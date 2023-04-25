@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.view.ReservationCompletedActivity
 import woowacourse.movie.view.model.ReservationUiModel
 import java.time.LocalDateTime
 
@@ -39,7 +40,10 @@ class ReservationListFragment : Fragment() {
                     listOf("A1", "B2"),
                     20000,
                 ),
-            ),
-        )
+            )
+        ) { reservation ->
+            val intent = ReservationCompletedActivity.newIntent(requireContext(), reservation)
+            startActivity(intent)
+        }
     }
 }

@@ -7,10 +7,23 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ReservationItemBinding
 import woowacourse.movie.view.model.ReservationUiModel
 
-class ReservationListAdapter(private val reservations: List<ReservationUiModel>) : RecyclerView.Adapter<ReservationItemViewHolder>() {
+class ReservationListAdapter(
+    private val reservations: List<ReservationUiModel>,
+    private val onItemClick: OnItemClick
+) : RecyclerView.Adapter<ReservationItemViewHolder>() {
+
+    fun interface OnItemClick {
+        fun onClick(reservation: ReservationUiModel)
+    }
+
+    private val onReservationViewClick: (Int) -> Unit = {
+        onItemClick.onClick(reservations[it])
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReservationItemViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.reservation_item, parent, false)
-        return ReservationItemViewHolder(ReservationItemBinding.bind(view))
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.reservation_item, parent, false)
+        return ReservationItemViewHolder(ReservationItemBinding.bind(view), onReservationViewClick)
     }
 
     override fun getItemCount(): Int {
