@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.movielist.adapter
+package woowacourse.movie.ui.home.adapter
 
 import woowacourse.movie.model.MovieListModel
 

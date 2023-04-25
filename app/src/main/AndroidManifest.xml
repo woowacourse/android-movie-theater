@@ -25,7 +25,7 @@
             android:exported="false"
             android:screenOrientation="sensor" />
         <activity
-            android:name=".ui.movielist.MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

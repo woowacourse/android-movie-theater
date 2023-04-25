@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.model.MovieListModel
 import woowacourse.movie.model.PeopleCountModel
-import woowacourse.movie.ui.movielist.MainActivity
+import woowacourse.movie.ui.MainActivity
 import woowacourse.movie.ui.seat.SeatSelectionActivity
 import woowacourse.movie.utils.failLoadingData
 import woowacourse.movie.utils.getParcelableCompat

@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.movielist.adapter
+package woowacourse.movie.ui.home.adapter
 
 enum class MovieListViewType(val value: Int) {
     MOVIE(0),
