@@ -14,7 +14,7 @@ import woowacourse.movie.MockAdvertisementFactory
 import woowacourse.movie.MockMoviesFactory
 import woowacourse.movie.R
 import woowacourse.movie.activity.MovieReservationActivity
-import woowacourse.movie.view.MovieAdapter
+import woowacourse.movie.adapter.MovieAdapter
 import woowacourse.movie.view.model.AdvertisementUiModel
 
 
@@ -37,7 +37,7 @@ class MoviesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_movies, container, false)
-        val movies = MockMoviesFactory.generateMovies()
+        val movies = MockMoviesFactory.makeMovies()
         val advertisementViewModel = MockAdvertisementFactory.generateAdvertisement()
         val movieList = view.findViewById<RecyclerView>(R.id.main_movie_list)
         movieList.adapter = MovieAdapter(

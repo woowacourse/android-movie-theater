@@ -6,7 +6,7 @@ import domain.Movies
 import java.time.LocalDate
 
 object MockMoviesFactory {
-    fun generateMovies(): Movies {
+    fun makeMovies(): Movies {
         return Movies(
             List(1000) { (generateMovie(it)) }
         )

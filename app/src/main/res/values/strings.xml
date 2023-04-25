@@ -33,6 +33,6 @@
     <string name="reservation_list_bottom_navigation_bar">예매 내역</string>
     <string name="setting_navigation_bar">설정</string>
     <string name="home_bottom_navigation_bar">홈</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="reservation_date_time_format">"yyyy-MM-dd | HH:mm"</string>
 </resources>
