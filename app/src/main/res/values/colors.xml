@@ -20,4 +20,7 @@
     <color name="seat_enable_button">#6200EE</color>
     <color name="seat_disable_button">#B7B7B7</color>
 
+    <color name="grey_D0D0D0">#D0D0D0</color>
+    <color name="grey_E0E0E0">#E0E0E0</color>
+
 </resources>

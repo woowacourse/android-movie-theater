@@ -2,7 +2,6 @@ package woowacourse.movie.ui.ticket
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -41,7 +40,6 @@ class MovieTicketActivity : AppCompatActivity() {
     }
 
     private fun setTicketInfo() {
-        Log.d("TicketActivity", "set!")
         val ticket: MovieTicketModel =
             intent.getSerializableExtraCompat(SeatSelectionActivity.KEY_TICKET)
                 ?: return failLoadingData()

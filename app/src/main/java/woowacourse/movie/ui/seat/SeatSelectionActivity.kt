@@ -16,6 +16,7 @@ import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toModel
 import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.model.PeopleCountModel
+import woowacourse.movie.model.ReservationModel
 import woowacourse.movie.model.SeatModel
 import woowacourse.movie.model.SelectedSeatsModel
 import woowacourse.movie.ui.moviedetail.MovieDetailActivity
@@ -127,7 +128,16 @@ class SeatSelectionActivity : AppCompatActivity() {
         .setTitle(getString(R.string.seat_dialog_title))
         .setMessage(getString(R.string.seat_dialog_message))
         .setPositiveButton(getString(R.string.seat_dialog_submit_button)) { _, _ ->
-            moveToTicketActivity()
+            val ticket = MovieTicketModel(
+                title = movieTitle,
+                time = movieTime,
+                peopleCount = peopleCount,
+                seats = selectedSeats.toModel()
+            ).apply {
+                setReservationData(this)
+                moveToTicketActivity(this)
+            }
+
         }
         .setNegativeButton(getString(R.string.seat_dialog_cancel_button)) { dialog, _ ->
             dialog.dismiss()
@@ -152,18 +162,17 @@ class SeatSelectionActivity : AppCompatActivity() {
         selectButton.isEnabled = selectedSeats.isSelectionDone(peopleCount.count)
     }
 
-    private fun moveToTicketActivity() {
-        val ticket = MovieTicketModel(
-            title = movieTitle,
-            time = movieTime,
-            peopleCount = peopleCount,
-            seats = selectedSeats.toModel()
-        )
+    private fun setReservationData(ticket: MovieTicketModel){
+        ReservationModel.add(ticket)
+    }
 
+    private fun moveToTicketActivity(ticket: MovieTicketModel) {
         val intent = Intent(this, MovieTicketActivity::class.java)
         intent.putExtra(KEY_TICKET, ticket)
         startActivity(intent)
     }
+
+
 
     companion object {
         const val ROW_SIZE = 5

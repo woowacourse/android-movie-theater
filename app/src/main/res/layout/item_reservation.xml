@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rectangle_1dp">
+
+    <TextView
+        android:id="@+id/reservation_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="12dp"
+        android:textSize="12sp"
+        android:textColor="@color/black"
+        tools:text="2024. 3. 2"/>
+
+    <View
+        android:id="@+id/reservation_divider_indicator"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="4dp"
+        android:background="@color/grey_D0D0D0"
+        app:layout_constraintBottom_toBottomOf="@id/reservation_date"
+        app:layout_constraintStart_toEndOf="@id/reservation_date"
+        app:layout_constraintTop_toTopOf="@id/reservation_date" />
+
+    <TextView
+        android:id="@+id/reservation_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/reservation_date"
+        app:layout_constraintStart_toEndOf="@id/reservation_divider_indicator"
+        app:layout_constraintTop_toTopOf="@id/reservation_date"
+        android:textSize="12sp"
+        android:textColor="@color/black"
+        tools:text="17:00" />
+
+    <TextView
+        android:id="@+id/reservation_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/reservation_date"
+        app:layout_constraintTop_toBottomOf="@+id/reservation_date"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        tools:text="제이슨, 제임스, 레아" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

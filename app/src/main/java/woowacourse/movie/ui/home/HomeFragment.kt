@@ -47,7 +47,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun moveToDetailActivity(movie: MovieListModel.MovieModel) {
-        val intent = Intent(moviesView.context, MovieDetailActivity::class.java)
+        val intent = Intent(context, MovieDetailActivity::class.java)
         intent.putExtra(KEY_MOVIE, movie)
         startActivity(intent)
     }
