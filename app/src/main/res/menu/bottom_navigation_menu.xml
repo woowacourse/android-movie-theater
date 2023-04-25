@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/page_book_history"
         android:enabled="true"
         android:icon="@drawable/book_history_24"
-        android:title="@string/bottom_navigation_menu_book_history"/>
+        android:title="@string/bottom_navigation_menu_book_history" />
 
     <item
         android:id="@+id/page_home"
         android:enabled="true"
         android:icon="@drawable/home_24"
-        android:title="@string/bottom_navigation_menu_home"/>
+        android:title="@string/bottom_navigation_menu_home" />
 
     <item
         android:id="@+id/page_setting"
         android:enabled="true"
         android:icon="@drawable/setting_24"
-        android:title="@string/bottom_navigation_menu_setting"/>
+        android:title="@string/bottom_navigation_menu_setting" />
 </menu>
