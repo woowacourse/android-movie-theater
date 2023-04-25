@@ -1,11 +1,13 @@
 package woowacourse.movie.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.view.data.ReservationViewDatas
 
 class ReservationListFragment : Fragment() {
 
@@ -23,8 +25,9 @@ class ReservationListFragment : Fragment() {
     }
 
     companion object {
-        fun from(param1: String, param2: String) = ReservationListFragment().apply {
-            arguments = Bundle().apply {}
+        fun from(reservationViewDatas: ReservationViewDatas) = Bundle().apply {
+            Log.d("DYDY", reservationViewDatas.value[0].movie.title)
+            putSerializable("", reservationViewDatas)
         }
     }
 }

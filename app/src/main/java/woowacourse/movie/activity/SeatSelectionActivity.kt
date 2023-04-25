@@ -15,17 +15,21 @@ import woowacourse.movie.domain.discountPolicy.OffTime
 import woowacourse.movie.view.data.MovieViewData
 import woowacourse.movie.view.data.PriceViewData
 import woowacourse.movie.view.data.ReservationDetailViewData
+import woowacourse.movie.view.data.ReservationViewData
 import woowacourse.movie.view.data.SeatsViewData
 import woowacourse.movie.view.error.ActivityError.finishWithError
 import woowacourse.movie.view.error.ViewError
 import woowacourse.movie.view.getSerializable
 import woowacourse.movie.view.mapper.MovieSeatMapper.toDomain
 import woowacourse.movie.view.mapper.ReservationDetailMapper.toDomain
+import woowacourse.movie.view.state.repository.SeatSelectionRepository
 import woowacourse.movie.view.widget.SeatTableLayout
 import java.text.NumberFormat
 import java.util.Locale
 
 class SeatSelectionActivity : AppCompatActivity() {
+    private val seatSelectionRepository: SeatSelectionRepository = SeatSelectionRepository()
+
     private val priceText: TextView by lazy {
         findViewById(R.id.seat_selection_movie_price)
     }
@@ -147,6 +151,11 @@ class SeatSelectionActivity : AppCompatActivity() {
         movie: MovieViewData,
         reservationDetail: ReservationDetailViewData
     ) {
+        seatSelectionRepository.postReservation(
+            ReservationViewData(
+                movie, reservationDetail
+            )
+        )
         ReservationResultActivity.from(
             this,
             movie,

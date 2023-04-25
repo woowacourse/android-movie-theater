@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.domain.AdvertisementMock
-import woowacourse.movie.domain.MovieMock
 import woowacourse.movie.domain.advertismentPolicy.MovieAdvertisementPolicy
 import woowacourse.movie.fragment.ReservationListFragment
 import woowacourse.movie.fragment.SettingFragment
@@ -17,8 +16,13 @@ import woowacourse.movie.view.MovieAdapter
 import woowacourse.movie.view.data.MovieListViewData
 import woowacourse.movie.view.data.MovieListViewType
 import woowacourse.movie.view.data.MovieViewData
+import woowacourse.movie.view.data.ReservationViewDatas
+import woowacourse.movie.view.mapper.MovieMapper.toDomain
+import woowacourse.movie.view.state.repository.MainRepository
 
 class MainActivity : AppCompatActivity() {
+    private val mainRepository: MainRepository = MainRepository()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -27,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun makeMovieRecyclerView() {
-        val movies = List(2500) { MovieMock.createMovies() }.flatten()
+        val movies = mainRepository.requestMovie().map { it.toDomain() }
         val advertisementDatas = AdvertisementMock.createAdvertisements()
         val advertisementPolicy = MovieAdvertisementPolicy(MOVIE_COUNT, ADVERTISEMENT_COUNT)
 
@@ -39,10 +43,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun onClickItem(data: MovieListViewData) {
         when (data.viewType) {
-            MovieListViewType.MOVIE -> MovieReservationActivity.from(this, data as MovieViewData)
-                .run {
-                    startActivity(this)
-                }
+            MovieListViewType.MOVIE -> MovieReservationActivity.from(
+                this, data as MovieViewData
+            ).run {
+                startActivity(this)
+            }
             MovieListViewType.ADVERTISEMENT -> Unit
         }
     }
@@ -54,7 +59,11 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.action_list -> {
-                    replaceFragment<ReservationListFragment>()
+                    replaceFragment<ReservationListFragment>(
+                        ReservationListFragment.from(
+                            ReservationViewDatas(mainRepository.requestReservation())
+                        )
+                    )
                     true
                 }
                 R.id.action_home -> {
