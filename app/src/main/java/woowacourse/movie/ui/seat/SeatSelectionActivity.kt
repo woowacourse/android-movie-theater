@@ -170,6 +170,7 @@ class SeatSelectionActivity : AppCompatActivity() {
         val intent = Intent(this, MovieTicketActivity::class.java)
         intent.putExtra(KEY_TICKET, ticket)
         startActivity(intent)
+        finish()
     }
 
 

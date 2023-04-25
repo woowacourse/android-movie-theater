@@ -113,6 +113,7 @@ class MovieDetailActivity : AppCompatActivity() {
             putExtra(KEY_PEOPLE_COUNT, peopleCountControllerView.peopleCountModel)
         }
         startActivity(intent)
+        finish()
     }
 
     private fun loadSavedData(savedInstanceState: Bundle?) {
