@@ -1,10 +1,10 @@
-package woowacourse.movie.presentation.activities.movielist.adapter
+package woowacourse.movie.presentation.activities.main.fragments.home
 
 import android.view.ViewGroup
 import woowacourse.movie.R
-import woowacourse.movie.presentation.activities.movielist.adapter.type.MovieViewType
-import woowacourse.movie.presentation.activities.movielist.adapter.viewholder.MovieViewHolder
-import woowacourse.movie.presentation.activities.movielist.adapter.viewholder.NativeAdViewHolder
+import woowacourse.movie.presentation.activities.main.fragments.home.type.MovieViewType
+import woowacourse.movie.presentation.activities.main.fragments.home.viewholder.MovieViewHolder
+import woowacourse.movie.presentation.activities.main.fragments.home.viewholder.NativeAdViewHolder
 import woowacourse.movie.presentation.base.BaseRecyclerView
 import woowacourse.movie.presentation.model.movieitem.Ad
 import woowacourse.movie.presentation.model.movieitem.ListItem
@@ -34,6 +34,7 @@ class MovieListAdapter(
     override fun getItemViewType(position: Int): Int = when (items[position]) {
         is Movie -> MovieViewType.MOVIE.type
         is Ad -> MovieViewType.AD.type
+        else -> throw IllegalArgumentException(INVALID_ITEM_TYPE)
     }
 
     fun appendAll(newItems: List<ListItem>) {
@@ -56,5 +57,7 @@ class MovieListAdapter(
         private const val DEFAULT_AD_INTERVAL = 3
         private const val APPENDED_SIZE = 1
         private const val NO_APPENDED_SIZE = 0
+
+        private const val INVALID_ITEM_TYPE = "Invalid type"
     }
 }

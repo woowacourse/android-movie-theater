@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.activities.movielist.adapter.viewholder
+package woowacourse.movie.presentation.activities.main.fragments.home.viewholder
 
 import android.view.View
 import android.widget.Button

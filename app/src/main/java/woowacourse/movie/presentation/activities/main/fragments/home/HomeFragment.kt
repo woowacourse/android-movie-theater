@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.activities.main.fragments
+package woowacourse.movie.presentation.activities.main.fragments.home
 
 import android.content.Intent
 import android.net.Uri
@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import woowacourse.movie.R
-import woowacourse.movie.presentation.activities.movielist.adapter.MovieListAdapter
 import woowacourse.movie.presentation.activities.ticketing.TicketingActivity
 import woowacourse.movie.presentation.model.movieitem.Ad
 import woowacourse.movie.presentation.model.movieitem.Movie
