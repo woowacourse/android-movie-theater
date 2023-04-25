@@ -8,7 +8,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import woowacourse.movie.R
-import woowacourse.movie.Reservation
 import woowacourse.movie.SelectResult
 import woowacourse.movie.SelectedSeat
 import woowacourse.movie.model.BookedMovie
@@ -17,6 +16,7 @@ import woowacourse.movie.model.Mapper.toUiModel
 import woowacourse.movie.model.SelectedSeatUiModel
 import woowacourse.movie.movie.Movie
 import woowacourse.movie.movie.MovieRepository
+import woowacourse.movie.reservation.Reservation
 import woowacourse.movie.theater.Theater
 import woowacourse.movie.theater.TheaterRepository
 import woowacourse.movie.ticket.Seat

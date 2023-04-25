@@ -2,5 +2,11 @@ package woowacourse.movie
 
 enum class PaymentType {
     OFFLINE,
-    ONLINE,
+    ONLINE, ;
+
+    companion object {
+        fun find(ordinal: Int): PaymentType {
+            return values().find { ordinal == it.ordinal } ?: throw IllegalArgumentException()
+        }
+    }
 }

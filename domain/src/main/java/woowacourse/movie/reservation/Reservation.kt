@@ -1,5 +1,6 @@
-package woowacourse.movie
+package woowacourse.movie.reservation
 
+import woowacourse.movie.PaymentType
 import woowacourse.movie.ticket.Ticket
 import java.time.LocalDateTime
 

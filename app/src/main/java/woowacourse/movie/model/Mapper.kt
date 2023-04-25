@@ -1,7 +1,7 @@
 package woowacourse.movie.model
 
-import woowacourse.movie.Reservation
 import woowacourse.movie.SelectedSeat
+import woowacourse.movie.reservation.Reservation
 import woowacourse.movie.ticket.Position
 import woowacourse.movie.ticket.Seat
 import woowacourse.movie.ticket.Ticket
