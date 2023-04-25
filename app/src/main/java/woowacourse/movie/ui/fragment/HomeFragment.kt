@@ -24,12 +24,13 @@ class HomeFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-        val moviesView = view.findViewById<RecyclerView>(R.id.main_movie_list)
+        val moviesView = view.findViewById<RecyclerView>(R.id.rv_movie)
         setMovieList(moviesView)
 
         return view
@@ -53,5 +54,4 @@ class HomeFragment : Fragment() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.url))
         startActivity(intent)
     }
-
 }

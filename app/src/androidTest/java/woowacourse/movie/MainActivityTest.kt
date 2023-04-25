@@ -25,7 +25,7 @@ class MainActivityTest {
     @Test
     fun 네_번째_요소를_누르면_우아한테크코스_사이트로_이동한다() {
         val position = 3 // 0 부터 시작
-        onView(withId(R.id.main_movie_list))
+        onView(withId(R.id.rv_movie))
             .perform(RecyclerViewActions.actionOnItemAtPosition<ViewHolder>(position, click()))
 
         intended(hasAction(Intent.ACTION_VIEW))
