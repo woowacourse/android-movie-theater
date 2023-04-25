@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.view.main
+package woowacourse.movie.presentation.view.main.home
 
 import android.content.Intent
 import androidx.recyclerview.widget.RecyclerView

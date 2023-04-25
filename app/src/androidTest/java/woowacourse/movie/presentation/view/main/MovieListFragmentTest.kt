@@ -6,10 +6,11 @@ import junit.framework.TestCase.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.R
+import woowacourse.movie.presentation.view.main.home.MovieListFragment
 
-class MainActivityTest {
+class MovieListFragmentTest {
     @get:Rule
-    val activityRule = ActivityScenarioRule(MainActivity::class.java)
+    val activityRule = ActivityScenarioRule(MovieListFragment::class.java)
 
     @Test
     fun 네번째_아이템마다_광고를_가져온다() {

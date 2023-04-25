@@ -21,7 +21,10 @@
             android:name=".presentation.view.moviedetail.MovieDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.view.main.MainActivity"
+            android:name=".presentation.view.main.home.MovieListFragment"
+            android:exported="true"></activity>
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

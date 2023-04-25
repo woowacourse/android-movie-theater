@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.view.main.data
+package woowacourse.movie.presentation.view.main.home.data
 
 import woowacourse.movie.R
 import woowacourse.movie.model.Movie
