@@ -25,4 +25,8 @@
     <string name="dialog_message_seat_selection_check">정말 예매하시겠습니까?</string>
     <string name="dialog_positive_button_seat_selection_check">예매 완료</string>
     <string name="dialog_negative_button_seat_selection_check">취소</string>
+
+    <string name="bottom_item_list">예매 내역</string>
+    <string name="bottom_item_home">홈</string>
+    <string name="bottom_item_setting">설정</string>
 </resources>

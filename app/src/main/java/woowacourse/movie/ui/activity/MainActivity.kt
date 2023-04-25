@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            add(R.id.main_activity_fragment_container_view, HomeFragment())
+            replace(R.id.main_fragment_container_view, HomeFragment())
         }
     }
 }
