@@ -139,6 +139,7 @@ class SeatPickerActivity : BackButtonActivity() {
                     )
                     BookHistories.items.add(movieBookingInfo)
                     startActivity(intent)
+                    finish()
                 }.setNegativeButton(
                     getString(R.string.alert_dialog_book_cancel)
                 ) { dialog, _ ->

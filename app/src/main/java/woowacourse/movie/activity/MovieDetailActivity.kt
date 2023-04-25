@@ -103,6 +103,7 @@ class MovieDetailActivity : BackButtonActivity() {
                 )
             )
             startActivity(intent)
+            finish()
         }
     }
 
