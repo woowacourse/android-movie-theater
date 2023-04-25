@@ -18,5 +18,5 @@
     <color name="seat_color_s">#19D358</color>
     <color name="picked_seat_color">#FAFF00</color>
     <color name="unpicked_seat_color">#FFFFFF</color>
-
+    <color name="book_history_separator">#D0D0D0</color>
 </resources>

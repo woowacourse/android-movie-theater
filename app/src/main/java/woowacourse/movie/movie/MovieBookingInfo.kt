@@ -14,6 +14,11 @@ data class MovieBookingInfo(
         return "$formattedDate $time"
     }
 
+    fun formatBookHistoryDate(): String {
+        val formattedDate: String = date.split("-").joinToString(".")
+        return "$formattedDate | $time"
+    }
+
     companion object {
         val dummyData = MovieBookingInfo(
             Movie.dummyData,

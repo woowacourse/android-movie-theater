@@ -16,6 +16,7 @@ import com.woowacourse.domain.seat.SeatGroup
 import com.woowacourse.domain.seat.SeatRow
 import com.woowacourse.domain.ticket.Ticket
 import com.woowacourse.domain.ticket.TicketBundle
+import woowacourse.movie.BookHistories
 import woowacourse.movie.BundleKeys
 import woowacourse.movie.R
 import woowacourse.movie.getSerializableCompat
@@ -124,16 +125,19 @@ class SeatPickerActivity : BackButtonActivity() {
                     getString(R.string.alert_dialog_book_done)
                 ) { _, _ ->
                     val intent = BookCompleteActivity.intent(this)
+                    val movieBookingInfo = MovieBookingSeatInfo(
+                        getMovieBookingInfo(),
+                        seatGroup.sorted().seats.map {
+                            formatSeatName(it.row.value, it.column.value)
+                        },
+                        seatPickerTicketPrice.text.toString()
+                    )
+
                     intent.putExtra(
                         BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY,
-                        MovieBookingSeatInfo(
-                            getMovieBookingInfo(),
-                            seatGroup.sorted().seats.map {
-                                formatSeatName(it.row.value, it.column.value)
-                            },
-                            seatPickerTicketPrice.text.toString()
-                        )
+                        movieBookingInfo
                     )
+                    BookHistories.items.add(movieBookingInfo)
                     startActivity(intent)
                 }.setNegativeButton(
                     getString(R.string.alert_dialog_book_cancel)
