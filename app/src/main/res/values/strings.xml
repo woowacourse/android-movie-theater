@@ -29,4 +29,8 @@
     <string name="menu_item_home">홈</string>
     <string name="menu_item_setting">설정</string>
 
+
+    <!-- 예매 내역 뷰 -->
+    <string name="reservation_its_empty">예매한 영화 내역이 없습니다.</string>
+
 </resources>
