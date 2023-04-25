@@ -3,7 +3,7 @@
 # 기능 요구 사항
 
 #### 메인 뷰
-- [ ] BottomNavigation 구현
+- [x] BottomNavigation 구현
 - [ ] FragmentContainerView 구현
 #### 예매 내역 뷰
 - [ ] 예매 내역 리스트, RecyclerView 구현
