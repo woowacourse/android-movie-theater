@@ -1,4 +1,4 @@
-package woowacourse.movie.view.data
+package woowacourse.movie.view.viewholder
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

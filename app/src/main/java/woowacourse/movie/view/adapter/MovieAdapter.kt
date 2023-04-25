@@ -1,4 +1,4 @@
-package woowacourse.movie.view
+package woowacourse.movie.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,14 +7,14 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.Advertisement
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.advertismentPolicy.AdvertisementPolicy
-import woowacourse.movie.view.data.AdvertisementViewHolder
-import woowacourse.movie.view.data.MovieInfoViewHolder
 import woowacourse.movie.view.data.MovieListViewData
 import woowacourse.movie.view.data.MovieListViewType
 import woowacourse.movie.view.data.MovieViewData
 import woowacourse.movie.view.data.MovieViewDatas
 import woowacourse.movie.view.mapper.AdvertisementMapper.toView
 import woowacourse.movie.view.mapper.MovieMapper.toView
+import woowacourse.movie.view.viewholder.AdvertisementViewHolder
+import woowacourse.movie.view.viewholder.MovieInfoViewHolder
 
 class MovieAdapter(
     movie: List<Movie>,

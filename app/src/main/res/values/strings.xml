@@ -27,4 +27,6 @@
     <string name="menu_item_reservation_list">예매 내역</string>
     <string name="menu_item_home">홈</string>
     <string name="menu_item_setting">설정</string>
+
+    <string name="reservation_item_datetime_format">yyyy.MM.dd | HH:mm</string>
 </resources>

@@ -6,9 +6,4 @@
     android:background="@color/white"
     tools:context=".fragment.SettingFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="fragment_setting" />
-
 </FrameLayout>
