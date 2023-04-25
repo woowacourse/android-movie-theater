@@ -1,45 +1,41 @@
 package woowacourse.movie.activity
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.Ad
-import woowacourse.movie.BundleKeys
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
 import woowacourse.movie.R
-import woowacourse.movie.movie.MovieMockData
-import woowacourse.movie.movielist.MovieRecyclerViewAdapter
+import woowacourse.movie.fragment.BookHistoryFragment
+import woowacourse.movie.fragment.HomeFragment
+import woowacourse.movie.fragment.SettingFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setMovieRecyclerView()
+        findViewById<BottomNavigationView>(R.id.bnv_main).setOnItemSelectedListener(this)
+
+        supportFragmentManager.beginTransaction().add(R.id.fl_main, BookHistoryFragment()).commit()
     }
 
-    private fun setMovieRecyclerView() {
-        val movieRecyclerView = findViewById<RecyclerView>(R.id.rv_movie_list)
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.page_book_history -> {
+                supportFragmentManager.beginTransaction().replace(R.id.fl_main, BookHistoryFragment()).commitAllowingStateLoss()
+                return true
+            }
+            R.id.page_home -> {
+                supportFragmentManager.beginTransaction().replace(R.id.fl_main, HomeFragment()).commitAllowingStateLoss()
+                return true
+            }
+            R.id.page_setting -> {
+                supportFragmentManager.beginTransaction().replace(R.id.fl_main, SettingFragment()).commitAllowingStateLoss()
+                return true
+            }
+        }
 
-        val movieRecyclerViewAdapter = MovieRecyclerViewAdapter(
-            MovieMockData.movies10000,
-            Ad.dummyAd,
-            getMovieOnClickListener(),
-            getAdOnClickListener(),
-        )
-        movieRecyclerView.adapter = movieRecyclerViewAdapter
-        movieRecyclerViewAdapter.notifyDataSetChanged()
-    }
-
-    private fun getAdOnClickListener() = { item: Ad ->
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
-        this.startActivity(intent)
-    }
-
-    private fun getMovieOnClickListener() = { position: Int ->
-        val intent = MovieDetailActivity.intent(this)
-        intent.putExtra(BundleKeys.MOVIE_DATA_KEY, MovieMockData.movies10000[position])
-        this.startActivity(intent)
+        return false
     }
 }
