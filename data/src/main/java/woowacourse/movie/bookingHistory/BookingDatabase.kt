@@ -7,6 +7,7 @@ object BookingDatabase {
         BookingEntity(
             0,
             1,
+            "해리 포터와 마법사의 돌",
             LocalDateTime.of(2024, 3, 1, 10, 0),
             0,
             listOf<SeatEntity>(SeatEntity(2, 0, 0)),

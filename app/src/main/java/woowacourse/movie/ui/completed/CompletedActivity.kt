@@ -7,9 +7,9 @@ import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.formatScreenDateTime
 import woowacourse.movie.model.ReservationUiModel
 import woowacourse.movie.movie.MovieRepository
+import woowacourse.movie.util.formatScreenDateTime
 import woowacourse.movie.util.getParcelable
 
 class CompletedActivity : AppCompatActivity() {

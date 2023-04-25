@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.formatScreenDate
 import woowacourse.movie.model.BookedMovie
 import woowacourse.movie.model.main.MovieMapper.toUiModel
 import woowacourse.movie.model.main.MovieUiModel
@@ -17,6 +16,7 @@ import woowacourse.movie.movie.MovieRepository
 import woowacourse.movie.movie.ScreeningDate
 import woowacourse.movie.ticket.TicketCount
 import woowacourse.movie.ui.seat.SeatActivity
+import woowacourse.movie.util.formatScreenDate
 import java.time.LocalDate
 import java.time.LocalTime
 

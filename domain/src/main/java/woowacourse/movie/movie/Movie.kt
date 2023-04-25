@@ -18,6 +18,6 @@ data class Movie(
     fun reserve(dateTime: LocalDateTime, seat: Seat): Ticket {
         val date = dateTime.toLocalDate()
         if (date !in screeningDates) throw IllegalArgumentException("상영 기간이 아닙니다.")
-        return Ticket(id, dateTime, seat)
+        return Ticket(id, title, dateTime, seat)
     }
 }

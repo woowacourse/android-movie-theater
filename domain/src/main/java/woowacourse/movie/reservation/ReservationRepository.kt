@@ -22,6 +22,7 @@ object ReservationRepository {
         return BookingEntity(
             id = BookingDatabase.getNewId(),
             movieId = this.movieId,
+            movieTitle = this.tickets.first().movieTitle,
             bookedDateTime = this.bookedDateTime,
             paymentType = this.paymentType.ordinal,
             seats = this.tickets.map { it.seat.toSeatEntity() },
@@ -30,8 +31,9 @@ object ReservationRepository {
 
     private fun BookingEntity.toReservation(): Reservation {
         return Reservation(
+            id = this.id,
             tickets = this.seats.map {
-                Ticket(this.movieId, this.bookedDateTime, it.toSeat())
+                Ticket(this.movieId, this.movieTitle, this.bookedDateTime, it.toSeat())
             }.toSet(),
             paymentType = PaymentType.find(this.paymentType),
         )

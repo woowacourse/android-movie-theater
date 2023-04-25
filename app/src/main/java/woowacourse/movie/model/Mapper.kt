@@ -45,10 +45,12 @@ object Mapper {
 
     fun Reservation.toUiModel(): ReservationUiModel {
         return ReservationUiModel(
+            id = this.id,
             tickets = this.tickets.map { it.toUiModel() }.toSet(),
             paymentType = this.paymentType,
             payment = this.payment,
             movieId = this.movieId,
+            movieTitle = this.tickets.first().movieTitle,
             bookedDateTime = this.bookedDateTime,
             count = this.count,
         )

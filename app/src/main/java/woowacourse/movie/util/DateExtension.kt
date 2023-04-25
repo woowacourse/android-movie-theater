@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.util
 
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -10,4 +10,8 @@ fun LocalDate.formatScreenDate(): String {
 
 fun LocalDateTime.formatScreenDateTime(): String {
     return format(DateTimeFormatter.ofPattern("YYYY.MM.dd HH:mm"))
+}
+
+fun LocalDateTime.formatBookedDateTime(): String {
+    return format(DateTimeFormatter.ofPattern("YYYY.MM.dd | HH:mm"))
 }

@@ -5,10 +5,10 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import woowacourse.movie.R
-import woowacourse.movie.formatScreenDate
 import woowacourse.movie.model.main.MainData
 import woowacourse.movie.model.main.MovieUiModel
 import woowacourse.movie.ui.main.adapter.MainViewType
+import woowacourse.movie.util.formatScreenDate
 
 class MovieViewHolder(view: View) : MainViewHolder(view) {
     private val thumbnail: ImageView = view.findViewById(R.id.imageItemThumbnail)
