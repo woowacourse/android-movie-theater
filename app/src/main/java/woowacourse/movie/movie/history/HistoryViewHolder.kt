@@ -7,10 +7,12 @@ import woowacourse.movie.R
 import woowacourse.movie.dto.MovieDateDto
 import woowacourse.movie.dto.MovieTimeDto
 import woowacourse.movie.movie.dto.BookingMovieDto
+import woowacourse.movie.movielist.OnClickListener
 import java.time.format.DateTimeFormatter
 
 class HistoryViewHolder(
     private val view: View,
+    private val onItemViewClickListener: OnClickListener<BookingMovieDto>
 ) :
     RecyclerView.ViewHolder(view) {
     val reservationTime: TextView = itemView.findViewById(R.id.history_datetime)
@@ -19,6 +21,10 @@ class HistoryViewHolder(
     fun bind(item: BookingMovieDto) {
         reservationTime.text = formatMovieDateTime(item.date, item.time)
         reservationMovie.text = item.movie.title
+
+        view.setOnClickListener {
+            onItemViewClickListener.onClick(item)
+        }
     }
 
     private fun formatMovieDateTime(date: MovieDateDto, time: MovieTimeDto): String {

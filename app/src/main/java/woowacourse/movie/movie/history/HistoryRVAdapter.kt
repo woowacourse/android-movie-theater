@@ -5,18 +5,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.movie.dto.BookingMovieDto
+import woowacourse.movie.movielist.OnClickListener
 
 class HistoryRVAdapter(
     private val histories: List<BookingMovieDto>,
 ) :
     RecyclerView.Adapter<HistoryViewHolder>() {
 
-    // lateinit var itemMovieClick: OnClickListener<MovieDto>
+    lateinit var itemViewClick: OnClickListener<BookingMovieDto>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.history_item, parent, false)
-        return HistoryViewHolder(view)
+        return HistoryViewHolder(view, itemViewClick)
     }
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {

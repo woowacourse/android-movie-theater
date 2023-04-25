@@ -1,5 +1,6 @@
 package woowacourse.movie.movie.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.TicketActivity
 import woowacourse.movie.movie.BookingHistoryDto
+import woowacourse.movie.movie.dto.BookingMovieDto
 import woowacourse.movie.movie.history.HistoryRVAdapter
+import woowacourse.movie.movielist.OnClickListener
 
 class HistoryFragment : Fragment() {
 
@@ -36,5 +40,16 @@ class HistoryFragment : Fragment() {
 
         history_rv.adapter = historyRVAdapter
         historyRVAdapter.notifyDataSetChanged()
+        historyRVAdapter.itemViewClick = object : OnClickListener<BookingMovieDto> {
+            override fun onClick(item: BookingMovieDto) {
+                val intent = Intent(context, TicketActivity::class.java)
+                intent.putExtra(BOOKING_MOVIE_KEY, item)
+                startActivity(intent)
+            }
+        }
+    }
+
+    companion object {
+        private const val BOOKING_MOVIE_KEY = "booking_movie"
     }
 }
