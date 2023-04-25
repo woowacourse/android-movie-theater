@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.fragment
+package woowacourse.movie.ui.fragment.movielist
 
 import android.content.Intent
 import android.net.Uri
@@ -9,10 +9,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.ui.Ads
-import woowacourse.movie.ui.Movies
 import woowacourse.movie.ui.activity.MovieDetailActivity
-import woowacourse.movie.ui.adapter.MovieAdapter
+import woowacourse.movie.ui.entity.Ads
+import woowacourse.movie.ui.entity.Movies
+import woowacourse.movie.ui.fragment.movielist.adapter.MovieAdapter
 import woowacourse.movie.ui.model.AdModel
 import woowacourse.movie.ui.model.MovieModel
 

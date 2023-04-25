@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.fragment
+package woowacourse.movie.ui.fragment.reservationlist
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -198,7 +198,9 @@ class SeatPickerActivity : AppCompatActivity() {
     }
 
     private fun loadSavedData(savedInstanceState: Bundle?) {
-        val ticketModel = savedInstanceState?.getParcelableByKey<MovieTicketModel>(TICKET_INSTANCE_KEY)
+        val ticketModel = savedInstanceState?.getParcelableByKey<MovieTicketModel>(
+            TICKET_INSTANCE_KEY
+        )
             ?: intent.getParcelable(TICKET_EXTRA_KEY)!!
         ticket = ticketModel.mapToMovieTicket()
     }

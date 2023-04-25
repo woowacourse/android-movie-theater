@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.adapter
+package woowacourse.movie.ui.fragment.movielist.adapter
 
 import android.view.View
 import android.widget.ImageView

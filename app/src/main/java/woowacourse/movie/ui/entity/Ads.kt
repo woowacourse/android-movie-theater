@@ -1,4 +1,4 @@
-package woowacourse.movie.ui
+package woowacourse.movie.ui.entity
 
 import woowacourse.movie.R
 import woowacourse.movie.ui.model.AdModel

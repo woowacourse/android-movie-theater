@@ -6,9 +6,9 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.ui.fragment.FragmentType
-import woowacourse.movie.ui.fragment.HomeFragment
-import woowacourse.movie.ui.fragment.ReservationListFragment
-import woowacourse.movie.ui.fragment.SettingFragment
+import woowacourse.movie.ui.fragment.movielist.HomeFragment
+import woowacourse.movie.ui.fragment.reservationlist.ReservationListFragment
+import woowacourse.movie.ui.fragment.settings.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
     private val bottomNavigationView by lazy { findViewById<BottomNavigationView>(R.id.main_bottom_navigation) }
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     private fun getFragmentType(itemId: Int): FragmentType = when (itemId) {
         R.id.bottom_item_list -> FragmentType.RESERVATION_LIST
         R.id.bottom_item_home -> FragmentType.HOME
-        R.id.bottom_item_setting -> FragmentType.SETTING
+        R.id.bottom_item_settings -> FragmentType.SETTING
         else -> throw IllegalArgumentException(getString(R.string.error_not_existing_item_id))
     }
 
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         return when (currentType) {
             FragmentType.RESERVATION_LIST -> ReservationListFragment()
             FragmentType.HOME -> HomeFragment()
-            FragmentType.SETTING -> SettingFragment()
+            FragmentType.SETTING -> SettingsFragment()
         }
     }
 

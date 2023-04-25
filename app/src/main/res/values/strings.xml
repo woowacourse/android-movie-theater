@@ -28,7 +28,7 @@
 
     <string name="bottom_item_list">예매 내역</string>
     <string name="bottom_item_home">홈</string>
-    <string name="bottom_item_setting">설정</string>
+    <string name="bottom_item_settings">설정</string>
 
     <string name="error_not_existing_item_id">존재하지 않는 아이템 아이디 입니다.</string>
 </resources>
