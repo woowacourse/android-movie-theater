@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.activity.ReservationResultActivity
 import woowacourse.movie.view.adapter.ReservationAdapter
 import woowacourse.movie.view.data.ReservationViewDatas
 import woowacourse.movie.view.getSerializable
@@ -35,7 +36,17 @@ class ReservationListFragment : Fragment() {
 
     private fun makeReservationRecyclerView(view: View, reservations: ReservationViewDatas) {
         val recyclerView = view.findViewById<RecyclerView>(R.id.reservation_list_recycler)
-        recyclerView.adapter = ReservationAdapter(reservations)
+        recyclerView.adapter = ReservationAdapter(reservations) {
+            startActivity(
+                ReservationResultActivity.from(
+                    view.context,
+                    it.movie,
+                    it.reservationDetail,
+                    it.seats,
+                    it.price
+                )
+            )
+        }
         val decoration = DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL)
         recyclerView.addItemDecoration(decoration)
     }

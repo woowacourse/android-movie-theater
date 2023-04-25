@@ -4,5 +4,7 @@ import java.io.Serializable
 
 data class ReservationViewData(
     val movie: MovieViewData,
-    val reservationDetail: ReservationDetailViewData
+    val reservationDetail: ReservationDetailViewData,
+    val seats: SeatsViewData,
+    val price: PriceViewData
 ) : Serializable

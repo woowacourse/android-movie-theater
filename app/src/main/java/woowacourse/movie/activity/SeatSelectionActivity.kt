@@ -151,19 +151,18 @@ class SeatSelectionActivity : AppCompatActivity() {
         movie: MovieViewData,
         reservationDetail: ReservationDetailViewData
     ) {
+        val seats = seatTableLayout.selectedSeats()
+        val price = calculateDiscountedPrice(
+            seatTableLayout.selectedSeats(), reservationDetail
+        )
+
         seatSelectionRepository.postReservation(
             ReservationViewData(
-                movie, reservationDetail
+                movie, reservationDetail, seats, price
             )
         )
         ReservationResultActivity.from(
-            this,
-            movie,
-            reservationDetail,
-            seatTableLayout.selectedSeats(),
-            calculateDiscountedPrice(
-                seatTableLayout.selectedSeats(), reservationDetail
-            )
+            this, movie, reservationDetail, seats, price
         ).run {
             startActivity(this)
         }
