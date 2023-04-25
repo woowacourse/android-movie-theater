@@ -30,4 +30,7 @@
 
     <string name="movie_data_null_error">영화 데이터가 들어오지 않았어요!!</string>
     <string name="reservation_data_null_error">예약 정보를 받지 못하였습니다!</string>
+    <string name="reservation_list_bottom_navigation_bar">예매 내역</string>
+    <string name="setting_navigation_bar">설정</string>
+    <string name="home_bottom_navigation_bar">홈</string>
 </resources>
