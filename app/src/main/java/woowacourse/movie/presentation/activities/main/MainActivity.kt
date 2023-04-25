@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
+import woowacourse.movie.presentation.activities.main.fragments.HistoryFragment
 import woowacourse.movie.presentation.activities.main.fragments.HomeFragment
-import woowacourse.movie.presentation.activities.main.fragments.MenuFragment
 import woowacourse.movie.presentation.activities.main.fragments.SettingFragment
 
 class MainActivity : AppCompatActivity() {
@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
             when (menu.itemId) {
                 R.id.menu -> {
                     supportFragmentManager.commit {
-                        replace(R.id.fragment_container_view, MenuFragment.newInstance())
+                        replace(R.id.fragment_container_view, HistoryFragment.newInstance())
                     }
                 }
                 R.id.home -> {

@@ -7,19 +7,20 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 
-class MenuFragment : Fragment() {
+class HistoryFragment : Fragment() {
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        return inflater.inflate(R.layout.fragment_menu, container, false)
+        return inflater.inflate(R.layout.fragment_history, container, false)
     }
 
     companion object {
-        private val menuFragment = MenuFragment()
+        private val historyFragment = HistoryFragment()
 
-        fun newInstance(): MenuFragment = menuFragment.apply {
+        fun newInstance(): HistoryFragment = historyFragment.apply {
             arguments = Bundle().apply {
             }
         }
