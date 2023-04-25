@@ -18,4 +18,5 @@
     <color name="s_class_color">#19D358</color>
     <color name="a_class_color">#1B48E9</color>
     <color name="b_class_color">#8E13EF</color>
+    <color name="unselected_menu_color">#666666</color>
 </resources>
