@@ -1,4 +1,4 @@
-package woowacourse.movie.repository
+package woowacourse.movie.domain.repository
 
 import woowacourse.movie.domain.Movie
 

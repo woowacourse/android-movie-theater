@@ -1,8 +1,9 @@
-package woowacourse.movie.repository
+package woowacourse.movie.data
 
 import woowacourse.movie.R
 import woowacourse.movie.domain.Minute
 import woowacourse.movie.domain.Movie
+import woowacourse.movie.domain.repository.MovieRepository
 import java.time.LocalDate
 
 object MovieMockRepository : MovieRepository {
@@ -45,6 +46,6 @@ object MovieMockRepository : MovieRepository {
     }.flatten()
 
     override fun findAll(): List<Movie> {
-        return movies
+        return movies.toList()
     }
 }

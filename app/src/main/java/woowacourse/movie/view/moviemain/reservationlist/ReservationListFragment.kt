@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.data.ReservationMockRepository
 import woowacourse.movie.view.ReservationCompletedActivity
-import woowacourse.movie.view.model.ReservationUiModel
-import java.time.LocalDateTime
+import woowacourse.movie.view.mapper.toUiModel
 
 class ReservationListFragment : Fragment() {
 
@@ -25,22 +25,7 @@ class ReservationListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerview)
         recyclerView.adapter = ReservationListAdapter(
-            listOf(
-                ReservationUiModel(
-                    "해리포터1",
-                    LocalDateTime.of(2023, 1, 1, 20, 0),
-                    2,
-                    listOf("A1", "B2"),
-                    10000,
-                ),
-                ReservationUiModel(
-                    "해리포터2",
-                    LocalDateTime.of(2023, 2, 1, 20, 0),
-                    2,
-                    listOf("A1", "B2"),
-                    20000,
-                ),
-            )
+            ReservationMockRepository.findAll().map { it.toUiModel() }
         ) { reservation ->
             val intent = ReservationCompletedActivity.newIntent(requireContext(), reservation)
             startActivity(intent)

@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.data.MovieMockRepository
 import woowacourse.movie.domain.Movie
-import woowacourse.movie.repository.MovieMockRepository
 import woowacourse.movie.view.ReservationActivity
 import woowacourse.movie.view.mapper.toUiModel
 import woowacourse.movie.view.model.MovieListModel
