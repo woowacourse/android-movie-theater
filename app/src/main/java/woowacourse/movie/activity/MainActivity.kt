@@ -1,14 +1,18 @@
 package woowacourse.movie.activity
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.domain.AdvertisementMock
 import woowacourse.movie.domain.MovieMock
 import woowacourse.movie.domain.advertismentPolicy.MovieAdvertisementPolicy
+import woowacourse.movie.fragment.ReservationListFragment
+import woowacourse.movie.fragment.SettingFragment
 import woowacourse.movie.view.MovieAdapter
 import woowacourse.movie.view.data.MovieListViewData
 import woowacourse.movie.view.data.MovieListViewType
@@ -50,18 +54,35 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.action_list -> {
-
+                    replaceFragment<ReservationListFragment>()
                     true
                 }
                 R.id.action_home -> {
-
+                    removeAllFragments()
                     true
                 }
                 R.id.action_setting -> {
-
+                    replaceFragment<SettingFragment>()
                     true
                 }
                 else -> false
+            }
+        }
+    }
+
+    private inline fun <reified T : Fragment> replaceFragment(bundle: Bundle? = null) {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace<T>(R.id.main_fragment_container_view, "", bundle)
+        }
+    }
+
+    private fun removeAllFragments() {
+        supportFragmentManager.run {
+            commit {
+                fragments.forEach {
+                    remove(it)
+                }
             }
         }
     }
