@@ -1,21 +1,32 @@
-package woowacourse.movie.view
+package woowacourse.movie.view.moviemain.movielist
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.repository.MovieMockRepository
+import woowacourse.movie.view.ReservationActivity
 import woowacourse.movie.view.mapper.toUiModel
 import woowacourse.movie.view.model.MovieListModel
 
-class MovieListActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_list)
+class MovieListFragment : Fragment() {
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_movie_list, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val movies = MovieMockRepository.findAll()
         val dataList = generateMovieListData(movies)
 
@@ -23,7 +34,7 @@ class MovieListActivity : AppCompatActivity() {
             dataList = dataList,
             onItemClick = object : MovieListAdapter.OnItemClick {
                 override fun onMovieClick(movie: MovieListModel.MovieUiModel) {
-                    val intent = ReservationActivity.newIntent(this@MovieListActivity, movie)
+                    val intent = ReservationActivity.newIntent(requireContext(), movie)
                     startActivity(intent)
                 }
 
@@ -33,18 +44,27 @@ class MovieListActivity : AppCompatActivity() {
                 }
             }
         )
-        val movieListView = findViewById<RecyclerView>(R.id.movie_recyclerview)
+        val movieListView = view.findViewById<RecyclerView>(R.id.movie_recyclerview)
         movieListView.adapter = movieAdapter
     }
 
     private fun generateMovieListData(movies: List<Movie>): List<MovieListModel> {
-        val dataList = mutableListOf<MovieListModel>()
         val ad = MovieListModel.MovieAdModel(
             R.drawable.woowacourse_banner,
             "https://woowacourse.github.io/"
         )
+
+        return mixMovieAdData(movies, ad, AD_POST_INTERVAL)
+    }
+
+    private fun mixMovieAdData(
+        movies: List<Movie>,
+        ad: MovieListModel.MovieAdModel,
+        adPostInterval: Int
+    ): List<MovieListModel> {
+        val dataList = mutableListOf<MovieListModel>()
         movies.forEachIndexed { index, movie ->
-            if (index % AD_POST_INTERVAL == AD_POST_INTERVAL - 1) {
+            if (index % adPostInterval == adPostInterval - 1) {
                 dataList.add(movie.toUiModel())
                 dataList.add(ad)
                 return@forEachIndexed

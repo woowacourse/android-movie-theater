@@ -11,6 +11,7 @@ import woowacourse.movie.databinding.ActivityReservationCompletedBinding
 import woowacourse.movie.util.DATE_TIME_FORMATTER
 import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.view.model.ReservationUiModel
+import woowacourse.movie.view.moviemain.MovieMainActivity
 import java.text.DecimalFormat
 
 class ReservationCompletedActivity : AppCompatActivity() {
@@ -31,7 +32,7 @@ class ReservationCompletedActivity : AppCompatActivity() {
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     val intent =
-                        Intent(this@ReservationCompletedActivity, MovieListActivity::class.java)
+                        Intent(this@ReservationCompletedActivity, MovieMainActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                     startActivity(intent)
                 }
@@ -57,7 +58,7 @@ class ReservationCompletedActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                val intent = Intent(this, MovieListActivity::class.java)
+                val intent = Intent(this, MovieMainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 startActivity(intent)
             }

@@ -1,4 +1,4 @@
-package woowacourse.movie.view
+package woowacourse.movie.view.moviemain.movielist
 
 import woowacourse.movie.R
 

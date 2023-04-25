@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 # android-movie-theater
-=======
-# android-movie-ticket
 
 ## domain
 
