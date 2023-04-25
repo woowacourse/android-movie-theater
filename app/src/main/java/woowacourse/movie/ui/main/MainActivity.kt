@@ -4,17 +4,16 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentContainerView
 import woowacourse.movie.R
-import woowacourse.movie.ui.fragment.movieList.MovieListFragment
+import woowacourse.movie.ui.fragment.reservationList.ReservationListFragment
 
 class MainActivity : AppCompatActivity() {
-
     private val rv: FragmentContainerView by lazy { findViewById(R.id.container) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         supportFragmentManager.beginTransaction()
-            .add(rv.id, MovieListFragment())
+            .add(rv.id, ReservationListFragment())
             .commit()
     }
 

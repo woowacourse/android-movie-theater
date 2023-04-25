@@ -1,9 +1,10 @@
-package woowacourse.movie.ui.main
+package woowacourse.movie.ui.main.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.ui.main.ViewType
 import woowacourse.movie.ui.main.itemModel.AdvItemModel
 import woowacourse.movie.ui.main.itemModel.ItemModel
 import woowacourse.movie.ui.main.itemModel.MovieItemModel
@@ -11,7 +12,7 @@ import woowacourse.movie.ui.main.viewHolder.AdvViewHolder
 import woowacourse.movie.ui.main.viewHolder.ItemViewHolder
 import woowacourse.movie.ui.main.viewHolder.MovieViewHolder
 
-class MainPageAdapter(
+class MovieListAdapter(
     movie: List<MovieItemModel>,
     adv: List<AdvItemModel>
 ) : RecyclerView.Adapter<ItemViewHolder>() {

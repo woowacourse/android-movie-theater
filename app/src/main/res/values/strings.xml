@@ -20,9 +20,11 @@
     <string name="discount_money">%s원</string>
     <string name="reservation_confirm">예매 확인</string>
     <string name="ask_really_reservation">정말 예매하시겠습니까?</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="reservation_list">예매내역</string>
     <string name="home">홈</string>
     <string name="setting">설정</string>
+
+    <string name="date_time_form">%s | %s</string>
 </resources>

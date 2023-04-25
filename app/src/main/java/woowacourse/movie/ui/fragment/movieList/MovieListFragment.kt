@@ -14,7 +14,7 @@ import woowacourse.movie.model.AdvState
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.ui.adv.AdvDetailActivity
 import woowacourse.movie.ui.main.MainActivity
-import woowacourse.movie.ui.main.MainPageAdapter
+import woowacourse.movie.ui.main.adapter.MovieListAdapter
 import woowacourse.movie.ui.main.itemModel.AdvItemModel
 import woowacourse.movie.ui.main.itemModel.MovieItemModel
 import woowacourse.movie.ui.reservation.MovieDetailActivity
@@ -22,7 +22,7 @@ import woowacourse.movie.ui.reservation.MovieDetailActivity
 class MovieListFragment : Fragment() {
 
     private lateinit var movieListView: RecyclerView
-    private lateinit var adapter: MainPageAdapter
+    private lateinit var adapter: MovieListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +39,7 @@ class MovieListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         movieListView = view.findViewById(R.id.rv_main)
-        adapter = MainPageAdapter(
+        adapter = MovieListAdapter(
             movie = MovieRepository.allMovies().map {
                 it.convertToItemModel { position ->
                     navigateMovieDetail((adapter.items[position] as MovieItemModel).movieState)
