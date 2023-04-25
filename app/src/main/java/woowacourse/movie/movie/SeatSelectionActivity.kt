@@ -6,6 +6,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import domain.BookingMovie
 import domain.Seat
 import domain.Seats
 import woowacourse.movie.dto.MovieDateDto
@@ -13,8 +14,14 @@ import woowacourse.movie.dto.MovieDto
 import woowacourse.movie.dto.MovieTimeDto
 import woowacourse.movie.dto.SeatsDto
 import woowacourse.movie.dto.TicketCountDto
+import woowacourse.movie.mapper.mapToMovie
+import woowacourse.movie.mapper.mapToMovieDate
+import woowacourse.movie.mapper.mapToMovieTime
 import woowacourse.movie.mapper.mapToSeats
 import woowacourse.movie.mapper.mapToSeatsDto
+import woowacourse.movie.mapper.mapToTicketCount
+import woowacourse.movie.movie.BookingHistoryDto
+import woowacourse.movie.movie.dto.BookingMovieDto
 import woowacourse.movie.view.SeatSelectView
 import java.time.LocalDateTime
 
@@ -135,13 +142,12 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     private fun moveActivity() {
+        val bookingMovie = BookingMovieDto(movie, date, time, ticketCount, seats.mapToSeatsDto())
         val intent = Intent(this, TicketActivity::class.java)
-        intent.putExtra(MOVIE_KEY, movie)
-        intent.putExtra(SEATS_KEY, seats.mapToSeatsDto())
-        intent.putExtra(DATE_KEY, date)
-        intent.putExtra(TIME_KEY, time)
-        intent.putExtra(TICKET_KEY, ticketCount)
+        intent.putExtra("booking_movie", bookingMovie)
+        BookingHistoryDto.add(bookingMovie)
         startActivity(intent)
+        finish()
     }
 
     companion object {
