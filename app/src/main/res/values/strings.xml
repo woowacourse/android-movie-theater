@@ -24,4 +24,7 @@
     <string name="seat_row_column">%c%d</string>
     <string name="seat_text_start_letter">A</string>
     <string name="seat_price">%s원</string>
+    <string name="menu_item_reservation_list">예매 내역</string>
+    <string name="menu_item_home">홈</string>
+    <string name="menu_item_setting">설정</string>
 </resources>
