@@ -1,56 +1,36 @@
 package woowacourse.movie.ui
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
-import woowacourse.movie.model.MovieListModel
-import woowacourse.movie.ui.moviedetail.MovieDetailActivity
-import woowacourse.movie.ui.home.adapter.ItemClickListener
-import woowacourse.movie.ui.home.adapter.MovieListAdapter
-import woowacourse.movie.utils.MockData
+import woowacourse.movie.ui.home.HomeFragment
+import woowacourse.movie.ui.reservation.ReservationFragment
+import woowacourse.movie.ui.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-/*        val movieItems = MockData.getMoviesWithAds()
-        setMovieList(movieItems)*/
-    }
+        supportFragmentManager.beginTransaction().add(R.id.main_fragment_view, ReservationFragment()).commit()
 
-/*    private fun setMovieList(movies: List<MovieListModel>) {
-        val moviesView = findViewById<RecyclerView>(R.id.main_movie_list)
-        moviesView.layoutManager = LinearLayoutManager(this)
-        moviesView.adapter = MovieListAdapter(
-            movies,
-            object : ItemClickListener {
-                override fun onMovieItemClick(movie: MovieListModel.MovieModel) {
-                    moveToDetailActivity(movie)
+        findViewById<BottomNavigationView>(R.id.main_bottom_navigation_view).setOnItemSelectedListener { item ->
+            changeFragment(
+                when (item.itemId) {
+                    R.id.menu_item_reservation -> ReservationFragment()
+                    R.id.menu_item_home -> HomeFragment()
+                    R.id.menu_item_setting -> SettingFragment()
+                    else -> throw IllegalArgumentException()
                 }
-
-                override fun onAdItemClick(ad: MovieListModel.AdModel) {
-                    moveToWebPage(ad)
-                }
-            }
-        )
+            )
+            true
+        }
     }
 
-    private fun moveToDetailActivity(movie: MovieListModel.MovieModel) {
-        val intent = Intent(this, MovieDetailActivity::class.java)
-        intent.putExtra(KEY_MOVIE, movie)
-        startActivity(intent)
-    }
-
-    private fun moveToWebPage(ad: MovieListModel.AdModel) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(ad.url))
-        startActivity(intent)
-    }*/
-
-    companion object {
-        const val KEY_MOVIE = "movie"
+    private fun changeFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(R.id.main_fragment_view, fragment).commit()
     }
 }

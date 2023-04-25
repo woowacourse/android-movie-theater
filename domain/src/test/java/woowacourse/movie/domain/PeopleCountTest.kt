@@ -3,7 +3,6 @@ package woowacourse.movie.domain
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-
 class PeopleCountTest {
     @Test
     fun `인원수가 1 감소한다`() {

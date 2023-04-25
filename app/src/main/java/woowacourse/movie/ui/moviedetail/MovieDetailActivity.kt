@@ -12,6 +12,7 @@ import woowacourse.movie.R
 import woowacourse.movie.model.MovieListModel
 import woowacourse.movie.model.PeopleCountModel
 import woowacourse.movie.ui.MainActivity
+import woowacourse.movie.ui.home.HomeFragment
 import woowacourse.movie.ui.seat.SeatSelectionActivity
 import woowacourse.movie.utils.failLoadingData
 import woowacourse.movie.utils.getParcelableCompat
@@ -42,7 +43,7 @@ class MovieDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val movie: MovieListModel.MovieModel =
-            intent.getParcelableCompat(MainActivity.KEY_MOVIE) ?: return failLoadingData()
+            intent.getParcelableCompat(HomeFragment.KEY_MOVIE) ?: return failLoadingData()
 
         setMovieInfo(movie)
         initSpinner(movie)
