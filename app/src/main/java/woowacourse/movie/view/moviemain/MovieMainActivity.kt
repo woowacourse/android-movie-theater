@@ -34,6 +34,7 @@ class MovieMainActivity : AppCompatActivity() {
                 else -> return@setOnItemSelectedListener false
             }
         }
+        navigation.selectedItemId = R.id.action_home
     }
 
     private fun replaceFragment(fragment: Fragment) {

@@ -5,9 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".view.moviemain.reservationlist.ReservationListFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="RESERVATION" />
+        tools:listitem="@layout/reservation_item"/>
 
 </FrameLayout>
