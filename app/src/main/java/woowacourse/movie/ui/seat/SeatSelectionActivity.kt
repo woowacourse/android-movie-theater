@@ -64,9 +64,12 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     private fun setBookingInfo() {
-        movieTitle = intent.getSerializableExtraCompat(MovieDetailActivity.KEY_TITLE) ?: return failLoadingData()
-        movieTime = intent.getSerializableExtraCompat(MovieDetailActivity.KEY_TIME) ?: return failLoadingData()
-        peopleCount = intent.getSerializableExtraCompat(MovieDetailActivity.KEY_PEOPLE_COUNT) ?: return failLoadingData()
+        movieTitle = intent.getSerializableExtraCompat(MovieDetailActivity.KEY_TITLE)
+            ?: return failLoadingData()
+        movieTime = intent.getSerializableExtraCompat(MovieDetailActivity.KEY_TIME)
+            ?: return failLoadingData()
+        peopleCount = intent.getSerializableExtraCompat(MovieDetailActivity.KEY_PEOPLE_COUNT)
+            ?: return failLoadingData()
     }
 
     private fun loadSavedData(savedInstanceState: Bundle?) {
@@ -116,8 +119,12 @@ class SeatSelectionActivity : AppCompatActivity() {
 
         seatView.isSelected = !seatView.isSelected
         selectedSeats = when (seatView.isSelected) {
-            true -> { selectedSeats.add(seat) }
-            false -> { selectedSeats.delete(seat) }
+            true -> {
+                selectedSeats.add(seat)
+            }
+            false -> {
+                selectedSeats.delete(seat)
+            }
         }
         updateBackgroundColor(seatView)
         updatePriceText(selectedSeats.getAllPrice(movieTime))
@@ -128,7 +135,7 @@ class SeatSelectionActivity : AppCompatActivity() {
         .setTitle(getString(R.string.seat_dialog_title))
         .setMessage(getString(R.string.seat_dialog_message))
         .setPositiveButton(getString(R.string.seat_dialog_submit_button)) { _, _ ->
-            val ticket = MovieTicketModel(
+            MovieTicketModel(
                 title = movieTitle,
                 time = movieTime,
                 peopleCount = peopleCount,
@@ -137,7 +144,6 @@ class SeatSelectionActivity : AppCompatActivity() {
                 setReservationData(this)
                 moveToTicketActivity(this)
             }
-
         }
         .setNegativeButton(getString(R.string.seat_dialog_cancel_button)) { dialog, _ ->
             dialog.dismiss()
@@ -149,8 +155,12 @@ class SeatSelectionActivity : AppCompatActivity() {
 
     private fun updateBackgroundColor(seatView: View) {
         when (seatView.isSelected) {
-            true -> { seatView.setBackgroundColor(getColor(R.color.seat_selected_background)) }
-            false -> { seatView.setBackgroundColor(getColor(R.color.seat_unselected_background)) }
+            true -> {
+                seatView.setBackgroundColor(getColor(R.color.seat_selected_background))
+            }
+            false -> {
+                seatView.setBackgroundColor(getColor(R.color.seat_unselected_background))
+            }
         }
     }
 
@@ -162,7 +172,7 @@ class SeatSelectionActivity : AppCompatActivity() {
         selectButton.isEnabled = selectedSeats.isSelectionDone(peopleCount.count)
     }
 
-    private fun setReservationData(ticket: MovieTicketModel){
+    private fun setReservationData(ticket: MovieTicketModel) {
         ReservationModel.add(ticket)
     }
 
@@ -172,8 +182,6 @@ class SeatSelectionActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
-
-
 
     companion object {
         const val ROW_SIZE = 5

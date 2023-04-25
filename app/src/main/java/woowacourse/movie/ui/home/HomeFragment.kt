@@ -19,19 +19,19 @@ class HomeFragment : Fragment() {
     private lateinit var moviesView: RecyclerView
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-        moviesView = view.findViewById(R.id.main_movie_list)
-        val movieItems = MockData.getMoviesWithAds()
-        setMovieList(movieItems)
+        setMovieList(view, MockData.getMoviesWithAds())
 
         return view
     }
 
-    private fun setMovieList(movies: List<MovieListModel>) {
+    private fun setMovieList(view: View, movies: List<MovieListModel>) {
+        moviesView = view.findViewById(R.id.main_movie_list)
         moviesView.adapter = MovieListAdapter(
             movies,
             object : ItemClickListener {
