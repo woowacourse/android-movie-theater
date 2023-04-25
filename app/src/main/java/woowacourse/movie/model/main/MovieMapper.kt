@@ -2,6 +2,7 @@ package woowacourse.movie.model.main
 
 import woowacourse.movie.R
 import woowacourse.movie.movie.Movie
+import woowacourse.movie.movie.ScreeningPeriod
 
 object MovieMapper {
 
@@ -29,8 +30,8 @@ object MovieMapper {
         return MovieUiModel(
             id = this.id,
             title = this.title,
-            startDate = this.startDate,
-            endDate = this.endDate,
+            startDate = this.screeningPeriod.startDate.value,
+            endDate = this.screeningPeriod.endDate.value,
             screeningDates = this.screeningDates,
             runningTime = this.runningTime,
             description = this.description,
@@ -43,8 +44,7 @@ object MovieMapper {
         return Movie(
             id = this.id,
             title = this.title,
-            startDate = this.startDate,
-            endDate = this.endDate,
+            screeningPeriod = ScreeningPeriod(this.startDate, this.endDate),
             runningTime = this.runningTime,
             description = this.description,
         )

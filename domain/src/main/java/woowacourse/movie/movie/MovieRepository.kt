@@ -13,8 +13,7 @@ object MovieRepository {
         return Movie(
             id = this.id,
             title = this.title,
-            startDate = this.startDate,
-            endDate = this.endDate,
+            screeningPeriod = ScreeningPeriod(this.startDate, this.endDate),
             runningTime = this.runningTime,
             description = this.description,
         )
