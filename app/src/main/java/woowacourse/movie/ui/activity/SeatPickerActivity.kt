@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.domain.MovieTicket
+import woowacourse.movie.ui.entity.Reservations
 import woowacourse.movie.ui.getParcelable
 import woowacourse.movie.ui.getParcelableByKey
 import woowacourse.movie.ui.model.MovieTicketModel
@@ -183,7 +184,9 @@ class SeatPickerActivity : AppCompatActivity() {
             .setTitle(getString(R.string.dialog_title_seat_selection_check))
             .setMessage(getString(R.string.dialog_message_seat_selection_check))
             .setPositiveButton(getString(R.string.dialog_positive_button_seat_selection_check)) { _, _ ->
-                moveToTicketActivity()
+                val ticketModel = ticket.mapToMovieTicketModel()
+                Reservations.addItem(ticketModel)
+                moveToTicketActivity(ticketModel)
             }
             .setNegativeButton(getString(R.string.dialog_negative_button_seat_selection_check)) { dialog, _ ->
                 dialog.dismiss()
@@ -192,8 +195,8 @@ class SeatPickerActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun moveToTicketActivity() {
-        val intent = MovieTicketActivity.createIntent(this, ticket.mapToMovieTicketModel())
+    private fun moveToTicketActivity(ticketModel: MovieTicketModel) {
+        val intent = MovieTicketActivity.createIntent(this, ticketModel)
         startActivity(intent)
     }
 
