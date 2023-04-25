@@ -83,9 +83,11 @@ class MovieDetailActivity : AppCompatActivity() {
         descriptionView.text = movie.description
     }
 
-    private fun MovieModel.getScreenDate(): String = getString(R.string.screen_date, startDate.format(), endDate.format())
+    private fun MovieModel.getScreenDate(): String =
+        getString(R.string.screen_date, startDate.format(), endDate.format())
 
-    private fun LocalDate.format(): String = format(DateTimeFormatter.ofPattern(getString(R.string.date_format)))
+    private fun LocalDate.format(): String =
+        format(DateTimeFormatter.ofPattern(getString(R.string.date_format)))
 
     private fun MovieModel.getRunningTime(): String = getString(R.string.running_time, runningTime)
 

@@ -30,7 +30,8 @@ class SeatPickerActivityTest {
         emptySet(),
         PriceModel(0)
     )
-    private val intent = SeatPickerActivity.createIntent(ApplicationProvider.getApplicationContext(), ticket)
+    private val intent =
+        SeatPickerActivity.createIntent(ApplicationProvider.getApplicationContext(), ticket)
 
     @get:Rule
     val activityRule = ActivityScenarioRule<SeatPickerActivity>(intent)

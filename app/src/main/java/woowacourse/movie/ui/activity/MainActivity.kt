@@ -48,9 +48,10 @@ class MainActivity : AppCompatActivity() {
         val transaction = supportFragmentManager.beginTransaction()
 
         val fragment =
-            supportFragmentManager.findFragmentByTag(currentType.tag) ?: createFragment(currentType).apply {
-                transaction.add(R.id.main_fragment_container_view, this, currentType.tag)
-            }
+            supportFragmentManager.findFragmentByTag(currentType.tag)
+                ?: createFragment(currentType).apply {
+                    transaction.add(R.id.main_fragment_container_view, this, currentType.tag)
+                }
         transaction.show(fragment)
 
         FragmentType.values()

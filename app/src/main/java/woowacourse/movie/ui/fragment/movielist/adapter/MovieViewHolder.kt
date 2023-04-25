@@ -10,7 +10,8 @@ import woowacourse.movie.ui.model.MovieModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class MovieViewHolder(view: View, private val onItemViewClick: (Int) -> Unit) : RecyclerView.ViewHolder(view) {
+class MovieViewHolder(view: View, private val onItemViewClick: (Int) -> Unit) :
+    RecyclerView.ViewHolder(view) {
     private val moviePoster: ImageView by lazy { view.findViewById(R.id.item_poster) }
     private val movieTitle: TextView by lazy { view.findViewById(R.id.item_title) }
     private val movieDate: TextView by lazy { view.findViewById(R.id.item_date) }

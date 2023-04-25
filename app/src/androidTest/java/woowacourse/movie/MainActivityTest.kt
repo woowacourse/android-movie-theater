@@ -19,6 +19,7 @@ import woowacourse.movie.ui.activity.MainActivity
 class MainActivityTest {
     @get:Rule
     val activityRule = ActivityScenarioRule(MainActivity::class.java)
+
     @get:Rule
     val intentsTestRule = IntentsTestRule(MainActivity::class.java)
 
