@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.activities.main.fragments
+package woowacourse.movie.presentation.activities.main.fragments.setting
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,8 @@ import woowacourse.movie.R
 class SettingFragment : Fragment() {
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
         return inflater.inflate(R.layout.fragment_setting, container, false)

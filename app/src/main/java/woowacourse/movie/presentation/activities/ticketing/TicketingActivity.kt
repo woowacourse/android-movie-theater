@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.movie.DomainMovieDate
 import woowacourse.movie.domain.model.movie.DomainMovieTime
-import woowacourse.movie.presentation.activities.main.fragments.HomeFragment.Companion.MOVIE_KEY
+import woowacourse.movie.presentation.activities.main.fragments.home.HomeFragment.Companion.MOVIE_KEY
 import woowacourse.movie.presentation.extensions.getParcelableCompat
 import woowacourse.movie.presentation.extensions.showBackButton
 import woowacourse.movie.presentation.extensions.showToast

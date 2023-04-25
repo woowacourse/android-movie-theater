@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.activities.movielist.adapter.type
+package woowacourse.movie.presentation.activities.main.fragments.home.type
 
 enum class MovieViewType(val type: Int) {
     AD(0),

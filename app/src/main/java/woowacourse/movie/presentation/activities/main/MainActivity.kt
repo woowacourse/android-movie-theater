@@ -5,9 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
-import woowacourse.movie.presentation.activities.main.fragments.HistoryFragment
-import woowacourse.movie.presentation.activities.main.fragments.HomeFragment
-import woowacourse.movie.presentation.activities.main.fragments.SettingFragment
+import woowacourse.movie.presentation.activities.main.fragments.history.HistoryFragment
+import woowacourse.movie.presentation.activities.main.fragments.home.HomeFragment
+import woowacourse.movie.presentation.activities.main.fragments.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

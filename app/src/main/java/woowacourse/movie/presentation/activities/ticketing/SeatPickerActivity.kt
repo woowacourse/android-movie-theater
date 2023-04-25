@@ -177,13 +177,12 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
 
         startActivity(
             Intent(this@SeatPickerActivity, TicketingResultActivity::class.java)
-                .putExtra(RESERVATION_KEY, reservation)
+                .putExtra(TicketingResultActivity.RESERVATION_KEY, reservation)
         )
         finish()
     }
 
     companion object {
         internal const val PICKED_SEATS_KEY = "picked_seats"
-        internal const val RESERVATION_KEY = "reservation"
     }
 }

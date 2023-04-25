@@ -5,14 +5,13 @@ import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.presentation.activities.ticketing.SeatPickerActivity
 import woowacourse.movie.presentation.extensions.getParcelableCompat
 import woowacourse.movie.presentation.extensions.showBackButton
 import woowacourse.movie.presentation.model.Reservation
 
 class TicketingResultActivity : AppCompatActivity() {
     private val reservation: Reservation by lazy {
-        intent.getParcelableCompat(SeatPickerActivity.RESERVATION_KEY)!!
+        intent.getParcelableCompat(RESERVATION_KEY)!!
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,5 +56,9 @@ class TicketingResultActivity : AppCompatActivity() {
             android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    companion object {
+        internal const val RESERVATION_KEY = "reservation"
     }
 }
