@@ -26,6 +26,7 @@ import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.presentation.activities.custom.ClickViewAction.clickViewWithId
 import woowacourse.movie.presentation.activities.custom.RecyclerViewAssertion.matchItemCount
+import woowacourse.movie.presentation.activities.main.fragments.HomeFragment
 import woowacourse.movie.presentation.activities.movielist.adapter.MovieListAdapter
 import woowacourse.movie.presentation.activities.movielist.adapter.type.MovieViewType
 import woowacourse.movie.presentation.activities.movielist.adapter.viewholder.NativeAdViewHolder
@@ -36,11 +37,11 @@ import java.time.LocalDate
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-class MovieListActivityTest {
+class HomeFragmentTest {
     private val adInterval = 3
 
     @get:Rule
-    internal val activityRule = ActivityScenarioRule(MovieListActivity::class.java)
+    internal val activityRule = ActivityScenarioRule(HomeFragment::class.java)
 
     @Before
     fun setup() {

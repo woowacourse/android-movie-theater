@@ -5,7 +5,7 @@ import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.presentation.activities.movielist.MovieListActivity.Companion.MOVIE_KEY
+import woowacourse.movie.presentation.activities.main.fragments.HomeFragment.Companion.MOVIE_KEY
 import woowacourse.movie.presentation.activities.ticketing.SeatPickerActivity
 import woowacourse.movie.presentation.activities.ticketing.SeatPickerActivity.Companion.PICKED_SEATS_KEY
 import woowacourse.movie.presentation.activities.ticketing.TicketingActivity

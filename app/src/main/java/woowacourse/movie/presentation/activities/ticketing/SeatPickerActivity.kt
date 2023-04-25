@@ -13,7 +13,7 @@ import woowacourse.movie.domain.model.discount.policy.MovieDayDiscountPolicy
 import woowacourse.movie.domain.model.discount.policy.MovieTimeDiscountPolicy
 import woowacourse.movie.domain.model.seat.DomainPickedSeats
 import woowacourse.movie.domain.model.seat.DomainSeat
-import woowacourse.movie.presentation.activities.movielist.MovieListActivity
+import woowacourse.movie.presentation.activities.main.fragments.HomeFragment
 import woowacourse.movie.presentation.activities.ticketingresult.TicketingResultActivity
 import woowacourse.movie.presentation.extensions.createAlertDialog
 import woowacourse.movie.presentation.extensions.getParcelableCompat
@@ -47,7 +47,7 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
         intent.getParcelableCompat<MovieTime>(TicketingActivity.MOVIE_TIME_KEY)!!.toDomain()
     }
     private val ticket by lazy { intent.getParcelableCompat<Ticket>(TicketingActivity.TICKET_KEY)!! }
-    private val movie by lazy { intent.getParcelableCompat<Movie>(MovieListActivity.MOVIE_KEY)!! }
+    private val movie by lazy { intent.getParcelableCompat<Movie>(HomeFragment.MOVIE_KEY)!! }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -170,7 +170,7 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
                 .putExtra(TicketingActivity.MOVIE_DATE_KEY, movieDate.toPresentation())
                 .putExtra(TicketingActivity.MOVIE_TIME_KEY, movieTime.toPresentation())
                 .putExtra(TicketingActivity.TICKET_KEY, ticket)
-                .putExtra(MovieListActivity.MOVIE_KEY, movie)
+                .putExtra(HomeFragment.MOVIE_KEY, movie)
                 .putExtra(PICKED_SEATS_KEY, pickedSeats.toPresentation())
                 .putExtra(TOTAL_TICKET_PRICE_KEY, calculateTotalPrice())
         )

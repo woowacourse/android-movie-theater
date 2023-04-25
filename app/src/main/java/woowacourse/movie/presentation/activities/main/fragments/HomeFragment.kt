@@ -1,9 +1,12 @@
-package woowacourse.movie.presentation.activities.movielist
+package woowacourse.movie.presentation.activities.main.fragments
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import woowacourse.movie.R
@@ -12,17 +15,24 @@ import woowacourse.movie.presentation.activities.ticketing.TicketingActivity
 import woowacourse.movie.presentation.model.movieitem.Ad
 import woowacourse.movie.presentation.model.movieitem.Movie
 
-class MovieListActivity : AppCompatActivity() {
+class HomeFragment : Fragment() {
     private lateinit var movieListAdapter: MovieListAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_list)
-        initMovieListAdapter()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
-    private fun initMovieListAdapter() {
-        val movieRecyclerView = findViewById<RecyclerView>(R.id.movies_rv)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initMovieListAdapter(view)
+    }
+
+    private fun initMovieListAdapter(view: View) {
+        val movieRecyclerView = view.findViewById<RecyclerView>(R.id.movies_rv)
         movieListAdapter = MovieListAdapter(
             adTypes = Ad.provideDummy(),
             onItemClick = { item ->
@@ -45,7 +55,7 @@ class MovieListActivity : AppCompatActivity() {
     }
 
     private fun startTicketingActivity(movie: Movie) {
-        val intent = Intent(this, TicketingActivity::class.java)
+        val intent = Intent(requireContext(), TicketingActivity::class.java)
             .putExtra(MOVIE_KEY, movie)
         startActivity(intent)
     }
@@ -58,5 +68,12 @@ class MovieListActivity : AppCompatActivity() {
     companion object {
         internal const val MOVIE_KEY = "movie_key"
         private const val DOWN_DIRECTION = 1
+
+        private val homeFragment = HomeFragment()
+
+        fun newInstance(): HomeFragment = homeFragment.apply {
+            arguments = Bundle().apply {
+            }
+        }
     }
 }
