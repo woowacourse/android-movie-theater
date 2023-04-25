@@ -31,19 +31,19 @@ class MovieListFragment : Fragment() {
         val dataList = generateMovieListData(movies)
 
         val movieAdapter = MovieListAdapter(
-            dataList = dataList,
-            onItemClick = object : MovieListAdapter.OnItemClick {
-                override fun onMovieClick(movie: MovieListModel.MovieUiModel) {
-                    val intent = ReservationActivity.newIntent(requireContext(), movie)
+            dataList = dataList
+        ) { item ->
+            when (item) {
+                is MovieListModel.MovieUiModel -> {
+                    val intent = ReservationActivity.newIntent(requireContext(), item)
                     startActivity(intent)
                 }
-
-                override fun onAdClick(ad: MovieListModel.MovieAdModel) {
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(ad.url))
+                is MovieListModel.MovieAdModel -> {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
                     startActivity(intent)
                 }
             }
-        )
+        }
         val movieListView = view.findViewById<RecyclerView>(R.id.movie_recyclerview)
         movieListView.adapter = movieAdapter
     }

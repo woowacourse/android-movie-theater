@@ -14,18 +14,12 @@ class MovieListAdapter(
     private val onItemClick: OnItemClick
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    interface OnItemClick {
-        fun onMovieClick(movie: MovieUiModel)
-
-        fun onAdClick(ad: MovieAdModel)
+    fun interface OnItemClick {
+        fun onClick(item: MovieListModel)
     }
 
-    private val onMovieViewClick: (Int) -> Unit = {
-        onItemClick.onMovieClick(dataList[it] as MovieUiModel)
-    }
-
-    private val onAdViewClick: (Int) -> Unit = {
-        onItemClick.onAdClick(dataList[it] as MovieAdModel)
+    private val onItemViewClick: (Int) -> Unit = {
+        onItemClick.onClick(dataList[it])
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -35,7 +29,7 @@ class MovieListAdapter(
                     MovieListViewType.MOVIE_ITEM.id, parent, false
                 )
                 MovieItemViewHolder(MovieItemBinding.bind(view)) {
-                    onMovieViewClick(it)
+                    onItemViewClick(it)
                 }
             }
             MovieListViewType.AD_ITEM -> {
@@ -43,7 +37,7 @@ class MovieListAdapter(
                     MovieListViewType.AD_ITEM.id, parent, false
                 )
                 MovieAdViewHolder(MovieAdItemBinding.bind(view)) {
-                    onAdViewClick(it)
+                    onItemViewClick(it)
                 }
             }
         }
