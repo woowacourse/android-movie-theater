@@ -1,35 +1,56 @@
-package woowacourse.movie.activity
+package woowacourse.movie.fragment
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import domain.Movie
 import woowacourse.movie.MockAdvertisementFactory
 import woowacourse.movie.MockMoviesFactory
 import woowacourse.movie.R
+import woowacourse.movie.activity.MovieReservationActivity
 import woowacourse.movie.view.MovieAdapter
 import woowacourse.movie.view.model.AdvertisementUiModel
 
-class MoviesActivity : AppCompatActivity() {
+
+class MoviesFragment : Fragment() {
+
+
+    private lateinit var parentContext: Context
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        parentContext = context
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movies)
+
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_movies, container, false)
         val movies = MockMoviesFactory.generateMovies()
         val advertisementViewModel = MockAdvertisementFactory.generateAdvertisement()
-        val movieList = findViewById<RecyclerView>(R.id.main_movie_list)
+        val movieList = view.findViewById<RecyclerView>(R.id.main_movie_list)
         movieList.adapter = MovieAdapter(
             movies,
             advertisementViewModel,
             ::advertisementClick,
             ::reservationButtonClick
         )
+        return view
     }
 
     private fun reservationButtonClick(movie: Movie) {
-        MovieReservationActivity.start(this, movie)
+        MovieReservationActivity.start(parentContext, movie)
     }
 
     private fun advertisementClick(advertisementUiModel: AdvertisementUiModel) {
