@@ -5,12 +5,11 @@ import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import woowacourse.movie.dto.MovieDateDto
 import woowacourse.movie.dto.MovieDto
-import woowacourse.movie.dto.MovieTimeDto
 import woowacourse.movie.dto.SeatsDto
 import woowacourse.movie.dto.TicketCountDto
 import woowacourse.movie.mapper.mapToSeats
+import woowacourse.movie.movie.dto.BookingMovieDto
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -22,15 +21,23 @@ class TicketActivity : AppCompatActivity() {
         setContentView(R.layout.activity_ticket)
         setToolbar()
 
-        val ticket = intent.getSerializableExtra(TICKET_KEY) as TicketCountDto
-        val movie = intent.getSerializableExtra(MOVIE_KEY) as MovieDto
-        val date = intent.getSerializableExtra(DATE_KEY) as MovieDateDto
-        val time = intent.getSerializableExtra(TIME_KEY) as MovieTimeDto
-        val seats = intent.getSerializableExtra(SEATS_KEY) as SeatsDto
+        val bookingMovie = intent.getSerializableExtra("booking_movie") as BookingMovieDto
 
-        showTicketInfo(movie, date.date, time.time)
-        showTicketInfo(ticket, seats)
-        showTicketPrice(seats, date.date, time.time, ticket.numberOfPeople)
+        showTicketInfo(
+            bookingMovie.movie,
+            bookingMovie.date.date,
+            bookingMovie.time.time,
+        )
+        showTicketInfo(
+            bookingMovie.ticketCount,
+            bookingMovie.seats,
+        )
+        showTicketPrice(
+            bookingMovie.seats,
+            bookingMovie.date.date,
+            bookingMovie.time.time,
+            bookingMovie.ticketCount.numberOfPeople,
+        )
     }
 
     private fun setToolbar() {
@@ -75,13 +82,5 @@ class TicketActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    companion object {
-        private const val TICKET_KEY = "ticket"
-        private const val MOVIE_KEY = "movie"
-        private const val DATE_KEY = "movie_date"
-        private const val TIME_KEY = "movie_time"
-        private const val SEATS_KEY = "seats"
     }
 }
