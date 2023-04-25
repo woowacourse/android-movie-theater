@@ -1,5 +1,5 @@
 package woowacourse.movie.presentation.model.movieitem
 
-sealed interface ListItem {
+interface ListItem {
     fun isAd(): Boolean
 }
