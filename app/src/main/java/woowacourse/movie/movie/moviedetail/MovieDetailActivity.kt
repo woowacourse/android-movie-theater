@@ -128,6 +128,7 @@ class MovieDetailActivity : AppCompatActivity() {
             intent.putExtra(DATE_KEY, selectedDate.mapToMovieDateDto())
             intent.putExtra(TIME_KEY, selectedTime.mapToMovieTimeDto())
             startActivity(intent)
+            finish()
         }
     }
 
