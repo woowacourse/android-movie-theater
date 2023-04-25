@@ -15,6 +15,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initBottomNavigation()
+
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.action_book_list -> changeFragment(BookListFragment())
@@ -23,6 +25,11 @@ class MainActivity : AppCompatActivity() {
             }
             return@setOnItemSelectedListener true
         }
+    }
+
+    private fun initBottomNavigation() {
+        changeFragment(MovieListFragment())
+        binding.bottomNavigation.selectedItemId = R.id.action_home
     }
 
     private fun changeFragment(fragment: Fragment) {

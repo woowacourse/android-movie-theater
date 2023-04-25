@@ -12,13 +12,13 @@
         android:theme="@style/Theme.Movie"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.view.seatpick.SeatPickerActivity"
+            android:name=".presentation.view.main.home.seatpick.SeatPickerActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.view.bookcomplete.BookCompleteActivity"
+            android:name=".presentation.view.main.home.bookcomplete.BookCompleteActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.view.moviedetail.MovieDetailActivity"
+            android:name=".presentation.view.main.home.moviedetail.MovieDetailActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.view.main.home.MovieListFragment"

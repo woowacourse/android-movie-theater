@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.view.seatpick
+package woowacourse.movie.presentation.view.main.home.seatpick
 
 import android.content.Intent
 import android.graphics.Color
@@ -11,16 +11,17 @@ import android.widget.Toast
 import androidx.annotation.Dimension
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
+import com.example.domain.Reservation
+import com.example.domain.ReservationRepository
 import com.example.domain.Seat
 import com.example.domain.SeatGrade
 import com.example.domain.TicketBundle
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatPickerBinding
-import woowacourse.movie.model.BookingCompleteInfo
 import woowacourse.movie.model.MovieBookingInfo
 import woowacourse.movie.presentation.extension.getParcelableCompat
-import woowacourse.movie.presentation.view.bookcomplete.BookCompleteActivity
 import woowacourse.movie.presentation.view.common.BackButtonActivity
+import woowacourse.movie.presentation.view.main.home.bookcomplete.BookCompleteActivity
 
 class SeatPickerActivity : BackButtonActivity() {
     private lateinit var binding: ActivitySeatPickerBinding
@@ -71,18 +72,28 @@ class SeatPickerActivity : BackButtonActivity() {
     }
 
     private fun setDialogPositiveEvent(movieBookingInfo: MovieBookingInfo) {
+        val reservationId = saveReservation(movieBookingInfo)
         val intent =
             Intent(this@SeatPickerActivity, BookCompleteActivity::class.java).apply {
                 putExtra(
                     BookCompleteActivity.BOOKING_COMPLETE_INFO_INTENT_KEY,
-                    BookingCompleteInfo(
-                        movieBookingInfo,
-                        binding.tvSeatPickerTotalPrice.text.toString().toInt(),
-                        ticketBundle.getSeatNames().joinToString(", ")
-                    )
+                    reservationId
                 )
             }
         startActivity(intent)
+    }
+
+    private fun saveReservation(movieBookingInfo: MovieBookingInfo): Long {
+        val reservation = Reservation(
+            binding.tvSeatPickerTotalPrice.text.toString().toInt(),
+            ticketBundle.tickets.size,
+            ticketBundle.getSeatNames().joinToString(", "),
+            movieBookingInfo.movieInfo.title,
+            movieBookingInfo.date,
+            movieBookingInfo.time
+        )
+        val reservationId = ReservationRepository.save(reservation)
+        return reservationId
     }
 
     private fun setBookingInfoView(movieBookingInfo: MovieBookingInfo) {

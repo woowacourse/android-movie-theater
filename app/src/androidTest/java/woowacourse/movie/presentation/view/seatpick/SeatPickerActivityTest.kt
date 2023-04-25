@@ -10,6 +10,7 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.IntentFixture
 import woowacourse.movie.R
+import woowacourse.movie.presentation.view.main.home.seatpick.SeatPickerActivity
 import java.time.LocalDate
 
 class SeatPickerActivityTest {

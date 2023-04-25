@@ -5,9 +5,9 @@ import androidx.test.core.app.ApplicationProvider
 import woowacourse.movie.model.BookingCompleteInfo
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieBookingInfo
-import woowacourse.movie.presentation.view.bookcomplete.BookCompleteActivity
-import woowacourse.movie.presentation.view.moviedetail.MovieDetailActivity
-import woowacourse.movie.presentation.view.seatpick.SeatPickerActivity
+import woowacourse.movie.presentation.view.main.home.bookcomplete.BookCompleteActivity
+import woowacourse.movie.presentation.view.main.home.moviedetail.MovieDetailActivity
+import woowacourse.movie.presentation.view.main.home.seatpick.SeatPickerActivity
 import java.time.LocalDate
 
 object IntentFixture {

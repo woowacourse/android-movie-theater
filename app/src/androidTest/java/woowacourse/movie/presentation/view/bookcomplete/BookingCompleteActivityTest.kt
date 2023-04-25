@@ -9,6 +9,7 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.IntentFixture
 import woowacourse.movie.R
+import woowacourse.movie.presentation.view.main.home.bookcomplete.BookCompleteActivity
 import java.time.LocalDate
 
 class BookingCompleteActivityTest {

@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.view.moviedetail
+package woowacourse.movie.presentation.view.main.home.moviedetail
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,7 +13,7 @@ import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieBookingInfo
 import woowacourse.movie.presentation.extension.getParcelableCompat
 import woowacourse.movie.presentation.view.common.BackButtonActivity
-import woowacourse.movie.presentation.view.seatpick.SeatPickerActivity
+import woowacourse.movie.presentation.view.main.home.seatpick.SeatPickerActivity
 
 class MovieDetailActivity : BackButtonActivity() {
     private lateinit var binding: ActivityMovieDetailBinding

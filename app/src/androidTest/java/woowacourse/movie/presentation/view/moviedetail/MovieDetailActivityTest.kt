@@ -19,6 +19,7 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.IntentFixture
 import woowacourse.movie.R
+import woowacourse.movie.presentation.view.main.home.moviedetail.MovieDetailActivity
 import java.time.LocalDate
 
 class MovieDetailActivityTest {

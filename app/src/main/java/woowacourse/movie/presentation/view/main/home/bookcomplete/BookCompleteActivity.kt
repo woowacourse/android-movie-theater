@@ -1,11 +1,12 @@
-package woowacourse.movie.presentation.view.bookcomplete
+package woowacourse.movie.presentation.view.main.home.bookcomplete
 
 import android.os.Bundle
 import android.widget.Toast
+import com.example.domain.Reservation
+import com.example.domain.ReservationRepository
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookCompleteBinding
 import woowacourse.movie.model.BookingCompleteInfo
-import woowacourse.movie.presentation.extension.getParcelableCompat
 import woowacourse.movie.presentation.view.common.BackButtonActivity
 
 class BookCompleteActivity : BackButtonActivity() {
@@ -16,33 +17,34 @@ class BookCompleteActivity : BackButtonActivity() {
         setContentView(binding.root)
 
         val bookingCompleteInfo =
-            intent.getParcelableCompat<BookingCompleteInfo>(BOOKING_COMPLETE_INFO_INTENT_KEY)
+            intent.getLongExtra(BOOKING_COMPLETE_INFO_INTENT_KEY, -1L)
         processEmptyBookingData(bookingCompleteInfo)
 
-        setViewData(bookingCompleteInfo!!)
+        val movieBookingData = ReservationRepository.findById(bookingCompleteInfo)
+        setViewData(movieBookingData!!)
     }
 
-    private fun processEmptyBookingData(bookingCompleteInfo: BookingCompleteInfo?) {
-        if (bookingCompleteInfo == null) {
+    private fun processEmptyBookingData(bookingCompleteInfo: Long) {
+        if (bookingCompleteInfo == -1L) {
             Toast.makeText(this, getString(R.string.error_intent_message), Toast.LENGTH_SHORT)
                 .show()
             this.finish()
         }
     }
 
-    private fun setViewData(bookingCompleteInfo: BookingCompleteInfo) {
-        val movieBookingData = bookingCompleteInfo.movieBookingInfo
-        binding.tvBookMovieTitle.text = movieBookingData.movieInfo.title
+    private fun setViewData(reservation: Reservation) {
+
+        binding.tvBookMovieTitle.text = reservation.movieTitle
         binding.tvBookDate.text =
-            formatBookingTime(movieBookingData.date, movieBookingData.time)
+            formatBookingTime(reservation.date, reservation.time)
         binding.tvBookPersonCount.text =
             getString(R.string.book_person_info).format(
-                movieBookingData.ticketCount,
-                bookingCompleteInfo.seats
+                reservation.ticketCount,
+                reservation.seatNames
             )
         binding.tvBookTotalPay.text =
             getString(R.string.book_total_pay).format(
-                bookingCompleteInfo.totalPrice
+                reservation.totalPrice
             )
     }
 
