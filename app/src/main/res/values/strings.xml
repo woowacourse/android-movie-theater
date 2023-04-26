@@ -35,4 +35,6 @@
     <string name="home_bottom_navigation_bar">홈</string>
 
     <string name="reservation_date_time_format">"yyyy-MM-dd | HH:mm"</string>
+    <string name="setting_title">푸시 알람 수신</string>
+    <string name="setting_push_alarm_description">해제하면 푸시 알림을 수신할 수 없습니다.</string>
 </resources>
