@@ -12,11 +12,11 @@ import java.time.format.DateTimeFormatter
 
 class HistoryViewHolder(
     private val view: View,
-    private val onItemViewClickListener: OnClickListener<BookingMovieDto>
+    private val onItemViewClickListener: OnClickListener<BookingMovieDto>,
 ) :
     RecyclerView.ViewHolder(view) {
-    val reservationTime: TextView = itemView.findViewById(R.id.history_datetime)
-    val reservationMovie: TextView = itemView.findViewById(R.id.history_title)
+    private val reservationTime: TextView = itemView.findViewById(R.id.history_datetime)
+    private val reservationMovie: TextView = itemView.findViewById(R.id.history_title)
 
     fun bind(item: BookingMovieDto) {
         reservationTime.text = formatMovieDateTime(item.date, item.time)
