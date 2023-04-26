@@ -4,10 +4,10 @@ import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -77,9 +77,7 @@ class MovieMainActivity : AppCompatActivity() {
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                    Toast.makeText(this, "권한을 설정해주셔야 알람을 받으실 수 있습니다.", Toast.LENGTH_LONG).show()
-                } else {
+                if (!shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
             }
@@ -89,6 +87,13 @@ class MovieMainActivity : AppCompatActivity() {
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission(),
     ) { isGranted: Boolean ->
-        if (isGranted) Toast.makeText(this, "권한을 설정해주셨습니다!", Toast.LENGTH_LONG).show()
+        val sharedPreferences =
+            this.getSharedPreferences(SettingFragment.ALARM_SETTING, Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+        if (isGranted) {
+            editor.putBoolean(SettingFragment.IS_ALARM_ON, true).apply()
+        } else {
+            editor.putBoolean(SettingFragment.IS_ALARM_ON, false).apply()
+        }
     }
 }
