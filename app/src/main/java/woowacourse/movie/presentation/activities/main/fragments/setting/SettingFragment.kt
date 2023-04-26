@@ -6,11 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.switchmaterial.SwitchMaterial
-import com.woowacourse.data.local.Preferences
 import woowacourse.movie.R
+import woowacourse.movie.presentation.MovieApplication
 
 class SettingFragment : Fragment() {
-    private val preferences by lazy { Preferences(requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,7 +26,10 @@ class SettingFragment : Fragment() {
 
     private fun initPushSwitch(view: View) {
         val switch = view.findViewById<SwitchMaterial>(R.id.notification_push_switch)
+        val preferences = MovieApplication.preferences
+
         with(switch) {
+            preferences.getBoolean(PUSH_ALLOW_KEY, true)
             isChecked = preferences.getBoolean(PUSH_ALLOW_KEY, true)
             setOnCheckedChangeListener { _, isChecked ->
                 preferences.setBoolean(PUSH_ALLOW_KEY, isChecked)
