@@ -1,5 +1,7 @@
 package woowacourse.movie.ui.activity
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -12,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import woowacourse.movie.R
+import woowacourse.movie.broadcastreceiver.NotificationReceiver
 import woowacourse.movie.domain.MovieTicket
 import woowacourse.movie.ui.entity.Reservations
 import woowacourse.movie.ui.getParcelable
@@ -25,6 +28,8 @@ import woowacourse.movie.ui.model.mapToPriceModel
 import woowacourse.movie.ui.model.seat.SeatModel
 import woowacourse.movie.ui.model.seat.SeatsModel
 import woowacourse.movie.ui.model.seat.mapToSeat
+import java.time.ZoneId
+import java.time.ZonedDateTime
 
 class SeatPickerActivity : AppCompatActivity() {
     private val seats = SeatsModel().getAll()
@@ -186,6 +191,7 @@ class SeatPickerActivity : AppCompatActivity() {
             .setPositiveButton(getString(R.string.dialog_positive_button_seat_selection_check)) { _, _ ->
                 val ticketModel = ticket.mapToMovieTicketModel()
                 Reservations.addItem(ticketModel)
+                setAlarmManager(ticketModel)
                 moveToTicketActivity(ticketModel)
             }
             .setNegativeButton(getString(R.string.dialog_negative_button_seat_selection_check)) { dialog, _ ->
@@ -193,6 +199,24 @@ class SeatPickerActivity : AppCompatActivity() {
             }
             .setCancelable(false)
             .show()
+    }
+
+    private fun setAlarmManager(ticketModel: MovieTicketModel) {
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        val time = ZonedDateTime.of(ticketModel.time.dateTime.minusMinutes(30), ZoneId.systemDefault())
+        val intent = NotificationReceiver.createIntent(this, ticketModel)
+        val pendingIntent = PendingIntent.getBroadcast(
+            this,
+            ticketModel.hashCode(),
+            intent,
+            PendingIntent.FLAG_IMMUTABLE
+        )
+
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            time.toInstant().toEpochMilli(),
+            pendingIntent
+        )
     }
 
     private fun moveToTicketActivity(ticketModel: MovieTicketModel) {
