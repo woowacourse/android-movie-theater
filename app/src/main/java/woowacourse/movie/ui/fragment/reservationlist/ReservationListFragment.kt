@@ -27,12 +27,14 @@ class ReservationListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view = inflater.inflate(R.layout.fragment_reservation_list, container, false)
+        return inflater.inflate(R.layout.fragment_reservation_list, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val reservationView = view.findViewById<RecyclerView>(R.id.rv_reservation)
         setReservationView(reservationView)
-
-        return view
     }
 
     override fun onResume() {

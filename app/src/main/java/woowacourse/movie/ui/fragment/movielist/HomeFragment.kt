@@ -28,12 +28,14 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        return inflater.inflate(R.layout.fragment_home, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val moviesView = view.findViewById<RecyclerView>(R.id.rv_movie)
         setMovieList(moviesView)
-
-        return view
     }
 
     private fun setMovieList(moviesView: RecyclerView) {
