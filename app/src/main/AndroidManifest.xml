@@ -26,7 +26,7 @@
         <activity android:name=".presentation.activities.ticketingresult.TicketingResultActivity" />
 
         <receiver
-            android:name=".presentation.receiver.PushReceiver"
+            android:name=".presentation.receiver.ReservationPushReceiver"
             android:exported="false" />
     </application>
 

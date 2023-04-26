@@ -1,7 +1,5 @@
 package woowacourse.movie.presentation.activities.ticketing
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -15,6 +13,7 @@ import woowacourse.movie.domain.model.discount.policy.MovieDayDiscountPolicy
 import woowacourse.movie.domain.model.discount.policy.MovieTimeDiscountPolicy
 import woowacourse.movie.domain.model.seat.DomainPickedSeats
 import woowacourse.movie.domain.model.seat.DomainSeat
+import woowacourse.movie.presentation.activities.main.alarm.PushAlarmManager
 import woowacourse.movie.presentation.activities.main.fragments.home.HomeFragment
 import woowacourse.movie.presentation.activities.ticketingresult.TicketingResultActivity
 import woowacourse.movie.presentation.extensions.createAlertDialog
@@ -37,8 +36,7 @@ import woowacourse.movie.presentation.model.SeatRow
 import woowacourse.movie.presentation.model.Ticket
 import woowacourse.movie.presentation.model.TicketPrice
 import woowacourse.movie.presentation.model.movieitem.Movie
-import woowacourse.movie.presentation.receiver.PushReceiver
-import java.time.LocalDateTime
+import woowacourse.movie.presentation.receiver.ReservationPushReceiver
 import java.time.ZoneId
 
 class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
@@ -190,31 +188,18 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun registerPushBroadcast(reservation: Reservation) {
-        val alarmMgr = getSystemService(ALARM_SERVICE) as AlarmManager
-        val alarmIntent = Intent(this, PushReceiver::class.java).let { intent ->
-            intent.action = PushReceiver.PUSH_ACTION
-            intent.putExtra(TicketingResultActivity.RESERVATION_KEY, reservation)
-            PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-        }
+        val alarmIntent = Intent(this, ReservationPushReceiver::class.java)
+        val alarmManager = PushAlarmManager(this, alarmIntent, reservation)
 
-        val pushTime = LocalDateTime.of(
-            reservation.movieDate.year,
-            reservation.movieDate.month,
-            reservation.movieDate.day,
-            reservation.movieTime.hour,
-            reservation.movieTime.min
-        )
-            .minusMinutes(30)
+        val pushTime = reservation.reservedTime
+            .minusMinutes(REMINDER_TIME_MINUTES_AGO)
             .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
-        alarmMgr.set(
-            AlarmManager.RTC_WAKEUP,
-            pushTime,
-            alarmIntent
-        )
+        alarmManager.set(pushTime)
     }
 
     companion object {
         internal const val PICKED_SEATS_KEY = "picked_seats"
+        internal const val REMINDER_TIME_MINUTES_AGO = 30L
     }
 }
