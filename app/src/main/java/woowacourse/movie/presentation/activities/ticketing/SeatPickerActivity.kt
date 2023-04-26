@@ -37,7 +37,7 @@ import woowacourse.movie.presentation.model.SeatRow
 import woowacourse.movie.presentation.model.Ticket
 import woowacourse.movie.presentation.model.TicketPrice
 import woowacourse.movie.presentation.model.movieitem.Movie
-import woowacourse.movie.presentation.receiver.AlarmReceiver
+import woowacourse.movie.presentation.receiver.PushReceiver
 import java.time.LocalDateTime
 import java.time.ZoneId
 
@@ -191,8 +191,8 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun registerPushBroadcast(reservation: Reservation) {
         val alarmMgr = getSystemService(ALARM_SERVICE) as AlarmManager
-        val alarmIntent = Intent(this, AlarmReceiver::class.java).let { intent ->
-            intent.action = AlarmReceiver.ACTION
+        val alarmIntent = Intent(this, PushReceiver::class.java).let { intent ->
+            intent.action = PushReceiver.ACTION
             intent.putExtra(TicketingResultActivity.RESERVATION_KEY, reservation)
             PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         }

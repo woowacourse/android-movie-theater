@@ -9,7 +9,7 @@ import woowacourse.movie.presentation.extensions.getParcelableCompat
 import woowacourse.movie.presentation.model.Reservation
 import woowacourse.movie.presentation.util.NotificationUtil
 
-class AlarmReceiver : BroadcastReceiver() {
+class PushReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == ACTION) {
             intent.getParcelableCompat<Reservation>(TicketingResultActivity.RESERVATION_KEY)?.run {
