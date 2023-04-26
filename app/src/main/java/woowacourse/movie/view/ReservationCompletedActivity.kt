@@ -74,6 +74,7 @@ class ReservationCompletedActivity : AppCompatActivity() {
     companion object {
         private const val RESERVATION = "RESERVATION"
         private val DECIMAL_FORMAT = DecimalFormat("#,###")
+        const val REQUEST_CODE = 101
 
         fun newIntent(context: Context, reservation: ReservationUiModel): Intent {
             val intent = Intent(context, ReservationCompletedActivity::class.java)

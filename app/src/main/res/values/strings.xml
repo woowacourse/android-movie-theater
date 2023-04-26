@@ -28,4 +28,6 @@
     <string name="setting">설정</string>
     <string name="datetime_with_space">%s %s</string>
     <string name="datetime_with_line">%s | %s</string>
+    <string name="reservation_noti">예매 알림</string>
+    <string name="screening_after_30_minutes">%s 30분 후에 상영</string>
 </resources>

@@ -17,6 +17,7 @@ import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.util.getSerializableCompat
 import woowacourse.movie.view.model.MovieListModel.MovieUiModel
 import woowacourse.movie.view.model.ReservationOptions
+import woowacourse.movie.view.seatselection.SeatSelectionActivity
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime

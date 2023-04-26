@@ -1,8 +1,11 @@
-package woowacourse.movie.view
+package woowacourse.movie.view.seatselection
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TableLayout
@@ -19,12 +22,16 @@ import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.domain.ReservationAgency
 import woowacourse.movie.domain.Seat
 import woowacourse.movie.util.getParcelableCompat
+import woowacourse.movie.view.ReservationCompletedActivity
 import woowacourse.movie.view.mapper.toDomainModel
 import woowacourse.movie.view.mapper.toUiModel
 import woowacourse.movie.view.model.MovieListModel.MovieUiModel
 import woowacourse.movie.view.model.ReservationOptions
+import woowacourse.movie.view.model.ReservationUiModel
 import woowacourse.movie.view.model.SeatUiModel
 import java.text.DecimalFormat
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 class SeatSelectionActivity : AppCompatActivity() {
 
@@ -84,7 +91,7 @@ class SeatSelectionActivity : AppCompatActivity() {
         seat.isSelected = false
         binding.confirmReservationButton.isEnabled = false
         binding.reservationFeeTextview.text = getString(R.string.reservation_fee_format).format(
-            DECIMAL_FORMAT.format(0)
+            DECIMAL_FORMAT.format(0),
         )
     }
 
@@ -123,8 +130,8 @@ class SeatSelectionActivity : AppCompatActivity() {
             selectedSeats.add(
                 Seat(
                     index % Seat.MAX_COLUMN + 1,
-                    index / Seat.MAX_COLUMN + 1
-                )
+                    index / Seat.MAX_COLUMN + 1,
+                ),
             )
         }
         return selectedSeats
@@ -132,7 +139,7 @@ class SeatSelectionActivity : AppCompatActivity() {
 
     private fun setReservationFee(fee: Int) {
         binding.reservationFeeTextview.text = getString(R.string.reservation_fee_format).format(
-            DECIMAL_FORMAT.format(fee)
+            DECIMAL_FORMAT.format(fee),
         )
     }
 
@@ -140,7 +147,7 @@ class SeatSelectionActivity : AppCompatActivity() {
         binding.apply {
             movieTitleTextview.text = reservationOptions?.title
             reservationFeeTextview.text = getString(R.string.reservation_fee_format).format(
-                DECIMAL_FORMAT.format(0)
+                DECIMAL_FORMAT.format(0),
             )
             confirmReservationButton.isEnabled = false
         }
@@ -154,7 +161,7 @@ class SeatSelectionActivity : AppCompatActivity() {
             reservationAgency = ReservationAgency(
                 movie,
                 reservationOptions!!.peopleCount,
-                reservationOptions!!.screeningDateTime
+                reservationOptions!!.screeningDateTime,
             )
         }
     }
@@ -180,8 +187,30 @@ class SeatSelectionActivity : AppCompatActivity() {
         val reservation = reservationAgency.reserve(selectedSeats)
         reservation?.let {
             ReservationMockRepository.add(reservation)
+            registerAlarm(reservation.toUiModel())
             startActivity(ReservationCompletedActivity.newIntent(this, reservation.toUiModel()))
         }
+    }
+
+    private fun registerAlarm(reservation: ReservationUiModel) {
+        val alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val pendingIntent = Intent(this, AlarmReceiver::class.java).let {
+            it.putExtra(AlarmReceiver.REQUEST_CODE, AlarmReceiver.ALARM_REQUEST_CODE)
+            it.putExtra(AlarmReceiver.RESERVATION, reservation)
+            PendingIntent.getBroadcast(
+                this,
+                AlarmReceiver.ALARM_REQUEST_CODE,
+                it,
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+            )
+        }
+
+        Log.d("manager", "set completed")
+        alarmManager.set(
+            AlarmManager.RTC_WAKEUP,
+            LocalDateTime.now().plusSeconds(3).atZone(ZoneId.systemDefault()).toEpochSecond() * 1000L,
+            pendingIntent,
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -195,11 +224,13 @@ class SeatSelectionActivity : AppCompatActivity() {
         private const val RESERVATION_OPTIONS = "RESERVATION_OPTIONS"
         private const val MOVIE = "MOVIE"
         private val DECIMAL_FORMAT = DecimalFormat("#,###")
+        private const val RESERVATION = "RESERVATION"
+        private const val REQUEST_CODE = "REQUEST_CODE"
 
         fun newIntent(
             context: Context,
             reservationOptions: ReservationOptions,
-            movie: MovieUiModel
+            movie: MovieUiModel,
         ): Intent {
             val intent = Intent(context, SeatSelectionActivity::class.java)
             intent.putExtra(RESERVATION_OPTIONS, reservationOptions)
