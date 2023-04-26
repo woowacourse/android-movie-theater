@@ -29,4 +29,8 @@
     <string name="menu_item_setting">설정</string>
 
     <string name="reservation_item_datetime_format">yyyy.MM.dd | HH:mm</string>
+    <string name="notification_content_title">예매 알림</string>
+    <string name="notification_content_text">%s 30분 후에 상영</string>
+    <string name="notification_channel_name">Notification_Ch</string>
+    <string name="notification_channel_description">Test Notification</string>
 </resources>

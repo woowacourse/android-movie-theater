@@ -10,6 +10,7 @@ import woowacourse.movie.R
 import woowacourse.movie.view.data.MovieViewData
 import woowacourse.movie.view.data.PriceViewData
 import woowacourse.movie.view.data.ReservationDetailViewData
+import woowacourse.movie.view.data.ReservationViewData
 import woowacourse.movie.view.data.SeatsViewData
 import woowacourse.movie.view.error.ActivityError.finishWithError
 import woowacourse.movie.view.error.ViewError
@@ -31,18 +32,12 @@ class ReservationResultActivity : AppCompatActivity() {
     private fun initReservationResultView() {
         makeBackButton()
 
-        val reservationDetail =
-            intent.extras?.getSerializable<ReservationDetailViewData>(ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME)
-                ?: return finishWithError(ViewError.ActivityMissingExtras(ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME))
-        val seats = intent.extras?.getSerializable<SeatsViewData>(SeatsViewData.SEATS_EXTRA_NAME)
-            ?: return finishWithError(ViewError.ActivityMissingExtras(SeatsViewData.SEATS_EXTRA_NAME))
-        val price = intent.extras?.getSerializable<PriceViewData>(PriceViewData.PRICE_EXTRA_NAME)
-            ?: return finishWithError(ViewError.ActivityMissingExtras(PriceViewData.PRICE_EXTRA_NAME))
-        renderReservationDetail(reservationDetail, seats, price)
+        val reservation =
+            intent.extras?.getSerializable<ReservationViewData>(ReservationViewData.RESERVATION_EXTRA_NAME)
+                ?: return finishWithError(ViewError.MissingExtras(ReservationViewData.RESERVATION_EXTRA_NAME))
+        renderReservationDetail(reservation.reservationDetail, reservation.seats, reservation.price)
 
-        val movie = intent.extras?.getSerializable<MovieViewData>(MovieViewData.MOVIE_EXTRA_NAME)
-            ?: return finishWithError(ViewError.ActivityMissingExtras(MovieViewData.MOVIE_EXTRA_NAME))
-        renderMovie(movie)
+        renderMovie(reservation.movie)
     }
 
     private fun makeBackButton() {
@@ -97,16 +92,10 @@ class ReservationResultActivity : AppCompatActivity() {
     companion object {
         fun from(
             context: Context,
-            movie: MovieViewData,
-            reservationDetail: ReservationDetailViewData,
-            seats: SeatsViewData,
-            price: PriceViewData
+            reservation: ReservationViewData
         ): Intent {
             return Intent(context, ReservationResultActivity::class.java).apply {
-                putExtra(MovieViewData.MOVIE_EXTRA_NAME, movie)
-                putExtra(ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME, reservationDetail)
-                putExtra(SeatsViewData.SEATS_EXTRA_NAME, seats)
-                putExtra(PriceViewData.PRICE_EXTRA_NAME, price)
+                putExtra(ReservationViewData.RESERVATION_EXTRA_NAME, reservation)
             }
         }
     }

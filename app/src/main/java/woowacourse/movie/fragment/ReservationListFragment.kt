@@ -35,10 +35,7 @@ class ReservationListFragment : Fragment() {
             startActivity(
                 ReservationResultActivity.from(
                     view.context,
-                    it.movie,
-                    it.reservationDetail,
-                    it.seats,
-                    it.price
+                    it
                 )
             )
         }

@@ -17,7 +17,8 @@ class SaveStateSpinner(override val saveStateKey: String, val spinner: Spinner) 
     }
 
     fun initSpinner(data: List<*>) {
-        val dateAdapter = ArrayAdapter(spinner.context, android.R.layout.simple_spinner_dropdown_item, data)
+        val dateAdapter =
+            ArrayAdapter(spinner.context, android.R.layout.simple_spinner_dropdown_item, data)
         spinner.adapter = dateAdapter
     }
 }

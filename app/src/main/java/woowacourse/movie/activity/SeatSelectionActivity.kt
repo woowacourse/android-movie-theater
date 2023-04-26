@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
@@ -62,10 +63,10 @@ class SeatSelectionActivity : AppCompatActivity() {
 
     private fun initSeatSelectionView(savedInstanceState: Bundle?) {
         val movie = intent.extras?.getSerializable<MovieViewData>(MovieViewData.MOVIE_EXTRA_NAME)
-            ?: return finishWithError(ViewError.ActivityMissingExtras(MovieViewData.MOVIE_EXTRA_NAME))
+            ?: return finishWithError(ViewError.MissingExtras(MovieViewData.MOVIE_EXTRA_NAME))
         val reservationDetail =
             intent.extras?.getSerializable<ReservationDetailViewData>(ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME)
-                ?: return finishWithError(ViewError.ActivityMissingExtras(ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME))
+                ?: return finishWithError(ViewError.MissingExtras(ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME))
 
         initMovieView(movie)
         setPriceView(PriceViewData())
@@ -162,28 +163,27 @@ class SeatSelectionActivity : AppCompatActivity() {
             seatTableLayout.selectedSeats(), reservationDetail
         )
 
-        makeReservationAlarm(movie, reservationDetail, seats, price)
-        postReservation(movie, reservationDetail, seats, price)
-        startReservationResultActivity(movie, reservationDetail, seats, price)
+        val reservation = ReservationViewData(
+            movie, reservationDetail, seats, price
+        )
+
+        makeReservationAlarm(reservation)
+        postReservation(reservation)
+        startReservationResultActivity(reservation)
     }
 
     private fun makeReservationAlarm(
-        movie: MovieViewData,
-        reservationDetail: ReservationDetailViewData,
-        seats: SeatsViewData,
-        price: PriceViewData
+        reservation: ReservationViewData,
     ) {
         makeAlarmReceiver(ACTION_ALARM)
         val alarmIntent = Intent(ACTION_ALARM).let {
-            it.putExtra(MovieViewData.MOVIE_EXTRA_NAME, movie)
-            it.putExtra(ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME, reservationDetail)
-            it.putExtra(SeatsViewData.SEATS_EXTRA_NAME, seats)
-            it.putExtra(PriceViewData.PRICE_EXTRA_NAME, price)
+            it.putExtra(ReservationViewData.RESERVATION_EXTRA_NAME, reservation)
             PendingIntent.getBroadcast(
                 applicationContext, RESERVATION_REQUEST_CODE, it, PendingIntent.FLAG_IMMUTABLE
             )
         }
-        makeAlarm(reservationDetail.date, alarmIntent)
+        // makeAlarm(reservationDetail.date, alarmIntent)
+        makeAlarm(LocalDateTime.now().plusSeconds(10), alarmIntent)
     }
 
     private fun makeAlarmReceiver(action: String) {
@@ -195,32 +195,23 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     private fun makeAlarm(date: LocalDateTime, intent: PendingIntent) {
+        Log.d("DYDY", date.toString())
         val milliseconds = date.atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli()
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(AlarmManager.RTC, milliseconds, intent)
     }
 
     private fun postReservation(
-        movie: MovieViewData,
-        reservationDetail: ReservationDetailViewData,
-        seats: SeatsViewData,
-        price: PriceViewData
+        reservation: ReservationViewData
     ) {
-        seatSelectionRepository.postReservation(
-            ReservationViewData(
-                movie, reservationDetail, seats, price
-            )
-        )
+        seatSelectionRepository.postReservation(reservation)
     }
 
     private fun startReservationResultActivity(
-        movie: MovieViewData,
-        reservationDetail: ReservationDetailViewData,
-        seats: SeatsViewData,
-        price: PriceViewData
+        reservation: ReservationViewData
     ) {
         ReservationResultActivity.from(
-            this, movie, reservationDetail, seats, price
+            this, reservation
         ).run {
             startActivity(this)
         }
@@ -243,7 +234,7 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val RESERVATION_REQUEST_CODE = 1
+        const val RESERVATION_REQUEST_CODE = 1
         private const val SEAT_ROW_COUNT = 5
         private const val SEAT_COLUMN_COUNT = 4
         private const val DEFAULT_SEAT_SIZE = 0

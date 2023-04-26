@@ -67,7 +67,7 @@ class MovieReservationActivity : AppCompatActivity() {
     private fun initMovieReservationView(savedInstanceState: Bundle?) {
         makeBackButton()
         val movie = intent.extras?.getSerializable<MovieViewData>(MovieViewData.MOVIE_EXTRA_NAME)
-            ?: return finishWithError(ViewError.ActivityMissingExtras(MovieViewData.MOVIE_EXTRA_NAME))
+            ?: return finishWithError(ViewError.MissingExtras(MovieViewData.MOVIE_EXTRA_NAME))
         makeCounter(savedInstanceState)
         makeSpinners(savedInstanceState, movie)
         renderMovie(movie)

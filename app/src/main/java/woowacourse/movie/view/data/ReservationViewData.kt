@@ -7,4 +7,8 @@ data class ReservationViewData(
     val reservationDetail: ReservationDetailViewData,
     val seats: SeatsViewData,
     val price: PriceViewData
-) : Serializable
+) : Serializable {
+    companion object {
+        const val RESERVATION_EXTRA_NAME = "reservation"
+    }
+}
