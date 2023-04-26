@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import woowacourse.movie.R
-import woowacourse.movie.presentation.bookedticketlist.BookedTicketsFragment
+import woowacourse.movie.presentation.movielist.MovieListFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun test() {
         supportFragmentManager.commit {
-            add(R.id.main_fragment_container, BookedTicketsFragment())
+            add(R.id.main_fragment_container, MovieListFragment())
         }
     }
 }

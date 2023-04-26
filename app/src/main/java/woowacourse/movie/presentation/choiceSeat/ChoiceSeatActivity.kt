@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import woowacourse.movie.R
+import woowacourse.movie.data.BookedTickets
 import woowacourse.movie.data.MovieData
 import woowacourse.movie.domain.model.rules.SeatsPayment
 import woowacourse.movie.domain.model.tools.Money
@@ -81,6 +82,7 @@ class ChoiceSeatActivity : AppCompatActivity() {
     private fun confirmBookMovie() {
         val movie = MovieData.findMovieById(reservation.movieId).toPresentation()
         val ticketModel = movie.reserve(reservation, seats)
+        BookedTickets.tickets.add(ticketModel)
         startActivity(CompleteActivity.getIntent(this, ticketModel))
     }
 
