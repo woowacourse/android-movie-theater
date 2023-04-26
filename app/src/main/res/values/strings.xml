@@ -25,4 +25,13 @@
     <string name="action_home">홈</string>
     <string name="action_settings">설정</string>
 
+
+    <!-- Notification Channel-->
+    <string name="alarm_channel_id">channel_alarm</string>
+    <string name="alarm_channel_name">영화 미리 알림</string>
+    <string name="alarm_channel_description">30분 전 영화 알림</string>
+
+    <!-- BookedTicket Notification  -->
+    <string name="booked_ticket_notification_title">예매 알림</string>
+    <string name="booked_ticket_notification_content">%s 30분 후에 상영</string>
 </resources>

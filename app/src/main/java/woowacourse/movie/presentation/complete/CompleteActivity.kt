@@ -71,7 +71,7 @@ class CompleteActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val TICKET = "TICKET"
+        const val TICKET = "TICKET"
 
         fun getIntent(context: Context, ticketModel: TicketModel): Intent {
             return Intent(context, CompleteActivity::class.java).apply {

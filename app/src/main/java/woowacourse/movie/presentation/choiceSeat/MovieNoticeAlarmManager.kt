@@ -5,10 +5,12 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import woowacourse.movie.broadcastreceiver.AlarmReceiver
+import woowacourse.movie.presentation.complete.CompleteActivity
+import woowacourse.movie.presentation.model.TicketModel
 import java.time.LocalDateTime
 import java.util.Calendar
 
-class MovieNoticeAlarmManager(val context: Context) {
+class MovieNoticeAlarmManager(val context: Context, val ticketModel: TicketModel) {
     private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
     fun getTicketAlarmCalendar(reservationTime: LocalDateTime): Calendar {
@@ -24,9 +26,9 @@ class MovieNoticeAlarmManager(val context: Context) {
 
     fun setAlarm(reservationTime: LocalDateTime) {
         val pendingIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
+            intent.putExtra(CompleteActivity.TICKET, ticketModel)
             PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         }
-
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
             getTicketAlarmCalendar(reservationTime).timeInMillis,
