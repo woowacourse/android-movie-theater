@@ -17,4 +17,8 @@
     <color name="s_rank">#19D358</color>
     <color name="a_rank">#1B48E9</color>
     <color name="seat_selected">#FAFF00</color>
+    <color name="bottom_navigation_icon_default">#666666</color>
+    <color name="settings_description">#666666</color>
+    <color name="settings_switch_track_off">#BDBCBC</color>
+    <color name="settings_switch_thumb_off">#717171</color>
 </resources>

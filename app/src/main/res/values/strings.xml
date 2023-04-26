@@ -31,4 +31,7 @@
     <string name="bottom_item_settings">설정</string>
 
     <string name="error_not_existing_item_id">존재하지 않는 아이템 아이디 입니다.</string>
+
+    <string name="push_notification_title">푸시 알림 수신</string>
+    <string name="push_notification_description">해제하면 푸시 알림을 수신할 수 없습니다.</string>
 </resources>
