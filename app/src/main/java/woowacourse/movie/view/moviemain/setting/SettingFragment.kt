@@ -59,7 +59,7 @@ class SettingFragment : Fragment() {
         if (isChecked) {
             if (requestNotificationPermission()) {
                 val reservations = ReservationMockRepository.findAll().map { it.toUiModel() }
-                alarmController.registerAlarms(reservations)
+                alarmController.registerAlarms(reservations, ALARM_MINUTE_INTERVAL)
                 editor.putBoolean(IS_ALARM_ON, true).apply()
             }
         } else {
@@ -100,5 +100,6 @@ class SettingFragment : Fragment() {
     companion object {
         const val ALARM_SETTING = "ALARM_SETTING"
         const val IS_ALARM_ON = "IS_ALARM_ON"
+        const val ALARM_MINUTE_INTERVAL = 30L
     }
 }

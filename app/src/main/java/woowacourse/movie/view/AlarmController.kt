@@ -6,20 +6,19 @@ import android.content.Context
 import android.content.Intent
 import woowacourse.movie.view.model.ReservationUiModel
 import woowacourse.movie.view.seatselection.AlarmReceiver
-import java.time.LocalDateTime
 import java.time.ZoneId
 
 class AlarmController(
     val context: Context
 ) {
 
-    fun registerAlarms(reservations: List<ReservationUiModel>) {
+    fun registerAlarms(reservations: List<ReservationUiModel>, minuteInterval: Long) {
         reservations.forEach {
-            registerAlarm(it)
+            registerAlarm(it, minuteInterval)
         }
     }
 
-    fun registerAlarm(reservation: ReservationUiModel) {
+    fun registerAlarm(reservation: ReservationUiModel, minuteInterval: Long) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val pendingIntent = Intent(context, AlarmReceiver::class.java).let {
             it.putExtra(AlarmReceiver.REQUEST_CODE, AlarmReceiver.ALARM_REQUEST_CODE)
@@ -34,7 +33,8 @@ class AlarmController(
 
         alarmManager.set(
             AlarmManager.RTC_WAKEUP,
-            LocalDateTime.now().plusSeconds(10).atZone(ZoneId.systemDefault())
+            reservation.screeningDateTime.minusMinutes(minuteInterval)
+                .atZone(ZoneId.systemDefault())
                 .toEpochSecond() * 1000L,
             pendingIntent,
         )

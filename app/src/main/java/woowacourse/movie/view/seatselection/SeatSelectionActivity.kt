@@ -190,7 +190,10 @@ class SeatSelectionActivity : AppCompatActivity() {
         val reservation = reservationAgency.reserve(selectedSeats)
         reservation?.let {
             ReservationMockRepository.add(reservation)
-            if (isAlarmOn) alarmController.registerAlarm(reservation.toUiModel())
+            if (isAlarmOn) alarmController.registerAlarm(
+                reservation.toUiModel(),
+                SettingFragment.ALARM_MINUTE_INTERVAL
+            )
             startActivity(ReservationCompletedActivity.newIntent(this, reservation.toUiModel()))
         }
     }
