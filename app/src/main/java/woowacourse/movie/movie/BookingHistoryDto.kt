@@ -2,7 +2,7 @@ package woowacourse.movie.movie
 
 import woowacourse.movie.movie.dto.BookingMovieDto
 
-object BookingHistoryDto {
+object BookingHistoryDto : java.io.Serializable {
 
     private val bookingHistory = mutableListOf<BookingMovieDto>()
 
