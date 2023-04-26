@@ -20,4 +20,5 @@
     <color name="unpicked_seat_color">#FFFFFF</color>
     <color name="book_history_separator">#D0D0D0</color>
     <color name="book_history_item_clicked">#E0E0E0</color>
+    <color name="setting_push_switch_track_unchecked">#B7B7B7</color>
 </resources>
