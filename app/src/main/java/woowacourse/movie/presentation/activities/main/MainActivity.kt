@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -14,6 +13,7 @@ import woowacourse.movie.R
 import woowacourse.movie.presentation.activities.main.fragments.history.HistoryFragment
 import woowacourse.movie.presentation.activities.main.fragments.home.HomeFragment
 import woowacourse.movie.presentation.activities.main.fragments.setting.SettingFragment
+import woowacourse.movie.presentation.extensions.showToast
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,8 +69,6 @@ class MainActivity : AppCompatActivity() {
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
-        if (isGranted) {
-            Toast.makeText(this, getString(R.string.permission_allowed), Toast.LENGTH_SHORT).show()
-        }
+        if (isGranted) showToast(getString(R.string.permission_allowed))
     }
 }

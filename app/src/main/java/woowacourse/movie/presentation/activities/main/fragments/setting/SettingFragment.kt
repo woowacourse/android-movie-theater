@@ -29,7 +29,7 @@ class SettingFragment : Fragment() {
     private fun initPushSwitch(view: View) {
         val switch = view.findViewById<SwitchMaterial>(R.id.notification_push_switch)
         with(switch) {
-            isChecked = preferences.getBoolean(PUSH_ALLOW_KEY, false)
+            isChecked = preferences.getBoolean(PUSH_ALLOW_KEY, true)
             setOnCheckedChangeListener { _, isChecked ->
                 preferences.setBoolean(PUSH_ALLOW_KEY, isChecked)
             }
