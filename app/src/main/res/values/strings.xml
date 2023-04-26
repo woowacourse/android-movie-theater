@@ -32,5 +32,7 @@
 
     <!-- 예매 내역 뷰 -->
     <string name="reservation_its_empty">예매한 영화 내역이 없습니다.</string>
+    <string name="setting_alarm_title">푸시 알림 수신</string>
+    <string name="setting_alarm_description">해제하면 푸시 알림을 수신할 수 없습니다.</string>
 
 </resources>

@@ -22,5 +22,9 @@
 
     <color name="grey_D0D0D0">#D0D0D0</color>
     <color name="grey_E0E0E0">#E0E0E0</color>
+    <color name="purple_6200EE">#6200EE</color>
+    <color name="purple_7F75EE">#7F75EE</color>
+    <color name="white_OCOE19">#OCOE19</color>
+    <color name="grey_666666">#666666</color>
 
 </resources>
