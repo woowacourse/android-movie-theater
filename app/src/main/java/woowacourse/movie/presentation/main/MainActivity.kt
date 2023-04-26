@@ -1,7 +1,11 @@
 package woowacourse.movie.presentation.main
 
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.presentation.bookedticketlist.BookedTicketsFragment
@@ -10,12 +14,38 @@ import woowacourse.movie.presentation.settings.SettingsFragment
 import woowacourse.movie.presentation.util.replace
 
 class MainActivity : AppCompatActivity() {
+
+    // 알림 권한 설정관련 리펙토링 필요
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         setInitialFragment()
         initBottomNavigation()
+        requestNotificationPermission()
+    }
+
+    // 알림 권한 설정관련 리펙토링 필요
+    private fun requestNotificationPermission() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS)) {
+                } else {
+                    requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                }
+            } else {
+                // 안드로이드 12 이하는 Notification에 관한 권한 필요 없음
+            }
+        }
     }
 
     private fun setInitialFragment() {
