@@ -1,5 +1,7 @@
 package woowacourse.movie.ui.activity
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -74,5 +76,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val KEY_INSTANCE_ITEM_ID = "item_id"
+
+        fun createIntent(context: Context) = Intent(context, MainActivity::class.java)
     }
 }

@@ -2,6 +2,8 @@ package woowacourse.movie.ui.activity
 
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
+import android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
@@ -33,7 +35,9 @@ class MovieTicketActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                finish()
+                val intent = MainActivity.createIntent(this)
+                intent.flags = FLAG_ACTIVITY_CLEAR_TOP + FLAG_ACTIVITY_SINGLE_TOP
+                startActivity(intent)
                 return true
             }
         }
