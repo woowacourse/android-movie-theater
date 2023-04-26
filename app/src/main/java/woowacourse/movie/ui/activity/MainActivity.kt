@@ -3,6 +3,7 @@ package woowacourse.movie.ui.activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.ui.fragment.FragmentType
@@ -45,22 +46,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun changeFragment(currentType: FragmentType) {
-        val transaction = supportFragmentManager.beginTransaction()
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
 
-        val fragment =
-            supportFragmentManager.findFragmentByTag(currentType.tag)
-                ?: createFragment(currentType).apply {
-                    transaction.add(R.id.main_fragment_container_view, this, currentType.tag)
+            val fragment =
+                supportFragmentManager.findFragmentByTag(currentType.tag)
+                    ?: createFragment(currentType).apply {
+                        add(R.id.main_fragment_container_view, this, currentType.tag)
+                    }
+            show(fragment)
+
+            FragmentType.values()
+                .filterNot { it == currentType }
+                .forEach { type ->
+                    supportFragmentManager.findFragmentByTag(type.tag)?.let(::hide)
                 }
-        transaction.show(fragment)
-
-        FragmentType.values()
-            .filterNot { it == currentType }
-            .forEach { type ->
-                supportFragmentManager.findFragmentByTag(type.tag)?.let { transaction.hide(it) }
-            }
-
-        transaction.commitAllowingStateLoss()
+        }
     }
 
     private fun createFragment(currentType: FragmentType): Fragment {
