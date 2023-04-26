@@ -16,6 +16,8 @@ import woowacourse.movie.ReservationAlarmReceiver
 import woowacourse.movie.domain.discountPolicy.Discount
 import woowacourse.movie.domain.discountPolicy.MovieDay
 import woowacourse.movie.domain.discountPolicy.OffTime
+import woowacourse.movie.domain.reservationNotificationPolicy.MovieReservationNotification
+import woowacourse.movie.domain.reservationNotificationPolicy.ReservationNotificationPolicy
 import woowacourse.movie.view.data.MovieViewData
 import woowacourse.movie.view.data.PriceViewData
 import woowacourse.movie.view.data.ReservationDetailViewData
@@ -166,13 +168,14 @@ class SeatSelectionActivity : AppCompatActivity() {
             movie, reservationDetail, seats, price
         )
 
-        makeReservationAlarm(reservation)
+        makeReservationAlarm(reservation, MovieReservationNotification)
         postReservation(reservation)
         startReservationResultActivity(reservation)
     }
 
     private fun makeReservationAlarm(
         reservation: ReservationViewData,
+        reservationNotificationPolicy: ReservationNotificationPolicy
     ) {
         makeAlarmReceiver(ACTION_ALARM)
         val alarmIntent = Intent(ACTION_ALARM).let {
@@ -182,7 +185,8 @@ class SeatSelectionActivity : AppCompatActivity() {
             )
         }
 
-        makeAlarm(reservation.reservationDetail.date.minusMinutes(NOTIFICATION_MINUTE), alarmIntent)
+        val date = reservationNotificationPolicy.calculateTime(reservation.reservationDetail.date)
+        makeAlarm(date, alarmIntent)
     }
 
     private fun makeAlarmReceiver(action: String) {
@@ -235,7 +239,6 @@ class SeatSelectionActivity : AppCompatActivity() {
         const val RESERVATION_REQUEST_CODE = 1
         const val ACTION_ALARM = "actionAlarm"
 
-        private const val NOTIFICATION_MINUTE: Long = 30
         private const val SEAT_ROW_COUNT = 5
         private const val SEAT_COLUMN_COUNT = 4
         private const val DEFAULT_SEAT_SIZE = 0
