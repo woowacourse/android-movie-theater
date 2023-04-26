@@ -84,7 +84,10 @@ class SeatPickerActivity : BackButtonActivity() {
 
     private fun setDialogPositiveEvent(movieBookingInfo: MovieBookingInfo) {
         val reservationId = saveReservation(movieBookingInfo)
-        setAlarmManager(reservationId)
+
+        val sharedPref = getPreferences(Context.MODE_PRIVATE)
+        val allowedPushNotification = sharedPref?.getBoolean(getString(R.string.push_alarm_permission), false) ?: false
+        if (allowedPushNotification) setAlarmManager(reservationId)
 
         val intent =
             Intent(this@SeatPickerActivity, BookCompleteActivity::class.java).apply {
