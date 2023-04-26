@@ -24,6 +24,10 @@
         <activity android:name=".presentation.activities.ticketing.TicketingActivity" />
         <activity android:name=".presentation.activities.ticketing.SeatPickerActivity" />
         <activity android:name=".presentation.activities.ticketingresult.TicketingResultActivity" />
+
+        <receiver
+            android:name=".presentation.receiver.AlarmReceiver"
+            android:exported="false" />
     </application>
 
 </manifest>

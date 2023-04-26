@@ -1,5 +1,7 @@
 package woowacourse.movie.presentation.activities.ticketing
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -35,6 +37,9 @@ import woowacourse.movie.presentation.model.SeatRow
 import woowacourse.movie.presentation.model.Ticket
 import woowacourse.movie.presentation.model.TicketPrice
 import woowacourse.movie.presentation.model.movieitem.Movie
+import woowacourse.movie.presentation.receiver.AlarmReceiver
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
     private var pickedSeats = DomainPickedSeats()
@@ -175,11 +180,38 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
             ticketPrice = calculateTotalPrice()
         )
 
+        registerPushBroadcast(reservation)
+
         startActivity(
             Intent(this@SeatPickerActivity, TicketingResultActivity::class.java)
                 .putExtra(TicketingResultActivity.RESERVATION_KEY, reservation)
         )
         finish()
+    }
+
+    private fun registerPushBroadcast(reservation: Reservation) {
+        val alarmMgr = getSystemService(ALARM_SERVICE) as AlarmManager
+        val alarmIntent = Intent(this, AlarmReceiver::class.java).let { intent ->
+            intent.action = AlarmReceiver.ACTION
+            intent.putExtra(TicketingResultActivity.RESERVATION_KEY, reservation)
+            PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        }
+
+        val pushTime = LocalDateTime.of(
+            reservation.movieDate.year,
+            reservation.movieDate.month,
+            reservation.movieDate.day,
+            reservation.movieTime.hour,
+            reservation.movieTime.min
+        )
+            .minusMinutes(30)
+            .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+
+        alarmMgr.set(
+            AlarmManager.RTC_WAKEUP,
+            pushTime,
+            alarmIntent
+        )
     }
 
     companion object {
