@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,9 +17,11 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.model.ReservationModel
 
 class SettingFragment : Fragment() {
     private lateinit var toggleButton: SwitchCompat
+
     private val requestPermissionLauncher by lazy {
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
@@ -36,14 +39,31 @@ class SettingFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_setting, container, false)
 
-        setAlarmIntent()
-        initToggleButton(view, pendingIntent)
-
+        requestNotificationPermission(view)
+        initToggleButton(view)
         return view
+    }
+
+    private fun initToggleButton(view: View) {
+        toggleButton = view.findViewById(R.id.setting_switch)
+        toggleButton.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                setAlarmIntent()
+                makeAlarm()
+            } else {
+                cancelAlarm()
+            }
+        }
     }
 
     private fun setAlarmIntent() {
         val intent = Intent(requireContext(), ReservationAlarmReceiver::class.java)
+
+        if (ReservationModel.tickets.isNotEmpty()) {
+            Log.d("123123", "put first ticket - size: ${ReservationModel.tickets.size}")
+            intent.putExtra(KEY_MOVIE, ReservationModel.tickets.first())
+        }
+
         pendingIntent = PendingIntent.getBroadcast(
             requireContext(),
             ReservationAlarmReceiver.NOTIFICATION_ID,
@@ -52,19 +72,17 @@ class SettingFragment : Fragment() {
         )
     }
 
-    private fun initToggleButton(view: View, pendingIntent: PendingIntent) {
-        toggleButton = view.findViewById(R.id.setting_switch)
-        toggleButton.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                requestNotificationPermission(view)
-                makeAlarm(pendingIntent)
-            } else {
-                cancelAlarm(pendingIntent)
-            }
-        }
+    private fun makeAlarm() {
+        val currentTimeMillis: Long = SystemClock.elapsedRealtime() + 3000 // 클릭 후 3초 후
+
+        alarmManager.set(
+            AlarmManager.RTC_WAKEUP,
+            currentTimeMillis,
+            pendingIntent,
+        )
     }
 
-    private fun cancelAlarm(pendingIntent: PendingIntent) {
+    private fun cancelAlarm() {
         alarmManager.cancel(pendingIntent)
     }
 
@@ -86,13 +104,7 @@ class SettingFragment : Fragment() {
         }
     }
 
-    private fun makeAlarm(pendingIntent: PendingIntent) {
-        val time = (SystemClock.elapsedRealtime() + 3000) // 3초 뒤
-
-        alarmManager.set(
-            AlarmManager.RTC_WAKEUP,
-            time,
-            pendingIntent,
-        )
+    companion object {
+        const val KEY_MOVIE = "movie"
     }
 }
