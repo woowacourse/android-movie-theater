@@ -16,6 +16,9 @@ class MovieReminder : BroadcastReceiver() {
     lateinit var notificationManager: NotificationManager
 
     override fun onReceive(context: Context, intent: Intent) {
+        val canPush = SharedPreferenceUtil(context).getSettingValue("switch", false)
+        if (!canPush) return
+
         val movieBookingSeatInfo =
             intent.getSerializableExtra(BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY) as MovieBookingSeatInfo
         notificationManager = context.getSystemService(
