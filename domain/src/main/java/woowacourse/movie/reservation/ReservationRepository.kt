@@ -18,6 +18,10 @@ object ReservationRepository {
         return BookingDatabase.selectBooking(id).toReservation()
     }
 
+    fun addReservation(reservation: Reservation) {
+        BookingDatabase.insertBooking(reservation.toBookingEntity())
+    }
+
     private fun Reservation.toBookingEntity(): BookingEntity {
         return BookingEntity(
             id = BookingDatabase.getNewId(),

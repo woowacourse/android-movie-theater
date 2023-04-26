@@ -17,6 +17,7 @@ import woowacourse.movie.model.SelectedSeatUiModel
 import woowacourse.movie.movie.Movie
 import woowacourse.movie.movie.MovieRepository
 import woowacourse.movie.reservation.Reservation
+import woowacourse.movie.reservation.ReservationRepository
 import woowacourse.movie.theater.Theater
 import woowacourse.movie.theater.TheaterRepository
 import woowacourse.movie.ticket.Seat
@@ -116,8 +117,9 @@ class SeatActivity : AppCompatActivity() {
     private fun completeBooking() {
         val tickets: List<Ticket> =
             selectedSeat.seats.map { movie.reserve(bookedMovie.bookedDateTime, it) }
-        val reservation = Reservation(tickets.toSet()).toUiModel()
-        startActivity(CompletedActivity.getIntent(this, reservation))
+        val reservation = Reservation(tickets.toSet())
+        ReservationRepository.addReservation(reservation)
+        startActivity(CompletedActivity.getIntent(this, reservation.toUiModel()))
         finish()
     }
 
