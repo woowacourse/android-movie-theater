@@ -8,7 +8,7 @@ import androidx.annotation.LayoutRes
 class SpinnerAdapter<T>(
     context: Context,
     @LayoutRes item: Int,
-    @IdRes view: Int,
+    @IdRes view: Int
 ) : ArrayAdapter<T>(context, item, view) {
 
     fun initItems(items: List<T>) {

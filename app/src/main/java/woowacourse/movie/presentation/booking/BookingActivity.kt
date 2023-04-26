@@ -19,7 +19,7 @@ import woowacourse.movie.presentation.choiceSeat.ChoiceSeatActivity
 import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.model.MovieModel
 import woowacourse.movie.presentation.model.ReservationModel
-import woowacourse.movie.presentation.util.formatScreenDate
+import woowacourse.movie.presentation.util.formatDotDate
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -104,8 +104,8 @@ class BookingActivity : AppCompatActivity() {
     private fun setMovieScreeningDate() {
         findViewById<TextView>(R.id.textBookingScreeningDate).text =
             getString(R.string.screening_date).format(
-                movie.screeningStartDate.formatScreenDate(),
-                movie.screeningEndDate.formatScreenDate(),
+                movie.screeningStartDate.formatDotDate(),
+                movie.screeningEndDate.formatDotDate()
             )
     }
 
@@ -154,7 +154,7 @@ class BookingActivity : AppCompatActivity() {
     private fun bookMovie() {
         val dateTime = LocalDateTime.of(
             dateSpinnerAdapter.getItem(findViewById<Spinner>(R.id.spinnerScreeningDate).selectedItemPosition),
-            timeSpinnerAdapter.getItem(findViewById<Spinner>(R.id.spinnerScreeningTime).selectedItemPosition),
+            timeSpinnerAdapter.getItem(findViewById<Spinner>(R.id.spinnerScreeningTime).selectedItemPosition)
         )
         val reservation = ReservationModel(movie.id, dateTime, ticketCount.value)
         startActivity(ChoiceSeatActivity.getIntent(this, reservation))
@@ -180,7 +180,7 @@ class BookingActivity : AppCompatActivity() {
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
-                id: Long,
+                id: Long
             ) {
                 convertTimeItems(position)
             }
@@ -200,7 +200,7 @@ class BookingActivity : AppCompatActivity() {
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
-                id: Long,
+                id: Long
             ) = Unit
 
             override fun onNothingSelected(parent: AdapterView<*>?) = Unit

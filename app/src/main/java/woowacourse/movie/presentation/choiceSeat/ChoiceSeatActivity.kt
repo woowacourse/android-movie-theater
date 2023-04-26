@@ -165,7 +165,7 @@ class ChoiceSeatActivity : AppCompatActivity() {
             getString(
                 R.string.seat_format,
                 location.row,
-                (location.number + COLUMN_ADDITION).toString(),
+                (location.number + COLUMN_ADDITION).toString()
             )
     }
 

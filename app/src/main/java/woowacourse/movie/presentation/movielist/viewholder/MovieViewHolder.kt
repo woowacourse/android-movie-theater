@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.presentation.movielist.MovieItem
-import woowacourse.movie.presentation.util.formatScreenDate
+import woowacourse.movie.presentation.util.formatDotDate
 
 class MovieViewHolder(private val view: View, clickBook: (Long) -> Unit) :
     RecyclerView.ViewHolder(view) {
@@ -31,8 +31,8 @@ class MovieViewHolder(private val view: View, clickBook: (Long) -> Unit) :
         screeningDate.apply {
             text = context.getString(R.string.screening_date)
                 .format(
-                    movie.screeningStartDate.formatScreenDate(),
-                    movie.screeningEndDate.formatScreenDate(),
+                    movie.screeningStartDate.formatDotDate(),
+                    movie.screeningEndDate.formatDotDate()
                 )
         }
     }

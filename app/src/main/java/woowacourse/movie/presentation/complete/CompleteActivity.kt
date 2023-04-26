@@ -11,7 +11,7 @@ import woowacourse.movie.R
 import woowacourse.movie.data.MovieData
 import woowacourse.movie.domain.model.tools.Movie
 import woowacourse.movie.presentation.model.TicketModel
-import woowacourse.movie.presentation.util.formatScreenDateTime
+import woowacourse.movie.presentation.util.formatDotDateTimeColon
 
 class CompleteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,14 +54,14 @@ class CompleteActivity : AppCompatActivity() {
 
     private fun setMovieScreeningDate(ticket: TicketModel) {
         findViewById<TextView>(R.id.textCompletedScreeningDate).text =
-            ticket.bookedDateTime.formatScreenDateTime()
+            ticket.bookedDateTime.formatDotDateTimeColon()
     }
 
     private fun setMovieTicketCount(ticket: TicketModel) {
         findViewById<TextView>(R.id.textCompletedTicketCount).text =
             getString(R.string.normal_ticket_count_seat).format(
                 ticket.count,
-                ticket.formatSeatsCombine(),
+                ticket.formatSeatsCombine()
             )
     }
 

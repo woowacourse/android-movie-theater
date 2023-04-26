@@ -9,7 +9,7 @@ import woowacourse.movie.presentation.movielist.viewholder.MovieViewHolder
 
 class MovieItemAdapter(
     private val movieItems: List<MovieItem>,
-    private val clickBook: (Long) -> Unit,
+    private val clickBook: (Long) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
