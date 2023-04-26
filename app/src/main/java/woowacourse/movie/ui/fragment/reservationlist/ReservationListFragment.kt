@@ -16,11 +16,7 @@ import woowacourse.movie.ui.model.MovieTicketModel
 
 class ReservationListFragment : Fragment() {
     private lateinit var reservationAdapter: ReservationAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {}
-    }
+    private var itemsCount = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,9 +33,10 @@ class ReservationListFragment : Fragment() {
         setReservationView(reservationView)
     }
 
-    override fun onResume() {
-        super.onResume()
-        reservationAdapter.notifyDataSetChanged()
+    override fun onStart() {
+        super.onStart()
+
+        applyItemsInsertion()
     }
 
     private fun setReservationView(reservationView: RecyclerView) {
@@ -51,5 +48,13 @@ class ReservationListFragment : Fragment() {
     private fun moveToTicketActivity(ticketModel: MovieTicketModel) {
         val intent = MovieTicketActivity.createIntent(requireActivity(), ticketModel)
         startActivity(intent)
+    }
+
+    private fun applyItemsInsertion() {
+        val countDifference = Reservations.getSize() - itemsCount
+        if (countDifference > 0) {
+            reservationAdapter.notifyItemRangeInserted(itemsCount, countDifference)
+            itemsCount = Reservations.getSize()
+        }
     }
 }

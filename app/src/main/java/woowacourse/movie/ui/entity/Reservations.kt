@@ -10,4 +10,6 @@ object Reservations {
     }
 
     fun getAll(): List<MovieTicketModel> = items
+
+    fun getSize(): Int = items.size
 }

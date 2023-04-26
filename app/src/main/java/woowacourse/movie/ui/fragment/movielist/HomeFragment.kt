@@ -18,11 +18,6 @@ import woowacourse.movie.ui.model.MovieModel
 
 class HomeFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {}
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
