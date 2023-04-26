@@ -17,6 +17,7 @@ import woowacourse.movie.ui.DecimalFormatters
 import woowacourse.movie.ui.reservation.MovieDetailActivity.Companion.KEY_TICKETS
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
+import java.time.LocalDateTime
 import java.util.Calendar
 
 class ReservationConfirmActivity : BackKeyActionBarActivity() {
@@ -57,7 +58,7 @@ class ReservationConfirmActivity : BackKeyActionBarActivity() {
     }
 
     private fun setNotification(tickets: TicketsState) {
-//        val tickets = tickets.copy(dateTime = LocalDateTime.of(0, 4, 26, 17, 47, 30))
+        val tickets = tickets.copy(dateTime = LocalDateTime.of(0, 4, 26, 17, 47, 30))
         val calendar: Calendar = Calendar.getInstance().apply {
             set(
                 tickets.dateTime.year,

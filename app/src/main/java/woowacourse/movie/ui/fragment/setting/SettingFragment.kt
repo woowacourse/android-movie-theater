@@ -1,12 +1,13 @@
 package woowacourse.movie.ui.fragment.setting
 
-import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
+import woowacourse.movie.PreferenceUtil
 import woowacourse.movie.R
 
 class SettingFragment : Fragment() {
@@ -26,11 +27,11 @@ class SettingFragment : Fragment() {
         switch = view.findViewById(R.id.notification_switch)
         var switchValue = false
         context?.let {
-            val sharedPreference = it.getSharedPreferences(SETTINGS, MODE_PRIVATE)
+            val sharedPreference = PreferenceUtil(it)
             switchValue = sharedPreference.getBoolean(NOTIFICATIONS, false)
             switch?.setOnCheckedChangeListener { _, isChecked ->
-                val editor = sharedPreference.edit()
-                editor.putBoolean(NOTIFICATIONS, isChecked).apply()
+                sharedPreference.setBoolean(NOTIFICATIONS, isChecked)
+                Log.d("mendel", "수신여부 변경 후 저장값: ${sharedPreference.getBoolean(NOTIFICATIONS, false)}")
             }
         }
         switch?.isChecked = switchValue
@@ -42,7 +43,7 @@ class SettingFragment : Fragment() {
     }
 
     companion object {
-        private const val SETTINGS = "settings"
-        private const val NOTIFICATIONS = "notifications"
+        const val SETTINGS = "settings"
+        const val NOTIFICATIONS = "notifications"
     }
 }

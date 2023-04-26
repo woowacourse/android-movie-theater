@@ -29,4 +29,6 @@
     <string name="date_time_form">%s | %s</string>
     <string name="notification_setting_title">푸시 알람 수신</string>
     <string name="notification_setting_text">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+    <string name="alarm_receiver_notification_text">%s 30분 후에 상영</string>
+    <string name="alarm_receiver_notification_title">예매 알림</string>
 </resources>
