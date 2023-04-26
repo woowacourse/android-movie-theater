@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "android-movie-ticket"
 include(":app")
 include(":domain")
+include(":data")
