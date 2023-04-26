@@ -1,10 +1,13 @@
 package woowacourse.movie.activity
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
-import android.text.TextUtils.replace
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
@@ -22,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         addFragment(ReservationListFragment())
         setOnBottomNavigationClickListener()
+        requestNotificationPermission()
     }
 
     private fun setOnBottomNavigationClickListener() {
@@ -47,5 +51,22 @@ class MainActivity : AppCompatActivity() {
             setReorderingAllowed(true)
             replace(R.id.main_fragment, fragment)
         }
+    }
+
+    private fun requestNotificationPermission() {
+        if (ContextCompat.checkSelfPermission(
+                this, Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                } else { requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS) }
+            } else { }
+        }
+    }
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
     }
 }
