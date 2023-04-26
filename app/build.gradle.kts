@@ -49,4 +49,7 @@ dependencies {
     testImplementation("org.assertj:assertj-core:3.22.0")
     testImplementation("androidx.test:core:1.5.0")
     testImplementation("org.mockito:mockito-core:3.12.4")
+
+    // Fragment
+    implementation ("androidx.fragment:fragment-ktx:1.4.0")
 }

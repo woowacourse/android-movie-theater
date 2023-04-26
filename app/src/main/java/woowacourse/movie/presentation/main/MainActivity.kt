@@ -1,30 +1,26 @@
 package woowacourse.movie.presentation.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.commit
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieItemData
-import woowacourse.movie.presentation.booking.BookingActivity
+import woowacourse.movie.presentation.movielist.MovieListFragment
 
 class MainActivity : AppCompatActivity() {
-    private val movieItemAdapter by lazy { MovieItemAdapter(MOVIE_ITEMS) { clickBook(it) } }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setMovieAdapter()
+        Log.d("멧돼지","멧돼지")
+        test()
+        Log.d("멧돼지","멧돼지")
+
     }
 
-    private fun setMovieAdapter() {
-        findViewById<RecyclerView>(R.id.recyclerMainMovie).adapter = movieItemAdapter
-    }
-
-    private fun clickBook(movieId: Long) {
-        startActivity(BookingActivity.getIntent(this, movieId))
-    }
-
-    companion object {
-        private val MOVIE_ITEMS = MovieItemData.getMovieItems()
+    private fun test() {
+        supportFragmentManager.commit {
+            add(R.id.main_fragment_container, MovieListFragment())
+        }
     }
 }

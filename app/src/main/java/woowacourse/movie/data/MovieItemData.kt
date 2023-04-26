@@ -1,6 +1,6 @@
 package woowacourse.movie.data
 
-import woowacourse.movie.presentation.main.MovieItem
+import woowacourse.movie.presentation.movielist.MovieItem
 import woowacourse.movie.presentation.mappers.toPresentation
 
 object MovieItemData {

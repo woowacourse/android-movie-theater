@@ -1,11 +1,11 @@
-package woowacourse.movie.presentation.main
+package woowacourse.movie.presentation.movielist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.presentation.main.viewholder.AdViewHolder
-import woowacourse.movie.presentation.main.viewholder.MovieViewHolder
+import woowacourse.movie.presentation.movielist.viewholder.AdViewHolder
+import woowacourse.movie.presentation.movielist.viewholder.MovieViewHolder
 
 class MovieItemAdapter(
     private val movieItems: List<MovieItem>,
