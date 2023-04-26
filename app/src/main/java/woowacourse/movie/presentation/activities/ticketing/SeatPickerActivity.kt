@@ -192,7 +192,7 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
     private fun registerPushBroadcast(reservation: Reservation) {
         val alarmMgr = getSystemService(ALARM_SERVICE) as AlarmManager
         val alarmIntent = Intent(this, PushReceiver::class.java).let { intent ->
-            intent.action = PushReceiver.ACTION
+            intent.action = PushReceiver.PUSH_ACTION
             intent.putExtra(TicketingResultActivity.RESERVATION_KEY, reservation)
             PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         }
