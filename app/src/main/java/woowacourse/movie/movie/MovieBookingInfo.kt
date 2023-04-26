@@ -19,6 +19,11 @@ data class MovieBookingInfo(
         return "$formattedDate | $time"
     }
 
+    fun formatAlarmDate(): String {
+        val formattedDate: String = date.split(".").joinToString("-")
+        return "$formattedDate $time"
+    }
+
     companion object {
         val dummyData = MovieBookingInfo(
             Movie.dummyData,
