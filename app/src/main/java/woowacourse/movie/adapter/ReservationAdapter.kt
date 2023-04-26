@@ -7,13 +7,16 @@ import domain.Reservation
 import woowacourse.movie.R
 import woowacourse.movie.viewholder.ReservationViewHolder
 
-class ReservationAdapter(private val reservations: List<Reservation>) :
+class ReservationAdapter(
+    private val reservations: List<Reservation>,
+    private val onClickEvent: (Reservation) -> Unit
+) :
     RecyclerView.Adapter<ReservationViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReservationViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_reservation, parent, false)
 
-        return ReservationViewHolder(view)
+        return ReservationViewHolder(view, onClickEvent)
     }
 
     override fun getItemCount(): Int {

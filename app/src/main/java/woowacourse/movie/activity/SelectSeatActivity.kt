@@ -19,9 +19,11 @@ import woowacourse.movie.view.MovieView
 import woowacourse.movie.view.SeatTable
 import woowacourse.movie.view.SeatView
 import woowacourse.movie.view.mapper.TicketOfficeMapper
+import woowacourse.movie.view.mapper.TicketsMapper
 import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.model.SeatUiModel
 import woowacourse.movie.view.model.TicketDateUiModel
+import woowacourse.movie.view.model.TicketsUiModel
 import java.text.NumberFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -91,7 +93,7 @@ class SelectSeatActivity : AppCompatActivity() {
             ReservationResultActivity.start(
                 this,
                 movieUiModel,
-                TicketOfficeMapper.toUi(ticketOffice)
+                TicketsMapper.toUi(ticketOffice.tickets)
             )
         }
         builder.setNegativeButton(R.string.select_seat_dialog_negative_button_text) { dialog, _ ->

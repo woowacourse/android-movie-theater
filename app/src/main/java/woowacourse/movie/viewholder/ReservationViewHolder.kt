@@ -8,7 +8,8 @@ import woowacourse.movie.R
 import woowacourse.movie.view.mapper.MovieMapper
 import java.time.format.DateTimeFormatter
 
-class ReservationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class ReservationViewHolder(itemView: View, val onClickEvent: (Reservation) -> Unit) :
+    RecyclerView.ViewHolder(itemView) {
     private val dateTimeTextView: TextView
     private val titleTextView: TextView
 
@@ -18,6 +19,7 @@ class ReservationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
     }
 
     fun bind(reservation: Reservation) {
+        itemView.setOnClickListener { onClickEvent(reservation) }
         val dateFormat =
             DateTimeFormatter.ofPattern(titleTextView.context.getString(R.string.reservation_date_time_format))
         dateTimeTextView.text = dateFormat.format(reservation.detail.list[0].date)
