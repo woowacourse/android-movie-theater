@@ -11,6 +11,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.activity.ReservationResultActivity
 import woowacourse.movie.activity.SeatSelectionActivity
+import woowacourse.movie.fragment.SettingFragment
 import woowacourse.movie.view.data.ReservationViewData
 import woowacourse.movie.view.error.BroadcastReceiverError.returnWithError
 import woowacourse.movie.view.error.ViewError
@@ -18,7 +19,9 @@ import woowacourse.movie.view.getSerializable
 
 class ReservationAlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == SeatSelectionActivity.ACTION_ALARM) {
+        if (intent.action == SeatSelectionActivity.ACTION_ALARM &&
+            Setting.getSettingValue(context, SettingFragment.SETTING_NOTIFICATION)
+        ) {
             val reservation =
                 intent.extras?.getSerializable<ReservationViewData>(ReservationViewData.RESERVATION_EXTRA_NAME)
                     ?: return returnWithError(ViewError.MissingExtras(ReservationViewData.RESERVATION_EXTRA_NAME))

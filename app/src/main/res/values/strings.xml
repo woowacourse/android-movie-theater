@@ -33,4 +33,6 @@
     <string name="notification_content_text">%s 30분 후에 상영</string>
     <string name="notification_channel_name">Notification_Ch</string>
     <string name="notification_channel_description">Test Notification</string>
+    <string name="setting_push_title">푸시 알림 수신</string>
+    <string name="setting_push_description">해제하면 푸시 알림을 수신할 수 없습니다.</string>
 </resources>
