@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.fragment.reservationList
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,17 +8,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.data.ReservationRepository
+import woowacourse.movie.data.TicketsRepository
+import woowacourse.movie.model.TicketsState
+import woowacourse.movie.ui.confirm.ReservationConfirmActivity
 import woowacourse.movie.ui.main.adapter.ReservationListAdapter
+import woowacourse.movie.ui.main.itemModel.TicketsItemModel
+import woowacourse.movie.ui.reservation.MovieDetailActivity
 
 class ReservationListFragment : Fragment() {
 
     private lateinit var reservationRecyclerView: RecyclerView
     private lateinit var adapter: ReservationListAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +33,19 @@ class ReservationListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         reservationRecyclerView = view.findViewById(R.id.reservation_rv)
-        adapter = ReservationListAdapter(ReservationRepository.allReservations().map { it.toItemModel { } })
+        adapter = ReservationListAdapter(
+            TicketsRepository.allTickets().map {
+                it.convertToItemModel { position ->
+                    navigateReservationConfirm((adapter.reservations[position] as TicketsItemModel).ticketsState)
+                }
+            }
+        )
         reservationRecyclerView.adapter = adapter
+    }
+
+    private fun navigateReservationConfirm(ticketsState: TicketsState) {
+        val intent = Intent(activity, ReservationConfirmActivity::class.java)
+        intent.putExtra(MovieDetailActivity.KEY_TICKETS, ticketsState)
+        startActivity(intent)
     }
 }

@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.widget.TextView
 import com.example.domain.usecase.DiscountApplyUseCase
 import woowacourse.movie.R
-import woowacourse.movie.data.ReservationRepository
-import woowacourse.movie.model.CountState
-import woowacourse.movie.model.ReservationState
+import woowacourse.movie.data.TicketsRepository
 import woowacourse.movie.model.TicketsState
 import woowacourse.movie.model.mapper.asDomain
 import woowacourse.movie.model.mapper.asPresentation
@@ -28,13 +26,7 @@ class ReservationConfirmActivity : BackKeyActionBarActivity() {
         setContentView(R.layout.activity_reservation_confirm)
         val tickets = intent.getParcelableExtraCompat<TicketsState>(KEY_TICKETS)
             ?: return keyError(KEY_TICKETS)
-        ReservationRepository.addReservation(
-            ReservationState(
-                tickets.movieState,
-                tickets.dateTime,
-                CountState.of(tickets.positions.size)
-            )
-        )
+        TicketsRepository.addTicket(tickets)
         setInitReservationData(tickets)
     }
 

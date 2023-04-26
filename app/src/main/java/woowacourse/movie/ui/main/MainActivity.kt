@@ -5,9 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentContainerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
-import woowacourse.movie.ui.fragment.SettingFragment
 import woowacourse.movie.ui.fragment.movieList.MovieListFragment
 import woowacourse.movie.ui.fragment.reservationList.ReservationListFragment
+import woowacourse.movie.ui.fragment.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
     private val rv: FragmentContainerView by lazy { findViewById(R.id.container) }

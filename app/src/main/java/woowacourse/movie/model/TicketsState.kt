@@ -2,6 +2,7 @@ package woowacourse.movie.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import woowacourse.movie.ui.main.itemModel.TicketsItemModel
 import java.time.LocalDateTime
 
 @Parcelize
@@ -11,8 +12,12 @@ data class TicketsState(
     val positions: List<SeatPositionState>
 ) : Parcelable {
 
+    fun convertToItemModel(onClick: (position: Int) -> Unit): TicketsItemModel {
+        return TicketsItemModel(this, onClick)
+    }
+
     companion object {
-        fun from(reservationState: ReservationState, seats: List<SeatPositionState>): TicketsState {
+        fun from(reservationState: ReservationOptState, seats: List<SeatPositionState>): TicketsState {
             require(reservationState.countState.value == seats.size) {
                 ERROR_NO_MATCH_SEAT_SIZE
             }

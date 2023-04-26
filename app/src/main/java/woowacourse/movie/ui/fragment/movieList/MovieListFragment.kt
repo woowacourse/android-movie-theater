@@ -24,10 +24,6 @@ class MovieListFragment : Fragment() {
     private lateinit var movieListView: RecyclerView
     private lateinit var adapter: MovieListAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

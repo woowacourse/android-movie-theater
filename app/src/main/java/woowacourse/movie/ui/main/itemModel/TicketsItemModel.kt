@@ -1,10 +1,10 @@
 package woowacourse.movie.ui.main.itemModel
 
-import woowacourse.movie.model.ReservationState
+import woowacourse.movie.model.TicketsState
 import woowacourse.movie.ui.main.ViewType
 
-class ReservationItemModel(
-    val reservationState: ReservationState,
+class TicketsItemModel(
+    val ticketsState: TicketsState,
     override val onClick: (position: Int) -> Unit
 ) : ItemModel {
     override val viewType: ViewType = ViewType.MOVIE

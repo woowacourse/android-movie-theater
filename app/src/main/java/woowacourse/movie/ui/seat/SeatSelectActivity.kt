@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.TextView
 import com.example.domain.usecase.DiscountApplyUseCase
 import woowacourse.movie.R
-import woowacourse.movie.model.ReservationState
+import woowacourse.movie.model.ReservationOptState
 import woowacourse.movie.model.SeatPositionState
 import woowacourse.movie.model.TicketsState
 import woowacourse.movie.model.mapper.asDomain
@@ -26,7 +26,7 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
     private val titleTextView: TextView by lazy { findViewById(R.id.reservation_title) }
     private val moneyTextView: TextView by lazy { findViewById(R.id.reservation_money) }
     private val confirmView: ConfirmView by lazy { findViewById(R.id.reservation_confirm) }
-    private lateinit var reservationState: ReservationState
+    private lateinit var reservationState: ReservationOptState
 
     private lateinit var seatTable: SeatTable
 

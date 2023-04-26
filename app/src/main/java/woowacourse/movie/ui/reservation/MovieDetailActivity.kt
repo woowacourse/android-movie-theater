@@ -8,7 +8,7 @@ import com.example.domain.usecase.GetMovieRunningTimeUseCase
 import woowacourse.movie.R
 import woowacourse.movie.model.CountState
 import woowacourse.movie.model.MovieState
-import woowacourse.movie.model.ReservationState
+import woowacourse.movie.model.ReservationOptState
 import woowacourse.movie.model.mapper.asDomain
 import woowacourse.movie.ui.BackKeyActionBarActivity
 import woowacourse.movie.ui.main.MainActivity.Companion.KEY_MOVIE
@@ -55,7 +55,7 @@ class MovieDetailActivity : BackKeyActionBarActivity() {
         val intent = Intent(this, SeatSelectActivity::class.java)
         val dateTime = dateTimeSpinner.getSelectDateTime()
         val reservationState =
-            ReservationState(movie, dateTime, reservationCounter.count)
+            ReservationOptState(movie, dateTime, reservationCounter.count)
         intent.putExtra(KEY_TICKETS, reservationState)
         startActivity(intent)
     }
