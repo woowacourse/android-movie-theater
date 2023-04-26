@@ -19,4 +19,8 @@
     <color name="a_class_color">#1B48E9</color>
     <color name="b_class_color">#8E13EF</color>
     <color name="unselected_menu_color">#666666</color>
+    <color name="unselected_track_color">#BABABA</color>
+    <color name="selected_track_color">#9977CA</color>
+    <color name="unselected_thumb_color">#858585</color>
+    <color name="selected_thumb_color">@color/color_primary</color>
 </resources>
