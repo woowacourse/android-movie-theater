@@ -1,7 +1,10 @@
 package woowacourse.movie.activity
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
@@ -9,6 +12,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
+import woowacourse.movie.ReservationAlarmReceiver
 import woowacourse.movie.domain.discountPolicy.Discount
 import woowacourse.movie.domain.discountPolicy.MovieDay
 import woowacourse.movie.domain.discountPolicy.OffTime
@@ -25,7 +29,9 @@ import woowacourse.movie.view.mapper.ReservationDetailMapper.toDomain
 import woowacourse.movie.view.repository.SeatSelectionRepository
 import woowacourse.movie.view.widget.SeatTableLayout
 import java.text.NumberFormat
+import java.time.LocalDateTime
 import java.util.Locale
+import java.util.TimeZone
 
 class SeatSelectionActivity : AppCompatActivity() {
     private val seatSelectionRepository: SeatSelectionRepository = SeatSelectionRepository()
@@ -156,11 +162,63 @@ class SeatSelectionActivity : AppCompatActivity() {
             seatTableLayout.selectedSeats(), reservationDetail
         )
 
+        makeReservationAlarm(movie, reservationDetail, seats, price)
+        postReservation(movie, reservationDetail, seats, price)
+        startReservationResultActivity(movie, reservationDetail, seats, price)
+    }
+
+    private fun makeReservationAlarm(
+        movie: MovieViewData,
+        reservationDetail: ReservationDetailViewData,
+        seats: SeatsViewData,
+        price: PriceViewData
+    ) {
+        makeAlarmReceiver(ACTION_ALARM)
+        val alarmIntent = Intent(ACTION_ALARM).let {
+            it.putExtra(MovieViewData.MOVIE_EXTRA_NAME, movie)
+            it.putExtra(ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME, reservationDetail)
+            it.putExtra(SeatsViewData.SEATS_EXTRA_NAME, seats)
+            it.putExtra(PriceViewData.PRICE_EXTRA_NAME, price)
+            PendingIntent.getBroadcast(
+                applicationContext, RESERVATION_REQUEST_CODE, it, PendingIntent.FLAG_IMMUTABLE
+            )
+        }
+        makeAlarm(reservationDetail.date, alarmIntent)
+    }
+
+    private fun makeAlarmReceiver(action: String) {
+        val myReceiver = ReservationAlarmReceiver()
+        val filter = IntentFilter().apply {
+            addAction(action)
+        }
+        registerReceiver(myReceiver, filter)
+    }
+
+    private fun makeAlarm(date: LocalDateTime, intent: PendingIntent) {
+        val milliseconds = date.atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli()
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.set(AlarmManager.RTC, milliseconds, intent)
+    }
+
+    private fun postReservation(
+        movie: MovieViewData,
+        reservationDetail: ReservationDetailViewData,
+        seats: SeatsViewData,
+        price: PriceViewData
+    ) {
         seatSelectionRepository.postReservation(
             ReservationViewData(
                 movie, reservationDetail, seats, price
             )
         )
+    }
+
+    private fun startReservationResultActivity(
+        movie: MovieViewData,
+        reservationDetail: ReservationDetailViewData,
+        seats: SeatsViewData,
+        price: PriceViewData
+    ) {
         ReservationResultActivity.from(
             this, movie, reservationDetail, seats, price
         ).run {
@@ -185,10 +243,12 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     companion object {
+        private const val RESERVATION_REQUEST_CODE = 1
         private const val SEAT_ROW_COUNT = 5
         private const val SEAT_COLUMN_COUNT = 4
         private const val DEFAULT_SEAT_SIZE = 0
         private const val SEAT_TABLE_LAYOUT_STATE_KEY = "seatTable"
+        const val ACTION_ALARM = "actionAlarm"
 
         fun from(
             context: Context,
