@@ -16,9 +16,9 @@ import woowacourse.movie.view.adapter.MovieAdapter
 import woowacourse.movie.view.data.MovieListViewData
 import woowacourse.movie.view.data.MovieListViewType
 import woowacourse.movie.view.data.MovieViewData
-import woowacourse.movie.view.data.ReservationViewDatas
+import woowacourse.movie.view.data.ReservationsViewData
 import woowacourse.movie.view.mapper.MovieMapper.toDomain
-import woowacourse.movie.view.state.repository.MainRepository
+import woowacourse.movie.view.repository.MainRepository
 
 class MainActivity : AppCompatActivity() {
     private val mainRepository: MainRepository = MainRepository()
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.action_list -> {
                     replaceFragment<ReservationListFragment>(
                         ReservationListFragment.from(
-                            ReservationViewDatas(mainRepository.requestReservation())
+                            ReservationsViewData(mainRepository.requestReservation())
                         )
                     )
                     true

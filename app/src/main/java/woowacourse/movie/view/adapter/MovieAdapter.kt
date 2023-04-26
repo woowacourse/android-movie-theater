@@ -58,7 +58,7 @@ class MovieAdapter(
     override fun getItemId(position: Int): Long = position.toLong()
     override fun getItemCount(): Int = movieViewDatas.value.size
 
-    private fun updateMovieListViewData(
+    fun updateMovieListViewData(
         movie: List<Movie>,
         advertisement: List<Advertisement>,
         advertisementPolicy: AdvertisementPolicy

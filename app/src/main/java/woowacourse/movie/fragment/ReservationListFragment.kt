@@ -10,15 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.activity.ReservationResultActivity
 import woowacourse.movie.view.adapter.ReservationAdapter
-import woowacourse.movie.view.data.ReservationViewDatas
+import woowacourse.movie.view.data.ReservationsViewData
 import woowacourse.movie.view.getSerializable
 
 class ReservationListFragment : Fragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {}
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,14 +22,14 @@ class ReservationListFragment : Fragment() {
     ): View? {
         arguments ?: return null
         val reservations =
-            arguments?.getSerializable<ReservationViewDatas>(ReservationViewDatas.RESERVATION_VIEW_DATAS_EXTRA_NAME)
+            arguments?.getSerializable<ReservationsViewData>(ReservationsViewData.RESERVATIONS_VIEW_DATA_EXTRA_NAME)
                 ?: return null
         val view = inflater.inflate(R.layout.fragment_reservation_list, container, false)
         makeReservationRecyclerView(view, reservations)
         return view
     }
 
-    private fun makeReservationRecyclerView(view: View, reservations: ReservationViewDatas) {
+    private fun makeReservationRecyclerView(view: View, reservations: ReservationsViewData) {
         val recyclerView = view.findViewById<RecyclerView>(R.id.reservation_list_recycler)
         recyclerView.adapter = ReservationAdapter(reservations) {
             startActivity(
@@ -52,9 +47,9 @@ class ReservationListFragment : Fragment() {
     }
 
     companion object {
-        fun from(reservationViewDatas: ReservationViewDatas) = Bundle().apply {
+        fun from(reservationsViewData: ReservationsViewData) = Bundle().apply {
             putSerializable(
-                ReservationViewDatas.RESERVATION_VIEW_DATAS_EXTRA_NAME, reservationViewDatas
+                ReservationsViewData.RESERVATIONS_VIEW_DATA_EXTRA_NAME, reservationsViewData
             )
         }
     }

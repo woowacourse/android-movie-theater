@@ -9,14 +9,14 @@ import java.time.format.DateTimeFormatter
 
 class ReservationViewHolder(
     view: View,
-    onItemClick: (Int) -> Unit
+    onClickItem: (Int) -> Unit
 ) : RecyclerView.ViewHolder(view) {
     private val dateTime: TextView = view.findViewById(R.id.item_reservation_datetime)
     private val title: TextView = view.findViewById(R.id.item_reservation_title)
 
     init {
         view.setOnClickListener {
-            onItemClick(adapterPosition)
+            onClickItem(adapterPosition)
         }
     }
 
