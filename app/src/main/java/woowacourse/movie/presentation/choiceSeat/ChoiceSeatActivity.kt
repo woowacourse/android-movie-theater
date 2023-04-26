@@ -83,6 +83,7 @@ class ChoiceSeatActivity : AppCompatActivity() {
         val movie = MovieData.findMovieById(reservation.movieId).toPresentation()
         val ticketModel = movie.reserve(reservation, seats)
         BookedTickets.tickets.add(ticketModel)
+        MovieNoticeAlarmManager(this).setAlarm(ticketModel.bookedDateTime)
         startActivity(CompleteActivity.getIntent(this, ticketModel))
     }
 
