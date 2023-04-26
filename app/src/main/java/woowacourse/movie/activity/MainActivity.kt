@@ -1,9 +1,11 @@
 package woowacourse.movie.activity
 
 import android.Manifest
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -18,11 +20,16 @@ import woowacourse.movie.fragment.SettingFragment
 class MainActivity : AppCompatActivity() {
 
     private val bottomNavigation: BottomNavigationView by lazy { findViewById(R.id.bottom_navigation) }
+    private val sharedPreference: SharedPreferences by lazy {
+        getSharedPreferences(
+            SETTING, MODE_PRIVATE
+        )
+    }
+    private val editor: SharedPreferences.Editor by lazy { sharedPreference.edit() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         addFragment(ReservationListFragment())
         setOnBottomNavigationClickListener()
         requestNotificationPermission()
@@ -60,13 +67,25 @@ class MainActivity : AppCompatActivity() {
         ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                } else { requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS) }
-            } else { }
+                } else {
+                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
+            } else {
+            }
         }
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
+        when (isGranted) {
+            true -> editor.putBoolean(REQUEST_PERMISSION_KEY, true).commit()
+            false -> editor.putBoolean(REQUEST_PERMISSION_KEY, false).commit()
+        }
+    }
+
+    companion object {
+        private const val SETTING = "settings"
+        private const val REQUEST_PERMISSION_KEY = "requestPermission"
     }
 }
