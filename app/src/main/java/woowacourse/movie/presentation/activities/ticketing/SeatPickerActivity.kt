@@ -37,7 +37,6 @@ import woowacourse.movie.presentation.model.Ticket
 import woowacourse.movie.presentation.model.TicketPrice
 import woowacourse.movie.presentation.model.movieitem.Movie
 import woowacourse.movie.presentation.receiver.ReservationPushReceiver
-import java.time.ZoneId
 
 class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
     private var pickedSeats = DomainPickedSeats()
@@ -191,11 +190,7 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
         val alarmIntent = Intent(this, ReservationPushReceiver::class.java)
         val alarmManager = PushAlarmManager(this, alarmIntent, reservation)
 
-        val pushTime = reservation.reservedTime
-            .minusMinutes(REMINDER_TIME_MINUTES_AGO)
-            .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
-
-        alarmManager.set(pushTime)
+        alarmManager.set(reservation.reservedTime, REMINDER_TIME_MINUTES_AGO)
     }
 
     companion object {

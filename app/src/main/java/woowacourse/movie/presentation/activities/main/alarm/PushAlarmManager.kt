@@ -5,6 +5,8 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Parcelable
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 class PushAlarmManager<T : Parcelable>(
     context: Context,
@@ -18,7 +20,10 @@ class PushAlarmManager<T : Parcelable>(
         PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
     }
 
-    fun set(pushTime: Long) {
+    fun set(time: LocalDateTime, ago: Long) {
+        val pushTime = time.minusMinutes(ago)
+            .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+
         alarmManager.set(AlarmManager.RTC_WAKEUP, pushTime, pendingIntent)
     }
 

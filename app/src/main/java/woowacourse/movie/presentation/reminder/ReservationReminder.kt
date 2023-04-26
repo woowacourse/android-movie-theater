@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Parcelable
 import woowacourse.movie.R
+import woowacourse.movie.presentation.activities.ticketing.SeatPickerActivity.Companion.REMINDER_TIME_MINUTES_AGO
 import woowacourse.movie.presentation.activities.ticketingresult.TicketingResultActivity
 import woowacourse.movie.presentation.model.Reservation
 
@@ -21,7 +22,11 @@ class ReservationReminder(
             sendNotification(
                 this,
                 getString(R.string.notification_push_title),
-                getString(R.string.notification_push_desc, data.movieTitle, 30),
+                getString(
+                    R.string.notification_push_desc,
+                    data.movieTitle,
+                    REMINDER_TIME_MINUTES_AGO
+                ),
                 RESERVATION_PUSH_ID,
             ) { makePendingIntent(context, data) }
         }
