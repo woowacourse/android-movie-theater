@@ -19,8 +19,9 @@ import woowacourse.movie.view.getSerializable
 
 class ReservationAlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == SeatSelectionActivity.ACTION_ALARM && Setting.getSettingValue(
-                context, SettingFragment.SETTING_NOTIFICATION
+        val setting: Setting = SharedSetting(context)
+        if (intent.action == SeatSelectionActivity.ACTION_ALARM && setting.getSettingValue(
+                SettingFragment.SETTING_NOTIFICATION
             )
         ) {
             val reservation =

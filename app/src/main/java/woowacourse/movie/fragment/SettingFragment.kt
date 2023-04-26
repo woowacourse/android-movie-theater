@@ -8,6 +8,7 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.Setting
+import woowacourse.movie.SharedSetting
 
 class SettingFragment : Fragment() {
 
@@ -22,9 +23,10 @@ class SettingFragment : Fragment() {
     }
 
     private fun makeNotificationSwitchCompat(view: View) {
+        val setting: Setting = SharedSetting(view.context)
         view.findViewById<SwitchCompat>(R.id.setting_push_switch)
-            .setOnCheckedChangeListener { buttonView, isChecked ->
-                Setting.setSettingValue(buttonView.context, SETTING_NOTIFICATION, isChecked)
+            .setOnCheckedChangeListener { _, isChecked ->
+                setting.setSettingValue(SETTING_NOTIFICATION, isChecked)
             }
     }
 
