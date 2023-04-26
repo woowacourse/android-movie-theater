@@ -17,12 +17,13 @@ import woowacourse.movie.ui.fragment.FragmentType
 import woowacourse.movie.ui.fragment.movielist.HomeFragment
 import woowacourse.movie.ui.fragment.reservationlist.ReservationListFragment
 import woowacourse.movie.ui.fragment.settings.SettingsFragment
+import woowacourse.movie.ui.storage.SettingsStorage
 
 class MainActivity : AppCompatActivity() {
     private val bottomNavigationView by lazy { findViewById<BottomNavigationView>(R.id.main_bottom_navigation) }
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean -> }
+    ) { isGranted: Boolean -> SettingsStorage.editPushNotification(isGranted) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
