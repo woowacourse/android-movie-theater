@@ -2,21 +2,51 @@ package woowacourse.movie.presentation.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.commit
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
+import woowacourse.movie.presentation.bookedticketlist.BookedTicketsFragment
 import woowacourse.movie.presentation.movielist.MovieListFragment
+import woowacourse.movie.presentation.settings.SettingsFragment
+import woowacourse.movie.presentation.util.replace
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        test()
+        setInitialFragment()
+        initBottomNavigation()
     }
 
-    private fun test() {
-        supportFragmentManager.commit {
-            add(R.id.main_fragment_container, MovieListFragment())
+    private fun setInitialFragment() {
+        this.replace<MovieListFragment>(R.id.main_fragment_container)
+    }
+
+    private fun initBottomNavigation() {
+        val bottomNavigation: BottomNavigationView = findViewById(R.id.bottomNavigationMain)
+
+        bottomNavigation.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.action_booked_tickets -> {
+                    this.replace<BookedTicketsFragment>(R.id.main_fragment_container)
+                    return@setOnItemSelectedListener true
+                }
+                R.id.action_home -> {
+                    this.replace<MovieListFragment>(R.id.main_fragment_container)
+                    return@setOnItemSelectedListener true
+                }
+                R.id.action_settings -> {
+                    this.replace<SettingsFragment>(R.id.main_fragment_container)
+                    return@setOnItemSelectedListener true
+                }
+                else -> throw IllegalStateException(BOTTOM_NAVIGATION_WRONG_ITEM_ID_ERROR)
+            }
         }
+
+        bottomNavigation.selectedItemId = R.id.action_home
+    }
+
+    companion object {
+        private const val BOTTOM_NAVIGATION_WRONG_ITEM_ID_ERROR = "설정된 아이템 제외한 아이템 아이디가 전달되었습니다."
     }
 }

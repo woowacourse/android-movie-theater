@@ -20,4 +20,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!-- bottom navigation -->
+    <string name="action_booked_tickets">예매 내역</string>
+    <string name="action_home">홈</string>
+    <string name="action_settings">설정</string>
+
 </resources>
