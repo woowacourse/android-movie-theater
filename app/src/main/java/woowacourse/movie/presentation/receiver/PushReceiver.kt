@@ -13,24 +13,23 @@ import woowacourse.movie.presentation.reminder.ReservationReminder
 
 class PushReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == PUSH_ACTION) {
-            if (!isAllowedPush(context)) return
+        if (intent.action != PUSH_ACTION) return
+        if (isDeniedPush(context)) return
 
-            val reservation: Reservation =
-                intent.getParcelableCompat(TicketingResultActivity.RESERVATION_KEY) ?: return
+        val reservation: Reservation =
+            intent.getParcelableCompat(TicketingResultActivity.RESERVATION_KEY) ?: return
 
-            val reservationReminder = ReservationReminder(
-                channelId = context.getString(R.string.reservation_reminder_channel_id),
-                channelName = context.getString(R.string.reservation_reminder_channel_name),
-                channelDesc = context.getString(R.string.reservation_reminder_channel_desc),
-            )
-            reservationReminder.notify(context, reservation)
-        }
+        val reservationReminder = ReservationReminder(
+            channelId = context.getString(R.string.reservation_reminder_channel_id),
+            channelName = context.getString(R.string.reservation_reminder_channel_name),
+            channelDesc = context.getString(R.string.reservation_reminder_channel_desc),
+        )
+        reservationReminder.notify(context, reservation)
     }
 
-    private fun isAllowedPush(context: Context): Boolean {
+    private fun isDeniedPush(context: Context): Boolean {
         val preferences = Preferences(context)
-        return preferences.getBoolean(SettingFragment.PUSH_ALLOW_KEY, true)
+        return !preferences.getBoolean(SettingFragment.PUSH_ALLOW_KEY, true)
     }
 
     companion object {

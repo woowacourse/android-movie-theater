@@ -10,7 +10,6 @@ import com.woowacourse.data.local.Preferences
 import woowacourse.movie.R
 
 class SettingFragment : Fragment() {
-
     private val preferences by lazy { Preferences(requireContext()) }
 
     override fun onCreateView(
