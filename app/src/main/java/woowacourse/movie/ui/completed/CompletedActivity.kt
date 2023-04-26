@@ -17,7 +17,9 @@ class CompletedActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_completed)
 
-        getResult()?.let { initView(it) } ?: finish()
+        getResult()?.let {
+            initView(it)
+        } ?: finish()
     }
 
     private fun getResult(): ReservationUiModel? {

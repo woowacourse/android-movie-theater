@@ -119,6 +119,7 @@ class SeatActivity : AppCompatActivity() {
             selectedSeat.seats.map { movie.reserve(bookedMovie.bookedDateTime, it) }
         val reservation = Reservation(tickets.toSet())
         ReservationRepository.addReservation(reservation)
+        ScreeningTimeReminder(this, reservation.toUiModel())
         startActivity(CompletedActivity.getIntent(this, reservation.toUiModel()))
         finish()
     }
