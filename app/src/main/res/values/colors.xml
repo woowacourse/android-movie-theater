@@ -18,4 +18,6 @@
     <color name="not_enter">#B7B7B7</color>
     <color name="enter">#6200EE</color>
     <color name="select_seat">#FAFF00</color>
+    <color name="switch_thumb_on">#6200EE</color>
+    <color name="switch_thumb_off">#ECECEC</color>
 </resources>

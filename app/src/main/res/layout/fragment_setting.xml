@@ -35,6 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="29dp"
         android:layout_marginEnd="16dp"
+        app:track="@drawable/selector_track"
+        android:thumb="@drawable/selector_thumb"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
