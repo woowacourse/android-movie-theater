@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.presentation.activities.ticketingresult.TicketingResultActivity
@@ -35,6 +36,12 @@ class HistoryFragment : Fragment() {
         }
         historyAdapter.appendAll(Reservation.provideDummy())
         historyRecyclerView.adapter = historyAdapter
+        historyRecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                DividerItemDecoration.VERTICAL
+            )
+        )
     }
 
     companion object {
