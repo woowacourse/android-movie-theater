@@ -5,10 +5,10 @@ import woowacourse.movie.model.SeatModel
 
 fun Seat.toModel() = SeatModel(
     row = row,
-    column = column
+    column = column,
 )
 
 fun SeatModel.toDomain() = Seat(
     row = row,
-    column = column
+    column = column,
 )

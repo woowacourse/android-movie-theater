@@ -24,7 +24,7 @@ class MovieDetailActivity : AppCompatActivity() {
     private val dateTimeSpinnerView by lazy {
         DateTimeSpinnerView(
             findViewById(R.id.detail_date_spinner),
-            findViewById(R.id.detail_time_spinner)
+            findViewById(R.id.detail_time_spinner),
         )
     }
 
@@ -32,7 +32,7 @@ class MovieDetailActivity : AppCompatActivity() {
         PeopleCountControllerView(
             minusButton = findViewById(R.id.detail_minus_button),
             plusButton = findViewById(R.id.detail_plus_button),
-            peopleCountView = findViewById(R.id.detail_people_count)
+            peopleCountView = findViewById(R.id.detail_people_count),
         )
     }
 
@@ -118,10 +118,11 @@ class MovieDetailActivity : AppCompatActivity() {
     private fun loadSavedData(savedInstanceState: Bundle?) {
         dateTimeSpinnerView.setItemPosition(
             savedInstanceState?.getInt(KEY_DATE_POSITION) ?: 0,
-            savedInstanceState?.getInt(KEY_TIME_POSITION) ?: 0
+            savedInstanceState?.getInt(KEY_TIME_POSITION) ?: 0,
         )
         peopleCountControllerView.setPeopleCountNumber(
-            savedInstanceState?.getSerializableExtraCompat<PeopleCountModel>(KEY_PEOPLE_COUNT)?.count ?: 1
+            savedInstanceState?.getSerializableExtraCompat<PeopleCountModel>(KEY_PEOPLE_COUNT)?.count
+                ?: 1,
         )
     }
 

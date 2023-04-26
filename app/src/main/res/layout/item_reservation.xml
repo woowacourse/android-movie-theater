@@ -10,13 +10,13 @@
         android:id="@+id/reservation_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="12dp"
         android:layout_marginStart="12dp"
-        android:textSize="12sp"
+        android:layout_marginTop="12dp"
         android:textColor="@color/black"
-        tools:text="2024. 3. 2"/>
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="2024. 3. 2" />
 
     <View
         android:id="@+id/reservation_divider_indicator"
@@ -33,11 +33,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:textColor="@color/black"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/reservation_date"
         app:layout_constraintStart_toEndOf="@id/reservation_divider_indicator"
         app:layout_constraintTop_toTopOf="@id/reservation_date"
-        android:textSize="12sp"
-        android:textColor="@color/black"
         tools:text="17:00" />
 
     <TextView
@@ -46,11 +46,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="12dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/reservation_date"
         app:layout_constraintTop_toBottomOf="@+id/reservation_date"
-        android:textSize="16sp"
-        android:textColor="@color/black"
         tools:text="제이슨, 제임스, 레아" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

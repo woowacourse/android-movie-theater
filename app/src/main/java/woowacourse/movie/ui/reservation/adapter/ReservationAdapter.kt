@@ -11,12 +11,15 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class ReservationAdapter(
-    private val reservationInfo: List<MovieTicketModel>, private val onClick: (Int) -> Unit
+    private val reservationInfo: List<MovieTicketModel>,
+    private val onClick: (Int) -> Unit,
 ) : RecyclerView.Adapter<ReservationAdapter.ReservationViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReservationViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
-            R.layout.item_reservation, parent, false
+            R.layout.item_reservation,
+            parent,
+            false,
         )
 
         return ReservationViewHolder(view, onClick)
@@ -30,7 +33,7 @@ class ReservationAdapter(
 
     class ReservationViewHolder(
         itemView: View,
-        onClick: (Int) -> Unit
+        onClick: (Int) -> Unit,
     ) : RecyclerView.ViewHolder(itemView) {
         private val dateView: TextView by lazy { itemView.findViewById(R.id.reservation_date) }
         private val timeView: TextView by lazy { itemView.findViewById(R.id.reservation_time) }
@@ -47,11 +50,11 @@ class ReservationAdapter(
         }
 
         private fun LocalDateTime.dateFormat(): String = format(
-            DateTimeFormatter.ofPattern(itemView.context.getString(R.string.date_format))
+            DateTimeFormatter.ofPattern(itemView.context.getString(R.string.date_format)),
         )
 
         private fun LocalDateTime.timeFormat(): String = format(
-            DateTimeFormatter.ofPattern(itemView.context.getString(R.string.time_format))
+            DateTimeFormatter.ofPattern(itemView.context.getString(R.string.time_format)),
         )
     }
 }

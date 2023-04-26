@@ -8,5 +8,5 @@ fun MovieListModel.MovieModel.toDomain(): Movie = Movie(
     startDate = startDate,
     endDate = endDate,
     runningTime = runningTime,
-    description = description
+    description = description,
 )

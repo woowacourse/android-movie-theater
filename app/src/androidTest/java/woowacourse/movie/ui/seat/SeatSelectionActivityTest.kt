@@ -29,7 +29,7 @@ internal class SeatSelectionActivityTest {
 
     private val intent = Intent(
         ApplicationProvider.getApplicationContext(),
-        SeatSelectionActivity::class.java
+        SeatSelectionActivity::class.java,
     ).apply {
         putExtra(MovieDetailActivity.KEY_TITLE, movieTitle)
         putExtra(MovieDetailActivity.KEY_TIME, movieTime)

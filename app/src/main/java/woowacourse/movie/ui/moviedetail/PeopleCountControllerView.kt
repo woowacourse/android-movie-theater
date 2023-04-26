@@ -9,7 +9,7 @@ import woowacourse.movie.model.PeopleCountModel
 class PeopleCountControllerView(
     private val minusButton: Button,
     private val plusButton: Button,
-    private val peopleCountView: TextView
+    private val peopleCountView: TextView,
 ) {
     private var peopleCount = PeopleCount()
 

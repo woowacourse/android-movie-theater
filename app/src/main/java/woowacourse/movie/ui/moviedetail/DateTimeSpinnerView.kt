@@ -27,7 +27,7 @@ class DateTimeSpinnerView(
     val selectedItem: LocalDateTime
         get() = LocalDateTime.of(
             dateSpinner.selectedItem as LocalDate,
-            timeSpinner.selectedItem as LocalTime
+            timeSpinner.selectedItem as LocalTime,
         )
 
     fun setItemPosition(datePosition: Int, timePosition: Int) {
@@ -39,7 +39,7 @@ class DateTimeSpinnerView(
         val dateSpinnerAdapter = ArrayAdapter(
             dateSpinner.context,
             android.R.layout.simple_spinner_item,
-            movie.toDomain().getDatesBetweenTwoDates()
+            movie.toDomain().getDatesBetweenTwoDates(),
         )
         dateSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
@@ -49,7 +49,7 @@ class DateTimeSpinnerView(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
-                id: Long
+                id: Long,
             ) {
                 timeSpinner.setSelection(0)
                 times.clear()
@@ -66,7 +66,7 @@ class DateTimeSpinnerView(
         timeSpinnerAdapter = ArrayAdapter(
             timeSpinner.context,
             android.R.layout.simple_spinner_item,
-            times
+            times,
         )
         timeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         timeSpinner.adapter = timeSpinnerAdapter

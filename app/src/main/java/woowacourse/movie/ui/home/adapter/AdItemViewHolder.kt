@@ -8,7 +8,7 @@ import woowacourse.movie.model.MovieListModel
 
 class AdItemViewHolder(
     view: View,
-    private val onItemClick: (Int) -> Unit
+    private val onItemClick: (Int) -> Unit,
 ) : RecyclerView.ViewHolder(view) {
 
     private val banner = view.findViewById<ImageView>(R.id.item_banner)

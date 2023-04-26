@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     private fun setBottomNavigationView() {
         bottomNavigationView.setOnItemSelectedListener { selectedIcon ->
             changeFragment(
-                getFragmentByIcon(selectedIcon)
+                getFragmentByIcon(selectedIcon),
             )
             true
         }

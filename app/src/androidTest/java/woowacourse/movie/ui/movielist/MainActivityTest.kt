@@ -59,8 +59,8 @@ internal class MainActivityTest {
         intended(
             allOf(
                 hasAction(Intent.ACTION_VIEW),
-                hasData(Uri.parse("https://github.com/woowacourse"))
-            )
+                hasData(Uri.parse("https://github.com/woowacourse")),
+            ),
         )
     }
 

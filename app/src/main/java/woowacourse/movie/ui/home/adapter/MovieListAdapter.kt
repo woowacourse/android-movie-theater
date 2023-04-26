@@ -8,21 +8,20 @@ import woowacourse.movie.model.MovieListModel
 
 class MovieListAdapter(
     private val modelItems: List<MovieListModel>,
-    private val onItemClick: ItemClickListener
+    private val onItemClick: ItemClickListener,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
         return when (viewType) {
             MovieListViewType.MOVIE.value ->
                 MovieItemViewHolder(
-                    LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
+                    LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false),
                 ) {
                     onItemClick.onMovieItemClick(modelItems[it] as MovieListModel.MovieModel)
                 }
             MovieListViewType.AD.value ->
                 AdItemViewHolder(
-                    LayoutInflater.from(parent.context).inflate(R.layout.item_ad, parent, false)
+                    LayoutInflater.from(parent.context).inflate(R.layout.item_ad, parent, false),
                 ) {
                     onItemClick.onAdItemClick(modelItems[it] as MovieListModel.AdModel)
                 }

@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter
 
 class MovieItemViewHolder(
     private val view: View,
-    private val onItemClick: (Int) -> Unit
+    private val onItemClick: (Int) -> Unit,
 ) : RecyclerView.ViewHolder(view) {
 
     private val poster: ImageView = view.findViewById(R.id.item_poster)
@@ -29,11 +29,15 @@ class MovieItemViewHolder(
     fun bind(movie: MovieListModel.MovieModel) {
         poster.setImageResource(movie.poster)
         title.text = movie.title
-        date.text = view.context.getString(R.string.screening_date, movie.startDate.format(), movie.endDate.format())
+        date.text = view.context.getString(
+            R.string.screening_date,
+            movie.startDate.format(),
+            movie.endDate.format(),
+        )
         runningTime.text = view.context.getString(R.string.running_time, movie.runningTime)
     }
 
     private fun LocalDate.format(): String = format(
-        DateTimeFormatter.ofPattern(view.context.getString(R.string.date_format))
+        DateTimeFormatter.ofPattern(view.context.getString(R.string.date_format)),
     )
 }

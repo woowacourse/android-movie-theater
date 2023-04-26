@@ -19,6 +19,6 @@ sealed class MovieListModel {
 
     data class AdModel(
         @DrawableRes val banner: Int,
-        val url: String
+        val url: String,
     ) : MovieListModel()
 }

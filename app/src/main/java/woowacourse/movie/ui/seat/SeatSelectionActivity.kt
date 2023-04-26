@@ -105,7 +105,7 @@ class SeatSelectionActivity : AppCompatActivity() {
         val seat = SeatModel(row, column)
         return seat.getView(
             this,
-            selectedSeats.contains(seat.toDomain())
+            selectedSeats.contains(seat.toDomain()),
         ) {
             clickSeat(seat.toDomain(), this)
         }
@@ -139,7 +139,7 @@ class SeatSelectionActivity : AppCompatActivity() {
                 title = movieTitle,
                 time = movieTime,
                 peopleCount = peopleCount,
-                seats = selectedSeats.toModel()
+                seats = selectedSeats.toModel(),
             ).apply {
                 setReservationData(this)
                 moveToTicketActivity(this)

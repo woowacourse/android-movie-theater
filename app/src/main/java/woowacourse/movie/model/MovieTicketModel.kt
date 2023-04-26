@@ -7,5 +7,5 @@ data class MovieTicketModel(
     val title: String,
     val time: LocalDateTime,
     val peopleCount: PeopleCountModel,
-    val seats: SelectedSeatsModel
+    val seats: SelectedSeatsModel,
 ) : Serializable

@@ -9,13 +9,13 @@ import java.io.Serializable
 
 data class SeatModel(
     val row: Int,
-    val column: Int
+    val column: Int,
 ) : Serializable {
 
     fun getView(
         context: Context,
         isSelected: Boolean,
-        onClick: View.() -> Unit
+        onClick: View.() -> Unit,
     ): View {
         return LayoutInflater.from(context).inflate(R.layout.item_seat, null, false).apply {
             this.isSelected = isSelected
@@ -32,8 +32,12 @@ data class SeatModel(
 
     private fun updateBackgroundColor(seatView: View, context: Context) {
         when (seatView.isSelected) {
-            true -> { seatView.setBackgroundColor(context.getColor(R.color.seat_selected_background)) }
-            false -> { seatView.setBackgroundColor(context.getColor(R.color.seat_unselected_background)) }
+            true -> {
+                seatView.setBackgroundColor(context.getColor(R.color.seat_selected_background))
+            }
+            false -> {
+                seatView.setBackgroundColor(context.getColor(R.color.seat_unselected_background))
+            }
         }
     }
 
