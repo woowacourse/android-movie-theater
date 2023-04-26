@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
@@ -182,8 +181,8 @@ class SeatSelectionActivity : AppCompatActivity() {
                 applicationContext, RESERVATION_REQUEST_CODE, it, PendingIntent.FLAG_IMMUTABLE
             )
         }
-        // makeAlarm(reservationDetail.date, alarmIntent)
-        makeAlarm(LocalDateTime.now().plusSeconds(10), alarmIntent)
+
+        makeAlarm(reservation.reservationDetail.date.minusMinutes(NOTIFICATION_MINUTE), alarmIntent)
     }
 
     private fun makeAlarmReceiver(action: String) {
@@ -195,7 +194,6 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     private fun makeAlarm(date: LocalDateTime, intent: PendingIntent) {
-        Log.d("DYDY", date.toString())
         val milliseconds = date.atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli()
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(AlarmManager.RTC, milliseconds, intent)
@@ -235,11 +233,13 @@ class SeatSelectionActivity : AppCompatActivity() {
 
     companion object {
         const val RESERVATION_REQUEST_CODE = 1
+        const val ACTION_ALARM = "actionAlarm"
+
+        private const val NOTIFICATION_MINUTE: Long = 30
         private const val SEAT_ROW_COUNT = 5
         private const val SEAT_COLUMN_COUNT = 4
         private const val DEFAULT_SEAT_SIZE = 0
         private const val SEAT_TABLE_LAYOUT_STATE_KEY = "seatTable"
-        const val ACTION_ALARM = "actionAlarm"
 
         fun from(
             context: Context,
