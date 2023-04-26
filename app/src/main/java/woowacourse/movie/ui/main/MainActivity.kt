@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val fragment = supportFragmentManager.findFragmentById(rv.id)
-
         when (fragment) {
             is MovieListFragment -> {
                 movieListFragment = fragment
