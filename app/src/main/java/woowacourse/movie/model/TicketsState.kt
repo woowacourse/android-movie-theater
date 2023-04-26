@@ -17,13 +17,13 @@ data class TicketsState(
     }
 
     companion object {
-        fun from(reservationState: ReservationOptState, seats: List<SeatPositionState>): TicketsState {
-            require(reservationState.countState.value == seats.size) {
+        fun from(ticketOptState: TicketOptState, seats: List<SeatPositionState>): TicketsState {
+            require(ticketOptState.countState.value == seats.size) {
                 ERROR_NO_MATCH_SEAT_SIZE
             }
             return TicketsState(
-                reservationState.movieState,
-                reservationState.dateTime,
+                ticketOptState.movieState,
+                ticketOptState.dateTime,
                 seats.toList()
             )
         }

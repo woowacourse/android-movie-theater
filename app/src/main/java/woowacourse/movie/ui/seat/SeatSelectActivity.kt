@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.widget.TextView
 import com.example.domain.usecase.DiscountApplyUseCase
 import woowacourse.movie.R
-import woowacourse.movie.model.ReservationOptState
 import woowacourse.movie.model.SeatPositionState
+import woowacourse.movie.model.TicketOptState
 import woowacourse.movie.model.TicketsState
 import woowacourse.movie.model.mapper.asDomain
 import woowacourse.movie.model.mapper.asPresentation
@@ -26,22 +26,22 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
     private val titleTextView: TextView by lazy { findViewById(R.id.reservation_title) }
     private val moneyTextView: TextView by lazy { findViewById(R.id.reservation_money) }
     private val confirmView: ConfirmView by lazy { findViewById(R.id.reservation_confirm) }
-    private lateinit var reservationState: ReservationOptState
+    private lateinit var ticketOptState: TicketOptState
 
     private lateinit var seatTable: SeatTable
 
     override fun onCreateView(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_seat_select)
 
-        reservationState =
+        ticketOptState =
             intent.getParcelableExtraCompat(KEY_TICKETS) ?: return keyError(KEY_TICKETS)
 
-        titleTextView.text = reservationState.movieState.title
+        titleTextView.text = ticketOptState.movieState.title
 
         confirmView.setOnClickListener { navigateShowDialog(seatTable.chosenSeatInfo) }
         confirmView.isClickable = false // 클릭리스너를 설정하면 clickable이 자동으로 참이 되기 때문
 
-        seatTable = SeatTable(window.decorView.rootView, reservationState.countState) {
+        seatTable = SeatTable(window.decorView.rootView, ticketOptState.countState) {
             updateSelectSeats(it)
         }
     }
@@ -78,17 +78,17 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
 
     private fun navigateReservationConfirmActivity(seats: List<SeatPositionState>) {
         val intent = Intent(this, ReservationConfirmActivity::class.java)
-        val tickets = TicketsState.from(reservationState, seats)
+        val tickets = TicketsState.from(ticketOptState, seats)
         intent.putExtra(KEY_TICKETS, tickets)
         startActivity(intent)
     }
 
     private fun updateSelectSeats(positionStates: List<SeatPositionState>) {
-        confirmView.isClickable = (positionStates.size == reservationState.countState.value)
+        confirmView.isClickable = (positionStates.size == ticketOptState.countState.value)
 
         val tickets = TicketsState(
-            reservationState.movieState,
-            reservationState.dateTime,
+            ticketOptState.movieState,
+            ticketOptState.dateTime,
             positionStates.toList()
         )
 

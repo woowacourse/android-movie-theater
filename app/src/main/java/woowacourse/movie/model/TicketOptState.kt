@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 import java.time.LocalDateTime
 
 @Parcelize
-data class ReservationOptState(
+data class TicketOptState(
     val movieState: MovieState,
     val dateTime: LocalDateTime,
     val countState: CountState
