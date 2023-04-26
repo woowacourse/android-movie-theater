@@ -6,7 +6,6 @@ import com.example.domain.Reservation
 import com.example.domain.ReservationRepository
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookCompleteBinding
-import woowacourse.movie.model.BookingCompleteInfo
 import woowacourse.movie.presentation.view.common.BackButtonActivity
 
 class BookCompleteActivity : BackButtonActivity() {

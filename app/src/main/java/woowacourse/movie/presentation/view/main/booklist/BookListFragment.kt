@@ -9,12 +9,12 @@ import com.example.domain.Reservation
 import com.example.domain.ReservationRepository
 import woowacourse.movie.databinding.FragmentBookListBinding
 
-
 class BookListFragment : Fragment() {
     private lateinit var binding: FragmentBookListBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentBookListBinding.inflate(inflater, container, false)

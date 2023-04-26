@@ -1,8 +1,13 @@
 package woowacourse.movie.presentation.view.main.home.seatpick
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.TableRow
@@ -17,11 +22,17 @@ import com.example.domain.Seat
 import com.example.domain.SeatGrade
 import com.example.domain.TicketBundle
 import woowacourse.movie.R
+import woowacourse.movie.broadcast.AlarmReceiver
 import woowacourse.movie.databinding.ActivitySeatPickerBinding
 import woowacourse.movie.model.MovieBookingInfo
 import woowacourse.movie.presentation.extension.getParcelableCompat
 import woowacourse.movie.presentation.view.common.BackButtonActivity
 import woowacourse.movie.presentation.view.main.home.bookcomplete.BookCompleteActivity
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 class SeatPickerActivity : BackButtonActivity() {
     private lateinit var binding: ActivitySeatPickerBinding
@@ -73,6 +84,8 @@ class SeatPickerActivity : BackButtonActivity() {
 
     private fun setDialogPositiveEvent(movieBookingInfo: MovieBookingInfo) {
         val reservationId = saveReservation(movieBookingInfo)
+        setAlarmManager(reservationId)
+
         val intent =
             Intent(this@SeatPickerActivity, BookCompleteActivity::class.java).apply {
                 putExtra(
@@ -81,6 +94,30 @@ class SeatPickerActivity : BackButtonActivity() {
                 )
             }
         startActivity(intent)
+    }
+
+    private fun setAlarmManager(reservationId: Long) {
+        val alarmMgr: AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val alarmIntent = Intent(this, AlarmReceiver::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }.let { intent ->
+            intent.putExtra(BookCompleteActivity.BOOKING_COMPLETE_INFO_INTENT_KEY, reservationId)
+            PendingIntent.getBroadcast(this, 0, intent, FLAG_IMMUTABLE)
+        }
+
+        val localDateTime = LocalDateTime.of(
+            LocalDate.parse("2023-04-26", DateTimeFormatter.ISO_DATE),
+            LocalTime.parse("17:15", DateTimeFormatter.ofPattern("H:mm"))
+        ).atZone(ZoneId.of("Asia/Seoul")).toInstant().toEpochMilli()
+
+        alarmMgr.set(
+            AlarmManager.RTC_WAKEUP,
+            localDateTime,
+            alarmIntent
+        )
+
+        Log.d("AlarmTest", (localDateTime - (1000 * 60 * 30)).toString())
     }
 
     private fun saveReservation(movieBookingInfo: MovieBookingInfo): Long {
