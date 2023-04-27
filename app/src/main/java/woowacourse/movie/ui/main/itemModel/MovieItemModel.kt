@@ -4,8 +4,7 @@ import woowacourse.movie.model.MovieState
 import woowacourse.movie.ui.main.ViewType
 
 class MovieItemModel(
-    val movieState: MovieState,
-    override val onClick: (position: Int) -> Unit
+    val movieState: MovieState
 ) : ItemModel {
     override val viewType: ViewType = ViewType.MOVIE
 }

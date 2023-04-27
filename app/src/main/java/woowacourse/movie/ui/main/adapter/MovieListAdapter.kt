@@ -14,7 +14,9 @@ import woowacourse.movie.ui.main.viewHolder.MovieViewHolder
 
 class MovieListAdapter(
     movie: List<MovieItemModel>,
-    adv: List<AdvItemModel>
+    adv: List<AdvItemModel>,
+    private val onClickMovie: (MovieItemModel) -> Unit,
+    private val onClickAdv: (AdvItemModel) -> Unit
 ) : RecyclerView.Adapter<ItemViewHolder>() {
 
     private val _items: List<ItemModel>
@@ -45,12 +47,16 @@ class MovieListAdapter(
             ViewType.MOVIE -> {
                 val itemView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.movie_item_layout, parent, false)
-                MovieViewHolder(itemView)
+                MovieViewHolder(itemView) { position ->
+                    onClickMovie(items[position] as MovieItemModel)
+                }
             }
             ViewType.ADV -> {
                 val itemView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.adv_item_layout, parent, false)
-                AdvViewHolder(itemView)
+                AdvViewHolder(itemView) { position ->
+                    onClickAdv(items[position] as AdvItemModel)
+                }
             }
         }
     }

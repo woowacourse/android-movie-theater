@@ -8,7 +8,10 @@ import woowacourse.movie.ui.DateTimeFormatters
 import woowacourse.movie.ui.main.itemModel.ItemModel
 import woowacourse.movie.ui.main.itemModel.TicketsItemModel
 
-class TicketsViewHolder(view: View) : ItemViewHolder(view) {
+class TicketsViewHolder(
+    view: View,
+    onClick: (position: Int) -> Unit
+) : ItemViewHolder(view) {
 
     private val box: LinearLayout
     private val screeningDateTimeTextView: TextView
@@ -18,6 +21,7 @@ class TicketsViewHolder(view: View) : ItemViewHolder(view) {
         box = view.findViewById(R.id.reservation_item_box)
         screeningDateTimeTextView = view.findViewById(R.id.screening_date_time_text_view)
         movieNameTextView = view.findViewById(R.id.movie_name_text_view)
+        box.setOnClickListener { onClick(bindingAdapterPosition) }
     }
 
     override fun bind(itemModel: ItemModel) {
@@ -30,7 +34,5 @@ class TicketsViewHolder(view: View) : ItemViewHolder(view) {
                 item.ticketsState.dateTime.toLocalTime().toString()
             )
         movieNameTextView.text = item.ticketsState.movieState.title
-
-        box.setOnClickListener { item.onClick(bindingAdapterPosition) }
     }
 }

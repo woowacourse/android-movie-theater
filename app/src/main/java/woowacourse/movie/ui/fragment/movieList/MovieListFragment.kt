@@ -18,25 +18,26 @@ import woowacourse.movie.ui.reservation.MovieDetailActivity
 
 class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
 
-    private lateinit var movieListView: RecyclerView
-    private lateinit var adapter: MovieListAdapter
+    private var movieListView: RecyclerView? = null
+    private var adapter: MovieListAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        movieListView = view.findViewById(R.id.rv_main)
         adapter = MovieListAdapter(
-            movie = MovieRepository.allMovies().map {
-                it.convertToItemModel { position ->
-                    navigateMovieDetail((adapter.items[position] as MovieItemModel).movieState)
-                }
-            },
-            adv = AdvRepository.allAdv().map {
-                it.convertToItemModel { position ->
-                    navigateAdbDetail((adapter.items[position] as AdvItemModel).advState)
-                }
-            }
+            movie = MovieRepository.allMovies().map(::MovieItemModel),
+            adv = AdvRepository.allAdv().map(::AdvItemModel),
+            onClickMovie = { movieItemModel -> navigateMovieDetail(movieItemModel.movieState) },
+            onClickAdv = { advItemModel -> navigateAdbDetail(advItemModel.advState) }
         )
-        movieListView.adapter = adapter
+
+        movieListView = view.findViewById(R.id.rv_main)
+        movieListView?.adapter = adapter
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        movieListView = null
+        adapter = null
     }
 
     private fun navigateMovieDetail(movie: MovieState) {

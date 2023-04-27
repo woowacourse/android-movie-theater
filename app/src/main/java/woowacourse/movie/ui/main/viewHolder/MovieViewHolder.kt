@@ -10,7 +10,8 @@ import woowacourse.movie.ui.main.itemModel.ItemModel
 import woowacourse.movie.ui.main.itemModel.MovieItemModel
 
 class MovieViewHolder(
-    itemView: View
+    itemView: View,
+    onClick: (position: Int) -> Unit
 ) : ItemViewHolder(itemView) {
     private val image: ImageView
     private val title: TextView
@@ -24,6 +25,7 @@ class MovieViewHolder(
         date = itemView.findViewById(R.id.running_date)
         time = itemView.findViewById(R.id.running_time)
         reservation = itemView.findViewById(R.id.reservation)
+        reservation.setOnClickListener { onClick(bindingAdapterPosition) }
     }
 
     override fun bind(itemModel: ItemModel) {
@@ -37,7 +39,5 @@ class MovieViewHolder(
                 item.movieState.endDate
             )
         time.text = time.context.getString(R.string.running_time, item.movieState.runningTime)
-
-        reservation.setOnClickListener { item.onClick(bindingAdapterPosition) }
     }
 }

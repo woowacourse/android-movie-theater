@@ -5,11 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.ui.main.itemModel.ItemModel
+import woowacourse.movie.ui.main.itemModel.TicketsItemModel
 import woowacourse.movie.ui.main.viewHolder.ItemViewHolder
 import woowacourse.movie.ui.main.viewHolder.TicketsViewHolder
 
 class ReservationListAdapter(
-    reservations: List<ItemModel>
+    reservations: List<ItemModel>,
+    private val onReservationClick: (TicketsItemModel) -> Unit
 ) : RecyclerView.Adapter<ItemViewHolder>() {
 
     private var _reservations = reservations.toList()
@@ -19,7 +21,9 @@ class ReservationListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_reservation_layout, parent, false)
-        return TicketsViewHolder(itemView)
+        return TicketsViewHolder(itemView) { position ->
+            onReservationClick(reservations[position] as TicketsItemModel)
+        }
     }
 
     override fun getItemCount(): Int = _reservations.size
