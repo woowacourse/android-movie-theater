@@ -13,8 +13,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
 import woowacourse.movie.ui.activity.MovieTicketActivity
-import woowacourse.movie.ui.getParcelable
 import woowacourse.movie.ui.model.MovieTicketModel
+import woowacourse.movie.ui.utils.getParcelable
 
 class NotificationReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {

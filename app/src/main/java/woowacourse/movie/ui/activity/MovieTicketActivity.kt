@@ -10,11 +10,11 @@ import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.ui.getParcelable
 import woowacourse.movie.ui.model.MovieTicketModel
 import woowacourse.movie.ui.model.PriceModel
 import woowacourse.movie.ui.model.TicketTimeModel
 import woowacourse.movie.ui.model.seat.SeatModel
+import woowacourse.movie.ui.utils.getParcelable
 import java.time.format.DateTimeFormatter
 
 class MovieTicketActivity : AppCompatActivity() {

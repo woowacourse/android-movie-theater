@@ -38,4 +38,7 @@
     <string name="reservation_notification_title">예매 알림</string>
     <string name="reservation_notification_content">%s 30분 후에 상영</string>
     <string name="reservation_notification_channel_description">영화 예매 알림 채널 입니다</string>
+
+    <string name="notification_permission_snackbar_message">상영 30분 전 알림을 위해 알림 권한이 필요합니다. 설정으로 이동하여 권한을 허용해주세요.</string>
+    <string name="notification_permission_snackbar_button">설정</string>
 </resources>

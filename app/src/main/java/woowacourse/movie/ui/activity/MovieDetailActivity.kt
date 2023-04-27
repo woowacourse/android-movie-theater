@@ -15,13 +15,13 @@ import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.domain.PeopleCount
 import woowacourse.movie.domain.TimesGenerator
-import woowacourse.movie.ui.getParcelable
 import woowacourse.movie.ui.model.MovieModel
 import woowacourse.movie.ui.model.MovieTicketModel
 import woowacourse.movie.ui.model.PriceModel
 import woowacourse.movie.ui.model.TicketTimeModel
 import woowacourse.movie.ui.model.mapToMovie
 import woowacourse.movie.ui.model.mapToPeopleCountModel
+import woowacourse.movie.ui.utils.getParcelable
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime

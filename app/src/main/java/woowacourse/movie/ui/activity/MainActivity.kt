@@ -4,10 +4,13 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
@@ -18,6 +21,7 @@ import woowacourse.movie.ui.fragment.movielist.HomeFragment
 import woowacourse.movie.ui.fragment.reservationlist.ReservationListFragment
 import woowacourse.movie.ui.fragment.settings.SettingsFragment
 import woowacourse.movie.ui.storage.SettingsStorage
+import woowacourse.movie.ui.utils.showSnack
 
 class MainActivity : AppCompatActivity() {
     private val bottomNavigationView by lazy { findViewById<BottomNavigationView>(R.id.main_bottom_navigation) }
@@ -54,6 +58,12 @@ class MainActivity : AppCompatActivity() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
                     // 권한 요청 거부한 경우
+                    val container = findViewById<ConstraintLayout>(R.id.main_container)
+                    container.showSnack(
+                        getString(R.string.notification_permission_snackbar_message),
+                        getString(R.string.notification_permission_snackbar_button),
+                        ::openAndroidSettings
+                    )
                 } else {
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
@@ -61,6 +71,15 @@ class MainActivity : AppCompatActivity() {
                 // 안드로이드 12 이하는 Notification에 관한 권한 필요 없음
             }
         }
+    }
+
+    private fun openAndroidSettings() {
+        val uri = Uri.fromParts("package", packageName, null)
+        val intent = Intent().apply {
+            action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+            data = uri
+        }
+        startActivity(intent)
     }
 
     private fun initFragment(itemId: Int) {
