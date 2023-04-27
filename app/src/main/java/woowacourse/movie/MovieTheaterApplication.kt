@@ -8,8 +8,12 @@ import woowacourse.movie.broadcastreceiver.AlarmReceiver
 class MovieTheaterApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        val alarmReceiver = AlarmReceiver()
+        initAlarmReceiver()
         initSettingsPreference()
+    }
+
+    private fun initAlarmReceiver() {
+        val alarmReceiver = AlarmReceiver()
         registerReceiver(alarmReceiver, IntentFilter())
     }
 
