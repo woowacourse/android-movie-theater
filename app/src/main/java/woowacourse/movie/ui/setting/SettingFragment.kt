@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,7 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.model.AlarmSwitchState
 import woowacourse.movie.model.ReservationModel
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -23,7 +23,6 @@ import java.time.ZoneOffset
 
 class SettingFragment : Fragment() {
     private lateinit var toggleButton: SwitchCompat
-
     private val requestPermissionLauncher by lazy {
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
@@ -41,6 +40,7 @@ class SettingFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_setting, container, false)
 
+        AlarmSwitchState.init(requireContext())
         requestNotificationPermission(view)
         initToggleButton(view)
         return view
@@ -48,9 +48,12 @@ class SettingFragment : Fragment() {
 
     private fun initToggleButton(view: View) {
         toggleButton = view.findViewById(R.id.setting_switch)
+        toggleButton.isChecked = AlarmSwitchState.isAlarmActivated
+
         toggleButton.setOnCheckedChangeListener { _, isChecked ->
+            AlarmSwitchState.isAlarmActivated = isChecked
+
             if (isChecked) {
-                setAlarmIntent()
                 makeAlarm()
             } else {
                 cancelAlarm()
@@ -58,25 +61,12 @@ class SettingFragment : Fragment() {
         }
     }
 
-    private fun setAlarmIntent() {
-        val intent = Intent(requireContext(), ReservationAlarmReceiver::class.java)
-
-        if (ReservationModel.tickets.isNotEmpty()) {
-            Log.d("123123", "put first ticket - size: ${ReservationModel.tickets.size}")
-            intent.putExtra(KEY_MOVIE, ReservationModel.tickets.first())
-        }
-
-        pendingIntent = PendingIntent.getBroadcast(
-            requireContext(),
-            ReservationAlarmReceiver.NOTIFICATION_ID,
-            intent,
-            PendingIntent.FLAG_IMMUTABLE,
-        )
-    }
-
     private fun makeAlarm() {
-        val setDateTime: LocalDateTime = ReservationModel.tickets.first().time.minusMinutes(30)
+        if (ReservationModel.firstTicket == null) return
 
+        setAlarmIntent()
+
+        val setDateTime: LocalDateTime = ReservationModel.firstTicket.time.minusMinutes(30)
         val dateTime =
             setDateTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneOffset.UTC)
                 .toLocalDateTime()
@@ -90,8 +80,25 @@ class SettingFragment : Fragment() {
         )
     }
 
+    private fun setAlarmIntent() {
+        val intent = Intent(requireContext(), ReservationAlarmReceiver::class.java)
+
+        if (ReservationModel.firstTicket != null) {
+            intent.putExtra(KEY_MOVIE, ReservationModel.firstTicket)
+        }
+
+        pendingIntent = PendingIntent.getBroadcast(
+            requireContext(),
+            ReservationAlarmReceiver.NOTIFICATION_ID,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE,
+        )
+    }
+
     private fun cancelAlarm() {
-        alarmManager.cancel(pendingIntent)
+        if (this::pendingIntent.isInitialized) {
+            alarmManager.cancel(pendingIntent)
+        }
     }
 
     private fun requestNotificationPermission(view: View) {
@@ -114,5 +121,6 @@ class SettingFragment : Fragment() {
 
     companion object {
         const val KEY_MOVIE = "movie"
+        private const val KEY_SWITCH = "switch"
     }
 }
