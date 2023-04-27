@@ -4,6 +4,7 @@ import android.Manifest
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
@@ -26,21 +27,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        movieListFragment =
-            supportFragmentManager.findFragmentByTag(MOVIE_LIST_TAG) as? MovieListFragment
-                ?: MovieListFragment()
-
-        reservationListFragment =
-            supportFragmentManager.findFragmentByTag(RESERVATION_LIST_TAG) as? ReservationListFragment
-                ?: ReservationListFragment()
-
-        settingFragment =
-            supportFragmentManager.findFragmentByTag(SETTING_TAG) as? SettingFragment
-                ?: SettingFragment()
+        movieListFragment = getFragment(MOVIE_LIST_TAG, MovieListFragment())
+        reservationListFragment = getFragment(RESERVATION_LIST_TAG, ReservationListFragment())
+        settingFragment = getFragment(SETTING_TAG, SettingFragment())
 
         if (savedInstanceState == null) { initFragments() }
         initListener()
         requestPermissions(PERMISSIONS, requestPermissionLauncher::launch)
+    }
+
+    private inline fun <reified T : Fragment> getFragment(tag: String, default: T): T {
+        return supportFragmentManager.findFragmentByTag(tag) as? T ?: default
     }
 
     private fun initFragments() {
