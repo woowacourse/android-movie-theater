@@ -15,5 +15,9 @@
     <color name="gray_100">#EAEAEA</color>
     <color name="white">#FFFFFFFF</color>
     <color name="yellow">#FAFF00</color>
+    <color name="gray_300">#a4b0be</color>
+
+
+
 
 </resources>

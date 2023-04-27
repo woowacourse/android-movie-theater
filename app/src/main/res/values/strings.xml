@@ -34,4 +34,8 @@
     <!-- BookedTicket Notification  -->
     <string name="booked_ticket_notification_title">예매 알림</string>
     <string name="booked_ticket_notification_content">%s 30분 후에 상영</string>
+
+    <!-- FragmentSettings  -->
+    <string name="textPushPermissionTitle">푸시 알림 수신</string>
+    <string name="textPushPermissionDescription">해제하면 푸시 알림을 수신할 수 없습니다.</string>
 </resources>
