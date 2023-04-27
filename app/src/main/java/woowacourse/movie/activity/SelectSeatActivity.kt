@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import domain.Ticket
 import domain.TicketOffice
 import woowacourse.movie.R
+import woowacourse.movie.fragment.SettingFragment
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.receiver.NotificationReceiver
 import woowacourse.movie.setBackgroundColorId
@@ -120,7 +121,6 @@ class SelectSeatActivity : AppCompatActivity() {
         val alarmManager: AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager[AlarmManager.RTC, calendar.timeInMillis] = pendingIntent
     }
-
 
     fun getAlarmDateTime(localDateTime: LocalDateTime): Date {
         val milliSeconds: Long = localDateTime.atZone(ZoneId.systemDefault())

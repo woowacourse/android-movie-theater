@@ -10,9 +10,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.activity.MainActivity
 import woowacourse.movie.activity.ReservationResultActivity
+import woowacourse.movie.activity.SelectSeatActivity
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.model.TicketsUiModel
@@ -72,7 +74,15 @@ class NotificationReceiver : BroadcastReceiver() {
         val notification: Notification = builder.build()
 
         //NotificationManager를 이용하여 푸시 알림 보내기
-        manager.notify(1, notification)
+        if (isAlarmPossible(context)) manager.notify(1, notification)
+    }
+
+    fun isAlarmPossible(context: Context): Boolean {
+        val sharedPreferences = context.getSharedPreferences(
+            SETTING,
+            AppCompatActivity.MODE_PRIVATE
+        )
+        return sharedPreferences.getBoolean(PUSH_ALARM_KEY, false)
     }
 
     companion object {
@@ -81,5 +91,7 @@ class NotificationReceiver : BroadcastReceiver() {
         private const val CHANNEL_NAME = "Channel1"
         private const val MOVIE_KEY_VALUE = "movie"
         private const val TICKET_KEY_VALUE = "tickets"
+        private const val SETTING = "settings"
+        private const val PUSH_ALARM_KEY = "pushAlarm"
     }
 }
