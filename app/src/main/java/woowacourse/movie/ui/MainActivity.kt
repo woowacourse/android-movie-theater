@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initFragmentContainerView() {
         supportFragmentManager.commit {
-            add(R.id.main_fragment_view, ReservationFragment())
+            add(R.id.main_fragment_view, HomeFragment())
             setReorderingAllowed(true)
         }
     }
@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setBottomNavigationView() {
+        bottomNavigationView.selectedItemId = R.id.menu_item_home
         bottomNavigationView.setOnItemSelectedListener { selectedIcon ->
             changeFragment(
                 getFragmentByIcon(selectedIcon),
