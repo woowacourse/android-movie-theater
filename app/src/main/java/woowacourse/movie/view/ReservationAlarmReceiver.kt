@@ -1,18 +1,18 @@
 package woowacourse.movie.view
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
 import woowacourse.movie.activity.ReservationResultActivity
 import woowacourse.movie.activity.SeatSelectionActivity
 import woowacourse.movie.fragment.SettingFragment
+import woowacourse.movie.system.PermissionLauncher
 import woowacourse.movie.system.Setting
 import woowacourse.movie.system.SharedSetting
 import woowacourse.movie.view.data.ReservationViewData
@@ -70,14 +70,10 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
         }
     }
 
+    @SuppressLint("MissingPermission")
     private fun notifyNotification(context: Context, builder: NotificationCompat.Builder) {
-        with(NotificationManagerCompat.from(context)) {
-            if (ActivityCompat.checkSelfPermission(
-                    context, Manifest.permission.POST_NOTIFICATIONS
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                notify(NOTIFICATION_ID, builder.build())
-            }
+        if (PermissionLauncher.isGranted(context, Manifest.permission.POST_NOTIFICATIONS)) {
+            NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, builder.build())
         }
     }
 

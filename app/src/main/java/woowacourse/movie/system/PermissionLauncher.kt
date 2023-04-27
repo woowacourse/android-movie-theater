@@ -1,5 +1,6 @@
 package woowacourse.movie.system
 
+import android.content.Context
 import android.content.pm.PackageManager
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
@@ -26,15 +27,17 @@ class PermissionLauncher(private val activity: ComponentActivity) {
     }
 
     fun requestNotificationPermission(permission: String) {
-        if (!isGranted(permission) && activity.shouldShowRequestPermissionRationale(permission)) {
+        if (!isGranted(activity, permission) && activity.shouldShowRequestPermissionRationale(permission)) {
             requestPermissionLauncher.launch(permission)
         }
     }
 
-    fun isGranted(permission: String): Boolean {
-        return ContextCompat.checkSelfPermission(
-            activity,
-            permission
-        ) == PackageManager.PERMISSION_GRANTED
+    companion object {
+        fun isGranted(context: Context, permission: String): Boolean {
+            return ContextCompat.checkSelfPermission(
+                context,
+                permission
+            ) == PackageManager.PERMISSION_GRANTED
+        }
     }
 }

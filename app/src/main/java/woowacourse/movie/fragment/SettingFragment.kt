@@ -32,8 +32,10 @@ class SettingFragment : Fragment() {
         val permission = Manifest.permission.POST_NOTIFICATIONS
 
         switch.isChecked =
-            setting.getSettingValue(SETTING_NOTIFICATION) &&
-            (permissionLauncher?.isGranted(permission) ?: true)
+            setting.getSettingValue(SETTING_NOTIFICATION) && PermissionLauncher.isGranted(
+            requireContext(),
+            permission
+        )
 
         permissionLauncher?.addResult(permission) {
             onNotificationAddResult(switch, setting, it)
@@ -61,8 +63,8 @@ class SettingFragment : Fragment() {
         permission: String,
         isChecked: Boolean
     ) {
-        if (isChecked && permissionLauncher?.isGranted(permission) == false) {
-            permissionLauncher.requestNotificationPermission(permission)
+        if (isChecked && !PermissionLauncher.isGranted(requireContext(), permission)) {
+            permissionLauncher?.requestNotificationPermission(permission)
             return
         }
         setting.setSettingValue(SETTING_NOTIFICATION, false)
