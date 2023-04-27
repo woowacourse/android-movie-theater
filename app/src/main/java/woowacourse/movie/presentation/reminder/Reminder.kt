@@ -10,7 +10,7 @@ import android.os.Parcelable
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
-import woowacourse.movie.presentation.extensions.checkPermissionCompat
+import woowacourse.movie.presentation.extensions.checkPermissionTiramisu
 
 abstract class Reminder {
     protected abstract val channelId: String
@@ -56,5 +56,5 @@ abstract class Reminder {
 
     @SuppressLint("InlinedApi")
     private fun isPermissionGranted(context: Context): Boolean =
-        context.checkPermissionCompat(permission.POST_NOTIFICATIONS)
+        context.checkPermissionTiramisu(permission.POST_NOTIFICATIONS)
 }

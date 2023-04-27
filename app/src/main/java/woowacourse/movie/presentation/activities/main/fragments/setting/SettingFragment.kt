@@ -1,5 +1,7 @@
 package woowacourse.movie.presentation.activities.main.fragments.setting
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +10,12 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.switchmaterial.SwitchMaterial
 import woowacourse.movie.R
 import woowacourse.movie.presentation.MovieApplication
+import woowacourse.movie.presentation.extensions.checkPermissionTiramisu
+import woowacourse.movie.presentation.extensions.createAlertDialog
+import woowacourse.movie.presentation.extensions.message
+import woowacourse.movie.presentation.extensions.negativeButton
+import woowacourse.movie.presentation.extensions.positiveButton
+import woowacourse.movie.presentation.extensions.title
 
 class SettingFragment : Fragment() {
 
@@ -24,15 +32,28 @@ class SettingFragment : Fragment() {
         initPushSwitch(view)
     }
 
+    @SuppressLint("InlinedApi")
     private fun initPushSwitch(view: View) {
         val switch = view.findViewById<SwitchMaterial>(R.id.notification_push_switch)
         val preferences = MovieApplication.preferences
+        val isPushAllowed = preferences.getBoolean(PUSH_ALLOW_KEY, true) &&
+            requireContext().checkPermissionTiramisu(Manifest.permission.POST_NOTIFICATIONS)
 
         with(switch) {
-            preferences.getBoolean(PUSH_ALLOW_KEY, true)
-            isChecked = preferences.getBoolean(PUSH_ALLOW_KEY, true)
+            isChecked = preferences.getBoolean(PUSH_ALLOW_KEY, isPushAllowed)
             setOnCheckedChangeListener { _, isChecked ->
-                preferences.setBoolean(PUSH_ALLOW_KEY, isChecked)
+                if (isChecked && !requireContext().checkPermissionTiramisu(Manifest.permission.POST_NOTIFICATIONS)) {
+                    requireContext().createAlertDialog {
+                        title("권한 요청")
+                        message("푸시 알림을 받으려면 권한이 필요합니다.")
+                        positiveButton {
+                            // 권한을 요청한다.
+                        }
+                        negativeButton { setChecked(false) }
+                    }.show()
+                } else {
+                    preferences.setBoolean(PUSH_ALLOW_KEY, isChecked)
+                }
             }
         }
     }
