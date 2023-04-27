@@ -18,7 +18,7 @@ private const val CHANNEL_NAME = "movie_channel_name"
 private const val CHANNEL_DESCRIPTION = "This is a movie channel"
 private const val NO_PERMISSION_OF_NOTIFICATION = -1
 
-private val atomicNotifyId = AtomicInteger(0x001)
+private val atomicNotifyId = AtomicInteger(1)
 
 data class NotificationArgs(
     val iconResId: Int,
