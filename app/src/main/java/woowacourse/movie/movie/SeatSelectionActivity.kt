@@ -77,8 +77,11 @@ class SeatSelectionActivity : AppCompatActivity() {
                 seat,
             )
             isSeatCancelable(seat) -> unselectSeat(textView, seat)
-            else -> Toast.makeText(this, R.string.seats_size_over_error, Toast.LENGTH_LONG)
-                .show()
+            else -> {
+                Toast.makeText(this, R.string.seats_size_over_error, Toast.LENGTH_LONG)
+                    .show()
+                return
+            }
         }
         setPrice(seats.caculateSeatPrice(LocalDateTime.of(date.date, time.time)))
         setEnterBtnClickable()
@@ -87,14 +90,14 @@ class SeatSelectionActivity : AppCompatActivity() {
     private fun setEnterBtnClickable() {
         if (isPossibleEnter(ticketCount.numberOfPeople)) {
             enterBtn.setBackgroundColor(getColor(R.color.enter))
-            OnEnterBtnClickListener(enterBtn)
+            onEnterBtnClickListener(enterBtn)
         } else {
             enterBtn.setBackgroundColor(getColor(R.color.not_enter))
             enterBtn.setOnClickListener(null)
         }
     }
 
-    private fun OnEnterBtnClickListener(enterBtn: TextView) {
+    private fun onEnterBtnClickListener(enterBtn: TextView) {
         enterBtn.setOnClickListener {
             showBookingDialog()
         }
