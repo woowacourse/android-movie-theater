@@ -1,7 +1,6 @@
 package woowacourse.movie.presentation.bookedticketlist
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,14 +25,12 @@ class BookedTicketsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("멧돼지", "테스트 들어오고있음")
         setBookedTicketsAdapter()
     }
 
     private fun setBookedTicketsAdapter() {
         requireActivity().findViewById<RecyclerView>(R.id.recyclerBookedTickets).adapter =
             bookedTicketsAdapter
-        Log.d("멧돼지", BookedTickets.tickets.toString())
         bookedTicketsAdapter.submitList(BookedTickets.tickets)
     }
 
