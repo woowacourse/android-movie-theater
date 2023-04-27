@@ -14,7 +14,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.activity.MainActivity
-import kotlin.properties.Delegates
 
 @RunWith(AndroidJUnit4::class)
 class SettingFragmentTest {
