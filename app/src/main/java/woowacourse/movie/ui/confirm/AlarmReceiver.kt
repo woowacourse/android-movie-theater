@@ -7,6 +7,7 @@ import woowacourse.movie.PreferenceUtil
 import woowacourse.movie.R
 import woowacourse.movie.model.TicketsState
 import woowacourse.movie.ui.fragment.setting.SettingFragment.Companion.NOTIFICATIONS
+import woowacourse.movie.util.NotificationArgs
 import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.util.sendNotification
 
@@ -17,13 +18,14 @@ class AlarmReceiver : BroadcastReceiver() {
         val isNotification = sharedPreference.getBoolean(NOTIFICATIONS, false)
 
         if (isNotification) {
-            context.sendNotification(
-                R.drawable.ic_launcher_foreground,
-                context.getString(R.string.alarm_receiver_notification_title),
-                context.getString(R.string.alarm_receiver_notification_text)
+            val notificationArgs = NotificationArgs(
+                iconResId = R.drawable.ic_launcher_foreground,
+                contentTitle = context.getString(R.string.alarm_receiver_notification_title),
+                contentText = context.getString(R.string.alarm_receiver_notification_text)
                     .format(tickets.movieState.title),
-                true
+                cancelable = true
             )
+            context.sendNotification(notificationArgs)
         }
     }
 

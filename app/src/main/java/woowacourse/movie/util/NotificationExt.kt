@@ -13,11 +13,19 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import java.util.concurrent.atomic.AtomicInteger
 
-const val CHANNEL_ID = "movie_channel"
-const val CHANNEL_NAME = "movie_channel_name"
-const val CHANNEL_DESCRIPTION = "This is a movie channel"
+private const val CHANNEL_ID = "movie_channel"
+private const val CHANNEL_NAME = "movie_channel_name"
+private const val CHANNEL_DESCRIPTION = "This is a movie channel"
+private const val NO_PERMISSION_OF_NOTIFICATION = -1
 
-val atomicNotifyId = AtomicInteger(0x001)
+private val atomicNotifyId = AtomicInteger(0x001)
+
+data class NotificationArgs(
+    val iconResId: Int,
+    val contentTitle: String,
+    val contentText: String,
+    val cancelable: Boolean
+)
 
 fun Context.createNotificationChannel() {
     val id = CHANNEL_ID
@@ -35,38 +43,28 @@ fun Context.createNotificationChannel() {
     NotificationManagerCompat.from(this).createNotificationChannel(channel)
 }
 
-fun Context.createNotification(
-    iconResId: Int,
-    contentTitle: String,
-    contentText: String,
-    cancelable: Boolean
-): Notification {
+fun Context.createNotification(args: NotificationArgs): Notification {
     createNotificationChannel()
 
     return NotificationCompat.Builder(this, CHANNEL_ID)
-        .setSmallIcon(iconResId)
-        .setContentTitle(contentTitle)
-        .setContentText(contentText)
+        .setSmallIcon(args.iconResId)
+        .setContentTitle(args.contentTitle)
+        .setContentText(args.contentText)
         .setPriority(NotificationCompat.PRIORITY_HIGH)
         .setCategory(NotificationCompat.CATEGORY_REMINDER)
-        .setAutoCancel(cancelable)
+        .setAutoCancel(args.cancelable)
         .build()
 }
 
-fun Context.sendNotification(
-    iconResId: Int,
-    contentTitle: String,
-    contentText: String,
-    cancelable: Boolean
-): Int {
+fun Context.sendNotification(args: NotificationArgs): Int {
     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
         != PackageManager.PERMISSION_GRANTED
     ) {
         Log.d("NotificationExt", "sendNotification: no permission")
-        return -1
+        return NO_PERMISSION_OF_NOTIFICATION
     }
 
-    val notification = this.createNotification(iconResId, contentText, contentTitle, cancelable)
+    val notification = this.createNotification(args)
     val notificationId = atomicNotifyId.getAndIncrement()
     NotificationManagerCompat.from(this).notify(notificationId, notification)
     return notificationId
