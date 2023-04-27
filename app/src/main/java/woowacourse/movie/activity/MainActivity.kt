@@ -1,26 +1,23 @@
 package woowacourse.movie.activity
 
-import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
-import woowacourse.movie.ReservationAlarmReceiver
 import woowacourse.movie.domain.AdvertisementMock
 import woowacourse.movie.domain.advertismentPolicy.MovieAdvertisementPolicy
 import woowacourse.movie.fragment.ReservationListFragment
 import woowacourse.movie.fragment.SettingFragment
+import woowacourse.movie.system.PermissionLauncher
+import woowacourse.movie.system.PermissionLauncherProvider
+import woowacourse.movie.view.ReservationAlarmReceiver
 import woowacourse.movie.view.adapter.MovieAdapter
 import woowacourse.movie.view.data.MovieListViewData
 import woowacourse.movie.view.data.MovieListViewType
@@ -31,15 +28,16 @@ import woowacourse.movie.view.repository.MainRepository
 
 class MainActivity : AppCompatActivity() {
     private val mainRepository: MainRepository = MainRepository()
+    val permissionLauncher: PermissionLauncher = PermissionLauncher(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        PermissionLauncherProvider.permissionLaunchers[this] = permissionLauncher
         createNotificationChannel(applicationContext)
 
         makeMovieRecyclerView()
         makeBottomNavigationView()
-        requestNotificationPermission()
     }
 
     private fun createNotificationChannel(context: Context?) {
@@ -117,22 +115,6 @@ class MainActivity : AppCompatActivity() {
             commit {
                 fragments.forEach {
                     remove(it)
-                }
-            }
-        }
-    }
-
-    private fun requestNotificationPermission() {
-        val requestPermissionLauncher = registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { }
-        if (ContextCompat.checkSelfPermission(
-                this, Manifest.permission.POST_NOTIFICATIONS
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (!shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
             }
         }

@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.system
 
 import android.content.Context
 import android.content.SharedPreferences

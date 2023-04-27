@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.system
 
 interface Setting {
     fun getSettingValue(key: String, default: Boolean = false): Boolean
