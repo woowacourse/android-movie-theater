@@ -25,6 +25,7 @@ import woowacourse.movie.domain.model.tools.seat.Theater
 import woowacourse.movie.presentation.complete.CompleteActivity
 import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.model.ReservationModel
+import woowacourse.movie.presentation.util.SharedPreferenceUtil
 
 class ChoiceSeatActivity : AppCompatActivity() {
 
@@ -83,7 +84,10 @@ class ChoiceSeatActivity : AppCompatActivity() {
         val movie = MovieData.findMovieById(reservation.movieId).toPresentation()
         val ticketModel = movie.reserve(reservation, seats)
         BookedTickets.tickets.add(ticketModel)
-        MovieNoticeAlarmManager(this, ticketModel).setAlarm(ticketModel.bookedDateTime)
+        if (SharedPreferenceUtil.getNotificationSettings()) MovieNoticeAlarmManager(
+            this,
+            ticketModel
+        ).setAlarm(ticketModel.bookedDateTime)
         startActivity(CompleteActivity.getIntent(this, ticketModel))
     }
 

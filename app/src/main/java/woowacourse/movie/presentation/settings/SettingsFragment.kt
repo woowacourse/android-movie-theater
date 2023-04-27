@@ -28,6 +28,9 @@ class SettingsFragment : Fragment() {
     private fun initNotificationSwitch() {
         val notificationSwitch =
             requireActivity().findViewById<SwitchCompat>(R.id.switchPushPermission)
+
+        notificationSwitch.isChecked = SharedPreferenceUtil.getNotificationSettings()
+
         notificationSwitch.setOnCheckedChangeListener { _, isChecked ->
             SharedPreferenceUtil.setNotificationSettings(isChecked)
         }
