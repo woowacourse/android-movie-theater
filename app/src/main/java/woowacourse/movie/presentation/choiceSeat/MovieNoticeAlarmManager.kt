@@ -10,10 +10,10 @@ import woowacourse.movie.presentation.model.TicketModel
 import java.time.LocalDateTime
 import java.util.Calendar
 
-class MovieNoticeAlarmManager(val context: Context, val ticketModel: TicketModel) {
+class MovieNoticeAlarmManager(private val context: Context, private val ticketModel: TicketModel) {
     private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-    fun getTicketAlarmCalendar(reservationTime: LocalDateTime): Calendar {
+    private fun getTicketAlarmCalendar(reservationTime: LocalDateTime): Calendar {
         val alarmTime = reservationTime.minusMinutes(30L)
         return Calendar.getInstance().apply {
             set(Calendar.YEAR, alarmTime.year)
@@ -25,14 +25,19 @@ class MovieNoticeAlarmManager(val context: Context, val ticketModel: TicketModel
     }
 
     fun setAlarm(reservationTime: LocalDateTime) {
-        val pendingIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
-            intent.putExtra(CompleteActivity.TICKET, ticketModel)
-            PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-        }
+        val pendingIntent = getPendingIntent()
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
             getTicketAlarmCalendar(reservationTime).timeInMillis,
             pendingIntent
         )
+    }
+
+    private fun getPendingIntent(): PendingIntent? {
+        val pendingIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
+            intent.putExtra(CompleteActivity.TICKET, ticketModel)
+            PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        }
+        return pendingIntent
     }
 }
