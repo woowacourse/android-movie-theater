@@ -13,9 +13,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.domain.discountPolicy.Discount
-import woowacourse.movie.domain.discountPolicy.MovieDay
-import woowacourse.movie.domain.discountPolicy.OffTime
-import woowacourse.movie.domain.reservationNotificationPolicy.MovieReservationNotification
+import woowacourse.movie.domain.discountPolicy.MovieDayPolicy
+import woowacourse.movie.domain.discountPolicy.OffTimePolicy
+import woowacourse.movie.domain.reservationNotificationPolicy.MovieReservationNotificationPolicy
 import woowacourse.movie.domain.reservationNotificationPolicy.ReservationNotificationPolicy
 import woowacourse.movie.view.ReservationAlarmReceiver
 import woowacourse.movie.view.data.MovieViewData
@@ -119,7 +119,7 @@ class SeatSelectionActivity : AppCompatActivity() {
         seats: SeatsViewData,
         reservationDetail: ReservationDetailViewData
     ): PriceViewData {
-        val discount = Discount(listOf(MovieDay, OffTime))
+        val discount = Discount(listOf(MovieDayPolicy, OffTimePolicy))
         return seats.seats.sumOf { seat ->
             discount.calculate(
                 reservationDetail.toDomain(), seat.toDomain().row.seatRankByRow().price
@@ -168,7 +168,7 @@ class SeatSelectionActivity : AppCompatActivity() {
             movie, reservationDetail, seats, price
         )
 
-        makeReservationAlarm(reservation, MovieReservationNotification)
+        makeReservationAlarm(reservation, MovieReservationNotificationPolicy)
         postReservation(reservation)
         startReservationResultActivity(reservation)
     }

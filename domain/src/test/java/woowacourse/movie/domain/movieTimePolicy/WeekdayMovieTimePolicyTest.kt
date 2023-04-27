@@ -5,13 +5,13 @@ import org.junit.Test
 import java.time.LocalDate
 import java.time.LocalTime
 
-class WeekdayMovieTimeTest {
+class WeekdayMovieTimePolicyTest {
     @Test
     fun `평일이면 영화 상영시간은 10시부터 24시까지 2시간 간격이다`() {
         // given
         val date = LocalDate.of(2023, 4, 13)
         // when
-        val actual = WeekdayMovieTime.generateTime(date)
+        val actual = WeekdayMovieTimePolicy.generateTime(date)
         // then
         val expected = listOf<LocalTime>(
             LocalTime.of(10, 0),
@@ -30,7 +30,7 @@ class WeekdayMovieTimeTest {
         // given
         val date = LocalDate.of(2023, 4, 15)
         // when
-        val actual = WeekdayMovieTime.generateTime(date)
+        val actual = WeekdayMovieTimePolicy.generateTime(date)
         // then
         assertEquals(actual, emptyList<LocalTime>())
     }

@@ -6,7 +6,7 @@ import woowacourse.movie.domain.Price
 import woowacourse.movie.domain.ReservationDetail
 import java.time.LocalDateTime
 
-class OffTimeTest {
+class OffTimePolicyTest {
     @Test
     fun `11시 이전일 경우 2000원 할인이 적용된다`() {
         // given
@@ -15,7 +15,7 @@ class OffTimeTest {
         val reservationDetail = ReservationDetail(date, 1)
 
         // when
-        val actual = OffTime.discount(reservationDetail, price).value
+        val actual = OffTimePolicy.discount(reservationDetail, price).value
 
         // then
         val expected = 11000
@@ -30,7 +30,7 @@ class OffTimeTest {
         val reservationDetail = ReservationDetail(date, 1)
 
         // when
-        val actual = OffTime.discount(reservationDetail, price).value
+        val actual = OffTimePolicy.discount(reservationDetail, price).value
 
         // then
         val expected = 13000
@@ -45,7 +45,7 @@ class OffTimeTest {
         val reservationDetail = ReservationDetail(date, 1)
 
         // when
-        val actual = OffTime.discount(reservationDetail, price).value
+        val actual = OffTimePolicy.discount(reservationDetail, price).value
 
         // then
         val expected = 13000
@@ -60,7 +60,7 @@ class OffTimeTest {
         val reservationDetail = ReservationDetail(date, 1)
 
         // when
-        val actual = OffTime.discount(reservationDetail, price).value
+        val actual = OffTimePolicy.discount(reservationDetail, price).value
 
         // then
         val expected = 11000

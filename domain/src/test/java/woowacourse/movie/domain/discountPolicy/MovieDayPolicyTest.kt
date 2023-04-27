@@ -10,7 +10,7 @@ import woowacourse.movie.domain.ReservationDetail
 import java.time.LocalDateTime
 
 @RunWith(Enclosed::class)
-class MovieDayTest {
+class MovieDayPolicyTest {
     @RunWith(Parameterized::class)
     class ParametrizedTest(private val day: Int) {
         @Test
@@ -21,7 +21,7 @@ class MovieDayTest {
             val reservationDetail = ReservationDetail(date, 1)
 
             // when
-            val actual = MovieDay.discount(reservationDetail, price).value
+            val actual = MovieDayPolicy.discount(reservationDetail, price).value
 
             // then
             val expected = 11700
@@ -46,7 +46,7 @@ class MovieDayTest {
             val reservationDetail = ReservationDetail(date, 1)
 
             // when
-            val actual = MovieDay.discount(reservationDetail, price).value
+            val actual = MovieDayPolicy.discount(reservationDetail, price).value
 
             // then
             val expected = 13000

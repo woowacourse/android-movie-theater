@@ -3,7 +3,7 @@ package woowacourse.movie.domain.movieTimePolicy
 import java.time.LocalDate
 import java.time.LocalTime
 
-object WeekendMovieTime : MovieTimePolicy {
+object WeekendMovieTimePolicy : MovieTimePolicy {
     private val WEEKEND = 6..7
     private val SCREEN_TIME = 9..24
     private const val SCREEN_TIME_INTERVAL = 2

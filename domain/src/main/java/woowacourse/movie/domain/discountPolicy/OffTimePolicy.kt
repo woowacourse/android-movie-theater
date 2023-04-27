@@ -3,7 +3,7 @@ package woowacourse.movie.domain.discountPolicy
 import woowacourse.movie.domain.Price
 import woowacourse.movie.domain.ReservationDetail
 
-object OffTime : DiscountPolicy {
+object OffTimePolicy : DiscountPolicy {
     private const val EARLY_TIME = 11
     private const val LATE_TIME = 20
     private const val DISCOUNT_VALUE = 2000
