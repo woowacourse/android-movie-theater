@@ -2,9 +2,7 @@ package woowacourse.movie.ui.fragment.movieList
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
@@ -18,18 +16,10 @@ import woowacourse.movie.ui.main.itemModel.AdvItemModel
 import woowacourse.movie.ui.main.itemModel.MovieItemModel
 import woowacourse.movie.ui.reservation.MovieDetailActivity
 
-class MovieListFragment : Fragment() {
+class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
 
     private lateinit var movieListView: RecyclerView
     private lateinit var adapter: MovieListAdapter
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_movie_list, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
