@@ -36,6 +36,9 @@ android {
 }
 
 dependencies {
+    val fragment_version = "1.5.5"
+
+    debugImplementation("androidx.fragment:fragment-testing:$fragment_version")
     implementation(project(":domain"))
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.0")
