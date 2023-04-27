@@ -1,8 +1,5 @@
 package woowacourse.movie.ui.setting
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -10,28 +7,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.model.AlarmSwitchState
+import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.model.ReservationModel
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.ZoneOffset
+import woowacourse.movie.ui.alarm.AlarmManager
 
 class SettingFragment : Fragment() {
     private lateinit var toggleButton: SwitchCompat
+    private val alarmManager by lazy { AlarmManager(requireContext()) }
     private val requestPermissionLauncher by lazy {
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
         ) {}
     }
-    private val alarmManager by lazy {
-        requireContext().getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
-    }
-    private lateinit var pendingIntent: PendingIntent
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,61 +35,33 @@ class SettingFragment : Fragment() {
         AlarmSwitchState.init(requireContext())
         requestNotificationPermission(view)
         initToggleButton(view)
+        setClickEventOnToggleButton()
         return view
     }
 
     private fun initToggleButton(view: View) {
         toggleButton = view.findViewById(R.id.setting_switch)
         toggleButton.isChecked = AlarmSwitchState.isAlarmActivated
+    }
 
+    private fun setClickEventOnToggleButton() {
         toggleButton.setOnCheckedChangeListener { _, isChecked ->
             AlarmSwitchState.isAlarmActivated = isChecked
-
-            if (isChecked) {
-                makeAlarm()
-            } else {
-                cancelAlarm()
-            }
+            setAlarms(isChecked)
         }
     }
 
-    private fun makeAlarm() {
-        if (ReservationModel.firstTicket == null) return
-
-        setAlarmIntent()
-
-        val setDateTime: LocalDateTime = ReservationModel.firstTicket.time.minusMinutes(30)
-        val dateTime =
-            setDateTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneOffset.UTC)
-                .toLocalDateTime()
-        val currentTimeMillis: Long =
-            dateTime.atZone(ZoneOffset.UTC).toInstant().toEpochMilli()
-
-        alarmManager.set(
-            AlarmManager.RTC_WAKEUP,
-            currentTimeMillis,
-            pendingIntent,
-        )
-    }
-
-    private fun setAlarmIntent() {
-        val intent = Intent(requireContext(), ReservationAlarmReceiver::class.java)
-
-        if (ReservationModel.firstTicket != null) {
-            intent.putExtra(KEY_MOVIE, ReservationModel.firstTicket)
+    private fun setAlarms(isChecked: Boolean) {
+        if (isChecked) {
+            iterateOnTickets(alarmManager::makeAlarm)
+        } else {
+            iterateOnTickets(alarmManager::cancelAlarm)
         }
-
-        pendingIntent = PendingIntent.getBroadcast(
-            requireContext(),
-            ReservationAlarmReceiver.NOTIFICATION_ID,
-            intent,
-            PendingIntent.FLAG_IMMUTABLE,
-        )
     }
 
-    private fun cancelAlarm() {
-        if (this::pendingIntent.isInitialized) {
-            alarmManager.cancel(pendingIntent)
+    private fun iterateOnTickets(event: (MovieTicketModel) -> Unit) {
+        ReservationModel.tickets.forEach { ticket ->
+            event(ticket)
         }
     }
 

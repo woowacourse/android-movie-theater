@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.setting
+package woowacourse.movie.ui.alarm
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -11,6 +11,7 @@ import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
 import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.ui.seat.SeatSelectionActivity
+import woowacourse.movie.ui.setting.SettingFragment
 import woowacourse.movie.ui.ticket.MovieTicketActivity
 import woowacourse.movie.utils.getSerializableExtraCompat
 
@@ -25,8 +26,9 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
             Context.NOTIFICATION_SERVICE,
         ) as NotificationManager
 
-        val movie: MovieTicketModel = intent.getSerializableExtraCompat(SettingFragment.KEY_MOVIE) ?: return
-        createNotificationChannel()
+        val movie: MovieTicketModel =
+            intent.getSerializableExtraCompat(SettingFragment.KEY_MOVIE)
+                ?: return createNotificationChannel()
         makeNotification(context, movie)
     }
 

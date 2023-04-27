@@ -14,11 +14,13 @@ import woowacourse.movie.domain.seat.Seat
 import woowacourse.movie.domain.seat.SelectedSeats
 import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toModel
+import woowacourse.movie.model.AlarmSwitchState
 import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.model.PeopleCountModel
 import woowacourse.movie.model.ReservationModel
 import woowacourse.movie.model.SeatModel
 import woowacourse.movie.model.SelectedSeatsModel
+import woowacourse.movie.ui.alarm.AlarmManager
 import woowacourse.movie.ui.moviedetail.MovieDetailActivity
 import woowacourse.movie.ui.ticket.MovieTicketActivity
 import woowacourse.movie.utils.failLoadingData
@@ -35,6 +37,8 @@ class SeatSelectionActivity : AppCompatActivity() {
     private lateinit var movieTitle: String
     private lateinit var movieTime: LocalDateTime
     private lateinit var peopleCount: PeopleCountModel
+
+    private val alarmManager by lazy { AlarmManager(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -142,6 +146,7 @@ class SeatSelectionActivity : AppCompatActivity() {
                 seats = selectedSeats.toModel(),
             ).apply {
                 setReservationData(this)
+                makeAlarm()
                 moveToTicketActivity(this)
             }
         }
@@ -174,6 +179,12 @@ class SeatSelectionActivity : AppCompatActivity() {
 
     private fun setReservationData(ticket: MovieTicketModel) {
         ReservationModel.add(ticket)
+    }
+
+    private fun MovieTicketModel.makeAlarm() {
+        if (AlarmSwitchState.isAlarmActivated) {
+            alarmManager.makeAlarm(this)
+        }
     }
 
     private fun moveToTicketActivity(ticket: MovieTicketModel) {
