@@ -22,7 +22,7 @@ import woowacourse.movie.view.error.ViewError
 class ReservationAlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val setting: Setting = SharedSetting(context)
-        if (intent.action == SeatSelectionActivity.ACTION_ALARM && setting.getSettingValue(
+        if (intent.action == SeatSelectionActivity.ACTION_ALARM && setting.getValue(
                 SettingFragment.SETTING_NOTIFICATION
             )
         ) {

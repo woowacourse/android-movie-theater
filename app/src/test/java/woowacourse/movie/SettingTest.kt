@@ -13,10 +13,10 @@ class SettingTest {
 
         // when
         val expect = true
-        setting.setSettingValue(key, expect)
+        setting.setValue(key, expect)
 
         // then
-        val actual = setting.getSettingValue(key)
+        val actual = setting.getValue(key)
 
         assertEquals(expect, actual)
     }

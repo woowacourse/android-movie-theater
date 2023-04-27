@@ -4,11 +4,11 @@ import woowacourse.movie.system.Setting
 
 class SettingMock : Setting {
     private val settings: MutableMap<String, Boolean> = mutableMapOf()
-    override fun getSettingValue(key: String, default: Boolean): Boolean {
+    override fun getValue(key: String, default: Boolean): Boolean {
         return settings[key] ?: default
     }
 
-    override fun setSettingValue(key: String, value: Boolean) {
+    override fun setValue(key: String, value: Boolean) {
         settings[key] = value
     }
 }
