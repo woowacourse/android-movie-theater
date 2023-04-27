@@ -12,7 +12,7 @@ class ReservationListAdapter(
     reservations: List<ItemModel>
 ) : RecyclerView.Adapter<ItemViewHolder>() {
 
-    private val _reservations = reservations.toList()
+    private var _reservations = reservations.toList()
     val reservations
         get() = _reservations.toList()
 
@@ -26,5 +26,10 @@ class ReservationListAdapter(
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.bind(_reservations[position])
+    }
+
+    fun setItemChanged(newReservations: List<ItemModel>) {
+        _reservations = newReservations.toList()
+        notifyDataSetChanged()
     }
 }

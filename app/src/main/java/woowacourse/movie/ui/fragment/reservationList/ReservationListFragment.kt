@@ -43,6 +43,17 @@ class ReservationListFragment : Fragment() {
         reservationRecyclerView.adapter = adapter
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        adapter.setItemChanged(
+            TicketsRepository.allTickets().map {
+                it.convertToItemModel { position ->
+                    navigateReservationConfirm((adapter.reservations[position] as TicketsItemModel).ticketsState)
+                }
+            }
+        )
+    }
+
     private fun navigateReservationConfirm(ticketsState: TicketsState) {
         val intent = Intent(activity, ReservationConfirmActivity::class.java)
         intent.putExtra(MovieDetailActivity.KEY_TICKETS, ticketsState)
