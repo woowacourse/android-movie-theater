@@ -12,10 +12,6 @@ import java.util.*
 
 class SettingFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,7 +23,7 @@ class SettingFragment : Fragment() {
 
         val switch = view.findViewById<SwitchCompat>(R.id.push_alarm_switch)
         switch.isChecked = settingPreference?.setting ?: throw IllegalArgumentException()
-        switch.setOnCheckedChangeListener { buttonView, isChecked ->
+        switch.setOnCheckedChangeListener { _, isChecked ->
             settingPreference.setting = isChecked
         }
         return view

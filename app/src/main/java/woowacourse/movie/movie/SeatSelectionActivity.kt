@@ -19,6 +19,9 @@ import woowacourse.movie.dto.TicketCountDto
 import woowacourse.movie.mapper.mapToSeats
 import woowacourse.movie.mapper.mapToSeatsDto
 import woowacourse.movie.movie.AlarmReceiver
+import woowacourse.movie.movie.AlarmReceiver.Companion.ALARM_CODE
+import woowacourse.movie.movie.AlarmReceiver.Companion.ALARM_TIME
+import woowacourse.movie.movie.AlarmReceiver.Companion.REQUEST_CODE
 import woowacourse.movie.movie.BookingHistoryDto
 import woowacourse.movie.movie.dto.BookingMovieDto
 import woowacourse.movie.view.SeatSelectView
@@ -144,7 +147,7 @@ class SeatSelectionActivity : AppCompatActivity() {
     private fun moveActivity() {
         val bookingMovie = BookingMovieDto(movie, date, time, ticketCount, seats.mapToSeatsDto())
         val intent = Intent(this, TicketActivity::class.java)
-        intent.putExtra("booking_movie", bookingMovie)
+        intent.putExtra(BOOKING_MOVIE_KEY, bookingMovie)
         putAlarm(bookingMovie)
         BookingHistoryDto.add(bookingMovie)
         startActivity(intent)
@@ -161,7 +164,7 @@ class SeatSelectionActivity : AppCompatActivity() {
             set(Calendar.DAY_OF_MONTH, date.monthValue)
             set(Calendar.DATE, date.dayOfMonth)
             set(Calendar.HOUR_OF_DAY, time.hour)
-            set(Calendar.MINUTE, time.minusMinutes(30L).minute)
+            set(Calendar.MINUTE, time.minusMinutes(ALARM_TIME.toLong()).minute)
         }
     }
 
@@ -177,11 +180,11 @@ class SeatSelectionActivity : AppCompatActivity() {
 
     private fun createReceiverPendingIntent(bookingMovie: BookingMovieDto): PendingIntent {
         return Intent(this, AlarmReceiver::class.java).let {
-            it.action = "alarm"
-            it.putExtra("booking_movie", bookingMovie)
+            it.action = ALARM_CODE
+            it.putExtra(BOOKING_MOVIE_KEY, bookingMovie)
             PendingIntent.getBroadcast(
                 this,
-                925,
+                REQUEST_CODE,
                 it,
                 PendingIntent.FLAG_IMMUTABLE,
             )
@@ -193,6 +196,7 @@ class SeatSelectionActivity : AppCompatActivity() {
         const val MOVIE_KEY = "movie"
         const val DATE_KEY = "movie_date"
         const val TIME_KEY = "movie_time"
-        private const val SEATS_POSITION = "seats_position"
+        const val BOOKING_MOVIE_KEY = "booking_movie"
+        const val SEATS_POSITION = "seats_position"
     }
 }

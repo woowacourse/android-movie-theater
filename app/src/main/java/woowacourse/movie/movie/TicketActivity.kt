@@ -5,6 +5,7 @@ import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import woowacourse.movie.SeatSelectionActivity.Companion.BOOKING_MOVIE_KEY
 import woowacourse.movie.dto.MovieDto
 import woowacourse.movie.dto.SeatsDto
 import woowacourse.movie.dto.TicketCountDto
@@ -21,7 +22,7 @@ class TicketActivity : AppCompatActivity() {
         setContentView(R.layout.activity_ticket)
         setToolbar()
 
-        val bookingMovie = intent.getSerializableExtra("booking_movie") as BookingMovieDto
+        val bookingMovie = intent.getSerializableExtra(BOOKING_MOVIE_KEY) as BookingMovieDto
 
         showTicketInfo(
             bookingMovie.movie,
