@@ -1,15 +1,15 @@
 package woowacourse.movie
 
-import android.content.Intent
 import android.net.Uri
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasData
 import androidx.test.espresso.intent.rule.IntentsTestRule
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import org.junit.Rule
@@ -29,7 +29,33 @@ class MainActivityTest {
         onView(withId(R.id.rv_movie))
             .perform(RecyclerViewActions.actionOnItemAtPosition<ViewHolder>(position, click()))
 
-        intended(hasAction(Intent.ACTION_VIEW))
         intended(hasData(Uri.parse("https://woowacourse.github.io/")))
+    }
+
+    @Test
+    fun 예매_내역_메뉴를_클릭하면_예매_내역_프래그먼트로_화면이_전환된다() {
+        onView(withId(R.id.bottom_item_list))
+            .perform(click())
+
+        onView(withId(R.id.fragment_reservation_list))
+            .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun 홈_메뉴를_클릭하면_홈_프래그먼트로_화면이_전환된다() {
+        onView(withId(R.id.bottom_item_home))
+            .perform(click())
+
+        onView(withId(R.id.fragment_home))
+            .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun 설정_메뉴를_클릭하면_설정_프래그먼트로_화면이_전환된다() {
+        onView(withId(R.id.bottom_item_settings))
+            .perform(click())
+
+        onView(withId(R.id.fragment_settings))
+            .check(matches(isDisplayed()))
     }
 }
