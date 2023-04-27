@@ -36,12 +36,21 @@ class SettingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val settingSharePreference = SettingSharedPreference(view.context)
-        val switch = view.findViewById<Switch>(R.id.switchPushAlarm)
-        switch.isChecked = settingSharePreference.receivingPushAlarm
+        setSwitch(settingSharePreference)
+    }
 
-        switch.setOnCheckedChangeListener { buttonView, isChecked ->
+    private fun setSwitch(settingSharePreference: SettingSharedPreference) {
+        switch.isChecked = settingSharePreference.receivingPushAlarm
+        setSwitchCheckedChange(switch.context, settingSharePreference)
+    }
+
+    private fun setSwitchCheckedChange(
+        context: Context,
+        settingSharePreference: SettingSharedPreference,
+    ) {
+        switch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                requestNotificationPermission(view.context)
+                requestNotificationPermission(context)
             }
             settingSharePreference.receivingPushAlarm = isChecked
         }
