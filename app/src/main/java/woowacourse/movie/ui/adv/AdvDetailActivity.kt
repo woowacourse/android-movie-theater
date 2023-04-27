@@ -25,9 +25,12 @@ class AdvDetailActivity : BackKeyActionBarActivity() {
 
     companion object {
         private const val KEY_ADV = "key_adb"
-        fun getIntent(context: Context, advState: AdvState): Intent = Intent().apply {
-            setClass(context, AdvDetailActivity::class.java)
-            putExtra(KEY_ADV, advState)
+
+        fun startActivity(context: Context, advState: AdvState) {
+            val intent = Intent(context, AdvDetailActivity::class.java).apply {
+                putExtra(KEY_ADV, advState)
+            }
+            context.startActivity(intent)
         }
     }
 }

@@ -40,10 +40,10 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
     }
 
     private fun navigateMovieDetail(movie: MovieState) {
-        startActivity(MovieDetailActivity.getIntent(activity as Context, movie))
+        MovieDetailActivity.startActivity(activity as Context, movie)
     }
 
     private fun navigateAdbDetail(adbState: AdvState) {
-        startActivity(AdvDetailActivity.getIntent(activity as Context, adbState))
+        AdvDetailActivity.startActivity(activity as Context, adbState)
     }
 }

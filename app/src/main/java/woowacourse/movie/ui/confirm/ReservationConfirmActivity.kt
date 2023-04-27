@@ -7,7 +7,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import com.example.domain.usecase.DiscountApplyUseCase
-import java.time.LocalDateTime
 import java.util.Calendar
 import woowacourse.movie.R
 import woowacourse.movie.data.TicketsRepository
@@ -60,7 +59,6 @@ class ReservationConfirmActivity : BackKeyActionBarActivity() {
     }
 
     private fun setNotification(tickets: TicketsState) {
-        val tickets = tickets.copy(dateTime = LocalDateTime.of(0, 4, 26, 17, 47, 30))
         val calendar: Calendar = Calendar.getInstance().apply {
             set(
                 tickets.dateTime.year,
@@ -89,9 +87,12 @@ class ReservationConfirmActivity : BackKeyActionBarActivity() {
 
     companion object {
         private const val KEY_TICKETS = "key_tickets"
-        fun getIntent(context: Context, tickets: TicketsState) = Intent().apply {
-            setClass(context, ReservationConfirmActivity::class.java)
-            putExtra(KEY_TICKETS, tickets)
+
+        fun startActivity(context: Context, tickets: TicketsState) {
+            val intent = Intent(context, ReservationConfirmActivity::class.java).apply {
+                putExtra(KEY_TICKETS, tickets)
+            }
+            context.startActivity(intent)
         }
     }
 }

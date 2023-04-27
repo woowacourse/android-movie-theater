@@ -54,7 +54,7 @@ class MovieDetailActivity : BackKeyActionBarActivity() {
     private fun navigateSeatSelectActivity() {
         val dateTime = dateTimeSpinner.getSelectDateTime()
         val ticketOptState = TicketOptState(movie, dateTime, reservationCounter.count)
-        startActivity(SeatSelectActivity.getIntent(this, ticketOptState))
+        SeatSelectActivity.startActivity(this, ticketOptState)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -94,9 +94,11 @@ class MovieDetailActivity : BackKeyActionBarActivity() {
         private const val KEY_TIME = "key_reservation_time"
         private const val KEY_MOVIE = "key_movie"
 
-        fun getIntent(context: Context, movie: MovieState): Intent = Intent().apply {
-            setClass(context, MovieDetailActivity::class.java)
-            putExtra(KEY_MOVIE, movie)
+        fun startActivity(context: Context, movie: MovieState) {
+            val intent = Intent(context, MovieDetailActivity::class.java).apply {
+                putExtra(KEY_MOVIE, movie)
+            }
+            context.startActivity(intent)
         }
     }
 }

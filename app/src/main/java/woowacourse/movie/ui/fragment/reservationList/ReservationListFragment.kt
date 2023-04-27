@@ -47,6 +47,6 @@ class ReservationListFragment : Fragment(R.layout.fragment_reservation_list) {
     }
 
     private fun navigateReservationConfirm(ticketsState: TicketsState) {
-        startActivity(ReservationConfirmActivity.getIntent(activity as Context, ticketsState))
+        ReservationConfirmActivity.startActivity(activity as Context, ticketsState)
     }
 }

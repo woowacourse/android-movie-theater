@@ -78,7 +78,7 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
 
     private fun navigateReservationConfirmActivity(seats: List<SeatPositionState>) {
         val tickets = TicketsState.from(ticketOptState, seats)
-        startActivity(ReservationConfirmActivity.getIntent(this, tickets))
+        ReservationConfirmActivity.startActivity(this, tickets)
     }
 
     private fun updateSelectSeats(positionStates: List<SeatPositionState>) {
@@ -101,9 +101,11 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
         private const val SEAT_RESTORE_KEY = "seat_restore_key"
         private const val KEY_TICKETS = "key_tickets"
 
-        fun getIntent(context: Context, ticketOptState: TicketOptState): Intent = Intent().apply {
-            setClass(context, SeatSelectActivity::class.java)
-            putExtra(KEY_TICKETS, ticketOptState)
+        fun startActivity(context: Context, ticketOptState: TicketOptState) {
+            val intent = Intent(context, SeatSelectActivity::class.java).apply {
+                putExtra(KEY_TICKETS, ticketOptState)
+            }
+            context.startActivity(intent)
         }
     }
 }
