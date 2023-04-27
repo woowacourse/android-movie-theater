@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.os.SystemClock
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +17,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.model.ReservationModel
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZoneOffset
 
 class SettingFragment : Fragment() {
     private lateinit var toggleButton: SwitchCompat
@@ -73,7 +75,13 @@ class SettingFragment : Fragment() {
     }
 
     private fun makeAlarm() {
-        val currentTimeMillis: Long = SystemClock.elapsedRealtime() + 3000 // 클릭 후 3초 후
+        val setDateTime: LocalDateTime = ReservationModel.tickets.first().time.minusMinutes(30)
+
+        val dateTime =
+            setDateTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneOffset.UTC)
+                .toLocalDateTime()
+        val currentTimeMillis: Long =
+            dateTime.atZone(ZoneOffset.UTC).toInstant().toEpochMilli()
 
         alarmManager.set(
             AlarmManager.RTC_WAKEUP,
