@@ -2,6 +2,7 @@ package woowacourse.movie.ui.confirm
 
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
@@ -14,7 +15,6 @@ import woowacourse.movie.model.mapper.asPresentation
 import woowacourse.movie.ui.BackKeyActionBarActivity
 import woowacourse.movie.ui.DateTimeFormatters
 import woowacourse.movie.ui.DecimalFormatters
-import woowacourse.movie.ui.reservation.MovieDetailActivity.Companion.KEY_TICKETS
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
 import java.time.LocalDateTime
@@ -84,5 +84,13 @@ class ReservationConfirmActivity : BackKeyActionBarActivity() {
             calendar.timeInMillis - 30 * 60 * 1000,
             alarmIntent
         )
+    }
+
+    companion object {
+        private const val KEY_TICKETS = "key_tickets"
+        fun getIntent(context: Context, tickets: TicketsState) = Intent().apply {
+            setClass(context, ReservationConfirmActivity::class.java)
+            putExtra(KEY_TICKETS, tickets)
+        }
     }
 }

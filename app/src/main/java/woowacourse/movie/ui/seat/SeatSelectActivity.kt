@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.seat
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
@@ -14,7 +15,6 @@ import woowacourse.movie.ui.BackKeyActionBarActivity
 import woowacourse.movie.ui.DecimalFormatters
 import woowacourse.movie.ui.confirm.ReservationConfirmActivity
 import woowacourse.movie.ui.customView.ConfirmView
-import woowacourse.movie.ui.reservation.MovieDetailActivity.Companion.KEY_TICKETS
 import woowacourse.movie.util.getParcelableArrayListCompat
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
@@ -101,5 +101,11 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
 
     companion object {
         private const val SEAT_RESTORE_KEY = "seat_restore_key"
+        private const val KEY_TICKETS = "key_tickets"
+
+        fun getIntent(context: Context, ticketOptState: TicketOptState): Intent = Intent().apply {
+            setClass(context, SeatSelectActivity::class.java)
+            putExtra(KEY_TICKETS, ticketOptState)
+        }
     }
 }

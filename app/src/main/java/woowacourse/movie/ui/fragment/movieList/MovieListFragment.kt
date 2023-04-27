@@ -1,6 +1,6 @@
 package woowacourse.movie.ui.fragment.movieList
 
-import android.content.Intent
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +13,6 @@ import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.model.AdvState
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.ui.adv.AdvDetailActivity
-import woowacourse.movie.ui.main.MainActivity
 import woowacourse.movie.ui.main.adapter.MovieListAdapter
 import woowacourse.movie.ui.main.itemModel.AdvItemModel
 import woowacourse.movie.ui.main.itemModel.MovieItemModel
@@ -51,20 +50,10 @@ class MovieListFragment : Fragment() {
     }
 
     private fun navigateMovieDetail(movie: MovieState) {
-        val intent = Intent(activity, MovieDetailActivity::class.java)
-        intent.putExtra(MainActivity.KEY_MOVIE, movie)
-        startActivity(intent)
+        startActivity(MovieDetailActivity.getIntent(activity as Context, movie))
     }
 
     private fun navigateAdbDetail(adbState: AdvState) {
-        val intent = Intent(activity, AdvDetailActivity::class.java)
-        intent.putExtra(MainActivity.KEY_ADV, adbState)
-        startActivity(intent)
-    }
-
-    companion object {
-
-        internal const val KEY_MOVIE = "key_movie"
-        internal const val KEY_ADV = "key_adb"
+        startActivity(AdvDetailActivity.getIntent(activity as Context, adbState))
     }
 }

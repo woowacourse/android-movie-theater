@@ -1,6 +1,6 @@
 package woowacourse.movie.ui.fragment.reservationList
 
-import android.content.Intent
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +13,6 @@ import woowacourse.movie.model.TicketsState
 import woowacourse.movie.ui.confirm.ReservationConfirmActivity
 import woowacourse.movie.ui.main.adapter.ReservationListAdapter
 import woowacourse.movie.ui.main.itemModel.TicketsItemModel
-import woowacourse.movie.ui.reservation.MovieDetailActivity
 
 class ReservationListFragment : Fragment() {
 
@@ -55,8 +54,6 @@ class ReservationListFragment : Fragment() {
     }
 
     private fun navigateReservationConfirm(ticketsState: TicketsState) {
-        val intent = Intent(activity, ReservationConfirmActivity::class.java)
-        intent.putExtra(MovieDetailActivity.KEY_TICKETS, ticketsState)
-        startActivity(intent)
+        startActivity(ReservationConfirmActivity.getIntent(activity as Context, ticketsState))
     }
 }

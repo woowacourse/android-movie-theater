@@ -87,9 +87,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        internal const val KEY_MOVIE = "key_movie"
-        internal const val KEY_ADV = "key_adb"
-
         private const val RESERVATION_LIST_TAG = "reservation_list_tag"
         private const val MOVIE_LIST_TAG = "movie_list_tag"
         private const val SETTING_TAG = "setting_tag"
