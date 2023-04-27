@@ -164,9 +164,9 @@ class SeatSelectionActivityTest {
             override fun matchesSafely(item: View?): Boolean {
                 return item?.background is ColorDrawable &&
                     (item.background as ColorDrawable).color == ContextCompat.getColor(
-                        item.context,
-                        color,
-                    )
+                    item.context,
+                    color,
+                )
             }
         }
     }

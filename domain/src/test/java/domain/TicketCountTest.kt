@@ -35,4 +35,3 @@ class TicketCountTest {
         assertEquals(ticketCount.numberOfPeople, 1)
     }
 }
-

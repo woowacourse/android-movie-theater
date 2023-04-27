@@ -88,5 +88,4 @@ class SeatTest {
 
         assertThat(seat.applyPolicyPrice(LocalDateTime.of(date, time))).isEqualTo(8800)
     }
-
 }

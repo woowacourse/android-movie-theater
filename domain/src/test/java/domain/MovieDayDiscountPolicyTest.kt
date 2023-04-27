@@ -1,6 +1,5 @@
 package woowacourse.movie.domain
 
-
 import domain.policy.MovieDayDiscountPolicy
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue

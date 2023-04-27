@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
@@ -12,8 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import domain.Seat
 import domain.Seats
 import woowacourse.movie.R
-import woowacourse.movie.movie.mapper.seat.mapToSeats
-import woowacourse.movie.movie.mapper.seat.mapToSeatsDto
 import woowacourse.movie.movie.AlarmReceiver
 import woowacourse.movie.movie.AlarmReceiver.Companion.ALARM_CODE
 import woowacourse.movie.movie.AlarmReceiver.Companion.ALARM_TIME
@@ -25,9 +24,10 @@ import woowacourse.movie.movie.dto.movie.MovieDto
 import woowacourse.movie.movie.dto.movie.MovieTimeDto
 import woowacourse.movie.movie.dto.seat.SeatsDto
 import woowacourse.movie.movie.dto.ticket.TicketCountDto
+import woowacourse.movie.movie.mapper.seat.mapToSeats
+import woowacourse.movie.movie.mapper.seat.mapToSeatsDto
 import woowacourse.movie.movie.view.SeatSelectView
 import java.time.LocalDateTime
-import java.util.*
 
 class SeatSelectionActivity : AppCompatActivity() {
 
