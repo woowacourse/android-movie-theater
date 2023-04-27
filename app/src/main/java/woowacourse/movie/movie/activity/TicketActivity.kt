@@ -7,11 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import woowacourse.movie.R
 import woowacourse.movie.movie.activity.SeatSelectionActivity.Companion.BOOKING_MOVIE_KEY
+import woowacourse.movie.movie.dto.movie.BookingMovieDto
 import woowacourse.movie.movie.dto.movie.MovieDto
 import woowacourse.movie.movie.dto.seat.SeatsDto
 import woowacourse.movie.movie.dto.ticket.TicketCountDto
 import woowacourse.movie.movie.mapper.seat.mapToSeats
-import woowacourse.movie.movie.dto.movie.BookingMovieDto
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
