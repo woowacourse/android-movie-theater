@@ -77,10 +77,8 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
     }
 
     private fun navigateReservationConfirmActivity(seats: List<SeatPositionState>) {
-        val intent = Intent(this, ReservationConfirmActivity::class.java)
         val tickets = TicketsState.from(ticketOptState, seats)
-        intent.putExtra(KEY_TICKETS, tickets)
-        startActivity(intent)
+        startActivity(ReservationConfirmActivity.getIntent(this, tickets))
     }
 
     private fun updateSelectSeats(positionStates: List<SeatPositionState>) {
