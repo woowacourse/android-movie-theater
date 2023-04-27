@@ -4,9 +4,9 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.movie.dto.movie.BookingMovieDto
 import woowacourse.movie.movie.dto.movie.MovieDateDto
 import woowacourse.movie.movie.dto.movie.MovieTimeDto
-import woowacourse.movie.movie.dto.movie.BookingMovieDto
 import woowacourse.movie.movie.movielist.OnClickListener
 import java.time.format.DateTimeFormatter
 
