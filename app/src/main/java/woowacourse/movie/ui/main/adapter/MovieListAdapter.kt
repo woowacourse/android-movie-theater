@@ -19,12 +19,10 @@ class MovieListAdapter(
     private val onClickAdv: (AdvItemModel) -> Unit
 ) : RecyclerView.Adapter<ItemViewHolder>() {
 
-    private val _items: List<ItemModel>
-    val items: List<ItemModel>
-        get() = _items.toList()
+    private val items: List<ItemModel>
 
     init {
-        _items = if (adv.isEmpty()) {
+        items = if (adv.isEmpty()) {
             movie.toList()
         } else {
             var curAdvIndex = 0
@@ -61,16 +59,13 @@ class MovieListAdapter(
         }
     }
 
-    override fun onBindViewHolder(
-        holder: ItemViewHolder,
-        position: Int
-    ) {
-        holder.bind(_items[position])
+    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+        holder.bind(items[position])
     }
 
-    override fun getItemCount(): Int = _items.size
+    override fun getItemCount(): Int = items.size
 
     override fun getItemViewType(position: Int): Int {
-        return _items[position].viewType.id
+        return items[position].viewType.id
     }
 }

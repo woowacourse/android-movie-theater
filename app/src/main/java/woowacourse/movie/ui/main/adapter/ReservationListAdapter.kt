@@ -14,9 +14,7 @@ class ReservationListAdapter(
     private val onReservationClick: (TicketsItemModel) -> Unit
 ) : RecyclerView.Adapter<ItemViewHolder>() {
 
-    private var _reservations = reservations.toList()
-    val reservations
-        get() = _reservations.toList()
+    private var reservations = reservations.toList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -26,14 +24,14 @@ class ReservationListAdapter(
         }
     }
 
-    override fun getItemCount(): Int = _reservations.size
+    override fun getItemCount(): Int = reservations.size
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        holder.bind(_reservations[position])
+        holder.bind(reservations[position])
     }
 
     fun setItemChanged(newReservations: List<ItemModel>) {
-        _reservations = newReservations.toList()
+        reservations = newReservations.toList()
         notifyDataSetChanged()
     }
 }
