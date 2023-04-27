@@ -8,13 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
-import woowacourse.movie.data.BookedTickets
 import woowacourse.movie.presentation.bookedticketlist.BookedTicketsFragment
-import woowacourse.movie.presentation.choiceSeat.MovieNoticeAlarmManager
 import woowacourse.movie.presentation.movielist.MovieListFragment
 import woowacourse.movie.presentation.settings.SettingsFragment
 import woowacourse.movie.presentation.util.replace
-import java.time.LocalDateTime
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,16 +28,6 @@ class MainActivity : AppCompatActivity() {
         setInitialFragment()
         initBottomNavigation()
         requestNotificationPermission()
-        // notification 실험용 제거 필요
-        MovieNoticeAlarmManager(this, BookedTickets.tickets[0]).setAlarm(
-            LocalDateTime.of(
-                2023,
-                1,
-                1,
-                12,
-                30
-            )
-        )
     }
 
     // 알림 권한 설정관련 리펙토링 필요
