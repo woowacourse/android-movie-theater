@@ -71,15 +71,14 @@ class ReservationConfirmActivity : BackKeyActionBarActivity() {
             )
         }
         val alarmManager: AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        val alarmIntent =
-            Intent(this, AlarmReceiver::class.java).apply { putExtra("a", tickets) }.let { intent ->
-                PendingIntent.getBroadcast(
-                    this,
-                    tickets.hashCode(),
-                    intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
-                )
-            }
+        val alarmIntent = AlarmReceiver.getIntent(this, tickets).let { intent ->
+            PendingIntent.getBroadcast(
+                this,
+                tickets.hashCode(),
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
+            )
+        }
 
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
