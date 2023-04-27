@@ -32,4 +32,9 @@
     <string name="setting_push_content">해제하면 푸시 알림을 수신할 수 없습니다.</string>
     <string name="notification_title">예매 알림</string>
     <string name="notification_content">%s 30분 후에 상영</string>
+    <string name="notification_channel_name">예매한 영화 시작 알림</string>
+    <string name="notification_channel_description">영화 시작 30분전 알림</string>
+    <string name="if_permission_is_denied_cant_use_notification_service">알림 권한이 없으면 알림 서비스를 이용하실 수 없습니다.</string>
+    <string name="notification_permission_is_granted">알림 권한을 받았습니다.</string>
+    <string name="notification_permission_is_denied">알림 권한을 획득하지 못하였습니다.</string>
 </resources>

@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                    Toast.makeText(this, "알림 권한이 없으면 알림 서비스를 이용하실 수 없습니다.", Toast.LENGTH_LONG)
+                    Toast.makeText(this, getString(R.string.if_permission_is_denied_cant_use_notification_service), Toast.LENGTH_LONG)
                         .show()
                 } else {
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
@@ -70,13 +70,13 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
-                Toast.makeText(this, "알림 권한을 받았습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.notification_permission_is_granted), Toast.LENGTH_SHORT).show()
                 SharedPreferenceUtil(this).setSettingValue(
                     BundleKeys.SETTING_PUSH_ALARM_SWITCH_KEY,
                     true
                 )
             } else {
-                Toast.makeText(this, "알림 권한을 획득하지 못하였습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.notification_permission_is_denied), Toast.LENGTH_SHORT).show()
                 SharedPreferenceUtil(this).setSettingValue(
                     BundleKeys.SETTING_PUSH_ALARM_SWITCH_KEY,
                     false
