@@ -52,13 +52,12 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     private fun requestNotificationPermission() {
-        if (ContextCompat.checkSelfPermission(
-                this, Manifest.permission.POST_NOTIFICATIONS
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                    // 권한 요청 거부한 경우
+                    Toast.makeText(this, "알림 권한이 없으면 알림 서비스를 이용하실 수 없습니다.", Toast.LENGTH_LONG)
+                        .show()
                 } else {
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
@@ -68,17 +67,20 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         }
     }
 
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean ->
-        if (isGranted) {
-            Toast.makeText(this, "알림 권한을 받았습니다.", Toast.LENGTH_SHORT).show()
-            SharedPreferenceUtil(this).setSettingValue(
-                BundleKeys.SETTING_PUSH_ALARM_SWITCH_KEY,
-                true
-            )
-        } else {
-            Toast.makeText(this, "알림 권한을 획득하지 못하였습니다.", Toast.LENGTH_SHORT).show()
+    val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                Toast.makeText(this, "알림 권한을 받았습니다.", Toast.LENGTH_SHORT).show()
+                SharedPreferenceUtil(this).setSettingValue(
+                    BundleKeys.SETTING_PUSH_ALARM_SWITCH_KEY,
+                    true
+                )
+            } else {
+                Toast.makeText(this, "알림 권한을 획득하지 못하였습니다.", Toast.LENGTH_SHORT).show()
+                SharedPreferenceUtil(this).setSettingValue(
+                    BundleKeys.SETTING_PUSH_ALARM_SWITCH_KEY,
+                    false
+                )
+            }
         }
-    }
 }
