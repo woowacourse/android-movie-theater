@@ -1,18 +1,16 @@
 package woowacourse.movie.presentation.reminder
 
-import android.Manifest
+import android.Manifest.permission
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Parcelable
-import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
+import woowacourse.movie.presentation.extensions.checkPermissionCompat
 
 abstract class Reminder {
     protected abstract val channelId: String
@@ -56,12 +54,7 @@ abstract class Reminder {
         notificationManager.createNotificationChannel(channel)
     }
 
+    @SuppressLint("InlinedApi")
     private fun isPermissionGranted(context: Context): Boolean =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            ActivityCompat.checkSelfPermission(
-                context, Manifest.permission.POST_NOTIFICATIONS
-            ) == PackageManager.PERMISSION_GRANTED
-        } else {
-            true
-        }
+        context.checkPermissionCompat(permission.POST_NOTIFICATIONS)
 }
