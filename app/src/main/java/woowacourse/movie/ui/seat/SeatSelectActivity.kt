@@ -7,7 +7,7 @@ import android.widget.TextView
 import com.example.domain.usecase.DiscountApplyUseCase
 import woowacourse.movie.R
 import woowacourse.movie.model.SeatPositionState
-import woowacourse.movie.model.TicketOptState
+import woowacourse.movie.model.SeatSelectState
 import woowacourse.movie.model.TicketsState
 import woowacourse.movie.model.mapper.asDomain
 import woowacourse.movie.model.mapper.asPresentation
@@ -26,22 +26,22 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
     private val titleTextView: TextView by lazy { findViewById(R.id.reservation_title) }
     private val moneyTextView: TextView by lazy { findViewById(R.id.reservation_money) }
     private val confirmView: ConfirmView by lazy { findViewById(R.id.reservation_confirm) }
-    private lateinit var ticketOptState: TicketOptState
+    private lateinit var seatSelectState: SeatSelectState
 
     private lateinit var seatTable: SeatTable
 
     override fun onCreateView(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_seat_select)
 
-        ticketOptState =
-            intent.getParcelableExtraCompat(KEY_TICKETS) ?: return keyError(KEY_TICKETS)
+        seatSelectState =
+            intent.getParcelableExtraCompat(KEY_SEAT_SELECT) ?: return keyError(KEY_SEAT_SELECT)
 
-        titleTextView.text = ticketOptState.movieState.title
+        titleTextView.text = seatSelectState.movieState.title
 
         confirmView.setOnClickListener { navigateShowDialog(seatTable.chosenSeatInfo) }
         confirmView.isClickable = false // 클릭리스너를 설정하면 clickable이 자동으로 참이 되기 때문
 
-        seatTable = SeatTable(window.decorView.rootView, ticketOptState.countState) {
+        seatTable = SeatTable(window.decorView.rootView, seatSelectState.countState) {
             updateSelectSeats(it)
         }
     }
@@ -51,8 +51,8 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
     ) {
         super.onRestoreInstanceState(savedInstanceState)
         val restoreState: ArrayList<SeatPositionState> =
-            savedInstanceState.getParcelableArrayListCompat(SEAT_RESTORE_KEY) ?: return keyError(
-                SEAT_RESTORE_KEY
+            savedInstanceState.getParcelableArrayListCompat(KEY_SEAT_RESTORE) ?: return keyError(
+                KEY_SEAT_RESTORE
             )
         seatTable.chosenSeatUpdate(restoreState.toList())
     }
@@ -60,7 +60,7 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putParcelableArrayList(
-            SEAT_RESTORE_KEY,
+            KEY_SEAT_RESTORE,
             ArrayList(seatTable.chosenSeatInfo)
         )
     }
@@ -77,16 +77,16 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
     }
 
     private fun navigateReservationConfirmActivity(seats: List<SeatPositionState>) {
-        val tickets = TicketsState.from(ticketOptState, seats)
+        val tickets = TicketsState.from(seatSelectState, seats)
         ReservationConfirmActivity.startActivity(this, tickets)
     }
 
     private fun updateSelectSeats(positionStates: List<SeatPositionState>) {
-        confirmView.isClickable = (positionStates.size == ticketOptState.countState.value)
+        confirmView.isClickable = (positionStates.size == seatSelectState.countState.value)
 
         val tickets = TicketsState(
-            ticketOptState.movieState,
-            ticketOptState.dateTime,
+            seatSelectState.movieState,
+            seatSelectState.dateTime,
             positionStates.toList()
         )
 
@@ -98,12 +98,12 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
     }
 
     companion object {
-        private const val SEAT_RESTORE_KEY = "seat_restore_key"
-        private const val KEY_TICKETS = "key_tickets"
+        private const val KEY_SEAT_RESTORE = "key_seat_restore"
+        private const val KEY_SEAT_SELECT = "key_seat_select"
 
-        fun startActivity(context: Context, ticketOptState: TicketOptState) {
+        fun startActivity(context: Context, seatSelectState: SeatSelectState) {
             val intent = Intent(context, SeatSelectActivity::class.java).apply {
-                putExtra(KEY_TICKETS, ticketOptState)
+                putExtra(KEY_SEAT_SELECT, seatSelectState)
             }
             context.startActivity(intent)
         }

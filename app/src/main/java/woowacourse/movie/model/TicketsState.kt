@@ -11,13 +11,13 @@ data class TicketsState(
     val positions: List<SeatPositionState>
 ) : Parcelable {
     companion object {
-        fun from(ticketOptState: TicketOptState, seats: List<SeatPositionState>): TicketsState {
-            require(ticketOptState.countState.value == seats.size) {
+        fun from(seatSelectState: SeatSelectState, seats: List<SeatPositionState>): TicketsState {
+            require(seatSelectState.countState.value == seats.size) {
                 ERROR_NO_MATCH_SEAT_SIZE
             }
             return TicketsState(
-                ticketOptState.movieState,
-                ticketOptState.dateTime,
+                seatSelectState.movieState,
+                seatSelectState.dateTime,
                 seats.toList()
             )
         }

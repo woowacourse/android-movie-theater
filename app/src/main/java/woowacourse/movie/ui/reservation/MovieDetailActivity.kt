@@ -12,7 +12,7 @@ import java.time.LocalTime
 import woowacourse.movie.R
 import woowacourse.movie.model.CountState
 import woowacourse.movie.model.MovieState
-import woowacourse.movie.model.TicketOptState
+import woowacourse.movie.model.SeatSelectState
 import woowacourse.movie.model.mapper.asDomain
 import woowacourse.movie.ui.BackKeyActionBarActivity
 import woowacourse.movie.ui.seat.SeatSelectActivity
@@ -53,8 +53,8 @@ class MovieDetailActivity : BackKeyActionBarActivity() {
 
     private fun navigateSeatSelectActivity() {
         val dateTime = dateTimeSpinner.getSelectDateTime()
-        val ticketOptState = TicketOptState(movie, dateTime, reservationCounter.count)
-        SeatSelectActivity.startActivity(this, ticketOptState)
+        val seatSelectState = SeatSelectState(movie, dateTime, reservationCounter.count)
+        SeatSelectActivity.startActivity(this, seatSelectState)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
