@@ -1,5 +1,8 @@
 package woowacourse.movie
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
@@ -15,10 +18,12 @@ import woowacourse.movie.dto.SeatsDto
 import woowacourse.movie.dto.TicketCountDto
 import woowacourse.movie.mapper.mapToSeats
 import woowacourse.movie.mapper.mapToSeatsDto
+import woowacourse.movie.movie.AlarmReceiver
 import woowacourse.movie.movie.BookingHistoryDto
 import woowacourse.movie.movie.dto.BookingMovieDto
 import woowacourse.movie.view.SeatSelectView
 import java.time.LocalDateTime
+import java.util.*
 
 class SeatSelectionActivity : AppCompatActivity() {
 
@@ -140,9 +145,47 @@ class SeatSelectionActivity : AppCompatActivity() {
         val bookingMovie = BookingMovieDto(movie, date, time, ticketCount, seats.mapToSeatsDto())
         val intent = Intent(this, TicketActivity::class.java)
         intent.putExtra("booking_movie", bookingMovie)
+        putAlarm(bookingMovie)
         BookingHistoryDto.add(bookingMovie)
         startActivity(intent)
         finish()
+    }
+
+    private fun setCalendar(bookingMovie: BookingMovieDto): Calendar {
+        val date = bookingMovie.date.date
+        val time = bookingMovie.time.time
+
+        return Calendar.getInstance().apply {
+            timeInMillis = System.currentTimeMillis()
+            set(Calendar.DAY_OF_YEAR, date.year)
+            set(Calendar.DAY_OF_MONTH, date.monthValue)
+            set(Calendar.DATE, date.dayOfMonth)
+            set(Calendar.HOUR_OF_DAY, time.hour)
+            set(Calendar.MINUTE, time.minusMinutes(30L).minute)
+        }
+    }
+
+    private fun putAlarm(bookingMovie: BookingMovieDto) {
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        alarmManager.setExact(
+            AlarmManager.RTC_WAKEUP,
+            setCalendar(bookingMovie).timeInMillis,
+            createReceiverPendingIntent(bookingMovie),
+        )
+    }
+
+    private fun createReceiverPendingIntent(bookingMovie: BookingMovieDto): PendingIntent {
+        return Intent(this, AlarmReceiver::class.java).let {
+            it.action = "alarm"
+            it.putExtra("booking_movie", bookingMovie)
+            PendingIntent.getBroadcast(
+                this,
+                925,
+                it,
+                PendingIntent.FLAG_IMMUTABLE,
+            )
+        }
     }
 
     companion object {
@@ -150,7 +193,6 @@ class SeatSelectionActivity : AppCompatActivity() {
         const val MOVIE_KEY = "movie"
         const val DATE_KEY = "movie_date"
         const val TIME_KEY = "movie_time"
-        const val SEATS_KEY = "seats"
         private const val SEATS_POSITION = "seats_position"
     }
 }
