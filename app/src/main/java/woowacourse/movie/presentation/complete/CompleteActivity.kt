@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieData
 import woowacourse.movie.domain.model.tools.Movie
+import woowacourse.movie.presentation.main.MainActivity
 import woowacourse.movie.presentation.model.TicketModel
 import woowacourse.movie.presentation.util.formatDotDateTimeColon
 
@@ -68,6 +69,13 @@ class CompleteActivity : AppCompatActivity() {
     private fun setMoviePaymentAmount(ticket: TicketModel) {
         findViewById<TextView>(R.id.textCompletedPaymentAmount).text =
             getString(R.string.payment_on_site_amount).format(ticket.paymentMoney)
+    }
+
+    override fun finish() {
+        super.finish()
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        startActivity(intent)
     }
 
     companion object {

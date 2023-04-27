@@ -89,6 +89,7 @@ class ChoiceSeatActivity : AppCompatActivity() {
             ticketModel
         ).setAlarm(ticketModel.bookedDateTime)
         startActivity(CompleteActivity.getIntent(this, ticketModel))
+        finishAffinity()
     }
 
     private fun setTitle(title: String) {
