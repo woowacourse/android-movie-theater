@@ -3,15 +3,18 @@ package woowacourse.movie.movie.java
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.isChecked
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isNotChecked
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
+import woowacourse.movie.movie.SettingPreference
 import woowacourse.movie.movielist.MainActivity
 
 @RunWith(AndroidJUnit4::class)
@@ -44,5 +47,25 @@ class SettingFragmentTest {
         onView(withId(R.id.push_alarm_switch)).perform(click())
 
         onView(withId(R.id.push_alarm_switch)).check(matches(isNotChecked()))
+    }
+
+    @Test
+    fun `세팅값이_false이면_스위치가_off_상태인지_확인`() {
+        val settingPreference =
+            SettingPreference(InstrumentationRegistry.getInstrumentation().targetContext)
+        settingPreference.setting = false
+
+        onView(withId(R.id.setting)).perform(click())
+        onView(withId(R.id.push_alarm_switch)).check(matches(isNotChecked()))
+    }
+
+    @Test
+    fun `세팅값이_true이면_스위치가_on_상태인지_확인`() {
+        val settingPreference =
+            SettingPreference(InstrumentationRegistry.getInstrumentation().targetContext)
+        settingPreference.setting = true
+
+        onView(withId(R.id.setting)).perform(click())
+        onView(withId(R.id.push_alarm_switch)).check(matches(isChecked()))
     }
 }
