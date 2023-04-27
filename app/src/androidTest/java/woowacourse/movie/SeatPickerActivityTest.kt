@@ -16,7 +16,7 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isClickable
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.isNotClickable
+import androidx.test.espresso.matcher.ViewMatchers.isNotEnabled
 import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
@@ -75,7 +75,7 @@ class SeatPickerActivityTest {
         onView(withText("C1")).perform(click())
 
         // then
-        onView(withId(R.id.tv_seat_picker_ticket_price)).check(matches(withText("13000원")))
+        onView(withId(R.id.tv_seat_picker_ticket_price)).check(matches(withText("13,000원")))
     }
 
     @Test
@@ -122,7 +122,7 @@ class SeatPickerActivityTest {
         onView(withText("B2")).perform(click())
 
         // then
-        onView(withId(R.id.bt_seat_picker_done)).check(matches(isNotClickable()))
+        onView(withId(R.id.bt_seat_picker_done)).check(matches(isNotEnabled()))
     }
 
     @Test
