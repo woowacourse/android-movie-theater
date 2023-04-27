@@ -1,10 +1,10 @@
 package woowacourse.movie.ui
 
 import android.content.Context
-import woowacourse.movie.R
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import woowacourse.movie.R
 
 object DateTimeFormatters {
 
@@ -16,7 +16,7 @@ object DateTimeFormatters {
         return context.getString(
             R.string.running_date,
             convertToDate(startDate),
-            convertToDate(endDate),
+            convertToDate(endDate)
         )
     }
 

@@ -35,7 +35,9 @@ class ReservationListFragment : Fragment() {
         adapter = ReservationListAdapter(
             TicketsRepository.allTickets().map {
                 it.convertToItemModel { position ->
-                    navigateReservationConfirm((adapter.reservations[position] as TicketsItemModel).ticketsState)
+                    navigateReservationConfirm(
+                        (adapter.reservations[position] as TicketsItemModel).ticketsState
+                    )
                 }
             }
         )
@@ -47,7 +49,9 @@ class ReservationListFragment : Fragment() {
         adapter.setItemChanged(
             TicketsRepository.allTickets().map {
                 it.convertToItemModel { position ->
-                    navigateReservationConfirm((adapter.reservations[position] as TicketsItemModel).ticketsState)
+                    navigateReservationConfirm(
+                        (adapter.reservations[position] as TicketsItemModel).ticketsState
+                    )
                 }
             }
         )

@@ -9,7 +9,7 @@ import woowacourse.movie.R
 class SeatView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0,
+    defStyleAttr: Int = 0
 ) : AppCompatTextView(context, attrs, defStyleAttr) {
     var isChosen: Boolean = false
         private set

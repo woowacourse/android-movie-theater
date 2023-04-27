@@ -7,6 +7,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import com.example.domain.usecase.DiscountApplyUseCase
+import java.time.LocalDateTime
+import java.util.Calendar
 import woowacourse.movie.R
 import woowacourse.movie.data.TicketsRepository
 import woowacourse.movie.model.TicketsState
@@ -17,15 +19,15 @@ import woowacourse.movie.ui.DateTimeFormatters
 import woowacourse.movie.ui.DecimalFormatters
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
-import java.time.LocalDateTime
-import java.util.Calendar
 
 class ReservationConfirmActivity : BackKeyActionBarActivity() {
     private val discountApplyUseCase = DiscountApplyUseCase()
     private val titleTextView: TextView by lazy { findViewById(R.id.reservation_title) }
     private val dateTextView: TextView by lazy { findViewById(R.id.reservation_date) }
     private val moneyTextView: TextView by lazy { findViewById(R.id.reservation_money) }
-    private val reservationCountTextView: TextView by lazy { findViewById(R.id.reservation_count_and_seat) }
+    private val reservationCountTextView: TextView by lazy {
+        findViewById(R.id.reservation_count_and_seat)
+    }
 
     override fun onCreateView(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_reservation_confirm)

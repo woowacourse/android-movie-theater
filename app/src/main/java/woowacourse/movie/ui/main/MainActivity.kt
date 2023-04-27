@@ -14,7 +14,9 @@ import woowacourse.movie.util.requestPermissions
 
 class MainActivity : AppCompatActivity() {
     private val rv: FragmentContainerView by lazy { findViewById(R.id.container) }
-    private val bottomNavigation: BottomNavigationView by lazy { findViewById(R.id.bottom_navigation_view) }
+    private val bottomNavigation: BottomNavigationView by lazy {
+        findViewById(R.id.bottom_navigation_view)
+    }
 
     private lateinit var movieListFragment: MovieListFragment
     private lateinit var reservationListFragment: ReservationListFragment
@@ -92,7 +94,7 @@ class MainActivity : AppCompatActivity() {
         private const val SETTING_TAG = "setting_tag"
 
         val PERMISSIONS = arrayOf(
-            Manifest.permission.POST_NOTIFICATIONS,
+            Manifest.permission.POST_NOTIFICATIONS
         )
     }
 }

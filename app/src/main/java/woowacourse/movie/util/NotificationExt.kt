@@ -39,7 +39,7 @@ fun Context.createNotification(
     iconResId: Int,
     contentTitle: String,
     contentText: String,
-    cancelable: Boolean,
+    cancelable: Boolean
 ): Notification {
     createNotificationChannel()
 
@@ -57,7 +57,7 @@ fun Context.sendNotification(
     iconResId: Int,
     contentTitle: String,
     contentText: String,
-    cancelable: Boolean,
+    cancelable: Boolean
 ): Int {
     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
         != PackageManager.PERMISSION_GRANTED

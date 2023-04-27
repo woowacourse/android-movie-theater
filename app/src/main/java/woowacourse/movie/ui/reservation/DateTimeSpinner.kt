@@ -2,13 +2,13 @@ package woowacourse.movie.ui.reservation
 
 import android.view.View
 import android.widget.Spinner
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 import woowacourse.movie.R
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.util.setClickListener
 import woowacourse.movie.util.setDefaultAdapter
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
 
 class DateTimeSpinner(
     view: View,
