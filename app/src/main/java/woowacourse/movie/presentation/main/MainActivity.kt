@@ -3,6 +3,7 @@ package woowacourse.movie.presentation.main
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -16,7 +17,6 @@ import woowacourse.movie.presentation.util.replace
 
 class MainActivity : AppCompatActivity() {
 
-    // 알림 권한 설정관련 리펙토링 필요
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         requestNotificationPermission()
     }
 
-    // 알림 권한 설정관련 리펙토링 필요
     private fun requestNotificationPermission() {
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -41,11 +40,10 @@ class MainActivity : AppCompatActivity() {
         ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS)) {
+                    Toast.makeText(this, ALARM_DENIED_TOAST_MESSAGE, Toast.LENGTH_LONG).show()
                 } else {
                     requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
                 }
-            } else {
-                // 안드로이드 12 이하는 Notification에 관한 권한 필요 없음
             }
         }
     }
@@ -80,5 +78,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val BOTTOM_NAVIGATION_WRONG_ITEM_ID_ERROR = "설정된 아이템 제외한 아이템 아이디가 전달되었습니다."
+        private const val ALARM_DENIED_TOAST_MESSAGE = "알림거부 횟수가 2회 이상이라 앱 설정에서 직접 알림 설정을 켜야합니다."
     }
 }
