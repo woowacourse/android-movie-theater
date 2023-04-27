@@ -7,7 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import com.example.domain.usecase.DiscountApplyUseCase
-import java.util.Calendar
+import java.time.ZoneId
 import woowacourse.movie.R
 import woowacourse.movie.data.TicketsRepository
 import woowacourse.movie.model.TicketsState
@@ -59,15 +59,6 @@ class ReservationConfirmActivity : BackKeyActionBarActivity() {
     }
 
     private fun setNotification(tickets: TicketsState) {
-        val calendar: Calendar = Calendar.getInstance().apply {
-            set(
-                tickets.dateTime.year,
-                tickets.dateTime.monthValue - 1,
-                tickets.dateTime.dayOfMonth,
-                tickets.dateTime.hour,
-                tickets.dateTime.minute
-            )
-        }
         val alarmManager: AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         val alarmIntent = AlarmReceiver.getIntent(this, tickets).let { intent ->
             PendingIntent.getBroadcast(
@@ -78,15 +69,20 @@ class ReservationConfirmActivity : BackKeyActionBarActivity() {
             )
         }
 
+        val advanceNoticeDateTime = tickets.dateTime
+            .minusMinutes(ADVANCE_NOTICE_MINUTES)
+            .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis - 30 * 60 * 1000,
+            advanceNoticeDateTime,
             alarmIntent
         )
     }
 
     companion object {
         private const val KEY_TICKETS = "key_tickets"
+        private const val ADVANCE_NOTICE_MINUTES = 30L
 
         fun startActivity(context: Context, tickets: TicketsState) {
             val intent = Intent(context, ReservationConfirmActivity::class.java).apply {
