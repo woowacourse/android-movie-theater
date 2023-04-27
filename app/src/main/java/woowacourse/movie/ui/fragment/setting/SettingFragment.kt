@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
-import woowacourse.movie.PreferenceUtil
+import woowacourse.movie.DefaultPreference
 import woowacourse.movie.R
 import woowacourse.movie.ui.Toaster
 import woowacourse.movie.ui.main.MainActivity.Companion.PERMISSIONS
@@ -15,7 +15,7 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val sharedPreference = PreferenceUtil(requireContext())
+        val sharedPreference = DefaultPreference(requireContext())
 
         switch = view.findViewById(R.id.notification_switch)
         switch?.isChecked = sharedPreference.getBoolean(NOTIFICATIONS, false)

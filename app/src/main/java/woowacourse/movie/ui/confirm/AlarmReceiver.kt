@@ -3,7 +3,7 @@ package woowacourse.movie.ui.confirm
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import woowacourse.movie.PreferenceUtil
+import woowacourse.movie.DefaultPreference
 import woowacourse.movie.R
 import woowacourse.movie.model.TicketsState
 import woowacourse.movie.ui.fragment.setting.SettingFragment.Companion.NOTIFICATIONS
@@ -14,7 +14,7 @@ import woowacourse.movie.util.sendNotification
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
         val tickets = intent?.extras?.getParcelableCompat<TicketsState>(KEY_TICKETS) ?: return
-        val sharedPreference = PreferenceUtil(context)
+        val sharedPreference = DefaultPreference(context)
         val isNotification = sharedPreference.getBoolean(NOTIFICATIONS, false)
 
         if (isNotification) {

@@ -3,7 +3,7 @@ package woowacourse.movie
 import android.content.Context
 import android.content.SharedPreferences
 
-class PreferenceUtil(context: Context) {
+class DefaultPreference(context: Context) {
     private val prefs: SharedPreferences =
         context.getSharedPreferences(
             "prefs_name",
