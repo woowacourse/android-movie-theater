@@ -3,6 +3,7 @@ package woowacourse.movie
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
@@ -11,14 +12,20 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import org.hamcrest.Matchers.allOf
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.activity.MainActivity
 import woowacourse.movie.movie.MovieMockData
 
-class MainActivityTest {
+class HomeFragmentTest {
     @get:Rule
     val activityRule = ActivityScenarioRule(MainActivity::class.java)
+
+    @Before
+    fun clickHome() {
+        onView(withId(R.id.page_home)).perform(click())
+    }
 
     @Test
     fun 리사이클러뷰_첫번째_아이템에_영화데이터의_첫번째_데이터가_들어있다() {
