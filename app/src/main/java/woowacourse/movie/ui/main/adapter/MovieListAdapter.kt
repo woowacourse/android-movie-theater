@@ -40,21 +40,19 @@ class MovieListAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ItemViewHolder {
-        return when (ViewType.of(viewType)) {
-            ViewType.MOVIE -> {
-                val itemView = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.movie_item_layout, parent, false)
-                MovieViewHolder(itemView) { position ->
-                    onClickMovie(items[position] as MovieItemModel)
-                }
+    ): ItemViewHolder = when (ViewType.of(viewType)) {
+        ViewType.MOVIE -> {
+            val itemView = LayoutInflater.from(parent.context)
+                .inflate(R.layout.movie_item_layout, parent, false)
+            MovieViewHolder(itemView) { position ->
+                onClickMovie(items[position] as MovieItemModel)
             }
-            ViewType.ADV -> {
-                val itemView = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.adv_item_layout, parent, false)
-                AdvViewHolder(itemView) { position ->
-                    onClickAdv(items[position] as AdvItemModel)
-                }
+        }
+        ViewType.ADV -> {
+            val itemView = LayoutInflater.from(parent.context)
+                .inflate(R.layout.adv_item_layout, parent, false)
+            AdvViewHolder(itemView) { position ->
+                onClickAdv(items[position] as AdvItemModel)
             }
         }
     }

@@ -18,15 +18,20 @@ class AlarmReceiver : BroadcastReceiver() {
         val isNotification = sharedPreference.getBoolean(NOTIFICATIONS, false)
 
         if (isNotification) {
-            val notificationArgs = NotificationArgs(
-                iconResId = R.drawable.ic_launcher_foreground,
-                contentTitle = context.getString(R.string.alarm_receiver_notification_title),
-                contentText = context.getString(R.string.alarm_receiver_notification_text)
-                    .format(tickets.movieState.title),
-                cancelable = true
-            )
-            context.sendNotification(notificationArgs)
+            sendNotification(context, tickets)
         }
+    }
+
+    private fun sendNotification(context: Context, tickets: TicketsState) {
+        val notificationArgs = NotificationArgs(
+            iconResId = R.drawable.ic_launcher_foreground,
+            contentTitle = context.getString(R.string.alarm_receiver_notification_title),
+            contentText = context.getString(R.string.alarm_receiver_notification_text).format(
+                tickets.movieState.title
+            ),
+            cancelable = true
+        )
+        context.sendNotification(notificationArgs)
     }
 
     companion object {
