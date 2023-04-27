@@ -38,15 +38,20 @@ class MoviesFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_movies, container, false)
         val movies = MockMoviesFactory.makeMovies()
-        val advertisementViewModel = MockAdvertisementFactory.generateAdvertisement()
+        val advertisementUiModel = MockAdvertisementFactory.generateAdvertisement()
         val movieList = view.findViewById<RecyclerView>(R.id.main_movie_list)
+
         movieList.adapter = MovieAdapter(
             movies,
-            advertisementViewModel,
+            advertisementUiModel,
             ::advertisementClick,
             ::reservationButtonClick
         )
         return view
+    }
+
+    override fun onPause() {
+        super.onPause()
     }
 
     private fun reservationButtonClick(movie: Movie) {

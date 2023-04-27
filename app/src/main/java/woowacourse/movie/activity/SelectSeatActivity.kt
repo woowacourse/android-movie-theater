@@ -14,9 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import domain.Ticket
 import domain.TicketOffice
 import woowacourse.movie.R
-import woowacourse.movie.fragment.SettingFragment
 import woowacourse.movie.getSerializableCompat
-import woowacourse.movie.receiver.NotificationReceiver
+import woowacourse.movie.receiver.ReservationNotificationReceiver
 import woowacourse.movie.setBackgroundColorId
 import woowacourse.movie.view.MovieView
 import woowacourse.movie.view.SeatTable
@@ -25,6 +24,7 @@ import woowacourse.movie.view.mapper.TicketsMapper
 import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.model.SeatUiModel
 import woowacourse.movie.view.model.TicketDateUiModel
+import woowacourse.movie.view.model.TicketsUiModel
 import java.sql.Date
 import java.text.NumberFormat
 import java.time.LocalDate
@@ -106,25 +106,32 @@ class SelectSeatActivity : AppCompatActivity() {
         return builder.create()
     }
 
-    fun registerAlarm() {
+    private fun registerAlarm() {
         val ticketsUiModel = TicketsMapper.toUi(ticketOffice.tickets)
-        val receiverIntent = Intent(this, NotificationReceiver::class.java)
-        receiverIntent.putExtra("movie", movieUiModel)
-        receiverIntent.putExtra("tickets", ticketsUiModel)
-
+        val receiverIntent = generateReceiverIntent(ticketsUiModel)
         val pendingIntent =
             PendingIntent.getBroadcast(this, 125, receiverIntent, PendingIntent.FLAG_IMMUTABLE)
-
-        val sqlDate = getAlarmDateTime(ticketDateTime)
-        val calendar: Calendar = Calendar.getInstance()
-        calendar.time = sqlDate
         val alarmManager: AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager[AlarmManager.RTC, calendar.timeInMillis] = pendingIntent
+        val timeMillis = getTimeInMillis()
+        alarmManager[AlarmManager.RTC, timeMillis] = pendingIntent
     }
 
-    fun getAlarmDateTime(localDateTime: LocalDateTime): Date {
+    private fun generateReceiverIntent(ticketsUiModel: TicketsUiModel): Intent {
+        val receiverIntent = Intent(this, ReservationNotificationReceiver::class.java)
+        receiverIntent.putExtra("movie", movieUiModel)
+        return receiverIntent.putExtra("tickets", ticketsUiModel)
+    }
+
+    private fun getTimeInMillis(): Long {
+        val sqlDate = getAlarmDateTime(ticketDateTime, 30)
+        val calendar: Calendar = Calendar.getInstance()
+        calendar.time = sqlDate
+        return calendar.timeInMillis
+    }
+
+    private fun getAlarmDateTime(localDateTime: LocalDateTime, minute: Long): Date {
         val milliSeconds: Long = localDateTime.atZone(ZoneId.systemDefault())
-            .minusMinutes(30)
+            .minusMinutes(minute)
             .toInstant().toEpochMilli()
         return Date(milliSeconds)
     }

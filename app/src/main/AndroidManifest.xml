@@ -33,7 +33,7 @@
                 android:exported="true" />
 
         <receiver
-                android:name=".receiver.NotificationReceiver"
+                android:name=".receiver.ReservationNotificationReceiver"
                 android:enabled="true"
                 android:exported="false">
             <intent-filter>

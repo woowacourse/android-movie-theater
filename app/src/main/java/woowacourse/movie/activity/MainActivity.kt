@@ -78,7 +78,11 @@ class MainActivity : AppCompatActivity() {
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
-        when (isGranted) {
+        saveAlarmPermissionData(isGranted)
+    }
+
+    private fun saveAlarmPermissionData(condition: Boolean) {
+        when (condition) {
             true -> editor.putBoolean(REQUEST_PERMISSION_KEY, true).commit()
             false -> editor.putBoolean(REQUEST_PERMISSION_KEY, false).commit()
         }
