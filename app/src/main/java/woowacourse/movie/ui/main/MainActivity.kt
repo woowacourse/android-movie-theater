@@ -18,6 +18,14 @@ import woowacourse.movie.ui.seat.NotiChannel
 import woowacourse.movie.util.shortToast
 
 class MainActivity : AppCompatActivity() {
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (!isGranted) {
+                shortToast("권한 요청을 거부하였습니다")
+            } else {
+                shortToast("권한 요청을 승인하였습니다")
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,15 +72,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-    private val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (!isGranted) {
-                shortToast("권한 요청을 거부하였습니다")
-            } else {
-                shortToast("권한 요청을 승인하였습니다")
-            }
-        }
 
     private fun createChannel() {
         val mChannel = NotificationChannel(
