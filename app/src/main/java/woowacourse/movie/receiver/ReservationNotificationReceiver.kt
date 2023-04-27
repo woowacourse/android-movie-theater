@@ -18,11 +18,12 @@ import woowacourse.movie.view.model.TicketsUiModel
 
 class ReservationNotificationReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, receivedIntent: Intent) {
+        val reservationNotificationHelper = NotificationHelper(context, CHANNEL_ID, CHANNEL_NAME)
         val movieUiModel = receiveMovieViewModel(receivedIntent)
         val ticketsUiModel = receiveTicketsUiModel(receivedIntent)
-
-        val notificationManager = getNotificationManager(context)
-        val notificationBuilder = generateNotificationBuilder(notificationManager, context)
+        val notificationManager = reservationNotificationHelper.generateNotificationManger()
+        val notificationBuilder =
+            reservationNotificationHelper.generateNotificationBuilder(notificationManager)
 
         val sendingIntent = generateSendingIntent(context, movieUiModel, ticketsUiModel)
         val pendingIntent = PendingIntent.getActivity(
@@ -30,8 +31,15 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
             PendingIntent.FLAG_IMMUTABLE
         )
 
-        setAlarmOption(notificationBuilder, movieUiModel, pendingIntent)
-        val notification: Notification = notificationBuilder.build()
+        reservationNotificationHelper.bindNotification(
+            notificationBuilder = notificationBuilder,
+            title = "예매 알림",
+            contextText = "${movieUiModel?.title} 30분 후에 상영",
+            smallIcon = R.drawable.ic_lock_idle_alarm,
+            isAutoCancel = true,
+            pendingIntent = pendingIntent
+        )
+        val notification: Notification = reservationNotificationHelper.generateNotification(notificationBuilder)
         if (isAlarmPossible(context)) notificationManager.notify(1, notification)
     }
 
@@ -41,27 +49,6 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
 
     private fun receiveMovieViewModel(intent: Intent): MovieUiModel? {
         return intent.extras?.getSerializableCompat(MOVIE_KEY_VALUE)
-    }
-
-    private fun getNotificationManager(context: Context): NotificationManager =
-        context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-    private fun generateNotificationBuilder(
-        notificationManager: NotificationManager,
-        context: Context
-    ): NotificationCompat.Builder {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationManager.createNotificationChannel(
-                NotificationChannel(
-                    CHANNEL_ID,
-                    CHANNEL_NAME,
-                    NotificationManager.IMPORTANCE_DEFAULT
-                )
-            )
-            NotificationCompat.Builder(context, CHANNEL_ID)
-        } else {
-            NotificationCompat.Builder(context)
-        }
     }
 
     private fun generateSendingIntent(
@@ -74,19 +61,6 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
         sendingIntent.putExtra(TICKETS_KEY_VALUE, ticketsUiModel)
         return sendingIntent
     }
-
-    private fun setAlarmOption(
-        notificationBuilder: NotificationCompat.Builder,
-        movieUiModel: MovieUiModel?,
-        pendingIntent: PendingIntent
-    ) {
-        notificationBuilder.setContentTitle("예매 알림")
-        notificationBuilder.setContentText(movieUiModel?.title + "  30분 후에 상영")
-        notificationBuilder.setSmallIcon(R.drawable.ic_lock_idle_alarm)
-        notificationBuilder.setAutoCancel(true)
-        notificationBuilder.setContentIntent(pendingIntent)
-    }
-
     private fun isAlarmPossible(context: Context): Boolean {
         val sharedPreferences = context.getSharedPreferences(
             SETTING,
