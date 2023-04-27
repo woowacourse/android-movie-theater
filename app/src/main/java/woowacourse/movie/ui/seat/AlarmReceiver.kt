@@ -10,6 +10,7 @@ import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
 import woowacourse.movie.model.ReservationUiModel
 import woowacourse.movie.ui.completed.CompletedActivity
+import woowacourse.movie.util.SettingSharedPreference
 import woowacourse.movie.util.getParcelable
 
 class AlarmReceiver : BroadcastReceiver() {
@@ -17,12 +18,18 @@ class AlarmReceiver : BroadcastReceiver() {
     private lateinit var notificationManager: NotificationManager
 
     override fun onReceive(context: Context, intent: Intent) {
+        if (!isAvailableReceivingAlarm(context)) return
         notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         createNotification(
             context,
             intent.getParcelable(RESERVATION, ReservationUiModel::class.java) ?: return,
         )
+    }
+
+    private fun isAvailableReceivingAlarm(context: Context): Boolean {
+        val settingSharedPreference = SettingSharedPreference(context)
+        return settingSharedPreference.receivingPushAlarm
     }
 
     private fun createNotification(context: Context, reservationUiModel: ReservationUiModel) {
@@ -35,7 +42,7 @@ class AlarmReceiver : BroadcastReceiver() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 PendingIntent.getActivity(
                     context,
-                    1,
+                    reservationUiModel.id.toInt(),
                     targetIntent,
                     PendingIntent.FLAG_MUTABLE,
                 )
@@ -56,7 +63,7 @@ class AlarmReceiver : BroadcastReceiver() {
             setChannelId(NotiChannel.BOOKING_ALARM.channelName)
             setAutoCancel(true)
         }
-        notificationManager.notify(0, builder.build())
+        notificationManager.notify(reservationUiModel.id.toInt(), builder.build())
     }
 
     companion object {

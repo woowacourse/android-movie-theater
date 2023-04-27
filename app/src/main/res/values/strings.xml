@@ -17,4 +17,6 @@
     <string name="menu_booking_history">예매 내역</string>
     <string name="menu_home">홈</string>
     <string name="menu_setting">설정</string>
+    <string name="receive_push_alarm">푸시 알림 수신</string>
+    <string name="push_alaram_denied">해제하시면 푸시 알림을 수신할 수 없습니다.</string>
 </resources>
