@@ -4,10 +4,10 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.dto.MovieDateDto
-import woowacourse.movie.dto.MovieTimeDto
-import woowacourse.movie.movie.dto.BookingMovieDto
-import woowacourse.movie.movielist.OnClickListener
+import woowacourse.movie.movie.dto.movie.MovieDateDto
+import woowacourse.movie.movie.dto.movie.MovieTimeDto
+import woowacourse.movie.movie.dto.movie.BookingMovieDto
+import woowacourse.movie.movie.movielist.OnClickListener
 import java.time.format.DateTimeFormatter
 
 class HistoryViewHolder(

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:id="@+id/seat_layout"
     android:background="@color/seat_background"
-    tools:context=".SeatSelectionActivity">
+    tools:context=".movie.activity.SeatSelectionActivity">
 
     <ScrollView
         android:layout_width="match_parent"

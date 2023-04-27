@@ -4,8 +4,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.dto.MovieDto
-import woowacourse.movie.movielist.OnClickListener
+import woowacourse.movie.movie.dto.movie.MovieDto
+import woowacourse.movie.movie.movielist.OnClickListener
 import java.time.format.DateTimeFormatter
 
 class MovieViewHolder(

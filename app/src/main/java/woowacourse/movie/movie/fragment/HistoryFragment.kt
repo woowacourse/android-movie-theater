@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.TicketActivity
-import woowacourse.movie.movie.BookingHistoryDto
-import woowacourse.movie.movie.dto.BookingMovieDto
+import woowacourse.movie.movie.activity.TicketActivity
+import woowacourse.movie.movie.dto.BookingHistoryDto
+import woowacourse.movie.movie.dto.movie.BookingMovieDto
 import woowacourse.movie.movie.history.HistoryRVAdapter
-import woowacourse.movie.movielist.OnClickListener
+import woowacourse.movie.movie.movielist.OnClickListener
 
 class HistoryFragment : Fragment() {
 

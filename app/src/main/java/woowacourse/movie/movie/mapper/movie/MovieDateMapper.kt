@@ -1,7 +1,7 @@
-package woowacourse.movie.mapper
+package woowacourse.movie.movie.mapper.movie
 
 import domain.movieinfo.MovieDate
-import woowacourse.movie.dto.MovieDateDto
+import woowacourse.movie.movie.dto.movie.MovieDateDto
 
 fun MovieDateDto.mapToMovieDate(): MovieDate {
     return MovieDate(this.date)

@@ -1,4 +1,4 @@
-package woowacourse.movie.view
+package woowacourse.movie.movie.view
 
 import android.util.TypedValue
 import android.view.Gravity
@@ -12,15 +12,15 @@ import domain.SeatCol
 import domain.SeatRow
 import domain.Seats
 import woowacourse.movie.R
-import woowacourse.movie.dto.SeatDto
-import woowacourse.movie.mapper.mapToSeat
-import woowacourse.movie.movie.dto.SeatColDto
-import woowacourse.movie.movie.dto.SeatRowDto
+import woowacourse.movie.movie.dto.seat.SeatColDto
+import woowacourse.movie.movie.dto.seat.SeatDto
+import woowacourse.movie.movie.dto.seat.SeatRowDto
+import woowacourse.movie.movie.mapper.seat.mapToSeat
 
 class SeatSelectView(
-    val viewGroup: ViewGroup,
+    private val viewGroup: ViewGroup,
     val onSeatClick: (Seat, TextView) -> Unit,
-    val seats: Seats,
+    private val seats: Seats,
 ) {
 
     private val tableLayout = viewGroup.findViewById<TableLayout>(R.id.seat)

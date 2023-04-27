@@ -2,7 +2,7 @@ package woowacourse.movie.dto
 
 import androidx.annotation.DrawableRes
 import woowacourse.movie.R
-import woowacourse.movie.movielist.ViewType
+import woowacourse.movie.movie.movielist.ViewType
 
 data class AdDto(
     val viewType: ViewType = ViewType.AD_VIEW,

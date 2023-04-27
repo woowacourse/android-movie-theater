@@ -1,4 +1,4 @@
-package woowacourse.movie.movielist
+package woowacourse.movie.movie.movielist
 
 import MovieViewHolder
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import woowacourse.movie.R
 import woowacourse.movie.dto.AdDto
-import woowacourse.movie.dto.MovieDto
+import woowacourse.movie.movie.dto.movie.MovieDto
 
 class MovieRVAdapter(
     private val movies: List<MovieDto>,

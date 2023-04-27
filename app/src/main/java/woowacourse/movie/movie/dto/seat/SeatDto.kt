@@ -1,7 +1,5 @@
-package woowacourse.movie.dto
+package woowacourse.movie.movie.dto.seat
 
-import woowacourse.movie.movie.dto.SeatColDto
-import woowacourse.movie.movie.dto.SeatRowDto
 import java.io.Serializable
 
 data class SeatDto(val row: SeatRowDto, val col: SeatColDto) : Serializable {

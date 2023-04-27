@@ -13,9 +13,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
-import woowacourse.movie.SeatSelectionActivity.Companion.BOOKING_MOVIE_KEY
-import woowacourse.movie.TicketActivity
-import woowacourse.movie.movie.dto.BookingMovieDto
+import woowacourse.movie.movie.activity.SeatSelectionActivity.Companion.BOOKING_MOVIE_KEY
+import woowacourse.movie.movie.activity.TicketActivity
+import woowacourse.movie.movie.dto.movie.BookingMovieDto
 
 class AlarmReceiver : BroadcastReceiver() {
 

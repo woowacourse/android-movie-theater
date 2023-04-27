@@ -1,16 +1,17 @@
-package woowacourse.movie
+package woowacourse.movie.movie.activity
 
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import woowacourse.movie.SeatSelectionActivity.Companion.BOOKING_MOVIE_KEY
-import woowacourse.movie.dto.MovieDto
-import woowacourse.movie.dto.SeatsDto
-import woowacourse.movie.dto.TicketCountDto
-import woowacourse.movie.mapper.mapToSeats
-import woowacourse.movie.movie.dto.BookingMovieDto
+import woowacourse.movie.R
+import woowacourse.movie.movie.activity.SeatSelectionActivity.Companion.BOOKING_MOVIE_KEY
+import woowacourse.movie.movie.dto.movie.MovieDto
+import woowacourse.movie.movie.dto.seat.SeatsDto
+import woowacourse.movie.movie.dto.ticket.TicketCountDto
+import woowacourse.movie.movie.mapper.seat.mapToSeats
+import woowacourse.movie.movie.dto.movie.BookingMovieDto
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime

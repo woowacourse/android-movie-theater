@@ -1,4 +1,4 @@
-package woowacourse.movie.dto
+package woowacourse.movie.movie.dto.ticket
 
 import java.io.Serializable
 

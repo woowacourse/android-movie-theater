@@ -1,6 +1,6 @@
-package woowacourse.movie.movie
+package woowacourse.movie.movie.dto
 
-import woowacourse.movie.movie.dto.BookingMovieDto
+import woowacourse.movie.movie.dto.movie.BookingMovieDto
 
 object BookingHistoryDto : java.io.Serializable {
 

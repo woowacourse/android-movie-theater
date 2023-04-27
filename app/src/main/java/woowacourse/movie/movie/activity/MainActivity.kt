@@ -1,4 +1,4 @@
-package woowacourse.movie.movielist
+package woowacourse.movie.movie.activity
 
 import android.Manifest
 import android.content.pm.PackageManager

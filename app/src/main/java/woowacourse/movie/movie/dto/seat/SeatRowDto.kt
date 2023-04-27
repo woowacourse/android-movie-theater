@@ -1,4 +1,4 @@
-package woowacourse.movie.movie.dto
+package woowacourse.movie.movie.dto.seat
 
 import woowacourse.movie.R
 

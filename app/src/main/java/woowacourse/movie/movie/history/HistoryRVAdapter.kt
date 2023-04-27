@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.movie.dto.BookingMovieDto
-import woowacourse.movie.movielist.OnClickListener
+import woowacourse.movie.movie.dto.movie.BookingMovieDto
+import woowacourse.movie.movie.movielist.OnClickListener
 
 class HistoryRVAdapter(
     private val histories: List<BookingMovieDto>,

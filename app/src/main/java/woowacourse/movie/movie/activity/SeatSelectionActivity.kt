@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.movie.activity
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -11,20 +11,21 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import domain.Seat
 import domain.Seats
-import woowacourse.movie.dto.MovieDateDto
-import woowacourse.movie.dto.MovieDto
-import woowacourse.movie.dto.MovieTimeDto
-import woowacourse.movie.dto.SeatsDto
-import woowacourse.movie.dto.TicketCountDto
-import woowacourse.movie.mapper.mapToSeats
-import woowacourse.movie.mapper.mapToSeatsDto
+import woowacourse.movie.R
+import woowacourse.movie.movie.mapper.seat.mapToSeats
+import woowacourse.movie.movie.mapper.seat.mapToSeatsDto
 import woowacourse.movie.movie.AlarmReceiver
 import woowacourse.movie.movie.AlarmReceiver.Companion.ALARM_CODE
 import woowacourse.movie.movie.AlarmReceiver.Companion.ALARM_TIME
 import woowacourse.movie.movie.AlarmReceiver.Companion.REQUEST_CODE
-import woowacourse.movie.movie.BookingHistoryDto
-import woowacourse.movie.movie.dto.BookingMovieDto
-import woowacourse.movie.view.SeatSelectView
+import woowacourse.movie.movie.dto.BookingHistoryDto
+import woowacourse.movie.movie.dto.movie.BookingMovieDto
+import woowacourse.movie.movie.dto.movie.MovieDateDto
+import woowacourse.movie.movie.dto.movie.MovieDto
+import woowacourse.movie.movie.dto.movie.MovieTimeDto
+import woowacourse.movie.movie.dto.seat.SeatsDto
+import woowacourse.movie.movie.dto.ticket.TicketCountDto
+import woowacourse.movie.movie.view.SeatSelectView
 import java.time.LocalDateTime
 import java.util.*
 

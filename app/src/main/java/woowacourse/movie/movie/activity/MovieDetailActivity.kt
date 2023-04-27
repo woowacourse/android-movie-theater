@@ -1,4 +1,4 @@
-package woowacourse.movie.moviedetail
+package woowacourse.movie.movie.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -18,14 +18,13 @@ import domain.movieinfo.MovieTime
 import domain.screeningschedule.ReservationDate
 import domain.screeningschedule.ReservationTime
 import woowacourse.movie.R
-import woowacourse.movie.SeatSelectionActivity
-import woowacourse.movie.dto.MovieDateDto
-import woowacourse.movie.dto.MovieDto
-import woowacourse.movie.dto.TicketCountDto
-import woowacourse.movie.mapper.mapToMovieDateDto
-import woowacourse.movie.mapper.mapToMovieTimeDto
-import woowacourse.movie.mapper.mapToTicketCount
-import woowacourse.movie.mapper.mapToTicketCountDto
+import woowacourse.movie.movie.mapper.movie.mapToMovieDateDto
+import woowacourse.movie.movie.mapper.movie.mapToMovieTimeDto
+import woowacourse.movie.movie.mapper.ticket.mapToTicketCount
+import woowacourse.movie.movie.mapper.ticket.mapToTicketCountDto
+import woowacourse.movie.movie.dto.movie.MovieDateDto
+import woowacourse.movie.movie.dto.movie.MovieDto
+import woowacourse.movie.movie.dto.ticket.TicketCountDto
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
