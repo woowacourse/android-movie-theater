@@ -22,7 +22,7 @@ import woowacourse.movie.presentation.extensions.positiveButton
 import woowacourse.movie.presentation.extensions.title
 
 class SettingFragment : Fragment() {
-    lateinit var switch: SwitchMaterial
+    lateinit var pushSwitch: SwitchMaterial
 
     private val preferences = MovieApplication.preferences
     private val settingActionReLauncher =
@@ -30,7 +30,7 @@ class SettingFragment : Fragment() {
             val isPushAllowed =
                 requireContext().checkPermissionTiramisu(Manifest.permission.POST_NOTIFICATIONS)
 
-            switch.isChecked = isPushAllowed
+            pushSwitch.isChecked = isPushAllowed
             preferences.setBoolean(PUSH_ALLOW_KEY, isPushAllowed)
         }
 
@@ -49,10 +49,10 @@ class SettingFragment : Fragment() {
 
     @SuppressLint("InlinedApi")
     private fun initPushSwitch(view: View) {
-        switch = view.findViewById(R.id.notification_push_switch)
+        pushSwitch = view.findViewById(R.id.notification_push_switch)
         val isPushAllowed = preferences.getBoolean(PUSH_ALLOW_KEY, true) && checkPushPermission()
 
-        with(switch) {
+        with(pushSwitch) {
             isChecked = preferences.getBoolean(PUSH_ALLOW_KEY, isPushAllowed)
             setOnCheckedChangeListener { _, isAllowed ->
                 if (isAllowed && !checkPushPermission()) {
@@ -79,7 +79,7 @@ class SettingFragment : Fragment() {
                 ).addCategory(Intent.CATEGORY_DEFAULT)
                 settingActionReLauncher.launch(appDetailsIntent)
             }
-            negativeButton { switch.isChecked = false }
+            negativeButton { pushSwitch.isChecked = false }
         }.show()
     }
 
