@@ -200,14 +200,12 @@ class SeatPickerActivity : BackButtonActivity() {
 
         alarmMgr.set(
             AlarmManager.RTC_WAKEUP,
-            LocalDateTime.now().atZone(ZoneId.of("Asia/Seoul")).toInstant()
-                .toEpochMilli() + 60000,//notificationTime,
+            notificationTime,
             alarmIntent
         )
         Log.d(
             "time_test",
-            (LocalDateTime.now().atZone(ZoneId.of("Asia/Seoul")).toInstant()
-                .toEpochMilli() + 60000).toString()
+            notificationTime.toString()
         )
 
     }
