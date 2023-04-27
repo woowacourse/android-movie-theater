@@ -4,8 +4,10 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.recyclerview.widget.RecyclerView
@@ -80,27 +82,22 @@ class MainActivity : AppCompatActivity() {
         val bottomNavigationView =
             findViewById<BottomNavigationView>(R.id.main_bottom_navigation_view)
         bottomNavigationView.selectedItemId = R.id.action_home
-        bottomNavigationView.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.action_list -> {
-                    replaceFragment<ReservationListFragment>(
-                        ReservationListFragment.from(
-                            ReservationsViewData(mainRepository.requestReservation())
-                        )
-                    )
-                    true
-                }
-                R.id.action_home -> {
-                    removeAllFragments()
-                    true
-                }
-                R.id.action_setting -> {
-                    replaceFragment<SettingFragment>()
-                    true
-                }
-                else -> false
-            }
+        bottomNavigationView.setOnItemSelectedListener(::onItemSelected)
+    }
+
+    private fun onItemSelected(menuItem: MenuItem): Boolean {
+        return when (menuItem.itemId) {
+            R.id.action_list -> replaceReservationListFragment() == Unit
+            R.id.action_home -> removeAllFragments() == Unit
+            R.id.action_setting -> replaceFragment<SettingFragment>() == Unit
+            else -> false
         }
+    }
+
+    private fun replaceReservationListFragment() {
+        val bundle =
+            ReservationListFragment.from(ReservationsViewData(mainRepository.requestReservation()))
+        replaceFragment<ReservationListFragment>(bundle)
     }
 
     private inline fun <reified T : Fragment> replaceFragment(bundle: Bundle? = null) {
@@ -111,12 +108,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun removeAllFragments() {
-        supportFragmentManager.run {
-            commit {
-                fragments.forEach {
-                    remove(it)
-                }
-            }
+        supportFragmentManager.commit {
+            removeAll()
+        }
+    }
+
+    private fun FragmentTransaction.removeAll() {
+        supportFragmentManager.fragments.forEach {
+            remove(it)
         }
     }
 
