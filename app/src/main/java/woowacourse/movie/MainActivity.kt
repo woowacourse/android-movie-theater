@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         requestNotificationPermission()
 
         initBottomNavigation()
@@ -44,6 +45,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun requestNotificationPermission() {
+        Application.prefs.setBoolean(getString(R.string.push_alarm_permission), false)
+
         if (ContextCompat.checkSelfPermission(
                 this, Manifest.permission.POST_NOTIFICATIONS
             ) != PackageManager.PERMISSION_GRANTED
@@ -63,5 +66,6 @@ class MainActivity : AppCompatActivity() {
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
+        Application.prefs.setBoolean(getString(R.string.push_alarm_permission), isGranted)
     }
 }

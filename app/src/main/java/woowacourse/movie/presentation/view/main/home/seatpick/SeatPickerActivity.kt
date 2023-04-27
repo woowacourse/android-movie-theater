@@ -21,10 +21,12 @@ import com.example.domain.ReservationRepository
 import com.example.domain.Seat
 import com.example.domain.SeatGrade
 import com.example.domain.TicketBundle
+import woowacourse.movie.Application
 import woowacourse.movie.R
 import woowacourse.movie.broadcast.AlarmReceiver
 import woowacourse.movie.databinding.ActivitySeatPickerBinding
 import woowacourse.movie.model.MovieBookingInfo
+import woowacourse.movie.model.ReservationResult
 import woowacourse.movie.presentation.extension.getParcelableCompat
 import woowacourse.movie.presentation.view.common.BackButtonActivity
 import woowacourse.movie.presentation.view.main.home.bookcomplete.BookCompleteActivity
@@ -45,14 +47,13 @@ class SeatPickerActivity : BackButtonActivity() {
         val movieBookingInfo: MovieBookingInfo? = intent.getParcelableCompat(
             MOVIE_BOOKING_INFO_SCHEDULE_INTENT_KEY
         )
-        processEmptyMovieData(movieBookingInfo)
 
-        setView(movieBookingInfo!!)
+        movieBookingInfo?.let { initView(it) } ?: processEmptyMovieData()
     }
 
-    private fun setView(movieBookingInfo: MovieBookingInfo) {
-        setBookingInfoView(movieBookingInfo)
-        setSeatPickerView(movieBookingInfo)
+    private fun initView(movieBookingInfo: MovieBookingInfo) {
+        initBookingInfoView(movieBookingInfo)
+        initSeatPickerView(movieBookingInfo)
         binding.tvSeatPickerConfirm.setOnClickListener {
             if (ticketBundle.tickets.size != movieBookingInfo.ticketCount) {
                 Toast.makeText(
@@ -68,91 +69,23 @@ class SeatPickerActivity : BackButtonActivity() {
         }
     }
 
-    private fun showDialog(movieBookingInfo: MovieBookingInfo) {
-        AlertDialog.Builder(this).apply {
-            setTitle(getString(R.string.dialog_title_seat_picker_confirm))
-            setMessage(getString(R.string.dialog_message_seat_picker_confirm))
-            setCancelable(false)
-            setPositiveButton(getString(R.string.dialog_positive_button_seat_picker_confirm)) { _, _ ->
-                setDialogPositiveEvent(movieBookingInfo)
-            }
-            setNegativeButton(getString(R.string.dialog_negative_button_seat_picker_confirm)) { dialog, _ ->
-                dialog.dismiss()
-            }
-        }.show()
-    }
-
-    private fun setDialogPositiveEvent(movieBookingInfo: MovieBookingInfo) {
-        val reservationId = saveReservation(movieBookingInfo)
-
-        val sharedPref = getPreferences(Context.MODE_PRIVATE)
-        val allowedPushNotification = sharedPref?.getBoolean(getString(R.string.push_alarm_permission), false) ?: false
-        if (allowedPushNotification) setAlarmManager(reservationId)
-
-        val intent =
-            Intent(this@SeatPickerActivity, BookCompleteActivity::class.java).apply {
-                putExtra(
-                    BookCompleteActivity.BOOKING_COMPLETE_INFO_INTENT_KEY,
-                    reservationId
-                )
-            }
-        startActivity(intent)
-    }
-
-    private fun setAlarmManager(reservationId: Long) {
-        val alarmMgr: AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-        val alarmIntent = Intent(this, AlarmReceiver::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }.let { intent ->
-            intent.putExtra(BookCompleteActivity.BOOKING_COMPLETE_INFO_INTENT_KEY, reservationId)
-            PendingIntent.getBroadcast(this, 0, intent, FLAG_IMMUTABLE)
-        }
-
-        val localDateTime = LocalDateTime.of(
-            LocalDate.parse("2023-04-26", DateTimeFormatter.ISO_DATE),
-            LocalTime.parse("17:15", DateTimeFormatter.ofPattern("H:mm"))
-        ).atZone(ZoneId.of("Asia/Seoul")).toInstant().toEpochMilli()
-
-        alarmMgr.set(
-            AlarmManager.RTC_WAKEUP,
-            localDateTime,
-            alarmIntent
-        )
-
-        Log.d("AlarmTest", (localDateTime - (1000 * 60 * 30)).toString())
-    }
-
-    private fun saveReservation(movieBookingInfo: MovieBookingInfo): Long {
-        val reservation = Reservation(
-            binding.tvSeatPickerTotalPrice.text.toString().toInt(),
-            ticketBundle.tickets.size,
-            ticketBundle.getSeatNames().joinToString(", "),
-            movieBookingInfo.movieInfo.title,
-            movieBookingInfo.date,
-            movieBookingInfo.time
-        )
-        val reservationId = ReservationRepository.save(reservation)
-        return reservationId
-    }
-
-    private fun setBookingInfoView(movieBookingInfo: MovieBookingInfo) {
+    private fun initBookingInfoView(movieBookingInfo: MovieBookingInfo) {
         binding.tvSeatPickerMovieTitle.text = movieBookingInfo.movieInfo.title
         binding.tvSeatPickerTotalPrice.text = 0.toString()
     }
 
-    private fun setSeatPickerView(movieBookingInfo: MovieBookingInfo) {
+    private fun initSeatPickerView(movieBookingInfo: MovieBookingInfo) {
         binding.tbSeatPicker.children
             .filterIsInstance<TableRow>()
             .flatMap { it.children }
             .filterIsInstance<TextView>()
             .forEachIndexed { index, textView ->
-                setTextViewOptions(index, textView)
-                setSeatPickerClickListener(index, textView, movieBookingInfo)
+                initTextViewOptions(index, textView)
+                initSeatPickerClickListener(index, textView, movieBookingInfo)
             }
     }
 
-    private fun setTextViewOptions(index: Int, textView: TextView) {
+    private fun initTextViewOptions(index: Int, textView: TextView) {
         val seat = Seat(index)
         textView.text = seat.getSeatName()
         textView.gravity = Gravity.CENTER
@@ -166,7 +99,7 @@ class SeatPickerActivity : BackButtonActivity() {
         textView.setTextColor(textColor)
     }
 
-    private fun setSeatPickerClickListener(
+    private fun initSeatPickerClickListener(
         seatIndex: Int,
         textView: TextView,
         movieBookingInfo: MovieBookingInfo,
@@ -204,15 +137,100 @@ class SeatPickerActivity : BackButtonActivity() {
         }
     }
 
-    private fun processEmptyMovieData(movieBookingInfo: MovieBookingInfo?) {
-        if (movieBookingInfo == null) {
-            Toast.makeText(this, getString(R.string.error_intent_message), Toast.LENGTH_SHORT)
-                .show()
-            this.finish()
+    private fun showDialog(movieBookingInfo: MovieBookingInfo) {
+        AlertDialog.Builder(this).apply {
+            setTitle(getString(R.string.dialog_title_seat_picker_confirm))
+            setMessage(getString(R.string.dialog_message_seat_picker_confirm))
+            setCancelable(false)
+            setPositiveButton(getString(R.string.dialog_positive_button_seat_picker_confirm)) { _, _ ->
+                onClickDialogPositiveButton(movieBookingInfo)
+            }
+            setNegativeButton(getString(R.string.dialog_negative_button_seat_picker_confirm)) { dialog, _ ->
+                dialog.dismiss()
+            }
+        }.show()
+    }
+
+    private fun onClickDialogPositiveButton(movieBookingInfo: MovieBookingInfo) {
+        val reservation = saveReservation(movieBookingInfo)
+
+        val sharedPref = Application.prefs
+        val allowedPushNotification =
+            sharedPref.getBoolean(getString(R.string.push_alarm_permission), true)
+        if (allowedPushNotification)
+            setAlarmManager(reservation)
+
+        val intent =
+            Intent(this@SeatPickerActivity, BookCompleteActivity::class.java).apply {
+                putExtra(
+                    BookCompleteActivity.RESERVATION_ID_INTENT_KEY,
+                    reservation.id
+                )
+            }
+        startActivity(intent)
+    }
+
+    private fun saveReservation(movieBookingInfo: MovieBookingInfo): Reservation {
+        val reservation = Reservation(
+            binding.tvSeatPickerTotalPrice.text.toString().toInt(),
+            ticketBundle.tickets.size,
+            ticketBundle.getSeatNames().joinToString(", "),
+            movieBookingInfo.movieInfo.title,
+            movieBookingInfo.date,
+            movieBookingInfo.time
+        )
+        ReservationRepository.save(reservation)
+        return reservation
+    }
+
+    private fun setAlarmManager(reservation: Reservation) {
+
+        val alarmMgr: AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val alarmIntent = createAlarmIntent(reservation)
+
+        val screeningDateTime = LocalDateTime.of(
+            LocalDate.parse(reservation.date, DateTimeFormatter.ISO_DATE),
+            LocalTime.parse(reservation.time, DateTimeFormatter.ofPattern("H:mm"))
+        )
+
+        val notificationTime =
+            screeningDateTime.atZone(ZoneId.of("Asia/Seoul")).toInstant().toEpochMilli() -
+                    TIME_MILLS_OF_HALF_HOUR
+
+        alarmMgr.set(
+            AlarmManager.RTC_WAKEUP,
+            LocalDateTime.now().atZone(ZoneId.of("Asia/Seoul")).toInstant()
+                .toEpochMilli() + 60000,//notificationTime,
+            alarmIntent
+        )
+        Log.d(
+            "time_test",
+            (LocalDateTime.now().atZone(ZoneId.of("Asia/Seoul")).toInstant()
+                .toEpochMilli() + 60000).toString()
+        )
+
+    }
+
+    private fun createAlarmIntent(reservation: Reservation): PendingIntent =
+        Intent(this, AlarmReceiver::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }.let { intent ->
+            intent.putExtra(BookCompleteActivity.RESERVATION_ID_INTENT_KEY, reservation.id)
+            intent.putExtra(
+                AlarmReceiver.RESERVATION_INTENT_KEY, ReservationResult.from(reservation)
+            )
+            PendingIntent.getBroadcast(this, 0, intent, FLAG_IMMUTABLE)
         }
+
+    private fun processEmptyMovieData() {
+        Toast.makeText(this, getString(R.string.error_intent_message), Toast.LENGTH_SHORT)
+            .show()
+        this.finish()
     }
 
     companion object {
+        const val TIME_MILLS_OF_HALF_HOUR = (1000 * 60 * 30)
         const val MOVIE_BOOKING_INFO_SCHEDULE_INTENT_KEY = "MOVIE_BOOKING_INFO_SCHEDULE_KEY"
     }
 }

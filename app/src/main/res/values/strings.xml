@@ -31,4 +31,6 @@
     <string name="setting_alarm_content">해제하면 푸시 알림을 수신할 수 없습니다.</string>
     <string name="push_alarm_permission">push_alarm_permission</string>
 
+    <string name="error_alarm_message">정보를 불러오는 중 에러가 발생했습니다. 다시 시도해 주세요.</string>
+
 </resources>

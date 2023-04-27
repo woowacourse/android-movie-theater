@@ -16,7 +16,7 @@ class BookCompleteActivity : BackButtonActivity() {
         setContentView(binding.root)
 
         val bookingCompleteInfo =
-            intent.getLongExtra(BOOKING_COMPLETE_INFO_INTENT_KEY, -1L)
+            intent.getLongExtra(RESERVATION_ID_INTENT_KEY, -1L)
         processEmptyBookingData(bookingCompleteInfo)
 
         val movieBookingData = ReservationRepository.findById(bookingCompleteInfo)
@@ -32,7 +32,6 @@ class BookCompleteActivity : BackButtonActivity() {
     }
 
     private fun setViewData(reservation: Reservation) {
-
         binding.tvBookMovieTitle.text = reservation.movieTitle
         binding.tvBookDate.text =
             formatBookingTime(reservation.date, reservation.time)
@@ -53,6 +52,6 @@ class BookCompleteActivity : BackButtonActivity() {
     }
 
     companion object {
-        const val BOOKING_COMPLETE_INFO_INTENT_KEY = "BOOKING_COMPLETE_INFO_INTENT_KEY"
+        const val RESERVATION_ID_INTENT_KEY = "RESERVATION_ID_INTENT_KEY"
     }
 }

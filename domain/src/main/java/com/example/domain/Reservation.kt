@@ -2,7 +2,7 @@ package com.example.domain
 
 import kotlin.properties.Delegates
 
-data class Reservation(
+class Reservation(
     val totalPrice: Int,
     val ticketCount: Int,
     val seatNames: String,

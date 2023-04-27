@@ -20,7 +20,7 @@ object IntentFixture {
             ApplicationProvider.getApplicationContext(),
             toClass
         ).putExtra(
-            BookCompleteActivity.BOOKING_COMPLETE_INFO_INTENT_KEY,
+            BookCompleteActivity.RESERVATION_ID_INTENT_KEY,
             BookingCompleteInfo(
                 MovieBookingInfo(
                     Movie(

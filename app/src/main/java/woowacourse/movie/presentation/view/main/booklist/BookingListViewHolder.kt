@@ -19,7 +19,7 @@ class BookingListViewHolder(binding: ItemBookingListBinding) :
             .format(reservation.date.replace("-", "."), reservation.time)
         root.setOnClickListener {
             val intent = Intent(context, BookCompleteActivity::class.java)
-                .putExtra(BookCompleteActivity.BOOKING_COMPLETE_INFO_INTENT_KEY, reservation.id)
+                .putExtra(BookCompleteActivity.RESERVATION_ID_INTENT_KEY, reservation.id)
             root.context.startActivity(intent)
         }
     }
