@@ -14,7 +14,7 @@ import woowacourse.movie.ui.fragment.setting.SettingFragment
 import woowacourse.movie.util.requestPermissions
 
 class MainActivity : AppCompatActivity() {
-    private val rv: FragmentContainerView by lazy { findViewById(R.id.container) }
+    private val fragmentContainer: FragmentContainerView by lazy { findViewById(R.id.container) }
     private val bottomNavigation: BottomNavigationView by lazy {
         findViewById(R.id.bottom_navigation_view)
     }
@@ -46,9 +46,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun initFragments() {
         supportFragmentManager.beginTransaction()
-            .add(rv.id, movieListFragment, MOVIE_LIST_TAG)
-            .add(rv.id, reservationListFragment, RESERVATION_LIST_TAG)
-            .add(rv.id, settingFragment, SETTING_TAG)
+            .add(fragmentContainer.id, movieListFragment, MOVIE_LIST_TAG)
+            .add(fragmentContainer.id, reservationListFragment, RESERVATION_LIST_TAG)
+            .add(fragmentContainer.id, settingFragment, SETTING_TAG)
             .hide(reservationListFragment)
             .hide(settingFragment)
             .commit()
