@@ -20,16 +20,7 @@ class AlarmController(
 
     fun registerAlarm(reservation: ReservationUiModel, minuteInterval: Long) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val pendingIntent = Intent(context, AlarmReceiver::class.java).let {
-            it.putExtra(AlarmReceiver.REQUEST_CODE, AlarmReceiver.ALARM_REQUEST_CODE)
-            it.putExtra(AlarmReceiver.RESERVATION, reservation)
-            PendingIntent.getBroadcast(
-                context,
-                AlarmReceiver.ALARM_REQUEST_CODE,
-                it,
-                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
-            )
-        }
+        val pendingIntent = getPendingIntent(reservation)
 
         alarmManager.set(
             AlarmManager.RTC_WAKEUP,
@@ -38,6 +29,18 @@ class AlarmController(
                 .toEpochSecond() * 1000L,
             pendingIntent,
         )
+    }
+
+    private fun getPendingIntent(reservation: ReservationUiModel): PendingIntent {
+        return Intent(context, AlarmReceiver::class.java).let {
+            it.putExtra(AlarmReceiver.RESERVATION, reservation)
+            PendingIntent.getBroadcast(
+                context,
+                AlarmReceiver.ALARM_REQUEST_CODE,
+                it,
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+            )
+        }
     }
 
     fun cancelAlarms() {
