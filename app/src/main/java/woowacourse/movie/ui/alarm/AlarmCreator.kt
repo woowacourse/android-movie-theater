@@ -11,7 +11,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset
 
-class AlarmManager(private val context: Context) {
+class AlarmCreator(private val context: Context) {
     private val alarmManager: AlarmManager =
         context.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
 
@@ -39,7 +39,7 @@ class AlarmManager(private val context: Context) {
     private fun setPendingIntent(ticketModel: MovieTicketModel): PendingIntent =
         PendingIntent.getBroadcast(
             context,
-            ReservationAlarmReceiver.NOTIFICATION_ID,
+            NotificationCreator.NOTIFICATION_ID,
             setIntent(ticketModel),
             PendingIntent.FLAG_IMMUTABLE,
         )

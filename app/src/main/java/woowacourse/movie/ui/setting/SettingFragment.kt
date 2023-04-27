@@ -14,11 +14,11 @@ import woowacourse.movie.R
 import woowacourse.movie.model.AlarmSwitchState
 import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.model.ReservationModel
-import woowacourse.movie.ui.alarm.AlarmManager
+import woowacourse.movie.ui.alarm.AlarmCreator
 
 class SettingFragment : Fragment() {
     private lateinit var toggleButton: SwitchCompat
-    private val alarmManager by lazy { AlarmManager(requireContext()) }
+    private val alarmCreator by lazy { AlarmCreator(requireContext()) }
     private val requestPermissionLauncher by lazy {
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
@@ -39,6 +39,24 @@ class SettingFragment : Fragment() {
         return view
     }
 
+    private fun requestNotificationPermission(view: View) {
+        if (ContextCompat.checkSelfPermission(
+                view.context,
+                android.Manifest.permission.POST_NOTIFICATIONS,
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (!shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS)) {
+                    // 권한 요청 거부한 경우
+                } else {
+                    requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                }
+            } else {
+                // 안드로이드 12 이하는 Notification에 관한 권한 필요 없음
+            }
+        }
+    }
+
     private fun initToggleButton(view: View) {
         toggleButton = view.findViewById(R.id.setting_switch)
         toggleButton.isChecked = AlarmSwitchState.isAlarmActivated
@@ -53,9 +71,9 @@ class SettingFragment : Fragment() {
 
     private fun setAlarms(isChecked: Boolean) {
         if (isChecked) {
-            iterateOnTickets(alarmManager::makeAlarm)
+            iterateOnTickets(alarmCreator::makeAlarm)
         } else {
-            iterateOnTickets(alarmManager::cancelAlarm)
+            iterateOnTickets(alarmCreator::cancelAlarm)
         }
     }
 
@@ -65,26 +83,7 @@ class SettingFragment : Fragment() {
         }
     }
 
-    private fun requestNotificationPermission(view: View) {
-        if (ContextCompat.checkSelfPermission(
-                view.context,
-                android.Manifest.permission.POST_NOTIFICATIONS,
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS)) {
-                    // 권한 요청 거부한 경우
-                } else {
-                    requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
-                }
-            } else {
-                // 안드로이드 12 이하는 Notification에 관한 권한 필요 없음
-            }
-        }
-    }
-
     companion object {
         const val KEY_MOVIE = "movie"
-        private const val KEY_SWITCH = "switch"
     }
 }

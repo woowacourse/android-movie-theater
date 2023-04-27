@@ -35,4 +35,8 @@
     <string name="setting_alarm_title">푸시 알림 수신</string>
     <string name="setting_alarm_description">해제하면 푸시 알림을 수신할 수 없습니다.</string>
 
+    <!-- notification -->
+    <string name="notification_title">예매 알림</string>
+    <string name="notification_text">%s 30분 후에 상영</string>
+
 </resources>
