@@ -2,10 +2,14 @@ package woowacourse.movie.presentation.activities.main.fragments.setting
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.google.android.material.switchmaterial.SwitchMaterial
 import woowacourse.movie.R
@@ -18,6 +22,17 @@ import woowacourse.movie.presentation.extensions.positiveButton
 import woowacourse.movie.presentation.extensions.title
 
 class SettingFragment : Fragment() {
+    lateinit var switch: SwitchMaterial
+
+    private val preferences = MovieApplication.preferences
+    private val settingActionReLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
+            val isPushAllowed =
+                requireContext().checkPermissionTiramisu(Manifest.permission.POST_NOTIFICATIONS)
+
+            switch.isChecked = isPushAllowed
+            preferences.setBoolean(PUSH_ALLOW_KEY, isPushAllowed)
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,28 +49,38 @@ class SettingFragment : Fragment() {
 
     @SuppressLint("InlinedApi")
     private fun initPushSwitch(view: View) {
-        val switch = view.findViewById<SwitchMaterial>(R.id.notification_push_switch)
-        val preferences = MovieApplication.preferences
-        val isPushAllowed = preferences.getBoolean(PUSH_ALLOW_KEY, true) &&
-            requireContext().checkPermissionTiramisu(Manifest.permission.POST_NOTIFICATIONS)
+        switch = view.findViewById(R.id.notification_push_switch)
+        val isPushAllowed = preferences.getBoolean(PUSH_ALLOW_KEY, true) && checkPushPermission()
 
         with(switch) {
             isChecked = preferences.getBoolean(PUSH_ALLOW_KEY, isPushAllowed)
-            setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked && !requireContext().checkPermissionTiramisu(Manifest.permission.POST_NOTIFICATIONS)) {
-                    requireContext().createAlertDialog {
-                        title("권한 요청")
-                        message("푸시 알림을 받으려면 권한이 필요합니다.")
-                        positiveButton {
-                            // 권한을 요청한다.
-                        }
-                        negativeButton { setChecked(false) }
-                    }.show()
+            setOnCheckedChangeListener { _, isAllowed ->
+                if (isAllowed && !checkPushPermission()) {
+                    showPushPermissionDialog()
                 } else {
-                    preferences.setBoolean(PUSH_ALLOW_KEY, isChecked)
+                    preferences.setBoolean(PUSH_ALLOW_KEY, isAllowed)
                 }
             }
         }
+    }
+
+    @SuppressLint("InlinedApi")
+    private fun checkPushPermission(): Boolean =
+        requireContext().checkPermissionTiramisu(Manifest.permission.POST_NOTIFICATIONS)
+
+    private fun showPushPermissionDialog() {
+        requireContext().createAlertDialog {
+            title(getString(R.string.permission_request_dialog_title))
+            message(getString(R.string.permission_request_dialog_desc))
+            positiveButton {
+                val appDetailsIntent = Intent(
+                    Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                    Uri.parse("package:${requireContext().packageName}")
+                ).addCategory(Intent.CATEGORY_DEFAULT)
+                settingActionReLauncher.launch(appDetailsIntent)
+            }
+            negativeButton { switch.isChecked = false }
+        }.show()
     }
 
     companion object {
@@ -63,8 +88,7 @@ class SettingFragment : Fragment() {
         internal const val PUSH_ALLOW_KEY = "push_allow_key"
 
         fun newInstance(): SettingFragment = settingFragment.apply {
-            arguments = Bundle().apply {
-            }
+            arguments = Bundle().apply {}
         }
     }
 }

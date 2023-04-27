@@ -48,8 +48,7 @@ class HistoryFragment : Fragment() {
         private val historyFragment = HistoryFragment()
 
         fun newInstance(): HistoryFragment = historyFragment.apply {
-            arguments = Bundle().apply {
-            }
+            arguments = Bundle().apply {}
         }
     }
 }
