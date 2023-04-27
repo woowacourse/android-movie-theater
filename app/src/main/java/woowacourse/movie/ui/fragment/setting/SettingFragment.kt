@@ -1,7 +1,6 @@
 package woowacourse.movie.ui.fragment.setting
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,9 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.PreferenceUtil
 import woowacourse.movie.R
+import woowacourse.movie.ui.Toaster
+import woowacourse.movie.ui.main.MainActivity.Companion.PERMISSIONS
+import woowacourse.movie.util.hasPermissions
 
 class SettingFragment : Fragment() {
 
@@ -29,12 +31,16 @@ class SettingFragment : Fragment() {
         context?.let {
             val sharedPreference = PreferenceUtil(it)
             switchValue = sharedPreference.getBoolean(NOTIFICATIONS, false)
-            switch?.setOnCheckedChangeListener { _, isChecked ->
-                sharedPreference.setBoolean(NOTIFICATIONS, isChecked)
-                Log.d("mendel", "수신여부 변경 후 저장값: ${sharedPreference.getBoolean(NOTIFICATIONS, false)}")
+            switch?.isChecked = switchValue
+            switch?.setOnCheckedChangeListener { switchCompat, _ ->
+                val permission = this.activity?.hasPermissions(PERMISSIONS) ?: return@setOnCheckedChangeListener
+                if (!permission) {
+                    switchCompat.isChecked = false
+                    Toaster.showToast(it, "알림 권한을 허용해주세요.")
+                }
+                sharedPreference.setBoolean(NOTIFICATIONS, switchCompat.isChecked)
             }
         }
-        switch?.isChecked = switchValue
     }
 
     override fun onDestroyView() {
