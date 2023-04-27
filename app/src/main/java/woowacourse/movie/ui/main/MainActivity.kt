@@ -24,59 +24,61 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val fragment = supportFragmentManager.findFragmentById(rv.id)
-        when (fragment) {
-            is MovieListFragment -> {
-                movieListFragment = fragment
-                reservationListFragment = ReservationListFragment()
-                settingFragment = SettingFragment()
-                bottomNavigation.selectedItemId = R.id.movie_list_item
-            }
-            is ReservationListFragment -> {
-                movieListFragment = MovieListFragment()
-                reservationListFragment = fragment
-                settingFragment = SettingFragment()
-                bottomNavigation.selectedItemId = R.id.reservation_list_item
-            }
-            is SettingFragment -> {
-                movieListFragment = MovieListFragment()
-                reservationListFragment = ReservationListFragment()
-                settingFragment = fragment
-            }
-            null -> {
-                movieListFragment = MovieListFragment()
-                reservationListFragment = ReservationListFragment()
-                settingFragment = SettingFragment()
-                supportFragmentManager.beginTransaction().add(
-                    rv.id, movieListFragment,
-                    MOVIE_LIST_TAG
-                ).commit()
-                bottomNavigation.selectedItemId = R.id.movie_list_item
-            }
-        }
+        movieListFragment =
+            supportFragmentManager.findFragmentByTag(MOVIE_LIST_TAG) as? MovieListFragment
+                ?: MovieListFragment()
 
+        reservationListFragment =
+            supportFragmentManager.findFragmentByTag(RESERVATION_LIST_TAG) as? ReservationListFragment
+                ?: ReservationListFragment()
+
+        settingFragment =
+            supportFragmentManager.findFragmentByTag(SETTING_TAG) as? SettingFragment
+                ?: SettingFragment()
+
+        if (savedInstanceState == null) { initFragments() }
+        initListener()
+        requestPermissions(PERMISSIONS, requestPermissionLauncher::launch)
+    }
+
+    private fun initFragments() {
+        supportFragmentManager.beginTransaction()
+            .add(rv.id, movieListFragment, MOVIE_LIST_TAG)
+            .add(rv.id, reservationListFragment, RESERVATION_LIST_TAG)
+            .add(rv.id, settingFragment, SETTING_TAG)
+            .hide(reservationListFragment)
+            .hide(settingFragment)
+            .commit()
+        bottomNavigation.selectedItemId = R.id.movie_list_item
+    }
+
+    private fun initListener() {
         bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.reservation_list_item -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(rv.id, reservationListFragment, RESERVATION_LIST_TAG)
+                        .show(reservationListFragment)
+                        .hide(movieListFragment)
+                        .hide(settingFragment)
                         .commit()
                 }
                 R.id.movie_list_item -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(rv.id, movieListFragment, MOVIE_LIST_TAG)
+                        .hide(reservationListFragment)
+                        .show(movieListFragment)
+                        .hide(settingFragment)
                         .commit()
                 }
                 R.id.setting_item -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(rv.id, settingFragment, SETTING_TAG)
+                        .hide(reservationListFragment)
+                        .hide(movieListFragment)
+                        .show(settingFragment)
                         .commit()
                 }
             }
             return@setOnItemSelectedListener true
         }
-
-        requestPermissions(PERMISSIONS, requestPermissionLauncher::launch)
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
