@@ -1,10 +1,11 @@
 package woowacourse.movie.util
 
 import android.app.Activity
+import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat
 
-fun Activity.hasPermissions(permissions: Array<String>): Boolean {
+fun Context.hasPermissions(permissions: Array<String>): Boolean {
     permissions.forEach { permission ->
         if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
             return false
