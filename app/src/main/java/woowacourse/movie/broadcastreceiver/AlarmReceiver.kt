@@ -24,6 +24,15 @@ class AlarmReceiver : BroadcastReceiver() {
             intent.getParcelableExtraCompat<TicketModel>(CompleteActivity.TICKET)
                 ?: throw NoSuchElementException()
 
+        val channel = setNotificationChannel(context)
+        initNotificationManager(context, channel)
+
+        val pendingIntent = initPendingIntent(context, ticket)
+        val builder = initNotificationBuilder(context, ticket, pendingIntent)
+        lunchNotification(context, builder)
+    }
+
+    private fun setNotificationChannel(context: Context): NotificationChannel {
         val channelId = context.getString(R.string.alarm_channel_id)
         val channelName = context.getString(R.string.alarm_channel_name)
         val channelDescription = context.getString(R.string.alarm_channel_description)
@@ -31,42 +40,61 @@ class AlarmReceiver : BroadcastReceiver() {
         val channel = NotificationChannel(channelId, channelName, importance).apply {
             description = channelDescription
         }
+        return channel
+    }
 
+    private fun initNotificationManager(
+        context: Context,
+        channel: NotificationChannel
+    ) {
         val notificationManager: NotificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
+    }
 
+    private fun initPendingIntent(
+        context: Context,
+        ticket: TicketModel
+    ): PendingIntent? {
         val intent = CompleteActivity.getIntent(context, ticket)
 
-        val pendingIntent = PendingIntent.getActivity(
+        return PendingIntent.getActivity(
             context,
             0,
             intent,
             PendingIntent.FLAG_IMMUTABLE
         )
+    }
 
-        val builder =
-            NotificationCompat.Builder(context, context.getString(R.string.alarm_channel_id))
-                .setSmallIcon(R.drawable.ic_home)
-                .setContentTitle(context.getString(R.string.booked_ticket_notification_title))
-                .setContentText(
-                    context.getString(
-                        R.string.booked_ticket_notification_content,
-                        MovieData.findMovieById(ticket.movieId).title
-                    )
+    private fun initNotificationBuilder(
+        context: Context,
+        ticket: TicketModel,
+        pendingIntent: PendingIntent?
+    ): NotificationCompat.Builder {
+        return NotificationCompat.Builder(context, context.getString(R.string.alarm_channel_id))
+            .setSmallIcon(R.drawable.ic_home)
+            .setContentTitle(context.getString(R.string.booked_ticket_notification_title))
+            .setContentText(
+                context.getString(
+                    R.string.booked_ticket_notification_content,
+                    MovieData.findMovieById(ticket.movieId).title
                 )
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
+            )
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+    }
 
+    private fun lunchNotification(
+        context: Context,
+        builder: NotificationCompat.Builder
+    ) {
         with(NotificationManagerCompat.from(context)) {
             if (ActivityCompat.checkSelfPermission(
                     context,
                     Manifest.permission.POST_NOTIFICATIONS
                 ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                return
-            }
+            ) return
             notify(1, builder.build())
         }
     }
