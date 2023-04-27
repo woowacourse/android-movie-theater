@@ -14,10 +14,13 @@ import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
 import woowacourse.movie.ui.activity.MovieTicketActivity
 import woowacourse.movie.ui.model.MovieTicketModel
+import woowacourse.movie.ui.storage.SettingsStorage
 import woowacourse.movie.ui.utils.getParcelable
 
 class NotificationReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
+        if (checkPushNotificationAllowed()) return
+
         val ticketModel =
             intent.getParcelable<MovieTicketModel>(TICKET_EXTRA_KEY) ?: return
 
@@ -25,6 +28,8 @@ class NotificationReceiver : BroadcastReceiver() {
 
         notifyReservation(context, ticketModel)
     }
+
+    private fun checkPushNotificationAllowed() = !SettingsStorage.getPushNotification()
 
     private fun createNotificationChannel(context: Context) {
         val name = context.getString(R.string.reservation_notification_title)
