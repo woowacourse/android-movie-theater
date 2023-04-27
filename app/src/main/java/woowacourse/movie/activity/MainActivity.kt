@@ -11,7 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
+import woowacourse.movie.BundleKeys
 import woowacourse.movie.R
+import woowacourse.movie.SharedPreferenceUtil
 import woowacourse.movie.fragment.BookHistoryFragment
 import woowacourse.movie.fragment.HomeFragment
 import woowacourse.movie.fragment.SettingFragment
@@ -71,6 +73,10 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     ) { isGranted: Boolean ->
         if (isGranted) {
             Toast.makeText(this, "알림 권한을 받았습니다.", Toast.LENGTH_SHORT).show()
+            SharedPreferenceUtil(this).setSettingValue(
+                BundleKeys.SETTING_PUSH_ALARM_SWITCH_KEY,
+                true
+            )
         } else {
             Toast.makeText(this, "알림 권한을 획득하지 못하였습니다.", Toast.LENGTH_SHORT).show()
         }
