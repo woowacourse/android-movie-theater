@@ -11,6 +11,8 @@ import woowacourse.movie.R
 import woowacourse.movie.activity.ReservationResultActivity
 import woowacourse.movie.view.adapter.ReservationAdapter
 import woowacourse.movie.view.data.ReservationsViewData
+import woowacourse.movie.view.error.FragmentError.finishWithError
+import woowacourse.movie.view.error.ViewError
 import woowacourse.movie.view.getSerializable
 
 class ReservationListFragment : Fragment() {
@@ -20,10 +22,11 @@ class ReservationListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        arguments ?: return null
+        arguments ?: return finishWithError(ViewError.MissingExtras(MISSING_ARGUMENTS))
         val reservations =
             arguments?.getSerializable<ReservationsViewData>(ReservationsViewData.RESERVATIONS_VIEW_DATA_EXTRA_NAME)
-                ?: return null
+                ?: return finishWithError(ViewError.MissingExtras(ReservationsViewData.RESERVATIONS_VIEW_DATA_EXTRA_NAME))
+
         val view = inflater.inflate(R.layout.fragment_reservation_list, container, false)
         makeReservationRecyclerView(view, reservations)
         return view
@@ -34,8 +37,7 @@ class ReservationListFragment : Fragment() {
         recyclerView.adapter = ReservationAdapter(reservations) {
             startActivity(
                 ReservationResultActivity.from(
-                    view.context,
-                    it
+                    view.context, it
                 )
             )
         }
@@ -44,6 +46,7 @@ class ReservationListFragment : Fragment() {
     }
 
     companion object {
+        private const val MISSING_ARGUMENTS = "arguments"
         fun from(reservationsViewData: ReservationsViewData) = Bundle().apply {
             putSerializable(
                 ReservationsViewData.RESERVATIONS_VIEW_DATA_EXTRA_NAME, reservationsViewData
