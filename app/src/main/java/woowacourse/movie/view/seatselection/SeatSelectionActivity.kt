@@ -18,6 +18,7 @@ import woowacourse.movie.data.ReservationMockRepository
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.domain.ReservationAgency
 import woowacourse.movie.domain.Seat
+import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.view.ReservationCompletedActivity
 import woowacourse.movie.view.mapper.toDomainModel
@@ -30,6 +31,7 @@ import java.text.DecimalFormat
 class SeatSelectionActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySeatSelectionBinding
+    private val reservationRepository: ReservationRepository = ReservationMockRepository
     private val reservationOptions by lazy {
         intent.getParcelableCompat<ReservationOptions>(RESERVATION_OPTIONS)
     }
@@ -180,7 +182,7 @@ class SeatSelectionActivity : AppCompatActivity() {
     private fun reserveSeats() {
         val reservation = reservationAgency.reserve(selectedSeats)
         reservation?.let {
-            ReservationMockRepository.add(reservation)
+            reservationRepository.add(reservation)
             startActivity(ReservationCompletedActivity.newIntent(this, reservation.toUiModel()))
         }
     }
