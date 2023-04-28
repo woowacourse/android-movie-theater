@@ -20,6 +20,18 @@ import woowacourse.movie.fragment.HomeFragment
 import woowacourse.movie.fragment.SettingFragment
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener {
+
+    val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                Toast.makeText(this, getString(R.string.notification_permission_is_granted), Toast.LENGTH_SHORT).show()
+                SharedPreferenceUtil(this).setSettingValue(BundleKeys.SETTING_PUSH_ALARM_SWITCH_KEY, true)
+            } else {
+                Toast.makeText(this, getString(R.string.notification_permission_is_denied), Toast.LENGTH_SHORT).show()
+                SharedPreferenceUtil(this).setSettingValue(BundleKeys.SETTING_PUSH_ALARM_SWITCH_KEY, false)
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -46,35 +58,20 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     private fun requestNotificationPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                    Toast.makeText(this, getString(R.string.if_permission_is_denied_cant_use_notification_service), Toast.LENGTH_LONG)
-                        .show()
-                } else {
-                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                }
-            } else {
-                // 안드로이드 12 이하는 Notification에 관한 권한 필요 없음
-            }
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) getNotificationPermission()
         }
     }
 
-    val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-            if (isGranted) {
-                Toast.makeText(this, getString(R.string.notification_permission_is_granted), Toast.LENGTH_SHORT).show()
-                SharedPreferenceUtil(this).setSettingValue(
-                    BundleKeys.SETTING_PUSH_ALARM_SWITCH_KEY,
-                    true
-                )
-            } else {
-                Toast.makeText(this, getString(R.string.notification_permission_is_denied), Toast.LENGTH_SHORT).show()
-                SharedPreferenceUtil(this).setSettingValue(
-                    BundleKeys.SETTING_PUSH_ALARM_SWITCH_KEY,
-                    false
-                )
-            }
+    private fun getNotificationPermission() {
+        if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+            Toast.makeText(this, getString(R.string.if_permission_is_denied_cant_use_notification_service), Toast.LENGTH_LONG).show()
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
+    }
 }
