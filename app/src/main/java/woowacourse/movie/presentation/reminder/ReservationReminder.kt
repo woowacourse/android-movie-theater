@@ -2,7 +2,6 @@ package woowacourse.movie.presentation.reminder
 
 import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.os.Parcelable
 import woowacourse.movie.R
 import woowacourse.movie.presentation.activities.ticketing.SeatPickerActivity.Companion.REMINDER_TIME_MINUTES_AGO
@@ -36,8 +35,7 @@ class ReservationReminder(
         context: Context,
         data: Reservation
     ): PendingIntent {
-        val intent = Intent(context, TicketingResultActivity::class.java)
-        intent.putExtra(TicketingResultActivity.RESERVATION_KEY, data)
+        val intent = TicketingResultActivity.intent(context, data)
         return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
     }
 

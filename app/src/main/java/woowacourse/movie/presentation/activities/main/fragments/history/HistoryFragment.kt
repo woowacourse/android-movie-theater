@@ -1,6 +1,5 @@
 package woowacourse.movie.presentation.activities.main.fragments.history
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -45,10 +44,7 @@ class HistoryFragment : Fragment() {
     }
 
     private fun startResultActivity(item: Reservation) {
-        startActivity(
-            Intent(requireContext(), TicketingResultActivity::class.java)
-                .putExtra(TicketingResultActivity.RESERVATION_KEY, item)
-        )
+        startActivity(TicketingResultActivity.intent(requireContext(), item))
     }
 
     companion object {

@@ -179,10 +179,7 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun startTicketingResultActivity(reservation: Reservation) {
-        startActivity(
-            Intent(this@SeatPickerActivity, TicketingResultActivity::class.java)
-                .putExtra(TicketingResultActivity.RESERVATION_KEY, reservation)
-        )
+        startActivity(TicketingResultActivity.intent(this, reservation))
         finish()
     }
 

@@ -1,5 +1,7 @@
 package woowacourse.movie.presentation.activities.ticketingresult
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
@@ -60,5 +62,9 @@ class TicketingResultActivity : AppCompatActivity() {
 
     companion object {
         internal const val RESERVATION_KEY = "reservation"
+
+        fun intent(context: Context, reservation: Reservation): Intent =
+            Intent(context, this::class.java)
+                .putExtra(RESERVATION_KEY, reservation)
     }
 }
