@@ -9,8 +9,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.R
+import woowacourse.movie.data.storage.SettingsStorage
 import woowacourse.movie.ui.activity.MainActivity
-import woowacourse.movie.ui.storage.SettingsStorage
 
 class SettingsFragmentTest {
     @get:Rule

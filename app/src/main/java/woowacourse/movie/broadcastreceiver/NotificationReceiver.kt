@@ -12,9 +12,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
+import woowacourse.movie.data.storage.SettingsStorage
 import woowacourse.movie.ui.activity.MovieTicketActivity
 import woowacourse.movie.ui.model.MovieTicketModel
-import woowacourse.movie.ui.storage.SettingsStorage
 import woowacourse.movie.ui.utils.getParcelable
 
 class NotificationReceiver : BroadcastReceiver() {

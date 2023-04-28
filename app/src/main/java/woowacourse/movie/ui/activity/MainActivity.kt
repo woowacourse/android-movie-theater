@@ -16,11 +16,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
+import woowacourse.movie.data.storage.SettingsStorage
 import woowacourse.movie.ui.fragment.FragmentType
 import woowacourse.movie.ui.fragment.movielist.HomeFragment
 import woowacourse.movie.ui.fragment.reservationlist.ReservationListFragment
 import woowacourse.movie.ui.fragment.settings.SettingsFragment
-import woowacourse.movie.ui.storage.SettingsStorage
 import woowacourse.movie.ui.utils.showSnack
 
 class MainActivity : AppCompatActivity() {

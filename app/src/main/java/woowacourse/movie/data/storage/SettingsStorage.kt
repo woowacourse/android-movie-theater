@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.storage
+package woowacourse.movie.data.storage
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
