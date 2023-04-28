@@ -3,6 +3,7 @@ package woowacourse.movie.view
 import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -134,6 +135,15 @@ class ReservationCompletedActivity : AppCompatActivity() {
             val intent = Intent(context, ReservationCompletedActivity::class.java)
             intent.putExtra(RESERVATION, reservation)
             return intent
+        }
+
+        fun getPendingIntent(context: Context, reservation: ReservationUiModel): PendingIntent {
+            return PendingIntent.getActivity(
+                context,
+                REQUEST_CODE,
+                newIntent(context, reservation),
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+            )
         }
     }
 }

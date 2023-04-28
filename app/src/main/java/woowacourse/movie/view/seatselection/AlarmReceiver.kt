@@ -22,15 +22,9 @@ class AlarmReceiver : BroadcastReceiver() {
         val content = reservation?.let {
             context.getString(R.string.screening_after_30_minutes, reservation.title)
         }
-        val toReservationCompletedIntent = reservation?.let {
-            ReservationCompletedActivity.newIntent(context, reservation)
+        val pendingIntent = reservation?.let {
+            ReservationCompletedActivity.getPendingIntent(context, reservation)
         }
-        val pendingIntent = PendingIntent.getActivity(
-            context,
-            ReservationCompletedActivity.REQUEST_CODE,
-            toReservationCompletedIntent,
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
-        )
         val notification = createNotification(context, content, pendingIntent)
         notify(context, notification)
     }
@@ -46,11 +40,7 @@ class AlarmReceiver : BroadcastReceiver() {
         }
     }
 
-    private fun createNotification(
-        context: Context,
-        content: String?,
-        pendingIntent: PendingIntent?
-    ): Notification {
+    private fun createNotification(context: Context, content: String?, pendingIntent: PendingIntent?): Notification {
         return NotificationCompat.Builder(context, CHANNEL_ID).apply {
             setSmallIcon(R.drawable.ic_movie)
             setContentTitle(context.getString(R.string.reservation_noti))
