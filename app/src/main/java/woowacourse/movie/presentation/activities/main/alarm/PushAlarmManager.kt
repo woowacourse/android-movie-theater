@@ -17,7 +17,7 @@ class PushAlarmManager<T : Parcelable>(
     private val pendingIntent = intent.let { intent ->
         intent.action = PUSH_ACTION
         intent.putExtra(PUSH_DATA_KEY, data)
-        PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        PendingIntent.getBroadcast(context, getUniqueNumber(), intent, PendingIntent.FLAG_IMMUTABLE)
     }
 
     fun set(time: LocalDateTime, ago: Long) {
@@ -26,6 +26,8 @@ class PushAlarmManager<T : Parcelable>(
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, pushTime, pendingIntent)
     }
+
+    private fun getUniqueNumber(): Int = System.currentTimeMillis().toInt()
 
     companion object {
         internal const val PUSH_DATA_KEY = "push"
