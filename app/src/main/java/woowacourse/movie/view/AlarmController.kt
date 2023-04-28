@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 
 class AlarmController(
-    val context: Context
+    private val context: Context
 ) {
 
     fun registerAlarms(reservations: List<ReservationUiModel>, minuteInterval: Long) {
