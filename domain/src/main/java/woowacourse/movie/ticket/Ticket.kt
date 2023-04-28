@@ -1,6 +1,6 @@
 package woowacourse.movie.ticket
 
-import woowacourse.movie.policy.TicketPriceAdapter
+import woowacourse.movie.policy.RunningDiscountPolicy
 import java.time.LocalDateTime
 
 data class Ticket(
@@ -9,5 +9,5 @@ data class Ticket(
     val bookedDateTime: LocalDateTime,
     val seat: Seat,
 ) {
-    val price get() = TicketPriceAdapter().getPayment(this)
+    val price get() = RunningDiscountPolicy().discount(seat.rank.price, bookedDateTime)
 }

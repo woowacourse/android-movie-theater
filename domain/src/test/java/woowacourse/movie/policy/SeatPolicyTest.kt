@@ -23,7 +23,7 @@ class SeatPolicyTest {
         val expected = 10_000
 
         // when
-        val actual: Int = TicketPriceAdapter().getPayment(ticket)
+        val actual: Int = RunningDiscountPolicy().discount(ticket.price, ticket.bookedDateTime)
 
         // then
         assertThat(actual).isEqualTo(expected)
@@ -44,7 +44,7 @@ class SeatPolicyTest {
         val expected = 12_000
 
         // when
-        val actual: Int = TicketPriceAdapter().getPayment(ticket)
+        val actual: Int = RunningDiscountPolicy().discount(ticket.price, ticket.bookedDateTime)
 
         // then
         assertThat(actual).isEqualTo(expected)
@@ -65,7 +65,7 @@ class SeatPolicyTest {
         val expected = 15_000
 
         // when
-        val actual: Int = TicketPriceAdapter().getPayment(ticket)
+        val actual: Int = RunningDiscountPolicy().discount(ticket.price, ticket.bookedDateTime)
 
         // then
         assertThat(actual).isEqualTo(expected)
