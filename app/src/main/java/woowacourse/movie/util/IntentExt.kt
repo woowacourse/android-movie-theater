@@ -15,14 +15,3 @@ inline fun <reified T : Parcelable> Intent.getParcelableExtraCompat(
         getParcelableExtra(key) as? T
     }
 }
-
-@Suppress("DEPRECATION")
-inline fun <reified T : Serializable> Intent.getSerializableExtraCompat(
-    key: String
-): T? {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        getSerializableExtra(key, T::class.java)
-    } else {
-        getSerializableExtra(key) as? T
-    }
-}
