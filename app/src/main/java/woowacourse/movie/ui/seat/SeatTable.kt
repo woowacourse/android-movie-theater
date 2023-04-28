@@ -45,7 +45,7 @@ class SeatTable(
     private fun convertIndexToPosition(index: Int): SeatPositionState {
         val row = index / COLUMN_SIZE + 1
         val column = (index - (row - 1) * COLUMN_SIZE) + 1
-        Log.d("mendel", "index: $index , column: $column , row: $row")
+        
         return SeatPositionState(row, column)
     }
 

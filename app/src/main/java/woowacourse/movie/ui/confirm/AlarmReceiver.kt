@@ -17,7 +17,7 @@ class AlarmReceiver : BroadcastReceiver() {
 
         val sharedPreference = PreferenceUtil(context)
         val isNotification = sharedPreference.getBoolean(NOTIFICATIONS, false)
-        Log.d("mendel", "수신옴: 수신여부 $isNotification")
+
         if (isNotification) {
             tickets?.let {
                 context.sendNotification(

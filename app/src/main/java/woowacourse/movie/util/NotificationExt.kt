@@ -62,7 +62,6 @@ fun Context.sendNotification(
     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
         != PackageManager.PERMISSION_GRANTED
     ) {
-        Log.d("NotificationExt", "sendNotification: no permission")
         return -1
     }
 
