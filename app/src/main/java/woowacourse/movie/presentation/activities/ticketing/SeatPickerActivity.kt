@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.discount.policy.MovieDayDiscountPolicy
 import woowacourse.movie.domain.model.discount.policy.MovieTimeDiscountPolicy
+import woowacourse.movie.domain.model.movie.DomainTicketPrice
+import woowacourse.movie.domain.model.reservation.DomainReservation
 import woowacourse.movie.domain.model.seat.DomainPickedSeats
 import woowacourse.movie.domain.model.seat.DomainSeat
 import woowacourse.movie.presentation.activities.main.alarm.PushAlarmManager
@@ -70,7 +72,7 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
         showMovieTitle()
         initViewClickListener()
         updateDoneBtnEnabled(!canPick())
-        updateTotalPriceView(calculateTotalPrice())
+        updateTotalPriceView(calculateTotalPrice().toPresentation())
         initSeatTable(seatRowSize, seatColSize)
     }
 
@@ -94,10 +96,10 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
             getString(R.string.movie_pay_price, ticketPrice.amount)
     }
 
-    private fun calculateTotalPrice(): TicketPrice = pickedSeats.calculateTotalPrice(
+    private fun calculateTotalPrice(): DomainTicketPrice = pickedSeats.calculateTotalPrice(
         MovieDayDiscountPolicy(movieDate),
         MovieTimeDiscountPolicy(movieTime),
-    ).toPresentation()
+    )
 
     private fun initSeatTable(rowSize: Int, colSize: Int) {
         SeatRow.make(rowSize).forEach { seatRow ->
@@ -134,7 +136,7 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun updateToggledSeatResultView(seatView: View, isPicked: Boolean) {
         seatView.findViewById<TextView>(R.id.seat_number_tv).isSelected = isPicked
-        updateTotalPriceView(calculateTotalPrice())
+        updateTotalPriceView(calculateTotalPrice().toPresentation())
         updateDoneBtnEnabled(!canPick())
     }
 
@@ -163,20 +165,25 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
             title(getString(R.string.ticketing_confirm_title))
             message(getString(R.string.ticketing_confirm_message))
             positiveButton(getString(R.string.ticketing_confirm_positive_btn)) {
-                val reservation = Reservation(
-                    movieTitle = movie.title,
-                    movieDate = movieDate.toPresentation(),
-                    movieTime = movieTime.toPresentation(),
-                    ticket = ticket,
-                    seats = pickedSeats.toPresentation(),
-                    ticketPrice = calculateTotalPrice()
-                )
+                val reservation = makeReservation()
                 registerPushBroadcast(reservation)
                 startTicketingResultActivity(reservation)
             }
             negativeButton(getString(R.string.ticketing_confirm_negative_btn)) { it.dismiss() }
         }.show()
     }
+
+    private fun makeReservation(): Reservation = DomainReservation.of(
+        movieTitle = movie.title,
+        year = movieDate.year,
+        month = movieDate.month,
+        day = movieDate.day,
+        hour = movieTime.hour,
+        min = movieTime.min,
+        ticketCount = ticket.count,
+        seats = pickedSeats,
+        price = calculateTotalPrice(),
+    ).toPresentation()
 
     private fun startTicketingResultActivity(reservation: Reservation) {
         startActivity(TicketingResultActivity.intent(this, reservation))
