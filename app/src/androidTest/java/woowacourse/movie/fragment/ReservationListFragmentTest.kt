@@ -17,9 +17,9 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.R
+import woowacourse.movie.data.entity.Reservations
 import woowacourse.movie.ui.activity.MainActivity
 import woowacourse.movie.ui.activity.MovieTicketActivity
-import woowacourse.movie.ui.entity.Reservations
 import woowacourse.movie.ui.model.MovieTicketModel
 import woowacourse.movie.ui.model.PeopleCountModel
 import woowacourse.movie.ui.model.PriceModel

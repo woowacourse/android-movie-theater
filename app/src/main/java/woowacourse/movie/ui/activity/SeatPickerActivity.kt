@@ -16,8 +16,8 @@ import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.broadcastreceiver.NotificationReceiver
 import woowacourse.movie.domain.MovieTicket
-import woowacourse.movie.ui.entity.Reservations
-import woowacourse.movie.ui.entity.Seats
+import woowacourse.movie.data.entity.Reservations
+import woowacourse.movie.data.entity.Seats
 import woowacourse.movie.ui.model.MovieTicketModel
 import woowacourse.movie.ui.model.PriceModel
 import woowacourse.movie.ui.model.mapToMovieTicket
