@@ -54,13 +54,12 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
     }
 
     private fun notificationPermissionIsGranted(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            ContextCompat.checkSelfPermission(
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            return ContextCompat.checkSelfPermission(
                 requireContext(), Manifest.permission.POST_NOTIFICATIONS
             ) == PackageManager.PERMISSION_GRANTED
-        } else {
-            true
         }
+        return true
     }
 
 }
