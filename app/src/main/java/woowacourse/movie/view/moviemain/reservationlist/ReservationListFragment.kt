@@ -24,9 +24,8 @@ class ReservationListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerview)
-        recyclerView.adapter = ReservationListAdapter(
-            ReservationMockRepository.findAll().map { it.toUiModel() }
-        ) { reservation ->
+        val reservations = ReservationMockRepository.findAll().map { it.toUiModel() }
+        recyclerView.adapter = ReservationListAdapter(reservations) { reservation ->
             val intent = ReservationCompletedActivity.newIntent(requireContext(), reservation)
             startActivity(intent)
         }
