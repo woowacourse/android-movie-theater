@@ -16,6 +16,7 @@ import woowacourse.movie.fragment.ReservationListFragment
 import woowacourse.movie.fragment.SettingFragment
 import woowacourse.movie.view.ReservationAlarmReceiver
 import woowacourse.movie.view.data.ReservationsViewData
+import woowacourse.movie.view.mapper.ReservationMapper.toView
 import woowacourse.movie.view.repository.MainRepository
 
 class MainActivity : AppCompatActivity() {
@@ -62,8 +63,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun replaceReservationListFragment() {
+        val reservations =
+            ReservationsViewData(mainRepository.requestReservation().map { it.toView() })
         val bundle =
-            ReservationListFragment.from(ReservationsViewData(mainRepository.requestReservation()))
+            ReservationListFragment.from(reservations)
         replaceFragment<ReservationListFragment>(bundle)
     }
 
