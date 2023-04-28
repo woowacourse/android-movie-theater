@@ -63,25 +63,24 @@ class SettingFragment : Fragment() {
 
     private fun setToggleChangeListener(isChecked: Boolean) {
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
-        if (isChecked) {
-            if (requestNotificationPermission()) {
-                val reservations = ReservationMockRepository.findAll().map { it.toUiModel() }
-                alarmController.registerAlarms(reservations, ALARM_MINUTE_INTERVAL)
-                editor.putBoolean(IS_ALARM_ON, true).apply()
-            }
-        } else {
-            alarmController.cancelAlarms()
-            editor.putBoolean(IS_ALARM_ON, false).apply()
+        if (isChecked && requestNotificationPermission()) {
+            val reservations = ReservationMockRepository.findAll().map { it.toUiModel() }
+            alarmController.registerAlarms(reservations, ALARM_MINUTE_INTERVAL)
+            editor.putBoolean(IS_ALARM_ON, true).apply()
+            return
         }
+        alarmController.cancelAlarms()
+        editor.putBoolean(IS_ALARM_ON, false).apply()
     }
 
     private fun requestNotificationPermission(): Boolean {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                return ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
             }
         }
-        return ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+        return true // android 12 version 이하는 notification 권한 필요 없기 때문
     }
 
     companion object {
