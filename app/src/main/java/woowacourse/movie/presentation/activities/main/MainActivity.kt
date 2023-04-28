@@ -5,13 +5,14 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.commit
+import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.presentation.activities.main.fragments.history.HistoryFragment
 import woowacourse.movie.presentation.activities.main.fragments.home.HomeFragment
 import woowacourse.movie.presentation.activities.main.fragments.setting.SettingFragment
 import woowacourse.movie.presentation.extensions.checkPermissions
+import woowacourse.movie.presentation.extensions.replaceFragment
 import woowacourse.movie.presentation.extensions.showToast
 
 class MainActivity : AppCompatActivity() {
@@ -30,26 +31,16 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.selectedItemId = R.id.home
         bottomNavigationView.setOnItemSelectedListener { menu ->
             when (menu.itemId) {
-                R.id.menu -> {
-                    supportFragmentManager.commit {
-                        replace(R.id.fragment_container_view, HistoryFragment.newInstance())
-                    }
-                }
-
-                R.id.home -> {
-                    supportFragmentManager.commit {
-                        replace(R.id.fragment_container_view, HomeFragment.newInstance())
-                    }
-                }
-
-                R.id.setting -> {
-                    supportFragmentManager.commit {
-                        replace(R.id.fragment_container_view, SettingFragment.newInstance())
-                    }
-                }
+                R.id.menu -> replaceFragment(HistoryFragment.newInstance())
+                R.id.home -> replaceFragment(HomeFragment.newInstance())
+                R.id.setting -> replaceFragment(SettingFragment.newInstance())
             }
             return@setOnItemSelectedListener true
         }
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        replaceFragment(R.id.fragment_container_view, fragment)
     }
 
     private fun requestNotificationPermission() {
