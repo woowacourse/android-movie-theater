@@ -45,10 +45,13 @@ class SettingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         toggle = view.findViewById(R.id.setting_toggle)
+        val isAlarmOn = sharedPreferences.getBoolean(IS_ALARM_ON, false)
 
-        val savedToggle = sharedPreferences.getBoolean(IS_ALARM_ON, false)
-        toggle.isChecked = savedToggle
+        initToggle(toggle, isAlarmOn)
+    }
 
+    private fun initToggle(toggle: SwitchMaterial, isAlarmOn: Boolean) {
+        toggle.isChecked = isAlarmOn
         toggle.setOnCheckedChangeListener { _, isChecked ->
             setToggleChangeListener(isChecked)
         }
@@ -56,16 +59,18 @@ class SettingFragment : Fragment() {
 
     private fun setToggleChangeListener(isChecked: Boolean) {
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
-        if (isChecked) {
-            if (requestNotificationPermission()) {
-                val reservations = ReservationMockRepository.findAll().map { it.toUiModel() }
-                alarmController.registerAlarms(reservations, ALARM_MINUTE_INTERVAL)
-                editor.putBoolean(IS_ALARM_ON, true).apply()
-            }
+        if (isChecked && requestNotificationPermission()) {
+            resetAlarms()
+            editor.putBoolean(IS_ALARM_ON, true).apply()
         } else {
             alarmController.cancelAlarms()
             editor.putBoolean(IS_ALARM_ON, false).apply()
         }
+    }
+
+    private fun resetAlarms() {
+        val reservations = ReservationMockRepository.findAll().map { it.toUiModel() }
+        alarmController.registerAlarms(reservations, ALARM_MINUTE_INTERVAL)
     }
 
     private fun requestNotificationPermission(): Boolean {
