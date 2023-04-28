@@ -14,7 +14,7 @@ class PushAlarmManager<T : Parcelable>(
     data: T,
 ) {
     private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    private val pendingIntent = intent.let { intent ->
+    private val pendingIntent = run {
         intent.action = PUSH_ACTION
         intent.putExtra(PUSH_DATA_KEY, data)
         PendingIntent.getBroadcast(context, getUniqueNumber(), intent, PendingIntent.FLAG_IMMUTABLE)
