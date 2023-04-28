@@ -173,7 +173,7 @@ class SeatPickerActivity : BackButtonActivity() {
             setAlarmManager(reservation)
 
         val intent =
-            Intent(this@SeatPickerActivity, BookCompleteActivity::class.java).apply {
+            BookCompleteActivity.getIntent(this).apply {
                 putExtra(
                     BookCompleteActivity.RESERVATION_ID_INTENT_KEY,
                     reservation.id
@@ -238,5 +238,8 @@ class SeatPickerActivity : BackButtonActivity() {
     companion object {
         const val TIME_MILLS_OF_HALF_HOUR = (1000 * 60 * 30)
         const val MOVIE_BOOKING_INFO_SCHEDULE_INTENT_KEY = "MOVIE_BOOKING_INFO_SCHEDULE_KEY"
+        fun getIntent(context: Context): Intent {
+            return Intent(context, SeatPickerActivity::class.java)
+        }
     }
 }

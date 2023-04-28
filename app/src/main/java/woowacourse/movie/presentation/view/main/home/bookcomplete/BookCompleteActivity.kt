@@ -1,5 +1,7 @@
 package woowacourse.movie.presentation.view.main.home.bookcomplete
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
@@ -51,5 +53,8 @@ class BookCompleteActivity : BackButtonActivity() {
 
     companion object {
         const val RESERVATION_ID_INTENT_KEY = "RESERVATION_ID_INTENT_KEY"
+        fun getIntent(context: Context): Intent {
+            return Intent(context, BookCompleteActivity::class.java)
+        }
     }
 }
