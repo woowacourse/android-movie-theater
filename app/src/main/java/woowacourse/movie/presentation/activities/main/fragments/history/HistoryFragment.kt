@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.presentation.activities.ticketingresult.TicketingResultActivity
 import woowacourse.movie.presentation.model.Reservation
+import woowacourse.movie.presentation.model.movieitem.ListItem
 
 class HistoryFragment : Fragment() {
 
@@ -26,14 +27,7 @@ class HistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val historyRecyclerView = view.findViewById<RecyclerView>(R.id.history_recycler_view)
-        val historyAdapter = HistoryListAdapter { item ->
-            if (item !is Reservation) return@HistoryListAdapter
-
-            startActivity(
-                Intent(requireContext(), TicketingResultActivity::class.java)
-                    .putExtra(TicketingResultActivity.RESERVATION_KEY, item)
-            )
-        }
+        val historyAdapter = HistoryListAdapter(::onClickHistoryItem)
         historyAdapter.appendAll(Reservation.provideDummy())
         historyRecyclerView.adapter = historyAdapter
         historyRecyclerView.addItemDecoration(
@@ -41,6 +35,19 @@ class HistoryFragment : Fragment() {
                 requireContext(),
                 DividerItemDecoration.VERTICAL
             )
+        )
+    }
+
+    private fun onClickHistoryItem(item: ListItem) {
+        when (item) {
+            is Reservation -> startResultActivity(item)
+        }
+    }
+
+    private fun startResultActivity(item: Reservation) {
+        startActivity(
+            Intent(requireContext(), TicketingResultActivity::class.java)
+                .putExtra(TicketingResultActivity.RESERVATION_KEY, item)
         )
     }
 
