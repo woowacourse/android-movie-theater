@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Movie"
         tools:targetApi="31">
-        <receiver android:name=".broadcast.AlarmReceiver"/>
+        <receiver android:name=".broadcast.bookingnotificaiotn.BookingAlarmReceiver"/>
         <activity
             android:name=".presentation.view.main.home.seatpick.SeatPickerActivity"
             android:exported="false" />

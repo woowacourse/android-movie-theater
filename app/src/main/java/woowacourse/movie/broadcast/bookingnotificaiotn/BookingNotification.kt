@@ -1,4 +1,4 @@
-package woowacourse.movie.broadcast
+package woowacourse.movie.broadcast.bookingnotificaiotn
 
 import android.app.NotificationChannel
 import android.app.NotificationManager

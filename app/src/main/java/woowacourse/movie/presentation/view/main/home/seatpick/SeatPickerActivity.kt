@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.TableLayout
@@ -24,7 +23,7 @@ import com.example.domain.SeatGrade
 import com.example.domain.TicketBundle
 import woowacourse.movie.Application
 import woowacourse.movie.R
-import woowacourse.movie.broadcast.AlarmReceiver
+import woowacourse.movie.broadcast.bookingnotificaiotn.BookingAlarmReceiver
 import woowacourse.movie.model.MovieBookingInfo
 import woowacourse.movie.model.ReservationResult
 import woowacourse.movie.presentation.extension.getParcelableCompat
@@ -220,12 +219,12 @@ class SeatPickerActivity : BackButtonActivity() {
     }
 
     private fun createAlarmIntent(reservation: Reservation): PendingIntent =
-        Intent(this, AlarmReceiver::class.java).apply {
+        Intent(this, BookingAlarmReceiver::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }.let { intent ->
             intent.putExtra(BookCompleteActivity.RESERVATION_ID_INTENT_KEY, reservation.id)
             intent.putExtra(
-                AlarmReceiver.RESERVATION_INTENT_KEY, ReservationResult.from(reservation)
+                BookingAlarmReceiver.RESERVATION_INTENT_KEY, ReservationResult.from(reservation)
             )
             PendingIntent.getBroadcast(this, 0, intent, FLAG_IMMUTABLE)
         }

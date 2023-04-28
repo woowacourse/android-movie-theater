@@ -1,4 +1,4 @@
-package woowacourse.movie.broadcast
+package woowacourse.movie.broadcast.bookingnotificaiotn
 
 import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_IMMUTABLE
@@ -11,12 +11,17 @@ import woowacourse.movie.model.ReservationResult
 import woowacourse.movie.presentation.extension.getParcelableCompat
 import woowacourse.movie.presentation.view.main.home.bookcomplete.BookCompleteActivity
 
-class AlarmReceiver : BroadcastReceiver() {
+class BookingAlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
+        processReceiveEvent(intent, context)
+    }
 
+    private fun processReceiveEvent(
+        intent: Intent?,
+        context: Context?
+    ) {
         val reservationResult =
             intent?.getParcelableCompat<ReservationResult>(RESERVATION_INTENT_KEY) ?: return
-
         saveReservation(reservationResult)
 
         val activityIntent = getActivityIntent(context, intent)
@@ -24,6 +29,7 @@ class AlarmReceiver : BroadcastReceiver() {
 
         sendNotification(context, pendingIntent, reservationResult)
     }
+
 
     private fun sendNotification(
         context: Context?,
