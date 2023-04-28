@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
@@ -17,10 +18,16 @@ import woowacourse.movie.ui.utils.getParcelable
 
 class NotificationReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
+        Log.d("sunny", "onReceive")
+
         if (checkPushNotificationAllowed()) return
+
+        Log.d("sunny", "allow permission")
 
         val ticketModel =
             intent.getParcelable<MovieTicketModel>(TICKET_EXTRA_KEY) ?: return
+
+        Log.d("sunny", "got data")
 
         createNotificationChannel(context)
 
@@ -37,10 +44,24 @@ class NotificationReceiver : BroadcastReceiver() {
             NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_DEFAULT).apply {
                 description = descriptionText
             }
+        initNotificationManager(channel, context)
+    }
 
+    private fun initNotificationManager(
+        channel: NotificationChannel,
+        context: Context
+    ) {
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
+
+        runCatching {
+            notificationManager.getNotificationChannel(channel.id)
+            Log.d("sunny", "got notificationChannel")
+        }
+            .getOrElse {
+                notificationManager.createNotificationChannel(channel)
+                Log.d("sunny", "created notificationChannel")
+            }
     }
 
     private fun notifyReservation(
@@ -58,7 +79,7 @@ class NotificationReceiver : BroadcastReceiver() {
         val notificationBuilder = getNotificationBuilder(context, ticketModel, pendingIntent)
 
         with(NotificationManagerCompat.from(context)) {
-            if (SinglePermissionRequester.checkDeniedPermission(
+            if (!SinglePermissionRequester.checkDeniedPermission(
                     context,
                     SinglePermissionRequester.NOTIFICATION_PERMISSION
                 )
