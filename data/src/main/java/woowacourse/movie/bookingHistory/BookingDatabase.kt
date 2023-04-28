@@ -3,6 +3,9 @@ package woowacourse.movie.bookingHistory
 import java.time.LocalDateTime
 
 object BookingDatabase {
+
+    private const val ALREADY_RESERVED_SEAT = "이미 예약된 좌석입니다."
+
     private val _bookings = mutableListOf<BookingEntity>(
         BookingEntity(
             0,
@@ -20,6 +23,9 @@ object BookingDatabase {
     }
 
     fun insertBooking(booking: BookingEntity) {
+        if (_bookings.contains(booking)) {
+            throw IllegalArgumentException(ALREADY_RESERVED_SEAT)
+        }
         _bookings.add(booking)
     }
 
