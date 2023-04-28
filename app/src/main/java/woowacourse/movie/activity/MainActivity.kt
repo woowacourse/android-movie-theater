@@ -86,12 +86,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onItemSelected(menuItem: MenuItem): Boolean {
-        return when (menuItem.itemId) {
-            R.id.action_list -> replaceReservationListFragment() == Unit
-            R.id.action_home -> removeAllFragments() == Unit
-            R.id.action_setting -> replaceFragment<SettingFragment>() == Unit
-            else -> false
+        when (menuItem.itemId) {
+            R.id.action_list -> replaceReservationListFragment()
+            R.id.action_home -> removeAllFragments()
+            R.id.action_setting -> replaceFragment<SettingFragment>()
+            else -> return false
         }
+        return true
     }
 
     private fun replaceReservationListFragment() {
