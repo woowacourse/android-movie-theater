@@ -6,16 +6,13 @@ import woowacourse.movie.view.model.MovieListModel
 
 class MovieAdViewHolder(
     private val binding: MovieAdItemBinding,
-    private val onViewClick: (Int) -> Unit
+    private val onViewClick: MovieListAdapter.OnItemClick
 ) : RecyclerView.ViewHolder(binding.root) {
-
-    init {
-        binding.adImageview.setOnClickListener {
-            onViewClick(adapterPosition)
-        }
-    }
 
     fun bind(ad: MovieListModel.MovieAdModel) {
         binding.adImageview.setImageResource(ad.banner)
+        binding.adImageview.setOnClickListener {
+            onViewClick.onClick(ad)
+        }
     }
 }

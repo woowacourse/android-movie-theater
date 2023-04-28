@@ -9,16 +9,9 @@ import woowacourse.movie.view.model.ReservationUiModel
 
 class ReservationItemViewHolder(
     private val binding: ReservationItemBinding,
-    private val onItemClick: (Int) -> Unit
+    private val onItemClick: ReservationListAdapter.OnItemClick
 ) :
     RecyclerView.ViewHolder(binding.root) {
-
-    init {
-        binding.reservationLayout.setOnClickListener {
-            onItemClick(adapterPosition)
-        }
-    }
-
     fun bind(reservation: ReservationUiModel) {
         val context = binding.root.context
         with(binding) {
@@ -28,6 +21,9 @@ class ReservationItemViewHolder(
                 reservation.screeningDateTime.format(TIME_FORMATTER),
             )
             movieTitle.text = reservation.title
+        }
+        binding.reservationLayout.setOnClickListener {
+            onItemClick.onClick(reservation)
         }
     }
 }

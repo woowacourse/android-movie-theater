@@ -16,14 +16,9 @@ class ReservationListAdapter(
         fun onClick(reservation: ReservationUiModel)
     }
 
-    private val onReservationViewClick: (Int) -> Unit = {
-        onItemClick.onClick(reservations[it])
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReservationItemViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.reservation_item, parent, false)
-        return ReservationItemViewHolder(ReservationItemBinding.bind(view), onReservationViewClick)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.reservation_item, parent, false)
+        return ReservationItemViewHolder(ReservationItemBinding.bind(view), onItemClick)
     }
 
     override fun getItemCount(): Int {

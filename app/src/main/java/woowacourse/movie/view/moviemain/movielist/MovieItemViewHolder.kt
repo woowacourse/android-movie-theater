@@ -8,14 +8,8 @@ import woowacourse.movie.view.model.MovieListModel.MovieUiModel
 
 class MovieItemViewHolder(
     private val binding: MovieItemBinding,
-    private val onViewClick: (Int) -> Unit
+    private val onViewClick: MovieListAdapter.OnItemClick
 ) : RecyclerView.ViewHolder(binding.root) {
-    init {
-        binding.reserveNowButton.setOnClickListener {
-            onViewClick(adapterPosition)
-        }
-    }
-
     fun bind(movie: MovieUiModel) {
         binding.apply {
             val context = binding.root.context
@@ -28,6 +22,9 @@ class MovieItemViewHolder(
                 )
             movieRunningTime.text = context.resources.getString(R.string.running_time_format)
                 .format(movie.runningTime)
+        }
+        binding.reserveNowButton.setOnClickListener {
+            onViewClick.onClick(movie)
         }
     }
 }

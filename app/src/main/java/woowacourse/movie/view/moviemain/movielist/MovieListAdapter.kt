@@ -18,27 +18,15 @@ class MovieListAdapter(
         fun onClick(item: MovieListModel)
     }
 
-    private val onItemViewClick: (Int) -> Unit = {
-        onItemClick.onClick(dataList[it])
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (MovieListViewType.values()[viewType]) {
             MovieListViewType.MOVIE_ITEM -> {
-                val view = LayoutInflater.from(parent.context).inflate(
-                    MovieListViewType.MOVIE_ITEM.id, parent, false
-                )
-                MovieItemViewHolder(MovieItemBinding.bind(view)) {
-                    onItemViewClick(it)
-                }
+                val view = LayoutInflater.from(parent.context).inflate(MovieListViewType.MOVIE_ITEM.id, parent, false)
+                MovieItemViewHolder(MovieItemBinding.bind(view), onItemClick)
             }
             MovieListViewType.AD_ITEM -> {
-                val view = LayoutInflater.from(parent.context).inflate(
-                    MovieListViewType.AD_ITEM.id, parent, false
-                )
-                MovieAdViewHolder(MovieAdItemBinding.bind(view)) {
-                    onItemViewClick(it)
-                }
+                val view = LayoutInflater.from(parent.context).inflate(MovieListViewType.AD_ITEM.id, parent, false)
+                MovieAdViewHolder(MovieAdItemBinding.bind(view), onItemClick)
             }
         }
     }
