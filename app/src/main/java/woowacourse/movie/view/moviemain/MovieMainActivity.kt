@@ -20,15 +20,18 @@ class MovieMainActivity : AppCompatActivity() {
         navigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.action_reservation_list -> {
-                    replaceFragment(ReservationListFragment())
+                    val fragment = supportFragmentManager.findFragmentByTag(TAG_RESERVATION_LIST) as? ReservationListFragment ?: ReservationListFragment().also { addFragment(it, TAG_RESERVATION_LIST) }
+                    replaceFragment(fragment)
                     return@setOnItemSelectedListener true
                 }
                 R.id.action_home -> {
-                    replaceFragment(MovieListFragment())
+                    val fragment = supportFragmentManager.findFragmentByTag(TAG_MOVIE_LIST) as? MovieListFragment ?: MovieListFragment().also { addFragment(it, TAG_MOVIE_LIST) }
+                    replaceFragment(fragment)
                     return@setOnItemSelectedListener true
                 }
                 R.id.action_setting -> {
-                    replaceFragment(SettingFragment())
+                    val fragment = supportFragmentManager.findFragmentByTag(TAG_MOVIE_LIST) as? SettingFragment ?: SettingFragment().also { addFragment(it, TAG_SETTING) }
+                    replaceFragment(fragment)
                     return@setOnItemSelectedListener true
                 }
                 else -> return@setOnItemSelectedListener false
@@ -42,5 +45,17 @@ class MovieMainActivity : AppCompatActivity() {
             setReorderingAllowed(true)
             replace(R.id.fragment_container_view, fragment)
         }
+    }
+
+    private fun addFragment(fragment: Fragment, tag: String) {
+        supportFragmentManager.commit {
+            add(fragment, tag)
+        }
+    }
+
+    companion object {
+        private const val TAG_RESERVATION_LIST = "RESERVATION_LIST"
+        private const val TAG_MOVIE_LIST = "MOVIE_LIST"
+        private const val TAG_SETTING = "SETTING"
     }
 }
