@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.Ad
-import woowacourse.movie.BundleKeys
 import woowacourse.movie.R
 import woowacourse.movie.activity.MovieDetailActivity
 import woowacourse.movie.movie.MovieMockData
@@ -54,8 +53,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun getMovieOnClickListener(view: View) = { position: Int ->
-        val intent = MovieDetailActivity.intent(view.context)
-        intent.putExtra(BundleKeys.MOVIE_DATA_KEY, MovieMockData.movies10000[position])
+        val intent = MovieDetailActivity.intent(view.context, MovieMockData.movies10000[position])
         this.startActivity(intent)
     }
 }

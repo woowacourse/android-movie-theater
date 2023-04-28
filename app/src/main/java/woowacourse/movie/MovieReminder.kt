@@ -55,8 +55,7 @@ class MovieReminder : BroadcastReceiver() {
     }
 
     private fun deliverNotification(context: Context, movieBookingSeatInfo: MovieBookingSeatInfo) {
-        val contentIntent = BookCompleteActivity.intent(context)
-        contentIntent.putExtra(BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY, movieBookingSeatInfo)
+        val contentIntent = BookCompleteActivity.intent(context, movieBookingSeatInfo)
         val contentPendingIntent = PendingIntent.getActivity(
             context,
             NOTIFICATION_ID,

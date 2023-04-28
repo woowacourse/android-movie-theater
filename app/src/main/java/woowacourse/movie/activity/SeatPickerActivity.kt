@@ -130,7 +130,6 @@ class SeatPickerActivity : BackButtonActivity() {
                 .setPositiveButton(
                     getString(R.string.alert_dialog_book_done)
                 ) { _, _ ->
-                    val intent = BookCompleteActivity.intent(this)
                     val movieBookingInfo = MovieBookingSeatInfo(
                         getMovieBookingInfo(),
                         seatGroup.sorted().seats.map {
@@ -138,11 +137,8 @@ class SeatPickerActivity : BackButtonActivity() {
                         },
                         seatPickerTicketPrice.text.toString()
                     )
+                    val intent = BookCompleteActivity.intent(this, movieBookingInfo)
 
-                    intent.putExtra(
-                        BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY,
-                        movieBookingInfo
-                    )
                     BookHistories.items.add(movieBookingInfo)
 
                     val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
@@ -253,6 +249,10 @@ class SeatPickerActivity : BackButtonActivity() {
         private const val PICKED_SEAT = "prickedSeat"
         private const val SEAT_ROW_INTERVAL = 4
         private const val MOVIE_RUN_BEFORE_TIME = 30L
-        fun intent(context: Context) = Intent(context, SeatPickerActivity::class.java)
+        fun intent(context: Context, movieBookingInfo: MovieBookingInfo): Intent {
+            val intent = Intent(context, SeatPickerActivity::class.java)
+            intent.putExtra(BundleKeys.MOVIE_BOOKING_INFO_KEY, movieBookingInfo)
+            return intent
+        }
     }
 }

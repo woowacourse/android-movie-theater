@@ -12,7 +12,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import com.woowacourse.domain.MovieSchedule
-import woowacourse.movie.BundleKeys.MOVIE_BOOKING_INFO_KEY
+import woowacourse.movie.BundleKeys
 import woowacourse.movie.BundleKeys.MOVIE_DATA_KEY
 import woowacourse.movie.DateFormatter
 import woowacourse.movie.R
@@ -92,16 +92,13 @@ class MovieDetailActivity : BackButtonActivity() {
         }
 
         findViewById<Button>(R.id.bt_to_seat_picker).setOnClickListener {
-            val intent = SeatPickerActivity.intent(this)
-            intent.putExtra(
-                MOVIE_BOOKING_INFO_KEY,
-                MovieBookingInfo(
-                    movieData,
-                    DateFormatter.format(LocalDate.parse(dateSpinner.selectedItem.toString())),
-                    timeSpinner.selectedItem.toString(),
-                    currentCount
-                )
+            val movieBookingInfo = MovieBookingInfo(
+                movieData,
+                DateFormatter.format(LocalDate.parse(dateSpinner.selectedItem.toString())),
+                timeSpinner.selectedItem.toString(),
+                currentCount
             )
+            val intent = SeatPickerActivity.intent(this, movieBookingInfo)
             startActivity(intent)
             finish()
         }
@@ -128,7 +125,8 @@ class MovieDetailActivity : BackButtonActivity() {
                     timeSpinner.setSelection(
                         (
                             savedInstanceState.getString(TIME_KEY)
-                                ?: movieSchedule.getScheduleTimes(dateSpinner.selectedItem.toString()).first()
+                                ?: movieSchedule.getScheduleTimes(dateSpinner.selectedItem.toString())
+                                    .first()
                             ).toInt()
                     )
                     needSpinnerInitialize = false
@@ -171,6 +169,10 @@ class MovieDetailActivity : BackButtonActivity() {
         private const val TIME_KEY = "time"
         private const val MIN_TICKET = "1"
 
-        fun intent(context: Context) = Intent(context, MovieDetailActivity::class.java)
+        fun intent(context: Context, movie: Movie): Intent {
+            val intent = Intent(context, MovieDetailActivity::class.java)
+            intent.putExtra(BundleKeys.MOVIE_DATA_KEY, movie)
+            return intent
+        }
     }
 }

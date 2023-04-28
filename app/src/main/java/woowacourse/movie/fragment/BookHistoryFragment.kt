@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.BookHistories
 import woowacourse.movie.BookHistoryRecyclerViewAdapter
-import woowacourse.movie.BundleKeys
 import woowacourse.movie.R
 import woowacourse.movie.activity.BookCompleteActivity
 
@@ -44,8 +43,7 @@ class BookHistoryFragment : Fragment() {
     }
 
     private fun getBookHistoryOnClickListener(view: View) = { position: Int ->
-        val intent = BookCompleteActivity.intent(view.context)
-        intent.putExtra(BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY, BookHistories.items[position])
+        val intent = BookCompleteActivity.intent(view.context, BookHistories.items[position])
         this.startActivity(intent)
     }
 }
