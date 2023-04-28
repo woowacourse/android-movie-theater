@@ -11,7 +11,7 @@ import woowacourse.movie.domain.seat.Seats
 import woowacourse.movie.view.data.SeatTable
 import woowacourse.movie.view.data.SeatsViewData
 import woowacourse.movie.view.data.TableSize
-import woowacourse.movie.view.getSerializable
+import woowacourse.movie.view.getSerializableCompat
 import woowacourse.movie.view.mapper.MovieSeatMapper.toView
 
 class SeatTableLayout(
@@ -71,7 +71,7 @@ class SeatTableLayout(
 
     override fun load(savedInstanceState: Bundle?) {
         savedInstanceState ?: return
-        val seats = savedInstanceState.getSerializable<SeatsViewData>(saveStateKey) ?: return
+        val seats = savedInstanceState.getSerializableCompat<SeatsViewData>(saveStateKey) ?: return
         seats.seats.forEach {
             findSeatViewByRowAndColumn(it.row, it.column)?.callOnClick()
         }

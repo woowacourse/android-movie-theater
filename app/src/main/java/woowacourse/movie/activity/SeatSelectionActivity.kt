@@ -25,7 +25,7 @@ import woowacourse.movie.view.data.ReservationViewData
 import woowacourse.movie.view.data.SeatsViewData
 import woowacourse.movie.view.error.ActivityError.finishWithError
 import woowacourse.movie.view.error.ViewError
-import woowacourse.movie.view.getSerializable
+import woowacourse.movie.view.getSerializableCompat
 import woowacourse.movie.view.mapper.MovieMapper.toDomain
 import woowacourse.movie.view.mapper.MovieSeatMapper.toDomain
 import woowacourse.movie.view.mapper.PriceMapper.toDomain
@@ -67,10 +67,10 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     private fun initSeatSelectionView(savedInstanceState: Bundle?) {
-        val movie = intent.extras?.getSerializable<MovieViewData>(MovieViewData.MOVIE_EXTRA_NAME)
+        val movie = intent.extras?.getSerializableCompat<MovieViewData>(MovieViewData.MOVIE_EXTRA_NAME)
             ?: return finishWithError(ViewError.MissingExtras(MovieViewData.MOVIE_EXTRA_NAME))
         val reservationDetail =
-            intent.extras?.getSerializable<ReservationDetailViewData>(ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME)
+            intent.extras?.getSerializableCompat<ReservationDetailViewData>(ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME)
                 ?: return finishWithError(ViewError.MissingExtras(ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME))
 
         initMovieView(movie)

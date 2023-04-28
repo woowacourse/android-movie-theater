@@ -14,7 +14,7 @@ import woowacourse.movie.view.data.ReservationViewData
 import woowacourse.movie.view.data.SeatsViewData
 import woowacourse.movie.view.error.ActivityError.finishWithError
 import woowacourse.movie.view.error.ViewError
-import woowacourse.movie.view.getSerializable
+import woowacourse.movie.view.getSerializableCompat
 import woowacourse.movie.view.widget.MovieController
 import woowacourse.movie.view.widget.MovieView
 import java.text.NumberFormat
@@ -33,7 +33,7 @@ class ReservationResultActivity : AppCompatActivity() {
         makeBackButton()
 
         val reservation =
-            intent.extras?.getSerializable<ReservationViewData>(ReservationViewData.RESERVATION_EXTRA_NAME)
+            intent.extras?.getSerializableCompat<ReservationViewData>(ReservationViewData.RESERVATION_EXTRA_NAME)
                 ?: return finishWithError(ViewError.MissingExtras(ReservationViewData.RESERVATION_EXTRA_NAME))
         renderReservationDetail(reservation.reservationDetail, reservation.seats, reservation.price)
 

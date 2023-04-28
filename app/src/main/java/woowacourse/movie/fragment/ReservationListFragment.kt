@@ -13,7 +13,7 @@ import woowacourse.movie.view.adapter.ReservationAdapter
 import woowacourse.movie.view.data.ReservationsViewData
 import woowacourse.movie.view.error.FragmentError.finishWithError
 import woowacourse.movie.view.error.ViewError
-import woowacourse.movie.view.getSerializable
+import woowacourse.movie.view.getSerializableCompat
 
 class ReservationListFragment : Fragment() {
 
@@ -24,7 +24,7 @@ class ReservationListFragment : Fragment() {
     ): View? {
         arguments ?: return finishWithError(ViewError.MissingExtras(MISSING_ARGUMENTS))
         val reservations =
-            arguments?.getSerializable<ReservationsViewData>(ReservationsViewData.RESERVATIONS_VIEW_DATA_EXTRA_NAME)
+            arguments?.getSerializableCompat<ReservationsViewData>(ReservationsViewData.RESERVATIONS_VIEW_DATA_EXTRA_NAME)
                 ?: return finishWithError(ViewError.MissingExtras(ReservationsViewData.RESERVATIONS_VIEW_DATA_EXTRA_NAME))
 
         val view = inflater.inflate(R.layout.fragment_reservation_list, container, false)
