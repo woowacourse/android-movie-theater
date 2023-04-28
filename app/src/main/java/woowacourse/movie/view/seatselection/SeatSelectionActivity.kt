@@ -2,7 +2,6 @@ package woowacourse.movie.view.seatselection
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
@@ -20,14 +19,12 @@ import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.domain.ReservationAgency
 import woowacourse.movie.domain.Seat
 import woowacourse.movie.util.getParcelableCompat
-import woowacourse.movie.view.AlarmController
 import woowacourse.movie.view.ReservationCompletedActivity
 import woowacourse.movie.view.mapper.toDomainModel
 import woowacourse.movie.view.mapper.toUiModel
 import woowacourse.movie.view.model.MovieListModel.MovieUiModel
 import woowacourse.movie.view.model.ReservationOptions
 import woowacourse.movie.view.model.SeatUiModel
-import woowacourse.movie.view.moviemain.setting.SettingFragment
 import java.text.DecimalFormat
 
 class SeatSelectionActivity : AppCompatActivity() {
@@ -39,7 +36,6 @@ class SeatSelectionActivity : AppCompatActivity() {
     private lateinit var reservationAgency: ReservationAgency
     private var selectedSeatCount = 0
     private var selectedSeats: List<Seat> = emptyList()
-    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,8 +47,6 @@ class SeatSelectionActivity : AppCompatActivity() {
         initReservationAgency()
         initConfirmReservationButton()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        sharedPreferences =
-            this.getSharedPreferences(SettingFragment.ALARM_SETTING, Context.MODE_PRIVATE)
     }
 
     private fun initSeatButtons() {
@@ -184,16 +178,9 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     private fun reserveSeats() {
-        val isAlarmOn = sharedPreferences.getBoolean(SettingFragment.IS_ALARM_ON, false)
-
-        val alarmController = AlarmController(this)
         val reservation = reservationAgency.reserve(selectedSeats)
         reservation?.let {
             ReservationMockRepository.add(reservation)
-            if (isAlarmOn) alarmController.registerAlarm(
-                reservation.toUiModel(),
-                SettingFragment.ALARM_MINUTE_INTERVAL
-            )
             startActivity(ReservationCompletedActivity.newIntent(this, reservation.toUiModel()))
         }
     }

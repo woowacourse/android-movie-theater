@@ -1,11 +1,19 @@
 package woowacourse.movie.view
 
+import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationCompletedBinding
 import woowacourse.movie.util.DATE_FORMATTER
@@ -13,32 +21,46 @@ import woowacourse.movie.util.TIME_FORMATTER
 import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.view.model.ReservationUiModel
 import woowacourse.movie.view.moviemain.MovieMainActivity
+import woowacourse.movie.view.moviemain.setting.SettingFragment
+import woowacourse.movie.view.seatselection.AlarmReceiver
 import java.text.DecimalFormat
 
 class ReservationCompletedActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityReservationCompletedBinding
-
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityReservationCompletedBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val reservation =
-            intent.getParcelableCompat<ReservationUiModel>(RESERVATION)
-        reservation?.let { initViewData(it) }
+        val reservation = intent.getParcelableCompat<ReservationUiModel>(RESERVATION)
+        sharedPreferences = getSharedPreferences(SettingFragment.ALARM_SETTING, MODE_PRIVATE)
+        val isAlarmOn = sharedPreferences.getBoolean(SettingFragment.IS_ALARM_ON, false)
+
+        reservation?.let {
+            initViewData(it)
+            if (isAlarmOn) setAlarm(reservation, SettingFragment.ALARM_MINUTE_INTERVAL)
+        }
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         onBackPressedDispatcher.addCallback(
             this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    val intent =
-                        Intent(this@ReservationCompletedActivity, MovieMainActivity::class.java)
+                    val intent = Intent(this@ReservationCompletedActivity, MovieMainActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                     startActivity(intent)
                 }
             },
         )
+    }
+
+    private fun setAlarm(reservation: ReservationUiModel, alarmMinuteInterval: Long) {
+        val alarmController = AlarmController(this)
+        createChannel()
+        requestNotificationPermission()
+        alarmController.registerAlarm(reservation, alarmMinuteInterval)
     }
 
     private fun initViewData(reservation: ReservationUiModel) {
@@ -69,6 +91,38 @@ class ReservationCompletedActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun createChannel() {
+        val name = "Reservation Notification"
+        val channel = NotificationChannel(
+            AlarmReceiver.CHANNEL_ID,
+            name,
+            NotificationManager.IMPORTANCE_DEFAULT,
+        )
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+    }
+
+    private fun requestNotificationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && !shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+    }
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { isGranted: Boolean ->
+        val sharedPreferences = this.getSharedPreferences(SettingFragment.ALARM_SETTING, Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+        if (isGranted) {
+            editor.putBoolean(SettingFragment.IS_ALARM_ON, true).apply()
+            return@registerForActivityResult
+        }
+        editor.putBoolean(SettingFragment.IS_ALARM_ON, false).apply()
     }
 
     companion object {

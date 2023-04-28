@@ -61,7 +61,7 @@ class ReservationActivity : AppCompatActivity() {
             movieTitle.text = movie.title
             movieScreeningDate.text = getString(R.string.screening_date_format).format(
                 movie.screeningStartDate.format(DATE_FORMATTER),
-                movie.screeningEndDate.format(DATE_FORMATTER)
+                movie.screeningEndDate.format(DATE_FORMATTER),
             )
             movieRunningTime.text =
                 getString(R.string.running_time_format).format(movie.runningTime)
@@ -78,7 +78,7 @@ class ReservationActivity : AppCompatActivity() {
         val dateSpinnerAdapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
-            screeningDates
+            screeningDates,
         )
 
         binding.dateSpinner.apply {
@@ -88,7 +88,7 @@ class ReservationActivity : AppCompatActivity() {
                     parent: AdapterView<*>?,
                     view: View?,
                     position: Int,
-                    id: Long
+                    id: Long,
                 ) {
                     selectedScreeningDate = screeningDates[position]
                     initTimeSpinner(timeSpinnerPosition)
@@ -105,7 +105,7 @@ class ReservationActivity : AppCompatActivity() {
         val timeSpinnerAdapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
-            screeningTimes
+            screeningTimes,
         )
         binding.timeSpinner.apply {
             adapter = timeSpinnerAdapter
@@ -118,7 +118,7 @@ class ReservationActivity : AppCompatActivity() {
                     parent: AdapterView<*>?,
                     view: View?,
                     position: Int,
-                    id: Long
+                    id: Long,
                 ) {
                     selectedScreeningTime = screeningTimes[position]
                 }
@@ -158,7 +158,7 @@ class ReservationActivity : AppCompatActivity() {
             val reservationOptions = ReservationOptions(
                 movie.title,
                 LocalDateTime.of(selectedScreeningDate, selectedScreeningTime),
-                peopleCountSaved
+                peopleCountSaved,
             )
             startActivity(SeatSelectionActivity.newIntent(this, reservationOptions, movie))
         }
