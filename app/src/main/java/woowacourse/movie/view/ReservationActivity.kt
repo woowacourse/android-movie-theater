@@ -14,7 +14,6 @@ import woowacourse.movie.domain.Reservation
 import woowacourse.movie.domain.ScreeningTime
 import woowacourse.movie.util.DATE_FORMATTER
 import woowacourse.movie.util.getParcelableCompat
-import woowacourse.movie.util.getSerializableCompat
 import woowacourse.movie.view.model.MovieListModel.MovieUiModel
 import woowacourse.movie.view.model.ReservationOptions
 import woowacourse.movie.view.seatselection.SeatSelectionActivity
@@ -167,10 +166,14 @@ class ReservationActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
+        val reservationOptions = ReservationOptions(
+            movie.title,
+            LocalDateTime.of(selectedScreeningDate, selectedScreeningTime),
+            peopleCountSaved
+        )
+
         outState.apply {
-            putInt(PEOPLE_COUNT, peopleCountSaved)
-            putSerializable(SELECTED_DATE, selectedScreeningDate)
-            putSerializable(SELECTED_TIME, selectedScreeningTime)
+            putParcelable(RESERVATION_OPTIONS, reservationOptions)
             putInt(SELECTED_TIME_POSITION, binding.timeSpinner.selectedItemPosition)
         }
     }
@@ -178,14 +181,12 @@ class ReservationActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 
-        peopleCountSaved = savedInstanceState.getInt(PEOPLE_COUNT)
         timeSpinnerPosition = savedInstanceState.getInt(SELECTED_TIME_POSITION)
 
-        savedInstanceState.getSerializableCompat<LocalDate>(SELECTED_DATE)?.run {
-            selectedScreeningDate = this
-        }
-        savedInstanceState.getSerializableCompat<LocalTime>(SELECTED_TIME)?.run {
-            selectedScreeningTime = this
+        savedInstanceState.getParcelableCompat<ReservationOptions>(RESERVATION_OPTIONS)?.run {
+            selectedScreeningDate = screeningDateTime.toLocalDate()
+            selectedScreeningTime = screeningDateTime.toLocalTime()
+            peopleCountSaved = peopleCount
         }
     }
 
@@ -197,10 +198,8 @@ class ReservationActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val PEOPLE_COUNT = "PEOPLE_COUNT"
-        private const val SELECTED_DATE = "SELECTED_DATE"
-        private const val SELECTED_TIME = "SELECTED_TIME"
         private const val SELECTED_TIME_POSITION = "SELECTED_TIME_POSITION"
+        private const val RESERVATION_OPTIONS = "RESERVATION_OPTIONS"
         private const val MOVIE = "MOVIE"
         fun newIntent(context: Context, movie: MovieUiModel): Intent {
             val intent = Intent(context, ReservationActivity::class.java)
