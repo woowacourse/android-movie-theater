@@ -13,7 +13,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.presentation.MovieApplication
 import woowacourse.movie.presentation.activities.main.MainActivity
 import woowacourse.movie.presentation.activities.main.fragments.setting.SettingFragment.Companion.PUSH_ALLOW_KEY
 

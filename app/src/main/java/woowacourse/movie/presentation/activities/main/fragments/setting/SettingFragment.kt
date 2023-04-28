@@ -12,8 +12,9 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.google.android.material.switchmaterial.SwitchMaterial
+import com.woowacourse.data.DataStore
+import com.woowacourse.data.local.LocalDataStore
 import woowacourse.movie.R
-import woowacourse.movie.presentation.MovieApplication
 import woowacourse.movie.presentation.extensions.checkPermissionTiramisu
 import woowacourse.movie.presentation.extensions.createAlertDialog
 import woowacourse.movie.presentation.extensions.message
@@ -24,14 +25,14 @@ import woowacourse.movie.presentation.extensions.title
 class SettingFragment : Fragment() {
     lateinit var pushSwitch: SwitchMaterial
 
-    private val preferences = MovieApplication.dataStore
+    private val dataStore: DataStore by lazy { LocalDataStore.getInstance(requireContext()) }
     private val settingActionReLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
             val isPushAllowed =
                 requireContext().checkPermissionTiramisu(Manifest.permission.POST_NOTIFICATIONS)
 
             pushSwitch.isChecked = isPushAllowed
-            preferences.setBoolean(PUSH_ALLOW_KEY, isPushAllowed)
+            dataStore.setBoolean(PUSH_ALLOW_KEY, isPushAllowed)
         }
 
     override fun onCreateView(
@@ -50,15 +51,15 @@ class SettingFragment : Fragment() {
     @SuppressLint("InlinedApi")
     private fun initPushSwitch(view: View) {
         pushSwitch = view.findViewById(R.id.notification_push_switch)
-        val isPushAllowed = preferences.getBoolean(PUSH_ALLOW_KEY, true) && checkPushPermission()
+        val isPushAllowed = dataStore.getBoolean(PUSH_ALLOW_KEY, true) && checkPushPermission()
 
         with(pushSwitch) {
-            isChecked = preferences.getBoolean(PUSH_ALLOW_KEY, isPushAllowed)
+            isChecked = dataStore.getBoolean(PUSH_ALLOW_KEY, isPushAllowed)
             setOnCheckedChangeListener { _, isAllowed ->
                 if (isAllowed && !checkPushPermission()) {
                     showPushPermissionDialog()
                 } else {
-                    preferences.setBoolean(PUSH_ALLOW_KEY, isAllowed)
+                    dataStore.setBoolean(PUSH_ALLOW_KEY, isAllowed)
                 }
             }
         }
