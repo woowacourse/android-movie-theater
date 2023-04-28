@@ -1,8 +1,5 @@
 package woowacourse.movie.activity
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +11,7 @@ import woowacourse.movie.R
 import woowacourse.movie.fragment.MovieListFragment
 import woowacourse.movie.fragment.ReservationListFragment
 import woowacourse.movie.fragment.SettingFragment
+import woowacourse.movie.system.BroadcastAlarm.createNotificationChannel
 import woowacourse.movie.view.ReservationAlarmReceiver
 import woowacourse.movie.view.data.ReservationsViewData
 import woowacourse.movie.view.mapper.ReservationMapper.toView
@@ -25,24 +23,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        createNotificationChannel(applicationContext)
+
+        createNotificationChannel(
+            ReservationAlarmReceiver.RESERVATION_NOTIFICATION_CHANNEL_ID,
+            getString(R.string.notification_channel_name),
+            getString(R.string.notification_channel_description)
+        )
 
         makeBottomNavigationView()
         replaceFragment<MovieListFragment>()
-    }
-
-    private fun createNotificationChannel(context: Context?) {
-        val channel = NotificationChannel(
-            ReservationAlarmReceiver.RESERVATION_NOTIFICATION_CHANNEL_ID,
-            getString(R.string.notification_channel_name),
-            NotificationManager.IMPORTANCE_DEFAULT
-        ).apply {
-            description = getString(R.string.notification_channel_description)
-        }
-
-        val notificationManager =
-            context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
     }
 
     private fun makeBottomNavigationView() {
