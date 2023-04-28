@@ -35,11 +35,7 @@ class ReservationListFragment : Fragment() {
     private fun makeReservationRecyclerView(view: View, reservations: ReservationsViewData) {
         val recyclerView = view.findViewById<RecyclerView>(R.id.reservation_list_recycler)
         recyclerView.adapter = ReservationAdapter(reservations) {
-            startActivity(
-                ReservationResultActivity.from(
-                    view.context, it
-                )
-            )
+            startActivity(ReservationResultActivity.from(view.context, it))
         }
         val decoration = DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL)
         recyclerView.addItemDecoration(decoration)
