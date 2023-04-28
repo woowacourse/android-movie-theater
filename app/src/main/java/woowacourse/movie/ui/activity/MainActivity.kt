@@ -2,10 +2,8 @@ package woowacourse.movie.ui.activity
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -19,6 +17,7 @@ import woowacourse.movie.ui.fragment.movielist.HomeFragment
 import woowacourse.movie.ui.fragment.reservationlist.ReservationListFragment
 import woowacourse.movie.ui.fragment.settings.SettingsFragment
 import woowacourse.movie.ui.storage.SettingsStorage
+import woowacourse.movie.ui.utils.openAndroidSettings
 import woowacourse.movie.ui.utils.showSnack
 
 class MainActivity : AppCompatActivity() {
@@ -65,15 +64,6 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.notification_permission_snackbar_button),
             ::openAndroidSettings
         )
-    }
-
-    private fun openAndroidSettings() {
-        val uri = Uri.fromParts("package", packageName, null)
-        val intent = Intent().apply {
-            action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-            data = uri
-        }
-        startActivity(intent)
     }
 
     private fun initFragment(itemId: Int) {
