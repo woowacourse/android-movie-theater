@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/margin_small"
+    android:padding="16dp"
     android:id="@+id/reservation_item_box">
 
     <TextView
@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:textSize="@dimen/title_small"
+        android:textSize="22sp"
         android:textStyle="bold"
         tools:text="해리포터" />
 
