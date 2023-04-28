@@ -12,11 +12,11 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
+import woowacourse.movie.domain.Reservation
 import woowacourse.movie.domain.discountPolicy.Discount
 import woowacourse.movie.domain.discountPolicy.MovieDayPolicy
 import woowacourse.movie.domain.discountPolicy.OffTimePolicy
 import woowacourse.movie.domain.reservationNotificationPolicy.MovieReservationNotificationPolicy
-import woowacourse.movie.domain.reservationNotificationPolicy.ReservationNotificationPolicy
 import woowacourse.movie.view.ReservationAlarmReceiver
 import woowacourse.movie.view.data.MovieViewData
 import woowacourse.movie.view.data.PriceViewData
@@ -26,8 +26,12 @@ import woowacourse.movie.view.data.SeatsViewData
 import woowacourse.movie.view.error.ActivityError.finishWithError
 import woowacourse.movie.view.error.ViewError
 import woowacourse.movie.view.getSerializable
+import woowacourse.movie.view.mapper.MovieMapper.toDomain
 import woowacourse.movie.view.mapper.MovieSeatMapper.toDomain
+import woowacourse.movie.view.mapper.PriceMapper.toDomain
 import woowacourse.movie.view.mapper.ReservationDetailMapper.toDomain
+import woowacourse.movie.view.mapper.ReservationMapper.toView
+import woowacourse.movie.view.mapper.SeatsMapper.toDomain
 import woowacourse.movie.view.repository.SeatSelectionRepository
 import woowacourse.movie.view.widget.SeatTableLayout
 import java.text.NumberFormat
@@ -164,29 +168,33 @@ class SeatSelectionActivity : AppCompatActivity() {
             seatTableLayout.selectedSeats(), reservationDetail
         )
 
-        val reservation = ReservationViewData(
-            movie, reservationDetail, seats, price
+        val reservation = Reservation(
+            movie.toDomain(),
+            reservationDetail.toDomain(),
+            seats.toDomain(),
+            price.toDomain(),
         )
 
-        makeReservationAlarm(reservation, MovieReservationNotificationPolicy)
+        makeReservationAlarm(reservation)
         postReservation(reservation)
-        startReservationResultActivity(reservation)
+        startReservationResultActivity(reservation.toView())
     }
 
     private fun makeReservationAlarm(
-        reservation: ReservationViewData,
-        reservationNotificationPolicy: ReservationNotificationPolicy
+        reservation: Reservation
     ) {
         makeAlarmReceiver(ACTION_ALARM)
         val alarmIntent = Intent(ACTION_ALARM).let {
-            it.putExtra(ReservationViewData.RESERVATION_EXTRA_NAME, reservation)
+            it.putExtra(ReservationViewData.RESERVATION_EXTRA_NAME, reservation.toView())
             PendingIntent.getBroadcast(
                 applicationContext, RESERVATION_REQUEST_CODE, it, PendingIntent.FLAG_IMMUTABLE
             )
         }
 
-        val date = reservationNotificationPolicy.calculateTime(reservation.reservationDetail.date)
-        makeAlarm(date, alarmIntent)
+        makeAlarm(
+            reservation.calculateNotification(MovieReservationNotificationPolicy),
+            alarmIntent
+        )
     }
 
     private fun makeAlarmReceiver(action: String) {
@@ -204,7 +212,7 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     private fun postReservation(
-        reservation: ReservationViewData
+        reservation: Reservation
     ) {
         seatSelectionRepository.postReservation(reservation)
     }
