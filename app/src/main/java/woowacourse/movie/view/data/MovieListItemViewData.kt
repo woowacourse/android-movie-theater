@@ -1,5 +1,5 @@
 package woowacourse.movie.view.data
 
-interface MovieListViewData {
+interface MovieListItemViewData {
     val viewType: MovieListViewType
 }
