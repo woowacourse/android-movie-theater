@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -24,14 +25,23 @@ class MainActivity : AppCompatActivity() {
 
         initBottomNavigation()
 
+        setSelectEvent()
+    }
+
+    private fun setSelectEvent() {
         binding.bottomNavigation.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.action_book_list -> changeFragment(BookListFragment())
-                R.id.action_home -> changeFragment(MovieListFragment())
-                R.id.action_settings -> changeFragment(SettingFragment())
-            }
-            return@setOnItemSelectedListener true
+            return@setOnItemSelectedListener setBottomNavigationClickEvent(it)
         }
+    }
+
+    private fun setBottomNavigationClickEvent(it: MenuItem): Boolean {
+        when (it.itemId) {
+            R.id.action_book_list -> changeFragment(BookListFragment())
+            R.id.action_home -> changeFragment(MovieListFragment())
+            R.id.action_settings -> changeFragment(SettingFragment())
+            else -> return false
+        }
+        return true
     }
 
     private fun initBottomNavigation() {
