@@ -2,42 +2,46 @@ package woowacourse.movie.system
 
 import android.content.Context
 import android.content.pm.PackageManager
-import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 
-class PermissionLauncher(private val activity: ComponentActivity) {
-
-    fun interface ActivityResult {
-        fun result(isGranted: Boolean)
+object PermissionLauncher {
+    fun AppCompatActivity.requestPermission(
+        permission: String,
+        permissionResultLauncher: ActivityResultLauncher<String>
+    ) {
+        if (isGranted(this, permission)) return
+        if (!shouldShowRequestPermissionRationale(permission)) return
+        permissionResultLauncher.launch(permission)
     }
 
-    private val requestPermissionLauncher: ActivityResultLauncher<String> =
-        activity.registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) {
-            results.forEach { result -> result.value.result(it) }
-        }
-
-    private val results: MutableMap<String, ActivityResult> = mutableMapOf()
-
-    fun addResult(permission: String, result: ActivityResult) {
-        results[permission] = result
+    fun Fragment.requestPermission(
+        permission: String,
+        permissionResultLauncher: ActivityResultLauncher<String>
+    ) {
+        if (isGranted(requireContext(), permission)) return
+        if (!shouldShowRequestPermissionRationale(permission)) return
+        permissionResultLauncher.launch(permission)
     }
 
-    fun requestNotificationPermission(permission: String) {
-        if (!isGranted(activity, permission) && activity.shouldShowRequestPermissionRationale(permission)) {
-            requestPermissionLauncher.launch(permission)
-        }
+    fun AppCompatActivity.makePermissionResultLauncher(callback: (Boolean) -> Unit): ActivityResultLauncher<String> {
+        return registerForActivityResult(
+            ActivityResultContracts.RequestPermission(), callback
+        )
     }
 
-    companion object {
-        fun isGranted(context: Context, permission: String): Boolean {
-            return ContextCompat.checkSelfPermission(
-                context,
-                permission
-            ) == PackageManager.PERMISSION_GRANTED
-        }
+    fun Fragment.makePermissionResultLauncher(callback: (Boolean) -> Unit): ActivityResultLauncher<String> {
+        return registerForActivityResult(
+            ActivityResultContracts.RequestPermission(), callback
+        )
+    }
+
+    fun isGranted(context: Context, permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(
+            context, permission
+        ) == PackageManager.PERMISSION_GRANTED
     }
 }

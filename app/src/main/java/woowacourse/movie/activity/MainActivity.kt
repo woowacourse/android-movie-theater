@@ -17,8 +17,6 @@ import woowacourse.movie.domain.AdvertisementMock
 import woowacourse.movie.domain.advertismentPolicy.MovieAdvertisementPolicy
 import woowacourse.movie.fragment.ReservationListFragment
 import woowacourse.movie.fragment.SettingFragment
-import woowacourse.movie.system.PermissionLauncher
-import woowacourse.movie.system.PermissionLauncherProvider
 import woowacourse.movie.view.ReservationAlarmReceiver
 import woowacourse.movie.view.adapter.MovieAdapter
 import woowacourse.movie.view.data.MovieListViewData
@@ -30,12 +28,10 @@ import woowacourse.movie.view.repository.MainRepository
 
 class MainActivity : AppCompatActivity() {
     private val mainRepository: MainRepository = MainRepository()
-    val permissionLauncher: PermissionLauncher = PermissionLauncher(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        PermissionLauncherProvider.permissionLaunchers[this] = permissionLauncher
         createNotificationChannel(applicationContext)
 
         makeMovieRecyclerView()

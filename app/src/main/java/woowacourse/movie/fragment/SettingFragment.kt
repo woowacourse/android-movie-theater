@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.system.PermissionLauncher
-import woowacourse.movie.system.PermissionLauncherProvider
+import woowacourse.movie.system.PermissionLauncher.makePermissionResultLauncher
+import woowacourse.movie.system.PermissionLauncher.requestPermission
 import woowacourse.movie.system.Setting
 import woowacourse.movie.system.SharedSetting
 
@@ -28,22 +30,19 @@ class SettingFragment : Fragment() {
     private fun makeNotificationSwitchCompat(view: View) {
         val setting: Setting = SharedSetting(view.context)
         val switch = view.findViewById<SwitchCompat>(R.id.setting_push_switch)
-        val permissionLauncher = PermissionLauncherProvider.permissionLaunchers[requireActivity()]
         val permission = Manifest.permission.POST_NOTIFICATIONS
+        val permissionResultLauncher: ActivityResultLauncher<String> =
+            makePermissionResultLauncher {
+                onNotificationAddResult(switch, setting, it)
+            }
 
-        switch.isChecked =
-            setting.getValue(SETTING_NOTIFICATION) && PermissionLauncher.isGranted(
-            requireContext(),
-            permission
+        switch.isChecked = setting.getValue(SETTING_NOTIFICATION) && PermissionLauncher.isGranted(
+            requireContext(), permission
         )
-
-        permissionLauncher?.addResult(permission) {
-            onNotificationAddResult(switch, setting, it)
-        }
 
         switch.setOnCheckedChangeListener { _, isChecked ->
             onNotificationSwitchCheckedChangeListener(
-                setting, permissionLauncher, permission, isChecked
+                permissionResultLauncher, setting, permission, isChecked
             )
         }
     }
@@ -58,13 +57,13 @@ class SettingFragment : Fragment() {
     }
 
     private fun onNotificationSwitchCheckedChangeListener(
+        permissionResultLauncher: ActivityResultLauncher<String>,
         setting: Setting,
-        permissionLauncher: PermissionLauncher?,
         permission: String,
         isChecked: Boolean
     ) {
         if (isChecked && !PermissionLauncher.isGranted(requireContext(), permission)) {
-            permissionLauncher?.requestNotificationPermission(permission)
+            requestPermission(permission, permissionResultLauncher)
             return
         }
         setting.setValue(SETTING_NOTIFICATION, false)
