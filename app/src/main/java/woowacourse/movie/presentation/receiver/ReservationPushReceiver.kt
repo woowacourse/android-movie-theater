@@ -28,7 +28,7 @@ class ReservationPushReceiver : BroadcastReceiver() {
     }
 
     private fun isDeniedPush(): Boolean {
-        val preferences = MovieApplication.preferences
+        val preferences = MovieApplication.dataStore
         return !preferences.getBoolean(SettingFragment.PUSH_ALLOW_KEY, true)
     }
 }
