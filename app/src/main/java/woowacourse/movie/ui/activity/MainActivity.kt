@@ -1,6 +1,5 @@
 package woowacourse.movie.ui.activity
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -34,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         SinglePermissionRequester.requestPermission(
             this,
-            Manifest.permission.POST_NOTIFICATIONS,
+            SinglePermissionRequester.NOTIFICATION_PERMISSION,
             Build.VERSION_CODES.TIRAMISU,
             ::actionGrantedPermission,
             ::actionDeniedPermission
@@ -56,7 +55,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun actionGrantedPermission() {
-        requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        requestPermissionLauncher.launch(SinglePermissionRequester.NOTIFICATION_PERMISSION)
     }
 
     private fun actionDeniedPermission() {

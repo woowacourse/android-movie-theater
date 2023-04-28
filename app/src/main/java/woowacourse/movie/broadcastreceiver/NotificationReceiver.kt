@@ -1,14 +1,11 @@
 package woowacourse.movie.broadcastreceiver
 
-import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
@@ -61,7 +58,11 @@ class NotificationReceiver : BroadcastReceiver() {
         val notificationBuilder = getNotificationBuilder(context, ticketModel, pendingIntent)
 
         with(NotificationManagerCompat.from(context)) {
-            if (SinglePermissionRequester.checkDeniedPermission(context, Manifest.permission.POST_NOTIFICATIONS))
+            if (SinglePermissionRequester.checkDeniedPermission(
+                    context,
+                    SinglePermissionRequester.NOTIFICATION_PERMISSION
+                )
+            )
                 notify(NOTIFICATION_ID, notificationBuilder.build())
         }
     }
@@ -85,17 +86,6 @@ class NotificationReceiver : BroadcastReceiver() {
             setAutoCancel(true)
         }
         return notificationBuilder
-    }
-
-    private fun checkPermission(context: Context): Boolean {
-        if (ActivityCompat.checkSelfPermission(
-                context,
-                Manifest.permission.POST_NOTIFICATIONS
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            return true
-        }
-        return false
     }
 
     companion object {

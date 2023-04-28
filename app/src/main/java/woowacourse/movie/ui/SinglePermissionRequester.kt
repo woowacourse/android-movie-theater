@@ -1,11 +1,14 @@
 package woowacourse.movie.ui
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 
 object SinglePermissionRequester {
+    internal const val NOTIFICATION_PERMISSION = Manifest.permission.POST_NOTIFICATIONS
+
     fun requestPermission(
         activity: Activity,
         permission: String,
