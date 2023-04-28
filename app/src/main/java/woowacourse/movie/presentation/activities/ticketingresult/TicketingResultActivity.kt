@@ -64,7 +64,6 @@ class TicketingResultActivity : AppCompatActivity() {
         internal const val RESERVATION_KEY = "reservation"
 
         fun intent(context: Context, reservation: Reservation): Intent =
-            Intent(context, this::class.java)
-                .putExtra(RESERVATION_KEY, reservation)
+            Intent(context, TicketingResultActivity::class.java).putExtra(RESERVATION_KEY, reservation)
     }
 }
