@@ -20,7 +20,7 @@ class MovieListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.fragment_movie_list, container, false)
     }
@@ -30,28 +30,28 @@ class MovieListFragment : Fragment() {
         val movies = MovieMockRepository.findAll()
         val dataList = generateMovieListData(movies)
 
-        val movieAdapter = MovieListAdapter(
-            dataList = dataList
-        ) { item ->
-            when (item) {
-                is MovieListModel.MovieUiModel -> {
-                    val intent = ReservationActivity.newIntent(requireContext(), item)
-                    startActivity(intent)
-                }
-                is MovieListModel.MovieAdModel -> {
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
-                    startActivity(intent)
-                }
-            }
-        }
+        val movieAdapter = MovieListAdapter(dataList, ::onClick)
         val movieListView = view.findViewById<RecyclerView>(R.id.movie_recyclerview)
         movieListView.adapter = movieAdapter
+    }
+
+    private fun onClick(item: MovieListModel) {
+        when (item) {
+            is MovieListModel.MovieUiModel -> {
+                val intent = ReservationActivity.newIntent(requireContext(), item)
+                startActivity(intent)
+            }
+            is MovieListModel.MovieAdModel -> {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
+                startActivity(intent)
+            }
+        }
     }
 
     private fun generateMovieListData(movies: List<Movie>): List<MovieListModel> {
         val ad = MovieListModel.MovieAdModel(
             R.drawable.woowacourse_banner,
-            "https://woowacourse.github.io/"
+            "https://woowacourse.github.io/",
         )
 
         return mixMovieAdData(movies, ad, AD_POST_INTERVAL)
@@ -60,7 +60,7 @@ class MovieListFragment : Fragment() {
     private fun mixMovieAdData(
         movies: List<Movie>,
         ad: MovieListModel.MovieAdModel,
-        adPostInterval: Int
+        adPostInterval: Int,
     ): List<MovieListModel> {
         val dataList = mutableListOf<MovieListModel>()
         movies.forEachIndexed { index, movie ->
