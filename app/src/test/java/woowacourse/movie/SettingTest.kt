@@ -9,14 +9,13 @@ class SettingTest {
         // given
         val setting = FakeSetting()
         val key = "reservation"
-
-        // when
         val expect = true
         setting.setValue(key, expect)
 
-        // then
+        // when
         val actual = setting.getValue(key)
 
+        // then
         assertEquals(expect, actual)
     }
 }
