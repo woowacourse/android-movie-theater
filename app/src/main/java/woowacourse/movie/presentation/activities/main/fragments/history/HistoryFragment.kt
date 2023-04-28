@@ -54,8 +54,6 @@ class HistoryFragment : Fragment() {
     companion object {
         private val historyFragment = HistoryFragment()
 
-        fun newInstance(): HistoryFragment = historyFragment.apply {
-            arguments = Bundle().apply {}
-        }
+        fun newInstance(): HistoryFragment = historyFragment
     }
 }
