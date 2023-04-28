@@ -17,6 +17,7 @@ import woowacourse.movie.R
 import woowacourse.movie.broadcastreceiver.NotificationReceiver
 import woowacourse.movie.domain.MovieTicket
 import woowacourse.movie.ui.entity.Reservations
+import woowacourse.movie.ui.entity.Seats
 import woowacourse.movie.ui.model.MovieTicketModel
 import woowacourse.movie.ui.model.PriceModel
 import woowacourse.movie.ui.model.mapToMovieTicket
@@ -24,7 +25,6 @@ import woowacourse.movie.ui.model.mapToMovieTicketModel
 import woowacourse.movie.ui.model.mapToMovieTicketModelWithOriginalPrice
 import woowacourse.movie.ui.model.mapToPriceModel
 import woowacourse.movie.ui.model.seat.SeatModel
-import woowacourse.movie.ui.model.seat.SeatsModel
 import woowacourse.movie.ui.model.seat.mapToSeat
 import woowacourse.movie.ui.utils.getParcelable
 import woowacourse.movie.ui.utils.getParcelableByKey
@@ -32,7 +32,7 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 
 class SeatPickerActivity : AppCompatActivity() {
-    private val seats = SeatsModel().getAll()
+    private val seats = Seats().getAll()
     private lateinit var ticket: MovieTicket
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -203,7 +203,8 @@ class SeatPickerActivity : AppCompatActivity() {
 
     private fun setAlarmManager(ticketModel: MovieTicketModel) {
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        val time = ZonedDateTime.of(ticketModel.time.dateTime.minusMinutes(30), ZoneId.systemDefault())
+        val time =
+            ZonedDateTime.of(ticketModel.time.dateTime.minusMinutes(30), ZoneId.systemDefault())
         val intent = NotificationReceiver.createIntent(this, ticketModel)
         val pendingIntent = PendingIntent.getBroadcast(
             this,
