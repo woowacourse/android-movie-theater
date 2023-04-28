@@ -38,7 +38,7 @@ class SelectSeatActivityTest {
     val activityRule = ActivityScenarioRule<SelectSeatActivity>(intent)
 
     @Test
-    fun check_seats_created() {
+    fun 좌석이_생성되는지_확인한다() {
         // given
         val seatFirst = onView(withText("A1"))
         val seatLast = onView(withText("E4"))

@@ -24,7 +24,7 @@ class SettingFragmentTest {
     private var isPossiblePushAlarm: Boolean = false
 
     @Before
-    fun open_setting_fragment() {
+    fun 프레그맨트_띄우기() {
         val navigationBarSetting = onView(withId(R.id.setting_bottom_navigation))
         navigationBarSetting.perform(click())
 
@@ -35,7 +35,7 @@ class SettingFragmentTest {
     }
 
     @Test
-    fun check_switch_displayed() {
+    fun 스위치가_화면에_뜨는지_확인한다() {
         // given
         val switch = onView(withId(R.id.setting_push_alarm_switch))
         // then
