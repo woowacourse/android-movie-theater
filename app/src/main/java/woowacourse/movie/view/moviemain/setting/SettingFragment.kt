@@ -1,7 +1,6 @@
 package woowacourse.movie.view.moviemain.setting
 
 import android.Manifest
-import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
@@ -13,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import com.google.android.material.switchmaterial.SwitchMaterial
 import woowacourse.movie.R
 import woowacourse.movie.data.ReservationMockRepository
@@ -34,9 +34,7 @@ class SettingFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        sharedPreferences =
-            requireContext().getSharedPreferences(ALARM_SETTING, Context.MODE_PRIVATE)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         alarmController = AlarmController(requireContext())
     }
 
@@ -84,7 +82,6 @@ class SettingFragment : Fragment() {
     }
 
     companion object {
-        const val ALARM_SETTING = "ALARM_SETTING"
         const val IS_ALARM_ON = "IS_ALARM_ON"
         const val ALARM_MINUTE_INTERVAL = 30L
     }

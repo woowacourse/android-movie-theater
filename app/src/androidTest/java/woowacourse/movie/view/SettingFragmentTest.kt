@@ -3,6 +3,7 @@ package woowacourse.movie.view
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.fragment.app.commit
+import androidx.preference.PreferenceManager
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
@@ -52,11 +53,7 @@ class SettingFragmentTest {
     private fun setSharedPreferences(isAlarmOn: Boolean) {
         val targetContext: Context = InstrumentationRegistry.getInstrumentation().targetContext
 
-        val preferencesEditor: SharedPreferences.Editor =
-            targetContext.getSharedPreferences(
-                SettingFragment.ALARM_SETTING,
-                Context.MODE_PRIVATE,
-            ).edit()
+        val preferencesEditor: SharedPreferences.Editor = PreferenceManager.getDefaultSharedPreferences(targetContext).edit()
         preferencesEditor.clear()
         preferencesEditor.putBoolean(SettingFragment.IS_ALARM_ON, isAlarmOn)
         preferencesEditor.commit()

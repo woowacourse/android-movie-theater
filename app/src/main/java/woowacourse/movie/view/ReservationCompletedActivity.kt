@@ -15,6 +15,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationCompletedBinding
 import woowacourse.movie.util.DATE_FORMATTER
@@ -36,7 +37,7 @@ class ReservationCompletedActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val reservation = intent.getParcelableCompat<ReservationUiModel>(RESERVATION)
-        sharedPreferences = getSharedPreferences(SettingFragment.ALARM_SETTING, MODE_PRIVATE)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val isAlarmOn = sharedPreferences.getBoolean(SettingFragment.IS_ALARM_ON, false)
 
         reservation?.let {
@@ -117,7 +118,6 @@ class ReservationCompletedActivity : AppCompatActivity() {
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission(),
     ) { isGranted: Boolean ->
-        val sharedPreferences = this.getSharedPreferences(SettingFragment.ALARM_SETTING, Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
         if (isGranted) {
             editor.putBoolean(SettingFragment.IS_ALARM_ON, true).apply()
