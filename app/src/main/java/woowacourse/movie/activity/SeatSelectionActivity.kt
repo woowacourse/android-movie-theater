@@ -67,10 +67,13 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     private fun initSeatSelectionView(savedInstanceState: Bundle?) {
-        val movie = intent.extras?.getSerializableCompat<MovieViewData>(MovieViewData.MOVIE_EXTRA_NAME)
-            ?: return finishWithError(ViewError.MissingExtras(MovieViewData.MOVIE_EXTRA_NAME))
+        val movie =
+            intent.extras?.getSerializableCompat<MovieViewData>(MovieViewData.MOVIE_EXTRA_NAME)
+                ?: return finishWithError(ViewError.MissingExtras(MovieViewData.MOVIE_EXTRA_NAME))
         val reservationDetail =
-            intent.extras?.getSerializableCompat<ReservationDetailViewData>(ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME)
+            intent.extras?.getSerializableCompat<ReservationDetailViewData>(
+                ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME
+            )
                 ?: return finishWithError(ViewError.MissingExtras(ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME))
 
         initMovieView(movie)
@@ -183,13 +186,8 @@ class SeatSelectionActivity : AppCompatActivity() {
     private fun makeReservationAlarm(
         reservation: Reservation
     ) {
-        makeAlarmReceiver(ACTION_ALARM)
-        val alarmIntent = Intent(ACTION_ALARM).let {
-            it.putExtra(ReservationViewData.RESERVATION_EXTRA_NAME, reservation.toView())
-            PendingIntent.getBroadcast(
-                applicationContext, RESERVATION_REQUEST_CODE, it, PendingIntent.FLAG_IMMUTABLE
-            )
-        }
+        makeAlarmReceiver(ReservationAlarmReceiver.ACTION_ALARM)
+        val alarmIntent = ReservationAlarmReceiver.from(this, reservation.toView())
 
         makeAlarm(
             reservation.calculateNotification(MovieReservationNotificationPolicy),
@@ -244,8 +242,6 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val RESERVATION_REQUEST_CODE = 1
-        const val ACTION_ALARM = "actionAlarm"
 
         private const val SEAT_ROW_COUNT = 5
         private const val SEAT_COLUMN_COUNT = 4

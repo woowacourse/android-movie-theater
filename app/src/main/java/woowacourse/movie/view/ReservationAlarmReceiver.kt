@@ -10,7 +10,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
 import woowacourse.movie.activity.ReservationResultActivity
-import woowacourse.movie.activity.SeatSelectionActivity
 import woowacourse.movie.fragment.SettingFragment
 import woowacourse.movie.system.PermissionLauncher
 import woowacourse.movie.system.Setting
@@ -22,7 +21,7 @@ import woowacourse.movie.view.error.ViewError
 class ReservationAlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val setting: Setting = SharedSetting(context)
-        if (intent.action == SeatSelectionActivity.ACTION_ALARM && setting.getValue(
+        if (intent.action == ACTION_ALARM && setting.getValue(
                 SettingFragment.SETTING_NOTIFICATION
             )
         ) {
@@ -45,7 +44,7 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
         }
         return PendingIntent.getActivity(
             context,
-            SeatSelectionActivity.RESERVATION_REQUEST_CODE,
+            RESERVATION_REQUEST_CODE,
             reservationIntent,
             PendingIntent.FLAG_IMMUTABLE
         )
@@ -78,7 +77,18 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        const val RESERVATION_NOTIFICATION_CHANNEL_ID = "reservation"
+        const val RESERVATION_REQUEST_CODE = 1
         const val NOTIFICATION_ID = 5
+        const val RESERVATION_NOTIFICATION_CHANNEL_ID = "reservation"
+        const val ACTION_ALARM = "actionAlarm"
+
+        fun from(context: Context, reservation: ReservationViewData): PendingIntent {
+            return Intent(ACTION_ALARM).let {
+                it.putExtra(ReservationViewData.RESERVATION_EXTRA_NAME, reservation)
+                PendingIntent.getBroadcast(
+                    context, RESERVATION_REQUEST_CODE, it, PendingIntent.FLAG_IMMUTABLE
+                )
+            }
+        }
     }
 }
