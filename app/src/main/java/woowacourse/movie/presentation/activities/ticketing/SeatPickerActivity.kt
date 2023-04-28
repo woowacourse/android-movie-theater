@@ -197,7 +197,7 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
         alarmManager.set(
             intent = alarmIntent,
             pushData = reservation,
-            time = reservation.reservedTime.minusDays(REMINDER_TIME_MINUTES_AGO),
+            time = reservation.reservedTime.minusMinutes(REMINDER_TIME_MINUTES_AGO),
         )
     }
 
