@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import woowacourse.movie.view.model.ReservationUiModel
 import woowacourse.movie.view.seatselection.AlarmReceiver
-import java.time.LocalDateTime
 import java.time.ZoneId
 
 class AlarmController(
@@ -23,16 +22,9 @@ class AlarmController(
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val pendingIntent = getPendingIntent(reservation)
 
-        // alarmManager.set(
-        //     AlarmManager.RTC_WAKEUP,
-        //     reservation.screeningDateTime.minusMinutes(minuteInterval)
-        //         .atZone(ZoneId.systemDefault())
-        //         .toEpochSecond() * 1000L,
-        //     pendingIntent,
-        // )
         alarmManager.set(
             AlarmManager.RTC_WAKEUP,
-            LocalDateTime.now().minusSeconds(3)
+            reservation.screeningDateTime.minusMinutes(minuteInterval)
                 .atZone(ZoneId.systemDefault())
                 .toEpochSecond() * 1000L,
             pendingIntent,
@@ -44,7 +36,7 @@ class AlarmController(
             it.putExtra(AlarmReceiver.RESERVATION, reservation)
             PendingIntent.getBroadcast(
                 context,
-                AlarmReceiver.ALARM_REQUEST_CODE,
+                ALARM_REQUEST_CODE,
                 it,
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
             )
@@ -54,11 +46,15 @@ class AlarmController(
     fun cancelAlarms() {
         val pendingIntent = PendingIntent.getBroadcast(
             context,
-            AlarmReceiver.ALARM_REQUEST_CODE,
+            ALARM_REQUEST_CODE,
             Intent(context, AlarmReceiver::class.java),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.cancel(pendingIntent)
+    }
+
+    companion object {
+        private const val ALARM_REQUEST_CODE = 100
     }
 }
