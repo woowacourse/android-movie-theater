@@ -3,7 +3,6 @@ package woowacourse.movie.ui.activity
 import android.Manifest
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -11,11 +10,11 @@ import android.provider.Settings
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
+import woowacourse.movie.ui.SinglePermissionRequester
 import woowacourse.movie.ui.fragment.FragmentType
 import woowacourse.movie.ui.fragment.movielist.HomeFragment
 import woowacourse.movie.ui.fragment.reservationlist.ReservationListFragment
@@ -33,7 +32,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        requestNotificationPermission()
+        SinglePermissionRequester.requestPermission(
+            this,
+            Manifest.permission.POST_NOTIFICATIONS,
+            Build.VERSION_CODES.TIRAMISU,
+            ::actionGrantedPermission,
+            ::actionDeniedPermission
+        )
 
         val itemId = savedInstanceState?.getInt(KEY_INSTANCE_ITEM_ID) ?: R.id.bottom_item_home
         initFragment(itemId)
@@ -50,27 +55,17 @@ class MainActivity : AppCompatActivity() {
         outState.putInt(KEY_INSTANCE_ITEM_ID, bottomNavigationView.selectedItemId)
     }
 
-    private fun requestNotificationPermission() {
-        if (ContextCompat.checkSelfPermission(
-                this, Manifest.permission.POST_NOTIFICATIONS
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                    // 권한 요청 거부한 경우
-                    val container = findViewById<ConstraintLayout>(R.id.main_container)
-                    container.showSnack(
-                        getString(R.string.notification_permission_snackbar_message),
-                        getString(R.string.notification_permission_snackbar_button),
-                        ::openAndroidSettings
-                    )
-                } else {
-                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                }
-            } else {
-                // 안드로이드 12 이하는 Notification에 관한 권한 필요 없음
-            }
-        }
+    private fun actionGrantedPermission() {
+        requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+    }
+
+    private fun actionDeniedPermission() {
+        val container = findViewById<ConstraintLayout>(R.id.main_container)
+        container.showSnack(
+            getString(R.string.notification_permission_snackbar_message),
+            getString(R.string.notification_permission_snackbar_button),
+            ::openAndroidSettings
+        )
     }
 
     private fun openAndroidSettings() {

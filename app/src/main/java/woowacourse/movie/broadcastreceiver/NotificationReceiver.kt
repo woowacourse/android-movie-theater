@@ -12,6 +12,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
+import woowacourse.movie.ui.SinglePermissionRequester
 import woowacourse.movie.ui.activity.MovieTicketActivity
 import woowacourse.movie.ui.model.MovieTicketModel
 import woowacourse.movie.ui.storage.SettingsStorage
@@ -60,7 +61,8 @@ class NotificationReceiver : BroadcastReceiver() {
         val notificationBuilder = getNotificationBuilder(context, ticketModel, pendingIntent)
 
         with(NotificationManagerCompat.from(context)) {
-            if (checkPermission(context)) notify(NOTIFICATION_ID, notificationBuilder.build())
+            if (SinglePermissionRequester.checkDeniedPermission(context, Manifest.permission.POST_NOTIFICATIONS))
+                notify(NOTIFICATION_ID, notificationBuilder.build())
         }
     }
 
