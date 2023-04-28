@@ -33,4 +33,7 @@
 
     <string name="error_alarm_message">정보를 불러오는 중 에러가 발생했습니다. 다시 시도해 주세요.</string>
 
+    <string name="booking_notification_title">예매 알림</string>
+    <string name="booking_notification_content">%s 30분 후 상영</string>
+
 </resources>
