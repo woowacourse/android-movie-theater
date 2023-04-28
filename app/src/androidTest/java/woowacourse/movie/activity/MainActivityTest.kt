@@ -20,7 +20,7 @@ class MainActivityTest {
     @Test
     fun 영화가_3번_출력되면_광고가_1번_출력된다() {
         // given
-        onView(withId(R.id.main_movie_list)).check(
+        onView(withId(R.id.movie_list_recycler)).check(
             matches(
                 atPosition(
                     0,
@@ -28,7 +28,7 @@ class MainActivityTest {
                 )
             )
         )
-        onView(withId(R.id.main_movie_list)).check(
+        onView(withId(R.id.movie_list_recycler)).check(
             matches(
                 atPosition(
                     1,
@@ -36,7 +36,7 @@ class MainActivityTest {
                 )
             )
         )
-        onView(withId(R.id.main_movie_list)).check(
+        onView(withId(R.id.movie_list_recycler)).check(
             matches(
                 atPosition(
                     2,
@@ -48,7 +48,7 @@ class MainActivityTest {
         // when
 
         // then
-        onView(withId(R.id.main_movie_list)).check(
+        onView(withId(R.id.movie_list_recycler)).check(
             matches(
                 atPosition(
                     3,
@@ -65,7 +65,7 @@ class MainActivityTest {
         // when
 
         // then
-        onView(withId(R.id.main_movie_list)).perform(
+        onView(withId(R.id.movie_list_recycler)).perform(
             RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
                 10000
             )
