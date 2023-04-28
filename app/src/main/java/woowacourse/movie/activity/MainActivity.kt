@@ -19,12 +19,9 @@ import woowacourse.movie.fragment.SettingFragment
 class MainActivity : AppCompatActivity() {
 
     private val bottomNavigation: BottomNavigationView by lazy { findViewById(R.id.bottom_navigation) }
-    private val sharedPreference: SharedPreferences by lazy {
-        getSharedPreferences(
-            SETTING, MODE_PRIVATE
-        )
+    private val sharedPreferencesEditor by lazy {
+        getSharedPreferences(SETTING, MODE_PRIVATE).edit()
     }
-    private val editor: SharedPreferences.Editor by lazy { sharedPreference.edit() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,18 +57,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun requestNotificationPermission() {
-        if (ContextCompat.checkSelfPermission(
-                this, Manifest.permission.POST_NOTIFICATIONS
-            ) != PackageManager.PERMISSION_GRANTED
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+            == PackageManager.PERMISSION_GRANTED
         ) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                } else {
-                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                }
-            } else {
-            }
+            return
         }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            return
+        }
+        if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+            return
+        }
+        requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -81,9 +79,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun saveAlarmPermissionData(condition: Boolean) {
+
         when (condition) {
-            true -> editor.putBoolean(REQUEST_PERMISSION_KEY, true).commit()
-            false -> editor.putBoolean(REQUEST_PERMISSION_KEY, false).commit()
+            true -> sharedPreferencesEditor.putBoolean(REQUEST_PERMISSION_KEY, true).apply()
+            false -> sharedPreferencesEditor.putBoolean(REQUEST_PERMISSION_KEY, false).apply()
         }
     }
 
