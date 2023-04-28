@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import woowacourse.movie.BundleKeys
@@ -31,24 +32,17 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.page_book_history -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fl_main, BookHistoryFragment()).commitAllowingStateLoss()
-                return true
-            }
-            R.id.page_home -> {
-                supportFragmentManager.beginTransaction().replace(R.id.fl_main, HomeFragment())
-                    .commitAllowingStateLoss()
-                return true
-            }
-            R.id.page_setting -> {
-                supportFragmentManager.beginTransaction().replace(R.id.fl_main, SettingFragment())
-                    .commitAllowingStateLoss()
-                return true
-            }
+            R.id.page_book_history -> return whenMenuSelected(BookHistoryFragment())
+            R.id.page_home -> return whenMenuSelected(HomeFragment())
+            R.id.page_setting -> return whenMenuSelected(SettingFragment())
         }
-
         return false
+    }
+
+    private fun whenMenuSelected(item: Fragment): Boolean {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fl_main, item).commitAllowingStateLoss()
+        return true
     }
 
     private fun requestNotificationPermission() {
