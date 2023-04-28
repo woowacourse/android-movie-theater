@@ -5,14 +5,21 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.ticket.Position
 import woowacourse.movie.ticket.Seat
 import woowacourse.movie.ticket.SeatRank
-import woowacourse.movie.ticket.Ticket
-import java.time.LocalDateTime
+import woowacourse.movie.util.Ticket
 
 class SeatPolicyTest {
     @Test
     fun `B등급 좌석의 가격은 10_000원이다`() {
         // given
-        val ticket = Ticket(0, LocalDateTime.of(2024, 3, 1, 16, 0), Seat(SeatRank.B, Position(1, 1)))
+        val ticket = Ticket(
+            Seat(
+                rank = SeatRank.B,
+                position = Position(
+                    row = 1,
+                    column = 1
+                )
+            )
+        )
         val expected = 10_000
 
         // when
@@ -24,9 +31,43 @@ class SeatPolicyTest {
 
     @Test
     fun `A등급 좌석의 가격은 12_000원이다`() {
+        // given
+        val ticket = Ticket(
+            Seat(
+                rank = SeatRank.A,
+                position = Position(
+                    row = 1,
+                    column = 1
+                )
+            )
+        )
+        val expected = 12_000
+
+        // when
+        val actual: Int = TicketPriceAdapter().getPayment(ticket)
+
+        // then
+        assertThat(actual).isEqualTo(expected)
     }
 
     @Test
     fun `S등급 좌석의 가격은 15_000원이다`() {
+        // given
+        val ticket = Ticket(
+            Seat(
+                rank = SeatRank.S,
+                position = Position(
+                    row = 1,
+                    column = 1
+                )
+            )
+        )
+        val expected = 15_000
+
+        // when
+        val actual: Int = TicketPriceAdapter().getPayment(ticket)
+
+        // then
+        assertThat(actual).isEqualTo(expected)
     }
 }

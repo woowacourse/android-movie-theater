@@ -2,6 +2,7 @@ package woowacourse.movie.ticket
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import woowacourse.movie.util.movieName
 import java.time.LocalDateTime
 
 class TicketTest {
@@ -10,7 +11,7 @@ class TicketTest {
         // given
         val screeningDateTime = LocalDateTime.of(2024, 1, 1, 9, 0)
         val seat = Seat(SeatRank.B, Position(1, 1))
-        val ticket = Ticket(1L, screeningDateTime, seat)
+        val ticket = Ticket(1L, movieName, screeningDateTime, seat)
         val expected = 8_000
 
         // when
