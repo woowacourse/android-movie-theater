@@ -4,19 +4,17 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.Application
 import woowacourse.movie.R
-import woowacourse.movie.databinding.FragmentSettingBinding
 
-class SettingFragment : Fragment() {
-    private lateinit var binding: FragmentSettingBinding
+class SettingFragment : Fragment(R.layout.fragment_setting) {
+
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -24,27 +22,24 @@ class SettingFragment : Fragment() {
 
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentSettingBinding.inflate(inflater, container, false)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val allowedPushNotification =
             Application.prefs.getBoolean((getString(R.string.push_alarm_permission)), false)
+        setAlarmView(view, allowedPushNotification)
 
-        binding.switchSettingAlarm.isChecked =
+    }
+
+    private fun setAlarmView(view: View, allowedPushNotification: Boolean) {
+        val switchSettingAlarm = view.findViewById<SwitchCompat>(R.id.switch_setting_alarm)
+        switchSettingAlarm.isChecked =
             allowedPushNotification && notificationPermissionIsGranted()
-        binding.switchSettingAlarm.setOnCheckedChangeListener { buttonView, isChecked ->
+        switchSettingAlarm.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked && notificationPermissionIsGranted().not()) {
                 requestNotificationPermission()
             }
             Application.prefs.setBoolean(getString(R.string.push_alarm_permission), isChecked)
-
         }
-
-        return binding.root
     }
 
     private fun requestNotificationPermission() {

@@ -9,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.presentation.view.main.booklist.BookListFragment
 import woowacourse.movie.presentation.view.main.home.MovieListFragment
@@ -16,20 +17,20 @@ import woowacourse.movie.presentation.view.main.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val bottomNavigation : BottomNavigationView by lazy { findViewById(R.id.bottom_navigation) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         requestNotificationPermission()
-
         initBottomNavigation()
-
         setSelectEvent()
     }
 
     private fun setSelectEvent() {
-        binding.bottomNavigation.setOnItemSelectedListener {
+        bottomNavigation.setOnItemSelectedListener {
             return@setOnItemSelectedListener setBottomNavigationClickEvent(it)
         }
     }
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initBottomNavigation() {
         changeFragment(MovieListFragment())
-        binding.bottomNavigation.selectedItemId = R.id.action_home
+        bottomNavigation.selectedItemId = R.id.action_home
     }
 
     private fun changeFragment(fragment: Fragment) {

@@ -5,10 +5,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import com.example.domain.MovieSchedule
 import woowacourse.movie.R
-import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieBookingInfo
 import woowacourse.movie.presentation.extension.getParcelableCompat
@@ -16,13 +19,15 @@ import woowacourse.movie.presentation.view.common.BackButtonActivity
 import woowacourse.movie.presentation.view.main.home.seatpick.SeatPickerActivity
 
 class MovieDetailActivity : BackButtonActivity() {
-    private lateinit var binding: ActivityMovieDetailBinding
     private var restoreInstanceFlag = true
+
+    private val dateSpinner: Spinner by lazy { findViewById(R.id.sp_movie_date) }
+    private val timeSpinner: Spinner by lazy { findViewById(R.id.sp_movie_time) }
+    private val ticketCountTextView: TextView by lazy { findViewById(R.id.tv_ticket_count) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMovieDetailBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_movie_detail)
         restoreInstanceFlag = true
         val movieData = intent.getParcelableCompat<Movie>(MOVIE_DATA_INTENT_KEY)
         processEmptyMovieData(movieData)
@@ -44,12 +49,12 @@ class MovieDetailActivity : BackButtonActivity() {
         scheduleDate: List<String>,
         movieSchedule: MovieSchedule
     ) {
-        binding.spMovieDate.adapter = ArrayAdapter(
+        dateSpinner.adapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
             scheduleDate
         )
-        binding.spMovieTime.adapter = ArrayAdapter(
+        timeSpinner.adapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
             movieSchedule.getScheduleTimes(scheduleDate[0])
@@ -57,18 +62,18 @@ class MovieDetailActivity : BackButtonActivity() {
     }
 
     private fun setViewData(movieData: Movie?) {
-        binding.ivMoviePoster.setImageResource(movieData!!.poster)
-        binding.tvMovieTitle.text = movieData.title
-        binding.tvMovieReleaseDate.text = movieData.releaseDate
-        binding.tvMovieRunningTime.text = movieData.runningTime
-        binding.tvMovieSynopsis.text = movieData.synopsis
+        findViewById<ImageView>(R.id.iv_movie_poster).setImageResource(movieData!!.poster)
+        findViewById<TextView>(R.id.tv_movie_title).text = movieData.title
+        findViewById<TextView>(R.id.tv_movie_release_date).text = movieData.releaseDate
+        findViewById<TextView>(R.id.tv_movie_running_time).text = movieData.runningTime
+        findViewById<TextView>(R.id.tv_movie_synopsis).text = movieData.synopsis
     }
 
     private fun reloadTicketCountInstance(
         savedInstanceState: Bundle?,
     ) {
         if (savedInstanceState != null) {
-            binding.tvTicketCount.text =
+            ticketCountTextView.text =
                 savedInstanceState.getString(USER_TICKET_COUNT_BUNDLE_KEY)
         }
     }
@@ -87,25 +92,25 @@ class MovieDetailActivity : BackButtonActivity() {
         savedInstanceState: Bundle?
     ) {
 
-        binding.spMovieDate.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        dateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 adapterView: AdapterView<*>?,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
-                binding.spMovieTime.adapter = ArrayAdapter(
+                timeSpinner.adapter = ArrayAdapter(
                     this@MovieDetailActivity,
                     android.R.layout.simple_spinner_item,
                     movieSchedule.getScheduleTimes(scheduleDate[position])
                 )
                 if (restoreInstanceFlag && savedInstanceState != null) {
-                    binding.spMovieTime.setSelection(
+                    timeSpinner.setSelection(
                         (
-                            savedInstanceState.getString(MOVIE_INFO_TIME_BUNDLE_KEY)
-                                ?: movieSchedule.getScheduleTimes(binding.spMovieDate.selectedItem.toString())
-                                    .first()
-                            ).toInt()
+                                savedInstanceState.getString(MOVIE_INFO_TIME_BUNDLE_KEY)
+                                    ?: movieSchedule.getScheduleTimes(dateSpinner.selectedItem.toString())
+                                        .first()
+                                ).toInt()
                     )
                     restoreInstanceFlag = false
                 }
@@ -117,8 +122,8 @@ class MovieDetailActivity : BackButtonActivity() {
 
     private fun setClickListener(movieData: Movie) {
 
-        binding.btTicketCountMinus.setOnClickListener {
-            if (binding.tvTicketCount.text == BASE_TICKET_COUNT_CHARACTER) {
+        findViewById<Button>(R.id.bt_ticket_count_minus).setOnClickListener {
+            if (ticketCountTextView.text == BASE_TICKET_COUNT_CHARACTER) {
                 Toast.makeText(
                     this,
                     getString(R.string.error_booking_over_one_ticket),
@@ -126,23 +131,23 @@ class MovieDetailActivity : BackButtonActivity() {
                 ).show()
                 return@setOnClickListener
             }
-            val newTicketCount = binding.tvTicketCount.text.toString().toInt() - 1
-            binding.tvTicketCount.text = newTicketCount.toString()
+            val newTicketCount = ticketCountTextView.text.toString().toInt() - 1
+            ticketCountTextView.text = newTicketCount.toString()
         }
 
-        binding.btTicketCountPlus.setOnClickListener {
-            val newTicketCount = binding.tvTicketCount.text.toString().toInt() + 1
-            binding.tvTicketCount.text = newTicketCount.toString()
+        findViewById<Button>(R.id.bt_ticket_count_plus).setOnClickListener {
+            val newTicketCount = ticketCountTextView.text.toString().toInt() + 1
+            ticketCountTextView.text = newTicketCount.toString()
         }
 
-        binding.btBookComplete.setOnClickListener {
+        findViewById<Button>(R.id.bt_book_complete).setOnClickListener {
             val intent = Intent(this, SeatPickerActivity::class.java).apply {
                 putExtra(
                     SeatPickerActivity.MOVIE_BOOKING_INFO_SCHEDULE_INTENT_KEY,
                     MovieBookingInfo(
-                        movieData, binding.spMovieDate.selectedItem.toString(),
-                        binding.spMovieTime.selectedItem.toString(),
-                        binding.tvTicketCount.text.toString().toInt()
+                        movieData, dateSpinner.selectedItem.toString(),
+                        timeSpinner.selectedItem.toString(),
+                        ticketCountTextView.text.toString().toInt()
                     )
                 )
             }
@@ -154,11 +159,11 @@ class MovieDetailActivity : BackButtonActivity() {
         super.onSaveInstanceState(outState)
         outState.putString(
             MOVIE_INFO_TIME_BUNDLE_KEY,
-            binding.spMovieTime.selectedItemPosition.toString()
+            timeSpinner.selectedItemPosition.toString()
         )
         outState.putString(
             USER_TICKET_COUNT_BUNDLE_KEY,
-            binding.tvTicketCount.text.toString()
+            ticketCountTextView.text.toString()
         )
     }
 

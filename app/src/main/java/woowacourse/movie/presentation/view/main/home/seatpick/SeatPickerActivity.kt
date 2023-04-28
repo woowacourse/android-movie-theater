@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
@@ -24,7 +25,6 @@ import com.example.domain.TicketBundle
 import woowacourse.movie.Application
 import woowacourse.movie.R
 import woowacourse.movie.broadcast.AlarmReceiver
-import woowacourse.movie.databinding.ActivitySeatPickerBinding
 import woowacourse.movie.model.MovieBookingInfo
 import woowacourse.movie.model.ReservationResult
 import woowacourse.movie.presentation.extension.getParcelableCompat
@@ -37,12 +37,11 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 class SeatPickerActivity : BackButtonActivity() {
-    private lateinit var binding: ActivitySeatPickerBinding
     private val ticketBundle = TicketBundle()
+    private val totalPriceTextView by lazy { findViewById<TextView>(R.id.tv_seat_picker_total_price) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySeatPickerBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_seat_picker)
 
         val movieBookingInfo: MovieBookingInfo? = intent.getParcelableCompat(
             MOVIE_BOOKING_INFO_SCHEDULE_INTENT_KEY
@@ -54,28 +53,42 @@ class SeatPickerActivity : BackButtonActivity() {
     private fun initView(movieBookingInfo: MovieBookingInfo) {
         initBookingInfoView(movieBookingInfo)
         initSeatPickerView(movieBookingInfo)
-        binding.tvSeatPickerConfirm.setOnClickListener {
-            if (ticketBundle.tickets.size != movieBookingInfo.ticketCount) {
-                Toast.makeText(
-                    this,
-                    getString(R.string.error_seat_picker_ticket_count_not_match).format(
-                        movieBookingInfo.ticketCount
-                    ),
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                showDialog(movieBookingInfo)
-            }
+        setConfirmView(movieBookingInfo)
+    }
+
+    private fun setConfirmView(
+        movieBookingInfo: MovieBookingInfo
+    ) {
+        val confirmTextView = findViewById<TextView>(R.id.tv_seat_picker_confirm)
+        confirmTextView.setOnClickListener {
+            setConfirmViewClick(movieBookingInfo)
+        }
+    }
+
+    private fun setConfirmViewClick(
+        movieBookingInfo: MovieBookingInfo
+    ) {
+        if (ticketBundle.tickets.size != movieBookingInfo.ticketCount) {
+            Toast.makeText(
+                this,
+                getString(R.string.error_seat_picker_ticket_count_not_match).format(
+                    movieBookingInfo.ticketCount
+                ),
+                Toast.LENGTH_SHORT
+            ).show()
+        } else {
+            showDialog(movieBookingInfo)
         }
     }
 
     private fun initBookingInfoView(movieBookingInfo: MovieBookingInfo) {
-        binding.tvSeatPickerMovieTitle.text = movieBookingInfo.movieInfo.title
-        binding.tvSeatPickerTotalPrice.text = 0.toString()
+        findViewById<TextView>(R.id.tv_seat_picker_movie_title).text =
+            movieBookingInfo.movieInfo.title
+        totalPriceTextView.text = 0.toString()
     }
 
     private fun initSeatPickerView(movieBookingInfo: MovieBookingInfo) {
-        binding.tbSeatPicker.children
+        findViewById<TableLayout>(R.id.tb_seat_picker).children
             .filterIsInstance<TableRow>()
             .flatMap { it.children }
             .filterIsInstance<TextView>()
@@ -107,7 +120,7 @@ class SeatPickerActivity : BackButtonActivity() {
         textView.setOnClickListener {
             setSeatViewStatus(it, seatIndex, movieBookingInfo)
 
-            binding.tvSeatPickerTotalPrice.text =
+            totalPriceTextView.text =
                 ticketBundle.calculateTotalPrice(movieBookingInfo.date, movieBookingInfo.time)
                     .toString()
         }
@@ -172,7 +185,7 @@ class SeatPickerActivity : BackButtonActivity() {
 
     private fun saveReservation(movieBookingInfo: MovieBookingInfo): Reservation {
         val reservation = Reservation(
-            binding.tvSeatPickerTotalPrice.text.toString().toInt(),
+            totalPriceTextView.text.toString().toInt(),
             ticketBundle.tickets.size,
             ticketBundle.getSeatNames().joinToString(", "),
             movieBookingInfo.movieInfo.title,

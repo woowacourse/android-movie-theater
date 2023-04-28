@@ -1,19 +1,17 @@
 package woowacourse.movie.presentation.view.main.home.bookcomplete
 
 import android.os.Bundle
+import android.widget.TextView
 import android.widget.Toast
 import com.example.domain.Reservation
 import com.example.domain.ReservationRepository
 import woowacourse.movie.R
-import woowacourse.movie.databinding.ActivityBookCompleteBinding
 import woowacourse.movie.presentation.view.common.BackButtonActivity
 
 class BookCompleteActivity : BackButtonActivity() {
-    private lateinit var binding: ActivityBookCompleteBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityBookCompleteBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_book_complete)
 
         val bookingCompleteInfo =
             intent.getLongExtra(RESERVATION_ID_INTENT_KEY, -1L)
@@ -32,15 +30,15 @@ class BookCompleteActivity : BackButtonActivity() {
     }
 
     private fun setViewData(reservation: Reservation) {
-        binding.tvBookMovieTitle.text = reservation.movieTitle
-        binding.tvBookDate.text =
+        findViewById<TextView>(R.id.tv_book_movie_title).text = reservation.movieTitle
+        findViewById<TextView>(R.id.tv_book_date).text =
             formatBookingTime(reservation.date, reservation.time)
-        binding.tvBookPersonCount.text =
+        findViewById<TextView>(R.id.tv_book_person_count).text =
             getString(R.string.book_person_info).format(
                 reservation.ticketCount,
                 reservation.seatNames
             )
-        binding.tvBookTotalPay.text =
+        findViewById<TextView>(R.id.tv_book_total_pay).text =
             getString(R.string.book_total_pay).format(
                 reservation.totalPrice
             )

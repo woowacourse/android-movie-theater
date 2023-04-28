@@ -1,30 +1,22 @@
 package woowacourse.movie.presentation.view.main.home
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.presentation.view.main.home.data.MovieData
 
-class MovieListFragment : Fragment() {
-    private lateinit var binding: FragmentMovieListBinding
+class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentMovieListBinding.inflate(inflater, container, false)
-        setListView()
-        return binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setListView(view)
     }
 
-    private fun setListView() {
-        val listView = binding.rvMovieList
+    private fun setListView(view: View) {
+        val listView = view.findViewById<RecyclerView>(R.id.rv_movie_list)
         val movies = MovieData.getData()
         val adapter = MovieListAdapter(
             movies,
