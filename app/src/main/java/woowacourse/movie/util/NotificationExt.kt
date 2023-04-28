@@ -13,11 +13,11 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import java.util.concurrent.atomic.AtomicInteger
 
-const val CHANNEL_ID = "movie_channel"
-const val CHANNEL_NAME = "movie_channel_name"
-const val CHANNEL_DESCRIPTION = "This is a movie channel"
+private const val CHANNEL_ID = "movie_channel"
+private const val CHANNEL_NAME = "movie_channel_name"
+private const val CHANNEL_DESCRIPTION = "This is a movie channel"
 
-val atomicNotifyId = AtomicInteger(0x001)
+private val atomicNotifyId = AtomicInteger(0x001)
 
 fun Context.createNotificationChannel() {
     val id = CHANNEL_ID
