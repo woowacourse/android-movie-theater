@@ -24,7 +24,7 @@ import woowacourse.movie.presentation.activities.ticketing.TicketingActivity.Com
 import woowacourse.movie.presentation.model.MovieDate
 import woowacourse.movie.presentation.model.MovieTime
 import woowacourse.movie.presentation.model.Ticket
-import woowacourse.movie.presentation.model.movieitem.Movie
+import woowacourse.movie.presentation.model.item.Movie
 import java.time.LocalDate
 
 @RunWith(AndroidJUnit4::class)

@@ -4,8 +4,8 @@ import android.view.View
 import android.widget.ImageView
 import woowacourse.movie.R
 import woowacourse.movie.presentation.base.BaseRecyclerView
-import woowacourse.movie.presentation.model.movieitem.Ad
-import woowacourse.movie.presentation.model.movieitem.ListItem
+import woowacourse.movie.presentation.model.item.Ad
+import woowacourse.movie.presentation.model.item.ListItem
 
 class NativeAdViewHolder(
     view: View,

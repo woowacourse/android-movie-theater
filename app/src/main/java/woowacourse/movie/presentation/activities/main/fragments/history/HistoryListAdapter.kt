@@ -4,14 +4,14 @@ import android.view.ViewGroup
 import woowacourse.movie.R
 import woowacourse.movie.presentation.activities.main.fragments.history.viewholder.HistoryViewHolder
 import woowacourse.movie.presentation.base.BaseRecyclerView
-import woowacourse.movie.presentation.model.movieitem.ListItem
+import woowacourse.movie.presentation.model.item.ListItem
 
 class HistoryListAdapter(
     onItemClick: (ListItem) -> Unit = {},
 ) : BaseRecyclerView.Adapter(onItemClick) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): BaseRecyclerView.BaseViewHolder {
         return HistoryViewHolder(parent.inflate(R.layout.item_history), onItemViewClick)
     }

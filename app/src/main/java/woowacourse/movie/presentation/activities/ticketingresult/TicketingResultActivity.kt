@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.presentation.extensions.getParcelableCompat
 import woowacourse.movie.presentation.extensions.showBackButton
-import woowacourse.movie.presentation.model.Reservation
+import woowacourse.movie.presentation.model.item.Reservation
 
 class TicketingResultActivity : AppCompatActivity() {
     private val reservation: Reservation by lazy {
@@ -34,7 +34,11 @@ class TicketingResultActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.seats_tv).text = reservation.seats.sorted().toString()
         findViewById<TextView>(R.id.date_tv).text = getString(
             R.string.book_date_time,
-            movieDate.year, movieDate.month, movieDate.day, movieTime.hour, movieTime.min
+            movieDate.year,
+            movieDate.month,
+            movieDate.day,
+            movieTime.hour,
+            movieTime.min,
         )
     }
 
@@ -47,7 +51,7 @@ class TicketingResultActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.pay_result_tv).text = getString(
             R.string.movie_pay_result,
             ticketPrice.amount,
-            getString(R.string.on_site_payment)
+            getString(R.string.on_site_payment),
         )
     }
 

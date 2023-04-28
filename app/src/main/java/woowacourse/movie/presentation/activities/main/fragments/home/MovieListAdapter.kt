@@ -6,9 +6,9 @@ import woowacourse.movie.presentation.activities.main.fragments.home.type.MovieV
 import woowacourse.movie.presentation.activities.main.fragments.home.viewholder.MovieViewHolder
 import woowacourse.movie.presentation.activities.main.fragments.home.viewholder.NativeAdViewHolder
 import woowacourse.movie.presentation.base.BaseRecyclerView
-import woowacourse.movie.presentation.model.movieitem.Ad
-import woowacourse.movie.presentation.model.movieitem.ListItem
-import woowacourse.movie.presentation.model.movieitem.Movie
+import woowacourse.movie.presentation.model.item.Ad
+import woowacourse.movie.presentation.model.item.ListItem
+import woowacourse.movie.presentation.model.item.Movie
 
 class MovieListAdapter(
     private val adInterval: Int = DEFAULT_AD_INTERVAL,

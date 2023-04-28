@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.presentation.activities.ticketingresult.TicketingResultActivity
-import woowacourse.movie.presentation.model.Reservation
+import woowacourse.movie.presentation.model.item.Ad
+import woowacourse.movie.presentation.model.item.Movie
+import woowacourse.movie.presentation.model.item.Reservation
 
 class HistoryFragment : Fragment() {
 
@@ -27,28 +29,31 @@ class HistoryFragment : Fragment() {
 
         val historyRecyclerView = view.findViewById<RecyclerView>(R.id.history_recycler_view)
         val historyAdapter = HistoryListAdapter { item ->
-            if (item !is Reservation) return@HistoryListAdapter
 
-            startActivity(
-                Intent(requireContext(), TicketingResultActivity::class.java)
-                    .putExtra(TicketingResultActivity.RESERVATION_KEY, item)
-            )
+            when (item) {
+                is Reservation -> {
+                    startActivity(
+                        Intent(requireContext(), TicketingResultActivity::class.java)
+                            .putExtra(TicketingResultActivity.RESERVATION_KEY, item),
+                    )
+                }
+                is Ad -> {}
+                is Movie -> {}
+            }
         }
         historyAdapter.appendAll(Reservation.provideDummy())
         historyRecyclerView.adapter = historyAdapter
         historyRecyclerView.addItemDecoration(
             DividerItemDecoration(
                 requireContext(),
-                DividerItemDecoration.VERTICAL
-            )
+                DividerItemDecoration.VERTICAL,
+            ),
         )
     }
 
     companion object {
         private val historyFragment = HistoryFragment()
 
-        fun newInstance(): HistoryFragment = historyFragment.apply {
-            arguments = Bundle().apply {}
-        }
+        fun newInstance(): HistoryFragment = historyFragment
     }
 }

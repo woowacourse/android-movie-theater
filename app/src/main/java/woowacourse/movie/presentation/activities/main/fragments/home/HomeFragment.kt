@@ -11,8 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import woowacourse.movie.R
 import woowacourse.movie.presentation.activities.ticketing.TicketingActivity
-import woowacourse.movie.presentation.model.movieitem.Ad
-import woowacourse.movie.presentation.model.movieitem.Movie
+import woowacourse.movie.presentation.model.item.Ad
+import woowacourse.movie.presentation.model.item.Movie
+import woowacourse.movie.presentation.model.item.Reservation
 
 class HomeFragment : Fragment() {
     private lateinit var movieListAdapter: MovieListAdapter
@@ -38,6 +39,7 @@ class HomeFragment : Fragment() {
                 when (item) {
                     is Movie -> startTicketingActivity(item)
                     is Ad -> accessAdWebPage(item)
+                    is Reservation -> {}
                 }
             },
         ).also { it.appendAll(Movie.provideDummy()) }

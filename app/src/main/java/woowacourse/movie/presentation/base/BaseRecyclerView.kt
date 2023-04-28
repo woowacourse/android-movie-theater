@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.presentation.model.movieitem.ListItem
+import woowacourse.movie.presentation.model.item.ListItem
 
 class BaseRecyclerView {
     abstract class BaseViewHolder(view: View) : RecyclerView.ViewHolder(view) {

@@ -2,7 +2,8 @@ package woowacourse.movie.presentation.activities.main.fragments.home.type
 
 enum class MovieViewType(val type: Int) {
     AD(0),
-    MOVIE(1);
+    MOVIE(1),
+    ;
 
     companion object {
         fun get(type: Int): MovieViewType =

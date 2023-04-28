@@ -7,7 +7,7 @@ import android.os.Parcelable
 import woowacourse.movie.R
 import woowacourse.movie.presentation.activities.ticketing.SeatPickerActivity.Companion.REMINDER_TIME_MINUTES_AGO
 import woowacourse.movie.presentation.activities.ticketingresult.TicketingResultActivity
-import woowacourse.movie.presentation.model.Reservation
+import woowacourse.movie.presentation.model.item.Reservation
 
 class ReservationReminder(
     override val channelId: String = "reservation_reminder",
@@ -25,7 +25,7 @@ class ReservationReminder(
                 getString(
                     R.string.notification_push_desc,
                     data.movieTitle,
-                    REMINDER_TIME_MINUTES_AGO
+                    REMINDER_TIME_MINUTES_AGO,
                 ),
                 RESERVATION_PUSH_ID,
             ) { makePendingIntent(context, data) }
@@ -34,7 +34,7 @@ class ReservationReminder(
 
     private fun makePendingIntent(
         context: Context,
-        data: Reservation
+        data: Reservation,
     ): PendingIntent {
         val intent = Intent(context, TicketingResultActivity::class.java)
         intent.putExtra(TicketingResultActivity.RESERVATION_KEY, data)

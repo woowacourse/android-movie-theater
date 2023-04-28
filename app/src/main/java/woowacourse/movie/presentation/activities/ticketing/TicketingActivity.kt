@@ -24,7 +24,7 @@ import woowacourse.movie.presentation.mapper.toPresentation
 import woowacourse.movie.presentation.model.MovieDate
 import woowacourse.movie.presentation.model.MovieTime
 import woowacourse.movie.presentation.model.Ticket
-import woowacourse.movie.presentation.model.movieitem.Movie
+import woowacourse.movie.presentation.model.item.Movie
 
 class TicketingActivity : AppCompatActivity(), View.OnClickListener {
     private var movieTicket: Ticket = Ticket()
@@ -40,8 +40,9 @@ class TicketingActivity : AppCompatActivity(), View.OnClickListener {
 
     private val movieDateAdapter: ArrayAdapter<String> by lazy {
         ArrayAdapter(
-            this, android.R.layout.simple_spinner_item,
-            movieDates.map { getString(R.string.book_date, it.year, it.month, it.day) }
+            this,
+            android.R.layout.simple_spinner_item,
+            movieDates.map { getString(R.string.book_date, it.year, it.month, it.day) },
         )
     }
     private val movieTimeAdapter: ArrayAdapter<String> by lazy {
@@ -112,7 +113,7 @@ class TicketingActivity : AppCompatActivity(), View.OnClickListener {
                     selectedDate?.toDomain()?.run {
                         updateMovieTimes(
                             DomainMovieTime.runningTimes(isWeekend(), isToday())
-                                .map { it.toPresentation() }
+                                .map { it.toPresentation() },
                         )
                     }
 
@@ -128,7 +129,7 @@ class TicketingActivity : AppCompatActivity(), View.OnClickListener {
         movieTimes.addAll(newMovieTimes)
 
         updateMovieTimeAdapter(
-            movieTimes.map { getString(R.string.book_time, it.hour, it.min) }
+            movieTimes.map { getString(R.string.book_time, it.hour, it.min) },
         )
     }
 
@@ -144,7 +145,7 @@ class TicketingActivity : AppCompatActivity(), View.OnClickListener {
             findViewById<TextView>(R.id.date_tv).text = getString(
                 R.string.movie_release_date,
                 startDate.formattedDate,
-                endDate.formattedDate
+                endDate.formattedDate,
             )
             findViewById<TextView>(R.id.running_time_tv).text =
                 getString(R.string.movie_running_time, runningTime)
@@ -160,7 +161,7 @@ class TicketingActivity : AppCompatActivity(), View.OnClickListener {
         }
         selectedDate?.toDomain()?.run {
             updateMovieTimes(
-                DomainMovieTime.runningTimes(isWeekend(), isToday()).map { it.toPresentation() }
+                DomainMovieTime.runningTimes(isWeekend(), isToday()).map { it.toPresentation() },
             )
         }
     }
@@ -200,7 +201,7 @@ class TicketingActivity : AppCompatActivity(), View.OnClickListener {
                 .putExtra(MOVIE_KEY, intent.getParcelableCompat<Movie>(MOVIE_KEY))
                 .putExtra(TICKET_KEY, movieTicket)
                 .putExtra(MOVIE_DATE_KEY, selectedDate)
-                .putExtra(MOVIE_TIME_KEY, selectedTime)
+                .putExtra(MOVIE_TIME_KEY, selectedTime),
         )
         finish()
     }

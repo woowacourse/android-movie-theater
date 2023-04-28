@@ -6,8 +6,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import woowacourse.movie.R
 import woowacourse.movie.presentation.base.BaseRecyclerView
-import woowacourse.movie.presentation.model.movieitem.ListItem
-import woowacourse.movie.presentation.model.movieitem.Movie
+import woowacourse.movie.presentation.model.item.ListItem
+import woowacourse.movie.presentation.model.item.Movie
 
 class MovieViewHolder(
     view: View,
@@ -32,7 +32,7 @@ class MovieViewHolder(
             dateTextView.text = dateTextView.context.getString(
                 R.string.movie_release_date,
                 startDate.formattedDate,
-                endDate.formattedDate
+                endDate.formattedDate,
             )
             runningTimeTextView.text =
                 runningTimeTextView.context.getString(R.string.movie_running_time, runningTime)

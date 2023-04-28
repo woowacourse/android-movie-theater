@@ -29,13 +29,13 @@ import woowacourse.movie.presentation.mapper.toPresentation
 import woowacourse.movie.presentation.model.MovieDate
 import woowacourse.movie.presentation.model.MovieTime
 import woowacourse.movie.presentation.model.PickedSeats
-import woowacourse.movie.presentation.model.Reservation
 import woowacourse.movie.presentation.model.Seat
 import woowacourse.movie.presentation.model.SeatColumn
 import woowacourse.movie.presentation.model.SeatRow
 import woowacourse.movie.presentation.model.Ticket
 import woowacourse.movie.presentation.model.TicketPrice
-import woowacourse.movie.presentation.model.movieitem.Movie
+import woowacourse.movie.presentation.model.item.Movie
+import woowacourse.movie.presentation.model.item.Reservation
 import woowacourse.movie.presentation.receiver.ReservationPushReceiver
 
 class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
@@ -174,14 +174,14 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
             movieTime = movieTime.toPresentation(),
             ticket = ticket,
             seats = pickedSeats.toPresentation(),
-            ticketPrice = calculateTotalPrice()
+            ticketPrice = calculateTotalPrice(),
         )
 
         registerPushBroadcast(reservation)
 
         startActivity(
             Intent(this@SeatPickerActivity, TicketingResultActivity::class.java)
-                .putExtra(TicketingResultActivity.RESERVATION_KEY, reservation)
+                .putExtra(TicketingResultActivity.RESERVATION_KEY, reservation),
         )
         finish()
     }

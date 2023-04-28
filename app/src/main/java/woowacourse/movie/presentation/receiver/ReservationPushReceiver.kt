@@ -9,7 +9,7 @@ import woowacourse.movie.presentation.activities.main.alarm.PushAlarmManager.Com
 import woowacourse.movie.presentation.activities.main.alarm.PushAlarmManager.Companion.PUSH_DATA_KEY
 import woowacourse.movie.presentation.activities.main.fragments.setting.SettingFragment
 import woowacourse.movie.presentation.extensions.getParcelableCompat
-import woowacourse.movie.presentation.model.Reservation
+import woowacourse.movie.presentation.model.item.Reservation
 import woowacourse.movie.presentation.reminder.ReservationReminder
 
 class ReservationPushReceiver : BroadcastReceiver() {

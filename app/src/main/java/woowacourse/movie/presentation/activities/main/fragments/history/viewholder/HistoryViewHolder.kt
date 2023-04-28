@@ -4,8 +4,8 @@ import android.view.View
 import android.widget.TextView
 import woowacourse.movie.R
 import woowacourse.movie.presentation.base.BaseRecyclerView
-import woowacourse.movie.presentation.model.Reservation
-import woowacourse.movie.presentation.model.movieitem.ListItem
+import woowacourse.movie.presentation.model.item.ListItem
+import woowacourse.movie.presentation.model.item.Reservation
 
 class HistoryViewHolder(
     view: View,
