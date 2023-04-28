@@ -13,10 +13,10 @@ import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.model.AdvState
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.ui.adv.AdvDetailActivity
-import woowacourse.movie.ui.main.MainActivity
-import woowacourse.movie.ui.main.adapter.MovieListAdapter
-import woowacourse.movie.ui.main.itemModel.AdvItemModel
-import woowacourse.movie.ui.main.itemModel.MovieItemModel
+import woowacourse.movie.main.MainActivity
+import woowacourse.movie.ui.adapter.MovieListAdapter
+import woowacourse.movie.ui.itemModel.AdvItemModel
+import woowacourse.movie.ui.itemModel.MovieItemModel
 import woowacourse.movie.ui.reservation.MovieDetailActivity
 
 class MovieListFragment : Fragment() {

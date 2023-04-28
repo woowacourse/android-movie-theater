@@ -1,7 +1,6 @@
-package woowacourse.movie.ui.main.itemModel
+package woowacourse.movie.ui.itemModel
 
 import woowacourse.movie.model.AdvState
-import woowacourse.movie.ui.main.ViewType
 
 class AdvItemModel(
     val advState: AdvState,

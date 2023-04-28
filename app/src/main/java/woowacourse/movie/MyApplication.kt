@@ -1,6 +1,7 @@
 package woowacourse.movie
 
 import android.app.Application
+import woowacourse.movie.util.PreferenceUtil
 
 class MyApplication : Application() {
     companion object {

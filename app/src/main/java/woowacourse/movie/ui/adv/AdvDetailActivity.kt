@@ -6,7 +6,7 @@ import android.widget.TextView
 import woowacourse.movie.R
 import woowacourse.movie.model.AdvState
 import woowacourse.movie.ui.BackKeyActionBarActivity
-import woowacourse.movie.ui.main.MainActivity.Companion.KEY_ADV
+import woowacourse.movie.main.MainActivity.Companion.KEY_ADV
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
 

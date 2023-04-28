@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.main
+package woowacourse.movie.ui.itemModel
 
 enum class ViewType(val id: Int) {
     MOVIE(0),

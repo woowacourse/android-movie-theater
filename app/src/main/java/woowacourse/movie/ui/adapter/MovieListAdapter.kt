@@ -1,16 +1,16 @@
-package woowacourse.movie.ui.main.adapter
+package woowacourse.movie.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.ui.main.ViewType
-import woowacourse.movie.ui.main.itemModel.AdvItemModel
-import woowacourse.movie.ui.main.itemModel.ItemModel
-import woowacourse.movie.ui.main.itemModel.MovieItemModel
-import woowacourse.movie.ui.main.viewHolder.AdvViewHolder
-import woowacourse.movie.ui.main.viewHolder.ItemViewHolder
-import woowacourse.movie.ui.main.viewHolder.MovieViewHolder
+import woowacourse.movie.ui.itemModel.ViewType
+import woowacourse.movie.ui.itemModel.AdvItemModel
+import woowacourse.movie.ui.itemModel.ItemModel
+import woowacourse.movie.ui.itemModel.MovieItemModel
+import woowacourse.movie.ui.viewHolder.AdvViewHolder
+import woowacourse.movie.ui.viewHolder.ItemViewHolder
+import woowacourse.movie.ui.viewHolder.MovieViewHolder
 
 class MovieListAdapter(
     movie: List<MovieItemModel>,

@@ -1,7 +1,6 @@
-package woowacourse.movie.ui.main.itemModel
+package woowacourse.movie.ui.itemModel
 
 import woowacourse.movie.model.TicketsState
-import woowacourse.movie.ui.main.ViewType
 
 class TicketsItemModel(
     val ticketsState: TicketsState,

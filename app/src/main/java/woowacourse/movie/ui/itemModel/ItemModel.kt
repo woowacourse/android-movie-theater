@@ -1,6 +1,4 @@
-package woowacourse.movie.ui.main.itemModel
-
-import woowacourse.movie.ui.main.ViewType
+package woowacourse.movie.ui.itemModel
 
 interface ItemModel {
     val viewType: ViewType

@@ -11,8 +11,8 @@ import woowacourse.movie.R
 import woowacourse.movie.data.TicketsRepository
 import woowacourse.movie.model.TicketsState
 import woowacourse.movie.ui.confirm.ReservationConfirmActivity
-import woowacourse.movie.ui.main.adapter.ReservationListAdapter
-import woowacourse.movie.ui.main.itemModel.TicketsItemModel
+import woowacourse.movie.ui.adapter.ReservationListAdapter
+import woowacourse.movie.ui.itemModel.TicketsItemModel
 import woowacourse.movie.ui.reservation.MovieDetailActivity
 
 class ReservationListFragment : Fragment() {

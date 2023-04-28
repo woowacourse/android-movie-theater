@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
-import woowacourse.movie.PreferenceUtil
+import woowacourse.movie.util.PreferenceUtil
 import woowacourse.movie.R
 import woowacourse.movie.ui.Toaster
-import woowacourse.movie.ui.main.MainActivity.Companion.PERMISSIONS
+import woowacourse.movie.main.MainActivity.Companion.PERMISSIONS
 import woowacourse.movie.util.hasPermissions
 
 class SettingFragment : Fragment() {

@@ -11,7 +11,7 @@ import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.TicketOptState
 import woowacourse.movie.model.mapper.asDomain
 import woowacourse.movie.ui.BackKeyActionBarActivity
-import woowacourse.movie.ui.main.MainActivity.Companion.KEY_MOVIE
+import woowacourse.movie.main.MainActivity.Companion.KEY_MOVIE
 import woowacourse.movie.ui.seat.SeatSelectActivity
 import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.util.getParcelableExtraCompat
