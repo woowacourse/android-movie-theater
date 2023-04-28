@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.activity
 
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
@@ -13,8 +13,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import woowacourse.movie.activity.ReservationResultActivity
-import woowacourse.movie.activity.SelectSeatActivity
+import woowacourse.movie.R
 import woowacourse.movie.view.model.*
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -170,6 +169,7 @@ class SelectSeatActivityTest {
         seat1.perform(click())
         seat2.perform(click())
         seat3.perform(click())
+        Thread.sleep(2000)
         button.perform(click())
         // then
         onView(withText(R.string.select_seat_dialog_title)).check(matches(isDisplayed()))

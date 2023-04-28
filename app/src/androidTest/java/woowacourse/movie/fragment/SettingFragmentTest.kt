@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.fragment
 
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
@@ -13,6 +13,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import woowacourse.movie.R
 import woowacourse.movie.activity.MainActivity
 
 @RunWith(AndroidJUnit4::class)
