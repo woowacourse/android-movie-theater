@@ -4,7 +4,6 @@ import woowacourse.movie.R
 import woowacourse.movie.model.AdvState
 
 object AdvRepository {
-    fun allAdv(): List<AdvState> = adbs.toList()
 
     private val adbs: List<AdvState> = List(3) {
         AdvState(
@@ -22,4 +21,6 @@ object AdvRepository {
                 "수료자들중 약 40%는 우아한형제들 입사하고, 나머지 인원은 대부분 네카라쿠배로 일컬어지는 IT 대기업이나 유수의 스타트업에 입사한다."
         )
     }
+
+    fun allAdv(): List<AdvState> = adbs.toList()
 }
