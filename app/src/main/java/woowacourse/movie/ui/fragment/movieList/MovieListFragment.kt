@@ -37,12 +37,12 @@ class MovieListFragment : Fragment() {
         movieListView = view.findViewById(R.id.rv_main)
         adapter = MovieListAdapter(
             movie = MovieRepository.allMovies().map {
-                it.convertToItemModel { position ->
+                it.toItemModel { position ->
                     navigateMovieDetail((adapter.items[position] as MovieItemModel).movieState)
                 }
             },
             adv = AdvRepository.allAdv().map {
-                it.convertToItemModel { position ->
+                it.toItemModel { position ->
                     navigateAdbDetail((adapter.items[position] as AdvItemModel).advState)
                 }
             }

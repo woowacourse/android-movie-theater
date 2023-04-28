@@ -35,7 +35,7 @@ class ReservationListFragment : Fragment() {
         reservationRecyclerView = view.findViewById(R.id.reservation_rv)
         adapter = ReservationListAdapter(
             TicketsRepository.allTickets().map {
-                it.convertToItemModel { position ->
+                it.toItemModel { position ->
                     navigateReservationConfirm((adapter.reservations[position] as TicketsItemModel).ticketsState)
                 }
             }
@@ -47,7 +47,7 @@ class ReservationListFragment : Fragment() {
         super.onHiddenChanged(hidden)
         adapter.setItemChanged(
             TicketsRepository.allTickets().map {
-                it.convertToItemModel { position ->
+                it.toItemModel { position ->
                     navigateReservationConfirm((adapter.reservations[position] as TicketsItemModel).ticketsState)
                 }
             }

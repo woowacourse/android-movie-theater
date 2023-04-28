@@ -11,7 +11,7 @@ data class AdvState(
     val imgId: Int,
     val advDescription: String
 ) : Parcelable {
-    fun convertToItemModel(onClick: (position: Int) -> Unit): AdvItemModel {
+    fun toItemModel(onClick: (position: Int) -> Unit): AdvItemModel {
         return AdvItemModel(this, onClick)
     }
 }
