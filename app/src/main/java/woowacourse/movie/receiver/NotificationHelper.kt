@@ -10,8 +10,9 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 
 class NotificationHelper(
-    val context: Context, val channelId: String,
-    val channelName: String
+    val context: Context,
+    private val channelId: String,
+    private val channelName: String
 ) {
     fun generateNotificationManger(): NotificationManager {
         return context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

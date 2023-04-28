@@ -78,13 +78,9 @@ class MainActivity : AppCompatActivity() {
         saveAlarmPermissionData(isGranted)
     }
 
-    private fun saveAlarmPermissionData(condition: Boolean) {
+    private fun saveAlarmPermissionData(condition: Boolean) =
+        sharedPreferencesEditor.putBoolean(REQUEST_PERMISSION_KEY, condition).apply()
 
-        when (condition) {
-            true -> sharedPreferencesEditor.putBoolean(REQUEST_PERMISSION_KEY, true).apply()
-            false -> sharedPreferencesEditor.putBoolean(REQUEST_PERMISSION_KEY, false).apply()
-        }
-    }
 
     companion object {
         private const val SETTING = "settings"

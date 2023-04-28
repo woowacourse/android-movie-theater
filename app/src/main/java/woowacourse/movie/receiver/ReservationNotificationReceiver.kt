@@ -62,6 +62,7 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
         return sendingIntent
     }
     private fun isAlarmPossible(context: Context): Boolean {
+
         val sharedPreferences = context.getSharedPreferences(
             SETTING,
             AppCompatActivity.MODE_PRIVATE

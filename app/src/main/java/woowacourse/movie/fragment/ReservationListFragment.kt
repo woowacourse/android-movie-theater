@@ -1,6 +1,5 @@
 package woowacourse.movie.fragment
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,16 +14,6 @@ import woowacourse.movie.adapter.ReservationAdapter
 import woowacourse.movie.view.mapper.ReservationMapper
 
 class ReservationListFragment : Fragment() {
-
-    private lateinit var parentContext: Context
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        parentContext = context
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,10 +30,15 @@ class ReservationListFragment : Fragment() {
         val reservationUiModel = ReservationMapper.toUi(reservation)
         val movieUiModel = reservationUiModel.movie
         val ticketsUiModel = reservationUiModel.tickets
+        val context = context ?: throw IllegalStateException(CONTEXT_NOT_FOUND)
         ReservationResultActivity.start(
-            parentContext,
+            context,
             movieUiModel = movieUiModel,
             ticketsUiModel = ticketsUiModel
         )
+    }
+
+    companion object {
+        private const val CONTEXT_NOT_FOUND = "context를 찾을 수 없습니다."
     }
 }

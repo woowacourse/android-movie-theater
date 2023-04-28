@@ -20,18 +20,6 @@ import woowacourse.movie.view.model.AdvertisementUiModel
 
 class MoviesFragment : Fragment() {
 
-
-    private lateinit var parentContext: Context
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        parentContext = context
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,17 +38,18 @@ class MoviesFragment : Fragment() {
         return view
     }
 
-    override fun onPause() {
-        super.onPause()
-    }
-
     private fun reservationButtonClick(movie: Movie) {
-        MovieReservationActivity.start(parentContext, movie)
+        val context: Context = context ?: throw IllegalStateException(CONTEXT_NOT_FOUND)
+        MovieReservationActivity.start(context, movie)
     }
 
     private fun advertisementClick(advertisementUiModel: AdvertisementUiModel) {
         val url = advertisementUiModel.url
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         startActivity(intent)
+    }
+
+    companion object {
+        private const val CONTEXT_NOT_FOUND = "context를 찾을 수 없습니다."
     }
 }

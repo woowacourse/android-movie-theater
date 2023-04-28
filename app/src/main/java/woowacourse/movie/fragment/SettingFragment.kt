@@ -21,18 +21,15 @@ import woowacourse.movie.activity.MainActivity
 
 class SettingFragment : Fragment() {
 
-    private lateinit var parentContext: Context
     private lateinit var sharedPreference: SharedPreferences
     private lateinit var pushAlarmSwitch: SwitchCompat
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        parentContext = context
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val context: Context = context ?: throw IllegalStateException(CONTEXT_NOT_FOUND)
         sharedPreference =
-            parentContext.getSharedPreferences(SETTING, AppCompatActivity.MODE_PRIVATE)
+            context.getSharedPreferences(SETTING, AppCompatActivity.MODE_PRIVATE)
     }
 
     override fun onCreateView(
@@ -62,12 +59,9 @@ class SettingFragment : Fragment() {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-    }
-
     companion object {
         private const val PUSH_ALARM_KEY = "pushAlarm"
         private const val SETTING = "settings"
+        private const val CONTEXT_NOT_FOUND = "context를 찾을 수 없습니다."
     }
 }
