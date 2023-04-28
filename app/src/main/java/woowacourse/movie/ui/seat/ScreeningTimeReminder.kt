@@ -15,13 +15,19 @@ class ScreeningTimeReminder(
         context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
     private val alarmIntent: PendingIntent =
-        AlarmReceiver.getIntent(context, reservationUiModel).let { intent ->
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-            } else {
-                PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        AlarmReceiver.getIntent(context, reservationUiModel)
+            .let { intent ->
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+                } else {
+                    PendingIntent.getBroadcast(
+                        context,
+                        0,
+                        intent,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                    )
+                }
             }
-        }
 
     init {
         val screeningDateTime =

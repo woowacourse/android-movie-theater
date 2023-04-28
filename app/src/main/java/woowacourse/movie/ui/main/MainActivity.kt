@@ -18,6 +18,12 @@ import woowacourse.movie.ui.seat.NotiChannel
 import woowacourse.movie.util.shortToast
 
 class MainActivity : AppCompatActivity() {
+
+    private val fragmentMap = mutableMapOf<String, Fragment?>(
+        BOOKING_HISTORY_FRAGMENT to null,
+        HOME_FRAGMENT to null,
+        SETTING_FRAGMENT to null
+    )
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (!isGranted) {
@@ -37,24 +43,34 @@ class MainActivity : AppCompatActivity() {
 
     private fun initNavigation() {
         val navigation = findViewById<BottomNavigationView>(R.id.main_bottom_navi)
+
         navigation.selectedItemId = R.id.action_menu_home
         navigation.setOnItemSelectedListener { menu ->
             when (menu.itemId) {
                 R.id.action_booking_history ->
-                    return@setOnItemSelectedListener replaceFragment(BookingHistoryFragment())
+                    return@setOnItemSelectedListener replaceFragment(BOOKING_HISTORY_FRAGMENT)
                 R.id.action_menu_home ->
-                    return@setOnItemSelectedListener replaceFragment(HomeFragment())
+                    return@setOnItemSelectedListener replaceFragment(HOME_FRAGMENT)
                 R.id.action_menu_setting ->
-                    return@setOnItemSelectedListener replaceFragment(SettingFragment())
+                    return@setOnItemSelectedListener replaceFragment(SETTING_FRAGMENT)
             }
             return@setOnItemSelectedListener false
         }
     }
 
-    private fun replaceFragment(fragment: Fragment): Boolean {
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            replace(R.id.fragmentContainerView, fragment)
+    private fun replaceFragment(tag: String): Boolean {
+        supportFragmentManager.findFragmentByTag(tag) ?: when (tag) {
+            BOOKING_HISTORY_FRAGMENT -> fragmentMap[BOOKING_HISTORY_FRAGMENT] = BookingHistoryFragment()
+            HOME_FRAGMENT -> fragmentMap[HOME_FRAGMENT] = HomeFragment()
+            SETTING_FRAGMENT -> fragmentMap[SETTING_FRAGMENT] = SettingFragment()
+            else -> return false
+        }
+
+        fragmentMap[tag]?.let {
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                replace(R.id.fragmentContainerView, it, tag)
+            }
         }
         return true
     }
@@ -84,5 +100,11 @@ class MainActivity : AppCompatActivity() {
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(mChannel)
+    }
+
+    companion object {
+        private const val BOOKING_HISTORY_FRAGMENT = "booking_history_fragment"
+        private const val HOME_FRAGMENT = "home_fragment"
+        private const val SETTING_FRAGMENT = "setting_fragment"
     }
 }
