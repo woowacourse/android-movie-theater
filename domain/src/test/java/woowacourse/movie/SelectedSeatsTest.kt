@@ -7,23 +7,23 @@ import woowacourse.movie.ticket.Position
 import woowacourse.movie.ticket.Seat
 import woowacourse.movie.ticket.SeatRank
 
-class SelectedSeatTest {
-    private lateinit var selectedSeat: SelectedSeat
+class SelectedSeatsTest {
+    private lateinit var selectedSeats: SelectedSeats
 
     @BeforeEach
     fun initSelectedSeat() {
-        selectedSeat = SelectedSeat(3)
+        selectedSeats = SelectedSeats(3)
     }
 
     @Test
     fun `빈 좌석을 클릭하면 좌석이 추가된다`() {
         // given
         val seat = Seat(SeatRank.B, Position(0, 0))
-        val expected: Int = selectedSeat.seats.size + 1
+        val expected: Int = selectedSeats.seats.size + 1
 
         // when
-        selectedSeat.clickSeat(seat)
-        val actual = selectedSeat.seats.size
+        selectedSeats.clickSeat(seat)
+        val actual = selectedSeats.seats.size
 
         // then
         assertThat(actual).isEqualTo(expected)
@@ -33,12 +33,12 @@ class SelectedSeatTest {
     fun `이미 클릭한 좌석을 클릭하면 좌석 선택이 해제된다`() {
         // given
         val seat = Seat(SeatRank.B, Position(0, 0))
-        selectedSeat.clickSeat(seat)
-        val expected: Int = selectedSeat.seats.size - 1
+        selectedSeats.clickSeat(seat)
+        val expected: Int = selectedSeats.seats.size - 1
 
         // when
-        selectedSeat.clickSeat(seat)
-        val actual = selectedSeat.seats.size
+        selectedSeats.clickSeat(seat)
+        val actual = selectedSeats.seats.size
 
         // then
         assertThat(actual).isEqualTo(expected)

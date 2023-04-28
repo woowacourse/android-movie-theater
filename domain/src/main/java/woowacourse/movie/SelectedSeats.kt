@@ -2,7 +2,7 @@ package woowacourse.movie
 
 import woowacourse.movie.ticket.Seat
 
-class SelectedSeat(private val ticketCount: Int) {
+class SelectedSeats(private val ticketCount: Int) {
     private val _seats = mutableSetOf<Seat>()
     val seats get() = _seats.toSet()
 

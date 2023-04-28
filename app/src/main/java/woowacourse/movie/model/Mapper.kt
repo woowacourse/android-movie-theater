@@ -1,6 +1,6 @@
 package woowacourse.movie.model
 
-import woowacourse.movie.SelectedSeat
+import woowacourse.movie.SelectedSeats
 import woowacourse.movie.reservation.Reservation
 import woowacourse.movie.ticket.Position
 import woowacourse.movie.ticket.Seat
@@ -56,7 +56,7 @@ object Mapper {
         )
     }
 
-    fun SelectedSeat.toUiModel(): SelectedSeatUiModel {
+    fun SelectedSeats.toUiModel(): SelectedSeatUiModel {
         return SelectedSeatUiModel(this.seats.map { it.toUiModel() }.toSet())
     }
 }

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import woowacourse.movie.R
 import woowacourse.movie.SelectResult
-import woowacourse.movie.SelectedSeat
+import woowacourse.movie.SelectedSeats
 import woowacourse.movie.model.BookedMovie
 import woowacourse.movie.model.Mapper.toDomainModel
 import woowacourse.movie.model.Mapper.toUiModel
@@ -35,7 +35,7 @@ class SeatActivity : AppCompatActivity() {
     private lateinit var bookedMovie: BookedMovie
     private lateinit var movie: Movie
     private lateinit var theater: Theater
-    private lateinit var selectedSeat: SelectedSeat
+    private lateinit var selectedSeats: SelectedSeats
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +47,7 @@ class SeatActivity : AppCompatActivity() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putParcelable("SELECTED_SEAT", selectedSeat.toUiModel())
+        outState.putParcelable("SELECTED_SEAT", selectedSeats.toUiModel())
         super.onSaveInstanceState(outState)
     }
 
@@ -68,7 +68,7 @@ class SeatActivity : AppCompatActivity() {
         bookedMovie = intent.getParcelable(BOOKED_MOVIE, BookedMovie::class.java) ?: return finish()
         movie = MovieRepository.getMovie(bookedMovie.movieId)
         theater = TheaterRepository.getTheater(bookedMovie.theaterId)
-        selectedSeat = SelectedSeat(bookedMovie.ticketCount)
+        selectedSeats = SelectedSeats(bookedMovie.ticketCount)
     }
 
     private fun initSeatTable() {
@@ -88,14 +88,14 @@ class SeatActivity : AppCompatActivity() {
 
     private fun setSeatState(seat: Seat) {
         val view = table[seat.position.row][seat.position.column]
-        val result = selectedSeat.clickSeat(seat)
+        val result = selectedSeats.clickSeat(seat)
         when (result) {
             SelectResult.Select.Full -> shortToast("더 이상 좌석을 선택할 수 없습니다.")
             SelectResult.Select.Success -> view.isSelected = !view.isSelected
             SelectResult.Unselect -> view.isSelected = !view.isSelected
         }
-        setConfirmButtonEnable(selectedSeat.isSeatFull)
-        setPayment(selectedSeat.seats)
+        setConfirmButtonEnable(selectedSeats.isSeatFull)
+        setPayment(selectedSeats.seats)
     }
 
     private fun setConfirmButtonEnable(isSeatFull: Boolean) {
@@ -116,7 +116,7 @@ class SeatActivity : AppCompatActivity() {
 
     private fun completeBooking() {
         val tickets: List<Ticket> =
-            selectedSeat.seats.map { movie.reserve(bookedMovie.bookedDateTime, it) }
+            selectedSeats.seats.map { movie.reserve(bookedMovie.bookedDateTime, it) }
         val reservation = Reservation(tickets.toSet())
         ReservationRepository.addReservation(reservation)
         ScreeningTimeReminder(this, reservation.toUiModel())
