@@ -8,21 +8,16 @@ import android.os.Parcelable
 import java.time.LocalDateTime
 import java.time.ZoneId
 
-class PushAlarmManager<T : Parcelable>(
-    context: Context,
-    intent: Intent,
-    data: T,
-) {
+class PushAlarmManager(val context: Context) {
     private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    private val pendingIntent = run {
-        intent.action = PUSH_ACTION
-        intent.putExtra(PUSH_DATA_KEY, data)
-        PendingIntent.getBroadcast(context, getUniqueNumber(), intent, PendingIntent.FLAG_IMMUTABLE)
-    }
 
-    fun set(time: LocalDateTime, ago: Long) {
-        val pushTime = time.minusMinutes(ago)
-            .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+    fun <T : Parcelable> set(intent: Intent, pushData: T, time: LocalDateTime) {
+        val pushTime = time.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+        val pendingIntent = run {
+            intent.action = PUSH_ACTION
+            intent.putExtra(PUSH_DATA_KEY, pushData)
+            PendingIntent.getBroadcast(context, getUniqueNumber(), intent, PendingIntent.FLAG_IMMUTABLE)
+        }
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, pushTime, pendingIntent)
     }

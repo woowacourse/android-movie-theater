@@ -162,23 +162,23 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
         createAlertDialog(false) {
             title(getString(R.string.ticketing_confirm_title))
             message(getString(R.string.ticketing_confirm_message))
-            positiveButton(getString(R.string.ticketing_confirm_positive_btn)) { startTicketingResultActivity() }
+            positiveButton(getString(R.string.ticketing_confirm_positive_btn)) {
+                val reservation = Reservation(
+                    movieTitle = movie.title,
+                    movieDate = movieDate.toPresentation(),
+                    movieTime = movieTime.toPresentation(),
+                    ticket = ticket,
+                    seats = pickedSeats.toPresentation(),
+                    ticketPrice = calculateTotalPrice()
+                )
+                registerPushBroadcast(reservation)
+                startTicketingResultActivity(reservation)
+            }
             negativeButton(getString(R.string.ticketing_confirm_negative_btn)) { it.dismiss() }
         }.show()
     }
 
-    private fun startTicketingResultActivity() {
-        val reservation = Reservation(
-            movieTitle = movie.title,
-            movieDate = movieDate.toPresentation(),
-            movieTime = movieTime.toPresentation(),
-            ticket = ticket,
-            seats = pickedSeats.toPresentation(),
-            ticketPrice = calculateTotalPrice()
-        )
-
-        registerPushBroadcast(reservation)
-
+    private fun startTicketingResultActivity(reservation: Reservation) {
         startActivity(
             Intent(this@SeatPickerActivity, TicketingResultActivity::class.java)
                 .putExtra(TicketingResultActivity.RESERVATION_KEY, reservation)
@@ -188,9 +188,13 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun registerPushBroadcast(reservation: Reservation) {
         val alarmIntent = Intent(this, ReservationPushReceiver::class.java)
-        val alarmManager = PushAlarmManager(this, alarmIntent, reservation)
+        val alarmManager = PushAlarmManager(this)
 
-        alarmManager.set(reservation.reservedTime, REMINDER_TIME_MINUTES_AGO)
+        alarmManager.set(
+            intent = alarmIntent,
+            pushData = reservation,
+            time = reservation.reservedTime.minusDays(REMINDER_TIME_MINUTES_AGO),
+        )
     }
 
     companion object {
