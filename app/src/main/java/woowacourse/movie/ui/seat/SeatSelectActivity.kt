@@ -1,47 +1,56 @@
 package woowacourse.movie.ui.seat
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import com.example.domain.usecase.DiscountApplyUseCase
+import com.example.domain.usecase.GetIssuedTicketsUseCase
 import woowacourse.movie.R
+import woowacourse.movie.data.TicketsRepository
+import woowacourse.movie.model.ReservationState
 import woowacourse.movie.model.SeatPositionState
-import woowacourse.movie.model.TicketOptState
 import woowacourse.movie.model.TicketsState
 import woowacourse.movie.model.mapper.asDomain
 import woowacourse.movie.model.mapper.asPresentation
 import woowacourse.movie.ui.BackKeyActionBarActivity
 import woowacourse.movie.ui.DecimalFormatters
+import woowacourse.movie.ui.confirm.AlarmReceiver
 import woowacourse.movie.ui.confirm.ReservationConfirmActivity
 import woowacourse.movie.ui.customView.ConfirmView
-import woowacourse.movie.ui.reservation.MovieDetailActivity.Companion.KEY_TICKETS
 import woowacourse.movie.util.getParcelableArrayListCompat
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
 import woowacourse.movie.util.showAskDialog
+import java.time.LocalDateTime
+import java.util.Calendar
+import kotlin.collections.ArrayList
 
 class SeatSelectActivity : BackKeyActionBarActivity() {
     private val discountApplyUseCase = DiscountApplyUseCase()
+    private val getIssuedTicketsUseCase = GetIssuedTicketsUseCase()
 
     private val titleTextView: TextView by lazy { findViewById(R.id.reservation_title) }
     private val moneyTextView: TextView by lazy { findViewById(R.id.reservation_money) }
     private val confirmView: ConfirmView by lazy { findViewById(R.id.reservation_confirm) }
-    private lateinit var ticketOptState: TicketOptState
+    private lateinit var reservationState: ReservationState
 
     private lateinit var seatTable: SeatTable
 
     override fun onCreateView(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_seat_select)
 
-        ticketOptState =
-            intent.getParcelableExtraCompat(KEY_TICKETS) ?: return keyError(KEY_TICKETS)
+        reservationState =
+            intent.getParcelableExtraCompat(KEY_RESERVATION) ?: return keyError(KEY_RESERVATION)
 
-        titleTextView.text = ticketOptState.movieState.title
+        titleTextView.text = reservationState.movieState.title
 
         confirmView.setOnClickListener { navigateShowDialog(seatTable.chosenSeatInfo) }
         confirmView.isClickable = false // 클릭리스너를 설정하면 clickable이 자동으로 참이 되기 때문
 
-        seatTable = SeatTable(window.decorView.rootView, ticketOptState.countState) {
+        seatTable = SeatTable(window.decorView.rootView, reservationState.countState) {
             updateSelectSeats(it)
         }
     }
@@ -77,29 +86,70 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
     }
 
     private fun navigateReservationConfirmActivity(seats: List<SeatPositionState>) {
-        val intent = Intent(this, ReservationConfirmActivity::class.java)
-        val tickets = TicketsState.from(ticketOptState, seats)
-        intent.putExtra(KEY_TICKETS, tickets)
+        val tickets = getIssuedTicketsUseCase(
+            reservationState.movieState.asDomain(),
+            reservationState.dateTime,
+            seats.map { it.asDomain() }
+        ).asPresentation()
+        val intent = ReservationConfirmActivity.getIntent(this, tickets)
+        TicketsRepository.addTicket(tickets)
+        setNotification(tickets)
         startActivity(intent)
     }
 
     private fun updateSelectSeats(positionStates: List<SeatPositionState>) {
-        confirmView.isClickable = (positionStates.size == ticketOptState.countState.value)
+        confirmView.isClickable = (positionStates.size == reservationState.countState.value)
 
-        val tickets = TicketsState(
-            ticketOptState.movieState,
-            ticketOptState.dateTime,
-            positionStates.toList()
-        )
+        val discountApplyMoney = discountApplyUseCase(
+            reservationState.movieState.asDomain(),
+            reservationState.dateTime,
+            positionStates.map { it.asDomain() }
+        ).asPresentation()
 
-        val discountApplyMoney = discountApplyUseCase(tickets.asDomain())
         moneyTextView.text = getString(
             R.string.discount_money,
-            DecimalFormatters.convertToMoneyFormat(discountApplyMoney.asPresentation())
+            DecimalFormatters.convertToMoneyFormat(discountApplyMoney)
+        )
+    }
+
+    private fun setNotification(tickets: TicketsState) {
+        // TODO: 지워줘야 함
+        val tickets = tickets.copy(dateTime = LocalDateTime.of(0, 4, 26, 17, 47, 30))
+        val calendar: Calendar = Calendar.getInstance().apply {
+            set(
+                tickets.dateTime.year,
+                tickets.dateTime.monthValue - 1,
+                tickets.dateTime.dayOfMonth,
+                tickets.dateTime.hour,
+                tickets.dateTime.minute
+            )
+        }
+        val alarmManager: AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        val alarmIntent =
+            Intent(this, AlarmReceiver::class.java).apply { putExtra("a", tickets) }.let { intent ->
+                PendingIntent.getBroadcast(
+                    this,
+                    tickets.hashCode(),
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
+                )
+            }
+
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis - 30 * 60 * 1000,
+            alarmIntent
         )
     }
 
     companion object {
+        fun getIntent(context: Context, reservationState: ReservationState): Intent {
+            val intent = Intent(context, SeatSelectActivity::class.java)
+            intent.putExtra(KEY_RESERVATION, reservationState)
+            return intent
+        }
+
+        private const val KEY_RESERVATION = "key_reservation"
         private const val SEAT_RESTORE_KEY = "seat_restore_key"
     }
 }

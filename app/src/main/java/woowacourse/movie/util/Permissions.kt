@@ -6,7 +6,11 @@ import androidx.core.content.ContextCompat
 
 fun Activity.hasPermissions(permissions: Array<String>): Boolean {
     permissions.forEach { permission ->
-        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                permission
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             return false
         }
     }
@@ -15,10 +19,7 @@ fun Activity.hasPermissions(permissions: Array<String>): Boolean {
 
 fun Activity.requestPermissions(permissions: Array<String>, requestPermission: (String) -> Unit) {
     permissions.forEach { permission ->
-        if (this.hasPermissions(arrayOf(permission))) { return }
-
-        if (!shouldShowRequestPermissionRationale(permission)) {
-            requestPermission(permission)
-        }
+        if (this.hasPermissions(arrayOf(permission))) return
+        if (!shouldShowRequestPermissionRationale(permission)) requestPermission(permission)
     }
 }
