@@ -1,8 +1,6 @@
 package woowacourse.movie.activity
 
-import android.app.AlarmManager
 import android.app.AlertDialog
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -18,9 +16,10 @@ import com.woowacourse.domain.seat.SeatGroup
 import com.woowacourse.domain.seat.SeatRow
 import com.woowacourse.domain.ticket.Ticket
 import com.woowacourse.domain.ticket.TicketBundle
+import woowacourse.movie.AlarmSetter
 import woowacourse.movie.BookHistories
 import woowacourse.movie.BundleKeys
-import woowacourse.movie.MovieReminder
+import woowacourse.movie.BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY
 import woowacourse.movie.R
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.mapper.toDomain
@@ -28,9 +27,6 @@ import woowacourse.movie.mapper.toPresentation
 import woowacourse.movie.model.SeatGroupModel
 import woowacourse.movie.movie.MovieBookingInfo
 import woowacourse.movie.movie.MovieBookingSeatInfo
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 class SeatPickerActivity : BackButtonActivity() {
     private val seatTableLayout: TableLayout by lazy { findViewById(R.id.tl_seats) }
@@ -130,8 +126,8 @@ class SeatPickerActivity : BackButtonActivity() {
                 .setPositiveButton(
                     getString(R.string.alert_dialog_book_done)
                 ) { _, _ ->
-                    val intent = BookCompleteActivity.intent(this)
-                    val movieBookingInfo = MovieBookingSeatInfo(
+                    val bookCompleteActivityIntent = BookCompleteActivity.intent(this)
+                    val movieBookingSeatInfo = MovieBookingSeatInfo(
                         getMovieBookingInfo(),
                         seatGroup.sorted().seats.map {
                             formatSeatName(it.row.value, it.column.value)
@@ -139,34 +135,14 @@ class SeatPickerActivity : BackButtonActivity() {
                         seatPickerTicketPrice.text.toString()
                     )
 
-                    intent.putExtra(
-                        BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY,
-                        movieBookingInfo
+                    bookCompleteActivityIntent.putExtra(
+                        MOVIE_BOOKING_SEAT_INFO_KEY,
+                        movieBookingSeatInfo
                     )
-                    BookHistories.items.add(movieBookingInfo)
+                    BookHistories.items.add(movieBookingSeatInfo)
+                    AlarmSetter.setMovieStartBeforeAlarm(this, movieBookingSeatInfo)
 
-                    val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-                    val intent1 = Intent(this, MovieReminder::class.java)
-                    intent1.putExtra(BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY, movieBookingInfo)
-                    val pendingIntent = PendingIntent.getBroadcast(
-                        this, MovieReminder.NOTIFICATION_ID, intent1,
-                        PendingIntent.FLAG_MUTABLE
-                    )
-                    val formatter = DateTimeFormatter.ofPattern("yyyy-M-d HH:mm")
-                    val movieDateTime = LocalDateTime.parse(
-                        movieBookingInfo.movieBookingInfo.formatAlarmDate(),
-                        formatter
-                    )
-                    val triggerTime = movieDateTime.minusMinutes(MOVIE_RUN_BEFORE_TIME)
-                    val zone = triggerTime.atZone(ZoneId.systemDefault())
-                    val mill = zone.toInstant().toEpochMilli()
-                    alarmManager.set(
-                        AlarmManager.RTC_WAKEUP,
-                        mill,
-                        pendingIntent
-                    )
-
-                    startActivity(intent)
+                    startActivity(bookCompleteActivityIntent)
                     finish()
                 }.setNegativeButton(
                     getString(R.string.alert_dialog_book_cancel)
@@ -252,7 +228,6 @@ class SeatPickerActivity : BackButtonActivity() {
         private const val TICKET_PRICE = "ticketPrice"
         private const val PICKED_SEAT = "prickedSeat"
         private const val SEAT_ROW_INTERVAL = 4
-        private const val MOVIE_RUN_BEFORE_TIME = 30L
         fun intent(context: Context) = Intent(context, SeatPickerActivity::class.java)
     }
 }

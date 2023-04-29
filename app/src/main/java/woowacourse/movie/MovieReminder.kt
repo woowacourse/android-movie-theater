@@ -21,7 +21,8 @@ class MovieReminder : BroadcastReceiver() {
         if (!canPush) return
 
         val movieBookingSeatInfo =
-            intent.getSerializableCompat<MovieBookingSeatInfo>(BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY) ?: return
+            intent.getSerializableCompat<MovieBookingSeatInfo>(BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY)
+                ?: return
         notificationManager = context.getSystemService(
             Context.NOTIFICATION_SERVICE
         ) as NotificationManager
@@ -91,5 +92,6 @@ class MovieReminder : BroadcastReceiver() {
     companion object {
         const val NOTIFICATION_ID = 0
         const val PRIMARY_CHANNEL_ID = "primary_notification_channel"
+        fun intent(context: Context): Intent = Intent(context, MovieReminder::class.java)
     }
 }
