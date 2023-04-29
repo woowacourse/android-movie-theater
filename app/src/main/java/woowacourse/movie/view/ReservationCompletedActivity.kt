@@ -32,10 +32,7 @@ class ReservationCompletedActivity : AppCompatActivity() {
             this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    val intent =
-                        Intent(this@ReservationCompletedActivity, MovieMainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                    startActivity(intent)
+                    toMovieMainActivity()
                 }
             },
         )
@@ -63,12 +60,16 @@ class ReservationCompletedActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                val intent = Intent(this, MovieMainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                startActivity(intent)
+                toMovieMainActivity()
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun toMovieMainActivity() {
+        val intent = Intent(this, MovieMainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        startActivity(intent)
     }
 
     companion object {
