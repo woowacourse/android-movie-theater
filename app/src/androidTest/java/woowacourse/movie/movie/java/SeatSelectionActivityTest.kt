@@ -30,16 +30,16 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.movie.activity.SeatSelectionActivity
-import woowacourse.movie.movie.activity.SeatSelectionActivity.Companion.DATE_KEY
-import woowacourse.movie.movie.activity.SeatSelectionActivity.Companion.MOVIE_KEY
-import woowacourse.movie.movie.activity.SeatSelectionActivity.Companion.TICKET_KEY
-import woowacourse.movie.movie.activity.SeatSelectionActivity.Companion.TIME_KEY
-import woowacourse.movie.movie.activity.TicketActivity
-import woowacourse.movie.movie.dto.movie.MovieDateDto
-import woowacourse.movie.movie.dto.movie.MovieDto
-import woowacourse.movie.movie.dto.movie.MovieTimeDto
-import woowacourse.movie.movie.dto.ticket.TicketCountDto
+import woowacourse.movie.activity.SeatSelectionActivity
+import woowacourse.movie.activity.SeatSelectionActivity.Companion.DATE_KEY
+import woowacourse.movie.activity.SeatSelectionActivity.Companion.MOVIE_KEY
+import woowacourse.movie.activity.SeatSelectionActivity.Companion.TICKET_KEY
+import woowacourse.movie.activity.SeatSelectionActivity.Companion.TIME_KEY
+import woowacourse.movie.activity.TicketActivity
+import woowacourse.movie.dto.movie.MovieDateDto
+import woowacourse.movie.dto.movie.MovieDto
+import woowacourse.movie.dto.movie.MovieTimeDto
+import woowacourse.movie.dto.ticket.TicketCountDto
 import java.time.LocalDate
 import java.time.LocalTime
 

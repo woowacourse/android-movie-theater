@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:id="@+id/seat_layout"
     android:background="@color/seat_background"
-    tools:context=".movie.activity.SeatSelectionActivity">
+    tools:context=".activity.SeatSelectionActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/screen"

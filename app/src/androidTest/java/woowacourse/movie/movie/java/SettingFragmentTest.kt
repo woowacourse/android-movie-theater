@@ -14,8 +14,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.movie.SettingPreference
-import woowacourse.movie.movie.activity.MainActivity
+import woowacourse.movie.SettingPreference
+import woowacourse.movie.activity.MainActivity
 
 @RunWith(AndroidJUnit4::class)
 class SettingFragmentTest {
