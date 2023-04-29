@@ -39,7 +39,6 @@ class BookHistoryFragment : Fragment() {
             getBookHistoryOnClickListener(view)
         )
         movieRecyclerView.adapter = bookHistoryRecyclerViewAdapter
-        bookHistoryRecyclerViewAdapter.notifyDataSetChanged()
     }
 
     private fun getBookHistoryOnClickListener(view: View) = { position: Int ->
