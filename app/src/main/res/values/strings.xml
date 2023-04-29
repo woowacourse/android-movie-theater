@@ -28,4 +28,5 @@
     <string name="channel_text">영화 예매 %d분 전에 알림이 울리도록 하는 기능</string>
     <string name="notification_title">예매 알림</string>
     <string name="notification_text">%s %d분 후에 상영</string>
+    <string name="check_notification">권한이 있어야 알림 기능을 사용할 수 있습니다.</string>
 </resources>
