@@ -54,5 +54,11 @@ class AlarmReceiver : BroadcastReceiver() {
         const val NOTIFICATION_ID = 200
         const val CHANNEL_ID = "RESERVATION_CHANNEL"
         const val RESERVATION = "RESERVATION"
+
+        fun newIntent(context: Context, reservation: ReservationUiModel): Intent {
+            return Intent(context, AlarmReceiver::class.java).apply {
+                putExtra(RESERVATION, reservation)
+            }
+        }
     }
 }
