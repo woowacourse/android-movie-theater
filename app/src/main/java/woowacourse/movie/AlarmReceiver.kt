@@ -8,10 +8,12 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import woowacourse.movie.activity.MainActivity
 import woowacourse.movie.activity.SeatSelectionActivity.Companion.BOOKING_MOVIE_KEY
 import woowacourse.movie.activity.TicketActivity
 import woowacourse.movie.dto.movie.BookingMovieDto
@@ -51,8 +53,8 @@ class AlarmReceiver : BroadcastReceiver() {
     }
 
     private fun createNotificationChannel(context: Context) {
-        val name = CHANNEL_NAME
-        val descriptionText = CHANNEL_TEXT
+        val name = context.getString(R.string.channel_name)
+        val descriptionText = context.getString(R.string.channel_text, ALARM_TIME)
         val channel =
             NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_DEFAULT).apply {
                 description = descriptionText
@@ -66,8 +68,8 @@ class AlarmReceiver : BroadcastReceiver() {
     private fun createNotificationBuilder(context: Context, bookingMovie: BookingMovieDto) {
         val builder = NotificationCompat.Builder(context, CHANNEL_ID).apply {
             setSmallIcon(R.drawable.cute_android)
-            setContentTitle(NOTIFICATION_TITLE)
-            setContentText(NOTIFICATION_TEXT.format(bookingMovie.movie.title))
+            setContentTitle(context.getString(R.string.notification_title))
+            setContentText(context.getString(R.string.notification_text, bookingMovie.movie.title, ALARM_TIME))
             priority = NotificationCompat.PRIORITY_DEFAULT
             setContentIntent(createNotificationPendingIntent(context, bookingMovie))
             setAutoCancel(true)
@@ -92,10 +94,6 @@ class AlarmReceiver : BroadcastReceiver() {
         const val ALARM_CODE = "alarm"
         const val ALARM_TIME = 30
         private const val CHANNEL_ID = "alarm_channel"
-        private const val CHANNEL_NAME = "영화 예매 알림"
-        private const val CHANNEL_TEXT = "영화 예매 30분 전에 알림이 울리도록 하는 기능"
-        private const val NOTIFICATION_TITLE = "예매 알림"
-        private const val NOTIFICATION_TEXT = "%s ${ALARM_TIME}분 후에 상영"
         const val REQUEST_CODE = 925
     }
 }
