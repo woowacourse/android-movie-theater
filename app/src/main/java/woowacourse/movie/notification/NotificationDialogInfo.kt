@@ -1,4 +1,4 @@
-package woowacourse.movie.ui
+package woowacourse.movie.notification
 
 enum class NotificationDialogInfo(val title: String, val text: String) {
     RemindingBookingTime(
