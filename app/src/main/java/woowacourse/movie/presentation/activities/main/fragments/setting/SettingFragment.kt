@@ -24,7 +24,7 @@ import woowacourse.movie.presentation.extensions.title
 class SettingFragment : Fragment() {
     lateinit var pushSwitch: SwitchMaterial
 
-    private val preferences = MovieApplication.preferences
+    private val preferences = MovieApplication.preferenceEditor
     private val settingActionReLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
             val isPushAllowed =
@@ -75,7 +75,7 @@ class SettingFragment : Fragment() {
             positiveButton {
                 val appDetailsIntent = Intent(
                     Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                    Uri.parse("package:${requireContext().packageName}")
+                    Uri.parse("package:${requireContext().packageName}"),
                 ).addCategory(Intent.CATEGORY_DEFAULT)
                 settingActionReLauncher.launch(appDetailsIntent)
             }

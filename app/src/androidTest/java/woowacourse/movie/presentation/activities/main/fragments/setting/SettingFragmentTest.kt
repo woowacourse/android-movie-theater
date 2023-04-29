@@ -60,6 +60,6 @@ class SettingFragmentTest {
     }
 
     private fun setPushState(value: Boolean) {
-        MovieApplication.preferences.setBoolean(PUSH_ALLOW_KEY, value)
+        MovieApplication.preferenceEditor.setBoolean(PUSH_ALLOW_KEY, value)
     }
 }

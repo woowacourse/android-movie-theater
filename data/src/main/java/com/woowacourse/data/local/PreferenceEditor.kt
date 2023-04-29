@@ -3,7 +3,7 @@ package com.woowacourse.data.local
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 
-class Preferences(context: Context) {
+class PreferenceEditor(context: Context) {
     private val sharedPreference = context.getSharedPreferences(PREF_NAME, MODE_PRIVATE)
 
     fun getBoolean(key: String, defValue: Boolean): Boolean {
