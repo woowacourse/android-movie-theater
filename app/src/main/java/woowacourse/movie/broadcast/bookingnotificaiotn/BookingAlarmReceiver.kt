@@ -20,6 +20,9 @@ class BookingAlarmReceiver : BroadcastReceiver() {
         intent: Intent?,
         context: Context?
     ) {
+        if (context == null) {
+            return
+        }
         val reservationResult =
             intent?.getParcelableCompat<ReservationResult>(RESERVATION_INTENT_KEY) ?: return
         saveReservation(reservationResult)
@@ -30,20 +33,11 @@ class BookingAlarmReceiver : BroadcastReceiver() {
         sendNotification(context, pendingIntent, reservationResult)
     }
 
-    private fun sendNotification(
-        context: Context?,
-        pendingIntent: PendingIntent,
-        reservationResult: ReservationResult
-    ) {
-        val bookingNotification = BookingNotification(context!!, pendingIntent)
-        bookingNotification.sendNotification(reservationResult.movieTitle)
-    }
-
     private fun getPendingIntent(
-        context: Context?,
+        context: Context,
         activityIntent: Intent
     ) = PendingIntent.getActivity(
-        context!!, 0, activityIntent, FLAG_IMMUTABLE
+        context, 0, activityIntent, FLAG_IMMUTABLE
     )
 
     private fun getActivityIntent(context: Context?, intent: Intent): Intent {
@@ -59,6 +53,15 @@ class BookingAlarmReceiver : BroadcastReceiver() {
                 )
             )
         }
+    }
+
+    private fun sendNotification(
+        context: Context,
+        pendingIntent: PendingIntent,
+        reservationResult: ReservationResult
+    ) {
+        val bookingNotification = BookingNotification(context, pendingIntent)
+        bookingNotification.sendNotification(reservationResult.movieTitle)
     }
 
     private fun saveReservation(reservationResult: ReservationResult) {
