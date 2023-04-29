@@ -1,18 +1,19 @@
 package woowacourse.movie.ui.main
 
 import android.Manifest
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.ActivityResultLauncher
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
-import woowacourse.movie.ui.NotificationChannelInfo
-import woowacourse.movie.ui.NotificationGenerator
+import woowacourse.movie.notification.NotificationChannelInfo
+import woowacourse.movie.notification.NotificationGenerator
+import woowacourse.movie.permission.PermissionLauncher
+import woowacourse.movie.permission.PermissionLauncher.getPermissionLauncher
 import woowacourse.movie.util.SettingSharedPreference
 import woowacourse.movie.util.shortToast
 
@@ -29,16 +30,20 @@ class MainActivity : AppCompatActivity() {
     private val notificationGenerator: NotificationGenerator by lazy {
         NotificationGenerator(this)
     }
-    private val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (!isGranted) {
+    private val permissionLauncher: ActivityResultLauncher<String> by lazy {
+        getPermissionLauncher(
+            deniedCase = {
+                settingSharedPreference.receivingPushAlarm = false
                 shortToast(getString(R.string.permission_denied))
-            } else {
+            },
+            allowedCase = {
                 settingSharedPreference.receivingPushAlarm = true
                 shortToast(getString(R.string.permission_allowed))
             }
-        }
+        )
+    }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -66,8 +71,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun replaceFragment(tag: String): Boolean {
         supportFragmentManager.findFragmentByTag(tag) ?: when (tag) {
-            BOOKING_HISTORY_FRAGMENT -> fragmentMap[BOOKING_HISTORY_FRAGMENT] =
-                BookingHistoryFragment()
+            BOOKING_HISTORY_FRAGMENT -> fragmentMap[BOOKING_HISTORY_FRAGMENT] = BookingHistoryFragment()
             HOME_FRAGMENT -> fragmentMap[HOME_FRAGMENT] = HomeFragment()
             SETTING_FRAGMENT -> fragmentMap[SETTING_FRAGMENT] = SettingFragment()
             else -> return false
@@ -82,18 +86,13 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun requestNotificationPermission() {
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.POST_NOTIFICATIONS,
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (!shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                }
-            }
-        }
+        PermissionLauncher.requestPermission(
+            context = this,
+            launcher = permissionLauncher,
+            permission = Manifest.permission.POST_NOTIFICATIONS
+        )
     }
 
     companion object {

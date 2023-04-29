@@ -4,8 +4,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import woowacourse.movie.model.ReservationUiModel
-import woowacourse.movie.ui.NotificationDialogInfo
-import woowacourse.movie.ui.NotificationGenerator
+import woowacourse.movie.notification.NotificationDialogInfo
+import woowacourse.movie.notification.NotificationGenerator
 import woowacourse.movie.ui.completed.CompletedActivity
 import woowacourse.movie.util.SettingSharedPreference
 import woowacourse.movie.util.getParcelable
