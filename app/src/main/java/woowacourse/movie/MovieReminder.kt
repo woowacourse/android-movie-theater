@@ -21,13 +21,14 @@ class MovieReminder : BroadcastReceiver() {
         if (!canPush) return
 
         val movieBookingSeatInfo =
-            intent.getSerializableCompat<MovieBookingSeatInfo>(BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY) ?: return
+            intent.getSerializableCompat<MovieBookingSeatInfo>(BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY)
+                ?: return
         notificationManager = context.getSystemService(
             Context.NOTIFICATION_SERVICE
         ) as NotificationManager
-
+        val id = intent.getIntExtra(BundleKeys.ALARM_NOTIFICATION_ID, 0)
         createNotificationChannel(context)
-        deliverNotification(context, movieBookingSeatInfo)
+        deliverNotification(context, movieBookingSeatInfo, id)
     }
 
     private fun getPushAlarmAllowed(context: Context) =
@@ -54,17 +55,21 @@ class MovieReminder : BroadcastReceiver() {
         }
     }
 
-    private fun deliverNotification(context: Context, movieBookingSeatInfo: MovieBookingSeatInfo) {
+    private fun deliverNotification(
+        context: Context,
+        movieBookingSeatInfo: MovieBookingSeatInfo,
+        id: Int
+    ) {
         val contentIntent = BookCompleteActivity.intent(context, movieBookingSeatInfo)
         val contentPendingIntent = PendingIntent.getActivity(
             context,
-            NOTIFICATION_ID,
+            id,
             contentIntent,
-            PendingIntent.FLAG_MUTABLE
+            PendingIntent.FLAG_IMMUTABLE
         )
         val builder = getBuilder(context, movieBookingSeatInfo, contentPendingIntent)
 
-        notificationManager.notify(NOTIFICATION_ID, builder.build())
+        notificationManager.notify(id, builder.build())
     }
 
     private fun getBuilder(

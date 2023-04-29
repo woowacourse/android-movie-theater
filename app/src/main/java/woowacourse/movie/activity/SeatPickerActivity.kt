@@ -1,8 +1,6 @@
 package woowacourse.movie.activity
 
-import android.app.AlarmManager
 import android.app.AlertDialog
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -18,9 +16,9 @@ import com.woowacourse.domain.seat.SeatGroup
 import com.woowacourse.domain.seat.SeatRow
 import com.woowacourse.domain.ticket.Ticket
 import com.woowacourse.domain.ticket.TicketBundle
+import woowacourse.movie.AlarmSetting
 import woowacourse.movie.BookHistories
 import woowacourse.movie.BundleKeys
-import woowacourse.movie.MovieReminder
 import woowacourse.movie.R
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.mapper.toDomain
@@ -28,9 +26,6 @@ import woowacourse.movie.mapper.toPresentation
 import woowacourse.movie.model.SeatGroupModel
 import woowacourse.movie.movie.MovieBookingInfo
 import woowacourse.movie.movie.MovieBookingSeatInfo
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 class SeatPickerActivity : BackButtonActivity() {
     private val seatTableLayout: TableLayout by lazy { findViewById(R.id.tl_seats) }
@@ -130,37 +125,17 @@ class SeatPickerActivity : BackButtonActivity() {
                 .setPositiveButton(
                     getString(R.string.alert_dialog_book_done)
                 ) { _, _ ->
-                    val movieBookingInfo = MovieBookingSeatInfo(
+                    val movieBookingSeatInfo = MovieBookingSeatInfo(
                         getMovieBookingInfo(),
                         seatGroup.sorted().seats.map {
                             formatSeatName(it.row.value, it.column.value)
                         },
                         seatPickerTicketPrice.text.toString()
                     )
-                    val intent = BookCompleteActivity.intent(this, movieBookingInfo)
+                    val intent = BookCompleteActivity.intent(this, movieBookingSeatInfo)
 
-                    BookHistories.items.add(movieBookingInfo)
-
-                    val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-                    val intent1 = Intent(this, MovieReminder::class.java)
-                    intent1.putExtra(BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY, movieBookingInfo)
-                    val pendingIntent = PendingIntent.getBroadcast(
-                        this, MovieReminder.NOTIFICATION_ID, intent1,
-                        PendingIntent.FLAG_MUTABLE
-                    )
-                    val formatter = DateTimeFormatter.ofPattern("yyyy-M-d HH:mm")
-                    val movieDateTime = LocalDateTime.parse(
-                        movieBookingInfo.movieBookingInfo.formatAlarmDate(),
-                        formatter
-                    )
-                    val triggerTime = movieDateTime.minusMinutes(MOVIE_RUN_BEFORE_TIME)
-                    val zone = triggerTime.atZone(ZoneId.systemDefault())
-                    val mill = zone.toInstant().toEpochMilli()
-                    alarmManager.set(
-                        AlarmManager.RTC_WAKEUP,
-                        mill,
-                        pendingIntent
-                    )
+                    AlarmSetting().setAlarm(this, movieBookingSeatInfo)
+                    BookHistories.items.add(movieBookingSeatInfo)
 
                     startActivity(intent)
                     finish()
