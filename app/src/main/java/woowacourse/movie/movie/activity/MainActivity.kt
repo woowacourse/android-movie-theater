@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
                             replace(R.id.fragment_container_view, HistoryFragment())
                         }
                     }
-
                     R.id.home -> {
                         supportFragmentManager.commit {
                             setReorderingAllowed(true)
@@ -73,9 +72,5 @@ class MainActivity : AppCompatActivity() {
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission(),
     ) { isGranted: Boolean ->
-    }
-
-    companion object {
-        private const val MOVIE_KEY = "movie"
     }
 }

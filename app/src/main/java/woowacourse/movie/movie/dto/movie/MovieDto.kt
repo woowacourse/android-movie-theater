@@ -1,10 +1,12 @@
 package woowacourse.movie.movie.dto.movie
 
+import android.os.Parcelable
 import androidx.annotation.DrawableRes
+import kotlinx.parcelize.Parcelize
 import woowacourse.movie.movie.movielist.ViewType
-import java.io.Serializable
 import java.time.LocalDate
 
+@Parcelize
 data class MovieDto(
     val viewType: ViewType = ViewType.MOVIE_VIEW,
     val title: String,
@@ -13,4 +15,4 @@ data class MovieDto(
     val runningTime: Int,
     val description: String,
     @DrawableRes val moviePoster: Int,
-) : Serializable
+) : Parcelable

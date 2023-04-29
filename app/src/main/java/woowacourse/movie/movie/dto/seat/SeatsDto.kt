@@ -1,8 +1,10 @@
 package woowacourse.movie.movie.dto.seat
 
-import java.io.Serializable
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-data class SeatsDto(val seats: List<SeatDto> = emptyList()) : Serializable {
+@Parcelize
+data class SeatsDto(val seats: List<SeatDto> = emptyList()) : Parcelable {
     fun getSeatsPositionToString(): String {
         return seats.map { it.getString() }.joinToString(", ")
     }

@@ -1,10 +1,12 @@
 package woowacourse.movie.movie.dto.ticket
 
-import java.io.Serializable
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class TicketCountDto(
     val numberOfPeople: Int = MIN_BOOKER_NUMBER,
-) : Serializable {
+) : Parcelable {
     companion object {
         const val MIN_BOOKER_NUMBER = 1
     }

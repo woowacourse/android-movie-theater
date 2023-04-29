@@ -1,6 +1,8 @@
 package woowacourse.movie.movie.dto.movie
 
-import java.io.Serializable
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import java.time.LocalDate
 
-data class MovieDateDto(val date: LocalDate) : Serializable
+@Parcelize
+data class MovieDateDto(val date: LocalDate) : Parcelable

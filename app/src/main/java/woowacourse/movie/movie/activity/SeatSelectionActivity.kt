@@ -26,6 +26,7 @@ import woowacourse.movie.movie.dto.seat.SeatsDto
 import woowacourse.movie.movie.dto.ticket.TicketCountDto
 import woowacourse.movie.movie.mapper.seat.mapToSeats
 import woowacourse.movie.movie.mapper.seat.mapToSeatsDto
+import woowacourse.movie.movie.utils.getParcelableCompat
 import woowacourse.movie.movie.view.SeatSelectView
 import java.time.LocalDateTime
 
@@ -33,10 +34,10 @@ class SeatSelectionActivity : AppCompatActivity() {
 
     private var seats = Seats()
 
-    private val date by lazy { intent.getSerializableExtra(DATE_KEY) as MovieDateDto }
-    private val time by lazy { intent.getSerializableExtra(TIME_KEY) as MovieTimeDto }
-    private val movie by lazy { intent.getSerializableExtra(MOVIE_KEY) as MovieDto }
-    private val ticketCount by lazy { intent.getSerializableExtra(TICKET_KEY) as TicketCountDto }
+    private val date by lazy { intent.getParcelableCompat<MovieDateDto>(DATE_KEY)!! }
+    private val time by lazy { intent.getParcelableCompat<MovieTimeDto>(TIME_KEY)!! }
+    private val movie by lazy { intent.getParcelableCompat<MovieDto>(MOVIE_KEY)!! }
+    private val ticketCount by lazy { intent.getParcelableCompat<TicketCountDto>(TICKET_KEY)!! }
     private val enterBtn by lazy { findViewById<TextView>(R.id.enterBtn) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +62,7 @@ class SeatSelectionActivity : AppCompatActivity() {
 
     private fun setUpState(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
-            val seatsDto = savedInstanceState.getSerializable(SEATS_POSITION) as SeatsDto
+            val seatsDto = savedInstanceState.getParcelableCompat<SeatsDto>(SEATS_POSITION)!!
             seats = seatsDto.mapToSeats()
             setPrice(seats.caculateSeatPrice(LocalDateTime.of(date.date, time.time)))
         } else {
@@ -144,7 +145,7 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable(SEATS_POSITION, seats.mapToSeatsDto())
+        outState.putParcelable(SEATS_POSITION, seats.mapToSeatsDto())
         super.onSaveInstanceState(outState)
     }
 

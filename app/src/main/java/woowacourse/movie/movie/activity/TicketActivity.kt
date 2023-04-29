@@ -12,6 +12,7 @@ import woowacourse.movie.movie.dto.movie.MovieDto
 import woowacourse.movie.movie.dto.seat.SeatsDto
 import woowacourse.movie.movie.dto.ticket.TicketCountDto
 import woowacourse.movie.movie.mapper.seat.mapToSeats
+import woowacourse.movie.movie.utils.getParcelableCompat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -23,7 +24,7 @@ class TicketActivity : AppCompatActivity() {
         setContentView(R.layout.activity_ticket)
         setToolbar()
 
-        val bookingMovie = intent.getSerializableExtra(BOOKING_MOVIE_KEY) as BookingMovieDto
+        val bookingMovie = intent.getParcelableCompat<BookingMovieDto>(BOOKING_MOVIE_KEY)!!
 
         showTicketInfo(
             bookingMovie.movie,

@@ -25,6 +25,7 @@ import woowacourse.movie.movie.mapper.movie.mapToMovieDateDto
 import woowacourse.movie.movie.mapper.movie.mapToMovieTimeDto
 import woowacourse.movie.movie.mapper.ticket.mapToTicketCount
 import woowacourse.movie.movie.mapper.ticket.mapToTicketCountDto
+import woowacourse.movie.movie.utils.getParcelableCompat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -43,7 +44,7 @@ class MovieDetailActivity : AppCompatActivity() {
         setToolBar()
         setUpState(savedInstanceState)
 
-        val movie = intent.getSerializableExtra(MOVIE_KEY) as MovieDto
+        val movie = intent.getParcelableCompat<MovieDto>(MOVIE_KEY)!!
 
         setDateSpinner(movie.startDate, movie.endDate)
         setUpMovieData(movie)

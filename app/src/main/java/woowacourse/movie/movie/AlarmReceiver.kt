@@ -16,6 +16,7 @@ import woowacourse.movie.R
 import woowacourse.movie.movie.activity.SeatSelectionActivity.Companion.BOOKING_MOVIE_KEY
 import woowacourse.movie.movie.activity.TicketActivity
 import woowacourse.movie.movie.dto.movie.BookingMovieDto
+import woowacourse.movie.movie.utils.getParcelableCompat
 
 class AlarmReceiver : BroadcastReceiver() {
 
@@ -26,7 +27,7 @@ class AlarmReceiver : BroadcastReceiver() {
         if (intent.action == ALARM_CODE && settingPreference.setting) {
             createNotificationChannel(context)
 
-            val bookingMovie = intent.getSerializableExtra(BOOKING_MOVIE_KEY) as BookingMovieDto
+            val bookingMovie = intent.getParcelableCompat<BookingMovieDto>(BOOKING_MOVIE_KEY)!!
             Log.d(BOOKING_MOVIE_KEY, bookingMovie.toString())
 
             createNotificationBuilder(context, bookingMovie)
