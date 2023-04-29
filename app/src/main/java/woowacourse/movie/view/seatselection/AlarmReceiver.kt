@@ -64,6 +64,5 @@ class AlarmReceiver : BroadcastReceiver() {
         const val NOTIFICATION_ID = 200
         const val CHANNEL_ID = "RESERVATION_CHANNEL"
         const val RESERVATION = "RESERVATION"
-        const val ALARM_REQUEST_CODE = 100
     }
 }

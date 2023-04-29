@@ -9,8 +9,10 @@ import woowacourse.movie.view.seatselection.AlarmReceiver
 import java.time.ZoneId
 
 class AlarmController(
-    val context: Context
+    private val context: Context
 ) {
+
+    private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
     fun registerAlarms(reservations: List<ReservationUiModel>, minuteInterval: Long) {
         reservations.forEach {
@@ -19,8 +21,7 @@ class AlarmController(
     }
 
     fun registerAlarm(reservation: ReservationUiModel, minuteInterval: Long) {
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val pendingIntent = getPendingIntent(reservation)
+        val pendingIntent = makeAlarmBroadcastPendingIntent(reservation)
 
         alarmManager.set(
             AlarmManager.RTC_WAKEUP,
@@ -31,26 +32,30 @@ class AlarmController(
         )
     }
 
-    private fun getPendingIntent(reservation: ReservationUiModel): PendingIntent {
-        return Intent(context, AlarmReceiver::class.java).let {
-            it.putExtra(AlarmReceiver.RESERVATION, reservation)
-            PendingIntent.getBroadcast(
-                context,
-                AlarmReceiver.ALARM_REQUEST_CODE,
-                it,
-                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
-            )
+    private fun makeAlarmBroadcastPendingIntent(reservation: ReservationUiModel): PendingIntent {
+        val alarmReceiverIntent = Intent(context, AlarmReceiver::class.java).apply {
+            putExtra(AlarmReceiver.RESERVATION, reservation)
         }
+        return PendingIntent.getBroadcast(
+            context,
+            ALARM_REQUEST_CODE,
+            alarmReceiverIntent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+        )
     }
 
     fun cancelAlarms() {
         val pendingIntent = PendingIntent.getBroadcast(
             context,
-            AlarmReceiver.ALARM_REQUEST_CODE,
+            ALARM_REQUEST_CODE,
             Intent(context, AlarmReceiver::class.java),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.cancel(pendingIntent)
+    }
+
+    companion object {
+        private const val ALARM_REQUEST_CODE = 100
     }
 }
