@@ -6,18 +6,15 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import domain.DayOfWeek
 import domain.movieinfo.MovieDate
 import domain.movieinfo.MovieTime
 import domain.screeningschedule.ReservationDate
 import domain.screeningschedule.ReservationTime
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.movie.dto.movie.MovieDateDto
 import woowacourse.movie.movie.dto.movie.MovieDto
 import woowacourse.movie.movie.dto.ticket.TicketCountDto
@@ -30,16 +27,18 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 class MovieDetailActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMovieDetailBinding
     private var movieTikcet = TicketCountDto()
     private var dateSpinnerPosition = 0
     private var timeSpinnerPosition = 0
 
-    private val selectDateSpinner by lazy { findViewById<Spinner>(R.id.select_date) }
-    private val selectTimeSpinner by lazy { findViewById<Spinner>(R.id.select_time) }
+    private val selectDateSpinner by lazy { binding.selectDate }
+    private val selectTimeSpinner by lazy { binding.selectTime }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_detail)
+        binding = ActivityMovieDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setToolBar()
         setUpState(savedInstanceState)
@@ -60,26 +59,16 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     private fun setToolBar() {
-        val toolbar = findViewById<Toolbar>(R.id.movie_detail_toolbar)
-
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.movieDetailToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun setUpMovieData(movie: MovieDto) {
-        val moviePoster = findViewById<ImageView>(R.id.movie_poster)
-        val movieTitle = findViewById<TextView>(R.id.movie_title)
-        val movieDate = findViewById<TextView>(R.id.movie_date)
-        val runningTime = findViewById<TextView>(R.id.movie_time)
-        val description = findViewById<TextView>(R.id.movie_description)
-
-        moviePoster.setImageResource(movie.moviePoster)
-        movieTitle.text = movie.title
-
-        movieDate.text = formatMovieRunningDate(movie)
-
-        runningTime.text = getString(R.string.movie_running_time).format(movie.runningTime)
-        description.text = movie.description
+        binding.moviePoster.setImageResource(movie.moviePoster)
+        binding.movieTitle.text = movie.title
+        binding.movieDate.text = formatMovieRunningDate(movie)
+        binding.movieTime.text = getString(R.string.movie_running_time).format(movie.runningTime)
+        binding.movieDescription.text = movie.description
     }
 
     private fun formatMovieRunningDate(item: MovieDto): String {
@@ -91,16 +80,14 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     private fun setNumberOfPeople() {
-        val booker = findViewById<TextView>(R.id.booker_num)
+        val booker = binding.bookerNum
         booker.text = movieTikcet.numberOfPeople.toString()
         onClickDecreaseBtnListener(booker)
         onClickIncreaseBtnListener(booker)
     }
 
     private fun onClickDecreaseBtnListener(booker: TextView) {
-        val minusBtn = findViewById<Button>(R.id.minus_button)
-
-        minusBtn.setOnClickListener {
+        binding.minusButton.setOnClickListener {
             val ticketDecrease = movieTikcet.mapToTicketCount().decrease()
             movieTikcet = ticketDecrease.mapToTicketCountDto()
             booker.text = movieTikcet.numberOfPeople.toString()
@@ -108,9 +95,7 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     private fun onClickIncreaseBtnListener(booker: TextView) {
-        val plusBtn = findViewById<Button>(R.id.plus_button)
-
-        plusBtn.setOnClickListener {
+        binding.plusButton.setOnClickListener {
             val ticketIncrease = movieTikcet.mapToTicketCount().increase()
             movieTikcet = ticketIncrease.mapToTicketCountDto()
             booker.text = movieTikcet.numberOfPeople.toString()
@@ -118,8 +103,7 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     private fun onClickBookBtnListener(movie: MovieDto) {
-        val bookBtn = findViewById<Button>(R.id.book_button)
-        bookBtn.setOnClickListener {
+        binding.bookButton.setOnClickListener {
             val selectedDate = MovieDate.of(selectDateSpinner.selectedItem.toString())
             val selectedTime = MovieTime.of(selectTimeSpinner.selectedItem.toString())
             val intent = Intent(this, SeatSelectionActivity::class.java)

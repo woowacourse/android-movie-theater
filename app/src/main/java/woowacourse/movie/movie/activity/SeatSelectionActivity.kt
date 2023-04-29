@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import domain.Seat
 import domain.Seats
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.movie.AlarmReceiver
 import woowacourse.movie.movie.AlarmReceiver.Companion.ALARM_CODE
 import woowacourse.movie.movie.AlarmReceiver.Companion.ALARM_TIME
@@ -31,6 +32,7 @@ import woowacourse.movie.movie.view.SeatSelectView
 import java.time.LocalDateTime
 
 class SeatSelectionActivity : AppCompatActivity() {
+    private lateinit var binding: ActivitySeatSelectionBinding
 
     private var seats = Seats()
 
@@ -42,22 +44,22 @@ class SeatSelectionActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_seat_selection)
+        binding = ActivitySeatSelectionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setUpState(savedInstanceState)
         setMovieTitle()
     }
 
     private fun setUpSeatsView() {
         SeatSelectView(
-            findViewById(R.id.seat_layout),
+            binding.seatLayout,
             ::onSeatClick,
             seats,
         )
     }
 
     private fun setMovieTitle() {
-        val movieTtile = findViewById<TextView>(R.id.movie_title)
-        movieTtile.text = movie.title
+        binding.movieTitle.text = movie.title
     }
 
     private fun setUpState(savedInstanceState: Bundle?) {
@@ -140,8 +142,7 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     private fun setPrice(ticketPrice: Int) {
-        val price = findViewById<TextView>(R.id.ticket_price)
-        price.text = getString(R.string.ticket_price_seat_page, ticketPrice)
+        binding.ticketPrice.text = getString(R.string.ticket_price_seat_page, ticketPrice)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

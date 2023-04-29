@@ -2,10 +2,9 @@ package woowacourse.movie.movie.activity
 
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityTicketBinding
 import woowacourse.movie.movie.activity.SeatSelectionActivity.Companion.BOOKING_MOVIE_KEY
 import woowacourse.movie.movie.dto.movie.BookingMovieDto
 import woowacourse.movie.movie.dto.movie.MovieDto
@@ -19,9 +18,12 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 class TicketActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityTicketBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_ticket)
+        binding = ActivityTicketBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setToolbar()
 
         val bookingMovie = intent.getParcelableCompat<BookingMovieDto>(BOOKING_MOVIE_KEY)!!
@@ -44,9 +46,7 @@ class TicketActivity : AppCompatActivity() {
     }
 
     private fun setToolbar() {
-        val toolbar = findViewById<Toolbar>(R.id.ticket_toolbar)
-
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.ticketToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -58,23 +58,19 @@ class TicketActivity : AppCompatActivity() {
     }
 
     private fun showTicketInfo(movie: MovieDto, date: LocalDate, time: LocalTime) {
-        val movieTitle = findViewById<TextView>(R.id.ticket_title)
-        val movieDate = findViewById<TextView>(R.id.ticket_date)
-        movieTitle.text = movie.title
-        movieDate.text = formatMovieDateTime(date, time)
+        binding.ticketTitle.text = movie.title
+        binding.ticketDate.text = formatMovieDateTime(date, time)
     }
 
     private fun showTicketInfo(ticket: TicketCountDto, seats: SeatsDto) {
-        val numberOfPeople = findViewById<TextView>(R.id.number_of_people)
-        numberOfPeople.text =
+        binding.numberOfPeople.text =
             getString(R.string.ticket_info, ticket.numberOfPeople, seats.getSeatsPositionToString())
     }
 
     private fun showTicketPrice(seats: SeatsDto, date: LocalDate, time: LocalTime, count: Int) {
-        val price = findViewById<TextView>(R.id.ticket_price)
         val totalTicketPrice = seats.mapToSeats().caculateSeatPrice(LocalDateTime.of(date, time))
 
-        price.text = getString(R.string.ticket_price, totalTicketPrice)
+        binding.ticketPrice.text = getString(R.string.ticket_price, totalTicketPrice)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
