@@ -35,4 +35,5 @@
     <string name="notification_channel_description">Test Notification</string>
     <string name="setting_push_title">푸시 알림 수신</string>
     <string name="setting_push_description">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+    <string name="permission_instruction_ment">푸쉬알림을 받으려면 설정창에서 \n권한을 설정해야 합니다.</string>
 </resources>
