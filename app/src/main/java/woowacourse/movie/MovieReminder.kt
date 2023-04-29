@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
 import androidx.core.app.NotificationCompat
@@ -78,6 +79,7 @@ class MovieReminder : BroadcastReceiver() {
         contentPendingIntent: PendingIntent?
     ) = NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID).apply {
         setSmallIcon(R.drawable.noti_icon_24)
+        setLargeIcon(BitmapFactory.decodeResource(context.resources, movieBookingSeatInfo.movieBookingInfo.movieInfo.poster))
         setContentTitle(context.getString(R.string.notification_title))
         setContentText(
             context.getString(
