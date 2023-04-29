@@ -1,13 +1,28 @@
 package com.example.domain.discountPolicy.policy
 
-import com.example.domain.discountPolicy.apply.Discount
-import com.example.domain.discountPolicy.apply.JoJoNightDiscount
-import com.example.domain.discountPolicy.apply.MovieDayDiscount
-import com.example.domain.discountPolicy.condition.DiscountCondition
-import com.example.domain.discountPolicy.condition.JoJoNightCondition
-import com.example.domain.discountPolicy.condition.MovieDayCondition
+import com.example.domain.model.Money
+import com.example.domain.model.Movie
+import com.example.domain.model.seat.SeatPosition
+import java.time.LocalDateTime
 
-sealed class Policy(val discountCondition: DiscountCondition, val discount: Discount) {
-    class JoJoNightPolicy : Policy(JoJoNightCondition(), JoJoNightDiscount())
-    class MovieDayPolicy : Policy(MovieDayCondition(), MovieDayDiscount())
+sealed class Policy {
+    fun discount(
+        money: Money,
+        movie: Movie,
+        dateTime: LocalDateTime,
+        seatPosition: SeatPosition
+    ): Money {
+        return if (isDiscountable(movie, dateTime, seatPosition)) apply(money)
+        else money
+    }
+
+    protected abstract fun isDiscountable(
+        movie: Movie,
+        dateTime: LocalDateTime,
+        seatPosition: SeatPosition
+    ): Boolean
+
+    protected abstract fun apply(
+        money: Money
+    ): Money
 }

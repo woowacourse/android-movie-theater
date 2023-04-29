@@ -1,5 +1,7 @@
 package com.example.domain.discountPolicy
 
+import com.example.domain.discountPolicy.policy.JoJoNightPolicy
+import com.example.domain.discountPolicy.policy.MovieDayPolicy
 import com.example.domain.discountPolicy.policy.Policy
 import com.example.domain.model.Money
 import com.example.domain.model.Movie
@@ -9,8 +11,8 @@ import java.time.LocalDateTime
 
 class DefaultDiscountPolicy(
     private val policies: List<Policy> = listOf(
-        Policy.MovieDayPolicy(),
-        Policy.JoJoNightPolicy()
+        MovieDayPolicy,
+        JoJoNightPolicy
     )
 ) : DiscountPolicy {
 
@@ -21,10 +23,7 @@ class DefaultDiscountPolicy(
     ): Money {
         val originMoney = SeatRank.from(seatPosition).money
         return policies.fold(originMoney) { money, policy ->
-            if (policy.discountCondition.isDiscountable(movie, dateTime, seatPosition)) {
-                return@fold policy.discount.discount(money)
-            }
-            money
+            policy.discount(money, movie, dateTime, seatPosition)
         }
     }
 }

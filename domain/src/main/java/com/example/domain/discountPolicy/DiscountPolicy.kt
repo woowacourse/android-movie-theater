@@ -5,6 +5,6 @@ import com.example.domain.model.Movie
 import com.example.domain.model.seat.SeatPosition
 import java.time.LocalDateTime
 
-interface DiscountPolicy {
+sealed interface DiscountPolicy {
     fun discount(movie: Movie, dateTime: LocalDateTime, seatPosition: SeatPosition): Money
 }

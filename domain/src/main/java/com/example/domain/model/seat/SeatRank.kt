@@ -10,9 +10,9 @@ enum class SeatRank(val money: Money) {
     companion object {
         fun from(seatPosition: SeatPosition): SeatRank {
             return when (seatPosition.row) {
-                SeatRow.A, SeatRow.B -> SeatRank.B
-                SeatRow.C, SeatRow.D -> SeatRank.S
-                SeatRow.E -> SeatRank.A
+                SeatRow.A, SeatRow.B -> B
+                SeatRow.C, SeatRow.D -> S
+                SeatRow.E -> A
             }
         }
     }
