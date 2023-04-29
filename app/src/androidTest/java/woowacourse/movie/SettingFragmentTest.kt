@@ -29,7 +29,7 @@ class SettingFragmentTest {
         activityRule.scenario.close()
         ActivityScenario.launch(MainActivity::class.java, null)
         clickSetting()
-        onView(withId(R.id.sw_setting_can_push)).check(matches(isChecked()))
+        onView(withId(R.id.switch_setting_can_push)).check(matches(isChecked()))
     }
 
     @Test
@@ -38,20 +38,20 @@ class SettingFragmentTest {
         activityRule.scenario.close()
         ActivityScenario.launch(MainActivity::class.java, null)
         clickSetting()
-        onView(withId(R.id.sw_setting_can_push)).check(matches(isNotChecked()))
+        onView(withId(R.id.switch_setting_can_push)).check(matches(isNotChecked()))
     }
 
     private fun getSwitchChecked(): Boolean {
         var isChecked = false
         activityRule.scenario.onActivity {
-            isChecked = it.findViewById<SwitchMaterial>(R.id.sw_setting_can_push).isChecked
+            isChecked = it.findViewById<SwitchMaterial>(R.id.switch_setting_can_push).isChecked
         }
         return isChecked
     }
 
     private fun setSwitchState(needIsChecked: Boolean) {
         if (getSwitchChecked() != needIsChecked) {
-            onView(withId(R.id.sw_setting_can_push)).perform(click())
+            onView(withId(R.id.switch_setting_can_push)).perform(click())
         }
     }
 }

@@ -23,7 +23,7 @@ class SettingFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_setting, container, false)
 
-        val switch = view.findViewById<SwitchMaterial>(R.id.sw_setting_can_push)
+        val switch = view.findViewById<SwitchMaterial>(R.id.switch_setting_can_push)
         val sharedPreferenceUtil = SharedPreferenceUtil(view.context)
 
         switch.isChecked =

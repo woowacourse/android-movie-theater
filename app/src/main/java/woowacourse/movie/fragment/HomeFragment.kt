@@ -29,7 +29,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setMovieRecyclerView(view: View) {
-        val movieRecyclerView = view.findViewById<RecyclerView>(R.id.rv_movie_list)
+        val movieRecyclerView = view.findViewById<RecyclerView>(R.id.recyclerview_movie_list)
 
         val movieRecyclerViewAdapter = MovieRecyclerViewAdapter(
             MovieMockData.movies10000,

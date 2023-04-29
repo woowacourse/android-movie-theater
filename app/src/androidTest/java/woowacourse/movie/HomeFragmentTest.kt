@@ -29,35 +29,35 @@ class HomeFragmentTest {
 
     @Test
     fun 리사이클러뷰_첫번째_아이템에_영화데이터의_첫번째_데이터가_들어있다() {
-        onView(withId(R.id.rv_movie_list))
+        onView(withId(R.id.recyclerview_movie_list))
             .performScrollTo(0)
             .checkMovieTitleIsDisplayed(0)
     }
 
     @Test
     fun 리사이클러뷰_두번째_아이템에_영화데이터의_두번째_데이터가_들어있다() {
-        onView(withId(R.id.rv_movie_list))
+        onView(withId(R.id.recyclerview_movie_list))
             .performScrollTo(1)
             .checkMovieTitleIsDisplayed(1)
     }
 
     @Test
     fun 리사이클러뷰_세번째_아이템에_영화데이터의_세번째_데이터가_들어있다() {
-        onView(withId(R.id.rv_movie_list))
+        onView(withId(R.id.recyclerview_movie_list))
             .performScrollTo(2)
             .checkMovieTitleIsDisplayed(2)
     }
 
     @Test
     fun 리사이클러뷰_네번째_아이템에_광고가_표시된다() {
-        onView(withId(R.id.rv_movie_list))
+        onView(withId(R.id.recyclerview_movie_list))
             .performScrollTo(3)
             .checkImageIsDisplayed(R.id.iv_ad)
     }
 
     @Test
     fun 리사이클러뷰_다섯번째_아이템에_영화데이터의_다섯번째_데이터가_들어있다() {
-        onView(withId(R.id.rv_movie_list))
+        onView(withId(R.id.recyclerview_movie_list))
             .performScrollTo(4)
             .checkMovieTitleIsDisplayed(4)
     }

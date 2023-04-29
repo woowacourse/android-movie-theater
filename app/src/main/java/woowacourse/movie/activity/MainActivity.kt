@@ -37,9 +37,9 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         setContentView(R.layout.activity_main)
         requestNotificationPermission()
 
-        findViewById<BottomNavigationView>(R.id.bnv_main).setOnItemSelectedListener(this)
+        findViewById<BottomNavigationView>(R.id.navigation_main).setOnItemSelectedListener(this)
 
-        supportFragmentManager.beginTransaction().add(R.id.fl_main, BookHistoryFragment()).commit()
+        supportFragmentManager.beginTransaction().add(R.id.framelayout_main, BookHistoryFragment()).commit()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     private fun whenMenuSelected(item: Fragment): Boolean {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fl_main, item).commitAllowingStateLoss()
+            .replace(R.id.framelayout_main, item).commitAllowingStateLoss()
         return true
     }
 

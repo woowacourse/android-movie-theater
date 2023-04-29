@@ -27,7 +27,7 @@ class BookHistoryFragment : Fragment() {
     }
 
     private fun setMovieRecyclerView(view: View) {
-        val movieRecyclerView = view.findViewById<RecyclerView>(R.id.rv_book_history_list)
+        val movieRecyclerView = view.findViewById<RecyclerView>(R.id.recyclerview_book_history_list)
         movieRecyclerView.addItemDecoration(
             DividerItemDecoration(
                 view.context,
