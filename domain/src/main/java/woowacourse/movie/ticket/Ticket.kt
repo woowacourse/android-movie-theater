@@ -9,5 +9,9 @@ data class Ticket(
     val bookedDateTime: LocalDateTime,
     val seat: Seat,
 ) {
-    val price: Int = RunningDiscountPolicy().discount(seat.rank.price, bookedDateTime)
+    val price: Int = DISCOUNT_POLICY.discount(seat.rank.price, bookedDateTime)
+
+    companion object {
+        private val DISCOUNT_POLICY = RunningDiscountPolicy()
+    }
 }
