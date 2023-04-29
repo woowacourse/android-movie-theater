@@ -1,8 +1,6 @@
 package woowacourse.movie.view
 
 import android.Manifest
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -24,18 +22,19 @@ import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.view.model.ReservationUiModel
 import woowacourse.movie.view.moviemain.MovieMainActivity
 import woowacourse.movie.view.moviemain.setting.SettingFragment
-import woowacourse.movie.view.seatselection.AlarmReceiver
 import java.text.DecimalFormat
 
 class ReservationCompletedActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityReservationCompletedBinding
     private lateinit var settingManager: SettingDataManager
+    private lateinit var alarmController: AlarmController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityReservationCompletedBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        alarmController = AlarmController(this)
         val reservation = intent.getParcelableCompat<ReservationUiModel>(RESERVATION)
         settingManager = SettingPreferencesManager(this)
         val isAlarmOn = settingManager.getIsAlarmSetting()
@@ -44,7 +43,7 @@ class ReservationCompletedActivity : AppCompatActivity() {
 
         reservation?.let {
             initViewData(it)
-            if (isAlarmOn) setAlarm(reservation, SettingFragment.ALARM_MINUTE_INTERVAL)
+            if (isAlarmOn) alarmController.registerAlarm(reservation, SettingFragment.ALARM_MINUTE_INTERVAL)
         }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -60,14 +59,8 @@ class ReservationCompletedActivity : AppCompatActivity() {
         )
     }
 
-    private fun setAlarm(reservation: ReservationUiModel, alarmMinuteInterval: Long) {
-        val alarmController = AlarmController(this)
-        createChannel()
-        alarmController.registerAlarm(reservation, alarmMinuteInterval)
-    }
-
     private fun initViewData(reservation: ReservationUiModel) {
-        binding.apply {
+        with(binding) {
             movieTitle.text = reservation.title
             movieScreeningDate.text = getString(
                 R.string.datetime_with_space,
@@ -94,18 +87,6 @@ class ReservationCompletedActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun createChannel() {
-        val name = "Reservation Notification"
-        val channel = NotificationChannel(
-            AlarmReceiver.CHANNEL_ID,
-            name,
-            NotificationManager.IMPORTANCE_DEFAULT,
-        )
-        val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
     }
 
     private fun requestNotificationPermission() {

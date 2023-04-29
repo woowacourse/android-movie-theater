@@ -1,6 +1,8 @@
 package woowacourse.movie.view
 
 import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -9,6 +11,9 @@ import woowacourse.movie.view.seatselection.AlarmReceiver
 import java.time.ZoneId
 
 class AlarmController(private val context: Context) {
+    init {
+        createChannel()
+    }
 
     fun registerAlarms(reservations: List<ReservationUiModel>, minuteInterval: Long) {
         reservations.forEach {
@@ -35,6 +40,12 @@ class AlarmController(private val context: Context) {
         alarmManager.cancel(pendingIntent)
     }
 
+    private fun createChannel() {
+        val channel = NotificationChannel(AlarmReceiver.CHANNEL_ID, CHANNER_NAME, NotificationManager.IMPORTANCE_DEFAULT)
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if (!notificationManager.notificationChannels.contains(channel)) notificationManager.createNotificationChannel(channel)
+    }
+
     private fun getPendingIntent(intent: Intent) = PendingIntent.getBroadcast(
         context,
         ALARM_REQUEST_CODE,
@@ -44,5 +55,6 @@ class AlarmController(private val context: Context) {
 
     companion object {
         private const val ALARM_REQUEST_CODE = 100
+        private const val CHANNER_NAME = "Reservation Notification"
     }
 }
