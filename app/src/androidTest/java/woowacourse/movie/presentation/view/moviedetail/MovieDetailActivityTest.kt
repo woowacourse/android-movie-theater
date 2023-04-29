@@ -50,7 +50,7 @@ class MovieDetailActivityTest {
     }
 
     @Test
-    fun 영화_출시일_나타난다() { // Error
+    fun 영화_출시일_나타난다() {
 
         onView(withId(R.id.tv_movie_release_date)).perform(ViewActions.scrollTo())
             .check(matches(isDisplayed()))
@@ -62,7 +62,7 @@ class MovieDetailActivityTest {
     }
 
     @Test
-    fun 스크롤을_내리면_러닝타임이_나타난다() { // Error
+    fun 스크롤을_내리면_러닝타임이_나타난다() {
 
         onView(withId(R.id.tv_movie_running_time)).perform(ViewActions.scrollTo())
             .check(matches(isDisplayed()))
