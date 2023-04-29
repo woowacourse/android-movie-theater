@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="12dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="12dp">
 
     <ImageView
         android:id="@+id/movie_poster"
@@ -30,15 +29,15 @@
 
     <TextView
         android:id="@+id/movie_date"
-        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        tools:text="@string/movie_running_date"
-        android:textSize="14sp"
+        android:layout_marginTop="10dp"
         android:textColor="@color/black"
+        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/movie_poster"
-        app:layout_constraintTop_toBottomOf="@id/movie_title" />
+        app:layout_constraintTop_toBottomOf="@id/movie_title"
+        tools:text="@string/movie_running_date" />
 
     <TextView
         android:id="@+id/running_time"
@@ -56,7 +55,7 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="11dp"
         android:paddingVertical="9dp"
-        android:text = "@string/now_booking"
+        android:text="@string/now_booking"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

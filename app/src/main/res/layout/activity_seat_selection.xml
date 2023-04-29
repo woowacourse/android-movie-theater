@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/seat_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/seat_layout"
     android:background="@color/seat_background"
     tools:context=".activity.SeatSelectionActivity">
 
@@ -49,9 +48,9 @@
         android:layout_width="0dp"
         android:layout_height="78dp"
         android:background="@color/white"
-        app:layout_constraintHorizontal_weight="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/enterBtn"
+        app:layout_constraintHorizontal_weight="2"
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
@@ -72,8 +71,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="@string/ticket_price_seat_page"
             android:layout_marginBottom="16dp"
+            android:text="@string/ticket_price_seat_page"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -85,12 +84,12 @@
         android:id="@+id/enterBtn"
         android:layout_width="88dp"
         android:layout_height="78dp"
+        android:background="@color/not_enter"
         android:gravity="center"
         android:text="@string/enter"
-        android:textStyle="bold"
         android:textColor="@color/white"
         android:textSize="18sp"
-        android:background="@color/not_enter"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="1"

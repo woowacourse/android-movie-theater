@@ -10,20 +10,20 @@
         android:id="@+id/push_alarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="@string/push_alarm"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:layout_marginStart="16sp"
-        android:layout_marginTop="9dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16sp"
+        android:layout_marginTop="9dp"
         android:text="@string/push_alarm_message"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,10 +35,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="29dp"
         android:layout_marginEnd="16dp"
-        app:track="@drawable/selector_track"
         android:thumb="@drawable/selector_thumb"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:track="@drawable/selector_track" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
