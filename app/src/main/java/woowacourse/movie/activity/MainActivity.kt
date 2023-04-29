@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -52,26 +53,24 @@ class MainActivity : AppCompatActivity() {
         if (ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.POST_NOTIFICATIONS,
-            ) != PackageManager.PERMISSION_GRANTED
+            ) == PackageManager.PERMISSION_GRANTED
         ) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                    // 권한 요청 거부한 경우
-                } else {
-                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                }
-            } else {
-                // 안드로이드 12 이하는 Notification에 관한 권한 필요 없음
+            return
+        }
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && shouldShowRequestPermissionRationale(
+                Manifest.permission.POST_NOTIFICATIONS,
+            ) -> {
+                Toast.makeText(this, getString(R.string.check_notification), Toast.LENGTH_LONG).show()
             }
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+            else -> {}
         }
     }
 
-    private val requestPermissionLauncher = registerForActivityResult(
+    val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission(),
-    ) { isGranted: Boolean ->
-    }
-
-    companion object {
-        private const val MOVIE_KEY = "movie"
-    }
+    ) { isGranted: Boolean -> }
 }
