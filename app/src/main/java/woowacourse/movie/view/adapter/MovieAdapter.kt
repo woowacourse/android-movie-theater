@@ -1,6 +1,7 @@
 package woowacourse.movie.view.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
@@ -20,7 +21,7 @@ class MovieAdapter(
     movie: List<Movie>,
     advertisement: List<Advertisement>,
     advertisementPolicy: AdvertisementPolicy,
-    val onClickItem: (data: MovieListViewData) -> Unit
+    val onClickItem: (view: View, data: MovieListViewData) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var movieViewDatas: MovieViewDatas =
         makeMovieListViewData(movie, advertisement, advertisementPolicy)
@@ -32,7 +33,7 @@ class MovieAdapter(
                     R.layout.item_movie, parent, false
                 )
             ) {
-                onClickItem(movieViewDatas.value[it])
+                onClickItem(parent, movieViewDatas.value[it])
             }
 
             MovieListViewType.ADVERTISEMENT -> AdvertisementViewHolder(
@@ -40,7 +41,7 @@ class MovieAdapter(
                     R.layout.item_advertisement, parent, false
                 )
             ) {
-                onClickItem(movieViewDatas.value[it])
+                onClickItem(parent, movieViewDatas.value[it])
             }
         }
     }
