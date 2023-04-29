@@ -7,12 +7,11 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
 import woowacourse.movie.data.storage.SettingsStorage
+import woowacourse.movie.permission.PermissionManager
 import woowacourse.movie.ui.activity.MovieTicketActivity
 import woowacourse.movie.ui.model.MovieTicketModel
 import woowacourse.movie.ui.utils.getParcelable
@@ -59,8 +58,10 @@ class NotificationReceiver : BroadcastReceiver() {
             )
         val notificationBuilder = getNotificationBuilder(context, ticketModel, pendingIntent)
 
-        with(NotificationManagerCompat.from(context)) {
-            if (checkPermission(context)) notify(NOTIFICATION_ID, notificationBuilder.build())
+        if (PermissionManager.checkGrantedPermission(context, Manifest.permission.POST_NOTIFICATIONS)) {
+            NotificationManagerCompat
+                .from(context)
+                .notify(NOTIFICATION_ID, notificationBuilder.build())
         }
     }
 
@@ -83,17 +84,6 @@ class NotificationReceiver : BroadcastReceiver() {
             setAutoCancel(true)
         }
         return notificationBuilder
-    }
-
-    private fun checkPermission(context: Context): Boolean {
-        if (ActivityCompat.checkSelfPermission(
-                context,
-                Manifest.permission.POST_NOTIFICATIONS
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            return true
-        }
-        return false
     }
 
     companion object {
