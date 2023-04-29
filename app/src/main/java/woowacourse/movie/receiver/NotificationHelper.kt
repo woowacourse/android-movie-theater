@@ -21,18 +21,14 @@ class NotificationHelper(
     fun generateNotificationBuilder(
         notificationManager: NotificationManager
     ): NotificationCompat.Builder {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationManager.createNotificationChannel(
-                NotificationChannel(
-                    channelId,
-                    channelName,
-                    NotificationManager.IMPORTANCE_DEFAULT
-                )
+        notificationManager.createNotificationChannel(
+            NotificationChannel(
+                channelId,
+                channelName,
+                NotificationManager.IMPORTANCE_DEFAULT
             )
-            NotificationCompat.Builder(context, channelId)
-        } else {
-            NotificationCompat.Builder(context)
-        }
+        )
+        return NotificationCompat.Builder(context, channelId)
     }
 
     fun generateNotification(notificationBuilder: NotificationCompat.Builder): Notification {

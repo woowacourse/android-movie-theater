@@ -39,7 +39,7 @@ class MoviesFragment : Fragment() {
     }
 
     private fun reservationButtonClick(movie: Movie) {
-        val context: Context = context ?: throw IllegalStateException(CONTEXT_NOT_FOUND)
+        val context: Context = requireContext()
         MovieReservationActivity.start(context, movie)
     }
 
@@ -47,9 +47,5 @@ class MoviesFragment : Fragment() {
         val url = advertisementUiModel.url
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         startActivity(intent)
-    }
-
-    companion object {
-        private const val CONTEXT_NOT_FOUND = "context를 찾을 수 없습니다."
     }
 }

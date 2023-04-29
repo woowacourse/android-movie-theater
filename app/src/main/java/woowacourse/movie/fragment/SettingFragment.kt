@@ -27,7 +27,7 @@ class SettingFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val context: Context = context ?: throw IllegalStateException(CONTEXT_NOT_FOUND)
+        val context: Context = requireContext()
         sharedPreference =
             context.getSharedPreferences(SETTING, AppCompatActivity.MODE_PRIVATE)
     }

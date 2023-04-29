@@ -7,15 +7,11 @@ import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import domain.TicketOffice
-import domain.Tickets
 import woowacourse.movie.R
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.view.MovieView
-import woowacourse.movie.view.mapper.TicketOfficeMapper
 import woowacourse.movie.view.mapper.TicketsMapper
 import woowacourse.movie.view.model.MovieUiModel
-import woowacourse.movie.view.model.TicketOfficeUiModel
 import woowacourse.movie.view.model.TicketsUiModel
 import java.text.NumberFormat
 import java.time.LocalDate
@@ -111,15 +107,15 @@ class ReservationResultActivity : AppCompatActivity() {
     companion object {
         private const val MOVIE_KEY_VALUE = "movie"
         private const val TICKETS_KEY_VALUE = "tickets"
-        fun start(
+        fun generateIntent(
             context: Context,
             movieUiModel: MovieUiModel,
             ticketsUiModel: TicketsUiModel
-        ) {
+        ): Intent {
             val intent = Intent(context, ReservationResultActivity::class.java)
             intent.putExtra(MOVIE_KEY_VALUE, movieUiModel)
             intent.putExtra(TICKETS_KEY_VALUE, ticketsUiModel)
-            context.startActivity(intent)
+            return intent
         }
     }
 }

@@ -2,15 +2,11 @@ package woowacourse.movie.receiver
 
 import android.R
 import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
 import woowacourse.movie.activity.ReservationResultActivity
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.view.model.MovieUiModel
@@ -24,10 +20,11 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
         val notificationManager = reservationNotificationHelper.generateNotificationManger()
         val notificationBuilder =
             reservationNotificationHelper.generateNotificationBuilder(notificationManager)
-
-        val sendingIntent = generateSendingIntent(context, movieUiModel, ticketsUiModel)
+        val sendingIntent = ReservationResultActivity.generateIntent(context, movieUiModel, ticketsUiModel)
         val pendingIntent = PendingIntent.getActivity(
-            context, 123, sendingIntent,
+            context,
+            123,
+            sendingIntent,
             PendingIntent.FLAG_IMMUTABLE
         )
 
@@ -43,24 +40,14 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
         if (isAlarmPossible(context)) notificationManager.notify(1, notification)
     }
 
-    private fun receiveTicketsUiModel(intent: Intent): TicketsUiModel? {
-        return intent.extras?.getSerializableCompat(TICKETS_KEY_VALUE)
+    private fun receiveTicketsUiModel(intent: Intent): TicketsUiModel {
+        return intent.extras?.getSerializableCompat(TICKETS_KEY_VALUE) ?: throw IllegalStateException(UI_MODEL_NOT_FOUND)
     }
 
-    private fun receiveMovieViewModel(intent: Intent): MovieUiModel? {
-        return intent.extras?.getSerializableCompat(MOVIE_KEY_VALUE)
+    private fun receiveMovieViewModel(intent: Intent): MovieUiModel {
+        return intent.extras?.getSerializableCompat(MOVIE_KEY_VALUE) ?: throw IllegalStateException(UI_MODEL_NOT_FOUND)
     }
 
-    private fun generateSendingIntent(
-        context: Context,
-        movieUiModel: MovieUiModel?,
-        ticketsUiModel: TicketsUiModel?
-    ): Intent {
-        val sendingIntent = Intent(context, ReservationResultActivity::class.java)
-        sendingIntent.putExtra(MOVIE_KEY_VALUE, movieUiModel)
-        sendingIntent.putExtra(TICKETS_KEY_VALUE, ticketsUiModel)
-        return sendingIntent
-    }
     private fun isAlarmPossible(context: Context): Boolean {
 
         val sharedPreferences = context.getSharedPreferences(
@@ -77,5 +64,6 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
         private const val TICKETS_KEY_VALUE = "tickets"
         private const val SETTING = "settings"
         private const val PUSH_ALARM_KEY = "pushAlarm"
+        private const val UI_MODEL_NOT_FOUND = "키에 해당하는 data를 찾을 수 없습니다."
     }
 }

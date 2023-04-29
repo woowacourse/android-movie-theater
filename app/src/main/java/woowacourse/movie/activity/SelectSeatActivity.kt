@@ -93,11 +93,11 @@ class SelectSeatActivity : AppCompatActivity() {
         builder.setTitle(R.string.select_seat_dialog_title)
         builder.setMessage(R.string.select_seat_dialog_message)
         builder.setPositiveButton(R.string.select_seat_dialog_positive_button_text) { dialog, _ ->
-            ReservationResultActivity.start(
+            startActivity(ReservationResultActivity.generateIntent(
                 this,
                 movieUiModel,
                 TicketsMapper.toUi(ticketOffice.tickets)
-            )
+            ))
             registerAlarm()
         }
         builder.setNegativeButton(R.string.select_seat_dialog_negative_button_text) { dialog, _ ->

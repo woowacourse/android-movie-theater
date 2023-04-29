@@ -30,15 +30,12 @@ class ReservationListFragment : Fragment() {
         val reservationUiModel = ReservationMapper.toUi(reservation)
         val movieUiModel = reservationUiModel.movie
         val ticketsUiModel = reservationUiModel.tickets
-        val context = context ?: throw IllegalStateException(CONTEXT_NOT_FOUND)
-        ReservationResultActivity.start(
+        val context = requireContext()
+        startActivity(ReservationResultActivity.generateIntent(
             context,
             movieUiModel = movieUiModel,
             ticketsUiModel = ticketsUiModel
-        )
-    }
+        ))
 
-    companion object {
-        private const val CONTEXT_NOT_FOUND = "context를 찾을 수 없습니다."
     }
 }
