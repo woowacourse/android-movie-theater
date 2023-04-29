@@ -16,12 +16,12 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
     }
 
     private fun setListView(view: View) {
-        val listView = view.findViewById<RecyclerView>(R.id.rv_movie_list)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.rv_movie_list)
         val movies = MovieData.getData()
         val adapter = MovieListAdapter(
             movies,
             ContextCompat.getDrawable(requireContext(), R.drawable.advertise_wooteco)!!
         )
-        listView.adapter = adapter
+        recyclerView.adapter = adapter
     }
 }
