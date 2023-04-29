@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.view.moviemain.movielist.MovieListFragment
@@ -34,15 +35,15 @@ class MovieMainActivity : AppCompatActivity() {
         navigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.action_reservation_list -> {
-                    replaceFragment(ReservationListFragment())
+                    replaceFragment<ReservationListFragment>()
                     return@setOnItemSelectedListener true
                 }
                 R.id.action_home -> {
-                    replaceFragment(MovieListFragment())
+                    replaceFragment<MovieListFragment>()
                     return@setOnItemSelectedListener true
                 }
                 R.id.action_setting -> {
-                    replaceFragment(SettingFragment())
+                    replaceFragment<SettingFragment>()
                     return@setOnItemSelectedListener true
                 }
                 else -> return@setOnItemSelectedListener false
@@ -51,10 +52,10 @@ class MovieMainActivity : AppCompatActivity() {
         navigation.selectedItemId = R.id.action_home
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    private inline fun <reified T : Fragment> AppCompatActivity.replaceFragment() {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace(R.id.fragment_container_view, fragment)
+            replace<T>(R.id.fragment_container_view)
         }
     }
 
