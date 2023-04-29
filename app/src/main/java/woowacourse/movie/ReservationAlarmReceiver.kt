@@ -82,5 +82,17 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
     companion object {
         const val RESERVATION_NOTIFICATION_CHANNEL_ID = "reservation"
         const val NOTIFICATION_ID = 5
+
+        fun from(context: Context, reservation: ReservationViewData): PendingIntent {
+            val intent: Intent =
+                Intent(SeatSelectionActivity.ACTION_ALARM).putExtra(
+                    ReservationViewData.RESERVATION_EXTRA_NAME,
+                    reservation
+                )
+            return PendingIntent.getBroadcast(
+                context,
+                SeatSelectionActivity.RESERVATION_REQUEST_CODE, intent, PendingIntent.FLAG_IMMUTABLE
+            )
+        }
     }
 }
