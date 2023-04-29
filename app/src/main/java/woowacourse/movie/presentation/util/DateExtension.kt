@@ -9,5 +9,5 @@ fun LocalDate.formatDotDate(): String = format(DateTimeFormatter.ofPattern("YYYY
 fun LocalDateTime.formatDotDateTimeColon(): String =
     format(DateTimeFormatter.ofPattern("YYYY.MM.dd HH:mm"))
 
-fun LocalDateTime.formatDotDateTimeColonSeparateBar() =
+fun LocalDateTime.formatDotDateTimeColonSeparateBar(): String =
     format(DateTimeFormatter.ofPattern("YYYY.MM.dd | HH:mm"))
