@@ -17,8 +17,8 @@ import woowacourse.movie.BundleKeys.MOVIE_DATA_KEY
 import woowacourse.movie.DateFormatter
 import woowacourse.movie.R
 import woowacourse.movie.getSerializableCompat
-import woowacourse.movie.movie.Movie
-import woowacourse.movie.movie.MovieBookingInfo
+import woowacourse.movie.movie.MovieBookingInfoUiModel
+import woowacourse.movie.movie.MovieUIModel
 import java.time.LocalDate
 
 class MovieDetailActivity : BackButtonActivity() {
@@ -49,17 +49,17 @@ class MovieDetailActivity : BackButtonActivity() {
 
     private fun getMovieData() = (
         intent.getSerializableCompat(MOVIE_DATA_KEY)
-            ?: Movie.dummyData
+            ?: MovieUIModel.dummyData
         )
 
-    private fun finishIfDummyData(movieData: Movie) {
-        if (movieData == Movie.dummyData) {
+    private fun finishIfDummyData(movieData: MovieUIModel) {
+        if (movieData == MovieUIModel.dummyData) {
             Toast.makeText(this, getString(R.string.cant_get_movie_data), Toast.LENGTH_SHORT).show()
             this.finish()
         }
     }
 
-    private fun initView(movieData: Movie) {
+    private fun initView(movieData: MovieUIModel) {
         findViewById<ImageView>(R.id.iv_movie_poster).setImageResource(movieData.poster)
         findViewById<TextView>(R.id.tv_movie_title).text = movieData.title
         findViewById<TextView>(R.id.tv_movie_screening_period).text =
@@ -73,7 +73,7 @@ class MovieDetailActivity : BackButtonActivity() {
         findViewById<TextView>(R.id.tv_movie_synopsis).text = movieData.synopsis
     }
 
-    private fun setClickListener(movieData: Movie) {
+    private fun setClickListener(movieData: MovieUIModel) {
 
         var currentCount = personCountTextView.text.toString().toInt()
 
@@ -92,7 +92,7 @@ class MovieDetailActivity : BackButtonActivity() {
         }
 
         findViewById<Button>(R.id.bt_to_seat_picker).setOnClickListener {
-            val movieBookingInfo = MovieBookingInfo(
+            val movieBookingInfo = MovieBookingInfoUiModel(
                 movieData,
                 DateFormatter.format(LocalDate.parse(dateSpinner.selectedItem.toString())),
                 timeSpinner.selectedItem.toString(),
@@ -169,7 +169,7 @@ class MovieDetailActivity : BackButtonActivity() {
         private const val TIME_KEY = "time"
         private const val MIN_TICKET = "1"
 
-        fun intent(context: Context, movie: Movie): Intent {
+        fun intent(context: Context, movie: MovieUIModel): Intent {
             val intent = Intent(context, MovieDetailActivity::class.java)
             intent.putExtra(BundleKeys.MOVIE_DATA_KEY, movie)
             return intent

@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.DateFormatter
 import woowacourse.movie.R
-import woowacourse.movie.movie.Movie
+import woowacourse.movie.movie.MovieUIModel
 
 class MovieRecyclerViewHolder(
     private val view: View,
@@ -27,7 +27,7 @@ class MovieRecyclerViewHolder(
         }
     }
 
-    fun bind(movieData: Movie) {
+    fun bind(movieData: MovieUIModel) {
         poster.setImageResource(movieData.poster)
         title.text = movieData.title
         screeningPeriod.text = view.context.getString(

@@ -6,7 +6,7 @@ import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.movie.MovieBookingSeatInfo
+import woowacourse.movie.movie.MovieBookingSeatInfoUIModel
 
 class BookHistoryViewHolder(
     private val view: View,
@@ -22,7 +22,7 @@ class BookHistoryViewHolder(
         }
     }
 
-    fun bind(movieBookingSeatInfo: MovieBookingSeatInfo) {
+    fun bind(movieBookingSeatInfo: MovieBookingSeatInfoUIModel) {
         val dateAndTime = movieBookingSeatInfo.movieBookingInfo.formatBookHistoryDate()
         val spannableStringBuilder = SpannableStringBuilder(dateAndTime)
         val grayColorSpan =

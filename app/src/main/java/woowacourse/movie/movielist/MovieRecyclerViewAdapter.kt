@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.Ad
 import woowacourse.movie.R
-import woowacourse.movie.movie.Movie
+import woowacourse.movie.movie.MovieUIModel
 
 class MovieRecyclerViewAdapter(
-    private val movies: List<Movie>,
+    private val movies: List<MovieUIModel>,
     private val ad: Ad,
     private val movieOnItemClicked: (Int) -> Unit,
     private val adOnItemClicked: (Ad) -> Unit,

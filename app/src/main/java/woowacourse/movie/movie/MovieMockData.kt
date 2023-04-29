@@ -5,7 +5,7 @@ import java.time.LocalDate
 
 object MovieMockData {
     val movies = listOf(
-        Movie(
+        MovieUIModel(
             R.drawable.harry_potter,
             "해리포터",
             123,
@@ -15,7 +15,7 @@ object MovieMockData {
             LocalDate.of(2023, 4, 1),
             LocalDate.of(2023, 5, 10),
         ),
-        Movie(
+        MovieUIModel(
             R.drawable.interstellar,
             "인터스텔라",
             169,
@@ -23,7 +23,7 @@ object MovieMockData {
             LocalDate.of(2023, 4, 4),
             LocalDate.of(2023, 7, 4),
         ),
-        Movie(
+        MovieUIModel(
             R.drawable.ironman,
             "아이언맨",
             150,
@@ -31,7 +31,7 @@ object MovieMockData {
             LocalDate.of(2023, 4, 29),
             LocalDate.of(2023, 7, 8),
         ),
-        Movie(
+        MovieUIModel(
             R.drawable.hansan,
             "한산",
             169,
@@ -39,7 +39,7 @@ object MovieMockData {
             LocalDate.of(2023, 4, 1),
             LocalDate.of(2023, 6, 28),
         ),
-        Movie(
+        MovieUIModel(
             R.drawable.tazza,
             "타짜",
             130,

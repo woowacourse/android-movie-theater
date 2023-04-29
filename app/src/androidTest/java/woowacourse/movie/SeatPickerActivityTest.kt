@@ -27,8 +27,8 @@ import org.hamcrest.TypeSafeMatcher
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.activity.SeatPickerActivity
-import woowacourse.movie.movie.Movie
-import woowacourse.movie.movie.MovieBookingInfo
+import woowacourse.movie.movie.MovieBookingInfoUiModel
+import woowacourse.movie.movie.MovieUIModel
 import java.time.LocalDate
 
 class SeatPickerActivityTest {
@@ -37,8 +37,8 @@ class SeatPickerActivityTest {
         Intent(ApplicationProvider.getApplicationContext(), SeatPickerActivity::class.java)
             .putExtra(
                 BundleKeys.MOVIE_BOOKING_INFO_KEY,
-                MovieBookingInfo(
-                    movieInfo = Movie(
+                MovieBookingInfoUiModel(
+                    movieInfo = MovieUIModel(
                         R.drawable.hansan,
                         "한산",
                         169,

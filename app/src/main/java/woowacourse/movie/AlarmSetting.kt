@@ -5,7 +5,9 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
-import woowacourse.movie.movie.MovieBookingSeatInfo
+import com.woowacourse.domain.BookHistories
+import com.woowacourse.domain.MovieBookingSeatInfo
+import woowacourse.movie.movie.toPresentation
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -29,7 +31,7 @@ class AlarmSetting {
     ): PendingIntent {
         val intent = Intent(context, MovieReminder::class.java)
         val notificationId = BookHistories.items.size
-        intent.putExtra(BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY, movieBookingSeatInfo)
+        intent.putExtra(BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY, movieBookingSeatInfo.toPresentation())
         intent.putExtra(BundleKeys.ALARM_NOTIFICATION_ID, notificationId)
 
         return PendingIntent.getBroadcast(

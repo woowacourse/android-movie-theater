@@ -9,7 +9,7 @@ import woowacourse.movie.BundleKeys
 import woowacourse.movie.BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY
 import woowacourse.movie.R
 import woowacourse.movie.getSerializableCompat
-import woowacourse.movie.movie.MovieBookingSeatInfo
+import woowacourse.movie.movie.MovieBookingSeatInfoUIModel
 
 class BookCompleteActivity : BackButtonActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,13 +21,13 @@ class BookCompleteActivity : BackButtonActivity() {
         initView(movieBookingData)
     }
 
-    private fun getMovieBookingSeatInfo(): MovieBookingSeatInfo {
+    private fun getMovieBookingSeatInfo(): MovieBookingSeatInfoUIModel {
         return intent.getSerializableCompat(MOVIE_BOOKING_SEAT_INFO_KEY)
-            ?: MovieBookingSeatInfo.dummyData
+            ?: MovieBookingSeatInfoUIModel.dummyData
     }
 
-    private fun displayToastIfDummyData(movieBookingData: MovieBookingSeatInfo) {
-        if (movieBookingData == MovieBookingSeatInfo.dummyData) {
+    private fun displayToastIfDummyData(movieBookingData: MovieBookingSeatInfoUIModel) {
+        if (movieBookingData == MovieBookingSeatInfoUIModel.dummyData) {
             Toast.makeText(
                 this,
                 getString(R.string.cant_get_movie_booking_data),
@@ -36,7 +36,7 @@ class BookCompleteActivity : BackButtonActivity() {
         }
     }
 
-    private fun initView(movieBookingSeatInfo: MovieBookingSeatInfo) {
+    private fun initView(movieBookingSeatInfo: MovieBookingSeatInfoUIModel) {
         findViewById<TextView>(R.id.tv_book_movie_title).text =
             movieBookingSeatInfo.movieBookingInfo.movieInfo.title
         findViewById<TextView>(R.id.tv_book_date).text =
@@ -52,7 +52,7 @@ class BookCompleteActivity : BackButtonActivity() {
     }
 
     companion object {
-        fun intent(context: Context, movieBookingSeatInfo: MovieBookingSeatInfo): Intent {
+        fun intent(context: Context, movieBookingSeatInfo: MovieBookingSeatInfoUIModel): Intent {
             val intent = Intent(context, BookCompleteActivity::class.java)
             intent.putExtra(BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY, movieBookingSeatInfo)
             return intent

@@ -3,7 +3,8 @@ package woowacourse.movie
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.movie.MovieBookingSeatInfo
+import com.woowacourse.domain.MovieBookingSeatInfo
+import woowacourse.movie.movie.toPresentation
 
 class BookHistoryRecyclerViewAdapter(
     private val bookHistory: List<MovieBookingSeatInfo>,
@@ -18,7 +19,7 @@ class BookHistoryRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = bookHistory[position]
-        (holder as BookHistoryViewHolder).bind(item)
+        (holder as BookHistoryViewHolder).bind(item.toPresentation())
     }
 
     override fun getItemCount(): Int = bookHistory.size

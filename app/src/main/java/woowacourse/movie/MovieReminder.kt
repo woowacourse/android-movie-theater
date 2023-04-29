@@ -11,7 +11,7 @@ import android.graphics.Color
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.activity.BookCompleteActivity
-import woowacourse.movie.movie.MovieBookingSeatInfo
+import woowacourse.movie.movie.MovieBookingSeatInfoUIModel
 
 class MovieReminder : BroadcastReceiver() {
     lateinit var notificationManager: NotificationManager
@@ -22,7 +22,7 @@ class MovieReminder : BroadcastReceiver() {
         if (!canPush) return
 
         val movieBookingSeatInfo =
-            intent.getSerializableCompat<MovieBookingSeatInfo>(BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY)
+            intent.getSerializableCompat<MovieBookingSeatInfoUIModel>(BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY)
                 ?: return
         notificationManager = context.getSystemService(
             Context.NOTIFICATION_SERVICE
@@ -58,7 +58,7 @@ class MovieReminder : BroadcastReceiver() {
 
     private fun deliverNotification(
         context: Context,
-        movieBookingSeatInfo: MovieBookingSeatInfo,
+        movieBookingSeatInfo: MovieBookingSeatInfoUIModel,
         id: Int
     ) {
         val contentIntent = BookCompleteActivity.intent(context, movieBookingSeatInfo)
@@ -75,7 +75,7 @@ class MovieReminder : BroadcastReceiver() {
 
     private fun getBuilder(
         context: Context,
-        movieBookingSeatInfo: MovieBookingSeatInfo,
+        movieBookingSeatInfo: MovieBookingSeatInfoUIModel,
         contentPendingIntent: PendingIntent?
     ) = NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID).apply {
         setSmallIcon(R.drawable.noti_icon_24)
