@@ -2,10 +2,11 @@ package woowacourse.movie
 
 import android.app.Application
 import android.content.IntentFilter
-import android.content.SharedPreferences
 import woowacourse.movie.broadcastreceiver.AlarmReceiver
+import woowacourse.movie.data.SettingsData
 
 class MovieTheaterApplication : Application() {
+
     override fun onCreate() {
         super.onCreate()
         initAlarmReceiver()
@@ -18,11 +19,6 @@ class MovieTheaterApplication : Application() {
     }
 
     private fun initSettingsPreference() {
-        settingsPreference = getSharedPreferences(SETTINGS, MODE_PRIVATE)
-    }
-
-    companion object {
-        private const val SETTINGS = "settings"
-        lateinit var settingsPreference: SharedPreferences
+        SettingsData.init(applicationContext)
     }
 }

@@ -12,15 +12,15 @@ import woowacourse.movie.R
 import woowacourse.movie.presentation.bookedticketlist.BookedTicketsFragment
 import woowacourse.movie.presentation.movielist.MovieListFragment
 import woowacourse.movie.presentation.settings.SettingsFragment
-import woowacourse.movie.presentation.util.SharedPreferenceUtil
+import woowacourse.movie.presentation.util.SettingsNotificationData
 import woowacourse.movie.presentation.util.replace
 
 class MainActivity : AppCompatActivity() {
 
     private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
+        ActivityResultContracts.RequestPermission(),
     ) { isGranted: Boolean ->
-        SharedPreferenceUtil.setNotificationSettings(isGranted)
+        SettingsNotificationData.setNotification(isGranted)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     private fun requestNotificationPermission() {
         if (ContextCompat.checkSelfPermission(
                 this,
-                android.Manifest.permission.POST_NOTIFICATIONS
+                android.Manifest.permission.POST_NOTIFICATIONS,
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

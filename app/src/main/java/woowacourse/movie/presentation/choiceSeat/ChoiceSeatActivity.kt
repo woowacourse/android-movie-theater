@@ -12,7 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import woowacourse.movie.R
-import woowacourse.movie.data.BookedTickets
+import woowacourse.movie.data.BookedTicketsData
 import woowacourse.movie.data.MovieData
 import woowacourse.movie.domain.model.rules.SeatsPayment
 import woowacourse.movie.domain.model.tools.Money
@@ -25,7 +25,7 @@ import woowacourse.movie.domain.model.tools.seat.Theater
 import woowacourse.movie.presentation.complete.CompleteActivity
 import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.model.ReservationModel
-import woowacourse.movie.presentation.util.SharedPreferenceUtil
+import woowacourse.movie.presentation.util.SettingsNotificationData
 
 class ChoiceSeatActivity : AppCompatActivity() {
 
@@ -83,11 +83,13 @@ class ChoiceSeatActivity : AppCompatActivity() {
     private fun confirmBookMovie() {
         val movie = MovieData.findMovieById(reservation.movieId).toPresentation()
         val ticketModel = movie.reserve(reservation, seats)
-        BookedTickets.tickets.add(ticketModel)
-        if (SharedPreferenceUtil.getNotificationSettings()) MovieNoticeAlarmManager(
-            this,
-            ticketModel
-        ).setAlarm(ticketModel.bookedDateTime)
+        BookedTicketsData.tickets.add(ticketModel)
+        if (SettingsNotificationData.getNotification()) {
+            MovieNoticeAlarmManager(
+                this,
+                ticketModel,
+            ).setAlarm(ticketModel.bookedDateTime)
+        }
         startActivity(CompleteActivity.getIntent(this, ticketModel))
         finishAffinity()
     }
@@ -173,7 +175,7 @@ class ChoiceSeatActivity : AppCompatActivity() {
             getString(
                 R.string.seat_format,
                 location.row,
-                (location.number + COLUMN_ADDITION).toString()
+                (location.number + COLUMN_ADDITION).toString(),
             )
     }
 

@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.presentation.util.SharedPreferenceUtil
+import woowacourse.movie.presentation.util.SettingsNotificationData
 
 class SettingsFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_settings, container, false)
@@ -29,10 +29,10 @@ class SettingsFragment : Fragment() {
         val notificationSwitch =
             requireActivity().findViewById<SwitchCompat>(R.id.switchPushPermission)
 
-        notificationSwitch.isChecked = SharedPreferenceUtil.getNotificationSettings()
+        notificationSwitch.isChecked = SettingsNotificationData.getNotification()
 
         notificationSwitch.setOnCheckedChangeListener { _, isChecked ->
-            SharedPreferenceUtil.setNotificationSettings(isChecked)
+            SettingsNotificationData.setNotification(isChecked)
         }
     }
 }
