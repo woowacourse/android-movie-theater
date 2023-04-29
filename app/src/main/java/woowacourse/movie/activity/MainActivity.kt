@@ -11,10 +11,10 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
-import woowacourse.movie.ReservationAlarmReceiver
 import woowacourse.movie.fragment.MovieListFragment
 import woowacourse.movie.fragment.ReservationListFragment
 import woowacourse.movie.fragment.SettingFragment
+import woowacourse.movie.service.ReservationAlarmReceiver
 import woowacourse.movie.view.data.ReservationsViewData
 import woowacourse.movie.view.mapper.ReservationMapper.toView
 import woowacourse.movie.view.repository.MainRepository

@@ -1,6 +1,6 @@
-package woowacourse.movie.view
+package woowacourse.movie
 
-import woowacourse.movie.Setting
+import woowacourse.movie.view.setting.Setting
 
 class SettingMock : Setting {
     private val settings: MutableMap<String, Boolean> = mutableMapOf()

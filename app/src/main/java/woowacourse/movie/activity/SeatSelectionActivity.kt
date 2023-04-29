@@ -9,14 +9,14 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import woowacourse.movie.Alarm
 import woowacourse.movie.R
-import woowacourse.movie.ReservationAlarmReceiver
 import woowacourse.movie.domain.discountPolicy.Discount
 import woowacourse.movie.domain.discountPolicy.MovieDay
 import woowacourse.movie.domain.discountPolicy.OffTime
 import woowacourse.movie.domain.reservationNotificationPolicy.MovieReservationNotification
 import woowacourse.movie.domain.reservationNotificationPolicy.ReservationNotificationPolicy
+import woowacourse.movie.service.Alarm
+import woowacourse.movie.service.ReservationAlarmReceiver
 import woowacourse.movie.view.data.MovieViewData
 import woowacourse.movie.view.data.PriceViewData
 import woowacourse.movie.view.data.ReservationDetailViewData

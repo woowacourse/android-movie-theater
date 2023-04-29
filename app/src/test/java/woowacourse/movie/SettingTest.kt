@@ -2,7 +2,6 @@ package woowacourse.movie
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import woowacourse.movie.view.SettingMock
 
 class SettingTest {
     @Test

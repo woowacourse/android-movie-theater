@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
-import woowacourse.movie.Permission
-import woowacourse.movie.Permission.checkNotificationPermission
-import woowacourse.movie.Permission.requestNotificationPermission
 import woowacourse.movie.R
-import woowacourse.movie.Setting
-import woowacourse.movie.SharedSetting
+import woowacourse.movie.service.Permission
+import woowacourse.movie.service.Permission.checkNotificationPermission
+import woowacourse.movie.service.Permission.requestNotificationPermission
 import woowacourse.movie.view.error.FragmentError.finishWithNullViewError
+import woowacourse.movie.view.setting.Setting
+import woowacourse.movie.view.setting.SharedSetting
 
 class SettingFragment : Fragment() {
 

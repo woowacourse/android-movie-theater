@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.service
 
 import android.Manifest
 import android.app.PendingIntent
@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import woowacourse.movie.R
 import woowacourse.movie.activity.ReservationResultActivity
 import woowacourse.movie.activity.SeatSelectionActivity
 import woowacourse.movie.fragment.SettingFragment
@@ -16,6 +17,8 @@ import woowacourse.movie.view.data.ReservationViewData
 import woowacourse.movie.view.error.BroadcastReceiverError.returnWithError
 import woowacourse.movie.view.error.ViewError
 import woowacourse.movie.view.getSerializable
+import woowacourse.movie.view.setting.Setting
+import woowacourse.movie.view.setting.SharedSetting
 
 class ReservationAlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
