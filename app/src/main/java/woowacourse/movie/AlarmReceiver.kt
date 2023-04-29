@@ -20,11 +20,8 @@ import woowacourse.movie.dto.movie.BookingMovieDto
 
 class AlarmReceiver : BroadcastReceiver() {
 
-    private lateinit var settingPreference: SettingPreference
-
     override fun onReceive(context: Context, intent: Intent) {
-        settingPreference = SettingPreference(context)
-        if (intent.action == ALARM_CODE && settingPreference.setting) {
+        if (intent.action == ALARM_CODE && SettingPreference.getSetting(context)) {
             createNotificationChannel(context)
 
             val bookingMovie = intent.getSerializableExtra(BOOKING_MOVIE_KEY) as BookingMovieDto
