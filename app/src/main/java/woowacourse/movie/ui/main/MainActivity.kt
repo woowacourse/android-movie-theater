@@ -12,8 +12,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.notification.NotificationChannelInfo
 import woowacourse.movie.notification.NotificationGenerator
-import woowacourse.movie.permission.PermissionLauncher
-import woowacourse.movie.permission.PermissionLauncher.getPermissionLauncher
+import woowacourse.movie.permission.getPermissionLauncher
+import woowacourse.movie.permission.requestPermission
 import woowacourse.movie.util.SettingSharedPreference
 import woowacourse.movie.util.shortToast
 
@@ -71,7 +71,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun replaceFragment(tag: String): Boolean {
         supportFragmentManager.findFragmentByTag(tag) ?: when (tag) {
-            BOOKING_HISTORY_FRAGMENT -> fragmentMap[BOOKING_HISTORY_FRAGMENT] = BookingHistoryFragment()
+            BOOKING_HISTORY_FRAGMENT -> fragmentMap[BOOKING_HISTORY_FRAGMENT] =
+                BookingHistoryFragment()
             HOME_FRAGMENT -> fragmentMap[HOME_FRAGMENT] = HomeFragment()
             SETTING_FRAGMENT -> fragmentMap[SETTING_FRAGMENT] = SettingFragment()
             else -> return false
@@ -88,7 +89,7 @@ class MainActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun requestNotificationPermission() {
-        PermissionLauncher.requestPermission(
+        requestPermission(
             context = this,
             launcher = permissionLauncher,
             permission = Manifest.permission.POST_NOTIFICATIONS

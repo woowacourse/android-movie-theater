@@ -9,8 +9,8 @@ import android.widget.Switch
 import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.permission.PermissionLauncher
-import woowacourse.movie.permission.PermissionLauncher.getPermissionLauncher
+import woowacourse.movie.permission.getPermissionLauncher
+import woowacourse.movie.permission.requestPermission
 import woowacourse.movie.util.SettingSharedPreference
 
 class SettingFragment : Fragment() {
@@ -55,7 +55,7 @@ class SettingFragment : Fragment() {
     private fun setCheckedChangedListener(switch: Switch) {
         switch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                PermissionLauncher.requestPermission(
+                requestPermission(
                     switch.context,
                     permissionLauncher,
                     Manifest.permission.POST_NOTIFICATIONS
