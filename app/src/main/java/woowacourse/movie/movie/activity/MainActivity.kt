@@ -26,10 +26,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         requestNotificationPermission()
-        binding.navigationBar?.let { setNavigationBar(it) }
+        binding.navigationBar?.let { bindNavigationBar(it) }
     }
 
-    private fun setNavigationBar(bottomNav: BottomNavigationView) {
+    private fun bindNavigationBar(bottomNav: BottomNavigationView) {
         bottomNav.run {
             setOnItemSelectedListener {
                 onNavigationItemSelected(it)

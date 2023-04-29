@@ -18,12 +18,15 @@ class SettingFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_setting, container, false)
         val settingPreference = this.activity?.let { SettingPreference(it.applicationContext) }
-
         val switch = view.findViewById<SwitchCompat>(R.id.push_alarm_switch)
-        switch.isChecked = settingPreference?.setting ?: throw IllegalArgumentException()
+        settingPreference?.let { bindSwitch(switch, it) }
+        return view
+    }
+
+    private fun bindSwitch(switch: SwitchCompat, settingPreference: SettingPreference) {
+        switch.isChecked = settingPreference.setting
         switch.setOnCheckedChangeListener { _, isChecked ->
             settingPreference.setting = isChecked
         }
-        return view
     }
 }
