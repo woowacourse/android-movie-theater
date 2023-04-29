@@ -11,7 +11,7 @@ import woowacourse.movie.R
 import woowacourse.movie.activity.TicketActivity
 import woowacourse.movie.dto.BookingHistoryDto
 import woowacourse.movie.dto.movie.BookingMovieDto
-import woowacourse.movie.history.HistoryRVAdapter
+import woowacourse.movie.history.HistoryRecyclerViewAdapter
 import woowacourse.movie.movielist.OnClickListener
 
 class HistoryFragment : Fragment() {
@@ -33,7 +33,7 @@ class HistoryFragment : Fragment() {
 
     private fun setUpHistoryDatas(view: View) {
         val historyRecyclerView = view.findViewById<RecyclerView>(R.id.history_rv)
-        val historyRVAdapter = HistoryRVAdapter(
+        val historyRVAdapter = HistoryRecyclerViewAdapter(
             BookingHistoryDto.getHistory(),
         )
 

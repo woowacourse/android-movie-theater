@@ -7,7 +7,7 @@ import woowacourse.movie.R
 import woowacourse.movie.dto.movie.BookingMovieDto
 import woowacourse.movie.movielist.OnClickListener
 
-class HistoryRVAdapter(
+class HistoryRecyclerViewAdapter(
     private val histories: List<BookingMovieDto>,
 ) :
     RecyclerView.Adapter<HistoryViewHolder>() {

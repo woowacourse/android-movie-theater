@@ -13,7 +13,7 @@ import woowacourse.movie.activity.MovieDetailActivity
 import woowacourse.movie.dto.AdDto
 import woowacourse.movie.dto.movie.MovieDto
 import woowacourse.movie.dto.movie.MovieDummy
-import woowacourse.movie.movielist.MovieRVAdapter
+import woowacourse.movie.movielist.MovieRecyclerViewAdapter
 import woowacourse.movie.movielist.OnClickListener
 
 class HomeFragment : Fragment() {
@@ -24,7 +24,7 @@ class HomeFragment : Fragment() {
 
     private fun setUpMovieDatas(view: View) {
         val movieRV = view.findViewById<RecyclerView>(R.id.movie_rv)
-        val movieRVAdapter = MovieRVAdapter(
+        val movieRVAdapter = MovieRecyclerViewAdapter(
             MovieDummy.movieDatas,
             AdDto.getAdData(),
         )
@@ -36,7 +36,7 @@ class HomeFragment : Fragment() {
         movieRVAdapter.notifyDataSetChanged()
     }
 
-    private fun onMovieItemClickListener(adapter: MovieRVAdapter) {
+    private fun onMovieItemClickListener(adapter: MovieRecyclerViewAdapter) {
         adapter.itemMovieClick = object : OnClickListener<MovieDto> {
             override fun onClick(item: MovieDto) {
                 val intent = Intent(context, MovieDetailActivity::class.java)
@@ -46,7 +46,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun onAdItemClickListener(adapter: MovieRVAdapter) {
+    private fun onAdItemClickListener(adapter: MovieRecyclerViewAdapter) {
         adapter.itemAdClick = object : OnClickListener<AdDto> {
             override fun onClick(item: AdDto) {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))

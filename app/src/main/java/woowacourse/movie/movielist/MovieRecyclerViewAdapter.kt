@@ -9,7 +9,7 @@ import woowacourse.movie.R
 import woowacourse.movie.dto.AdDto
 import woowacourse.movie.dto.movie.MovieDto
 
-class MovieRVAdapter(
+class MovieRecyclerViewAdapter(
     private val movies: List<MovieDto>,
     private val ad: AdDto,
 ) :
