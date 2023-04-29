@@ -87,8 +87,6 @@ class SettingFragment : Fragment() {
         private val settingFragment = SettingFragment()
         internal const val PUSH_ALLOW_KEY = "push_allow_key"
 
-        fun newInstance(): SettingFragment = settingFragment.apply {
-            arguments = Bundle().apply {}
-        }
+        fun getInstance(): SettingFragment = settingFragment
     }
 }

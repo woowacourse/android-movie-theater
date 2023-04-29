@@ -72,8 +72,6 @@ class HomeFragment : Fragment() {
 
         private val homeFragment = HomeFragment()
 
-        fun newInstance(): HomeFragment = homeFragment.apply {
-            arguments = Bundle().apply {}
-        }
+        fun getIntance(): HomeFragment = homeFragment
     }
 }

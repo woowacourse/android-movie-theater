@@ -32,19 +32,19 @@ class MainActivity : AppCompatActivity() {
             when (menu.itemId) {
                 R.id.menu -> {
                     supportFragmentManager.commit {
-                        replace(R.id.fragment_container_view, HistoryFragment.newInstance())
+                        replace(R.id.fragment_container_view, HistoryFragment.getInstance())
                     }
                 }
 
                 R.id.home -> {
                     supportFragmentManager.commit {
-                        replace(R.id.fragment_container_view, HomeFragment.newInstance())
+                        replace(R.id.fragment_container_view, HomeFragment.getIntance())
                     }
                 }
 
                 R.id.setting -> {
                     supportFragmentManager.commit {
-                        replace(R.id.fragment_container_view, SettingFragment.newInstance())
+                        replace(R.id.fragment_container_view, SettingFragment.getInstance())
                     }
                 }
             }
