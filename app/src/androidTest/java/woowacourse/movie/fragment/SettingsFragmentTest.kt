@@ -3,8 +3,10 @@ package woowacourse.movie.fragment
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.intent.rule.IntentsTestRule
+import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import org.hamcrest.CoreMatchers.`is`
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -32,6 +34,6 @@ class SettingsFragmentTest {
         onView(withId(R.id.push_notification_switch))
             .perform(click())
 
-        assert(SettingsStorage.getPushNotification())
+        assertThat(SettingsStorage.getPushNotification(), `is`(true))
     }
 }
