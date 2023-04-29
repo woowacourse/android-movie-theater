@@ -1,18 +1,17 @@
 package woowacourse.movie.view.moviemain
 
 import android.Manifest
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.AlarmPreference
 import woowacourse.movie.R
+import woowacourse.movie.util.requestRequiredPermissions
 import woowacourse.movie.view.moviemain.movielist.MovieListFragment
 import woowacourse.movie.view.moviemain.reservationlist.ReservationListFragment
 import woowacourse.movie.view.moviemain.setting.SettingFragment
@@ -22,8 +21,6 @@ class MovieMainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_main)
-
-        requestNotificationPermission()
 
         val navigation = findViewById<BottomNavigationView>(R.id.navigation_view)
 
@@ -45,6 +42,8 @@ class MovieMainActivity : AppCompatActivity() {
             }
         }
         navigation.selectedItemId = R.id.action_home
+
+        requestPermissions()
     }
 
     private inline fun <reified T : Fragment> AppCompatActivity.replaceFragment() {
@@ -54,18 +53,10 @@ class MovieMainActivity : AppCompatActivity() {
         }
     }
 
-    private fun requestNotificationPermission() {
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.POST_NOTIFICATIONS,
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (!shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                }
-            }
-        }
+    private fun requestPermissions() {
+        val permissionsRequired = mutableListOf<String>()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) permissionsRequired.add(Manifest.permission.POST_NOTIFICATIONS)
+        this.requestRequiredPermissions(permissionsRequired, requestPermissionLauncher::launch)
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
