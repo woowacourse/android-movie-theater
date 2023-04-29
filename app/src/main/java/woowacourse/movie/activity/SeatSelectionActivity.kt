@@ -1,9 +1,7 @@
 package woowacourse.movie.activity
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
@@ -12,8 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import domain.Seat
 import domain.Seats
 import woowacourse.movie.AlarmReceiver
-import woowacourse.movie.AlarmReceiver.Companion.ALARM_CODE
-import woowacourse.movie.AlarmReceiver.Companion.REQUEST_CODE
+import woowacourse.movie.MovieAlarmManager
 import woowacourse.movie.R
 import woowacourse.movie.dto.BookingHistoryDto
 import woowacourse.movie.dto.movie.BookingMovieDto
@@ -26,7 +23,6 @@ import woowacourse.movie.mapper.seat.mapToSeats
 import woowacourse.movie.mapper.seat.mapToSeatsDto
 import woowacourse.movie.view.SeatSelectView
 import java.time.LocalDateTime
-import java.time.ZoneId
 
 class SeatSelectionActivity : AppCompatActivity() {
 
@@ -37,9 +33,13 @@ class SeatSelectionActivity : AppCompatActivity() {
     private val movie by lazy { intent.getSerializableExtra(MOVIE_KEY) as MovieDto }
     private val ticketCount by lazy { intent.getSerializableExtra(TICKET_KEY) as TicketCountDto }
     private val enterBtn by lazy { findViewById<TextView>(R.id.enterBtn) }
+    private val movieAlarmManager by lazy { MovieAlarmManager(this) }
+    private val alarmReceiver by lazy { AlarmReceiver() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        registerReceiver(alarmReceiver, IntentFilter(AlarmReceiver.ALARM_CODE))
+
         setContentView(R.layout.activity_seat_selection)
         setUpState(savedInstanceState)
         setMovieTitle()
@@ -151,42 +151,15 @@ class SeatSelectionActivity : AppCompatActivity() {
         val bookingMovie = BookingMovieDto(movie, date, time, ticketCount, seats.mapToSeatsDto())
         val intent = Intent(this, TicketActivity::class.java)
         intent.putExtra(BOOKING_MOVIE_KEY, bookingMovie)
-        putAlarm(bookingMovie)
+        movieAlarmManager.putAlarm(bookingMovie)
         BookingHistoryDto.add(bookingMovie)
         startActivity(intent)
         finish()
     }
 
-    private fun setAlarmTime(bookingMovie: BookingMovieDto): Long {
-        val date = bookingMovie.date.date
-        val time = bookingMovie.time.time
-
-        val movieDateTime = LocalDateTime.of(date, time)
-        val timeZone = ZoneId.of("Asia/Seoul")
-        return movieDateTime.minusMinutes(30).atZone(timeZone).toInstant().toEpochMilli()
-    }
-
-    private fun putAlarm(bookingMovie: BookingMovieDto) {
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-        alarmManager.setExact(
-            AlarmManager.RTC_WAKEUP,
-            setAlarmTime(bookingMovie),
-            createReceiverPendingIntent(bookingMovie),
-        )
-    }
-
-    private fun createReceiverPendingIntent(bookingMovie: BookingMovieDto): PendingIntent {
-        return Intent(this, AlarmReceiver::class.java).let {
-            it.action = ALARM_CODE
-            it.putExtra(BOOKING_MOVIE_KEY, bookingMovie)
-            PendingIntent.getBroadcast(
-                this,
-                REQUEST_CODE,
-                it,
-                PendingIntent.FLAG_IMMUTABLE,
-            )
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(alarmReceiver)
     }
 
     companion object {
