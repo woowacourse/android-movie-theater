@@ -66,7 +66,13 @@ class AlarmReceiver : BroadcastReceiver() {
         val builder = NotificationCompat.Builder(context, CHANNEL_ID).apply {
             setSmallIcon(R.drawable.cute_android)
             setContentTitle(context.getString(R.string.notification_title))
-            setContentText(context.getString(R.string.notification_text, bookingMovie.movie.title, ALARM_TIME))
+            setContentText(
+                context.getString(
+                    R.string.notification_text,
+                    bookingMovie.movie.title,
+                    ALARM_TIME,
+                ),
+            )
             priority = NotificationCompat.PRIORITY_DEFAULT
             setContentIntent(createNotificationPendingIntent(context, bookingMovie))
             setAutoCancel(true)
@@ -75,15 +81,16 @@ class AlarmReceiver : BroadcastReceiver() {
     }
 
     private fun notifyBuilder(context: Context, builder: NotificationCompat.Builder) {
-        with(NotificationManagerCompat.from(context)) {
-            if (ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.POST_NOTIFICATIONS,
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                return
-            }
-            notify(REQUEST_CODE, builder.build())
+        if (ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.POST_NOTIFICATIONS,
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            NotificationManagerCompat.from(context).notify(REQUEST_CODE, builder.build())
+            return
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            (context as MainActivity).requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
     }
 
