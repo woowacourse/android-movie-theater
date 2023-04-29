@@ -4,50 +4,61 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.movie.fragment.HistoryFragment
 import woowacourse.movie.movie.fragment.HomeFragment
 import woowacourse.movie.movie.fragment.SettingFragment
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         requestNotificationPermission()
+        binding.navigationBar?.let { setNavigationBar(it) }
+    }
 
-        val bottomNav = findViewById<BottomNavigationView>(R.id.navigation_bar)
+    private fun setNavigationBar(bottomNav: BottomNavigationView) {
         bottomNav.run {
             setOnItemSelectedListener {
-                when (it.itemId) {
-                    R.id.history -> {
-                        supportFragmentManager.commit {
-                            setReorderingAllowed(true)
-                            replace(R.id.fragment_container_view, HistoryFragment())
-                        }
-                    }
-                    R.id.home -> {
-                        supportFragmentManager.commit {
-                            setReorderingAllowed(true)
-                            replace(R.id.fragment_container_view, HomeFragment())
-                        }
-                    }
-                    R.id.setting -> {
-                        supportFragmentManager.commit {
-                            setReorderingAllowed(true)
-                            replace(R.id.fragment_container_view, SettingFragment())
-                        }
-                    }
-                }
+                onNavigationItemSelected(it)
                 true
             }
             selectedItemId = R.id.home
+        }
+    }
+
+    private fun onNavigationItemSelected(item: MenuItem) {
+        when (item.itemId) {
+            R.id.history -> {
+                supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    replace(R.id.fragment_container_view, HistoryFragment())
+                }
+            }
+            R.id.home -> {
+                supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    replace(R.id.fragment_container_view, HomeFragment())
+                }
+            }
+            R.id.setting -> {
+                supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    replace(R.id.fragment_container_view, SettingFragment())
+                }
+            }
         }
     }
 
