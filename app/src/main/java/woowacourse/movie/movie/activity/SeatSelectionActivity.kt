@@ -4,7 +4,6 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.icu.util.Calendar
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
@@ -16,7 +15,6 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.movie.AlarmReceiver
 import woowacourse.movie.movie.AlarmReceiver.Companion.ALARM_CODE
-import woowacourse.movie.movie.AlarmReceiver.Companion.ALARM_TIME
 import woowacourse.movie.movie.AlarmReceiver.Companion.REQUEST_CODE
 import woowacourse.movie.movie.dto.BookingHistoryDto
 import woowacourse.movie.movie.dto.movie.BookingMovieDto
@@ -30,6 +28,7 @@ import woowacourse.movie.movie.mapper.seat.mapToSeatsDto
 import woowacourse.movie.movie.utils.getParcelableCompat
 import woowacourse.movie.movie.view.SeatSelectView
 import java.time.LocalDateTime
+import java.time.ZoneId
 
 class SeatSelectionActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySeatSelectionBinding
@@ -160,18 +159,9 @@ class SeatSelectionActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun setCalendar(bookingMovie: BookingMovieDto): Calendar {
-        val date = bookingMovie.date.date
-        val time = bookingMovie.time.time
-
-        return Calendar.getInstance().apply {
-            timeInMillis = System.currentTimeMillis()
-            set(Calendar.DAY_OF_YEAR, date.year)
-            set(Calendar.DAY_OF_MONTH, date.monthValue)
-            set(Calendar.DATE, date.dayOfMonth)
-            set(Calendar.HOUR_OF_DAY, time.hour)
-            set(Calendar.MINUTE, time.minusMinutes(ALARM_TIME.toLong()).minute)
-        }
+    private fun setDateTime(bookingMovie: BookingMovieDto): LocalDateTime {
+        val dateTime = LocalDateTime.of(bookingMovie.date.date, bookingMovie.time.time)
+        return dateTime.minusMinutes(30L)
     }
 
     private fun putAlarm(bookingMovie: BookingMovieDto) {
@@ -179,7 +169,7 @@ class SeatSelectionActivity : AppCompatActivity() {
 
         alarmManager.setExact(
             AlarmManager.RTC_WAKEUP,
-            setCalendar(bookingMovie).timeInMillis,
+            setDateTime(bookingMovie).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(),
             createReceiverPendingIntent(bookingMovie),
         )
     }
