@@ -2,35 +2,25 @@ package woowacourse.movie.ui.fragment.movieList
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.data.AdvRepository
 import woowacourse.movie.data.MovieRepository
+import woowacourse.movie.main.MainActivity
 import woowacourse.movie.model.AdvState
 import woowacourse.movie.model.MovieState
-import woowacourse.movie.ui.adv.AdvDetailActivity
-import woowacourse.movie.main.MainActivity
 import woowacourse.movie.ui.adapter.MovieListAdapter
+import woowacourse.movie.ui.adv.AdvDetailActivity
 import woowacourse.movie.ui.itemModel.AdvItemModel
 import woowacourse.movie.ui.itemModel.MovieItemModel
 import woowacourse.movie.ui.reservation.MovieDetailActivity
 
-class MovieListFragment : Fragment() {
+class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
 
     private lateinit var movieListView: RecyclerView
     private lateinit var adapter: MovieListAdapter
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_movie_list, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -60,11 +50,5 @@ class MovieListFragment : Fragment() {
         val intent = Intent(activity, AdvDetailActivity::class.java)
         intent.putExtra(MainActivity.KEY_ADV, adbState)
         startActivity(intent)
-    }
-
-    companion object {
-
-        internal const val KEY_MOVIE = "key_movie"
-        internal const val KEY_ADV = "key_adb"
     }
 }
