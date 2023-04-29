@@ -25,9 +25,6 @@
             android:name=".presentation.view.main.home.moviedetail.MovieDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.view.main.home.MovieListFragment"
-            android:exported="true"></activity>
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

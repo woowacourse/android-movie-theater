@@ -106,10 +106,10 @@ class MovieDetailActivity : BackButtonActivity() {
                 if (restoreInstanceFlag && savedInstanceState != null) {
                     timeSpinner.setSelection(
                         (
-                                savedInstanceState.getString(MOVIE_INFO_TIME_BUNDLE_KEY)
-                                    ?: movieSchedule.getScheduleTimes(dateSpinner.selectedItem.toString())
-                                        .first()
-                                ).toInt()
+                            savedInstanceState.getString(MOVIE_INFO_TIME_BUNDLE_KEY)
+                                ?: movieSchedule.getScheduleTimes(dateSpinner.selectedItem.toString())
+                                    .first()
+                            ).toInt()
                     )
                     restoreInstanceFlag = false
                 }

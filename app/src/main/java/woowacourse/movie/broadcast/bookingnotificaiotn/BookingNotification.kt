@@ -41,5 +41,4 @@ class BookingNotification(private val context: Context, private val pendingInten
         private const val CHANNEL_NAME = "BOOKING_NOTIFICATION_CHANNEL"
         private const val CHANNEL_DESCRIPTION = "BOOKING_NOTIFICATION_CHANNEL"
     }
-
 }

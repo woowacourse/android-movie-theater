@@ -30,7 +30,6 @@ class BookingAlarmReceiver : BroadcastReceiver() {
         sendNotification(context, pendingIntent, reservationResult)
     }
 
-
     private fun sendNotification(
         context: Context?,
         pendingIntent: PendingIntent,
@@ -78,5 +77,4 @@ class BookingAlarmReceiver : BroadcastReceiver() {
     companion object {
         const val RESERVATION_INTENT_KEY = "RESERVATION_INTENT_KEY"
     }
-
 }

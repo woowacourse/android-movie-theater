@@ -208,14 +208,13 @@ class SeatPickerActivity : BackButtonActivity() {
 
         val notificationTime =
             screeningDateTime.atZone(ZoneId.of("Asia/Seoul")).toInstant().toEpochMilli() -
-                    TIME_MILLS_OF_HALF_HOUR
+                TIME_MILLS_OF_HALF_HOUR
 
         alarmManager.set(
             AlarmManager.RTC_WAKEUP,
             notificationTime,
             alarmIntent
         )
-
     }
 
     private fun createAlarmIntent(reservation: Reservation): PendingIntent =

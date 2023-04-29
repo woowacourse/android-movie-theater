@@ -5,10 +5,9 @@ import android.view.View
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.databinding.ItemAdvertiseBinding
 
 class AdListViewHolder(
-    rootView : View
+    rootView: View
 ) : RecyclerView.ViewHolder(rootView) {
     private val advertise = rootView.findViewById<ImageView>(R.id.iv_advertise)
     fun bind(ad: Drawable) {

@@ -15,7 +15,6 @@ import woowacourse.movie.R
 class SettingFragment : Fragment(R.layout.fragment_setting) {
     private val switchSettingAlarm by lazy { requireView().findViewById<SwitchCompat>(R.id.switch_setting_alarm) }
 
-
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
@@ -58,5 +57,4 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
         }
         return true
     }
-
 }

@@ -10,19 +10,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.presentation.view.main.booklist.BookListFragment
 import woowacourse.movie.presentation.view.main.home.MovieListFragment
 import woowacourse.movie.presentation.view.main.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
-    private val bottomNavigation : BottomNavigationView by lazy { findViewById(R.id.bottom_navigation) }
+    private val bottomNavigation: BottomNavigationView by lazy { findViewById(R.id.bottom_navigation) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_main)
 
         requestNotificationPermission()
         initBottomNavigation()
@@ -52,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun changeFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-            .replace(binding.container.id, fragment).commit()
+            .replace(R.id.container, fragment).commit()
     }
 
     private fun requestNotificationPermission() {
