@@ -1,16 +1,15 @@
 package woowacourse.movie.activity
 
-import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import woowacourse.movie.Alarm
 import woowacourse.movie.R
 import woowacourse.movie.ReservationAlarmReceiver
 import woowacourse.movie.domain.discountPolicy.Discount
@@ -31,9 +30,7 @@ import woowacourse.movie.view.mapper.ReservationDetailMapper.toDomain
 import woowacourse.movie.view.repository.SeatSelectionRepository
 import woowacourse.movie.view.widget.SeatTableLayout
 import java.text.NumberFormat
-import java.time.LocalDateTime
 import java.util.Locale
-import java.util.TimeZone
 
 class SeatSelectionActivity : AppCompatActivity() {
     private val seatSelectionRepository: SeatSelectionRepository = SeatSelectionRepository()
@@ -59,6 +56,7 @@ class SeatSelectionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seat_selection)
 
+        Alarm.makeAlarmReceiver(ACTION_ALARM, applicationContext)
         initSeatSelectionView(savedInstanceState)
     }
 
@@ -167,40 +165,19 @@ class SeatSelectionActivity : AppCompatActivity() {
         val reservation = ReservationViewData(
             movie, reservationDetail, seats, price
         )
-
-        makeReservationAlarm(reservation, MovieReservationNotification)
+        makeReservationAlarm(reservation, MovieReservationNotification, baseContext)
         postReservation(reservation)
         startReservationResultActivity(reservation)
     }
 
     private fun makeReservationAlarm(
         reservation: ReservationViewData,
-        reservationNotificationPolicy: ReservationNotificationPolicy
+        reservationNotificationPolicy: ReservationNotificationPolicy,
+        context: Context
     ) {
-        makeAlarmReceiver(ACTION_ALARM)
-        val alarmIntent = Intent(ACTION_ALARM).let {
-            it.putExtra(ReservationViewData.RESERVATION_EXTRA_NAME, reservation)
-            PendingIntent.getBroadcast(
-                applicationContext, RESERVATION_REQUEST_CODE, it, PendingIntent.FLAG_IMMUTABLE
-            )
-        }
-
+        val pendingIntent: PendingIntent = ReservationAlarmReceiver.from(context, reservation)
         val date = reservationNotificationPolicy.calculateTime(reservation.reservationDetail.date)
-        makeAlarm(date, alarmIntent)
-    }
-
-    private fun makeAlarmReceiver(action: String) {
-        val myReceiver = ReservationAlarmReceiver()
-        val filter = IntentFilter().apply {
-            addAction(action)
-        }
-        registerReceiver(myReceiver, filter)
-    }
-
-    private fun makeAlarm(date: LocalDateTime, intent: PendingIntent) {
-        val milliseconds = date.atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli()
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.set(AlarmManager.RTC, milliseconds, intent)
+        Alarm.makeAlarm(date, pendingIntent, context)
     }
 
     private fun postReservation(
