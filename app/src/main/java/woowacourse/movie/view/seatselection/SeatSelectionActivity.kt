@@ -2,7 +2,6 @@ package woowacourse.movie.view.seatselection
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
@@ -14,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.view.children
+import woowacourse.movie.AlarmPreference
 import woowacourse.movie.R
 import woowacourse.movie.data.ReservationMockRepository
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
@@ -39,7 +39,7 @@ class SeatSelectionActivity : AppCompatActivity() {
     private lateinit var reservationAgency: ReservationAgency
     private var selectedSeatCount = 0
     private var selectedSeats: List<Seat> = emptyList()
-    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var alarmPreference: AlarmPreference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,8 +51,7 @@ class SeatSelectionActivity : AppCompatActivity() {
         initReservationAgency()
         initConfirmReservationButton()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        sharedPreferences =
-            this.getSharedPreferences(SettingFragment.ALARM_SETTING, Context.MODE_PRIVATE)
+        alarmPreference = AlarmPreference(this)
     }
 
     private fun initSeatButtons() {
@@ -184,7 +183,7 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     private fun reserveSeats() {
-        val isAlarmOn = sharedPreferences.getBoolean(SettingFragment.IS_ALARM_ON, false)
+        val isAlarmOn = alarmPreference.getBoolean(SettingFragment.IS_ALARM_ON, false)
 
         val alarmController = AlarmController(this)
         val reservation = reservationAgency.reserve(selectedSeats)

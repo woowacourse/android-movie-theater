@@ -1,8 +1,6 @@
 package woowacourse.movie.view.moviemain.setting
 
 import android.Manifest
-import android.content.Context
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -14,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.switchmaterial.SwitchMaterial
+import woowacourse.movie.AlarmPreference
 import woowacourse.movie.R
 import woowacourse.movie.data.ReservationMockRepository
 import woowacourse.movie.view.AlarmController
@@ -22,14 +21,13 @@ import woowacourse.movie.view.mapper.toUiModel
 class SettingFragment : Fragment() {
 
     private lateinit var alarmController: AlarmController
-    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var alarmPreference: AlarmPreference
     private lateinit var toggle: SwitchMaterial
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        sharedPreferences =
-            requireContext().getSharedPreferences(ALARM_SETTING, Context.MODE_PRIVATE)
+        alarmPreference = AlarmPreference(requireContext())
         alarmController = AlarmController(requireContext())
     }
 
@@ -45,7 +43,7 @@ class SettingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         toggle = view.findViewById(R.id.setting_toggle)
-        val isAlarmOn = sharedPreferences.getBoolean(IS_ALARM_ON, false)
+        val isAlarmOn = alarmPreference.getBoolean(IS_ALARM_ON, false)
 
         initToggle(toggle, isAlarmOn)
     }
@@ -58,13 +56,12 @@ class SettingFragment : Fragment() {
     }
 
     private fun setToggleChangeListener(isChecked: Boolean) {
-        val editor: SharedPreferences.Editor = sharedPreferences.edit()
         if (isChecked && requestNotificationPermission()) {
             resetAlarms()
-            editor.putBoolean(IS_ALARM_ON, true).apply()
+            alarmPreference.putBoolean(IS_ALARM_ON, true)
         } else {
             alarmController.cancelAlarms()
-            editor.putBoolean(IS_ALARM_ON, false).apply()
+            alarmPreference.putBoolean(IS_ALARM_ON, false)
         }
     }
 
@@ -103,7 +100,6 @@ class SettingFragment : Fragment() {
     }
 
     companion object {
-        const val ALARM_SETTING = "ALARM_SETTING"
         const val IS_ALARM_ON = "IS_ALARM_ON"
         const val ALARM_MINUTE_INTERVAL = 30L
     }

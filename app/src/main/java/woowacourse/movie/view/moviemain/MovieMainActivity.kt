@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -15,10 +14,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import woowacourse.movie.AlarmPreference
 import woowacourse.movie.R
 import woowacourse.movie.view.moviemain.movielist.MovieListFragment
 import woowacourse.movie.view.moviemain.reservationlist.ReservationListFragment
 import woowacourse.movie.view.moviemain.setting.SettingFragment
+import woowacourse.movie.view.moviemain.setting.SettingFragment.Companion.IS_ALARM_ON
 import woowacourse.movie.view.seatselection.AlarmReceiver
 
 class MovieMainActivity : AppCompatActivity() {
@@ -88,13 +89,11 @@ class MovieMainActivity : AppCompatActivity() {
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission(),
     ) { isGranted: Boolean ->
-        val sharedPreferences =
-            this.getSharedPreferences(SettingFragment.ALARM_SETTING, Context.MODE_PRIVATE)
-        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+        val sharedPreferences = AlarmPreference(this)
         if (isGranted) {
-            editor.putBoolean(SettingFragment.IS_ALARM_ON, true).apply()
+            sharedPreferences.putBoolean(IS_ALARM_ON, true)
         } else {
-            editor.putBoolean(SettingFragment.IS_ALARM_ON, false).apply()
+            sharedPreferences.putBoolean(IS_ALARM_ON, false)
         }
     }
 }
