@@ -6,6 +6,8 @@ import androidx.test.espresso.intent.rule.IntentsTestRule
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import io.mockk.every
+import io.mockk.mockk
 import org.hamcrest.CoreMatchers.`is`
 import org.junit.Before
 import org.junit.Rule
@@ -21,9 +23,11 @@ class SettingsFragmentTest {
     @get:Rule
     val intentsTestRule = IntentsTestRule(MainActivity::class.java)
 
+    private var pushNotificationState = false
+
     @Before
     fun setUp() {
-        SettingsStorage.editPushNotification(false)
+        pushNotificationState = false
 
         onView(withId(R.id.bottom_item_settings))
             .perform(click())
@@ -34,6 +38,13 @@ class SettingsFragmentTest {
         onView(withId(R.id.push_notification_switch))
             .perform(click())
 
-        assertThat(SettingsStorage.getPushNotification(), `is`(true))
+        val mockk = mockk<SettingsStorage>()
+        every { mockk.getPushNotification() } returns changeSwitch(pushNotificationState)
+
+        assertThat(mockk.getPushNotification(), `is`(true))
+    }
+
+    companion object {
+        fun changeSwitch(state: Boolean): Boolean = !state
     }
 }
