@@ -1,9 +1,6 @@
 package woowacourse.movie.ui.main
 
 import android.Manifest
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -14,22 +11,31 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
-import woowacourse.movie.ui.seat.NotiChannel
+import woowacourse.movie.ui.NotificationChannelInfo
+import woowacourse.movie.ui.NotificationGenerator
+import woowacourse.movie.util.SettingSharedPreference
 import woowacourse.movie.util.shortToast
 
 class MainActivity : AppCompatActivity() {
 
+    private val settingSharedPreference: SettingSharedPreference by lazy {
+        SettingSharedPreference(this)
+    }
     private val fragmentMap = mutableMapOf<String, Fragment?>(
         BOOKING_HISTORY_FRAGMENT to null,
         HOME_FRAGMENT to null,
         SETTING_FRAGMENT to null
     )
+    private val notificationGenerator: NotificationGenerator by lazy {
+        NotificationGenerator(this)
+    }
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (!isGranted) {
-                shortToast("권한 요청을 거부하였습니다")
+                shortToast(getString(R.string.permission_denied))
             } else {
-                shortToast("권한 요청을 승인하였습니다")
+                settingSharedPreference.receivingPushAlarm = true
+                shortToast(getString(R.string.permission_allowed))
             }
         }
 
@@ -38,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         initNavigation()
         requestNotificationPermission()
-        createChannel()
+        notificationGenerator.createChannel(NotificationChannelInfo.BOOKING_ALARM)
     }
 
     private fun initNavigation() {
@@ -60,7 +66,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun replaceFragment(tag: String): Boolean {
         supportFragmentManager.findFragmentByTag(tag) ?: when (tag) {
-            BOOKING_HISTORY_FRAGMENT -> fragmentMap[BOOKING_HISTORY_FRAGMENT] = BookingHistoryFragment()
+            BOOKING_HISTORY_FRAGMENT -> fragmentMap[BOOKING_HISTORY_FRAGMENT] =
+                BookingHistoryFragment()
             HOME_FRAGMENT -> fragmentMap[HOME_FRAGMENT] = HomeFragment()
             SETTING_FRAGMENT -> fragmentMap[SETTING_FRAGMENT] = SettingFragment()
             else -> return false
@@ -87,19 +94,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun createChannel() {
-        val mChannel = NotificationChannel(
-            NotiChannel.BOOKING_ALARM.channelName,
-            NotiChannel.BOOKING_ALARM.channelName,
-            NotificationManager.IMPORTANCE_HIGH,
-        ).apply {
-            description = NotiChannel.BOOKING_ALARM.channelDescription
-        }
-        val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(mChannel)
     }
 
     companion object {
