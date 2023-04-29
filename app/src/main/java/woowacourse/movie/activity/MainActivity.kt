@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
@@ -21,34 +22,29 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         requestNotificationPermission()
+        onClickBottomNavItem()
+    }
 
+    private fun onClickBottomNavItem() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.navigation_bar)
         bottomNav.run {
-            setOnItemSelectedListener {
-                when (it.itemId) {
-                    R.id.history -> {
-                        supportFragmentManager.commit {
-                            setReorderingAllowed(true)
-                            replace(R.id.fragment_container_view, HistoryFragment())
-                        }
-                    }
-
-                    R.id.home -> {
-                        supportFragmentManager.commit {
-                            setReorderingAllowed(true)
-                            replace(R.id.fragment_container_view, HomeFragment())
-                        }
-                    }
-                    R.id.setting -> {
-                        supportFragmentManager.commit {
-                            setReorderingAllowed(true)
-                            replace(R.id.fragment_container_view, SettingFragment())
-                        }
-                    }
-                }
+            val fragments = mapOf(
+                R.id.history to HistoryFragment(),
+                R.id.home to HomeFragment(),
+                R.id.setting to SettingFragment(),
+            )
+            setOnItemSelectedListener { item ->
+                fragments[item.itemId]?.let { setFragment(it) }
                 true
             }
             selectedItemId = R.id.home
+        }
+    }
+
+    fun setFragment(fragment: Fragment) {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(R.id.fragment_container_view, fragment)
         }
     }
 
