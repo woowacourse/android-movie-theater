@@ -14,7 +14,7 @@ object MovieDayPolicy : Policy() {
         return dateTime.dayOfMonth in MOVIE_DAYS
     }
 
-    override fun apply(money: Money): Money = money * MOVIE_DAY_DISCOUNT
+    override fun applyDiscount(money: Money): Money = money * MOVIE_DAY_DISCOUNT
 
     private val MOVIE_DAYS = listOf(10, 20, 30)
     private const val MOVIE_DAY_DISCOUNT = 0.9f

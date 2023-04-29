@@ -9,7 +9,7 @@ import com.example.domain.model.Tickets
 import com.example.domain.model.seat.SeatPosition
 import java.time.LocalDateTime
 
-class TicketSeller(val discountPolicy: DiscountPolicy = DefaultDiscountPolicy()) {
+class TicketSeller(private val discountPolicy: DiscountPolicy = DefaultDiscountPolicy()) {
 
     fun predictMoney(movie: Movie, dateTime: LocalDateTime, seats: List<SeatPosition>): Money {
         return Money(seats.sumOf { discountPolicy.discount(movie, dateTime, it).value })

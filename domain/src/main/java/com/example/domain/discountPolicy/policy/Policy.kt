@@ -12,7 +12,7 @@ sealed class Policy {
         dateTime: LocalDateTime,
         seatPosition: SeatPosition
     ): Money {
-        return if (isDiscountable(movie, dateTime, seatPosition)) apply(money)
+        return if (isDiscountable(movie, dateTime, seatPosition)) applyDiscount(money)
         else money
     }
 
@@ -22,7 +22,7 @@ sealed class Policy {
         seatPosition: SeatPosition
     ): Boolean
 
-    protected abstract fun apply(
+    protected abstract fun applyDiscount(
         money: Money
     ): Money
 }
