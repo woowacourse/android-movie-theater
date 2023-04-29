@@ -1,6 +1,8 @@
 package woowacourse.movie.view
 
 import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -11,6 +13,10 @@ import java.time.ZoneId
 class AlarmController(
     private val context: Context
 ) {
+
+    init {
+        createChannel()
+    }
 
     private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
@@ -55,7 +61,19 @@ class AlarmController(
         alarmManager.cancel(pendingIntent)
     }
 
+    private fun createChannel() {
+        val channel = NotificationChannel(
+            AlarmReceiver.CHANNEL_ID,
+            CHANNEL_NAME,
+            NotificationManager.IMPORTANCE_DEFAULT,
+        )
+        val notificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+    }
+
     companion object {
         private const val ALARM_REQUEST_CODE = 100
+        private const val CHANNEL_NAME = "Reservation Notification"
     }
 }

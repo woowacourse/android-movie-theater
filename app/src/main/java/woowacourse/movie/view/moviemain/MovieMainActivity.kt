@@ -1,9 +1,6 @@
 package woowacourse.movie.view.moviemain
 
 import android.Manifest
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -20,14 +17,11 @@ import woowacourse.movie.view.moviemain.movielist.MovieListFragment
 import woowacourse.movie.view.moviemain.reservationlist.ReservationListFragment
 import woowacourse.movie.view.moviemain.setting.SettingFragment
 import woowacourse.movie.view.moviemain.setting.SettingFragment.Companion.IS_ALARM_ON
-import woowacourse.movie.view.seatselection.AlarmReceiver
 
 class MovieMainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_main)
-
-        createChannel()
 
         requestNotificationPermission()
 
@@ -58,18 +52,6 @@ class MovieMainActivity : AppCompatActivity() {
             setReorderingAllowed(true)
             replace<T>(R.id.fragment_container_view)
         }
-    }
-
-    private fun createChannel() {
-        val name = "Reservation Notification"
-        val channel = NotificationChannel(
-            AlarmReceiver.CHANNEL_ID,
-            name,
-            NotificationManager.IMPORTANCE_DEFAULT,
-        )
-        val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
     }
 
     private fun requestNotificationPermission() {
