@@ -11,36 +11,29 @@ import woowacourse.movie.R
 import woowacourse.movie.movie.activity.TicketActivity
 import woowacourse.movie.movie.dto.BookingHistoryDto
 import woowacourse.movie.movie.dto.movie.BookingMovieDto
-import woowacourse.movie.movie.history.HistoryRVAdapter
+import woowacourse.movie.movie.history.HistoryAdapter
 import woowacourse.movie.movie.movielist.OnClickListener
 
 class HistoryFragment : Fragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_history, container, false)
-        setUpHistoryDatas(view)
+        setUpHistoryData(view)
 
         return view
     }
 
-    private fun setUpHistoryDatas(view: View) {
-        val history_rv = view.findViewById<RecyclerView>(R.id.history_rv)
-        val historyRVAdapter = HistoryRVAdapter(
+    private fun setUpHistoryData(view: View) {
+        val historyRecyclerView = view.findViewById<RecyclerView>(R.id.history_rv)
+        val historyAdapter = HistoryAdapter(
             BookingHistoryDto.getHistory(),
         )
 
-        history_rv.adapter = historyRVAdapter
-        historyRVAdapter.notifyDataSetChanged()
-        historyRVAdapter.itemViewClick = object : OnClickListener<BookingMovieDto> {
+        historyRecyclerView.adapter = historyAdapter
+        historyAdapter.itemViewClick = object : OnClickListener<BookingMovieDto> {
             override fun onClick(item: BookingMovieDto) {
                 val intent = Intent(context, TicketActivity::class.java)
                 intent.putExtra(BOOKING_MOVIE_KEY, item)

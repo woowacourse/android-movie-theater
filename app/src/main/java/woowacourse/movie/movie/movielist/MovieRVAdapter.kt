@@ -13,12 +13,12 @@ class MovieRVAdapter(
     private val movies: List<MovieDto>,
     private val ad: AdDto,
 ) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    RecyclerView.Adapter<ViewHolder>() {
 
     lateinit var itemMovieClick: OnClickListener<MovieDto>
     lateinit var itemAdClick: OnClickListener<AdDto>
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when (ViewType.values()[viewType]) {
             ViewType.MOVIE_VIEW -> {
                 val view = LayoutInflater.from(parent.context)
@@ -42,7 +42,8 @@ class MovieRVAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        if ((position + 1) % DIVIDE_MOVIE_VIEW == 0) return ViewType.AD_VIEW.ordinal else return ViewType.MOVIE_VIEW.ordinal
+        return if ((position + 1) % DIVIDE_MOVIE_VIEW == 0) ViewType.AD_VIEW.ordinal
+        else ViewType.MOVIE_VIEW.ordinal
     }
 
     override fun getItemCount(): Int {

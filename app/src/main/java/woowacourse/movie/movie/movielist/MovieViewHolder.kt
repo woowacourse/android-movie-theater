@@ -13,11 +13,11 @@ class MovieViewHolder(
     private val onMovieClickListener: OnClickListener<MovieDto>,
 ) :
     RecyclerView.ViewHolder(view) {
-    val moviePoster: ImageView = itemView.findViewById(R.id.movie_poster)
-    val movieTitle: TextView = itemView.findViewById(R.id.movie_title)
-    val movieDate: TextView = itemView.findViewById(R.id.movie_date)
-    val runningTime: TextView = itemView.findViewById(R.id.running_time)
-    val bookButton: Button = itemView.findViewById(R.id.book_button)
+    private val moviePoster: ImageView = itemView.findViewById(R.id.movie_poster)
+    private val movieTitle: TextView = itemView.findViewById(R.id.movie_title)
+    private val movieDate: TextView = itemView.findViewById(R.id.movie_date)
+    private val runningTime: TextView = itemView.findViewById(R.id.running_time)
+    private val bookButton: Button = itemView.findViewById(R.id.book_button)
 
     fun bind(movie: MovieDto) {
         moviePoster.setImageResource(movie.moviePoster)

@@ -17,23 +17,27 @@ import woowacourse.movie.movie.movielist.MovieRVAdapter
 import woowacourse.movie.movie.movielist.OnClickListener
 
 class HomeFragment : Fragment() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        setUpMovieData(view)
+        return view
     }
 
-    private fun setUpMovieDatas(view: View) {
-        val movieRV = view.findViewById<RecyclerView>(R.id.movie_rv)
-        val movieRVAdapter = MovieRVAdapter(
+    private fun setUpMovieData(view: View) {
+        val movieRecyclerView = view.findViewById<RecyclerView>(R.id.movie_rv)
+        val movieAdapter = MovieRVAdapter(
             MovieDummy.movieDatas,
             AdDto.getAdData(),
         )
 
-        movieRV.adapter = movieRVAdapter
-        onMovieItemClickListener(movieRVAdapter)
-        onAdItemClickListener(movieRVAdapter)
-
-        movieRVAdapter.notifyDataSetChanged()
+        movieRecyclerView.adapter = movieAdapter
+        onMovieItemClickListener(movieAdapter)
+        onAdItemClickListener(movieAdapter)
     }
 
     private fun onMovieItemClickListener(adapter: MovieRVAdapter) {
@@ -53,18 +57,6 @@ class HomeFragment : Fragment() {
                 startActivity(intent)
             }
         }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
-
-        setUpMovieDatas(view)
-        return view
     }
 
     companion object {
