@@ -32,7 +32,7 @@ class HistoryFragment : Fragment() {
     }
 
     private fun setUpHistoryDatas(view: View) {
-        val history_rv = view.findViewById<RecyclerView>(R.id.history_rv)
+        val historyRecyclerView = view.findViewById<RecyclerView>(R.id.history_rv)
         val historyRVAdapter = HistoryRVAdapter(
             BookingHistoryDto.getHistory(),
         )
