@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.dto.AdDto
 import woowacourse.movie.activity.MovieDetailActivity
+import woowacourse.movie.dto.AdDto
 import woowacourse.movie.dto.movie.MovieDto
 import woowacourse.movie.dto.movie.MovieDummy
 import woowacourse.movie.movielist.MovieRVAdapter
@@ -60,7 +60,6 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         setUpMovieDatas(view)

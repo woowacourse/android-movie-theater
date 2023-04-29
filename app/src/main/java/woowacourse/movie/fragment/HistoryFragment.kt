@@ -25,7 +25,6 @@ class HistoryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_history, container, false)
         setUpHistoryDatas(view)
 
@@ -38,7 +37,7 @@ class HistoryFragment : Fragment() {
             BookingHistoryDto.getHistory(),
         )
 
-        history_rv.adapter = historyRVAdapter
+        historyRecyclerView.adapter = historyRVAdapter
         historyRVAdapter.notifyDataSetChanged()
         historyRVAdapter.itemViewClick = object : OnClickListener<BookingMovieDto> {
             override fun onClick(item: BookingMovieDto) {
