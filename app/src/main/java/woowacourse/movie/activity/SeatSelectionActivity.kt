@@ -11,11 +11,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import domain.Seat
 import domain.Seats
-import woowacourse.movie.R
 import woowacourse.movie.AlarmReceiver
 import woowacourse.movie.AlarmReceiver.Companion.ALARM_CODE
-import woowacourse.movie.AlarmReceiver.Companion.ALARM_TIME
 import woowacourse.movie.AlarmReceiver.Companion.REQUEST_CODE
+import woowacourse.movie.R
 import woowacourse.movie.dto.BookingHistoryDto
 import woowacourse.movie.dto.movie.BookingMovieDto
 import woowacourse.movie.dto.movie.MovieDateDto
@@ -27,7 +26,7 @@ import woowacourse.movie.mapper.seat.mapToSeats
 import woowacourse.movie.mapper.seat.mapToSeatsDto
 import woowacourse.movie.view.SeatSelectView
 import java.time.LocalDateTime
-import java.util.Calendar
+import java.time.ZoneId
 
 class SeatSelectionActivity : AppCompatActivity() {
 
@@ -158,18 +157,13 @@ class SeatSelectionActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun setCalendar(bookingMovie: BookingMovieDto): Calendar {
+    private fun setAlarmTime(bookingMovie: BookingMovieDto): Long {
         val date = bookingMovie.date.date
         val time = bookingMovie.time.time
 
-        return Calendar.getInstance().apply {
-            timeInMillis = System.currentTimeMillis()
-            set(Calendar.DAY_OF_YEAR, date.year)
-            set(Calendar.DAY_OF_MONTH, date.monthValue)
-            set(Calendar.DATE, date.dayOfMonth)
-            set(Calendar.HOUR_OF_DAY, time.hour)
-            set(Calendar.MINUTE, time.minusMinutes(ALARM_TIME.toLong()).minute)
-        }
+        val movieDateTime = LocalDateTime.of(date, time)
+        val timeZone = ZoneId.of("Asia/Seoul")
+        return movieDateTime.minusMinutes(30).atZone(timeZone).toInstant().toEpochMilli()
     }
 
     private fun putAlarm(bookingMovie: BookingMovieDto) {
@@ -177,7 +171,7 @@ class SeatSelectionActivity : AppCompatActivity() {
 
         alarmManager.setExact(
             AlarmManager.RTC_WAKEUP,
-            setCalendar(bookingMovie).timeInMillis,
+            setAlarmTime(bookingMovie),
             createReceiverPendingIntent(bookingMovie),
         )
     }
