@@ -4,5 +4,5 @@ data class SeatPosition(
     val row: SeatRow,
     val column: SeatColumn
 ) {
-    constructor(y: Int, x: Int) : this(SeatRow.valueOf(y), SeatColumn.valueOf(x))
+    constructor(row: Int, column: Int) : this(SeatRow.valueOf(row), SeatColumn.valueOf(column))
 }
