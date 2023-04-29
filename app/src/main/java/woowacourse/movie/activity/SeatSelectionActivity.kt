@@ -27,6 +27,7 @@ import woowacourse.movie.view.error.ViewError
 import woowacourse.movie.view.getSerializable
 import woowacourse.movie.view.mapper.MovieSeatMapper.toDomain
 import woowacourse.movie.view.mapper.ReservationDetailMapper.toDomain
+import woowacourse.movie.view.mapper.ReservationMapper.toDomain
 import woowacourse.movie.view.repository.SeatSelectionRepository
 import woowacourse.movie.view.widget.SeatTableLayout
 import java.text.NumberFormat
@@ -183,7 +184,7 @@ class SeatSelectionActivity : AppCompatActivity() {
     private fun postReservation(
         reservation: ReservationViewData
     ) {
-        seatSelectionRepository.postReservation(reservation)
+        seatSelectionRepository.postReservation(reservation.toDomain())
     }
 
     private fun startReservationResultActivity(

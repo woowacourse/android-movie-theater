@@ -16,6 +16,7 @@ import woowacourse.movie.fragment.MovieListFragment
 import woowacourse.movie.fragment.ReservationListFragment
 import woowacourse.movie.fragment.SettingFragment
 import woowacourse.movie.view.data.ReservationsViewData
+import woowacourse.movie.view.mapper.ReservationMapper.toView
 import woowacourse.movie.view.repository.MainRepository
 
 class MainActivity : AppCompatActivity() {
@@ -53,7 +54,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.action_list -> {
                     replaceFragment<ReservationListFragment>(
                         ReservationListFragment.from(
-                            ReservationsViewData(mainRepository.requestReservation())
+                            ReservationsViewData(
+                                mainRepository.requestReservation()
+                                    .map { reservation -> reservation.toView() }
+                            )
                         )
                     )
                     true

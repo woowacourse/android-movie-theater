@@ -14,7 +14,6 @@ import woowacourse.movie.view.adapter.MovieAdapter
 import woowacourse.movie.view.data.MovieListViewData
 import woowacourse.movie.view.data.MovieListViewType
 import woowacourse.movie.view.data.MovieViewData
-import woowacourse.movie.view.mapper.MovieMapper.toDomain
 import woowacourse.movie.view.repository.MainRepository
 
 class MovieListFragment : Fragment() {
@@ -33,7 +32,7 @@ class MovieListFragment : Fragment() {
     }
 
     private fun makeMovieRecyclerView(view: View) {
-        val movies = mainRepository.requestMovie().map { it.toDomain() }
+        val movies = mainRepository.requestMovie()
         val advertisementDatas = AdvertisementMock.createAdvertisements()
         val advertisementPolicy =
             MovieAdvertisementPolicy(MOVIE_COUNT, ADVERTISEMENT_COUNT)
