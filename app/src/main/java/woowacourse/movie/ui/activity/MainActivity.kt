@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
-import woowacourse.movie.ui.SinglePermissionRequester
+import woowacourse.movie.permission.SinglePermissionRequester
 import woowacourse.movie.ui.fragment.FragmentType
 import woowacourse.movie.ui.fragment.movielist.HomeFragment
 import woowacourse.movie.ui.fragment.reservationlist.ReservationListFragment

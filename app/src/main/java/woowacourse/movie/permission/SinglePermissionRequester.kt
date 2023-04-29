@@ -1,4 +1,4 @@
-package woowacourse.movie.ui
+package woowacourse.movie.permission
 
 import android.Manifest
 import android.app.Activity
@@ -17,7 +17,7 @@ object SinglePermissionRequester {
         deniedAction: () -> Unit
     ) {
         if (checkDeniedPermission(activity.applicationContext, permission)) {
-            actionToCheckBuildVersion(
+            requestPermissionByBuildVersion(
                 versionCondition,
                 { actionToRequestPermission(activity, permission, grantedAction, deniedAction) },
                 { grantedAction() }
@@ -28,13 +28,13 @@ object SinglePermissionRequester {
     fun checkDeniedPermission(context: Context, permission: String): Boolean =
         context.checkSelfPermission(permission) == PackageManager.PERMISSION_DENIED
 
-    private fun actionToCheckBuildVersion(
+    private fun requestPermissionByBuildVersion(
         versionCondition: Int,
-        actionToRequestPermission: () -> Unit,
+        requestPermissionOverBuildVersion: () -> Unit,
         requestAlwaysPermission: () -> Unit
     ) {
         if (Build.VERSION.SDK_INT >= versionCondition) {
-            actionToRequestPermission()
+            requestPermissionOverBuildVersion()
         } else {
             requestAlwaysPermission()
         }

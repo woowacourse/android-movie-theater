@@ -10,7 +10,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
-import woowacourse.movie.ui.SinglePermissionRequester
+import woowacourse.movie.permission.SinglePermissionRequester
 import woowacourse.movie.ui.activity.MovieTicketActivity
 import woowacourse.movie.ui.model.MovieTicketModel
 import woowacourse.movie.ui.storage.SettingsStorage
