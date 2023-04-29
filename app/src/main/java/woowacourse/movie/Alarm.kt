@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.IntentFilter
 import java.time.LocalDateTime
+import java.util.TimeZone
 
 object Alarm {
 
@@ -16,8 +17,7 @@ object Alarm {
     }
 
     fun makeAlarm(date: LocalDateTime, intent: PendingIntent, context: Context) {
-//        val milliseconds = date.atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli()
-        val milliseconds = System.currentTimeMillis() + 5 * 1000
+        val milliseconds = date.atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli()
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(AlarmManager.RTC, milliseconds, intent)
     }
