@@ -23,10 +23,10 @@ class SettingFragment : Fragment() {
     }
 
     private fun makeNotificationSwitchCompat(view: View) {
+        val settingSwitch = view.findViewById<SwitchCompat>(R.id.setting_push_switch)
         val setting: Setting = SharedSetting(view.context)
-        val switch = view.findViewById<SwitchCompat>(R.id.setting_push_switch)
-        switch.isChecked = setting.getSettingValue(SETTING_NOTIFICATION)
-        switch.setOnCheckedChangeListener { _, isChecked ->
+        settingSwitch.isChecked = setting.getSettingValue(SETTING_NOTIFICATION)
+        settingSwitch.setOnCheckedChangeListener { _, isChecked ->
             setting.setSettingValue(SETTING_NOTIFICATION, isChecked)
         }
     }
