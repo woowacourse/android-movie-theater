@@ -1,12 +1,12 @@
 package woowacourse.movie.receiver
 
-import android.R
 import android.app.Notification
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
+import woowacourse.movie.R
 import woowacourse.movie.activity.ReservationResultActivity
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.view.model.MovieUiModel
@@ -30,9 +30,9 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
 
         reservationNotificationHelper.bindNotification(
             notificationBuilder = notificationBuilder,
-            title = "예매 알림",
-            contextText = "${movieUiModel?.title} 30분 후에 상영",
-            smallIcon = R.drawable.ic_lock_idle_alarm,
+            title = context.getString(R.string.alarm_title),
+            contextText = context.getString(R.string.alarm_content).format(movieUiModel.title),
+            smallIcon = R.drawable.scottring_icon,
             isAutoCancel = true,
             pendingIntent = pendingIntent
         )
