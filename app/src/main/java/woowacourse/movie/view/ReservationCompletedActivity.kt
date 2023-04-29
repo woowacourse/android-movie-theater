@@ -40,6 +40,8 @@ class ReservationCompletedActivity : AppCompatActivity() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val isAlarmOn = sharedPreferences.getBoolean(SettingFragment.IS_ALARM_ON, false)
 
+        requestNotificationPermission()
+
         reservation?.let {
             initViewData(it)
             if (isAlarmOn) setAlarm(reservation, SettingFragment.ALARM_MINUTE_INTERVAL)
@@ -61,7 +63,6 @@ class ReservationCompletedActivity : AppCompatActivity() {
     private fun setAlarm(reservation: ReservationUiModel, alarmMinuteInterval: Long) {
         val alarmController = AlarmController(this)
         createChannel()
-        requestNotificationPermission()
         alarmController.registerAlarm(reservation, alarmMinuteInterval)
     }
 
