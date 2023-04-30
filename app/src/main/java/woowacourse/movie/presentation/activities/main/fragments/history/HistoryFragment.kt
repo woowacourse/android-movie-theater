@@ -44,7 +44,7 @@ class HistoryFragment : Fragment() {
     }
 
     private fun startResultActivity(item: Reservation) {
-        startActivity(TicketingResultActivity.intent(requireContext(), item))
+        startActivity(TicketingResultActivity.makeIntent(requireContext(), item))
     }
 
     companion object {

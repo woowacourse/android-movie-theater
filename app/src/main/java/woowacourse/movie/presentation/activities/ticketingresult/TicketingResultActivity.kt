@@ -63,7 +63,7 @@ class TicketingResultActivity : AppCompatActivity() {
     companion object {
         internal const val RESERVATION_KEY = "reservation"
 
-        fun intent(context: Context, reservation: Reservation): Intent =
+        fun makeIntent(context: Context, reservation: Reservation): Intent =
             Intent(context, TicketingResultActivity::class.java).putExtra(RESERVATION_KEY, reservation)
     }
 }

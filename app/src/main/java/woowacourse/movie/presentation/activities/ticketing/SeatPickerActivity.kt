@@ -186,7 +186,7 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
     ).toPresentation()
 
     private fun startTicketingResultActivity(reservation: Reservation) {
-        startActivity(TicketingResultActivity.intent(this, reservation))
+        startActivity(TicketingResultActivity.makeIntent(this, reservation))
         finish()
     }
 
