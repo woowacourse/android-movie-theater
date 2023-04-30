@@ -24,10 +24,10 @@ class SettingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val canPushSwitch = view.findViewById<SwitchMaterial>(R.id.sw_setting_can_push)
+        val canPushSwitchView = view.findViewById<SwitchMaterial>(R.id.sw_setting_can_push)
 
-        synchronizeCanPushSwitch(canPushSwitch)
-        setCanPushSwitchOnClickListener(canPushSwitch)
+        synchronizeCanPushSwitch(canPushSwitchView)
+        setCanPushSwitchOnClickListener(canPushSwitchView)
     }
 
     private fun synchronizeCanPushSwitch(switch: SwitchMaterial) {
