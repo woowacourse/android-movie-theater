@@ -17,6 +17,7 @@ class HistoryViewHolder(
 
     init {
         view.setOnClickListener { onClick(adapterPosition) }
+        movieTitleTextView.setOnClickListener { onClick(adapterPosition) }
     }
 
     override fun <T : ListItem> bind(item: T) {

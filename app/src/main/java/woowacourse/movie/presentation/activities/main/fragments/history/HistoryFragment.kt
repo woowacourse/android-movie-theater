@@ -2,6 +2,7 @@ package woowacourse.movie.presentation.activities.main.fragments.history
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,6 +50,7 @@ class HistoryFragment : Fragment() {
                 DividerItemDecoration.VERTICAL,
             ),
         )
+        Log.d("krrong", "onViewCreated")
     }
 
     companion object {

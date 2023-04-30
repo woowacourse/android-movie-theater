@@ -72,6 +72,6 @@ class HomeFragment : Fragment() {
 
         private val homeFragment = HomeFragment()
 
-        fun getIntance(): HomeFragment = homeFragment
+        fun getInstance(): HomeFragment = homeFragment
     }
 }

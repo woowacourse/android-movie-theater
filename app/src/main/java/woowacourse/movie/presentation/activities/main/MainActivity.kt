@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.selectedItemId = R.id.home
         bottomNavigationView.setOnItemSelectedListener { menu ->
             when (menu.itemId) {
-                R.id.menu -> {
+                R.id.history -> {
                     supportFragmentManager.commit {
                         replace(R.id.fragment_container_view, HistoryFragment.getInstance())
                     }
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.home -> {
                     supportFragmentManager.commit {
-                        replace(R.id.fragment_container_view, HomeFragment.getIntance())
+                        replace(R.id.fragment_container_view, HomeFragment.getInstance())
                     }
                 }
 
