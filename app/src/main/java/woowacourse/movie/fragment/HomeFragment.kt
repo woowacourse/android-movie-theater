@@ -34,19 +34,18 @@ class HomeFragment : Fragment() {
         val movieRecyclerViewAdapter = MovieRecyclerViewAdapter(
             MovieMockData.movies10000,
             Ad.dummyAd,
-            getMovieOnClickListener(view),
-            getAdOnClickListener(),
+            onClickMovie(view),
+            onClickAd(),
         )
         movieRecyclerView.adapter = movieRecyclerViewAdapter
-        movieRecyclerViewAdapter.notifyDataSetChanged()
     }
 
-    private fun getAdOnClickListener() = { item: Ad ->
+    private fun onClickAd() = { item: Ad ->
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
         this.startActivity(intent)
     }
 
-    private fun getMovieOnClickListener(view: View) = { position: Int ->
+    private fun onClickMovie(view: View) = { position: Int ->
         val intent = MovieDetailActivity.getIntent(view.context, MovieMockData.movies10000[position])
         this.startActivity(intent)
     }

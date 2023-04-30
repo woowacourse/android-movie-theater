@@ -37,13 +37,16 @@ class BookHistoryFragment : Fragment() {
         )
         val bookHistoryRecyclerViewAdapter = BookHistoryRecyclerViewAdapter(
             BookHistories.items,
-            getBookHistoryOnClickListener(view)
+            onClickBookHistory(view)
         )
         movieRecyclerView.adapter = bookHistoryRecyclerViewAdapter
     }
 
-    private fun getBookHistoryOnClickListener(view: View) = { position: Int ->
-        val intent = BookCompleteActivity.getIntent(view.context, BookHistories.items[position].toPresentation())
+    private fun onClickBookHistory(view: View) = { position: Int ->
+        val intent = BookCompleteActivity.getIntent(
+            view.context,
+            BookHistories.items[position].toPresentation()
+        )
         this.startActivity(intent)
     }
 }
