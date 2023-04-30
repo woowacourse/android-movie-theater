@@ -98,7 +98,7 @@ class MovieDetailActivity : BackButtonActivity() {
                 timeSpinner.selectedItem.toString(),
                 currentCount
             )
-            val intent = SeatPickerActivity.intent(this, movieBookingInfo)
+            val intent = SeatPickerActivity.getIntent(this, movieBookingInfo)
             startActivity(intent)
             finish()
         }
@@ -169,7 +169,7 @@ class MovieDetailActivity : BackButtonActivity() {
         private const val TIME_KEY = "time"
         private const val MIN_TICKET = "1"
 
-        fun intent(context: Context, movie: MovieUIModel): Intent {
+        fun getIntent(context: Context, movie: MovieUIModel): Intent {
             val intent = Intent(context, MovieDetailActivity::class.java)
             intent.putExtra(BundleKeys.MOVIE_DATA_KEY, movie)
             return intent

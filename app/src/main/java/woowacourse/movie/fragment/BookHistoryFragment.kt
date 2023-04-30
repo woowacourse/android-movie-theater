@@ -43,7 +43,7 @@ class BookHistoryFragment : Fragment() {
     }
 
     private fun getBookHistoryOnClickListener(view: View) = { position: Int ->
-        val intent = BookCompleteActivity.intent(view.context, BookHistories.items[position].toPresentation())
+        val intent = BookCompleteActivity.getIntent(view.context, BookHistories.items[position].toPresentation())
         this.startActivity(intent)
     }
 }

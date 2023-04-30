@@ -52,7 +52,7 @@ class BookCompleteActivity : BackButtonActivity() {
     }
 
     companion object {
-        fun intent(context: Context, movieBookingSeatInfo: MovieBookingSeatInfoUIModel): Intent {
+        fun getIntent(context: Context, movieBookingSeatInfo: MovieBookingSeatInfoUIModel): Intent {
             val intent = Intent(context, BookCompleteActivity::class.java)
             intent.putExtra(BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY, movieBookingSeatInfo)
             return intent

@@ -61,7 +61,7 @@ class MovieReminder : BroadcastReceiver() {
         movieBookingSeatInfo: MovieBookingSeatInfoUIModel,
         id: Int
     ) {
-        val contentIntent = BookCompleteActivity.intent(context, movieBookingSeatInfo)
+        val contentIntent = BookCompleteActivity.getIntent(context, movieBookingSeatInfo)
         val contentPendingIntent = PendingIntent.getActivity(
             context,
             id,

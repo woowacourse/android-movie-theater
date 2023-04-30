@@ -47,7 +47,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun getMovieOnClickListener(view: View) = { position: Int ->
-        val intent = MovieDetailActivity.intent(view.context, MovieMockData.movies10000[position])
+        val intent = MovieDetailActivity.getIntent(view.context, MovieMockData.movies10000[position])
         this.startActivity(intent)
     }
 }

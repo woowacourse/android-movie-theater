@@ -134,7 +134,7 @@ class SeatPickerActivity : BackButtonActivity() {
                         },
                         seatPickerTicketPrice.text.toString()
                     )
-                    val intent = BookCompleteActivity.intent(this, movieBookingSeatInfo.toPresentation())
+                    val intent = BookCompleteActivity.getIntent(this, movieBookingSeatInfo.toPresentation())
 
                     AlarmSetting().setAlarm(this, movieBookingSeatInfo)
                     BookHistories.saveBookingInfo(movieBookingSeatInfo)
@@ -226,7 +226,7 @@ class SeatPickerActivity : BackButtonActivity() {
         private const val PICKED_SEAT = "prickedSeat"
         private const val SEAT_ROW_INTERVAL = 4
         private const val MOVIE_RUN_BEFORE_TIME = 30L
-        fun intent(context: Context, movieBookingInfo: MovieBookingInfoUiModel): Intent {
+        fun getIntent(context: Context, movieBookingInfo: MovieBookingInfoUiModel): Intent {
             val intent = Intent(context, SeatPickerActivity::class.java)
             intent.putExtra(BundleKeys.MOVIE_BOOKING_INFO_KEY, movieBookingInfo)
             return intent
