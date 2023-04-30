@@ -8,11 +8,11 @@ import woowacourse.movie.presentation.activities.ticketing.SeatPickerActivity.Co
 import woowacourse.movie.presentation.activities.ticketingresult.TicketingResultActivity
 import woowacourse.movie.presentation.model.Reservation
 
-class ReservationReminder(
+class ReservationNotification(
     override val channelId: String = "reservation_reminder",
     override val channelName: String = "default channel name",
     override val channelDesc: String = "default description",
-) : Reminder() {
+) : Notifiable() {
 
     override fun <T : Parcelable> notify(context: Context, data: T) {
         if (data !is Reservation) return

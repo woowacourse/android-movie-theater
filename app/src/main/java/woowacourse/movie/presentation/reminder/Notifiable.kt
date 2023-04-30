@@ -12,7 +12,7 @@ import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
 import woowacourse.movie.presentation.extensions.checkPermissionTiramisu
 
-abstract class Reminder {
+abstract class Notifiable {
     protected abstract val channelId: String
     protected abstract val channelName: String
     protected abstract val channelDesc: String
