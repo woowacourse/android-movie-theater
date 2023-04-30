@@ -15,18 +15,18 @@ object PermissionManager {
         activity: Activity,
         activityResultLauncher: ActivityResultLauncher<String>
     ) {
-        if (isPermissionDenied(activity, POST_NOTIFICATIONS)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (shouldShowRequestPermissionRationale(activity, POST_NOTIFICATIONS)) {
-                    Toast.makeText(
-                        activity,
-                        activity.getString(R.string.if_permission_is_denied_cant_use_notification_service),
-                        Toast.LENGTH_LONG
-                    ).show()
-                    return
-                }
-                activityResultLauncher.launch(POST_NOTIFICATIONS)
+        if (isPermissionDenied(activity, POST_NOTIFICATIONS) &&
+            (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+        ) {
+            if (shouldShowRequestPermissionRationale(activity, POST_NOTIFICATIONS)) {
+                Toast.makeText(
+                    activity,
+                    activity.getString(R.string.if_permission_is_denied_cant_use_notification_service),
+                    Toast.LENGTH_LONG
+                ).show()
+                return
             }
+            activityResultLauncher.launch(POST_NOTIFICATIONS)
         }
     }
 
