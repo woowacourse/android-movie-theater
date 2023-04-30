@@ -1,11 +1,8 @@
 package woowacourse.movie.fragment
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import domain.Reservation
 import woowacourse.movie.MockReservationsFactory
@@ -14,15 +11,7 @@ import woowacourse.movie.activity.ReservationResultActivity
 import woowacourse.movie.adapter.ReservationAdapter
 import woowacourse.movie.view.mapper.ReservationMapper
 
-class ReservationListFragment : Fragment() {
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_reservation_list, container, false)
-    }
-
+class ReservationListFragment : Fragment(R.layout.fragment_reservation_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val reservations = MockReservationsFactory.makeReservations()
