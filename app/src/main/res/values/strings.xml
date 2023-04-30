@@ -1,3 +1,44 @@
 <resources>
     <string name="app_name">Movie</string>
+
+    <string name="button_booking">지금 예매</string>
+    <string name="button_select_seat">좌석 선택</string>
+    <string name="button_minus">-</string>
+    <string name="button_plus">+</string>
+    <string name="ticket_cancel_guide">영화 상영 시작 시간 15분 전까지\n취소가 가능합니다.</string>
+    <string name="screen">SCREEN</string>
+    <string name="button_seat_picker_done">확인</string>
+
+    <string name="screen_date">상영일: %s ~ %s</string>
+    <string name="running_time">러닝타임: %d분</string>
+    <string name="reserved_seat">일반 %d명 | %s</string>
+    <string name="price">%,d원</string>
+    <string name="on_site_payment">(현장 결제)</string>
+    <string name="price_with_payment_type">%s %s</string>
+    <string name="seat">%s%d</string>
+
+    <string name="date_format">yyyy.MM.dd</string>
+    <string name="date_time_format">yyyy.MM.dd HH:mm</string>
+
+    <string name="toast_message_seat_selection_done">이미 모든 좌석을 선택했습니다.</string>
+    <string name="dialog_title_seat_selection_check">예매 확인</string>
+    <string name="dialog_message_seat_selection_check">정말 예매하시겠습니까?</string>
+    <string name="dialog_positive_button_seat_selection_check">예매 완료</string>
+    <string name="dialog_negative_button_seat_selection_check">취소</string>
+
+    <string name="bottom_item_list">예매 내역</string>
+    <string name="bottom_item_home">홈</string>
+    <string name="bottom_item_settings">설정</string>
+
+    <string name="error_not_existing_item_id">존재하지 않는 아이템 아이디 입니다.</string>
+
+    <string name="push_notification_title">푸시 알림 수신</string>
+    <string name="push_notification_description">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+
+    <string name="reservation_notification_title">예매 알림</string>
+    <string name="reservation_notification_content">%s 30분 후에 상영</string>
+    <string name="reservation_notification_channel_description">영화 예매 알림 채널 입니다</string>
+
+    <string name="notification_permission_snackbar_message">상영 30분 전 알림을 위해 알림 권한이 필요합니다. 설정으로 이동하여 권한을 허용해주세요.</string>
+    <string name="notification_permission_snackbar_button">설정</string>
 </resources>

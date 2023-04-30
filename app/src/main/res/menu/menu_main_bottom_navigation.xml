@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_item_list"
+        android:icon="@drawable/bottom_item_list"
+        android:title="@string/bottom_item_list" />
+    <item
+        android:id="@+id/bottom_item_home"
+        android:icon="@drawable/bottom_item_home"
+        android:title="@string/bottom_item_home" />
+    <item
+        android:id="@+id/bottom_item_settings"
+        android:icon="@drawable/bottom_item_settings"
+        android:title="@string/bottom_item_settings" />
+
+</menu>
