@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +18,13 @@ import woowacourse.movie.ui.model.MovieTicketModel
 class ReservationListFragment : Fragment() {
     private lateinit var reservationAdapter: ReservationAdapter
     private var itemsCount = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setFragmentResultListener(REQUEST_KEY_ITEM_INSERTION) { _, _ ->
+            applyItemsInsertion()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,12 +39,6 @@ class ReservationListFragment : Fragment() {
 
         val reservationView = view.findViewById<RecyclerView>(R.id.rv_reservation)
         setReservationView(reservationView)
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        applyItemsInsertion()
     }
 
     private fun setReservationView(reservationView: RecyclerView) {
@@ -56,5 +58,9 @@ class ReservationListFragment : Fragment() {
             reservationAdapter.notifyItemRangeInserted(itemsCount, countDifference)
             itemsCount = Reservations.getSize()
         }
+    }
+
+    companion object {
+        const val REQUEST_KEY_ITEM_INSERTION = "item_insertion"
     }
 }
