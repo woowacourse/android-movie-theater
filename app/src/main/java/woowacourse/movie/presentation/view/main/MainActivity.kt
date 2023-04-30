@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.presentation.view.main
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import woowacourse.movie.R
 import woowacourse.movie.data.SharedPreferenceUtil
 import woowacourse.movie.presentation.permission.NotificationPermission
 import woowacourse.movie.presentation.view.main.booklist.BookListFragment

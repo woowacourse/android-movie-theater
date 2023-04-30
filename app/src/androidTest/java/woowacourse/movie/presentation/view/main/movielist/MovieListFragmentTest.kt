@@ -5,7 +5,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import junit.framework.TestCase.assertEquals
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.movie.MainActivity
+import woowacourse.movie.presentation.view.main.MainActivity
 import woowacourse.movie.R
 
 class MovieListFragmentTest {
