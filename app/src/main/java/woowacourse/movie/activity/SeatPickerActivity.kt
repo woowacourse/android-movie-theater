@@ -20,6 +20,7 @@ import woowacourse.movie.AlarmSetter
 import woowacourse.movie.BookHistories
 import woowacourse.movie.BundleKeys
 import woowacourse.movie.BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY
+import woowacourse.movie.MovieReminder
 import woowacourse.movie.R
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.mapper.toDomain
@@ -120,38 +121,49 @@ class SeatPickerActivity : BackButtonActivity() {
 
     private fun setPickDoneButtonClickListener() {
         pickDoneButton.setOnClickListener {
-            AlertDialog.Builder(this)
-                .setTitle(getString(R.string.alert_dialog_book_confirm))
-                .setMessage(getString(R.string.alert_dialog_book_re_confirm))
-                .setPositiveButton(
-                    getString(R.string.alert_dialog_book_done)
-                ) { _, _ ->
-                    val bookCompleteActivityIntent = BookCompleteActivity.intent(this)
-                    val movieBookingSeatInfo = MovieBookingSeatInfo(
-                        getMovieBookingInfo(),
-                        seatGroup.sorted().seats.map {
-                            formatSeatName(it.row.value, it.column.value)
-                        },
-                        seatPickerTicketPrice.text.toString()
-                    )
-
-                    bookCompleteActivityIntent.putExtra(
-                        MOVIE_BOOKING_SEAT_INFO_KEY,
-                        movieBookingSeatInfo
-                    )
-                    BookHistories.items.add(movieBookingSeatInfo)
-                    AlarmSetter.setMovieStartBeforeAlarm(this, movieBookingSeatInfo)
-
-                    startActivity(bookCompleteActivityIntent)
-                    finish()
-                }.setNegativeButton(
-                    getString(R.string.alert_dialog_book_cancel)
-                ) { dialog, _ ->
+            AlertDialog.Builder(this).apply {
+                setTitle(getString(R.string.alert_dialog_book_confirm))
+                setMessage(getString(R.string.alert_dialog_book_re_confirm))
+                setPositiveButton(getString(R.string.alert_dialog_book_done)) { _, _ ->
+                    setIntent()
+                }
+                setNegativeButton(getString(R.string.alert_dialog_book_cancel)) { dialog, _ ->
                     dialog.dismiss()
                 }
-                .setCancelable(false)
-                .show()
+                setCancelable(false)
+                show()
+            }
+
         }
+    }
+
+    private fun setIntent() {
+        val bookCompleteActivityIntent = BookCompleteActivity.intent(this)
+        val movieBookingSeatInfo = MovieBookingSeatInfo(
+            getMovieBookingInfo(), seatGroup.sorted().seats.map {
+                formatSeatName(it.row.value, it.column.value)
+            },
+            seatPickerTicketPrice.text.toString()
+        )
+
+        bookCompleteActivityIntent.putExtra(MOVIE_BOOKING_SEAT_INFO_KEY, movieBookingSeatInfo)
+        BookHistories.items.add(movieBookingSeatInfo)
+
+        setMovieAlarm(movieBookingSeatInfo)
+
+        startActivity(bookCompleteActivityIntent)
+        finish()
+    }
+
+    private fun setMovieAlarm(movieBookingSeatInfo: MovieBookingSeatInfo) {
+        val movieReminderIntent = MovieReminder.intent(this)
+        movieReminderIntent.putExtra(MOVIE_BOOKING_SEAT_INFO_KEY, movieBookingSeatInfo)
+
+        AlarmSetter.setMovieStartBeforeAlarm(
+            this,
+            movieReminderIntent,
+            movieBookingSeatInfo.movieBookingInfo.formatAlarmDate()
+        )
     }
 
     private fun setSeatsOnClickListener(movieBookingInfo: MovieBookingInfo) {
