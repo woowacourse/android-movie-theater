@@ -10,7 +10,7 @@ class LocalDataStore : DataStore {
     }
 
     override fun setBoolean(key: String, value: Boolean) {
-        preference.edit()?.putBoolean(key, value)?.apply()
+        preference.edit().putBoolean(key, value).apply()
     }
 
     companion object {
