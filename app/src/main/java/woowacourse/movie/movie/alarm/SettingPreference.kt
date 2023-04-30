@@ -8,12 +8,17 @@ class SettingPreference(context: Context) {
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences(setting_preference_key, Context.MODE_PRIVATE)
 
-    var setting: Boolean
-        get() = sharedPreferences.getBoolean(setting_value_key, false)
-        set(value) = sharedPreferences.edit().putBoolean(setting_value_key, value).apply()
+    fun setBoolean(key: String, value: Boolean) {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean(key, value)
+        editor.apply()
+    }
+
+    fun getBoolean(key: String): Boolean {
+        return sharedPreferences.getBoolean(key, false)
+    }
 
     companion object {
-        private const val setting_preference_key = "setting"
-        private const val setting_value_key = "setting_value"
+        const val setting_preference_key = "setting"
     }
 }

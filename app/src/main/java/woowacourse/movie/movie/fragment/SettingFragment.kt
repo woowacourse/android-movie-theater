@@ -8,6 +8,7 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.movie.alarm.SettingPreference
+import woowacourse.movie.movie.alarm.SettingPreference.Companion.setting_preference_key
 
 class SettingFragment : Fragment() {
 
@@ -24,9 +25,9 @@ class SettingFragment : Fragment() {
     }
 
     private fun bindSwitch(switch: SwitchCompat, settingPreference: SettingPreference) {
-        switch.isChecked = settingPreference.setting
+        switch.isChecked = settingPreference.getBoolean(setting_preference_key)
         switch.setOnCheckedChangeListener { _, isChecked ->
-            settingPreference.setting = isChecked
+            settingPreference.setBoolean(setting_preference_key, isChecked)
         }
     }
 }

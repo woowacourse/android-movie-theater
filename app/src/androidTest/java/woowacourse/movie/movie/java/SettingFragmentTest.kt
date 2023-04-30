@@ -16,6 +16,7 @@ import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.movie.activity.MainActivity
 import woowacourse.movie.movie.alarm.SettingPreference
+import woowacourse.movie.movie.alarm.SettingPreference.Companion.setting_preference_key
 
 @RunWith(AndroidJUnit4::class)
 class SettingFragmentTest {
@@ -53,7 +54,7 @@ class SettingFragmentTest {
     fun 세팅값이_false이면_스위치가_off_상태인지_확인() {
         val settingPreference =
             SettingPreference(InstrumentationRegistry.getInstrumentation().targetContext)
-        settingPreference.setting = false
+        settingPreference.setBoolean(setting_preference_key, false)
 
         onView(withId(R.id.setting)).perform(click())
         onView(withId(R.id.push_alarm_switch)).check(matches(isNotChecked()))
@@ -63,7 +64,7 @@ class SettingFragmentTest {
     fun 세팅값이_true이면_스위치가_on_상태인지_확인() {
         val settingPreference =
             SettingPreference(InstrumentationRegistry.getInstrumentation().targetContext)
-        settingPreference.setting = true
+        settingPreference.setBoolean(setting_preference_key, true)
 
         onView(withId(R.id.setting)).perform(click())
         onView(withId(R.id.push_alarm_switch)).check(matches(isChecked()))
