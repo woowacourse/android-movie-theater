@@ -11,13 +11,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/setting_title"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="16dp" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/setting_title" />
 
     <TextView
             android:id="@+id/setting_push_alarm_description"
@@ -29,7 +29,7 @@
             app:layout_constraintTop_toBottomOf="@+id/setting_push_alarm_title"
             android:text="@string/setting_push_alarm_description" />
 
-    <androidx.appcompat.widget.SwitchCompat
+    <Switch
             app:thumbTint="@color/purple_500"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
