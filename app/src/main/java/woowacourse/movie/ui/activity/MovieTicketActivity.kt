@@ -8,6 +8,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.ui.model.MovieTicketModel
@@ -25,6 +26,8 @@ class MovieTicketActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setTicketInfo()
+
+        setBackPressedCallback()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -35,13 +38,17 @@ class MovieTicketActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                val intent = MainActivity.createIntent(this)
-                intent.flags = FLAG_ACTIVITY_CLEAR_TOP + FLAG_ACTIVITY_SINGLE_TOP
-                startActivity(intent)
-                return true
+                return goBackToMainActivity()
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun goBackToMainActivity(): Boolean {
+        val intent = MainActivity.createIntent(this)
+        intent.flags = FLAG_ACTIVITY_CLEAR_TOP + FLAG_ACTIVITY_SINGLE_TOP
+        startActivity(intent)
+        return true
     }
 
     private fun setTicketInfo() {
@@ -72,6 +79,12 @@ class MovieTicketActivity : AppCompatActivity() {
     private fun SeatModel.format(): String = getString(R.string.seat, row.letter, column.value)
 
     private fun PriceModel.format(): String = getString(R.string.price, amount)
+
+    private fun setBackPressedCallback() {
+        onBackPressedDispatcher.addCallback(this) {
+            goBackToMainActivity()
+        }
+    }
 
     companion object {
         private const val TICKET_EXTRA_KEY = "ticket"
