@@ -28,6 +28,8 @@ import woowacourse.movie.mapper.toPresentation
 import woowacourse.movie.model.SeatGroupModel
 import woowacourse.movie.movie.MovieBookingInfo
 import woowacourse.movie.movie.MovieBookingSeatInfo
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class SeatPickerActivity : BackButtonActivity() {
     private val seatTableLayout: TableLayout by lazy { findViewById(R.id.tl_seats) }
@@ -159,10 +161,16 @@ class SeatPickerActivity : BackButtonActivity() {
         val movieReminderIntent = MovieReminder.intent(this)
         movieReminderIntent.putExtra(MOVIE_BOOKING_SEAT_INFO_KEY, movieBookingSeatInfo)
 
-        AlarmSetter.setMovieStartBeforeAlarm(
+        val formatter = DateTimeFormatter.ofPattern("yyyy-M-d HH:mm")
+        val movieDateTime =
+            LocalDateTime.parse(movieBookingSeatInfo.movieBookingInfo.formatAlarmDate(), formatter)
+        val triggerTime = movieDateTime.minusMinutes(MOVIE_RUN_BEFORE_TIME)
+
+        AlarmSetter.setAlarm(
             this,
+            MovieReminder.NOTIFICATION_ID,
             movieReminderIntent,
-            movieBookingSeatInfo.movieBookingInfo.formatAlarmDate()
+            triggerTime
         )
     }
 
@@ -240,6 +248,8 @@ class SeatPickerActivity : BackButtonActivity() {
         private const val TICKET_PRICE = "ticketPrice"
         private const val PICKED_SEAT = "prickedSeat"
         private const val SEAT_ROW_INTERVAL = 4
+        private const val MOVIE_RUN_BEFORE_TIME = 30L
+
         fun intent(context: Context) = Intent(context, SeatPickerActivity::class.java)
     }
 }
