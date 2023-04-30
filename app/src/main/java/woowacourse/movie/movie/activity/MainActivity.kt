@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -70,18 +71,26 @@ class MainActivity : AppCompatActivity() {
         ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                    // 권한 요청 거부한 경우
+                    Toast.makeText(this@MainActivity, DENIED_PERMISSION_MESSAGE, Toast.LENGTH_SHORT).show()
                 } else {
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
             } else {
-                // 안드로이드 12 이하는 Notification에 관한 권한 필요 없음
+                Toast.makeText(this@MainActivity, LOWER_VERSION_MESSAGE, Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission(),
-    ) { isGranted: Boolean ->
+    ) { isCheck: Boolean ->
+        if (isCheck) Toast.makeText(this@MainActivity, PERMIT_PERMISSION_MESSAGE, Toast.LENGTH_SHORT).show()
+        else Toast.makeText(this@MainActivity, DENIED_PERMISSION_MESSAGE, Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        private const val DENIED_PERMISSION_MESSAGE = "알림 권한이 차단되었습니다"
+        private const val PERMIT_PERMISSION_MESSAGE = "알림 권한이 허용되었습니다"
+        private const val LOWER_VERSION_MESSAGE = "설정에 가서 알림 권한을 켜주세요"
     }
 }
