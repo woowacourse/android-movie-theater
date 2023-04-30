@@ -12,7 +12,7 @@ object MockMoviesFactory {
         )
     }
 
-    private fun generateMovie(number: Int): Movie {
+     fun generateMovie(number: Int): Movie {
         return Movie(
             R.drawable.poster_harrypotter.toString(),
             "해리 포터${number}",

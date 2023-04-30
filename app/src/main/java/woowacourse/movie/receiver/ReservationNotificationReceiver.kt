@@ -1,18 +1,15 @@
 package woowacourse.movie.receiver
 
 import android.R
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
+import woowacourse.movie.MockMoviesFactory
+import woowacourse.movie.SettingPreferenceManager
 import woowacourse.movie.activity.ReservationResultActivity
 import woowacourse.movie.getSerializableCompat
+import woowacourse.movie.view.mapper.MovieMapper
 import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.model.TicketsUiModel
 
@@ -21,54 +18,41 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
         val reservationNotificationHelper = NotificationHelper(context, CHANNEL_ID, CHANNEL_NAME)
         val movieUiModel = receiveMovieViewModel(receivedIntent)
         val ticketsUiModel = receiveTicketsUiModel(receivedIntent)
-        val notificationManager = reservationNotificationHelper.generateNotificationManger()
-        val notificationBuilder =
-            reservationNotificationHelper.generateNotificationBuilder(notificationManager)
-
-        val sendingIntent = generateSendingIntent(context, movieUiModel, ticketsUiModel)
+        val sendingIntent =
+            ReservationResultActivity.generateIntent(context, movieUiModel, ticketsUiModel)
         val pendingIntent = PendingIntent.getActivity(
-            context, 123, sendingIntent,
+            context, REQUEST_CODE, sendingIntent,
             PendingIntent.FLAG_IMMUTABLE
         )
 
-        reservationNotificationHelper.bindNotification(
-            notificationBuilder = notificationBuilder,
-            title = "예매 알림",
-            contextText = "${movieUiModel?.title} 30분 후에 상영",
+        val notificationData = NotificationData(
+            title = context.getString(woowacourse.movie.R.string.reservation_notification_title),
+            contextText = "${movieUiModel.title} context.getString(woowacourse.movie.R.string.reservation_notification_description)",
             smallIcon = R.drawable.ic_lock_idle_alarm,
             isAutoCancel = true,
             pendingIntent = pendingIntent
         )
-        val notification: Notification =
-            reservationNotificationHelper.generateNotification(notificationBuilder)
-        if (isAlarmPossible(context)) notificationManager.notify(1, notification)
-    }
 
-    private fun receiveTicketsUiModel(intent: Intent): TicketsUiModel? {
-        return intent.extras?.getSerializableCompat(TICKETS_KEY_VALUE)
-    }
-
-    private fun receiveMovieViewModel(intent: Intent): MovieUiModel? {
-        return intent.extras?.getSerializableCompat(MOVIE_KEY_VALUE)
-    }
-
-    private fun generateSendingIntent(
-        context: Context,
-        movieUiModel: MovieUiModel?,
-        ticketsUiModel: TicketsUiModel?
-    ): Intent {
-        val sendingIntent = Intent(context, ReservationResultActivity::class.java)
-        sendingIntent.putExtra(MOVIE_KEY_VALUE, movieUiModel)
-        sendingIntent.putExtra(TICKETS_KEY_VALUE, ticketsUiModel)
-        return sendingIntent
-    }
-
-    private fun isAlarmPossible(context: Context): Boolean {
-        val sharedPreferences = context.getSharedPreferences(
-            SETTING,
-            AppCompatActivity.MODE_PRIVATE
+        val notificationManager = reservationNotificationHelper.generateNotificationManger()
+        val notification = reservationNotificationHelper.generateNotification(
+            notificationData,
+            notificationManager
         )
-        return sharedPreferences.getBoolean(PUSH_ALARM_KEY, false)
+        if (SettingPreferenceManager.getAlarmReceptionStatus()) notificationManager.notify(
+            NOTIFICATION_ID,
+            notification
+        )
+    }
+
+    private fun receiveTicketsUiModel(intent: Intent): TicketsUiModel {
+        return intent.extras?.getSerializableCompat(KEY_TICKETS_VALUE) ?: TicketsUiModel(listOf())
+
+    }
+
+    private fun receiveMovieViewModel(intent: Intent): MovieUiModel {
+        return intent.extras?.getSerializableCompat(KEY_MOVIE_VALUE) ?: MovieMapper.toUi(
+            MockMoviesFactory.generateMovie(0)
+        )
     }
 
     companion object {
@@ -78,15 +62,15 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
             ticketsUiModel: TicketsUiModel
         ): Intent {
             val receiverIntent = Intent(context, ReservationNotificationReceiver::class.java)
-            receiverIntent.putExtra(MOVIE_KEY_VALUE, movieUiModel)
-            return receiverIntent.putExtra(TICKETS_KEY_VALUE, ticketsUiModel)
+            receiverIntent.putExtra(KEY_MOVIE_VALUE, movieUiModel)
+            return receiverIntent.putExtra(KEY_TICKETS_VALUE, ticketsUiModel)
         }
 
         private const val CHANNEL_ID = "channel1"
         private const val CHANNEL_NAME = "Channel1"
-        private const val MOVIE_KEY_VALUE = "movie"
-        private const val TICKETS_KEY_VALUE = "tickets"
-        private const val SETTING = "settings"
-        private const val PUSH_ALARM_KEY = "pushAlarm"
+        private const val KEY_MOVIE_VALUE = "KEY_MOVIE_VALUE"
+        private const val KEY_TICKETS_VALUE = "KEY_TICKETS_VALUE"
+        private const val REQUEST_CODE = 123
+        private const val NOTIFICATION_ID = 1
     }
 }
