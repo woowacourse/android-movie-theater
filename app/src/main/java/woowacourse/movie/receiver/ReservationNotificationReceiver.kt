@@ -39,7 +39,8 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
             isAutoCancel = true,
             pendingIntent = pendingIntent
         )
-        val notification: Notification = reservationNotificationHelper.generateNotification(notificationBuilder)
+        val notification: Notification =
+            reservationNotificationHelper.generateNotification(notificationBuilder)
         if (isAlarmPossible(context)) notificationManager.notify(1, notification)
     }
 
@@ -61,6 +62,7 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
         sendingIntent.putExtra(TICKETS_KEY_VALUE, ticketsUiModel)
         return sendingIntent
     }
+
     private fun isAlarmPossible(context: Context): Boolean {
         val sharedPreferences = context.getSharedPreferences(
             SETTING,
@@ -70,6 +72,16 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
     }
 
     companion object {
+        fun generateReceiverIntent(
+            context: Context,
+            movieUiModel: MovieUiModel,
+            ticketsUiModel: TicketsUiModel
+        ): Intent {
+            val receiverIntent = Intent(context, ReservationNotificationReceiver::class.java)
+            receiverIntent.putExtra(MOVIE_KEY_VALUE, movieUiModel)
+            return receiverIntent.putExtra(TICKETS_KEY_VALUE, ticketsUiModel)
+        }
+
         private const val CHANNEL_ID = "channel1"
         private const val CHANNEL_NAME = "Channel1"
         private const val MOVIE_KEY_VALUE = "movie"

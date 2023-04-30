@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import domain.Ticket
 import domain.TicketOffice
 import woowacourse.movie.R
+import woowacourse.movie.ReservationAlarmManager
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.receiver.ReservationNotificationReceiver
 import woowacourse.movie.setBackgroundColorId
@@ -95,47 +96,20 @@ class SelectSeatActivity : AppCompatActivity() {
         builder.setPositiveButton(R.string.select_seat_dialog_positive_button_text) { dialog, _ ->
             ReservationResultActivity.start(
                 this,
-                movieUiModel,
-                TicketsMapper.toUi(ticketOffice.tickets)
+                movieUiModel = movieUiModel,
+                ticketsUiModel = TicketsMapper.toUi(ticketOffice.tickets)
             )
-            registerAlarm()
+            ReservationAlarmManager().registerAlarm(
+                this,
+                ticketsUiModel = TicketsMapper.toUi(ticketOffice.tickets),
+                movieUiModel = movieUiModel
+            )
         }
         builder.setNegativeButton(R.string.select_seat_dialog_negative_button_text) { dialog, _ ->
             dialog.dismiss()
         }
         return builder.create()
     }
-
-    private fun registerAlarm() {
-        val ticketsUiModel = TicketsMapper.toUi(ticketOffice.tickets)
-        val receiverIntent = generateReceiverIntent(ticketsUiModel)
-        val pendingIntent =
-            PendingIntent.getBroadcast(this, 125, receiverIntent, PendingIntent.FLAG_IMMUTABLE)
-        val alarmManager: AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val timeMillis = getTimeInMillis()
-        alarmManager[AlarmManager.RTC, timeMillis] = pendingIntent
-    }
-
-    private fun generateReceiverIntent(ticketsUiModel: TicketsUiModel): Intent {
-        val receiverIntent = Intent(this, ReservationNotificationReceiver::class.java)
-        receiverIntent.putExtra("movie", movieUiModel)
-        return receiverIntent.putExtra("tickets", ticketsUiModel)
-    }
-
-    private fun getTimeInMillis(): Long {
-        val sqlDate = getAlarmDateTime(ticketDateTime, 30)
-        val calendar: Calendar = Calendar.getInstance()
-        calendar.time = sqlDate
-        return calendar.timeInMillis
-    }
-
-    private fun getAlarmDateTime(localDateTime: LocalDateTime, minute: Long): Date {
-        val milliSeconds: Long = localDateTime.atZone(ZoneId.systemDefault())
-            .minusMinutes(minute)
-            .toInstant().toEpochMilli()
-        return Date(milliSeconds)
-    }
-
 
     private fun updateUi(seatView: SeatView) {
         changeSeatViewState(seatView)
