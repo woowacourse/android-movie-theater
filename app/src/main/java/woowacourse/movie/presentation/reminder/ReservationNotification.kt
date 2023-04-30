@@ -19,14 +19,14 @@ class ReservationNotification(
 
         with(context) {
             sendNotification(
-                this,
-                getString(R.string.notification_push_title),
-                getString(
+                context = this,
+                title = getString(R.string.notification_push_title),
+                content = getString(
                     R.string.notification_push_desc,
                     data.movieTitle,
                     REMINDER_TIME_MINUTES_AGO
                 ),
-                RESERVATION_PUSH_ID,
+                pushId = data.hashCode(),
             ) { makePendingIntent(context, data) }
         }
     }
@@ -37,9 +37,5 @@ class ReservationNotification(
     ): PendingIntent {
         val intent = TicketingResultActivity.makeIntent(context, data)
         return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-    }
-
-    companion object {
-        private const val RESERVATION_PUSH_ID = 1000
     }
 }
