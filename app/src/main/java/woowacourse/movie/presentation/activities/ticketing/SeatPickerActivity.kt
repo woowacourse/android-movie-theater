@@ -12,7 +12,6 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.model.discount.policy.MovieDayDiscountPolicy
 import woowacourse.movie.domain.model.discount.policy.MovieTimeDiscountPolicy
 import woowacourse.movie.domain.model.movie.DomainTicketPrice
-import woowacourse.movie.domain.model.reservation.DomainReservation
 import woowacourse.movie.domain.model.seat.DomainPickedSeats
 import woowacourse.movie.domain.model.seat.DomainSeat
 import woowacourse.movie.presentation.activities.main.alarm.PushAlarmManager
@@ -173,16 +172,12 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
         }.show()
     }
 
-    private fun makeReservation(): Reservation = DomainReservation.of(
-        movieTitle = movie.title,
-        year = movieDate.year,
-        month = movieDate.month,
-        day = movieDate.day,
-        hour = movieTime.hour,
-        min = movieTime.min,
-        ticketCount = ticket.count,
+    private fun makeReservation(): Reservation = movie.toDomain().reserve(
+        reservedDate = movieDate,
+        reservedTime = movieTime,
+        ticket = ticket.toDomain(),
         seats = pickedSeats,
-        price = calculateTotalPrice(),
+        ticketPrice = calculateTotalPrice(),
     ).toPresentation()
 
     private fun startTicketingResultActivity(reservation: Reservation) {
