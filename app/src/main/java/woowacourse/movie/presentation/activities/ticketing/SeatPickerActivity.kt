@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.activities.ticketing
 
+import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -188,9 +189,12 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun registerPushBroadcast(reservation: Reservation) {
         val alarmIntent = Intent(this, ReservationPushReceiver::class.java)
-        val alarmManager = PushAlarmManager(this, alarmIntent, reservation)
-
-        alarmManager.set(reservation.reservedTime, REMINDER_TIME_MINUTES_AGO)
+        val pendingIntent = alarmIntent.let { intent ->
+            intent.action = PushAlarmManager.PUSH_ACTION
+            intent.putExtra(PushAlarmManager.PUSH_DATA_KEY, reservation)
+            PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        }
+        PushAlarmManager.set(this, pendingIntent, reservation.reservedTime, REMINDER_TIME_MINUTES_AGO)
     }
 
     companion object {

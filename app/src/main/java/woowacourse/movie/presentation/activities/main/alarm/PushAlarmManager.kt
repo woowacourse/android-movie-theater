@@ -3,33 +3,20 @@ package woowacourse.movie.presentation.activities.main.alarm
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
-import android.os.Parcelable
 import java.time.LocalDateTime
 import java.time.ZoneId
 
-class PushAlarmManager<T : Parcelable>(
-    context: Context,
-    intent: Intent,
-    data: T,
-) {
-    private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    private val pendingIntent = intent.let { intent ->
-        intent.action = PUSH_ACTION
-        intent.putExtra(PUSH_DATA_KEY, data)
-        PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-    }
+object PushAlarmManager {
 
-    fun set(time: LocalDateTime, ago: Long) {
+    const val PUSH_DATA_KEY = "push"
+    const val PUSH_ACTION: String =
+        "woowacourse.movie.presentation.activities.main.alarm.PushAlarmManager.PUSH_ACTION"
+
+    fun set(context: Context, pendingIntent: PendingIntent, time: LocalDateTime, ago: Long) {
         val pushTime = time.minusMinutes(ago)
             .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(AlarmManager.RTC_WAKEUP, pushTime, pendingIntent)
-    }
-
-    companion object {
-        internal const val PUSH_DATA_KEY = "push"
-        internal const val PUSH_ACTION: String =
-            "woowacourse.movie.presentation.activities.main.alarm.PushAlarmManager.PUSH_ACTION"
     }
 }

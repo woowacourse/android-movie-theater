@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import woowacourse.movie.R
 import woowacourse.movie.presentation.MovieApplication
-import woowacourse.movie.presentation.activities.main.alarm.PushAlarmManager.Companion.PUSH_DATA_KEY
+import woowacourse.movie.presentation.activities.main.alarm.PushAlarmManager.PUSH_DATA_KEY
 import woowacourse.movie.presentation.activities.main.fragments.setting.SettingFragment
 import woowacourse.movie.presentation.extensions.getParcelableCompat
 import woowacourse.movie.presentation.model.item.Reservation
