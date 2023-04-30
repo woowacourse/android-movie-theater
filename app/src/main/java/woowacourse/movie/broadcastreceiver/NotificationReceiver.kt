@@ -28,7 +28,7 @@ class NotificationReceiver : BroadcastReceiver() {
         notifyReservation(context, ticketModel)
     }
 
-    private fun checkPushNotificationAllowed() = !SettingsStorage.getPushNotification()
+    private fun checkPushNotificationAllowed() = !SettingsStorage.enablePushNotification
 
     private fun createNotificationChannel(context: Context) {
         val name = context.getString(R.string.reservation_notification_title)

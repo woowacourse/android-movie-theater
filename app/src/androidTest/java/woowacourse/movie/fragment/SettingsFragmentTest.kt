@@ -21,7 +21,7 @@ class SettingsFragmentTest {
 
     @Before
     fun setUp() {
-        SettingsStorage.editPushNotification(false)
+        SettingsStorage.enablePushNotification = false
 
         onView(withId(R.id.bottom_item_settings))
             .perform(click())
@@ -32,6 +32,6 @@ class SettingsFragmentTest {
         onView(withId(R.id.push_notification_switch))
             .perform(click())
 
-        assert(SettingsStorage.getPushNotification())
+        assert(SettingsStorage.enablePushNotification)
     }
 }

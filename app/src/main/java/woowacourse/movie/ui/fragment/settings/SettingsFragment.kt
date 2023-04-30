@@ -27,9 +27,9 @@ class SettingsFragment : Fragment() {
 
     private fun initPushNotificationSwitch(view: View) {
         val pushNotificationSwitch = view.findViewById<SwitchCompat>(R.id.push_notification_switch)
-        pushNotificationSwitch.isChecked = SettingsStorage.getPushNotification()
+        pushNotificationSwitch.isChecked = SettingsStorage.enablePushNotification
         pushNotificationSwitch.setOnCheckedChangeListener { _, isChecked ->
-            SettingsStorage.editPushNotification(isChecked)
+            SettingsStorage.enablePushNotification = isChecked
         }
     }
 }

@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     private val bottomNavigationView by lazy { findViewById<BottomNavigationView>(R.id.main_bottom_navigation) }
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean -> SettingsStorage.editPushNotification(isGranted) }
+    ) { isGranted: Boolean -> SettingsStorage.enablePushNotification = isGranted }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
