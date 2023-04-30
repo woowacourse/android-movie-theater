@@ -5,10 +5,7 @@ import android.content.SharedPreferences
 
 class PreferenceUtil(context: Context) {
     private val prefs: SharedPreferences =
-        context.getSharedPreferences(
-            "prefs_name",
-            Context.MODE_PRIVATE + Context.MODE_MULTI_PROCESS
-        )
+        context.getSharedPreferences("prefs_name", Context.MODE_PRIVATE)
 
     fun getBoolean(key: String, defValue: Boolean): Boolean {
         return prefs.getBoolean(key, defValue)
