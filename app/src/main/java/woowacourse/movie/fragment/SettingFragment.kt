@@ -1,14 +1,18 @@
 package woowacourse.movie.fragment
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.switchmaterial.SwitchMaterial
+import woowacourse.movie.BuildConfig
 import woowacourse.movie.R
 import woowacourse.movie.SharedPreferenceUtil
 import woowacourse.movie.activity.MainActivity
@@ -39,7 +43,9 @@ class SettingFragment : Fragment() {
             ) {
                 switch.isChecked = false
                 if (!shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                    switch.isEnabled = false
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        .setData(Uri.parse("package:" + BuildConfig.APPLICATION_ID))
+                    startActivity(intent)
                 } else {
                     (activity as MainActivity).requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
