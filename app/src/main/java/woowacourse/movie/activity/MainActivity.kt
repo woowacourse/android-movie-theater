@@ -1,10 +1,9 @@
 package woowacourse.movie.activity
 
 import android.Manifest
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -12,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
+import woowacourse.movie.SettingPreferenceManager
 import woowacourse.movie.fragment.MoviesFragment
 import woowacourse.movie.fragment.ReservationListFragment
 import woowacourse.movie.fragment.SettingFragment
@@ -19,16 +19,13 @@ import woowacourse.movie.fragment.SettingFragment
 class MainActivity : AppCompatActivity() {
 
     private val bottomNavigation: BottomNavigationView by lazy { findViewById(R.id.bottom_navigation) }
-    private val sharedPreference: SharedPreferences by lazy {
-        getSharedPreferences(
-            SETTING, MODE_PRIVATE
-        )
-    }
-    private val editor: SharedPreferences.Editor by lazy { sharedPreference.edit() }
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()){}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        SettingPreferenceManager.inIt(this)
         addFragment(ReservationListFragment())
         setOnBottomNavigationClickListener()
         requestNotificationPermission()
@@ -60,35 +57,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun requestNotificationPermission() {
-        if (ContextCompat.checkSelfPermission(
-                this, Manifest.permission.POST_NOTIFICATIONS
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                } else {
-                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                }
-            } else {
-            }
+        if (!isPermissionGranted()) {
+            showNotificationPermissionDialog()
         }
     }
 
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean ->
-        saveAlarmPermissionData(isGranted)
+    private fun isPermissionGranted(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this, Manifest.permission.POST_NOTIFICATIONS
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun saveAlarmPermissionData(condition: Boolean) {
-        when (condition) {
-            true -> editor.putBoolean(REQUEST_PERMISSION_KEY, true).commit()
-            false -> editor.putBoolean(REQUEST_PERMISSION_KEY, false).commit()
+    private fun showNotificationPermissionDialog() {
+        if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            Toast.makeText(this,"만약 권한을 거부한다면, 다시 앱을 설치하셔야 권한 허용이 가능합니다",Toast.LENGTH_LONG).show()
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
-    }
-
-    companion object {
-        private const val SETTING = "settings"
-        private const val REQUEST_PERMISSION_KEY = "requestPermission"
     }
 }

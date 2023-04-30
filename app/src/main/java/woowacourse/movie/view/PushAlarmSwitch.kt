@@ -1,10 +1,7 @@
 package woowacourse.movie.view
 
-import android.content.Context
-import android.util.Log
 import android.widget.Switch
-import androidx.appcompat.widget.SwitchCompat
-import woowacourse.SettingPreferenceManager
+import woowacourse.movie.SettingPreferenceManager
 
 class PushAlarmSwitch(val view: Switch) {
     init {
