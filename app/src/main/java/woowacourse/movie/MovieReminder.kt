@@ -8,13 +8,11 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.os.Build
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.activity.BookCompleteActivity
 import woowacourse.movie.movie.MovieBookingSeatInfoUIModel
 
 class MovieReminder : BroadcastReceiver() {
-    lateinit var notificationManager: NotificationManager
 
     override fun onReceive(context: Context, intent: Intent) {
         val canPush = getPushAlarmAllowed(context)
@@ -24,12 +22,11 @@ class MovieReminder : BroadcastReceiver() {
         val movieBookingSeatInfo =
             intent.getSerializableCompat<MovieBookingSeatInfoUIModel>(BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY)
                 ?: return
-        notificationManager = context.getSystemService(
-            Context.NOTIFICATION_SERVICE
-        ) as NotificationManager
+        val notificationManager = MovieNotificationManager(context)
+
         val id = intent.getIntExtra(BundleKeys.ALARM_NOTIFICATION_ID, 0)
-        createNotificationChannel(context)
-        deliverNotification(context, movieBookingSeatInfo, id)
+        createNotificationChannel(context, notificationManager)
+        deliverNotification(context, movieBookingSeatInfo, id, notificationManager)
     }
 
     private fun getPushAlarmAllowed(context: Context) =
@@ -38,28 +35,28 @@ class MovieReminder : BroadcastReceiver() {
             false
         )
 
-    private fun createNotificationChannel(context: Context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationChannel = NotificationChannel(
-                PRIMARY_CHANNEL_ID,
-                context.getString(R.string.notification_channel_name),
-                NotificationManager.IMPORTANCE_HIGH
-            )
-            notificationChannel.enableLights(true)
-            notificationChannel.lightColor = Color.RED
-            notificationChannel.enableVibration(true)
-            notificationChannel.description =
-                context.getString(R.string.notification_channel_description)
-            notificationManager.createNotificationChannel(
-                notificationChannel
-            )
-        }
+    private fun createNotificationChannel(
+        context: Context,
+        notificationManager: MovieNotificationManager
+    ) {
+        val notificationChannel = NotificationChannel(
+            PRIMARY_CHANNEL_ID,
+            context.getString(R.string.notification_channel_name),
+            NotificationManager.IMPORTANCE_HIGH
+        )
+        notificationChannel.enableLights(true)
+        notificationChannel.lightColor = Color.RED
+        notificationChannel.enableVibration(true)
+        notificationChannel.description =
+            context.getString(R.string.notification_channel_description)
+        notificationManager.createChannel(notificationChannel)
     }
 
     private fun deliverNotification(
         context: Context,
         movieBookingSeatInfo: MovieBookingSeatInfoUIModel,
-        id: Int
+        id: Int,
+        notificationManager: MovieNotificationManager
     ) {
         val contentIntent = BookCompleteActivity.getIntent(context, movieBookingSeatInfo)
         val contentPendingIntent = PendingIntent.getActivity(
@@ -70,7 +67,7 @@ class MovieReminder : BroadcastReceiver() {
         )
         val builder = getBuilder(context, movieBookingSeatInfo, contentPendingIntent)
 
-        notificationManager.notify(id, builder.build())
+        notificationManager.notify(id, builder)
     }
 
     private fun getBuilder(
@@ -79,7 +76,12 @@ class MovieReminder : BroadcastReceiver() {
         contentPendingIntent: PendingIntent?
     ) = NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID).apply {
         setSmallIcon(R.drawable.noti_icon_24)
-        setLargeIcon(BitmapFactory.decodeResource(context.resources, movieBookingSeatInfo.movieBookingInfo.movieInfo.poster))
+        setLargeIcon(
+            BitmapFactory.decodeResource(
+                context.resources,
+                movieBookingSeatInfo.movieBookingInfo.movieInfo.poster
+            )
+        )
         setContentTitle(context.getString(R.string.notification_title))
         setContentText(
             context.getString(
