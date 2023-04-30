@@ -2,7 +2,6 @@ package woowacourse.movie.domain.model.rules
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.rules.ScreeningTimes
 import java.time.LocalDate
 import java.time.LocalTime
 

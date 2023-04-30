@@ -3,7 +3,6 @@ package woowacourse.movie.domain.model.discount.discountpolicy
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.discount.discountcondition.DiscountConditionWithDays
-import woowacourse.movie.domain.model.discount.discountpolicy.RateDiscountPolicy
 import woowacourse.movie.domain.model.tools.Money
 import java.time.LocalDateTime
 

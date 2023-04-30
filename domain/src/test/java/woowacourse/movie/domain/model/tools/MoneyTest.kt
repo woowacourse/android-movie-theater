@@ -3,7 +3,6 @@ package woowacourse.movie.domain.model.tools
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import woowacourse.movie.domain.model.tools.Money
 
 class MoneyTest {
 

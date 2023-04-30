@@ -51,5 +51,5 @@ dependencies {
     testImplementation("org.mockito:mockito-core:3.12.4")
 
     // Fragment
-    implementation ("androidx.fragment:fragment-ktx:1.4.0")
+    implementation("androidx.fragment:fragment-ktx:1.4.0")
 }
