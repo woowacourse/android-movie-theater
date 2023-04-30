@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        PermissionManager.requestNotificationPermission(this, this, requestPermissionLauncher)
+        PermissionManager.requestNotificationPermission(this, requestPermissionLauncher)
         findViewById<BottomNavigationView>(R.id.bnv_main).setOnItemSelectedListener(this)
         supportFragmentManager.beginTransaction().add(R.id.fl_main, BookHistoryFragment()).commit()
     }

@@ -13,15 +13,14 @@ import androidx.core.content.ContextCompat
 object PermissionManager {
     fun requestNotificationPermission(
         activity: Activity,
-        context: Context,
         activityResultLauncher: ActivityResultLauncher<String>
     ) {
-        if (isPermissionDenied(context, POST_NOTIFICATIONS)) {
+        if (isPermissionDenied(activity, POST_NOTIFICATIONS)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (shouldShowRequestPermissionRationale(activity, POST_NOTIFICATIONS)) {
                     Toast.makeText(
-                        context,
-                        context.getString(R.string.if_permission_is_denied_cant_use_notification_service),
+                        activity,
+                        activity.getString(R.string.if_permission_is_denied_cant_use_notification_service),
                         Toast.LENGTH_LONG
                     ).show()
                     return
