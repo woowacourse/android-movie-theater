@@ -23,7 +23,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.dto.AdDto
-import woowacourse.movie.movie.activity.MainActivity
+import woowacourse.movie.movie.MainActivity
 import woowacourse.movie.movie.dto.movie.MovieDummy
 
 @RunWith(AndroidJUnit4::class)
@@ -36,13 +36,13 @@ class MainActivityTest {
     val intentsTestRule = IntentsTestRule(MainActivity::class.java)
 
     @Test
-    fun `리사이클러뷰가_화면에_보이는지_확인`() {
+    fun 리사이클러뷰가_화면에_보이는지_확인() {
         onView(withId(R.id.movie_rv))
             .check(matches(isDisplayed()))
     }
 
     @Test
-    fun `리사이클러뷰_0번째_위치에_영화_데이터가_들어있는지_확인`() {
+    fun 리사이클러뷰_0번째_위치에_영화_데이터가_들어있는지_확인() {
         onView(withId(R.id.movie_rv))
             .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(0))
             .check(
@@ -58,7 +58,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun `리사이클러뷰_1번째_위치에_영화_데이터가_들어있는지_확인`() {
+    fun 리사이클러뷰_1번째_위치에_영화_데이터가_들어있는지_확인() {
         onView(withId(R.id.movie_rv))
             .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(1))
             .check(
@@ -74,7 +74,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun `리사이클러뷰_2번째_위치에_영화_데이터가_들어있는지_확인`() {
+    fun 리사이클러뷰_2번째_위치에_영화_데이터가_들어있는지_확인() {
         onView(withId(R.id.movie_rv))
             .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(2))
             .check(
@@ -90,14 +90,14 @@ class MainActivityTest {
     }
 
     @Test
-    fun `리사이클러뷰_3번째_위치에_광고가_있는지_확인`() {
+    fun 리사이클러뷰_3번째_위치에_광고가_있는지_확인() {
         onView(withId(R.id.movie_rv))
             .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(3))
             .check(matches(hasDescendant(allOf(withId(R.id.ad), isDisplayed()))))
     }
 
     @Test
-    fun `리사이클러뷰_3번째_위치에_있는_광고를_눌렀을_때_우아한테크코스_사이트가_열리는지_확인`() {
+    fun 리사이클러뷰_3번째_위치에_있는_광고를_눌렀을_때_우아한테크코스_사이트가_열리는지_확인() {
         onView(withId(R.id.movie_rv))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(

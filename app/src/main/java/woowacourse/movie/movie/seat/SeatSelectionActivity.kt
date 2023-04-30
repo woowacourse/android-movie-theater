@@ -1,4 +1,4 @@
-package woowacourse.movie.movie.activity
+package woowacourse.movie.movie.seat
 
 import android.app.AlarmManager
 import android.content.Context
@@ -12,8 +12,6 @@ import domain.Seat
 import domain.Seats
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
-import woowacourse.movie.movie.alarm.AlarmReceiver
-import woowacourse.movie.movie.alarm.PendingIntentBuilder
 import woowacourse.movie.movie.dto.BookingHistoryDto
 import woowacourse.movie.movie.dto.movie.BookingMovieEntity
 import woowacourse.movie.movie.dto.movie.MovieDateDto
@@ -23,6 +21,9 @@ import woowacourse.movie.movie.dto.seat.SeatsDto
 import woowacourse.movie.movie.dto.ticket.TicketCountDto
 import woowacourse.movie.movie.mapper.seat.mapToSeats
 import woowacourse.movie.movie.mapper.seat.mapToSeatsDto
+import woowacourse.movie.movie.setting.AlarmReceiver
+import woowacourse.movie.movie.ticket.TicketActivity
+import woowacourse.movie.movie.utils.PendingIntentBuilder
 import woowacourse.movie.movie.utils.getParcelableCompat
 import woowacourse.movie.movie.view.SeatSelectView
 import java.time.LocalDateTime

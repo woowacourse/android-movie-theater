@@ -1,4 +1,4 @@
-package woowacourse.movie.movie.fragment
+package woowacourse.movie.movie.movielist
 
 import android.content.Intent
 import android.net.Uri
@@ -10,11 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.dto.AdDto
-import woowacourse.movie.movie.activity.MovieDetailActivity
 import woowacourse.movie.movie.dto.movie.MovieDto
 import woowacourse.movie.movie.dto.movie.MovieDummy
-import woowacourse.movie.movie.movielist.MovieRVAdapter
-import woowacourse.movie.movie.movielist.OnClickListener
+import woowacourse.movie.movie.moviedetail.MovieDetailActivity
 
 class HomeFragment : Fragment() {
     override fun onCreateView(

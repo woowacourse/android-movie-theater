@@ -1,4 +1,4 @@
-package woowacourse.movie.movie.activity
+package woowacourse.movie.movie.moviedetail
 
 import android.content.Intent
 import android.os.Bundle
@@ -22,6 +22,7 @@ import woowacourse.movie.movie.mapper.movie.mapToMovieDateDto
 import woowacourse.movie.movie.mapper.movie.mapToMovieTimeDto
 import woowacourse.movie.movie.mapper.ticket.mapToTicketCount
 import woowacourse.movie.movie.mapper.ticket.mapToTicketCountDto
+import woowacourse.movie.movie.seat.SeatSelectionActivity
 import woowacourse.movie.movie.utils.getParcelableCompat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

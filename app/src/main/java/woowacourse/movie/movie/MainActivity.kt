@@ -1,4 +1,4 @@
-package woowacourse.movie.movie.activity
+package woowacourse.movie.movie
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -13,9 +13,9 @@ import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
-import woowacourse.movie.movie.fragment.HistoryFragment
-import woowacourse.movie.movie.fragment.HomeFragment
-import woowacourse.movie.movie.fragment.SettingFragment
+import woowacourse.movie.movie.history.HistoryFragment
+import woowacourse.movie.movie.movielist.HomeFragment
+import woowacourse.movie.movie.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
 

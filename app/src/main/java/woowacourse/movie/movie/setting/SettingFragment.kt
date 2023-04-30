@@ -1,4 +1,4 @@
-package woowacourse.movie.movie.fragment
+package woowacourse.movie.movie.setting
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.movie.alarm.SettingPreference
-import woowacourse.movie.movie.alarm.SettingPreference.Companion.setting_preference_key
+import woowacourse.movie.movie.utils.SettingPreference
+import woowacourse.movie.movie.utils.SettingPreference.Companion.setting_preference_key
 
 class SettingFragment : Fragment() {
 

@@ -14,9 +14,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.movie.activity.MainActivity
-import woowacourse.movie.movie.alarm.SettingPreference
-import woowacourse.movie.movie.alarm.SettingPreference.Companion.setting_preference_key
+import woowacourse.movie.movie.MainActivity
+import woowacourse.movie.movie.utils.SettingPreference
+import woowacourse.movie.movie.utils.SettingPreference.Companion.setting_preference_key
 
 @RunWith(AndroidJUnit4::class)
 class SettingFragmentTest {

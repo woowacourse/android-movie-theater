@@ -1,12 +1,13 @@
-package woowacourse.movie.movie.alarm
+package woowacourse.movie.movie.setting
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import woowacourse.movie.movie.activity.SeatSelectionActivity.Companion.BOOKING_MOVIE_KEY
-import woowacourse.movie.movie.alarm.SettingPreference.Companion.setting_preference_key
 import woowacourse.movie.movie.dto.movie.BookingMovieEntity
+import woowacourse.movie.movie.seat.SeatSelectionActivity.Companion.BOOKING_MOVIE_KEY
+import woowacourse.movie.movie.utils.SettingPreference
+import woowacourse.movie.movie.utils.SettingPreference.Companion.setting_preference_key
 import woowacourse.movie.movie.utils.getParcelableCompat
 
 class AlarmReceiver : BroadcastReceiver() {

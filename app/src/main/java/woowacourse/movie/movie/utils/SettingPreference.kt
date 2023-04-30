@@ -1,4 +1,4 @@
-package woowacourse.movie.movie.alarm
+package woowacourse.movie.movie.utils
 
 import android.content.Context
 import android.content.SharedPreferences

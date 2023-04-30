@@ -1,4 +1,4 @@
-package woowacourse.movie.movie.fragment
+package woowacourse.movie.movie.history
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,11 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.movie.activity.TicketActivity
 import woowacourse.movie.movie.dto.BookingHistoryDto
 import woowacourse.movie.movie.dto.movie.BookingMovieEntity
-import woowacourse.movie.movie.history.HistoryAdapter
 import woowacourse.movie.movie.movielist.OnClickListener
+import woowacourse.movie.movie.ticket.TicketActivity
 
 class HistoryFragment : Fragment() {
     override fun onCreateView(

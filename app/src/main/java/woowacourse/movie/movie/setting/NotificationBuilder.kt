@@ -1,4 +1,4 @@
-package woowacourse.movie.movie.alarm
+package woowacourse.movie.movie.setting
 
 import android.Manifest
 import android.app.NotificationChannel
@@ -11,6 +11,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
 import woowacourse.movie.movie.dto.movie.BookingMovieEntity
+import woowacourse.movie.movie.utils.PendingIntentBuilder
 
 class NotificationBuilder(val context: Context) {
 

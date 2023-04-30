@@ -1,11 +1,12 @@
-package woowacourse.movie.movie.alarm
+package woowacourse.movie.movie.utils
 
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import woowacourse.movie.movie.activity.SeatSelectionActivity
-import woowacourse.movie.movie.activity.TicketActivity
 import woowacourse.movie.movie.dto.movie.BookingMovieEntity
+import woowacourse.movie.movie.seat.SeatSelectionActivity
+import woowacourse.movie.movie.setting.AlarmReceiver
+import woowacourse.movie.movie.ticket.TicketActivity
 
 class PendingIntentBuilder(val context: Context) {
     fun createNotificationPendingIntent(

@@ -30,16 +30,16 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.movie.activity.SeatSelectionActivity
-import woowacourse.movie.movie.activity.SeatSelectionActivity.Companion.DATE_KEY
-import woowacourse.movie.movie.activity.SeatSelectionActivity.Companion.MOVIE_KEY
-import woowacourse.movie.movie.activity.SeatSelectionActivity.Companion.TICKET_KEY
-import woowacourse.movie.movie.activity.SeatSelectionActivity.Companion.TIME_KEY
-import woowacourse.movie.movie.activity.TicketActivity
 import woowacourse.movie.movie.dto.movie.MovieDateDto
 import woowacourse.movie.movie.dto.movie.MovieDto
 import woowacourse.movie.movie.dto.movie.MovieTimeDto
 import woowacourse.movie.movie.dto.ticket.TicketCountDto
+import woowacourse.movie.movie.seat.SeatSelectionActivity
+import woowacourse.movie.movie.seat.SeatSelectionActivity.Companion.DATE_KEY
+import woowacourse.movie.movie.seat.SeatSelectionActivity.Companion.MOVIE_KEY
+import woowacourse.movie.movie.seat.SeatSelectionActivity.Companion.TICKET_KEY
+import woowacourse.movie.movie.seat.SeatSelectionActivity.Companion.TIME_KEY
+import woowacourse.movie.movie.ticket.TicketActivity
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -82,26 +82,26 @@ class SeatSelectionActivityTest {
         )
 
     @Test
-    fun `영화_제목이_전달받은_데이터와_일치하는지_확인`() {
+    fun 영화_제목이_전달받은_데이터와_일치하는지_확인() {
         onView(withId(R.id.movie_title))
             .check(matches(allOf(withText("해리포터"), isDisplayed())))
     }
 
     @Test
-    fun `좌석이_선택되지_않았을_때_가격이_0원인지_확인`() {
+    fun 좌석이_선택되지_않았을_때_가격이_0원인지_확인() {
         onView(withId(R.id.ticket_price))
             .check(matches(allOf(withText("0원"), isDisplayed())))
     }
 
     @Test
-    fun `좌석을_선택하면_가격이_0원이_아닌지_확인`() {
+    fun 좌석을_선택하면_가격이_0원이_아닌지_확인() {
         onView(withText("A1")).perform(ViewActions.click())
         onView(withId(R.id.ticket_price))
             .check(matches(not(withText("0원"))))
     }
 
     @Test
-    fun `좌석을_선택했다가_재선택하면_가격이_0원인지_확인`() {
+    fun 좌석을_선택했다가_재선택하면_가격이_0원인지_확인() {
         onView(withText("A1")).perform(ViewActions.click())
         onView(withText("A1")).perform(ViewActions.click())
         onView(withId(R.id.ticket_price))
@@ -109,13 +109,13 @@ class SeatSelectionActivityTest {
     }
 
     @Test
-    fun `좌석을_정해진_좌석_수_만큼_선택하지_않으면_버튼이_클릭되지_않는지_확인`() {
+    fun 좌석을_정해진_좌석_수_만큼_선택하지_않으면_버튼이_클릭되지_않는지_확인() {
         onView(withId(R.id.enterBtn))
             .check(matches(isNotClickable()))
     }
 
     @Test
-    fun `좌석을_정해진_좌석_수_만큼_선택하면_버튼이_클릭되는지_확인`() {
+    fun 좌석을_정해진_좌석_수_만큼_선택하면_버튼이_클릭되는지_확인() {
         onView(withText("A1")).perform(ViewActions.click())
         onView(withText("B1")).perform(ViewActions.click())
         onView(withText("C1")).perform(ViewActions.click())
@@ -124,20 +124,20 @@ class SeatSelectionActivityTest {
     }
 
     @Test
-    fun `좌석을_선택하면_좌석의_색깔이_변하는지_확인`() {
+    fun 좌석을_선택하면_좌석의_색깔이_변하는지_확인() {
         onView(withText("A1")).perform(ViewActions.click())
         onView(withText("A1")).check(matches(hasBackgroundColor(R.color.select_seat)))
     }
 
     @Test
-    fun `좌석을_선택했다가_재선택하면_기본_색깔로_돌아오는지_확인`() {
+    fun 좌석을_선택했다가_재선택하면_기본_색깔로_돌아오는지_확인() {
         onView(withText("A1")).perform(ViewActions.click())
         onView(withText("A1")).perform(ViewActions.click())
         onView(withText("A1")).check(matches(hasBackgroundColor(R.color.white)))
     }
 
     @Test
-    fun `확인_버튼을_누르면_다이얼로그가_나오는지_확인`() {
+    fun 확인_버튼을_누르면_다이얼로그가_나오는지_확인() {
         onView(withText("A1")).perform(ViewActions.click())
         onView(withText("B1")).perform(ViewActions.click())
         onView(withText("C1")).perform(ViewActions.click())
@@ -146,7 +146,7 @@ class SeatSelectionActivityTest {
     }
 
     @Test
-    fun `다이얼로그에서_예를_누르면_티켓_확인_페이지로_이동하는지_확인`() {
+    fun 다이얼로그에서_예를_누르면_티켓_확인_페이지로_이동하는지_확인() {
         onView(withText("A1")).perform(ViewActions.click())
         onView(withText("B1")).perform(ViewActions.click())
         onView(withText("C1")).perform(ViewActions.click())
