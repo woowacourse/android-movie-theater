@@ -3,7 +3,7 @@ package woowacourse.movie
 import android.app.Application
 import android.content.IntentFilter
 import woowacourse.movie.broadcastreceiver.AlarmReceiver
-import woowacourse.movie.data.SettingsData
+import woowacourse.movie.data.settings.SettingsPreference
 
 class MovieTheaterApplication : Application() {
 
@@ -19,6 +19,6 @@ class MovieTheaterApplication : Application() {
     }
 
     private fun initSettingsPreference() {
-        SettingsData.init(applicationContext)
+        SettingsPreference.init(applicationContext)
     }
 }

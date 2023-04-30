@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.presentation.util.SettingsNotificationData
+import woowacourse.movie.data.settings.SettingsNotificationData
 
 class SettingsFragment : Fragment() {
 

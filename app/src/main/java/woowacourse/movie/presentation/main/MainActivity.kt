@@ -12,7 +12,7 @@ import woowacourse.movie.R
 import woowacourse.movie.presentation.bookedticketlist.BookedTicketsFragment
 import woowacourse.movie.presentation.movielist.MovieListFragment
 import woowacourse.movie.presentation.settings.SettingsFragment
-import woowacourse.movie.presentation.util.SettingsNotificationData
+import woowacourse.movie.data.settings.SettingsNotificationData
 import woowacourse.movie.presentation.util.replace
 
 class MainActivity : AppCompatActivity() {

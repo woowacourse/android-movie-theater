@@ -25,7 +25,7 @@ import woowacourse.movie.domain.model.tools.seat.Theater
 import woowacourse.movie.presentation.complete.CompleteActivity
 import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.model.ReservationModel
-import woowacourse.movie.presentation.util.SettingsNotificationData
+import woowacourse.movie.data.settings.SettingsNotificationData
 
 class ChoiceSeatActivity : AppCompatActivity() {
 

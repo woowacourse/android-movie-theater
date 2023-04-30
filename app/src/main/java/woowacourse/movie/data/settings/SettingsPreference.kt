@@ -1,10 +1,10 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.settings
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 
-object SettingsData {
+object SettingsPreference : SettingsData {
 
     private lateinit var settingsPreferences: SharedPreferences
     private const val preferenceName = "Settings"
@@ -13,9 +13,10 @@ object SettingsData {
         settingsPreferences = context.getSharedPreferences(preferenceName, MODE_PRIVATE)
     }
 
-    fun setBooleanData(key: String, value: Boolean) {
+    override fun setBooleanData(key: String, value: Boolean) {
         settingsPreferences.edit().putBoolean(key, value).apply()
     }
 
-    fun getBooleanData(key: String): Boolean = settingsPreferences.getBoolean(key, true)
+    override fun getBooleanData(key: String, defaultValue: Boolean): Boolean =
+        settingsPreferences.getBoolean(key, defaultValue)
 }
