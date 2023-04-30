@@ -65,6 +65,6 @@ class MovieListAdapter(
     override fun getItemCount(): Int = _items.size
 
     override fun getItemViewType(position: Int): Int {
-        return _items[position].viewType.id
+        return _items[position].viewType.ordinal
     }
 }

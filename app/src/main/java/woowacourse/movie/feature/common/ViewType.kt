@@ -1,10 +1,10 @@
 package woowacourse.movie.feature.common
 
-enum class ViewType(val id: Int) {
-    MOVIE(0),
-    ADV(1);
+enum class ViewType {
+    MOVIE,
+    ADV;
 
     companion object {
-        fun of(id: Int): ViewType = values()[id]
+        fun of(ordinal: Int): ViewType = values()[ordinal]
     }
 }
