@@ -32,6 +32,10 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             }
         }
 
+    private val bookHistoryFragment: Fragment by lazy { BookHistoryFragment() }
+    private val homeFragment: Fragment by lazy { HomeFragment() }
+    private val settingFragment: Fragment by lazy { SettingFragment() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -39,19 +43,20 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         findViewById<BottomNavigationView>(R.id.navigation_main).setOnItemSelectedListener(this)
 
-        supportFragmentManager.beginTransaction().add(R.id.framelayout_main, BookHistoryFragment()).commit()
+        supportFragmentManager.beginTransaction().add(R.id.framelayout_main, bookHistoryFragment)
+            .commit()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.page_book_history -> return whenMenuSelected(BookHistoryFragment())
-            R.id.page_home -> return whenMenuSelected(HomeFragment())
-            R.id.page_setting -> return whenMenuSelected(SettingFragment())
+            R.id.page_book_history -> return onChangedFragment(bookHistoryFragment)
+            R.id.page_home -> return onChangedFragment(homeFragment)
+            R.id.page_setting -> return onChangedFragment(settingFragment)
         }
         return false
     }
 
-    private fun whenMenuSelected(item: Fragment): Boolean {
+    private fun onChangedFragment(item: Fragment): Boolean {
         supportFragmentManager.beginTransaction()
             .replace(R.id.framelayout_main, item).commitAllowingStateLoss()
         return true
