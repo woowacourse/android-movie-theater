@@ -29,7 +29,11 @@
 
         <receiver
             android:name=".presentation.receiver.ReservationPushReceiver"
-            android:exported="false" />
+            android:exported="false">
+            <intent-filter>
+                <action android:name="woowacourse.movie.presentation.activities.main.alarm.PushAlarmManager.PUSH_ACTION"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
