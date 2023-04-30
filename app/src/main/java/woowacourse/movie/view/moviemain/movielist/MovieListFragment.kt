@@ -67,5 +67,6 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
 
     companion object {
         private const val AD_POST_INTERVAL = 3
+        const val TAG_MOVIE_LIST = "MOVIE_LIST"
     }
 }

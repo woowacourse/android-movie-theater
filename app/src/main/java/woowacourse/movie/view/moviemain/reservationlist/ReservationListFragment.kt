@@ -19,4 +19,8 @@ class ReservationListFragment : Fragment(R.layout.fragment_reservation_list) {
             startActivity(intent)
         }
     }
+
+    companion object {
+        const val TAG_RESERVATION_LIST = "RESERVATION_LIST"
+    }
 }

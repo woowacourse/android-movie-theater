@@ -73,5 +73,6 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
 
     companion object {
         const val ALARM_MINUTE_INTERVAL = 30L
+        const val TAG_SETTING = "SETTING"
     }
 }
