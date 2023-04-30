@@ -17,29 +17,15 @@ import woowacourse.movie.fragment.HomeFragment
 import woowacourse.movie.fragment.SettingFragment
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener {
-
+    private val sharedPreference = SharedPreferenceUtil(this)
     val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
-                Toast.makeText(
-                    this,
-                    getString(R.string.notification_permission_is_granted),
-                    Toast.LENGTH_SHORT
-                ).show()
-                SharedPreferenceUtil(this).setSettingValue(
-                    SETTING_PUSH_ALARM_SWITCH_KEY,
-                    true
-                )
+                Toast.makeText(this, getString(R.string.notification_permission_is_granted), Toast.LENGTH_SHORT).show()
+                sharedPreference.setSettingValue(SETTING_PUSH_ALARM_SWITCH_KEY, true)
             } else {
-                Toast.makeText(
-                    this,
-                    getString(R.string.notification_permission_is_denied),
-                    Toast.LENGTH_SHORT
-                ).show()
-                SharedPreferenceUtil(this).setSettingValue(
-                    SETTING_PUSH_ALARM_SWITCH_KEY,
-                    false
-                )
+                Toast.makeText(this, getString(R.string.notification_permission_is_denied), Toast.LENGTH_SHORT).show()
+                sharedPreference.setSettingValue(SETTING_PUSH_ALARM_SWITCH_KEY, false)
             }
         }
 
@@ -54,8 +40,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         findViewById<BottomNavigationView>(R.id.navigation_main).setOnItemSelectedListener(this)
 
-        supportFragmentManager.beginTransaction().add(R.id.framelayout_main, bookHistoryFragment)
-            .commit()
+        supportFragmentManager.beginTransaction().add(R.id.framelayout_main, bookHistoryFragment).commit()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
