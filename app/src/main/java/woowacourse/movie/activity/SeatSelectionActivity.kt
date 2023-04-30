@@ -53,11 +53,13 @@ class SeatSelectionActivity : AppCompatActivity() {
         )
     }
 
+    private val alarmReceiver = ReservationAlarmReceiver()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seat_selection)
 
-        Alarm.makeAlarmReceiver(ACTION_ALARM, applicationContext)
+        Alarm.registerAlarmReceiver(ACTION_ALARM, alarmReceiver, applicationContext)
         initSeatSelectionView(savedInstanceState)
     }
 
@@ -211,6 +213,11 @@ class SeatSelectionActivity : AppCompatActivity() {
             android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Alarm.unregisterAlarmReceiver(alarmReceiver, applicationContext)
     }
 
     companion object {
