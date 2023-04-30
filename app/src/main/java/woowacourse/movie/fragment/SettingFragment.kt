@@ -21,8 +21,11 @@ class SettingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_setting, container, false)
+        return inflater.inflate(R.layout.fragment_setting, container, false)
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val switch = view.findViewById<SwitchMaterial>(R.id.switch_setting_can_push)
         val sharedPreferenceUtil = SharedPreferenceUtil(view.context)
 
@@ -31,7 +34,7 @@ class SettingFragment : Fragment() {
 
         switch.setOnCheckedChangeListener { _, _ ->
             if (ContextCompat.checkSelfPermission(
-                    inflater.context,
+                    view.context,
                     Manifest.permission.POST_NOTIFICATIONS
                 ) == PackageManager.PERMISSION_DENIED
             ) {
@@ -48,6 +51,5 @@ class SettingFragment : Fragment() {
                 switch.isChecked
             )
         }
-        return view
     }
 }
