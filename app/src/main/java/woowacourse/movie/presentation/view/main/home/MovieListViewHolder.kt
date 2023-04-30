@@ -10,8 +10,7 @@ import woowacourse.movie.R
 import woowacourse.movie.model.Movie
 
 class MovieListViewHolder(
-    parent: ViewGroup,
-    private val event: (Int) -> Unit
+    parent: ViewGroup, private val event: (Int) -> Unit
 ) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context)
         .inflate(R.layout.item_movie_list, parent, false)

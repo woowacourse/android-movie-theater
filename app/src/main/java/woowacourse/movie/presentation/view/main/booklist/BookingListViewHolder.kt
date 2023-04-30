@@ -12,7 +12,8 @@ class BookingListViewHolder(
     private val event: (Int) -> Unit
 ) :
     RecyclerView.ViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.item_booking_list, parent, false)
+        LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_booking_list, parent, false)
     ) {
 
 
