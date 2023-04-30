@@ -1,9 +1,9 @@
-package woowacourse.movie
+package woowacourse.movie.data
 
 import android.content.Context
 import android.content.SharedPreferences
 
-class PreferenceUtil(context: Context) {
+class AlarmSettingRepository(context: Context) {
     private val prefs: SharedPreferences =
         context.getSharedPreferences(
             "notifications_prefs",
