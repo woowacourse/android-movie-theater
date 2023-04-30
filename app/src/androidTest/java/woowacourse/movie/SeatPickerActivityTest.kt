@@ -36,7 +36,7 @@ class SeatPickerActivityTest {
     private val intent =
         Intent(ApplicationProvider.getApplicationContext(), SeatPickerActivity::class.java)
             .putExtra(
-                BundleKeys.MOVIE_BOOKING_INFO_KEY,
+                MOVIE_BOOKING_INFO_KEY,
                 MovieBookingInfoUiModel(
                     movieInfo = MovieUIModel(
                         R.drawable.hansan,
@@ -182,5 +182,9 @@ class SeatPickerActivityTest {
                 )
             }
         }
+    }
+
+    companion object {
+        private const val MOVIE_BOOKING_INFO_KEY = "movieBookingInfo"
     }
 }

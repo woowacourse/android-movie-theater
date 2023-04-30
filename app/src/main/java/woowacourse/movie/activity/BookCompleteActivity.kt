@@ -5,8 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
-import woowacourse.movie.BundleKeys
-import woowacourse.movie.BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY
 import woowacourse.movie.R
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.movie.MovieBookingSeatInfoUIModel
@@ -52,9 +50,11 @@ class BookCompleteActivity : BackButtonActivity() {
     }
 
     companion object {
+        private const val MOVIE_BOOKING_SEAT_INFO_KEY = "movieBookingSeatInfo"
+
         fun getIntent(context: Context, movieBookingSeatInfo: MovieBookingSeatInfoUIModel): Intent {
             val intent = Intent(context, BookCompleteActivity::class.java)
-            intent.putExtra(BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY, movieBookingSeatInfo)
+            intent.putExtra(MOVIE_BOOKING_SEAT_INFO_KEY, movieBookingSeatInfo)
             return intent
         }
     }

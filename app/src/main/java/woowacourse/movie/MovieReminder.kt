@@ -20,18 +20,18 @@ class MovieReminder : BroadcastReceiver() {
         if (!canPush) return
 
         val movieBookingSeatInfo =
-            intent.getSerializableCompat<MovieBookingSeatInfoUIModel>(BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY)
+            intent.getSerializableCompat<MovieBookingSeatInfoUIModel>(MOVIE_BOOKING_SEAT_INFO_KEY)
                 ?: return
         val notificationManager = MovieNotificationManager(context)
 
-        val id = intent.getIntExtra(BundleKeys.ALARM_NOTIFICATION_ID, 0)
+        val id = intent.getIntExtra(ALARM_NOTIFICATION_ID, 0)
         createNotificationChannel(context, notificationManager)
         deliverNotification(context, movieBookingSeatInfo, id, notificationManager)
     }
 
     private fun getPushAlarmAllowed(context: Context) =
         SharedPreferenceUtil(context).getSettingValue(
-            BundleKeys.SETTING_PUSH_ALARM_SWITCH_KEY,
+            SETTING_PUSH_ALARM_SWITCH_KEY,
             false
         )
 
@@ -96,7 +96,10 @@ class MovieReminder : BroadcastReceiver() {
     }
 
     companion object {
-        const val NOTIFICATION_ID = 0
+        private const val MOVIE_BOOKING_SEAT_INFO_KEY = "movieBookingSeatInfo"
+        private const val SETTING_PUSH_ALARM_SWITCH_KEY = "settingPushAlarmSwitchKey"
+        private const val ALARM_NOTIFICATION_ID = "notificationId"
+
         const val PRIMARY_CHANNEL_ID = "primary_notification_channel"
     }
 }

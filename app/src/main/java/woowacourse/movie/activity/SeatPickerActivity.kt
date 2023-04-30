@@ -19,7 +19,6 @@ import com.woowacourse.domain.seat.SeatRow
 import com.woowacourse.domain.ticket.Ticket
 import com.woowacourse.domain.ticket.TicketBundle
 import woowacourse.movie.AlarmSetting
-import woowacourse.movie.BundleKeys
 import woowacourse.movie.R
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.mapper.toDomain
@@ -54,7 +53,7 @@ class SeatPickerActivity : BackButtonActivity() {
     }
 
     private fun getMovieBookingInfo(): MovieBookingInfoUiModel {
-        return intent.getSerializableCompat(BundleKeys.MOVIE_BOOKING_INFO_KEY)
+        return intent.getSerializableCompat(MOVIE_BOOKING_INFO_KEY)
             ?: MovieBookingInfoUiModel.dummyData
     }
 
@@ -225,10 +224,10 @@ class SeatPickerActivity : BackButtonActivity() {
         private const val TICKET_PRICE = "ticketPrice"
         private const val PICKED_SEAT = "prickedSeat"
         private const val SEAT_ROW_INTERVAL = 4
-        private const val MOVIE_RUN_BEFORE_TIME = 30L
+        private const val MOVIE_BOOKING_INFO_KEY = "movieBookingInfo"
         fun getIntent(context: Context, movieBookingInfo: MovieBookingInfoUiModel): Intent {
             val intent = Intent(context, SeatPickerActivity::class.java)
-            intent.putExtra(BundleKeys.MOVIE_BOOKING_INFO_KEY, movieBookingInfo)
+            intent.putExtra(MOVIE_BOOKING_INFO_KEY, movieBookingInfo)
             return intent
         }
     }

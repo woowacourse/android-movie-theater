@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.switchmaterial.SwitchMaterial
-import woowacourse.movie.BundleKeys
 import woowacourse.movie.R
 import woowacourse.movie.SharedPreferenceUtil
 import woowacourse.movie.activity.MainActivity
@@ -30,7 +29,7 @@ class SettingFragment : Fragment() {
         val sharedPreferenceUtil = SharedPreferenceUtil(view.context)
 
         switch.isChecked =
-            sharedPreferenceUtil.getSettingValue(BundleKeys.SETTING_PUSH_ALARM_SWITCH_KEY, false)
+            sharedPreferenceUtil.getSettingValue(SETTING_PUSH_ALARM_SWITCH_KEY, false)
 
         switch.setOnCheckedChangeListener { _, _ ->
             if (ContextCompat.checkSelfPermission(
@@ -47,9 +46,13 @@ class SettingFragment : Fragment() {
             }
 
             sharedPreferenceUtil.setSettingValue(
-                BundleKeys.SETTING_PUSH_ALARM_SWITCH_KEY,
+                SETTING_PUSH_ALARM_SWITCH_KEY,
                 switch.isChecked
             )
         }
+    }
+
+    companion object {
+        private const val SETTING_PUSH_ALARM_SWITCH_KEY = "settingPushAlarmSwitchKey"
     }
 }

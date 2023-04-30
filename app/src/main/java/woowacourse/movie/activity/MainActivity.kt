@@ -12,7 +12,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
-import woowacourse.movie.BundleKeys
 import woowacourse.movie.R
 import woowacourse.movie.SharedPreferenceUtil
 import woowacourse.movie.fragment.BookHistoryFragment
@@ -24,11 +23,25 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
-                Toast.makeText(this, getString(R.string.notification_permission_is_granted), Toast.LENGTH_SHORT).show()
-                SharedPreferenceUtil(this).setSettingValue(BundleKeys.SETTING_PUSH_ALARM_SWITCH_KEY, true)
+                Toast.makeText(
+                    this,
+                    getString(R.string.notification_permission_is_granted),
+                    Toast.LENGTH_SHORT
+                ).show()
+                SharedPreferenceUtil(this).setSettingValue(
+                    SETTING_PUSH_ALARM_SWITCH_KEY,
+                    true
+                )
             } else {
-                Toast.makeText(this, getString(R.string.notification_permission_is_denied), Toast.LENGTH_SHORT).show()
-                SharedPreferenceUtil(this).setSettingValue(BundleKeys.SETTING_PUSH_ALARM_SWITCH_KEY, false)
+                Toast.makeText(
+                    this,
+                    getString(R.string.notification_permission_is_denied),
+                    Toast.LENGTH_SHORT
+                ).show()
+                SharedPreferenceUtil(this).setSettingValue(
+                    SETTING_PUSH_ALARM_SWITCH_KEY,
+                    false
+                )
             }
         }
 
@@ -74,9 +87,17 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     private fun getNotificationPermission() {
         if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-            Toast.makeText(this, getString(R.string.if_permission_is_denied_cant_use_notification_service), Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this,
+                getString(R.string.if_permission_is_denied_cant_use_notification_service),
+                Toast.LENGTH_LONG
+            ).show()
         } else {
             requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
+    }
+
+    companion object {
+        private const val SETTING_PUSH_ALARM_SWITCH_KEY = "settingPushAlarmSwitchKey"
     }
 }

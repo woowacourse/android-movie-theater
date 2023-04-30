@@ -12,8 +12,6 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import com.woowacourse.domain.MovieSchedule
-import woowacourse.movie.BundleKeys
-import woowacourse.movie.BundleKeys.MOVIE_DATA_KEY
 import woowacourse.movie.DateFormatter
 import woowacourse.movie.R
 import woowacourse.movie.getSerializableCompat
@@ -164,6 +162,7 @@ class MovieDetailActivity : BackButtonActivity() {
     }
 
     companion object {
+        private const val MOVIE_DATA_KEY = "movieData"
         private const val TICKET_COUNT_KEY = "ticketCount"
         private const val DATE_KEY = "date"
         private const val TIME_KEY = "time"
@@ -171,7 +170,7 @@ class MovieDetailActivity : BackButtonActivity() {
 
         fun getIntent(context: Context, movie: MovieUIModel): Intent {
             val intent = Intent(context, MovieDetailActivity::class.java)
-            intent.putExtra(BundleKeys.MOVIE_DATA_KEY, movie)
+            intent.putExtra(MOVIE_DATA_KEY, movie)
             return intent
         }
     }

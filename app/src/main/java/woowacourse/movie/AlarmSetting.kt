@@ -31,8 +31,11 @@ class AlarmSetting {
     ): PendingIntent {
         val intent = Intent(context, MovieReminder::class.java)
         val notificationId = BookHistories.items.size
-        intent.putExtra(BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY, movieBookingSeatInfo.toPresentation())
-        intent.putExtra(BundleKeys.ALARM_NOTIFICATION_ID, notificationId)
+        intent.putExtra(
+            MOVIE_BOOKING_SEAT_INFO_KEY,
+            movieBookingSeatInfo.toPresentation()
+        )
+        intent.putExtra(ALARM_NOTIFICATION_ID, notificationId)
 
         return PendingIntent.getBroadcast(
             context, notificationId, intent,
@@ -52,6 +55,8 @@ class AlarmSetting {
     }
 
     companion object {
+        private const val MOVIE_BOOKING_SEAT_INFO_KEY = "movieBookingSeatInfo"
+        private const val ALARM_NOTIFICATION_ID = "notificationId"
         private const val FORMATTER_PATTERN = "yyyy-M-d HH:mm"
         private const val MOVIE_RUN_BEFORE_TIME = 30L
     }
