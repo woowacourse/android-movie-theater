@@ -1,5 +1,7 @@
 package woowacourse.movie.presentation.view.main.home.moviedetail
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -106,10 +108,10 @@ class MovieDetailActivity : BackButtonActivity() {
                 if (restoreInstanceFlag && savedInstanceState != null) {
                     timeSpinner.setSelection(
                         (
-                            savedInstanceState.getString(MOVIE_INFO_TIME_BUNDLE_KEY)
-                                ?: movieSchedule.getScheduleTimes(dateSpinner.selectedItem.toString())
-                                    .first()
-                            ).toInt()
+                                savedInstanceState.getString(MOVIE_INFO_TIME_BUNDLE_KEY)
+                                    ?: movieSchedule.getScheduleTimes(dateSpinner.selectedItem.toString())
+                                        .first()
+                                ).toInt()
                     )
                     restoreInstanceFlag = false
                 }
@@ -171,5 +173,9 @@ class MovieDetailActivity : BackButtonActivity() {
         const val MOVIE_DATA_INTENT_KEY = "MOVIE_DATA_INTENT_KEY"
         const val MOVIE_INFO_TIME_BUNDLE_KEY = "MOVIE_INFO_TIME_BUNDLE_KEY"
         const val USER_TICKET_COUNT_BUNDLE_KEY = "USER_TICKET_COUNT_BUNDLE_KEY"
+
+        fun getIntent(context: Context): Intent {
+            return Intent(context, MovieDetailActivity::class.java)
+        }
     }
 }

@@ -1,6 +1,5 @@
 package woowacourse.movie.presentation.view.main.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -24,7 +23,7 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
             movies,
             ContextCompat.getDrawable(requireContext(), R.drawable.advertise_wooteco)!!
         ) {
-            val intent = Intent(context, MovieDetailActivity::class.java)
+            val intent = MovieDetailActivity.getIntent(requireContext())
             intent.putExtra(MovieDetailActivity.MOVIE_DATA_INTENT_KEY, it)
             requireContext().startActivity(intent)
         }

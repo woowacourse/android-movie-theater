@@ -1,6 +1,5 @@
 package woowacourse.movie.presentation.view.main.booklist
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -20,7 +19,7 @@ class BookListFragment : Fragment(R.layout.fragment_book_list) {
     private fun setRecyclerView(view: View, reservations: List<Reservation>) {
         view.findViewById<RecyclerView>(R.id.rv_book_list).adapter =
             BookingListAdapter(reservations) {
-                val intent = Intent(context, BookCompleteActivity::class.java)
+                val intent = BookCompleteActivity.getIntent(requireContext())
                     .putExtra(BookCompleteActivity.RESERVATION_ID_INTENT_KEY, it.id)
                 requireContext().startActivity(intent)
             }
