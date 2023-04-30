@@ -14,8 +14,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.movie.SettingPreference
 import woowacourse.movie.movie.activity.MainActivity
+import woowacourse.movie.movie.alarm.SettingPreference
 
 @RunWith(AndroidJUnit4::class)
 class SettingFragmentTest {
@@ -24,14 +24,14 @@ class SettingFragmentTest {
     val activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
-    fun `SettingFragment의_switch가_잘_뜨는지_확인`() {
+    fun SettingFragment의_switch가_잘_뜨는지_확인() {
         onView(withId(R.id.setting)).perform(click())
 
         onView(withId(R.id.push_alarm_switch)).check(matches(isDisplayed()))
     }
 
     @Test
-    fun `switch를_누르면_switch가_on으로_바뀐다`() {
+    fun switch를_누르면_switch가_on으로_바뀐다() {
         onView(withId(R.id.setting)).perform(click())
 
         onView(withId(R.id.push_alarm_switch)).perform(click())
@@ -40,7 +40,7 @@ class SettingFragmentTest {
     }
 
     @Test
-    fun `switch가_on인_상태일때_누르면_switch가_off로_바뀐다`() {
+    fun switch가_on인_상태일때_누르면_switch가_off로_바뀐다() {
         onView(withId(R.id.setting)).perform(click())
 
         onView(withId(R.id.push_alarm_switch)).perform(click())
@@ -50,7 +50,7 @@ class SettingFragmentTest {
     }
 
     @Test
-    fun `세팅값이_false이면_스위치가_off_상태인지_확인`() {
+    fun 세팅값이_false이면_스위치가_off_상태인지_확인() {
         val settingPreference =
             SettingPreference(InstrumentationRegistry.getInstrumentation().targetContext)
         settingPreference.setting = false
@@ -60,7 +60,7 @@ class SettingFragmentTest {
     }
 
     @Test
-    fun `세팅값이_true이면_스위치가_on_상태인지_확인`() {
+    fun 세팅값이_true이면_스위치가_on_상태인지_확인() {
         val settingPreference =
             SettingPreference(InstrumentationRegistry.getInstrumentation().targetContext)
         settingPreference.setting = true

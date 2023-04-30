@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.movie.SettingPreference
+import woowacourse.movie.movie.alarm.SettingPreference
 
 class SettingFragment : Fragment() {
 

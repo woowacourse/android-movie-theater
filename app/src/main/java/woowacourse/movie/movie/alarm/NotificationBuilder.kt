@@ -1,4 +1,4 @@
-package woowacourse.movie.movie
+package woowacourse.movie.movie.alarm
 
 import android.Manifest
 import android.app.NotificationChannel

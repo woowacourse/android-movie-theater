@@ -1,4 +1,4 @@
-package woowacourse.movie.movie
+package woowacourse.movie.movie.alarm
 
 import android.app.PendingIntent
 import android.content.Context

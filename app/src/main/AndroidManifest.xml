@@ -32,7 +32,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".movie.AlarmReceiver"
+        <receiver android:name=".movie.alarm.AlarmReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

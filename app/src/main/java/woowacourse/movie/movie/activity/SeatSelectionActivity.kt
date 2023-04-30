@@ -12,8 +12,8 @@ import domain.Seat
 import domain.Seats
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
-import woowacourse.movie.movie.AlarmReceiver
-import woowacourse.movie.movie.PendingIntentBuilder
+import woowacourse.movie.movie.alarm.AlarmReceiver
+import woowacourse.movie.movie.alarm.PendingIntentBuilder
 import woowacourse.movie.movie.dto.BookingHistoryDto
 import woowacourse.movie.movie.dto.movie.BookingMovieDto
 import woowacourse.movie.movie.dto.movie.MovieDateDto
