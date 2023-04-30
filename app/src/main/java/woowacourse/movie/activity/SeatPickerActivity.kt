@@ -127,7 +127,11 @@ class SeatPickerActivity : BackButtonActivity() {
                 setTitle(getString(R.string.alert_dialog_book_confirm))
                 setMessage(getString(R.string.alert_dialog_book_re_confirm))
                 setPositiveButton(getString(R.string.alert_dialog_book_done)) { _, _ ->
-                    setIntent()
+                    val movieBookingSeatInfo = getMovieBookingSeatInfo()
+                    BookHistories.items.add(movieBookingSeatInfo)
+                    setMovieAlarm(movieBookingSeatInfo)
+                    startActivity(getIntent(movieBookingSeatInfo))
+                    finish()
                 }
                 setNegativeButton(getString(R.string.alert_dialog_book_cancel)) { dialog, _ ->
                     dialog.dismiss()
@@ -139,23 +143,13 @@ class SeatPickerActivity : BackButtonActivity() {
         }
     }
 
-    private fun setIntent() {
-        val bookCompleteActivityIntent = BookCompleteActivity.intent(this)
-        val movieBookingSeatInfo = MovieBookingSeatInfo(
-            getMovieBookingInfo(), seatGroup.sorted().seats.map {
-                formatSeatName(it.row.value, it.column.value)
-            },
-            seatPickerTicketPrice.text.toString()
-        )
-
-        bookCompleteActivityIntent.putExtra(MOVIE_BOOKING_SEAT_INFO_KEY, movieBookingSeatInfo)
-        BookHistories.items.add(movieBookingSeatInfo)
-
-        setMovieAlarm(movieBookingSeatInfo)
-
-        startActivity(bookCompleteActivityIntent)
-        finish()
-    }
+    private fun getMovieBookingSeatInfo() = MovieBookingSeatInfo(
+        getMovieBookingInfo(),
+        seatGroup.sorted().seats.map {
+            formatSeatName(it.row.value, it.column.value)
+        },
+        seatPickerTicketPrice.text.toString()
+    )
 
     private fun setMovieAlarm(movieBookingSeatInfo: MovieBookingSeatInfo) {
         val movieReminderIntent = MovieReminder.intent(this)
@@ -172,6 +166,12 @@ class SeatPickerActivity : BackButtonActivity() {
             movieReminderIntent,
             triggerTime
         )
+    }
+
+    private fun getIntent(movieBookingSeatInfo: MovieBookingSeatInfo): Intent {
+        val bookCompleteActivityIntent = BookCompleteActivity.intent(this)
+        bookCompleteActivityIntent.putExtra(MOVIE_BOOKING_SEAT_INFO_KEY, movieBookingSeatInfo)
+        return bookCompleteActivityIntent
     }
 
     private fun setSeatsOnClickListener(movieBookingInfo: MovieBookingInfo) {
