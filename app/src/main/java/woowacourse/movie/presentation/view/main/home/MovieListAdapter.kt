@@ -1,16 +1,26 @@
 package woowacourse.movie.presentation.view.main.home
 
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.model.Movie
 
-class MovieListAdapter(private val movies: List<Movie>, private val ad: Drawable) :
+class MovieListAdapter(
+    private val movies: List<Movie>,
+    private val ad: Drawable,
+    private val clickEvent: (Movie) -> Unit
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (ViewType.values()[viewType]) {
             ViewType.AD -> AdListViewHolder(parent)
-            ViewType.MOVIE -> MovieListViewHolder(parent)
+            ViewType.MOVIE -> {
+                val viewHolder = MovieListViewHolder(parent){
+                    clickEvent(movies[it])
+                }
+                viewHolder
+            }
         }
     }
 
