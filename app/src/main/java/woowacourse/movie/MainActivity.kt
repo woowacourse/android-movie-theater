@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("InlinedApi")
     private fun requestNotificationPermission() {
         sharedPreferenceUtil.setBoolean(getString(R.string.push_alarm_permission), false)
-        if (NotificationPermission().isGranted(this).not()) {
+        if (NotificationPermission(this).isGranted().not()) {
             if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS).not()) {
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }

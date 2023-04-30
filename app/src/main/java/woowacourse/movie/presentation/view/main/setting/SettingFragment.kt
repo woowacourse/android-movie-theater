@@ -18,7 +18,7 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
             requireContext()
         )
     }
-    private val notificationPermission = NotificationPermission()
+    private val notificationPermission by lazy { NotificationPermission(requireContext()) }
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -39,9 +39,9 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
     private fun setAlarmView(allowedPushNotification: Boolean) {
 
         switchSettingAlarm.isChecked =
-            allowedPushNotification && notificationPermission.isGranted(requireContext())
+            allowedPushNotification && notificationPermission.isGranted()
         switchSettingAlarm.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked && NotificationPermission().isGranted(requireContext()).not()) {
+            if (isChecked && notificationPermission.isGranted().not()) {
                 requestNotificationPermission()
             }
             sharedPreferenceUtil.setBoolean(getString(R.string.push_alarm_permission), isChecked)
