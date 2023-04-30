@@ -1,6 +1,7 @@
 package woowacourse.movie.movie.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
@@ -26,7 +27,9 @@ class TicketActivity : AppCompatActivity() {
         setContentView(binding.root)
         setToolbar()
 
+        Log.d("test", "인텐트 값 받아오기 시작")
         val bookingMovie = intent.getParcelableCompat<BookingMovieDto>(BOOKING_MOVIE_KEY)!!
+        Log.d("test", "인텐트 값 받아오기 성공")
 
         showTicketInfo(
             bookingMovie.movie,
@@ -41,7 +44,6 @@ class TicketActivity : AppCompatActivity() {
             bookingMovie.seats,
             bookingMovie.date.date,
             bookingMovie.time.time,
-            bookingMovie.ticketCount.numberOfPeople,
         )
     }
 
@@ -67,7 +69,7 @@ class TicketActivity : AppCompatActivity() {
             getString(R.string.ticket_info, ticket.numberOfPeople, seats.getSeatsPositionToString())
     }
 
-    private fun showTicketPrice(seats: SeatsDto, date: LocalDate, time: LocalTime, count: Int) {
+    private fun showTicketPrice(seats: SeatsDto, date: LocalDate, time: LocalTime) {
         val totalTicketPrice = seats.mapToSeats().caculateSeatPrice(LocalDateTime.of(date, time))
 
         binding.ticketPrice.text = getString(R.string.ticket_price, totalTicketPrice)

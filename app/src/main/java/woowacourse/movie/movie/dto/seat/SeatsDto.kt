@@ -6,6 +6,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class SeatsDto(val seats: List<SeatDto> = emptyList()) : Parcelable {
     fun getSeatsPositionToString(): String {
-        return seats.map { it.getString() }.joinToString(", ")
+        return seats.joinToString(", ") { it.getString() }
     }
 }

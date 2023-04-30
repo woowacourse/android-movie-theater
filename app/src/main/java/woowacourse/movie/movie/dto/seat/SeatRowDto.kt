@@ -1,8 +1,11 @@
 package woowacourse.movie.movie.dto.seat
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import woowacourse.movie.R
 
-data class SeatRowDto(val row: Char) : java.io.Serializable {
+@Parcelize
+data class SeatRowDto(val row: Char) : Parcelable {
 
     fun getColor(): Int {
         return when (row) {

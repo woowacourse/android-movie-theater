@@ -1,3 +1,7 @@
 package woowacourse.movie.movie.dto.seat
 
-data class SeatColDto(val col: Int) : java.io.Serializable
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class SeatColDto(val col: Int) : Parcelable
