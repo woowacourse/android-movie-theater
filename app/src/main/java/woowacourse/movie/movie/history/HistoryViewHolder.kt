@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.movie.dto.movie.BookingMovieDto
+import woowacourse.movie.movie.dto.movie.BookingMovieEntity
 import woowacourse.movie.movie.dto.movie.MovieDateDto
 import woowacourse.movie.movie.dto.movie.MovieTimeDto
 import java.time.format.DateTimeFormatter
@@ -13,7 +13,7 @@ class HistoryViewHolder(private val view: View,) : RecyclerView.ViewHolder(view)
     private val reservationTime: TextView = itemView.findViewById(R.id.history_datetime)
     private val reservationMovie: TextView = itemView.findViewById(R.id.history_title)
 
-    fun bind(item: BookingMovieDto) {
+    fun bind(item: BookingMovieEntity) {
         reservationTime.text = formatMovieDateTime(item.date, item.time)
         reservationMovie.text = item.movie.title
     }

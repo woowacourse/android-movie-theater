@@ -1,14 +1,14 @@
 package woowacourse.movie.movie.dto
 
-import woowacourse.movie.movie.dto.movie.BookingMovieDto
+import woowacourse.movie.movie.dto.movie.BookingMovieEntity
 
 object BookingHistoryDto : java.io.Serializable {
 
-    private val bookingHistory = mutableListOf<BookingMovieDto>()
+    private val bookingHistory = mutableListOf<BookingMovieEntity>()
 
-    fun add(movie: BookingMovieDto) {
+    fun add(movie: BookingMovieEntity) {
         bookingHistory.add(movie)
     }
 
-    fun getHistory(): List<BookingMovieDto> = bookingHistory.toList()
+    fun getHistory(): List<BookingMovieEntity> = bookingHistory.toList()
 }

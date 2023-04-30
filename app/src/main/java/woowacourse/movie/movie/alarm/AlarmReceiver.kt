@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import woowacourse.movie.movie.activity.SeatSelectionActivity.Companion.BOOKING_MOVIE_KEY
-import woowacourse.movie.movie.dto.movie.BookingMovieDto
+import woowacourse.movie.movie.dto.movie.BookingMovieEntity
 import woowacourse.movie.movie.utils.getParcelableCompat
 
 class AlarmReceiver : BroadcastReceiver() {
@@ -19,7 +19,7 @@ class AlarmReceiver : BroadcastReceiver() {
             notificationBuilder.createNotificationChannel()
             Log.d("test", "알람 채널 생성 성공")
 
-            val bookingMovie = intent.getParcelableCompat<BookingMovieDto>(BOOKING_MOVIE_KEY)!!
+            val bookingMovie = intent.getParcelableCompat<BookingMovieEntity>(BOOKING_MOVIE_KEY)!!
             Log.d(BOOKING_MOVIE_KEY, bookingMovie.toString())
             Log.d("test", "인텐트 받아오기 성공")
 

@@ -6,7 +6,7 @@ import woowacourse.movie.movie.dto.seat.SeatsDto
 import woowacourse.movie.movie.dto.ticket.TicketCountDto
 
 @Parcelize
-data class BookingMovieDto(
+data class BookingMovieEntity(
     val movie: MovieDto,
     val date: MovieDateDto,
     val time: MovieTimeDto,

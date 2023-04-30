@@ -10,7 +10,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
-import woowacourse.movie.movie.dto.movie.BookingMovieDto
+import woowacourse.movie.movie.dto.movie.BookingMovieEntity
 
 class NotificationBuilder(val context: Context) {
 
@@ -27,7 +27,7 @@ class NotificationBuilder(val context: Context) {
         notificationManager.createNotificationChannel(channel)
     }
 
-    fun createNotificationBuilder(bookingMovie: BookingMovieDto) {
+    fun createNotificationBuilder(bookingMovie: BookingMovieEntity) {
         val builder = NotificationCompat.Builder(context, CHANNEL_ID).apply {
             setSmallIcon(R.drawable.cute_android)
             setContentTitle(NOTIFICATION_TITLE)

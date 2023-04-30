@@ -5,11 +5,11 @@ import android.content.Context
 import android.content.Intent
 import woowacourse.movie.movie.activity.SeatSelectionActivity
 import woowacourse.movie.movie.activity.TicketActivity
-import woowacourse.movie.movie.dto.movie.BookingMovieDto
+import woowacourse.movie.movie.dto.movie.BookingMovieEntity
 
 class PendingIntentBuilder(val context: Context) {
     fun createNotificationPendingIntent(
-        bookingMovie: BookingMovieDto,
+        bookingMovie: BookingMovieEntity,
     ): PendingIntent {
         val ticketIntent =
             Intent(context, TicketActivity::class.java).putExtra(SeatSelectionActivity.BOOKING_MOVIE_KEY, bookingMovie)
@@ -25,7 +25,7 @@ class PendingIntentBuilder(val context: Context) {
         )
     }
 
-    fun createReceiverPendingIntent(intent: Intent, bookingMovie: BookingMovieDto): PendingIntent {
+    fun createReceiverPendingIntent(intent: Intent, bookingMovie: BookingMovieEntity): PendingIntent {
         return intent.let {
             it.action = AlarmReceiver.ALARM_CODE
             it.putExtra(SeatSelectionActivity.BOOKING_MOVIE_KEY, bookingMovie)

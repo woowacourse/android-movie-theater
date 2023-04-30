@@ -3,8 +3,7 @@ package domain
 enum class Grade(val ticketPrice: TicketPrice) {
     B(TicketPrice(10_000)),
     S(TicketPrice(15_000)),
-    A(TicketPrice(12_000)),
-    ;
+    A(TicketPrice(12_000));
 
     companion object {
         fun checkGrade(row: Int): Grade {

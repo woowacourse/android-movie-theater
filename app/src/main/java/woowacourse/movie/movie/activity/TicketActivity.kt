@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityTicketBinding
 import woowacourse.movie.movie.activity.SeatSelectionActivity.Companion.BOOKING_MOVIE_KEY
-import woowacourse.movie.movie.dto.movie.BookingMovieDto
+import woowacourse.movie.movie.dto.movie.BookingMovieEntity
 import woowacourse.movie.movie.dto.movie.MovieDto
 import woowacourse.movie.movie.dto.seat.SeatsDto
 import woowacourse.movie.movie.dto.ticket.TicketCountDto
@@ -28,7 +28,7 @@ class TicketActivity : AppCompatActivity() {
         setToolbar()
 
         Log.d("test", "인텐트 값 받아오기 시작")
-        val bookingMovie = intent.getParcelableCompat<BookingMovieDto>(BOOKING_MOVIE_KEY)!!
+        val bookingMovie = intent.getParcelableCompat<BookingMovieEntity>(BOOKING_MOVIE_KEY)!!
         Log.d("test", "인텐트 값 받아오기 성공")
 
         showTicketInfo(

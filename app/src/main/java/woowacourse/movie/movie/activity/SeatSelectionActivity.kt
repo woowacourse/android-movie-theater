@@ -15,7 +15,7 @@ import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.movie.alarm.AlarmReceiver
 import woowacourse.movie.movie.alarm.PendingIntentBuilder
 import woowacourse.movie.movie.dto.BookingHistoryDto
-import woowacourse.movie.movie.dto.movie.BookingMovieDto
+import woowacourse.movie.movie.dto.movie.BookingMovieEntity
 import woowacourse.movie.movie.dto.movie.MovieDateDto
 import woowacourse.movie.movie.dto.movie.MovieDto
 import woowacourse.movie.movie.dto.movie.MovieTimeDto
@@ -148,7 +148,7 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     private fun moveActivity() {
-        val bookingMovie = BookingMovieDto(movie, date, time, ticketCount, seats.mapToSeatsDto())
+        val bookingMovie = BookingMovieEntity(movie, date, time, ticketCount, seats.mapToSeatsDto())
         val intent = Intent(this, TicketActivity::class.java)
         intent.putExtra(BOOKING_MOVIE_KEY, bookingMovie)
         putAlarm(bookingMovie)
@@ -157,12 +157,12 @@ class SeatSelectionActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun setDateTime(bookingMovie: BookingMovieDto): LocalDateTime {
+    private fun setDateTime(bookingMovie: BookingMovieEntity): LocalDateTime {
         val dateTime = LocalDateTime.of(bookingMovie.date.date, bookingMovie.time.time)
         return dateTime.minusMinutes(1L)
     }
 
-    private fun putAlarm(bookingMovie: BookingMovieDto) {
+    private fun putAlarm(bookingMovie: BookingMovieEntity) {
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         alarmManager.setExact(
