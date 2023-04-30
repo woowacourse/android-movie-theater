@@ -1,9 +1,9 @@
-package woowacourse.movie
+package woowacourse.movie.data
 
 import android.content.Context
 import android.content.SharedPreferences
 
-class PreferenceUtil(context: Context) {
+class SharedPreferenceUtil(context: Context) {
     private val prefs: SharedPreferences =
         context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
 

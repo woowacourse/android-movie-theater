@@ -21,9 +21,9 @@ import com.example.domain.ReservationRepository
 import com.example.domain.Seat
 import com.example.domain.SeatGrade
 import com.example.domain.TicketBundle
-import woowacourse.movie.Application
 import woowacourse.movie.R
 import woowacourse.movie.broadcast.bookingnotificaiotn.BookingAlarmReceiver
+import woowacourse.movie.data.SharedPreferenceUtil
 import woowacourse.movie.model.MovieBookingInfo
 import woowacourse.movie.model.ReservationResult
 import woowacourse.movie.presentation.extension.getParcelableCompat
@@ -166,9 +166,8 @@ class SeatPickerActivity : BackButtonActivity() {
     private fun onClickDialogPositiveButton(movieBookingInfo: MovieBookingInfo) {
         val reservation = saveReservation(movieBookingInfo)
 
-        val sharedPref = Application.prefs
         val allowedPushNotification =
-            sharedPref.getBoolean(getString(R.string.push_alarm_permission), true)
+            SharedPreferenceUtil(this).getBoolean(getString(R.string.push_alarm_permission), true)
         if (allowedPushNotification)
             setAlarmManager(reservation)
 

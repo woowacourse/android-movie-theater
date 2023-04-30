@@ -10,12 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import woowacourse.movie.data.SharedPreferenceUtil
 import woowacourse.movie.presentation.view.main.booklist.BookListFragment
 import woowacourse.movie.presentation.view.main.home.MovieListFragment
 import woowacourse.movie.presentation.view.main.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
     private val bottomNavigation: BottomNavigationView by lazy { findViewById(R.id.bottom_navigation) }
+    private val sharedPreferenceUtil: SharedPreferenceUtil by lazy { SharedPreferenceUtil(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +55,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun requestNotificationPermission() {
-        Application.prefs.setBoolean(getString(R.string.push_alarm_permission), false)
+        sharedPreferenceUtil.setBoolean(getString(R.string.push_alarm_permission), false)
 
         if (ContextCompat.checkSelfPermission(
                 this, Manifest.permission.POST_NOTIFICATIONS
@@ -74,6 +76,6 @@ class MainActivity : AppCompatActivity() {
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
-        Application.prefs.setBoolean(getString(R.string.push_alarm_permission), isGranted)
+        sharedPreferenceUtil.setBoolean(getString(R.string.push_alarm_permission), isGranted)
     }
 }

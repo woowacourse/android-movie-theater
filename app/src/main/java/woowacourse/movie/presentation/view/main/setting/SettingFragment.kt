@@ -9,25 +9,30 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import woowacourse.movie.Application
 import woowacourse.movie.R
+import woowacourse.movie.data.SharedPreferenceUtil
 
 class SettingFragment : Fragment(R.layout.fragment_setting) {
     private val switchSettingAlarm by lazy { requireView().findViewById<SwitchCompat>(R.id.switch_setting_alarm) }
+    private val sharedPreferenceUtil: SharedPreferenceUtil by lazy {
+        SharedPreferenceUtil(
+            requireContext()
+        )
+    }
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
         if (isGranted.not()) {
             switchSettingAlarm.isSelected = isGranted
-            Application.prefs.setBoolean(getString(R.string.push_alarm_permission), isGranted)
+            sharedPreferenceUtil.setBoolean(getString(R.string.push_alarm_permission), isGranted)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val allowedPushNotification =
-            Application.prefs.getBoolean((getString(R.string.push_alarm_permission)), false)
+            sharedPreferenceUtil.getBoolean((getString(R.string.push_alarm_permission)), false)
         setAlarmView(allowedPushNotification)
     }
 
@@ -39,7 +44,7 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
             if (isChecked && notificationPermissionIsGranted().not()) {
                 requestNotificationPermission()
             }
-            Application.prefs.setBoolean(getString(R.string.push_alarm_permission), isChecked)
+            sharedPreferenceUtil.setBoolean(getString(R.string.push_alarm_permission), isChecked)
         }
     }
 
