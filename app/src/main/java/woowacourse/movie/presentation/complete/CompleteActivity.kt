@@ -35,7 +35,7 @@ class CompleteActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            finish()
+            startMainWithClearBackStack()
             return true
         }
         return super.onOptionsItemSelected(item)
@@ -62,7 +62,7 @@ class CompleteActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.textCompletedTicketCount).text =
             getString(R.string.normal_ticket_count_seat).format(
                 ticket.count,
-                ticket.formatSeatsCombine()
+                ticket.formatSeatsCombine(),
             )
     }
 
@@ -71,11 +71,11 @@ class CompleteActivity : AppCompatActivity() {
             getString(R.string.payment_on_site_amount).format(ticket.paymentMoney)
     }
 
-    override fun finish() {
-        super.finish()
+    private fun startMainWithClearBackStack() {
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivity(intent)
+        finish()
     }
 
     companion object {
