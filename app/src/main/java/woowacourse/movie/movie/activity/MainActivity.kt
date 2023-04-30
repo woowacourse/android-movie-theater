@@ -41,24 +41,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onNavigationItemSelected(item: MenuItem) {
-        when (item.itemId) {
-            R.id.history -> {
-                supportFragmentManager.commit {
-                    setReorderingAllowed(true)
-                    replace(R.id.fragment_container_view, HistoryFragment())
-                }
-            }
-            R.id.home -> {
-                supportFragmentManager.commit {
-                    setReorderingAllowed(true)
-                    replace(R.id.fragment_container_view, HomeFragment())
-                }
-            }
-            R.id.setting -> {
-                supportFragmentManager.commit {
-                    setReorderingAllowed(true)
-                    replace(R.id.fragment_container_view, SettingFragment())
-                }
+        fragmentRepository[item.itemId]?.let { nowFragment ->
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                replace(R.id.fragment_container_view, nowFragment)
             }
         }
     }
@@ -92,5 +78,11 @@ class MainActivity : AppCompatActivity() {
         private const val DENIED_PERMISSION_MESSAGE = "알림 권한이 차단되었습니다"
         private const val PERMIT_PERMISSION_MESSAGE = "알림 권한이 허용되었습니다"
         private const val LOWER_VERSION_MESSAGE = "설정에 가서 알림 권한을 켜주세요"
+
+        val fragmentRepository = mapOf(
+            R.id.history to HistoryFragment(),
+            R.id.home to HomeFragment(),
+            R.id.setting to SettingFragment(),
+        )
     }
 }
