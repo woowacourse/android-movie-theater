@@ -20,13 +20,13 @@ class MainActivity : AppCompatActivity() {
 
     private val bottomNavigation: BottomNavigationView by lazy { findViewById(R.id.bottom_navigation) }
     private val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()){}
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         SettingPreferenceManager.inIt(this)
-        addFragment(ReservationListFragment())
+        replaceFragment(ReservationListFragment())
         setOnBottomNavigationClickListener()
         requestNotificationPermission()
     }
@@ -39,13 +39,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.reservation_list_bottom_navigation -> replaceFragment(ReservationListFragment())
             }
             true
-        }
-    }
-
-    private fun addFragment(fragment: Fragment) {
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            add(R.id.main_fragment, fragment)
         }
     }
 
@@ -68,12 +61,27 @@ class MainActivity : AppCompatActivity() {
         ) == PackageManager.PERMISSION_GRANTED
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(KEY_SELECTED_ITEM_ID, bottomNavigation.selectedItemId)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        val selectedItemId = savedInstanceState.getInt(KEY_SELECTED_ITEM_ID)
+        bottomNavigation.selectedItemId = selectedItemId
+    }
+
     private fun showNotificationPermissionDialog() {
         if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
             requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-            Toast.makeText(this,"만약 권한을 거부한다면, 다시 앱을 설치하셔야 권한 허용이 가능합니다",Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.notification_refuse_two_time_warning_message), Toast.LENGTH_LONG).show()
         } else {
             requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
+    }
+
+    companion object {
+        private const val KEY_SELECTED_ITEM_ID = "KEY_SELECTED_ITEM_ID"
     }
 }
