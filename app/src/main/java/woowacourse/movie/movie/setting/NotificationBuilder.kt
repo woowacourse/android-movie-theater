@@ -11,6 +11,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
 import woowacourse.movie.movie.dto.movie.BookingMovieEntity
+import woowacourse.movie.movie.seat.SeatSelectionActivity.Companion.ALARM_TIME
 import woowacourse.movie.movie.utils.PendingIntentBuilder
 
 class NotificationBuilder(val context: Context) {
@@ -61,6 +62,6 @@ class NotificationBuilder(val context: Context) {
         private const val CHANNEL_NAME = "영화 예매 알림"
         private const val CHANNEL_TEXT = "영화 예매 30분 전에 알림이 울리도록 하는 기능"
         private const val NOTIFICATION_TITLE = "예매 알림"
-        private const val NOTIFICATION_TEXT = "%s ${AlarmReceiver.ALARM_TIME}분 후에 상영"
+        private const val NOTIFICATION_TEXT = "%s ${ALARM_TIME}분 후에 상영"
     }
 }

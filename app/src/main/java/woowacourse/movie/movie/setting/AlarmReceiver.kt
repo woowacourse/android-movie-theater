@@ -31,7 +31,6 @@ class AlarmReceiver : BroadcastReceiver() {
 
     companion object {
         const val ALARM_CODE = "alarm"
-        const val ALARM_TIME = 30
         const val REQUEST_CODE = 925
     }
 }

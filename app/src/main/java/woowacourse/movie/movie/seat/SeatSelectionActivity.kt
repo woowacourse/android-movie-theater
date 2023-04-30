@@ -160,7 +160,7 @@ class SeatSelectionActivity : AppCompatActivity() {
 
     private fun setDateTime(bookingMovie: BookingMovieEntity): LocalDateTime {
         val dateTime = LocalDateTime.of(bookingMovie.date.date, bookingMovie.time.time)
-        return dateTime.minusMinutes(1L)
+        return dateTime.minusMinutes(ALARM_TIME.toLong())
     }
 
     private fun putAlarm(bookingMovie: BookingMovieEntity) {
@@ -180,5 +180,7 @@ class SeatSelectionActivity : AppCompatActivity() {
         const val TIME_KEY = "movie_time"
         const val BOOKING_MOVIE_KEY = "booking_movie"
         const val SEATS_POSITION = "seats_position"
+
+        const val ALARM_TIME = 30
     }
 }
