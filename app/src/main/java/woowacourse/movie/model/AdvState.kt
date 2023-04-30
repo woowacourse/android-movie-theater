@@ -3,7 +3,7 @@ package woowacourse.movie.model
 import android.os.Parcelable
 import androidx.annotation.DrawableRes
 import kotlinx.parcelize.Parcelize
-import woowacourse.movie.feature.main.itemModel.AdvItemModel
+import woowacourse.movie.feature.movieList.itemModel.AdvItemModel
 
 @Parcelize
 data class AdvState(

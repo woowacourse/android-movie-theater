@@ -24,7 +24,6 @@ import woowacourse.movie.util.getParcelableArrayListCompat
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
 import woowacourse.movie.util.showAskDialog
-import java.time.LocalDateTime
 import java.util.Calendar
 import kotlin.collections.ArrayList
 
@@ -113,8 +112,8 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
     }
 
     private fun setNotification(tickets: TicketsState) {
-        // TODO: 지워줘야 함
-        val tickets = tickets.copy(dateTime = LocalDateTime.of(0, 4, 26, 17, 47, 30))
+        // 지금 당장 울리는지 테스트하고 싶은 경우, 과거로 시간 세팅
+        // val tickets = tickets.copy(dateTime = LocalDateTime.of(0, 4, 26, 17, 47, 30))
         val calendar: Calendar = Calendar.getInstance().apply {
             set(
                 tickets.dateTime.year,
@@ -125,15 +124,12 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
             )
         }
         val alarmManager: AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        val alarmIntent =
-            Intent(this, AlarmReceiver::class.java).apply { putExtra("a", tickets) }.let { intent ->
-                PendingIntent.getBroadcast(
-                    this,
-                    tickets.hashCode(),
-                    intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
-                )
-            }
+        val alarmIntent: PendingIntent = PendingIntent.getBroadcast(
+            this,
+            tickets.hashCode(),
+            AlarmReceiver.getIntent(this, tickets),
+            PendingIntent.FLAG_IMMUTABLE
+        )
 
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,

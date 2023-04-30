@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.data.TicketsRepository
 import woowacourse.movie.feature.confirm.ReservationConfirmActivity
-import woowacourse.movie.feature.main.adapter.ReservationListAdapter
-import woowacourse.movie.feature.main.itemModel.TicketsItemModel
+import woowacourse.movie.feature.reservationList.adapter.ReservationListAdapter
+import woowacourse.movie.feature.reservationList.itemModel.TicketsItemModel
 import woowacourse.movie.model.TicketsState
 
 class ReservationListFragment : Fragment() {

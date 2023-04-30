@@ -1,12 +1,13 @@
-package woowacourse.movie.feature.main.viewHolder
+package woowacourse.movie.feature.movieList.viewHolder
 
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import woowacourse.movie.R
-import woowacourse.movie.feature.main.itemModel.ItemModel
-import woowacourse.movie.feature.main.itemModel.MovieItemModel
+import woowacourse.movie.feature.common.itemModel.ItemModel
+import woowacourse.movie.feature.common.viewHolder.ItemViewHolder
+import woowacourse.movie.feature.movieList.itemModel.MovieItemModel
 import woowacourse.movie.util.DateTimeFormatters
 
 class MovieViewHolder(

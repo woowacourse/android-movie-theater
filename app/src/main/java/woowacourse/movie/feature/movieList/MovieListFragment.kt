@@ -13,9 +13,9 @@ import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.feature.adv.AdvDetailActivity
 import woowacourse.movie.feature.detail.MovieDetailActivity
 import woowacourse.movie.feature.main.MainActivity
-import woowacourse.movie.feature.main.adapter.MovieListAdapter
-import woowacourse.movie.feature.main.itemModel.AdvItemModel
-import woowacourse.movie.feature.main.itemModel.MovieItemModel
+import woowacourse.movie.feature.movieList.adapter.MovieListAdapter
+import woowacourse.movie.feature.movieList.itemModel.AdvItemModel
+import woowacourse.movie.feature.movieList.itemModel.MovieItemModel
 import woowacourse.movie.model.AdvState
 import woowacourse.movie.model.MovieState
 

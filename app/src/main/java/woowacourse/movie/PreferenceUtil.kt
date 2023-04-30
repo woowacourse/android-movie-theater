@@ -6,15 +6,17 @@ import android.content.SharedPreferences
 class PreferenceUtil(context: Context) {
     private val prefs: SharedPreferences =
         context.getSharedPreferences(
-            "prefs_name",
-            Context.MODE_PRIVATE + Context.MODE_MULTI_PROCESS
+            "notifications_prefs",
+            Context.MODE_PRIVATE
         )
 
-    fun getBoolean(key: String, defValue: Boolean): Boolean {
-        return prefs.getBoolean(key, defValue)
-    }
+    var enablePushNotification: Boolean
+        get() = prefs.getBoolean(NOTIFICATIONS, false)
+        set(value) {
+            prefs.edit().putBoolean(NOTIFICATIONS, value).apply()
+        }
 
-    fun setBoolean(key: String, value: Boolean) {
-        prefs.edit().putBoolean(key, value).apply()
+    companion object {
+        private const val NOTIFICATIONS = "notifications"
     }
 }

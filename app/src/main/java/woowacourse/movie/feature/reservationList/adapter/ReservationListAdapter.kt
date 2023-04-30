@@ -1,12 +1,12 @@
-package woowacourse.movie.feature.main.adapter
+package woowacourse.movie.feature.reservationList.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.feature.main.itemModel.ItemModel
-import woowacourse.movie.feature.main.viewHolder.ItemViewHolder
-import woowacourse.movie.feature.main.viewHolder.TicketsViewHolder
+import woowacourse.movie.feature.common.itemModel.ItemModel
+import woowacourse.movie.feature.common.viewHolder.ItemViewHolder
+import woowacourse.movie.feature.reservationList.viewHolder.TicketsViewHolder
 
 class ReservationListAdapter(
     reservations: List<ItemModel>

@@ -9,7 +9,7 @@ class MyApplication : Application() {
     }
 
     override fun onCreate() {
-        prefs = PreferenceUtil(applicationContext)
+        prefs = PreferenceUtil(this)
         super.onCreate()
     }
 }

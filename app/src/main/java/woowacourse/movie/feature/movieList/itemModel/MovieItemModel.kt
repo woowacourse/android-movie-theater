@@ -1,6 +1,7 @@
-package woowacourse.movie.feature.main.itemModel
+package woowacourse.movie.feature.movieList.itemModel
 
-import woowacourse.movie.feature.main.ViewType
+import woowacourse.movie.feature.common.ViewType
+import woowacourse.movie.feature.common.itemModel.ItemModel
 import woowacourse.movie.model.MovieState
 
 class MovieItemModel(

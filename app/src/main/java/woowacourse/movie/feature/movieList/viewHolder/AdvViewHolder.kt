@@ -1,10 +1,11 @@
-package woowacourse.movie.feature.main.viewHolder
+package woowacourse.movie.feature.movieList.viewHolder
 
 import android.view.View
 import android.widget.ImageView
 import woowacourse.movie.R
-import woowacourse.movie.feature.main.itemModel.AdvItemModel
-import woowacourse.movie.feature.main.itemModel.ItemModel
+import woowacourse.movie.feature.common.itemModel.ItemModel
+import woowacourse.movie.feature.common.viewHolder.ItemViewHolder
+import woowacourse.movie.feature.movieList.itemModel.AdvItemModel
 
 class AdvViewHolder(
     itemView: View
