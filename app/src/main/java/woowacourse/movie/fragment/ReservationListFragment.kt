@@ -16,25 +16,18 @@ import woowacourse.movie.view.mapper.ReservationMapper
 
 class ReservationListFragment : Fragment() {
 
-    private lateinit var parentContext: Context
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        parentContext = context
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        return inflater.inflate(R.layout.fragment_reservation_list, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val reservations = MockReservationsFactory.makeReservations()
-        val view = inflater.inflate(R.layout.fragment_reservation_list, container, false)
         val recyclerView: RecyclerView = view.findViewById(R.id.reservation_recycler_view)
         recyclerView.adapter = ReservationAdapter(reservations, ::reservationItemClick)
-        return view
     }
 
     private fun reservationItemClick(reservation: Reservation) {
@@ -42,7 +35,7 @@ class ReservationListFragment : Fragment() {
         val movieUiModel = reservationUiModel.movie
         val ticketsUiModel = reservationUiModel.tickets
         ReservationResultActivity.start(
-            parentContext,
+            requireContext(),
             movieUiModel = movieUiModel,
             ticketsUiModel = ticketsUiModel
         )
