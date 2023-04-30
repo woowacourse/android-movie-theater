@@ -23,6 +23,7 @@ class SettingFragment : Fragment() {
     private lateinit var alarmController: AlarmController
     private lateinit var alarmPreference: AlarmPreference
     private lateinit var toggle: SwitchMaterial
+    private var initialToggleValue: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,24 +51,14 @@ class SettingFragment : Fragment() {
 
     private fun initToggle(toggle: SwitchMaterial, isAlarmOn: Boolean) {
         toggle.isChecked = isAlarmOn
+        initialToggleValue = isAlarmOn
         toggle.setOnCheckedChangeListener { _, isChecked ->
             setToggleChangeListener(isChecked)
         }
     }
 
     private fun setToggleChangeListener(isChecked: Boolean) {
-        if (isChecked && requestNotificationPermission()) {
-            resetAlarms()
-            alarmPreference.putBoolean(IS_ALARM_ON, true)
-        } else {
-            alarmController.cancelAlarms()
-            alarmPreference.putBoolean(IS_ALARM_ON, false)
-        }
-    }
-
-    private fun resetAlarms() {
-        val reservations = ReservationMockRepository.findAll().map { it.toUiModel() }
-        alarmController.registerAlarms(reservations, ALARM_MINUTE_INTERVAL)
+        if (isChecked) requestNotificationPermission()
     }
 
     private fun requestNotificationPermission(): Boolean {
@@ -95,6 +86,29 @@ class SettingFragment : Fragment() {
             toggle.isChecked = false
             alarmPreference.putBoolean(IS_ALARM_ON, false)
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val isToggleChecked = toggle.isChecked
+        if (initialToggleValue != isToggleChecked) {
+            applyChange(isToggleChecked)
+        }
+    }
+
+    private fun applyChange(isToggleChecked: Boolean) {
+        if (isToggleChecked) {
+            resetAlarms()
+            alarmPreference.putBoolean(IS_ALARM_ON, true)
+        } else {
+            alarmController.cancelAlarms()
+            alarmPreference.putBoolean(IS_ALARM_ON, false)
+        }
+    }
+
+    private fun resetAlarms() {
+        val reservations = ReservationMockRepository.findAll().map { it.toUiModel() }
+        alarmController.registerAlarms(reservations, ALARM_MINUTE_INTERVAL)
     }
 
     companion object {
