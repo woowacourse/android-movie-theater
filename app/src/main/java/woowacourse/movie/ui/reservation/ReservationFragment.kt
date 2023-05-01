@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
@@ -37,7 +38,7 @@ class ReservationFragment : Fragment() {
 
     private fun setTextOnEmptyState(view: View) {
         if (ReservationModel.tickets.isNotEmpty()) {
-            view.findViewById<TextView>(R.id.reservation_empty).visibility = View.GONE
+            view.findViewById<TextView>(R.id.reservation_empty).isVisible = false
         }
     }
 

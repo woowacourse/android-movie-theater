@@ -30,13 +30,13 @@ class NotificationCreator(
     }
 
     fun makeNotification(movie: MovieTicketModel) {
-        val contentPendingIntent = setContentIntent(context, movie)
-        val builder = setBuilder(context, movie, contentPendingIntent)
+        val contentPendingIntent = getContentIntent(context, movie)
+        val builder = getNotificationBuilder(context, movie, contentPendingIntent)
 
         notificationManager.notify(NOTIFICATION_ID, builder.build())
     }
 
-    private fun setContentIntent(
+    private fun getContentIntent(
         context: Context,
         movie: MovieTicketModel,
     ): PendingIntent {
@@ -50,7 +50,7 @@ class NotificationCreator(
         )
     }
 
-    private fun setBuilder(
+    private fun getNotificationBuilder(
         context: Context,
         movie: MovieTicketModel,
         contentPendingIntent: PendingIntent?,

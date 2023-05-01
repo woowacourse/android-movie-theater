@@ -18,7 +18,7 @@ import woowacourse.movie.model.PeopleCountModel
 import woowacourse.movie.model.ReservationModel
 import woowacourse.movie.model.SeatModel
 import woowacourse.movie.model.SelectedSeatsModel
-import woowacourse.movie.ui.alarm.AlarmCreator
+import woowacourse.movie.ui.alarm.ReservationAlarmManager
 import woowacourse.movie.ui.moviedetail.MovieDetailActivity
 import woowacourse.movie.ui.setting.SettingFragment
 import woowacourse.movie.ui.ticket.MovieTicketActivity
@@ -38,7 +38,7 @@ class SeatSelectionActivity : AppCompatActivity() {
     private lateinit var movieTime: LocalDateTime
     private lateinit var peopleCount: PeopleCountModel
 
-    private val alarmCreator by lazy { AlarmCreator(this) }
+    private val reservationAlarmManager by lazy { ReservationAlarmManager(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -185,7 +185,7 @@ class SeatSelectionActivity : AppCompatActivity() {
         if (this@SeatSelectionActivity.getPreferences()
                 .getBoolean(SettingFragment.KEY_SWITCH, false)
         ) {
-            alarmCreator.makeAlarm(this)
+            reservationAlarmManager.makeAlarm(this)
         }
     }
 

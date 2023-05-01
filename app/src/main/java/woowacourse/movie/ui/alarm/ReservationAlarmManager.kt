@@ -9,23 +9,23 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset
 
-class AlarmCreator(private val context: Context) {
+class ReservationAlarmManager(private val context: Context) {
     private val alarmManager: AlarmManager =
         context.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
 
     fun makeAlarm(ticketModel: MovieTicketModel) {
         alarmManager.set(
             AlarmManager.RTC_WAKEUP,
-            setNotificationTime(ticketModel),
-            setPendingIntent(ticketModel),
+            getNotificationTime(ticketModel),
+            getPendingIntent(ticketModel),
         )
     }
 
     fun cancelAlarm(ticketModel: MovieTicketModel) {
-        alarmManager.cancel(setPendingIntent(ticketModel))
+        alarmManager.cancel(getPendingIntent(ticketModel))
     }
 
-    private fun setNotificationTime(ticketModel: MovieTicketModel): Long {
+    private fun getNotificationTime(ticketModel: MovieTicketModel): Long {
         val setDateTime: LocalDateTime =
             ticketModel.time.minusMinutes(NOTIFY_BEFORE_TIME)
         val dateTime =
@@ -34,7 +34,7 @@ class AlarmCreator(private val context: Context) {
         return dateTime.atZone(ZoneOffset.UTC).toInstant().toEpochMilli()
     }
 
-    private fun setPendingIntent(ticketModel: MovieTicketModel): PendingIntent =
+    private fun getPendingIntent(ticketModel: MovieTicketModel): PendingIntent =
         PendingIntent.getBroadcast(
             context,
             NotificationCreator.NOTIFICATION_ID,

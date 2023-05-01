@@ -14,12 +14,12 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.model.ReservationModel
-import woowacourse.movie.ui.alarm.AlarmCreator
+import woowacourse.movie.ui.alarm.ReservationAlarmManager
 import woowacourse.movie.utils.getPreferences
 
 class SettingFragment : Fragment() {
     private lateinit var toggleButton: SwitchCompat
-    private val alarmCreator by lazy { AlarmCreator(requireContext()) }
+    private val reservationAlarmManager by lazy { ReservationAlarmManager(requireContext()) }
     private val requestPermissionLauncher by lazy {
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
@@ -81,9 +81,9 @@ class SettingFragment : Fragment() {
 
     private fun setAlarms(isChecked: Boolean) {
         if (isChecked) {
-            iterateOnTickets(alarmCreator::makeAlarm)
+            iterateOnTickets(reservationAlarmManager::makeAlarm)
         } else {
-            iterateOnTickets(alarmCreator::cancelAlarm)
+            iterateOnTickets(reservationAlarmManager::cancelAlarm)
         }
     }
 
