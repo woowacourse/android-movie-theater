@@ -32,19 +32,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        PermissionManager.requestPermission(
-            activity = this,
-            permission = Manifest.permission.POST_NOTIFICATIONS,
-            showRationale = {
-                val container = findViewById<ConstraintLayout>(R.id.main_container)
-                container.showSnack(
-                    getString(R.string.notification_permission_snackbar_message),
-                    getString(R.string.notification_permission_snackbar_button),
-                    ::openAndroidSettings
-                )
-            },
-            requestPermissionLauncher
-        )
+        requestNotificationPermission()
 
         val itemId = savedInstanceState?.getInt(KEY_INSTANCE_ITEM_ID) ?: R.id.bottom_item_home
         initFragment(itemId)
@@ -66,6 +54,22 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.setFragmentResult(
             ReservationListFragment.REQUEST_KEY_ITEM_INSERTION,
             bundleOf()
+        )
+    }
+
+    private fun requestNotificationPermission() {
+        PermissionManager.requestPermission(
+            activity = this,
+            permission = Manifest.permission.POST_NOTIFICATIONS,
+            showRationale = {
+                val container = findViewById<ConstraintLayout>(R.id.main_container)
+                container.showSnack(
+                    getString(R.string.notification_permission_snackbar_message),
+                    getString(R.string.notification_permission_snackbar_button),
+                    ::openAndroidSettings
+                )
+            },
+            requestPermissionLauncher
         )
     }
 
