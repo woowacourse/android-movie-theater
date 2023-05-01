@@ -10,16 +10,17 @@ import woowacourse.movie.R
 import woowacourse.movie.data.TicketsRepository
 import woowacourse.movie.feature.common.BackKeyActionBarActivity
 import woowacourse.movie.feature.common.customView.ConfirmView
+import woowacourse.movie.feature.confirm.AlarmReceiver
 import woowacourse.movie.feature.confirm.ReservationConfirmActivity
 import woowacourse.movie.model.ReservationState
 import woowacourse.movie.model.SeatPositionState
 import woowacourse.movie.model.mapper.asDomain
 import woowacourse.movie.model.mapper.asPresentation
 import woowacourse.movie.util.DecimalFormatters
-import woowacourse.movie.util.MovieAlarmSetter
 import woowacourse.movie.util.getParcelableArrayListCompat
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
+import woowacourse.movie.util.setAlarm
 import woowacourse.movie.util.showAskDialog
 import kotlin.collections.ArrayList
 
@@ -86,9 +87,14 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
             reservationState.dateTime,
             seats.map { it.asDomain() }
         ).asPresentation()
-        val intent = ReservationConfirmActivity.getIntent(this, tickets)
-        MovieAlarmSetter.setAlarm(this, tickets)
+        setAlarm(
+            intent = AlarmReceiver.getIntent(this, tickets),
+            dateTime = tickets.dateTime,
+            requestCode = tickets.hashCode(),
+            timeMillsAdjustAmount = NOTIFICATION_TIME_ADJUST_AMOUNT
+        )
         TicketsRepository.addTicket(tickets)
+        val intent = ReservationConfirmActivity.getIntent(this, tickets)
         startActivity(intent)
     }
 
@@ -116,5 +122,6 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
 
         private const val KEY_RESERVATION = "key_reservation"
         private const val SEAT_RESTORE_KEY = "seat_restore_key"
+        private const val NOTIFICATION_TIME_ADJUST_AMOUNT: Long = 30 * 60 * 1000
     }
 }
