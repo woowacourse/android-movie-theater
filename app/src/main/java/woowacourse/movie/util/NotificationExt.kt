@@ -20,6 +20,8 @@ private const val CHANNEL_DESCRIPTION = "This is a movie channel"
 
 private val atomicNotifyId = AtomicInteger(0x001)
 
+const val NOTIFICATION_FAIL_NO_PERMISSION = -1
+
 data class NotificationSettings(
     @DrawableRes val iconResId: Int = R.drawable.ic_launcher_foreground,
     val contentTitle: String,
@@ -56,10 +58,16 @@ fun Context.createNotification(notificationSettings: NotificationSettings): Noti
         .build()
 }
 
+/**
+ * return values
+ * NOTIFICATION_FAIL_NO_PERMISSION = -1
+ */
 fun Context.sendNotification(notificationSettings: NotificationSettings): Int {
     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
         != PackageManager.PERMISSION_GRANTED
-    ) { return -1 }
+    ) {
+        return NOTIFICATION_FAIL_NO_PERMISSION
+    }
 
     val notification = this.createNotification(notificationSettings)
     val notificationId = atomicNotifyId.getAndIncrement()

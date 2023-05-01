@@ -12,6 +12,7 @@ import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.util.sendNotification
 
 class AlarmReceiver : BroadcastReceiver() {
+
     override fun onReceive(context: Context, intent: Intent?) {
         val tickets: TicketsState = intent?.extras?.getParcelableCompat(KEY_TICKETS) ?: return
         val sharedPreference = PreferenceUtil(context)
