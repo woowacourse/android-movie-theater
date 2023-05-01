@@ -15,7 +15,6 @@ import woowacourse.movie.domain.discountPolicy.OffTime
 import woowacourse.movie.domain.reservationNotificationPolicy.MovieReservationNotification
 import woowacourse.movie.domain.reservationNotificationPolicy.ReservationNotificationPolicy
 import woowacourse.movie.service.Alarm
-import woowacourse.movie.service.ReservationAlarmReceiver
 import woowacourse.movie.view.data.MovieViewData
 import woowacourse.movie.view.data.PriceViewData
 import woowacourse.movie.view.data.ReservationDetailViewData
@@ -52,19 +51,11 @@ class SeatSelectionActivity : AppCompatActivity() {
         )
     }
 
-    private val alarmReceiver = ReservationAlarmReceiver()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seat_selection)
 
-        Alarm.registerAlarmReceiver(alarmReceiver, applicationContext)
         initSeatSelectionView(savedInstanceState)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Alarm.unregisterAlarmReceiver(alarmReceiver, applicationContext)
     }
 
     private fun initSeatSelectionView(savedInstanceState: Bundle?) {
@@ -219,7 +210,6 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val RESERVATION_REQUEST_CODE = 1
         const val ACTION_ALARM = "actionAlarm"
 
         private const val SEAT_ROW_COUNT = 5

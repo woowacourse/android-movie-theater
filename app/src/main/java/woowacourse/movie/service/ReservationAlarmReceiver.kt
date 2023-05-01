@@ -2,9 +2,9 @@ package woowacourse.movie.service
 
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import woowacourse.movie.activity.SeatSelectionActivity
 import woowacourse.movie.fragment.SettingFragment
 import woowacourse.movie.view.data.ReservationViewData
@@ -24,10 +24,8 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
             val reservation =
                 intent.extras?.getSerializable<ReservationViewData>(ReservationViewData.RESERVATION_EXTRA_NAME)
                     ?: return returnWithError(ViewError.MissingExtras(ReservationViewData.RESERVATION_EXTRA_NAME))
-            Log.d("HKHK", reservation.toString())
-            val pendingIntent = Notification.makeNotificationPendingIntent(context, reservation)
-            val builder = Notification.makeNotificationBuilder(context, reservation, pendingIntent)
-            Notification.notifyNotification(context, builder)
+
+            Notification.notifyNotification(context, reservation)
         }
     }
 
@@ -36,14 +34,14 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
             get() = System.currentTimeMillis().toInt()
 
         fun from(context: Context, reservation: ReservationViewData): PendingIntent {
-            val intent: Intent = Intent(SeatSelectionActivity.ACTION_ALARM).putExtra(
-                ReservationViewData.RESERVATION_EXTRA_NAME, reservation
-            )
+            val intent: Intent = Intent(SeatSelectionActivity.ACTION_ALARM).apply {
+                putExtra(
+                    ReservationViewData.RESERVATION_EXTRA_NAME, reservation
+                )
+                component = ComponentName(context, ReservationAlarmReceiver::class.java)
+            }
             return PendingIntent.getBroadcast(
-                context,
-                requestCode,
-                intent,
-                PendingIntent.FLAG_IMMUTABLE
+                context, requestCode, intent, PendingIntent.FLAG_IMMUTABLE
             )
         }
     }
