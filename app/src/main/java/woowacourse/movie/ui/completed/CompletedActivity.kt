@@ -1,25 +1,44 @@
 package woowacourse.movie.ui.completed
 
+import android.Manifest
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.model.ReservationUiModel
 import woowacourse.movie.movie.MovieRepository
+import woowacourse.movie.ui.seat.NotiChannel
+import woowacourse.movie.util.createChannel
 import woowacourse.movie.util.formatScreenDateTime
 import woowacourse.movie.util.getParcelable
+import woowacourse.movie.util.requestNotificationPermission
+import woowacourse.movie.util.shortToast
 
 class CompletedActivity : AppCompatActivity() {
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (!isGranted) {
+                shortToast(R.string.permission_denied)
+            } else {
+                shortToast(R.string.permission_granted)
+                createChannel(this, NotiChannel.BOOKING_ALARM, NotificationManager.IMPORTANCE_HIGH)
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_completed)
 
-        getResult()?.let {
-            initView(it)
-        } ?: finish()
+        requestNotificationPermission(this) {
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+
+        getResult()?.let { initView(it) } ?: finish()
     }
 
     private fun getResult(): ReservationUiModel? {

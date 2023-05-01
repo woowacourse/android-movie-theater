@@ -1,19 +1,20 @@
 package woowacourse.movie.ui.main
 
 import android.Manifest
+import android.app.NotificationManager
 import android.content.Context
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Switch
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.ui.seat.NotiChannel
 import woowacourse.movie.util.SettingSharedPreference
+import woowacourse.movie.util.createChannel
+import woowacourse.movie.util.requestNotificationPermission
 
 class SettingFragment : Fragment() {
     private val switch: Switch by lazy {
@@ -23,6 +24,13 @@ class SettingFragment : Fragment() {
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             switch.isChecked = isGranted
+            if (isGranted) {
+                createChannel(
+                    context = requireContext(),
+                    channel = NotiChannel.BOOKING_ALARM,
+                    importance = NotificationManager.IMPORTANCE_HIGH,
+                )
+            }
         }
 
     override fun onCreateView(
@@ -50,21 +58,11 @@ class SettingFragment : Fragment() {
     ) {
         switch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                requestNotificationPermission(context)
+                requestNotificationPermission(context) {
+                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
             }
             settingSharePreference.receivingPushAlarm = isChecked
-        }
-    }
-
-    private fun requestNotificationPermission(context: Context) {
-        if (ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.POST_NOTIFICATIONS,
-            ) == PackageManager.PERMISSION_DENIED
-        ) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-            }
         }
     }
 }
