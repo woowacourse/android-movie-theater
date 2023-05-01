@@ -8,7 +8,7 @@ import woowacourse.movie.model.ReservationUiModel
 import java.util.TimeZone
 
 class ScreeningTimeReminder(
-    private val context: Context,
+    context: Context,
     reservationUiModel: ReservationUiModel,
 ) {
     private val alarmManager: AlarmManager =
