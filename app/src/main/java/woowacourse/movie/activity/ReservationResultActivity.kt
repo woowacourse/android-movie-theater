@@ -11,6 +11,7 @@ import woowacourse.movie.R
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.view.MovieView
 import woowacourse.movie.view.mapper.TicketsMapper
+import woowacourse.movie.view.mapper.TicketsMapper.toDomain
 import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.model.TicketsUiModel
 import java.text.NumberFormat
@@ -83,7 +84,7 @@ class ReservationResultActivity : AppCompatActivity() {
     }
 
     private fun renderPrice(ticketsUiModel: TicketsUiModel) {
-        val tickets = TicketsMapper.toDomain(ticketsUiModel)
+        val tickets = ticketsUiModel.toDomain()
         val formattedPrice =
             NumberFormat.getNumberInstance(Locale.US).format(tickets.price.value)
         priceTextView.text = getString(R.string.reservation_price).format(formattedPrice)

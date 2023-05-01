@@ -16,6 +16,7 @@ import woowacourse.movie.view.MovieDateTimePicker
 import woowacourse.movie.view.MovieView
 import woowacourse.movie.view.TimeSpinner
 import woowacourse.movie.view.mapper.MovieMapper
+import woowacourse.movie.view.mapper.MovieMapper.toUi
 import woowacourse.movie.view.model.*
 
 class MovieReservationActivity : AppCompatActivity() {
@@ -101,9 +102,8 @@ class MovieReservationActivity : AppCompatActivity() {
 
     companion object {
         private const val MOVIE_KEY_VALUE = "movie"
-        fun start(context: Context, movie: Movie) {
+        fun start(context: Context, movieUiModel: MovieUiModel) {
             val intent = Intent(context, MovieReservationActivity::class.java)
-            val movieUiModel = MovieMapper.toUi(movie)
             intent.putExtra(MOVIE_KEY_VALUE, movieUiModel)
             context.startActivity(intent)
         }

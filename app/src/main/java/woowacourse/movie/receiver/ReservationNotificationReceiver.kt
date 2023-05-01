@@ -12,6 +12,7 @@ import woowacourse.movie.SettingPreferencesManager
 import woowacourse.movie.activity.ReservationResultActivity
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.view.mapper.MovieMapper
+import woowacourse.movie.view.mapper.MovieMapper.toUi
 import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.model.TicketsUiModel
 
@@ -49,9 +50,8 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
     }
 
     private fun receiveMovieViewModel(intent: Intent): MovieUiModel {
-        return intent.extras?.getSerializableCompat(KEY_MOVIE_VALUE) ?: MovieMapper.toUi(
-            MockMoviesFactory.generateMovie(0)
-        )
+        return intent.extras?.getSerializableCompat(KEY_MOVIE_VALUE)
+            ?: MockMoviesFactory.generateMovie(0).toUi()
     }
 
     companion object {

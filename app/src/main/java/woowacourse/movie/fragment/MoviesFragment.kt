@@ -13,6 +13,7 @@ import woowacourse.movie.R
 import woowacourse.movie.activity.MovieReservationActivity
 import woowacourse.movie.adapter.MovieAdapter
 import woowacourse.movie.view.model.AdvertisementUiModel
+import woowacourse.movie.view.model.MovieUiModel
 
 
 class MoviesFragment : Fragment(R.layout.fragment_movies) {
@@ -21,13 +22,12 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
         val movies = MockMoviesFactory.makeMovies()
         val advertisementUiModel = MockAdvertisementFactory.generateAdvertisement()
         val movieList = view.findViewById<RecyclerView>(R.id.main_movie_list)
-
         movieList.adapter = MovieAdapter(
             movies, advertisementUiModel, ::advertisementClick, ::reservationButtonClick
         )
     }
-    private fun reservationButtonClick(movie: Movie) {
-        MovieReservationActivity.start(requireContext(), movie)
+    private fun reservationButtonClick(movieUiModel: MovieUiModel) {
+        MovieReservationActivity.start(requireContext(), movieUiModel)
     }
 
     private fun advertisementClick(advertisementUiModel: AdvertisementUiModel) {

@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import domain.Movie
 import domain.Movies
+import woowacourse.movie.view.mapper.MovieMapper.toUi
 import woowacourse.movie.view.model.AdvertisementUiModel
 import woowacourse.movie.view.model.MovieAdapterViewType
+import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.viewholder.AdvertisementItemViewHolder
 import woowacourse.movie.viewholder.MovieItemViewHolder
 
@@ -16,7 +18,7 @@ class MovieAdapter(
     private val movies: Movies,
     private val advertisementUiModel: AdvertisementUiModel,
     private val advertisementClickEvent: (AdvertisementUiModel) -> Unit,
-    private val movieListClickEvent: (Movie) -> Unit
+    private val movieListClickEvent: (MovieUiModel) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
@@ -46,7 +48,7 @@ class MovieAdapter(
             advertisementUiModel, advertisementClickEvent
         )
         if (viewHolder is MovieItemViewHolder) viewHolder.bind(
-            movies.value[position], movieListClickEvent
+            movies.value[position].toUi(), movieListClickEvent
         )
     }
 

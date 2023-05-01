@@ -10,6 +10,7 @@ import woowacourse.movie.R
 import woowacourse.movie.activity.ReservationResultActivity
 import woowacourse.movie.adapter.ReservationAdapter
 import woowacourse.movie.view.mapper.ReservationMapper
+import woowacourse.movie.view.mapper.ReservationMapper.toUi
 
 class ReservationListFragment : Fragment(R.layout.fragment_reservation_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -20,7 +21,7 @@ class ReservationListFragment : Fragment(R.layout.fragment_reservation_list) {
     }
 
     private fun reservationItemClick(reservation: Reservation) {
-        val reservationUiModel = ReservationMapper.toUi(reservation)
+        val reservationUiModel = reservation.toUi()
         val movieUiModel = reservationUiModel.movie
         val ticketsUiModel = reservationUiModel.tickets
         ReservationResultActivity.start(

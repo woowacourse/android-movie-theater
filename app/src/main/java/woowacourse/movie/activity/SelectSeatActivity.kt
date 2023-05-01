@@ -22,6 +22,7 @@ import woowacourse.movie.view.MovieView
 import woowacourse.movie.view.SeatTable
 import woowacourse.movie.view.SeatView
 import woowacourse.movie.view.mapper.TicketsMapper
+import woowacourse.movie.view.mapper.TicketsMapper.toUi
 import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.model.SeatUiModel
 import woowacourse.movie.view.model.TicketDateUiModel
@@ -94,13 +95,14 @@ class SelectSeatActivity : AppCompatActivity() {
         builder.setTitle(R.string.select_seat_dialog_title)
         builder.setMessage(R.string.select_seat_dialog_message)
         builder.setPositiveButton(R.string.select_seat_dialog_positive_button_text) { dialog, _ ->
+            val ticketsUiModel = ticketOffice.tickets.toUi()
             ReservationResultActivity.start(
                 this,
                 movieUiModel = movieUiModel,
-                ticketsUiModel = TicketsMapper.toUi(ticketOffice.tickets)
+                ticketsUiModel = ticketsUiModel
             )
             ReservationAlarmManager(this).registerAlarm(
-                ticketsUiModel = TicketsMapper.toUi(ticketOffice.tickets),
+                ticketsUiModel = ticketsUiModel,
                 movieUiModel = movieUiModel
             )
         }

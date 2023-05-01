@@ -7,7 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import domain.Movie
 import woowacourse.movie.R
-import woowacourse.movie.view.mapper.MovieMapper
+import woowacourse.movie.view.mapper.MovieMapper.toUi
+import woowacourse.movie.view.model.MovieUiModel
 import java.time.format.DateTimeFormatter
 
 class MovieItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -25,19 +26,18 @@ class MovieItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         reservationButton = view.findViewById(R.id.item_movie_reservation_button)
     }
 
-    fun bind(movie: Movie, onClickEvent: (Movie) -> Unit) {
-        val movieViewModel = MovieMapper.toUi(movie)
-        posterImageView.setImageResource(movieViewModel.picture)
+    fun bind(movieUiModel: MovieUiModel, onClickEvent: (MovieUiModel) -> Unit) {
+        posterImageView.setImageResource(movieUiModel.picture)
         val dateFormat =
             DateTimeFormatter.ofPattern(movieDateTextView.context.getString(R.string.movie_date_format))
         movieDateTextView.text = movieDateTextView.context.getString(R.string.movie_date).format(
-            dateFormat.format(movieViewModel.startDate),
-            dateFormat.format(movieViewModel.endDate)
+            dateFormat.format(movieUiModel.startDate),
+            dateFormat.format(movieUiModel.endDate)
         )
         runningTimeTextView.text =
             runningTimeTextView.context.getString(R.string.movie_running_time)
-                .format(movieViewModel.runningTime)
-        titleTextView.text = movieViewModel.title
-        reservationButton.setOnClickListener { onClickEvent(movie) }
+                .format(movieUiModel.runningTime)
+        titleTextView.text = movieUiModel.title
+        reservationButton.setOnClickListener { onClickEvent(movieUiModel) }
     }
 }
