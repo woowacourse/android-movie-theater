@@ -3,7 +3,6 @@ package woowacourse.movie.activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -31,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         val bottomNavigationView =
             findViewById<BottomNavigationView>(R.id.main_bottom_navigation_view)
         bottomNavigationView.selectedItemId = R.id.action_home
-        addFragment<MovieListFragment>()
         bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.action_list -> {
@@ -55,12 +53,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 else -> false
             }
-        }
-    }
-
-    private inline fun <reified T : Fragment> addFragment() {
-        supportFragmentManager.commit {
-            add<T>(R.id.main_fragment_container_view)
         }
     }
 
