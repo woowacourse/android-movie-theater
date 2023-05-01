@@ -1,5 +1,7 @@
 package woowacourse.movie.activity
 
+import android.Manifest.permission.POST_NOTIFICATIONS
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -28,12 +30,23 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        PermissionManager.requestNotificationPermission(this, requestPermissionLauncher)
+        requestNotificationPermission()
         findViewById<BottomNavigationView>(R.id.bnv_main).setOnItemSelectedListener(this)
         supportFragmentManager.beginTransaction().add(
             R.id.fl_main,
             fragments.getOrPut(R.id.page_book_history) { BookHistoryFragment() }
         ).commit()
+    }
+
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            PermissionManager.requestPermission(
+                permission = POST_NOTIFICATIONS,
+                activity = this,
+                activityResultLauncher = requestPermissionLauncher,
+                ifDeniedDescription = this.getString(R.string.if_permission_is_denied_cant_use_notification_service)
+            )
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

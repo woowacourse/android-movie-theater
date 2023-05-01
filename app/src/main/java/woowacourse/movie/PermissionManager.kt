@@ -1,32 +1,30 @@
 package woowacourse.movie
 
-import android.Manifest.permission.POST_NOTIFICATIONS
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
-import android.os.Build
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.core.content.ContextCompat
 
 object PermissionManager {
-    fun requestNotificationPermission(
+    fun requestPermission(
+        permission: String,
         activity: Activity,
-        activityResultLauncher: ActivityResultLauncher<String>
+        activityResultLauncher: ActivityResultLauncher<String>,
+        ifDeniedDescription: String,
     ) {
-        if (isPermissionDenied(activity, POST_NOTIFICATIONS) &&
-            (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-        ) {
-            if (shouldShowRequestPermissionRationale(activity, POST_NOTIFICATIONS)) {
+        if (isPermissionDenied(activity, permission)) {
+            if (shouldShowRequestPermissionRationale(activity, permission)) {
                 Toast.makeText(
                     activity,
-                    activity.getString(R.string.if_permission_is_denied_cant_use_notification_service),
+                    ifDeniedDescription,
                     Toast.LENGTH_LONG
                 ).show()
                 return
             }
-            activityResultLauncher.launch(POST_NOTIFICATIONS)
+            activityResultLauncher.launch(permission)
         }
     }
 
