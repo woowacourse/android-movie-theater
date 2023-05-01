@@ -6,7 +6,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import woowacourse.movie.MockMoviesFactory
-import woowacourse.movie.SettingPreferenceManager
+import woowacourse.movie.SettingPreferencesManager
 import woowacourse.movie.activity.ReservationResultActivity
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.view.mapper.MovieMapper
@@ -38,7 +38,7 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
             notificationData,
             notificationManager
         )
-        if (SettingPreferenceManager.getAlarmReceptionStatus()) notificationManager.notify(
+        if (SettingPreferencesManager.getAlarmReceptionStatus()) notificationManager.notify(
             NOTIFICATION_ID,
             notification
         )

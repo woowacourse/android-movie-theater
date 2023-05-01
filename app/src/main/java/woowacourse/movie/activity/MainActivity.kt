@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
-import woowacourse.movie.SettingPreferenceManager
+import woowacourse.movie.SettingPreferencesManager
 import woowacourse.movie.fragment.MoviesFragment
 import woowacourse.movie.fragment.ReservationListFragment
 import woowacourse.movie.fragment.SettingFragment
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        SettingPreferenceManager.inIt(this)
+        SettingPreferencesManager.init(this)
         replaceFragment(ReservationListFragment())
         setOnBottomNavigationClickListener()
         requestNotificationPermission()

@@ -1,14 +1,14 @@
 package woowacourse.movie.view
 
 import android.widget.Switch
-import woowacourse.movie.SettingPreferenceManager
+import woowacourse.movie.SettingPreferencesManager
 
 class PushAlarmSwitch(val view: Switch) {
     init {
-        SettingPreferenceManager.inIt(view.context)
-        view.isChecked = SettingPreferenceManager.getAlarmReceptionStatus()
+        SettingPreferencesManager.init(view.context)
+        view.isChecked = SettingPreferencesManager.getAlarmReceptionStatus()
         view.setOnClickListener {
-            SettingPreferenceManager.changeAlarmReceptionStatus()
+            SettingPreferencesManager.changeAlarmReceptionStatus()
         }
     }
 }
