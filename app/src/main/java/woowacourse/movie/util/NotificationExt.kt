@@ -7,10 +7,11 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.util.Log
+import androidx.annotation.DrawableRes
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import woowacourse.movie.R
 import java.util.concurrent.atomic.AtomicInteger
 
 private const val CHANNEL_ID = "movie_channel"
@@ -18,6 +19,13 @@ private const val CHANNEL_NAME = "movie_channel_name"
 private const val CHANNEL_DESCRIPTION = "This is a movie channel"
 
 private val atomicNotifyId = AtomicInteger(0x001)
+
+data class NotificationSettings(
+    @DrawableRes val iconResId: Int = R.drawable.ic_launcher_foreground,
+    val contentTitle: String,
+    val contentText: String,
+    val cancelable: Boolean
+)
 
 fun Context.createNotificationChannel() {
     val id = CHANNEL_ID
@@ -35,37 +43,25 @@ fun Context.createNotificationChannel() {
     NotificationManagerCompat.from(this).createNotificationChannel(channel)
 }
 
-fun Context.createNotification(
-    iconResId: Int,
-    contentTitle: String,
-    contentText: String,
-    cancelable: Boolean,
-): Notification {
+fun Context.createNotification(notificationSettings: NotificationSettings): Notification {
     createNotificationChannel()
 
     return NotificationCompat.Builder(this, CHANNEL_ID)
-        .setSmallIcon(iconResId)
-        .setContentTitle(contentTitle)
-        .setContentText(contentText)
+        .setSmallIcon(notificationSettings.iconResId)
+        .setContentTitle(notificationSettings.contentTitle)
+        .setContentText(notificationSettings.contentText)
         .setPriority(NotificationCompat.PRIORITY_HIGH)
         .setCategory(NotificationCompat.CATEGORY_REMINDER)
-        .setAutoCancel(cancelable)
+        .setAutoCancel(notificationSettings.cancelable)
         .build()
 }
 
-fun Context.sendNotification(
-    iconResId: Int,
-    contentTitle: String,
-    contentText: String,
-    cancelable: Boolean,
-): Int {
+fun Context.sendNotification(notificationSettings: NotificationSettings): Int {
     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
         != PackageManager.PERMISSION_GRANTED
-    ) {
-        return -1
-    }
+    ) { return -1 }
 
-    val notification = this.createNotification(iconResId, contentText, contentTitle, cancelable)
+    val notification = this.createNotification(notificationSettings)
     val notificationId = atomicNotifyId.getAndIncrement()
     NotificationManagerCompat.from(this).notify(notificationId, notification)
     return notificationId

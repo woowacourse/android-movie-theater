@@ -6,6 +6,7 @@ import android.content.Intent
 import woowacourse.movie.R
 import woowacourse.movie.model.TicketsState
 import woowacourse.movie.ui.fragment.setting.SettingFragment.Companion.NOTIFICATIONS
+import woowacourse.movie.util.NotificationSettings
 import woowacourse.movie.util.PreferenceUtil
 import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.util.sendNotification
@@ -17,13 +18,14 @@ class AlarmReceiver : BroadcastReceiver() {
         val isNotification = sharedPreference.getBoolean(NOTIFICATIONS, false)
 
         if (isNotification) {
-            context.sendNotification(
-                R.drawable.ic_launcher_foreground,
-                context.getString(R.string.alarm_receiver_notification_title),
-                context.getString(R.string.alarm_receiver_notification_text)
-                    .format(tickets.movieState.title),
-                true
+            val notificationSettings = NotificationSettings(
+                contentTitle = context.getString(R.string.alarm_receiver_notification_title),
+                contentText = context.getString(R.string.alarm_receiver_notification_text).format(
+                    tickets.movieState.title
+                ),
+                cancelable = true
             )
+            context.sendNotification(notificationSettings)
         }
     }
 
