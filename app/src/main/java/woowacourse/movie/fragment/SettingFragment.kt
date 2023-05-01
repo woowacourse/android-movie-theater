@@ -19,6 +19,14 @@ class SettingFragment : Fragment() {
     private val requestPermissionLauncher =
         Permission.getRequestPermissionLauncher(this, ::onPermissionGranted)
 
+    private val switch: SwitchCompat by lazy {
+        requireView().findViewById(R.id.setting_push_switch)
+    }
+
+    private val setting: Setting by lazy {
+        SharedSetting(requireContext())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,39 +37,35 @@ class SettingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initSwitch(view)
+        initSwitch()
     }
 
-    private fun initSwitch(view: View) {
-        val setting: Setting = SharedSetting(view.context)
-        val switch = view.findViewById<SwitchCompat>(R.id.setting_push_switch)
-        initSwitchCheckStatus(view)
+    private fun initSwitch() {
+        initSwitchCheckStatus()
         switch.setOnCheckedChangeListener { _, isChecked ->
             setting.setValue(SETTING_NOTIFICATION, isChecked)
-            if (isChecked && !checkNotificationPermission(view)) {
+            if (isChecked && !checkNotificationPermission(requireContext())) {
                 requestNotificationPermission(this, requestPermissionLauncher, ::requestPermission)
             }
         }
     }
 
-    private fun initSwitchCheckStatus(view: View) {
-        val setting: Setting = SharedSetting(view.context)
-        val switch = view.findViewById<SwitchCompat>(R.id.setting_push_switch)
-        if (!checkNotificationPermission(view)) {
+    private fun initSwitchCheckStatus() {
+        if (!checkNotificationPermission(requireContext())) {
             switch.isChecked = false
         } else {
             switch.isChecked = setting.getValue(SETTING_NOTIFICATION)
         }
     }
 
-    private fun onPermissionGranted(view: View?) {
-        view?.findViewById<SwitchCompat>(R.id.setting_push_switch)?.isChecked = false
+    private fun onPermissionGranted() {
+        switch.isChecked = false
     }
 
-    private fun requestPermission(view: View) {
+    private fun requestPermission() {
         Toast.makeText(
-            view.context,
-            view.context.getString(R.string.permission_instruction_ment),
+            requireContext(),
+            requireContext().getString(R.string.permission_instruction_ment),
             Toast.LENGTH_SHORT
         ).show()
     }
