@@ -8,8 +8,8 @@ import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.service.ContextExtension.checkNotificationSelfPermission
 import woowacourse.movie.service.PermissionManager
-import woowacourse.movie.service.PermissionManager.checkNotificationPermission
 import woowacourse.movie.service.PermissionManager.requestNotificationPermission
 import woowacourse.movie.view.setting.Setting
 import woowacourse.movie.view.setting.SharedSetting
@@ -48,7 +48,7 @@ class SettingFragment : Fragment() {
     }
 
     private fun initSwitchCheckStatus() {
-        if (!checkNotificationPermission(requireContext())) {
+        if (!requireContext().checkNotificationSelfPermission()) {
             switch.isChecked = false
         } else {
             switch.isChecked = setting.getValue(SETTING_NOTIFICATION)
@@ -57,7 +57,7 @@ class SettingFragment : Fragment() {
 
     private fun onCheckedChange(isChecked: Boolean) {
         setting.setValue(SETTING_NOTIFICATION, isChecked)
-        if (isChecked && !checkNotificationPermission(requireContext())) {
+        if (isChecked && !requireContext().checkNotificationSelfPermission()) {
             requestNotificationPermission(this, requestPermissionLauncher, ::requestPermission)
         }
     }

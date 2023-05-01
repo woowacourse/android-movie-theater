@@ -1,16 +1,14 @@
 package woowacourse.movie.service
 
-import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
-import android.content.pm.PackageManager
-import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
 import woowacourse.movie.activity.ReservationResultActivity
+import woowacourse.movie.service.ContextExtension.checkNotificationSelfPermission
 import woowacourse.movie.service.ReservationAlarmReceiver.Companion.requestCode
 import woowacourse.movie.view.data.ReservationViewData
 
@@ -36,10 +34,7 @@ object NotificationManager {
 
     fun notifyNotification(context: Context, reservation: ReservationViewData) {
         with(NotificationManagerCompat.from(context)) {
-            if (ActivityCompat.checkSelfPermission(
-                    context, Manifest.permission.POST_NOTIFICATIONS
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
+            if (!context.checkNotificationSelfPermission()) {
                 val builder = makeNotificationBuilder(context, reservation)
                 notify(notificationId, builder.build())
             }
