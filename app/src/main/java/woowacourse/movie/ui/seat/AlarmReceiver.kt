@@ -12,12 +12,10 @@ import woowacourse.movie.util.getParcelable
 
 class AlarmReceiver : BroadcastReceiver() {
 
-    private lateinit var notificationGenerator: NotificationGenerator
-
     override fun onReceive(context: Context, intent: Intent) {
         if (isAvailableReceivingAlarm(context)) {
-            initNotificationGenerator(context)
-            notificationGenerator.generate(
+            NotificationGenerator.generate(
+                context = context,
                 dialogInfo = NotificationDialogInfo.RemindingBookingTime,
                 intent = getCompletedActivityIntent(context, intent),
             )
@@ -27,12 +25,6 @@ class AlarmReceiver : BroadcastReceiver() {
     private fun isAvailableReceivingAlarm(context: Context): Boolean {
         val settingSharedPreference = SettingSharedPreference(context)
         return settingSharedPreference.receivingPushAlarm
-    }
-
-    private fun initNotificationGenerator(context: Context) {
-        if (!::notificationGenerator.isInitialized) {
-            notificationGenerator = NotificationGenerator(context)
-        }
     }
 
     private fun getCompletedActivityIntent(context: Context, intent: Intent): Intent {

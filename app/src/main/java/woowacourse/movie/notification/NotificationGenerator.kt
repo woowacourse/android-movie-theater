@@ -7,12 +7,16 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
 
-class NotificationGenerator(private val context: Context) {
+object NotificationGenerator {
 
-    private val notificationManager =
-        context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    private var notificationId = 0
 
-    fun createChannel(channelInfo: NotificationChannelInfo) {
+    fun createChannel(
+        context: Context,
+        channelInfo: NotificationChannelInfo
+    ) {
+        val notificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val channel = NotificationChannel(
             channelInfo.id,
             channelInfo.description,
@@ -23,9 +27,12 @@ class NotificationGenerator(private val context: Context) {
     }
 
     fun generate(
+        context: Context,
         dialogInfo: NotificationDialogInfo,
         intent: Intent
     ) {
+        val notificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val builder =
             NotificationCompat.Builder(context, NotificationChannelInfo.BOOKING_ALARM.name).apply {
                 setSmallIcon(R.mipmap.ic_launcher)
@@ -36,9 +43,5 @@ class NotificationGenerator(private val context: Context) {
                 setAutoCancel(true)
             }
         notificationManager.notify(notificationId++, builder.build())
-    }
-
-    companion object {
-        private var notificationId = 0
     }
 }

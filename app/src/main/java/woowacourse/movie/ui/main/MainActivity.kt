@@ -27,9 +27,7 @@ class MainActivity : AppCompatActivity() {
         HOME_FRAGMENT to null,
         SETTING_FRAGMENT to null
     )
-    private val notificationGenerator: NotificationGenerator by lazy {
-        NotificationGenerator(this)
-    }
+
     private val permissionLauncher: ActivityResultLauncher<String> by lazy {
         getPermissionLauncher(
             deniedCase = {
@@ -49,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         initNavigation()
         requestNotificationPermission()
-        notificationGenerator.createChannel(NotificationChannelInfo.BOOKING_ALARM)
+        NotificationGenerator.createChannel(this, NotificationChannelInfo.BOOKING_ALARM)
     }
 
     private fun initNavigation() {
