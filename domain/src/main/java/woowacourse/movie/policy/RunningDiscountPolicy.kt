@@ -2,7 +2,7 @@ package woowacourse.movie.policy
 
 import java.time.LocalDateTime
 
-class RunningDiscountPolicy : TicketDiscountPolicy {
+object RunningDiscountPolicy : TicketDiscountPolicy {
 
     private val discountPolices = listOf(
         MovieDayDiscountPolicy(),

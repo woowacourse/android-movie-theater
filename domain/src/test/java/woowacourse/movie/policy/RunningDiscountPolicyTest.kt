@@ -15,7 +15,7 @@ class RunningDiscountPolicyTest {
         val ticket = Ticket(dateTime)
 
         // when
-        val actual = RunningDiscountPolicy().discount(ticket.price, ticket.bookedDateTime)
+        val actual = RunningDiscountPolicy.discount(ticket.price, ticket.bookedDateTime)
 
         // then
         val expected = (ticket.price * 0.9).toInt() - 2000
@@ -31,7 +31,7 @@ class RunningDiscountPolicyTest {
         val expected = (ticket.price * 0.9).toInt()
 
         // when
-        val actual = RunningDiscountPolicy().discount(ticket.price, ticket.bookedDateTime)
+        val actual = RunningDiscountPolicy.discount(ticket.price, ticket.bookedDateTime)
 
         // then
         assertThat(actual).isEqualTo(expected)
@@ -46,7 +46,7 @@ class RunningDiscountPolicyTest {
         val expected = ticket.price - 2000
 
         // when
-        val actual = RunningDiscountPolicy().discount(ticket.price, ticket.bookedDateTime)
+        val actual = RunningDiscountPolicy.discount(ticket.price, ticket.bookedDateTime)
 
         // then
         assertThat(actual).isEqualTo(expected)
