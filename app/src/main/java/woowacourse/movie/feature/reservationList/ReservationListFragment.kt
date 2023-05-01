@@ -43,7 +43,7 @@ class ReservationListFragment : Fragment() {
     private fun getTicketsItemModel(): List<TicketsItemModel> {
         return TicketsRepository.allTickets().map {
             it.convertToItemModel { position ->
-                navigateReservationConfirm((adapter.reservations[position] as TicketsItemModel).ticketsState)
+                navigateReservationConfirm(adapter.reservations[position].ticketsState)
             }
         }
     }

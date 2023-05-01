@@ -4,19 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.feature.common.itemModel.ItemModel
-import woowacourse.movie.feature.common.viewHolder.ItemViewHolder
+import woowacourse.movie.feature.reservationList.itemModel.TicketsItemModel
 import woowacourse.movie.feature.reservationList.viewHolder.TicketsViewHolder
 
 class ReservationListAdapter(
-    reservations: List<ItemModel>
-) : RecyclerView.Adapter<ItemViewHolder>() {
+    reservations: List<TicketsItemModel>
+) : RecyclerView.Adapter<TicketsViewHolder>() {
 
     private var _reservations = reservations.toList()
     val reservations
         get() = _reservations.toList()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TicketsViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_reservation_layout, parent, false)
         return TicketsViewHolder(itemView)
@@ -24,11 +23,11 @@ class ReservationListAdapter(
 
     override fun getItemCount(): Int = _reservations.size
 
-    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TicketsViewHolder, position: Int) {
         holder.bind(_reservations[position])
     }
 
-    fun setItemChanged(newReservations: List<ItemModel>) {
+    fun setItemChanged(newReservations: List<TicketsItemModel>) {
         _reservations = newReservations.toList()
         notifyDataSetChanged()
     }

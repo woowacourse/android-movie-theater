@@ -3,26 +3,19 @@ package woowacourse.movie.feature.reservationList.viewHolder
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.feature.common.itemModel.ItemModel
-import woowacourse.movie.feature.common.viewHolder.ItemViewHolder
 import woowacourse.movie.feature.reservationList.itemModel.TicketsItemModel
 import woowacourse.movie.util.DateTimeFormatters
 
-class TicketsViewHolder(view: View) : ItemViewHolder(view) {
+class TicketsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    private val box: LinearLayout
-    private val screeningDateTimeTextView: TextView
-    private val movieNameTextView: TextView
+    private val box: LinearLayout = view.findViewById(R.id.reservation_item_box)
+    private val screeningDateTimeTextView: TextView =
+        view.findViewById(R.id.screening_date_time_text_view)
+    private val movieNameTextView: TextView = view.findViewById(R.id.movie_name_text_view)
 
-    init {
-        box = view.findViewById(R.id.reservation_item_box)
-        screeningDateTimeTextView = view.findViewById(R.id.screening_date_time_text_view)
-        movieNameTextView = view.findViewById(R.id.movie_name_text_view)
-    }
-
-    override fun bind(itemModel: ItemModel) {
-        val item = itemModel as TicketsItemModel
+    fun bind(item: TicketsItemModel) {
         val context = screeningDateTimeTextView.context
 
         screeningDateTimeTextView.text = context.getString(R.string.date_time_form)
