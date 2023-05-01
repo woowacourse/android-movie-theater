@@ -46,7 +46,7 @@ object Notification {
             context,
             requestCode,
             reservationIntent,
-            PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_IMMUTABLE
         )
     }
 
