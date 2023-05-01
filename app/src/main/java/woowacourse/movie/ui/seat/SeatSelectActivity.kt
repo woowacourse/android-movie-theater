@@ -112,8 +112,6 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
     }
 
     private fun setNotification(tickets: TicketsState) {
-        // val tickets = tickets.copy(dateTime = LocalDateTime.of(0, 4, 26, 17, 47, 30))
-
         val calendar: Calendar = Calendar.getInstance().apply {
             set(
                 tickets.dateTime.year,
@@ -125,7 +123,7 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
         }
         val alarmManager: AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         val alarmIntent =
-            Intent(this, AlarmReceiver::class.java).apply { putExtra("a", tickets) }.let { intent ->
+            Intent(this, AlarmReceiver::class.java).apply { putExtra(AlarmReceiver.KEY_TICKETS, tickets) }.let { intent ->
                 PendingIntent.getBroadcast(
                     this,
                     tickets.hashCode(),

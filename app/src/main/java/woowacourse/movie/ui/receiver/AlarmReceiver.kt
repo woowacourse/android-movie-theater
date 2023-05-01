@@ -31,6 +31,6 @@ class AlarmReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        private const val KEY_TICKETS = "key_tickets"
+        const val KEY_TICKETS = "key_tickets"
     }
 }
