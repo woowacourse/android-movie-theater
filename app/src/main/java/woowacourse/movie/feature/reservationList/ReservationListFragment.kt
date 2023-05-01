@@ -31,11 +31,16 @@ class ReservationListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         reservationRecyclerView = view.findViewById(R.id.reservation_rv)
-        adapter = ReservationListAdapter(getTicketsItemModel())
+        adapter = ReservationListAdapter(emptyList())
         reservationRecyclerView.adapter = adapter
     }
 
-    fun updateData() {
+    override fun onResume() {
+        super.onResume()
+        updateData()
+    }
+
+    private fun updateData() {
         adapter.setItemChanged(getTicketsItemModel())
     }
 
