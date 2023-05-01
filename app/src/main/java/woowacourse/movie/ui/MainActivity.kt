@@ -16,6 +16,12 @@ class MainActivity : AppCompatActivity() {
         findViewById(R.id.main_bottom_navigation_view)
     }
 
+    private val fragments = mapOf(
+        FRAGMENT_HOME to HomeFragment(),
+        FRAGMENT_RESERVATION to ReservationFragment(),
+        FRAGMENT_SETTING to SettingFragment(),
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -26,32 +32,55 @@ class MainActivity : AppCompatActivity() {
 
     private fun initFragmentContainerView() {
         supportFragmentManager.commit {
-            add(R.id.main_fragment_view, HomeFragment())
+            add(R.id.main_fragment_view, HomeFragment(), FRAGMENT_HOME)
             setReorderingAllowed(true)
         }
     }
 
-    private fun changeFragment(fragment: Fragment) {
+    private fun changeFragment(tag: String) {
         supportFragmentManager.commit {
-            replace(R.id.main_fragment_view, fragment)
             setReorderingAllowed(true)
+        }
+
+        val fragment: Fragment = fragments[tag] ?: throw IllegalArgumentException()
+
+        val findFragment = supportFragmentManager.findFragmentByTag(tag)
+        supportFragmentManager.fragments.forEach { fm ->
+            supportFragmentManager.commit {
+                hide(fm)
+            }
+        }
+
+        findFragment?.let {
+            supportFragmentManager.commit {
+                show(it)
+            }
+        } ?: kotlin.run {
+            supportFragmentManager.commit {
+                add(R.id.main_fragment_view, fragment, tag)
+                setReorderingAllowed(true)
+            }
         }
     }
 
     private fun setBottomNavigationView() {
         bottomNavigationView.selectedItemId = R.id.menu_item_home
         bottomNavigationView.setOnItemSelectedListener { selectedIcon ->
-            changeFragment(
-                getFragmentByIcon(selectedIcon),
-            )
+            changeFragment(getTag(selectedIcon))
             true
         }
     }
 
-    private fun getFragmentByIcon(item: MenuItem): Fragment = when (item.itemId) {
-        R.id.menu_item_reservation -> ReservationFragment()
-        R.id.menu_item_home -> HomeFragment()
-        R.id.menu_item_setting -> SettingFragment()
+    private fun getTag(item: MenuItem): String = when (item.itemId) {
+        R.id.menu_item_home -> FRAGMENT_HOME
+        R.id.menu_item_reservation -> FRAGMENT_RESERVATION
+        R.id.menu_item_setting -> FRAGMENT_SETTING
         else -> throw IllegalArgumentException()
+    }
+
+    companion object {
+        private const val FRAGMENT_HOME = "home"
+        private const val FRAGMENT_RESERVATION = "reservation"
+        private const val FRAGMENT_SETTING = "setting"
     }
 }
