@@ -9,7 +9,6 @@ object SeatMapper : DomainViewMapper<Seat, SeatUiModel> {
         return Seat(
             SeatUiModel.toNumber(row),
             col,
-            SeatPolicies()
         )
     }
 

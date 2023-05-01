@@ -119,31 +119,12 @@ class SelectSeatActivity : AppCompatActivity() {
     }
 
     private fun changeSeatViewState(seatView: SeatView) {
-        val ticket =
-            ticketOffice.generateTicket(
-                ticketDateTime,
-                SeatUiModel.toNumber(seatView.row),
-                seatView.col
-            )
-        if (ticketOffice.tickets.isContainSameTicket(ticket)) {
-            setViewNotSelected(seatView, ticket)
-        } else {
-            setViewSelected(seatView, ticket)
-        }
-    }
-
-    private fun setViewNotSelected(seatView: SeatView, ticket: Ticket) {
-        ticketOffice.deleteTicket(ticket)
-        seatView.view.isSelected = false
-        seatView.setBackgroundColorId(color = R.color.white)
-    }
-
-    private fun setViewSelected(seatView: SeatView, ticket: Ticket) {
-        if (ticketOffice.isAvailableAddTicket()) {
-            ticketOffice.addTicket(ticket)
-            seatView.view.isSelected = true
-            seatView.setBackgroundColorId(color = R.color.seat_selection_selected_seat_color)
-        }
+        val ticket = ticketOffice.generateTicket(
+            SeatUiModel.toNumber(seatView.row), seatView.col
+        )
+        ticketOffice.updateTickets(ticket)
+        val ticketsUiModel = ticketOffice.tickets.toUi()
+        seatTable.updateTable(ticketsUiModel)
     }
 
     private fun changePriceTextView() {
@@ -170,7 +151,7 @@ class SelectSeatActivity : AppCompatActivity() {
     private fun receiveTicketOfficeData(): TicketOffice {
         val peopleCount = intent.getIntExtra(PEOPLE_COUNT_KEY, 0)
         if (peopleCount == 0) finishActivityWithToast(getString(R.string.reservation_data_null_error))
-        return TicketOffice(peopleCount = peopleCount)
+        return TicketOffice(peopleCount = peopleCount, date = ticketDateTime)
     }
 
     private fun receiveMovieViewModelData(): MovieUiModel? {

@@ -13,7 +13,7 @@ object MockTicketsFactory {
         return Ticket(
             date = LocalDateTime.of(2023, 5, 8, 0, 0),
             seat = Seat(
-                1, 1, SeatPolicies()
+                1, 1
             ),
             DisCountPolicies()
         )

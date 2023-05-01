@@ -3,14 +3,17 @@ package woowacourse.movie.view
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
+import woowacourse.movie.R
 import woowacourse.movie.view.model.SeatUiModel
+import woowacourse.movie.view.model.TicketsUiModel
 
 class SeatTable(
     private val tableLayout: TableLayout,
-    private val rowSize: Int = DEFAULT_ROW_SIZE,
-    private val colSize: Int = DEFAULT_COL_SIZE,
+    val rowSize: Int = DEFAULT_ROW_SIZE,
+    val colSize: Int = DEFAULT_COL_SIZE,
     private val onClick: (SeatView) -> Unit
 ) {
+    private val seatViews: MutableList<SeatView> = mutableListOf()
     fun makeSeatTable() {
         repeat(rowSize) { row ->
             val tableRow = makeTableRow()
@@ -18,10 +21,27 @@ class SeatTable(
                 val seatView = SeatView(
                     TextView(tableLayout.context), SeatUiModel.toChar(row), col + 1, onClick
                 )
+                seatViews.add(seatView)
                 tableRow.addView(seatView.view)
             }
             tableLayout.addView(tableRow)
         }
+    }
+
+    fun updateTable(ticketsUiModel: TicketsUiModel) {
+        initTableBackground()
+        ticketsUiModel.list.forEach { ticketUiModel ->
+            val index = convertTablePositionToIndex(ticketUiModel.seat)
+            seatViews[index].setBackgroundColorId(R.color.seat_selection_selected_seat_color)
+        }
+    }
+
+    private fun initTableBackground() {
+        seatViews.forEach { it.setBackgroundColorId(R.color.white) }
+    }
+
+    private fun convertTablePositionToIndex(seatUiModel: SeatUiModel): Int {
+        return (SeatUiModel.toNumber(seatUiModel.row) - 2) * (colSize) + (seatUiModel.col - 1)
     }
 
     private fun makeTableRow(): TableRow {
