@@ -31,4 +31,5 @@
     <string name="notification_setting_text">해제하면 푸시 알림을 수신할 수 없습니다.</string>
     <string name="alarm_receiver_notification_text">%s 30분 후에 상영</string>
     <string name="alarm_receiver_notification_title">예매 알림</string>
+    <string name="alarm_premission_request_message">알림 권한을 허용해주세요.</string>
 </resources>

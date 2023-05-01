@@ -30,14 +30,23 @@ class SettingFragment : Fragment() {
         switch = view.findViewById(R.id.notification_switch)
         val switchValue = AlarmSettingRepository.enablePushNotification
         switch?.isChecked = switchValue
-        switch?.setOnCheckedChangeListener { switchCompat, _ ->
+        switch?.setOnCheckedChangeListener { _, _ ->
+            checkedChange()
+        }
+    }
+
+    private fun checkedChange() {
+        switch?.let {
             val permission =
-                this.activity?.hasPermissions(PERMISSIONS) ?: return@setOnCheckedChangeListener
+                this.activity?.hasPermissions(PERMISSIONS) ?: return
             if (!permission) {
-                switchCompat.isChecked = false
-                Toaster.showToast(requireContext(), "알림 권한을 허용해주세요.")
+                it.isChecked = false
+                Toaster.showToast(
+                    requireContext(),
+                    getString(R.string.alarm_premission_request_message)
+                )
             }
-            AlarmSettingRepository.enablePushNotification = switchCompat.isChecked
+            AlarmSettingRepository.enablePushNotification = it.isChecked
         }
     }
 
