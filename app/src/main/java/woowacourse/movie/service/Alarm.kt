@@ -4,17 +4,18 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.IntentFilter
+import woowacourse.movie.activity.SeatSelectionActivity.Companion.ACTION_ALARM
+import woowacourse.movie.view.data.ReservationViewData
 import java.time.LocalDateTime
 
 object Alarm {
 
     fun registerAlarmReceiver(
-        action: String,
         alarmReceiver: ReservationAlarmReceiver,
         context: Context
     ) {
         val filter = IntentFilter().apply {
-            addAction(action)
+            addAction(ACTION_ALARM)
         }
         context.registerReceiver(alarmReceiver, filter)
     }
@@ -23,10 +24,11 @@ object Alarm {
         context.unregisterReceiver(alarmReceiver)
     }
 
-    fun makeAlarm(date: LocalDateTime, intent: PendingIntent, context: Context) {
+    fun makeAlarm(date: LocalDateTime, reservation: ReservationViewData, context: Context) {
+        val pendingIntent: PendingIntent = ReservationAlarmReceiver.from(context, reservation)
 //        val milliseconds = date.atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli()
-        val milliseconds = System.currentTimeMillis() + 8 * 1000
+        val milliseconds = System.currentTimeMillis() + 5 * 1000
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.set(AlarmManager.RTC, milliseconds, intent)
+        alarmManager.set(AlarmManager.RTC, milliseconds, pendingIntent)
     }
 }

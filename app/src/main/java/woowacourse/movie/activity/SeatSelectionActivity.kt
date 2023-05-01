@@ -1,6 +1,5 @@
 package woowacourse.movie.activity
 
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -59,8 +58,13 @@ class SeatSelectionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seat_selection)
 
-        Alarm.registerAlarmReceiver(ACTION_ALARM, alarmReceiver, applicationContext)
+        Alarm.registerAlarmReceiver(alarmReceiver, applicationContext)
         initSeatSelectionView(savedInstanceState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Alarm.unregisterAlarmReceiver(alarmReceiver, applicationContext)
     }
 
     private fun initSeatSelectionView(savedInstanceState: Bundle?) {
@@ -178,9 +182,8 @@ class SeatSelectionActivity : AppCompatActivity() {
         reservationNotificationPolicy: ReservationNotificationPolicy,
         context: Context
     ) {
-        val pendingIntent: PendingIntent = ReservationAlarmReceiver.from(context, reservation)
         val date = reservationNotificationPolicy.calculateTime(reservation.reservationDetail.date)
-        Alarm.makeAlarm(date, pendingIntent, context)
+        Alarm.makeAlarm(date, reservation, context)
     }
 
     private fun postReservation(
@@ -213,11 +216,6 @@ class SeatSelectionActivity : AppCompatActivity() {
             android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Alarm.unregisterAlarmReceiver(alarmReceiver, applicationContext)
     }
 
     companion object {
