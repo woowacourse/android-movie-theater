@@ -2,12 +2,12 @@ package woowacourse.movie.main
 
 import android.Manifest
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.ui.fragment.movieList.MovieListFragment
@@ -20,16 +20,13 @@ class MainActivity : AppCompatActivity() {
     private val bottomNavigation: BottomNavigationView by lazy { findViewById(R.id.bottom_navigation_view) }
 
     private val movieListFragment: MovieListFragment by lazy {
-        supportFragmentManager.findFragmentByTag(MOVIE_LIST_TAG) as? MovieListFragment
-            ?: MovieListFragment()
+        getFragment(MOVIE_LIST_TAG, MovieListFragment())
     }
     private val reservationListFragment: ReservationListFragment by lazy {
-        supportFragmentManager.findFragmentByTag(RESERVATION_LIST_TAG) as? ReservationListFragment
-            ?: ReservationListFragment()
+        getFragment(RESERVATION_LIST_TAG, ReservationListFragment())
     }
     private val settingFragment: SettingFragment by lazy {
-        supportFragmentManager.findFragmentByTag(SETTING_TAG) as? SettingFragment
-            ?: SettingFragment()
+        getFragment(SETTING_TAG, SettingFragment())
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -40,15 +37,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (savedInstanceState == null) { initFragments() }
+        if (savedInstanceState == null) {
+            initFragments()
+        }
         initListener()
         requestPermissions(PERMISSIONS, requestPermissionLauncher::launch)
     }
 
+    private inline fun <reified T : Fragment> getFragment(tag: String, default: T): T {
+        return supportFragmentManager.findFragmentByTag(tag) as? T ?: default
+    }
+
     private fun initFragments() {
-        supportFragmentManager.beginTransaction()
-            .replace(fragmentContainerView.id, movieListFragment)
-            .commit()
+        supportFragmentManager.commit {
+            replace(fragmentContainerView.id, movieListFragment)
+        }
         bottomNavigation.selectedItemId = R.id.movie_list_item
     }
 
@@ -62,19 +65,19 @@ class MainActivity : AppCompatActivity() {
     private fun bottomNavigationItemClickEvent(menuItem: MenuItem) {
         when (menuItem.itemId) {
             R.id.reservation_list_item -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(fragmentContainerView.id, reservationListFragment)
-                    .commit()
+                supportFragmentManager.commit {
+                    replace(fragmentContainerView.id, reservationListFragment)
+                }
             }
             R.id.movie_list_item -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(fragmentContainerView.id, movieListFragment)
-                    .commit()
+                supportFragmentManager.commit {
+                    replace(fragmentContainerView.id, movieListFragment)
+                }
             }
             R.id.setting_item -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(fragmentContainerView.id, settingFragment)
-                    .commit()
+                supportFragmentManager.commit {
+                    replace(fragmentContainerView.id, settingFragment)
+                }
             }
         }
     }
