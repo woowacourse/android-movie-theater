@@ -18,6 +18,7 @@ import woowacourse.movie.fragment.HomeFragment
 import woowacourse.movie.fragment.SettingFragment
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener {
+    private val fragments = mutableMapOf<Int, Fragment>()
     val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
@@ -29,25 +30,33 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         setContentView(R.layout.activity_main)
         PermissionManager.requestNotificationPermission(this, requestPermissionLauncher)
         findViewById<BottomNavigationView>(R.id.bnv_main).setOnItemSelectedListener(this)
-        supportFragmentManager.beginTransaction().add(R.id.fl_main, BookHistoryFragment()).commit()
+        supportFragmentManager.beginTransaction().add(
+            R.id.fl_main,
+            fragments.getOrPut(R.id.page_book_history) { BookHistoryFragment() }
+        ).commit()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.page_book_history -> {
-                replaceFragment(BookHistoryFragment())
+                replaceFragment(fragments.getOrPut(R.id.page_book_history) { BookHistoryFragment() })
                 return true
             }
             R.id.page_home -> {
-                replaceFragment(HomeFragment())
+                replaceFragment(fragments.getOrPut(R.id.page_home) { HomeFragment() })
                 return true
             }
             R.id.page_setting -> {
-                replaceFragment(SettingFragment())
+                replaceFragment(fragments.getOrPut(R.id.page_setting) { SettingFragment() })
                 return true
             }
         }
         return false
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fl_main, fragment).commitAllowingStateLoss()
     }
 
     private fun progressIsGrantedNotificationPermission() = { isGranted: Boolean ->
@@ -65,10 +74,5 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         supportFragmentManager.findFragmentById(R.id.fl_main)?.view?.findViewById<SwitchMaterial>(
             R.id.sw_setting_can_push
         )?.isChecked = wantChecked
-    }
-
-    private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fl_main, fragment).commitAllowingStateLoss()
     }
 }
