@@ -8,7 +8,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
 import woowacourse.movie.activity.ReservationResultActivity
-import woowacourse.movie.service.ContextExtension.checkNotificationSelfPermission
+import woowacourse.movie.service.PermissionManager.checkNotificationSelfPermission
 import woowacourse.movie.service.ReservationAlarmReceiver.Companion.requestCode
 import woowacourse.movie.view.data.ReservationViewData
 
