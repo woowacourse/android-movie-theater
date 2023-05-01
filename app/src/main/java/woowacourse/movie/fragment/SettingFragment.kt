@@ -41,6 +41,7 @@ class SettingFragment : Fragment() {
 
     private fun setCanPushSwitchOnClickListener(switch: SwitchMaterial) {
         switch.setOnCheckedChangeListener { _, isChecked ->
+            SharedPreferenceUtil.setBooleanValue(requireContext(), SETTING_PUSH_ALARM_SWITCH_KEY, isChecked)
             if (PermissionManager.isPermissionDenied(requireContext(), POST_NOTIFICATIONS)) {
                 if (!shouldShowRequestPermissionRationale(POST_NOTIFICATIONS)) {
                     switch.isEnabled = false
