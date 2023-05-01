@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        SettingPreferencesManager.init(this)
         replaceFragment(ReservationListFragment())
         setOnBottomNavigationClickListener()
         requestNotificationPermission()

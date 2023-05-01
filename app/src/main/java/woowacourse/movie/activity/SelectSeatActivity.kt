@@ -99,8 +99,7 @@ class SelectSeatActivity : AppCompatActivity() {
                 movieUiModel = movieUiModel,
                 ticketsUiModel = TicketsMapper.toUi(ticketOffice.tickets)
             )
-            ReservationAlarmManager().registerAlarm(
-                this,
+            ReservationAlarmManager(this).registerAlarm(
                 ticketsUiModel = TicketsMapper.toUi(ticketOffice.tickets),
                 movieUiModel = movieUiModel
             )
