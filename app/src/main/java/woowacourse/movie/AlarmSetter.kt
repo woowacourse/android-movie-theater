@@ -9,7 +9,6 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 
 object AlarmSetter {
-
     fun setAlarm(
         context: Context,
         requestCode: Int,
@@ -29,5 +28,3 @@ object AlarmSetter {
         alarmManager.set(AlarmManager.RTC_WAKEUP, mill, pendingIntent)
     }
 }
-
-

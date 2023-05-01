@@ -139,7 +139,6 @@ class SeatPickerActivity : BackButtonActivity() {
                 setCancelable(false)
                 show()
             }
-
         }
     }
 
