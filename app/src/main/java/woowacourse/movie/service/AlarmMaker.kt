@@ -6,9 +6,9 @@ import android.content.Context
 import woowacourse.movie.view.data.ReservationViewData
 import java.time.LocalDateTime
 
-object Alarm {
+object AlarmMaker {
 
-    fun makeAlarm(date: LocalDateTime, reservation: ReservationViewData, context: Context) {
+    fun make(date: LocalDateTime, reservation: ReservationViewData, context: Context) {
         val pendingIntent: PendingIntent = ReservationAlarmReceiver.from(context, reservation)
 //        val milliseconds = date.atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli()
         val milliseconds = System.currentTimeMillis() + 5 * 1000

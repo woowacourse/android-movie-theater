@@ -14,7 +14,7 @@ import woowacourse.movie.activity.ReservationResultActivity
 import woowacourse.movie.service.ReservationAlarmReceiver.Companion.requestCode
 import woowacourse.movie.view.data.ReservationViewData
 
-object Notification {
+object NotificationManager {
 
     private const val RESERVATION_NOTIFICATION_CHANNEL_ID = "reservation"
     private val notificationId: Int

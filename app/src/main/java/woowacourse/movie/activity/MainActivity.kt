@@ -10,7 +10,7 @@ import woowacourse.movie.R
 import woowacourse.movie.fragment.MovieListFragment
 import woowacourse.movie.fragment.ReservationListFragment
 import woowacourse.movie.fragment.SettingFragment
-import woowacourse.movie.service.Notification
+import woowacourse.movie.service.NotificationManager
 import woowacourse.movie.view.data.ReservationsViewData
 import woowacourse.movie.view.mapper.ReservationMapper.toView
 import woowacourse.movie.view.repository.MainRepository
@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Notification.createNotificationChannel(applicationContext)
+        NotificationManager.createNotificationChannel(applicationContext)
 
         makeBottomNavigationView()
     }

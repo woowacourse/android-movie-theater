@@ -9,7 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 
-object Permission {
+object PermissionManager {
 
     fun requestNotificationPermission(
         fragment: Fragment,

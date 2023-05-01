@@ -14,7 +14,7 @@ import woowacourse.movie.domain.discountPolicy.MovieDay
 import woowacourse.movie.domain.discountPolicy.OffTime
 import woowacourse.movie.domain.reservationNotificationPolicy.MovieReservationNotification
 import woowacourse.movie.domain.reservationNotificationPolicy.ReservationNotificationPolicy
-import woowacourse.movie.service.Alarm
+import woowacourse.movie.service.AlarmMaker
 import woowacourse.movie.view.data.MovieViewData
 import woowacourse.movie.view.data.PriceViewData
 import woowacourse.movie.view.data.ReservationDetailViewData
@@ -174,7 +174,7 @@ class SeatSelectionActivity : AppCompatActivity() {
         context: Context
     ) {
         val date = reservationNotificationPolicy.calculateTime(reservation.reservationDetail.date)
-        Alarm.makeAlarm(date, reservation, context)
+        AlarmMaker.make(date, reservation, context)
     }
 
     private fun postReservation(

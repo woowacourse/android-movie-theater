@@ -8,16 +8,16 @@ import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.service.Permission
-import woowacourse.movie.service.Permission.checkNotificationPermission
-import woowacourse.movie.service.Permission.requestNotificationPermission
+import woowacourse.movie.service.PermissionManager
+import woowacourse.movie.service.PermissionManager.checkNotificationPermission
+import woowacourse.movie.service.PermissionManager.requestNotificationPermission
 import woowacourse.movie.view.setting.Setting
 import woowacourse.movie.view.setting.SharedSetting
 
 class SettingFragment : Fragment() {
 
     private val requestPermissionLauncher =
-        Permission.getRequestPermissionLauncher(this, ::onPermissionGranted)
+        PermissionManager.getRequestPermissionLauncher(this, ::onPermissionGranted)
 
     private val switch: SwitchCompat by lazy {
         requireView().findViewById(R.id.setting_push_switch)
