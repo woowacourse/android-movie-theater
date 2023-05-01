@@ -89,9 +89,8 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
         ).asPresentation()
         setAlarm(
             intent = AlarmReceiver.getIntent(this, tickets),
-            dateTime = tickets.dateTime,
+            triggerDateTime = tickets.dateTime.minusMinutes(NOTIFICATION_ADJUST_MINUTES),
             requestCode = tickets.hashCode(),
-            adjustTimeMills = NOTIFICATION_TIME_ADJUST_AMOUNT
         )
         TicketsRepository.addTicket(tickets)
         val intent = ReservationConfirmActivity.getIntent(this, tickets)
@@ -122,6 +121,6 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
 
         private const val KEY_RESERVATION = "key_reservation"
         private const val SEAT_RESTORE_KEY = "seat_restore_key"
-        private const val NOTIFICATION_TIME_ADJUST_AMOUNT: Long = 30 * 60 * 1000
+        private const val NOTIFICATION_ADJUST_MINUTES: Long = 30L
     }
 }

@@ -6,35 +6,19 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import java.time.LocalDateTime
-import java.util.Calendar
 
 fun Context.setAlarm(
     intent: Intent,
-    dateTime: LocalDateTime,
-    requestCode: Int,
-    adjustTimeMills: Long = 0L
+    triggerDateTime: LocalDateTime,
+    requestCode: Int
 ) {
-    val calendar: Calendar = dateTime.toCalendar()
-
     val alarmManager: AlarmManager =
         getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
 
     val alarmIntent: PendingIntent = getBroadcastPendingIntent(requestCode, intent)
 
-    val triggerAtMillis: Long = calendar.timeInMillis - adjustTimeMills
+    val triggerAtMillis = triggerDateTime.toCalendar().timeInMillis
     alarmManager.setRtcTimeMillsAlarm(triggerAtMillis, alarmIntent)
-}
-
-private fun LocalDateTime.toCalendar(): Calendar {
-    return Calendar.getInstance().apply {
-        set(
-            year,
-            monthValue - 1,
-            dayOfMonth,
-            hour,
-            minute
-        )
-    }
 }
 
 private fun Context.getBroadcastPendingIntent(requestCode: Int, intent: Intent): PendingIntent =
