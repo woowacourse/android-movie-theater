@@ -34,7 +34,7 @@ object NotificationManager {
 
     fun notifyNotification(context: Context, reservation: ReservationViewData) {
         with(NotificationManagerCompat.from(context)) {
-            if (!context.checkNotificationSelfPermission()) {
+            if (context.checkNotificationSelfPermission()) {
                 val builder = makeNotificationBuilder(context, reservation)
                 notify(notificationId, builder.build())
             }
