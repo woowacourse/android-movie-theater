@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.activity.ReservationResultActivity
 import woowacourse.movie.view.adapter.ReservationAdapter
+import woowacourse.movie.view.data.ReservationViewData
 import woowacourse.movie.view.data.ReservationsViewData
 import woowacourse.movie.view.error.FragmentError.finishWithError
 import woowacourse.movie.view.error.ViewError
@@ -32,15 +33,17 @@ class ReservationListFragment : Fragment() {
 
     private fun makeReservationRecyclerView(view: View, reservations: ReservationsViewData) {
         val recyclerView = view.findViewById<RecyclerView>(R.id.reservation_list_recycler)
-        recyclerView.adapter = ReservationAdapter(reservations) {
-            startActivity(
-                ReservationResultActivity.from(
-                    view.context, it
-                )
-            )
-        }
+        recyclerView.adapter = ReservationAdapter(reservations, ::onClickItem)
         val decoration = DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL)
         recyclerView.addItemDecoration(decoration)
+    }
+
+    private fun onClickItem(view: View, reservation: ReservationViewData) {
+        startActivity(
+            ReservationResultActivity.from(
+                view.context, reservation
+            )
+        )
     }
 
     companion object {
