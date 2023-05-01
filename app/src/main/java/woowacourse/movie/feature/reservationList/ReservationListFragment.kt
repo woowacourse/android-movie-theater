@@ -31,25 +31,21 @@ class ReservationListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         reservationRecyclerView = view.findViewById(R.id.reservation_rv)
-        adapter = ReservationListAdapter(
-            TicketsRepository.allTickets().map {
-                it.convertToItemModel { position ->
-                    navigateReservationConfirm((adapter.reservations[position] as TicketsItemModel).ticketsState)
-                }
-            }
-        )
+        adapter = ReservationListAdapter(getTicketsItemModel())
         reservationRecyclerView.adapter = adapter
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        adapter.setItemChanged(
-            TicketsRepository.allTickets().map {
-                it.convertToItemModel { position ->
-                    navigateReservationConfirm((adapter.reservations[position] as TicketsItemModel).ticketsState)
-                }
+        adapter.setItemChanged(getTicketsItemModel())
+    }
+
+    private fun getTicketsItemModel(): List<TicketsItemModel> {
+        return TicketsRepository.allTickets().map {
+            it.convertToItemModel { position ->
+                navigateReservationConfirm((adapter.reservations[position] as TicketsItemModel).ticketsState)
             }
-        )
+        }
     }
 
     private fun navigateReservationConfirm(ticketsState: TicketsState) {
