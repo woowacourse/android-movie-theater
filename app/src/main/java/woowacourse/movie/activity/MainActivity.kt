@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import com.google.android.material.switchmaterial.SwitchMaterial
+import woowacourse.movie.BundleKeys.IS_CAN_PUSH_CHECKED
+import woowacourse.movie.BundleKeys.REQUEST_NOTIFICATION_PERMISSION
 import woowacourse.movie.BundleKeys.SETTING_PUSH_ALARM_SWITCH_KEY
 import woowacourse.movie.PermissionManager
 import woowacourse.movie.R
@@ -21,7 +23,7 @@ import woowacourse.movie.fragment.SettingFragment
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener {
     private val fragments = mutableMapOf<Int, Fragment>()
-    val requestPermissionLauncher =
+    private val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
             progressIsGrantedNotificationPermission()
@@ -36,6 +38,17 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             R.id.fl_main,
             fragments.getOrPut(R.id.page_book_history) { BookHistoryFragment() }
         ).commit()
+        setRequestPermissionListener()
+    }
+
+    private fun setRequestPermissionListener() {
+        supportFragmentManager.setFragmentResultListener(
+            REQUEST_NOTIFICATION_PERMISSION, this
+        ) { _, bundle ->
+            if (bundle.getBoolean(IS_CAN_PUSH_CHECKED)) requestPermissionLauncher.launch(
+                POST_NOTIFICATIONS
+            )
+        }
     }
 
     private fun requestNotificationPermission() {
