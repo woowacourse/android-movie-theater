@@ -12,16 +12,18 @@ import woowacourse.movie.util.hasPermissions
 
 class SettingFragment : Fragment(R.layout.fragment_setting) {
 
-    private var switch: SwitchCompat? = null
+    private lateinit var switch: SwitchCompat
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         switch = view.findViewById(R.id.notification_switch)
+
         context?.let {
             val sharedPreference = PreferenceUtil(it)
 
-            switch?.isChecked = sharedPreference.getBoolean(NOTIFICATIONS, false)
-            switch?.setOnCheckedChangeListener { switchCompat, _ ->
+            switch.isChecked = sharedPreference.getBoolean(NOTIFICATIONS, false)
+            switch.setOnCheckedChangeListener { switchCompat, _ ->
                 val permission =
                     this.activity?.hasPermissions(PERMISSIONS) ?: return@setOnCheckedChangeListener
                 if (!permission) {
@@ -31,11 +33,6 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
                 sharedPreference.setBoolean(NOTIFICATIONS, switchCompat.isChecked)
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        switch = null
     }
 
     companion object {

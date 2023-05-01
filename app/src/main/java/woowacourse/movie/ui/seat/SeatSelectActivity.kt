@@ -15,16 +15,16 @@ import woowacourse.movie.model.mapper.asDomain
 import woowacourse.movie.model.mapper.asPresentation
 import woowacourse.movie.ui.BackKeyActionBarActivity
 import woowacourse.movie.ui.DecimalFormatters
-import woowacourse.movie.ui.confirm.AlarmReceiver
 import woowacourse.movie.ui.confirm.ReservationConfirmActivity
 import woowacourse.movie.ui.customView.ConfirmView
+import woowacourse.movie.ui.receiver.AlarmReceiver
 import woowacourse.movie.ui.reservation.MovieDetailActivity.Companion.KEY_TICKETS
 import woowacourse.movie.util.getParcelableArrayListCompat
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
 import woowacourse.movie.util.showAskDialog
 import java.time.LocalDateTime
-import java.util.*
+import java.util.Calendar
 import kotlin.collections.ArrayList
 
 class SeatSelectActivity : BackKeyActionBarActivity() {
