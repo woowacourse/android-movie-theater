@@ -6,10 +6,10 @@ import android.content.Intent
 import woowacourse.movie.R
 import woowacourse.movie.model.TicketsState
 import woowacourse.movie.ui.fragment.setting.SettingFragment.Companion.NOTIFICATIONS
-import woowacourse.movie.util.NotificationSettings
 import woowacourse.movie.util.PreferenceUtil
 import woowacourse.movie.util.getParcelableCompat
-import woowacourse.movie.util.sendNotification
+import woowacourse.movie.util.notification.NotificationSettings
+import woowacourse.movie.util.notification.sendNotification
 
 class AlarmReceiver : BroadcastReceiver() {
 

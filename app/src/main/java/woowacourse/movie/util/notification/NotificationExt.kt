@@ -1,4 +1,4 @@
-package woowacourse.movie.util
+package woowacourse.movie.util.notification
 
 import android.Manifest
 import android.app.Notification
@@ -7,11 +7,9 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Color
-import androidx.annotation.DrawableRes
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import woowacourse.movie.R
 import java.util.concurrent.atomic.AtomicInteger
 
 private const val CHANNEL_ID = "movie_channel"
@@ -21,13 +19,6 @@ private const val CHANNEL_DESCRIPTION = "This is a movie channel"
 private val atomicNotifyId = AtomicInteger(0x001)
 
 const val NOTIFICATION_FAIL_NO_PERMISSION = -1
-
-data class NotificationSettings(
-    @DrawableRes val iconResId: Int = R.drawable.ic_launcher_foreground,
-    val contentTitle: String,
-    val contentText: String,
-    val cancelable: Boolean
-)
 
 fun Context.createNotificationChannel() {
     val id = CHANNEL_ID

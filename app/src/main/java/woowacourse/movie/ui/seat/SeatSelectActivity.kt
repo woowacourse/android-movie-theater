@@ -23,7 +23,6 @@ import woowacourse.movie.util.getParcelableArrayListCompat
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
 import woowacourse.movie.util.showAskDialog
-import java.time.LocalDateTime
 import java.util.Calendar
 import kotlin.collections.ArrayList
 
@@ -111,7 +110,8 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
     }
 
     private fun setNotification(tickets: TicketsState) {
-        val tickets = tickets.copy(dateTime = LocalDateTime.of(0, 4, 26, 17, 47, 30))
+        // val tickets = tickets.copy(dateTime = LocalDateTime.of(0, 4, 26, 17, 47, 30))
+
         val calendar: Calendar = Calendar.getInstance().apply {
             set(
                 tickets.dateTime.year,
