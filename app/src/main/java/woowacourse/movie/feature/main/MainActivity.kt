@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.reservation_list_item -> {
                     changeShowFragment<ReservationListFragment>()
+                    reservationListFragment.updateData()
                 }
                 R.id.movie_list_item -> {
                     changeShowFragment<MovieListFragment>()

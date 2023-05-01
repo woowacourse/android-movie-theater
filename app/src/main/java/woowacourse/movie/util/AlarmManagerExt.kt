@@ -45,10 +45,9 @@ private fun Context.getBroadcastPendingIntent(requestCode: Int, intent: Intent):
         PendingIntent.FLAG_IMMUTABLE
     )
 
-private fun AlarmManager.setRtcTimeMillsAlarm(triggerAtMillis: Long, intent: PendingIntent) {
+private fun AlarmManager.setRtcTimeMillsAlarm(triggerAtMillis: Long, intent: PendingIntent) =
     setExactAndAllowWhileIdle(
         AlarmManager.RTC_WAKEUP,
         triggerAtMillis,
         intent
     )
-}

@@ -35,8 +35,7 @@ class ReservationListFragment : Fragment() {
         reservationRecyclerView.adapter = adapter
     }
 
-    override fun onHiddenChanged(hidden: Boolean) {
-        super.onHiddenChanged(hidden)
+    fun updateData() {
         adapter.setItemChanged(getTicketsItemModel())
     }
 
