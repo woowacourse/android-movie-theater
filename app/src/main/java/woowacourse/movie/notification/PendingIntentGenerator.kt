@@ -9,18 +9,19 @@ object PendingIntentGenerator {
 
     private var requestCode = 0
 
-    private fun getFlag() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        PendingIntent.FLAG_MUTABLE
-    } else {
-        PendingIntent.FLAG_UPDATE_CURRENT
-    }
+    private val flag: Int
+        get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.FLAG_MUTABLE
+        } else {
+            PendingIntent.FLAG_UPDATE_CURRENT
+        }
 
     fun generateActivityIntent(intent: Intent, context: Context): PendingIntent =
         PendingIntent.getActivity(
             context,
             requestCode++,
             intent,
-            getFlag()
+            flag
         )
 
     fun generateBroadcastingIntent(intent: Intent, context: Context): PendingIntent =
@@ -28,6 +29,6 @@ object PendingIntentGenerator {
             context,
             requestCode++,
             intent,
-            getFlag()
+            flag
         )
 }
