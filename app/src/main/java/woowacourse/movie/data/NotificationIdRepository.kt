@@ -16,7 +16,7 @@ object NotificationIdRepository {
     val notificationId: Int
         get() {
             val lastNotificationId = prefs.getInt(NOTIFICATION_ID, 0)
-            val nextNotificationId = lastNotificationId + 1
+            val nextNotificationId = (lastNotificationId + 1) % Int.MAX_VALUE
             prefs.edit().putInt(NOTIFICATION_ID, nextNotificationId).apply()
             return nextNotificationId
         }
