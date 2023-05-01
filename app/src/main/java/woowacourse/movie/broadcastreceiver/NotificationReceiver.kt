@@ -1,17 +1,12 @@
 package woowacourse.movie.broadcastreceiver
 
-import android.Manifest
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
 import woowacourse.movie.data.storage.SettingsStorage
-import woowacourse.movie.permission.PermissionManager
+import woowacourse.movie.notification.NotificationManager
 import woowacourse.movie.ui.activity.MovieTicketActivity
 import woowacourse.movie.ui.model.MovieTicketModel
 import woowacourse.movie.ui.utils.getParcelable
@@ -32,22 +27,20 @@ class NotificationReceiver : BroadcastReceiver() {
 
     private fun createNotificationChannel(context: Context) {
         val name = context.getString(R.string.reservation_notification_title)
-        val descriptionText =
-            context.getString(R.string.reservation_notification_channel_description)
-        val channel =
-            NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_DEFAULT).apply {
-                description = descriptionText
-            }
-
-        val notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
+        val description = context.getString(R.string.reservation_notification_channel_description)
+        NotificationManager.createChannel(context, CHANNEL_ID, name, description)
     }
 
     private fun notifyReservation(
         context: Context,
         ticketModel: MovieTicketModel
     ) {
+        val icon = R.drawable.ic_reservation_notification
+        val title = context.getString(R.string.reservation_notification_title)
+        val content = context.getString(
+            R.string.reservation_notification_content,
+            ticketModel.title
+        )
         val ticketIntent = MovieTicketActivity.createIntent(context, ticketModel)
         val pendingIntent =
             PendingIntent.getActivity(
@@ -56,34 +49,16 @@ class NotificationReceiver : BroadcastReceiver() {
                 ticketIntent,
                 PendingIntent.FLAG_IMMUTABLE
             )
-        val notificationBuilder = getNotificationBuilder(context, ticketModel, pendingIntent)
 
-        if (PermissionManager.checkGrantedPermission(context, Manifest.permission.POST_NOTIFICATIONS)) {
-            NotificationManagerCompat
-                .from(context)
-                .notify(NOTIFICATION_ID, notificationBuilder.build())
-        }
-    }
-
-    private fun getNotificationBuilder(
-        context: Context,
-        ticketModel: MovieTicketModel,
-        pendingIntent: PendingIntent?
-    ): NotificationCompat.Builder {
-        val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID).apply {
-            setSmallIcon(R.drawable.ic_reservation_notification)
-            setContentTitle(context.getString(R.string.reservation_notification_title))
-            setContentText(
-                context.getString(
-                    R.string.reservation_notification_content,
-                    ticketModel.title
-                )
-            )
-            priority = NotificationCompat.PRIORITY_DEFAULT
-            setContentIntent(pendingIntent)
-            setAutoCancel(true)
-        }
-        return notificationBuilder
+        NotificationManager.notify(
+            context,
+            CHANNEL_ID,
+            NOTIFICATION_ID,
+            icon,
+            title,
+            content,
+            pendingIntent
+        )
     }
 
     companion object {
