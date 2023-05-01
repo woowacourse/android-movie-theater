@@ -1,17 +1,17 @@
 package woowacourse.movie.ui.reservation
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import com.example.domain.usecase.GetMovieRunningDateUseCase
 import com.example.domain.usecase.GetMovieRunningTimeUseCase
 import woowacourse.movie.R
+import woowacourse.movie.main.MainActivity.Companion.KEY_MOVIE
 import woowacourse.movie.model.CountState
 import woowacourse.movie.model.MovieState
-import woowacourse.movie.model.TicketOptState
 import woowacourse.movie.model.mapper.asDomain
 import woowacourse.movie.ui.BackKeyActionBarActivity
-import woowacourse.movie.main.MainActivity.Companion.KEY_MOVIE
 import woowacourse.movie.ui.seat.SeatSelectActivity
 import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.util.getParcelableExtraCompat
@@ -52,12 +52,8 @@ class MovieDetailActivity : BackKeyActionBarActivity() {
     }
 
     private fun navigateSeatSelectActivity() {
-        val intent = Intent(this, SeatSelectActivity::class.java)
         val dateTime = dateTimeSpinner.getSelectDateTime()
-        val ticketOptState =
-            TicketOptState(movie, dateTime, reservationCounter.count)
-        intent.putExtra(KEY_TICKETS, ticketOptState)
-        startActivity(intent)
+        SeatSelectActivity.startActivity(this, movie, dateTime, reservationCounter.count)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -96,5 +92,12 @@ class MovieDetailActivity : BackKeyActionBarActivity() {
         private const val KEY_DATE = "key_reservation_date"
         private const val KEY_TIME = "key_reservation_time"
         internal const val KEY_TICKETS = "key_reservation"
+
+        fun startActivity(context: Context, movie: MovieState) {
+            val intent = Intent(context, MovieDetailActivity::class.java).apply {
+                putExtra(KEY_MOVIE, movie)
+            }
+            context.startActivity(intent)
+        }
     }
 }

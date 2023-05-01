@@ -1,5 +1,7 @@
 package woowacourse.movie.ui.confirm
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import com.example.domain.usecase.DiscountApplyUseCase
@@ -15,6 +17,7 @@ import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
 
 class ReservationConfirmActivity : BackKeyActionBarActivity() {
+
     private val discountApplyUseCase = DiscountApplyUseCase()
     private val titleTextView: TextView by lazy { findViewById(R.id.reservation_title) }
     private val dateTextView: TextView by lazy { findViewById(R.id.reservation_date) }
@@ -47,5 +50,14 @@ class ReservationConfirmActivity : BackKeyActionBarActivity() {
         val discountApplyMoney = discountApplyUseCase(tickets.asDomain())
         moneyTextView.text =
             DecimalFormatters.convertToMoneyFormat(discountApplyMoney.asPresentation())
+    }
+
+    companion object {
+        fun startActivity(context: Context, tickets: TicketsState) {
+            val intent = Intent(context, ReservationConfirmActivity::class.java).apply {
+                putExtra(KEY_TICKETS, tickets)
+            }
+            context.startActivity(intent)
+        }
     }
 }

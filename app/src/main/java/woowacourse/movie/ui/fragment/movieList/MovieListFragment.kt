@@ -1,6 +1,5 @@
 package woowacourse.movie.ui.fragment.movieList
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -8,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.data.AdvRepository
 import woowacourse.movie.data.MovieRepository
-import woowacourse.movie.main.MainActivity
 import woowacourse.movie.model.AdvState
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.ui.adapter.MovieListAdapter
@@ -41,14 +39,10 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
     }
 
     private fun navigateMovieDetail(movie: MovieState) {
-        val intent = Intent(activity, MovieDetailActivity::class.java)
-        intent.putExtra(MainActivity.KEY_MOVIE, movie)
-        startActivity(intent)
+        MovieDetailActivity.startActivity(requireContext(), movie)
     }
 
     private fun navigateAdbDetail(adbState: AdvState) {
-        val intent = Intent(activity, AdvDetailActivity::class.java)
-        intent.putExtra(MainActivity.KEY_ADV, adbState)
-        startActivity(intent)
+        AdvDetailActivity.startActivity(requireContext(), adbState)
     }
 }

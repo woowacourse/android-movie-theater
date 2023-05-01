@@ -2,12 +2,15 @@ package woowacourse.movie.ui.seat
 
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import com.example.domain.usecase.DiscountApplyUseCase
 import woowacourse.movie.R
 import woowacourse.movie.data.TicketsRepository
+import woowacourse.movie.model.CountState
+import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.SeatPositionState
 import woowacourse.movie.model.TicketOptState
 import woowacourse.movie.model.TicketsState
@@ -23,6 +26,7 @@ import woowacourse.movie.util.getParcelableArrayListCompat
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
 import woowacourse.movie.util.showAskDialog
+import java.time.LocalDateTime
 import java.util.Calendar
 import kotlin.collections.ArrayList
 
@@ -88,9 +92,7 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
     }
 
     private fun navigateReservationConfirmActivity(tickets: TicketsState) {
-        val intent = Intent(this, ReservationConfirmActivity::class.java)
-        intent.putExtra(KEY_TICKETS, tickets)
-        startActivity(intent)
+        ReservationConfirmActivity.startActivity(this, tickets)
     }
 
     private fun updateSelectSeats(positionStates: List<SeatPositionState>) {
@@ -141,5 +143,13 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
 
     companion object {
         private const val SEAT_RESTORE_KEY = "seat_restore_key"
+
+        fun startActivity(context: Context, movie: MovieState, dateTime: LocalDateTime, count: CountState) {
+            val intent = Intent(context, SeatSelectActivity::class.java).apply {
+                val ticketOptState = TicketOptState(movie, dateTime, count)
+                putExtra(KEY_TICKETS, ticketOptState)
+            }
+            context.startActivity(intent)
+        }
     }
 }
