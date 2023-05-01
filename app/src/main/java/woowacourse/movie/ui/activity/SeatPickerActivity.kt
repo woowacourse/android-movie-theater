@@ -203,7 +203,10 @@ class SeatPickerActivity : AppCompatActivity() {
 
     private fun setAlarm(ticketModel: MovieTicketModel) {
         val time =
-            ZonedDateTime.of(ticketModel.time.dateTime.minusMinutes(30), ZoneId.systemDefault())
+            ZonedDateTime.of(
+                ticketModel.time.notificationTime,
+                ZoneId.systemDefault()
+            )
                 .toInstant().toEpochMilli()
         val intent = NotificationReceiver.createIntent(this, ticketModel)
         val pendingIntent = PendingIntent.getBroadcast(
