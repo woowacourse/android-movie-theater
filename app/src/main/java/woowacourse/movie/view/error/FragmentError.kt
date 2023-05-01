@@ -3,30 +3,19 @@ package woowacourse.movie.view.error
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import woowacourse.movie.R
 
 object FragmentError {
 
-    private const val LOG_TAG = "DYDY"
-    private const val ERROR_LOG_MESSAGE = "%s 프래그먼트에서 %s Extra가 필요합니다."
-    private const val ERROR_TOAST_MESSAGE = "프래그먼트 실행에 오류가 발생했습니다."
-    private const val NULL_VIEW_LOG_MESSAGE = "뷰가 null 입니다."
-
     fun Fragment.finishWithError(missingExtras: ViewError.MissingExtras) {
         Log.d(
-            LOG_TAG,
-            ERROR_LOG_MESSAGE.format(this, missingExtras.message)
+            getString(R.string.log_tag),
+            getString(R.string.fragment_error_log_message, this, missingExtras.message)
         )
-        Toast.makeText(activity, ERROR_TOAST_MESSAGE, Toast.LENGTH_SHORT)
-            .show()
-    }
-
-    fun Fragment.finishWithNullViewError() {
-        Log.d(
-            LOG_TAG,
-            ERROR_LOG_MESSAGE.format(this, NULL_VIEW_LOG_MESSAGE)
-        )
-        Toast.makeText(activity, ERROR_TOAST_MESSAGE, Toast.LENGTH_SHORT)
-            .show()
-        return
+        Toast.makeText(
+            activity,
+            getString(R.string.fragment_error_toast_message),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }

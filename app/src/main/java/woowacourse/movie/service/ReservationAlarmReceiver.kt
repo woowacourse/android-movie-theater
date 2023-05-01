@@ -23,7 +23,10 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
         ) {
             val reservation =
                 intent.extras?.getSerializable<ReservationViewData>(ReservationViewData.RESERVATION_EXTRA_NAME)
-                    ?: return returnWithError(ViewError.MissingExtras(ReservationViewData.RESERVATION_EXTRA_NAME))
+                    ?: return returnWithError(
+                        ViewError.MissingExtras(ReservationViewData.RESERVATION_EXTRA_NAME),
+                        context
+                    )
 
             NotificationManager.notifyNotification(context, reservation)
         }

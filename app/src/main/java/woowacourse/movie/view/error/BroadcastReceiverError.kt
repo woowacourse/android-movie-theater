@@ -1,13 +1,23 @@
 package woowacourse.movie.view.error
 
 import android.content.BroadcastReceiver
+import android.content.Context
 import android.util.Log
+import woowacourse.movie.R
 
 object BroadcastReceiverError {
-    private const val LOG_TAG = "DYDY"
-    private const val ERROR_LOG_MESSAGE = "%s 브로드캐스트 리시버에서 %s Extra가 필요합니다."
 
-    fun BroadcastReceiver.returnWithError(missingExtras: ViewError.MissingExtras) {
-        Log.d(LOG_TAG, ERROR_LOG_MESSAGE.format(javaClass.name, missingExtras.message))
+    fun BroadcastReceiver.returnWithError(
+        missingExtras: ViewError.MissingExtras,
+        context: Context
+    ) {
+        Log.d(
+            context.getString(R.string.log_tag),
+            context.getString(
+                R.string.broadcast_error_log_message,
+                javaClass.name,
+                missingExtras.message
+            )
+        )
     }
 }
