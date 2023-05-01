@@ -43,10 +43,7 @@ class SettingFragment : Fragment() {
     private fun initSwitch() {
         initSwitchCheckStatus()
         switch.setOnCheckedChangeListener { _, isChecked ->
-            setting.setValue(SETTING_NOTIFICATION, isChecked)
-            if (isChecked && !checkNotificationPermission(requireContext())) {
-                requestNotificationPermission(this, requestPermissionLauncher, ::requestPermission)
-            }
+            onCheckedChange(isChecked)
         }
     }
 
@@ -55,6 +52,13 @@ class SettingFragment : Fragment() {
             switch.isChecked = false
         } else {
             switch.isChecked = setting.getValue(SETTING_NOTIFICATION)
+        }
+    }
+
+    private fun onCheckedChange(isChecked: Boolean) {
+        setting.setValue(SETTING_NOTIFICATION, isChecked)
+        if (isChecked && !checkNotificationPermission(requireContext())) {
+            requestNotificationPermission(this, requestPermissionLauncher, ::requestPermission)
         }
     }
 
