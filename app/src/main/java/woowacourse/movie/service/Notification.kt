@@ -5,7 +5,6 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
@@ -35,13 +34,23 @@ object Notification {
         notificationManager.createNotificationChannel(channel)
     }
 
-    fun makeNotificationPendingIntent(
+    fun notifyNotification(context: Context, reservation: ReservationViewData) {
+        with(NotificationManagerCompat.from(context)) {
+            if (ActivityCompat.checkSelfPermission(
+                    context, Manifest.permission.POST_NOTIFICATIONS
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                val builder = makeNotificationBuilder(context, reservation)
+                notify(notificationId, builder.build())
+            }
+        }
+    }
+
+    private fun makeNotificationPendingIntent(
         context: Context,
         reservation: ReservationViewData
     ): PendingIntent {
-        val reservationIntent = ReservationResultActivity.from(context, reservation).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
+        val reservationIntent = ReservationResultActivity.from(context, reservation)
         return PendingIntent.getActivity(
             context,
             requestCode,
@@ -50,10 +59,9 @@ object Notification {
         )
     }
 
-    fun makeNotificationBuilder(
+    private fun makeNotificationBuilder(
         context: Context,
-        reservation: ReservationViewData,
-        pendingIntent: PendingIntent
+        reservation: ReservationViewData
     ): NotificationCompat.Builder {
         return NotificationCompat.Builder(
             context,
@@ -67,19 +75,9 @@ object Notification {
                 )
             )
             priority = NotificationCompat.PRIORITY_DEFAULT
+            val pendingIntent = makeNotificationPendingIntent(context, reservation)
             setContentIntent(pendingIntent)
             setAutoCancel(true)
-        }
-    }
-
-    fun notifyNotification(context: Context, builder: NotificationCompat.Builder) {
-        with(NotificationManagerCompat.from(context)) {
-            if (ActivityCompat.checkSelfPermission(
-                    context, Manifest.permission.POST_NOTIFICATIONS
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                notify(notificationId, builder.build())
-            }
         }
     }
 }
