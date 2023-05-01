@@ -11,13 +11,11 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import java.util.concurrent.atomic.AtomicInteger
+import woowacourse.movie.data.NotificationIdRepository
 
 const val CHANNEL_ID = "movie_channel"
 const val CHANNEL_NAME = "movie_channel_name"
 const val CHANNEL_DESCRIPTION = "This is a movie channel"
-
-val atomicNotifyId = AtomicInteger(0x001)
 
 fun Context.createNotificationChannel() {
     val id = CHANNEL_ID
@@ -67,7 +65,7 @@ fun Context.sendNotification(
     }
 
     val notification = this.createNotification(iconResId, contentText, contentTitle, cancelable)
-    val notificationId = atomicNotifyId.getAndIncrement()
+    val notificationId = NotificationIdRepository.notificationId
     NotificationManagerCompat.from(this).notify(notificationId, notification)
     return notificationId
 }
