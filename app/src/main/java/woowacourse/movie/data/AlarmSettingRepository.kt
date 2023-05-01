@@ -3,12 +3,15 @@ package woowacourse.movie.data
 import android.content.Context
 import android.content.SharedPreferences
 
-class AlarmSettingRepository(context: Context) {
-    private val prefs: SharedPreferences =
-        context.getSharedPreferences(
+object AlarmSettingRepository {
+    private lateinit var prefs: SharedPreferences
+
+    fun init(context: Context) {
+        prefs = context.getSharedPreferences(
             "notifications_prefs",
             Context.MODE_PRIVATE
         )
+    }
 
     var enablePushNotification: Boolean
         get() = prefs.getBoolean(NOTIFICATIONS, false)
@@ -16,7 +19,5 @@ class AlarmSettingRepository(context: Context) {
             prefs.edit().putBoolean(NOTIFICATIONS, value).apply()
         }
 
-    companion object {
-        private const val NOTIFICATIONS = "notifications"
-    }
+    private const val NOTIFICATIONS = "notifications"
 }

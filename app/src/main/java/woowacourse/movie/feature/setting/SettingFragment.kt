@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.data.AlarmSettingRepository
 import woowacourse.movie.feature.common.Toaster
 import woowacourse.movie.feature.main.MainActivity.Companion.PERMISSIONS
-import woowacourse.movie.global.MyApplication
 import woowacourse.movie.util.hasPermissions
 
 class SettingFragment : Fragment() {
@@ -28,7 +28,7 @@ class SettingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         switch = view.findViewById(R.id.notification_switch)
-        val switchValue = MyApplication.prefs.enablePushNotification
+        val switchValue = AlarmSettingRepository.enablePushNotification
         switch?.isChecked = switchValue
         switch?.setOnCheckedChangeListener { switchCompat, _ ->
             val permission =
@@ -37,7 +37,7 @@ class SettingFragment : Fragment() {
                 switchCompat.isChecked = false
                 Toaster.showToast(requireContext(), "알림 권한을 허용해주세요.")
             }
-            MyApplication.prefs.enablePushNotification = switchCompat.isChecked
+            AlarmSettingRepository.enablePushNotification = switchCompat.isChecked
         }
     }
 
