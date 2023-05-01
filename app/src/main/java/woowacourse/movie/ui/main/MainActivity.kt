@@ -21,9 +21,9 @@ class MainActivity : AppCompatActivity() {
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (!isGranted) {
-                shortToast("권한 요청을 거부하였습니다")
+                shortToast(R.string.permission_denied)
             } else {
-                shortToast("권한 요청을 승인하였습니다")
+                shortToast(R.string.permission_granted)
             }
         }
 

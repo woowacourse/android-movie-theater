@@ -32,7 +32,7 @@
         android:id="@+id/textSettingPushDenied"
         android:textSize="12sp"
         android:fontFamily="@font/roboto"
-        android:text="@string/push_alaram_denied"
+        android:text="@string/push_alarm_denied"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
