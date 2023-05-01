@@ -9,12 +9,13 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.model.AlarmSwitchState
 import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.model.ReservationModel
 import woowacourse.movie.ui.alarm.AlarmCreator
+import woowacourse.movie.utils.getPreferences
 
 class SettingFragment : Fragment() {
     private lateinit var toggleButton: SwitchCompat
@@ -32,7 +33,6 @@ class SettingFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_setting, container, false)
 
-        AlarmSwitchState.init(requireContext())
         requestNotificationPermission(view)
         initToggleButton(view)
         setClickEventOnToggleButton()
@@ -59,12 +59,12 @@ class SettingFragment : Fragment() {
 
     private fun initToggleButton(view: View) {
         toggleButton = view.findViewById(R.id.setting_switch)
-        toggleButton.isChecked = AlarmSwitchState.isAlarmActivated
+        toggleButton.isChecked = requireContext().getPreferences().getBoolean(KEY_SWITCH, false)
     }
 
     private fun setClickEventOnToggleButton() {
         toggleButton.setOnCheckedChangeListener { _, isChecked ->
-            AlarmSwitchState.isAlarmActivated = isChecked
+            requireContext().getPreferences().edit { putBoolean(KEY_SWITCH, isChecked) }
             setAlarms(isChecked)
         }
     }
@@ -85,5 +85,6 @@ class SettingFragment : Fragment() {
 
     companion object {
         const val KEY_MOVIE = "movie"
+        const val KEY_SWITCH = "switch"
     }
 }

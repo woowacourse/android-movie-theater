@@ -3,6 +3,7 @@ package woowacourse.movie.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
@@ -44,4 +45,8 @@ fun Context.showToast(message: String) {
 fun Activity.failLoadingData() {
     showToast(getString(R.string.error_loading))
     finish()
+}
+
+fun Context.getPreferences(): SharedPreferences {
+    return this.getSharedPreferences("movie", Context.MODE_PRIVATE)
 }

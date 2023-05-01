@@ -14,7 +14,6 @@ import woowacourse.movie.domain.seat.Seat
 import woowacourse.movie.domain.seat.SelectedSeats
 import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toModel
-import woowacourse.movie.model.AlarmSwitchState
 import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.model.PeopleCountModel
 import woowacourse.movie.model.ReservationModel
@@ -22,8 +21,10 @@ import woowacourse.movie.model.SeatModel
 import woowacourse.movie.model.SelectedSeatsModel
 import woowacourse.movie.ui.alarm.AlarmCreator
 import woowacourse.movie.ui.moviedetail.MovieDetailActivity
+import woowacourse.movie.ui.setting.SettingFragment
 import woowacourse.movie.ui.ticket.MovieTicketActivity
 import woowacourse.movie.utils.failLoadingData
+import woowacourse.movie.utils.getPreferences
 import woowacourse.movie.utils.getSerializableExtraCompat
 import woowacourse.movie.utils.showToast
 import java.time.LocalDateTime
@@ -182,7 +183,9 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     private fun MovieTicketModel.makeAlarm() {
-        if (AlarmSwitchState.isAlarmActivated) {
+        if (this@SeatSelectionActivity.getPreferences()
+                .getBoolean(SettingFragment.KEY_SWITCH, false)
+        ) {
             alarmCreator.makeAlarm(this)
         }
     }
