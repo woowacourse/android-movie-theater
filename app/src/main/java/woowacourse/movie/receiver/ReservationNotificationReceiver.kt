@@ -1,6 +1,8 @@
 package woowacourse.movie.receiver
 
 import android.R
+import android.app.Notification
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -15,7 +17,6 @@ import woowacourse.movie.view.model.TicketsUiModel
 
 class ReservationNotificationReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, receivedIntent: Intent) {
-        val reservationNotificationHelper = NotificationHelper(context, CHANNEL_ID, CHANNEL_NAME)
         val movieUiModel = receiveMovieViewModel(receivedIntent)
         val ticketsUiModel = receiveTicketsUiModel(receivedIntent)
         val sendingIntent =
@@ -27,21 +28,19 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
 
         val notificationData = NotificationData(
             title = context.getString(woowacourse.movie.R.string.reservation_notification_title),
-            contextText = "${movieUiModel.title} context.getString(woowacourse.movie.R.string.reservation_notification_description)",
+            contextText = "${movieUiModel.title} ${context.getString(woowacourse.movie.R.string.reservation_notification_description)}",
             smallIcon = R.drawable.ic_lock_idle_alarm,
             isAutoCancel = true,
             pendingIntent = pendingIntent
         )
-
-        val notificationManager = reservationNotificationHelper.generateNotificationManger()
-        val notification = reservationNotificationHelper.generateNotification(
-            notificationData,
-            notificationManager
+        val notificationManager = NotificationHelper.generateNotificationManger(
+            context,
+            CHANNEL_ID,
+            CHANNEL_NAME
         )
-        if (SettingPreferencesManager.getAlarmReceptionStatus()) notificationManager.notify(
-            NOTIFICATION_ID,
-            notification
-        )
+        val notification =
+            NotificationHelper.generateNotification(context, CHANNEL_ID, notificationData)
+        NotificationHelper.notifyNotification(notificationManager, notification, NOTIFICATION_ID)
     }
 
     private fun receiveTicketsUiModel(intent: Intent): TicketsUiModel {
