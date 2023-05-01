@@ -6,6 +6,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.feature.common.Toaster
@@ -44,13 +45,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFragments() {
-        supportFragmentManager.beginTransaction()
-            .add(containerView.id, movieListFragment, MOVIE_LIST_TAG)
-            .add(containerView.id, reservationListFragment, RESERVATION_LIST_TAG)
-            .add(containerView.id, settingFragment, SETTING_TAG)
-            .hide(reservationListFragment)
-            .hide(settingFragment)
-            .commit()
+        supportFragmentManager.commit {
+            add(containerView.id, movieListFragment, MOVIE_LIST_TAG)
+            add(containerView.id, reservationListFragment, RESERVATION_LIST_TAG)
+            add(containerView.id, settingFragment, SETTING_TAG)
+            hide(reservationListFragment)
+            hide(settingFragment)
+        }
         bottomNavigation.selectedItemId = R.id.movie_list_item
     }
 
@@ -72,7 +73,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private inline fun <reified T : Fragment> changeShowFragment() {
-        supportFragmentManager.beginTransaction().apply {
+        supportFragmentManager.commit {
             supportFragmentManager.fragments.forEach {
                 if (it is T) {
                     show(it)
@@ -80,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                     hide(it)
                 }
             }
-        }.commit()
+        }
     }
 
     private val requestPermissionLauncher = registerForActivityResult(

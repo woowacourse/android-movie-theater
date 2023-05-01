@@ -51,4 +51,6 @@ dependencies {
     androidTestImplementation("androidx.test:rules:1.1.0")
     androidTestImplementation("androidx.test.espresso:espresso-intents:3.1.0")
     testImplementation("org.robolectric:robolectric:4.9")
+
+    implementation("androidx.fragment:fragment-ktx:1.2.5")
 }
