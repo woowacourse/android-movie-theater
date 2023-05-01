@@ -91,7 +91,7 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
             intent = AlarmReceiver.getIntent(this, tickets),
             dateTime = tickets.dateTime,
             requestCode = tickets.hashCode(),
-            timeMillsAdjustAmount = NOTIFICATION_TIME_ADJUST_AMOUNT
+            adjustTimeMills = NOTIFICATION_TIME_ADJUST_AMOUNT
         )
         TicketsRepository.addTicket(tickets)
         val intent = ReservationConfirmActivity.getIntent(this, tickets)

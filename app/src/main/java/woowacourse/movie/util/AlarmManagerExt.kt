@@ -12,7 +12,7 @@ fun Context.setAlarm(
     intent: Intent,
     dateTime: LocalDateTime,
     requestCode: Int,
-    timeMillsAdjustAmount: Long = 0L
+    adjustTimeMills: Long = 0L
 ) {
     val calendar: Calendar = dateTime.toCalendar()
 
@@ -21,7 +21,7 @@ fun Context.setAlarm(
 
     val alarmIntent: PendingIntent = getBroadcastPendingIntent(requestCode, intent)
 
-    val triggerAtMillis: Long = calendar.timeInMillis - timeMillsAdjustAmount
+    val triggerAtMillis: Long = calendar.timeInMillis - adjustTimeMills
     alarmManager.setRtcTimeMillsAlarm(triggerAtMillis, alarmIntent)
 }
 
