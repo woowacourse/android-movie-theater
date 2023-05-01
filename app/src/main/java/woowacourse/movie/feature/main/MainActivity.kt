@@ -88,9 +88,9 @@ class MainActivity : AppCompatActivity() {
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
         if (isGranted) {
-            Toaster.showToast(this, "알람 노티피케이션 권한 승인")
+            Toaster.showToast(this, getString(R.string.alarm_notification_approve))
         } else {
-            Toaster.showToast(this, "알람 노티피케이션 권한 거부")
+            Toaster.showToast(this, getString(R.string.alarm_notification_reject))
         }
     }
 
