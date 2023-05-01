@@ -8,12 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.data.TicketsRepository
+import woowacourse.movie.feature.common.OnDataUpdate
 import woowacourse.movie.feature.confirm.ReservationConfirmActivity
 import woowacourse.movie.feature.reservationList.adapter.ReservationListAdapter
 import woowacourse.movie.feature.reservationList.itemModel.TicketsItemModel
 import woowacourse.movie.model.TicketsState
 
-class ReservationListFragment : Fragment() {
+class ReservationListFragment : Fragment(), OnDataUpdate {
 
     private lateinit var reservationRecyclerView: RecyclerView
     private lateinit var adapter: ReservationListAdapter
@@ -35,15 +36,6 @@ class ReservationListFragment : Fragment() {
         reservationRecyclerView.adapter = adapter
     }
 
-    override fun onResume() {
-        super.onResume()
-        updateData()
-    }
-
-    private fun updateData() {
-        adapter.setItemChanged(getTicketsItemModel())
-    }
-
     private fun getTicketsItemModel(): List<TicketsItemModel> {
         return TicketsRepository.allTickets().map {
             it.convertToItemModel { position ->
@@ -55,5 +47,9 @@ class ReservationListFragment : Fragment() {
     private fun navigateReservationConfirm(ticketsState: TicketsState) {
         val intent = ReservationConfirmActivity.getIntent(requireContext(), ticketsState)
         startActivity(intent)
+    }
+
+    override fun onUpdateData() {
+        adapter.setItemChanged(getTicketsItemModel())
     }
 }

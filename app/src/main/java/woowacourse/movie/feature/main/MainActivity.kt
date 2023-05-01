@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
+import woowacourse.movie.feature.common.OnDataUpdate
 import woowacourse.movie.feature.common.Toaster
 import woowacourse.movie.feature.movieList.MovieListFragment
 import woowacourse.movie.feature.reservationList.ReservationListFragment
@@ -77,11 +78,16 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.fragments.forEach {
                 if (it is T) {
                     show(it)
+                    it.updateData()
                 } else {
                     hide(it)
                 }
             }
         }
+    }
+
+    private fun Fragment.updateData() {
+        if (this is OnDataUpdate) onUpdateData()
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
