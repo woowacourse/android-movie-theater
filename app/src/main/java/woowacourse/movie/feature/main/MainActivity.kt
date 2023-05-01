@@ -4,9 +4,11 @@ import android.Manifest
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
+import woowacourse.movie.feature.common.Toaster
 import woowacourse.movie.feature.movieList.MovieListFragment
 import woowacourse.movie.feature.reservationList.ReservationListFragment
 import woowacourse.movie.feature.setting.SettingFragment
@@ -24,21 +26,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        movieListFragment =
-            supportFragmentManager.findFragmentByTag(MOVIE_LIST_TAG) as? MovieListFragment
-                ?: MovieListFragment()
+        movieListFragment = getFragment(MOVIE_LIST_TAG)
+        reservationListFragment = getFragment(RESERVATION_LIST_TAG)
+        settingFragment = getFragment(SETTING_TAG)
 
-        reservationListFragment =
-            supportFragmentManager.findFragmentByTag(RESERVATION_LIST_TAG) as? ReservationListFragment
-                ?: ReservationListFragment()
+        if (savedInstanceState == null) {
+            initFragments()
+        }
 
-        settingFragment =
-            supportFragmentManager.findFragmentByTag(SETTING_TAG) as? SettingFragment
-                ?: SettingFragment()
-
-        if (savedInstanceState == null) { initFragments() }
         initListener()
         requestPermissions(PERMISSIONS, requestPermissionLauncher::launch)
+    }
+
+    private inline fun <reified T : Fragment> getFragment(tag: String): T {
+        return supportFragmentManager.findFragmentByTag(tag) as? T
+            ?: T::class.java.getDeclaredConstructor().newInstance()
     }
 
     private fun initFragments() {
@@ -56,34 +58,39 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.reservation_list_item -> {
-                    supportFragmentManager.beginTransaction()
-                        .show(reservationListFragment)
-                        .hide(movieListFragment)
-                        .hide(settingFragment)
-                        .commit()
+                    changeShowFragment<ReservationListFragment>()
                 }
                 R.id.movie_list_item -> {
-                    supportFragmentManager.beginTransaction()
-                        .hide(reservationListFragment)
-                        .show(movieListFragment)
-                        .hide(settingFragment)
-                        .commit()
+                    changeShowFragment<MovieListFragment>()
                 }
                 R.id.setting_item -> {
-                    supportFragmentManager.beginTransaction()
-                        .hide(reservationListFragment)
-                        .hide(movieListFragment)
-                        .show(settingFragment)
-                        .commit()
+                    changeShowFragment<SettingFragment>()
                 }
             }
             return@setOnItemSelectedListener true
         }
     }
 
+    private inline fun <reified T : Fragment> changeShowFragment() {
+        supportFragmentManager.beginTransaction().apply {
+            supportFragmentManager.fragments.forEach {
+                if (it is T) {
+                    show(it)
+                } else {
+                    hide(it)
+                }
+            }
+        }.commit()
+    }
+
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
+        if (isGranted) {
+            Toaster.showToast(this, "알람 노티피케이션 권한 승인")
+        } else {
+            Toaster.showToast(this, "알람 노티피케이션 권한 거부")
+        }
     }
 
     companion object {
