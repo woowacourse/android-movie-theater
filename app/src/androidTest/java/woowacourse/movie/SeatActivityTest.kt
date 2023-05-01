@@ -16,12 +16,13 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import org.hamcrest.CoreMatchers.not
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.movie.model.BookedMovie
-import woowacourse.movie.ui.seat.SeatActivity
+import woowacourse.app.model.BookedMovie
+import woowacourse.app.ui.seat.SeatActivity
 import java.time.LocalDateTime
 
 class SeatActivityTest {
-    private val bookedMovie = BookedMovie(1, 0, 2, LocalDateTime.of(2024, 3, 1, 10, 0))
+    private val bookedMovie =
+        BookedMovie(1, 0, 2, LocalDateTime.of(2024, 3, 1, 10, 0))
 
     @get:Rule
     var activityScenarioRule: ActivityScenarioRule<SeatActivity> =
