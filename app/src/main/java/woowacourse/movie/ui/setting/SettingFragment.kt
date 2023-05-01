@@ -94,7 +94,6 @@ class SettingFragment : Fragment() {
     }
 
     companion object {
-        const val KEY_MOVIE = "movie"
         const val KEY_SWITCH = "switch"
     }
 }

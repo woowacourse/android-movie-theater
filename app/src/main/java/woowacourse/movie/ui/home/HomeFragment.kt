@@ -47,17 +47,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun moveToDetailActivity(movie: MovieListModel.MovieModel) {
-        val intent = Intent(context, MovieDetailActivity::class.java)
-        intent.putExtra(KEY_MOVIE, movie)
-        startActivity(intent)
+        startActivity(MovieDetailActivity.getIntent(movie, requireContext()))
     }
 
     private fun moveToWebPage(ad: MovieListModel.AdModel) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(ad.url))
         startActivity(intent)
-    }
-
-    companion object {
-        const val KEY_MOVIE = "movie"
     }
 }

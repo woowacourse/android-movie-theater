@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.moviedetail
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -11,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.model.MovieListModel
 import woowacourse.movie.model.PeopleCountModel
-import woowacourse.movie.ui.home.HomeFragment
 import woowacourse.movie.ui.seat.SeatSelectionActivity
 import woowacourse.movie.utils.failLoadingData
 import woowacourse.movie.utils.getParcelableCompat
@@ -42,7 +42,7 @@ class MovieDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val movie: MovieListModel.MovieModel =
-            intent.getParcelableCompat(HomeFragment.KEY_MOVIE) ?: return failLoadingData()
+            intent.getParcelableCompat(KEY_MOVIE) ?: return failLoadingData()
 
         setMovieInfo(movie)
         initSpinner(movie)
@@ -127,10 +127,17 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     companion object {
+        const val KEY_MOVIE = "movie"
         private const val KEY_DATE_POSITION = "date_position"
         private const val KEY_TIME_POSITION = "time_position"
         const val KEY_TITLE = "title"
         const val KEY_TIME = "time"
         const val KEY_PEOPLE_COUNT = "count"
+
+        fun getIntent(movie: MovieListModel.MovieModel, context: Context): Intent {
+            return Intent(context, MovieDetailActivity::class.java).apply {
+                putExtra(KEY_MOVIE, movie)
+            }
+        }
     }
 }

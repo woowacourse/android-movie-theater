@@ -1,5 +1,7 @@
 package woowacourse.movie.ui.ticket
 
+import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
@@ -8,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.model.MovieTicketModel
-import woowacourse.movie.ui.seat.SeatSelectionActivity
 import woowacourse.movie.utils.failLoadingData
 import woowacourse.movie.utils.getSerializableExtraCompat
 import java.text.DecimalFormat
@@ -41,7 +42,7 @@ class MovieTicketActivity : AppCompatActivity() {
 
     private fun setTicketInfo() {
         val ticket: MovieTicketModel =
-            intent.getSerializableExtraCompat(SeatSelectionActivity.KEY_TICKET)
+            intent.getSerializableExtraCompat(KEY_TICKET)
                 ?: return failLoadingData()
 
         findViewById<TextView>(R.id.ticket_title).text = ticket.title
@@ -59,4 +60,14 @@ class MovieTicketActivity : AppCompatActivity() {
 
     private fun LocalDateTime.format(): String =
         format(DateTimeFormatter.ofPattern(getString(R.string.date_time_format)))
+
+    companion object {
+        private const val KEY_TICKET = "ticket"
+
+        fun getIntent(movie: MovieTicketModel, context: Context): Intent {
+            return Intent(context, MovieTicketActivity::class.java).apply {
+                putExtra(KEY_TICKET, movie)
+            }
+        }
+    }
 }

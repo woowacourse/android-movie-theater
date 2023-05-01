@@ -1,6 +1,5 @@
 package woowacourse.movie.ui.reservation
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.model.ReservationModel
 import woowacourse.movie.ui.reservation.adapter.ReservationAdapter
-import woowacourse.movie.ui.seat.SeatSelectionActivity
 import woowacourse.movie.ui.ticket.MovieTicketActivity
 
 class ReservationFragment : Fragment() {
@@ -44,9 +42,11 @@ class ReservationFragment : Fragment() {
     }
 
     private fun moveToMovieTicketActivity(position: Int) {
-        val intentToMovieTicket = Intent(context, MovieTicketActivity::class.java).apply {
-            putExtra(SeatSelectionActivity.KEY_TICKET, ReservationModel.tickets[position])
-        }
-        startActivity(intentToMovieTicket)
+        startActivity(
+            MovieTicketActivity.getIntent(
+                ReservationModel.tickets[position],
+                requireContext(),
+            ),
+        )
     }
 }

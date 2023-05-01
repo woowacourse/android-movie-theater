@@ -1,6 +1,5 @@
 package woowacourse.movie.ui.seat
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -191,16 +190,13 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     private fun moveToTicketActivity(ticket: MovieTicketModel) {
-        val intent = Intent(this, MovieTicketActivity::class.java)
-        intent.putExtra(KEY_TICKET, ticket)
-        startActivity(intent)
+        startActivity(MovieTicketActivity.getIntent(ticket, this))
         finish()
     }
 
     companion object {
         const val ROW_SIZE = 5
         const val COLUMN_SIZE = 4
-        const val KEY_TICKET = "ticket"
         private const val KEY_SEATS = "seats"
     }
 }

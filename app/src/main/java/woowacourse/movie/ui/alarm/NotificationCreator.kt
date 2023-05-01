@@ -4,14 +4,14 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
 import woowacourse.movie.model.MovieTicketModel
-import woowacourse.movie.ui.seat.SeatSelectionActivity
 import woowacourse.movie.ui.ticket.MovieTicketActivity
 
-class NotificationCreator(context: Context) {
+class NotificationCreator(
+    private val context: Context,
+) {
     private val notificationManager: NotificationManager by lazy {
         context.getSystemService(
             Context.NOTIFICATION_SERVICE,
@@ -29,7 +29,7 @@ class NotificationCreator(context: Context) {
         )
     }
 
-    fun makeNotification(context: Context, movie: MovieTicketModel) {
+    fun makeNotification(movie: MovieTicketModel) {
         val contentPendingIntent = setContentIntent(context, movie)
         val builder = setBuilder(context, movie, contentPendingIntent)
 
@@ -40,9 +40,7 @@ class NotificationCreator(context: Context) {
         context: Context,
         movie: MovieTicketModel,
     ): PendingIntent {
-        val contentIntent = Intent(context, MovieTicketActivity::class.java).apply {
-            putExtra(SeatSelectionActivity.KEY_TICKET, movie)
-        }
+        val contentIntent = MovieTicketActivity.getIntent(movie, context)
 
         return PendingIntent.getActivity(
             context,
