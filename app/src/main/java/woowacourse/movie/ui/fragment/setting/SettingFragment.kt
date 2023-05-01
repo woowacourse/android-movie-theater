@@ -2,6 +2,7 @@ package woowacourse.movie.ui.fragment.setting
 
 import android.os.Bundle
 import android.view.View
+import android.widget.CompoundButton
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
@@ -17,22 +18,22 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val sharedPreference = PreferenceUtil(requireContext())
         switch = view.findViewById(R.id.notification_switch)
 
-        context?.let {
-            val sharedPreference = PreferenceUtil(it)
-
-            switch.isChecked = sharedPreference.getBoolean(NOTIFICATIONS, false)
-            switch.setOnCheckedChangeListener { switchCompat, _ ->
-                val permission =
-                    this.activity?.hasPermissions(PERMISSIONS) ?: return@setOnCheckedChangeListener
-                if (!permission) {
-                    switchCompat.isChecked = false
-                    Toaster.showToast(it, "알림 권한을 허용해주세요.")
-                }
-                sharedPreference.setBoolean(NOTIFICATIONS, switchCompat.isChecked)
-            }
+        switch.isChecked = sharedPreference.getBoolean(NOTIFICATIONS, false)
+        switch.setOnCheckedChangeListener { switchCompat, _ ->
+            switchCheckedEvent(switchCompat, sharedPreference)
         }
+    }
+
+    private fun switchCheckedEvent(switchCompat: CompoundButton, sharedPreference: PreferenceUtil) {
+        val permission = requireContext().hasPermissions(PERMISSIONS)
+        if (!permission) {
+            switchCompat.isChecked = false
+            Toaster.showToast(requireContext(), "알림 권한을 허용해주세요.")
+        }
+        sharedPreference.setBoolean(NOTIFICATIONS, switchCompat.isChecked)
     }
 
     companion object {
