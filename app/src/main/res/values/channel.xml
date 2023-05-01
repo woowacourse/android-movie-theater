@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="reservation_reminder_channel_id" translatable="false">reservation_reminder</string>
+    <string name="reservation_reminder_channel_name">예매 정보</string>
+    <string name="reservation_reminder_channel_desc">예매 정보와 관련된 푸시 알림 채널입니다.</string>
+</resources>
