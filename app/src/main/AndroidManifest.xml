@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,8 +14,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Movie"
         tools:targetApi="31">
+
+        <receiver
+            android:name=".ui.alarm.ReservationAlarmReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.seat.SeatSelectionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ticket.MovieTicketActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.moviedetail.MovieDetailActivity"
+            android:configChanges="screenSize|orientation"
+            android:exported="false"
+            android:screenOrientation="sensor" />
+        <activity
+            android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
