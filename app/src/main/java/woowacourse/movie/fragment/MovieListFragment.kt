@@ -25,17 +25,18 @@ class MovieListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_movie_list, container, false)
-        makeMovieRecyclerView(view)
+        return inflater.inflate(R.layout.fragment_movie_list, container, false)
+    }
 
-        return view
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        makeMovieRecyclerView(view)
     }
 
     private fun makeMovieRecyclerView(view: View) {
         val movies = mainRepository.requestMovie()
         val advertisementDatas = AdvertisementMock.createAdvertisements()
-        val advertisementPolicy =
-            MovieAdvertisementPolicy(MOVIE_COUNT, ADVERTISEMENT_COUNT)
+        val advertisementPolicy = MovieAdvertisementPolicy(MOVIE_COUNT, ADVERTISEMENT_COUNT)
 
         val movieRecyclerView = view.findViewById<RecyclerView>(R.id.main_movie_list)
         movieRecyclerView.adapter = MovieAdapter(

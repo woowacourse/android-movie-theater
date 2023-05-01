@@ -23,12 +23,15 @@ class ReservationListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_reservation_list, container, false)
+        return inflater.inflate(R.layout.fragment_reservation_list, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val reservations =
             arguments?.getSerializable<ReservationsViewData>(ReservationsViewData.RESERVATIONS_VIEW_DATA_EXTRA_NAME)
                 ?: return finishWithError(ViewError.MissingExtras(ReservationsViewData.RESERVATIONS_VIEW_DATA_EXTRA_NAME))
         makeReservationRecyclerView(view, reservations)
-        return view
     }
 
     private fun makeReservationRecyclerView(view: View, reservations: ReservationsViewData) {

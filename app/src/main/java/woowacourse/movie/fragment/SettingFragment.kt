@@ -11,7 +11,6 @@ import woowacourse.movie.R
 import woowacourse.movie.service.Permission
 import woowacourse.movie.service.Permission.checkNotificationPermission
 import woowacourse.movie.service.Permission.requestNotificationPermission
-import woowacourse.movie.view.error.FragmentError.finishWithNullViewError
 import woowacourse.movie.view.setting.Setting
 import woowacourse.movie.view.setting.SharedSetting
 
@@ -25,28 +24,33 @@ class SettingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_setting, container, false)
-        makeNotificationSwitchCompat(view)
-        return view
+        return inflater.inflate(R.layout.fragment_setting, container, false)
     }
 
-    override fun onResume() {
-        super.onResume()
-        val view: View = view ?: return finishWithNullViewError()
-        val setting: Setting = SharedSetting(view.context)
-        val switch = view.findViewById<SwitchCompat>(R.id.setting_push_switch)
-        if (!checkNotificationPermission(view)) switch.isChecked = false
-        else switch.isChecked = setting.getValue(SETTING_NOTIFICATION)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initSwitch(view)
     }
 
-    private fun makeNotificationSwitchCompat(view: View) {
+    private fun initSwitch(view: View) {
         val setting: Setting = SharedSetting(view.context)
         val switch = view.findViewById<SwitchCompat>(R.id.setting_push_switch)
+        initSwitchCheckStatus(view)
         switch.setOnCheckedChangeListener { _, isChecked ->
             setting.setValue(SETTING_NOTIFICATION, isChecked)
             if (isChecked && !checkNotificationPermission(view)) {
                 requestNotificationPermission(this, requestPermissionLauncher, ::requestPermission)
             }
+        }
+    }
+
+    private fun initSwitchCheckStatus(view: View) {
+        val setting: Setting = SharedSetting(view.context)
+        val switch = view.findViewById<SwitchCompat>(R.id.setting_push_switch)
+        if (!checkNotificationPermission(view)) {
+            switch.isChecked = false
+        } else {
+            switch.isChecked = setting.getValue(SETTING_NOTIFICATION)
         }
     }
 
