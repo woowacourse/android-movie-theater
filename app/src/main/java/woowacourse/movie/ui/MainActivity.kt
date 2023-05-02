@@ -12,6 +12,8 @@ import woowacourse.movie.ui.reservation.ReservationFragment
 import woowacourse.movie.ui.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
+    private var lastSelectedFragmentTag = ""
+
     private val bottomNavigationView: BottomNavigationView by lazy {
         findViewById(R.id.main_bottom_navigation_view)
     }
@@ -35,6 +37,7 @@ class MainActivity : AppCompatActivity() {
             add(R.id.main_fragment_view, HomeFragment(), FRAGMENT_HOME)
             setReorderingAllowed(true)
         }
+        lastSelectedFragmentTag = FRAGMENT_HOME
     }
 
     private fun changeFragment(tag: String) {
@@ -45,19 +48,20 @@ class MainActivity : AppCompatActivity() {
         val fragment: Fragment = fragments[tag] ?: throw IllegalArgumentException()
 
         val findFragment = supportFragmentManager.findFragmentByTag(tag)
-        supportFragmentManager.fragments.forEach { fm ->
-            supportFragmentManager.commit {
-                hide(fm)
-            }
+
+        supportFragmentManager.commit {
+            supportFragmentManager.findFragmentByTag(lastSelectedFragmentTag)?.let { hide(it) }
         }
 
         findFragment?.let {
             supportFragmentManager.commit {
                 show(it)
+                lastSelectedFragmentTag = tag
             }
         } ?: kotlin.run {
             supportFragmentManager.commit {
-                add(R.id.main_fragment_view, fragment, tag)
+                replace(R.id.main_fragment_view, fragment, tag)
+                lastSelectedFragmentTag = tag
                 setReorderingAllowed(true)
             }
         }
