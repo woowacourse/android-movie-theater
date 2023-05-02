@@ -3,7 +3,7 @@ package woowacourse.movie.view
 import android.widget.ImageView
 import android.widget.TextView
 import woowacourse.movie.R
-import woowacourse.movie.view.model.MovieUiModel
+import woowacourse.movie.model.MovieUiModel
 import java.time.format.DateTimeFormatter
 
 class MovieView(

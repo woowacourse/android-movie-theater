@@ -1,7 +1,7 @@
 package woowacourse.movie.view
 
 import android.os.Bundle
-import woowacourse.movie.view.model.MovieUiModel
+import woowacourse.movie.model.MovieUiModel
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime

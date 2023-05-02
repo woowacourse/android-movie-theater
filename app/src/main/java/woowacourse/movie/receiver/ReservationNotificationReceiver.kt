@@ -1,20 +1,16 @@
 package woowacourse.movie.receiver
 
 import android.R
-import android.app.Notification
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import woowacourse.movie.MockMoviesFactory
-import woowacourse.movie.SettingPreferencesManager
-import woowacourse.movie.activity.ReservationResultActivity
+import woowacourse.movie.mock.MockMoviesFactory
+import woowacourse.movie.view.activity.ReservationResultActivity
 import woowacourse.movie.getSerializableCompat
-import woowacourse.movie.view.mapper.MovieMapper
-import woowacourse.movie.view.mapper.MovieMapper.toUi
-import woowacourse.movie.view.model.MovieUiModel
-import woowacourse.movie.view.model.TicketsUiModel
+import woowacourse.movie.model.mapper.MovieMapper.toUi
+import woowacourse.movie.model.MovieUiModel
+import woowacourse.movie.model.TicketsUiModel
 
 class ReservationNotificationReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, receivedIntent: Intent) {

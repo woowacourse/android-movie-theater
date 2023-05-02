@@ -9,10 +9,10 @@ import domain.discountPolicy.DisCountPolicies
 import domain.seatPolicy.SeatPolicies
 import woowacourse.movie.R
 import woowacourse.movie.setBackgroundColorId
-import woowacourse.movie.view.mapper.SeatMapper
-import woowacourse.movie.view.mapper.SeatRankMapper
-import woowacourse.movie.view.mapper.SeatRankMapper.toUi
-import woowacourse.movie.view.model.SeatUiModel
+import woowacourse.movie.model.mapper.SeatMapper
+import woowacourse.movie.model.mapper.SeatRankMapper
+import woowacourse.movie.model.mapper.SeatRankMapper.toUi
+import woowacourse.movie.model.SeatUiModel
 
 class SeatView(val view: TextView, val row: Char, val col: Int, onClick: (SeatView) -> Unit) {
     init {

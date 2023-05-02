@@ -14,7 +14,10 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.view.model.*
+import woowacourse.movie.model.MovieUiModel
+import woowacourse.movie.model.TicketDateUiModel
+import woowacourse.movie.view.activity.ReservationResultActivity
+import woowacourse.movie.view.activity.SelectSeatActivity
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime

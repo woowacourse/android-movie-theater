@@ -6,8 +6,8 @@ import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import woowacourse.movie.receiver.ReservationNotificationReceiver
-import woowacourse.movie.view.model.MovieUiModel
-import woowacourse.movie.view.model.TicketsUiModel
+import woowacourse.movie.model.MovieUiModel
+import woowacourse.movie.model.TicketsUiModel
 import java.sql.Date
 import java.time.LocalDateTime
 import java.time.ZoneId

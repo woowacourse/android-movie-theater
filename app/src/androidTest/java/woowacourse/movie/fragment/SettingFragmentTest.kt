@@ -12,6 +12,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
+import woowacourse.movie.view.fragment.SettingFragment
 
 @RunWith(AndroidJUnit4::class)
 class SettingFragmentTest {

@@ -5,6 +5,7 @@ import android.widget.Spinner
 import domain.movieTimePolicy.MovieTime
 import domain.movieTimePolicy.WeekdayMovieTime
 import domain.movieTimePolicy.WeekendMovieTime
+import woowacourse.movie.util.LocalFormattedTime
 import java.time.LocalDate
 import java.time.LocalTime
 

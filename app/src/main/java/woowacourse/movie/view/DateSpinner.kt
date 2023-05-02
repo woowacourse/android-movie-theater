@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Spinner
-import woowacourse.movie.view.model.MovieUiModel
+import woowacourse.movie.model.MovieUiModel
+import woowacourse.movie.util.LocalFormattedDate
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 class DateSpinner(spinner: Spinner, savedStateKey: String) :
     SaveStateSpinner(savedStateKey, spinner) {

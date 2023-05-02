@@ -4,8 +4,8 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import woowacourse.movie.R
-import woowacourse.movie.view.model.SeatUiModel
-import woowacourse.movie.view.model.TicketsUiModel
+import woowacourse.movie.model.SeatUiModel
+import woowacourse.movie.model.TicketsUiModel
 
 class SeatTable(
     private val tableLayout: TableLayout,
