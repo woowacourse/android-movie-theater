@@ -8,7 +8,6 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
-import woowacourse.movie.domain.repository.ReservationListRepository
 import woowacourse.movie.system.BroadcastAlarm.createNotificationChannel
 import woowacourse.movie.system.ReservationAlarmReceiver
 import woowacourse.movie.view.fragment.MovieListFragment
@@ -16,8 +15,6 @@ import woowacourse.movie.view.fragment.ReservationListFragment
 import woowacourse.movie.view.fragment.SettingFragment
 
 class MainActivity : AppCompatActivity() {
-    private val reservationListRepository: ReservationListRepository = ReservationListRepository()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

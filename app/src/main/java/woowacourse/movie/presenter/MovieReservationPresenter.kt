@@ -8,10 +8,10 @@ import woowacourse.movie.domain.ReservationDetail
 import woowacourse.movie.mapper.ReservationDetailMapper.toView
 import java.time.LocalDateTime
 
-class MovieReservationPresenter(override val view: MovieReservationContract.View) :
-    MovieReservationContract.Presenter {
+class MovieReservationPresenter(
+    override val view: MovieReservationContract.View,
     var peopleCount: Count = Count(PEOPLE_DEFAULT_COUNT)
-
+) : MovieReservationContract.Presenter {
     override fun addPeopleCount(count: Int) {
         peopleCount += count
         view.setCounterText(peopleCount.value)

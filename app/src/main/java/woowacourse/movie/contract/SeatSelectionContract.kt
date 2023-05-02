@@ -19,7 +19,6 @@ interface SeatSelectionContract {
             reservation: ReservationViewData,
             date: LocalDateTime
         )
-
         fun startReservationResultActivity(
             reservation: ReservationViewData
         )
