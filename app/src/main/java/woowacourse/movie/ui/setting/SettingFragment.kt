@@ -11,15 +11,15 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.model.AlarmSwitchState
+import woowacourse.movie.model.data.AlarmSwitchStateImpl
 import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.model.ReservationTicketMachine
 import woowacourse.movie.ui.alarm.AlarmCreator
 
 class SettingFragment : Fragment() {
     private lateinit var toggleButton: SwitchCompat
-    private val alarmSwitchState: AlarmSwitchState by lazy {
-        AlarmSwitchState.getInstance(
+    private val alarmSwitchStateImpl: AlarmSwitchStateImpl by lazy {
+        AlarmSwitchStateImpl.getInstance(
             requireContext(),
         )
     }
@@ -63,12 +63,12 @@ class SettingFragment : Fragment() {
 
     private fun initToggleButton(view: View) {
         toggleButton = view.findViewById(R.id.setting_switch)
-        toggleButton.isChecked = alarmSwitchState.isAlarmActivated
+        toggleButton.isChecked = alarmSwitchStateImpl.isAlarmActivated
     }
 
     private fun setClickEventOnToggleButton() {
         toggleButton.setOnCheckedChangeListener { _, isChecked ->
-            alarmSwitchState.isAlarmActivated = isChecked
+            alarmSwitchStateImpl.isAlarmActivated = isChecked
             setAlarms(isChecked)
         }
     }
