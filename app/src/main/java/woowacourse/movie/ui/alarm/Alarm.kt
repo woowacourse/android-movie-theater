@@ -39,7 +39,7 @@ class Alarm(private val context: Context) {
     private fun setPendingIntent(ticketModel: MovieTicketModel): PendingIntent =
         PendingIntent.getBroadcast(
             context,
-            NotificationCreator.NOTIFICATION_ID,
+            NotificationOnChannel.NOTIFICATION_ID,
             setIntent(ticketModel),
             PendingIntent.FLAG_IMMUTABLE,
         )

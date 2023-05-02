@@ -11,7 +11,7 @@ import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.ui.seat.SeatSelectionActivity
 import woowacourse.movie.ui.ticket.MovieTicketActivity
 
-class NotificationCreator(context: Context) {
+class NotificationOnChannel(context: Context) {
     private val notificationManager: NotificationManager by lazy {
         context.getSystemService(
             Context.NOTIFICATION_SERVICE,
@@ -29,11 +29,11 @@ class NotificationCreator(context: Context) {
         )
     }
 
-    fun makeNotification(context: Context, movie: MovieTicketModel) {
+    fun notify(context: Context, movie: MovieTicketModel) {
         val contentPendingIntent = setContentIntent(context, movie)
-        val builder = setBuilder(context, movie, contentPendingIntent)
+        val notification = buildNotification(context, movie, contentPendingIntent)
 
-        notificationManager.notify(NOTIFICATION_ID, builder.build())
+        notificationManager.notify(NOTIFICATION_ID, notification)
     }
 
     private fun setContentIntent(
@@ -52,7 +52,7 @@ class NotificationCreator(context: Context) {
         )
     }
 
-    private fun setBuilder(
+    private fun buildNotification(
         context: Context,
         movie: MovieTicketModel,
         contentPendingIntent: PendingIntent?,
@@ -62,7 +62,7 @@ class NotificationCreator(context: Context) {
         .setContentText(context.getString(R.string.notification_text, movie.title))
         .setContentIntent(contentPendingIntent)
         .setPriority(NotificationCompat.PRIORITY_HIGH)
-        .setAutoCancel(true)
+        .setAutoCancel(true).build()
 
     companion object {
         private const val ALARM_CHANNEL_NAME = "reservation_alarm_channel"

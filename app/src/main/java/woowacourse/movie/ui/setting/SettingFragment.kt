@@ -11,9 +11,9 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.model.data.AlarmSwitchStateImpl
 import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.model.ReservationTicketMachine
+import woowacourse.movie.model.data.AlarmSwitchStateImpl
 import woowacourse.movie.ui.alarm.Alarm
 
 class SettingFragment : Fragment() {

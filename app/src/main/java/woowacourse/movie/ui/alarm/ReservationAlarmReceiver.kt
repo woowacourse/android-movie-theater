@@ -13,12 +13,12 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
         context: Context,
         intent: Intent,
     ) {
-        val notificationManager = NotificationCreator(context)
+        val notificationOnChannel = NotificationOnChannel(context)
         val movie: MovieTicketModel =
             intent.getSerializableExtraCompat(SettingFragment.KEY_MOVIE)
                 ?: return
 
-        notificationManager.createNotificationChannel()
-        notificationManager.makeNotification(context, movie)
+        notificationOnChannel.createNotificationChannel()
+        notificationOnChannel.notify(context, movie)
     }
 }
