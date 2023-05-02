@@ -19,7 +19,7 @@ import woowacourse.movie.permission.PermissionManager
 import woowacourse.movie.ui.fragment.FragmentType
 import woowacourse.movie.ui.fragment.movielist.HomeFragment
 import woowacourse.movie.ui.fragment.reservationlist.ReservationListFragment
-import woowacourse.movie.ui.fragment.settings.SettingsFragment
+import woowacourse.movie.ui.fragment.settings.view.SettingsFragment
 import woowacourse.movie.ui.utils.showSnack
 
 class MainActivity : AppCompatActivity() {
