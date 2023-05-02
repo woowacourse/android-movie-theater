@@ -8,17 +8,18 @@ import woowacourse.movie.ui.setting.SettingFragment
 import woowacourse.movie.utils.getSerializableExtraCompat
 
 class ReservationAlarmReceiver : BroadcastReceiver() {
-
+    private lateinit var _context: Context
+    private val notificationOnChannel by lazy { NotificationOnChannel(_context) }
     override fun onReceive(
         context: Context,
         intent: Intent,
     ) {
-        val notificationOnChannel = NotificationOnChannel(context)
+        _context = context
+
         val movie: MovieTicketModel =
             intent.getSerializableExtraCompat(SettingFragment.KEY_MOVIE)
                 ?: return
-
         notificationOnChannel.createNotificationChannel()
-        notificationOnChannel.notify(context, movie)
+        notificationOnChannel.notify(_context, movie)
     }
 }

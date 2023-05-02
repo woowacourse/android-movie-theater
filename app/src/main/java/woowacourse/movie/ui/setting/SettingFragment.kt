@@ -24,11 +24,9 @@ class SettingFragment : Fragment() {
         )
     }
     private val alarm by lazy { Alarm(requireContext()) }
-    private val requestPermissionLauncher by lazy {
-        registerForActivityResult(
-            ActivityResultContracts.RequestPermission(),
-        ) {}
-    }
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) {}
 
     override fun onCreateView(
         inflater: LayoutInflater,
