@@ -44,7 +44,7 @@ class SeatSelectionActivity : AppCompatActivity() {
         setMovieTitle()
     }
 
-    private fun setInitData(){
+    private fun setInitData() {
         intent.getParcelableCompat<SeatMovieDto>(SEAT_BASE_INFORMATION_KEY)?.let { seatBaseInfo = it }
     }
 
