@@ -21,7 +21,6 @@ import woowacourse.movie.ui.model.MovieTicketModel
 import woowacourse.movie.ui.model.PeopleCountModel
 import woowacourse.movie.ui.model.PriceModel
 import woowacourse.movie.ui.model.TicketTimeModel
-import woowacourse.movie.ui.model.mapToMovie
 import woowacourse.movie.ui.utils.getParcelable
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -116,7 +115,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         val dateSpinnerAdapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
-            movie.mapToMovie().getDatesBetweenTwoDates()
+            movie.getDatesBetweenTwoDates()
         )
         dateSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         dateSpinner.adapter = dateSpinnerAdapter
