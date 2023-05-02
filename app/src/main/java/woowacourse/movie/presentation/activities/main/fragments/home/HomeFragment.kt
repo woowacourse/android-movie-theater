@@ -48,9 +48,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeContract.View {
     }
 
     override fun showTicketScreen(item: ListItem) {
-        val intent = Intent(requireContext(), TicketingActivity::class.java)
-            .putExtra(MOVIE_KEY, item)
-        startActivity(intent)
+        startActivity(TicketingActivity.getIntent(requireContext(), item))
     }
 
     override fun showAdWebSite(item: ListItem) {
@@ -61,7 +59,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeContract.View {
     }
 
     companion object {
-        internal const val MOVIE_KEY = "movie_key"
         private val homeFragment = HomeFragment()
 
         fun newInstance(): HomeFragment = homeFragment

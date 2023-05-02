@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.activities.ticketing
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -15,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.movie.DomainMovieDate
 import woowacourse.movie.domain.model.movie.DomainMovieTime
-import woowacourse.movie.presentation.activities.main.fragments.home.HomeFragment.Companion.MOVIE_KEY
 import woowacourse.movie.presentation.extensions.getParcelableCompat
 import woowacourse.movie.presentation.extensions.showBackButton
 import woowacourse.movie.presentation.extensions.showToast
@@ -24,6 +24,7 @@ import woowacourse.movie.presentation.mapper.toPresentation
 import woowacourse.movie.presentation.model.MovieDate
 import woowacourse.movie.presentation.model.MovieTime
 import woowacourse.movie.presentation.model.Ticket
+import woowacourse.movie.presentation.model.movieitem.ListItem
 import woowacourse.movie.presentation.model.movieitem.Movie
 
 class TicketingActivity : AppCompatActivity(), View.OnClickListener {
@@ -227,5 +228,10 @@ class TicketingActivity : AppCompatActivity(), View.OnClickListener {
         internal const val SELECTED_DATE_STATE_KEY = "selectedDate"
         internal const val SELECTED_TIME_STATE_KEY = "selectedTime"
         internal const val TICKET_COUNT_STATE_KEY = "ticketCountState"
+
+        internal const val MOVIE_KEY = "movie_key"
+
+        fun getIntent(context: Context, movie: ListItem): Intent =
+            Intent(context, TicketingActivity::class.java).putExtra(MOVIE_KEY, movie)
     }
 }
