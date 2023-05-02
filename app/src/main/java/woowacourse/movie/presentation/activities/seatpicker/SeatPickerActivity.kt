@@ -48,14 +48,14 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener, SeatPicker
     private val seatRowSize: Int = 5
     private val seatColSize: Int = 4
 
+    private val movie: Movie by lazy { intent.getParcelableCompat(MOVIE_KEY)!! }
+    private val ticket: Ticket by lazy { intent.getParcelableCompat(TICKET_KEY)!! }
     private val movieDate by lazy {
         intent.getParcelableCompat<MovieDate>(MOVIE_DATE_KEY)!!.toDomain()
     }
     private val movieTime by lazy {
         intent.getParcelableCompat<MovieTime>(MOVIE_TIME_KEY)!!.toDomain()
     }
-    private val ticket by lazy { intent.getParcelableCompat<Ticket>(TICKET_KEY)!! }
-    private val movie by lazy { intent.getParcelableCompat<Movie>(MOVIE_KEY)!! }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -150,19 +150,6 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener, SeatPicker
         outState.putParcelable(PICKED_SEATS_KEY, pickedSeats.toPresentation())
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> finish()
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onClick(view: View) {
-        when (view.id) {
-            R.id.done_btn -> showTicketingConfirmDialog()
-        }
-    }
-
     private fun showTicketingConfirmDialog() {
         createAlertDialog(false) {
             title(getString(R.string.ticketing_confirm_title))
@@ -200,24 +187,37 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener, SeatPicker
         )
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onClick(view: View) {
+        when (view.id) {
+            R.id.done_btn -> showTicketingConfirmDialog()
+        }
+    }
+
     companion object {
-        internal const val PICKED_SEATS_KEY = "picked_seats"
+        internal const val PICKED_SEATS_KEY = "picked_seats_key"
         internal const val REMINDER_TIME_MINUTES_AGO = 30L
 
-        private const val TICKET_KEY = "ticketCount"
+        private const val TICKET_KEY = "ticket_key"
         private const val MOVIE_KEY = "movie_key"
-        private const val MOVIE_DATE_KEY = "movieDate"
-        private const val MOVIE_TIME_KEY = "movieTime"
+        private const val MOVIE_DATE_KEY = "movie_date_key"
+        private const val MOVIE_TIME_KEY = "movie_time_key"
 
         fun getIntent(
             context: Context,
             movie: Movie,
             ticket: Ticket,
             selectedDate: MovieDate,
-            selectedTime: MovieTime
+            selectedTime: MovieTime,
         ): Intent = Intent(context, SeatPickerActivity::class.java)
-            .putExtra(TICKET_KEY, movie)
-            .putExtra(MOVIE_KEY, ticket)
+            .putExtra(MOVIE_KEY, movie)
+            .putExtra(TICKET_KEY, ticket)
             .putExtra(MOVIE_DATE_KEY, selectedDate)
             .putExtra(MOVIE_TIME_KEY, selectedTime)
     }

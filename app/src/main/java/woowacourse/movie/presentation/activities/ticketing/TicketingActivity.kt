@@ -163,7 +163,7 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnCl
         movie: Movie,
         ticket: Ticket,
         selectedDate: MovieDate,
-        selectedTime: MovieTime
+        selectedTime: MovieTime,
     ) {
         val seatPickerIntent =
             SeatPickerActivity.getIntent(this, movie, ticket, selectedDate, selectedTime)
