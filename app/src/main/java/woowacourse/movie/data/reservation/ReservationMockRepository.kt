@@ -1,4 +1,4 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.reservation
 
 import woowacourse.movie.domain.Reservation
 import woowacourse.movie.domain.repository.ReservationRepository
