@@ -7,22 +7,34 @@ import androidx.recyclerview.widget.RecyclerView
 import domain.Reservation
 import woowacourse.movie.mock.MockReservationsFactory
 import woowacourse.movie.R
+import woowacourse.movie.contract.ReservationListContract
+import woowacourse.movie.model.MovieUiModel
+import woowacourse.movie.model.TicketUiModel
+import woowacourse.movie.model.TicketsUiModel
 import woowacourse.movie.view.activity.ReservationResultActivity
 import woowacourse.movie.view.adapter.ReservationAdapter
 import woowacourse.movie.model.mapper.ReservationMapper.toUi
+import woowacourse.movie.presenter.ReservationListPresenter
 
-class ReservationListFragment : Fragment(R.layout.fragment_reservation_list) {
+class ReservationListFragment : Fragment(R.layout.fragment_reservation_list),
+    ReservationListContract.View {
+    override val presenter: ReservationListContract.Presenter = ReservationListPresenter(this)
+    private lateinit var recyclerView: RecyclerView
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val reservations = MockReservationsFactory.makeReservations()
-        val recyclerView: RecyclerView = view.findViewById(R.id.reservation_recycler_view)
-        recyclerView.adapter = ReservationAdapter(reservations, ::reservationItemClick)
+        recyclerView = view.findViewById(R.id.reservation_recycler_view)
+        presenter.getReservationList()
     }
 
-    private fun reservationItemClick(reservation: Reservation) {
-        val reservationUiModel = reservation.toUi()
-        val movieUiModel = reservationUiModel.movie
-        val ticketsUiModel = reservationUiModel.tickets
+    override fun setAdapter(reservationList: List<Reservation>) {
+        recyclerView.adapter =
+            ReservationAdapter(reservationList, presenter::showReservationDetail)
+    }
+
+    override fun startReservationResultActivity(
+        movieUiModel: MovieUiModel,
+        ticketsUiModel: TicketsUiModel
+    ) {
         ReservationResultActivity.start(
             requireContext(),
             movieUiModel = movieUiModel,
