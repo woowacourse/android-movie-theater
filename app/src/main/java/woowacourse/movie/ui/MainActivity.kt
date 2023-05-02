@@ -53,12 +53,12 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentByTag(lastSelectedFragmentTag)?.let { hide(it) }
         }
 
-        findFragment?.let {
+        if (findFragment != null) {
             supportFragmentManager.commit {
-                show(it)
+                show(findFragment)
                 lastSelectedFragmentTag = tag
             }
-        } ?: kotlin.run {
+        } else {
             supportFragmentManager.commit {
                 replace(R.id.main_fragment_view, fragment, tag)
                 lastSelectedFragmentTag = tag
