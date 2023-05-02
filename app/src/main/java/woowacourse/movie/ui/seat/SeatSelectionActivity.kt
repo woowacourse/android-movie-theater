@@ -17,7 +17,7 @@ import woowacourse.movie.mapper.toModel
 import woowacourse.movie.model.AlarmSwitchState
 import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.model.PeopleCountModel
-import woowacourse.movie.model.ReservationModel
+import woowacourse.movie.model.ReservationTicketMachine
 import woowacourse.movie.model.SeatModel
 import woowacourse.movie.model.SelectedSeatsModel
 import woowacourse.movie.ui.alarm.AlarmCreator
@@ -29,7 +29,6 @@ import woowacourse.movie.utils.showToast
 import java.time.LocalDateTime
 
 class SeatSelectionActivity : AppCompatActivity() {
-
     private val priceTextView by lazy { findViewById<TextView>(R.id.seat_price) }
     private val selectButton by lazy { findViewById<TextView>(R.id.seat_confirm_button) }
 
@@ -178,11 +177,11 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     private fun setReservationData(ticket: MovieTicketModel) {
-        ReservationModel.add(ticket)
+        ReservationTicketMachine.add(ticket)
     }
 
     private fun MovieTicketModel.makeAlarm() {
-        if (AlarmSwitchState.isAlarmActivated) {
+        if (AlarmSwitchState.getInstance(this@SeatSelectionActivity).isAlarmActivated) {
             alarmCreator.makeAlarm(this)
         }
     }

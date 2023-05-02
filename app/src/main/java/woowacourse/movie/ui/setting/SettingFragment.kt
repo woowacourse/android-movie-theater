@@ -13,11 +13,16 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.model.AlarmSwitchState
 import woowacourse.movie.model.MovieTicketModel
-import woowacourse.movie.model.ReservationModel
+import woowacourse.movie.model.ReservationTicketMachine
 import woowacourse.movie.ui.alarm.AlarmCreator
 
 class SettingFragment : Fragment() {
     private lateinit var toggleButton: SwitchCompat
+    private val alarmSwitchState: AlarmSwitchState by lazy {
+        AlarmSwitchState.getInstance(
+            requireContext(),
+        )
+    }
     private val alarmCreator by lazy { AlarmCreator(requireContext()) }
     private val requestPermissionLauncher by lazy {
         registerForActivityResult(
@@ -32,7 +37,6 @@ class SettingFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_setting, container, false)
 
-        AlarmSwitchState.init(requireContext())
         requestNotificationPermission(view)
         initToggleButton(view)
         setClickEventOnToggleButton()
@@ -59,12 +63,12 @@ class SettingFragment : Fragment() {
 
     private fun initToggleButton(view: View) {
         toggleButton = view.findViewById(R.id.setting_switch)
-        toggleButton.isChecked = AlarmSwitchState.isAlarmActivated
+        toggleButton.isChecked = alarmSwitchState.isAlarmActivated
     }
 
     private fun setClickEventOnToggleButton() {
         toggleButton.setOnCheckedChangeListener { _, isChecked ->
-            AlarmSwitchState.isAlarmActivated = isChecked
+            alarmSwitchState.isAlarmActivated = isChecked
             setAlarms(isChecked)
         }
     }
@@ -78,7 +82,7 @@ class SettingFragment : Fragment() {
     }
 
     private fun iterateOnTickets(event: (MovieTicketModel) -> Unit) {
-        ReservationModel.tickets.forEach { ticket ->
+        ReservationTicketMachine.tickets.forEach { ticket ->
             event(ticket)
         }
     }
