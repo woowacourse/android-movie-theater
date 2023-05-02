@@ -2,8 +2,8 @@ package woowacourse.movie.domain.discountPolicy
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import woowacourse.movie.domain.Price
-import woowacourse.movie.domain.ReservationDetail
+import woowacourse.movie.domain.model.Price
+import woowacourse.movie.domain.model.ReservationDetail
 import java.time.LocalDateTime
 
 class OffTimeTest {

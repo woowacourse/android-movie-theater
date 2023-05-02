@@ -1,4 +1,4 @@
-package woowacourse.movie.domain
+package woowacourse.movie.domain.model
 
 data class Movie(
     val poster: Image,

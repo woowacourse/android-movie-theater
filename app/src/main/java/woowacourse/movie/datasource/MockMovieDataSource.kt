@@ -1,8 +1,8 @@
 package woowacourse.movie.datasource
 
-import woowacourse.movie.domain.Movie
-import woowacourse.movie.domain.MovieMock
 import woowacourse.movie.domain.dataSource.MovieDataSource
+import woowacourse.movie.domain.model.Movie
+import woowacourse.movie.domain.model.MovieMock
 
 class MockMovieDataSource : MovieDataSource {
     override fun getData(): List<Movie> {

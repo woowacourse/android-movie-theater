@@ -1,7 +1,7 @@
 package woowacourse.movie.view.widget
 
 import android.os.Bundle
-import woowacourse.movie.domain.Count
+import woowacourse.movie.domain.model.Count
 
 class SaveStateCounter(val counter: Counter, override val saveStateKey: String) :
     SaveState {

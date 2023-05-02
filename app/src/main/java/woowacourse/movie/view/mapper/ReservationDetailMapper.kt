@@ -1,6 +1,6 @@
 package woowacourse.movie.view.mapper
 
-import woowacourse.movie.domain.ReservationDetail
+import woowacourse.movie.domain.model.ReservationDetail
 import woowacourse.movie.view.data.ReservationDetailViewData
 
 object ReservationDetailMapper : Mapper<ReservationDetail, ReservationDetailViewData> {

@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.activity.MovieReservationActivity
 import woowacourse.movie.datasource.MockMovieDataSource
-import woowacourse.movie.domain.AdvertisementMock
 import woowacourse.movie.domain.advertismentPolicy.MovieAdvertisementPolicy
 import woowacourse.movie.domain.dataSource.MovieDataSource
+import woowacourse.movie.domain.model.AdvertisementMock
 import woowacourse.movie.domain.repository.MovieRepository
 import woowacourse.movie.view.adapter.MovieAdapter
 import woowacourse.movie.view.data.MovieListViewData

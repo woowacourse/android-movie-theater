@@ -7,8 +7,8 @@ import android.view.MenuItem
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.domain.Count
-import woowacourse.movie.domain.ReservationDetail
+import woowacourse.movie.domain.model.Count
+import woowacourse.movie.domain.model.ReservationDetail
 import woowacourse.movie.view.data.LocalFormattedDate
 import woowacourse.movie.view.data.LocalFormattedTime
 import woowacourse.movie.view.data.MovieViewData

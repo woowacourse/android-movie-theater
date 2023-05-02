@@ -1,4 +1,4 @@
-package woowacourse.movie.domain
+package woowacourse.movie.domain.model
 
 class Count(val value: Int) {
     operator fun plus(increment: Int): Count = Count(value + increment)

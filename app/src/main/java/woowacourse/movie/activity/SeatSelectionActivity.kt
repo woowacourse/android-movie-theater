@@ -9,8 +9,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.domain.Price
-import woowacourse.movie.domain.TicketBox
+import woowacourse.movie.datasource.ReservationDataSource
+import woowacourse.movie.domain.model.Price
+import woowacourse.movie.domain.model.TicketBox
 import woowacourse.movie.domain.reservationNotificationPolicy.MovieReservationNotification
 import woowacourse.movie.domain.reservationNotificationPolicy.ReservationNotificationPolicy
 import woowacourse.movie.service.AlarmMaker
@@ -141,7 +142,7 @@ class SeatSelectionActivity : AppCompatActivity() {
         movie: MovieViewData,
         reservationDetail: ReservationDetailViewData
     ) {
-        val ticketBox = TicketBox(woowacourse.movie.datasource.ReservationDataSource())
+        val ticketBox = TicketBox(ReservationDataSource())
         val seats = seatTableLayout.selectedSeats()
         val reservation =
             ticketBox.ticketing(movie.toDomain(), reservationDetail.toDomain(), seats.toDomain())

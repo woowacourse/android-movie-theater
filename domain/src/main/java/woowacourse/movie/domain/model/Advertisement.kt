@@ -1,3 +1,3 @@
-package woowacourse.movie.domain
+package woowacourse.movie.domain.model
 
 data class Advertisement(val banner: Image)

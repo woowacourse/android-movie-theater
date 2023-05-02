@@ -1,4 +1,4 @@
-package woowacourse.movie.domain
+package woowacourse.movie.domain.model
 
 class Price(val value: Int = DEFAULT_PRICE) {
     companion object {

@@ -1,7 +1,7 @@
 package woowacourse.movie.domain.discountPolicy
 
-import woowacourse.movie.domain.Price
-import woowacourse.movie.domain.ReservationDetail
+import woowacourse.movie.domain.model.Price
+import woowacourse.movie.domain.model.ReservationDetail
 
 class Discount(private val discountPolicy: List<DiscountPolicy>) {
     fun calculate(

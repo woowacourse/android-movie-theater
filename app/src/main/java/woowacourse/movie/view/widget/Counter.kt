@@ -2,7 +2,7 @@ package woowacourse.movie.view.widget
 
 import android.widget.Button
 import android.widget.TextView
-import woowacourse.movie.domain.Count
+import woowacourse.movie.domain.model.Count
 
 class Counter(
     minusButton: Button,

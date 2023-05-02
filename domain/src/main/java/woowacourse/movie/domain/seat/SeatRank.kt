@@ -1,6 +1,6 @@
 package woowacourse.movie.domain.seat
 
-import woowacourse.movie.domain.Price
+import woowacourse.movie.domain.model.Price
 
 enum class SeatRank(
     val price: Price

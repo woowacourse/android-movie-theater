@@ -1,6 +1,6 @@
 package woowacourse.movie.view.mapper
 
-import woowacourse.movie.domain.Price
+import woowacourse.movie.domain.model.Price
 import woowacourse.movie.view.data.PriceViewData
 
 object PriceMapper : Mapper<Price, PriceViewData> {

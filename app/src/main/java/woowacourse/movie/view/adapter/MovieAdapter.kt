@@ -5,9 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.domain.Advertisement
-import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.advertismentPolicy.AdvertisementPolicy
+import woowacourse.movie.domain.model.Advertisement
+import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.view.data.MovieListViewData
 import woowacourse.movie.view.data.MovieListViewType
 import woowacourse.movie.view.data.MovieViewData
