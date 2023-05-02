@@ -14,8 +14,6 @@ import woowacourse.movie.feature.adv.AdvDetailActivity
 import woowacourse.movie.feature.detail.MovieDetailActivity
 import woowacourse.movie.feature.main.MainActivity
 import woowacourse.movie.feature.movieList.adapter.MovieListAdapter
-import woowacourse.movie.feature.movieList.itemModel.AdvItemModel
-import woowacourse.movie.feature.movieList.itemModel.MovieItemModel
 import woowacourse.movie.model.AdvState
 import woowacourse.movie.model.MovieState
 
@@ -37,14 +35,10 @@ class MovieListFragment : Fragment() {
         movieListView = view.findViewById(R.id.rv_main)
         adapter = MovieListAdapter(
             movie = MovieRepository.allMovies().map {
-                it.convertToItemModel { position ->
-                    navigateMovieDetail((adapter.items[position] as MovieItemModel).movieState)
-                }
+                it.convertToItemModel { movie -> navigateMovieDetail(movie) }
             },
             adv = AdvRepository.allAdv().map {
-                it.convertToItemModel { position ->
-                    navigateAdbDetail((adapter.items[position] as AdvItemModel).advState)
-                }
+                it.convertToItemModel { adv -> navigateAdbDetail(adv) }
             }
         )
         movieListView.adapter = adapter

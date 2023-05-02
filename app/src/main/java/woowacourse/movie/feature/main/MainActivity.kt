@@ -4,11 +4,13 @@ import android.Manifest
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.feature.common.OnDataUpdate
 import woowacourse.movie.feature.common.Toaster
 import woowacourse.movie.feature.movieList.MovieListFragment
@@ -17,6 +19,7 @@ import woowacourse.movie.feature.setting.SettingFragment
 import woowacourse.movie.util.requestPermissions
 
 class MainActivity : AppCompatActivity(), MainContract.View {
+    private lateinit var binding: ActivityMainBinding
     private val containerView: FragmentContainerView by lazy { findViewById(R.id.container) }
     private val bottomNavigation: BottomNavigationView by lazy { findViewById(R.id.bottom_navigation_view) }
 
@@ -28,7 +31,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         presenter = MainPresenter(this)
 
         movieListFragment = getFragment(MOVIE_LIST_TAG)
