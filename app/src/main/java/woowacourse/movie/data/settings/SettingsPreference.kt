@@ -4,19 +4,34 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 
-object SettingsPreference : SettingsData {
+class SettingsPreference private constructor(
+    private val key: String,
+    context: Context,
+) : SettingsData {
 
-    private lateinit var settingsPreferences: SharedPreferences
-    private const val preferenceName = "Settings"
+    private val settingsPreferences: SharedPreferences
 
-    fun init(context: Context) {
-        settingsPreferences = context.getSharedPreferences(preferenceName, MODE_PRIVATE)
+    override var isAvailable: Boolean
+        get() = settingsPreferences.getBoolean(key, true)
+        set(value) {
+            settingsPreferences.edit().putBoolean(key, value).apply()
+        }
+
+    init {
+        settingsPreferences = context.getSharedPreferences(PREFERENCE_NAME, MODE_PRIVATE)
     }
 
-    override fun setBooleanData(key: String, value: Boolean) {
-        settingsPreferences.edit().putBoolean(key, value).apply()
-    }
+    companion object {
+        private const val PREFERENCE_NAME = "Settings"
 
-    override fun getBooleanData(key: String, defaultValue: Boolean): Boolean =
-        settingsPreferences.getBoolean(key, defaultValue)
+        private val instances = mutableMapOf<String, SettingsPreference>()
+
+        fun getInstance(key: String, context: Context): SettingsPreference {
+            return instances[key] ?: synchronized(this) {
+                instances[key] ?: SettingsPreference(key, context).also {
+                    instances[key] = it
+                }
+            }
+        }
+    }
 }

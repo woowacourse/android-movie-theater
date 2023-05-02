@@ -7,7 +7,8 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.data.settings.SettingsNotificationData
+import woowacourse.movie.data.settings.SettingsPreference
+import woowacourse.movie.data.settings.SettingsPreferenceKeys
 
 class SettingsFragment : Fragment() {
 
@@ -29,10 +30,22 @@ class SettingsFragment : Fragment() {
         val notificationSwitch =
             requireActivity().findViewById<SwitchCompat>(R.id.switchPushPermission)
 
-        notificationSwitch.isChecked = SettingsNotificationData.getNotification()
+        notificationSwitch.isChecked = isNotifiable()
 
         notificationSwitch.setOnCheckedChangeListener { _, isChecked ->
-            SettingsNotificationData.setNotification(isChecked)
+            setNotifiable(isChecked)
         }
+    }
+
+    private fun isNotifiable(): Boolean {
+        val settingsNotification =
+            SettingsPreference.getInstance(SettingsPreferenceKeys.notificationKey, requireContext())
+        return settingsNotification.isAvailable
+    }
+
+    private fun setNotifiable(value: Boolean) {
+        val settingsNotification =
+            SettingsPreference.getInstance(SettingsPreferenceKeys.notificationKey, requireContext())
+        settingsNotification.isAvailable = value
     }
 }
