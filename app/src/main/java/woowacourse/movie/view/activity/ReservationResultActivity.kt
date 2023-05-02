@@ -16,7 +16,7 @@ import woowacourse.movie.data.SeatsViewData
 import woowacourse.movie.error.ActivityError.finishWithError
 import woowacourse.movie.error.ViewError
 import woowacourse.movie.presenter.ReservationResultPresenter
-import woowacourse.movie.view.getSerializableCompat
+import woowacourse.movie.system.getSerializableCompat
 import woowacourse.movie.view.widget.MovieController
 import woowacourse.movie.view.widget.MovieView
 import java.text.NumberFormat

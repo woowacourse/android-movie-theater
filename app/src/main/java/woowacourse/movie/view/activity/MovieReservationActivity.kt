@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +18,7 @@ import woowacourse.movie.data.ReservationDetailViewData
 import woowacourse.movie.error.ActivityError.finishWithError
 import woowacourse.movie.error.ViewError
 import woowacourse.movie.presenter.MovieReservationPresenter
-import woowacourse.movie.view.getSerializableCompat
+import woowacourse.movie.system.getSerializableCompat
 import woowacourse.movie.view.widget.DateSpinner
 import woowacourse.movie.view.widget.MovieController
 import woowacourse.movie.view.widget.MovieView
@@ -87,7 +89,14 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         counterText.text = count.toString()
     }
 
-    override fun startReservationResultActivity(reservationDetail: ReservationDetailViewData, movie: MovieViewData) {
+    override fun setTimeSpinner(times: List<LocalFormattedTime>) {
+        timeSpinner.setTimes(times)
+    }
+
+    override fun startReservationResultActivity(
+        reservationDetail: ReservationDetailViewData,
+        movie: MovieViewData
+    ) {
         SeatSelectionActivity.from(this, movie, reservationDetail).run {
             startActivity(this)
         }
@@ -104,8 +113,17 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
 
     private fun makeSpinners(savedInstanceState: Bundle?, movie: MovieViewData) {
         dateSpinner.make(
-            savedInstanceState = savedInstanceState, movie = movie, timeSpinner = timeSpinner
+            savedInstanceState = savedInstanceState, movie = movie
         )
+        timeSpinner.make(savedInstanceState)
+        dateSpinner.spinner.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                presenter.selectDate(dateSpinner.dates[position].date)
+            }
+        }
     }
 
     private fun makeReservationButtonClickListener(

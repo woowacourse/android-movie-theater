@@ -7,7 +7,7 @@ import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.data.SeatTableViewData
 import woowacourse.movie.data.SeatsViewData
-import woowacourse.movie.view.getSerializableCompat
+import woowacourse.movie.system.getSerializableCompat
 
 class SeatTableLayout(
     private val tableLayout: TableLayout,

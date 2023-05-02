@@ -21,7 +21,7 @@ import woowacourse.movie.presenter.SeatSelectionPresenter
 import woowacourse.movie.system.BroadcastAlarm.registerAlarmReceiver
 import woowacourse.movie.system.BroadcastAlarm.setAlarmAtDate
 import woowacourse.movie.system.ReservationAlarmReceiver
-import woowacourse.movie.view.getSerializableCompat
+import woowacourse.movie.system.getSerializableCompat
 import woowacourse.movie.view.widget.SeatTableLayout
 import java.text.NumberFormat
 import java.time.LocalDateTime

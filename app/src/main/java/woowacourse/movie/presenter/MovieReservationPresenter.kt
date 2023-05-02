@@ -2,10 +2,15 @@ package woowacourse.movie.presenter
 
 import android.os.Bundle
 import woowacourse.movie.contract.MovieReservationContract
+import woowacourse.movie.data.LocalFormattedTime
 import woowacourse.movie.data.MovieViewData
 import woowacourse.movie.domain.Count
 import woowacourse.movie.domain.ReservationDetail
+import woowacourse.movie.domain.movieTimePolicy.MovieTime
+import woowacourse.movie.domain.movieTimePolicy.WeekdayMovieTimePolicy
+import woowacourse.movie.domain.movieTimePolicy.WeekendMovieTimePolicy
 import woowacourse.movie.mapper.ReservationDetailMapper.toView
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 class MovieReservationPresenter(
@@ -27,6 +32,13 @@ class MovieReservationPresenter(
             date, peopleCount.value
         ).toView()
         view.startReservationResultActivity(reservationDetail, movie)
+    }
+
+    override fun selectDate(date: LocalDate) {
+        val times = MovieTime(
+            listOf(WeekdayMovieTimePolicy, WeekendMovieTimePolicy)
+        ).determine(date).map { LocalFormattedTime(it) }
+        view.setTimeSpinner(times)
     }
 
     override fun save(outState: Bundle) {

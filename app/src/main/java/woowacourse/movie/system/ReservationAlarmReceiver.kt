@@ -14,7 +14,6 @@ import woowacourse.movie.error.BroadcastReceiverError.returnWithError
 import woowacourse.movie.error.ViewError
 import woowacourse.movie.view.activity.ReservationResultActivity
 import woowacourse.movie.view.fragment.SettingFragment
-import woowacourse.movie.view.getSerializableCompat
 
 class ReservationAlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
