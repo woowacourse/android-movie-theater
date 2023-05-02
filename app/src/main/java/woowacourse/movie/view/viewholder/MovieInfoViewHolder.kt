@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.view.data.MovieViewData
+import woowacourse.movie.data.MovieViewData
 import woowacourse.movie.view.widget.MovieController
 import woowacourse.movie.view.widget.MovieView
 

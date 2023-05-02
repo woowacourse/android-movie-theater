@@ -17,12 +17,13 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
+import woowacourse.movie.data.LocalFormattedDate
+import woowacourse.movie.data.LocalFormattedTime
 import woowacourse.movie.domain.DateRange
 import woowacourse.movie.domain.Image
 import woowacourse.movie.domain.Movie
-import woowacourse.movie.view.data.LocalFormattedDate
-import woowacourse.movie.view.data.LocalFormattedTime
-import woowacourse.movie.view.mapper.MovieMapper.toView
+import woowacourse.movie.mapper.MovieMapper.toView
+import woowacourse.movie.view.activity.MovieReservationActivity
 import java.time.LocalDate
 
 @RunWith(AndroidJUnit4::class)

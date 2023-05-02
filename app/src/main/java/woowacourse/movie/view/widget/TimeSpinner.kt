@@ -1,10 +1,10 @@
 package woowacourse.movie.view.widget
 
 import android.os.Bundle
+import woowacourse.movie.data.LocalFormattedTime
 import woowacourse.movie.domain.movieTimePolicy.MovieTime
 import woowacourse.movie.domain.movieTimePolicy.WeekdayMovieTimePolicy
 import woowacourse.movie.domain.movieTimePolicy.WeekendMovieTimePolicy
-import woowacourse.movie.view.data.LocalFormattedTime
 import java.time.LocalDate
 
 class TimeSpinner(val spinner: SaveStateSpinner) {

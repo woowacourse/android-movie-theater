@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.view.data.ReservationViewData
-import woowacourse.movie.view.data.ReservationsViewData
+import woowacourse.movie.data.ReservationViewData
+import woowacourse.movie.data.ReservationsViewData
 import woowacourse.movie.view.viewholder.ReservationViewHolder
 
 class ReservationAdapter(

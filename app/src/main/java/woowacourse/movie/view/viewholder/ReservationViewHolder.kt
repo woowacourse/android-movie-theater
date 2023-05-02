@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.view.data.ReservationViewData
+import woowacourse.movie.data.ReservationViewData
 import java.time.format.DateTimeFormatter
 
 class ReservationViewHolder(

@@ -4,15 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.data.MovieListItemViewData
+import woowacourse.movie.data.MovieListItemsViewData
+import woowacourse.movie.data.MovieListViewType
+import woowacourse.movie.data.MovieViewData
 import woowacourse.movie.domain.Advertisement
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.advertismentPolicy.AdvertisementPolicy
-import woowacourse.movie.view.data.MovieListItemViewData
-import woowacourse.movie.view.data.MovieListItemsViewData
-import woowacourse.movie.view.data.MovieListViewType
-import woowacourse.movie.view.data.MovieViewData
-import woowacourse.movie.view.mapper.AdvertisementMapper.toView
-import woowacourse.movie.view.mapper.MovieMapper.toView
+import woowacourse.movie.mapper.AdvertisementMapper.toView
+import woowacourse.movie.mapper.MovieMapper.toView
 import woowacourse.movie.view.viewholder.AdvertisementViewHolder
 import woowacourse.movie.view.viewholder.MovieInfoViewHolder
 

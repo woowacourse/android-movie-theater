@@ -21,8 +21,9 @@ import woowacourse.movie.domain.DateRange
 import woowacourse.movie.domain.Image
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.ReservationDetail
-import woowacourse.movie.view.mapper.MovieMapper.toView
-import woowacourse.movie.view.mapper.ReservationDetailMapper.toView
+import woowacourse.movie.mapper.MovieMapper.toView
+import woowacourse.movie.mapper.ReservationDetailMapper.toView
+import woowacourse.movie.view.activity.SeatSelectionActivity
 import java.time.LocalDate
 import java.time.LocalDateTime
 

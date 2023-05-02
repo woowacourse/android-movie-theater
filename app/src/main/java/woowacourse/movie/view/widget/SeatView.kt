@@ -7,7 +7,7 @@ import android.widget.TableRow
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import woowacourse.movie.R
-import woowacourse.movie.view.data.SeatViewData
+import woowacourse.movie.data.SeatViewData
 
 class SeatView private constructor(
     context: Context,
