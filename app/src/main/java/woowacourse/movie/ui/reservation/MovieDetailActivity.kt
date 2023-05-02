@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import com.example.domain.usecase.GetMovieRunningDateUseCase
-import com.example.domain.usecase.GetMovieRunningTimeUseCase
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -13,7 +11,6 @@ import woowacourse.movie.R
 import woowacourse.movie.model.CountState
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.SeatSelectState
-import woowacourse.movie.model.mapper.asDomain
 import woowacourse.movie.ui.BackKeyActionBarActivity
 import woowacourse.movie.ui.seat.SeatSelectActivity
 import woowacourse.movie.util.getParcelableCompat
@@ -21,39 +18,41 @@ import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.getSerializableCompat
 import woowacourse.movie.util.keyError
 
-class MovieDetailActivity : BackKeyActionBarActivity() {
-    private val getMovieRunningDateUseCase = GetMovieRunningDateUseCase()
-    private val getMovieRunningTimeUseCase = GetMovieRunningTimeUseCase()
+class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View {
+    override var presenter: MovieDetailContract.Presenter = MovieDetailPresenter(this)
 
     private lateinit var movie: MovieState
 
     private lateinit var movieInfo: MovieInfo
     private lateinit var dateTimeSpinner: DateTimeSpinner
-    private lateinit var reservationCounter: ReservationCounter
-    private val reservationConfirm: Button by lazy { findViewById(R.id.reservation_confirm) }
+    private lateinit var view: TicketCounter
+
+    private lateinit var reservationConfirm: Button
+
+    private val rootView by lazy { window.decorView.rootView }
 
     override fun onCreateView(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_movie_detail)
-        val rootView = window.decorView.rootView
         movie = intent.getParcelableExtraCompat(KEY_MOVIE) ?: return keyError(KEY_MOVIE)
         movieInfo = MovieInfo(rootView).also { it.setMovieState(movie) }
-        if (savedInstanceState != null) {
-            restoreInstanceState(savedInstanceState)
-        } else {
-            dateTimeSpinner = DateTimeSpinner(
-                rootView,
-                movie,
-                ::getMovieRunningDates,
-                ::getMovieRunningTimes
-            )
-            reservationCounter = ReservationCounter(rootView)
+        when (savedInstanceState) {
+            null -> initInstanceState()
+            else -> restoreInstanceState(savedInstanceState)
         }
+        reservationConfirm = findViewById(R.id.reservation_confirm)
         reservationConfirm.setOnClickListener { navigateSeatSelectActivity() }
     }
 
+    override fun setCounterText(count: Int) {
+        view.setCounterText(count)
+    }
+
     private fun navigateSeatSelectActivity() {
-        val dateTime = dateTimeSpinner.getSelectDateTime()
-        val seatSelectState = SeatSelectState(movie, dateTime, reservationCounter.count)
+        val seatSelectState = SeatSelectState(
+            movie,
+            dateTimeSpinner.getSelectDateTime(),
+            presenter.count
+        )
         SeatSelectActivity.startActivity(this, seatSelectState)
     }
 
@@ -62,7 +61,17 @@ class MovieDetailActivity : BackKeyActionBarActivity() {
         val dateTime = dateTimeSpinner.getSelectDateTime()
         outState.putSerializable(KEY_DATE, dateTime.toLocalDate())
         outState.putSerializable(KEY_TIME, dateTime.toLocalTime())
-        outState.putParcelable(KEY_COUNT, reservationCounter.count)
+        outState.putParcelable(KEY_COUNT, presenter.count)
+    }
+
+    private fun initInstanceState() {
+        dateTimeSpinner = DateTimeSpinner(
+            rootView,
+            movie,
+            presenter::getMovieRunningDates,
+            presenter::getMovieRunningTimes
+        )
+        view = TicketCounter(rootView, presenter)
     }
 
     private fun restoreInstanceState(savedInstanceState: Bundle) {
@@ -73,20 +82,14 @@ class MovieDetailActivity : BackKeyActionBarActivity() {
         val restoreCount: CountState =
             savedInstanceState.getParcelableCompat(KEY_COUNT) ?: return keyError(KEY_COUNT)
         dateTimeSpinner = DateTimeSpinner(
-            window.decorView.rootView,
+            rootView,
             movie,
-            ::getMovieRunningDates,
-            ::getMovieRunningTimes,
+            presenter::getMovieRunningDates,
+            presenter::getMovieRunningTimes,
             LocalDateTime.of(restoreSelectDate, restoreSelectTime)
         )
-        reservationCounter = ReservationCounter(window.decorView.rootView, restoreCount)
+        view = TicketCounter(rootView, presenter, restoreCount)
     }
-
-    private fun getMovieRunningDates(movie: MovieState) =
-        getMovieRunningDateUseCase(movie.asDomain())
-
-    private fun getMovieRunningTimes(date: LocalDate) =
-        getMovieRunningTimeUseCase(date)
 
     companion object {
         private const val KEY_COUNT = "key_reservation_count"
