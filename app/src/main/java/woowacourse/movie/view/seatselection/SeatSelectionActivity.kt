@@ -39,7 +39,6 @@ class SeatSelectionActivity : AppCompatActivity() {
     private lateinit var reservationAgency: ReservationAgency
     private var selectedSeatCount = 0
     private var selectedSeats: List<Seat> = emptyList()
-    private lateinit var alarmPreference: AlarmPreference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +50,6 @@ class SeatSelectionActivity : AppCompatActivity() {
         initReservationAgency()
         initConfirmReservationButton()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        alarmPreference = AlarmPreference(this)
     }
 
     private fun initSeatButtons() {
@@ -183,7 +181,7 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     private fun reserveSeats() {
-        val isAlarmOn = alarmPreference.getBoolean(SettingFragment.IS_ALARM_ON, false)
+        val isAlarmOn = AlarmPreference.getInstance(applicationContext).isAlarmOn(false)
 
         val alarmController = AlarmController(this)
         val reservation = reservationAgency.reserve(selectedSeats)

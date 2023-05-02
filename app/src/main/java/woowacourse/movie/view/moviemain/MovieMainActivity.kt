@@ -15,7 +15,6 @@ import woowacourse.movie.util.requestRequiredPermissions
 import woowacourse.movie.view.moviemain.movielist.MovieListFragment
 import woowacourse.movie.view.moviemain.reservationlist.ReservationListFragment
 import woowacourse.movie.view.moviemain.setting.SettingFragment
-import woowacourse.movie.view.moviemain.setting.SettingFragment.Companion.IS_ALARM_ON
 
 class MovieMainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,11 +61,11 @@ class MovieMainActivity : AppCompatActivity() {
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission(),
     ) { isGranted: Boolean ->
-        val sharedPreferences = AlarmPreference(this)
+        val alarmPreferences = AlarmPreference.getInstance(applicationContext)
         if (isGranted) {
-            sharedPreferences.putBoolean(IS_ALARM_ON, true)
+            alarmPreferences.setIsAlarmOn(true)
         } else {
-            sharedPreferences.putBoolean(IS_ALARM_ON, false)
+            alarmPreferences.setIsAlarmOn(false)
         }
     }
 }

@@ -28,7 +28,7 @@ class SettingFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        alarmPreference = AlarmPreference(requireContext())
+        alarmPreference = AlarmPreference.getInstance(requireActivity().applicationContext)
         alarmController = AlarmController(requireContext())
     }
 
@@ -44,7 +44,7 @@ class SettingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         toggle = view.findViewById(R.id.setting_toggle)
-        val isAlarmOn = alarmPreference.getBoolean(IS_ALARM_ON, false)
+        val isAlarmOn = alarmPreference.isAlarmOn(false)
 
         initToggle(toggle, isAlarmOn)
     }
@@ -76,7 +76,7 @@ class SettingFragment : Fragment() {
     ) { isGranted: Boolean ->
         if (isGranted) {
             toggle.isChecked = true
-            alarmPreference.putBoolean(IS_ALARM_ON, true)
+            alarmPreference.setIsAlarmOn(true)
         } else {
             Toast.makeText(
                 requireContext(),
@@ -84,7 +84,7 @@ class SettingFragment : Fragment() {
                 Toast.LENGTH_LONG
             ).show()
             toggle.isChecked = false
-            alarmPreference.putBoolean(IS_ALARM_ON, false)
+            alarmPreference.setIsAlarmOn(false)
         }
     }
 
@@ -99,10 +99,10 @@ class SettingFragment : Fragment() {
     private fun applyChange(isToggleChecked: Boolean) {
         if (isToggleChecked) {
             resetAlarms()
-            alarmPreference.putBoolean(IS_ALARM_ON, true)
+            alarmPreference.setIsAlarmOn(true)
         } else {
             alarmController.cancelAlarms()
-            alarmPreference.putBoolean(IS_ALARM_ON, false)
+            alarmPreference.setIsAlarmOn(false)
         }
     }
 
@@ -112,7 +112,6 @@ class SettingFragment : Fragment() {
     }
 
     companion object {
-        const val IS_ALARM_ON = "IS_ALARM_ON"
         const val ALARM_MINUTE_INTERVAL = 30L
     }
 }
