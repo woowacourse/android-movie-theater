@@ -1,3 +1,46 @@
 <resources>
     <string name="app_name">Movie</string>
+
+    <string name="item_movie_reservation_button">지금 예매</string>
+
+    <string name="movie_reservation_minus">-</string>
+    <string name="movie_reservation_plus">+</string>
+    <string name="movie_reservation_button">예매 완료</string>
+    <string name="movie_reservation_result_information">영화 상영 시작 시간 15분 전까지\n취소가 가능합니다</string>
+
+    <string name="movie_date">상영일: %s ~ %s</string>
+    <string name="movie_running_time">러닝타임: %d분</string>
+    <string name="movie_date_format">yyyy-MM-dd</string>
+
+    <string name="reservation_people_count">일반 %d명 | %s</string>
+    <string name="reservation_price">%s원 (현장 결제)</string>
+    <string name="reservation_datetime_format">yyyy-MM-dd HH:mm</string>
+
+    <string name="seat_selection_alert_title">예매 확인</string>
+    <string name="seat_selection_alert_message">정말 예매하시겠습니까?</string>
+    <string name="seat_selection_alert_positive">예매 완료</string>
+    <string name="seat_selection_alert_negative">취소</string>
+
+    <string name="seat_row_column">%c%d</string>
+    <string name="seat_text_start_letter">A</string>
+    <string name="seat_price">%s원</string>
+    <string name="menu_item_reservation_list">예매 내역</string>
+    <string name="menu_item_home">홈</string>
+    <string name="menu_item_setting">설정</string>
+
+    <string name="reservation_item_datetime_format">yyyy.MM.dd | HH:mm</string>
+    <string name="notification_content_title">예매 알림</string>
+    <string name="notification_content_text">%s 30분 후에 상영</string>
+    <string name="notification_channel_name">Notification_Ch</string>
+    <string name="notification_channel_description">Test Notification</string>
+    <string name="setting_push_title">푸시 알림 수신</string>
+    <string name="setting_push_description">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+    <string name="permission_instruction_ment">푸쉬알림을 받으려면 설정창에서 \n권한을 설정해야 합니다.</string>
+
+    <string name="activity_error_log_message">%s 액티비티에서 %s Extra가 필요합니다.</string>
+    <string name="activity_error_toast_message">액티비티 실행에 오류가 발생했습니다.</string>
+    <string name="broadcast_error_log_message">%s 브로드캐스트 리시버에서 %s Extra가 필요합니다.</string>
+    <string name="fragment_error_log_message">%s 프래그먼트에서 %s Extra가 필요합니다.</string>
+    <string name="fragment_error_toast_message">프래그먼트 실행에 오류가 발생했습니다.</string>
+    <string name="log_tag">HKHK</string>
 </resources>
