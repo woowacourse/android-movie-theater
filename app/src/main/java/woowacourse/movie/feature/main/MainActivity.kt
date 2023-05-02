@@ -16,7 +16,7 @@ import woowacourse.movie.feature.reservationList.ReservationListFragment
 import woowacourse.movie.feature.setting.SettingFragment
 import woowacourse.movie.util.requestPermissions
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContract.View {
     private val containerView: FragmentContainerView by lazy { findViewById(R.id.container) }
     private val bottomNavigation: BottomNavigationView by lazy { findViewById(R.id.bottom_navigation_view) }
 
@@ -24,17 +24,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var reservationListFragment: ReservationListFragment
     private lateinit var settingFragment: SettingFragment
 
+    private lateinit var presenter: MainContract.Presenter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        presenter = MainPresenter(this)
 
         movieListFragment = getFragment(MOVIE_LIST_TAG)
         reservationListFragment = getFragment(RESERVATION_LIST_TAG)
         settingFragment = getFragment(SETTING_TAG)
 
-        if (savedInstanceState == null) {
-            initFragments()
-        }
+        if (savedInstanceState == null) initFragments()
 
         initListener()
         requestPermissions(PERMISSIONS, requestPermissionLauncher::launch)
@@ -93,12 +94,10 @@ class MainActivity : AppCompatActivity() {
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
-        if (isGranted) {
-            Toaster.showToast(this, getString(R.string.alarm_notification_approve))
-        } else {
-            Toaster.showToast(this, getString(R.string.alarm_notification_reject))
-        }
+        presenter.permissionApproveResult(isGranted)
     }
+
+    override fun showPermissionToast(messageId: Int) = Toaster.showToast(this, getString(messageId))
 
     companion object {
         internal const val KEY_MOVIE = "key_movie"
