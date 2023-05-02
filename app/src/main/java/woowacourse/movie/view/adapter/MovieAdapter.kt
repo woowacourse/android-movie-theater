@@ -5,9 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import domain.Movie
-import domain.Movies
-import woowacourse.movie.model.mapper.MovieMapper.toUi
 import woowacourse.movie.model.AdvertisementUiModel
 import woowacourse.movie.model.MovieAdapterViewType
 import woowacourse.movie.model.MovieUiModel
@@ -15,7 +12,7 @@ import woowacourse.movie.view.adapter.viewholder.AdvertisementItemViewHolder
 import woowacourse.movie.view.adapter.viewholder.MovieItemViewHolder
 
 class MovieAdapter(
-    private val movies: Movies,
+    private val movieUiModels: List<MovieUiModel>,
     private val advertisementUiModel: AdvertisementUiModel,
     private val advertisementClickEvent: (AdvertisementUiModel) -> Unit,
     private val movieListClickEvent: (MovieUiModel) -> Unit
@@ -48,16 +45,17 @@ class MovieAdapter(
             advertisementUiModel, advertisementClickEvent
         )
         if (viewHolder is MovieItemViewHolder) viewHolder.bind(
-            movies.value[position].toUi(), movieListClickEvent
+            movieUiModels[position], movieListClickEvent
         )
     }
 
     override fun getItemCount(): Int {
-        return 10_000
+        return MAXIMUM_RECYCLER_VIEW_COUNT
     }
 
     companion object {
         private const val ADVERTISEMENT_TURN = 3
         private const val CYCLE = 4
+        private const val MAXIMUM_RECYCLER_VIEW_COUNT = 10_000
     }
 }
