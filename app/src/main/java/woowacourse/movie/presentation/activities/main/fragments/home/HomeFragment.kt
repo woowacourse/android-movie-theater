@@ -3,71 +3,65 @@ package woowacourse.movie.presentation.activities.main.fragments.home
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import woowacourse.movie.R
+import woowacourse.movie.presentation.activities.main.fragments.home.contract.HomeContract
+import woowacourse.movie.presentation.activities.main.fragments.home.contract.presenter.HomePresenter
+import woowacourse.movie.presentation.activities.main.fragments.home.recyclerview.MovieListAdapter
+import woowacourse.movie.presentation.activities.main.fragments.home.recyclerview.OnEndScrollListener
 import woowacourse.movie.presentation.activities.ticketing.TicketingActivity
 import woowacourse.movie.presentation.model.movieitem.Ad
-import woowacourse.movie.presentation.model.movieitem.Movie
+import woowacourse.movie.presentation.model.movieitem.ListItem
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(R.layout.fragment_home), HomeContract.View {
+    override val presenter: HomeContract.Presenter = HomePresenter(this)
+
     private lateinit var movieListAdapter: MovieListAdapter
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        return inflater.inflate(R.layout.fragment_home, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initMovieListAdapter(view)
+        initRecyclerView()
+        presenter.loadMoreMovies()
     }
 
-    private fun initMovieListAdapter(view: View) {
-        val movieRecyclerView = view.findViewById<RecyclerView>(R.id.movies_rv)
+    private fun initMovieListAdapter() {
         movieListAdapter = MovieListAdapter(
-            adTypes = Ad.provideDummy(),
-            onItemClick = { item ->
-                when (item) {
-                    is Movie -> startTicketingActivity(item)
-                    is Ad -> accessAdWebPage(item)
-                }
-            },
-        ).also { it.appendAll(Movie.provideDummy()) }
-
-        movieRecyclerView.adapter = movieListAdapter
-        movieRecyclerView.addOnScrollListener(object : OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                if (!recyclerView.canScrollVertically(DOWN_DIRECTION) && dy > 0) {
-                    movieListAdapter.appendAll(Movie.provideDummy())
-                }
-            }
-        })
+            adTypes = presenter.loadAds(),
+            onItemClick = presenter::onMovieClick,
+        )
     }
 
-    private fun startTicketingActivity(movie: Movie) {
+    private fun initRecyclerView() {
+        val movieRecyclerView = requireView().findViewById<RecyclerView>(R.id.movies_rv)
+
+        initMovieListAdapter()
+        movieRecyclerView.adapter = movieListAdapter
+        movieRecyclerView.addOnScrollListener(
+            OnEndScrollListener { presenter.loadMoreMovies() }
+        )
+    }
+
+    override fun showMoreMovies(items: List<ListItem>) {
+        movieListAdapter.appendAll(items)
+    }
+
+    override fun showTicketScreen(item: ListItem) {
         val intent = Intent(requireContext(), TicketingActivity::class.java)
-            .putExtra(MOVIE_KEY, movie)
+            .putExtra(MOVIE_KEY, item)
         startActivity(intent)
     }
 
-    private fun accessAdWebPage(ads: Ad) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(ads.url))
+    override fun showAdWebSite(item: ListItem) {
+        if (item !is Ad) return
+
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
         startActivity(intent)
     }
 
     companion object {
         internal const val MOVIE_KEY = "movie_key"
-        private const val DOWN_DIRECTION = 1
-
         private val homeFragment = HomeFragment()
 
         fun newInstance(): HomeFragment = homeFragment

@@ -1,10 +1,8 @@
-package woowacourse.movie.presentation.activities.main.fragments.home
+package woowacourse.movie.presentation.activities.main.fragments.home.recyclerview
 
 import android.view.ViewGroup
 import woowacourse.movie.R
 import woowacourse.movie.presentation.activities.main.fragments.home.type.MovieViewType
-import woowacourse.movie.presentation.activities.main.fragments.home.viewholder.MovieViewHolder
-import woowacourse.movie.presentation.activities.main.fragments.home.viewholder.NativeAdViewHolder
 import woowacourse.movie.presentation.base.BaseRecyclerView
 import woowacourse.movie.presentation.model.movieitem.Ad
 import woowacourse.movie.presentation.model.movieitem.ListItem

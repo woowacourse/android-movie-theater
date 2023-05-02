@@ -27,9 +27,9 @@ import woowacourse.movie.R
 import woowacourse.movie.presentation.activities.custom.ClickViewAction.clickViewWithId
 import woowacourse.movie.presentation.activities.custom.RecyclerViewAssertion.matchItemCount
 import woowacourse.movie.presentation.activities.main.fragments.home.HomeFragment
-import woowacourse.movie.presentation.activities.main.fragments.home.MovieListAdapter
+import woowacourse.movie.presentation.activities.main.fragments.home.recyclerview.MovieListAdapter
+import woowacourse.movie.presentation.activities.main.fragments.home.recyclerview.NativeAdViewHolder
 import woowacourse.movie.presentation.activities.main.fragments.home.type.MovieViewType
-import woowacourse.movie.presentation.activities.main.fragments.home.viewholder.NativeAdViewHolder
 import woowacourse.movie.presentation.activities.ticketing.TicketingActivity
 import woowacourse.movie.presentation.model.movieitem.Ad
 import woowacourse.movie.presentation.model.movieitem.Movie
