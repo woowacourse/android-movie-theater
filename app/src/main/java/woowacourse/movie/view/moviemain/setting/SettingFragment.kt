@@ -3,9 +3,7 @@ package woowacourse.movie.view.moviemain.setting
 import android.Manifest
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -18,7 +16,7 @@ import woowacourse.movie.util.requestRequiredPermissions
 import woowacourse.movie.view.AlarmController
 import woowacourse.movie.view.mapper.toUiModel
 
-class SettingFragment : Fragment() {
+class SettingFragment : Fragment(R.layout.fragment_setting) {
 
     private lateinit var alarmController: AlarmController
     private lateinit var alarmPreference: AlarmPreference
@@ -30,14 +28,6 @@ class SettingFragment : Fragment() {
 
         alarmPreference = AlarmPreference.getInstance(requireActivity().applicationContext)
         alarmController = AlarmController(requireContext())
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_setting, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
