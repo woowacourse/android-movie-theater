@@ -9,9 +9,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.domain.discountPolicy.Discount
-import woowacourse.movie.domain.discountPolicy.MovieDay
-import woowacourse.movie.domain.discountPolicy.OffTime
+import woowacourse.movie.domain.Price
+import woowacourse.movie.domain.TicketBox
 import woowacourse.movie.domain.reservationNotificationPolicy.MovieReservationNotification
 import woowacourse.movie.domain.reservationNotificationPolicy.ReservationNotificationPolicy
 import woowacourse.movie.service.AlarmMaker
@@ -23,17 +22,17 @@ import woowacourse.movie.view.data.SeatsViewData
 import woowacourse.movie.view.error.ActivityError.finishWithError
 import woowacourse.movie.view.error.ViewError
 import woowacourse.movie.view.getSerializable
-import woowacourse.movie.view.mapper.MovieSeatMapper.toDomain
+import woowacourse.movie.view.mapper.MovieMapper.toDomain
+import woowacourse.movie.view.mapper.PriceMapper.toView
 import woowacourse.movie.view.mapper.ReservationDetailMapper.toDomain
-import woowacourse.movie.view.mapper.ReservationMapper.toDomain
+import woowacourse.movie.view.mapper.ReservationMapper.toView
+import woowacourse.movie.view.mapper.SeatsMapper.toDomain
 import woowacourse.movie.view.widget.SeatTableLayout
 import java.text.NumberFormat
 import java.util.Locale
 
 class SeatSelectionActivity : AppCompatActivity() {
-    private val reservationDataSource: ReservationDataSource =
-        woowacourse.movie.datasource.ReservationDataSource()
-    private val reservationRepository = ReservationRepository(reservationDataSource)
+
     private val priceText: TextView by lazy {
         findViewById(R.id.seat_selection_movie_price)
     }
@@ -95,7 +94,8 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     private fun onSelectSeat(seats: SeatsViewData, reservationDetail: ReservationDetailViewData) {
-        setPriceView(calculateDiscountedPrice(seats, reservationDetail))
+        val price: Price = seats.toDomain().calculateDiscountedPrice(reservationDetail.toDomain())
+        setPriceView(price.toView())
         setReservationButtonState(seats.seats.size, reservationDetail.peopleCount)
     }
 
@@ -109,20 +109,6 @@ class SeatSelectionActivity : AppCompatActivity() {
         peopleCount: Int
     ) {
         reservationButton.isEnabled = seatsSize == peopleCount
-    }
-
-    private fun calculateDiscountedPrice(
-        seats: SeatsViewData,
-        reservationDetail: ReservationDetailViewData
-    ): PriceViewData {
-        val discount = Discount(listOf(MovieDay, OffTime))
-        return seats.seats.sumOf { seat ->
-            discount.calculate(
-                reservationDetail.toDomain(), seat.toDomain().row.seatRankByRow().price
-            ).value
-        }.let {
-            PriceViewData(it)
-        }
     }
 
     private fun initReserveButton(
@@ -155,16 +141,12 @@ class SeatSelectionActivity : AppCompatActivity() {
         movie: MovieViewData,
         reservationDetail: ReservationDetailViewData
     ) {
+        val ticketBox = TicketBox(woowacourse.movie.datasource.ReservationDataSource())
         val seats = seatTableLayout.selectedSeats()
-        val price = calculateDiscountedPrice(
-            seatTableLayout.selectedSeats(), reservationDetail
-        )
-
-        val reservation = ReservationViewData(
-            movie, reservationDetail, seats, price
-        )
+        val reservation =
+            ticketBox.ticketing(movie.toDomain(), reservationDetail.toDomain(), seats.toDomain())
+                .toView()
         makeReservationAlarm(reservation, MovieReservationNotification, baseContext)
-        postReservation(reservation)
         startReservationResultActivity(reservation)
     }
 
@@ -175,12 +157,6 @@ class SeatSelectionActivity : AppCompatActivity() {
     ) {
         val date = reservationNotificationPolicy.calculateTime(reservation.reservationDetail.date)
         AlarmMaker.make(date, reservation, context)
-    }
-
-    private fun postReservation(
-        reservation: ReservationViewData
-    ) {
-        reservationRepository.addData(reservation.toDomain())
     }
 
     private fun startReservationResultActivity(
