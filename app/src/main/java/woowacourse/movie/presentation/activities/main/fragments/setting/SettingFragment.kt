@@ -1,20 +1,18 @@
 package woowacourse.movie.presentation.activities.main.fragments.setting
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.google.android.material.switchmaterial.SwitchMaterial
-import com.woowacourse.data.DataStore
 import com.woowacourse.data.local.LocalDataStore
 import woowacourse.movie.R
+import woowacourse.movie.presentation.activities.main.fragments.setting.contract.SettingContract
+import woowacourse.movie.presentation.activities.main.fragments.setting.contract.presenter.SettingPresenter
 import woowacourse.movie.presentation.extensions.checkPermissionTiramisu
 import woowacourse.movie.presentation.extensions.createAlertDialog
 import woowacourse.movie.presentation.extensions.message
@@ -22,71 +20,61 @@ import woowacourse.movie.presentation.extensions.negativeButton
 import woowacourse.movie.presentation.extensions.positiveButton
 import woowacourse.movie.presentation.extensions.title
 
-class SettingFragment : Fragment() {
-    lateinit var pushSwitch: SwitchMaterial
-
-    private val dataStore: DataStore by lazy { LocalDataStore.getInstance(requireContext()) }
-    private val settingActionReLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
-            val isPushAllowed =
-                requireContext().checkPermissionTiramisu(Manifest.permission.POST_NOTIFICATIONS)
-
-            pushSwitch.isChecked = isPushAllowed
-            dataStore.setBoolean(PUSH_ALLOW_KEY, isPushAllowed)
-        }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        return inflater.inflate(R.layout.fragment_setting, container, false)
+class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.View {
+    override val presenter: SettingContract.Presenter by lazy {
+        SettingPresenter(
+            view = this,
+            dataStore = LocalDataStore.getInstance(requireContext()),
+        )
     }
+
+    private val pushSwitch: SwitchMaterial by lazy { requireView().findViewById(R.id.notification_push_switch) }
+
+    private val settingScreenLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            val isPushPermissionGranted =
+                requireContext().checkPermissionTiramisu(Manifest.permission.POST_NOTIFICATIONS)
+            presenter.updatePushAllow(isPushPermissionGranted)
+        }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initPushSwitch(view)
+        initPushSwitch()
     }
 
-    @SuppressLint("InlinedApi")
-    private fun initPushSwitch(view: View) {
-        pushSwitch = view.findViewById(R.id.notification_push_switch)
-        val isPushAllowed = dataStore.getBoolean(PUSH_ALLOW_KEY, true) && checkPushPermission()
-
-        with(pushSwitch) {
-            isChecked = dataStore.getBoolean(PUSH_ALLOW_KEY, isPushAllowed)
-            setOnCheckedChangeListener { _, isAllowed ->
-                if (isAllowed && !checkPushPermission()) {
-                    showPushPermissionDialog()
-                } else {
-                    dataStore.setBoolean(PUSH_ALLOW_KEY, isAllowed)
-                }
-            }
+    private fun initPushSwitch() {
+        presenter.fetchPushSwitchState()
+        pushSwitch.setOnCheckedChangeListener { _, newState ->
+            presenter.onPushSwitchClicked(newState)
         }
     }
 
-    @SuppressLint("InlinedApi")
-    private fun checkPushPermission(): Boolean =
+    override fun changePushSwitchState(newState: Boolean) {
+        pushSwitch.isChecked = newState
+    }
+
+    override fun checkPushPermission(): Boolean =
         requireContext().checkPermissionTiramisu(Manifest.permission.POST_NOTIFICATIONS)
 
-    private fun showPushPermissionDialog() {
+    override fun showPushPermissionDialog() {
         requireContext().createAlertDialog {
             title(getString(R.string.permission_request_dialog_title))
             message(getString(R.string.permission_request_dialog_desc))
-            positiveButton {
-                val appDetailsIntent = Intent(
-                    Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                    Uri.parse("package:${requireContext().packageName}")
-                ).addCategory(Intent.CATEGORY_DEFAULT)
-                settingActionReLauncher.launch(appDetailsIntent)
-            }
-            negativeButton { pushSwitch.isChecked = false }
+            positiveButton { launchSettingScreen() }
+            negativeButton { presenter.updatePushAllow(false) }
         }.show()
+    }
+
+    private fun launchSettingScreen() {
+        val appDetailsIntent = Intent(
+            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+            Uri.parse("package:${requireContext().packageName}")
+        ).addCategory(Intent.CATEGORY_DEFAULT)
+        settingScreenLauncher.launch(appDetailsIntent)
     }
 
     companion object {
         private val settingFragment = SettingFragment()
-        internal const val PUSH_ALLOW_KEY = "push_allow_key"
 
         fun newInstance(): SettingFragment = settingFragment
     }
