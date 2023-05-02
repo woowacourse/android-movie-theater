@@ -17,12 +17,12 @@ import woowacourse.movie.mapper.toModel
 import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.model.PeopleCountModel
 import woowacourse.movie.model.ReservationTicketMachine
-import woowacourse.movie.model.SeatModel
-import woowacourse.movie.model.SelectedSeatsModel
 import woowacourse.movie.model.data.AlarmSwitchState
 import woowacourse.movie.model.data.AlarmSwitchStateImpl
 import woowacourse.movie.ui.alarm.AlarmCreator
 import woowacourse.movie.ui.moviedetail.MovieDetailActivity
+import woowacourse.movie.ui.seat.uimodel.SeatModel
+import woowacourse.movie.ui.seat.uimodel.SelectedSeatsModel
 import woowacourse.movie.ui.ticket.MovieTicketActivity
 import woowacourse.movie.utils.failLoadingData
 import woowacourse.movie.utils.getSerializableExtraCompat

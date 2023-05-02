@@ -1,5 +1,6 @@
 package woowacourse.movie.model
 
+import woowacourse.movie.ui.seat.uimodel.SelectedSeatsModel
 import java.io.Serializable
 import java.time.LocalDateTime
 

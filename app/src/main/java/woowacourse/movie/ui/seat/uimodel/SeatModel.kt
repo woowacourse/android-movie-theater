@@ -1,4 +1,4 @@
-package woowacourse.movie.model
+package woowacourse.movie.ui.seat.uimodel
 
 import android.content.Context
 import android.view.LayoutInflater
