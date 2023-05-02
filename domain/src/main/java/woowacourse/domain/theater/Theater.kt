@@ -24,7 +24,7 @@ data class Theater(
     }
 
     private fun getSeatRank(row: Int): SeatRank {
-        rankMap.entries.forEach {
+        rankMap.forEach {
             if (it.value.any { range -> row in range }) {
                 return it.key
             }
