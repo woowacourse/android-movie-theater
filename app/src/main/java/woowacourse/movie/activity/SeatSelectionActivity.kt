@@ -26,14 +26,14 @@ import woowacourse.movie.view.getSerializable
 import woowacourse.movie.view.mapper.MovieSeatMapper.toDomain
 import woowacourse.movie.view.mapper.ReservationDetailMapper.toDomain
 import woowacourse.movie.view.mapper.ReservationMapper.toDomain
-import woowacourse.movie.view.repository.SeatSelectionRepository
 import woowacourse.movie.view.widget.SeatTableLayout
 import java.text.NumberFormat
 import java.util.Locale
 
 class SeatSelectionActivity : AppCompatActivity() {
-    private val seatSelectionRepository: SeatSelectionRepository = SeatSelectionRepository()
-
+    private val reservationDataSource: ReservationDataSource =
+        woowacourse.movie.datasource.ReservationDataSource()
+    private val reservationRepository = ReservationRepository(reservationDataSource)
     private val priceText: TextView by lazy {
         findViewById(R.id.seat_selection_movie_price)
     }
@@ -180,7 +180,7 @@ class SeatSelectionActivity : AppCompatActivity() {
     private fun postReservation(
         reservation: ReservationViewData
     ) {
-        seatSelectionRepository.postReservation(reservation.toDomain())
+        reservationRepository.addData(reservation.toDomain())
     }
 
     private fun startReservationResultActivity(

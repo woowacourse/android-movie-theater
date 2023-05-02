@@ -8,17 +8,20 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.activity.MovieReservationActivity
+import woowacourse.movie.datasource.MockMovieDataSource
 import woowacourse.movie.domain.AdvertisementMock
 import woowacourse.movie.domain.advertismentPolicy.MovieAdvertisementPolicy
+import woowacourse.movie.domain.dataSource.MovieDataSource
+import woowacourse.movie.domain.repository.MovieRepository
 import woowacourse.movie.view.adapter.MovieAdapter
 import woowacourse.movie.view.data.MovieListViewData
 import woowacourse.movie.view.data.MovieListViewType
 import woowacourse.movie.view.data.MovieViewData
-import woowacourse.movie.view.repository.MainRepository
 
 class MovieListFragment : Fragment() {
 
-    private val mainRepository: MainRepository = MainRepository()
+    private val movieDataSource: MovieDataSource = MockMovieDataSource()
+    private val movieRepository: MovieRepository = MovieRepository(movieDataSource)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,7 +37,7 @@ class MovieListFragment : Fragment() {
     }
 
     private fun makeMovieRecyclerView(view: View) {
-        val movies = mainRepository.requestMovie()
+        val movies = movieRepository.getData()
         val advertisementDatas = AdvertisementMock.createAdvertisements()
         val advertisementPolicy = MovieAdvertisementPolicy(MOVIE_COUNT, ADVERTISEMENT_COUNT)
 
