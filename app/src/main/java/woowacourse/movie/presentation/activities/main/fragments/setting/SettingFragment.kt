@@ -10,8 +10,9 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.google.android.material.switchmaterial.SwitchMaterial
+import com.woowacourse.data.local.PreferenceManager
+import com.woowacourse.data.local.PreferenceManager.setBoolean
 import woowacourse.movie.R
-import woowacourse.movie.presentation.MovieApplication
 import woowacourse.movie.presentation.extensions.checkPermissionTiramisu
 import woowacourse.movie.presentation.extensions.createAlertDialog
 import woowacourse.movie.presentation.extensions.message
@@ -21,8 +22,8 @@ import woowacourse.movie.presentation.extensions.title
 
 class SettingFragment : Fragment(R.layout.fragment_setting) {
     lateinit var pushSwitch: SwitchMaterial
+    private val preferences by lazy { PreferenceManager.getInstance(requireContext()) }
 
-    private val preferences = MovieApplication.preferenceEditor
     private val settingActionReLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
             val isPushAllowed =
