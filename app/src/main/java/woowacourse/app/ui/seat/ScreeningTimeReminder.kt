@@ -37,7 +37,7 @@ class ScreeningTimeReminder(
     init {
         val screeningDateTime =
             reservationUiModel.bookedDateTime
-                .minusMinutes(30)
+                .minusMinutes(reservationUiModel.alarmCycle)
                 .atZone(TimeZone.getDefault().toZoneId())
                 .toInstant()
                 .toEpochMilli()

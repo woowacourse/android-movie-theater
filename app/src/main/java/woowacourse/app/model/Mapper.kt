@@ -53,6 +53,7 @@ object Mapper {
             movieTitle = this.tickets.first().movieTitle,
             bookedDateTime = this.bookedDateTime,
             count = this.count,
+            alarmCycle = this.alarmCycle,
         )
     }
 
