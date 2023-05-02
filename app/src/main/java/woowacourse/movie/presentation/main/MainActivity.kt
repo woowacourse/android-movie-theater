@@ -41,9 +41,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun initBottomNavigation() {
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottomNavigationMain)
+        bottomNavigation.selectedItemId = R.id.action_home
 
         bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
+                bottomNavigation.selectedItemId -> {
+                    return@setOnItemSelectedListener true
+                }
                 R.id.action_booked_tickets -> {
                     this.replace<BookedTicketsFragment>(R.id.main_fragment_container)
                     return@setOnItemSelectedListener true
