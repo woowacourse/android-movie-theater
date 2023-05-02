@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         requestNotificationPermission()
-        binding.navigationBar?.let { bindNavigationBar(it) }
+        binding.navigationBar?.let(::bindNavigationBar)
     }
 
     private fun bindNavigationBar(bottomNav: BottomNavigationView) {
