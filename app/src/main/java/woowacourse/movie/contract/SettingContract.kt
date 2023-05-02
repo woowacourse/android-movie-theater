@@ -7,7 +7,7 @@ interface SettingContract {
     }
 
     interface Presenter {
-        fun changeAlarmReceptionState()
-        fun setInitSwitchState()
+        fun onClickSwitch()
+        fun updateSwitchState()
     }
 }

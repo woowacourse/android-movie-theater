@@ -5,15 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import domain.Reservation
-import woowacourse.movie.mock.MockReservationsFactory
 import woowacourse.movie.R
 import woowacourse.movie.contract.ReservationListContract
 import woowacourse.movie.model.MovieUiModel
-import woowacourse.movie.model.TicketUiModel
 import woowacourse.movie.model.TicketsUiModel
 import woowacourse.movie.view.activity.ReservationResultActivity
 import woowacourse.movie.view.adapter.ReservationAdapter
-import woowacourse.movie.model.mapper.ReservationMapper.toUi
 import woowacourse.movie.presenter.ReservationListPresenter
 
 class ReservationListFragment : Fragment(R.layout.fragment_reservation_list),
@@ -23,12 +20,12 @@ class ReservationListFragment : Fragment(R.layout.fragment_reservation_list),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.reservation_recycler_view)
-        presenter.getReservationList()
+        presenter.updateReservationList()
     }
 
     override fun setAdapter(reservationList: List<Reservation>) {
         recyclerView.adapter =
-            ReservationAdapter(reservationList, presenter::showReservationDetail)
+            ReservationAdapter(reservationList, presenter::reservationItemClick)
     }
 
     override fun startReservationResultActivity(

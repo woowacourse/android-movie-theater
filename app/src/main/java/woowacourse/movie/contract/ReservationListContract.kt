@@ -12,7 +12,7 @@ interface ReservationListContract {
     }
 
     interface Presenter {
-        fun showReservationDetail(reservation: Reservation)
-        fun getReservationList()
+        fun reservationItemClick(reservation: Reservation)
+        fun updateReservationList()
     }
 }

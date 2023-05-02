@@ -16,9 +16,9 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pushAlarmSwitch = view.findViewById(R.id.setting_push_alarm_switch)
-        presenter.setInitSwitchState()
+        presenter.updateSwitchState()
         pushAlarmSwitch.setOnClickListener {
-            presenter.changeAlarmReceptionState()
+            presenter.onClickSwitch()
         }
     }
 
