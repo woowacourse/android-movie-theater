@@ -1,12 +1,9 @@
 package woowacourse.movie.data
 
-import woowacourse.movie.domain.seat.Seat
-import woowacourse.movie.domain.seat.Seats
-
-data class SeatTable(val seats: Seats, val size: TableSize) {
-    fun getSeat(row: Int, column: Int): Seat {
+data class SeatTableViewData(val seats: SeatsViewData, val size: TableSize) {
+    fun getSeat(row: Int, column: Int): SeatViewData {
         return seats.value.find {
-            it.row.row == row && it.column == column
+            it.row == row && it.column == column
         } ?: throw IllegalArgumentException(ERROR_WRONG_SEAT.format(row, column))
     }
 

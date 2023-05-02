@@ -5,13 +5,8 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import androidx.core.view.children
 import woowacourse.movie.R
-import woowacourse.movie.data.SeatTable
+import woowacourse.movie.data.SeatTableViewData
 import woowacourse.movie.data.SeatsViewData
-import woowacourse.movie.data.TableSize
-import woowacourse.movie.domain.seat.MovieSeatRow
-import woowacourse.movie.domain.seat.Seat
-import woowacourse.movie.domain.seat.Seats
-import woowacourse.movie.mapper.MovieSeatMapper.toView
 import woowacourse.movie.view.getSerializableCompat
 
 class SeatTableLayout(
@@ -33,7 +28,7 @@ class SeatTableLayout(
         }
     }
 
-    fun makeSeatTable(seats: SeatTable) {
+    fun makeSeatTable(seats: SeatTableViewData) {
         val tableLayout = tableLayout.findViewById<TableLayout>(R.id.seat_selection_table)
         tableLayout.weightSum = seats.size.row.toFloat()
         (0 until seats.size.row).forEach {
@@ -41,7 +36,7 @@ class SeatTableLayout(
         }
     }
 
-    private fun makeSeatRow(row: Int, seats: SeatTable): TableRow {
+    private fun makeSeatRow(row: Int, seats: SeatTableViewData): TableRow {
         val tableRow = TableRow(tableLayout.context)
         tableRow.weightSum = seats.size.column.toFloat()
         tableRow.layoutParams = TableLayout.LayoutParams(0, 0, 1f)
@@ -54,12 +49,12 @@ class SeatTableLayout(
     private fun makeSeatCell(
         row: Int,
         column: Int,
-        seats: SeatTable
+        seats: SeatTableViewData
     ): SeatView {
         return SeatView.from(
             tableLayout.context,
-            seats.getSeat(row, column).toView(),
-            { seatSelectCondition(selectedSeats().seats.size) }
+            seats.getSeat(row, column),
+            { seatSelectCondition(selectedSeats().value.size) }
         ) {
             onSelectSeat(selectedSeats())
         }
@@ -72,7 +67,7 @@ class SeatTableLayout(
     override fun load(savedInstanceState: Bundle?) {
         savedInstanceState ?: return
         val seats = savedInstanceState.getSerializableCompat<SeatsViewData>(saveStateKey) ?: return
-        seats.seats.forEach {
+        seats.value.forEach {
             findSeatViewByRowAndColumn(it.row, it.column)?.callOnClick()
         }
     }
@@ -88,23 +83,11 @@ class SeatTableLayout(
     companion object {
         fun from(
             tableLayout: TableLayout,
-            row: Int,
-            column: Int,
+            seatTableViewData: SeatTableViewData,
             saveStateKey: String
         ): SeatTableLayout {
-            val seatTable = makeSeatTable(row, column)
             return SeatTableLayout(tableLayout, saveStateKey).also {
-                it.makeSeatTable(seatTable)
-            }
-        }
-
-        private fun makeSeatTable(row: Int, column: Int): SeatTable {
-            return (0..row * column).map {
-                val y = it / column
-                val x = it % column
-                Seat(MovieSeatRow(y), x)
-            }.let {
-                SeatTable(Seats(it), TableSize(row, column))
+                it.makeSeatTable(seatTableViewData)
             }
         }
     }

@@ -14,7 +14,7 @@ object SeatsMapper : Mapper<Seats, SeatsViewData> {
 
     override fun SeatsViewData.toDomain(): Seats {
         return Seats(
-            seats.map { it.toDomain() }
+            value.map { it.toDomain() }
         )
     }
 }

@@ -77,7 +77,7 @@ class ReservationResultActivity : AppCompatActivity() {
     }
 
     private fun formatSeats(seats: SeatsViewData): String {
-        return seats.seats.joinToString {
+        return seats.value.joinToString {
             getString(R.string.seat_row_column, it.rowCharacter, it.column + 1)
         }
     }
