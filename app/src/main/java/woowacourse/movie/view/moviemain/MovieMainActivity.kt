@@ -3,6 +3,7 @@ package woowacourse.movie.view.moviemain
 import android.Manifest
 import android.os.Build
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -24,25 +25,27 @@ class MovieMainActivity : AppCompatActivity() {
         val navigation = findViewById<BottomNavigationView>(R.id.navigation_view)
 
         navigation.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.action_reservation_list -> {
-                    replaceFragment<ReservationListFragment>()
-                    return@setOnItemSelectedListener true
-                }
-                R.id.action_home -> {
-                    replaceFragment<MovieListFragment>()
-                    return@setOnItemSelectedListener true
-                }
-                R.id.action_setting -> {
-                    replaceFragment<SettingFragment>()
-                    return@setOnItemSelectedListener true
-                }
-                else -> return@setOnItemSelectedListener false
-            }
+            setMenuItemClickListener(item)
         }
         navigation.selectedItemId = R.id.action_home
 
         requestPermissions()
+    }
+
+    private fun setMenuItemClickListener(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.action_reservation_list -> {
+            replaceFragment<ReservationListFragment>()
+            true
+        }
+        R.id.action_home -> {
+            replaceFragment<MovieListFragment>()
+            true
+        }
+        R.id.action_setting -> {
+            replaceFragment<SettingFragment>()
+            true
+        }
+        else -> false
     }
 
     private inline fun <reified T : Fragment> AppCompatActivity.replaceFragment() {
