@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +20,6 @@ import woowacourse.movie.ui.fragment.reservationlist.ReservationListFragment
 import woowacourse.movie.ui.fragment.reservationlist.ReservationListFragment.Companion.KEY_UPDATE_RESERVATION_ITEM
 import woowacourse.movie.ui.fragment.settings.SettingsFragment
 import woowacourse.movie.ui.storage.SettingsStorage
-import woowacourse.movie.ui.utils.openAndroidSettings
 import woowacourse.movie.ui.utils.showSnack
 
 class MainActivity : AppCompatActivity() {
@@ -27,18 +27,16 @@ class MainActivity : AppCompatActivity() {
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean -> SettingsStorage.editPushNotification(isGranted) }
+    private val selfPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            setSelfRequestPermission()
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        SinglePermissionRequester.requestPermission(
-            this,
-            SinglePermissionRequester.NOTIFICATION_PERMISSION,
-            Build.VERSION_CODES.TIRAMISU,
-            ::actionGrantedPermission,
-            ::actionDeniedPermission
-        )
+        requestPermission()
 
         val itemId = savedInstanceState?.getInt(KEY_INSTANCE_ITEM_ID) ?: R.id.bottom_item_home
         initFragment(itemId)
@@ -66,6 +64,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    internal fun requestPermission() {
+        SinglePermissionRequester.requestPermission(
+            this,
+            SinglePermissionRequester.NOTIFICATION_PERMISSION,
+            Build.VERSION_CODES.TIRAMISU,
+            ::actionGrantedPermission,
+            ::actionDeniedPermission
+        )
+    }
+
     private fun actionGrantedPermission() {
         requestPermissionLauncher.launch(SinglePermissionRequester.NOTIFICATION_PERMISSION)
     }
@@ -77,6 +85,24 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.notification_permission_snackbar_button),
             ::openAndroidSettings
         )
+    }
+
+    private fun openAndroidSettings() {
+        val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+        intent.putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+
+        selfPermissionLauncher.launch(intent)
+    }
+
+    private fun setSelfRequestPermission() {
+        if (!SinglePermissionRequester.checkDeniedPermission(
+                this,
+                SinglePermissionRequester.NOTIFICATION_PERMISSION
+            )
+        )
+            SettingsStorage.editPushNotification(true)
+        else
+            SettingsStorage.editPushNotification(false)
     }
 
     private fun initFragment(itemId: Int) {

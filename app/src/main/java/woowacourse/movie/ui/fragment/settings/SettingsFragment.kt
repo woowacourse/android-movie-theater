@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.permission.SinglePermissionRequester
+import woowacourse.movie.ui.activity.MainActivity
 import woowacourse.movie.ui.storage.SettingsStorage
-import woowacourse.movie.ui.utils.showToast
 
 class SettingsFragment : Fragment() {
 
@@ -30,8 +31,17 @@ class SettingsFragment : Fragment() {
         val pushNotificationSwitch = view.findViewById<SwitchCompat>(R.id.push_notification_switch)
         pushNotificationSwitch.isChecked = SettingsStorage.getPushNotification()
         pushNotificationSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (checkDeniedPermission())
+                (activity as MainActivity).requestPermission()
+
             SettingsStorage.editPushNotification(isChecked)
-            if (!pushNotificationSwitch.isChecked) view.showToast(getString(R.string.push_notification_description))
         }
     }
+
+    private fun checkDeniedPermission(): Boolean = context?.let {
+        SinglePermissionRequester.checkDeniedPermission(
+            it,
+            SinglePermissionRequester.NOTIFICATION_PERMISSION
+        )
+    } ?: false
 }
