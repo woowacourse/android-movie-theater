@@ -1,6 +1,5 @@
 package woowacourse.movie.ui.activity
 
-import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -14,6 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import woowacourse.movie.R
+import woowacourse.movie.alarm.AlarmManager
 import woowacourse.movie.broadcastreceiver.NotificationReceiver
 import woowacourse.movie.domain.MovieTicket
 import woowacourse.movie.ui.entity.Reservations
@@ -202,20 +202,19 @@ class SeatPickerActivity : AppCompatActivity() {
     }
 
     private fun setAlarmManager(ticketModel: MovieTicketModel) {
-        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        val time = ZonedDateTime.of(ticketModel.time.dateTime.minusMinutes(30), ZoneId.systemDefault())
-        val intent = NotificationReceiver.createIntent(this, ticketModel)
-        val pendingIntent = PendingIntent.getBroadcast(
+        val time =
+            ZonedDateTime.of(ticketModel.time.dateTime.minusMinutes(ALARM_MINUTE_CONDITION), ZoneId.systemDefault())
+                .toInstant().toEpochMilli()
+        val pendingIntent = getPendingIntent(ticketModel)
+        AlarmManager.setAlarm(this, time, pendingIntent)
+    }
+
+    private fun getPendingIntent(ticketModel: MovieTicketModel): PendingIntent {
+        return PendingIntent.getBroadcast(
             this,
             ticketModel.hashCode(),
-            intent,
+            NotificationReceiver.createIntent(this, ticketModel),
             PendingIntent.FLAG_IMMUTABLE
-        )
-
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            time.toInstant().toEpochMilli(),
-            pendingIntent
         )
     }
 
@@ -235,6 +234,7 @@ class SeatPickerActivity : AppCompatActivity() {
     companion object {
         private const val TICKET_EXTRA_KEY = "ticket_extra"
         private const val TICKET_INSTANCE_KEY = "ticket_instance"
+        private const val ALARM_MINUTE_CONDITION = 30L
 
         fun createIntent(context: Context, ticket: MovieTicketModel): Intent {
             val intent = Intent(context, SeatPickerActivity::class.java)
