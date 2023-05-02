@@ -1,8 +1,7 @@
 package woowacourse.movie.model
 
-object ReservationModel {
+object ReservationTicketMachine {
     private val _tickets = mutableListOf<MovieTicketModel>()
-
     val tickets: List<MovieTicketModel>
         get() = _tickets.toList().sortedBy { it.time }
 
