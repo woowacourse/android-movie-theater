@@ -28,7 +28,7 @@ class TicketActivity : AppCompatActivity() {
         setToolbar()
 
         Log.d("test", "인텐트 값 받아오기 시작")
-        val bookingMovie = intent.getParcelableCompat<BookingMovieEntity>(BOOKING_MOVIE_KEY)!!
+        val bookingMovie = intent.getParcelableCompat<BookingMovieEntity>(BOOKING_MOVIE_KEY)
         Log.d("test", "인텐트 값 받아오기 성공")
 
         showTicketInfo(

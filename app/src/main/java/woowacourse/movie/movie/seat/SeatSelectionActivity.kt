@@ -14,13 +14,11 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.movie.dto.BookingHistoryDto
 import woowacourse.movie.movie.dto.movie.BookingMovieEntity
-import woowacourse.movie.movie.dto.movie.MovieDateDto
-import woowacourse.movie.movie.dto.movie.MovieDto
-import woowacourse.movie.movie.dto.movie.MovieTimeDto
+import woowacourse.movie.movie.dto.movie.SeatMovieDto
 import woowacourse.movie.movie.dto.seat.SeatsDto
-import woowacourse.movie.movie.dto.ticket.TicketCountDto
 import woowacourse.movie.movie.mapper.seat.mapToSeats
 import woowacourse.movie.movie.mapper.seat.mapToSeatsDto
+import woowacourse.movie.movie.moviedetail.MovieDetailActivity.Companion.SEAT_BASE_INFORMATION_KEY
 import woowacourse.movie.movie.setting.AlarmReceiver
 import woowacourse.movie.movie.ticket.TicketActivity
 import woowacourse.movie.movie.utils.PendingIntentBuilder
@@ -31,13 +29,8 @@ import java.time.ZoneId
 
 class SeatSelectionActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySeatSelectionBinding
-
     private var seats = Seats()
-
-    private val date by lazy { intent.getParcelableCompat<MovieDateDto>(DATE_KEY)!! }
-    private val time by lazy { intent.getParcelableCompat<MovieTimeDto>(TIME_KEY)!! }
-    private val movie by lazy { intent.getParcelableCompat<MovieDto>(MOVIE_KEY)!! }
-    private val ticketCount by lazy { intent.getParcelableCompat<TicketCountDto>(TICKET_KEY)!! }
+    private val seatBaseInfo by lazy { intent.getParcelableCompat<SeatMovieDto>(SEAT_BASE_INFORMATION_KEY) }
     private val enterBtn by lazy { findViewById<TextView>(R.id.enterBtn) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,14 +50,14 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     private fun setMovieTitle() {
-        binding.movieTitle.text = movie.title
+        binding.movieTitle.text = seatBaseInfo.movie.title
     }
 
     private fun setUpState(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
-            val seatsDto = savedInstanceState.getParcelableCompat<SeatsDto>(SEATS_POSITION)!!
+            val seatsDto = savedInstanceState.getParcelableCompat<SeatsDto>(SEATS_POSITION)
             seats = seatsDto.mapToSeats()
-            setPrice(seats.caculateSeatPrice(LocalDateTime.of(date.date, time.time)))
+            setPrice(seats.caculateSeatPrice(LocalDateTime.of(seatBaseInfo.movieDate.date, seatBaseInfo.movieTime.time)))
         } else {
             setPrice(0)
         }
@@ -74,7 +67,7 @@ class SeatSelectionActivity : AppCompatActivity() {
 
     private fun onSeatClick(seat: Seat, textView: TextView) {
         when {
-            isPossibleSelect(seat, ticketCount.numberOfPeople) -> selectSeat(
+            isPossibleSelect(seat, seatBaseInfo.ticketCount.numberOfPeople) -> selectSeat(
                 textView,
                 seat,
             )
@@ -85,12 +78,12 @@ class SeatSelectionActivity : AppCompatActivity() {
                 return
             }
         }
-        setPrice(seats.caculateSeatPrice(LocalDateTime.of(date.date, time.time)))
+        setPrice(seats.caculateSeatPrice(LocalDateTime.of(seatBaseInfo.movieDate.date, seatBaseInfo.movieTime.time)))
         setEnterBtnClickable()
     }
 
     private fun setEnterBtnClickable() {
-        if (isPossibleEnter(ticketCount.numberOfPeople)) {
+        if (isPossibleEnter(seatBaseInfo.ticketCount.numberOfPeople)) {
             enterBtn.setBackgroundColor(getColor(R.color.enter))
             onEnterBtnClickListener(enterBtn)
         } else {
@@ -149,7 +142,7 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     private fun moveActivity() {
-        val bookingMovie = BookingMovieEntity(movie, date, time, ticketCount, seats.mapToSeatsDto())
+        val bookingMovie = BookingMovieEntity(seatBaseInfo.movie, seatBaseInfo.movieDate, seatBaseInfo.movieTime, seatBaseInfo.ticketCount, seats.mapToSeatsDto())
         val intent = Intent(this, TicketActivity::class.java)
         intent.putExtra(BOOKING_MOVIE_KEY, bookingMovie)
         putAlarm(bookingMovie)

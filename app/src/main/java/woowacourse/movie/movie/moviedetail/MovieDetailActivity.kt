@@ -17,6 +17,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.movie.dto.movie.MovieDateDto
 import woowacourse.movie.movie.dto.movie.MovieDto
+import woowacourse.movie.movie.dto.movie.SeatMovieDto
 import woowacourse.movie.movie.dto.ticket.TicketCountDto
 import woowacourse.movie.movie.mapper.movie.mapToMovieDateDto
 import woowacourse.movie.movie.mapper.movie.mapToMovieTimeDto
@@ -44,7 +45,7 @@ class MovieDetailActivity : AppCompatActivity() {
         setToolBar()
         setUpState(savedInstanceState)
 
-        val movie = intent.getParcelableCompat<MovieDto>(MOVIE_KEY)!!
+        val movie = intent.getParcelableCompat<MovieDto>(MOVIE_KEY)
 
         setDateSpinner(movie.startDate, movie.endDate)
         setUpMovieData(movie)
@@ -108,10 +109,8 @@ class MovieDetailActivity : AppCompatActivity() {
             val selectedDate = MovieDate.of(selectDateSpinner.selectedItem.toString())
             val selectedTime = MovieTime.of(selectTimeSpinner.selectedItem.toString())
             val intent = Intent(this, SeatSelectionActivity::class.java)
-            intent.putExtra(TICKET_KEY, movieTikcet)
-            intent.putExtra(MOVIE_KEY, movie)
-            intent.putExtra(DATE_KEY, selectedDate.mapToMovieDateDto())
-            intent.putExtra(TIME_KEY, selectedTime.mapToMovieTimeDto())
+
+            intent.putExtra(SEAT_BASE_INFORMATION_KEY, SeatMovieDto(movieTikcet, movie, selectedDate.mapToMovieDateDto(), selectedTime.mapToMovieTimeDto()))
             startActivity(intent)
             finish()
         }
@@ -201,10 +200,8 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val TICKET_KEY = "ticket"
+        const val SEAT_BASE_INFORMATION_KEY = "seat_base_info"
         private const val MOVIE_KEY = "movie"
-        private const val DATE_KEY = "movie_date"
-        private const val TIME_KEY = "movie_time"
         private const val DATE_SPINNER_POSITION = "date_spinner_position"
         private const val TIME_SPINNER_POSITION = "time_spinner_position"
     }
