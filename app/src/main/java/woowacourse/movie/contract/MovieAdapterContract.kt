@@ -12,6 +12,7 @@ interface MovieAdapterContract {
     }
 
     interface Presenter {
+        val view: View
         fun requestMovies(): List<Movie>
         fun requestAdvertisements(): List<Advertisement>
         fun requestAdvertisementPolicy(): AdvertisementPolicy

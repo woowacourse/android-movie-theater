@@ -6,7 +6,7 @@ import woowacourse.movie.domain.Reservation
 import woowacourse.movie.domain.repository.ReservationListRepository
 import woowacourse.movie.mapper.ReservationMapper.toView
 
-class ReservationAdapterPresenter(val view: ReservationAdapterContract.View) :
+class ReservationAdapterPresenter(override val view: ReservationAdapterContract.View) :
     ReservationAdapterContract.Presenter {
     private val reservationProvider: ReservationListRepository = ReservationListRepository()
 

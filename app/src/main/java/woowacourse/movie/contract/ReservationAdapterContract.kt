@@ -10,6 +10,7 @@ interface ReservationAdapterContract {
     }
 
     interface Presenter {
+        val view: View
         fun requestReservationData(): List<Reservation>
         fun setReservation()
     }

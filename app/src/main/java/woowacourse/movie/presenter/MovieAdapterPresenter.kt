@@ -12,7 +12,7 @@ import woowacourse.movie.domain.mock.AdvertisementPolicyMock
 import woowacourse.movie.mapper.AdvertisementMapper.toView
 import woowacourse.movie.mapper.MovieMapper.toView
 
-class MovieAdapterPresenter(val view: MovieAdapterContract.View) : MovieAdapterContract.Presenter {
+class MovieAdapterPresenter(override val view: MovieAdapterContract.View) : MovieAdapterContract.Presenter {
     private val movieProvider: MovieProvider = MovieProvider()
     private val advertisementProvider: AdvertisementProvider = AdvertisementProvider()
 
