@@ -19,7 +19,7 @@ class SeatTable(
             val tableRow = makeTableRow()
             repeat(colSize) { col ->
                 val seatView = SeatView(
-                    TextView(tableLayout.context), SeatUiModel.toChar(row), col + 1, onClick
+                    TextView(tableLayout.context), SeatUiModel.toChar(row + 1), col + 1, onClick
                 )
                 seatViews.add(seatView)
                 tableRow.addView(seatView.view)
@@ -32,16 +32,20 @@ class SeatTable(
         initTableBackground()
         ticketsUiModel.list.forEach { ticketUiModel ->
             val index = convertTablePositionToIndex(ticketUiModel.seat)
+            seatViews[index].view.isSelected = true
             seatViews[index].setBackgroundColorId(R.color.seat_selection_selected_seat_color)
         }
     }
 
     private fun initTableBackground() {
-        seatViews.forEach { it.setBackgroundColorId(R.color.white) }
+        seatViews.forEach {
+            it.view.isSelected = false
+            it.setBackgroundColorId(R.color.white)
+        }
     }
 
     private fun convertTablePositionToIndex(seatUiModel: SeatUiModel): Int {
-        return (SeatUiModel.toNumber(seatUiModel.row) - 2) * (colSize) + (seatUiModel.col - 1)
+        return (SeatUiModel.toNumber(seatUiModel.row) - 1) * (colSize) + (seatUiModel.col - 1)
     }
 
     private fun makeTableRow(): TableRow {
