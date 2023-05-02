@@ -4,5 +4,5 @@ import woowacourse.movie.model.TicketsState
 
 data class TicketsItemModel(
     val ticketsState: TicketsState,
-    val onClick: (position: Int) -> Unit
+    val onClick: (ticketsState: TicketsState) -> Unit
 )

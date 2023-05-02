@@ -3,7 +3,7 @@ package woowacourse.movie.feature.reservationList.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemReservationLayoutBinding
 import woowacourse.movie.feature.reservationList.itemModel.TicketsItemModel
 import woowacourse.movie.feature.reservationList.viewHolder.TicketsViewHolder
 
@@ -16,8 +16,8 @@ class ReservationListAdapter(
         get() = _reservations.toList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TicketsViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_reservation_layout, parent, false)
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val itemView = ItemReservationLayoutBinding.inflate(layoutInflater, parent, false)
         return TicketsViewHolder(itemView)
     }
 
