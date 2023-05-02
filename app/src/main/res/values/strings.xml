@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">Movie</string>
+    <string name="booking_now">지금 예매</string>
+    <string name="running_time">러닝타임: %d분</string>
+    <string name="screening_date">상영일: %s ~ %s</string>
+    <string name="booking_completed">예매 완료</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="cancel_description">영화 상영 시작 시간 15분 전까지\n취소가 가능합니다.</string>
+    <string name="ticket_count_seat_info">일반 %d명 | %s</string>
+    <string name="payment_amount">%,d원 (현장 결제)</string>
+    <string name="screen">SCREEN</string>
+    <string name="confirm">확인</string>
+    <string name="seat_table_row">좌석 테이블 행</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_booking_history">예매 내역</string>
+    <string name="menu_home">홈</string>
+    <string name="menu_setting">설정</string>
+    <string name="receive_push_alarm">푸시 알림 수신</string>
+    <string name="push_alarm_denied">해제하시면 푸시 알림을 수신할 수 없습니다.</string>
+    <string name="permission_denied">권한 요청을 거부하였습니다</string>
+    <string name="permission_granted">권한 요청을 승인하였습니다</string>
 </resources>
