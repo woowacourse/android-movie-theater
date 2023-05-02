@@ -6,8 +6,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import woowacourse.movie.R
 import woowacourse.movie.presentation.base.BaseRecyclerView
+import woowacourse.movie.presentation.model.item.Ad
 import woowacourse.movie.presentation.model.item.ListItem
 import woowacourse.movie.presentation.model.item.Movie
+import woowacourse.movie.presentation.model.item.Reservation
 
 class MovieViewHolder(
     view: View,
@@ -23,19 +25,24 @@ class MovieViewHolder(
         bookButton.setOnClickListener { onClick(adapterPosition) }
     }
 
-    override fun <T : ListItem> bind(item: T) {
-        if (item !is Movie) return
-
-        with(item as Movie) {
-            posterImageView.setImageResource(thumbnail)
-            titleTextView.text = title
-            dateTextView.text = dateTextView.context.getString(
-                R.string.movie_release_date,
-                startDate.formattedDate,
-                endDate.formattedDate,
-            )
-            runningTimeTextView.text =
-                runningTimeTextView.context.getString(R.string.movie_running_time, runningTime)
+    override fun bind(item: ListItem) {
+        when (item) {
+            is Movie -> {
+                with(item) {
+                    posterImageView.setImageResource(thumbnail)
+                    titleTextView.text = title
+                    dateTextView.text = dateTextView.context.getString(
+                        R.string.movie_release_date,
+                        startDate.formattedDate,
+                        endDate.formattedDate,
+                    )
+                    runningTimeTextView.text =
+                        runningTimeTextView.context.getString(R.string.movie_running_time, runningTime)
+                }
+            }
+            is Reservation -> {}
+            is Ad -> {}
         }
+        if (item !is Movie) return
     }
 }

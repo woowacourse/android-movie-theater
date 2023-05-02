@@ -8,7 +8,7 @@ import woowacourse.movie.presentation.model.item.ListItem
 
 class BaseRecyclerView {
     abstract class BaseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        abstract fun <T : ListItem> bind(item: T)
+        abstract fun bind(item: ListItem)
     }
 
     abstract class Adapter(

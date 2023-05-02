@@ -4,7 +4,9 @@ import android.view.View
 import android.widget.TextView
 import woowacourse.movie.R
 import woowacourse.movie.presentation.base.BaseRecyclerView
+import woowacourse.movie.presentation.model.item.Ad
 import woowacourse.movie.presentation.model.item.ListItem
+import woowacourse.movie.presentation.model.item.Movie
 import woowacourse.movie.presentation.model.item.Reservation
 
 class HistoryViewHolder(
@@ -20,11 +22,15 @@ class HistoryViewHolder(
         movieTitleTextView.setOnClickListener { onClick(adapterPosition) }
     }
 
-    override fun <T : ListItem> bind(item: T) {
-        if (item !is Reservation) return
-
-        movieDateTextView.text = item.formattedDate
-        movieTimeTextView.text = item.formattedTime
-        movieTitleTextView.text = item.movieTitle
+    override fun bind(item: ListItem) {
+        when (item) {
+            is Reservation -> {
+                movieDateTextView.text = item.formattedDate
+                movieTimeTextView.text = item.formattedTime
+                movieTitleTextView.text = item.movieTitle
+            }
+            is Movie -> {}
+            is Ad -> {}
+        }
     }
 }

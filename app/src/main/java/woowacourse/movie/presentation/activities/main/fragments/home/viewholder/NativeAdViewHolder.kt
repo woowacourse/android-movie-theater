@@ -6,6 +6,8 @@ import woowacourse.movie.R
 import woowacourse.movie.presentation.base.BaseRecyclerView
 import woowacourse.movie.presentation.model.item.Ad
 import woowacourse.movie.presentation.model.item.ListItem
+import woowacourse.movie.presentation.model.item.Movie
+import woowacourse.movie.presentation.model.item.Reservation
 
 class NativeAdViewHolder(
     view: View,
@@ -17,8 +19,13 @@ class NativeAdViewHolder(
         nativeAdsImageView.setOnClickListener { onAdClick(adapterPosition) }
     }
 
-    override fun <T : ListItem> bind(item: T) {
-        if (item !is Ad) return
-        nativeAdsImageView.setImageResource(item.bannerResId)
+    override fun bind(item: ListItem) {
+        when (item) {
+            is Ad -> {
+                nativeAdsImageView.setImageResource(item.bannerResId)
+            }
+            is Movie -> {}
+            is Reservation -> {}
+        }
     }
 }
