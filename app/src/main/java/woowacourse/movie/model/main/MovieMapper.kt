@@ -32,7 +32,6 @@ object MovieMapper {
             title = this.title,
             startDate = this.screeningPeriod.startDate.value,
             endDate = this.screeningPeriod.endDate.value,
-            screeningDates = this.screeningDates,
             runningTime = this.runningTime,
             description = this.description,
             thumbnail = getThumbnail(this.id),

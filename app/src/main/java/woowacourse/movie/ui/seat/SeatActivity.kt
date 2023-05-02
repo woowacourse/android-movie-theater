@@ -147,7 +147,7 @@ class SeatActivity : AppCompatActivity() {
     companion object {
         private const val BOOKED_MOVIE = "BOOKED_MOVIE"
 
-        fun getIntent(context: Context, bookedMovie: BookedMovie): Intent {
+        fun getIntent(context: Context, bookedMovie: BookedMovie?): Intent {
             return Intent(context, SeatActivity::class.java).apply {
                 putExtra(BOOKED_MOVIE, bookedMovie)
             }

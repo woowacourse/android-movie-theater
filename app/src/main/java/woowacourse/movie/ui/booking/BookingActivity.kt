@@ -13,55 +13,74 @@ import woowacourse.movie.model.BookedMovie
 import woowacourse.movie.model.main.MovieMapper.toUiModel
 import woowacourse.movie.model.main.MovieUiModel
 import woowacourse.movie.movie.MovieRepository
-import woowacourse.movie.movie.ScreeningDate
-import woowacourse.movie.ticket.TicketCount
 import woowacourse.movie.ui.seat.SeatActivity
 import woowacourse.movie.util.formatScreenDate
-import java.time.LocalDate
-import java.time.LocalTime
 
-class BookingActivity : AppCompatActivity() {
-    private var ticketCount = TicketCount()
-    private val dateTimeSpinner by lazy {
-        findViewById<DateTimeSpinner>(R.id.spinnerDateTime)
+class BookingActivity : AppCompatActivity(), BookingContract.View {
+
+    private val movie: MovieUiModel by lazy {
+        MovieRepository.getMovie(
+            movieId = intent.getLongExtra(MOVIE_ID, -1)
+        ).toUiModel()
+    }
+    private val dateTimeSpinner: DateTimeSpinner by lazy {
+        findViewById(R.id.spinnerDateTime)
+    }
+    private val ticketCountText: TextView by lazy {
+        findViewById(R.id.textBookingTicketCount)
+    }
+    private val minusButton: Button by lazy {
+        findViewById(R.id.buttonBookingMinus)
+    }
+    private val plusButton: Button by lazy {
+        findViewById(R.id.buttonBookingPlus)
+    }
+    private val completeButton: Button by lazy {
+        findViewById(R.id.buttonBookingComplete)
+    }
+    private val bookingPresenter: BookingContract.Presenter by lazy {
+        BookingPresenter(
+            bookingView = this,
+            movie = movie,
+        )
+    }
+    private val dateTimePresenter: DateTimeContract.Presenter by lazy {
+        DateTimePresenter(
+            startDate = movie.startDate,
+            endDate = movie.endDate,
+            view = dateTimeSpinner
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_booking)
-        val movie = getMovie()
-        initDateTimes(movie)
-        restoreData(savedInstanceState)
-        initView(movie)
-        gatherClickListeners(movie)
-        initSpinnerListener()
+
+        initView()
+        initTicketCountText()
+        initClickListeners()
+        initDateTimeSpinner()
     }
 
-    private fun restoreData(savedInstanceState: Bundle?) {
-        if (savedInstanceState != null) {
-            ticketCount = TicketCount(savedInstanceState.getInt(TICKET_COUNT))
-        }
+    override fun onRestoreInstanceState(
+        savedInstanceState: Bundle
+    ) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        setTicketCountText(
+            count = savedInstanceState.getInt(TICKET_COUNT)
+        )
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.run {
-            putInt(TICKET_COUNT, ticketCount.value)
-        }
         super.onSaveInstanceState(outState)
+
+        outState.run {
+            putInt(TICKET_COUNT, ticketCountText.text.toString().toInt())
+        }
     }
 
-    private fun getMovie(): MovieUiModel {
-        val movieId = intent.getLongExtra(MOVIE_ID, -1)
-        return MovieRepository.getMovie(movieId).toUiModel()
-    }
-
-    private fun gatherClickListeners(movie: MovieUiModel) {
-        clickMinus()
-        clickPlus()
-        clickBookingComplete(movie)
-    }
-
-    private fun initView(movie: MovieUiModel) {
+    private fun initView() {
         findViewById<ImageView>(R.id.imageBookingPoster).setImageResource(movie.poster)
         findViewById<TextView>(R.id.textBookingTitle).text = movie.title
         findViewById<TextView>(R.id.textBookingScreeningDate).text =
@@ -73,12 +92,21 @@ class BookingActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.textBookingRunningTime).text =
             getString(R.string.running_time, movie.runningTime)
         findViewById<TextView>(R.id.textBookingDescription).text = movie.description
-        findViewById<TextView>(R.id.textBookingTicketCount).text = ticketCount.value.toString()
         showBackButton()
+    }
+
+    private fun initTicketCountText() {
+        bookingPresenter.initTicketCount()
     }
 
     private fun showBackButton() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun initClickListeners() {
+        initMinusBtnClickListener()
+        initPlusBtnClickListener()
+        initCompleteBtnClickListener()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -89,38 +117,38 @@ class BookingActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun clickMinus() {
-        findViewById<Button>(R.id.buttonBookingMinus).setOnClickListener {
-            ticketCount = ticketCount.minus()
-            findViewById<TextView>(R.id.textBookingTicketCount).text = ticketCount.value.toString()
+    private fun initMinusBtnClickListener() {
+        minusButton.setOnClickListener {
+            bookingPresenter.minusTicketCount()
         }
     }
 
-    private fun clickPlus() {
-        findViewById<Button>(R.id.buttonBookingPlus).setOnClickListener {
-            ticketCount = ticketCount.plus()
-            findViewById<TextView>(R.id.textBookingTicketCount).text = ticketCount.value.toString()
+    private fun initPlusBtnClickListener() {
+        plusButton.setOnClickListener {
+            bookingPresenter.plusTicketCount()
         }
     }
 
-    private fun clickBookingComplete(movie: MovieUiModel) {
-        findViewById<Button>(R.id.buttonBookingComplete).setOnClickListener {
-            val dateTime = dateTimeSpinner.selectedDateTime
-            val bookedMovie = BookedMovie(movie.id, 0, ticketCount.value, dateTime)
+    private fun initDateTimeSpinner() {
+        dateTimePresenter.initDateTimes()
+    }
+
+    override fun setTicketCountText(count: Int) {
+        ticketCountText.text = count.toString()
+    }
+
+    private fun initCompleteBtnClickListener() {
+        completeButton.setOnClickListener {
+            val bookedMovie = BookedMovie(
+                movieId = movie.id,
+                theaterId = 0,
+                ticketCount = ticketCountText.text.toString().toInt(),
+                bookedDateTime = dateTimeSpinner.selectedDateTime
+            )
+
             startActivity(SeatActivity.getIntent(this, bookedMovie))
             finish()
         }
-    }
-
-    private fun initDateTimes(movie: MovieUiModel) {
-        val dates: List<LocalDate> = movie.screeningDates
-        val times: List<LocalTime> = ScreeningDate(movie.startDate).screeningTimes
-        dateTimeSpinner.initDateItems(dates)
-        dateTimeSpinner.initTimeItems(times)
-    }
-
-    private fun initSpinnerListener() {
-        dateTimeSpinner.initDateSelectedListener { ScreeningDate(it).screeningTimes }
     }
 
     companion object {

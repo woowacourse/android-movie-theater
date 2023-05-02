@@ -13,7 +13,7 @@ data class MovieUiModel(
     val title: String,
     val startDate: LocalDate,
     val endDate: LocalDate,
-    val screeningDates: List<LocalDate>,
+//    val screeningDates: List<LocalDate>,
     val runningTime: Int,
     val description: String,
     @DrawableRes val thumbnail: Int,

@@ -15,20 +15,26 @@ import java.time.LocalTime
 class DateTimeSpinner(
     context: Context,
     attrs: AttributeSet,
-) : ConstraintLayout(context, attrs) {
+) : ConstraintLayout(context, attrs), DateTimeContract.View {
+
     private var layoutInflater: LayoutInflater? = null
-    private val dateSpinner: Spinner by lazy { findViewById(R.id.movieDateSpinner) }
-    private val timeSpinner: Spinner by lazy { findViewById(R.id.movieTimeSpinner) }
+    private val dateSpinner: Spinner by lazy {
+        findViewById(R.id.movieDateSpinner)
+    }
+    private val timeSpinner: Spinner by lazy {
+        findViewById(R.id.movieTimeSpinner)
+    }
     private val dateAdapter: SpinnerAdapter<LocalDate> by lazy {
         SpinnerAdapter(context, R.layout.screening_date_time_item, R.id.textSpinnerDateTime)
     }
     private val timeAdapter: SpinnerAdapter<LocalTime> by lazy {
         SpinnerAdapter(context, R.layout.screening_date_time_item, R.id.textSpinnerDateTime)
     }
-
-    private val selectedDateItem: LocalDate? get() = dateAdapter.getItem(dateSpinner.selectedItemPosition)
-    private val selectedTimeItem: LocalTime? get() = timeAdapter.getItem(timeSpinner.selectedItemPosition)
-    val selectedDateTime: LocalDateTime get() = LocalDateTime.of(selectedDateItem, selectedTimeItem)
+    val selectedDateTime: LocalDateTime
+        get() = LocalDateTime.of(
+            dateAdapter.getItem(dateSpinner.selectedItemPosition),
+            timeAdapter.getItem(timeSpinner.selectedItemPosition)
+        )
 
     init {
         initView()
@@ -47,15 +53,15 @@ class DateTimeSpinner(
         timeSpinner.adapter = timeAdapter
     }
 
-    fun initDateItems(dates: List<LocalDate>) {
-        dateAdapter.initItems(dates)
+    override fun setDates(screeningDates: List<LocalDate>) {
+        dateAdapter.initItems(screeningDates)
     }
 
-    fun initTimeItems(times: List<LocalTime>) {
-        timeAdapter.initItems(times)
+    override fun setTimes(screeningTimes: List<LocalTime>) {
+        timeAdapter.initItems(screeningTimes)
     }
 
-    fun initDateSelectedListener(getTimes: (LocalDate) -> List<LocalTime>) {
+    override fun initDateSelectedListener(updateTimes: (selectedDate: LocalDate) -> (Unit)) {
         dateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -63,8 +69,9 @@ class DateTimeSpinner(
                 position: Int,
                 id: Long,
             ) {
-                val times = getTimes(dateAdapter.getItem(position) ?: return)
-                initTimeItems(times)
+                dateAdapter.getItem(position)?.let { screeningDate ->
+                    updateTimes(screeningDate)
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) = Unit
