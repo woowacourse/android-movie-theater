@@ -29,7 +29,7 @@ class MovieNoticeAlarmManager(private val context: Context, private val ticketMo
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
             getTicketAlarmCalendar(reservationTime).timeInMillis,
-            pendingIntent
+            pendingIntent,
         )
     }
 

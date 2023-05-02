@@ -2,11 +2,14 @@ package woowacourse.movie.presentation.main
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
+import woowacourse.movie.broadcastreceiver.AlarmReceiver
 import woowacourse.movie.presentation.bookedticketlist.BookedTicketsFragment
 import woowacourse.movie.presentation.movielist.MovieListFragment
 import woowacourse.movie.presentation.settings.SettingsFragment
@@ -26,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         setInitialFragment()
         initBottomNavigation()
         requestNotificationPermission()
+        initAlarmReceiver()
     }
 
     @SuppressLint("InlinedApi")
@@ -33,6 +37,14 @@ class MainActivity : AppCompatActivity() {
         if (!applicationContext.checkPermissionTiramisu(Manifest.permission.POST_NOTIFICATIONS)) {
             requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
+    }
+
+    private fun initAlarmReceiver() {
+        val myReceiver = AlarmReceiver()
+        val filter = IntentFilter().apply {
+            addAction(Intent.ACTION_SCREEN_ON)
+        }
+        registerReceiver(myReceiver, filter)
     }
 
     private fun setInitialFragment() {
@@ -63,8 +75,6 @@ class MainActivity : AppCompatActivity() {
                 else -> throw IllegalStateException(BOTTOM_NAVIGATION_WRONG_ITEM_ID_ERROR)
             }
         }
-
-        bottomNavigation.selectedItemId = R.id.action_home
     }
 
     companion object {
