@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -15,6 +16,7 @@ import woowacourse.movie.permission.SinglePermissionRequester
 import woowacourse.movie.ui.fragment.FragmentType
 import woowacourse.movie.ui.fragment.movielist.HomeFragment
 import woowacourse.movie.ui.fragment.reservationlist.ReservationListFragment
+import woowacourse.movie.ui.fragment.reservationlist.ReservationListFragment.Companion.KEY_UPDATE_RESERVATION_ITEM
 import woowacourse.movie.ui.fragment.settings.SettingsFragment
 import woowacourse.movie.ui.storage.SettingsStorage
 import woowacourse.movie.ui.utils.openAndroidSettings
@@ -51,6 +53,17 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(KEY_INSTANCE_ITEM_ID, bottomNavigationView.selectedItemId)
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+
+        if (intent?.type == MovieTicketActivity.TYPE_MOVIE_TICKET) {
+            supportFragmentManager.setFragmentResult(
+                KEY_UPDATE_RESERVATION_ITEM,
+                bundleOf()
+            )
+        }
     }
 
     private fun actionGrantedPermission() {

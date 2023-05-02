@@ -8,6 +8,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.ui.model.MovieTicketModel
@@ -24,6 +25,7 @@ class MovieTicketActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        setBackPressedCallback()
         setTicketInfo()
     }
 
@@ -32,16 +34,27 @@ class MovieTicketActivity : AppCompatActivity() {
         super.onConfigurationChanged(newConfig)
     }
 
+    private fun setBackPressedCallback() {
+        onBackPressedDispatcher.addCallback(this) {
+            goBackToMainActivity()
+        }
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                val intent = MainActivity.createIntent(this)
-                intent.flags = FLAG_ACTIVITY_CLEAR_TOP + FLAG_ACTIVITY_SINGLE_TOP
-                startActivity(intent)
-                return true
+                return goBackToMainActivity()
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun goBackToMainActivity(): Boolean {
+        val intent = MainActivity.createIntent(this)
+        intent.flags = FLAG_ACTIVITY_CLEAR_TOP + FLAG_ACTIVITY_SINGLE_TOP
+        intent.type = TYPE_MOVIE_TICKET
+        startActivity(intent)
+        return true
     }
 
     private fun setTicketInfo() {
@@ -75,6 +88,7 @@ class MovieTicketActivity : AppCompatActivity() {
 
     companion object {
         private const val TICKET_EXTRA_KEY = "ticket"
+        internal const val TYPE_MOVIE_TICKET = "movie_ticket"
 
         fun createIntent(context: Context, ticket: MovieTicketModel): Intent {
             val intent = Intent(context, MovieTicketActivity::class.java)
