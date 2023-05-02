@@ -52,4 +52,7 @@ dependencies {
 
     // Fragment
     implementation("androidx.fragment:fragment-ktx:1.4.0")
+
+    // mockk
+    testImplementation("io.mockk:mockk-android:1.13.5")
 }
