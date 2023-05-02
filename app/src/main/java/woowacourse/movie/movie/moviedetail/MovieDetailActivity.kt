@@ -36,6 +36,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private val selectDateSpinner by lazy { binding.selectDate }
     private val selectTimeSpinner by lazy { binding.selectTime }
+    private lateinit var movie : MovieDto
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +46,8 @@ class MovieDetailActivity : AppCompatActivity() {
         setToolBar()
         setUpState(savedInstanceState)
 
-        val movie = intent.getParcelableCompat<MovieDto>(MOVIE_KEY)
+
+        intent.getParcelableCompat<MovieDto>(MOVIE_KEY)?.let { movie = it }
 
         setDateSpinner(movie.startDate, movie.endDate)
         setUpMovieData(movie)

@@ -30,15 +30,22 @@ import java.time.ZoneId
 class SeatSelectionActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySeatSelectionBinding
     private var seats = Seats()
-    private val seatBaseInfo by lazy { intent.getParcelableCompat<SeatMovieDto>(SEAT_BASE_INFORMATION_KEY) }
+
+    private lateinit var seatsDto: SeatsDto
+    private lateinit var seatBaseInfo: SeatMovieDto
     private val enterBtn by lazy { findViewById<TextView>(R.id.enterBtn) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySeatSelectionBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setInitData()
         setUpState(savedInstanceState)
         setMovieTitle()
+    }
+
+    private fun setInitData(){
+        intent.getParcelableCompat<SeatMovieDto>(SEAT_BASE_INFORMATION_KEY)?.let { seatBaseInfo = it }
     }
 
     private fun setUpSeatsView() {
@@ -55,7 +62,7 @@ class SeatSelectionActivity : AppCompatActivity() {
 
     private fun setUpState(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
-            val seatsDto = savedInstanceState.getParcelableCompat<SeatsDto>(SEATS_POSITION)
+            savedInstanceState.getParcelableCompat<SeatsDto>(SEATS_POSITION)?.let { seatsDto = it }
             seats = seatsDto.mapToSeats()
             setPrice(seats.caculateSeatPrice(LocalDateTime.of(seatBaseInfo.movieDate.date, seatBaseInfo.movieTime.time)))
         } else {

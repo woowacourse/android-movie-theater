@@ -1,7 +1,6 @@
 package woowacourse.movie.movie.ticket
 
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
@@ -20,16 +19,14 @@ import java.time.format.DateTimeFormatter
 
 class TicketActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTicketBinding
+    private lateinit var bookingMovie: BookingMovieEntity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTicketBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setToolbar()
-
-        Log.d("test", "인텐트 값 받아오기 시작")
-        val bookingMovie = intent.getParcelableCompat<BookingMovieEntity>(BOOKING_MOVIE_KEY)
-        Log.d("test", "인텐트 값 받아오기 성공")
+        intent.getParcelableCompat<BookingMovieEntity>(BOOKING_MOVIE_KEY)?.let { bookingMovie = it }
 
         showTicketInfo(
             bookingMovie.movie,

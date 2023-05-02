@@ -75,6 +75,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
+        const val setting_preference_key = "setting"
+
         private const val DENIED_PERMISSION_MESSAGE = "알림 권한이 차단되었습니다"
         private const val PERMIT_PERMISSION_MESSAGE = "알림 권한이 허용되었습니다"
         private const val LOWER_VERSION_MESSAGE = "설정에 가서 알림 권한을 켜주세요"
@@ -84,5 +86,7 @@ class MainActivity : AppCompatActivity() {
             R.id.home to HomeFragment(),
             R.id.setting to SettingFragment(),
         )
+
+
     }
 }
