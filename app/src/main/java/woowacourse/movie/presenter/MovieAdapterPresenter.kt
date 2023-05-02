@@ -4,18 +4,18 @@ import woowacourse.movie.contract.MovieAdapterContract
 import woowacourse.movie.data.MovieListItemViewData
 import woowacourse.movie.data.MovieListItemsViewData
 import woowacourse.movie.domain.Advertisement
-import woowacourse.movie.domain.AdvertisementProvider
 import woowacourse.movie.domain.Movie
-import woowacourse.movie.domain.MovieProvider
 import woowacourse.movie.domain.advertismentPolicy.AdvertisementPolicy
 import woowacourse.movie.domain.mock.AdvertisementPolicyMock
+import woowacourse.movie.domain.repository.AdvertisementRepository
+import woowacourse.movie.domain.repository.MovieRepository
 import woowacourse.movie.mapper.AdvertisementMapper.toView
 import woowacourse.movie.mapper.MovieMapper.toView
 
 class MovieAdapterPresenter(
     override val view: MovieAdapterContract.View,
-    val movieProvider: MovieProvider = MovieProvider(),
-    val advertisementProvider: AdvertisementProvider = AdvertisementProvider()
+    val movieRepository: MovieRepository = MovieRepository(),
+    val advertisementRepository: AdvertisementRepository = AdvertisementRepository()
 ) : MovieAdapterContract.Presenter {
     override fun setMovieList() {
         val movies = makeMovieListViewData(
@@ -24,10 +24,10 @@ class MovieAdapterPresenter(
         view.setAdapterData(movies)
     }
 
-    private fun requestMovies(): List<Movie> = movieProvider.requestMovies()
+    private fun requestMovies(): List<Movie> = movieRepository.requestMovies()
 
     private fun requestAdvertisements(): List<Advertisement> =
-        advertisementProvider.requestAdvertisements()
+        advertisementRepository.requestAdvertisements()
 
     private fun requestAdvertisementPolicy(): AdvertisementPolicy =
         AdvertisementPolicyMock.createAdvertisementPolicy()
