@@ -4,26 +4,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.contract.MovieAdapterContract
 import woowacourse.movie.data.MovieListItemViewData
 import woowacourse.movie.data.MovieListItemsViewData
 import woowacourse.movie.data.MovieListViewType
 import woowacourse.movie.data.MovieViewData
-import woowacourse.movie.domain.Advertisement
-import woowacourse.movie.domain.Movie
-import woowacourse.movie.domain.advertismentPolicy.AdvertisementPolicy
-import woowacourse.movie.mapper.AdvertisementMapper.toView
-import woowacourse.movie.mapper.MovieMapper.toView
+import woowacourse.movie.presenter.MovieAdapterPresenter
 import woowacourse.movie.view.viewholder.AdvertisementViewHolder
 import woowacourse.movie.view.viewholder.MovieInfoViewHolder
 
-class MovieAdapter(
-    movie: List<Movie>,
-    advertisement: List<Advertisement>,
-    advertisementPolicy: AdvertisementPolicy,
-    val onClickItem: (data: MovieListItemViewData) -> Unit
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var movieListItemsViewData: MovieListItemsViewData =
-        makeMovieListViewData(movie, advertisement, advertisementPolicy)
+class MovieAdapter(val onClickItem: (MovieListItemViewData) -> Unit) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>(), MovieAdapterContract.View {
+    private var movieListItemsViewData: MovieListItemsViewData = MovieListItemsViewData(emptyList())
+
+    override val presenter: MovieAdapterContract.Presenter = MovieAdapterPresenter(this)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (MovieListViewType.values()[viewType]) {
@@ -58,27 +52,8 @@ class MovieAdapter(
     override fun getItemId(position: Int): Long = position.toLong()
     override fun getItemCount(): Int = movieListItemsViewData.value.size
 
-    fun updateMovieListViewData(
-        movie: List<Movie>,
-        advertisement: List<Advertisement>,
-        advertisementPolicy: AdvertisementPolicy
-    ) {
-        movieListItemsViewData = makeMovieListViewData(movie, advertisement, advertisementPolicy)
+    override fun setAdapterData(movies: MovieListItemsViewData) {
+        movieListItemsViewData = movies
         notifyDataSetChanged()
-    }
-
-    private fun makeMovieListViewData(
-        movie: List<Movie>,
-        advertisement: List<Advertisement>,
-        advertisementPolicy: AdvertisementPolicy
-    ): MovieListItemsViewData {
-        return mutableListOf<MovieListItemViewData>().apply {
-            for (index in movie.indices) {
-                if (index > 0 && index % advertisementPolicy.movieCount == 0) add(advertisement[0].toView())
-                add(movie[index].toView())
-            }
-        }.let {
-            MovieListItemsViewData(it)
-        }
     }
 }

@@ -1,13 +1,13 @@
-package woowacourse.movie.view.repository
+package woowacourse.movie.domain.repository
 
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.dataSource.DataSource
 import woowacourse.movie.domain.dataSource.MovieDataSource
 
-class MovieListRepository {
+class MovieRepository {
     private val movieDataSource: DataSource<Movie> = MovieDataSource()
 
-    fun requestMovie(): List<Movie> {
+    fun requestMovies(): List<Movie> {
         return movieDataSource.value
     }
 }

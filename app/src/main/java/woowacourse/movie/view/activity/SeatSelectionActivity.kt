@@ -18,6 +18,7 @@ import woowacourse.movie.domain.Reservation
 import woowacourse.movie.domain.discountPolicy.Discount
 import woowacourse.movie.domain.discountPolicy.MovieDayPolicy
 import woowacourse.movie.domain.discountPolicy.OffTimePolicy
+import woowacourse.movie.domain.repository.SeatSelectionRepository
 import woowacourse.movie.domain.reservationNotificationPolicy.MovieReservationNotificationPolicy
 import woowacourse.movie.error.ActivityError.finishWithError
 import woowacourse.movie.error.ViewError
@@ -31,7 +32,6 @@ import woowacourse.movie.system.BroadcastAlarm.registerAlarmReceiver
 import woowacourse.movie.system.BroadcastAlarm.setAlarmAtDate
 import woowacourse.movie.system.ReservationAlarmReceiver
 import woowacourse.movie.view.getSerializableCompat
-import woowacourse.movie.view.repository.SeatSelectionRepository
 import woowacourse.movie.view.widget.SeatTableLayout
 import java.text.NumberFormat
 import java.util.Locale

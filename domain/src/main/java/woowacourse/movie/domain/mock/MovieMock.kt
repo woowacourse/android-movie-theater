@@ -1,5 +1,8 @@
-package woowacourse.movie.domain
+package woowacourse.movie.domain.mock
 
+import woowacourse.movie.domain.DateRange
+import woowacourse.movie.domain.Image
+import woowacourse.movie.domain.Movie
 import java.time.LocalDate
 
 object MovieMock {

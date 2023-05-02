@@ -1,4 +1,7 @@
-package woowacourse.movie.domain
+package woowacourse.movie.domain.mock
+
+import woowacourse.movie.domain.Advertisement
+import woowacourse.movie.domain.Image
 
 object AdvertisementMock {
     fun createAdvertisement(): Advertisement = Advertisement(

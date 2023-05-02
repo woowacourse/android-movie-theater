@@ -1,7 +1,7 @@
 package woowacourse.movie.domain.dataSource
 
 import woowacourse.movie.domain.Movie
-import woowacourse.movie.domain.MovieMock
+import woowacourse.movie.domain.mock.MovieMock
 
 class MovieDataSource : DataSource<Movie> {
     override val value: List<Movie>

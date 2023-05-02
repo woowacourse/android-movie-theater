@@ -9,13 +9,13 @@ import androidx.fragment.app.replace
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.data.ReservationsViewData
+import woowacourse.movie.domain.repository.MainRepository
 import woowacourse.movie.mapper.ReservationMapper.toView
 import woowacourse.movie.system.BroadcastAlarm.createNotificationChannel
 import woowacourse.movie.system.ReservationAlarmReceiver
 import woowacourse.movie.view.fragment.MovieListFragment
 import woowacourse.movie.view.fragment.ReservationListFragment
 import woowacourse.movie.view.fragment.SettingFragment
-import woowacourse.movie.view.repository.MainRepository
 
 class MainActivity : AppCompatActivity() {
     private val mainRepository: MainRepository = MainRepository()
