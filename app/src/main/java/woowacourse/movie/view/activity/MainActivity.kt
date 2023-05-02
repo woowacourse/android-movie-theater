@@ -25,6 +25,10 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.notification_channel_description)
         )
 
+        initMainView()
+    }
+
+    private fun initMainView() {
         makeBottomNavigationView()
         replaceFragment<MovieListFragment>()
     }
@@ -38,17 +42,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun onItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
-            R.id.action_list -> replaceReservationListFragment()
+            R.id.action_list -> replaceFragment<ReservationListFragment>()
             R.id.action_home -> replaceFragment<MovieListFragment>()
             R.id.action_setting -> replaceFragment<SettingFragment>()
             else -> return false
         }
         return true
-    }
-
-    private fun replaceReservationListFragment() {
-        val bundle = ReservationListFragment.from()
-        replaceFragment<ReservationListFragment>(bundle)
     }
 
     private inline fun <reified T : Fragment> replaceFragment(bundle: Bundle? = null) {

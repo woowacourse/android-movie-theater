@@ -23,8 +23,4 @@ class ReservationListFragment : Fragment(R.layout.fragment_reservation_list) {
         val decoration = DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL)
         recyclerView.addItemDecoration(decoration)
     }
-
-    companion object {
-        fun from() = Bundle()
-    }
 }

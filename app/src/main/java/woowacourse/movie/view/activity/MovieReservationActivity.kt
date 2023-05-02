@@ -58,6 +58,14 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
 
         presenter.load(savedInstanceState)
 
+        initMovieReservationView(savedInstanceState)
+    }
+
+    private fun makeBackButton() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun initMovieReservationView(savedInstanceState: Bundle?) {
         val movie =
             intent.extras?.getSerializableCompat<MovieViewData>(MovieViewData.MOVIE_EXTRA_NAME)
                 ?: return finishWithError(ViewError.MissingExtras(MovieViewData.MOVIE_EXTRA_NAME))
@@ -66,10 +74,6 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         makeCounterListener()
         makeSpinners(savedInstanceState, movie)
         makeReservationButtonClickListener(movie)
-    }
-
-    private fun makeBackButton() {
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun setMovieData(movie: MovieViewData) {
