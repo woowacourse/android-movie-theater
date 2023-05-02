@@ -14,7 +14,7 @@ import woowacourse.movie.R
 import woowacourse.movie.model.data.AlarmSwitchStateImpl
 import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.model.ReservationTicketMachine
-import woowacourse.movie.ui.alarm.AlarmCreator
+import woowacourse.movie.ui.alarm.Alarm
 
 class SettingFragment : Fragment() {
     private lateinit var toggleButton: SwitchCompat
@@ -23,7 +23,7 @@ class SettingFragment : Fragment() {
             requireContext(),
         )
     }
-    private val alarmCreator by lazy { AlarmCreator(requireContext()) }
+    private val alarm by lazy { Alarm(requireContext()) }
     private val requestPermissionLauncher by lazy {
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
@@ -75,9 +75,9 @@ class SettingFragment : Fragment() {
 
     private fun setAlarms(isChecked: Boolean) {
         if (isChecked) {
-            iterateOnTickets(alarmCreator::makeAlarm)
+            iterateOnTickets(alarm::makeAlarm)
         } else {
-            iterateOnTickets(alarmCreator::cancelAlarm)
+            iterateOnTickets(alarm::cancelAlarm)
         }
     }
 

@@ -11,7 +11,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset
 
-class AlarmCreator(private val context: Context) {
+class Alarm(private val context: Context) {
     private val alarmManager: AlarmManager =
         context.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
 
