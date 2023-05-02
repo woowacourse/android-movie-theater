@@ -3,7 +3,6 @@ package woowacourse.movie.ui.activity
 import android.Manifest
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import androidx.activity.result.contract.ActivityResultContracts
@@ -66,18 +65,17 @@ class MainActivity : AppCompatActivity() {
                 container.showSnack(
                     getString(R.string.notification_permission_snackbar_message),
                     getString(R.string.notification_permission_snackbar_button),
-                    ::openAndroidSettings
+                    ::openNotificationSettings
                 )
             },
             requestPermissionLauncher
         )
     }
 
-    private fun openAndroidSettings() {
-        val uri = Uri.fromParts("package", packageName, null)
+    private fun openNotificationSettings() {
         val intent = Intent().apply {
-            action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-            data = uri
+            action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
+            putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
         }
         startActivity(intent)
     }
