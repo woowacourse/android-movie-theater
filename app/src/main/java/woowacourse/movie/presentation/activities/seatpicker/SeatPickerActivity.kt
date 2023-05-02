@@ -1,5 +1,6 @@
-package woowacourse.movie.presentation.activities.ticketing
+package woowacourse.movie.presentation.activities.seatpicker
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -15,7 +16,8 @@ import woowacourse.movie.domain.model.movie.DomainTicketPrice
 import woowacourse.movie.domain.model.seat.DomainPickedSeats
 import woowacourse.movie.domain.model.seat.DomainSeat
 import woowacourse.movie.presentation.activities.main.alarm.PushAlarmManager
-import woowacourse.movie.presentation.activities.ticketing.TicketingActivity.Companion.MOVIE_KEY
+import woowacourse.movie.presentation.activities.seatpicker.contract.SeatPickerContract
+import woowacourse.movie.presentation.activities.seatpicker.presenter.SeatPickerPresenter
 import woowacourse.movie.presentation.activities.ticketingresult.TicketingResultActivity
 import woowacourse.movie.presentation.extensions.createAlertDialog
 import woowacourse.movie.presentation.extensions.getParcelableCompat
@@ -39,18 +41,20 @@ import woowacourse.movie.presentation.model.TicketPrice
 import woowacourse.movie.presentation.model.movieitem.Movie
 import woowacourse.movie.presentation.receiver.ReservationPushReceiver
 
-class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
+class SeatPickerActivity : AppCompatActivity(), View.OnClickListener, SeatPickerContract.View {
+    override val presenter: SeatPickerContract.Presenter = SeatPickerPresenter(this)
+
     private var pickedSeats = DomainPickedSeats()
     private val seatRowSize: Int = 5
     private val seatColSize: Int = 4
 
     private val movieDate by lazy {
-        intent.getParcelableCompat<MovieDate>(TicketingActivity.MOVIE_DATE_KEY)!!.toDomain()
+        intent.getParcelableCompat<MovieDate>(MOVIE_DATE_KEY)!!.toDomain()
     }
     private val movieTime by lazy {
-        intent.getParcelableCompat<MovieTime>(TicketingActivity.MOVIE_TIME_KEY)!!.toDomain()
+        intent.getParcelableCompat<MovieTime>(MOVIE_TIME_KEY)!!.toDomain()
     }
-    private val ticket by lazy { intent.getParcelableCompat<Ticket>(TicketingActivity.TICKET_KEY)!! }
+    private val ticket by lazy { intent.getParcelableCompat<Ticket>(TICKET_KEY)!! }
     private val movie by lazy { intent.getParcelableCompat<Movie>(MOVIE_KEY)!! }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -199,5 +203,22 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
     companion object {
         internal const val PICKED_SEATS_KEY = "picked_seats"
         internal const val REMINDER_TIME_MINUTES_AGO = 30L
+
+        private const val TICKET_KEY = "ticketCount"
+        private const val MOVIE_KEY = "movie_key"
+        private const val MOVIE_DATE_KEY = "movieDate"
+        private const val MOVIE_TIME_KEY = "movieTime"
+
+        fun getIntent(
+            context: Context,
+            movie: Movie,
+            ticket: Ticket,
+            selectedDate: MovieDate,
+            selectedTime: MovieTime
+        ): Intent = Intent(context, SeatPickerActivity::class.java)
+            .putExtra(TICKET_KEY, movie)
+            .putExtra(MOVIE_KEY, ticket)
+            .putExtra(MOVIE_DATE_KEY, selectedDate)
+            .putExtra(MOVIE_TIME_KEY, selectedTime)
     }
 }

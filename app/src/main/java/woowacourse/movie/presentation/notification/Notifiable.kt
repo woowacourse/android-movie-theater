@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.reminder
+package woowacourse.movie.presentation.notification
 
 import android.Manifest.permission
 import android.annotation.SuppressLint

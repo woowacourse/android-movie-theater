@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".presentation.activities.ticketing.TicketingActivity" />
-        <activity android:name=".presentation.activities.ticketing.SeatPickerActivity" />
+        <activity android:name=".presentation.activities.seatpicker.SeatPickerActivity" />
         <activity android:name=".presentation.activities.ticketingresult.TicketingResultActivity" />
 
         <receiver

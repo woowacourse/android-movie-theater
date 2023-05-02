@@ -14,7 +14,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.presentation.activities.main.MainActivity
-import woowacourse.movie.presentation.activities.main.fragments.setting.contract.presenter.SettingPresenter.Companion.PUSH_ALLOW_KEY
 
 @RunWith(AndroidJUnit4::class)
 class SettingFragmentTest {
@@ -34,8 +33,6 @@ class SettingFragmentTest {
 
     @Test
     internal fun 푸시_동의_스위치가_활성화_상태일_때_누르면_비활성화한다() {
-        setPushState(true)
-
         onView(withId(R.id.setting))
             .check(matches(isDisplayed()))
             .perform(click())
@@ -47,8 +44,6 @@ class SettingFragmentTest {
 
     @Test
     internal fun 푸시_동의_스위치가_비활성화_상태일_때_누르면_활성화한다() {
-        setPushState(false)
-
         onView(withId(R.id.setting))
             .check(matches(isDisplayed()))
             .perform(click())
@@ -56,9 +51,5 @@ class SettingFragmentTest {
         onView(withId(R.id.notification_push_switch))
             .perform(click())
             .check(matches(isChecked()))
-    }
-
-    private fun setPushState(value: Boolean) {
-        MovieApplication.dataStore.setBoolean(PUSH_ALLOW_KEY, value)
     }
 }
