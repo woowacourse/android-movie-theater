@@ -8,9 +8,7 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
-import woowacourse.movie.data.ReservationsViewData
-import woowacourse.movie.domain.repository.MainRepository
-import woowacourse.movie.mapper.ReservationMapper.toView
+import woowacourse.movie.domain.repository.ReservationListRepository
 import woowacourse.movie.system.BroadcastAlarm.createNotificationChannel
 import woowacourse.movie.system.ReservationAlarmReceiver
 import woowacourse.movie.view.fragment.MovieListFragment
@@ -18,7 +16,7 @@ import woowacourse.movie.view.fragment.ReservationListFragment
 import woowacourse.movie.view.fragment.SettingFragment
 
 class MainActivity : AppCompatActivity() {
-    private val mainRepository: MainRepository = MainRepository()
+    private val reservationListRepository: ReservationListRepository = ReservationListRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,10 +50,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun replaceReservationListFragment() {
-        val reservations =
-            ReservationsViewData(mainRepository.requestReservation().map { it.toView() })
-        val bundle =
-            ReservationListFragment.from(reservations)
+        val bundle = ReservationListFragment.from()
         replaceFragment<ReservationListFragment>(bundle)
     }
 
