@@ -1,7 +1,5 @@
 package woowacourse.movie.ui.seat
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -20,14 +18,12 @@ import woowacourse.movie.ui.BackKeyActionBarActivity
 import woowacourse.movie.ui.DecimalFormatters
 import woowacourse.movie.ui.confirm.ReservationConfirmActivity
 import woowacourse.movie.ui.customView.ConfirmView
-import woowacourse.movie.ui.receiver.AlarmReceiver
 import woowacourse.movie.ui.reservation.MovieDetailActivity.Companion.KEY_TICKETS
 import woowacourse.movie.util.getParcelableArrayListCompat
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
 import woowacourse.movie.util.showAskDialog
 import java.time.LocalDateTime
-import java.util.Calendar
 import kotlin.collections.ArrayList
 
 class SeatSelectActivity : BackKeyActionBarActivity() {
@@ -88,7 +84,6 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
         val tickets: TicketsState = TicketsState.from(ticketOptState, seats)
         TicketsRepository.addTicket(tickets)
         navigateReservationConfirmActivity(tickets)
-        setNotification(tickets)
     }
 
     private fun navigateReservationConfirmActivity(tickets: TicketsState) {
@@ -108,34 +103,6 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
         moneyTextView.text = getString(
             R.string.discount_money,
             DecimalFormatters.convertToMoneyFormat(discountApplyMoney.asPresentation())
-        )
-    }
-
-    private fun setNotification(tickets: TicketsState) {
-        val calendar: Calendar = Calendar.getInstance().apply {
-            set(
-                tickets.dateTime.year,
-                tickets.dateTime.monthValue - 1,
-                tickets.dateTime.dayOfMonth,
-                tickets.dateTime.hour,
-                tickets.dateTime.minute
-            )
-        }
-        val alarmManager: AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        val alarmIntent =
-            Intent(this, AlarmReceiver::class.java).apply { putExtra(AlarmReceiver.KEY_TICKETS, tickets) }.let { intent ->
-                PendingIntent.getBroadcast(
-                    this,
-                    tickets.hashCode(),
-                    intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
-                )
-            }
-
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis - 30 * 60 * 1000,
-            alarmIntent
         )
     }
 

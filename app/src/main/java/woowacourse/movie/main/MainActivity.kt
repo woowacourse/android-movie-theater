@@ -1,9 +1,7 @@
 package woowacourse.movie.main
 
-import android.Manifest
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
@@ -13,7 +11,6 @@ import woowacourse.movie.R
 import woowacourse.movie.ui.fragment.movieList.MovieListFragment
 import woowacourse.movie.ui.fragment.reservationList.ReservationListFragment
 import woowacourse.movie.ui.fragment.setting.SettingFragment
-import woowacourse.movie.util.requestPermissions
 
 class MainActivity : AppCompatActivity() {
     private val fragmentContainerView: FragmentContainerView by lazy { findViewById(R.id.container) }
@@ -29,19 +26,12 @@ class MainActivity : AppCompatActivity() {
         getFragment(SETTING_TAG, SettingFragment())
     }
 
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (savedInstanceState == null) {
-            initFragments()
-        }
+        if (savedInstanceState == null) { initFragments() }
         initListener()
-        requestPermissions(PERMISSIONS, requestPermissionLauncher::launch)
     }
 
     private inline fun <reified T : Fragment> getFragment(tag: String, default: T): T {
@@ -89,7 +79,5 @@ class MainActivity : AppCompatActivity() {
         private const val RESERVATION_LIST_TAG = "reservation_list_tag"
         private const val MOVIE_LIST_TAG = "movie_list_tag"
         private const val SETTING_TAG = "setting_tag"
-
-        val PERMISSIONS = arrayOf(Manifest.permission.POST_NOTIFICATIONS)
     }
 }
