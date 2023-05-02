@@ -13,7 +13,6 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.domain.TimesGenerator
 import woowacourse.movie.ui.activity.SeatPickerActivity
 import woowacourse.movie.ui.activity.detail.MovieDetailContract
 import woowacourse.movie.ui.activity.detail.presenter.MovieDetailPresenter
@@ -34,7 +33,6 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     private val dateSpinner: Spinner by lazy { findViewById(R.id.detail_date_spinner) }
     private val timeSpinner: Spinner by lazy { findViewById(R.id.detail_time_spinner) }
     private lateinit var timeSpinnerAdapter: ArrayAdapter<LocalTime>
-    private val times = mutableListOf<LocalTime>()
     private val peopleCountView by lazy { findViewById<TextView>(R.id.detail_people_count) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +48,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
             setDateSpinner(it)
             setBookingButton(it)
         }
-        setTimeSpinner()
+        presenter.initTimes(dateSpinner.selectedItem as LocalDate)
         setPeopleCountController()
 
         loadSavedData(savedInstanceState)
@@ -76,6 +74,20 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
 
     override fun setPeopleCount(count: Int) {
         peopleCountView.text = count.toString()
+    }
+
+    override fun initTimeSpinner(times: List<LocalTime>) {
+        timeSpinnerAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            times
+        )
+        timeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        timeSpinner.adapter = timeSpinnerAdapter
+    }
+
+    override fun updateTimeSpinner() {
+        timeSpinnerAdapter.notifyDataSetChanged()
     }
 
     private fun setMovieInfo(movie: MovieModel) {
@@ -116,25 +128,12 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
                 id: Long
             ) {
                 timeSpinner.setSelection(0)
-                times.clear()
-                times.addAll(TimesGenerator.getTimesByDate(dateSpinner.selectedItem as LocalDate))
-                timeSpinnerAdapter.notifyDataSetChanged()
+                presenter.updateTimes(dateSpinner.selectedItem as LocalDate)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
-    }
-
-    private fun setTimeSpinner() {
-        times.addAll(TimesGenerator.getTimesByDate(dateSpinner.selectedItem as LocalDate))
-        timeSpinnerAdapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_item,
-            times
-        )
-        timeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        timeSpinner.adapter = timeSpinnerAdapter
     }
 
     private fun setPeopleCountController() {
