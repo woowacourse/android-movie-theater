@@ -1,33 +1,32 @@
 package woowacourse.movie.presentation.activities.main.fragments.history
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.presentation.activities.main.fragments.history.contract.HistoryContract
+import woowacourse.movie.presentation.activities.main.fragments.history.contract.presenter.HistoryPresenter
+import woowacourse.movie.presentation.activities.main.fragments.history.recyclerview.HistoryListAdapter
 import woowacourse.movie.presentation.activities.ticketingresult.TicketingResultActivity
-import woowacourse.movie.presentation.model.Reservation
 import woowacourse.movie.presentation.model.movieitem.ListItem
 
-class HistoryFragment : Fragment() {
+class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.View {
+    override val presenter: HistoryContract.Presenter = HistoryPresenter(this)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        return inflater.inflate(R.layout.fragment_history, container, false)
-    }
+    private val historyAdapter = HistoryListAdapter(presenter::onClickItem)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initRecyclerView()
+        presenter.loadHistories()
+    }
 
-        val historyRecyclerView = view.findViewById<RecyclerView>(R.id.history_recycler_view)
-        val historyAdapter = HistoryListAdapter(::onClickHistoryItem)
-        historyAdapter.appendAll(Reservation.provideDummy())
+    private fun initRecyclerView() {
+        val historyRecyclerView =
+            view?.findViewById<RecyclerView>(R.id.history_recycler_view) ?: return
+
         historyRecyclerView.adapter = historyAdapter
         historyRecyclerView.addItemDecoration(
             DividerItemDecoration(
@@ -37,13 +36,11 @@ class HistoryFragment : Fragment() {
         )
     }
 
-    private fun onClickHistoryItem(item: ListItem) {
-        when (item) {
-            is Reservation -> startResultActivity(item)
-        }
+    override fun showExtraHistories(items: List<ListItem>) {
+        historyAdapter.appendAll(items)
     }
 
-    private fun startResultActivity(item: Reservation) {
+    override fun showDetails(item: ListItem) {
         startActivity(TicketingResultActivity.makeIntent(requireContext(), item))
     }
 

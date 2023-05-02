@@ -8,7 +8,7 @@ import woowacourse.movie.domain.model.ticket.Ticket
 
 typealias DomainReservation = Reservation
 
-class Reservation constructor(
+data class Reservation(
     val movieTitle: String,
     val movieDate: MovieDate,
     val movieTime: MovieTime,

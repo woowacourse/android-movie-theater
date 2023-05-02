@@ -3,14 +3,11 @@ package woowacourse.movie.presentation.mapper
 import woowacourse.movie.domain.model.reservation.DomainReservation
 import woowacourse.movie.presentation.model.Reservation
 
-fun Reservation.toDomain(): DomainReservation = DomainReservation.of(
+fun Reservation.toDomain(): DomainReservation = DomainReservation(
     movieTitle,
-    movieDate.year,
-    movieDate.month,
-    movieDate.day,
-    movieTime.hour,
-    movieTime.min,
-    ticket.count,
+    movieDate.toDomain(),
+    movieTime.toDomain(),
+    ticket.toDomain(),
     seats.toDomain(),
     ticketPrice.toDomain(),
 )

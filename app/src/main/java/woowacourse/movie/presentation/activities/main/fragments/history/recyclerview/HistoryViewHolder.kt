@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.activities.main.fragments.history.viewholder
+package woowacourse.movie.presentation.activities.main.fragments.history.recyclerview
 
 import android.view.View
 import android.widget.TextView

@@ -10,6 +10,7 @@ import woowacourse.movie.R
 import woowacourse.movie.presentation.extensions.getParcelableCompat
 import woowacourse.movie.presentation.extensions.showBackButton
 import woowacourse.movie.presentation.model.Reservation
+import woowacourse.movie.presentation.model.movieitem.ListItem
 
 class TicketingResultActivity : AppCompatActivity() {
     private val reservation: Reservation by lazy {
@@ -63,7 +64,10 @@ class TicketingResultActivity : AppCompatActivity() {
     companion object {
         internal const val RESERVATION_KEY = "reservation"
 
-        fun makeIntent(context: Context, reservation: Reservation): Intent =
-            Intent(context, TicketingResultActivity::class.java).putExtra(RESERVATION_KEY, reservation)
+        fun makeIntent(context: Context, reservation: ListItem): Intent =
+            Intent(context, TicketingResultActivity::class.java).putExtra(
+                RESERVATION_KEY,
+                reservation
+            )
     }
 }

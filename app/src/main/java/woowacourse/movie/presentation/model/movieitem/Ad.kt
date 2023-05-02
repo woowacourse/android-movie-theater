@@ -1,8 +1,10 @@
 package woowacourse.movie.presentation.model.movieitem
 
 import androidx.annotation.DrawableRes
+import kotlinx.parcelize.Parcelize
 import woowacourse.movie.R
 
+@Parcelize
 data class Ad(
     @DrawableRes val bannerResId: Int,
     val url: String,
