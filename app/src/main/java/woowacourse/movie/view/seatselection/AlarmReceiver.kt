@@ -19,20 +19,20 @@ class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         val reservation = intent.getParcelableCompat<ReservationUiModel>(RESERVATION)
-        val content = reservation?.let {
-            context.getString(R.string.screening_after_30_minutes, reservation.title)
+
+        reservation?.let {
+            val content = context.getString(R.string.screening_after_30_minutes, reservation.title)
+            val toReservationCompletedIntent =
+                ReservationCompletedActivity.newIntent(context, reservation)
+            val pendingIntent = PendingIntent.getActivity(
+                context,
+                ReservationCompletedActivity.REQUEST_CODE,
+                toReservationCompletedIntent,
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+            )
+            val notification = createNotification(context, content, pendingIntent)
+            notify(context, notification)
         }
-        val toReservationCompletedIntent = reservation?.let {
-            ReservationCompletedActivity.newIntent(context, reservation)
-        }
-        val pendingIntent = PendingIntent.getActivity(
-            context,
-            ReservationCompletedActivity.REQUEST_CODE,
-            toReservationCompletedIntent,
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
-        )
-        val notification = createNotification(context, content, pendingIntent)
-        notify(context, notification)
     }
 
     private fun notify(context: Context, notification: Notification) {
