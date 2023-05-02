@@ -7,12 +7,16 @@ import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
+import woowacourse.movie.presentation.activities.ticketingresult.contract.TicketingResultContract
+import woowacourse.movie.presentation.activities.ticketingresult.presenter.TicketingResultPresenter
 import woowacourse.movie.presentation.extensions.getParcelableCompat
 import woowacourse.movie.presentation.extensions.showBackButton
 import woowacourse.movie.presentation.model.Reservation
 import woowacourse.movie.presentation.model.movieitem.ListItem
 
-class TicketingResultActivity : AppCompatActivity() {
+class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.View {
+    override val presenter: TicketingResultContract.Presenter = TicketingResultPresenter(this)
+
     private val reservation: Reservation by lazy {
         intent.getParcelableCompat(RESERVATION_KEY)!!
     }
@@ -62,7 +66,7 @@ class TicketingResultActivity : AppCompatActivity() {
     }
 
     companion object {
-        internal const val RESERVATION_KEY = "reservation"
+        private const val RESERVATION_KEY = "reservation"
 
         fun makeIntent(context: Context, reservation: ListItem): Intent =
             Intent(context, TicketingResultActivity::class.java).putExtra(
