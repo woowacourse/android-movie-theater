@@ -24,7 +24,7 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
 
     companion object {
         fun getIntent(ticketModel: MovieTicketModel, context: Context): Intent {
-            val intent = Intent(context, this::class.java).apply {
+            val intent = Intent(context, ReservationAlarmReceiver::class.java).apply {
                 putExtra(MovieDetailActivity.KEY_MOVIE, ticketModel)
             }
 
