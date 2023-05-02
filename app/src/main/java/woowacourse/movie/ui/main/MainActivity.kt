@@ -1,4 +1,4 @@
-package woowacourse.movie.ui
+package woowacourse.movie.ui.main
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -8,6 +8,9 @@ import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.ui.home.HomeFragment
+import woowacourse.movie.ui.main.FragmentsOnBottomNavigation.HOME
+import woowacourse.movie.ui.main.FragmentsOnBottomNavigation.RESERVATION
+import woowacourse.movie.ui.main.FragmentsOnBottomNavigation.SETTING
 import woowacourse.movie.ui.reservation.ReservationFragment
 import woowacourse.movie.ui.setting.SettingFragment
 
@@ -48,10 +51,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getFragmentByIcon(item: MenuItem): Fragment = when (item.itemId) {
-        R.id.menu_item_reservation -> ReservationFragment()
-        R.id.menu_item_home -> HomeFragment()
-        R.id.menu_item_setting -> SettingFragment()
-        else -> throw IllegalArgumentException()
+    private fun getFragmentByIcon(item: MenuItem): Fragment {
+        val reservationFragment = ReservationFragment()
+        val homeFragment = HomeFragment()
+        val settingFragment = SettingFragment()
+
+        return when (FragmentsOnBottomNavigation.valueOf(item.itemId)) {
+            RESERVATION -> reservationFragment
+            HOME -> homeFragment
+            SETTING -> settingFragment
+        }
     }
 }

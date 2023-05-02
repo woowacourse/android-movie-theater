@@ -24,7 +24,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.ui.MainActivity
+import woowacourse.movie.ui.main.MainActivity
 import woowacourse.movie.ui.home.adapter.MovieListViewType
 import woowacourse.movie.ui.moviedetail.MovieDetailActivity
 
