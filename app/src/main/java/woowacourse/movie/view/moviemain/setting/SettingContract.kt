@@ -7,11 +7,11 @@ interface SettingContract {
         var presenter: Presenter
         val requestPermissionLauncher: ActivityResultLauncher<String>
         fun setToggle(isOn: Boolean)
+        fun requestNotificationPermission(): Boolean
     }
 
     interface Presenter {
         fun initToggle()
         fun onClick(isOn: Boolean)
-        fun requestNotificationPermission(): Boolean
     }
 }
