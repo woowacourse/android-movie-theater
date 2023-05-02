@@ -15,8 +15,8 @@ object BookingDatabase {
     )
     val bookings: List<BookingEntity> get() = _bookings.toList()
 
-    fun selectBooking(id: Long): BookingEntity {
-        return _bookings.find { it.id == id } ?: throw NoSuchElementException()
+    fun selectBooking(id: Long): BookingEntity? {
+        return _bookings.find { it.id == id }
     }
 
     fun insertBooking(booking: BookingEntity) {

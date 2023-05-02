@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.app.model.Mapper.toUiModel
 import woowacourse.app.ui.completed.CompletedActivity
+import woowacourse.app.util.shortToast
 import woowacourse.domain.reservation.ReservationRepository
 import woowacourse.movie.R
 
@@ -31,10 +32,19 @@ class BookingHistoryFragment : Fragment() {
     }
 
     private fun itemClicked(id: Long) {
+        val reservation = ReservationRepository.getReservation(id)
+        if (reservation == null) {
+            noSuchElement()
+            return
+        }
         val intent = CompletedActivity.getIntent(
             context = requireActivity(),
-            reservation = ReservationRepository.getReservation(id).toUiModel(),
+            reservation = reservation.toUiModel(),
         )
         startActivity(intent)
+    }
+
+    private fun noSuchElement() {
+        requireContext().shortToast("해당 예매내역이 없습니다. 앱을 다시 시작해주세요")
     }
 }

@@ -5,8 +5,8 @@ enum class PaymentType {
     ONLINE, ;
 
     companion object {
-        fun find(ordinal: Int): PaymentType {
-            return values().find { ordinal == it.ordinal } ?: throw IllegalArgumentException()
+        fun find(ordinal: Int): PaymentType? {
+            return values().find { ordinal == it.ordinal }
         }
     }
 }

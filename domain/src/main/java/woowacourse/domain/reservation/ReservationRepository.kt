@@ -10,11 +10,11 @@ import woowacourse.domain.ticket.Ticket
 
 object ReservationRepository {
     fun getReservations(): List<Reservation> {
-        return BookingDatabase.bookings.map { it.toReservation() }
+        return BookingDatabase.bookings.mapNotNull { it.toReservation() }
     }
 
-    fun getReservation(id: Long): Reservation {
-        return BookingDatabase.selectBooking(id).toReservation()
+    fun getReservation(id: Long): Reservation? {
+        return BookingDatabase.selectBooking(id)?.toReservation()
     }
 
     fun addReservation(reservation: Reservation) {
@@ -32,13 +32,13 @@ object ReservationRepository {
         )
     }
 
-    private fun BookingEntity.toReservation(): Reservation {
+    private fun BookingEntity.toReservation(): Reservation? {
         return Reservation(
             id = this.id,
             tickets = this.seats.map {
                 Ticket(this.movieId, this.movieTitle, this.bookedDateTime, it.toSeat())
             }.toSet(),
-            paymentType = woowacourse.domain.PaymentType.find(this.paymentType),
+            paymentType = woowacourse.domain.PaymentType.find(this.paymentType) ?: return null,
         )
     }
 
