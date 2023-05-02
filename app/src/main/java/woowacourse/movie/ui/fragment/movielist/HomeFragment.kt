@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.data.entity.Ads
 import woowacourse.movie.data.entity.Movies
-import woowacourse.movie.ui.activity.MovieDetailActivity
+import woowacourse.movie.ui.activity.detail.view.MovieDetailActivity
 import woowacourse.movie.ui.fragment.movielist.adapter.MovieAdapter
 import woowacourse.movie.ui.model.AdModel
 import woowacourse.movie.ui.model.MovieModel

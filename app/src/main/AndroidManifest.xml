@@ -30,7 +30,7 @@
             android:name=".ui.activity.MovieTicketActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.MovieDetailActivity"
+            android:name=".ui.activity.detail.view.MovieDetailActivity"
             android:configChanges="screenSize|orientation"
             android:exported="false"
             android:screenOrientation="sensor" />

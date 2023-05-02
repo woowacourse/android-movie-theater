@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.activity
+package woowacourse.movie.ui.activity.detail.view
 
 import android.content.Context
 import android.content.Intent
@@ -13,30 +13,35 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.domain.PeopleCount
 import woowacourse.movie.domain.TimesGenerator
+import woowacourse.movie.ui.activity.SeatPickerActivity
+import woowacourse.movie.ui.activity.detail.MovieDetailContract
+import woowacourse.movie.ui.activity.detail.presenter.MovieDetailPresenter
 import woowacourse.movie.ui.model.MovieModel
 import woowacourse.movie.ui.model.MovieTicketModel
+import woowacourse.movie.ui.model.PeopleCountModel
 import woowacourse.movie.ui.model.PriceModel
 import woowacourse.movie.ui.model.TicketTimeModel
 import woowacourse.movie.ui.model.mapToMovie
-import woowacourse.movie.ui.model.mapToPeopleCountModel
 import woowacourse.movie.ui.utils.getParcelable
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
-class MovieDetailActivity : AppCompatActivity() {
-    private var peopleCount = PeopleCount()
+class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
+    override lateinit var presenter: MovieDetailContract.Presenter
     private val dateSpinner: Spinner by lazy { findViewById(R.id.detail_date_spinner) }
     private val timeSpinner: Spinner by lazy { findViewById(R.id.detail_time_spinner) }
     private lateinit var timeSpinnerAdapter: ArrayAdapter<LocalTime>
     private val times = mutableListOf<LocalTime>()
+    private val peopleCountView by lazy { findViewById<TextView>(R.id.detail_people_count) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
+
+        presenter = MovieDetailPresenter(this)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -56,7 +61,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
         outState.putInt(DATE_SPINNER_POSITION_INSTANCE_KEY, dateSpinner.selectedItemPosition)
         outState.putInt(TIME_SPINNER_POSITION_INSTANCE_KEY, timeSpinner.selectedItemPosition)
-        outState.putInt(PEOPLE_COUNT_VALUE_INSTANCE_KEY, peopleCount.value)
+        outState.putInt(PEOPLE_COUNT_VALUE_INSTANCE_KEY, peopleCountView.text.toString().toInt())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -67,6 +72,10 @@ class MovieDetailActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun setPeopleCount(count: Int) {
+        peopleCountView.text = count.toString()
     }
 
     private fun setMovieInfo(movie: MovieModel) {
@@ -129,29 +138,21 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     private fun setPeopleCountController() {
-        val peopleCountView = findViewById<TextView>(R.id.detail_people_count)
-        setPeopleCountView(peopleCountView)
-        setMinusButton(peopleCountView)
-        setPlusButton(peopleCountView)
+        setMinusButton()
+        setPlusButton()
     }
 
-    private fun setPeopleCountView(peopleCountView: TextView) {
-        peopleCountView.text = "${peopleCount.value}"
-    }
-
-    private fun setMinusButton(peopleCountView: TextView) {
+    private fun setMinusButton() {
         val minusButton = findViewById<Button>(R.id.detail_minus_button)
         minusButton.setOnClickListener {
-            peopleCount = peopleCount.minusCount()
-            setPeopleCountView(peopleCountView)
+            presenter.decreasePeopleCount()
         }
     }
 
-    private fun setPlusButton(peopleCountView: TextView) {
+    private fun setPlusButton() {
         val plusButton = findViewById<Button>(R.id.detail_plus_button)
         plusButton.setOnClickListener {
-            peopleCount = peopleCount.plusCount()
-            setPeopleCountView(peopleCountView)
+            presenter.increasePeopleCount()
         }
     }
 
@@ -172,7 +173,7 @@ class MovieDetailActivity : AppCompatActivity() {
                     timeSpinner.selectedItem as LocalTime
                 )
             ),
-            peopleCount.mapToPeopleCountModel(),
+            PeopleCountModel(peopleCountView.text.toString().toInt()),
             seats = emptySet(),
             PriceModel(0)
         )
@@ -187,7 +188,7 @@ class MovieDetailActivity : AppCompatActivity() {
         val count = savedInstanceState?.getInt(PEOPLE_COUNT_VALUE_INSTANCE_KEY) ?: 1
         dateSpinner.setSelection(datePosition)
         timeSpinner.setSelection(timePosition)
-        peopleCount = PeopleCount(count)
+        presenter.setPeopleCount(count)
     }
 
     companion object {
