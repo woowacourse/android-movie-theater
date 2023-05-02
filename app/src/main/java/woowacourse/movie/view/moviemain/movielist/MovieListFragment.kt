@@ -52,16 +52,13 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
         ad: MovieListModel.MovieAdModel,
         adPostInterval: Int
     ): List<MovieListModel> {
-        val dataList = mutableListOf<MovieListModel>()
-        movies.forEachIndexed { index, movie ->
+        return movies.flatMapIndexed { index, movie ->
             if (index % adPostInterval == adPostInterval - 1) {
-                dataList.add(movie.toUiModel())
-                dataList.add(ad)
-                return@forEachIndexed
+                listOf(movie.toUiModel(), ad)
+            } else {
+                listOf(movie.toUiModel())
             }
-            dataList.add(movie.toUiModel())
         }
-        return dataList
     }
 
     companion object {
