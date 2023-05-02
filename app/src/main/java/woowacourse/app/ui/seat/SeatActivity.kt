@@ -18,12 +18,9 @@ import woowacourse.domain.SelectResult
 import woowacourse.domain.SelectedSeat
 import woowacourse.domain.movie.Movie
 import woowacourse.domain.movie.MovieRepository
-import woowacourse.domain.reservation.Reservation
-import woowacourse.domain.reservation.ReservationRepository
 import woowacourse.domain.theater.Theater
 import woowacourse.domain.theater.TheaterRepository
 import woowacourse.domain.ticket.Seat
-import woowacourse.domain.ticket.Ticket
 import woowacourse.movie.R
 
 class SeatActivity : AppCompatActivity() {
@@ -96,7 +93,7 @@ class SeatActivity : AppCompatActivity() {
             SelectResult.Unselect -> view.isSelected = !view.isSelected
         }
         setConfirmButtonEnable(selectedSeat.isSeatFull)
-        setPayment(selectedSeat.seats)
+        setPayment()
     }
 
     private fun setConfirmButtonEnable(isSeatFull: Boolean) {
@@ -116,10 +113,7 @@ class SeatActivity : AppCompatActivity() {
     }
 
     private fun completeBooking() {
-        val tickets: List<Ticket> =
-            selectedSeat.seats.map { movie.reserve(bookedMovie.bookedDateTime, it) }
-        val reservation = Reservation(tickets.toSet())
-        ReservationRepository.addReservation(reservation)
+        val reservation = selectedSeat.reserve(movie, bookedMovie.bookedDateTime)
         ScreeningTimeReminder(this, reservation.toUiModel())
         startActivity(CompletedActivity.getIntent(this, reservation.toUiModel()))
         finish()
@@ -136,9 +130,9 @@ class SeatActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun setPayment(seats: Set<Seat>) {
-        val tickets: List<Ticket> = seats.map { movie.reserve(bookedMovie.bookedDateTime, it) }
-        textPayment.text = tickets.sumOf { it.price }.toString() + "원"
+    private fun setPayment() {
+        textPayment.text =
+            selectedSeat.getPayment(movie, bookedMovie.bookedDateTime).toString() + "원"
     }
 
     private fun initView() {
