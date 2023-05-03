@@ -17,8 +17,8 @@ class MovieItemViewHolder(
             movieTitle.text = movie.title
             movieScreeningDate.text =
                 context.resources.getString(R.string.screening_date_format).format(
-                    movie.screeningStartDate.format(DATE_FORMATTER),
-                    movie.screeningEndDate.format(DATE_FORMATTER)
+                    movie.screeningDates.min().format(DATE_FORMATTER),
+                    movie.screeningDates.max().format(DATE_FORMATTER)
                 )
             movieRunningTime.text = context.resources.getString(R.string.running_time_format)
                 .format(movie.runningTime)

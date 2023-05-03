@@ -6,8 +6,7 @@ import woowacourse.movie.view.model.MovieListModel.MovieUiModel
 
 fun Movie.toUiModel(): MovieUiModel = MovieUiModel(
     title,
-    screeningStartDate,
-    screeningEndDate,
+    getAllScreeningDates(),
     runningTime.value,
     posterResourceId,
     summary
@@ -15,8 +14,8 @@ fun Movie.toUiModel(): MovieUiModel = MovieUiModel(
 
 fun MovieUiModel.toDomainModel(): Movie = Movie(
     title,
-    screeningStartDate,
-    screeningEndDate,
+    screeningDates.min(),
+    screeningDates.max(),
     Minute(runningTime),
     posterResourceId,
     summary
