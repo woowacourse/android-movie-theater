@@ -35,7 +35,7 @@ class ReservationNotification(
         context: Context,
         data: Reservation
     ): PendingIntent {
-        val intent = TicketingResultActivity.makeIntent(context, data)
+        val intent = TicketingResultActivity.getIntent(context, data)
         return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
     }
 }
