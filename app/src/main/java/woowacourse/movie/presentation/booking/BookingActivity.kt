@@ -12,24 +12,27 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieData
-import woowacourse.movie.domain.model.rules.ScreeningTimes
-import woowacourse.movie.domain.model.tools.TicketCount
 import woowacourse.movie.presentation.choiceSeat.ChoiceSeatActivity
-import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.model.MovieModel
-import woowacourse.movie.presentation.model.ReservationModel
 import woowacourse.movie.presentation.util.formatDotDate
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class BookingActivity : AppCompatActivity() {
-    private var ticketCount = TicketCount()
-    private val movie: MovieModel by lazy {
-        val movieId = intent.getLongExtra(MOVIE_ID, -1)
-        MovieData.findMovieById(movieId).toPresentation()
+class BookingActivity : AppCompatActivity(), BookingContract.View {
+
+    override val movieId: Long by lazy {
+        intent.getLongExtra(MOVIE_ID, -1)
     }
+
+    override val presenter: BookingContract.Presenter by lazy {
+        BookingPresenter(this)
+    }
+
+    private val movieModel: MovieModel by lazy {
+        presenter.requireMovieModel(movieId)
+    }
+
     private val dateSpinner by lazy { findViewById<Spinner>(R.id.spinnerScreeningDate) }
     private val timeSpinner by lazy { findViewById<Spinner>(R.id.spinnerScreeningTime) }
     private val dateSpinnerAdapter by lazy {
@@ -42,10 +45,11 @@ class BookingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_booking)
+
         initAdapters()
-        initDateTimes()
         restoreData(savedInstanceState)
         initView()
+        initDateTimes()
         gatherClickListeners()
         initDateSpinnerSelectedListener()
         initTimeSpinnerSelectedListener()
@@ -63,15 +67,22 @@ class BookingActivity : AppCompatActivity() {
         savedInstanceState ?: return
 
         with(savedInstanceState) {
-            ticketCount = TicketCount(getInt(TICKET_COUNT))
+            setTicketCount(getInt(TICKET_COUNT))
             dateSpinner.setSelection(getInt(DATE_POSITION), false)
             timeSpinner.setSelection(getInt(TIME_POSITION), false)
         }
     }
 
+    override fun setTicketCount(count: Int) {
+        findViewById<TextView>(R.id.textBookingTicketCount).text = count.toString()
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         outState.run {
-            putInt(TICKET_COUNT, ticketCount.value)
+            putInt(
+                TICKET_COUNT,
+                findViewById<TextView>(R.id.textBookingTicketCount).text.toString().toInt(),
+            )
             putInt(DATE_POSITION, dateSpinner.selectedItemPosition)
             putInt(TIME_POSITION, timeSpinner.selectedItemPosition)
         }
@@ -90,59 +101,44 @@ class BookingActivity : AppCompatActivity() {
         setMovieScreeningDate()
         setMovieRunningTime()
         setMovieDescription()
-        setTicketCount(TicketCount(DEFAULT_TICKET_COUNT))
+        setTicketCount(DEFAULT_TICKET_COUNT)
     }
 
     private fun setMoviePoster() {
-        movie.poster?.let { findViewById<ImageView>(R.id.imageBookingPoster).setImageResource(it) }
+        findViewById<ImageView>(R.id.imageBookingPoster).setImageResource(movieModel.poster)
     }
 
     private fun setMovieTitle() {
-        findViewById<TextView>(R.id.textBookingTitle).text = movie.title
+        findViewById<TextView>(R.id.textBookingTitle).text = movieModel.title
     }
 
     private fun setMovieScreeningDate() {
         findViewById<TextView>(R.id.textBookingScreeningDate).text =
             getString(R.string.screening_date).format(
-                movie.screeningStartDate.formatDotDate(),
-                movie.screeningEndDate.formatDotDate()
+                movieModel.screeningStartDate.formatDotDate(),
+                movieModel.screeningEndDate.formatDotDate(),
             )
     }
 
     private fun setMovieRunningTime() {
         findViewById<TextView>(R.id.textBookingRunningTime).text =
-            getString(R.string.running_time).format(movie.runningTime)
+            getString(R.string.running_time).format(movieModel.runningTime)
     }
 
     private fun setMovieDescription() {
-        findViewById<TextView>(R.id.textBookingDescription).text = movie.description
-    }
-
-    private fun setTicketCount(ticketCount: TicketCount) {
-        this.ticketCount = ticketCount
-        findViewById<TextView>(R.id.textBookingTicketCount).text = ticketCount.value.toString()
+        findViewById<TextView>(R.id.textBookingDescription).text = movieModel.description
     }
 
     private fun clickMinus() {
         findViewById<Button>(R.id.buttonBookingMinus).setOnClickListener {
-            minusTicketCount()
+            presenter.subTicket()
         }
-    }
-
-    private fun minusTicketCount() {
-        val newTicketCount = ticketCount.minus()
-        setTicketCount(newTicketCount)
     }
 
     private fun clickPlus() {
         findViewById<Button>(R.id.buttonBookingPlus).setOnClickListener {
-            plusTicketCount()
+            presenter.addTicket()
         }
-    }
-
-    private fun plusTicketCount() {
-        val newTicketCount = ticketCount.plus()
-        setTicketCount(newTicketCount)
     }
 
     private fun clickBookingComplete() {
@@ -153,10 +149,10 @@ class BookingActivity : AppCompatActivity() {
 
     private fun bookMovie() {
         val dateTime = LocalDateTime.of(
-            dateSpinnerAdapter.getItem(findViewById<Spinner>(R.id.spinnerScreeningDate).selectedItemPosition),
-            timeSpinnerAdapter.getItem(findViewById<Spinner>(R.id.spinnerScreeningTime).selectedItemPosition)
+            dateSpinnerAdapter.getItem(dateSpinner.selectedItemPosition),
+            timeSpinnerAdapter.getItem(timeSpinner.selectedItemPosition),
         )
-        val reservation = ReservationModel(movie.id, dateTime, ticketCount.value)
+        val reservation = presenter.reserveMovie(dateTime)
         startActivity(ChoiceSeatActivity.getIntent(this, reservation))
     }
 
@@ -166,32 +162,28 @@ class BookingActivity : AppCompatActivity() {
     }
 
     private fun initDateTimes() {
-        val dates: List<LocalDate> = movie.getScreeningDates()
-        val times: List<LocalTime> = ScreeningTimes.getScreeningTime(dates[0])
-        dateSpinnerAdapter.initItems(dates)
-        timeSpinnerAdapter.initItems(times)
+        dateSpinnerAdapter.initItems(presenter.getScreeningDate())
+        timeSpinnerAdapter.initItems(presenter.getScreeningTime(0))
     }
 
     private fun initDateSpinnerSelectedListener() {
-        val dates: List<LocalDate> = movie.getScreeningDates()
-
         dateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
-                id: Long
+                id: Long,
             ) {
                 convertTimeItems(position)
             }
 
-            private fun convertTimeItems(position: Int) {
-                val times: List<LocalTime> = ScreeningTimes.getScreeningTime(dates[position])
-                timeSpinnerAdapter.initItems(times)
-            }
-
             override fun onNothingSelected(parent: AdapterView<*>?) = Unit
         }
+    }
+
+    override fun convertTimeItems(position: Int) {
+        val times: List<LocalTime> = presenter.getScreeningTime(position)
+        timeSpinnerAdapter.initItems(times)
     }
 
     private fun initTimeSpinnerSelectedListener() {
@@ -200,7 +192,7 @@ class BookingActivity : AppCompatActivity() {
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
-                id: Long
+                id: Long,
             ) = Unit
 
             override fun onNothingSelected(parent: AdapterView<*>?) = Unit
