@@ -20,8 +20,8 @@ import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.domain.ReservationAgency
 import woowacourse.movie.domain.Seat
 import woowacourse.movie.util.getParcelableCompat
-import woowacourse.movie.view.AlarmController
 import woowacourse.movie.view.ReservationCompletedActivity
+import woowacourse.movie.view.alarm.ReservationAlarmManager
 import woowacourse.movie.view.mapper.toDomainModel
 import woowacourse.movie.view.mapper.toUiModel
 import woowacourse.movie.view.model.MovieListModel.MovieUiModel
@@ -183,11 +183,11 @@ class SeatSelectionActivity : AppCompatActivity() {
     private fun reserveSeats() {
         val isAlarmOn = AlarmPreference.getInstance(applicationContext).isAlarmOn(false)
 
-        val alarmController = AlarmController(this)
+        val reservationAlarmManager = ReservationAlarmManager(this)
         val reservation = reservationAgency.reserve(selectedSeats)
         reservation?.let {
             ReservationMockRepository.add(reservation)
-            if (isAlarmOn) alarmController.registerAlarm(
+            if (isAlarmOn) reservationAlarmManager.registerAlarm(
                 reservation.toUiModel(),
                 SettingFragment.ALARM_MINUTE_INTERVAL
             )

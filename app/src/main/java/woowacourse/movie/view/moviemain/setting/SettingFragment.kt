@@ -13,21 +13,38 @@ import woowacourse.movie.R
 import woowacourse.movie.data.ReservationMockRepository
 import woowacourse.movie.util.isGranted
 import woowacourse.movie.util.requestRequiredPermissions
-import woowacourse.movie.view.AlarmController
+import woowacourse.movie.view.alarm.ReservationAlarmManager
 import woowacourse.movie.view.mapper.toUiModel
 
 class SettingFragment : Fragment(R.layout.fragment_setting) {
 
-    private lateinit var alarmController: AlarmController
+    private lateinit var reservationAlarmManager: ReservationAlarmManager
     private lateinit var alarmPreference: AlarmPreference
     private lateinit var toggle: SwitchMaterial
     private var initialToggleValue: Boolean = false
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            toggle.isChecked = true
+            alarmPreference.setIsAlarmOn(true)
+        } else {
+            Toast.makeText(
+                requireContext(),
+                "권한을 설정해야 알림을 받을 수 있습니다. 설정에서 알림을 켜주세요.",
+                Toast.LENGTH_LONG
+            ).show()
+            toggle.isChecked = false
+            alarmPreference.setIsAlarmOn(false)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         alarmPreference = AlarmPreference.getInstance(requireActivity().applicationContext)
-        alarmController = AlarmController(requireContext())
+        reservationAlarmManager = ReservationAlarmManager(requireContext())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,23 +78,6 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
         return requireActivity().isGranted(Manifest.permission.POST_NOTIFICATIONS)
     }
 
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission(),
-    ) { isGranted: Boolean ->
-        if (isGranted) {
-            toggle.isChecked = true
-            alarmPreference.setIsAlarmOn(true)
-        } else {
-            Toast.makeText(
-                requireContext(),
-                "권한을 설정해야 알림을 받을 수 있습니다. 설정에서 알림을 켜주세요.",
-                Toast.LENGTH_LONG
-            ).show()
-            toggle.isChecked = false
-            alarmPreference.setIsAlarmOn(false)
-        }
-    }
-
     override fun onStop() {
         super.onStop()
         val isToggleChecked = toggle.isChecked
@@ -91,14 +91,14 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
             resetAlarms()
             alarmPreference.setIsAlarmOn(true)
         } else {
-            alarmController.cancelAlarms()
+            reservationAlarmManager.cancelAlarms()
             alarmPreference.setIsAlarmOn(false)
         }
     }
 
     private fun resetAlarms() {
         val reservations = ReservationMockRepository.findAll().map { it.toUiModel() }
-        alarmController.registerAlarms(reservations, ALARM_MINUTE_INTERVAL)
+        reservationAlarmManager.registerAlarms(reservations, ALARM_MINUTE_INTERVAL)
     }
 
     companion object {
