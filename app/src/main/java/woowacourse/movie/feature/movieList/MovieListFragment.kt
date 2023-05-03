@@ -6,10 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
 import woowacourse.movie.data.AdvRepository
 import woowacourse.movie.data.MovieRepository
+import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.feature.adv.AdvDetailActivity
 import woowacourse.movie.feature.detail.MovieDetailActivity
 import woowacourse.movie.feature.main.MainActivity
@@ -19,20 +18,23 @@ import woowacourse.movie.model.MovieState
 
 class MovieListFragment : Fragment() {
 
-    private lateinit var movieListView: RecyclerView
     private lateinit var adapter: MovieListAdapter
+
+    private var _binding: FragmentMovieListBinding? = null
+    private val binding: FragmentMovieListBinding
+        get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_movie_list, container, false)
+    ): View {
+        _binding = FragmentMovieListBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        movieListView = view.findViewById(R.id.rv_main)
         adapter = MovieListAdapter(
             movie = MovieRepository.allMovies().map {
                 it.convertToItemModel { movie -> navigateMovieDetail(movie) }
@@ -41,7 +43,12 @@ class MovieListFragment : Fragment() {
                 it.convertToItemModel { adv -> navigateAdbDetail(adv) }
             }
         )
-        movieListView.adapter = adapter
+        binding.rvMovie.adapter = adapter
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun navigateMovieDetail(movie: MovieState) {
@@ -57,7 +64,6 @@ class MovieListFragment : Fragment() {
     }
 
     companion object {
-
         internal const val KEY_MOVIE = "key_movie"
         internal const val KEY_ADV = "key_adb"
     }

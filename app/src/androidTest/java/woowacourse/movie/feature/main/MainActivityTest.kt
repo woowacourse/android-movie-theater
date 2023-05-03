@@ -46,7 +46,7 @@ class MainActivityTest {
     fun `광고_아이템_레이아웃이_세번째_인덱스에_위치한다`() {
         var size = 0
         activityRule.scenario.onActivity {
-            size = it.findViewById<RecyclerView>(R.id.rv_main).adapter!!.itemCount
+            size = it.findViewById<RecyclerView>(R.id.rv_movie).adapter!!.itemCount
         }
         if (size <= 3) {
             return
@@ -55,7 +55,7 @@ class MainActivityTest {
             var viewType = 0
             activityRule.scenario.onActivity {
                 viewType =
-                    it.findViewById<RecyclerView>(R.id.rv_main).adapter!!.getItemViewType(index)
+                    it.findViewById<RecyclerView>(R.id.rv_movie).adapter!!.getItemViewType(index)
             }
             assertEquals(1, viewType)
         }
@@ -66,14 +66,14 @@ class MainActivityTest {
         var viewType = 0
         activityRule.scenario.onActivity {
             viewType =
-                it.findViewById<RecyclerView>(R.id.rv_main).adapter!!.getItemViewType(2)
+                it.findViewById<RecyclerView>(R.id.rv_movie).adapter!!.getItemViewType(2)
         }
         assertEquals(0, viewType)
     }
 
     @Test
     fun `8번째_인덱스에_위치한_영화의_제목이_일치한다`() {
-        onView(withId(R.id.rv_main))
+        onView(withId(R.id.rv_movie))
             .perform(
                 RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(8)
             )
@@ -82,7 +82,7 @@ class MainActivityTest {
 
     @Test
     fun `광고아이템을_클릭하면_광고화면으로_이동한다`() {
-        onView(withId(R.id.rv_main))
+        onView(withId(R.id.rv_movie))
             .perform(
                 actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     3,
@@ -98,7 +98,7 @@ class MainActivityTest {
 
     @Test
     fun `영화_아이템을_클릭하면_영화_예매화면으로_이동한다`() {
-        onView(withId(R.id.rv_main))
+        onView(withId(R.id.rv_movie))
             .perform(
                 actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     1,
