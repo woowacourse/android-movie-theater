@@ -9,9 +9,8 @@ class SettingPreference(context: Context) : SettingStorage {
         context.getSharedPreferences(SETTINGS, MODE_PRIVATE)
     }
 
-    override fun setNotificationSettings(notifyState: Boolean) {
-        value.edit().putBoolean(SETTINGS_NOTIFICATION, notifyState).apply()
-    }
+    override fun setNotificationSettings(notifyState: Boolean): Boolean =
+        value.edit().putBoolean(SETTINGS_NOTIFICATION, notifyState).commit()
 
     override fun getNotificationSettings(): Boolean = value.getBoolean(SETTINGS_NOTIFICATION, true)
 

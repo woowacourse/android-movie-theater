@@ -51,6 +51,7 @@ class ChoiceSeatActivity : AppCompatActivity() {
     private fun initSettingStorage() {
         settingStorage = SettingPreference(this)
     }
+
     private fun initReservation() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         intent.getParcelableExtra(RESERVATION, ReservationModel::class.java)
             ?: throw IllegalArgumentException()

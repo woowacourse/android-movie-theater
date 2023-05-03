@@ -8,11 +8,11 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.model.data.local.SettingPreference
-import woowacourse.movie.model.data.storage.SettingStorage
 
-class SettingsFragment : Fragment() {
+class SettingsFragment() : Fragment(), SettingsContract.View {
 
-    private lateinit var settingStorage: SettingStorage
+    override lateinit var presenter: SettingsContract.Presenter
+    private val notificationSwitch by lazy { requireActivity().findViewById<SwitchCompat>(R.id.switchPushPermission) }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -24,22 +24,21 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initSettingStorage()
+        initPresenter()
         initNotificationSwitch()
     }
 
-    private fun initSettingStorage() {
-        settingStorage = SettingPreference(requireActivity())
+    private fun initPresenter() {
+        presenter = SettingsPresenter(this, SettingPreference(requireContext()))
     }
 
     private fun initNotificationSwitch() {
-        val notificationSwitch =
-            requireActivity().findViewById<SwitchCompat>(R.id.switchPushPermission)
-
-        notificationSwitch.isChecked = settingStorage.getNotificationSettings()
-
         notificationSwitch.setOnCheckedChangeListener { _, isChecked ->
-            settingStorage.setNotificationSettings(isChecked)
+            presenter.setNotificationSettings(isChecked)
         }
+    }
+
+    override fun setSwitchSelectedState(state: Boolean) {
+        notificationSwitch.isChecked = state
     }
 }
