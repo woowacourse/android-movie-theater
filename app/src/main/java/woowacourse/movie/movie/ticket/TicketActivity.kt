@@ -6,42 +6,23 @@ import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityTicketBinding
 import woowacourse.movie.movie.dto.movie.BookingMovieEntity
-import woowacourse.movie.movie.dto.movie.MovieDto
-import woowacourse.movie.movie.dto.seat.SeatsDto
-import woowacourse.movie.movie.dto.ticket.TicketCountDto
-import woowacourse.movie.movie.mapper.seat.mapToSeats
 import woowacourse.movie.movie.seat.SeatSelectionActivity.Companion.BOOKING_MOVIE_KEY
 import woowacourse.movie.movie.utils.getParcelableCompat
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
-class TicketActivity : AppCompatActivity() {
+class TicketActivity : AppCompatActivity(), TicketContract.View {
     private lateinit var binding: ActivityTicketBinding
-    private lateinit var bookingMovie: BookingMovieEntity
+    override lateinit var presenter: TicketContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTicketBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        presenter = TicketPresenter(this)
         setToolbar()
-        intent.getParcelableCompat<BookingMovieEntity>(BOOKING_MOVIE_KEY)?.let { bookingMovie = it }
-
-        showTicketInfo(
-            bookingMovie.movie,
-            bookingMovie.date.date,
-            bookingMovie.time.time,
-        )
-        showTicketInfo(
-            bookingMovie.ticketCount,
-            bookingMovie.seats,
-        )
-        showTicketPrice(
-            bookingMovie.seats,
-            bookingMovie.date.date,
-            bookingMovie.time.time,
-        )
+        initTicketData()
     }
 
     private fun setToolbar() {
@@ -49,27 +30,36 @@ class TicketActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    private fun formatMovieDateTime(date: LocalDate, time: LocalTime): String {
+    private fun initTicketData() {
+        val bookingMovie = intent.getParcelableCompat<BookingMovieEntity>(BOOKING_MOVIE_KEY)
+        bookingMovie?.let { presenter.initActivity(bookingMovie) }
+    }
+
+    override fun showMovieInfo(title: String, date: String) {
+        binding.ticketTitle.text = title
+        binding.ticketDate.text = date
+    }
+
+    override fun showTicketInfo(seatInfo: String) {
+        binding.numberOfPeople.text = seatInfo
+    }
+
+    override fun showTicketPrice(ticketPrice: String) {
+        binding.ticketPrice.text = ticketPrice
+    }
+
+    override fun formatTicketDateTime(date: LocalDate, time: LocalTime): String {
         val formatDate = date.format(DateTimeFormatter.ofPattern(getString(R.string.date_format)))
         val formatTime = time.format(DateTimeFormatter.ofPattern(getString(R.string.time_format)))
-
         return formatDate.plus(" $formatTime")
     }
 
-    private fun showTicketInfo(movie: MovieDto, date: LocalDate, time: LocalTime) {
-        binding.ticketTitle.text = movie.title
-        binding.ticketDate.text = formatMovieDateTime(date, time)
+    override fun formatTicketSeat(count: Int, seats: String): String {
+        return getString(R.string.ticket_info, count, seats)
     }
 
-    private fun showTicketInfo(ticket: TicketCountDto, seats: SeatsDto) {
-        binding.numberOfPeople.text =
-            getString(R.string.ticket_info, ticket.numberOfPeople, seats.getSeatsPositionToString())
-    }
-
-    private fun showTicketPrice(seats: SeatsDto, date: LocalDate, time: LocalTime) {
-        val totalTicketPrice = seats.mapToSeats().caculateSeatPrice(LocalDateTime.of(date, time))
-
-        binding.ticketPrice.text = getString(R.string.ticket_price, totalTicketPrice)
+    override fun formatTicketPrice(totalTicketPrice: Int): String {
+        return getString(R.string.ticket_price, totalTicketPrice)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
