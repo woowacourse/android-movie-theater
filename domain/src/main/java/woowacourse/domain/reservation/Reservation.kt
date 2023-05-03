@@ -14,5 +14,8 @@ data class Reservation(
     val movie: Movie get() = tickets.first().movie
     val bookedDateTime: LocalDateTime get() = tickets.first().bookedDateTime
     val count: Int get() = tickets.size
-    val alarmCycle: Long = 30
+
+    companion object {
+        val alarmCycle: Long = 30
+    }
 }

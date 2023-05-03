@@ -17,7 +17,7 @@ object Mapper {
             movieTitle = this.tickets.first().movie.title,
             bookedDateTime = this.bookedDateTime,
             count = this.count,
-            alarmCycle = this.alarmCycle,
+            alarmCycle = Reservation.alarmCycle,
         )
     }
 
