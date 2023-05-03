@@ -10,23 +10,32 @@ import woowacourse.movie.ui.Toaster
 import woowacourse.movie.ui.main.MainActivity.Companion.PERMISSIONS
 import woowacourse.movie.util.hasPermissions
 
-class SettingFragment : Fragment(R.layout.fragment_setting) {
+class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.View {
+    private lateinit var presenter: SettingContract.Presenter
+
     private var switch: SwitchCompat? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val sharedPreference = DefaultPreference(requireContext())
+        presenter = SettingPresenter(this, DefaultPreference(requireContext()))
+        presenter.getBoolean(NOTIFICATIONS, false)
 
         switch = view.findViewById(R.id.notification_switch)
-        switch?.isChecked = sharedPreference.getBoolean(NOTIFICATIONS, false)
         switch?.setOnCheckedChangeListener { switchCompat, _ ->
             val permission = requireContext().hasPermissions(PERMISSIONS)
-            if (!permission) {
-                switchCompat.isChecked = false
-                Toaster.showToast(requireContext(), "알림 권한을 허용해주세요.")
+            val isChecked = when {
+                permission -> switchCompat.isChecked
+                else -> {
+                    Toaster.showToast(requireContext(), "알림 권한을 허용해주세요.")
+                    false
+                }
             }
-            sharedPreference.setBoolean(NOTIFICATIONS, switchCompat.isChecked)
+            presenter.setBoolean(NOTIFICATIONS, isChecked)
         }
+    }
+
+    override fun setSwitchChecked(boolean: Boolean) {
+        switch?.isChecked = boolean
     }
 
     override fun onDestroyView() {
