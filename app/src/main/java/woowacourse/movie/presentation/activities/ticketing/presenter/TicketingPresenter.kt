@@ -19,7 +19,7 @@ class TicketingPresenter(private var state: TicketingState) : TicketingContract.
 
     override fun attach(view: TicketingContract.View) {
         super.attach(view)
-        view.initView(movieDates)
+        view.initView(state.movie, movieDates)
     }
 
     override fun getState(): TicketingState = state.copy()

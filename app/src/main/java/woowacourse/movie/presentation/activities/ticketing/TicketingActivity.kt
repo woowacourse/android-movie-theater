@@ -59,16 +59,16 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnCl
         ticketingState?.let { presenter.setState(it) }
     }
 
-    override fun initView(movieDates: List<MovieDate>) {
+    override fun initView(movie: Movie, movieDates: List<MovieDate>) {
         showBackButton()
-        showMovieIntroduce()
+        showMovieIntroduce(movie)
         initSpinnerConfig()
         updateMovieDates(movieDates)
         initViewClickListener()
     }
 
-    private fun showMovieIntroduce() {
-        intent.getParcelableCompat<Movie>(MOVIE_KEY)?.run {
+    private fun showMovieIntroduce(movie: Movie) {
+        with(movie) {
             findViewById<ImageView>(R.id.poster_iv).setImageResource(thumbnail)
             findViewById<TextView>(R.id.title_tv).text = title
             findViewById<TextView>(R.id.date_tv).text = getString(
