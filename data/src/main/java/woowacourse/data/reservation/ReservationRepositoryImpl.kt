@@ -6,21 +6,22 @@ import woowacourse.domain.reservation.Reservation
 import woowacourse.domain.reservation.ReservationRepository
 import woowacourse.domain.ticket.Ticket
 
-class ReservationRepositoryImpl : ReservationRepository {
+class ReservationRepositoryImpl(private val reservationDataSource: ReservationDataSource) :
+    ReservationRepository {
     override fun getReservations(): List<Reservation> {
-        return ReservationDatabase.bookings.mapNotNull { it.toReservation() }
+        return reservationDataSource.getReservationEntities().mapNotNull { it.toReservation() }
     }
 
     override fun getReservation(id: Long): Reservation? {
-        return ReservationDatabase.selectBooking(id)?.toReservation()
+        return reservationDataSource.getReservationEntity(id)?.toReservation()
     }
 
     override fun addReservation(reservation: Reservation) {
-        ReservationDatabase.insertBooking(reservation.toReservationEntity())
+        reservationDataSource.addReservationEntity(reservation.toReservationEntity())
     }
 
     override fun makeReservation(tickets: Set<Ticket>): Reservation {
-        val reservation = Reservation(tickets, ReservationDatabase.getNewId())
+        val reservation = Reservation(tickets, reservationDataSource.getNewReservationId())
         addReservation(reservation)
         return reservation
     }

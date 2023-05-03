@@ -17,6 +17,7 @@ import woowacourse.app.util.getParcelable
 import woowacourse.app.util.getParcelableBundle
 import woowacourse.app.util.shortToast
 import woowacourse.data.movie.MovieRepositoryImpl
+import woowacourse.data.reservation.ReservationDatabase
 import woowacourse.data.reservation.ReservationRepositoryImpl
 import woowacourse.data.theater.TheaterRepositoryImpl
 import woowacourse.domain.BoxOffice
@@ -69,7 +70,8 @@ class SeatActivity : AppCompatActivity() {
             intent.getParcelable(BOOKED_MOVIE, woowacourse.app.model.BookedMovie::class.java)
                 ?: return finish()
         movie = MovieUseCase(MovieRepositoryImpl()).getMovie(bookedMovie.movieId) ?: return finish()
-        theater = TheaterUseCase(TheaterRepositoryImpl()).getTheater(bookedMovie.theaterId) ?: return finish()
+        theater = TheaterUseCase(TheaterRepositoryImpl()).getTheater(bookedMovie.theaterId)
+            ?: return finish()
         selectedSeat = SelectedSeat(bookedMovie.ticketCount)
     }
 
@@ -118,7 +120,7 @@ class SeatActivity : AppCompatActivity() {
 
     private fun completeBooking() {
         val reservation =
-            BoxOffice(ReservationRepositoryImpl()).makeReservation(
+            BoxOffice(ReservationRepositoryImpl(ReservationDatabase)).makeReservation(
                 movie,
                 bookedMovie.bookedDateTime,
                 selectedSeat.seats,
@@ -143,7 +145,7 @@ class SeatActivity : AppCompatActivity() {
         textPayment.text =
             getString(
                 R.string.won,
-                BoxOffice(ReservationRepositoryImpl()).getPayment(
+                BoxOffice(ReservationRepositoryImpl(ReservationDatabase)).getPayment(
                     movie,
                     bookedMovie.bookedDateTime,
                     selectedSeat.seats,

@@ -3,8 +3,8 @@ package woowacourse.data.reservation
 import woowacourse.data.movie.MovieDatabase
 import java.time.LocalDateTime
 
-object ReservationDatabase {
-    private val _bookings = mutableListOf<ReservationEntity>(
+object ReservationDatabase : ReservationDataSource {
+    private val bookings = mutableListOf<ReservationEntity>(
         ReservationEntity(
             0,
             movie = MovieDatabase.selectMovie(1) ?: throw IllegalArgumentException(),
@@ -13,15 +13,20 @@ object ReservationDatabase {
             listOf<SeatEntity>(SeatEntity(2, 0, 0)),
         ),
     )
-    val bookings: List<ReservationEntity> get() = _bookings.toList()
 
-    fun selectBooking(id: Long): ReservationEntity? {
-        return _bookings.find { it.id == id }
+    override fun getReservationEntities(): List<ReservationEntity> {
+        return bookings.toList()
     }
 
-    fun insertBooking(booking: ReservationEntity) {
-        _bookings.add(booking)
+    override fun getReservationEntity(id: Long): ReservationEntity? {
+        return bookings.find { it.id == id }
     }
 
-    fun getNewId(): Long = _bookings.last().id + 1
+    override fun addReservationEntity(reservationEntity: ReservationEntity) {
+        bookings.add(reservationEntity)
+    }
+
+    override fun getNewReservationId(): Long {
+        return bookings.last().id + 1
+    }
 }

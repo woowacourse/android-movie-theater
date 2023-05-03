@@ -11,7 +11,7 @@ import woowacourse.domain.ticket.Ticket
 object ReservationMapper {
     fun Reservation.toReservationEntity(): ReservationEntity {
         return ReservationEntity(
-            id = ReservationDatabase.getNewId(),
+            id = ReservationDatabase.getNewReservationId(),
             movie = this.movie.toMovieEntity(),
             bookedDateTime = this.bookedDateTime,
             paymentType = this.paymentType.ordinal,

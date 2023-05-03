@@ -10,6 +10,7 @@ import woowacourse.app.model.Mapper.toUiModel
 import woowacourse.app.ui.completed.CompletedActivity
 import woowacourse.app.usecase.reservation.ReservationUseCase
 import woowacourse.app.util.shortToast
+import woowacourse.data.reservation.ReservationDatabase
 import woowacourse.data.reservation.ReservationRepositoryImpl
 import woowacourse.movie.R
 
@@ -29,11 +30,11 @@ class BookingHistoryFragment : Fragment() {
         val recyclerView = requireActivity().findViewById<RecyclerView>(R.id.recyclerBookingHistory)
         val adapter = BookingHistoryAdapter(::itemClicked)
         recyclerView.adapter = adapter
-        adapter.initList(ReservationUseCase(ReservationRepositoryImpl()).getReservations().map { it.toUiModel() })
+        adapter.initList(ReservationUseCase(ReservationRepositoryImpl(ReservationDatabase)).getReservations().map { it.toUiModel() })
     }
 
     private fun itemClicked(id: Long) {
-        val reservation = ReservationUseCase(ReservationRepositoryImpl()).getReservation(id)
+        val reservation = ReservationUseCase(ReservationRepositoryImpl(ReservationDatabase)).getReservation(id)
         if (reservation == null) {
             noSuchElement()
             return
