@@ -19,8 +19,7 @@ interface TicketingContract {
     }
 
     abstract class Presenter {
-        protected var view: View? = null
-            private set
+        private var view: View? = null
 
         open fun attach(view: View) {
             this.view = view
