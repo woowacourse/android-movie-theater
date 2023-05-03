@@ -56,15 +56,9 @@ class MainActivity : AppCompatActivity() {
 
         hideFragment(ft, home, history, setting)
 
-        if (tag == TAG_HOME_FRAGMENT) {
-            if (home != null) ft.show(home)
-        }
-        if (tag == TAG_HISTORY_FRAGMENT) {
-            if (history != null) ft.show(history)
-        }
-        if (tag == TAG_SETTING_FRAGMENT) {
-            if (setting != null) ft.show(setting)
-        }
+        if (tag == TAG_HOME_FRAGMENT) if (home != null) ft.show(home)
+        if (tag == TAG_HISTORY_FRAGMENT) if (history != null) ft.show(history)
+        if (tag == TAG_SETTING_FRAGMENT) if (setting != null) ft.show(setting)
         ft.commitAllowingStateLoss()
     }
 
