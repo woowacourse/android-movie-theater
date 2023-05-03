@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -18,6 +17,7 @@ import woowacourse.movie.movie.history.HistoryFragment
 import woowacourse.movie.movie.movielist.HomeFragment
 import woowacourse.movie.movie.setting.SettingFragment
 import woowacourse.movie.movie.utils.SettingPreference
+import woowacourse.movie.movie.utils.Toaster
 
 class MainActivity : AppCompatActivity() {
 
@@ -76,12 +76,12 @@ class MainActivity : AppCompatActivity() {
         ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                    Toast.makeText(this@MainActivity, DENIED_PERMISSION_MESSAGE, Toast.LENGTH_SHORT).show()
+                    Toaster.showToast(this@MainActivity, DENIED_PERMISSION_MESSAGE)
                 } else {
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
             } else {
-                Toast.makeText(this@MainActivity, LOWER_VERSION_MESSAGE, Toast.LENGTH_SHORT).show()
+                Toaster.showToast(this@MainActivity, LOWER_VERSION_MESSAGE)
             }
         }
     }
@@ -89,8 +89,8 @@ class MainActivity : AppCompatActivity() {
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission(),
     ) { isCheck: Boolean ->
-        if (isCheck) Toast.makeText(this@MainActivity, PERMIT_PERMISSION_MESSAGE, Toast.LENGTH_SHORT).show()
-        else Toast.makeText(this@MainActivity, DENIED_PERMISSION_MESSAGE, Toast.LENGTH_SHORT).show()
+        if (isCheck) Toaster.showToast(this@MainActivity, PERMIT_PERMISSION_MESSAGE)
+        else Toaster.showToast(this@MainActivity, DENIED_PERMISSION_MESSAGE)
     }
 
     companion object {
@@ -102,6 +102,6 @@ class MainActivity : AppCompatActivity() {
 
         private const val DENIED_PERMISSION_MESSAGE = "알림 권한이 차단되었습니다"
         private const val PERMIT_PERMISSION_MESSAGE = "알림 권한이 허용되었습니다"
-        private const val LOWER_VERSION_MESSAGE = "설정에 가서 알림 권한을 켜주세요"
+        private const val LOWER_VERSION_MESSAGE = "버전이 낮아 권한이 자동으로 허용되었습니다"
     }
 }
