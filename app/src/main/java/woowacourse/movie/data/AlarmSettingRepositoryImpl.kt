@@ -3,7 +3,7 @@ package woowacourse.movie.data
 import android.content.Context
 import android.content.SharedPreferences
 
-object AlarmSettingRepositoryImpl {
+object AlarmSettingRepositoryImpl : AlarmSettingRepository {
     private lateinit var prefs: SharedPreferences
 
     fun init(context: Context) {
@@ -13,7 +13,7 @@ object AlarmSettingRepositoryImpl {
         )
     }
 
-    var enablePushNotification: Boolean
+    override var enablePushNotification: Boolean
         get() = prefs.getBoolean(NOTIFICATIONS, false)
         set(value) {
             prefs.edit().putBoolean(NOTIFICATIONS, value).apply()
