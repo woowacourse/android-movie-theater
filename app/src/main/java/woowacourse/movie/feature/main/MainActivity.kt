@@ -30,7 +30,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (savedInstanceState == null) { initFragments() }
+        if (savedInstanceState == null) {
+            initFragments()
+        }
         initListener()
     }
 
