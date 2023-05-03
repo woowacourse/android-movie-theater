@@ -8,10 +8,10 @@ import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.domain.setting.Setting
 import woowacourse.movie.service.PermissionManager
 import woowacourse.movie.service.PermissionManager.checkNotificationSelfPermission
 import woowacourse.movie.service.PermissionManager.requestNotificationPermission
-import woowacourse.movie.view.setting.Setting
 import woowacourse.movie.view.setting.SharedSetting
 
 class SettingFragment : Fragment() {

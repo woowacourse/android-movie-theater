@@ -2,6 +2,7 @@ package woowacourse.movie.view.setting
 
 import android.content.Context
 import android.content.SharedPreferences
+import woowacourse.movie.domain.setting.Setting
 
 class SharedSetting(private val context: Context) : Setting {
     override fun getValue(key: String, default: Boolean): Boolean {

@@ -6,12 +6,12 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import woowacourse.movie.activity.SeatSelectionActivity
+import woowacourse.movie.domain.setting.Setting
 import woowacourse.movie.fragment.SettingFragment
 import woowacourse.movie.view.data.ReservationViewData
 import woowacourse.movie.view.error.BroadcastReceiverError.returnWithError
 import woowacourse.movie.view.error.ViewError
 import woowacourse.movie.view.getSerializable
-import woowacourse.movie.view.setting.Setting
 import woowacourse.movie.view.setting.SharedSetting
 
 class ReservationAlarmReceiver : BroadcastReceiver() {
