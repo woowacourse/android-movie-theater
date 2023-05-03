@@ -11,7 +11,18 @@ interface HistoryContract {
     }
 
     abstract class Presenter {
-        protected val view: View
+        private var view: View? = null
+
+        open fun attach(view: View) {
+            this.view = view
+        }
+
+        open fun detach() {
+            this.view = null
+        }
+
+        protected fun requireView(): View =
+            view ?: throw IllegalStateException("View is not attached")
 
         abstract fun loadHistories()
         abstract fun onClickItem(item: ListItem)
