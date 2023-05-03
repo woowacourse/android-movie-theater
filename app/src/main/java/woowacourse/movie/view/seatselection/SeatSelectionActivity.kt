@@ -14,7 +14,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.view.children
 import woowacourse.movie.R
-import woowacourse.movie.data.ReservationMockRepository
+import woowacourse.movie.data.reservation.ReservationMockRepository
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.domain.ReservationAgency
 import woowacourse.movie.domain.Seat
