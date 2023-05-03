@@ -15,11 +15,9 @@ import woowacourse.movie.model.Mapper.toDomainModel
 import woowacourse.movie.model.Mapper.toUiModel
 import woowacourse.movie.model.SelectedSeatUiModel
 import woowacourse.movie.movie.Movie
-import woowacourse.movie.movie.MovieRepository
 import woowacourse.movie.reservation.Reservation
 import woowacourse.movie.reservation.ReservationRepository
 import woowacourse.movie.theater.Theater
-import woowacourse.movie.theater.TheaterRepository
 import woowacourse.movie.ticket.Seat
 import woowacourse.movie.ticket.Ticket
 import woowacourse.movie.ui.completed.CompletedActivity
@@ -27,12 +25,32 @@ import woowacourse.movie.util.getParcelable
 import woowacourse.movie.util.getParcelableBundle
 import woowacourse.movie.util.shortToast
 
-class SeatActivity : AppCompatActivity() {
-    private val textPayment by lazy { findViewById<TextView>(R.id.textSeatPayment) }
-    private val buttonConfirm by lazy { findViewById<TextView>(R.id.buttonSeatConfirm) }
-    private val table by lazy { findViewById<SeatTableLayout>(R.id.seatTableLayout) }
+class SeatActivity : AppCompatActivity(), SeatContract.View {
 
-    private lateinit var bookedMovie: BookedMovie
+    private val movieTitleText: TextView by lazy {
+        findViewById(R.id.textSeatMovieTitle)
+    }
+    private val textPayment by lazy {
+        findViewById<TextView>(R.id.textSeatPayment)
+    }
+    private val buttonConfirm by lazy {
+        findViewById<TextView>(R.id.buttonSeatConfirm)
+    }
+    private val seatTable by lazy {
+        findViewById<SeatTableLayout>(R.id.seatTableLayout)
+    }
+    private val bookedMovie: BookedMovie? by lazy {
+        intent.getParcelable(BOOKED_MOVIE, BookedMovie::class.java)
+    }
+    private val seatPresenter: SeatPresenter by lazy {
+        bookedMovie?.let {
+            SeatPresenter(
+                view = this,
+                bookedMovie = it
+            )
+        } ?: throw IllegalArgumentException(RECEIVING_MOVIE_ERROR)
+    }
+
     private lateinit var movie: Movie
     private lateinit var theater: Theater
     private lateinit var selectedSeats: SelectedSeats
@@ -40,40 +58,34 @@ class SeatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seat)
-        getData()
-        initSeatTable()
-        initView()
-        clickConfirmButton()
+
+        seatPresenter.initMovieTitle()
+        // initSeatTable()
+        // initView()
+        // clickConfirmButton()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putParcelable("SELECTED_SEAT", selectedSeats.toUiModel())
+        outState.putParcelable(SELECTED_SEAT, selectedSeats.toUiModel())
         super.onSaveInstanceState(outState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         val selectedSeatUiModel =
-            savedInstanceState.getParcelableBundle("SELECTED_SEAT", SelectedSeatUiModel::class.java)
-        restoreSelectedSeat(selectedSeatUiModel)
-    }
-
-    private fun restoreSelectedSeat(selectedSeatUiModel: SelectedSeatUiModel) {
+            savedInstanceState.getParcelableBundle(SELECTED_SEAT, SelectedSeatUiModel::class.java)
         selectedSeatUiModel.selectedSeat.forEach {
             setSeatState(it.toDomainModel())
         }
     }
 
-    private fun getData() {
-        bookedMovie = intent.getParcelable(BOOKED_MOVIE, BookedMovie::class.java) ?: return finish()
-        movie = MovieRepository.getMovie(bookedMovie.movieId)
-        theater = TheaterRepository.getTheater(bookedMovie.theaterId)
-        selectedSeats = SelectedSeats(bookedMovie.ticketCount)
+    override fun initMovieTitleText(movieTitle: String) {
+        movieTitleText.text = movieTitle
     }
 
     private fun initSeatTable() {
-        table.setTable(theater.rowSize, theater.columnSize)
-        table.setColorRange(
+        seatTable.setView(theater.rowSize, theater.columnSize)
+        seatTable.setColorRange(
             mapOf(
                 theater.sRankRange to R.color.green_400,
                 theater.aRankRange to R.color.blue_500,
@@ -140,12 +152,10 @@ class SeatActivity : AppCompatActivity() {
         textPayment.text = tickets.sumOf { it.price }.toString() + "원"
     }
 
-    private fun initView() {
-        findViewById<TextView>(R.id.textSeatMovieTitle).text = movie.title
-    }
-
     companion object {
+        private const val RECEIVING_MOVIE_ERROR = "예약하는 영화의 정보를 받아올 수 없습니다."
         private const val BOOKED_MOVIE = "BOOKED_MOVIE"
+        private const val SELECTED_SEAT = "SELECTED_SEAT"
 
         fun getIntent(context: Context, bookedMovie: BookedMovie?): Intent {
             return Intent(context, SeatActivity::class.java).apply {

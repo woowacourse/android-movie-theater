@@ -26,7 +26,7 @@ class SeatTableLayout(context: Context, attrs: AttributeSet) : TableLayout(conte
     }
 
     // 테이블 사이즈 세팅 및 생성
-    fun setTable(rowSize: Int, columnSize: Int) {
+    fun setView(rowSize: Int, columnSize: Int) {
         addRow(rowSize, columnSize)
         initText()
     }
