@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import woowacourse.movie.movie.MainActivity.Companion.setting_preference_key
+import woowacourse.movie.movie.MainActivity.Companion.SETTING_PREFERENCE_KEY
 import woowacourse.movie.movie.dto.movie.BookingMovieEntity
 import woowacourse.movie.movie.seat.SeatSelectionActivity.Companion.BOOKING_MOVIE_KEY
 import woowacourse.movie.movie.utils.SettingPreference
@@ -14,7 +14,7 @@ class AlarmReceiver : BroadcastReceiver() {
     private lateinit var bookingMovie: BookingMovieEntity
 
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == ALARM_CODE && SettingPreference.getBoolean(context, setting_preference_key)) {
+        if (intent.action == ALARM_CODE && SettingPreference.getBoolean(SETTING_PREFERENCE_KEY)) {
             val notificationBuilder = NotificationBuilder(context)
             notificationBuilder.createNotificationChannel()
 

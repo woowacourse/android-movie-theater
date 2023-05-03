@@ -17,6 +17,7 @@ import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.movie.history.HistoryFragment
 import woowacourse.movie.movie.movielist.HomeFragment
 import woowacourse.movie.movie.setting.SettingFragment
+import woowacourse.movie.movie.utils.SettingPreference
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,9 +28,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         requestNotificationPermission()
-
+        SettingPreference.initSharedPreferences(applicationContext)
         setFragment(TAG_HOME_FRAGMENT, HomeFragment())
-
         binding.navigationBar?.let(::onNavigationBarClickListener)
     }
 
@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val setting_preference_key = "setting"
+        const val SETTING_PREFERENCE_KEY = "setting"
 
         private const val TAG_HOME_FRAGMENT = "home_fragment"
         private const val TAG_HISTORY_FRAGMENT = "history_fragment"
