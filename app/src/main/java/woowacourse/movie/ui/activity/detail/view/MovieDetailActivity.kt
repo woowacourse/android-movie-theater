@@ -13,7 +13,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.ui.activity.SeatPickerActivity
+import woowacourse.movie.ui.activity.seatpicker.view.SeatPickerActivity
 import woowacourse.movie.ui.activity.detail.MovieDetailContract
 import woowacourse.movie.ui.activity.detail.presenter.MovieDetailPresenter
 import woowacourse.movie.ui.model.MovieModel

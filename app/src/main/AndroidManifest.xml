@@ -24,7 +24,7 @@
             android:permission="android.permission.POST_NOTIFICATIONS" />
 
         <activity
-            android:name=".ui.activity.SeatPickerActivity"
+            android:name=".ui.activity.seatpicker.view.SeatPickerActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.MovieTicketActivity"
