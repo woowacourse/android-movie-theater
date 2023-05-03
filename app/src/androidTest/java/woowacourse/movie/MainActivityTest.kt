@@ -46,7 +46,7 @@ class MainActivityTest {
         onView(withId(R.id.bottom_item_home))
             .perform(click())
 
-        onView(withId(R.id.fragment_home))
+        onView(withId(R.id.fragment_movie_list))
             .check(matches(isDisplayed()))
     }
 

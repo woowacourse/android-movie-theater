@@ -15,7 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.permission.SinglePermissionRequester
 import woowacourse.movie.ui.fragment.FragmentType
-import woowacourse.movie.ui.fragment.movielist.HomeFragment
+import woowacourse.movie.ui.fragment.movielist.MovieListFragment
 import woowacourse.movie.ui.fragment.reservationlist.ReservationListFragment
 import woowacourse.movie.ui.fragment.reservationlist.ReservationListFragment.Companion.KEY_UPDATE_RESERVATION_ITEM
 import woowacourse.movie.ui.fragment.settings.SettingsFragment
@@ -139,7 +139,7 @@ class MainActivity : AppCompatActivity() {
     private fun createFragment(currentType: FragmentType): Fragment {
         return when (currentType) {
             FragmentType.RESERVATION_LIST -> ReservationListFragment()
-            FragmentType.HOME -> HomeFragment()
+            FragmentType.HOME -> MovieListFragment()
             FragmentType.SETTING -> SettingsFragment()
         }
     }

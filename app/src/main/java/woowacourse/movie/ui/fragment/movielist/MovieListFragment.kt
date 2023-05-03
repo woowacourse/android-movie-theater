@@ -16,14 +16,14 @@ import woowacourse.movie.ui.fragment.movielist.adapter.MovieAdapter
 import woowacourse.movie.ui.model.AdModel
 import woowacourse.movie.ui.model.MovieModel
 
-class HomeFragment : Fragment() {
+class MovieListFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        return inflater.inflate(R.layout.fragment_movie_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
