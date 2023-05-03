@@ -12,8 +12,10 @@ import woowacourse.app.model.BookedMovie
 import woowacourse.app.model.main.MovieMapper.toUiModel
 import woowacourse.app.model.main.MovieUiModel
 import woowacourse.app.ui.seat.SeatActivity
+import woowacourse.app.usecase.movie.MovieUseCase
 import woowacourse.app.util.formatScreenDate
-import woowacourse.domain.movie.MovieRepository
+import woowacourse.app.util.shortToast
+import woowacourse.data.movie.MovieRepositoryImpl
 import woowacourse.domain.movie.ScreeningDate
 import woowacourse.domain.ticket.TicketCount
 import woowacourse.movie.R
@@ -52,7 +54,12 @@ class BookingActivity : AppCompatActivity() {
 
     private fun getMovie(): MovieUiModel {
         val movieId = intent.getLongExtra(MOVIE_ID, -1)
-        return MovieRepository.getMovie(movieId).toUiModel()
+        val movieUiModel = MovieUseCase(MovieRepositoryImpl()).getMovie(movieId)?.toUiModel()
+        if (movieUiModel == null) {
+            shortToast(R.string.error_no_such_movie)
+            finish()
+        }
+        return movieUiModel!!
     }
 
     private fun gatherClickListeners(movie: MovieUiModel) {
