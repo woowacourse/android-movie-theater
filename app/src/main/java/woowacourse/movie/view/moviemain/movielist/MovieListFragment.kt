@@ -7,8 +7,8 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.view.ReservationActivity
 import woowacourse.movie.view.model.MovieListModel
+import woowacourse.movie.view.moviemain.reservation.ReservationActivity
 
 class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
