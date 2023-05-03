@@ -1,8 +1,8 @@
-package woowacourse.movie.domain.repository
+package woowacourse.movie.data.repository
 
+import woowacourse.movie.data.dataSource.DataSource
+import woowacourse.movie.data.dataSource.MovieDataSource
 import woowacourse.movie.domain.Movie
-import woowacourse.movie.domain.dataSource.DataSource
-import woowacourse.movie.domain.dataSource.MovieDataSource
 
 class MovieRepository {
     private val movieDataSource: DataSource<Movie> = MovieDataSource()

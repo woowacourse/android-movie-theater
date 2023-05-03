@@ -16,10 +16,7 @@ class SettingPresenter(override val view: SettingContract.View) : SettingContrac
         isChecked: Boolean
     ) {
         view.onNotificationSwitchCheckedChangeListener(
-            permissionResultLauncher,
-            setting,
-            permission,
-            isChecked
+            permissionResultLauncher, setting, permission, isChecked
         )
     }
 }

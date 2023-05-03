@@ -3,12 +3,12 @@ package woowacourse.movie.presenter
 import woowacourse.movie.contract.MovieAdapterContract
 import woowacourse.movie.data.MovieListItemViewData
 import woowacourse.movie.data.MovieListItemsViewData
+import woowacourse.movie.data.repository.AdvertisementRepository
+import woowacourse.movie.data.repository.MovieRepository
 import woowacourse.movie.domain.Advertisement
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.advertismentPolicy.AdvertisementPolicy
 import woowacourse.movie.domain.mock.AdvertisementPolicyMock
-import woowacourse.movie.domain.repository.AdvertisementRepository
-import woowacourse.movie.domain.repository.MovieRepository
 import woowacourse.movie.mapper.AdvertisementMapper.toView
 import woowacourse.movie.mapper.MovieMapper.toView
 

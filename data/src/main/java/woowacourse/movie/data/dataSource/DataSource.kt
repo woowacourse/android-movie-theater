@@ -1,4 +1,4 @@
-package woowacourse.movie.domain.dataSource
+package woowacourse.movie.data.dataSource
 
 interface DataSource<T> {
     val value: List<T>

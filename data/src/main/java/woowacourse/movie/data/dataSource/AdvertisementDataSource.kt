@@ -1,4 +1,4 @@
-package woowacourse.movie.domain.dataSource
+package woowacourse.movie.data.dataSource
 
 import woowacourse.movie.domain.Advertisement
 import woowacourse.movie.domain.mock.AdvertisementMock

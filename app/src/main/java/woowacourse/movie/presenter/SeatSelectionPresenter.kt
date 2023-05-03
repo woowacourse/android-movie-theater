@@ -8,10 +8,10 @@ import woowacourse.movie.data.ReservationViewData
 import woowacourse.movie.data.SeatTableViewData
 import woowacourse.movie.data.SeatsViewData
 import woowacourse.movie.data.TableSize
+import woowacourse.movie.data.repository.SeatSelectionRepository
 import woowacourse.movie.domain.discountPolicy.Discount
 import woowacourse.movie.domain.discountPolicy.MovieDayPolicy
 import woowacourse.movie.domain.discountPolicy.OffTimePolicy
-import woowacourse.movie.domain.repository.SeatSelectionRepository
 import woowacourse.movie.domain.reservationNotificationPolicy.MovieReservationNotificationPolicy
 import woowacourse.movie.domain.seat.Seats
 import woowacourse.movie.mapper.MovieSeatMapper.toDomain
