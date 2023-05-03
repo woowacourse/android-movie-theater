@@ -23,7 +23,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
+                "proguard-rules.pro"
             )
         }
     }
@@ -51,5 +51,8 @@ dependencies {
     testImplementation("org.mockito:mockito-core:3.12.4")
 
     // Fragment
-    implementation ("androidx.fragment:fragment-ktx:1.4.0")
+    implementation("androidx.fragment:fragment-ktx:1.4.0")
+
+    // Mockk
+    testImplementation("io.mockk:mockk:1.13.5")
 }
