@@ -12,9 +12,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.model.MovieTicketModel
-import woowacourse.movie.model.ReservationModel
 import woowacourse.movie.ui.alarm.ReservationAlarmManager
+import woowacourse.movie.uimodel.MovieTicketModel
+import woowacourse.movie.uimodel.ReservationModel
 import woowacourse.movie.utils.getPreferences
 
 class SettingFragment : Fragment() {

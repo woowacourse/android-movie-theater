@@ -3,8 +3,8 @@ package woowacourse.movie.ui.alarm
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.ui.moviedetail.MovieDetailActivity
+import woowacourse.movie.uimodel.MovieTicketModel
 import woowacourse.movie.utils.getSerializableExtraCompat
 
 class ReservationAlarmReceiver : BroadcastReceiver() {

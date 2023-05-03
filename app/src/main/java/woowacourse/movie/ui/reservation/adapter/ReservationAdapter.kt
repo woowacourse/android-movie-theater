@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.model.MovieTicketModel
+import woowacourse.movie.uimodel.MovieTicketModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 

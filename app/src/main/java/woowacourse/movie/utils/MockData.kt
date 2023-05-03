@@ -1,7 +1,7 @@
 package woowacourse.movie.utils
 
 import woowacourse.movie.R
-import woowacourse.movie.model.MovieListModel
+import woowacourse.movie.uimodel.MovieListModel
 import java.time.LocalDate
 
 object MockData {

@@ -6,8 +6,8 @@ import android.app.PendingIntent
 import android.content.Context
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
-import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.ui.ticket.MovieTicketActivity
+import woowacourse.movie.uimodel.MovieTicketModel
 
 class NotificationCreator(
     private val context: Context,

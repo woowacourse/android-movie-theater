@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.model.MovieListModel
+import woowacourse.movie.uimodel.MovieListModel
 
 class MovieListAdapter(
     private val modelItems: List<MovieListModel>,

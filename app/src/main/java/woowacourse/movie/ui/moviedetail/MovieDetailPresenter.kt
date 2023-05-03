@@ -4,8 +4,8 @@ import woowacourse.movie.domain.PeopleCount
 import woowacourse.movie.domain.TimesGenerator
 import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toModel
-import woowacourse.movie.model.MovieListModel
-import woowacourse.movie.model.PeopleCountModel
+import woowacourse.movie.uimodel.MovieListModel
+import woowacourse.movie.uimodel.PeopleCountModel
 import java.time.LocalDate
 import java.time.LocalTime
 

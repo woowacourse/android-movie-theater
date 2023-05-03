@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.model.MovieListModel
+import woowacourse.movie.uimodel.MovieListModel
 
 class AdItemViewHolder(
     view: View,

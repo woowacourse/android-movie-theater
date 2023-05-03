@@ -9,9 +9,9 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.model.ReservationModel
 import woowacourse.movie.ui.reservation.adapter.ReservationAdapter
 import woowacourse.movie.ui.ticket.MovieTicketActivity
+import woowacourse.movie.uimodel.ReservationModel
 
 class ReservationFragment : Fragment() {
     private lateinit var reservationView: RecyclerView

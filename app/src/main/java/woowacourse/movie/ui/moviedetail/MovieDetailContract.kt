@@ -1,6 +1,6 @@
 package woowacourse.movie.ui.moviedetail
 
-import woowacourse.movie.model.MovieListModel
+import woowacourse.movie.uimodel.MovieListModel
 import java.time.LocalDate
 
 interface MovieDetailContract {

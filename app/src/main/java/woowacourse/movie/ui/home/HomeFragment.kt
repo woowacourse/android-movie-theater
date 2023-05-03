@@ -9,10 +9,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.model.MovieListModel
 import woowacourse.movie.ui.home.adapter.ItemClickListener
 import woowacourse.movie.ui.home.adapter.MovieListAdapter
 import woowacourse.movie.ui.moviedetail.MovieDetailActivity
+import woowacourse.movie.uimodel.MovieListModel
 import woowacourse.movie.utils.MockData
 
 class HomeFragment : Fragment() {

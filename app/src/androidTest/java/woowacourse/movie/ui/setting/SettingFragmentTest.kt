@@ -15,8 +15,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.model.AlarmSwitchState
 import woowacourse.movie.ui.MainActivity
+import woowacourse.movie.uimodel.AlarmSwitchState
 
 @RunWith(AndroidJUnit4::class)
 internal class SettingFragmentTest {

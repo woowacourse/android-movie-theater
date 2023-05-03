@@ -1,4 +1,4 @@
-package woowacourse.movie.model
+package woowacourse.movie.uimodel
 
 object ReservationModel {
     private val _tickets = mutableListOf<MovieTicketModel>()

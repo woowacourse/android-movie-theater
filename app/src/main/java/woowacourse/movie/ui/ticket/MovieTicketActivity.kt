@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.mapper.toDomain
-import woowacourse.movie.model.MovieTicketModel
+import woowacourse.movie.uimodel.MovieTicketModel
 import woowacourse.movie.utils.failLoadingData
 import woowacourse.movie.utils.getSerializableExtraCompat
 import java.text.DecimalFormat

@@ -17,8 +17,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.model.PeopleCountModel
 import woowacourse.movie.ui.moviedetail.MovieDetailActivity
+import woowacourse.movie.uimodel.PeopleCountModel
 import java.time.LocalDateTime
 
 @RunWith(AndroidJUnit4::class)
