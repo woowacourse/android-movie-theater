@@ -4,9 +4,9 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import woowacourse.app.model.MainData
+import woowacourse.app.model.HomeData
 import woowacourse.app.model.movie.MovieUiModel
-import woowacourse.app.ui.main.home.adapter.MainViewType
+import woowacourse.app.ui.main.home.adapter.HomeViewType
 import woowacourse.app.util.formatScreenDate
 import woowacourse.movie.R
 
@@ -17,10 +17,10 @@ class MovieViewHolder(view: View) : HomeViewHolder(view) {
     private val runningTime: TextView = view.findViewById(R.id.textBookingRunningTime)
     private val button: Button = view.findViewById(R.id.buttonItemBook)
 
-    override val mainViewType: MainViewType = MainViewType.CONTENT
+    override val homeViewType: HomeViewType = HomeViewType.CONTENT
     private lateinit var movie: MovieUiModel
 
-    override fun onBind(data: MainData) {
+    override fun onBind(data: HomeData) {
         movie = data as MovieUiModel
         thumbnail.setImageResource(movie.thumbnail)
         title.text = movie.title

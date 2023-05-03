@@ -3,8 +3,8 @@ package woowacourse.app.model.movie
 import android.os.Parcelable
 import androidx.annotation.DrawableRes
 import kotlinx.android.parcel.Parcelize
-import woowacourse.app.model.MainData
-import woowacourse.app.ui.main.home.adapter.MainViewType
+import woowacourse.app.model.HomeData
+import woowacourse.app.ui.main.home.adapter.HomeViewType
 import java.time.LocalDate
 
 @Parcelize
@@ -18,6 +18,6 @@ data class MovieUiModel(
     val description: String,
     @DrawableRes val thumbnail: Int,
     @DrawableRes val poster: Int,
-) : MainData(), Parcelable {
-    override val mainViewType: MainViewType = MainViewType.CONTENT
+) : HomeData(), Parcelable {
+    override val homeViewType: HomeViewType = HomeViewType.CONTENT
 }

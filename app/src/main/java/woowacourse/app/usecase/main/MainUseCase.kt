@@ -1,6 +1,6 @@
 package woowacourse.app.usecase.main
 
-import woowacourse.app.model.MainData
+import woowacourse.app.model.HomeData
 import woowacourse.app.model.advertisement.AdvertisementMapper.toUiAdvertisements
 import woowacourse.app.model.movie.MovieMapper.toUiMovies
 import woowacourse.domain.advertisement.Advertisement
@@ -11,7 +11,7 @@ class MainUseCase(
     private val advertisementRepository: AdvertisementRepository,
     private val movieRepository: MovieRepository,
 ) {
-    fun getMainData(): List<MainData> {
+    fun getMainData(): List<HomeData> {
         val movies = movieRepository.getMovies().toUiMovies()
         val advertisements = advertisementRepository.getAdvertisements().toUiAdvertisements()
         return mergeAdvertisement(movies, advertisements)

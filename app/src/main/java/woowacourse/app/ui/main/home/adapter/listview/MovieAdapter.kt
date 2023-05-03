@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import woowacourse.app.model.MainData
-import woowacourse.app.ui.main.home.adapter.MainViewType
+import woowacourse.app.model.HomeData
+import woowacourse.app.ui.main.home.adapter.HomeViewType
 import woowacourse.movie.R
 
 class MovieAdapter(
@@ -15,25 +15,25 @@ class MovieAdapter(
     private val clickBook: (Long) -> Unit,
     private val clickAd: (Intent) -> Unit,
 ) : BaseAdapter() {
-    private val movies = mutableListOf<MainData>()
+    private val movies = mutableListOf<HomeData>()
     private val layoutInflater = LayoutInflater.from(context)
     private val viewHolders = mutableMapOf<Int, MainViewHolder>()
 
     override fun getCount(): Int = movies.size
 
-    override fun getItem(position: Int): MainData = movies[position]
+    override fun getItem(position: Int): HomeData = movies[position]
 
     override fun getItemId(position: Int): Long = movies[position].id
 
-    override fun getItemViewType(position: Int): Int = movies[position].mainViewType.ordinal
+    override fun getItemViewType(position: Int): Int = movies[position].homeViewType.ordinal
 
     override fun getViewTypeCount(): Int = 2
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val viewType = MainViewType.getMainViewType(getItemViewType(position))
+        val viewType = HomeViewType.getMainViewType(getItemViewType(position))
         val layoutId: Int = when (viewType) {
-            MainViewType.CONTENT -> R.layout.movie_list_item
-            MainViewType.ADVERTISEMENT -> R.layout.advertisement_list_item
+            HomeViewType.CONTENT -> R.layout.movie_list_item
+            HomeViewType.ADVERTISEMENT -> R.layout.advertisement_list_item
         }
 
         val view: View = convertView ?: layoutInflater.inflate(layoutId, parent, false)
@@ -42,7 +42,7 @@ class MovieAdapter(
     }
 
     private fun onBindViewHolder(position: Int, key: Int, view: View) {
-        val viewType = MainViewType.getMainViewType(getItemViewType(position))
+        val viewType = HomeViewType.getMainViewType(getItemViewType(position))
         val item = getItem(position)
         if (viewHolders[key] == null) {
             viewHolders[key] = viewType.makeViewHolder(view)
@@ -58,7 +58,7 @@ class MovieAdapter(
         }
     }
 
-    fun initMovies(items: List<MainData>) {
+    fun initMovies(items: List<HomeData>) {
         movies.clear()
         movies.addAll(items)
         notifyDataSetChanged()

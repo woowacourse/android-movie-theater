@@ -5,8 +5,8 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.app.model.MainData
-import woowacourse.app.ui.main.home.adapter.MainViewType
+import woowacourse.app.model.HomeData
+import woowacourse.app.ui.main.home.adapter.HomeViewType
 import woowacourse.movie.R
 
 class HomeAdapter(
@@ -14,16 +14,16 @@ class HomeAdapter(
     private val clickBook: (Long) -> Unit,
     private val clickAd: (Intent) -> Unit,
 ) : RecyclerView.Adapter<HomeViewHolder>() {
-    private val movies = mutableListOf<MainData>()
+    private val movies = mutableListOf<HomeData>()
     private val layoutInflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
-        val mainViewType = MainViewType.getMainViewType(viewType)
-        val viewHolder: HomeViewHolder = when (mainViewType) {
-            MainViewType.CONTENT -> {
+        val homeViewType = HomeViewType.getMainViewType(viewType)
+        val viewHolder: HomeViewHolder = when (homeViewType) {
+            HomeViewType.CONTENT -> {
                 MovieViewHolder(layoutInflater.inflate(R.layout.movie_list_item, parent, false))
             }
-            MainViewType.ADVERTISEMENT -> {
+            HomeViewType.ADVERTISEMENT -> {
                 AdvertisementViewHolder(
                     layoutInflater.inflate(R.layout.advertisement_list_item, parent, false),
                 )
@@ -45,9 +45,9 @@ class HomeAdapter(
     }
 
     override fun getItemCount(): Int = movies.size
-    override fun getItemViewType(position: Int): Int = movies[position].mainViewType.ordinal
+    override fun getItemViewType(position: Int): Int = movies[position].homeViewType.ordinal
 
-    fun initMovies(items: List<MainData>) {
+    fun initMovies(items: List<HomeData>) {
         movies.clear()
         movies.addAll(items)
         notifyDataSetChanged()

@@ -5,7 +5,7 @@ import woowacourse.app.ui.main.home.adapter.listview.AdvertisementViewHolder
 import woowacourse.app.ui.main.home.adapter.listview.MainViewHolder
 import woowacourse.app.ui.main.home.adapter.listview.MovieViewHolder
 
-enum class MainViewType {
+enum class HomeViewType {
     CONTENT {
         override fun makeViewHolder(view: View): MainViewHolder = MovieViewHolder(view)
     },
@@ -16,7 +16,7 @@ enum class MainViewType {
     abstract fun makeViewHolder(view: View): MainViewHolder
 
     companion object {
-        fun getMainViewType(ordinal: Int): MainViewType {
+        fun getMainViewType(ordinal: Int): HomeViewType {
             return values()[ordinal]
         }
     }
