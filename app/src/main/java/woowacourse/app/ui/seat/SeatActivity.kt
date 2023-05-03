@@ -88,7 +88,7 @@ class SeatActivity : AppCompatActivity() {
         val view = table[seat.position.row][seat.position.column]
         val result = selectedSeat.clickSeat(seat)
         when (result) {
-            SelectResult.Select.Full -> shortToast("더 이상 좌석을 선택할 수 없습니다.")
+            SelectResult.Select.Full -> shortToast(R.string.no_more_seat)
             SelectResult.Select.Success -> view.isSelected = !view.isSelected
             SelectResult.Unselect -> view.isSelected = !view.isSelected
         }
@@ -121,10 +121,10 @@ class SeatActivity : AppCompatActivity() {
 
     private fun showDialog() {
         AlertDialog.Builder(this)
-            .setTitle("예매 확인")
-            .setMessage("정말 예매하시겠습니까?")
-            .setPositiveButton("예") { _, _ -> completeBooking() }
-            .setNegativeButton("아니요") { dialog, _ ->
+            .setTitle(R.string.booking_confirm)
+            .setMessage(R.string.booking_really)
+            .setPositiveButton(R.string.yes) { _, _ -> completeBooking() }
+            .setNegativeButton(R.string.no) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
@@ -132,7 +132,7 @@ class SeatActivity : AppCompatActivity() {
 
     private fun setPayment() {
         textPayment.text =
-            selectedSeat.getPayment(movie, bookedMovie.bookedDateTime).toString() + "원"
+            getString(R.string.won, selectedSeat.getPayment(movie, bookedMovie.bookedDateTime))
     }
 
     private fun initView() {

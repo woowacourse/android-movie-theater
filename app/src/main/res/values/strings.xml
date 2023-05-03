@@ -21,4 +21,10 @@
     <string name="permission_denied">권한 요청을 거부하였습니다</string>
     <string name="permission_granted">권한 요청을 승인하였습니다</string>
     <string name="error_no_such_booking">"해당 예매내역이 없습니다. 앱을 다시 시작해주세요"</string>
+    <string name="no_more_seat">더 이상 좌석을 선택할 수 없습니다.</string>
+    <string name="booking_confirm">예매 확인</string>
+    <string name="booking_really">정말 예매하시겠습니까?</string>
+    <string name="yes">예</string>
+    <string name="no">아니오</string>
+    <string name="won">%d원</string>
 </resources>
