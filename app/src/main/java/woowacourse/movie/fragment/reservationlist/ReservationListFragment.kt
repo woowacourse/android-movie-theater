@@ -1,4 +1,4 @@
-package woowacourse.movie.fragment
+package woowacourse.movie.fragment.reservationlist
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,12 +12,10 @@ import woowacourse.movie.activity.ReservationResultActivity
 import woowacourse.movie.view.adapter.ReservationAdapter
 import woowacourse.movie.view.data.ReservationViewData
 import woowacourse.movie.view.data.ReservationsViewData
-import woowacourse.movie.view.error.FragmentError.finishWithError
-import woowacourse.movie.view.error.ViewError
-import woowacourse.movie.view.getSerializable
 
-class ReservationListFragment : Fragment() {
-
+class ReservationListFragment : Fragment(), ReservationListContract.View {
+    override lateinit var presenter: ReservationListContract.Presenter
+    private lateinit var reservations: ReservationsViewData
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,10 +26,15 @@ class ReservationListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val reservations =
-            arguments?.getSerializable<ReservationsViewData>(ReservationsViewData.RESERVATIONS_VIEW_DATA_EXTRA_NAME)
-                ?: return finishWithError(ViewError.MissingExtras(ReservationsViewData.RESERVATIONS_VIEW_DATA_EXTRA_NAME))
+
+        presenter = ReservationListPresenter(this)
+        presenter.loadReservationData()
+
         makeReservationRecyclerView(view, reservations)
+    }
+
+    override fun setReservationData(reservationsViewData: ReservationsViewData) {
+        this.reservations = reservationsViewData
     }
 
     private fun makeReservationRecyclerView(view: View, reservations: ReservationsViewData) {

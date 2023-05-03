@@ -7,17 +7,11 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
-import woowacourse.movie.datasource.ReservationDataSource
-import woowacourse.movie.domain.repository.ReservationRepository
-import woowacourse.movie.fragment.ReservationListFragment
 import woowacourse.movie.fragment.SettingFragment
 import woowacourse.movie.fragment.movielist.MovieListFragment
-import woowacourse.movie.view.data.ReservationsViewData
-import woowacourse.movie.view.mapper.ReservationMapper.toView
+import woowacourse.movie.fragment.reservationlist.ReservationListFragment
 
 class MainActivity : AppCompatActivity() {
-    private val reservationDataSource: ReservationDataSource = ReservationDataSource()
-    private val reservationRepository = ReservationRepository(reservationDataSource)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -32,14 +26,7 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.action_list -> {
-                    replaceFragment<ReservationListFragment>(
-                        ReservationListFragment.from(
-                            ReservationsViewData(
-                                reservationRepository.getData()
-                                    .map { reservation -> reservation.toView() }
-                            )
-                        )
-                    )
+                    replaceFragment<ReservationListFragment>()
                     true
                 }
                 R.id.action_home -> {
