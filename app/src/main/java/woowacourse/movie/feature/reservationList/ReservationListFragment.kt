@@ -13,11 +13,13 @@ import woowacourse.movie.feature.reservationList.adapter.ReservationListAdapter
 import woowacourse.movie.feature.reservationList.itemModel.TicketsItemModel
 import woowacourse.movie.model.TicketsState
 
-class ReservationListFragment : Fragment(), OnDataUpdate {
+class ReservationListFragment : Fragment(), ReservationListContract.View, OnDataUpdate {
 
     private var _binding: FragmentReservationListBinding? = null
     private val binding
         get() = _binding!!
+
+    private lateinit var presenter: ReservationListContract.Presenter
 
     private lateinit var adapter: ReservationListAdapter
 
@@ -32,9 +34,10 @@ class ReservationListFragment : Fragment(), OnDataUpdate {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        presenter = ReservationPresenter(this, TicketsRepositoryImpl)
         adapter = ReservationListAdapter()
-        // TODO: 화면 회전 시 데이터 불러와야 함
         binding.rvReservation.adapter = adapter
+        presenter.loadTicketsItemList()
     }
 
     override fun onDestroyView() {
@@ -42,18 +45,16 @@ class ReservationListFragment : Fragment(), OnDataUpdate {
         _binding = null
     }
 
-    private fun getTicketsItemModel(): List<TicketsItemModel> {
-        return TicketsRepositoryImpl.allTickets().map {
-            it.convertToItemModel { tickets -> navigateReservationConfirm(tickets) }
-        }
-    }
-
-    private fun navigateReservationConfirm(ticketsState: TicketsState) {
+    override fun navigateReservationConfirm(ticketsState: TicketsState) {
         val intent = ReservationConfirmActivity.getIntent(requireContext(), ticketsState)
         startActivity(intent)
     }
 
+    override fun updateItems(items: List<TicketsItemModel>) {
+        adapter.setItemChanged(items)
+    }
+
     override fun onUpdateData() {
-        adapter.setItemChanged(getTicketsItemModel())
+        presenter.loadTicketsItemList()
     }
 }

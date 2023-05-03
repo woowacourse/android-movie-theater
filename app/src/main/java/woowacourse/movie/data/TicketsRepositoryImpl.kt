@@ -2,11 +2,10 @@ package woowacourse.movie.data
 
 import woowacourse.movie.model.TicketsState
 
-object TicketsRepositoryImpl {
+object TicketsRepositoryImpl : TicketsRepository {
+    override fun allTickets(): List<TicketsState> = tickets.toList()
 
-    fun allTickets(): List<TicketsState> = tickets.toList()
-
-    fun addTicket(ticket: TicketsState) = this.tickets.add(ticket)
+    override fun addTicket(ticket: TicketsState): Boolean = this.tickets.add(ticket)
 
     private val tickets: MutableList<TicketsState> = mutableListOf()
 }
