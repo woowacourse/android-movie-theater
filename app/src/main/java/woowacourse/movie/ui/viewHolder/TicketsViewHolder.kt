@@ -1,12 +1,12 @@
-package woowacourse.movie.ui.main.viewHolder
+package woowacourse.movie.ui.viewHolder
 
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import woowacourse.movie.R
 import woowacourse.movie.ui.DateTimeFormatters
-import woowacourse.movie.ui.main.itemModel.ItemModel
-import woowacourse.movie.ui.main.itemModel.TicketsItemModel
+import woowacourse.movie.ui.itemModel.ItemModel
+import woowacourse.movie.ui.itemModel.TicketsItemModel
 
 class TicketsViewHolder(
     view: View,

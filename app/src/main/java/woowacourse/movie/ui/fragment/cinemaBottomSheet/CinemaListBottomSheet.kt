@@ -8,8 +8,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.model.CinemaState
 import woowacourse.movie.model.MovieState
-import woowacourse.movie.ui.main.adapter.CinemaListAdapter
-import woowacourse.movie.ui.main.itemModel.CinemaItemModel
+import woowacourse.movie.ui.adapter.CinemaListAdapter
+import woowacourse.movie.ui.itemModel.CinemaItemModel
 import woowacourse.movie.ui.reservation.MovieDetailActivity
 
 class CinemaListBottomSheet(

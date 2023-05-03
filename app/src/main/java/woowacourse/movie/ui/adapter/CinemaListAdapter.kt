@@ -1,12 +1,12 @@
-package woowacourse.movie.ui.main.adapter
+package woowacourse.movie.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemCinemaBottomSheetBinding
-import woowacourse.movie.ui.main.itemModel.ItemModel
-import woowacourse.movie.ui.main.viewHolder.CinemaListViewHolder
-import woowacourse.movie.ui.main.viewHolder.ItemViewHolder
+import woowacourse.movie.ui.itemModel.ItemModel
+import woowacourse.movie.ui.viewHolder.CinemaListViewHolder
+import woowacourse.movie.ui.viewHolder.ItemViewHolder
 
 class CinemaListAdapter(
     cinemas: List<ItemModel>,

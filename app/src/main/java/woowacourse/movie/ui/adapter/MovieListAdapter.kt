@@ -1,16 +1,15 @@
-package woowacourse.movie.ui.main.adapter
+package woowacourse.movie.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.ui.main.ViewType
-import woowacourse.movie.ui.main.itemModel.AdvItemModel
-import woowacourse.movie.ui.main.itemModel.ItemModel
-import woowacourse.movie.ui.main.itemModel.MovieItemModel
-import woowacourse.movie.ui.main.viewHolder.AdvViewHolder
-import woowacourse.movie.ui.main.viewHolder.ItemViewHolder
-import woowacourse.movie.ui.main.viewHolder.MovieViewHolder
+import woowacourse.movie.ui.itemModel.AdvItemModel
+import woowacourse.movie.ui.itemModel.ItemModel
+import woowacourse.movie.ui.itemModel.MovieItemModel
+import woowacourse.movie.ui.viewHolder.AdvViewHolder
+import woowacourse.movie.ui.viewHolder.ItemViewHolder
+import woowacourse.movie.ui.viewHolder.MovieViewHolder
 
 class MovieListAdapter(
     movie: List<MovieItemModel>,
@@ -40,21 +39,22 @@ class MovieListAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ItemViewHolder = when (ViewType.of(viewType)) {
-        ViewType.MOVIE -> {
+    ): ItemViewHolder = when (viewType) {
+        MovieItemModel.type -> {
             val itemView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.movie_item_layout, parent, false)
             MovieViewHolder(itemView) { position ->
                 onClickMovie(items[position] as MovieItemModel)
             }
         }
-        ViewType.ADV -> {
+        AdvItemModel.type -> {
             val itemView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.adv_item_layout, parent, false)
             AdvViewHolder(itemView) { position ->
                 onClickAdv(items[position] as AdvItemModel)
             }
         }
+        else -> throw IllegalArgumentException(ERROR_INVALID_TYPE)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
@@ -63,7 +63,13 @@ class MovieListAdapter(
 
     override fun getItemCount(): Int = items.size
 
-    override fun getItemViewType(position: Int): Int {
-        return items[position].viewType.id
+    override fun getItemViewType(position: Int): Int = when (items[position]) {
+        is MovieItemModel -> MovieItemModel.type
+        is AdvItemModel -> AdvItemModel.type
+        else -> throw IllegalArgumentException(ERROR_INVALID_TYPE)
+    }
+
+    companion object {
+        const val ERROR_INVALID_TYPE = "Invalid type"
     }
 }

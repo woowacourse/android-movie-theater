@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.data.TicketsRepository
 import woowacourse.movie.model.TicketsState
+import woowacourse.movie.ui.adapter.ReservationListAdapter
 import woowacourse.movie.ui.confirm.ReservationConfirmActivity
-import woowacourse.movie.ui.main.adapter.ReservationListAdapter
-import woowacourse.movie.ui.main.itemModel.TicketsItemModel
+import woowacourse.movie.ui.itemModel.TicketsItemModel
 
 class ReservationListFragment : Fragment(R.layout.fragment_reservation_list), ReservationListContract.View {
     private lateinit var presenter: ReservationListContract.Presenter
