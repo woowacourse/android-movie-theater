@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.fragment.reservationList
+package woowacourse.movie.ui.main.reservationList
 
 import io.mockk.every
 import io.mockk.mockk

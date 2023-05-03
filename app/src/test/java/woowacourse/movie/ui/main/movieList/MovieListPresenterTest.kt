@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.fragment.movieList
+package woowacourse.movie.ui.main.movieList
 
 import io.mockk.every
 import io.mockk.mockk

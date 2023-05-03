@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.fragment.movieList
+package woowacourse.movie.ui.main.movieList
 
 import android.content.Context
 import android.os.Bundle
@@ -10,9 +10,9 @@ import woowacourse.movie.model.AdvState
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.ui.adapter.MovieListAdapter
 import woowacourse.movie.ui.adv.AdvDetailActivity
-import woowacourse.movie.ui.fragment.cinemaBottomSheet.CinemaListBottomSheet
 import woowacourse.movie.ui.itemModel.AdvItemModel
 import woowacourse.movie.ui.itemModel.MovieItemModel
+import woowacourse.movie.ui.main.cinemaBottomSheet.CinemaListBottomSheet
 
 class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
     private lateinit var presenter: MovieListContract.Presenter

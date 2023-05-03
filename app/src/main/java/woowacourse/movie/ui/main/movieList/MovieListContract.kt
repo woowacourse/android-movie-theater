@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.fragment.movieList
+package woowacourse.movie.ui.main.movieList
 
 import woowacourse.movie.model.AdvState
 import woowacourse.movie.model.MovieState

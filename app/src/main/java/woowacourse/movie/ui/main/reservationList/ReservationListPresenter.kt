@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.fragment.reservationList
+package woowacourse.movie.ui.main.reservationList
 
 import woowacourse.movie.data.TicketsRepository
 import woowacourse.movie.model.TicketsState

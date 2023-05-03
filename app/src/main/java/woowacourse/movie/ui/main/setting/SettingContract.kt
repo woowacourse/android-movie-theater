@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.fragment.setting
+package woowacourse.movie.ui.main.setting
 
 interface SettingContract {
     interface View {

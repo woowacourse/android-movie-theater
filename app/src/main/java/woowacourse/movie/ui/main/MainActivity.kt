@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
-import woowacourse.movie.ui.fragment.movieList.MovieListFragment
-import woowacourse.movie.ui.fragment.reservationList.ReservationListFragment
-import woowacourse.movie.ui.fragment.setting.SettingFragment
+import woowacourse.movie.ui.main.movieList.MovieListFragment
+import woowacourse.movie.ui.main.reservationList.ReservationListFragment
+import woowacourse.movie.ui.main.setting.SettingFragment
 import woowacourse.movie.util.requestPermissions
 
 class MainActivity : AppCompatActivity() {

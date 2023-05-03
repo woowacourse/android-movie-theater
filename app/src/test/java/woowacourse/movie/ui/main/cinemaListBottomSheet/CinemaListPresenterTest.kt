@@ -1,12 +1,12 @@
-package woowacourse.movie.ui.fragment.cinemaListBottomSheet
+package woowacourse.movie.ui.main.cinemaListBottomSheet
 
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Test
 import woowacourse.movie.data.CinemaRepository
-import woowacourse.movie.ui.fragment.cinemaBottomSheet.CinemaListContract
-import woowacourse.movie.ui.fragment.cinemaBottomSheet.CinemaListPresenter
+import woowacourse.movie.ui.main.cinemaBottomSheet.CinemaListContract
+import woowacourse.movie.ui.main.cinemaBottomSheet.CinemaListPresenter
 
 class CinemaListPresenterTest {
     @Test

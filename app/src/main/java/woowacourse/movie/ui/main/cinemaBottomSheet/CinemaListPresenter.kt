@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.fragment.cinemaBottomSheet
+package woowacourse.movie.ui.main.cinemaBottomSheet
 
 import woowacourse.movie.data.CinemaRepository
 

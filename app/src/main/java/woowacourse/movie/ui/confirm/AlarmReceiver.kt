@@ -6,7 +6,7 @@ import android.content.Intent
 import woowacourse.movie.DefaultPreference
 import woowacourse.movie.R
 import woowacourse.movie.model.TicketsState
-import woowacourse.movie.ui.fragment.setting.SettingFragment.Companion.NOTIFICATIONS
+import woowacourse.movie.ui.main.setting.SettingFragment.Companion.NOTIFICATIONS
 import woowacourse.movie.util.NotificationArgs
 import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.util.sendNotification
