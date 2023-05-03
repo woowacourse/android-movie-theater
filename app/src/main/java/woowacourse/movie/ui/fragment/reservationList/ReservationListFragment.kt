@@ -12,7 +12,8 @@ import woowacourse.movie.ui.confirm.ReservationConfirmActivity
 import woowacourse.movie.ui.main.adapter.ReservationListAdapter
 import woowacourse.movie.ui.main.itemModel.TicketsItemModel
 
-class ReservationListFragment : Fragment(R.layout.fragment_reservation_list) {
+class ReservationListFragment : Fragment(R.layout.fragment_reservation_list), ReservationListContract.View {
+    private lateinit var presenter: ReservationListContract.Presenter
 
     private var reservationRecyclerView: RecyclerView? = null
     private var adapter: ReservationListAdapter? = null
@@ -20,8 +21,10 @@ class ReservationListFragment : Fragment(R.layout.fragment_reservation_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        presenter = ReservationListPresenter()
+
         adapter = ReservationListAdapter(
-            TicketsRepository.allTickets().map(::TicketsItemModel)
+            presenter.getReservationList().map(::TicketsItemModel)
         ) { ticketsItemModel ->
             navigateReservationConfirm(ticketsItemModel.ticketsState)
         }
