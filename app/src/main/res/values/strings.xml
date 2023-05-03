@@ -13,7 +13,6 @@
     <string name="confirm">확인</string>
     <string name="seat_table_row">좌석 테이블 행</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="menu_booking_history">예매 내역</string>
     <string name="menu_home">홈</string>
     <string name="menu_setting">설정</string>
@@ -21,4 +20,5 @@
     <string name="push_alarm_denied">해제하시면 푸시 알림을 수신할 수 없습니다.</string>
     <string name="permission_denied">권한 요청을 거부하였습니다</string>
     <string name="permission_granted">권한 요청을 승인하였습니다</string>
+    <string name="error_no_such_booking">"해당 예매내역이 없습니다. 앱을 다시 시작해주세요"</string>
 </resources>

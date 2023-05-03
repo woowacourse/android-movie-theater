@@ -45,6 +45,6 @@ class BookingHistoryFragment : Fragment() {
     }
 
     private fun noSuchElement() {
-        requireContext().shortToast("해당 예매내역이 없습니다. 앱을 다시 시작해주세요")
+        requireContext().shortToast(R.string.error_no_such_booking)
     }
 }
