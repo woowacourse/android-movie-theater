@@ -33,8 +33,7 @@ class SettingFragment : Fragment(), SettingContract.View {
         presenter = SettingPresenter(this, AlarmSettingRepositoryImpl)
         presenter.loadAlarmSettingInfo()
         binding.notificationSwitch.setOnCheckedChangeListener { _, isChecked ->
-            val isPermission =
-                activity?.hasPermissions(PERMISSIONS) ?: return@setOnCheckedChangeListener
+            val isPermission = requireActivity().hasPermissions(PERMISSIONS)
             presenter.changeSwitchCheckedState(isPermission, isChecked)
         }
     }

@@ -3,20 +3,20 @@ package woowacourse.movie.feature.seatSelect
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import com.example.domain.usecase.DiscountApplyUseCase
 import com.example.domain.usecase.GetIssuedTicketsUseCase
 import woowacourse.movie.R
 import woowacourse.movie.data.TicketsRepositoryImpl
+import woowacourse.movie.databinding.ActivitySeatSelectBinding
 import woowacourse.movie.feature.common.BackKeyActionBarActivity
-import woowacourse.movie.feature.common.customView.ConfirmView
 import woowacourse.movie.feature.confirm.AlarmReceiver
 import woowacourse.movie.feature.confirm.ReservationConfirmActivity
+import woowacourse.movie.model.MoneyState
 import woowacourse.movie.model.ReservationState
 import woowacourse.movie.model.SeatPositionState
 import woowacourse.movie.model.mapper.asDomain
 import woowacourse.movie.model.mapper.asPresentation
-import woowacourse.movie.util.DecimalFormatters
 import woowacourse.movie.util.getParcelableArrayListCompat
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
@@ -28,25 +28,25 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
     private val discountApplyUseCase = DiscountApplyUseCase()
     private val getIssuedTicketsUseCase = GetIssuedTicketsUseCase()
 
-    private val titleTextView: TextView by lazy { findViewById(R.id.reservation_title) }
-    private val moneyTextView: TextView by lazy { findViewById(R.id.reservation_money) }
-    private val confirmView: ConfirmView by lazy { findViewById(R.id.reservation_confirm) }
+    private lateinit var binding: ActivitySeatSelectBinding
+
     private lateinit var reservationState: ReservationState
 
     private lateinit var seatTable: SeatTable
 
     override fun onCreateView(savedInstanceState: Bundle?) {
-        setContentView(R.layout.activity_seat_select)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_select)
 
         reservationState =
             intent.getParcelableExtraCompat(KEY_RESERVATION) ?: return keyError(KEY_RESERVATION)
 
-        titleTextView.text = reservationState.movieState.title
+        binding.movie = reservationState.movieState
+        binding.money = MoneyState(0)
 
-        confirmView.setOnClickListener { navigateShowDialog(seatTable.chosenSeatInfo) }
-        confirmView.isClickable = false // 클릭리스너를 설정하면 clickable이 자동으로 참이 되기 때문
+        binding.reservationConfirm.setOnClickListener { navigateShowDialog(seatTable.chosenSeatInfo) }
+        binding.reservationConfirm.isClickable = false // 클릭리스너를 설정하면 clickable이 자동으로 참이 되기 때문
 
-        seatTable = SeatTable(window.decorView.rootView, reservationState.countState) {
+        seatTable = SeatTable(binding, reservationState.countState) {
             updateSelectSeats(it)
         }
     }
@@ -98,7 +98,8 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
     }
 
     private fun updateSelectSeats(positionStates: List<SeatPositionState>) {
-        confirmView.isClickable = (positionStates.size == reservationState.countState.value)
+        binding.reservationConfirm.isClickable =
+            (positionStates.size == reservationState.countState.value)
 
         val discountApplyMoney = discountApplyUseCase(
             reservationState.movieState.asDomain(),
@@ -106,10 +107,7 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
             positionStates.map { it.asDomain() }
         ).asPresentation()
 
-        moneyTextView.text = getString(
-            R.string.discount_money,
-            DecimalFormatters.convertToMoneyFormat(discountApplyMoney)
-        )
+        binding.money = discountApplyMoney
     }
 
     companion object {

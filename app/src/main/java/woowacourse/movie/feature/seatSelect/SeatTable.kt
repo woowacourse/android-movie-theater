@@ -1,21 +1,18 @@
 package woowacourse.movie.feature.seatSelect
 
 import android.util.Log
-import android.view.View
-import android.widget.TableLayout
 import android.widget.TableRow
 import androidx.core.view.children
-import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivitySeatSelectBinding
 import woowacourse.movie.feature.common.customView.SeatView
 import woowacourse.movie.model.CountState
 import woowacourse.movie.model.SeatPositionState
 
 class SeatTable(
-    root: View,
+    val binding: ActivitySeatSelectBinding,
     private val maxSelectCount: CountState,
     private val update: (List<SeatPositionState>) -> Unit
 ) {
-    private val seats: TableLayout = root.findViewById(R.id.seats)
     val chosenSeatInfo: List<SeatPositionState>
         get() {
             return mutableListOf<SeatPositionState>().apply {
@@ -34,7 +31,7 @@ class SeatTable(
     }
 
     private fun getAllSeatView(): List<SeatView> {
-        return seats
+        return binding.seats
             .children
             .filterIsInstance<TableRow>()
             .flatMap { it.children }
