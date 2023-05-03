@@ -18,6 +18,7 @@ import woowacourse.movie.data.ReservationDetailViewData
 import woowacourse.movie.error.ActivityError.finishWithError
 import woowacourse.movie.error.ViewError
 import woowacourse.movie.presenter.MovieReservationPresenter
+import woowacourse.movie.system.BundleStateContainer
 import woowacourse.movie.system.getSerializableCompat
 import woowacourse.movie.view.widget.DateSpinner
 import woowacourse.movie.view.widget.MovieController
@@ -56,7 +57,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         setContentView(R.layout.activity_movie_reservation)
         makeBackButton()
 
-        presenter.load(savedInstanceState)
+        presenter.load(savedInstanceState?.let { BundleStateContainer(it) })
 
         initMovieReservationView(savedInstanceState)
     }
@@ -152,7 +153,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        presenter.save(outState)
+        presenter.save(BundleStateContainer(outState))
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -163,7 +164,6 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
     }
 
     companion object {
-
         private const val COUNT_FACTOR = 1
         private const val DATE_SPINNER_SAVE_STATE_KEY = "date_spinner"
         private const val TIME_SPINNER_SAVE_STATE_KEY = "time_spinner"

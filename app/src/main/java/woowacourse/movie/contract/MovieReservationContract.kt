@@ -1,9 +1,9 @@
 package woowacourse.movie.contract
 
-import android.os.Bundle
 import woowacourse.movie.data.LocalFormattedTime
 import woowacourse.movie.data.MovieViewData
 import woowacourse.movie.data.ReservationDetailViewData
+import woowacourse.movie.system.StateContainer
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -22,7 +22,7 @@ interface MovieReservationContract {
         fun minusPeopleCount(count: Int)
         fun reserveMovie(date: LocalDateTime, movie: MovieViewData)
         fun selectDate(date: LocalDate)
-        fun save(outState: Bundle)
-        fun load(savedInstanceState: Bundle?)
+        fun save(outState: StateContainer)
+        fun load(savedInstanceState: StateContainer?)
     }
 }

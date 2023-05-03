@@ -1,6 +1,5 @@
 package woowacourse.movie.presenter
 
-import android.os.Bundle
 import woowacourse.movie.contract.MovieReservationContract
 import woowacourse.movie.data.LocalFormattedTime
 import woowacourse.movie.data.MovieViewData
@@ -10,6 +9,7 @@ import woowacourse.movie.domain.movieTimePolicy.MovieTime
 import woowacourse.movie.domain.movieTimePolicy.WeekdayMovieTimePolicy
 import woowacourse.movie.domain.movieTimePolicy.WeekendMovieTimePolicy
 import woowacourse.movie.mapper.ReservationDetailMapper.toView
+import woowacourse.movie.system.StateContainer
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -41,13 +41,13 @@ class MovieReservationPresenter(
         view.setTimeSpinner(times)
     }
 
-    override fun save(outState: Bundle) {
-        outState.putInt(PEOPLE_COUNT_SAVE_KEY, peopleCount.value)
+    override fun save(outState: StateContainer) {
+        outState.save(PEOPLE_COUNT_SAVE_KEY, peopleCount.value)
     }
 
-    override fun load(savedInstanceState: Bundle?) {
+    override fun load(savedInstanceState: StateContainer?) {
         peopleCount = if (savedInstanceState == null) peopleCount
-        else Count(savedInstanceState.getInt(PEOPLE_COUNT_SAVE_KEY))
+        else Count(savedInstanceState.load(PEOPLE_COUNT_SAVE_KEY))
         view.setCounterText(peopleCount.value)
     }
 
