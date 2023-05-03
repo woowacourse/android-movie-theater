@@ -5,8 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
@@ -17,24 +21,31 @@ import woowacourse.movie.utils.failLoadingData
 import woowacourse.movie.utils.getParcelableCompat
 import woowacourse.movie.utils.getSerializableExtraCompat
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
-class MovieDetailActivity : AppCompatActivity() {
+class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
 
-    private val dateTimeSpinnerView by lazy {
-        DateTimeSpinnerView(
-            findViewById(R.id.detail_date_spinner),
-            findViewById(R.id.detail_time_spinner),
-        )
+    override val presenter = MovieDetailPresenter(this)
+
+    private val minusButton: Button by lazy {
+        findViewById(R.id.detail_minus_button)
+    }
+    private val plusButton: Button by lazy {
+        findViewById(R.id.detail_plus_button)
+    }
+    private val peopleCountView: TextView by lazy {
+        findViewById(R.id.detail_people_count)
+    }
+    private val dateSpinner: Spinner by lazy {
+        findViewById(R.id.detail_date_spinner)
+    }
+    private val timeSpinner: Spinner by lazy {
+        findViewById(R.id.detail_time_spinner)
     }
 
-    private val peopleCountControllerView by lazy {
-        PeopleCountControllerView(
-            minusButton = findViewById(R.id.detail_minus_button),
-            plusButton = findViewById(R.id.detail_plus_button),
-            peopleCountView = findViewById(R.id.detail_people_count),
-        )
-    }
+    private lateinit var timeSpinnerAdapter: ArrayAdapter<LocalTime>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,9 +65,9 @@ class MovieDetailActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
         super.onSaveInstanceState(outState, outPersistentState)
 
-        outState.putInt(KEY_DATE_POSITION, dateTimeSpinnerView.dateSelectedPosition)
-        outState.putInt(KEY_TIME_POSITION, dateTimeSpinnerView.timeSelectedPosition)
-        outState.putSerializable(KEY_PEOPLE_COUNT, peopleCountControllerView.peopleCountModel)
+        outState.putInt(KEY_DATE_POSITION, dateSpinner.selectedItemPosition)
+        outState.putInt(KEY_TIME_POSITION, timeSpinner.selectedItemPosition)
+        outState.putSerializable(KEY_PEOPLE_COUNT, presenter.peopleCountModel)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -83,18 +94,66 @@ class MovieDetailActivity : AppCompatActivity() {
         format(DateTimeFormatter.ofPattern(getString(R.string.date_format)))
 
     private fun initSpinner(movie: MovieListModel.MovieModel) {
-        dateTimeSpinnerView.apply {
-            setDateSpinner(movie)
-            setTimeSpinner()
+        setDateSpinner(movie)
+        setTimeSpinner()
+    }
+
+    private fun setDateSpinner(movie: MovieListModel.MovieModel) {
+        val dateSpinnerAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            presenter.getDatesBetweenTwoDates(movie),
+        )
+        dateSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        dateSpinner.adapter = dateSpinnerAdapter
+        dateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long,
+            ) {
+                presenter.updateTimesByDate(dateSpinner.selectedItem as LocalDate)
+                timeSpinner.setSelection(0)
+                timeSpinnerAdapter.notifyDataSetChanged()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) = Unit
         }
     }
 
+    private fun setTimeSpinner() {
+        presenter.updateTimesByDate(dateSpinner.selectedItem as LocalDate)
+        timeSpinnerAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            presenter.times,
+        )
+        timeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        timeSpinner.adapter = timeSpinnerAdapter
+    }
+
     private fun initPeopleCountController() {
-        peopleCountControllerView.apply {
-            setMinusButton()
-            setPlusButton()
-            setPeopleCountView()
+        setMinusButton()
+        setPlusButton()
+        setPeopleCountView(presenter.peopleCountModel.count)
+    }
+
+    private fun setMinusButton() {
+        minusButton.setOnClickListener {
+            presenter.minusCount()
         }
+    }
+
+    private fun setPlusButton() {
+        plusButton.setOnClickListener {
+            presenter.addCount()
+        }
+    }
+
+    override fun setPeopleCountView(count: Int) {
+        peopleCountView.text = "$count"
     }
 
     private fun initBookingButton(movie: MovieListModel.MovieModel) {
@@ -108,19 +167,23 @@ class MovieDetailActivity : AppCompatActivity() {
     private fun moveToSeatSelectionActivity(movie: MovieListModel.MovieModel) {
         val intent = Intent(this, SeatSelectionActivity::class.java).apply {
             putExtra(KEY_TITLE, movie.title)
-            putExtra(KEY_TIME, dateTimeSpinnerView.selectedItem)
-            putExtra(KEY_PEOPLE_COUNT, peopleCountControllerView.peopleCountModel)
+            putExtra(
+                KEY_TIME,
+                LocalDateTime.of(
+                    dateSpinner.selectedItem as LocalDate,
+                    timeSpinner.selectedItem as LocalTime,
+                ),
+            )
+            putExtra(KEY_PEOPLE_COUNT, presenter.peopleCountModel)
         }
         startActivity(intent)
         finish()
     }
 
     private fun loadSavedData(savedInstanceState: Bundle?) {
-        dateTimeSpinnerView.setItemPosition(
-            savedInstanceState?.getInt(KEY_DATE_POSITION) ?: 0,
-            savedInstanceState?.getInt(KEY_TIME_POSITION) ?: 0,
-        )
-        peopleCountControllerView.setPeopleCountNumber(
+        dateSpinner.setSelection(savedInstanceState?.getInt(KEY_DATE_POSITION) ?: 0)
+        timeSpinner.setSelection(savedInstanceState?.getInt(KEY_TIME_POSITION) ?: 0)
+        presenter.updatePeopleCount(
             savedInstanceState?.getSerializableExtraCompat<PeopleCountModel>(KEY_PEOPLE_COUNT)?.count
                 ?: 1,
         )
