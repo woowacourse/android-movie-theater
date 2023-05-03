@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.data.settings.SettingsPreference
-import woowacourse.movie.data.settings.SettingsPreferenceKeys
+import woowacourse.movie.presentation.allowance.NotificationAllowance
 
 class SettingsFragment : Fragment() {
 
@@ -37,15 +36,9 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    private fun isNotifiable(): Boolean {
-        val settingsNotification =
-            SettingsPreference.getInstance(SettingsPreferenceKeys.notificationKey, requireContext())
-        return settingsNotification.isAvailable
-    }
+    private fun isNotifiable(): Boolean = NotificationAllowance.isNotifiable(requireContext())
 
     private fun setNotifiable(value: Boolean) {
-        val settingsNotification =
-            SettingsPreference.getInstance(SettingsPreferenceKeys.notificationKey, requireContext())
-        settingsNotification.isAvailable = value
+        NotificationAllowance.setNotifiable(requireContext(), value)
     }
 }

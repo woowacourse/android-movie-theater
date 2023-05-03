@@ -14,7 +14,6 @@ import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.data.BookedTicketsData
 import woowacourse.movie.data.MovieData
-import woowacourse.movie.data.settings.SettingsPreference
 import woowacourse.movie.domain.model.rules.SeatsPayment
 import woowacourse.movie.domain.model.tools.Money
 import woowacourse.movie.domain.model.tools.seat.Location
@@ -23,6 +22,7 @@ import woowacourse.movie.domain.model.tools.seat.SeatGrade
 import woowacourse.movie.domain.model.tools.seat.SeatRow
 import woowacourse.movie.domain.model.tools.seat.Seats
 import woowacourse.movie.domain.model.tools.seat.Theater
+import woowacourse.movie.presentation.allowance.NotificationAllowance
 import woowacourse.movie.presentation.complete.CompleteActivity
 import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.model.ReservationModel
@@ -93,10 +93,7 @@ class ChoiceSeatActivity : AppCompatActivity() {
         finishAffinity()
     }
 
-    private fun isNotifiable(): Boolean {
-        val settingsData = SettingsPreference.getInstance("Notification", this)
-        return settingsData.isAvailable
-    }
+    private fun isNotifiable(): Boolean = NotificationAllowance.isNotifiable(this)
 
     private fun setTitle(title: String) {
         findViewById<TextView>(R.id.textChoiceTitle).text = title

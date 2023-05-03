@@ -5,16 +5,15 @@ import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 
 class SettingsPreference private constructor(
-    private val key: String,
     context: Context,
 ) : SettingsData {
 
     private val settingsPreferences: SharedPreferences
 
     override var isAvailable: Boolean
-        get() = settingsPreferences.getBoolean(key, true)
+        get() = settingsPreferences.getBoolean(prefkey, true)
         set(value) {
-            settingsPreferences.edit().putBoolean(key, value).apply()
+            settingsPreferences.edit().putBoolean(prefkey, value).apply()
         }
 
     init {
@@ -24,12 +23,14 @@ class SettingsPreference private constructor(
     companion object {
         private const val PREFERENCE_NAME = "Settings"
 
-        private val instances = mutableMapOf<String, SettingsPreference>()
+        private var instance: SettingsPreference? = null
+        private var prefkey: String? = null
 
         fun getInstance(key: String, context: Context): SettingsPreference {
-            return instances[key] ?: synchronized(this) {
-                instances[key] ?: SettingsPreference(key, context).also {
-                    instances[key] = it
+            return instance ?: synchronized(this) {
+                instance ?: SettingsPreference(context).also {
+                    instance = it
+                    prefkey = key
                 }
             }
         }
