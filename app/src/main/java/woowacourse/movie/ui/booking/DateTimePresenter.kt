@@ -18,12 +18,15 @@ class DateTimePresenter(
         ScreeningDate(selectedDate).screeningTimes
     }
 
-    override fun initDateTimes() {
-        view.setDates(screeningDates)
-        view.setTimes(screeningTimes(screeningDates.first()))
+    init {
         view.initDateSelectedListener { screeningDate ->
             onDateSelected(screeningDate)
         }
+    }
+
+    override fun initDateTimes() {
+        view.setDates(screeningDates)
+        view.setTimes(screeningTimes(screeningDates.first()))
     }
 
     override fun onDateSelected(screeningDate: LocalDate) {
