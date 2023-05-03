@@ -8,7 +8,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
-import android.view.View
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -16,146 +15,80 @@ import android.widget.Toast
 import androidx.annotation.Dimension
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
-import com.example.domain.Reservation
-import com.example.domain.ReservationRepository
-import com.example.domain.Seat
-import com.example.domain.SeatGrade
-import com.example.domain.TicketBundle
 import woowacourse.movie.R
 import woowacourse.movie.broadcast.bookingnotificaiotn.BookingAlarmReceiver
-import woowacourse.movie.data.SharedPreferenceUtil
-import woowacourse.movie.model.MovieBookingInfo
 import woowacourse.movie.model.ReservationResult
 import woowacourse.movie.presentation.extension.getParcelableCompat
 import woowacourse.movie.presentation.view.common.BackButtonActivity
 import woowacourse.movie.presentation.view.main.home.bookcomplete.BookCompleteActivity
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
+import woowacourse.movie.presentation.view.main.home.seatpick.model.SeatGradeModel
 
-class SeatPickerActivity : BackButtonActivity() {
-    private val ticketBundle = TicketBundle()
+class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
+    private val presenter: SeatPickerContract.Presenter by lazy {
+        SeatPickerPresenter(
+            view = this,
+            context = this,
+            movieBookingInfo = intent.getParcelableCompat(
+                MOVIE_BOOKING_INFO_SCHEDULE_INTENT_KEY
+            )
+        )
+    }
     private val totalPriceTextView by lazy { findViewById<TextView>(R.id.tv_seat_picker_total_price) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seat_picker)
 
-        val movieBookingInfo: MovieBookingInfo? = intent.getParcelableCompat(
-            MOVIE_BOOKING_INFO_SCHEDULE_INTENT_KEY
-        )
-
-        movieBookingInfo?.let { initView(it) } ?: processEmptyMovieData()
+        presenter.onCreate()
     }
 
-    private fun initView(movieBookingInfo: MovieBookingInfo) {
-        initBookingInfoView(movieBookingInfo)
-        initSeatPickerView(movieBookingInfo)
-        setConfirmView(movieBookingInfo)
+    override fun initView(movieTitle: String) {
+        initBookingInfoView(movieTitle)
+        initSeatPickerView()
+        setConfirmView()
+    }
+
+    override fun finishErrorView() {
+        Toast.makeText(this, getString(R.string.error_intent_message), Toast.LENGTH_SHORT)
+            .show()
+        this.finish()
+    }
+
+    private fun initBookingInfoView(movieTitle: String) {
+        findViewById<TextView>(R.id.tv_seat_picker_movie_title).text =
+            movieTitle
+        presenter.getDefaultTotalPrice()
+
+    }
+
+    override fun updateDefaultTotalPriceView(value: Int) {
+        totalPriceTextView.text = value.toString()
     }
 
     private fun setConfirmView(
-        movieBookingInfo: MovieBookingInfo
     ) {
         val confirmTextView = findViewById<TextView>(R.id.tv_seat_picker_confirm)
         confirmTextView.setOnClickListener {
-            setConfirmViewClick(movieBookingInfo)
+            presenter.confirmBooking()
         }
     }
 
-    private fun setConfirmViewClick(
-        movieBookingInfo: MovieBookingInfo
-    ) {
-        if (ticketBundle.tickets.size != movieBookingInfo.ticketCount) {
-            Toast.makeText(
-                this,
-                getString(R.string.error_seat_picker_ticket_count_not_match).format(
-                    movieBookingInfo.ticketCount
-                ),
-                Toast.LENGTH_SHORT
-            ).show()
-        } else {
-            showDialog(movieBookingInfo)
-        }
+    override fun showTicketIsMaxCountView(ticketCount: Int) {
+        Toast.makeText(
+            this,
+            getString(R.string.error_seat_picker_ticket_count_not_match).format(
+                ticketCount
+            ),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
-    private fun initBookingInfoView(movieBookingInfo: MovieBookingInfo) {
-        findViewById<TextView>(R.id.tv_seat_picker_movie_title).text =
-            movieBookingInfo.movieInfo.title
-        totalPriceTextView.text = 0.toString()
-    }
-
-    private fun initSeatPickerView(movieBookingInfo: MovieBookingInfo) {
-        findViewById<TableLayout>(R.id.tb_seat_picker).children
-            .filterIsInstance<TableRow>()
-            .flatMap { it.children }
-            .filterIsInstance<TextView>()
-            .forEachIndexed { index, textView ->
-                initTextViewOptions(index, textView)
-                initSeatPickerClickListener(index, textView, movieBookingInfo)
-            }
-    }
-
-    private fun initTextViewOptions(index: Int, textView: TextView) {
-        val seat = Seat(index)
-        textView.text = seat.getSeatName()
-        textView.gravity = Gravity.CENTER
-        textView.setTextSize(Dimension.SP, 22f)
-        val textColor = when (seat.getSeatGrade()) {
-            SeatGrade.S_CLASS -> Color.parseColor("#19D358")
-            SeatGrade.A_CLASS -> Color.parseColor("#1B48E9")
-            SeatGrade.B_CLASS -> Color.parseColor("#E9B21B")
-            SeatGrade.NONE -> Color.BLACK
-        }
-        textView.setTextColor(textColor)
-    }
-
-    private fun initSeatPickerClickListener(
-        seatIndex: Int,
-        textView: TextView,
-        movieBookingInfo: MovieBookingInfo,
-    ) {
-        textView.setOnClickListener {
-            setSeatViewStatus(it, seatIndex, movieBookingInfo)
-
-            totalPriceTextView.text =
-                ticketBundle.calculateTotalPrice(movieBookingInfo.date, movieBookingInfo.time)
-                    .toString()
-        }
-    }
-
-    private fun setSeatViewStatus(
-        it: View,
-        seatIndex: Int,
-        movieBookingInfo: MovieBookingInfo
-    ) {
-        if (it.isSelected) {
-            it.isSelected = false
-            ticketBundle.popTicket(Seat(seatIndex))
-            it.setBackgroundColor(Color.WHITE)
-        } else if (!it.isSelected) {
-            if (ticketBundle.tickets.size == movieBookingInfo.ticketCount) {
-                Toast.makeText(
-                    this,
-                    getString(R.string.error_seat_picker_selected_max).format(movieBookingInfo.ticketCount),
-                    Toast.LENGTH_SHORT
-                ).show()
-                return
-            }
-            it.isSelected = true
-            ticketBundle.putTicket(Seat(seatIndex))
-            it.setBackgroundColor(Color.parseColor("#FAFF00"))
-        }
-    }
-
-    private fun showDialog(movieBookingInfo: MovieBookingInfo) {
+    override fun showConfirmDialog() {
         AlertDialog.Builder(this).apply {
             setTitle(getString(R.string.dialog_title_seat_picker_confirm))
             setMessage(getString(R.string.dialog_message_seat_picker_confirm))
             setCancelable(false)
             setPositiveButton(getString(R.string.dialog_positive_button_seat_picker_confirm)) { _, _ ->
-                onClickDialogPositiveButton(movieBookingInfo)
+                presenter.bookComplete()
             }
             setNegativeButton(getString(R.string.dialog_negative_button_seat_picker_confirm)) { dialog, _ ->
                 dialog.dismiss()
@@ -163,78 +96,80 @@ class SeatPickerActivity : BackButtonActivity() {
         }.show()
     }
 
-    private fun onClickDialogPositiveButton(movieBookingInfo: MovieBookingInfo) {
-        val reservation = saveReservation(movieBookingInfo)
-
-        val allowedPushNotification =
-            SharedPreferenceUtil(this).getBoolean(getString(R.string.push_alarm_permission), true)
-        if (allowedPushNotification)
-            setAlarmManager(reservation)
-
-        val intent =
-            BookCompleteActivity.getIntent(this).apply {
-                putExtra(
-                    BookCompleteActivity.RESERVATION_ID_INTENT_KEY,
-                    reservation.id
-                )
-            }
-        startActivity(intent)
-    }
-
-    private fun saveReservation(movieBookingInfo: MovieBookingInfo): Reservation {
-        val reservation = Reservation(
-            totalPriceTextView.text.toString().toInt(),
-            ticketBundle.tickets.size,
-            ticketBundle.getSeatNames().joinToString(", "),
-            movieBookingInfo.movieInfo.title,
-            movieBookingInfo.date,
-            movieBookingInfo.time
-        )
-        ReservationRepository.save(reservation)
-        return reservation
-    }
-
-    private fun setAlarmManager(reservation: Reservation) {
-
+    override fun updateNotification(
+        reservationResult: ReservationResult,
+        notificationTimeStamp: Long
+    ) {
         val alarmManager: AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-        val alarmIntent = createAlarmIntent(reservation)
-
-        val screeningDateTime = LocalDateTime.of(
-            LocalDate.parse(reservation.date, DateTimeFormatter.ISO_DATE),
-            LocalTime.parse(reservation.time, DateTimeFormatter.ofPattern("H:mm"))
-        )
-
-        val notificationTime =
-            screeningDateTime.atZone(ZoneId.of("Asia/Seoul")).toInstant().toEpochMilli() -
-                TIME_MILLS_OF_HALF_HOUR
+        val alarmIntent = createAlarmIntent(reservationResult)
 
         alarmManager.set(
             AlarmManager.RTC_WAKEUP,
-            notificationTime,
+            notificationTimeStamp,
             alarmIntent
         )
     }
 
-    private fun createAlarmIntent(reservation: Reservation): PendingIntent =
+    private fun createAlarmIntent(reservation: ReservationResult): PendingIntent =
         Intent(this, BookingAlarmReceiver::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }.let { intent ->
             intent.putExtra(BookCompleteActivity.RESERVATION_ID_INTENT_KEY, reservation.id)
             intent.putExtra(
-                BookingAlarmReceiver.RESERVATION_INTENT_KEY, ReservationResult.from(reservation)
+                BookingAlarmReceiver.RESERVATION_INTENT_KEY, reservation
             )
             PendingIntent.getBroadcast(this, 0, intent, FLAG_IMMUTABLE)
         }
 
-    private fun processEmptyMovieData() {
-        Toast.makeText(this, getString(R.string.error_intent_message), Toast.LENGTH_SHORT)
-            .show()
-        this.finish()
+    override fun showBookCompleteView(reservationId: Long) {
+        val intent = BookCompleteActivity.getIntent(this).apply {
+            putExtra(
+                BookCompleteActivity.RESERVATION_ID_INTENT_KEY,
+                reservationId
+            )
+        }
+        startActivity(intent)
+    }
+
+    private fun initSeatPickerView() {
+        findViewById<TableLayout>(R.id.tb_seat_picker).children
+            .filterIsInstance<TableRow>()
+            .flatMap { it.children }
+            .filterIsInstance<TextView>()
+            .forEachIndexed { index, textView ->
+                val seatModel = presenter.setSeatInfo(index)
+                textView.setSeatInfo(seatModel.seatName, seatModel.seatGrade)
+
+                textView.setSeatPickerClickListener(index)
+            }
+    }
+
+    private fun TextView.setSeatInfo(seatName: String, seatGrade: SeatGradeModel) {
+        text = seatName
+        gravity = Gravity.CENTER
+        background = getDrawable(R.drawable.selector_seat_view)
+        setTextSize(Dimension.SP, 22f)
+
+        val textColor = Color.parseColor(seatGrade.seatColor)
+        setTextColor(textColor)
+    }
+
+    private fun TextView.setSeatPickerClickListener(
+        seatIndex: Int
+    ) {
+        setOnClickListener {
+            val isSelected = presenter.updateSeatStatus(it.isSelected, seatIndex)
+            it.isSelected = isSelected
+
+            presenter.calculateTotalPrice()
+        }
+    }
+
+    override fun updateTotalPriceView(totalPrice: Int) {
+        totalPriceTextView.text = totalPrice.toString()
     }
 
     companion object {
-        const val TIME_MILLS_OF_HALF_HOUR = (1000 * 60 * 30)
         const val MOVIE_BOOKING_INFO_SCHEDULE_INTENT_KEY = "MOVIE_BOOKING_INFO_SCHEDULE_KEY"
         fun getIntent(context: Context): Intent {
             return Intent(context, SeatPickerActivity::class.java)
