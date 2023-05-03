@@ -6,8 +6,6 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.data.AdvRepository
-import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.model.AdvState
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.ui.adv.AdvDetailActivity
@@ -17,6 +15,7 @@ import woowacourse.movie.ui.main.itemModel.MovieItemModel
 import woowacourse.movie.ui.reservation.MovieDetailActivity
 
 class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
+    private lateinit var presenter: MovieListContract.Presenter
 
     private var movieListView: RecyclerView? = null
     private var adapter: MovieListAdapter? = null
@@ -24,8 +23,8 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = MovieListAdapter(
-            movie = MovieRepository.allMovies().map(::MovieItemModel),
-            adv = AdvRepository.allAdv().map(::AdvItemModel),
+            movie = presenter.getMovieList().map(::MovieItemModel),
+            adv = presenter.getAdvList().map(::AdvItemModel),
             onClickMovie = { movieItemModel -> navigateMovieDetail(movieItemModel.movieState) },
             onClickAdv = { advItemModel -> navigateAdbDetail(advItemModel.advState) }
         )
