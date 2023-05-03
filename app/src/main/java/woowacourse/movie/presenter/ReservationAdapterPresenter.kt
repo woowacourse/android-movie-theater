@@ -8,7 +8,7 @@ import woowacourse.movie.mapper.ReservationMapper.toView
 
 class ReservationAdapterPresenter(
     override val view: ReservationAdapterContract.View,
-    val reservationRepository: ReservationListRepository = ReservationListRepository()
+    private val reservationRepository: ReservationListRepository = ReservationListRepository()
 ) : ReservationAdapterContract.Presenter {
     override fun setReservation() {
         val reservations = makeReservationListViewData(

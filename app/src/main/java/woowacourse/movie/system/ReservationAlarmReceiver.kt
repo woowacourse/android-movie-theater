@@ -25,8 +25,11 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
             val reservation =
                 intent.extras?.getSerializableCompat<ReservationViewData>(ReservationViewData.RESERVATION_EXTRA_NAME)
                     ?: return returnWithError(ViewError.MissingExtras(ReservationViewData.RESERVATION_EXTRA_NAME))
+            val code = intent.extras?.getInt(RESERVATION_REQUEST_CODE) ?: return returnWithError(
+                ViewError.MissingExtras(ReservationViewData.RESERVATION_EXTRA_NAME)
+            )
 
-            val pendingIntent = makeNotificationPendingIntent(context, reservation)
+            val pendingIntent = makeNotificationPendingIntent(context, reservation, code)
             val builder = makeNotificationBuilder(context, reservation, pendingIntent)
             notifyNotification(context, builder)
         }
@@ -34,16 +37,14 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
 
     private fun makeNotificationPendingIntent(
         context: Context,
-        reservation: ReservationViewData
+        reservation: ReservationViewData,
+        code: Int
     ): PendingIntent {
         val reservationIntent = ReservationResultActivity.from(context, reservation).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         return PendingIntent.getActivity(
-            context,
-            RESERVATION_REQUEST_CODE,
-            reservationIntent,
-            PendingIntent.FLAG_IMMUTABLE
+            context, code, reservationIntent, PendingIntent.FLAG_IMMUTABLE
         )
     }
 
@@ -74,16 +75,18 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        const val RESERVATION_REQUEST_CODE = 1
+        private const val RESERVATION_REQUEST_CODE = "reservationCode"
         const val NOTIFICATION_ID = 5
         const val RESERVATION_NOTIFICATION_CHANNEL_ID = "reservation"
         const val ACTION_ALARM = "actionAlarm"
 
         fun from(context: Context, reservation: ReservationViewData): PendingIntent {
+            val code = (0..1000).random()
             return Intent(ACTION_ALARM).let {
                 it.putExtra(ReservationViewData.RESERVATION_EXTRA_NAME, reservation)
+                it.putExtra(RESERVATION_REQUEST_CODE, code)
                 PendingIntent.getBroadcast(
-                    context, RESERVATION_REQUEST_CODE, it, PendingIntent.FLAG_IMMUTABLE
+                    context, code, it, PendingIntent.FLAG_IMMUTABLE
                 )
             }
         }

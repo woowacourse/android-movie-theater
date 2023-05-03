@@ -8,6 +8,8 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
+import woowacourse.movie.data.dataSource.LocalDatabase
+import woowacourse.movie.data.database.MovieDBHelper
 import woowacourse.movie.system.BroadcastAlarm.createNotificationChannel
 import woowacourse.movie.system.ReservationAlarmReceiver
 import woowacourse.movie.view.fragment.MovieListFragment
@@ -18,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        LocalDatabase.movieDBHelper = MovieDBHelper(applicationContext)
 
         createNotificationChannel(
             ReservationAlarmReceiver.RESERVATION_NOTIFICATION_CHANNEL_ID,

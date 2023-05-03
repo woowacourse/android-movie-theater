@@ -14,8 +14,8 @@ import woowacourse.movie.mapper.MovieMapper.toView
 
 class MovieAdapterPresenter(
     override val view: MovieAdapterContract.View,
-    val movieRepository: MovieRepository = MovieRepository(),
-    val advertisementRepository: AdvertisementRepository = AdvertisementRepository()
+    private val movieRepository: MovieRepository = MovieRepository(),
+    private val advertisementRepository: AdvertisementRepository = AdvertisementRepository()
 ) : MovieAdapterContract.Presenter {
     override fun setMovieList() {
         val movies = makeMovieListViewData(
