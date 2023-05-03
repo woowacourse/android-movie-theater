@@ -7,7 +7,6 @@ import android.content.Intent
 import android.os.Bundle
 import java.time.ZoneId
 import woowacourse.movie.R
-import woowacourse.movie.data.TicketsRepository
 import woowacourse.movie.model.TicketsState
 import woowacourse.movie.ui.BackKeyActionBarActivity
 import woowacourse.movie.util.getParcelableExtraCompat
@@ -20,7 +19,6 @@ class ReservationConfirmActivity : BackKeyActionBarActivity() {
         setContentView(R.layout.activity_reservation_confirm)
         val tickets = intent.getParcelableExtraCompat<TicketsState>(KEY_TICKETS)
             ?: return keyError(KEY_TICKETS)
-        TicketsRepository.addTicket(tickets)
         view = ReservationConfirmView(window.decorView.rootView, tickets)
         setNotification(tickets)
     }

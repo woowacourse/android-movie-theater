@@ -3,7 +3,6 @@ package woowacourse.movie.ui.confirm
 import android.view.View
 import android.widget.TextView
 import woowacourse.movie.R
-import woowacourse.movie.data.TicketsRepository
 import woowacourse.movie.model.MoneyState
 import woowacourse.movie.model.TicketsState
 import woowacourse.movie.ui.DateTimeFormatters
@@ -23,13 +22,10 @@ class ReservationConfirmView(
     )
 
     init {
-        TicketsRepository.addTicket(tickets)
         setInitReservationData(tickets)
     }
 
-    private fun setInitReservationData(
-        tickets: TicketsState
-    ) {
+    private fun setInitReservationData(tickets: TicketsState) {
         titleTextView.text = tickets.movieState.title
         dateTextView.text = DateTimeFormatters.convertToDateTime(tickets.dateTime)
         reservationCountTextView.text = view.context.getString(

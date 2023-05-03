@@ -40,4 +40,28 @@ class SeatSelectPresenterTest {
         assertEquals(slot.captured, MoneyState(8000))
         verify { view.setMoneyText(slot.captured) }
     }
+
+    @Test
+    fun `티켓을 등록하고 화면을 전환한다`() {
+        // given
+        val view = mockk<SeatSelectContract.View>(relaxed = true)
+        val presenter = SeatSelectPresenter(view)
+        val tickets = TicketsState(
+            MovieState(
+                1,
+                "title",
+                LocalDate.MIN,
+                LocalDate.MIN.plusDays(3),
+                152,
+                "description"
+            ),
+            LocalDateTime.MIN,
+            listOf(SeatPositionState(1, 1))
+        )
+        // when
+        presenter.addTicket(tickets)
+
+        // then
+        verify { view.navigateToConfirmView(tickets) }
+    }
 }

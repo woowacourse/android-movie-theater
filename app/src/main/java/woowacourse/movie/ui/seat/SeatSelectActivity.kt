@@ -70,12 +70,12 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
             negativeStringId = R.string.reservation_cancel,
             positiveStringId = R.string.reservation_complete
         ) {
-            navigateReservationConfirmActivity(seats)
+            val tickets = TicketsState.from(seatSelectState, seats)
+            presenter.addTicket(tickets)
         }
     }
 
-    private fun navigateReservationConfirmActivity(seats: List<SeatPositionState>) {
-        val tickets = TicketsState.from(seatSelectState, seats)
+    override fun navigateToConfirmView(tickets: TicketsState) {
         ReservationConfirmActivity.startActivity(this, tickets)
     }
 
