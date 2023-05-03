@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.data.AlarmSettingRepository
+import woowacourse.movie.data.AlarmSettingRepositoryImpl
 import woowacourse.movie.feature.common.Toaster
 import woowacourse.movie.feature.main.MainActivity.Companion.PERMISSIONS
 import woowacourse.movie.util.hasPermissions
@@ -28,7 +28,7 @@ class SettingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         switch = view.findViewById(R.id.notification_switch)
-        val switchValue = AlarmSettingRepository.enablePushNotification
+        val switchValue = AlarmSettingRepositoryImpl.enablePushNotification
         switch?.isChecked = switchValue
         switch?.setOnCheckedChangeListener { _, _ ->
             checkedChange()
@@ -46,7 +46,7 @@ class SettingFragment : Fragment() {
                     getString(R.string.alarm_premission_request_message)
                 )
             }
-            AlarmSettingRepository.enablePushNotification = it.isChecked
+            AlarmSettingRepositoryImpl.enablePushNotification = it.isChecked
         }
     }
 

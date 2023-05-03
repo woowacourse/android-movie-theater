@@ -2,7 +2,7 @@ package woowacourse.movie.data
 
 import woowacourse.movie.model.TicketsState
 
-object TicketsRepository {
+object TicketsRepositoryImpl {
 
     fun allTickets(): List<TicketsState> = tickets.toList()
 

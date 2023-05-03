@@ -7,7 +7,7 @@ import android.widget.TextView
 import com.example.domain.usecase.DiscountApplyUseCase
 import com.example.domain.usecase.GetIssuedTicketsUseCase
 import woowacourse.movie.R
-import woowacourse.movie.data.TicketsRepository
+import woowacourse.movie.data.TicketsRepositoryImpl
 import woowacourse.movie.feature.common.BackKeyActionBarActivity
 import woowacourse.movie.feature.common.customView.ConfirmView
 import woowacourse.movie.feature.confirm.AlarmReceiver
@@ -92,7 +92,7 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
             triggerDateTime = tickets.dateTime.minusMinutes(NOTIFICATION_ADJUST_MINUTES),
             requestCode = tickets.hashCode(),
         )
-        TicketsRepository.addTicket(tickets)
+        TicketsRepositoryImpl.addTicket(tickets)
         val intent = ReservationConfirmActivity.getIntent(this, tickets)
         startActivity(intent)
     }

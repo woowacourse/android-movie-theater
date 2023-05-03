@@ -3,7 +3,7 @@ package woowacourse.movie.data
 import android.content.Context
 import android.content.SharedPreferences
 
-object AlarmSettingRepository {
+object AlarmSettingRepositoryImpl {
     private lateinit var prefs: SharedPreferences
 
     fun init(context: Context) {

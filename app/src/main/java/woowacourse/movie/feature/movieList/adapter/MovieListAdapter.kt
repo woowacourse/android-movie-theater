@@ -8,35 +8,16 @@ import woowacourse.movie.databinding.MovieItemLayoutBinding
 import woowacourse.movie.feature.common.ViewType
 import woowacourse.movie.feature.common.itemModel.ItemModel
 import woowacourse.movie.feature.common.viewHolder.ItemViewHolder
-import woowacourse.movie.feature.movieList.itemModel.AdvItemModel
-import woowacourse.movie.feature.movieList.itemModel.MovieItemModel
 import woowacourse.movie.feature.movieList.viewHolder.AdvViewHolder
 import woowacourse.movie.feature.movieList.viewHolder.MovieViewHolder
 
 class MovieListAdapter(
-    movie: List<MovieItemModel>,
-    adv: List<AdvItemModel>
+    items: List<ItemModel>,
 ) : RecyclerView.Adapter<ItemViewHolder>() {
 
-    private val _items: List<ItemModel>
+    private var _items: List<ItemModel> = items.toList()
     val items: List<ItemModel>
         get() = _items.toList()
-
-    init {
-        _items = if (adv.isEmpty()) {
-            movie.toList()
-        } else {
-            var curAdvIndex = 0
-            val advSize = adv.size
-            val allowAdvMaxCount: Int = movie.size / 3
-            mutableListOf<ItemModel>().apply {
-                addAll(movie.toList())
-                for (index in 3..(movie.size + allowAdvMaxCount) step 4) {
-                    add(index, adv[(curAdvIndex++) % advSize])
-                }
-            }
-        }
-    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -66,5 +47,10 @@ class MovieListAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return _items[position].viewType.ordinal
+    }
+
+    fun setItems(items: List<ItemModel>) {
+        _items = items.toList()
+        notifyDataSetChanged()
     }
 }

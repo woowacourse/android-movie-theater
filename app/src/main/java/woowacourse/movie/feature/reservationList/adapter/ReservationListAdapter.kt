@@ -8,7 +8,7 @@ import woowacourse.movie.feature.reservationList.itemModel.TicketsItemModel
 import woowacourse.movie.feature.reservationList.viewHolder.TicketsViewHolder
 
 class ReservationListAdapter(
-    reservations: List<TicketsItemModel>
+    reservations: List<TicketsItemModel> = listOf()
 ) : RecyclerView.Adapter<TicketsViewHolder>() {
 
     private var _reservations = reservations.toList()

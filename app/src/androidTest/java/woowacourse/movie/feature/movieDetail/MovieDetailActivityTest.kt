@@ -17,7 +17,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieRepository
+import woowacourse.movie.data.MovieRepositoryImpl
 import woowacourse.movie.feature.detail.MovieDetailActivity
 import woowacourse.movie.feature.seatSelect.SeatSelectActivity
 import woowacourse.movie.feature.util.checkMatches
@@ -27,7 +27,7 @@ import woowacourse.movie.feature.util.checkMatches
 class MovieDetailActivityTest {
 
     // 더 퍼스트 슬램덩크 1
-    private val movie = MovieRepository.allMovies()[1]
+    private val movie = MovieRepositoryImpl.allMovies()[1]
 
     private val intent = MovieDetailActivity.getIntent(
         ApplicationProvider.getApplicationContext(),

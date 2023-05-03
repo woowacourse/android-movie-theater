@@ -16,7 +16,7 @@ data class MovieState(
     val runningTime: Int,
     val description: String
 ) : Parcelable {
-    fun convertToItemModel(onClick: (movieState: MovieState) -> Unit): MovieItemModel {
+    fun toItemModel(onClick: (movieState: MovieState) -> Unit): MovieItemModel {
         return MovieItemModel(this, onClick)
     }
 }

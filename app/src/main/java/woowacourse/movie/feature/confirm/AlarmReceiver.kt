@@ -4,14 +4,14 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import woowacourse.movie.R
-import woowacourse.movie.data.AlarmSettingRepository
+import woowacourse.movie.data.AlarmSettingRepositoryImpl
 import woowacourse.movie.model.TicketsState
 import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.util.sendNotification
 
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
-        val isNotification = AlarmSettingRepository.enablePushNotification
+        val isNotification = AlarmSettingRepositoryImpl.enablePushNotification
         if (isNotification.not()) return
 
         val tickets = intent?.extras?.getParcelableCompat<TicketsState>(TICKETS)
