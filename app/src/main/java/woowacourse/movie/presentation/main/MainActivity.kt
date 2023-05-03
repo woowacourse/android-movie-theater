@@ -3,11 +3,13 @@ package woowacourse.movie.presentation.main
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.model.data.local.SettingPreference
@@ -69,25 +71,34 @@ class MainActivity : AppCompatActivity() {
     private fun initBottomNavigation() {
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottomNavigationMain)
 
+        bottomNavigation.selectedItemId = R.id.action_home
+
         bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.action_booked_tickets -> {
-                    this.replace<BookedTicketsFragment>(R.id.main_fragment_container)
+                    replaceFragment<BookedTicketsFragment>(bottomNavigation, it)
                     return@setOnItemSelectedListener true
                 }
                 R.id.action_home -> {
-                    this.replace<MovieListFragment>(R.id.main_fragment_container)
+                    replaceFragment<MovieListFragment>(bottomNavigation, it)
                     return@setOnItemSelectedListener true
                 }
                 R.id.action_settings -> {
-                    this.replace<SettingsFragment>(R.id.main_fragment_container)
+                    replaceFragment<SettingsFragment>(bottomNavigation, it)
                     return@setOnItemSelectedListener true
                 }
                 else -> throw IllegalStateException(BOTTOM_NAVIGATION_WRONG_ITEM_ID_ERROR)
             }
         }
+    }
 
-        bottomNavigation.selectedItemId = R.id.action_home
+    private inline fun <reified T : Fragment> replaceFragment(
+        bottomNavigation: BottomNavigationView,
+        menuItem: MenuItem
+    ) {
+        if (bottomNavigation.selectedItemId != menuItem.itemId) {
+            this.replace<T>(R.id.main_fragment_container)
+        }
     }
 
     companion object {
