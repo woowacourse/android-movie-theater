@@ -22,6 +22,9 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        presenter = MovieListPresenter()
+
         adapter = MovieListAdapter(
             movie = presenter.getMovieList().map(::MovieItemModel),
             adv = presenter.getAdvList().map(::AdvItemModel),

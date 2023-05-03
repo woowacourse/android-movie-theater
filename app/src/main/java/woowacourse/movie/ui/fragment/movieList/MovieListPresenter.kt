@@ -8,12 +8,12 @@ import woowacourse.movie.model.MovieState
 class MovieListPresenter(
     private val movieRepository: MovieRepository = MovieRepository,
     private val advRepository: AdvRepository = AdvRepository
-) {
-    fun getMovieList(): List<MovieState> {
+) : MovieListContract.Presenter {
+    override fun getMovieList(): List<MovieState> {
         return movieRepository.allMovies()
     }
 
-    fun getAdvList(): List<AdvState> {
+    override fun getAdvList(): List<AdvState> {
         return advRepository.allAdv()
     }
 }
