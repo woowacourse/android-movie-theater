@@ -21,13 +21,15 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class MovieDetailActivity : BackKeyActionBarActivity() {
+class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View {
     private lateinit var binding: ActivityMovieDetailBinding
 
     private lateinit var movie: MovieState
 
     private lateinit var dateTimeSpinner: DateTimeSpinner
     private lateinit var reservationCounter: ReservationCounter
+
+    private val presenter: MovieDetailContract.Presenter = MovieDetailPresenter(this)
 
     override fun onCreateView(savedInstanceState: Bundle?) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
@@ -43,13 +45,17 @@ class MovieDetailActivity : BackKeyActionBarActivity() {
             )
             reservationCounter = ReservationCounter(binding)
         }
-        binding.reservationConfirm.setOnClickListener { navigateSeatSelectActivity() }
+
+        binding.reservationConfirm.setOnClickListener {
+            presenter.clickConfirm(
+                movie,
+                dateTimeSpinner.selectDateTime,
+                reservationCounter.count
+            )
+        }
     }
 
-    private fun navigateSeatSelectActivity() {
-        val dateTime = dateTimeSpinner.selectDateTime
-        val reservationState =
-            ReservationState(movie, dateTime, reservationCounter.count)
+    override fun navigateSeatSelect(reservationState: ReservationState) {
         val intent = SeatSelectActivity.getIntent(this, reservationState)
         startActivity(intent)
     }
