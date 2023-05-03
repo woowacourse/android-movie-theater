@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="cinema"
+            type="woowacourse.movie.model.CinemaState" />
+    </data>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,6 +19,7 @@
         android:layout_marginTop="6dp"
         android:textColor="@color/black"
         android:textSize="16sp"
+        android:text="@{@string/cinema_title_format(cinema.name)}"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="선릉 극장" />
@@ -22,6 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#87000000"
+        android:text="@{@string/cinema_movie_count_format(cinema.numberOfMovie)}"
         app:layout_constraintStart_toStartOf="@+id/bottom_sheet_cinema_name"
         app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_cinema_name"
         tools:text="3개의 상영 시간" />
@@ -38,3 +46,4 @@
         tools:ignore="ContentDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

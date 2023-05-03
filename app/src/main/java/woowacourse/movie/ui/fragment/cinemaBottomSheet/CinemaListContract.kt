@@ -7,6 +7,6 @@ interface CinemaListContract {
         fun setAdapter(cinemas: List<CinemaState>)
     }
     interface Presenter {
-        fun getCinemaList(): List<CinemaState>
+        fun getCinemaList()
     }
 }
