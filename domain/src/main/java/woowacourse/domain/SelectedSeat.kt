@@ -1,10 +1,6 @@
 package woowacourse.domain
 
-import woowacourse.domain.movie.Movie
-import woowacourse.domain.reservation.Reservation
-import woowacourse.domain.reservation.ReservationRepository
 import woowacourse.domain.ticket.Seat
-import java.time.LocalDateTime
 
 class SelectedSeat(private val ticketCount: Int) {
     private val _seats = mutableSetOf<Seat>()
@@ -31,17 +27,5 @@ class SelectedSeat(private val ticketCount: Int) {
     private fun unSelectSeat(seat: Seat): SelectResult {
         _seats.remove(seat)
         return SelectResult.Unselect
-    }
-
-    fun reserve(movie: Movie, dateTime: LocalDateTime): Reservation {
-        val tickets = seats.map { movie.reserve(dateTime, it) }
-        val reservation = Reservation(tickets.toSet())
-        ReservationRepository.addReservation(reservation)
-        return reservation
-    }
-
-    fun getPayment(movie: Movie, dateTime: LocalDateTime): Int {
-        val tickets = seats.map { movie.reserve(dateTime, it) }
-        return tickets.sumOf { it.price }
     }
 }

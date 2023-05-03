@@ -1,5 +1,6 @@
 package woowacourse.app.model
 
+import woowacourse.app.model.main.MovieMapper.toUiModel
 import woowacourse.domain.SelectedSeat
 import woowacourse.domain.reservation.Reservation
 import woowacourse.domain.ticket.Position
@@ -9,7 +10,7 @@ import woowacourse.domain.ticket.Ticket
 object Mapper {
     fun Ticket.toUiModel(): TicketUiModel {
         return TicketUiModel(
-            movieId = this.movieId,
+            movie = this.movie.toUiModel(),
             bookedDateTime = this.bookedDateTime,
             seat = this.seat.toUiModel(),
         )
@@ -50,7 +51,7 @@ object Mapper {
             paymentType = this.paymentType,
             payment = this.payment,
             movieId = this.movieId,
-            movieTitle = this.tickets.first().movieTitle,
+            movieTitle = this.tickets.first().movie.title,
             bookedDateTime = this.bookedDateTime,
             count = this.count,
             alarmCycle = this.alarmCycle,

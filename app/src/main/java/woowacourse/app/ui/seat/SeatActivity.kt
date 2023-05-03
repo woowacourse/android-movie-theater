@@ -14,6 +14,7 @@ import woowacourse.app.ui.completed.CompletedActivity
 import woowacourse.app.util.getParcelable
 import woowacourse.app.util.getParcelableBundle
 import woowacourse.app.util.shortToast
+import woowacourse.domain.BoxOffice
 import woowacourse.domain.SelectResult
 import woowacourse.domain.SelectedSeat
 import woowacourse.domain.movie.Movie
@@ -113,7 +114,8 @@ class SeatActivity : AppCompatActivity() {
     }
 
     private fun completeBooking() {
-        val reservation = selectedSeat.reserve(movie, bookedMovie.bookedDateTime)
+        val reservation =
+            BoxOffice.makeReservation(movie, bookedMovie.bookedDateTime, selectedSeat.seats)
         ScreeningTimeReminder(this, reservation.toUiModel())
         startActivity(CompletedActivity.getIntent(this, reservation.toUiModel()))
         finish()
@@ -132,7 +134,10 @@ class SeatActivity : AppCompatActivity() {
 
     private fun setPayment() {
         textPayment.text =
-            getString(R.string.won, selectedSeat.getPayment(movie, bookedMovie.bookedDateTime))
+            getString(
+                R.string.won,
+                BoxOffice.getPayment(movie, bookedMovie.bookedDateTime, selectedSeat.seats),
+            )
     }
 
     private fun initView() {

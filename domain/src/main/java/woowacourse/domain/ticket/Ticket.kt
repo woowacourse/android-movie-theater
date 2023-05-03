@@ -1,11 +1,11 @@
 package woowacourse.domain.ticket
 
+import woowacourse.domain.movie.Movie
 import woowacourse.domain.policy.TicketPriceAdapter
 import java.time.LocalDateTime
 
 data class Ticket(
-    val movieId: Long,
-    val movieTitle: String,
+    val movie: Movie,
     val bookedDateTime: LocalDateTime,
     val seat: Seat,
 ) {

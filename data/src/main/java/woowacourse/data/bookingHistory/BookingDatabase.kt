@@ -1,13 +1,13 @@
 package woowacourse.data.bookingHistory
 
+import woowacourse.data.movie.MovieDatabase
 import java.time.LocalDateTime
 
 object BookingDatabase {
     private val _bookings = mutableListOf<BookingEntity>(
         BookingEntity(
             0,
-            1,
-            "해리 포터와 마법사의 돌",
+            movie = MovieDatabase.selectMovie(1),
             LocalDateTime.of(2024, 3, 1, 10, 0),
             0,
             listOf<SeatEntity>(SeatEntity(2, 0, 0)),

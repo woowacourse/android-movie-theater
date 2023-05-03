@@ -11,7 +11,7 @@ data class Reservation(
     val paymentType: PaymentType = PaymentType.OFFLINE,
 ) {
     val payment: Int get() = tickets.sumOf { it.price }
-    val movieId: Long get() = tickets.first().movieId
+    val movieId: Long get() = tickets.first().movie.id
     val bookedDateTime: LocalDateTime get() = tickets.first().bookedDateTime
     val count: Int get() = tickets.size
     val alarmCycle: Long = 30
