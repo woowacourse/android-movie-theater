@@ -113,10 +113,10 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         reservation: ReservationViewData,
         date: LocalDateTime
     ) {
-        registerAlarmReceiver(ReservationAlarmReceiver(), ReservationAlarmReceiver.ACTION_ALARM)
+        registerAlarmReceiver(this, ReservationAlarmReceiver(), ReservationAlarmReceiver.ACTION_ALARM)
 
         val alarmIntent = ReservationAlarmReceiver.from(this, reservation)
-        setAlarmAtDate(date, alarmIntent)
+        setAlarmAtDate(this, date, alarmIntent)
     }
 
     override fun setMovieData(movie: MovieViewData) {
