@@ -41,7 +41,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.Vie
     }
 
     override fun showDetails(item: ListItem) {
-        startActivity(TicketingResultActivity.makeIntent(requireContext(), item))
+        startActivity(TicketingResultActivity.getIntent(requireContext(), item))
     }
 
     override fun onDestroyView() {

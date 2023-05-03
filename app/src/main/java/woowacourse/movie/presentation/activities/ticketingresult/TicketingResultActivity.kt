@@ -68,7 +68,7 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
     companion object {
         private const val RESERVATION_KEY = "reservation"
 
-        fun makeIntent(context: Context, reservation: ListItem): Intent =
+        fun getIntent(context: Context, reservation: ListItem): Intent =
             Intent(context, TicketingResultActivity::class.java).putExtra(
                 RESERVATION_KEY,
                 reservation
