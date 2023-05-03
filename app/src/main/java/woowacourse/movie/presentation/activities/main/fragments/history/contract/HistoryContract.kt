@@ -10,7 +10,9 @@ interface HistoryContract {
         fun showDetails(item: ListItem)
     }
 
-    abstract class Presenter(protected val view: View) {
+    abstract class Presenter {
+        protected val view: View
+
         abstract fun loadHistories()
         abstract fun onClickItem(item: ListItem)
     }
