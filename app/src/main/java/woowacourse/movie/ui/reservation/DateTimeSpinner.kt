@@ -13,8 +13,8 @@ import woowacourse.movie.util.setDefaultAdapter
 class DateTimeSpinner(
     view: View,
     movieState: MovieState,
-    private val getDates: (MovieState) -> List<LocalDate>,
-    private val getTimes: (LocalDate) -> List<LocalTime>,
+    getDates: (MovieState) -> List<LocalDate>,
+    getTimes: (MovieState) -> List<LocalTime>,
     initLocalDateTime: LocalDateTime? = null
 ) {
     private val dateSpinner: Spinner = view.findViewById(R.id.date_spinner)
@@ -24,7 +24,6 @@ class DateTimeSpinner(
     private var selectDate: LocalDate = LocalDate.now()
         set(value) {
             field = value
-            runningTimes = getTimes(field)
             setTimeSpinnerAdapter()
         }
 
@@ -39,8 +38,8 @@ class DateTimeSpinner(
         runningDates = getDates(movieState)
         setDateSpinnerAdapter()
         selectDate = runningDates.first()
+        runningTimes = getTimes(movieState)
         setTimeSpinnerAdapter()
-        runningTimes = getTimes(selectDate)
         selectTime = runningTimes.first()
 
         initLocalDateTime?.let { updateSelectDateTime(it.toLocalDate(), it.toLocalTime()) }

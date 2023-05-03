@@ -26,13 +26,13 @@ class CinemaListBottomSheet(
 
         bottomSheetListView = view.findViewById(R.id.bottom_sheet_movie_list)
 
-        presenter.getCinemaList()
+        presenter.getCinemaList(movie)
     }
 
     override fun setAdapter(cinemas: List<CinemaState>) {
         val adapter = CinemaListAdapter(
-            cinemas = cinemas.map { CinemaItemModel(it) }
-        ) { navigateMovieDetail(movie) }
+            cinemas = cinemas.map { CinemaItemModel(it, movie) }
+        ) { movie -> navigateMovieDetail(movie) }
         bottomSheetListView?.adapter = adapter
     }
 

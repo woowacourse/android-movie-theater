@@ -30,7 +30,7 @@ class MovieDetailPresenter(
         return getMovieRunningDateUseCase(movie.asDomain())
     }
 
-    override fun getMovieRunningTimes(date: LocalDate): List<LocalTime> {
-        return getMovieRunningTimeUseCase(date)
+    override fun getMovieRunningTimes(movie: MovieState): List<LocalTime> {
+        return movie.screeningTimes
     }
 }

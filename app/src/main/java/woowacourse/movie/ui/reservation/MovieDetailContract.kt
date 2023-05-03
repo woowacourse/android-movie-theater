@@ -16,6 +16,6 @@ interface MovieDetailContract {
         fun plus()
         fun minus()
         fun getMovieRunningDates(movie: MovieState): List<LocalDate>
-        fun getMovieRunningTimes(date: LocalDate): List<LocalTime>
+        fun getMovieRunningTimes(movie: MovieState): List<LocalTime>
     }
 }

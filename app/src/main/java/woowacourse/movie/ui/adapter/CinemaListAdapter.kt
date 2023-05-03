@@ -4,13 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemCinemaBottomSheetBinding
+import woowacourse.movie.model.MovieState
+import woowacourse.movie.ui.itemModel.CinemaItemModel
 import woowacourse.movie.ui.itemModel.ItemModel
 import woowacourse.movie.ui.viewHolder.CinemaListViewHolder
 import woowacourse.movie.ui.viewHolder.ItemViewHolder
 
 class CinemaListAdapter(
     cinemas: List<ItemModel>,
-    val onArrowButtonClick: (itemModel: ItemModel) -> Unit
+    val onArrowButtonClick: (movie: MovieState) -> Unit
 ) : RecyclerView.Adapter<ItemViewHolder>() {
     private var cinemas = cinemas.toList()
 
@@ -22,8 +24,9 @@ class CinemaListAdapter(
         )
 
         return CinemaListViewHolder(itemBinding) { position ->
+            val cinemaItemModel = cinemas[position] as CinemaItemModel
             onArrowButtonClick(
-                cinemas[position]
+                cinemaItemModel.cinema.movies.first { it.title == cinemaItemModel.movie.title }
             )
         }
     }
