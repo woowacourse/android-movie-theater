@@ -3,7 +3,7 @@ package woowacourse.movie.presentation.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.woowacourse.data.cache.local.LocalCacheDataStore
+import com.woowacourse.data.datasource.cache.local.LocalCacheDataSource
 import woowacourse.movie.R
 import woowacourse.movie.presentation.activities.main.alarm.PushAlarmManager.Companion.PUSH_ACTION
 import woowacourse.movie.presentation.activities.main.alarm.PushAlarmManager.Companion.PUSH_DATA_KEY
@@ -28,7 +28,7 @@ class ReservationPushReceiver : BroadcastReceiver() {
     }
 
     private fun isDeniedPush(context: Context): Boolean {
-        val preferences = LocalCacheDataStore.getInstance(context)
+        val preferences = LocalCacheDataSource.getInstance(context)
         return !preferences.getBoolean(PUSH_ALLOW_KEY, true)
     }
 }

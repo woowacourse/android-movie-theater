@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.activities.seatpicker.presenter
 
+import com.woowacourse.data.repository.history.HistoryRepository
 import woowacourse.movie.domain.model.discount.policy.MovieDayDiscountPolicy
 import woowacourse.movie.domain.model.discount.policy.MovieTimeDiscountPolicy
 import woowacourse.movie.domain.model.movie.DomainTicketPrice
@@ -14,7 +15,8 @@ import woowacourse.movie.presentation.model.TicketingState
 class SeatPickerPresenter(
     private val seatRowSize: Int = 5,
     private val seatColSize: Int = 4,
-    private val ticketingState: TicketingState
+    private val ticketingState: TicketingState,
+    private val historyRepository: HistoryRepository,
 ) : SeatPickerContract.Presenter() {
     private var pickedSeats: DomainPickedSeats = DomainPickedSeats()
 
@@ -47,10 +49,11 @@ class SeatPickerPresenter(
             ticket = ticketingState.ticket.toDomain(),
             seats = pickedSeats,
             ticketPrice = calculateTotalPrice(),
-        ).toPresentation()
+        )
 
-        requireView().registerPushBroadcast(reservation)
-        requireView().showTicketingResultScreen(reservation)
+        historyRepository.add(reservation)
+        requireView().registerPushBroadcast(reservation.toPresentation())
+        requireView().showTicketingResultScreen(reservation.toPresentation())
     }
 
     private fun pick(seat: Seat) {

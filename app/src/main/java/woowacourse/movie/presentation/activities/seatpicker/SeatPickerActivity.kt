@@ -9,6 +9,10 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.woowacourse.data.database.reservation.ReservationDatabase
+import com.woowacourse.data.database.reservation.history.dao.HistoryDao
+import com.woowacourse.data.datasource.history.local.LocalHistoryDataSource
+import com.woowacourse.data.repository.history.local.LocalHistoryRepository
 import woowacourse.movie.R
 import woowacourse.movie.presentation.activities.main.alarm.PushAlarmManager
 import woowacourse.movie.presentation.activities.seatpicker.contract.SeatPickerContract
@@ -33,7 +37,12 @@ import woowacourse.movie.presentation.receiver.ReservationPushReceiver
 
 class SeatPickerActivity : AppCompatActivity(), View.OnClickListener, SeatPickerContract.View {
     override val presenter: SeatPickerContract.Presenter by lazy {
-        SeatPickerPresenter(ticketingState = intent.getParcelableCompat(TICKETING_STATE_KEY)!!)
+        SeatPickerPresenter(
+            ticketingState = intent.getParcelableCompat(TICKETING_STATE_KEY)!!,
+            historyRepository = LocalHistoryRepository(
+                LocalHistoryDataSource(HistoryDao(ReservationDatabase(this)))
+            ),
+        )
     }
     private val seatViews: MutableList<View> = mutableListOf()
 

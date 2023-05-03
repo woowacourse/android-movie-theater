@@ -1,10 +1,10 @@
-package com.woowacourse.data.cache.local
+package com.woowacourse.data.datasource.cache.local
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.woowacourse.data.cache.CacheDataStore
+import com.woowacourse.data.datasource.cache.CacheDataSource
 
-class LocalCacheDataStore : CacheDataStore {
+class LocalCacheDataSource : CacheDataSource {
     override fun getBoolean(key: String, defValue: Boolean): Boolean {
         return preference.getBoolean(key, defValue)
     }
@@ -17,11 +17,11 @@ class LocalCacheDataStore : CacheDataStore {
         private const val PREF_NAME = "settings"
 
         @Volatile
-        private var instance: LocalCacheDataStore? = null
+        private var instance: LocalCacheDataSource? = null
         private lateinit var preference: SharedPreferences
 
-        fun getInstance(context: Context): LocalCacheDataStore = instance ?: synchronized(this) {
-            instance ?: LocalCacheDataStore().also {
+        fun getInstance(context: Context): LocalCacheDataSource = instance ?: synchronized(this) {
+            instance ?: LocalCacheDataSource().also {
                 preference = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
                 instance = it
             }
