@@ -1,8 +1,8 @@
 package woowacourse.app.usecase.main
 
-import woowacourse.app.model.main.AdvertisementMapper.toUiAdvertisements
-import woowacourse.app.model.main.MainData
-import woowacourse.app.model.main.MovieMapper.toUiMovies
+import woowacourse.app.model.MainData
+import woowacourse.app.model.advertisement.AdvertisementMapper.toUiAdvertisements
+import woowacourse.app.model.movie.MovieMapper.toUiMovies
 import woowacourse.domain.advertisement.Advertisement
 import woowacourse.domain.advertisement.AdvertisementRepository
 import woowacourse.domain.movie.MovieRepository

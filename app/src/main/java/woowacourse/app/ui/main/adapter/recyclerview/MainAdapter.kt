@@ -5,7 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.app.model.main.MainData
+import woowacourse.app.model.MainData
 import woowacourse.app.ui.main.adapter.MainViewType
 import woowacourse.movie.R
 

@@ -1,4 +1,4 @@
-package woowacourse.app.model.main
+package woowacourse.app.model.movie
 
 import woowacourse.domain.movie.Movie
 import woowacourse.domain.movie.ScreeningPeriod

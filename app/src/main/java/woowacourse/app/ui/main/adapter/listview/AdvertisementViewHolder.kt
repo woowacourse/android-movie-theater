@@ -3,8 +3,8 @@ package woowacourse.app.ui.main.adapter.listview
 import android.content.Intent
 import android.view.View
 import android.widget.ImageView
-import woowacourse.app.model.main.AdvertisementUiModel
-import woowacourse.app.model.main.MainData
+import woowacourse.app.model.MainData
+import woowacourse.app.model.advertisement.AdvertisementUiModel
 import woowacourse.app.ui.main.adapter.MainViewType
 import woowacourse.movie.R
 

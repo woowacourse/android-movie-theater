@@ -2,7 +2,8 @@ package woowacourse.app.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.app.model.main.MovieUiModel
+import woowacourse.app.model.movie.MovieUiModel
+import woowacourse.app.model.ticket.TicketUiModel
 import woowacourse.domain.PaymentType
 import java.time.LocalDateTime
 

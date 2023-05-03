@@ -1,8 +1,9 @@
-package woowacourse.app.model.main
+package woowacourse.app.model.movie
 
 import android.os.Parcelable
 import androidx.annotation.DrawableRes
 import kotlinx.android.parcel.Parcelize
+import woowacourse.app.model.MainData
 import woowacourse.app.ui.main.adapter.MainViewType
 import java.time.LocalDate
 

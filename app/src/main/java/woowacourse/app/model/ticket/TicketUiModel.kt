@@ -1,8 +1,8 @@
-package woowacourse.app.model
+package woowacourse.app.model.ticket
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.app.model.main.MovieUiModel
+import woowacourse.app.model.movie.MovieUiModel
 import woowacourse.app.ui.seat.SeatRow
 import java.time.LocalDateTime
 

@@ -9,8 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.app.model.BookedMovie
-import woowacourse.app.model.main.MovieMapper.toUiModel
-import woowacourse.app.model.main.MovieUiModel
+import woowacourse.app.model.movie.MovieMapper.toUiModel
+import woowacourse.app.model.movie.MovieUiModel
 import woowacourse.app.ui.seat.SeatActivity
 import woowacourse.app.usecase.movie.MovieUseCase
 import woowacourse.app.util.formatScreenDate

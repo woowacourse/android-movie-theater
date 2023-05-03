@@ -1,4 +1,4 @@
-package woowacourse.app.model.main
+package woowacourse.app.model.advertisement
 
 import woowacourse.domain.advertisement.Advertisement
 import woowacourse.movie.R

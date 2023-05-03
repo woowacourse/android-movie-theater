@@ -7,9 +7,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
-import woowacourse.app.model.Mapper.toDomainModel
 import woowacourse.app.model.Mapper.toUiModel
 import woowacourse.app.model.SelectedSeatUiModel
+import woowacourse.app.model.ticket.TicketMapper.toDomainModel
 import woowacourse.app.ui.completed.CompletedActivity
 import woowacourse.app.usecase.movie.MovieUseCase
 import woowacourse.app.usecase.theater.TheaterUseCase

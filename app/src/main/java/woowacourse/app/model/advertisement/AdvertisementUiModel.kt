@@ -1,8 +1,9 @@
-package woowacourse.app.model.main
+package woowacourse.app.model.advertisement
 
 import android.content.Intent
 import android.net.Uri
 import androidx.annotation.DrawableRes
+import woowacourse.app.model.MainData
 import woowacourse.app.ui.main.adapter.MainViewType
 
 data class AdvertisementUiModel(

@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import woowacourse.app.model.main.MainData
+import woowacourse.app.model.MainData
 import woowacourse.app.ui.main.adapter.MainViewType
 import woowacourse.movie.R
 
