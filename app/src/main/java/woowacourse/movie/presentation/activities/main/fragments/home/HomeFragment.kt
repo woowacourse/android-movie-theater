@@ -13,11 +13,14 @@ import woowacourse.movie.presentation.model.item.Ad
 import woowacourse.movie.presentation.model.item.Movie
 import woowacourse.movie.presentation.model.item.Reservation
 
-class HomeFragment : Fragment(R.layout.fragment_home) {
+class HomeFragment : Fragment(R.layout.fragment_home), HomeContract.View {
+    override lateinit var presenter: HomePresenter
     private lateinit var movieListAdapter: MovieListAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        presenter = HomePresenter(this)
         initMovieListAdapter(view)
     }
 
@@ -27,8 +30,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             adTypes = Ad.provideDummy(),
             onItemClick = { item ->
                 when (item) {
-                    is Movie -> startTicketingActivity(item)
-                    is Ad -> accessAdWebPage(item)
+                    is Movie -> presenter.onClickedMovie(item)
+                    is Ad -> presenter.onClickedAd(item)
                     is Reservation -> {}
                 }
             },
@@ -45,13 +48,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         })
     }
 
-    private fun startTicketingActivity(movie: Movie) {
+    override fun startTicketingActivity(movie: Movie) {
         val intent = Intent(requireContext(), TicketingActivity::class.java)
             .putExtra(MOVIE_KEY, movie)
         startActivity(intent)
     }
 
-    private fun accessAdWebPage(ads: Ad) {
+    override fun accessAdWebPage(ads: Ad) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(ads.url))
         startActivity(intent)
     }
