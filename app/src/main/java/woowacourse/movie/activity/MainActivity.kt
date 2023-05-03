@@ -9,9 +9,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.datasource.ReservationDataSource
 import woowacourse.movie.domain.repository.ReservationRepository
-import woowacourse.movie.fragment.MovieListFragment
 import woowacourse.movie.fragment.ReservationListFragment
 import woowacourse.movie.fragment.SettingFragment
+import woowacourse.movie.fragment.movielist.MovieListFragment
 import woowacourse.movie.view.data.ReservationsViewData
 import woowacourse.movie.view.mapper.ReservationMapper.toView
 
