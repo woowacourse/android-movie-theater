@@ -9,10 +9,10 @@ import woowacourse.movie.R
 import woowacourse.movie.model.AdvState
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.ui.adv.AdvDetailActivity
+import woowacourse.movie.ui.fragment.cinemaBottomSheet.CinemaListBottomSheet
 import woowacourse.movie.ui.main.adapter.MovieListAdapter
 import woowacourse.movie.ui.main.itemModel.AdvItemModel
 import woowacourse.movie.ui.main.itemModel.MovieItemModel
-import woowacourse.movie.ui.reservation.MovieDetailActivity
 
 class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
     private lateinit var presenter: MovieListContract.Presenter
@@ -28,7 +28,7 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
         adapter = MovieListAdapter(
             movie = presenter.getMovieList().map(::MovieItemModel),
             adv = presenter.getAdvList().map(::AdvItemModel),
-            onClickMovie = { movieItemModel -> navigateMovieDetail(movieItemModel.movieState) },
+            onClickMovie = { movieItemModel -> showCinemaBottomSheet(movieItemModel.movieState) },
             onClickAdv = { advItemModel -> navigateAdbDetail(advItemModel.advState) }
         )
 
@@ -42,8 +42,9 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
         adapter = null
     }
 
-    private fun navigateMovieDetail(movie: MovieState) {
-        MovieDetailActivity.startActivity(activity as Context, movie)
+    private fun showCinemaBottomSheet(movie: MovieState) {
+        CinemaListBottomSheet(movie)
+            .show(parentFragmentManager, CinemaListBottomSheet.TAG_CINEMA_LIST_BOTTOM_SHEET)
     }
 
     private fun navigateAdbDetail(adbState: AdvState) {
