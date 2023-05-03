@@ -1,4 +1,4 @@
-package woowacourse.app.ui.main
+package woowacourse.app.ui.main.setting
 
 import android.Manifest
 import android.app.NotificationManager

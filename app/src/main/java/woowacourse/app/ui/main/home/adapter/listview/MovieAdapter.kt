@@ -1,4 +1,4 @@
-package woowacourse.app.ui.main.adapter.listview
+package woowacourse.app.ui.main.home.adapter.listview
 
 import android.content.Context
 import android.content.Intent
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import woowacourse.app.model.MainData
-import woowacourse.app.ui.main.adapter.MainViewType
+import woowacourse.app.ui.main.home.adapter.MainViewType
 import woowacourse.movie.R
 
 class MovieAdapter(

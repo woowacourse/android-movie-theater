@@ -1,6 +1,6 @@
 package woowacourse.app.model
 
-import woowacourse.app.ui.main.adapter.MainViewType
+import woowacourse.app.ui.main.home.adapter.MainViewType
 
 abstract class MainData {
     abstract val mainViewType: MainViewType

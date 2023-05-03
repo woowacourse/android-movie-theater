@@ -1,4 +1,4 @@
-package woowacourse.app.ui.main
+package woowacourse.app.ui.main.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.app.ui.booking.BookingActivity
-import woowacourse.app.ui.main.adapter.recyclerview.MainAdapter
+import woowacourse.app.ui.main.home.adapter.recyclerview.HomeAdapter
 import woowacourse.app.usecase.main.MainUseCase
 import woowacourse.data.advertisement.AdvertisementRepositoryImpl
 import woowacourse.data.movie.MovieRepositoryImpl
@@ -30,13 +30,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun initAdapter(view: View) {
-        val mainAdapter = MainAdapter(
+        val homeAdapter = HomeAdapter(
             requireContext(),
             { clickBook(it) },
             { clickAdvertisement(it) },
         )
-        view.findViewById<RecyclerView>(R.id.listMainMovie).adapter = mainAdapter
-        mainAdapter.initMovies(
+        view.findViewById<RecyclerView>(R.id.listMainMovie).adapter = homeAdapter
+        homeAdapter.initMovies(
             MainUseCase(
                 AdvertisementRepositoryImpl(),
                 MovieRepositoryImpl(),

@@ -1,4 +1,4 @@
-package woowacourse.app.ui.main.adapter.recyclerview
+package woowacourse.app.ui.main.home.adapter.recyclerview
 
 import android.view.View
 import android.widget.Button
@@ -6,11 +6,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import woowacourse.app.model.MainData
 import woowacourse.app.model.movie.MovieUiModel
-import woowacourse.app.ui.main.adapter.MainViewType
+import woowacourse.app.ui.main.home.adapter.MainViewType
 import woowacourse.app.util.formatScreenDate
 import woowacourse.movie.R
 
-class MovieViewHolder(view: View) : MainViewHolder(view) {
+class MovieViewHolder(view: View) : HomeViewHolder(view) {
     private val thumbnail: ImageView = view.findViewById(R.id.imageItemThumbnail)
     private val title: TextView = view.findViewById(R.id.textItemTitle)
     private val date: TextView = view.findViewById(R.id.textBookingScreeningDate)

@@ -4,7 +4,7 @@ import android.os.Parcelable
 import androidx.annotation.DrawableRes
 import kotlinx.android.parcel.Parcelize
 import woowacourse.app.model.MainData
-import woowacourse.app.ui.main.adapter.MainViewType
+import woowacourse.app.ui.main.home.adapter.MainViewType
 import java.time.LocalDate
 
 @Parcelize

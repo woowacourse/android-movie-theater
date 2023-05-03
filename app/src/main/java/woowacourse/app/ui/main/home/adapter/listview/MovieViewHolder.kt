@@ -1,4 +1,4 @@
-package woowacourse.app.ui.main.adapter.listview
+package woowacourse.app.ui.main.home.adapter.listview
 
 import android.view.View
 import android.widget.Button
@@ -6,7 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import woowacourse.app.model.MainData
 import woowacourse.app.model.movie.MovieUiModel
-import woowacourse.app.ui.main.adapter.MainViewType
+import woowacourse.app.ui.main.home.adapter.MainViewType
 import woowacourse.app.util.formatScreenDate
 import woowacourse.movie.R
 

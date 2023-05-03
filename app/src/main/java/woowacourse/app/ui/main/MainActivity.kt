@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import woowacourse.app.ui.main.home.HomeFragment
+import woowacourse.app.ui.main.reservation.BookingHistoryFragment
+import woowacourse.app.ui.main.setting.SettingFragment
 import woowacourse.movie.R
 
 class MainActivity : AppCompatActivity() {

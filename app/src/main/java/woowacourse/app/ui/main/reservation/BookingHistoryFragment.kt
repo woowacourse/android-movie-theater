@@ -1,4 +1,4 @@
-package woowacourse.app.ui.main
+package woowacourse.app.ui.main.reservation
 
 import android.os.Bundle
 import android.view.LayoutInflater
