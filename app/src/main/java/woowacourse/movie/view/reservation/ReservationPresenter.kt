@@ -1,10 +1,11 @@
-package woowacourse.movie.view.moviemain.reservation
+package woowacourse.movie.view.reservation
 
 import woowacourse.movie.domain.Reservation
 import woowacourse.movie.domain.ScreeningTime
 import java.time.LocalDate
 
-class ReservationPresenter(private val view: ReservationContract.View) : ReservationContract.Presenter {
+class ReservationPresenter(private val view: ReservationContract.View) :
+    ReservationContract.Presenter {
     private var peopleCountSaved = 0
 
     override fun onMinusClick() {

@@ -1,4 +1,4 @@
-package woowacourse.movie.view.moviemain.reservation
+package woowacourse.movie.view.reservation
 
 import java.time.LocalDate
 import java.time.LocalTime

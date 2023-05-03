@@ -26,7 +26,7 @@
             android:name=".view.ReservationCompletedActivity"
             android:exported="false" />
         <activity
-            android:name=".view.moviemain.reservation.ReservationActivity"
+            android:name=".view.reservation.ReservationActivity"
             android:exported="false" />
         <activity
             android:name=".view.moviemain.MovieMainActivity"
