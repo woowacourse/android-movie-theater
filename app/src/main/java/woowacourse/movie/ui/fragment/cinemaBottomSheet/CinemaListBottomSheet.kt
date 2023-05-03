@@ -9,7 +9,7 @@ import woowacourse.movie.R
 import woowacourse.movie.model.CinemaState
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.ui.main.adapter.CinemaListAdapter
-import woowacourse.movie.ui.main.itemModel.BottomSheetItemModel
+import woowacourse.movie.ui.main.itemModel.CinemaItemModel
 import woowacourse.movie.ui.reservation.MovieDetailActivity
 
 class CinemaListBottomSheet(
@@ -31,7 +31,7 @@ class CinemaListBottomSheet(
 
     override fun setAdapter(cinemas: List<CinemaState>) {
         val adapter = CinemaListAdapter(
-            cinemas = cinemas.map { BottomSheetItemModel(it) }
+            cinemas = cinemas.map { CinemaItemModel(it) }
         ) { navigateMovieDetail(movie) }
         bottomSheetListView?.adapter = adapter
     }

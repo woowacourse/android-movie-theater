@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemCinemaBottomSheetBinding
-import woowacourse.movie.ui.main.itemModel.BottomSheetItemModel
+import woowacourse.movie.ui.main.itemModel.CinemaItemModel
 import woowacourse.movie.ui.main.itemModel.ItemModel
 
 class CinemaListViewHolder(
@@ -16,7 +16,7 @@ class CinemaListViewHolder(
     }
 
     override fun bind(itemModel: ItemModel) {
-        val item = itemModel as? BottomSheetItemModel ?: return
+        val item = itemModel as? CinemaItemModel ?: return
         binding.cinema = item.cinema
         setVisibility(item.cinema.numberOfMovie > 0)
     }
