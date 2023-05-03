@@ -11,41 +11,33 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
-import woowacourse.movie.SettingPreferencesManager
+import woowacourse.movie.contract.MainContract
+import woowacourse.movie.presenter.MainPresenter
 import woowacourse.movie.view.fragment.MoviesFragment
 import woowacourse.movie.view.fragment.ReservationListFragment
 import woowacourse.movie.view.fragment.SettingFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContract.View {
 
+    override val presenter: MainContract.Presenter = MainPresenter(this)
     private val bottomNavigation: BottomNavigationView by lazy { findViewById(R.id.bottom_navigation) }
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
+    private var saveState: Bundle? = null
+    private val moviesFragment = MoviesFragment()
+    private val settingFragment = SettingFragment()
+    private val reservationListFragment = ReservationListFragment()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        replaceFragment(ReservationListFragment())
-        setOnBottomNavigationClickListener()
-        requestNotificationPermission()
-    }
-
-    private fun setOnBottomNavigationClickListener() {
+        saveState = savedInstanceState
         bottomNavigation.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.home_bottom_navigation -> replaceFragment(MoviesFragment())
-                R.id.setting_bottom_navigation -> replaceFragment(SettingFragment())
-                R.id.reservation_list_bottom_navigation -> replaceFragment(ReservationListFragment())
-            }
-            true
+            presenter.onClickBottomNavigationItem(it.itemId)
         }
-    }
-
-    private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            replace(R.id.main_fragment, fragment)
-        }
+        presenter.updateFragmentView()
+        requestNotificationPermission()
     }
 
     private fun requestNotificationPermission() {
@@ -60,24 +52,45 @@ class MainActivity : AppCompatActivity() {
         ) == PackageManager.PERMISSION_GRANTED
     }
 
+    private fun showNotificationPermissionDialog() {
+        if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            Toast.makeText(
+                this,
+                getString(R.string.notification_refuse_two_time_warning_message),
+                Toast.LENGTH_LONG
+            ).show()
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+    }
+
+    override fun changeFragmentByItemID(itemId: Int) {
+        when (itemId) {
+            R.id.home_bottom_navigation -> replaceFragment(moviesFragment)
+            R.id.setting_bottom_navigation -> replaceFragment(settingFragment)
+            R.id.reservation_list_bottom_navigation -> replaceFragment(reservationListFragment)
+        }
+    }
+
+    override fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(R.id.main_fragment, fragment)
+        }
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(KEY_SELECTED_ITEM_ID, bottomNavigation.selectedItemId)
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        val selectedItemId = savedInstanceState.getInt(KEY_SELECTED_ITEM_ID)
+    override fun setSelectedFragmentView(selectedItemId: Int) {
         bottomNavigation.selectedItemId = selectedItemId
     }
 
-    private fun showNotificationPermissionDialog() {
-        if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-            Toast.makeText(this, getString(R.string.notification_refuse_two_time_warning_message), Toast.LENGTH_LONG).show()
-        } else {
-            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-        }
+    override fun getIntentNavigationItemId(): Int {
+        return saveState?.getInt(KEY_SELECTED_ITEM_ID) ?: R.id.home_bottom_navigation
     }
 
     companion object {
