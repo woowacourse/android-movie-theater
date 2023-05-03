@@ -167,8 +167,8 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnCl
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         presenter.detach()
+        super.onDestroy()
     }
 
     companion object {

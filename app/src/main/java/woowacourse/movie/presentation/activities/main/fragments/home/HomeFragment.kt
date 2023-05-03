@@ -16,9 +16,14 @@ import woowacourse.movie.presentation.model.movieitem.Ad
 import woowacourse.movie.presentation.model.movieitem.ListItem
 
 class HomeFragment : Fragment(R.layout.fragment_home), HomeContract.View {
-    override val presenter: HomeContract.Presenter = HomePresenter(this)
+    override val presenter: HomeContract.Presenter = HomePresenter()
 
     private lateinit var movieListAdapter: MovieListAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        presenter.attach(this)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,6 +61,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeContract.View {
 
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
         startActivity(intent)
+    }
+
+    override fun onDestroy() {
+        presenter.detach()
+        super.onDestroy()
     }
 
     companion object {

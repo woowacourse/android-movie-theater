@@ -159,8 +159,8 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener, SeatPicker
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         presenter.detach()
+        super.onDestroy()
     }
 
     companion object {
