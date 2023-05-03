@@ -68,16 +68,15 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
     override fun setSeatReserved(seat: SeatModel) {
         val view = seatTable[seat]
         view?.let {
-            it.setBackgroundColor(getColor(R.color.seat_selected))
-            it.isSelected = true
+            setSeatViewSelected(it)
         }
     }
 
     override fun setSeatCanceled(seat: SeatModel) {
         val view = seatTable[seat]
         view?.let {
-            it.setBackgroundColor(getColor(R.color.white))
             it.isSelected = false
+            it.setBackgroundColor(getColor(R.color.white))
         }
     }
 
@@ -108,6 +107,11 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
         doneButton.isClickable = true
     }
 
+    private fun setSeatViewSelected(view: TextView) {
+        view.isSelected = true
+        view.setBackgroundColor(getColor(R.color.seat_selected))
+    }
+
     private fun Int.formatPrice(): String = getString(R.string.price, this)
 
     private fun setSeatViews(ticket: MovieTicketModel) {
@@ -122,10 +126,7 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
             seatTable[seat] = view
             view.text = getString(R.string.seat, seat.row.letter, seat.column.value)
             view.setTextColor(getColor(seat.rank.color))
-            if (ticket.isSelectedSeat(seat)) {
-                view.isSelected = true
-                view.setBackgroundColor(getColor(R.color.seat_selected))
-            }
+            if (ticket.isSelectedSeat(seat)) setSeatViewSelected(view)
             view.setOnClickListener {
                 selectSeat(view, seat)
                 presenter.checkSelectionDone()
