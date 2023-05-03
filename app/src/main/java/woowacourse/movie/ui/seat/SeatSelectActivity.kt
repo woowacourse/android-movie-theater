@@ -4,13 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
-import com.example.domain.usecase.DiscountApplyUseCase
 import woowacourse.movie.R
+import woowacourse.movie.model.MoneyState
 import woowacourse.movie.model.SeatPositionState
 import woowacourse.movie.model.SeatSelectState
 import woowacourse.movie.model.TicketsState
-import woowacourse.movie.model.mapper.asDomain
-import woowacourse.movie.model.mapper.asPresentation
 import woowacourse.movie.ui.BackKeyActionBarActivity
 import woowacourse.movie.ui.DecimalFormatters
 import woowacourse.movie.ui.confirm.ReservationConfirmActivity
@@ -20,8 +18,8 @@ import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
 import woowacourse.movie.util.showAskDialog
 
-class SeatSelectActivity : BackKeyActionBarActivity() {
-    private val discountApplyUseCase = DiscountApplyUseCase()
+class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
+    private val presenter = SeatSelectPresenter(this)
 
     private val titleTextView: TextView by lazy { findViewById(R.id.reservation_title) }
     private val moneyTextView: TextView by lazy { findViewById(R.id.reservation_money) }
@@ -90,10 +88,13 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
             positionStates.toList()
         )
 
-        val discountApplyMoney = discountApplyUseCase(tickets.asDomain())
+        presenter.discountApply(tickets)
+    }
+
+    override fun setMoneyText(money: MoneyState) {
         moneyTextView.text = getString(
             R.string.discount_money,
-            DecimalFormatters.convertToMoneyFormat(discountApplyMoney.asPresentation())
+            DecimalFormatters.convertToMoneyFormat(money)
         )
     }
 
