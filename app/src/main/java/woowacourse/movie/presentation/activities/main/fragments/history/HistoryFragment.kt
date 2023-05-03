@@ -13,14 +13,14 @@ import woowacourse.movie.presentation.activities.ticketingresult.TicketingResult
 import woowacourse.movie.presentation.model.movieitem.ListItem
 
 class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.View {
-    override val presenter: HistoryContract.Presenter = HistoryPresenter()
+    override val presenter: HistoryContract.Presenter = HistoryPresenter(this)
 
     private val historyAdapter = HistoryListAdapter(presenter::onClickItem)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
-        presenter.attach(this)
+        presenter.loadHistories()
     }
 
     private fun initRecyclerView() {
@@ -42,11 +42,6 @@ class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.Vie
 
     override fun showDetails(item: ListItem) {
         startActivity(TicketingResultActivity.makeIntent(requireContext(), item))
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        presenter.detach()
     }
 
     companion object {
