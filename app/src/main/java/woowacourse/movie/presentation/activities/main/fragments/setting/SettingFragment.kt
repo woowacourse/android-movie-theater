@@ -9,7 +9,7 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.google.android.material.switchmaterial.SwitchMaterial
-import com.woowacourse.data.local.LocalDataStore
+import com.woowacourse.data.cache.local.LocalCacheDataStore
 import woowacourse.movie.R
 import woowacourse.movie.presentation.activities.main.fragments.setting.contract.SettingContract
 import woowacourse.movie.presentation.activities.main.fragments.setting.contract.presenter.SettingPresenter
@@ -24,7 +24,7 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
     override val presenter: SettingContract.Presenter by lazy {
         SettingPresenter(
             view = this,
-            dataStore = LocalDataStore.getInstance(requireContext()),
+            cacheDataStore = LocalCacheDataStore.getInstance(requireContext()),
         )
     }
 

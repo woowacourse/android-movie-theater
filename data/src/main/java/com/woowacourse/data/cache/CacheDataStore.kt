@@ -1,6 +1,6 @@
-package com.woowacourse.data
+package com.woowacourse.data.cache
 
-interface DataStore {
+interface CacheDataStore {
     fun getBoolean(key: String, defValue: Boolean): Boolean
     fun setBoolean(key: String, value: Boolean)
 }

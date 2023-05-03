@@ -1,20 +1,20 @@
 package woowacourse.movie.presentation.activities.main.fragments.setting.contract.presenter
 
-import com.woowacourse.data.DataStore
+import com.woowacourse.data.cache.CacheDataStore
 import woowacourse.movie.presentation.activities.main.fragments.setting.contract.SettingContract
 
 class SettingPresenter(
     view: SettingContract.View,
-    private val dataStore: DataStore,
+    private val cacheDataStore: CacheDataStore,
 ) : SettingContract.Presenter(view) {
 
     override fun fetchPushSwitchState() {
-        val pushState = dataStore.getBoolean(PUSH_ALLOW_KEY, false)
+        val pushState = cacheDataStore.getBoolean(PUSH_ALLOW_KEY, false)
         view.changePushSwitchState(pushState)
     }
 
     override fun updatePushAllow(newState: Boolean) {
-        dataStore.setBoolean(PUSH_ALLOW_KEY, newState)
+        cacheDataStore.setBoolean(PUSH_ALLOW_KEY, newState)
         view.changePushSwitchState(newState)
     }
 
