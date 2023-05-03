@@ -12,8 +12,6 @@ interface MovieListContract {
     }
 
     interface Presenter {
-        fun clickMovieItem(movie: MovieState)
-        fun clickAdvItem(adv: AdvState)
-        fun getMovieAndAdvItemList()
+        fun loadMovieAndAdvItemList()
     }
 }

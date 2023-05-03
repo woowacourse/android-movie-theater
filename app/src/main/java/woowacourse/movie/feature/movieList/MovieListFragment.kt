@@ -38,7 +38,7 @@ class MovieListFragment : Fragment(), MovieListContract.View {
         super.onViewCreated(view, savedInstanceState)
         presenter = MoviesPresenter(this, MovieRepositoryImpl, AdvRepositoryImpl)
         adapter = MovieListAdapter(listOf())
-        presenter.getMovieAndAdvItemList() // 뷰가 그려질때마다 데이터 다시 불러옴. 캐싱 적용 안함
+        presenter.loadMovieAndAdvItemList() // 뷰가 그려질때마다 데이터 다시 불러옴. 캐싱 적용 안함
         binding.rvMovie.adapter = adapter
     }
 

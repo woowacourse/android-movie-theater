@@ -5,28 +5,19 @@ import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.feature.common.itemModel.ItemModel
 import woowacourse.movie.feature.movieList.itemModel.AdvItemModel
 import woowacourse.movie.feature.movieList.itemModel.MovieItemModel
-import woowacourse.movie.model.AdvState
-import woowacourse.movie.model.MovieState
 
 class MoviesPresenter(
     val view: MovieListContract.View,
     val movieRepository: MovieRepository,
     val advRepository: AdvRepository
 ) : MovieListContract.Presenter {
-    override fun clickMovieItem(movie: MovieState) {
-        view.navigateMovieDetail(movie)
-    }
 
-    override fun clickAdvItem(adv: AdvState) {
-        view.navigateAdbDetail(adv)
-    }
-
-    override fun getMovieAndAdvItemList() {
+    override fun loadMovieAndAdvItemList() {
         val movie = movieRepository.allMovies().map {
-            it.toItemModel { movie -> clickMovieItem(movie) }
+            it.toItemModel { movie -> view.navigateMovieDetail(movie) }
         }
         val adv = advRepository.allAdv().map {
-            it.toItemModel { adv -> clickAdvItem(adv) }
+            it.toItemModel { adv -> view.navigateAdbDetail(adv) }
         }
         view.updateItems(combineMovieAndAdvItems(movie, adv))
     }
