@@ -4,8 +4,8 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 object TimesGenerator {
-    private val WEEKDAYS = (9..23 step 2).map { LocalTime.of(it, 0) }
-    private val WEEKENDS = (10..22 step 2).map { LocalTime.of(it, 0) }
+    private val WEEKDAYS = (10..22 step 2).map { LocalTime.of(it, 0) }
+    private val WEEKENDS = (9..23 step 2).map { LocalTime.of(it, 0) }
 
     fun getTimesByDate(date: LocalDate): List<LocalTime> {
         return when (date.dayOfWeek.value) {
