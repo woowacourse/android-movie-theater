@@ -2,19 +2,10 @@ package woowacourse.movie.presentation.extensions
 
 import android.content.Context
 import android.content.DialogInterface
-import android.os.Build
-import android.os.Build.VERSION
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import woowacourse.movie.R
-
-fun Context.checkPermissionTiramisu(permission: String): Boolean =
-    if (VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        checkPermission(permission)
-    } else {
-        true
-    }
 
 fun Context.checkPermissions(vararg permissions: String): Boolean =
     permissions.all { checkPermission(it) }

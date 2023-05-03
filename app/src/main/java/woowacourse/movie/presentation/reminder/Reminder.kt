@@ -6,11 +6,12 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
+import android.os.Build
 import android.os.Parcelable
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
-import woowacourse.movie.presentation.extensions.checkPermissionTiramisu
+import woowacourse.movie.presentation.extensions.checkPermission
 
 abstract class Reminder {
     protected abstract val channelId: String
@@ -54,7 +55,11 @@ abstract class Reminder {
         notificationManager.createNotificationChannel(channel)
     }
 
-    @SuppressLint("InlinedApi")
-    private fun isPermissionGranted(context: Context): Boolean =
-        context.checkPermissionTiramisu(permission.POST_NOTIFICATIONS)
+    private fun isPermissionGranted(context: Context): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.checkPermission(permission.POST_NOTIFICATIONS)
+        } else {
+            true
+        }
+    }
 }

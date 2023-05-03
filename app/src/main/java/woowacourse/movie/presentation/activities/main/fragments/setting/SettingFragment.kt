@@ -3,6 +3,7 @@ package woowacourse.movie.presentation.activities.main.fragments.setting
 import android.Manifest
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
@@ -11,7 +12,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 import com.woowacourse.data.local.PreferenceManager
 import com.woowacourse.data.local.PreferenceManager.setBoolean
 import woowacourse.movie.R
-import woowacourse.movie.presentation.extensions.checkPermissionTiramisu
+import woowacourse.movie.presentation.extensions.checkPermission
 import woowacourse.movie.presentation.extensions.createAlertDialog
 import woowacourse.movie.presentation.extensions.message
 import woowacourse.movie.presentation.extensions.negativeButton
@@ -51,8 +52,13 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
         }
     }
 
-    private fun checkPushPermission(): Boolean =
-        requireContext().checkPermissionTiramisu(Manifest.permission.POST_NOTIFICATIONS)
+    private fun checkPushPermission(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requireContext().checkPermission(Manifest.permission.POST_NOTIFICATIONS)
+        } else {
+            true
+        }
+    }
 
     private fun showPushPermissionDialog() {
         requireContext().createAlertDialog {
