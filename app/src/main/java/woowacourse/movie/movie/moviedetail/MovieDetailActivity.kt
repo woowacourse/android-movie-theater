@@ -2,7 +2,6 @@ package woowacourse.movie.movie.moviedetail
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
@@ -64,9 +63,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     }
 
     private fun initDetailData() {
-        Log.d("test", "initDetailData 진입")
         val movie = intent.getParcelableCompat<MovieDto>(MOVIE_KEY)
-        Log.d("test", "intent 잘 받아옴")
         movie?.let { presenter.initActivity(movie) }
     }
 
