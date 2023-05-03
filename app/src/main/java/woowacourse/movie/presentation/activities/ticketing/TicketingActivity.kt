@@ -21,16 +21,13 @@ import woowacourse.movie.presentation.extensions.showBackButton
 import woowacourse.movie.presentation.extensions.showToast
 import woowacourse.movie.presentation.model.MovieDate
 import woowacourse.movie.presentation.model.MovieTime
-import woowacourse.movie.presentation.model.Ticket
+import woowacourse.movie.presentation.model.TicketingState
 import woowacourse.movie.presentation.model.movieitem.ListItem
 import woowacourse.movie.presentation.model.movieitem.Movie
 
 class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnClickListener {
     override val presenter: TicketingContract.Presenter by lazy {
-        TicketingPresenter(
-            view = this,
-            movie = intent.getParcelableCompat(MOVIE_KEY)!!
-        )
+        TicketingPresenter(state = TicketingState(intent.getParcelableCompat(MOVIE_KEY)!!))
     }
 
     private val movieDateAdapter: ArrayAdapter<String> by lazy {
@@ -39,6 +36,7 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnCl
     private val movieTimeAdapter: ArrayAdapter<String> by lazy {
         ArrayAdapter(this, android.R.layout.simple_spinner_item, mutableListOf())
     }
+
     private val movieTimeSpinner: Spinner by lazy { findViewById(R.id.movie_time_spinner) }
     private val movieDateSpinner: Spinner by lazy { findViewById(R.id.movie_date_spinner) }
 
@@ -47,39 +45,18 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnCl
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ticketing)
-        presenter.onCreate()
+        presenter.attach(this)
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        presenter.onSaveState(outState)
-    }
-
-    override fun saveViewState(
-        outState: Bundle,
-        ticket: Ticket,
-        movieDate: MovieDate?,
-        movieTime: MovieTime?
-    ) {
-        outState.putParcelable(TICKET_COUNT_STATE_KEY, ticket)
-        outState.putParcelable(SELECTED_DATE_STATE_KEY, movieDate)
-        outState.putParcelable(SELECTED_TIME_STATE_KEY, movieTime)
+    override fun onSaveInstanceState(bundle: Bundle) {
+        super.onSaveInstanceState(bundle)
+        bundle.putParcelable(TICKETING_STATE_KEY, presenter.getState())
     }
 
     override fun onRestoreInstanceState(bundle: Bundle) {
         super.onRestoreInstanceState(bundle)
-        val ticket = bundle.getParcelableCompat<Ticket>(TICKET_COUNT_STATE_KEY) ?: return
-        val movieDate = bundle.getParcelableCompat<MovieDate>(SELECTED_DATE_STATE_KEY) ?: return
-        val movieTime = bundle.getParcelableCompat<MovieTime>(SELECTED_TIME_STATE_KEY) ?: return
-        presenter.onRestoreState(ticket, movieDate, movieTime)
-    }
-
-    override fun restoreViewState(ticketCount: Int, movieDatePos: Int, movieTimePos: Int) {
-        updateCount(ticketCount)
-        updateSpinnersState(
-            movieDatePos = movieDatePos,
-            movieTimePos = movieTimePos,
-        )
+        val ticketingState = bundle.getParcelableCompat<TicketingState>(TICKETING_STATE_KEY)
+        ticketingState?.let { presenter.setState(it) }
     }
 
     override fun initView(movieDates: List<MovieDate>) {
@@ -143,8 +120,18 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnCl
             OnSpinnerItemSelectedListener { presenter.onSelectMovieDate(it) }
     }
 
+    override fun showTicketingState(ticketCount: Int, movieDatePos: Int, movieTimePos: Int) {
+        updateCount(ticketCount)
+        updateSpinnersState(movieDatePos = movieDatePos, movieTimePos = movieTimePos)
+    }
+
     override fun updateCount(value: Int) {
         ticketCountTextView.text = value.toString()
+    }
+
+    override fun updateSpinnersState(movieDatePos: Int, movieTimePos: Int) {
+        movieDateSpinner.setSelection(movieDatePos)
+        movieTimeSpinner.setSelection(movieTimePos)
     }
 
     override fun updateRunningTimes(runningTimes: List<MovieTime>) {
@@ -154,19 +141,8 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnCl
         movieTimeAdapter.addAll(runningTimeTexts)
     }
 
-    override fun updateSpinnersState(movieDatePos: Int, movieTimePos: Int) {
-        movieDateSpinner.setSelection(movieDatePos)
-        movieTimeSpinner.setSelection(movieTimePos)
-    }
-
-    override fun startSeatPickerActivity(
-        movie: Movie,
-        ticket: Ticket,
-        selectedDate: MovieDate,
-        selectedTime: MovieTime,
-    ) {
-        val seatPickerIntent =
-            SeatPickerActivity.getIntent(this, movie, ticket, selectedDate, selectedTime)
+    override fun showSeatPickerScreen(ticketingState: TicketingState) {
+        val seatPickerIntent = SeatPickerActivity.getIntent(this, ticketingState)
         startActivity(seatPickerIntent)
         finish()
     }
@@ -190,12 +166,14 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnCl
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.detach()
+    }
+
     companion object {
         private const val MOVIE_KEY = "movie_key"
-
-        internal const val SELECTED_DATE_STATE_KEY = "selectedDate"
-        internal const val SELECTED_TIME_STATE_KEY = "selectedTime"
-        internal const val TICKET_COUNT_STATE_KEY = "ticketCountState"
+        private const val TICKETING_STATE_KEY = "ticketing_state_key"
 
         fun getIntent(context: Context, movie: ListItem): Intent =
             Intent(context, TicketingActivity::class.java).putExtra(MOVIE_KEY, movie)

@@ -1,6 +1,5 @@
 package woowacourse.movie.presentation.activities.ticketing.presenter
 
-import android.os.Bundle
 import woowacourse.movie.domain.model.movie.DomainMovieDate
 import woowacourse.movie.domain.model.movie.DomainMovieTime
 import woowacourse.movie.presentation.activities.ticketing.contract.TicketingContract
@@ -8,80 +7,67 @@ import woowacourse.movie.presentation.mapper.toDomain
 import woowacourse.movie.presentation.mapper.toPresentation
 import woowacourse.movie.presentation.model.MovieDate
 import woowacourse.movie.presentation.model.MovieTime
-import woowacourse.movie.presentation.model.Ticket
-import woowacourse.movie.presentation.model.movieitem.Movie
+import woowacourse.movie.presentation.model.TicketingState
 
-class TicketingPresenter(
-    view: TicketingContract.View,
-    private var movie: Movie,
-    private var movieTicket: Ticket = Ticket(),
-    private var selectedDate: MovieDate? = null,
-    private var selectedTime: MovieTime? = null,
-) : TicketingContract.Presenter(view) {
-
+class TicketingPresenter(private var state: TicketingState) : TicketingContract.Presenter() {
     private val movieDates: List<MovieDate> = DomainMovieDate.releaseDates(
-        from = movie.startDate,
-        to = movie.endDate
+        from = state.movie.startDate,
+        to = state.movie.endDate
     ).map { it.toPresentation() }
 
     private val movieTimes = mutableListOf<MovieTime>()
 
-    override fun onCreate() {
+    override fun attach(view: TicketingContract.View) {
+        super.attach(view)
         view.initView(movieDates)
     }
 
-    override fun onSaveState(outState: Bundle) {
-        view.saveViewState(outState, movieTicket, selectedDate, selectedTime)
-    }
+    override fun getState(): TicketingState = state.copy()
 
-    override fun onRestoreState(movieTicket: Ticket, movieDate: MovieDate, movieTime: MovieTime) {
-        this.movieTicket = movieTicket
-        this.selectedDate = movieDate
-        this.selectedTime = movieTime
-        updateRunningTimes(selectedDate)
+    override fun setState(ticketingState: TicketingState) {
+        this.state = ticketingState.copy()
+        updateRunningTimes(ticketingState.movieDate)
 
-        val movieDatePos = movieDates.indexOf(selectedDate)
-        val movieTimePos = movieTimes.indexOf(selectedTime)
+        val movieDatePos = movieDates.indexOf(ticketingState.movieDate)
+        val movieTimePos = movieTimes.indexOf(ticketingState.movieTime)
 
-        view.restoreViewState(movieTicket.count, movieDatePos, movieTimePos)
+        requireView().showTicketingState(ticketingState.ticketCount, movieDatePos, movieTimePos)
     }
 
     override fun plusCount() {
-        movieTicket = (movieTicket.toDomain() + 1).toPresentation()
-        view.updateCount(movieTicket.count)
+        state = state.copy(ticket = (state.ticket.toDomain() + 1).toPresentation())
+        requireView().updateCount(state.ticketCount)
     }
 
     override fun minusCount() {
-        movieTicket = (movieTicket.toDomain() - 1).toPresentation()
-        view.updateCount(movieTicket.count)
+        state = state.copy(ticket = (state.ticket.toDomain() - 1).toPresentation())
+        requireView().updateCount(state.ticketCount)
     }
 
     override fun onClickTicketingButton() {
-        if (selectedDate == null || selectedTime == null) {
-            view.showUnSelectDateTimeAlertMessage()
+        if (state.isNotSelectedDateTime) {
+            requireView().showUnSelectDateTimeAlertMessage()
             return
         }
-
-        view.startSeatPickerActivity(movie, movieTicket, selectedDate!!, selectedTime!!)
+        requireView().showSeatPickerScreen(getState())
     }
 
     override fun onSelectMovieDate(position: Int) {
-        selectedDate = movieDates[position]
-        selectedTime = movieTimes.firstOrNull()
-        updateRunningTimes(selectedDate)
+        state = state.copy(movieDate = movieDates[position], movieTime = movieTimes.firstOrNull())
+        updateRunningTimes(state.movieDate)
     }
 
     override fun onSelectMovieTime(position: Int) {
-        selectedTime = movieTimes.getOrNull(position)
+        state = state.copy(movieTime = movieTimes.getOrNull(position))
     }
 
-    private fun updateRunningTimes(selectedDate: MovieDate?) {
-        selectedDate?.toDomain()?.run {
+    private fun updateRunningTimes(movieDate: MovieDate?) {
+        movieDate?.toDomain()?.run {
             val newRunningTimes =
                 DomainMovieTime.runningTimes(isWeekend(), isToday()).map { it.toPresentation() }
             movieTimes.clear()
             movieTimes.addAll(newRunningTimes)
-            view.updateRunningTimes(movieTimes)
+            requireView().updateRunningTimes(movieTimes)
         }
     }
 }
