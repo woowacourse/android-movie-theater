@@ -11,7 +11,7 @@ class ReservationCounter(
 ) : CounterContract.View {
     private val presenter: CounterContract.Presenter = CounterPresenter(this)
     val count: CountState
-        get() = presenter.getCount()
+        get() = presenter.countNumber
 
     init {
         initCountState?.let { presenter.setCountState(it) }

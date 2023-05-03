@@ -10,9 +10,9 @@ interface CounterContract {
     }
 
     interface Presenter {
+        var countNumber: CountState
         fun minus()
         fun plus()
         fun setCountState(countState: CountState)
-        fun getCount(): CountState
     }
 }

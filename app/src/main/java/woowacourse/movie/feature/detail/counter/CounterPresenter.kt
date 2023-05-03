@@ -6,8 +6,8 @@ class CounterPresenter(
     val view: CounterContract.View
 ) : CounterContract.Presenter {
 
-    var countNumber: CountState = CountState.of(1)
-        private set(value) {
+    override var countNumber: CountState = CountState.of(1)
+        set(value) {
             field = value
             view.setCountNumber(value)
         }
@@ -31,6 +31,4 @@ class CounterPresenter(
     override fun setCountState(countState: CountState) {
         countNumber = countState
     }
-
-    override fun getCount(): CountState = CountState.of(countNumber.value)
 }
