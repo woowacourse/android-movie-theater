@@ -63,15 +63,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     private fun initListener() {
         bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.reservation_list_item -> {
-                    changeShowFragment<ReservationListFragment>()
-                }
-                R.id.movie_list_item -> {
-                    changeShowFragment<MovieListFragment>()
-                }
-                R.id.setting_item -> {
-                    changeShowFragment<SettingFragment>()
-                }
+                R.id.reservation_list_item -> presenter.clickReservationTab()
+                R.id.movie_list_item -> presenter.clickMovieTab()
+                R.id.setting_item -> presenter.clickSettingTab()
             }
             return@setOnItemSelectedListener true
         }
@@ -100,7 +94,25 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         presenter.permissionApproveResult(isGranted)
     }
 
-    override fun showPermissionToast(messageId: Int) = Toaster.showToast(this, getString(messageId))
+    override fun showPermissionApproveToast() {
+        Toaster.showToast(this, getString(R.string.alarm_notification_approve))
+    }
+
+    override fun showPermissionRejectToast() {
+        Toaster.showToast(this, getString(R.string.alarm_notification_reject))
+    }
+
+    override fun showMovieList() {
+        changeShowFragment<MovieListFragment>()
+    }
+
+    override fun showReservationList() {
+        changeShowFragment<ReservationListFragment>()
+    }
+
+    override fun showSetting() {
+        changeShowFragment<SettingFragment>()
+    }
 
     companion object {
         internal const val KEY_MOVIE = "key_movie"

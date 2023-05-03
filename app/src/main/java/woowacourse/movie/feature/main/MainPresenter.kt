@@ -1,15 +1,25 @@
 package woowacourse.movie.feature.main
 
-import woowacourse.movie.R
-
 class MainPresenter(
     val view: MainContract.View
 ) : MainContract.Presenter {
     override fun permissionApproveResult(isGranted: Boolean) {
         if (isGranted) {
-            view.showPermissionToast(R.string.alarm_notification_approve)
+            view.showPermissionApproveToast()
         } else {
-            view.showPermissionToast(R.string.alarm_notification_reject)
+            view.showPermissionRejectToast()
         }
+    }
+
+    override fun clickMovieTab() {
+        view.showMovieList()
+    }
+
+    override fun clickReservationTab() {
+        view.showReservationList()
+    }
+
+    override fun clickSettingTab() {
+        view.showSetting()
     }
 }
