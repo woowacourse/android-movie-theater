@@ -1,13 +1,11 @@
 package woowacourse.movie.presentation.activities.main.fragments.setting
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.woowacourse.data.local.PreferenceManager
@@ -24,38 +22,35 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
     lateinit var pushSwitch: SwitchMaterial
     private val preferences by lazy { PreferenceManager.getInstance(requireContext()) }
 
-    private val settingActionReLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
-            val isPushAllowed =
-                requireContext().checkPermissionTiramisu(Manifest.permission.POST_NOTIFICATIONS)
-
-            pushSwitch.isChecked = isPushAllowed
-            preferences.setBoolean(PUSH_ALLOW_KEY, isPushAllowed)
-        }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initPushSwitch(view)
     }
 
-    @SuppressLint("InlinedApi")
+    override fun onResume() {
+        super.onResume()
+
+        val isPushAllowed =
+            preferences.getBoolean(PUSH_ALLOW_KEY, true) && checkPushPermission()
+
+        pushSwitch.isChecked = isPushAllowed
+        preferences.setBoolean(PUSH_ALLOW_KEY, isPushAllowed)
+    }
+
     private fun initPushSwitch(view: View) {
         pushSwitch = view.findViewById(R.id.notification_push_switch)
         val isPushAllowed = preferences.getBoolean(PUSH_ALLOW_KEY, true) && checkPushPermission()
 
-        with(pushSwitch) {
-            isChecked = preferences.getBoolean(PUSH_ALLOW_KEY, isPushAllowed)
-            setOnCheckedChangeListener { _, isAllowed ->
-                if (isAllowed && !checkPushPermission()) {
-                    showPushPermissionDialog()
-                } else {
-                    preferences.setBoolean(PUSH_ALLOW_KEY, isAllowed)
-                }
+        pushSwitch.isChecked = preferences.getBoolean(PUSH_ALLOW_KEY, isPushAllowed)
+        pushSwitch.setOnCheckedChangeListener { _, isAllowed ->
+            if (isAllowed && !checkPushPermission()) {
+                showPushPermissionDialog()
+            } else {
+                preferences.setBoolean(PUSH_ALLOW_KEY, isAllowed)
             }
         }
     }
 
-    @SuppressLint("InlinedApi")
     private fun checkPushPermission(): Boolean =
         requireContext().checkPermissionTiramisu(Manifest.permission.POST_NOTIFICATIONS)
 
@@ -68,7 +63,7 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
                     Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
                     Uri.parse("package:${requireContext().packageName}"),
                 ).addCategory(Intent.CATEGORY_DEFAULT)
-                settingActionReLauncher.launch(appDetailsIntent)
+                startActivity(appDetailsIntent)
             }
             negativeButton { pushSwitch.isChecked = false }
         }.show()
