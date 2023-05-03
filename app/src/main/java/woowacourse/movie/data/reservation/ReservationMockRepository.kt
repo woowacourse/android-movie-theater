@@ -1,7 +1,7 @@
 package woowacourse.movie.data.reservation
 
-import woowacourse.movie.domain.Reservation
 import woowacourse.movie.domain.repository.ReservationRepository
+import woowacourse.movie.domain.reservation.Reservation
 
 object ReservationMockRepository : ReservationRepository {
 

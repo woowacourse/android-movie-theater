@@ -1,8 +1,8 @@
 package woowacourse.movie.data
 
 import woowacourse.movie.R
-import woowacourse.movie.domain.Minute
-import woowacourse.movie.domain.Movie
+import woowacourse.movie.domain.movie.Minute
+import woowacourse.movie.domain.movie.Movie
 import woowacourse.movie.domain.repository.MovieRepository
 import java.time.LocalDate
 

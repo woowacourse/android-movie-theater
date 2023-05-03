@@ -1,7 +1,6 @@
 package woowacourse.movie.view.reservation
 
-import woowacourse.movie.domain.Reservation
-import woowacourse.movie.domain.ScreeningTime
+import woowacourse.movie.domain.movie.ScreeningTime
 import java.time.LocalDate
 
 class ReservationPresenter(private val view: ReservationContract.View) :
@@ -9,14 +8,14 @@ class ReservationPresenter(private val view: ReservationContract.View) :
     private var peopleCountSaved = 0
 
     override fun onMinusClick() {
-        if (peopleCountSaved > Reservation.MIN_PEOPLE_COUNT) {
+        if (peopleCountSaved > 0) {
             peopleCountSaved--
             view.setCount(peopleCountSaved)
         }
     }
 
     override fun onPlusClick() {
-        if (peopleCountSaved < Reservation.MAX_PEOPLE_COUNT) {
+        if (peopleCountSaved < 20) {
             peopleCountSaved++
             view.setCount(peopleCountSaved)
         }

@@ -71,11 +71,11 @@ class ReservationCompletedActivity : AppCompatActivity() {
             peopleCount.text = getString(R.string.reservation_people_count_format)
                 .format(
                     getString(R.string.general_person),
-                    reservation.peopleCount,
+                    reservation.count,
                     reservation.seats.joinToString(),
                 )
             totalPrice.text =
-                getString(R.string.total_price_format).format(DECIMAL_FORMAT.format(reservation.finalReservationFee))
+                getString(R.string.total_price_format).format(DECIMAL_FORMAT.format(reservation.count))
         }
     }
 

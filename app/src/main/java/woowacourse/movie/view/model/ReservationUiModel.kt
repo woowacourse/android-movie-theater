@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 data class ReservationUiModel(
     val title: String,
     val screeningDateTime: LocalDateTime,
-    val peopleCount: Int,
+    val count: Int,
     val seats: List<String>,
-    val finalReservationFee: Int
+    val price: Int
 ) : Parcelable

@@ -2,6 +2,7 @@ package woowacourse.movie.domain
 
 import org.junit.Assert.assertThrows
 import org.junit.Test
+import woowacourse.movie.domain.movie.Minute
 
 class MinuteTest {
 

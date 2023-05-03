@@ -17,8 +17,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.domain.Minute
-import woowacourse.movie.domain.Movie
+import woowacourse.movie.domain.movie.Minute
+import woowacourse.movie.domain.movie.Movie
 import woowacourse.movie.view.mapper.toUiModel
 import woowacourse.movie.view.model.ReservationOptions
 import woowacourse.movie.view.seatselection.SeatSelectionActivity

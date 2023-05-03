@@ -2,7 +2,7 @@ package woowacourse.movie.view.moviemain.movielist
 
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieMockRepository
-import woowacourse.movie.domain.Movie
+import woowacourse.movie.domain.movie.Movie
 import woowacourse.movie.domain.repository.MovieRepository
 import woowacourse.movie.view.mapper.toUiModel
 import woowacourse.movie.view.model.MovieListModel
