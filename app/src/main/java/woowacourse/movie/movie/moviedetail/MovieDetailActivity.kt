@@ -2,16 +2,15 @@ package woowacourse.movie.movie.moviedetail
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import domain.DayOfWeek
 import domain.movieinfo.MovieDate
 import domain.movieinfo.MovieTime
-import domain.screeningschedule.ReservationDate
 import domain.screeningschedule.ReservationTime
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
@@ -28,30 +27,33 @@ import woowacourse.movie.movie.utils.getParcelableCompat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class MovieDetailActivity : AppCompatActivity() {
+class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     private lateinit var binding: ActivityMovieDetailBinding
-    private var movieTikcet = TicketCountDto()
+    override lateinit var presenter: MovieDetailContract.Presenter
+
     private var dateSpinnerPosition = 0
     private var timeSpinnerPosition = 0
 
     private val selectDateSpinner by lazy { binding.selectDate }
     private val selectTimeSpinner by lazy { binding.selectTime }
-    private lateinit var movie: MovieDto
+
+    private var movieTicket = TicketCountDto()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMovieDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setToolBar()
+        presenter = MovieDetailPresenter(this)
         setUpState(savedInstanceState)
+        initDetailData()
+        onClickDecreaseBtnListener()
+        onClickIncreaseBtnListener()
+    }
 
-        intent.getParcelableCompat<MovieDto>(MOVIE_KEY)?.let { movie = it }
-
-        setDateSpinner(movie.startDate, movie.endDate)
-        setUpMovieData(movie)
-        setNumberOfPeople()
-        onClickBookBtnListener(movie)
+    private fun setToolBar() {
+        setSupportActionBar(binding.movieDetailToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun setUpState(savedInstanceState: Bundle?) {
@@ -61,74 +63,76 @@ class MovieDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun setToolBar() {
-        setSupportActionBar(binding.movieDetailToolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    private fun initDetailData() {
+        Log.d("test", "initDetailData 진입")
+        val movie = intent.getParcelableCompat<MovieDto>(MOVIE_KEY)
+        Log.d("test", "intent 잘 받아옴")
+        movie?.let { presenter.initActivity(movie) }
     }
 
-    private fun setUpMovieData(movie: MovieDto) {
-        binding.moviePoster.setImageResource(movie.moviePoster)
-        binding.movieTitle.text = movie.title
-        binding.movieDate.text = formatMovieRunningDate(movie)
-        binding.movieTime.text = getString(R.string.movie_running_time).format(movie.runningTime)
-        binding.movieDescription.text = movie.description
+    override fun showMovieInfo(poster: Int, title: String, description: String) {
+        binding.moviePoster.setImageResource(poster)
+        binding.movieTitle.text = title
+        binding.movieDescription.text = description
     }
 
-    private fun formatMovieRunningDate(item: MovieDto): String {
-        val startDate =
-            item.startDate.format(DateTimeFormatter.ofPattern(getString(R.string.date_format)))
-        val endDate =
-            item.endDate.format(DateTimeFormatter.ofPattern(getString(R.string.date_format)))
-        return getString(R.string.movie_running_date).format(startDate, endDate)
+    override fun showMovieDateInfo(date: String, time: String) {
+        binding.movieDate.text = date
+        binding.movieTime.text = time
     }
 
-    private fun setNumberOfPeople() {
-        val booker = binding.bookerNum
-        booker.text = movieTikcet.numberOfPeople.toString()
-        onClickDecreaseBtnListener(booker)
-        onClickIncreaseBtnListener(booker)
+    override fun formatMovieRunningDate(startDate: LocalDate, endDate: LocalDate): String {
+        val start = startDate.format(DateTimeFormatter.ofPattern(getString(R.string.date_format)))
+        val end = endDate.format(DateTimeFormatter.ofPattern(getString(R.string.date_format)))
+        return getString(R.string.movie_running_date).format(start, end)
     }
 
-    private fun onClickDecreaseBtnListener(booker: TextView) {
+    override fun formatMovieRunningTime(runningTime: Int): String {
+        return getString(R.string.movie_running_time).format(runningTime)
+    }
+
+    override fun showNumberOfPeople() {
+        binding.bookerNum.text = movieTicket.numberOfPeople.toString()
+    }
+
+    override fun onClickDecreaseBtnListener() {
         binding.minusButton.setOnClickListener {
-            val ticketDecrease = movieTikcet.mapToTicketCount().decrease()
-            movieTikcet = ticketDecrease.mapToTicketCountDto()
-            booker.text = movieTikcet.numberOfPeople.toString()
+            val ticketDecrease = movieTicket.mapToTicketCount().decrease()
+            movieTicket = ticketDecrease.mapToTicketCountDto()
+            binding.bookerNum.text = presenter.decreaseCount(movieTicket)
         }
     }
 
-    private fun onClickIncreaseBtnListener(booker: TextView) {
+    override fun onClickIncreaseBtnListener() {
         binding.plusButton.setOnClickListener {
-            val ticketIncrease = movieTikcet.mapToTicketCount().increase()
-            movieTikcet = ticketIncrease.mapToTicketCountDto()
-            booker.text = movieTikcet.numberOfPeople.toString()
+            val ticketIncrease = movieTicket.mapToTicketCount().increase()
+            movieTicket = ticketIncrease.mapToTicketCountDto()
+            binding.bookerNum.text = presenter.increaseCount(movieTicket)
         }
     }
 
-    private fun onClickBookBtnListener(movie: MovieDto) {
+    override fun onClickBookBtnListener(movie: MovieDto) {
         binding.bookButton.setOnClickListener {
             val selectedDate = MovieDate.of(selectDateSpinner.selectedItem.toString())
             val selectedTime = MovieTime.of(selectTimeSpinner.selectedItem.toString())
             val intent = Intent(this, SeatSelectionActivity::class.java)
 
-            intent.putExtra(SEAT_BASE_INFORMATION_KEY, SeatMovieDto(movieTikcet, movie, selectedDate.mapToMovieDateDto(), selectedTime.mapToMovieTimeDto()))
+            intent.putExtra(
+                SEAT_BASE_INFORMATION_KEY,
+                SeatMovieDto(
+                    movieTicket,
+                    movie,
+                    selectedDate.mapToMovieDateDto(),
+                    selectedTime.mapToMovieTimeDto()
+                )
+            )
             startActivity(intent)
             finish()
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                finish()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    private fun setDateSpinner(startDate: LocalDate, endDate: LocalDate) {
-        selectDateSpinner.adapter = getDateSpinnerAdapter(startDate, endDate)
+    override fun setDateSpinner(intervalDate: List<String>) {
+        selectDateSpinner.adapter = getDateSpinnerAdapter(intervalDate)
         selectDateSpinner.setSelection(dateSpinnerPosition)
 
         selectDateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -149,7 +153,7 @@ class MovieDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun setTimeSpinner(selectedDay: MovieDateDto) {
+    override fun setTimeSpinner(selectedDay: MovieDateDto) {
         selectTimeSpinner.adapter = getTimeSpinnerAdapter(selectedDay)
         selectTimeSpinner.setSelection(timeSpinnerPosition)
 
@@ -168,14 +172,11 @@ class MovieDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun getDateSpinnerAdapter(
-        startDate: LocalDate,
-        endDate: LocalDate,
-    ): ArrayAdapter<String> {
+    private fun getDateSpinnerAdapter(intervalDate: List<String>): ArrayAdapter<String> {
         val dateAdapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
-            ReservationDate(startDate, endDate).getIntervalDays(),
+            intervalDate,
         )
         dateAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
 
@@ -198,6 +199,17 @@ class MovieDetailActivity : AppCompatActivity() {
         outState.putInt(DATE_SPINNER_POSITION, dateSpinnerPosition)
         outState.putInt(TIME_SPINNER_POSITION, timeSpinnerPosition)
         super.onSaveInstanceState(outState)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     companion object {
