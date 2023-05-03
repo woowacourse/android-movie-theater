@@ -76,9 +76,6 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
     }
 
     companion object {
-        private val settingFragment = SettingFragment()
         internal const val PUSH_ALLOW_KEY = "push_allow_key"
-
-        fun getInstance(): SettingFragment = settingFragment
     }
 }

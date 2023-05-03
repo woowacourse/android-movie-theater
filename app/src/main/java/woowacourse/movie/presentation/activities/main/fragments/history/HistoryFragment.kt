@@ -40,10 +40,4 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
             ),
         )
     }
-
-    companion object {
-        private val historyFragment = HistoryFragment()
-
-        fun getInstance(): HistoryFragment = historyFragment
-    }
 }

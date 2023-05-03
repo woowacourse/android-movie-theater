@@ -59,9 +59,5 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     companion object {
         internal const val MOVIE_KEY = "movie_key"
         private const val DOWN_DIRECTION = 1
-
-        private val homeFragment = HomeFragment()
-
-        fun getInstance(): HomeFragment = homeFragment
     }
 }

@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
@@ -21,35 +22,68 @@ class MainActivity : AppCompatActivity() {
         if (isGranted) showToast(getString(R.string.permission_allowed))
     }
 
+    private val bottomNavigationView by lazy { findViewById<BottomNavigationView>(R.id.bottom_navigation_view) }
+
+    private lateinit var homeFragment: HomeFragment
+    private lateinit var settingFragment: SettingFragment
+    private lateinit var historyFragment: HistoryFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         requestNotificationPermission()
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
-        bottomNavigationView.selectedItemId = R.id.home
+        homeFragment = getFragment(TAG_HOME)
+        historyFragment = getFragment(TAG_HISTORY)
+        settingFragment = getFragment(TAG_SETTING)
+
+        initFragments()
+        initListener()
+    }
+
+    private fun initListener() {
         bottomNavigationView.setOnItemSelectedListener { menu ->
             when (menu.itemId) {
                 R.id.history -> {
-                    supportFragmentManager.commit {
-                        replace(R.id.fragment_container_view, HistoryFragment.getInstance())
-                    }
+                    changeShowFragment<HistoryFragment>()
                 }
-
                 R.id.home -> {
-                    supportFragmentManager.commit {
-                        replace(R.id.fragment_container_view, HomeFragment.getInstance())
-                    }
+                    changeShowFragment<HomeFragment>()
                 }
-
                 R.id.setting -> {
-                    supportFragmentManager.commit {
-                        replace(R.id.fragment_container_view, SettingFragment.getInstance())
-                    }
+                    changeShowFragment<SettingFragment>()
                 }
             }
             return@setOnItemSelectedListener true
         }
+    }
+
+    private inline fun <reified T : Fragment> changeShowFragment() {
+        supportFragmentManager.commit {
+            supportFragmentManager.fragments.forEach {
+                if (it is T) {
+                    show(it)
+                } else {
+                    hide(it)
+                }
+            }
+        }
+    }
+
+    private fun initFragments() {
+        supportFragmentManager.commit {
+            add(R.id.fragment_container_view, homeFragment, TAG_HOME)
+            add(R.id.fragment_container_view, historyFragment, TAG_HISTORY)
+            add(R.id.fragment_container_view, settingFragment, TAG_SETTING)
+            hide(historyFragment)
+            hide(settingFragment)
+        }
+        bottomNavigationView.selectedItemId = R.id.home
+    }
+
+    private inline fun <reified T : Fragment> getFragment(tag: String): T {
+        return supportFragmentManager.findFragmentByTag(tag) as? T
+            ?: T::class.java.getDeclaredConstructor().newInstance()
     }
 
     private fun requestNotificationPermission() {
@@ -58,5 +92,11 @@ class MainActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
+    }
+
+    companion object {
+        private const val TAG_HOME = "HOME"
+        private const val TAG_HISTORY = "HISTORY"
+        private const val TAG_SETTING = "SETTING"
     }
 }
