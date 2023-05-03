@@ -1,4 +1,4 @@
-package woowacourse.movie.view.viewholder
+package woowacourse.movie.fragment.movielist.adapter
 
 import android.view.View
 import android.widget.Button
@@ -8,7 +8,7 @@ import woowacourse.movie.view.data.MovieViewData
 import woowacourse.movie.view.widget.MovieController
 import woowacourse.movie.view.widget.MovieView
 
-class MovieInfoViewHolder(private val view: View, onClickItem: (Int) -> Unit) :
+class MovieInfoViewHolder(view: View, onClickItem: (Int) -> Unit) :
     RecyclerView.ViewHolder(view) {
     private val movieView: MovieView = MovieView(
         poster = view.findViewById(R.id.item_movie_poster),

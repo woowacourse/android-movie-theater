@@ -1,4 +1,4 @@
-package woowacourse.movie.view.adapter
+package woowacourse.movie.fragment.movielist.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +9,6 @@ import woowacourse.movie.view.data.MovieListViewData
 import woowacourse.movie.view.data.MovieListViewType
 import woowacourse.movie.view.data.MovieViewData
 import woowacourse.movie.view.data.MovieViewDatas
-import woowacourse.movie.view.viewholder.AdvertisementViewHolder
-import woowacourse.movie.view.viewholder.MovieInfoViewHolder
 
 class MovieAdapter(
     val movieViewDatas: MovieViewDatas,

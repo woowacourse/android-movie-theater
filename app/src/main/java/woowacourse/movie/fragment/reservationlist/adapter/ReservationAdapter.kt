@@ -1,4 +1,4 @@
-package woowacourse.movie.view.adapter
+package woowacourse.movie.fragment.reservationlist.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.view.data.ReservationViewData
 import woowacourse.movie.view.data.ReservationsViewData
-import woowacourse.movie.view.viewholder.ReservationViewHolder
 
 class ReservationAdapter(
     private val reservationsViewData: ReservationsViewData,

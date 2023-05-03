@@ -1,4 +1,4 @@
-package woowacourse.movie.view.viewholder
+package woowacourse.movie.fragment.reservationlist.adapter
 
 import android.view.View
 import android.widget.TextView

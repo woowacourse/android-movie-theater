@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.activity.ReservationResultActivity
-import woowacourse.movie.view.adapter.ReservationAdapter
+import woowacourse.movie.fragment.reservationlist.adapter.ReservationAdapter
 import woowacourse.movie.view.data.ReservationViewData
 import woowacourse.movie.view.data.ReservationsViewData
 
