@@ -7,7 +7,7 @@ object CinemaRepository {
     private val dummyMovies = MovieRepository.allMovies()
     private val dummyMovies2 = MovieRepository.allMovies2()
     private val cinemas: List<CinemaState> = listOf(
-        CinemaState("선릉", dummyMovies),
+        CinemaState("선릉aaaaaaaaaaaaaaa", dummyMovies),
         CinemaState("잠실", dummyMovies),
         CinemaState("강남", dummyMovies2),
         CinemaState("강남", emptyList())

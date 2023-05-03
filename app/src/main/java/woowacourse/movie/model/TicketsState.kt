@@ -6,16 +6,22 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class TicketsState(
+    val cinemaName: String,
     val movieState: MovieState,
     val dateTime: LocalDateTime,
     val positions: List<SeatPositionState>
 ) : Parcelable {
     companion object {
-        fun from(seatSelectState: SeatSelectState, seats: List<SeatPositionState>): TicketsState {
+        fun from(
+            cinemaName: String,
+            seatSelectState: SeatSelectState,
+            seats: List<SeatPositionState>
+        ): TicketsState {
             require(seatSelectState.countState.value == seats.size) {
                 ERROR_NO_MATCH_SEAT_SIZE
             }
             return TicketsState(
+                cinemaName,
                 seatSelectState.movieState,
                 seatSelectState.dateTime,
                 seats.toList()

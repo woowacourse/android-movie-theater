@@ -25,6 +25,7 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
     private val moneyTextView: TextView by lazy { findViewById(R.id.reservation_money) }
     private val confirmView: ConfirmView by lazy { findViewById(R.id.reservation_confirm) }
     private lateinit var seatSelectState: SeatSelectState
+    private lateinit var cinemaName: String
 
     private lateinit var seatTable: SeatTable
 
@@ -33,6 +34,8 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
 
         seatSelectState =
             intent.getParcelableExtraCompat(KEY_SEAT_SELECT) ?: return keyError(KEY_SEAT_SELECT)
+        cinemaName =
+            intent.getStringExtra(KEY_CINEMA_NAME) ?: return keyError(KEY_CINEMA_NAME)
 
         titleTextView.text = seatSelectState.movieState.title
 
@@ -70,7 +73,7 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
             negativeStringId = R.string.reservation_cancel,
             positiveStringId = R.string.reservation_complete
         ) {
-            val tickets = TicketsState.from(seatSelectState, seats)
+            val tickets = TicketsState.from(cinemaName, seatSelectState, seats)
             presenter.addTicket(tickets)
         }
     }
@@ -83,6 +86,7 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
         confirmView.isClickable = (positionStates.size == seatSelectState.countState.value)
 
         val tickets = TicketsState(
+            cinemaName,
             seatSelectState.movieState,
             seatSelectState.dateTime,
             positionStates.toList()
@@ -100,10 +104,12 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
 
     companion object {
         private const val KEY_SEAT_RESTORE = "key_seat_restore"
+        private const val KEY_CINEMA_NAME = "key_cinema_name"
         private const val KEY_SEAT_SELECT = "key_seat_select"
 
-        fun startActivity(context: Context, seatSelectState: SeatSelectState) {
+        fun startActivity(context: Context, cinema: String, seatSelectState: SeatSelectState) {
             val intent = Intent(context, SeatSelectActivity::class.java).apply {
+                putExtra(KEY_CINEMA_NAME, cinema)
                 putExtra(KEY_SEAT_SELECT, seatSelectState)
             }
             context.startActivity(intent)

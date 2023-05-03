@@ -5,6 +5,7 @@ import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import java.time.LocalDate
+import java.time.LocalTime
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import woowacourse.movie.model.MovieState
@@ -49,23 +50,16 @@ class MovieDetailPresenterTest {
         // given
         val view: MovieDetailActivity = mockk(relaxed = true)
         val presenter = MovieDetailPresenter(view)
-        val movie = MovieState(
-            imgId = 1,
-            title = "타이틀",
-            startDate = LocalDate.parse("2021-08-01"),
-            endDate = LocalDate.parse("2021-08-03"),
-            runningTime = 120,
-            description = "설명"
-        )
+        val movie = sampleMovieState
 
         // when
         val dates = presenter.getMovieRunningDates(movie)
 
         // then
-        assertEquals(dates.size, 3)
-        assertEquals(dates[0], LocalDate.parse("2021-08-01"))
-        assertEquals(dates[1], LocalDate.parse("2021-08-02"))
-        assertEquals(dates[2], LocalDate.parse("2021-08-03"))
+        assertEquals(dates.size, 4)
+        assertEquals(dates[0], LocalDate.parse("-999999999-01-01"))
+        assertEquals(dates[1], LocalDate.parse("-999999999-01-02"))
+        assertEquals(dates[2], LocalDate.parse("-999999999-01-03"))
     }
 
     @Test
@@ -73,12 +67,23 @@ class MovieDetailPresenterTest {
         // given
         val view: MovieDetailActivity = mockk(relaxed = true)
         val presenter = MovieDetailPresenter(view)
-        val date = LocalDate.parse("2021-08-01")
 
         // when
-        val times = presenter.getMovieRunningTimes(date)
+        val times = presenter.getMovieRunningTimes(sampleMovieState)
 
         // then
-        assertEquals(times.size, 8)
+        assertEquals(times.size, 2)
+    }
+
+    companion object {
+        val sampleMovieState = MovieState(
+            1,
+            "title",
+            LocalDate.MIN,
+            LocalDate.MIN.plusDays(3),
+            listOf(LocalTime.parse("10:00"), LocalTime.parse("12:00")),
+            152,
+            "description"
+        )
     }
 }

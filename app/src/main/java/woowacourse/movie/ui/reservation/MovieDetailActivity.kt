@@ -22,6 +22,7 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
     override var presenter: MovieDetailContract.Presenter = MovieDetailPresenter(this)
 
     private lateinit var movie: MovieState
+    private lateinit var cinemaName: String
 
     private lateinit var movieInfo: MovieInfo
     private lateinit var dateTimeSpinner: DateTimeSpinner
@@ -34,6 +35,8 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
     override fun onCreateView(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_movie_detail)
         movie = intent.getParcelableExtraCompat(KEY_MOVIE) ?: return keyError(KEY_MOVIE)
+        cinemaName = intent.getStringExtra(KEY_CINEMA_NAME) ?: return keyError(KEY_CINEMA_NAME)
+
         movieInfo = MovieInfo(rootView).also { it.setMovieState(movie) }
         when (savedInstanceState) {
             null -> initInstanceState()
@@ -53,7 +56,7 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
             dateTimeSpinner.getSelectDateTime(),
             presenter.count
         )
-        SeatSelectActivity.startActivity(this, seatSelectState)
+        SeatSelectActivity.startActivity(this, cinemaName, seatSelectState)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -96,9 +99,11 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
         private const val KEY_DATE = "key_reservation_date"
         private const val KEY_TIME = "key_reservation_time"
         private const val KEY_MOVIE = "key_movie"
+        private const val KEY_CINEMA_NAME = "key_cinema_name"
 
-        fun startActivity(context: Context, movie: MovieState) {
+        fun startActivity(context: Context, cinemaName: String, movie: MovieState) {
             val intent = Intent(context, MovieDetailActivity::class.java).apply {
+                putExtra(KEY_CINEMA_NAME, cinemaName)
                 putExtra(KEY_MOVIE, movie)
             }
             context.startActivity(intent)

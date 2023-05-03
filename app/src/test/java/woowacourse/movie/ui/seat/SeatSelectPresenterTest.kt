@@ -6,6 +6,7 @@ import io.mockk.slot
 import io.mockk.verify
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import woowacourse.movie.model.MoneyState
@@ -20,19 +21,9 @@ class SeatSelectPresenterTest {
         val view = mockk<SeatSelectContract.View>(relaxed = true)
         val presenter = SeatSelectPresenter(view)
         val slot = slot<MoneyState>()
-        val tickets = TicketsState(
-            MovieState(
-                1,
-                "title",
-                LocalDate.MIN,
-                LocalDate.MIN.plusDays(3),
-                152,
-                "description"
-            ),
-            LocalDateTime.MIN,
-            listOf(SeatPositionState(1, 1))
-        )
+        val tickets = sampleTicketsState
         every { view.setMoneyText(capture(slot)) } answers { println("slot = ${slot.captured}") }
+
         // when
         presenter.discountApply(tickets)
 
@@ -46,22 +37,28 @@ class SeatSelectPresenterTest {
         // given
         val view = mockk<SeatSelectContract.View>(relaxed = true)
         val presenter = SeatSelectPresenter(view)
-        val tickets = TicketsState(
+        val tickets = sampleTicketsState
+        // when
+        presenter.addTicket(tickets)
+
+        // then
+        verify { view.navigateToConfirmView(tickets) }
+    }
+
+    companion object {
+        val sampleTicketsState = TicketsState(
+            cinemaName = "cinemaName",
             MovieState(
                 1,
                 "title",
                 LocalDate.MIN,
                 LocalDate.MIN.plusDays(3),
+                listOf(LocalTime.parse("10:00"), LocalTime.parse("12:00")),
                 152,
                 "description"
             ),
             LocalDateTime.MIN,
             listOf(SeatPositionState(1, 1))
         )
-        // when
-        presenter.addTicket(tickets)
-
-        // then
-        verify { view.navigateToConfirmView(tickets) }
     }
 }

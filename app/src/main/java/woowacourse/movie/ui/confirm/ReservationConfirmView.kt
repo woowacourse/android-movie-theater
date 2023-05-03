@@ -31,7 +31,8 @@ class ReservationConfirmView(
         reservationCountTextView.text = view.context.getString(
             R.string.person_count_and_seat,
             tickets.positions.size,
-            tickets.positions.joinToString { it.toString() }
+            tickets.positions.joinToString { it.toString() },
+            tickets.cinemaName
         )
         presenter.setDiscountApplyMoney(tickets)
     }

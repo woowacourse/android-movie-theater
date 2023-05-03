@@ -32,12 +32,16 @@ class CinemaListBottomSheet(
     override fun setAdapter(cinemas: List<CinemaState>) {
         val adapter = CinemaListAdapter(
             cinemas = cinemas.map { CinemaItemModel(it, movie) }
-        ) { movie -> navigateMovieDetail(movie) }
+        ) { itemModel -> navigateMovieDetail(itemModel) }
         bottomSheetListView?.adapter = adapter
     }
 
-    private fun navigateMovieDetail(movie: MovieState) {
-        MovieDetailActivity.startActivity(requireContext(), movie)
+    private fun navigateMovieDetail(cinemaItemModel: CinemaItemModel) {
+        MovieDetailActivity.startActivity(
+            requireContext(),
+            cinemaItemModel.cinema.name,
+            cinemaItemModel.movie
+        )
     }
 
     override fun onDestroyView() {
