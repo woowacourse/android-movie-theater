@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import woowacourse.app.model.BookedMovie
 import woowacourse.app.model.main.MovieMapper.toUiModel
 import woowacourse.app.model.main.MovieUiModel
 import woowacourse.app.ui.seat.SeatActivity
@@ -106,7 +107,7 @@ class BookingActivity : AppCompatActivity() {
         findViewById<Button>(R.id.buttonBookingComplete).setOnClickListener {
             val dateTime = dateTimeSpinner.selectedDateTime
             val bookedMovie =
-                woowacourse.app.model.BookedMovie(movie.id, 0, ticketCount.value, dateTime)
+                BookedMovie(movie.id, 0, ticketCount.value, dateTime)
             startActivity(SeatActivity.getIntent(this, bookedMovie))
             finish()
         }
