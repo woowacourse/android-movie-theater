@@ -2,7 +2,6 @@ package woowacourse.app.ui.main
 
 import android.Manifest
 import android.app.NotificationManager
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -49,16 +48,13 @@ class SettingFragment : Fragment() {
 
     private fun setSwitch(settingSharePreference: SettingSharedPreference) {
         switch.isChecked = settingSharePreference.receivingPushAlarm
-        setSwitchCheckedChange(switch.context, settingSharePreference)
+        setSwitchCheckedChange(settingSharePreference)
     }
 
-    private fun setSwitchCheckedChange(
-        context: Context,
-        settingSharePreference: SettingSharedPreference,
-    ) {
-        switch.setOnCheckedChangeListener { _, isChecked ->
+    private fun setSwitchCheckedChange(settingSharePreference: SettingSharedPreference) {
+        switch.setOnCheckedChangeListener { switch, isChecked ->
             if (isChecked) {
-                requestNotificationPermission(context) {
+                switch.context.requestNotificationPermission {
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
             }

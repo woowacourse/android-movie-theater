@@ -9,9 +9,8 @@ import android.os.Build
 import androidx.core.content.ContextCompat
 import woowacourse.app.ui.seat.NotiChannel
 
-fun requestNotificationPermission(context: Context, launchAction: () -> Unit) {
-    val permission =
-        ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS)
+fun Context.requestNotificationPermission(launchAction: () -> Unit) {
+    val permission = ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
     if (permission == PackageManager.PERMISSION_DENIED) {
         checkTiramisu(launchAction)
     }
