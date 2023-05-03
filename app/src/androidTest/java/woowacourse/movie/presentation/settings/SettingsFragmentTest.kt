@@ -14,7 +14,6 @@ import org.junit.runner.RunWith
 import woowacourse.movie.MovieTheaterApplication
 import woowacourse.movie.R
 import woowacourse.movie.presentation.main.MainActivity
-import woowacourse.movie.presentation.util.SharedPreferenceUtil
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest

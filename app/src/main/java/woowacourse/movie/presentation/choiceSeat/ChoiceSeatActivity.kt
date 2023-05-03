@@ -22,13 +22,15 @@ import woowacourse.movie.domain.model.tools.seat.SeatGrade
 import woowacourse.movie.domain.model.tools.seat.SeatRow
 import woowacourse.movie.domain.model.tools.seat.Seats
 import woowacourse.movie.domain.model.tools.seat.Theater
+import woowacourse.movie.model.data.local.SettingPreference
+import woowacourse.movie.model.data.storage.SettingStorage
 import woowacourse.movie.presentation.complete.CompleteActivity
 import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.model.ReservationModel
-import woowacourse.movie.presentation.util.SharedPreferenceUtil
 
 class ChoiceSeatActivity : AppCompatActivity() {
 
+    private lateinit var settingStorage: SettingStorage
     private val seats: Seats = Seats()
     private var paymentAmount: Money = Money(INITIAL_PAYMENT_AMOUNT)
     private val reservation by lazy {
@@ -40,11 +42,15 @@ class ChoiceSeatActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initSettingStorage()
         setContentView(R.layout.activity_choice_seat)
         setTheaterSeat()
         initView()
     }
 
+    private fun initSettingStorage() {
+        settingStorage = SettingPreference(this)
+    }
     private fun initReservation() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         intent.getParcelableExtra(RESERVATION, ReservationModel::class.java)
             ?: throw IllegalArgumentException()
@@ -84,7 +90,7 @@ class ChoiceSeatActivity : AppCompatActivity() {
         val movie = MovieData.findMovieById(reservation.movieId).toPresentation()
         val ticketModel = movie.reserve(reservation, seats)
         BookedTickets.tickets.add(ticketModel)
-        if (SharedPreferenceUtil.getNotificationSettings()) MovieNoticeAlarmManager(
+        if (settingStorage.getNotificationSettings()) MovieNoticeAlarmManager(
             this,
             ticketModel
         ).setAlarm(ticketModel.bookedDateTime)

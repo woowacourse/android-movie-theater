@@ -4,32 +4,46 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
+import woowacourse.movie.model.data.local.SettingPreference
+import woowacourse.movie.model.data.storage.SettingStorage
 import woowacourse.movie.presentation.bookedticketlist.BookedTicketsFragment
 import woowacourse.movie.presentation.movielist.MovieListFragment
 import woowacourse.movie.presentation.settings.SettingsFragment
-import woowacourse.movie.presentation.util.SharedPreferenceUtil
 import woowacourse.movie.presentation.util.replace
 
 class MainActivity : AppCompatActivity() {
 
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean ->
-        SharedPreferenceUtil.setNotificationSettings(isGranted)
-    }
+    private lateinit var settingStorage: SettingStorage
+
+    private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        initSettingStorage()
+        initRequestPermissionLauncher()
         setInitialFragment()
         initBottomNavigation()
         requestNotificationPermission()
+    }
+
+    private fun initRequestPermissionLauncher() {
+        requestPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            settingStorage.setNotificationSettings(isGranted)
+        }
+    }
+
+    private fun initSettingStorage() {
+        settingStorage = SettingPreference(this)
     }
 
     private fun requestNotificationPermission() {
