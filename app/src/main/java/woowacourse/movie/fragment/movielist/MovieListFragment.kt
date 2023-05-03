@@ -12,8 +12,11 @@ import woowacourse.movie.view.adapter.MovieAdapter
 import woowacourse.movie.view.data.MovieListViewData
 import woowacourse.movie.view.data.MovieListViewType
 import woowacourse.movie.view.data.MovieViewData
+import woowacourse.movie.view.data.MovieViewDatas
 
-class MovieListFragment : Fragment() {
+class MovieListFragment : Fragment(), MovieListContract.View {
+    override lateinit var presenter: MovieListContract.Presenter
+    private lateinit var movieViewDatas: MovieViewDatas
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,12 +28,20 @@ class MovieListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        presenter = MovieListPresenter(this)
+        presenter.loadMovieListData()
+
         makeMovieRecyclerView(view)
+    }
+
+    override fun setMovieListData(movieViewDatas: MovieViewDatas) {
+        this.movieViewDatas = movieViewDatas
     }
 
     private fun makeMovieRecyclerView(view: View) {
         val movieRecyclerView = view.findViewById<RecyclerView>(R.id.main_movie_list)
-        movieRecyclerView.adapter = MovieAdapter(::onClickItem)
+        movieRecyclerView.adapter = MovieAdapter(movieViewDatas, ::onClickItem)
     }
 
     private fun onClickItem(view: View, data: MovieListViewData) {

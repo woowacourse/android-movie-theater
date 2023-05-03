@@ -5,8 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.fragment.movielist.MovieListAdapterPresenter
-import woowacourse.movie.fragment.movielist.MovieListContract
 import woowacourse.movie.view.data.MovieListViewData
 import woowacourse.movie.view.data.MovieListViewType
 import woowacourse.movie.view.data.MovieViewData
@@ -15,18 +13,9 @@ import woowacourse.movie.view.viewholder.AdvertisementViewHolder
 import woowacourse.movie.view.viewholder.MovieInfoViewHolder
 
 class MovieAdapter(
+    val movieViewDatas: MovieViewDatas,
     val onClickItem: (view: View, data: MovieListViewData) -> Unit
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), MovieListContract.View {
-    private lateinit var movieViewDatas: MovieViewDatas
-    override var presenter: MovieListContract.Presenter = MovieListAdapterPresenter(this)
-
-    init {
-        presenter.loadMovieListData()
-    }
-
-    override fun setMovieListData(movieViewDatas: MovieViewDatas) {
-        this.movieViewDatas = movieViewDatas
-    }
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (MovieListViewType.values()[viewType]) {

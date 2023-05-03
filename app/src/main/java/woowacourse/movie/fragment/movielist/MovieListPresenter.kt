@@ -11,7 +11,7 @@ import woowacourse.movie.view.data.MovieViewDatas
 import woowacourse.movie.view.mapper.AdvertisementMapper.toView
 import woowacourse.movie.view.mapper.MovieMapper.toView
 
-class MovieListAdapterPresenter(
+class MovieListPresenter(
     private val view: MovieListContract.View
 ) : MovieListContract.Presenter {
 
