@@ -2,6 +2,7 @@ package woowacourse.app.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import woowacourse.app.model.main.MovieUiModel
 import woowacourse.domain.PaymentType
 import java.time.LocalDateTime
 
@@ -11,7 +12,7 @@ data class ReservationUiModel(
     val tickets: Set<TicketUiModel>,
     val paymentType: PaymentType = PaymentType.OFFLINE,
     val payment: Int,
-    val movieId: Long,
+    val movie: MovieUiModel,
     val movieTitle: String,
     val bookedDateTime: LocalDateTime,
     val count: Int,

@@ -16,7 +16,6 @@ import woowacourse.app.util.formatScreenDateTime
 import woowacourse.app.util.getParcelable
 import woowacourse.app.util.requestNotificationPermission
 import woowacourse.app.util.shortToast
-import woowacourse.domain.movie.MovieRepository
 import woowacourse.movie.R
 
 class CompletedActivity : AppCompatActivity() {
@@ -54,7 +53,7 @@ class CompletedActivity : AppCompatActivity() {
     }
 
     private fun initView(reservation: ReservationUiModel) {
-        val movie = MovieRepository.getMovie(reservation.movieId)
+        val movie = reservation.movie
         findViewById<TextView>(R.id.textCompletedTitle).text = movie.title
         findViewById<TextView>(R.id.textCompletedScreeningDate).text =
             reservation.bookedDateTime.formatScreenDateTime()

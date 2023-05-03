@@ -5,8 +5,7 @@ object AdvertisementDatabase {
         AdvertisementEntity(0, "https://woowacourse.github.io/"),
     )
 
-    fun selectAdvertisement(id: Long): AdvertisementEntity {
+    fun selectAdvertisement(id: Long): AdvertisementEntity? {
         return advertisements.find { it.id == id }
-            ?: throw NoSuchElementException()
     }
 }

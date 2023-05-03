@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.app.model.main.MainModelHandler
 import woowacourse.app.ui.booking.BookingActivity
 import woowacourse.app.ui.main.adapter.recyclerview.MainAdapter
+import woowacourse.app.usecase.main.MainUseCase
+import woowacourse.data.advertisement.AdvertisementRepositoryImpl
+import woowacourse.data.movie.MovieRepositoryImpl
 import woowacourse.movie.R
 
 class HomeFragment : Fragment() {
@@ -34,7 +36,12 @@ class HomeFragment : Fragment() {
             { clickAdvertisement(it) },
         )
         view.findViewById<RecyclerView>(R.id.listMainMovie).adapter = mainAdapter
-        mainAdapter.initMovies(MainModelHandler.getMainData())
+        mainAdapter.initMovies(
+            MainUseCase(
+                AdvertisementRepositoryImpl(),
+                MovieRepositoryImpl(),
+            ).getMainData(),
+        )
     }
 
     private fun clickBook(movieId: Long) {

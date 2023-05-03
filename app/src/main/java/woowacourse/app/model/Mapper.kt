@@ -50,7 +50,7 @@ object Mapper {
             tickets = this.tickets.map { it.toUiModel() }.toSet(),
             paymentType = this.paymentType,
             payment = this.payment,
-            movieId = this.movieId,
+            movie = this.movie.toUiModel(),
             movieTitle = this.tickets.first().movie.title,
             bookedDateTime = this.bookedDateTime,
             count = this.count,

@@ -1,4 +1,4 @@
-package woowacourse.data.bookingHistory
+package woowacourse.data.reservation
 
 data class SeatEntity(
     val rank: Int,

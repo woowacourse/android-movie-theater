@@ -9,5 +9,5 @@ data class Ticket(
     val bookedDateTime: LocalDateTime,
     val seat: Seat,
 ) {
-    val price get() = TicketPriceAdapter().getPayment(this)
+    val price get() = TicketPriceAdapter.getPayment(this)
 }

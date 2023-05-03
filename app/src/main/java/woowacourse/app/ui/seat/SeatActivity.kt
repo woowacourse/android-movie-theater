@@ -11,16 +11,19 @@ import woowacourse.app.model.Mapper.toDomainModel
 import woowacourse.app.model.Mapper.toUiModel
 import woowacourse.app.model.SelectedSeatUiModel
 import woowacourse.app.ui.completed.CompletedActivity
+import woowacourse.app.usecase.movie.MovieUseCase
+import woowacourse.app.usecase.theater.TheaterUseCase
 import woowacourse.app.util.getParcelable
 import woowacourse.app.util.getParcelableBundle
 import woowacourse.app.util.shortToast
+import woowacourse.data.movie.MovieRepositoryImpl
+import woowacourse.data.reservation.ReservationRepositoryImpl
+import woowacourse.data.theater.TheaterRepositoryImpl
 import woowacourse.domain.BoxOffice
 import woowacourse.domain.SelectResult
 import woowacourse.domain.SelectedSeat
 import woowacourse.domain.movie.Movie
-import woowacourse.domain.movie.MovieRepository
 import woowacourse.domain.theater.Theater
-import woowacourse.domain.theater.TheaterRepository
 import woowacourse.domain.ticket.Seat
 import woowacourse.movie.R
 
@@ -65,8 +68,8 @@ class SeatActivity : AppCompatActivity() {
         bookedMovie =
             intent.getParcelable(BOOKED_MOVIE, woowacourse.app.model.BookedMovie::class.java)
                 ?: return finish()
-        movie = MovieRepository.getMovie(bookedMovie.movieId)
-        theater = TheaterRepository.getTheater(bookedMovie.theaterId)
+        movie = MovieUseCase(MovieRepositoryImpl()).getMovie(bookedMovie.movieId) ?: return finish()
+        theater = TheaterUseCase(TheaterRepositoryImpl()).getTheater(bookedMovie.theaterId) ?: return finish()
         selectedSeat = SelectedSeat(bookedMovie.ticketCount)
     }
 
@@ -115,7 +118,11 @@ class SeatActivity : AppCompatActivity() {
 
     private fun completeBooking() {
         val reservation =
-            BoxOffice.makeReservation(movie, bookedMovie.bookedDateTime, selectedSeat.seats)
+            BoxOffice(ReservationRepositoryImpl()).makeReservation(
+                movie,
+                bookedMovie.bookedDateTime,
+                selectedSeat.seats,
+            )
         ScreeningTimeReminder(this, reservation.toUiModel())
         startActivity(CompletedActivity.getIntent(this, reservation.toUiModel()))
         finish()
@@ -136,7 +143,11 @@ class SeatActivity : AppCompatActivity() {
         textPayment.text =
             getString(
                 R.string.won,
-                BoxOffice.getPayment(movie, bookedMovie.bookedDateTime, selectedSeat.seats),
+                BoxOffice(ReservationRepositoryImpl()).getPayment(
+                    movie,
+                    bookedMovie.bookedDateTime,
+                    selectedSeat.seats,
+                ),
             )
     }
 

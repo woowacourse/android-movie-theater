@@ -7,7 +7,7 @@ import woowacourse.domain.ticket.Seat
 import woowacourse.domain.ticket.Ticket
 import java.time.LocalDateTime
 
-object BoxOffice {
+class BoxOffice(private val reservationRepository: ReservationRepository) {
 
     fun createTickets(
         movie: Movie,
@@ -26,9 +26,7 @@ object BoxOffice {
     }
 
     fun makeReservation(tickets: Set<Ticket>): Reservation {
-        val reservation = Reservation(tickets)
-        ReservationRepository.addReservation(reservation)
-        return reservation
+        return reservationRepository.makeReservation(tickets)
     }
 
     fun makeReservation(
@@ -37,8 +35,6 @@ object BoxOffice {
         seats: Set<Seat>,
     ): Reservation {
         val tickets = createTickets(movie, bookedDateTime, seats)
-        val reservation = Reservation(tickets.toSet())
-        ReservationRepository.addReservation(reservation)
-        return reservation
+        return makeReservation(tickets.toSet())
     }
 }

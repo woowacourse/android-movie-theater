@@ -110,7 +110,7 @@ object MovieDatabase {
         ),
     )
 
-    fun selectMovie(id: Long): MovieEntity {
-        return movies.find { it.id == id } ?: throw NoSuchElementException()
+    fun selectMovie(id: Long): MovieEntity? {
+        return movies.find { it.id == id }
     }
 }

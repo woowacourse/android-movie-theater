@@ -8,8 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.app.model.Mapper.toUiModel
 import woowacourse.app.ui.completed.CompletedActivity
+import woowacourse.app.usecase.reservation.ReservationUseCase
 import woowacourse.app.util.shortToast
-import woowacourse.domain.reservation.ReservationRepository
+import woowacourse.data.reservation.ReservationRepositoryImpl
 import woowacourse.movie.R
 
 class BookingHistoryFragment : Fragment() {
@@ -28,11 +29,11 @@ class BookingHistoryFragment : Fragment() {
         val recyclerView = requireActivity().findViewById<RecyclerView>(R.id.recyclerBookingHistory)
         val adapter = BookingHistoryAdapter(::itemClicked)
         recyclerView.adapter = adapter
-        adapter.initList(ReservationRepository.getReservations().map { it.toUiModel() })
+        adapter.initList(ReservationUseCase(ReservationRepositoryImpl()).getReservations().map { it.toUiModel() })
     }
 
     private fun itemClicked(id: Long) {
-        val reservation = ReservationRepository.getReservation(id)
+        val reservation = ReservationUseCase(ReservationRepositoryImpl()).getReservation(id)
         if (reservation == null) {
             noSuchElement()
             return
@@ -45,6 +46,6 @@ class BookingHistoryFragment : Fragment() {
     }
 
     private fun noSuchElement() {
-        requireContext().shortToast(R.string.error_no_such_booking)
+        requireContext().shortToast(R.string.error_no_such_reservation)
     }
 }

@@ -1,9 +1,9 @@
-package woowacourse.data.bookingHistory
+package woowacourse.data.reservation
 
 import woowacourse.data.movie.MovieEntity
 import java.time.LocalDateTime
 
-data class BookingEntity(
+data class ReservationEntity(
     val id: Long,
     val movie: MovieEntity,
     val bookedDateTime: LocalDateTime,
