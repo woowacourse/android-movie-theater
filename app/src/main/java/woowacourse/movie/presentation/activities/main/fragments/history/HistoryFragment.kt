@@ -2,7 +2,6 @@ package woowacourse.movie.presentation.activities.main.fragments.history
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +13,6 @@ import woowacourse.movie.presentation.activities.main.fragments.history.contract
 import woowacourse.movie.presentation.activities.main.fragments.history.contract.presenter.HistoryPresenter
 import woowacourse.movie.presentation.activities.main.fragments.history.recyclerview.HistoryListAdapter
 import woowacourse.movie.presentation.activities.ticketingresult.TicketingResultActivity
-import woowacourse.movie.presentation.extensions.getParcelableCompat
 import woowacourse.movie.presentation.model.Reservation
 import woowacourse.movie.presentation.model.movieitem.ListItem
 
@@ -26,7 +24,6 @@ class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.Vie
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         presenter.attach(this)
-        addHistoryFromBundle()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,10 +31,8 @@ class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.Vie
         initRecyclerView()
     }
 
-    private fun addHistoryFromBundle() {
-        arguments?.getParcelableCompat<Reservation>(RESERVATION_KEY)?.let {
-            presenter.addHistory(it)
-        }
+    fun addHistory(reservation: Reservation?) {
+        reservation?.let { presenter.addHistory(it) }
     }
 
     private fun initRecyclerView() {
@@ -77,11 +72,6 @@ class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.Vie
     }
 
     companion object {
-        private val historyFragment = HistoryFragment()
-        private const val RESERVATION_KEY = "reservation_key"
-
-        fun newInstance(reservation: Reservation? = null): HistoryFragment = historyFragment.apply {
-            arguments = bundleOf(RESERVATION_KEY to reservation)
-        }
+        internal const val TAG = "HistoryFragment"
     }
 }

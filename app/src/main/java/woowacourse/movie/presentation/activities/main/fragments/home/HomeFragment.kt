@@ -69,8 +69,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeContract.View {
     }
 
     companion object {
-        private val homeFragment = HomeFragment()
-
-        fun newInstance(): HomeFragment = homeFragment
+        internal const val TAG = "HomeFragment"
     }
 }

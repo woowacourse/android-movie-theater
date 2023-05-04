@@ -10,16 +10,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
+import woowacourse.movie.presentation.activities.main.contract.MainContract
+import woowacourse.movie.presentation.activities.main.contract.presenter.MainPresenter
 import woowacourse.movie.presentation.activities.main.fragments.history.HistoryFragment
 import woowacourse.movie.presentation.activities.main.fragments.home.HomeFragment
 import woowacourse.movie.presentation.activities.main.fragments.setting.SettingFragment
 import woowacourse.movie.presentation.extensions.checkPermissions
 import woowacourse.movie.presentation.extensions.getParcelableCompat
-import woowacourse.movie.presentation.extensions.replaceFragment
+import woowacourse.movie.presentation.extensions.showFragmentByTag
 import woowacourse.movie.presentation.extensions.showToast
 import woowacourse.movie.presentation.model.Reservation
+import woowacourse.movie.presentation.model.mainstate.MainScreenState
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContract.View {
+    override val presenter: MainContract.Presenter = MainPresenter()
+
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
@@ -29,22 +34,53 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        requestNotificationPermission()
+        presenter.attach(this)
+    }
 
+    override fun initView() {
+        requestNotificationPermission()
+        initBottomNavigationView()
+        showHomeScreen()
+    }
+
+    override fun onSaveInstanceState(bundle: Bundle) {
+        super.onSaveInstanceState(bundle)
+        bundle.putParcelable(MAIN_SCREEN_STATE_KEY, presenter.getState())
+    }
+
+    override fun onRestoreInstanceState(bundle: Bundle) {
+        super.onRestoreInstanceState(bundle)
+        bundle.getParcelableCompat<MainScreenState>(MAIN_SCREEN_STATE_KEY)
+            ?.let { presenter.setState(it) }
+    }
+
+    private fun initBottomNavigationView() {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
         bottomNavigationView.selectedItemId = R.id.home
         bottomNavigationView.setOnItemSelectedListener { menu ->
             when (menu.itemId) {
-                R.id.menu -> replaceFragment(HistoryFragment.newInstance())
-                R.id.home -> replaceFragment(HomeFragment.newInstance())
-                R.id.setting -> replaceFragment(SettingFragment.newInstance())
+                R.id.history -> presenter.onShowHistoryScreen()
+                R.id.home -> presenter.onShowHomeScreen()
+                R.id.setting -> presenter.onShowSettingScreen()
             }
             return@setOnItemSelectedListener true
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        replaceFragment(R.id.fragment_container_view, fragment)
+    override fun showHistoryScreen() {
+        showScreen<HistoryFragment>(HistoryFragment.TAG)
+    }
+
+    override fun showHomeScreen() {
+        showScreen<HomeFragment>(HomeFragment.TAG)
+    }
+
+    override fun showSettingScreen() {
+        showScreen<SettingFragment>(SettingFragment.TAG)
+    }
+
+    private inline fun <reified T : Fragment> showScreen(tag: String) {
+        showFragmentByTag<T>(R.id.fragment_container_view, tag)
     }
 
     private fun requestNotificationPermission() {
@@ -58,13 +94,21 @@ class MainActivity : AppCompatActivity() {
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        intent?.getParcelableCompat<Reservation>(RESERVATION_KEY)?.let {
-            replaceFragment(HistoryFragment.newInstance())
+        if (presenter.wasShownHistory()) {
+            val historyFragment = supportFragmentManager
+                .findFragmentByTag(HistoryFragment.TAG) as HistoryFragment
+            historyFragment.addHistory(intent?.getParcelableCompat(RESERVATION_KEY))
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.detach()
     }
 
     companion object {
         private const val RESERVATION_KEY = "reservation_key"
+        private const val MAIN_SCREEN_STATE_KEY = "main_screen_state_key"
 
         fun getIntent(context: Context, reservation: Reservation): Intent =
             Intent(context, MainActivity::class.java)

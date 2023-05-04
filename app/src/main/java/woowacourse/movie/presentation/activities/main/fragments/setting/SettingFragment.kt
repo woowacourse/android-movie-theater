@@ -74,8 +74,6 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
     }
 
     companion object {
-        private val settingFragment = SettingFragment()
-
-        fun newInstance(): SettingFragment = settingFragment
+        internal const val TAG = "SettingFragment"
     }
 }
