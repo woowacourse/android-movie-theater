@@ -9,8 +9,7 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.woowacourse.data.database.reservation.ReservationDatabase
-import com.woowacourse.data.database.reservation.history.dao.HistoryDao
+import com.woowacourse.data.database.reservation.history.dao.ReservationDao
 import com.woowacourse.data.datasource.history.local.LocalHistoryDataSource
 import com.woowacourse.data.repository.history.local.LocalHistoryRepository
 import woowacourse.movie.R
@@ -36,14 +35,8 @@ import woowacourse.movie.presentation.model.TicketingState
 import woowacourse.movie.presentation.receiver.ReservationPushReceiver
 
 class SeatPickerActivity : AppCompatActivity(), View.OnClickListener, SeatPickerContract.View {
-    override val presenter: SeatPickerContract.Presenter by lazy {
-        SeatPickerPresenter(
-            ticketingState = intent.getParcelableCompat(TICKETING_STATE_KEY)!!,
-            historyRepository = LocalHistoryRepository(
-                LocalHistoryDataSource(HistoryDao(ReservationDatabase(this)))
-            ),
-        )
-    }
+    override val presenter: SeatPickerContract.Presenter by lazy { makePresenter() }
+
     private val seatViews: MutableList<View> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -162,6 +155,13 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener, SeatPicker
         presenter.detach()
         super.onDestroy()
     }
+
+    private fun makePresenter(): SeatPickerContract.Presenter = SeatPickerPresenter(
+        ticketingState = intent.getParcelableCompat(TICKETING_STATE_KEY)!!,
+        historyRepository = LocalHistoryRepository(
+            LocalHistoryDataSource(ReservationDao(this))
+        ),
+    )
 
     companion object {
         internal const val PICKED_SEATS_KEY = "picked_seats_key"

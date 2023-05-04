@@ -5,6 +5,9 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import com.woowacourse.data.database.reservation.history.dao.ReservationDao
+import com.woowacourse.data.datasource.history.local.LocalHistoryDataSource
+import com.woowacourse.data.repository.history.local.LocalHistoryRepository
 import woowacourse.movie.R
 import woowacourse.movie.presentation.activities.main.fragments.history.contract.HistoryContract
 import woowacourse.movie.presentation.activities.main.fragments.history.contract.presenter.HistoryPresenter
@@ -13,9 +16,15 @@ import woowacourse.movie.presentation.activities.ticketingresult.TicketingResult
 import woowacourse.movie.presentation.model.movieitem.ListItem
 
 class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.View {
-    override val presenter: HistoryContract.Presenter = HistoryPresenter()
+    override val presenter: HistoryContract.Presenter by lazy {
+        HistoryPresenter(
+            historyRepository = LocalHistoryRepository(
+                LocalHistoryDataSource(ReservationDao(requireContext()))
+            )
+        )
+    }
 
-    private val historyAdapter = HistoryListAdapter(presenter::onClickItem)
+    private val historyAdapter by lazy { HistoryListAdapter(presenter::onClickItem) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,6 +49,10 @@ class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.Vie
         historyAdapter.appendAll(items)
     }
 
+    override fun showAddedHistory(item: List<ListItem>) {
+        historyAdapter.append(item)
+    }
+
     override fun showDetails(item: ListItem) {
         startActivity(TicketingResultActivity.getIntent(requireContext(), item))
     }
@@ -48,6 +61,12 @@ class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.Vie
         super.onDestroyView()
         presenter.detach()
     }
+
+    private fun makePresenter(): HistoryContract.Presenter = HistoryPresenter(
+        historyRepository = LocalHistoryRepository(
+            LocalHistoryDataSource(ReservationDao(requireContext()))
+        )
+    )
 
     companion object {
         private val historyFragment = HistoryFragment()

@@ -20,4 +20,9 @@ class HistoryListAdapter(
         items.addAll(newItems)
         notifyItemRangeChanged(items.size, newItems.size)
     }
+
+    fun append(newItem: List<ListItem>) {
+        items.addAll(newItem)
+        notifyItemInserted(items.size - 1)
+    }
 }

@@ -7,6 +7,7 @@ interface HistoryContract {
         val presenter: Presenter
 
         fun showExtraHistories(items: List<ListItem>)
+        fun showAddedHistory(item: List<ListItem>)
         fun showDetails(item: ListItem)
     }
 

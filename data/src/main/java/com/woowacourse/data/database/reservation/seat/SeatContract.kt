@@ -22,8 +22,7 @@ object SeatContract {
 
     object Entry : BaseColumns {
         internal const val TABLE_NAME = "seat"
-        internal const val COLUMN_MOVIE_ID =
-            "${HistoryContract.Entry.TABLE_NAME}${BaseColumns._ID}"
+        internal const val COLUMN_MOVIE_ID = HistoryContract.Entry.TABLE_NAME + _ID
         internal const val COLUMN_ROW = "row"
         internal const val COLUMN_COL = "col"
     }

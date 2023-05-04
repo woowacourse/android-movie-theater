@@ -10,6 +10,12 @@ data class MovieDate(
     fun transform(): String = TRANSFORM_FORMAT.format(year, month, day)
 
     companion object {
-        private const val TRANSFORM_FORMAT = "%04d-%02d-%02d"
+        private const val DELIMITERS = "-"
+        private const val TRANSFORM_FORMAT = "%04d$DELIMITERS%02d$DELIMITERS%02d"
+
+        fun of(date: String): MovieDate {
+            val (year, month, day) = date.split(DELIMITERS).map { it.toInt() }
+            return MovieDate(year, month, day)
+        }
     }
 }

@@ -1,11 +1,16 @@
 package woowacourse.movie.presentation.activities.main.fragments.history.contract.presenter
 
+import com.woowacourse.data.repository.history.HistoryRepository
+import woowacourse.movie.domain.model.reservation.DomainReservation
 import woowacourse.movie.presentation.activities.main.fragments.history.contract.HistoryContract
+import woowacourse.movie.presentation.mapper.toPresentation
 import woowacourse.movie.presentation.model.Reservation
 import woowacourse.movie.presentation.model.movieitem.ListItem
 
-class HistoryPresenter : HistoryContract.Presenter() {
-    private val loadedHistories = mutableSetOf<ListItem>()
+class HistoryPresenter(
+    private val historyRepository: HistoryRepository,
+) : HistoryContract.Presenter() {
+    private val loadedHistories = mutableSetOf<DomainReservation>()
 
     override fun attach(view: HistoryContract.View) {
         super.attach(view)
@@ -13,10 +18,10 @@ class HistoryPresenter : HistoryContract.Presenter() {
     }
 
     override fun loadHistories() {
-        val newHistories = Reservation.provideDummy()
+        val newHistories = historyRepository.getAll()
 
         loadedHistories.addAll(newHistories)
-        requireView().showExtraHistories(newHistories)
+        requireView().showExtraHistories(newHistories.map { it.toPresentation() })
     }
 
     override fun onClickItem(item: ListItem) {
