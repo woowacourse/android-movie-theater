@@ -13,11 +13,13 @@ import woowacourse.movie.R
 import woowacourse.movie.contract.MovieReservationContract
 import woowacourse.movie.data.LocalFormattedDate
 import woowacourse.movie.data.LocalFormattedTime
+import woowacourse.movie.data.MovieScheduleViewData
 import woowacourse.movie.data.MovieViewData
 import woowacourse.movie.data.ReservationDetailViewData
 import woowacourse.movie.data.TheaterViewData
 import woowacourse.movie.error.ActivityError.finishWithError
 import woowacourse.movie.error.ViewError
+import woowacourse.movie.mapper.MovieScheduleMapper.toDomain
 import woowacourse.movie.presenter.MovieReservationPresenter
 import woowacourse.movie.system.BundleStateContainer
 import woowacourse.movie.system.StateContainer
@@ -30,7 +32,7 @@ import woowacourse.movie.view.widget.TimeSpinner
 import java.time.LocalDateTime
 
 class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.View {
-    override val presenter: MovieReservationContract.Presenter = MovieReservationPresenter(this)
+    override lateinit var presenter: MovieReservationContract.Presenter
 
     private val counterText: TextView by lazy {
         findViewById(R.id.movie_reservation_people_count)
@@ -71,11 +73,18 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         val movie =
             intent.extras?.getSerializableCompat<MovieViewData>(MovieViewData.MOVIE_EXTRA_NAME)
                 ?: return finishWithError(ViewError.MissingExtras(MovieViewData.MOVIE_EXTRA_NAME))
+        val movieSchedule =
+            intent.extras?.getSerializableCompat<MovieScheduleViewData>(MovieScheduleViewData.MOVIE_SCHEDULE_EXTRA_NAME)
+                ?: return finishWithError(ViewError.MissingExtras(MovieScheduleViewData.MOVIE_SCHEDULE_EXTRA_NAME))
+        val theaterName =
+            intent.extras?.getSerializableCompat<String>(TheaterViewData.THEATER_EXTRA_NAME)
+                ?: return finishWithError(ViewError.MissingExtras(TheaterViewData.THEATER_EXTRA_NAME))
 
+        presenter = MovieReservationPresenter(this, movieSchedule = movieSchedule.toDomain())
         presenter.initActivity(movie)
         makeCounterListener()
         makeSpinners(savedInstanceState, movie)
-        makeReservationButtonClickListener(movie)
+        makeReservationButtonClickListener(movie, theaterName)
     }
 
     override fun setMovieData(movie: MovieViewData) {
@@ -105,9 +114,10 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
 
     override fun startReservationResultActivity(
         reservationDetail: ReservationDetailViewData,
-        movie: MovieViewData
+        movie: MovieViewData,
+        theaterName: String
     ) {
-        SeatSelectionActivity.from(this, movie, reservationDetail).run {
+        SeatSelectionActivity.from(this, movie, reservationDetail, theaterName).run {
             startActivity(this)
         }
     }
@@ -136,18 +146,19 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
                     position: Int,
                     p3: Long
                 ) {
-                    presenter.selectDate(dateSpinner.dates[position].date)
+                    presenter.selectDate()
                     timeSpinner.make(savedInstanceState)
                 }
             }
     }
 
     private fun makeReservationButtonClickListener(
-        movie: MovieViewData
+        movie: MovieViewData,
+        theaterName: String
     ) {
         findViewById<Button>(R.id.movie_reservation_button).setOnClickListener {
             val date = makeReservationDate(dateSpinner, timeSpinner)
-            presenter.reserveMovie(date, movie)
+            presenter.reserveMovie(date, movie, theaterName)
         }
     }
 
@@ -178,10 +189,16 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         private const val COUNT_FACTOR = 1
         private const val DATE_SPINNER_SAVE_STATE_KEY = "date_spinner"
         private const val TIME_SPINNER_SAVE_STATE_KEY = "time_spinner"
-        fun from(context: Context, movie: MovieViewData, theater: TheaterViewData): Intent {
+        fun from(
+            context: Context,
+            movie: MovieViewData,
+            movieScheduleViewData: MovieScheduleViewData,
+            theaterName: String
+        ): Intent {
             return Intent(context, MovieReservationActivity::class.java).apply {
                 putExtra(MovieViewData.MOVIE_EXTRA_NAME, movie)
-                putExtra(TheaterViewData.THEATER_EXTRA_NAME, theater)
+                putExtra(MovieScheduleViewData.MOVIE_SCHEDULE_EXTRA_NAME, movieScheduleViewData)
+                putExtra(TheaterViewData.THEATER_EXTRA_NAME, theaterName)
             }
         }
     }

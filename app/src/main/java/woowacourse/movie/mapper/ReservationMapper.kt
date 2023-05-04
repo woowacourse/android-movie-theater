@@ -17,7 +17,8 @@ object ReservationMapper : Mapper<Reservation, ReservationViewData> {
             movie.toView(),
             reservationDetail.toView(),
             seats.toView(),
-            PriceViewData(price.value)
+            PriceViewData(price.value),
+            theaterName
         )
     }
 
@@ -26,7 +27,8 @@ object ReservationMapper : Mapper<Reservation, ReservationViewData> {
             movie.toDomain(),
             reservationDetail.toDomain(),
             seats.toDomain(),
-            Price(price.value)
+            Price(price.value),
+            theaterName
         )
     }
 }

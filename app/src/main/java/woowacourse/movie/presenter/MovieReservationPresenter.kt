@@ -4,22 +4,16 @@ import woowacourse.movie.contract.MovieReservationContract
 import woowacourse.movie.data.LocalFormattedTime
 import woowacourse.movie.data.MovieViewData
 import woowacourse.movie.domain.Count
+import woowacourse.movie.domain.MovieSchedule
 import woowacourse.movie.domain.ReservationDetail
-import woowacourse.movie.domain.movieTimePolicy.MovieTime
-import woowacourse.movie.domain.movieTimePolicy.MovieTimePolicy
-import woowacourse.movie.domain.movieTimePolicy.WeekdayMovieTimePolicy
-import woowacourse.movie.domain.movieTimePolicy.WeekendMovieTimePolicy
 import woowacourse.movie.mapper.ReservationDetailMapper.toView
 import woowacourse.movie.system.StateContainer
-import java.time.LocalDate
 import java.time.LocalDateTime
 
 class MovieReservationPresenter(
     override val view: MovieReservationContract.View,
     private var peopleCount: Count = Count(PEOPLE_DEFAULT_COUNT),
-    private val movieTimePolicies: List<MovieTimePolicy> = listOf(
-        WeekdayMovieTimePolicy, WeekendMovieTimePolicy
-    )
+    private val movieSchedule: MovieSchedule
 ) : MovieReservationContract.Presenter {
     override fun initActivity(movie: MovieViewData) {
         view.setMovieData(movie)
@@ -35,15 +29,15 @@ class MovieReservationPresenter(
         view.setCounterText(peopleCount.value)
     }
 
-    override fun reserveMovie(date: LocalDateTime, movie: MovieViewData) {
+    override fun reserveMovie(date: LocalDateTime, movie: MovieViewData, theaterName: String) {
         val reservationDetail = ReservationDetail(
             date, peopleCount.value
         ).toView()
-        view.startReservationResultActivity(reservationDetail, movie)
+        view.startReservationResultActivity(reservationDetail, movie, theaterName)
     }
 
-    override fun selectDate(date: LocalDate) {
-        val times = MovieTime(movieTimePolicies).determine(date).map { LocalFormattedTime(it) }
+    override fun selectDate() {
+        val times = movieSchedule.times.map { LocalFormattedTime(it) }
         view.setTimeSpinner(times)
     }
 

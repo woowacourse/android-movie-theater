@@ -15,6 +15,7 @@ import woowacourse.movie.data.PriceViewData
 import woowacourse.movie.data.ReservationDetailViewData
 import woowacourse.movie.data.ReservationViewData
 import woowacourse.movie.data.SeatTableViewData
+import woowacourse.movie.data.TheaterViewData
 import woowacourse.movie.error.ActivityError.finishWithError
 import woowacourse.movie.error.ViewError
 import woowacourse.movie.presenter.SeatSelectionPresenter
@@ -60,35 +61,39 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME
         )
             ?: return finishWithError(ViewError.MissingExtras(ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME))
+        val theaterName =
+            intent.extras?.getSerializableCompat<String>(TheaterViewData.THEATER_EXTRA_NAME)
+                ?: return finishWithError(ViewError.MissingExtras(TheaterViewData.THEATER_EXTRA_NAME))
 
         presenter.initActivity(movie, reservationDetail)
         seatTableLayout.load(savedInstanceState)
-        initReserveButton(seatTableLayout, movie, reservationDetail)
+        initReserveButton(seatTableLayout, movie, reservationDetail, theaterName)
     }
 
     private fun initReserveButton(
         seatTableLayout: SeatTableLayout,
         movie: MovieViewData,
-        reservationDetail: ReservationDetailViewData
+        reservationDetail: ReservationDetailViewData,
+        theaterName: String
     ) {
         reservationButton.setOnClickListener {
-            onClickReserveButton(seatTableLayout, movie, reservationDetail)
+            onClickReserveButton(seatTableLayout, movie, reservationDetail, theaterName)
         }
         setReservationButtonState(
-            seatTableLayout.selectedSeats().value.size,
-            reservationDetail.peopleCount
+            seatTableLayout.selectedSeats().value.size, reservationDetail.peopleCount
         )
     }
 
     private fun onClickReserveButton(
         seatTableLayout: SeatTableLayout,
         movie: MovieViewData,
-        reservationDetail: ReservationDetailViewData
+        reservationDetail: ReservationDetailViewData,
+        theaterName: String
     ) {
         AlertDialog.Builder(this).setTitle(getString(R.string.seat_selection_alert_title))
             .setMessage(getString(R.string.seat_selection_alert_message))
             .setPositiveButton(getString(R.string.seat_selection_alert_positive)) { _, _ ->
-                reserveMovie(seatTableLayout, movie, reservationDetail)
+                reserveMovie(seatTableLayout, movie, reservationDetail, theaterName)
             }.setNegativeButton(getString(R.string.seat_selection_alert_negative)) { dialog, _ ->
                 dialog.dismiss()
             }.setCancelable(false).show()
@@ -97,10 +102,11 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private fun reserveMovie(
         seatTableLayout: SeatTableLayout,
         movie: MovieViewData,
-        reservationDetail: ReservationDetailViewData
+        reservationDetail: ReservationDetailViewData,
+        theaterName: String
     ) {
         val seats = seatTableLayout.selectedSeats()
-        presenter.confirmSeats(movie, reservationDetail, seats)
+        presenter.confirmSeats(movie, reservationDetail, seats, theaterName)
     }
 
     override fun setReservationButtonState(seatsSize: Int, peopleCount: Int) {
@@ -117,9 +123,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         date: LocalDateTime
     ) {
         registerAlarmReceiver(
-            this,
-            ReservationAlarmReceiver(),
-            ReservationAlarmReceiver.ACTION_ALARM
+            this, ReservationAlarmReceiver(), ReservationAlarmReceiver.ACTION_ALARM
         )
 
         val alarmIntent = ReservationAlarmReceiver.from(this, reservation)
@@ -135,9 +139,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         seatTable: SeatTableViewData
     ) {
         seatTableLayout = SeatTableLayout.from(
-            findViewById(R.id.seat_selection_table),
-            seatTable,
-            SEAT_TABLE_LAYOUT_STATE_KEY
+            findViewById(R.id.seat_selection_table), seatTable, SEAT_TABLE_LAYOUT_STATE_KEY
         )
 
         seatTableLayout.onSelectSeat = {
@@ -149,7 +151,9 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         }
     }
 
-    override fun startReservationResultActivity(reservation: ReservationViewData) {
+    override fun startReservationResultActivity(
+        reservation: ReservationViewData
+    ) {
         ReservationResultActivity.from(this, reservation).run {
             startActivity(this)
         }
@@ -173,7 +177,8 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         fun from(
             context: Context,
             movie: MovieViewData,
-            reservationDetailViewData: ReservationDetailViewData
+            reservationDetailViewData: ReservationDetailViewData,
+            theaterName: String
         ): Intent {
             return Intent(context, SeatSelectionActivity::class.java).apply {
                 putExtra(MovieViewData.MOVIE_EXTRA_NAME, movie)
@@ -181,6 +186,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                     ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME,
                     reservationDetailViewData
                 )
+                putExtra(TheaterViewData.THEATER_EXTRA_NAME, theaterName)
             }
         }
     }

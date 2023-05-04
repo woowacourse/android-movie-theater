@@ -8,7 +8,7 @@ class ReservationResultPresenter(override val view: ReservationResultContract.Vi
     override fun initActivity(reservation: ReservationViewData) {
         view.setMovieData(reservation.movie)
         view.setReservationDetailData(reservation.reservationDetail)
-        view.setSeatData(reservation.reservationDetail, reservation.seats)
+        view.setSeatData(reservation.reservationDetail, reservation.seats, reservation.theaterName)
         view.setPriceData(reservation.price)
     }
 }

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieListViewType
+import woowacourse.movie.data.MovieScheduleViewData
 import woowacourse.movie.data.MovieViewData
 import woowacourse.movie.data.TheaterViewData
 import woowacourse.movie.data.TheatersViewData
@@ -48,23 +49,26 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
         movieViewData: MovieViewData,
         theater: TheaterViewData,
         root: ViewGroup
-    ): View {
+    ): View? {
+        val movieSchedule =
+            theater.movieSchedules.find { it.movie.title == movieViewData.title } ?: return null
         val item = layoutInflater.inflate(R.layout.item_theater, root, false)
         item.findViewById<TextView>(R.id.item_theater_name).text = theater.name
         item.findViewById<TextView>(R.id.item_theater_schedule).text =
-            getString(R.string.schedule_count, theater.movieSchedules.size)
+            getString(R.string.schedule_count, movieSchedule.times.size)
         item.setOnClickListener {
-            startMovieReservationActivity(movieViewData, theater)
+            startMovieReservationActivity(movieViewData, movieSchedule, theater.name)
         }
         return item
     }
 
     private fun startMovieReservationActivity(
         movieViewData: MovieViewData,
-        theaterViewData: TheaterViewData
+        movieScheduleViewData: MovieScheduleViewData,
+        theaterName: String
     ) {
         MovieReservationActivity.from(
-            requireContext(), movieViewData, theaterViewData
+            requireContext(), movieViewData, movieScheduleViewData, theaterName
         ).run {
             startActivity(this)
         }

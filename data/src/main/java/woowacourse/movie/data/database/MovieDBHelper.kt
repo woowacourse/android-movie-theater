@@ -81,7 +81,8 @@ class MovieDBHelper(context: Context) :
                             getInt(getColumnIndexOrThrow(SQLReservation.PEOPLE_COUNT))
                         ),
                         selectSeatsByReservationId(getInt(getColumnIndexOrThrow(SQLReservation.ID))),
-                        Price(getInt(getColumnIndexOrThrow(SQLReservation.PRICE)))
+                        Price(getInt(getColumnIndexOrThrow(SQLReservation.PRICE))),
+                        getString(getColumnIndexOrThrow(SQLReservation.THEATER_NAME))
                     )
                 )
             }
@@ -175,6 +176,7 @@ class MovieDBHelper(context: Context) :
         contentValues[SQLReservation.PEOPLE_COUNT] = reservation.reservationDetail.peopleCount
         contentValues[SQLReservation.MOVIE_ID] = movieId.toInt()
         contentValues[SQLReservation.PRICE] = reservation.price.value
+        contentValues[SQLReservation.THEATER_NAME] = reservation.theaterName
         val reservationId = insert(db, SQLReservation, contentValues)
         for (seat in reservation.seats.value) {
             insertSeat(db, seat, reservationId)

@@ -9,6 +9,7 @@ object SQLReservation : SQLTable {
     const val PEOPLE_COUNT = "PEOPLE_COUNT"
     const val MOVIE_ID = "MOVIE_ID"
     const val PRICE = "PRICE"
+    const val THEATER_NAME = "THEATER_NAME"
 
     override val name: String = "RESERVATION"
     override val scheme: List<SQLColumn> = listOf(
@@ -17,5 +18,6 @@ object SQLReservation : SQLTable {
         SQLColumn(PEOPLE_COUNT, SQLType.INTEGER),
         SQLColumn(MOVIE_ID, SQLType.INTEGER),
         SQLColumn(PRICE, SQLType.INTEGER),
+        SQLColumn(THEATER_NAME, SQLType.TEXT),
     )
 }

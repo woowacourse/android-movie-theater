@@ -12,7 +12,7 @@ interface ReservationResultContract {
         fun setMovieData(movie: MovieViewData)
         fun setReservationDetailData(reservationDetail: ReservationDetailViewData)
         fun setPriceData(price: PriceViewData)
-        fun setSeatData(reservationDetail: ReservationDetailViewData, seats: SeatsViewData)
+        fun setSeatData(reservationDetail: ReservationDetailViewData, seats: SeatsViewData, theaterName: String)
     }
 
     interface Presenter {

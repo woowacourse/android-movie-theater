@@ -43,7 +43,8 @@ class SeatSelectionPresenter(
     override fun confirmSeats(
         movie: MovieViewData,
         reservationDetail: ReservationDetailViewData,
-        seats: SeatsViewData
+        seats: SeatsViewData,
+        theaterName: String
     ) {
         val price = calculateDiscountedPrice(seats, reservationDetail)
 
@@ -52,6 +53,7 @@ class SeatSelectionPresenter(
             reservationDetail,
             seats,
             price,
+            theaterName
         )
 
         val domainReservation = reservation.toDomain()

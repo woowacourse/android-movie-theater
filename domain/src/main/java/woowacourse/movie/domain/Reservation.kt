@@ -9,6 +9,7 @@ data class Reservation(
     val reservationDetail: ReservationDetail,
     val seats: Seats,
     val price: Price,
+    val theaterName: String
 ) {
     fun calculateNotification(notificationPolicy: ReservationNotificationPolicy): LocalDateTime {
         return notificationPolicy.calculateTime(reservationDetail.date)

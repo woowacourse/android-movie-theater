@@ -31,7 +31,8 @@ interface SeatSelectionContract {
         fun confirmSeats(
             movie: MovieViewData,
             reservationDetail: ReservationDetailViewData,
-            seats: SeatsViewData
+            seats: SeatsViewData,
+            theaterName: String
         )
     }
 }

@@ -68,11 +68,18 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
         priceText.text = priceText.context.getString(R.string.reservation_price, formattedPrice)
     }
 
-    override fun setSeatData(reservationDetail: ReservationDetailViewData, seats: SeatsViewData) {
+    override fun setSeatData(
+        reservationDetail: ReservationDetailViewData,
+        seats: SeatsViewData,
+        theaterName: String
+    ) {
         val peopleCount = findViewById<TextView>(R.id.movie_reservation_result_people_count)
 
         peopleCount.text = peopleCount.context.getString(
-            R.string.reservation_people_count, reservationDetail.peopleCount, formatSeats(seats)
+            R.string.reservation_people_count,
+            reservationDetail.peopleCount,
+            formatSeats(seats),
+            theaterName
         )
     }
 

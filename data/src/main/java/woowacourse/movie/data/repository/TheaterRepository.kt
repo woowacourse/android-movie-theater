@@ -1,13 +1,14 @@
 package woowacourse.movie.data.repository
 
 import woowacourse.movie.data.dataSource.DataSource
+import woowacourse.movie.data.dataSource.MovieDataSource
 import woowacourse.movie.data.dataSource.TheaterDataSource
 import woowacourse.movie.domain.Theater
 import woowacourse.movie.domain.Theaters
 
 class TheaterRepository {
     private val theaterDataSource: DataSource<Theater> = TheaterDataSource(
-        MovieRepository().requestMovies()
+        MovieDataSource()
     )
 
     fun requestTheaters(): Theaters {
