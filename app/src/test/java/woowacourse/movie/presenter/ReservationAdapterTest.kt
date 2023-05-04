@@ -8,7 +8,7 @@ import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.contract.ReservationAdapterContract
-import woowacourse.movie.data.repository.ReservationListRepository
+import woowacourse.movie.data.repository.ReservationRepository
 import woowacourse.movie.domain.Price
 import woowacourse.movie.domain.Reservation
 import woowacourse.movie.domain.ReservationDetail
@@ -19,7 +19,7 @@ import java.time.LocalDateTime
 class ReservationAdapterTest {
     lateinit var reservationAdapterPresenter: ReservationAdapterContract.Presenter
     lateinit var view: ReservationAdapterContract.View
-    private lateinit var reservationRepository: ReservationListRepository
+    private lateinit var reservationRepository: ReservationRepository
 
     @Before
     fun init() {

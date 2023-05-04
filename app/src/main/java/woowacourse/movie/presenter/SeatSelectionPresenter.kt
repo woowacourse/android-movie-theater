@@ -8,7 +8,7 @@ import woowacourse.movie.data.ReservationViewData
 import woowacourse.movie.data.SeatTableViewData
 import woowacourse.movie.data.SeatsViewData
 import woowacourse.movie.data.TableSize
-import woowacourse.movie.data.repository.SeatSelectionRepository
+import woowacourse.movie.data.repository.ReservationRepository
 import woowacourse.movie.domain.discountPolicy.Discount
 import woowacourse.movie.domain.discountPolicy.MovieDayPolicy
 import woowacourse.movie.domain.discountPolicy.OffTimePolicy
@@ -21,7 +21,7 @@ import woowacourse.movie.mapper.SeatsMapper.toView
 
 class SeatSelectionPresenter(
     override val view: SeatSelectionContract.View,
-    private val seatSelectionRepository: SeatSelectionRepository = SeatSelectionRepository()
+    private val reservationRepository: ReservationRepository = ReservationRepository()
 ) : SeatSelectionContract.Presenter {
     override fun initActivity(movie: MovieViewData, reservationDetail: ReservationDetailViewData) {
         view.makeSeatLayout(
@@ -58,7 +58,7 @@ class SeatSelectionPresenter(
         val notificationDate =
             domainReservation.calculateNotification(MovieReservationNotificationPolicy)
         view.makeReservationAlarm(reservation, notificationDate)
-        seatSelectionRepository.postReservation(domainReservation)
+        reservationRepository.postReservation(domainReservation)
         view.startReservationResultActivity(reservation)
     }
 
