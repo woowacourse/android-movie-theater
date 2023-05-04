@@ -13,22 +13,24 @@ import woowacourse.movie.contract.MovieReservationContract
 import woowacourse.movie.data.ReservationDetailViewData
 import woowacourse.movie.domain.Count
 import woowacourse.movie.domain.Movie
+import woowacourse.movie.domain.MovieSchedule
 import woowacourse.movie.domain.ReservationDetail
 import woowacourse.movie.domain.mock.MovieMock
 import woowacourse.movie.mapper.MovieMapper.toView
 import woowacourse.movie.mapper.ReservationDetailMapper.toView
 import woowacourse.movie.system.StateContainer
-import java.time.LocalDate
 import java.time.LocalDateTime
 
 class MovieReservationPresenterTest {
     lateinit var movieReservationPresenter: MovieReservationContract.Presenter
     lateinit var view: MovieReservationContract.View
+    lateinit var movieSchedule: MovieSchedule
 
     @Before
     fun init() {
         view = mockk()
-        movieReservationPresenter = MovieReservationPresenter(view, Count(3))
+        movieSchedule = mockk()
+        movieReservationPresenter = MovieReservationPresenter(view, Count(3), movieSchedule)
     }
 
     @Test
@@ -69,31 +71,32 @@ class MovieReservationPresenterTest {
         val reservationDetailSlot = slot<ReservationDetailViewData>()
         every {
             view.startReservationResultActivity(
-                capture(reservationDetailSlot), any()
+                capture(reservationDetailSlot), any(), any()
             )
         } just runs
 
         // when
         val movie = fakeMovie().toView()
         val date = fakeDateTime()
+        val theaterName = ""
         val expect = fakeReservationDetail(date).toView()
-        movieReservationPresenter.reserveMovie(date, movie)
+        movieReservationPresenter.reserveMovie(date, movie, theaterName)
 
         // then
         val actual = reservationDetailSlot.captured
 
         assertEquals(expect, actual)
-        verify { view.startReservationResultActivity(expect, any()) }
+        verify { view.startReservationResultActivity(expect, any(), any()) }
     }
 
     @Test
     fun 날짜_스피너를_선택하면_시간_정책에_의해_시간_스피너를_설정한다() {
         // given
+        every { movieSchedule.times } returns emptyList()
         every { view.setTimeSpinner(any()) } just runs
 
         // when
-        val date = fakeDate()
-        movieReservationPresenter.selectDate(date)
+        movieReservationPresenter.selectDate()
 
         // then
         verify { view.setTimeSpinner(any()) }
@@ -105,6 +108,7 @@ class MovieReservationPresenterTest {
         val stateContainer: StateContainer = mockk()
         val slot = slot<Int>()
         every { stateContainer.save(any(), capture(slot)) } just runs
+        every { view.saveTimeSpinner(stateContainer) } just runs
 
         // when
         val expect = 3
@@ -112,6 +116,7 @@ class MovieReservationPresenterTest {
 
         // then
         verify { stateContainer.save(any(), expect) }
+        verify { view.saveTimeSpinner(stateContainer) }
     }
 
     @Test
@@ -134,7 +139,6 @@ class MovieReservationPresenterTest {
 
     private fun fakeMovie(): Movie = MovieMock.createMovie()
     private fun fakeDateTime(): LocalDateTime = LocalDateTime.now()
-    private fun fakeDate(): LocalDate = LocalDate.now()
     private fun fakeReservationDetail(date: LocalDateTime): ReservationDetail = ReservationDetail(
         date, 3
     )

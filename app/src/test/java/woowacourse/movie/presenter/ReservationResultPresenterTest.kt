@@ -31,7 +31,7 @@ class ReservationResultPresenterTest {
         // given
         every { view.setMovieData(any()) } just runs
         every { view.setReservationDetailData(any()) } just runs
-        every { view.setSeatData(any(), any()) } just runs
+        every { view.setSeatData(any(), any(), any()) } just runs
         every { view.setPriceData(any()) } just runs
         val reservation = fakeReservation().toView()
 
@@ -41,7 +41,7 @@ class ReservationResultPresenterTest {
         // then
         verify { view.setMovieData(any()) }
         verify { view.setReservationDetailData(any()) }
-        verify { view.setSeatData(any(), any()) }
+        verify { view.setSeatData(any(), any(), any()) }
         verify { view.setPriceData(any()) }
     }
 
@@ -53,5 +53,6 @@ class ReservationResultPresenterTest {
         ),
         Seats(emptyList()),
         Price(),
+        ""
     )
 }

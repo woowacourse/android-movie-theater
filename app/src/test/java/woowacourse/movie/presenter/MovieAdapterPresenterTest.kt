@@ -38,7 +38,7 @@ class MovieAdapterPresenterTest {
         movieRepository = mockk()
         advertisementRepository = mockk()
         movieAdapterPresenter =
-            MovieAdapterPresenter(view, movieRepository, advertisementRepository)
+            MovieAdapterPresenter(view, movieRepository, advertisementRepository, mockk())
     }
 
     @Test

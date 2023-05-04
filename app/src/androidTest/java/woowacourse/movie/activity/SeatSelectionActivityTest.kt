@@ -47,7 +47,7 @@ class SeatSelectionActivityTest {
     @get:Rule
     val activityRule = ActivityScenarioRule<SeatSelectionActivity>(
         SeatSelectionActivity.from(
-            ApplicationProvider.getApplicationContext(), movie, reservationDetail
+            ApplicationProvider.getApplicationContext(), movie, reservationDetail, ""
         )
     )
 

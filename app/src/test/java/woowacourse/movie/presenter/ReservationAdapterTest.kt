@@ -50,5 +50,6 @@ class ReservationAdapterTest {
         ),
         Seats(emptyList()),
         Price(),
+        ""
     )
 }

@@ -74,7 +74,8 @@ class SeatSelectionPresenterTest {
         val movie = fakeMovie().toView()
         val reservationDetail = fakeReservationDetail().toView()
         val seats = fakeSeats().toView()
-        seatSelectionPresenter.confirmSeats(movie, reservationDetail, seats)
+        val theaterName = ""
+        seatSelectionPresenter.confirmSeats(movie, reservationDetail, seats, theaterName)
 
         // then
         verify { view.makeReservationAlarm(any(), any()) }

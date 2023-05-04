@@ -19,6 +19,7 @@ import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.data.LocalFormattedDate
 import woowacourse.movie.data.LocalFormattedTime
+import woowacourse.movie.data.MovieScheduleViewData
 import woowacourse.movie.domain.DateRange
 import woowacourse.movie.domain.Image
 import woowacourse.movie.domain.Movie
@@ -32,16 +33,9 @@ class MovieReservationActivityTest {
     val activityRule = ActivityScenarioRule<MovieReservationActivity>(
         MovieReservationActivity.from(
             ApplicationProvider.getApplicationContext(),
-            Movie(
-                Image(0),
-                "해리 포터",
-                DateRange(
-                    LocalDate.of(2024, 3, 1),
-                    LocalDate.of(2024, 3, 31),
-                ),
-                153,
-                "adsfasdfadsf",
-            ).toView()
+            fakeMovie().toView(),
+            MovieScheduleViewData(fakeMovie().toView(), emptyList()),
+            ""
         )
     )
 
@@ -86,6 +80,7 @@ class MovieReservationActivityTest {
         val count = 2
         onView(withId(R.id.movie_reservation_people_count)).check(matches(withText(count.toString())))
     }
+
     @Test
     fun 카운터의_빼기_버튼을_누르면_카운트가_1_감소한다() {
         // given
@@ -98,6 +93,7 @@ class MovieReservationActivityTest {
         val count = 1
         onView(withId(R.id.movie_reservation_people_count)).check(matches(withText(count.toString())))
     }
+
     @Test
     fun 카운터의_빼기_버튼을_눌러도_값이_1_미만으로_감소하지_않는다() {
         // given
@@ -109,4 +105,15 @@ class MovieReservationActivityTest {
         val count = 1
         onView(withId(R.id.movie_reservation_people_count)).check(matches(withText(count.toString())))
     }
+
+    private fun fakeMovie(): Movie = Movie(
+        Image(0),
+        "해리 포터",
+        DateRange(
+            LocalDate.of(2024, 3, 1),
+            LocalDate.of(2024, 3, 31),
+        ),
+        153,
+        "adsfasdfadsf",
+    )
 }

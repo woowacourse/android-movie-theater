@@ -36,14 +36,14 @@ class SettingPresenterTest {
         // given
         every {
             view.onNotificationSwitchCheckedChangeListener(
-                any(), any(), any()
+                any(), any()
             )
         } just runs
 
         // when
-        settingPresenter.toggleNotificationSetting(mockk(), "", false)
+        settingPresenter.toggleNotificationSetting("", false)
 
         // then
-        verify { view.onNotificationSwitchCheckedChangeListener(any(), any(), any()) }
+        verify { view.onNotificationSwitchCheckedChangeListener(any(), any()) }
     }
 }
