@@ -3,8 +3,8 @@ package woowacourse.movie.ui.seat
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivitySeatSelectBinding
 import woowacourse.movie.model.MoneyState
 import woowacourse.movie.model.SeatPositionState
 import woowacourse.movie.model.SeatSelectState
@@ -12,7 +12,6 @@ import woowacourse.movie.model.TicketsState
 import woowacourse.movie.ui.BackKeyActionBarActivity
 import woowacourse.movie.ui.DecimalFormatters
 import woowacourse.movie.ui.confirm.ReservationConfirmActivity
-import woowacourse.movie.ui.customView.ConfirmView
 import woowacourse.movie.util.getParcelableArrayListCompat
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
@@ -20,29 +19,30 @@ import woowacourse.movie.util.showAskDialog
 
 class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
     private val presenter = SeatSelectPresenter(this)
+    private lateinit var binding: ActivitySeatSelectBinding
 
-    private val titleTextView: TextView by lazy { findViewById(R.id.reservation_title) }
-    private val moneyTextView: TextView by lazy { findViewById(R.id.reservation_money) }
-    private val confirmView: ConfirmView by lazy { findViewById(R.id.reservation_confirm) }
     private lateinit var seatSelectState: SeatSelectState
     private lateinit var cinemaName: String
 
     private lateinit var seatTable: SeatTable
 
     override fun onCreateView(savedInstanceState: Bundle?) {
-        setContentView(R.layout.activity_seat_select)
+        binding = ActivitySeatSelectBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         seatSelectState =
             intent.getParcelableExtraCompat(KEY_SEAT_SELECT) ?: return keyError(KEY_SEAT_SELECT)
         cinemaName =
             intent.getStringExtra(KEY_CINEMA_NAME) ?: return keyError(KEY_CINEMA_NAME)
 
-        titleTextView.text = seatSelectState.movieState.title
+        binding.reservationTitle.text = seatSelectState.movieState.title
 
-        confirmView.setOnClickListener { navigateShowDialog(seatTable.chosenSeatInfo) }
-        confirmView.isClickable = false // 클릭리스너를 설정하면 clickable이 자동으로 참이 되기 때문
+        binding.reservationConfirm.setOnClickListener {
+            navigateShowDialog(seatTable.chosenSeatInfo)
+        }
+        binding.reservationConfirm.isClickable = false // 클릭리스너를 설정하면 clickable이 자동으로 참이 되기 때문
 
-        seatTable = SeatTable(window.decorView.rootView, seatSelectState.countState) {
+        seatTable = SeatTable(binding, seatSelectState.countState) {
             updateSelectSeats(it)
         }
     }
@@ -83,7 +83,7 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
     }
 
     private fun updateSelectSeats(positionStates: List<SeatPositionState>) {
-        confirmView.isClickable = (positionStates.size == seatSelectState.countState.value)
+        binding.reservationConfirm.isClickable = (positionStates.size == seatSelectState.countState.value)
 
         val tickets = TicketsState(
             cinemaName,
@@ -96,7 +96,7 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
     }
 
     override fun setMoneyText(money: MoneyState) {
-        moneyTextView.text = getString(
+        binding.reservationMoney.text = getString(
             R.string.discount_money,
             DecimalFormatters.convertToMoneyFormat(money)
         )
