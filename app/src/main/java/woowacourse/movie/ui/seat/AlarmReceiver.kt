@@ -24,7 +24,7 @@ class AlarmReceiver : BroadcastReceiver() {
 
     private fun isAvailableReceivingAlarm(context: Context): Boolean {
         val settingSharedPreference = SettingSharedPreference(context)
-        return settingSharedPreference.state
+        return settingSharedPreference.isAvailableAlarm
     }
 
     private fun getCompletedActivityIntent(context: Context, intent: Intent): Intent {

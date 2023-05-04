@@ -31,11 +31,11 @@ class MainActivity : AppCompatActivity() {
     private val permissionLauncher: ActivityResultLauncher<String> by lazy {
         getPermissionLauncher(
             deniedCase = {
-                settingSharedPreference.state = false
+                settingSharedPreference.isAvailableAlarm = false
                 shortToast(getString(R.string.permission_denied))
             },
             allowedCase = {
-                settingSharedPreference.state = true
+                settingSharedPreference.isAvailableAlarm = true
                 shortToast(getString(R.string.permission_allowed))
             }
         )

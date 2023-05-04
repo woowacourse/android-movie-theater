@@ -6,7 +6,7 @@ class SettingPresenter(
 ) : SettingContract.Presenter {
 
     override fun saveSetting(isAvailable: Boolean) {
-        settingRepository.state = isAvailable
+        settingRepository.isAvailableAlarm = isAvailable
         view.setSwitch(
             isChecked = isAvailable
         )
@@ -14,7 +14,7 @@ class SettingPresenter(
 
     override fun loadSetting() {
         view.setSwitch(
-            isChecked = settingRepository.state
+            isChecked = settingRepository.isAvailableAlarm
         )
     }
 }
