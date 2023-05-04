@@ -30,7 +30,6 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
     private lateinit var reservationCounter: ReservationCounter
 
     private val presenter: MovieDetailContract.Presenter = MovieDetailPresenter(this)
-
     override fun onCreateView(savedInstanceState: Bundle?) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
         movie = intent.getParcelableExtraCompat(KEY_MOVIE) ?: return keyError(KEY_MOVIE)
@@ -39,12 +38,12 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
         if (savedInstanceState != null) {
             restoreInstanceState(savedInstanceState)
         } else {
-            dateTimeSpinner = DateTimeSpinner(
-                binding,
-                movie,
-            )
+            dateTimeSpinner = DateTimeSpinner(binding, movie)
             reservationCounter = ReservationCounter(binding)
         }
+
+        binding.counterPresenter = reservationCounter.presenter
+        binding.dateTimePresenter = dateTimeSpinner.presenter
 
         binding.reservationConfirm.setOnClickListener {
             presenter.clickConfirm(
@@ -75,11 +74,9 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
             savedInstanceState.getSerializableCompat(KEY_TIME) ?: return keyError(KEY_TIME)
         val restoreCount: CountState =
             savedInstanceState.getParcelableCompat(KEY_COUNT) ?: return keyError(KEY_COUNT)
-        dateTimeSpinner = DateTimeSpinner(
-            binding,
-            movie,
-            LocalDateTime.of(restoreSelectDate, restoreSelectTime)
-        )
+
+        val restoreDateTime = LocalDateTime.of(restoreSelectDate, restoreSelectTime)
+        dateTimeSpinner = DateTimeSpinner(binding, movie, restoreDateTime)
         reservationCounter = ReservationCounter(binding, restoreCount)
     }
 

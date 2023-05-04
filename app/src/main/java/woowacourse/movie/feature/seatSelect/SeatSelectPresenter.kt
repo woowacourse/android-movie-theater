@@ -20,6 +20,10 @@ class SeatSelectPresenter(
     override val seats: List<SeatPositionState>
         get() = _seats.toList()
 
+    init {
+        updateMoneyAndConfirmBtnState()
+    }
+
     override fun clickSeat(index: Int) {
         val seatPosition = convertIndexToPosition(index)
         if (seatPosition !in seats && seats.size >= reservationState.countState.value) return
@@ -51,10 +55,9 @@ class SeatSelectPresenter(
     }
 
     override fun updateChosenSeats(chosen: List<SeatPositionState>) {
-        _seats.forEach {
-            view.seatToggle(convertPositionToIndex(it))
+        chosen.forEach {
+            clickSeat(convertPositionToIndex(it))
         }
-        _seats = chosen.toMutableList()
         updateMoneyAndConfirmBtnState()
     }
 

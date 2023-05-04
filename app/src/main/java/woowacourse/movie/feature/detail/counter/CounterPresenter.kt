@@ -5,7 +5,6 @@ import woowacourse.movie.model.CountState
 class CounterPresenter(
     val view: CounterContract.View
 ) : CounterContract.Presenter {
-
     private var _countNumber: CountState = CountState.of(1)
         set(value) {
             field = value

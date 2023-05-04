@@ -12,6 +12,7 @@
         <variable
             name="money"
             type="woowacourse.movie.model.MoneyState" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -330,6 +331,7 @@
                 android:id="@+id/reservation_confirm"
                 android:layout_width="88dp"
                 android:layout_height="match_parent"
+                android:background="@color/confirm_enabled_false"
                 android:clickable="false"
                 android:gravity="center"
                 android:insetTop="0dp"

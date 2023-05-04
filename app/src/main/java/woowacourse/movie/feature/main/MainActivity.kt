@@ -71,6 +71,15 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
     }
 
+    override fun showMovieList() =
+        changeShowFragment<MovieListFragment>()
+
+    override fun showReservationList() =
+        changeShowFragment<ReservationListFragment>()
+
+    override fun showSetting() =
+        changeShowFragment<SettingFragment>()
+
     private inline fun <reified T : Fragment> changeShowFragment() {
         supportFragmentManager.commit {
             supportFragmentManager.fragments.forEach {
@@ -94,30 +103,13 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         presenter.permissionApproveResult(isGranted)
     }
 
-    override fun showPermissionApproveToast() {
+    override fun showPermissionApproveToast() =
         Toaster.showToast(this, getString(R.string.alarm_notification_approve))
-    }
 
-    override fun showPermissionRejectToast() {
+    override fun showPermissionRejectToast() =
         Toaster.showToast(this, getString(R.string.alarm_notification_reject))
-    }
-
-    override fun showMovieList() {
-        changeShowFragment<MovieListFragment>()
-    }
-
-    override fun showReservationList() {
-        changeShowFragment<ReservationListFragment>()
-    }
-
-    override fun showSetting() {
-        changeShowFragment<SettingFragment>()
-    }
 
     companion object {
-        internal const val KEY_MOVIE = "key_movie"
-        internal const val KEY_ADV = "key_adb"
-
         private const val RESERVATION_LIST_TAG = "reservation_list_tag"
         private const val MOVIE_LIST_TAG = "movie_list_tag"
         private const val SETTING_TAG = "setting_tag"

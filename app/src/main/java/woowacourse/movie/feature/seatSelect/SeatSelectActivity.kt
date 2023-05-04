@@ -36,10 +36,9 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_select)
         reservationState =
             intent.getParcelableExtraCompat(KEY_RESERVATION) ?: return keyError(KEY_RESERVATION)
+        initClickListener()
         presenter = SeatSelectPresenter(this, reservationState, TicketsRepositoryImpl)
         binding.movie = reservationState.movieState
-        presenter.updateChosenSeats(listOf())
-        initClickListener()
     }
 
     private fun getAllSeatView(): List<SeatView> {
@@ -52,12 +51,18 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
     }
 
     private fun initClickListener() {
-        binding.reservationConfirm.setOnClickListener { presenter.clickConfirm() }
         getAllSeatView().forEachIndexed { index, seatView ->
             seatView.setOnClickListener {
                 presenter.clickSeat(index)
             }
         }
+        binding.reservationConfirm.setOnClickListener { presenter.clickConfirm() }
+        binding.reservationConfirm.isClickable = false
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelableArrayList(SEAT_RESTORE_KEY, ArrayList(presenter.seats))
     }
 
     override fun onRestoreInstanceState(
@@ -68,12 +73,7 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
             savedInstanceState.getParcelableArrayListCompat(SEAT_RESTORE_KEY) ?: return keyError(
                 SEAT_RESTORE_KEY
             )
-        presenter.updateChosenSeats(restoreState)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putParcelableArrayList(SEAT_RESTORE_KEY, ArrayList(presenter.seats))
+        presenter.updateChosenSeats(restoreState.toList())
     }
 
     override fun seatToggle(index: Int) {
