@@ -13,7 +13,7 @@ import woowacourse.movie.util.toSeat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class BookingHistoryDBAdapter(db: BookingHistoryDBHelper) {
+class BookingHistoryDBAdapter(db: BookingHistoryDBHelper) : BookingHistoryRepository {
 
     private val writableDB: SQLiteDatabase = db.writableDatabase
     private val cursor = writableDB.query(
@@ -33,7 +33,7 @@ class BookingHistoryDBAdapter(db: BookingHistoryDBHelper) {
         null
     )
 
-    fun selectAll(): List<ReservationUiModel> {
+    override fun loadBookingHistory(): List<ReservationUiModel> {
         val reservations = mutableListOf<ReservationUiModel>()
 
         while (cursor.moveToNext()) {

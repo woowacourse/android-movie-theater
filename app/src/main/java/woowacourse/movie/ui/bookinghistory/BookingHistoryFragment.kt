@@ -10,13 +10,22 @@ import woowacourse.movie.R
 import woowacourse.movie.model.ReservationUiModel
 import woowacourse.movie.ui.completed.CompletedActivity
 
-class BookingHistoryFragment : Fragment() {
+class BookingHistoryFragment : Fragment(), BookingHistoryContract.View {
 
     private val bookingHistoryDBHelper: BookingHistoryDBHelper by lazy {
         BookingHistoryDBHelper(requireContext())
     }
     private val bookingHistoryDBAdapter: BookingHistoryDBAdapter by lazy {
         BookingHistoryDBAdapter(bookingHistoryDBHelper)
+    }
+    private val bookingHistoryPresenter: BookingHistoryPresenter by lazy {
+        BookingHistoryPresenter(
+            view = this,
+            repository = bookingHistoryDBAdapter
+        )
+    }
+    private val recyclerView: RecyclerView by lazy {
+        requireActivity().findViewById(R.id.recyclerBookingHistory)
     }
 
     override fun onCreateView(
@@ -30,10 +39,14 @@ class BookingHistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recyclerView = requireActivity().findViewById<RecyclerView>(R.id.recyclerBookingHistory)
+        bookingHistoryPresenter.initBookingHistories()
+    }
+
+    override fun initAdapter(bookingHistories: List<ReservationUiModel>) {
         val adapter = BookingHistoryAdapter(::itemClicked)
+
         recyclerView.adapter = adapter
-        adapter.initList(bookingHistoryDBAdapter.selectAll())
+        adapter.initList(bookingHistories)
     }
 
     private fun itemClicked(reservationUiModel: ReservationUiModel) {
