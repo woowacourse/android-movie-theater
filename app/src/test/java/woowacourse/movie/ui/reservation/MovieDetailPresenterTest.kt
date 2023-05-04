@@ -21,7 +21,7 @@ class MovieDetailPresenterTest {
         assertEquals(presenter.count.value, 1)
 
         // when
-        presenter.plus()
+        presenter.onPlusClick()
 
         // then
         assertEquals(slot.captured, 2)
@@ -38,7 +38,7 @@ class MovieDetailPresenterTest {
         assertEquals(presenter.count.value, 1)
 
         // when
-        presenter.minus()
+        presenter.onMinusClick()
 
         // then
         assertEquals(slot.captured, 1)
@@ -50,10 +50,10 @@ class MovieDetailPresenterTest {
         // given
         val view: MovieDetailActivity = mockk(relaxed = true)
         val presenter = MovieDetailPresenter(view)
-        val movie = sampleMovieState
+        presenter.init("cinemaName", sampleMovieState)
 
         // when
-        val dates = presenter.getMovieRunningDates(movie)
+        val dates = presenter.getMovieRunningDates()
 
         // then
         assertEquals(dates.size, 4)
@@ -67,12 +67,41 @@ class MovieDetailPresenterTest {
         // given
         val view: MovieDetailActivity = mockk(relaxed = true)
         val presenter = MovieDetailPresenter(view)
+        presenter.init("cinemaName", sampleMovieState)
 
         // when
-        val times = presenter.getMovieRunningTimes(sampleMovieState)
+        val times = presenter.getMovieRunningTimes()
 
         // then
         assertEquals(times.size, 2)
+    }
+
+    @Test
+    fun `예매하기 버튼을 누르면 좌석 선택 화면으로 이동한다`() {
+        // given
+        val view: MovieDetailActivity = mockk(relaxed = true)
+        val presenter = MovieDetailPresenter(view)
+        presenter.init("cinemaName", sampleMovieState)
+
+        // when
+        presenter.onReserveButtonClick()
+
+        // then
+        verify { view.navigateSeatSelectActivity(sampleMovieState, "cinemaName") }
+    }
+
+    @Test
+    fun `영화 정보를 넘기면 영화 정보를 바인딩한다`() {
+        // given
+        val view: MovieDetailActivity = mockk(relaxed = true)
+        val presenter = MovieDetailPresenter(view)
+        presenter.init("cinemaName", sampleMovieState)
+
+        // when
+        presenter.getMovieRunningTimes()
+
+        // then
+        verify { view.setBinding(sampleMovieState) }
     }
 
     companion object {

@@ -4,15 +4,13 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
-import woowacourse.movie.model.MovieState
 import woowacourse.movie.util.setClickListener
 import woowacourse.movie.util.setDefaultAdapter
 
 class DateTimeSpinner(
     private val binding: ActivityMovieDetailBinding,
-    movieState: MovieState,
-    getDates: (MovieState) -> List<LocalDate>,
-    getTimes: (MovieState) -> List<LocalTime>,
+    getDates: () -> List<LocalDate>,
+    getTimes: () -> List<LocalTime>,
     initLocalDateTime: LocalDateTime? = null
 ) {
     private val runningDates: List<LocalDate>
@@ -30,10 +28,10 @@ class DateTimeSpinner(
     private var selectTime: LocalTime
 
     init {
-        runningDates = getDates(movieState)
+        runningDates = getDates()
         setDateSpinnerAdapter()
         selectDate = runningDates.first()
-        runningTimes = getTimes(movieState)
+        runningTimes = getTimes()
         setTimeSpinnerAdapter()
         selectTime = runningTimes.first()
 

@@ -14,21 +14,33 @@ class MovieDetailPresenter(
     private val getMovieRunningDateUseCase = GetMovieRunningDateUseCase()
     private val getMovieRunningTimeUseCase = GetMovieRunningTimeUseCase()
 
+    private lateinit var movie: MovieState
+    private lateinit var cinemaName: String
+
     override var count: CountState = CountState.of(1)
         set(value) {
             field = value
             view.setCounterText(value.value)
         }
 
-    override fun plus() { count += 1 }
+    override fun init(cinemaName: String, movie: MovieState) {
+        this.cinemaName = cinemaName
+        this.movie = movie
+        view.setBinding(movie)
+    }
+    override fun onPlusClick() { count += 1 }
 
-    override fun minus() { count -= 1 }
+    override fun onMinusClick() { count -= 1 }
 
-    override fun getMovieRunningDates(movie: MovieState): List<LocalDate> {
+    override fun getMovieRunningDates(): List<LocalDate> {
         return getMovieRunningDateUseCase(movie.asDomain())
     }
 
-    override fun getMovieRunningTimes(movie: MovieState): List<LocalTime> {
+    override fun getMovieRunningTimes(): List<LocalTime> {
         return movie.screeningTimes
+    }
+
+    override fun onReserveButtonClick() {
+        view.navigateSeatSelectActivity(movie, cinemaName)
     }
 }
