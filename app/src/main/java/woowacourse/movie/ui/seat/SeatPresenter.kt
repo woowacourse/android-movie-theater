@@ -12,9 +12,12 @@ import woowacourse.movie.theater.Theater
 import woowacourse.movie.theater.TheaterRepository
 import woowacourse.movie.ticket.Position
 import woowacourse.movie.ticket.Ticket
+import woowacourse.movie.ui.bookinghistory.BookingHistoryRepository
 
 class SeatPresenter(
     private val view: SeatContract.View,
+    private val repository: BookingHistoryRepository,
+    private val timeReminder: TimeReminder,
     private val bookedMovie: BookedMovie,
 ) : SeatContract.Presenter {
 
@@ -45,6 +48,11 @@ class SeatPresenter(
         }
         view.setButtonState(selectedSeats.isSeatFull)
         view.setSeatPayment(selectedSeats.payment)
+    }
+
+    override fun addReservation(reservationUiModel: ReservationUiModel) {
+        timeReminder.remind(reservationUiModel)
+        repository.insertBookingHistory(reservationUiModel)
     }
 
     override fun createReservation(): ReservationUiModel {

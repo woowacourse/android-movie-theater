@@ -33,19 +33,7 @@ class BookingHistoryDBAdapter(db: BookingHistoryDBHelper) : BookingHistoryReposi
         null
     )
 
-    override fun loadBookingHistory(): List<ReservationUiModel> {
-        val reservations = mutableListOf<ReservationUiModel>()
-
-        while (cursor.moveToNext()) {
-            val reservation = cursor.getReservation()
-
-            reservations.add(reservation)
-        }
-
-        return reservations
-    }
-
-    fun insertReservation(reservationUiModel: ReservationUiModel) {
+    override fun insertBookingHistory(reservationUiModel: ReservationUiModel) {
         val values = ContentValues().apply {
             put(BookingDBContract.MOVIE_ID, reservationUiModel.movieId)
             put(BookingDBContract.MOVIE_TITLE, reservationUiModel.movieTitle)
@@ -64,6 +52,18 @@ class BookingHistoryDBAdapter(db: BookingHistoryDBHelper) : BookingHistoryReposi
         }
 
         writableDB.insert(BookingDBContract.TABLE_NAME, null, values)
+    }
+
+    override fun loadBookingHistory(): List<ReservationUiModel> {
+        val reservations = mutableListOf<ReservationUiModel>()
+
+        while (cursor.moveToNext()) {
+            val reservation = cursor.getReservation()
+
+            reservations.add(reservation)
+        }
+
+        return reservations
     }
 
     fun deleteReservations() {

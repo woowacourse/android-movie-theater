@@ -9,22 +9,30 @@ import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import woowacourse.movie.model.ReservationUiModel
 import woowacourse.movie.ticket.SeatRank
+import woowacourse.movie.ui.bookinghistory.BookingHistoryRepository
 import woowacourse.movie.ui.seat.SeatContract
 import woowacourse.movie.ui.seat.SeatPresenter
+import woowacourse.movie.ui.seat.TimeReminder
 
 class SeatPresenterTest {
 
     private lateinit var seatPresenter: SeatContract.Presenter
+    private lateinit var timeReminder: TimeReminder
+    private lateinit var repository: BookingHistoryRepository
     private lateinit var view: SeatContract.View
 
     @Before
     fun setUp() {
         view = mockk()
-
+        timeReminder = mockk()
+        repository = mockk()
         // given: 기본적으로 티켓은 한장이다.
         seatPresenter = SeatPresenter(
             view = view,
+            repository = repository,
+            timeReminder = timeReminder,
             bookedMovie = BookedMovie(
                 ticketCount = 1
             )
@@ -176,30 +184,22 @@ class SeatPresenterTest {
     }
 
     @Test
-    fun `예약 완료 후 예약정보를 발생시킨다`() {
+    fun `예약을 하면 timeReminder가 remind를 호출하고 저장소에 데이터를 저장한다`() {
         // given
-        val theater = seatPresenter.theater
-        val slotRowSize = slot<Int>()
-        val slotColSize = slot<Int>()
-
-        every {
-            view.initSeatTableView(
-                rowSize = capture(slotRowSize),
-                columnSize = capture(slotColSize)
-            )
-        } answers {
-            println("rowSize: %d, colSize: %d".format(slotRowSize.captured, slotColSize.captured))
-        }
+        val slotReservation = slot<ReservationUiModel>()
+        val slotReservationOnReminder = slot<ReservationUiModel>()
+        every { repository.insertBookingHistory(capture(slotReservation)) } just Runs
+        every { timeReminder.remind(capture(slotReservationOnReminder)) } just Runs
 
         // when
-        seatPresenter.initSelectedSeats()
+        seatPresenter.addReservation(ReservationUiModel())
 
-        //then
-        val actualRow = slotRowSize.captured
-        val actualCol = slotColSize.captured
-
-        assertEquals(actualRow to actualCol, theater.rowSize to theater.columnSize)
-        verify { view.initSeatTableView(actualRow, actualCol) }
+        // then
+        val actual = slotReservation.captured
+        val actualOnReminder = slotReservationOnReminder.captured
+        assertEquals(ReservationUiModel(), actual)
+        verify { repository.insertBookingHistory(actual) }
+        verify { timeReminder.remind(actualOnReminder)}
     }
 }
 

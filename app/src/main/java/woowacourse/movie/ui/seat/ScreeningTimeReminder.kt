@@ -9,29 +9,34 @@ import java.util.TimeZone
 
 // TODO: MVP 적용할지 말지
 class ScreeningTimeReminder(
-    context: Context,
-    reservationUiModel: ReservationUiModel,
-) {
-    private val alarmManager: AlarmManager =
-        context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    private val intent: PendingIntent =
-        PendingIntentGenerator.generateBroadcastingIntent(
-            intent = AlarmReceiver.getIntent(context, reservationUiModel),
-            context = context
-        )
+    private val context: Context,
+) : TimeReminder {
 
-    init {
+    override fun remind(reservation: ReservationUiModel) {
         val screeningDateTime =
-            reservationUiModel.bookedDateTime
+            reservation.bookedDateTime
                 .minusMinutes(30)
                 .atZone(TimeZone.getDefault().toZoneId())
                 .toInstant()
                 .toEpochMilli()
 
-        alarmManager.set(
+        createAlarmManager().set(
             AlarmManager.RTC_WAKEUP,
             screeningDateTime,
-            intent,
+            createPendingIntent(reservation),
+        )
+    }
+
+    private fun createAlarmManager(): AlarmManager {
+
+        return context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    }
+
+    private fun createPendingIntent(reservationUiModel: ReservationUiModel): PendingIntent {
+
+        return PendingIntentGenerator.generateBroadcastingIntent(
+            intent = AlarmReceiver.getIntent(context, reservationUiModel),
+            context = context
         )
     }
 }

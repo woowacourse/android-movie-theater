@@ -31,19 +31,21 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
     private val bookedMovie: BookedMovie? by lazy {
         intent.getParcelable(BOOKED_MOVIE, BookedMovie::class.java)
     }
-    private val seatPresenter: SeatPresenter by lazy {
-        bookedMovie?.let {
-            SeatPresenter(
-                view = this,
-                bookedMovie = it
-            )
-        } ?: throw IllegalArgumentException(RECEIVING_MOVIE_ERROR)
-    }
     private val bookingHistoryDBHelper: BookingHistoryDBHelper by lazy {
         BookingHistoryDBHelper(this)
     }
     private val bookingHistoryDBAdapter: BookingHistoryDBAdapter by lazy {
         BookingHistoryDBAdapter(bookingHistoryDBHelper)
+    }
+    private val seatPresenter: SeatPresenter by lazy {
+        bookedMovie?.let {
+            SeatPresenter(
+                view = this,
+                repository = bookingHistoryDBAdapter,
+                timeReminder = ScreeningTimeReminder(this),
+                bookedMovie = it,
+            )
+        } ?: throw IllegalArgumentException(RECEIVING_MOVIE_ERROR)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -115,9 +117,7 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
     private fun completeBooking() {
         val reservation = seatPresenter.createReservation()
 
-        // TODO: MVP 적용할지 말지
-        bookingHistoryDBAdapter.insertReservation(reservation)
-        ScreeningTimeReminder(this, reservation)
+        seatPresenter.addReservation(reservation)
         startActivity(CompletedActivity.getIntent(this, reservation))
         finish()
     }

@@ -27,6 +27,7 @@ interface SeatContract {
         fun initMovieTitle()
         fun initSelectedSeats()
         fun onSeatSelected(row: Int, col: Int)
+        fun addReservation(reservationUiModel: ReservationUiModel)
         fun createReservation(): ReservationUiModel
     }
 }
