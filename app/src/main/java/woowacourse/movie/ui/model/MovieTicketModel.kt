@@ -13,7 +13,8 @@ fun MovieTicketModel.mapToMovieTicket(): MovieTicket {
         time.mapToTicketTime(),
         peopleCount.mapToPeopleCount(),
         seats.map { it.mapToSeat() }.toSet(),
-        price.mapToPrice()
+        price.mapToPrice(),
+        theaterName
     )
 }
 
@@ -23,7 +24,8 @@ fun MovieTicket.mapToMovieTicketModel(): MovieTicketModel {
         time.mapToTicketTimeModel(),
         peopleCount.mapToPeopleCountModel(),
         seats.map { it.mapToSeatModel() }.toSet(),
-        getDiscountPrice().mapToPriceModel()
+        getDiscountPrice().mapToPriceModel(),
+        theaterName
     )
 }
 
@@ -33,7 +35,8 @@ fun MovieTicket.mapToMovieTicketModelWithOriginalPrice(): MovieTicketModel {
         time.mapToTicketTimeModel(),
         peopleCount.mapToPeopleCountModel(),
         seats.map { it.mapToSeatModel() }.toSet(),
-        price.mapToPriceModel()
+        price.mapToPriceModel(),
+        theaterName
     )
 }
 
@@ -43,7 +46,8 @@ data class MovieTicketModel(
     val time: TicketTimeModel,
     val peopleCount: PeopleCountModel,
     val seats: Set<SeatModel>,
-    val price: PriceModel
+    val price: PriceModel,
+    val theaterName: String,
 ) : Parcelable {
     fun isSelectedSeat(seat: SeatModel): Boolean = seats.contains(seat)
 }

@@ -67,7 +67,8 @@ class MovieTicketActivity : AppCompatActivity() {
                     ticketModel.seats.sortedBy { seat -> seat.format() }
                         .joinToString(", ") { seat ->
                             seat.format()
-                        }
+                        },
+                    ticketModel.theaterName
                 )
             priceView.text = ticketModel.price.format()
         }

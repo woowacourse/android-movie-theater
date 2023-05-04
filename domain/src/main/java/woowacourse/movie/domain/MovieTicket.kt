@@ -8,6 +8,7 @@ class MovieTicket(
     val peopleCount: PeopleCount,
     seats: Set<Seat> = setOf(),
     price: Price = Price(),
+    val theaterName: String,
 ) {
     private val _seats = seats.toMutableSet()
     val seats: List<Seat>

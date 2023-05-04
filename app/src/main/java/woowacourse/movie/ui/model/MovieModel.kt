@@ -15,6 +15,7 @@ data class MovieModel(
     val endDate: LocalDate,
     val runningTime: Int,
     val description: String,
+    val theaters: List<TheaterModel>,
 ) : Parcelable {
     fun getDatesBetweenTwoDates(): List<LocalDate> {
         val numberOfDates = ChronoUnit.DAYS.between(startDate, endDate) + 1

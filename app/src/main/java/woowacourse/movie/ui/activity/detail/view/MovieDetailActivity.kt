@@ -13,13 +13,14 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.ui.activity.seatpicker.view.SeatPickerActivity
 import woowacourse.movie.ui.activity.detail.MovieDetailContract
 import woowacourse.movie.ui.activity.detail.presenter.MovieDetailPresenter
+import woowacourse.movie.ui.activity.seatpicker.view.SeatPickerActivity
 import woowacourse.movie.ui.model.MovieModel
 import woowacourse.movie.ui.model.MovieTicketModel
 import woowacourse.movie.ui.model.PeopleCountModel
 import woowacourse.movie.ui.model.PriceModel
+import woowacourse.movie.ui.model.TheaterModel
 import woowacourse.movie.ui.model.TicketTimeModel
 import woowacourse.movie.ui.utils.getParcelable
 import java.time.LocalDate
@@ -28,11 +29,12 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
-    override lateinit var presenter: MovieDetailContract.Presenter
     private val dateSpinner: Spinner by lazy { findViewById(R.id.detail_date_spinner) }
+    private val peopleCountView by lazy { findViewById<TextView>(R.id.detail_people_count) }
+    override lateinit var presenter: MovieDetailContract.Presenter
+    private var theaterName = ""
     private val timeSpinner: Spinner by lazy { findViewById(R.id.detail_time_spinner) }
     private lateinit var timeSpinnerAdapter: ArrayAdapter<LocalTime>
-    private val peopleCountView by lazy { findViewById<TextView>(R.id.detail_people_count) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +49,10 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
             setDateSpinner(it)
             setBookingButton(it)
         }
-        presenter.initTimes(dateSpinner.selectedItem as LocalDate)
+        intent.getParcelable<TheaterModel>(THEATER_EXTRA_KEY)?.let {
+            theaterName = it.name
+            setTimeSpinner(it)
+        }
         setPeopleCountController()
 
         loadSavedData(savedInstanceState)
@@ -73,20 +78,6 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
 
     override fun setPeopleCount(count: Int) {
         peopleCountView.text = count.toString()
-    }
-
-    override fun initTimeSpinner(times: List<LocalTime>) {
-        timeSpinnerAdapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_item,
-            times
-        )
-        timeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        timeSpinner.adapter = timeSpinnerAdapter
-    }
-
-    override fun updateTimeSpinner() {
-        timeSpinnerAdapter.notifyDataSetChanged()
     }
 
     private fun setMovieInfo(movie: MovieModel) {
@@ -127,12 +118,29 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
                 id: Long
             ) {
                 timeSpinner.setSelection(0)
-                presenter.updateTimes(dateSpinner.selectedItem as LocalDate)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
+    }
+
+    private fun setBookingButton(movie: MovieModel) {
+        val bookingButton = findViewById<Button>(R.id.detail_booking_button)
+
+        bookingButton.setOnClickListener {
+            moveToSeatPickerActivity(movie)
+        }
+    }
+
+    private fun setTimeSpinner(theater: TheaterModel) {
+        timeSpinnerAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            theater.times
+        )
+        timeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        timeSpinner.adapter = timeSpinnerAdapter
     }
 
     private fun setPeopleCountController() {
@@ -154,14 +162,6 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         }
     }
 
-    private fun setBookingButton(movie: MovieModel) {
-        val bookingButton = findViewById<Button>(R.id.detail_booking_button)
-
-        bookingButton.setOnClickListener {
-            moveToSeatPickerActivity(movie)
-        }
-    }
-
     private fun moveToSeatPickerActivity(movie: MovieModel) {
         val ticket = MovieTicketModel(
             movie.title,
@@ -173,7 +173,8 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
             ),
             PeopleCountModel(peopleCountView.text.toString().toInt()),
             seats = emptySet(),
-            PriceModel(0)
+            PriceModel(0),
+            theaterName
         )
 
         val intent = SeatPickerActivity.createIntent(this, ticket)
@@ -192,12 +193,14 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     companion object {
         private const val DATE_SPINNER_POSITION_INSTANCE_KEY = "date_position"
         private const val MOVIE_EXTRA_KEY = "movie"
+        private const val THEATER_EXTRA_KEY = "theater"
         private const val PEOPLE_COUNT_VALUE_INSTANCE_KEY = "count"
         private const val TIME_SPINNER_POSITION_INSTANCE_KEY = "time_position"
 
-        fun createIntent(context: Context, movie: MovieModel): Intent {
+        fun createIntent(context: Context, movie: MovieModel, theater: TheaterModel): Intent {
             val intent = Intent(context, MovieDetailActivity::class.java)
             intent.putExtra(MOVIE_EXTRA_KEY, movie)
+            intent.putExtra(THEATER_EXTRA_KEY, theater)
             return intent
         }
     }
