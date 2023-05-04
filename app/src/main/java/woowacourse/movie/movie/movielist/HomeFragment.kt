@@ -7,38 +7,41 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.dto.AdDto
 import woowacourse.movie.movie.dto.movie.MovieDto
 import woowacourse.movie.movie.dto.movie.MovieDummy
 import woowacourse.movie.movie.moviedetail.MovieDetailActivity
 
 class HomeFragment : Fragment() {
+    private lateinit var binding: FragmentHomeBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
-
-        setUpMovieData(view)
-        return view
+    ): View {
+        setUpBinding()
+        setUpMovieData()
+        return binding.root
     }
 
-    private fun setUpMovieData(view: View) {
-        val movieRecyclerView = view.findViewById<RecyclerView>(R.id.movie_rv)
-        val movieAdapter = MovieRVAdapter(
+    private fun setUpBinding() {
+        binding = FragmentHomeBinding.inflate(layoutInflater)
+    }
+
+    private fun setUpMovieData() {
+        val movieAdapter = MovieAdapter(
             MovieDummy.movieDatas,
             AdDto.getAdData(),
         )
 
-        movieRecyclerView.adapter = movieAdapter
+        binding.movieRv.adapter = movieAdapter
         onMovieItemClickListener(movieAdapter)
         onAdItemClickListener(movieAdapter)
     }
 
-    private fun onMovieItemClickListener(adapter: MovieRVAdapter) {
+    private fun onMovieItemClickListener(adapter: MovieAdapter) {
         adapter.itemMovieClick = object : OnClickListener<MovieDto> {
             override fun onClick(item: MovieDto) {
                 val intent = Intent(context, MovieDetailActivity::class.java)
@@ -48,7 +51,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun onAdItemClickListener(adapter: MovieRVAdapter) {
+    private fun onAdItemClickListener(adapter: MovieAdapter) {
         adapter.itemAdClick = object : OnClickListener<AdDto> {
             override fun onClick(item: AdDto) {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))

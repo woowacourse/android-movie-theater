@@ -45,14 +45,16 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     private fun setInitData() {
-        intent.getParcelableCompat<SeatMovieDto>(SEAT_BASE_INFORMATION_KEY)?.let { seatBaseInfo = it }
+        intent.getParcelableCompat<SeatMovieDto>(SEAT_BASE_INFORMATION_KEY)?.let {
+            seatBaseInfo = it
+        }
     }
 
     private fun setUpSeatsView() {
         SeatSelectView(
             binding.seatLayout,
             ::onSeatClick,
-            seats,
+            seats
         )
     }
 
@@ -64,7 +66,11 @@ class SeatSelectionActivity : AppCompatActivity() {
         if (savedInstanceState != null) {
             savedInstanceState.getParcelableCompat<SeatsDto>(SEATS_POSITION)?.let { seatsDto = it }
             seats = seatsDto.mapToSeats()
-            setPrice(seats.caculateSeatPrice(LocalDateTime.of(seatBaseInfo.movieDate.date, seatBaseInfo.movieTime.time)))
+            setPrice(
+                seats.caculateSeatPrice(
+                    LocalDateTime.of(seatBaseInfo.movieDate.date, seatBaseInfo.movieTime.time)
+                )
+            )
         } else {
             setPrice(0)
         }
@@ -76,7 +82,7 @@ class SeatSelectionActivity : AppCompatActivity() {
         when {
             isPossibleSelect(seat, seatBaseInfo.ticketCount.numberOfPeople) -> selectSeat(
                 textView,
-                seat,
+                seat
             )
             isSeatCancelable(seat) -> unselectSeat(textView, seat)
             else -> {
@@ -85,7 +91,11 @@ class SeatSelectionActivity : AppCompatActivity() {
                 return
             }
         }
-        setPrice(seats.caculateSeatPrice(LocalDateTime.of(seatBaseInfo.movieDate.date, seatBaseInfo.movieTime.time)))
+        setPrice(
+            seats.caculateSeatPrice(
+                LocalDateTime.of(seatBaseInfo.movieDate.date, seatBaseInfo.movieTime.time)
+            )
+        )
         setEnterBtnClickable()
     }
 
@@ -149,7 +159,13 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     private fun moveActivity() {
-        val bookingMovie = BookingMovieEntity(seatBaseInfo.movie, seatBaseInfo.movieDate, seatBaseInfo.movieTime, seatBaseInfo.ticketCount, seats.mapToSeatsDto())
+        val bookingMovie = BookingMovieEntity(
+            seatBaseInfo.movie,
+            seatBaseInfo.movieDate,
+            seatBaseInfo.movieTime,
+            seatBaseInfo.ticketCount,
+            seats.mapToSeatsDto()
+        )
         val intent = Intent(this, TicketActivity::class.java)
         intent.putExtra(BOOKING_MOVIE_KEY, bookingMovie)
         putAlarm(bookingMovie)
@@ -169,7 +185,10 @@ class SeatSelectionActivity : AppCompatActivity() {
         alarmManager.setExact(
             AlarmManager.RTC_WAKEUP,
             setDateTime(bookingMovie).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(),
-            PendingIntentBuilder(this).createReceiverPendingIntent(Intent(this, AlarmReceiver::class.java), bookingMovie),
+            PendingIntentBuilder(this).createReceiverPendingIntent(
+                Intent(this, AlarmReceiver::class.java),
+                bookingMovie
+            )
         )
     }
 
