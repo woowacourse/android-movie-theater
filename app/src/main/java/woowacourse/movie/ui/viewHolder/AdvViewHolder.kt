@@ -1,24 +1,19 @@
 package woowacourse.movie.ui.viewHolder
 
-import android.view.View
-import android.widget.ImageView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemAdvLayoutBinding
 import woowacourse.movie.ui.itemModel.AdvItemModel
 import woowacourse.movie.ui.itemModel.ItemModel
 
 class AdvViewHolder(
-    itemView: View,
+    private val binding: ItemAdvLayoutBinding,
     onClick: (position: Int) -> Unit
-) : ItemViewHolder(itemView) {
-    private val image: ImageView
-
+) : ItemViewHolder(binding.root) {
     init {
-        image = itemView.findViewById(R.id.adv_img)
-        image.setOnClickListener { onClick(bindingAdapterPosition) }
+        binding.advImg.setOnClickListener { onClick(bindingAdapterPosition) }
     }
 
     override fun bind(itemModel: ItemModel) {
         val item = itemModel as AdvItemModel
-        image.setImageResource(item.advState.imgId)
+        binding.advImg.setImageResource(item.advState.imgId)
     }
 }

@@ -27,6 +27,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.ui.adv.AdvDetailActivity
+import woowacourse.movie.ui.itemModel.AdvItemModel
+import woowacourse.movie.ui.itemModel.MovieItemModel
 import woowacourse.movie.ui.reservation.MovieDetailActivity
 
 @RunWith(AndroidJUnit4::class)
@@ -51,9 +53,9 @@ class MainActivityTest {
             var viewType = 0
             activityRule.scenario.onActivity {
                 viewType =
-                    it.findViewById<RecyclerView>(R.id.rv_main).adapter!!.getItemViewType(index)
+                    it.findViewById<RecyclerView>(R.id.movie_list).adapter!!.getItemViewType(index)
             }
-            assertEquals(R.layout.adv_item_layout, viewType)
+            assertEquals(AdvItemModel.type, viewType)
         }
     }
 
@@ -62,14 +64,14 @@ class MainActivityTest {
         var viewType = 0
         activityRule.scenario.onActivity {
             viewType =
-                it.findViewById<RecyclerView>(R.id.rv_main).adapter!!.getItemViewType(2)
+                it.findViewById<RecyclerView>(R.id.movie_list).adapter!!.getItemViewType(2)
         }
-        assertEquals(R.layout.movie_item_layout, viewType)
+        assertEquals(MovieItemModel, viewType)
     }
 
     @Test
     fun `8번째_인덱스에_위치한_영화의_제목이_일치한다`() {
-        onView(withId(R.id.rv_main))
+        onView(withId(R.id.movie_list))
             .perform(
                 RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(8)
             )
@@ -78,7 +80,7 @@ class MainActivityTest {
 
     @Test
     fun `광고아이템을_클릭하면_광고화면으로_이동한다`() {
-        onView(withId(R.id.rv_main))
+        onView(withId(R.id.movie_list))
             .perform(
                 actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     3,
@@ -94,7 +96,7 @@ class MainActivityTest {
 
     @Test
     fun `영화_아이템을_클릭하면_영화_예매화면으로_이동한다`() {
-        onView(withId(R.id.rv_main))
+        onView(withId(R.id.movie_list))
             .perform(
                 actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     1,

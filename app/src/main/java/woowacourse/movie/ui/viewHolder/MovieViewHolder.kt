@@ -1,43 +1,32 @@
 package woowacourse.movie.ui.viewHolder
 
-import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemMovieLayoutBinding
 import woowacourse.movie.ui.DateTimeFormatters
 import woowacourse.movie.ui.itemModel.ItemModel
 import woowacourse.movie.ui.itemModel.MovieItemModel
 
 class MovieViewHolder(
-    itemView: View,
+    private val binding: ItemMovieLayoutBinding,
     onClick: (position: Int) -> Unit
-) : ItemViewHolder(itemView) {
-    private val image: ImageView
-    private val title: TextView
-    private val date: TextView
-    private val time: TextView
-    private val reservation: Button
-
+) : ItemViewHolder(binding.root) {
     init {
-        image = itemView.findViewById(R.id.image)
-        title = itemView.findViewById(R.id.reservation_title)
-        date = itemView.findViewById(R.id.running_date)
-        time = itemView.findViewById(R.id.running_time)
-        reservation = itemView.findViewById(R.id.reservation)
-        reservation.setOnClickListener { onClick(bindingAdapterPosition) }
+        binding.reservation.setOnClickListener { onClick(bindingAdapterPosition) }
     }
 
     override fun bind(itemModel: ItemModel) {
         val item = itemModel as MovieItemModel
-        image.setImageResource(item.movieState.imgId)
-        title.text = item.movieState.title
-        date.text =
+        binding.image.setImageResource(item.movieState.imgId)
+        binding.reservationTitle.text = item.movieState.title
+        binding.runningDate.text =
             DateTimeFormatters.convertToDateTildeDate(
-                date.context,
+                binding.root.context,
                 item.movieState.startDate,
                 item.movieState.endDate
             )
-        time.text = time.context.getString(R.string.running_time, item.movieState.runningTime)
+        binding.runningTime.text = binding.root.context.getString(
+            R.string.running_time,
+            item.movieState.runningTime
+        )
     }
 }

@@ -3,7 +3,8 @@ package woowacourse.movie.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemAdvLayoutBinding
+import woowacourse.movie.databinding.ItemMovieLayoutBinding
 import woowacourse.movie.ui.itemModel.AdvItemModel
 import woowacourse.movie.ui.itemModel.ItemModel
 import woowacourse.movie.ui.itemModel.MovieItemModel
@@ -41,16 +42,22 @@ class MovieListAdapter(
         viewType: Int
     ): ItemViewHolder = when (viewType) {
         MovieItemModel.type -> {
-            val itemView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.movie_item_layout, parent, false)
-            MovieViewHolder(itemView) { position ->
+            val binding = ItemMovieLayoutBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+            MovieViewHolder(binding) { position ->
                 onClickMovie(items[position] as MovieItemModel)
             }
         }
         AdvItemModel.type -> {
-            val itemView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.adv_item_layout, parent, false)
-            AdvViewHolder(itemView) { position ->
+            val binding = ItemAdvLayoutBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+            AdvViewHolder(binding) { position ->
                 onClickAdv(items[position] as AdvItemModel)
             }
         }
