@@ -7,9 +7,9 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
-import woowacourse.movie.fragment.SettingFragment
 import woowacourse.movie.fragment.movielist.MovieListFragment
 import woowacourse.movie.fragment.reservationlist.ReservationListFragment
+import woowacourse.movie.fragment.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
