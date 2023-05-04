@@ -10,6 +10,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
 import woowacourse.movie.data.ReservationViewData
+import woowacourse.movie.data.dataSource.SharedSetting
 import woowacourse.movie.error.BroadcastReceiverError.returnWithError
 import woowacourse.movie.error.ViewError
 import woowacourse.movie.view.activity.ReservationResultActivity
@@ -17,8 +18,8 @@ import woowacourse.movie.view.fragment.SettingFragment
 
 class ReservationAlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        val setting: Setting = SharedSetting(context)
-        if (intent.action == ACTION_ALARM && setting.getValue(
+        SharedSetting.initWithContext(context)
+        if (intent.action == ACTION_ALARM && SharedSetting.getValue(
                 SettingFragment.SETTING_NOTIFICATION
             )
         ) {
