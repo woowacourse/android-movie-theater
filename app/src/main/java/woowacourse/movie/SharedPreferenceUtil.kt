@@ -2,16 +2,20 @@ package woowacourse.movie
 
 import android.content.Context
 import android.content.SharedPreferences
+import woowacourse.movie.BundleKeys.SETTING_PUSH_ALARM_SWITCH_KEY
 
-object SharedPreferenceUtil {
-    fun getBooleanValue(context: Context, key: String, default: Boolean): Boolean {
-        val sharedPreference = context.getSharedPreferences(key, Context.MODE_PRIVATE)
-        return sharedPreference.getBoolean(key, default)
+class SharedPreferenceUtil(context: Context) : DataRepository {
+
+    private val sharedPreferences: SharedPreferences = context.getSharedPreferences(
+        SETTING_PUSH_ALARM_SWITCH_KEY, Context.MODE_PRIVATE
+    )
+
+    override fun getBooleanValue(default: Boolean): Boolean {
+        return sharedPreferences.getBoolean(SETTING_PUSH_ALARM_SWITCH_KEY, default)
     }
 
-    fun setBooleanValue(context: Context, key: String, value: Boolean) {
-        val sharedPreference = context.getSharedPreferences(key, Context.MODE_PRIVATE)
-        val editor: SharedPreferences.Editor = sharedPreference.edit()
-        editor.putBoolean(key, value).apply()
+    override fun setBooleanValue(value: Boolean) {
+        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+        editor.putBoolean(SETTING_PUSH_ALARM_SWITCH_KEY, value).apply()
     }
 }
