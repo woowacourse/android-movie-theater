@@ -56,6 +56,14 @@ class SeatPickerPresenter(
         requireView().showTicketingResultScreen(reservation.toPresentation())
     }
 
+    private fun isPicked(seat: Seat): Boolean = pickedSeats.isPicked(seat.toDomain())
+
+    override fun onClickSeat(seat: Seat): Unit = when {
+        isPicked(seat) -> unpick(seat)
+        !isAllPicked() -> pick(seat)
+        else -> requireView().showSeatExceedAlertMessage()
+    }
+
     private fun pick(seat: Seat) {
         pickedSeats = pickedSeats.add(seat.toDomain())
         updateViewWithSeat(seat, true)
@@ -69,14 +77,6 @@ class SeatPickerPresenter(
     private fun updateViewWithSeat(seat: Seat, isPicked: Boolean) {
         updatePriceTextAndReservationEnabled()
         requireView().setSeatViewPickState(seat.toIndex(seatColSize), isPicked)
-    }
-
-    private fun isPicked(seat: Seat): Boolean = pickedSeats.isPicked(seat.toDomain())
-
-    override fun onClickSeat(seat: Seat): Unit = when {
-        isPicked(seat) -> unpick(seat)
-        !isAllPicked() -> pick(seat)
-        else -> requireView().showSeatExceedAlertMessage()
     }
 
     override fun isAllPicked(): Boolean =
