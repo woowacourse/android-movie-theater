@@ -15,6 +15,7 @@ class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == ALARM_CODE && SettingPreference.getBoolean(SETTING_PREFERENCE_KEY)) {
+            SettingPreference.initSharedPreferences(context)
             val notificationBuilder = NotificationBuilder(context)
             notificationBuilder.createNotificationChannel()
 
