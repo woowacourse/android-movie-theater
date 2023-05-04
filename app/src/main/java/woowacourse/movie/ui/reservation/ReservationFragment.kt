@@ -21,16 +21,27 @@ class ReservationFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_reservation, container, false)
+        return inflater.inflate(R.layout.fragment_reservation, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         setTextOnEmptyState(view)
         initAdapter(view)
+    }
 
-        return view
+    override fun onResume() {
+        super.onResume()
+        setReservationViewAdapter()
     }
 
     private fun initAdapter(view: View) {
         reservationView = view.findViewById(R.id.reservation_recyclerview)
+        setReservationViewAdapter()
+    }
+
+    private fun setReservationViewAdapter() {
         reservationView.adapter = ReservationAdapter(ReservationModel.tickets) {
             moveToMovieTicketActivity(it)
         }

@@ -31,12 +31,15 @@ class SettingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_setting, container, false)
+        return inflater.inflate(R.layout.fragment_setting, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         requestNotificationPermission(view)
         initToggleButton(view)
         setClickEventOnToggleButton()
-        return view
     }
 
     private fun requestNotificationPermission(view: View) {
