@@ -37,6 +37,12 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    packagingOptions {
+        resources {
+            excludes += "META-INF/LICENSE.md"
+            excludes += "META-INF/LICENSE-notice.md"
+        }
+    }
 }
 
 dependencies {
@@ -49,4 +55,6 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    testImplementation("io.mockk:mockk-android:1.13.5")
+    androidTestImplementation("io.mockk:mockk-android:1.13.5")
 }

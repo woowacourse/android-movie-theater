@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieListBinding
-import woowacourse.movie.view.ReservationActivity
 import woowacourse.movie.view.model.MovieListModel
+import woowacourse.movie.view.reservation.ReservationActivity
 
 class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContract.View {
 

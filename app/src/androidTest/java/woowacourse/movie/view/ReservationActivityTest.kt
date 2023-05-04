@@ -13,6 +13,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.view.model.MovieListModel
+import woowacourse.movie.view.reservation.ReservationActivity
 import java.time.LocalDate
 
 @RunWith(AndroidJUnit4::class)

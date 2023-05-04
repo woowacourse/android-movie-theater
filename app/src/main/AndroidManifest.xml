@@ -24,10 +24,10 @@
             android:name=".view.seatselection.SeatSelectionActivity"
             android:exported="false" />
         <activity
-            android:name=".view.ReservationCompletedActivity"
+            android:name=".view.reservationcompleted.ReservationCompletedActivity"
             android:exported="false" />
         <activity
-            android:name=".view.ReservationActivity"
+            android:name=".view.reservation.ReservationActivity"
             android:exported="false" />
         <activity
             android:name=".view.moviemain.MovieMainActivity"

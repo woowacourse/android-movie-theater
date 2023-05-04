@@ -20,7 +20,6 @@ import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.domain.ReservationAgency
 import woowacourse.movie.domain.Seat
 import woowacourse.movie.util.getParcelableCompat
-import woowacourse.movie.view.ReservationCompletedActivity
 import woowacourse.movie.view.alarm.ReservationAlarmManager
 import woowacourse.movie.view.mapper.toDomainModel
 import woowacourse.movie.view.mapper.toUiModel
@@ -28,6 +27,7 @@ import woowacourse.movie.view.model.MovieListModel.MovieUiModel
 import woowacourse.movie.view.model.ReservationOptions
 import woowacourse.movie.view.model.SeatUiModel
 import woowacourse.movie.view.moviemain.setting.SettingFragment
+import woowacourse.movie.view.reservationcompleted.ReservationCompletedActivity
 import java.text.DecimalFormat
 
 class SeatSelectionActivity : AppCompatActivity() {

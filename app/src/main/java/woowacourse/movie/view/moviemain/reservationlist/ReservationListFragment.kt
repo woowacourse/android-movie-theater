@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationListBinding
-import woowacourse.movie.view.ReservationCompletedActivity
 import woowacourse.movie.view.model.ReservationUiModel
+import woowacourse.movie.view.reservationcompleted.ReservationCompletedActivity
 
 class ReservationListFragment :
     Fragment(R.layout.fragment_reservation_list),
