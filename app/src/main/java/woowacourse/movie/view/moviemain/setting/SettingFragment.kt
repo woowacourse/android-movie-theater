@@ -12,16 +12,19 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.switchmaterial.SwitchMaterial
 import woowacourse.movie.R
 import woowacourse.movie.data.setting.SettingPreferencesManager
-import woowacourse.movie.view.model.AlarmController
+import woowacourse.movie.view.AlarmController
+import woowacourse.movie.view.model.ReservationUiModel
 
 class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.View {
 
     private lateinit var toggle: SwitchMaterial
+    private lateinit var alarmController: AlarmController
     override lateinit var presenter: SettingContract.Presenter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = SettingPresenter(this, SettingPreferencesManager(requireContext()), AlarmController(requireContext()))
+        alarmController = AlarmController(requireContext())
+        presenter = SettingPresenter(this, SettingPreferencesManager(requireContext()))
 
         toggle = view.findViewById(R.id.setting_toggle)
         presenter.initToggle()
@@ -32,6 +35,13 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
 
     override fun setToggle(isOn: Boolean) {
         toggle.isChecked = isOn
+    }
+
+    override fun setAlarms(reservations: List<ReservationUiModel>) {
+        alarmController.registerAlarms(reservations, ALARM_MINUTE_INTERVAL)
+    }
+    override fun cancelAlarms() {
+        alarmController.cancelAlarms()
     }
 
     override val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->

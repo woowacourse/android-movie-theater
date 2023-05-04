@@ -18,7 +18,7 @@ import woowacourse.movie.databinding.ActivityReservationCompletedBinding
 import woowacourse.movie.util.DATE_FORMATTER
 import woowacourse.movie.util.TIME_FORMATTER
 import woowacourse.movie.util.getParcelableCompat
-import woowacourse.movie.view.model.AlarmController
+import woowacourse.movie.view.AlarmController
 import woowacourse.movie.view.model.ReservationUiModel
 import woowacourse.movie.view.moviemain.MovieMainActivity
 import woowacourse.movie.view.moviemain.setting.SettingFragment
