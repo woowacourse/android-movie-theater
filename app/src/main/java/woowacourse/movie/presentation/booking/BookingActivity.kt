@@ -47,12 +47,11 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         setContentView(R.layout.activity_booking)
 
         initAdapters()
-        restoreData(savedInstanceState)
         initView()
+        restoreData(savedInstanceState)
         initDateTimes()
         gatherClickListeners()
         initDateSpinnerSelectedListener()
-        initTimeSpinnerSelectedListener()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -64,10 +63,13 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
     }
 
     private fun restoreData(savedInstanceState: Bundle?) {
-        savedInstanceState ?: return
+        if (savedInstanceState == null) {
+            presenter.setTicketCount(INITIAL_TICKET_COUNT)
+            return
+        }
 
         with(savedInstanceState) {
-            setTicketCount(getInt(TICKET_COUNT))
+            presenter.setTicketCount(getInt(TICKET_COUNT))
             dateSpinner.setSelection(getInt(DATE_POSITION), false)
             timeSpinner.setSelection(getInt(TIME_POSITION), false)
         }
@@ -101,7 +103,6 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         setMovieScreeningDate()
         setMovieRunningTime()
         setMovieDescription()
-        setTicketCount(DEFAULT_TICKET_COUNT)
     }
 
     private fun setMoviePoster() {
@@ -186,25 +187,12 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         timeSpinnerAdapter.initItems(times)
     }
 
-    private fun initTimeSpinnerSelectedListener() {
-        timeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long,
-            ) = Unit
-
-            override fun onNothingSelected(parent: AdapterView<*>?) = Unit
-        }
-    }
-
     companion object {
         private const val MOVIE_ID = "MOVIE_ID"
         private const val TICKET_COUNT = "TICKET_COUNT"
         private const val DATE_POSITION = "DATE_POSITION"
         private const val TIME_POSITION = "TIME_POSITION"
-        private const val DEFAULT_TICKET_COUNT = 1
+        private const val INITIAL_TICKET_COUNT = 1
         fun getIntent(context: Context, movieId: Long): Intent {
             return Intent(context, BookingActivity::class.java).apply {
                 putExtra(MOVIE_ID, movieId)

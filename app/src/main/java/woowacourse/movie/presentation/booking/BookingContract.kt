@@ -15,6 +15,7 @@ interface BookingContract {
     }
 
     interface Presenter {
+        fun setTicketCount(count: Int)
         fun requireMovieModel(id: Long): MovieModel
         fun addTicket()
         fun subTicket()

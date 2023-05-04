@@ -20,6 +20,11 @@ class BookingPresenter(
 
     override fun requireMovieModel(id: Long): MovieModel = movie.toPresentation()
 
+    override fun setTicketCount(count: Int) {
+        ticketCount = TicketCount(count)
+        setTicketCountView()
+    }
+
     override fun addTicket() {
         ticketCount = ticketCount.plus()
         setTicketCountView()
