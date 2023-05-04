@@ -4,9 +4,9 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isClickable
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.isNotClickable
+import androidx.test.espresso.matcher.ViewMatchers.isEnabled
+import androidx.test.espresso.matcher.ViewMatchers.isNotEnabled
 import androidx.test.espresso.matcher.ViewMatchers.isNotSelected
 import androidx.test.espresso.matcher.ViewMatchers.isSelected
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -79,14 +79,14 @@ class SeatPickerActivityTest {
     @Test
     fun 좌석을_모두_선택하면_확인_버튼_클릭이_가능하다() {
         onView(withId(R.id.seat_picker_done_button))
-            .check(matches(isNotClickable()))
+            .check(matches(isNotEnabled()))
 
         onView(withId(R.id.seat_view_1))
             .check(matches(isNotSelected()))
             .perform(click())
 
         onView(withId(R.id.seat_picker_done_button))
-            .check(matches(isClickable()))
+            .check(matches(isEnabled()))
     }
 
     @Test
@@ -95,14 +95,14 @@ class SeatPickerActivityTest {
             .check(matches(isNotSelected()))
             .perform(click())
         onView(withId(R.id.seat_picker_done_button))
-            .check(matches(isClickable()))
+            .check(matches(isEnabled()))
 
         onView(withId(R.id.seat_view_1))
             .check(matches(isSelected()))
             .perform(click())
 
         onView(withId(R.id.seat_picker_done_button))
-            .check(matches(isNotClickable()))
+            .check(matches(isNotEnabled()))
     }
 
     @Test

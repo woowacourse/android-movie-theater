@@ -15,25 +15,23 @@ import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.alarm.AlarmManager
 import woowacourse.movie.broadcastreceiver.NotificationReceiver
-import woowacourse.movie.domain.MovieTicket
+import woowacourse.movie.contract.seat.SeatPickerContract
+import woowacourse.movie.presenter.seat.SeatPicketPresenter
 import woowacourse.movie.ui.entity.Reservations
 import woowacourse.movie.ui.model.MovieTicketModel
 import woowacourse.movie.ui.model.PriceModel
-import woowacourse.movie.ui.model.mapToMovieTicket
-import woowacourse.movie.ui.model.mapToMovieTicketModel
-import woowacourse.movie.ui.model.mapToMovieTicketModelWithOriginalPrice
-import woowacourse.movie.ui.model.mapToPriceModel
 import woowacourse.movie.ui.model.seat.SeatModel
 import woowacourse.movie.ui.model.seat.SeatsModel
-import woowacourse.movie.ui.model.seat.mapToSeat
 import woowacourse.movie.ui.utils.getParcelable
 import woowacourse.movie.ui.utils.getParcelableByKey
 import java.time.ZoneId
 import java.time.ZonedDateTime
 
-class SeatPickerActivity : AppCompatActivity() {
+class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
+    override lateinit var presenter: SeatPickerContract.Presenter
+
+    private val seatViews = mutableMapOf<SeatModel, TextView>()
     private val seats = SeatsModel().getAll()
-    private lateinit var ticket: MovieTicket
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,20 +39,18 @@ class SeatPickerActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        presenter = SeatPicketPresenter(this)
+
         loadSavedData(savedInstanceState)
 
-        val ticketModel = ticket.mapToMovieTicketModel()
-        setSeatViews(ticketModel)
-        setTicketViews(ticketModel)
+        setSeatViews()
         setDoneButton()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelable(TICKET_INSTANCE_KEY, ticket.mapToMovieTicketModelWithOriginalPrice())
+        outState.putParcelable(TICKET_INSTANCE_KEY, presenter.getTicketOriginalModel())
     }
-
-    private fun PriceModel.format(): String = getString(R.string.price, amount)
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -66,26 +62,34 @@ class SeatPickerActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun setSeatViews(ticketModel: MovieTicketModel) {
-        val seatViews = findViewById<TableLayout>(R.id.layout_seat)
+    private fun setSeatViews() {
+        val views = findViewById<TableLayout>(R.id.layout_seat)
             .children
             .filterIsInstance<TableRow>()
             .flatMap { it.children }
             .filterIsInstance<TextView>()
             .toList()
 
-        seatViews.zip(seats) { view, seat ->
-            view.text = getString(R.string.seat, seat.row.letter, seat.column.value)
-            view.setTextColor(getColor(seat.rank.color))
-            if (ticketModel.isSelectedSeat(seat)) {
-                view.isSelected = true
-                view.setBackgroundColor(getColor(R.color.seat_selected))
-            }
+        views.zip(seats) { view, seat ->
+            seatViews[seat] = view
+            setSeat(seat)
+
+            presenter.setSelectedSeat(seat)
+
             view.setOnClickListener {
                 selectSeat(view, seat)
-                updateDoneButtonState()
+                presenter.canReserveSeat()
             }
         }
+    }
+
+    private fun setSeat(seat: SeatModel) {
+        seatViews[seat]?.text = getString(R.string.seat, seat.row.letter, seat.column.value)
+        seatViews[seat]?.setTextColor(getColor(seat.rank.color))
+    }
+
+    override fun setSelectedSeat(seat: SeatModel, isSelected: Boolean) {
+        seatViews[seat]?.isSelected = isSelected
     }
 
     private fun selectSeat(
@@ -93,52 +97,33 @@ class SeatPickerActivity : AppCompatActivity() {
         seat: SeatModel
     ) {
         if (view.isSelected) {
-            removeSeat(view, seat)
+            presenter.cancelSeat(seat)
             return
         }
-        selectEmptySeat(view, seat)
+        selectEmptySeat(seat)
     }
 
-    private fun removeSeat(
-        view: TextView,
-        seat: SeatModel
-    ) {
-        updateEmptySeatView(view)
-        ticket.cancelSeat(seat.mapToSeat())
-        val priceView = findViewById<TextView>(R.id.seat_picker_price)
-        priceView.text = ticket.getDiscountPrice().mapToPriceModel().format()
-    }
-
-    private fun updateEmptySeatView(view: TextView) {
-        view.setBackgroundColor(getColor(R.color.white))
-        view.isSelected = false
-    }
-
-    private fun selectEmptySeat(
-        view: TextView,
-        seat: SeatModel
-    ) {
-        if (ticket.canReserveSeat()) {
-            addSeat(view, seat)
+    private fun selectEmptySeat(seat: SeatModel) {
+        if (presenter.canReserveSeat()) {
+            presenter.addSeat(seat)
             return
         }
         notifyUnableToAddSeat()
     }
 
-    private fun addSeat(
-        view: TextView,
-        seat: SeatModel
-    ) {
-        updateFullSeatView(view)
-        ticket.reserveSeat(seat.mapToSeat())
+    override fun setTextPrice(price: PriceModel) {
         val priceView = findViewById<TextView>(R.id.seat_picker_price)
-        priceView.text = ticket.getDiscountPrice().mapToPriceModel().format()
+        priceView.text = price.format()
     }
 
-    private fun updateFullSeatView(view: TextView) {
-        view.setBackgroundColor(getColor(R.color.seat_selected))
-        view.isSelected = true
+    override fun setTicketViews(ticketModel: MovieTicketModel) {
+        val titleView = findViewById<TextView>(R.id.seat_picker_title)
+        val priceView = findViewById<TextView>(R.id.seat_picker_price)
+        titleView.text = ticketModel.title
+        priceView.text = ticketModel.price.format()
     }
+
+    private fun PriceModel.format(): String = getString(R.string.price, amount)
 
     private fun notifyUnableToAddSeat() {
         Toast
@@ -150,46 +135,23 @@ class SeatPickerActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun updateDoneButtonState() {
+    override fun setEnabledDone(isEnabled: Boolean) {
         val doneButton = findViewById<TextView>(R.id.seat_picker_done_button)
-        if (ticket.canReserveSeat()) {
-            deactivateDoneButton(doneButton)
-        } else {
-            activateDoneButton(doneButton)
-        }
-    }
-
-    private fun activateDoneButton(doneButton: TextView) {
-        doneButton.setBackgroundColor(getColor(R.color.seat_picker_done_button_on))
-        doneButton.isClickable = true
-    }
-
-    private fun deactivateDoneButton(doneButton: TextView) {
-        doneButton.setBackgroundColor(getColor(R.color.seat_picker_done_button_off))
-        doneButton.isClickable = false
-    }
-
-    private fun setTicketViews(ticketModel: MovieTicketModel) {
-        val titleView = findViewById<TextView>(R.id.seat_picker_title)
-        val priceView = findViewById<TextView>(R.id.seat_picker_price)
-        titleView.text = ticketModel.title
-        priceView.text = ticketModel.price.format()
+        doneButton.isEnabled = isEnabled
     }
 
     private fun setDoneButton() {
         val doneButton = findViewById<TextView>(R.id.seat_picker_done_button)
         doneButton.setOnClickListener {
-            showReservationCheckDialog()
+            presenter.actionReservation()
         }
-        updateDoneButtonState()
     }
 
-    private fun showReservationCheckDialog() {
+    override fun showReservationCheckDialog(ticketModel: MovieTicketModel) {
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.dialog_title_seat_selection_check))
             .setMessage(getString(R.string.dialog_message_seat_selection_check))
             .setPositiveButton(getString(R.string.dialog_positive_button_seat_selection_check)) { _, _ ->
-                val ticketModel = ticket.mapToMovieTicketModel()
                 Reservations.addItem(ticketModel)
                 setAlarmManager(ticketModel)
                 moveToTicketActivity(ticketModel)
@@ -203,7 +165,10 @@ class SeatPickerActivity : AppCompatActivity() {
 
     private fun setAlarmManager(ticketModel: MovieTicketModel) {
         val time =
-            ZonedDateTime.of(ticketModel.time.dateTime.minusMinutes(ALARM_MINUTE_CONDITION), ZoneId.systemDefault())
+            ZonedDateTime.of(
+                ticketModel.time.dateTime.minusMinutes(ALARM_MINUTE_CONDITION),
+                ZoneId.systemDefault()
+            )
                 .toInstant().toEpochMilli()
         val pendingIntent = getPendingIntent(ticketModel)
         AlarmManager.setAlarm(this, time, pendingIntent)
@@ -224,11 +189,12 @@ class SeatPickerActivity : AppCompatActivity() {
     }
 
     private fun loadSavedData(savedInstanceState: Bundle?) {
-        val ticketModel = savedInstanceState?.getParcelableByKey<MovieTicketModel>(
+        val ticketModel: MovieTicketModel = savedInstanceState?.getParcelableByKey(
             TICKET_INSTANCE_KEY
         )
             ?: intent.getParcelable(TICKET_EXTRA_KEY)!!
-        ticket = ticketModel.mapToMovieTicket()
+
+        presenter.setupTicket(ticketModel)
     }
 
     companion object {
