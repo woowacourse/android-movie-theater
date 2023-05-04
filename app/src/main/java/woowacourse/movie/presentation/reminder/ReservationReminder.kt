@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Parcelable
 import woowacourse.movie.R
-import woowacourse.movie.presentation.activities.ticketing.SeatPickerActivity.Companion.REMINDER_TIME_MINUTES_AGO
+import woowacourse.movie.presentation.activities.ticketing.seatpicker.SeatPickerActivity.Companion.REMINDER_TIME_MINUTES_AGO
 import woowacourse.movie.presentation.activities.ticketingresult.TicketingResultActivity
 import woowacourse.movie.presentation.model.item.Reservation
 
