@@ -1,15 +1,18 @@
 package woowacourse.movie.fragment.movielist
 
+import woowacourse.movie.view.data.MovieListViewData
 import woowacourse.movie.view.data.MovieViewDatas
 
 interface MovieListContract {
 
     interface View {
         var presenter: Presenter
-        fun setMovieListData(movieViewDatas: MovieViewDatas)
+        fun makeMovieRecyclerView(movieViewDatas: MovieViewDatas)
+        fun setOnMovieClickListener(data: MovieListViewData)
     }
 
     interface Presenter {
-        fun loadMovieListData()
+        fun makeMovieRecyclerView()
+        fun setOnClickListener(data: MovieListViewData)
     }
 }

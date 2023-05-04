@@ -10,13 +10,11 @@ import woowacourse.movie.R
 import woowacourse.movie.activity.MovieReservationActivity
 import woowacourse.movie.fragment.movielist.adapter.MovieAdapter
 import woowacourse.movie.view.data.MovieListViewData
-import woowacourse.movie.view.data.MovieListViewType
 import woowacourse.movie.view.data.MovieViewData
 import woowacourse.movie.view.data.MovieViewDatas
 
 class MovieListFragment : Fragment(), MovieListContract.View {
     override lateinit var presenter: MovieListContract.Presenter
-    private lateinit var movieViewDatas: MovieViewDatas
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,30 +26,22 @@ class MovieListFragment : Fragment(), MovieListContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         presenter = MovieListPresenter(this)
-        presenter.loadMovieListData()
-
-        makeMovieRecyclerView(view)
+        presenter.makeMovieRecyclerView()
     }
 
-    override fun setMovieListData(movieViewDatas: MovieViewDatas) {
-        this.movieViewDatas = movieViewDatas
+    override fun makeMovieRecyclerView(movieViewDatas: MovieViewDatas) {
+        val movieRecyclerView = requireView().findViewById<RecyclerView>(R.id.main_movie_list)
+        movieRecyclerView.adapter = MovieAdapter(movieViewDatas) {
+            presenter.setOnClickListener(it)
+        }
     }
 
-    private fun makeMovieRecyclerView(view: View) {
-        val movieRecyclerView = view.findViewById<RecyclerView>(R.id.main_movie_list)
-        movieRecyclerView.adapter = MovieAdapter(movieViewDatas, ::onClickItem)
-    }
-
-    private fun onClickItem(view: View, data: MovieListViewData) {
-        when (data.viewType) {
-            MovieListViewType.MOVIE -> MovieReservationActivity.from(
-                view.context, data as MovieViewData
-            ).run {
-                startActivity(this)
-            }
-            MovieListViewType.ADVERTISEMENT -> Unit
+    override fun setOnMovieClickListener(data: MovieListViewData) {
+        MovieReservationActivity.from(
+            requireContext(), data as MovieViewData
+        ).run {
+            startActivity(this)
         }
     }
 }

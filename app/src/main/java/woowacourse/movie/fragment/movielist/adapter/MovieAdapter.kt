@@ -1,7 +1,6 @@
 package woowacourse.movie.fragment.movielist.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
@@ -12,19 +11,19 @@ import woowacourse.movie.view.data.MovieViewDatas
 
 class MovieAdapter(
     val movieViewDatas: MovieViewDatas,
-    val onClickItem: (view: View, data: MovieListViewData) -> Unit
+    val onClickItem: (data: MovieListViewData) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (MovieListViewType.values()[viewType]) {
             MovieListViewType.MOVIE -> MovieInfoViewHolder(
                 LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
-            ) { onClickItem(parent, movieViewDatas.value[it]) }
+            ) { onClickItem(movieViewDatas.value[it]) }
 
             MovieListViewType.ADVERTISEMENT -> AdvertisementViewHolder(
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_advertisement, parent, false)
-            ) { onClickItem(parent, movieViewDatas.value[it]) }
+            ) { onClickItem(movieViewDatas.value[it]) }
         }
     }
 

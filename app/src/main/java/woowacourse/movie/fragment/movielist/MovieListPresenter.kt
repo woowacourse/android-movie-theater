@@ -7,6 +7,7 @@ import woowacourse.movie.domain.advertismentPolicy.MovieAdvertisementPolicy
 import woowacourse.movie.domain.repository.AdRepository
 import woowacourse.movie.domain.repository.MovieRepository
 import woowacourse.movie.view.data.MovieListViewData
+import woowacourse.movie.view.data.MovieListViewType
 import woowacourse.movie.view.data.MovieViewDatas
 import woowacourse.movie.view.mapper.AdvertisementMapper.toView
 import woowacourse.movie.view.mapper.MovieMapper.toView
@@ -17,12 +18,23 @@ class MovieListPresenter(
 
     private val movieRepository: MovieRepository = MovieRepository(MockMovieDataSource())
     private val adRepository: AdRepository = AdRepository(MockAdDataSource())
+    override fun makeMovieRecyclerView() {
+        val loadMovieViewDatas: MovieViewDatas = loadMovieListData()
+        view.makeMovieRecyclerView(loadMovieViewDatas)
+    }
 
-    override fun loadMovieListData() {
+    override fun setOnClickListener(data: MovieListViewData) {
+        when (data.viewType) {
+            MovieListViewType.MOVIE -> view.setOnMovieClickListener(data)
+            MovieListViewType.ADVERTISEMENT -> Unit
+        }
+    }
+
+    private fun loadMovieListData(): MovieViewDatas {
         val movies = movieRepository.getData()
         val advertisements = adRepository.getData()
         val advertisementPolicy = MovieAdvertisementPolicy(MOVIE_COUNT, ADVERTISEMENT_COUNT)
-        val movieViewDatas = mutableListOf<MovieListViewData>().apply {
+        return mutableListOf<MovieListViewData>().apply {
             for (index in movies.indices) {
                 if (checkAdvertisementTurn(index, advertisementPolicy)) {
                     add(advertisements[0].toView())
@@ -30,7 +42,6 @@ class MovieListPresenter(
                 add(movies[index].toView())
             }
         }.let { MovieViewDatas(it) }
-        view.setMovieListData(movieViewDatas)
     }
 
     private fun checkAdvertisementTurn(
