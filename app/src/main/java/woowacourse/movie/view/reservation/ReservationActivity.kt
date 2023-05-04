@@ -13,7 +13,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationBinding
 import woowacourse.movie.util.DATE_FORMATTER
 import woowacourse.movie.util.getParcelableCompat
-import woowacourse.movie.view.model.MovieListModel.MovieUiModel
+import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.model.ReservationOptions
 import woowacourse.movie.view.seatselection.SeatSelectionActivity
 import java.time.LocalDate
@@ -38,7 +38,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         presenter = ReservationPresenter(this)
 
         setViewData(movie)
-        setDateSpinner(movie.screeningDates)
+        setDateSpinner(movie.screeningDateTimes)
         setPeopleCountAdjustButtonClickListener()
         setReserveButtonClickListener(movie)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -53,8 +53,8 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
             moviePoster.setImageResource(movie.posterResourceId)
             movieTitle.text = movie.title
             movieScreeningDate.text = getString(R.string.screening_date_format).format(
-                movie.screeningDates.min().format(DATE_FORMATTER),
-                movie.screeningDates.max().format(DATE_FORMATTER),
+                movie.screeningDateTimes.keys.min().format(DATE_FORMATTER),
+                movie.screeningDateTimes.keys.max().format(DATE_FORMATTER),
             )
             movieRunningTime.text =
                 getString(R.string.running_time_format).format(movie.runningTime)
@@ -62,11 +62,11 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         }
     }
 
-    private fun setDateSpinner(screeningDates: List<LocalDate>) {
+    private fun setDateSpinner(screeningDateTimes: Map<LocalDate, List<LocalTime>>) {
         val dateSpinnerAdapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
-            screeningDates,
+            screeningDateTimes.keys.toList(),
         )
 
         binding.dateSpinner.apply {
@@ -78,7 +78,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
                     position: Int,
                     id: Long,
                 ) {
-                    presenter.onDateSpinnerChanged(screeningDates[position])
+                    presenter.onDateSpinnerChanged(position, screeningDateTimes)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) = Unit

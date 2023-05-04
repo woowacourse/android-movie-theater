@@ -13,6 +13,6 @@ interface ReservationContract {
     interface Presenter {
         fun onMinusClick()
         fun onPlusClick()
-        fun onDateSpinnerChanged(date: LocalDate)
+        fun onDateSpinnerChanged(position: Int, screeningDateTimes: Map<LocalDate, List<LocalTime>>)
     }
 }

@@ -8,7 +8,7 @@ import org.junit.Test
 import woowacourse.movie.domain.system.SeatSelectSystem
 import woowacourse.movie.domain.system.SelectResult
 import woowacourse.movie.domain.theater.Grade
-import woowacourse.movie.domain.theater.TheaterInfo
+import woowacourse.movie.domain.theater.Theater
 
 class SeatSelectSystemTest {
     private lateinit var system: SeatSelectSystem
@@ -24,8 +24,8 @@ class SeatSelectSystemTest {
         )
         val row = 5
         val col = 4
-        val theaterInfo = TheaterInfo(rowGrade, row, col)
-        system = SeatSelectSystem(theaterInfo, 3)
+        val theater = Theater("선릉", rowGrade, row, col, mapOf())
+        system = SeatSelectSystem(theater, 3)
     }
 
     @Test
