@@ -3,6 +3,7 @@ package woowacourse.movie.moviedetail
 import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.slot
+import io.mockk.verify
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -34,6 +35,7 @@ class MovieDetailPresenterTest {
         // then
         val actual = slot.captured
         assertEquals(2, actual)
+        verify { view.setPeopleCount(actual) }
     }
 
     @Test
@@ -49,6 +51,7 @@ class MovieDetailPresenterTest {
         // then
         val actual = slot.captured
         assertEquals(1, actual)
+        verify { view.setPeopleCount(actual) }
     }
 
     @Test
@@ -61,8 +64,9 @@ class MovieDetailPresenterTest {
         presenter.setScreeningDates(dummyMovie)
 
         // then
-        val actual = slot.captured.size
-        assertEquals(10, actual)
+        val actual = slot.captured
+        assertEquals(10, actual.size)
+        verify { view.setDateSpinner(actual) }
     }
 
     @Test
@@ -76,9 +80,10 @@ class MovieDetailPresenterTest {
         presenter.setScreeningTimes(weekday)
 
         // then
-        val actual = slot.captured[0]
+        val actual = slot.captured
         val expected = LocalTime.of(9, 0)
-        assertEquals(expected, actual)
+        assertEquals(expected, actual[0])
+        verify { view.setTimeSpinner(actual) }
     }
 
     @Test
@@ -92,9 +97,10 @@ class MovieDetailPresenterTest {
         presenter.setScreeningTimes(weekend)
 
         // then
-        val actual = slot.captured[0]
+        val actual = slot.captured
         val expected = LocalTime.of(10, 0)
-        assertEquals(expected, actual)
+        assertEquals(expected, actual[0])
+        verify { view.setTimeSpinner(actual) }
     }
 
     companion object {
