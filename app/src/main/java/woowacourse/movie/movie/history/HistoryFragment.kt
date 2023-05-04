@@ -6,32 +6,42 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
-import woowacourse.movie.movie.dto.BookingHistoryDto
+import woowacourse.movie.databinding.FragmentHistoryBinding
 import woowacourse.movie.movie.dto.movie.BookingMovieEntity
 import woowacourse.movie.movie.movielist.OnClickListener
 import woowacourse.movie.movie.ticket.TicketActivity
 
-class HistoryFragment : Fragment() {
+class HistoryFragment : Fragment(), HistoryContract.View {
+    override lateinit var presenter: HistoryContract.Presenter
+    private lateinit var binding: FragmentHistoryBinding
+
+    private lateinit var adapter: HistoryAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_history, container, false)
-        setUpHistoryData(view)
-
-        return view
+    ): View {
+        setUpBinding()
+        presenter = HistoryPresenter(this)
+        presenter.initFragment()
+        return binding.root
     }
 
-    private fun setUpHistoryData(view: View) {
-        val historyRecyclerView = view.findViewById<RecyclerView>(R.id.history_rv)
-        val historyAdapter = HistoryAdapter(
-            BookingHistoryDto.getHistory(),
-        )
+    override fun onResume() {
+        super.onResume()
+        presenter.initFragment()
+    }
 
-        historyRecyclerView.adapter = historyAdapter
+    private fun setUpBinding() {
+        binding = FragmentHistoryBinding.inflate(layoutInflater)
+    }
+
+    override fun setUpHistoryData(history: List<BookingMovieEntity>) {
+        val historyAdapter = HistoryAdapter(history)
+
+        adapter = historyAdapter
+        binding.historyRv.adapter = adapter
         historyAdapter.itemViewClick = object : OnClickListener<BookingMovieEntity> {
             override fun onClick(item: BookingMovieEntity) {
                 val intent = Intent(context, TicketActivity::class.java)
@@ -39,6 +49,11 @@ class HistoryFragment : Fragment() {
                 startActivity(intent)
             }
         }
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        adapter = HistoryAdapter(presenter.getHistory())
     }
 
     companion object {
