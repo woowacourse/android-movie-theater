@@ -15,16 +15,14 @@ class MovieDetailPresenter(
     private val getMovieRunningTimeUseCase = GetMovieRunningTimeUseCase()
 
     override var count: CountState = CountState.of(1)
+        set(value) {
+            field = value
+            view.setCounterText(value.value)
+        }
 
-    override fun plus() {
-        count += 1
-        view.setCounterText(count.value)
-    }
+    override fun plus() { count += 1 }
 
-    override fun minus() {
-        count -= 1
-        view.setCounterText(count.value)
-    }
+    override fun minus() { count -= 1 }
 
     override fun getMovieRunningDates(movie: MovieState): List<LocalDate> {
         return getMovieRunningDateUseCase(movie.asDomain())

@@ -3,6 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="movieDetailView"
+            type="woowacourse.movie.ui.reservation.MovieDetailContract.View" />
+        <variable
+            name="movieDetailPreseter"
+            type="woowacourse.movie.ui.reservation.MovieDetailContract.Presenter" />
+        <variable
+            name="movie"
+            type="woowacourse.movie.model.MovieState" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,6 +42,7 @@
                     android:adjustViewBounds="true"
                     android:maxHeight="340dp"
                     android:scaleType="centerInside"
+                    android:imageResource="@{movie.imgId}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -43,6 +56,7 @@
                     android:layout_marginTop="27dp"
                     android:textColor="@color/black"
                     android:textSize="24sp"
+                    android:text="@{movie.title}"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/detail_image"
@@ -54,6 +68,7 @@
                     android:layout_height="20dp"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="34dp"
+                    android:text="@{`상영일 : ` + movie.startDate + ` ~ ` + movie.endDate }"
                     android:gravity="center_vertical"
                     android:textColor="@color/black"
                     android:textSize="14sp"
@@ -70,6 +85,7 @@
                     android:layout_marginTop="4dp"
                     android:gravity="bottom"
                     android:textColor="@color/black"
+                    android:text = "@{`러닝타임 : ` + movie.runningTime}"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -83,6 +99,7 @@
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="38.87dp"
                     android:textColor="@color/black"
+                    android:text = "@{movie.description}"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -128,6 +145,7 @@
                 android:layout_marginBottom="22dp"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
+                android:onClick="@{() -> movieDetailPreseter.minus()}"
                 android:padding="0dp"
                 android:text="@string/minus"
                 android:textSize="25sp"
@@ -141,8 +159,10 @@
                 android:layout_marginBottom="22dp"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
+                android:onClick="@{() -> movieDetailPreseter.plus()}"
                 android:padding="0dp"
                 android:text="@string/plus"
+
                 android:textSize="25sp"
                 app:layout_constraintBottom_toTopOf="@id/reservation_confirm"
                 app:layout_constraintEnd_toEndOf="@id/end_guide" />
@@ -158,7 +178,8 @@
                 android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@id/reservation_confirm"
                 app:layout_constraintEnd_toStartOf="@id/plus"
-                app:layout_constraintStart_toEndOf="@id/minus" />
+                app:layout_constraintStart_toEndOf="@id/minus"
+                tools:ignore="HardcodedText" />
 
 
             <Button
@@ -170,6 +191,7 @@
                 android:insetBottom="0dp"
                 android:padding="0dp"
                 android:text="@string/reservation_complete"
+                android:onClick="@{() -> movieDetailView.navigateSeatSelectActivity()}"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/end_guide"

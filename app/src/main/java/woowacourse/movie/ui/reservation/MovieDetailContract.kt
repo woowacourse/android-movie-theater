@@ -9,6 +9,7 @@ interface MovieDetailContract {
     interface View {
         var presenter: Presenter
         fun setCounterText(count: Int)
+        fun navigateSeatSelectActivity()
     }
 
     interface Presenter {

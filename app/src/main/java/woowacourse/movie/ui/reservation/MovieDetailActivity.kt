@@ -25,43 +25,32 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
     private lateinit var movie: MovieState
     private lateinit var cinemaName: String
 
-    private lateinit var movieInfo: MovieInfo
     private lateinit var dateTimeSpinner: DateTimeSpinner
-    private lateinit var view: TicketCounter
 
     override fun onCreateView(savedInstanceState: Bundle?) {
-        binding = ActivityMovieDetailBinding.inflate(layoutInflater)
+        setUpParcelable()
+        setUpBinding()
+        setUpInstanceState(savedInstanceState)
         setContentView(binding.root)
+    }
+
+    private fun setUpParcelable() {
         movie = intent.getParcelableExtraCompat(KEY_MOVIE) ?: return keyError(KEY_MOVIE)
         cinemaName = intent.getStringExtra(KEY_CINEMA_NAME) ?: return keyError(KEY_CINEMA_NAME)
+    }
 
-        movieInfo = MovieInfo(binding).also { it.setMovieState(movie) }
+    private fun setUpBinding() {
+        binding = ActivityMovieDetailBinding.inflate(layoutInflater)
+        binding.movieDetailView = this
+        binding.movieDetailPreseter = presenter
+        binding.movie = movie
+    }
+
+    private fun setUpInstanceState(savedInstanceState: Bundle?) {
         when (savedInstanceState) {
             null -> initInstanceState()
             else -> restoreInstanceState(savedInstanceState)
         }
-        binding.reservationConfirm.setOnClickListener { navigateSeatSelectActivity() }
-    }
-
-    override fun setCounterText(count: Int) {
-        view.setCounterText(count)
-    }
-
-    private fun navigateSeatSelectActivity() {
-        val seatSelectState = SeatSelectState(
-            movie,
-            dateTimeSpinner.getSelectDateTime(),
-            presenter.count
-        )
-        SeatSelectActivity.startActivity(this, cinemaName, seatSelectState)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        val dateTime = dateTimeSpinner.getSelectDateTime()
-        outState.putSerializable(KEY_DATE, dateTime.toLocalDate())
-        outState.putSerializable(KEY_TIME, dateTime.toLocalTime())
-        outState.putParcelable(KEY_COUNT, presenter.count)
     }
 
     private fun initInstanceState() {
@@ -71,7 +60,6 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
             presenter::getMovieRunningDates,
             presenter::getMovieRunningTimes
         )
-        view = TicketCounter(binding, presenter)
     }
 
     private fun restoreInstanceState(savedInstanceState: Bundle) {
@@ -88,7 +76,29 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
             presenter::getMovieRunningTimes,
             LocalDateTime.of(restoreSelectDate, restoreSelectTime)
         )
-        view = TicketCounter(binding, presenter, restoreCount)
+
+        presenter.count = restoreCount
+    }
+
+    override fun setCounterText(count: Int) {
+        binding.count.text = count.toString()
+    }
+
+    override fun navigateSeatSelectActivity() {
+        val seatSelectState = SeatSelectState(
+            movie,
+            dateTimeSpinner.getSelectDateTime(),
+            presenter.count
+        )
+        SeatSelectActivity.startActivity(this, cinemaName, seatSelectState)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val dateTime = dateTimeSpinner.getSelectDateTime()
+        outState.putSerializable(KEY_DATE, dateTime.toLocalDate())
+        outState.putSerializable(KEY_TIME, dateTime.toLocalTime())
+        outState.putParcelable(KEY_COUNT, presenter.count)
     }
 
     companion object {
