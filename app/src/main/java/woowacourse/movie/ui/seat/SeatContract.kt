@@ -16,7 +16,6 @@ interface SeatContract {
         fun setSeatSelected(row: Int, col: Int)
         fun setSeatPayment(payment: Int)
         fun setButtonState(enabled: Boolean)
-        fun showCannotSelect()
     }
 
     interface Presenter {

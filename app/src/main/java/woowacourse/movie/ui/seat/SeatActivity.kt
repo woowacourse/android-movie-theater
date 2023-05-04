@@ -87,10 +87,6 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         seatTable.setSelected(row, col)
     }
 
-    override fun showCannotSelect() {
-        shortToast(CANNOT_SELECT)
-    }
-
     private fun initConfirmButtonClickListener() {
         buttonConfirm.setOnClickListener {
             showDialog()
