@@ -56,15 +56,15 @@ class MainActivity : AppCompatActivity() {
         if (findFragment != null) {
             supportFragmentManager.commit {
                 show(findFragment)
-                lastSelectedFragmentTag = tag
             }
         } else {
             supportFragmentManager.commit {
-                replace(R.id.main_fragment_view, fragment, tag)
-                lastSelectedFragmentTag = tag
+                add(R.id.main_fragment_view, fragment, tag)
                 setReorderingAllowed(true)
             }
         }
+
+        lastSelectedFragmentTag = tag
     }
 
     private fun setBottomNavigationView() {
