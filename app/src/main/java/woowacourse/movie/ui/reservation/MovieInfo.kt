@@ -1,31 +1,24 @@
 package woowacourse.movie.ui.reservation
 
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.ui.DateTimeFormatters
 
-class MovieInfo(
-    view: View
-) {
-    private val image: ImageView = view.findViewById(R.id.detail_image)
-    private val title: TextView = view.findViewById(R.id.detail_title)
-    private val detailDate: TextView = view.findViewById(R.id.detail_date)
-    private val detailTime: TextView = view.findViewById(R.id.detail_time)
-    private val description: TextView = view.findViewById(R.id.description)
-
+class MovieInfo(private val binding: ActivityMovieDetailBinding) {
     fun setMovieState(movie: MovieState) {
-        image.setImageResource(movie.imgId)
-        title.text = movie.title
-        detailDate.text =
+        binding.detailImage.setImageResource(movie.imgId)
+        binding.detailTitle.text = movie.title
+        binding.detailDate.text =
             DateTimeFormatters.convertToDateTildeDate(
-                detailDate.context,
+                binding.root.context,
                 movie.startDate,
                 movie.endDate
             )
-        detailTime.text = detailTime.context.getString(R.string.running_time, movie.runningTime)
-        description.text = movie.description
+        binding.detailTime.text = binding.root.context.getString(
+            R.string.running_time,
+            movie.runningTime
+        )
+        binding.description.text = movie.description
     }
 }
