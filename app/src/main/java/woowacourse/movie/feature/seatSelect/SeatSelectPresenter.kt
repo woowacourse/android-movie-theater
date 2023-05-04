@@ -18,7 +18,7 @@ class SeatSelectPresenter(
 
     private var _seats: MutableList<SeatPositionState> = mutableListOf()
     override val seats: List<SeatPositionState>
-        get() = _seats.toList()
+        get() = _seats.sortedWith(compareBy<SeatPositionState> { it.row }.thenBy { it.column })
 
     init {
         updateMoneyAndConfirmBtnState()
