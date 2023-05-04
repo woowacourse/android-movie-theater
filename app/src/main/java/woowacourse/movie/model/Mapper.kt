@@ -45,7 +45,6 @@ object Mapper {
 
     fun Reservation.toUiModel(): ReservationUiModel {
         return ReservationUiModel(
-            id = this.id,
             tickets = this.tickets.map { it.toUiModel() }.toSet(),
             paymentType = this.paymentType,
             payment = this.payment,

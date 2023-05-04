@@ -7,7 +7,6 @@ import java.time.LocalDateTime
 
 @Parcelize
 data class ReservationUiModel(
-    val id: Long,
     val tickets: Set<TicketUiModel>,
     val paymentType: PaymentType = PaymentType.OFFLINE,
     val payment: Int,
