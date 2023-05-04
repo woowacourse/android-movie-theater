@@ -1,4 +1,4 @@
-package woowacourse.movie.domain.settings
+package woowacourse.movie.presentation.settings
 
 import io.mockk.Runs
 import io.mockk.every
@@ -10,8 +10,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.model.data.storage.SettingStorage
-import woowacourse.movie.presentation.settings.SettingsContract
-import woowacourse.movie.presentation.settings.SettingsPresenter
 
 class SettingsPresenterTest {
     private lateinit var presenter: SettingsPresenter
