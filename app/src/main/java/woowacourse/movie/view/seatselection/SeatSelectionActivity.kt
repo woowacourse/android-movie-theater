@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.MenuItem
-import android.view.View
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -14,16 +13,14 @@ import android.widget.Toolbar.LayoutParams
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.data.Theater
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
-import woowacourse.movie.domain.price.Price
 import woowacourse.movie.domain.price.PriceCalculator
-import woowacourse.movie.domain.reservation.Reservation
 import woowacourse.movie.domain.system.PriceSystem
 import woowacourse.movie.domain.system.Seat
 import woowacourse.movie.domain.system.SeatSelectSystem
-import woowacourse.movie.domain.system.SelectResult
 import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.view.ReservationCompletedActivity
 import woowacourse.movie.view.mapper.toUiModel
@@ -31,35 +28,44 @@ import woowacourse.movie.view.model.MovieListModel.MovieUiModel
 import woowacourse.movie.view.model.ReservationOptions
 import woowacourse.movie.view.model.ReservationUiModel
 import woowacourse.movie.view.model.SeatUiModel
-import java.time.LocalDateTime
 
-class SeatSelectionActivity : AppCompatActivity() {
+class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     private lateinit var binding: ActivitySeatSelectionBinding
-    private lateinit var seatSystem: SeatSelectSystem
-    private lateinit var priceSystem: PriceSystem
+
+    override lateinit var presenter: SeatSelectionContract.Presenter
+
+    private val seats: List<TextView> by lazy {
+        binding.layoutSeats.children
+            .filterIsInstance<TableRow>()
+            .flatMap { it.children }
+            .filterIsInstance<TextView>().toList()
+    }
+
     private val theater = Theater
-    private var price: Price = Price(0)
+    private lateinit var reserveOptions: ReservationOptions
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySeatSelectionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val reserveOptions = intent.getParcelableCompat<ReservationOptions>(RESERVATION_OPTIONS)
-        if (reserveOptions == null) {
+        val options = intent.getParcelableCompat<ReservationOptions>(RESERVATION_OPTIONS)
+        if (options == null) {
             Toast.makeText(this, DATA_LOADING_ERROR_MESSAGE, Toast.LENGTH_LONG).show()
             finish()
             return
         }
-
-        seatSystem = SeatSelectSystem(Theater.info, reserveOptions.peopleCount)
-        priceSystem =
+        reserveOptions = options
+        val seatSystem = SeatSelectSystem(Theater.info, reserveOptions.peopleCount)
+        val priceSystem =
             PriceSystem(PriceCalculator(Theater.policies), reserveOptions.screeningDateTime)
+
+        presenter = SeatSelectionPresenter(this, seatSystem, priceSystem)
 
         createRows()
         setTitle(reserveOptions.title)
-        setNextButton(reserveOptions.title, reserveOptions.screeningDateTime)
+        setNextButton()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -87,9 +93,8 @@ class SeatSelectionActivity : AppCompatActivity() {
             }
             textAlignment = TextView.TEXT_ALIGNMENT_CENTER
             gravity = Gravity.CENTER
-            setOnClickListener { setSeatView(seatUi.row, seatUi.col, it) }
-            background =
-                AppCompatResources.getDrawable(this@SeatSelectionActivity, R.drawable.selector_seat)
+            setOnClickListener { presenter.onSeatClick(seatUi.row, seatUi.col) }
+            background = AppCompatResources.getDrawable(this@SeatSelectionActivity, R.drawable.seat_selector)
             layoutParams = TableRow.LayoutParams(0, LayoutParams.MATCH_PARENT, 1f)
         }
 
@@ -97,75 +102,60 @@ class SeatSelectionActivity : AppCompatActivity() {
         binding.textTitle.text = title
     }
 
-    private fun setNextButton(title: String, dateTime: LocalDateTime) {
+    private fun setNextButton() {
         binding.btnNext.setOnClickListener {
-            with(getDialog(Reservation(title, dateTime, seatSystem.seats, price).toUiModel())) {
-                setCanceledOnTouchOutside(false)
-                show()
-            }
+            presenter.onReserveClick(reserveOptions.title, reserveOptions.screeningDateTime)
         }
     }
 
-    private fun getDialog(ticketModel: ReservationUiModel): AlertDialog {
-        return AlertDialog.Builder(this).run {
+    override fun showSubmitDialog(reservation: ReservationUiModel) {
+        AlertDialog.Builder(this).run {
             setTitle(context.getString(R.string.reserve_dialog_title))
             setMessage(context.getString(R.string.reserve_dialog_detail))
             setPositiveButton(context.getString(R.string.reserve_dialog_submit)) { _, _ ->
-                onNextClick(ticketModel)
+                onReserveClick(reservation)
             }
             setNegativeButton(context.getString(R.string.reserve_dialog_cancel)) { dialog, _ ->
                 dialog.dismiss()
             }
-            create()
-        }
+            setCancelable(false)
+        }.show()
     }
 
-    private fun onNextClick(model: ReservationUiModel) {
+    private fun onReserveClick(model: ReservationUiModel) {
         val intent = ReservationCompletedActivity.newIntent(this, model)
         startActivity(intent)
     }
 
-    private fun setPrice(price: String) {
+    override fun setSelectionSeat(row: Int, col: Int, isClickableButton: Boolean) {
+        val textView = seats[rowColToIndex(row, col)]
+        textView.isSelected = true
+        if (isClickableButton) binding.btnNext.isEnabled = true
+    }
+
+    override fun setDeselectionSeat(row: Int, col: Int) {
+        val textView = seats[rowColToIndex(row, col)]
+        binding.btnNext.isEnabled = false
+        textView.isSelected = false
+    }
+
+    override fun maxSelectionToast() {
+        showToast(SELECT_ALL_SEAT_MESSAGE)
+    }
+
+    override fun wrongInputToast() {
+        showToast(SELECT_WRONG_SEAT_MESSAGE)
+    }
+
+    private fun showToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+    }
+
+    override fun setPrice(price: String) {
         binding.textPrice.text = getString(R.string.reservation_fee_format, price)
     }
 
-    private fun setSeatView(row: Int, col: Int, textView: View) {
-        val result = seatSystem.select(row, col)
-        when (result) {
-            is SelectResult.Success.Selection -> {
-                textView.setBackgroundColor(textView.context.getColor(R.color.select_seat))
-                textView.isSelected = true
-                if (result.isSelectAll) {
-                    binding.btnNext.isEnabled = true
-                }
-            }
-            is SelectResult.Success.Deselection -> {
-                textView.setBackgroundColor(textView.context.getColor(R.color.white))
-                binding.btnNext.isEnabled = false
-                textView.isSelected = false
-                setPrice(result.seatPrice.toUiModel())
-            }
-            is SelectResult.MaxSelection -> {
-                Toast.makeText(
-                    this,
-                    SELECT_ALL_SEAT_MESSAGE,
-                    Toast.LENGTH_LONG,
-                )
-                    .show()
-            }
-            is SelectResult.WrongInput -> {
-                Toast.makeText(
-                    this,
-                    SELECT_WRONG_SEAT_MESSAGE,
-                    Toast.LENGTH_LONG,
-                )
-                    .show()
-            }
-        }
-        val newPrice = priceSystem.getCurrentPrice(price, result)
-        price = newPrice
-        setPrice(newPrice.toUiModel())
-    }
+    private fun rowColToIndex(row: Int, col: Int): Int = row * Theater.col + col
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
