@@ -27,24 +27,30 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
     private lateinit var seatTable: SeatTable
 
     override fun onCreateView(savedInstanceState: Bundle?) {
-        binding = ActivitySeatSelectBinding.inflate(layoutInflater)
+        setUpParcelable()
+        setUpBinding()
+        setUpSeatTable()
         setContentView(binding.root)
+    }
 
-        seatSelectState =
-            intent.getParcelableExtraCompat(KEY_SEAT_SELECT) ?: return keyError(KEY_SEAT_SELECT)
-        cinemaName =
-            intent.getStringExtra(KEY_CINEMA_NAME) ?: return keyError(KEY_CINEMA_NAME)
+    private fun setUpParcelable() {
+        seatSelectState = intent.getParcelableExtraCompat(KEY_SEAT_SELECT)
+            ?: return keyError(KEY_SEAT_SELECT)
+        cinemaName = intent.getStringExtra(KEY_CINEMA_NAME) ?: return keyError(KEY_CINEMA_NAME)
+    }
+
+    private fun setUpBinding() {
+        binding = ActivitySeatSelectBinding.inflate(layoutInflater)
 
         binding.reservationTitle.text = seatSelectState.movieState.title
-
         binding.reservationConfirm.setOnClickListener {
             navigateShowDialog(seatTable.chosenSeatInfo)
         }
-        binding.reservationConfirm.isClickable = false // 클릭리스너를 설정하면 clickable이 자동으로 참이 되기 때문
+        binding.reservationConfirm.isClickable = false
+    }
 
-        seatTable = SeatTable(binding, seatSelectState.countState) {
-            updateSelectSeats(it)
-        }
+    private fun setUpSeatTable() {
+        seatTable = SeatTable(binding, seatSelectState.countState) { updateSelectSeats(it) }
     }
 
     override fun onRestoreInstanceState(
