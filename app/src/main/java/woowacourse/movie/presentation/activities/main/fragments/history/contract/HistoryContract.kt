@@ -1,13 +1,14 @@
 package woowacourse.movie.presentation.activities.main.fragments.history.contract
 
+import woowacourse.movie.presentation.model.Reservation
 import woowacourse.movie.presentation.model.movieitem.ListItem
 
 interface HistoryContract {
     interface View {
         val presenter: Presenter
 
-        fun showExtraHistories(items: List<ListItem>)
-        fun showAddedHistory(item: List<ListItem>)
+        fun showHistories(items: List<ListItem>)
+        fun showMoreHistory(item: ListItem)
         fun showDetails(item: ListItem)
     }
 
@@ -25,6 +26,7 @@ interface HistoryContract {
         protected fun requireView(): View =
             view ?: throw IllegalStateException("View is not attached")
 
+        abstract fun addHistory(item: Reservation)
         abstract fun loadHistories()
         abstract fun onClickItem(item: ListItem)
     }

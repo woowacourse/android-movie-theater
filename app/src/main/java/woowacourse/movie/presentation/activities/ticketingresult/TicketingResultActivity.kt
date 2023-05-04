@@ -7,12 +7,12 @@ import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
+import woowacourse.movie.presentation.activities.main.MainActivity
 import woowacourse.movie.presentation.activities.ticketingresult.contract.TicketingResultContract
 import woowacourse.movie.presentation.activities.ticketingresult.presenter.TicketingResultPresenter
 import woowacourse.movie.presentation.extensions.getParcelableCompat
 import woowacourse.movie.presentation.extensions.showBackButton
 import woowacourse.movie.presentation.model.Reservation
-import woowacourse.movie.presentation.model.movieitem.ListItem
 
 class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.View {
     override val presenter: TicketingResultContract.Presenter = TicketingResultPresenter(this)
@@ -60,7 +60,10 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            android.R.id.home -> finish()
+            android.R.id.home -> {
+                startActivity(MainActivity.getIntent(this, reservation))
+                finish()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -68,10 +71,8 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
     companion object {
         private const val RESERVATION_KEY = "reservation"
 
-        fun getIntent(context: Context, reservation: ListItem): Intent =
-            Intent(context, TicketingResultActivity::class.java).putExtra(
-                RESERVATION_KEY,
-                reservation
-            )
+        fun getIntent(context: Context, reservation: woowacourse.movie.presentation.model.movieitem.ListItem): Intent =
+            Intent(context, TicketingResultActivity::class.java)
+                .putExtra(RESERVATION_KEY, reservation)
     }
 }

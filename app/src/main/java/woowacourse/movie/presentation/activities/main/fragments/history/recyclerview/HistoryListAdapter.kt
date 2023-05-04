@@ -11,7 +11,7 @@ class HistoryListAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): BaseRecyclerView.BaseViewHolder {
         return HistoryViewHolder(parent.inflate(R.layout.item_history), onItemViewClick)
     }
@@ -21,8 +21,8 @@ class HistoryListAdapter(
         notifyItemRangeChanged(items.size, newItems.size)
     }
 
-    fun append(newItem: List<ListItem>) {
-        items.addAll(newItem)
+    fun append(newItem: ListItem) {
+        items.add(newItem)
         notifyItemInserted(items.size - 1)
     }
 }

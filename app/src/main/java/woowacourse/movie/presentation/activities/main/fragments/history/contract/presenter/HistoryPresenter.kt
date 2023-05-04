@@ -3,6 +3,7 @@ package woowacourse.movie.presentation.activities.main.fragments.history.contrac
 import com.woowacourse.data.repository.history.HistoryRepository
 import woowacourse.movie.domain.model.reservation.DomainReservation
 import woowacourse.movie.presentation.activities.main.fragments.history.contract.HistoryContract
+import woowacourse.movie.presentation.mapper.toDomain
 import woowacourse.movie.presentation.mapper.toPresentation
 import woowacourse.movie.presentation.model.Reservation
 import woowacourse.movie.presentation.model.movieitem.ListItem
@@ -17,11 +18,16 @@ class HistoryPresenter(
         loadHistories()
     }
 
+    override fun addHistory(item: Reservation) {
+        loadedHistories.add(item.toDomain())
+        requireView().showMoreHistory(item)
+    }
+
     override fun loadHistories() {
         val newHistories = historyRepository.getAll()
 
         loadedHistories.addAll(newHistories)
-        requireView().showExtraHistories(newHistories.map { it.toPresentation() })
+        requireView().showHistories(newHistories.map { it.toPresentation() })
     }
 
     override fun onClickItem(item: ListItem) {

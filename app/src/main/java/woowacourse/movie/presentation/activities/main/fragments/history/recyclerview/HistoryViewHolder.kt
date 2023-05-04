@@ -5,7 +5,6 @@ import android.widget.TextView
 import woowacourse.movie.R
 import woowacourse.movie.presentation.base.BaseRecyclerView
 import woowacourse.movie.presentation.model.Reservation
-import woowacourse.movie.presentation.model.movieitem.ListItem
 
 class HistoryViewHolder(
     view: View,
@@ -19,7 +18,7 @@ class HistoryViewHolder(
         view.setOnClickListener { onClick(adapterPosition) }
     }
 
-    override fun <T : ListItem> bind(item: T) {
+    override fun <T : woowacourse.movie.presentation.model.movieitem.ListItem> bind(item: T) {
         if (item !is Reservation) return
 
         movieDateTextView.text = item.formattedDate

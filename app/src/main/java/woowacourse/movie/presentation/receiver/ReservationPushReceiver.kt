@@ -28,7 +28,7 @@ class ReservationPushReceiver : BroadcastReceiver() {
     }
 
     private fun isDeniedPush(context: Context): Boolean {
-        val preferences = LocalCacheDataSource.getInstance(context)
+        val preferences = LocalCacheDataSource.getInstance(context.applicationContext)
         return !preferences.getBoolean(PUSH_ALLOW_KEY, true)
     }
 }

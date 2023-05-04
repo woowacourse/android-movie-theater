@@ -24,7 +24,7 @@ data class Reservation(
     override fun isAd(): Boolean = false
 
     companion object {
-        fun provideDummy(): List<Reservation> = List(5) {
+        fun provideDummy(): List<ListItem> = List(5) {
             Reservation(
                 "해리 포터와 마법사의 돌 $it",
                 MovieDate(2021, 10, 10),
