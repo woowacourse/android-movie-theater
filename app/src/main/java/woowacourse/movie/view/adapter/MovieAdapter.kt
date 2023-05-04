@@ -5,15 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.contract.MovieAdapterContract
-import woowacourse.movie.data.MovieListItemViewData
 import woowacourse.movie.data.MovieListItemsViewData
 import woowacourse.movie.data.MovieListViewType
 import woowacourse.movie.data.MovieViewData
+import woowacourse.movie.data.TheatersViewData
 import woowacourse.movie.presenter.MovieAdapterPresenter
 import woowacourse.movie.view.viewholder.AdvertisementViewHolder
 import woowacourse.movie.view.viewholder.MovieInfoViewHolder
 
-class MovieAdapter(val onClickItem: (MovieListItemViewData) -> Unit) :
+class MovieAdapter(override val onClickItem: (MovieViewData, TheatersViewData) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), MovieAdapterContract.View {
     private var movieListItemsViewData: MovieListItemsViewData = MovieListItemsViewData(emptyList())
 
@@ -26,7 +26,7 @@ class MovieAdapter(val onClickItem: (MovieListItemViewData) -> Unit) :
                     R.layout.item_movie, parent, false
                 )
             ) {
-                onClickItem(movieListItemsViewData.value[it])
+                presenter.onClickItem(movieListItemsViewData.value[it])
             }
 
             MovieListViewType.ADVERTISEMENT -> AdvertisementViewHolder(
@@ -34,7 +34,7 @@ class MovieAdapter(val onClickItem: (MovieListItemViewData) -> Unit) :
                     R.layout.item_advertisement, parent, false
                 )
             ) {
-                onClickItem(movieListItemsViewData.value[it])
+                presenter.onClickItem(movieListItemsViewData.value[it])
             }
         }
     }

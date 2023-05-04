@@ -15,6 +15,7 @@ import woowacourse.movie.data.LocalFormattedDate
 import woowacourse.movie.data.LocalFormattedTime
 import woowacourse.movie.data.MovieViewData
 import woowacourse.movie.data.ReservationDetailViewData
+import woowacourse.movie.data.TheaterViewData
 import woowacourse.movie.error.ActivityError.finishWithError
 import woowacourse.movie.error.ViewError
 import woowacourse.movie.presenter.MovieReservationPresenter
@@ -177,9 +178,10 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         private const val COUNT_FACTOR = 1
         private const val DATE_SPINNER_SAVE_STATE_KEY = "date_spinner"
         private const val TIME_SPINNER_SAVE_STATE_KEY = "time_spinner"
-        fun from(context: Context, movie: MovieViewData): Intent {
+        fun from(context: Context, movie: MovieViewData, theater: TheaterViewData): Intent {
             return Intent(context, MovieReservationActivity::class.java).apply {
                 putExtra(MovieViewData.MOVIE_EXTRA_NAME, movie)
+                putExtra(TheaterViewData.THEATER_EXTRA_NAME, theater)
             }
         }
     }
