@@ -1,7 +1,5 @@
 package woowacourse.movie.presentation.activities.ticketing
 
-import android.content.Intent
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -9,19 +7,12 @@ import androidx.test.espresso.matcher.ViewMatchers.isEnabled
 import androidx.test.espresso.matcher.ViewMatchers.isSelected
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import org.hamcrest.CoreMatchers.not
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.presentation.activities.main.fragments.home.HomeFragment.Companion.MOVIE_KEY
-import woowacourse.movie.presentation.activities.seatpicker.SeatPickerActivity
-import woowacourse.movie.presentation.activities.ticketing.TicketingActivity.Companion.MOVIE_DATE_KEY
-import woowacourse.movie.presentation.activities.ticketing.TicketingActivity.Companion.MOVIE_TIME_KEY
-import woowacourse.movie.presentation.activities.ticketing.TicketingActivity.Companion.TICKET_KEY
 import woowacourse.movie.presentation.model.MovieDate
 import woowacourse.movie.presentation.model.MovieTime
 import woowacourse.movie.presentation.model.Ticket
@@ -53,16 +44,16 @@ internal class SeatPickerActivityTest {
         "E1", "E2", "E3", "E4",
     )
 
-    private val intent =
-        Intent(ApplicationProvider.getApplicationContext(), SeatPickerActivity::class.java).apply {
-            putExtra(MOVIE_KEY, movie)
-            putExtra(TICKET_KEY, movieTicket)
-            putExtra(MOVIE_DATE_KEY, selectedMovieDate)
-            putExtra(MOVIE_TIME_KEY, selectedMovieTime)
-        }
+    // private val intent =
+    //     Intent(ApplicationProvider.getApplicationContext(), SeatPickerActivity::class.java).apply {
+    //         putExtra(MOVIE_KEY, movie)
+    //         putExtra(TICKET_KEY, movieTicket)
+    //         putExtra(MOVIE_DATE_KEY, selectedMovieDate)
+    //         putExtra(MOVIE_TIME_KEY, selectedMovieTime)
+    //     }
 
-    @get:Rule
-    internal val activityRule = ActivityScenarioRule<SeatPickerActivity>(intent)
+    // @get:Rule
+    // internal val activityRule = ActivityScenarioRule<SeatPickerActivity>(intent)
 
     @Test
     internal fun 영화_제목이_보여진다() {

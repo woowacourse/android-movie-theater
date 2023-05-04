@@ -38,6 +38,15 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    packagingOptions {
+        resources {
+            excludes += "META-INF/LICENSE.md"
+            excludes += "META-INF/LICENSE-notice.md"
+        }
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
 }
 
 dependencies {
@@ -61,5 +70,4 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.4.0")
     androidTestImplementation("androidx.fragment:fragment-testing:$fragmentVersion")
     testImplementation("io.mockk:mockk-android:$mockkVersion")
-    androidTestImplementation("io.mockk:mockk-android:$mockkVersion")
 }
