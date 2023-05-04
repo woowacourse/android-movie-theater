@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="movie"
+            type="woowacourse.movie.model.MovieState" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="132dp"
@@ -12,6 +19,7 @@
             android:id="@+id/image"
             android:layout_width="76dp"
             android:layout_height="108dp"
+            android:imageResource="@{movie.imgId}"
             android:scaleType="centerInside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="parent"
@@ -23,6 +31,7 @@
             android:layout_width="245dp"
             android:layout_height="24dp"
             android:layout_marginStart="15dp"
+            android:text="@{movie.title}"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/image"
@@ -34,6 +43,7 @@
             android:layout_height="18dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
+            android:text="@{`상영일: `+ movie.startDate + ` ~ ` + movie.endDate}"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/image"
@@ -46,6 +56,7 @@
             android:layout_height="18dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="4dp"
+            android:text="@{`러닝타임: `+ movie.runningTime + `분`}"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/image"

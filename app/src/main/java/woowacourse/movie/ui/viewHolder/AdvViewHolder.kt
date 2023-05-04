@@ -14,6 +14,6 @@ class AdvViewHolder(
 
     override fun bind(itemModel: ItemModel) {
         val item = itemModel as AdvItemModel
-        binding.advImg.setImageResource(item.advState.imgId)
+        binding.imageId = item.advState.imgId
     }
 }
