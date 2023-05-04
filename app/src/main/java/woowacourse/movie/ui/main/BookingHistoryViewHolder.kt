@@ -21,7 +21,9 @@ class BookingHistoryViewHolder(
         movieTitle.text = reservation.movieTitle
     }
 
-    fun itemClicked(itemClicked: (id: Long) -> Unit) {
-        view.setOnClickListener { itemClicked(reservation.id) }
+    fun setOnReservationClickListener(
+        onClicked: (reservation: ReservationUiModel) -> Unit
+    ) {
+        view.setOnClickListener { onClicked(reservation) }
     }
 }

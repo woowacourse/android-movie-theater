@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.model.BookedMovie
 import woowacourse.movie.ui.completed.CompletedActivity
+import woowacourse.movie.ui.main.BookingHistoryDBAdapter
+import woowacourse.movie.ui.main.BookingHistoryDBHelper
 import woowacourse.movie.util.getParcelable
 import woowacourse.movie.util.shortToast
 
@@ -36,6 +38,12 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
                 bookedMovie = it
             )
         } ?: throw IllegalArgumentException(RECEIVING_MOVIE_ERROR)
+    }
+    private val bookingHistoryDBHelper: BookingHistoryDBHelper by lazy {
+        BookingHistoryDBHelper(this)
+    }
+    private val bookingHistoryDBAdapter: BookingHistoryDBAdapter by lazy {
+        BookingHistoryDBAdapter(bookingHistoryDBHelper)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -107,6 +115,8 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
     private fun completeBooking() {
         val reservation = seatPresenter.createReservation()
 
+        // TODO: MVP 적용할지 말지
+        bookingHistoryDBAdapter.insertReservation(reservation)
         ScreeningTimeReminder(this, reservation)
         startActivity(CompletedActivity.getIntent(this, reservation))
         finish()
