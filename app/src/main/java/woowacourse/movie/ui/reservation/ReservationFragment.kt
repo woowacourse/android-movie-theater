@@ -5,41 +5,49 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.FragmentReservationBinding
 import woowacourse.movie.model.ReservationTicketMachine
 import woowacourse.movie.ui.reservation.adapter.ReservationAdapter
+import woowacourse.movie.ui.reservation.presenter.ReservationContract
+import woowacourse.movie.ui.reservation.presenter.ReservationContract.Presenter
+import woowacourse.movie.ui.reservation.presenter.ReservationPresenter
 import woowacourse.movie.ui.seat.SeatSelectionActivity
 import woowacourse.movie.ui.ticket.MovieTicketActivity
 
-class ReservationFragment : Fragment() {
-    private lateinit var reservationView: RecyclerView
+class ReservationFragment : Fragment(), ReservationContract.View {
+    override val presenter: Presenter by lazy { ReservationPresenter(this) }
+    private lateinit var reservationMovieList: RecyclerView
+    private var _binding: FragmentReservationBinding? = null
+    private val binding: FragmentReservationBinding
+        get() = requireNotNull(_binding)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_reservation, container, false)
-
-        setTextOnEmptyState(view)
-        initAdapter(view)
-
-        return view
+    ): View {
+        _binding = FragmentReservationBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    private fun initAdapter(view: View) {
-        reservationView = view.findViewById(R.id.reservation_recyclerview)
-        reservationView.adapter = ReservationAdapter(ReservationTicketMachine.tickets) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initAdapter()
+        presenter.isEmptyMovieReservation()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun initAdapter() {
+        reservationMovieList = binding.reservationRecyclerview
+        reservationMovieList.adapter = ReservationAdapter(ReservationTicketMachine.tickets) {
             moveToMovieTicketActivity(it)
-        }
-    }
-
-    private fun setTextOnEmptyState(view: View) {
-        if (ReservationTicketMachine.tickets.isNotEmpty()) {
-            view.findViewById<TextView>(R.id.reservation_empty).visibility = View.GONE
         }
     }
 
@@ -48,5 +56,9 @@ class ReservationFragment : Fragment() {
             putExtra(SeatSelectionActivity.KEY_TICKET, ReservationTicketMachine.tickets[position])
         }
         startActivity(intentToMovieTicket)
+    }
+
+    override fun setTextOnEmptyState(isEmpty: Boolean) {
+        if (!isEmpty) binding.reservationEmpty.visibility = View.GONE
     }
 }
