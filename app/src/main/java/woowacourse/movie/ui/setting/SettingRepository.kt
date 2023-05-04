@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.main
+package woowacourse.movie.ui.setting
 
 interface SettingRepository {
 

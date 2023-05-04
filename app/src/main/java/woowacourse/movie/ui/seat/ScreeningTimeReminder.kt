@@ -7,6 +7,7 @@ import woowacourse.movie.model.ReservationUiModel
 import woowacourse.movie.notification.PendingIntentGenerator
 import java.util.TimeZone
 
+// TODO: MVP 적용할지 말지
 class ScreeningTimeReminder(
     context: Context,
     reservationUiModel: ReservationUiModel,

@@ -10,11 +10,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
-import woowacourse.movie.model.SettingSharedPreference
 import woowacourse.movie.notification.NotificationChannelInfo
 import woowacourse.movie.notification.NotificationGenerator
 import woowacourse.movie.permission.getPermissionLauncher
 import woowacourse.movie.permission.requestPermission
+import woowacourse.movie.ui.bookinghistory.BookingHistoryFragment
+import woowacourse.movie.ui.home.HomeFragment
+import woowacourse.movie.ui.setting.SettingFragment
+import woowacourse.movie.ui.setting.SettingSharedPreference
 import woowacourse.movie.util.shortToast
 
 class MainActivity : AppCompatActivity() {

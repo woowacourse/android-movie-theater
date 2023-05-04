@@ -1,9 +1,8 @@
-package woowacourse.movie.model
+package woowacourse.movie.ui.setting
 
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import woowacourse.movie.ui.main.SettingRepository
 
 class SettingSharedPreference(context: Context) : SettingRepository {
     private val loginPreferences: SharedPreferences =

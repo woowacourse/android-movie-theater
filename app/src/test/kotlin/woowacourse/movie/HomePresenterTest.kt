@@ -10,8 +10,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.model.main.MainData
-import woowacourse.movie.ui.main.HomeContract
-import woowacourse.movie.ui.main.HomePresenter
+import woowacourse.movie.ui.home.HomeContract
+import woowacourse.movie.ui.home.HomePresenter
 import woowacourse.movie.model.main.MainModelHandler
 
 class HomePresenterTest {

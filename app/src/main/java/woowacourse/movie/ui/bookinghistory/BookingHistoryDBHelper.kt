@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.main
+package woowacourse.movie.ui.bookinghistory
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase

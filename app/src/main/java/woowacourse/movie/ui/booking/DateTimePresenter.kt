@@ -19,6 +19,7 @@ class DateTimePresenter(
     }
 
     init {
+        // todo 이런구조는 사용하지 말자
         view.initDateSelectedListener { screeningDate ->
             onDateSelected(screeningDate)
         }

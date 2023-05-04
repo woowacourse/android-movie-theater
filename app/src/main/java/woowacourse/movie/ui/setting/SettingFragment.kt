@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.main
+package woowacourse.movie.ui.setting
 
 import android.Manifest
 import android.os.Bundle
@@ -9,7 +9,6 @@ import android.widget.Switch
 import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.model.SettingSharedPreference
 import woowacourse.movie.permission.getPermissionLauncher
 import woowacourse.movie.permission.requestPermission
 

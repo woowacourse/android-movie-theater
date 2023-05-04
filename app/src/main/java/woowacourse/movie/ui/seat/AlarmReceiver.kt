@@ -4,12 +4,13 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import woowacourse.movie.model.ReservationUiModel
-import woowacourse.movie.model.SettingSharedPreference
 import woowacourse.movie.notification.NotificationDialogInfo
 import woowacourse.movie.notification.NotificationGenerator
 import woowacourse.movie.ui.completed.CompletedActivity
+import woowacourse.movie.ui.setting.SettingSharedPreference
 import woowacourse.movie.util.getParcelable
 
+// TODO: MVP 적용할지 말지
 class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {

@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.main
+package woowacourse.movie.ui.bookinghistory
 
 import android.view.View
 import android.widget.TextView

@@ -8,9 +8,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.model.BookedMovie
+import woowacourse.movie.ui.bookinghistory.BookingHistoryDBAdapter
+import woowacourse.movie.ui.bookinghistory.BookingHistoryDBHelper
 import woowacourse.movie.ui.completed.CompletedActivity
-import woowacourse.movie.ui.main.BookingHistoryDBAdapter
-import woowacourse.movie.ui.main.BookingHistoryDBHelper
 import woowacourse.movie.util.getParcelable
 import woowacourse.movie.util.shortToast
 
