@@ -22,7 +22,7 @@ import woowacourse.movie.R
 import woowacourse.movie.presentation.view.main.home.moviedetail.MovieDetailActivity
 import java.time.LocalDate
 
-class MovieDetailActivityTest {
+class BookingDetailActivityTest {
     private val intent =
         IntentFixture.getMovieDataIntent(
             LocalDate.of(2023, 4, 23),

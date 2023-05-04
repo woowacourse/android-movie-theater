@@ -8,7 +8,7 @@ import org.junit.Test
 import woowacourse.movie.presentation.view.main.MainActivity
 import woowacourse.movie.R
 
-class MovieListFragmentTest {
+class BookingListFragmentTest {
     @get:Rule
     val activityRule = ActivityScenarioRule(MainActivity::class.java)
 

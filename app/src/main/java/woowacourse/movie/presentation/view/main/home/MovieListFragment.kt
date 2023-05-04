@@ -6,7 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.presentation.view.main.home.data.MovieData
+import woowacourse.movie.data.MovieData
 import woowacourse.movie.presentation.view.main.home.moviedetail.MovieDetailActivity
 
 class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
