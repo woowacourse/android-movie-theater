@@ -9,14 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieItemData
 import woowacourse.movie.presentation.booking.BookingActivity
+import woowacourse.movie.presentation.model.MovieModel
 
-class MovieListFragment : Fragment() {
-    private val movieItemAdapter by lazy { MovieItemAdapter(MOVIE_ITEMS) { clickBook(it) } }
+class MovieListFragment : Fragment(), MovieListContract.View {
+    override val presenter: MovieListContract.Presenter by lazy { MovieListPresenter(this) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.fragment_movie_list, container, false)
     }
@@ -24,12 +25,12 @@ class MovieListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setMovieAdapter()
+        presenter.requestMovies()
     }
 
-    private fun setMovieAdapter() {
+    override fun setMoviesAdapter(movies: List<MovieModel>) {
         requireActivity().findViewById<RecyclerView>(R.id.recyclerMainMovie).adapter =
-            movieItemAdapter
+            MovieItemAdapter(MOVIE_ITEMS) { clickBook(it) }
     }
 
     private fun clickBook(movieId: Long) {
