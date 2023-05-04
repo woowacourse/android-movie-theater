@@ -3,7 +3,7 @@ package woowacourse.movie.ui.adv
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityAdvDetailBinding
 import woowacourse.movie.model.AdvState
 import woowacourse.movie.ui.BackKeyActionBarActivity
 import woowacourse.movie.util.getParcelableExtraCompat
@@ -11,13 +11,15 @@ import woowacourse.movie.util.keyError
 
 class AdvDetailActivity : BackKeyActionBarActivity() {
     private lateinit var advDetailView: AdvDetailView
+    private lateinit var binding: ActivityAdvDetailBinding
     override fun onCreateView(savedInstanceState: Bundle?) {
-        setContentView(R.layout.activity_adv_detail)
+        binding = ActivityAdvDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val advState: AdvState = intent.getParcelableExtraCompat(KEY_ADV)
             ?: return keyError(KEY_ADV)
 
-        advDetailView = AdvDetailView(window.decorView.rootView, advState)
+        advDetailView = AdvDetailView(binding, advState)
     }
 
     companion object {
