@@ -29,7 +29,7 @@ class ReservationAdapterTest {
     }
 
     @Test
-    fun setReservation() {
+    fun 예매_정보를_받아와_Adapter에_설정한다() {
         // given
         every { view.setAdapterData(any()) } just runs
         every { reservationRepository.requestReservation() } returns listOf(
@@ -46,8 +46,7 @@ class ReservationAdapterTest {
     private fun fakeReservation(): Reservation = Reservation(
         MovieMock.createMovie(),
         ReservationDetail(
-            LocalDateTime.now(),
-            1
+            LocalDateTime.now(), 1
         ),
         Seats(emptyList()),
         Price(),

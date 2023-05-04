@@ -27,7 +27,7 @@ class ReservationResultPresenterTest {
     }
 
     @Test
-    fun initActivity() {
+    fun 예매_결과_화면을_세팅한다() {
         // given
         every { view.setMovieData(any()) } just runs
         every { view.setReservationDetailData(any()) } just runs

@@ -17,6 +17,7 @@ import woowacourse.movie.domain.Advertisement
 import woowacourse.movie.domain.DateRange
 import woowacourse.movie.domain.Image
 import woowacourse.movie.domain.Movie
+import woowacourse.movie.domain.advertismentPolicy.AdvertisementPolicy
 import woowacourse.movie.domain.advertismentPolicy.MovieAdvertisementPolicy
 import woowacourse.movie.domain.mock.AdvertisementMock
 import woowacourse.movie.domain.mock.AdvertisementPolicyMock
@@ -41,35 +42,22 @@ class MovieAdapterPresenterTest {
     }
 
     @Test
-    fun setMovieList() {
+    fun 영화_정보를_받아와_Adapter에_설정한다() {
         // given
         val movieSlot = slot<MovieListItemsViewData>()
         every { view.setAdapterData(capture(movieSlot)) } just runs
         every { movieRepository.requestMovies() } returns listOf(
-            Movie(
-                Image(0),
-                "해리 포터 1",
-                DateRange(
-                    LocalDate.of(2021, 1, 1),
-                    LocalDate.of(2021, 1, 31),
-                ),
-                111,
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-            )
+            fakeMovie()
         )
         every { advertisementRepository.requestAdvertisements() } returns listOf(
-            Advertisement(
-                Image(4)
-            )
+            fakeAdvertisement()
         )
-        every { advertisementRepository.requestAdvertisementPolicy() } returns MovieAdvertisementPolicy(3, 1)
+        every { advertisementRepository.requestAdvertisementPolicy() } returns fakeAdvertisementPolicy()
 
         // when
         val movies = listOf(MovieMock.createMovie()).map { it.toView() }
-        val advertisements =
-            listOf(AdvertisementMock.createAdvertisement()).map { it.toView() }
-        val advertisementPolicy =
-            AdvertisementPolicyMock.createAdvertisementPolicy().movieCount
+        val advertisements = listOf(AdvertisementMock.createAdvertisement()).map { it.toView() }
+        val advertisementPolicy = AdvertisementPolicyMock.createAdvertisementPolicy().movieCount
 
         val expect = MovieListItemsViewData.from(
             movies, advertisements, advertisementPolicy
@@ -82,4 +70,21 @@ class MovieAdapterPresenterTest {
         assertEquals(actual, expect)
         verify { view.setAdapterData(expect) }
     }
+
+    private fun fakeMovie(): Movie = Movie(
+        Image(0),
+        "해리 포터 1",
+        DateRange(
+            LocalDate.of(2021, 1, 1),
+            LocalDate.of(2021, 1, 31),
+        ),
+        111,
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+    )
+
+    private fun fakeAdvertisement(): Advertisement = Advertisement(
+        Image(4)
+    )
+
+    private fun fakeAdvertisementPolicy(): AdvertisementPolicy = MovieAdvertisementPolicy(3, 1)
 }

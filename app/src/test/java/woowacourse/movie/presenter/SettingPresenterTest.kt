@@ -20,7 +20,7 @@ class SettingPresenterTest {
     }
 
     @Test
-    fun initFragment() {
+    fun 설정_화면을_설정한다() {
         // given
         every { view.makeSettingSwitch() } just runs
 

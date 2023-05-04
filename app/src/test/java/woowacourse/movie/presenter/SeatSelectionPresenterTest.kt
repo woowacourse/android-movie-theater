@@ -31,7 +31,7 @@ class SeatSelectionPresenterTest {
     }
 
     @Test
-    fun initActivity() {
+    fun 좌석_선택_화면을_설정한다() {
         // given
         every { view.makeSeatLayout(any(), any()) } just runs
         every { view.setMovieData(any()) } just runs
@@ -49,7 +49,7 @@ class SeatSelectionPresenterTest {
     }
 
     @Test
-    fun selectSeat() {
+    fun 좌석을_선택하면_가격과_예매_버튼을_설정한다() {
         // given
         every { view.setReservationButtonState(any(), any()) } just runs
         every { view.setPriceText(any()) } just runs
@@ -65,7 +65,7 @@ class SeatSelectionPresenterTest {
     }
 
     @Test
-    fun confirmSeats() {
+    fun 예매_버튼을_누르면_알람을_설정하고_예매_결과_액티비티를_시작한다() {
         // given
         every { view.makeReservationAlarm(any(), any()) } just runs
         every { view.startReservationResultActivity(any()) } just runs
