@@ -1,0 +1,25 @@
+package woowacourse.movie.presentation.view.main.home.moviedetail
+
+import woowacourse.movie.model.Movie
+import woowacourse.movie.model.MovieBookingInfo
+
+interface MovieDetailContract {
+    interface View {
+        fun initView(movie: Movie)
+        fun finishErrorView()
+        fun updateScheduleDateView(scheduleDate: List<String>, scheduleTime: List<String>)
+        fun updateTicketCountView(currentTicketCount: Int)
+        fun showErrorTicketCountIsZeroView()
+        fun showInfoSelectedView(movieBookingInfo: MovieBookingInfo)
+        fun updateScheduleTimeView(movieScheduleTime: List<String>)
+    }
+
+    interface Presenter {
+        fun onCreate()
+        fun getMovieSchedule()
+        fun addTicket(currentTicketCount: Int)
+        fun removeTicket(currentTicketCount: Int)
+        fun getMovieBookingInfo(ticketCount: Int, movieDate: String, movieTime: String)
+        fun getMovieScheduleTime(date: String)
+    }
+}

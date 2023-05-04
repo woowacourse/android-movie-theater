@@ -40,9 +40,9 @@ class SeatPickerPresenter(
 
     override fun confirmBooking() {
         if (isTicketCountMax()) {
-            view.showTicketIsMaxCountView(movieBookingInfo!!.ticketCount)
-        } else {
             view.showConfirmDialog()
+        } else {
+            view.showTicketIsMaxCountView(movieBookingInfo!!.ticketCount)
         }
     }
 

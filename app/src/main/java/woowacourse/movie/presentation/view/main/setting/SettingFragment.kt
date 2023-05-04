@@ -8,43 +8,42 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.data.SharedPreferenceUtil
-import woowacourse.movie.presentation.permission.NotificationPermission
 
-class SettingFragment : Fragment(R.layout.fragment_setting) {
+class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.View {
     private val switchSettingAlarm by lazy { requireView().findViewById<SwitchCompat>(R.id.switch_setting_alarm) }
-    private val sharedPreferenceUtil: SharedPreferenceUtil by lazy {
-        SharedPreferenceUtil(
-            requireContext()
+    private val presenter: SettingPresenter by lazy {
+        SettingPresenter(
+            view = this,
+            context = requireContext()
         )
     }
-    private val notificationPermission by lazy { NotificationPermission(requireContext()) }
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
-        if (isGranted.not()) {
-            switchSettingAlarm.isSelected = isGranted
-            sharedPreferenceUtil.setBoolean(getString(R.string.push_alarm_permission), isGranted)
-        }
+        presenter.setAlarmSetting(isGranted)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val allowedPushNotification =
-            sharedPreferenceUtil.getBoolean((getString(R.string.push_alarm_permission)), false)
-        setAlarmView(allowedPushNotification)
+        presenter.getAlarmSettingInfo()
     }
 
-    private fun setAlarmView(allowedPushNotification: Boolean) {
+    override fun updatePermissionNotGrantedView() {
+        switchSettingAlarm.isSelected = false
+    }
 
+    override fun updateAlarmSettingView(isSet: Boolean, isGranted: Boolean) {
+        setAlarmView(isSet, isGranted)
+    }
+
+    private fun setAlarmView(allowedPushNotification: Boolean, isGranted: Boolean) {
         switchSettingAlarm.isChecked =
-            allowedPushNotification && notificationPermission.isGranted()
+            allowedPushNotification && isGranted
         switchSettingAlarm.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked && notificationPermission.isGranted().not()) {
+            if (isChecked && isGranted.not()) {
                 requestNotificationPermission()
             }
-            sharedPreferenceUtil.setBoolean(getString(R.string.push_alarm_permission), isChecked)
         }
     }
 
