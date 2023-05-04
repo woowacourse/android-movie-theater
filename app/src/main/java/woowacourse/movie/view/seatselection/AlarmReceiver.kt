@@ -12,8 +12,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
 import woowacourse.movie.util.getParcelableCompat
-import woowacourse.movie.view.ReservationCompletedActivity
 import woowacourse.movie.view.model.ReservationUiModel
+import woowacourse.movie.view.reservationcompleted.ReservationCompletedActivity
 
 class AlarmReceiver : BroadcastReceiver() {
 

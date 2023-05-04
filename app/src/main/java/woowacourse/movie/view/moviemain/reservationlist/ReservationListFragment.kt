@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.view.ReservationCompletedActivity
+import woowacourse.movie.view.reservationcompleted.ReservationCompletedActivity
 
 class ReservationListFragment : Fragment(R.layout.fragment_reservation_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

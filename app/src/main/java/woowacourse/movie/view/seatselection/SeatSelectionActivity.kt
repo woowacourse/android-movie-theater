@@ -22,12 +22,12 @@ import woowacourse.movie.domain.system.PriceSystem
 import woowacourse.movie.domain.system.Seat
 import woowacourse.movie.domain.system.SeatSelectSystem
 import woowacourse.movie.util.getParcelableCompat
-import woowacourse.movie.view.ReservationCompletedActivity
 import woowacourse.movie.view.mapper.toUiModel
 import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.model.ReservationOptions
 import woowacourse.movie.view.model.ReservationUiModel
 import woowacourse.movie.view.model.SeatUiModel
+import woowacourse.movie.view.reservationcompleted.ReservationCompletedActivity
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 

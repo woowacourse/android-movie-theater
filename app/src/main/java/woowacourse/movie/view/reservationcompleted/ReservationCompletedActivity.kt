@@ -1,4 +1,4 @@
-package woowacourse.movie.view
+package woowacourse.movie.view.reservationcompleted
 
 import android.Manifest
 import android.app.PendingIntent
@@ -13,7 +13,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import woowacourse.movie.R
-import woowacourse.movie.data.setting.SettingDataManager
 import woowacourse.movie.data.setting.SettingPreferencesManager
 import woowacourse.movie.databinding.ActivityReservationCompletedBinding
 import woowacourse.movie.util.DATE_FORMATTER
@@ -25,26 +24,26 @@ import woowacourse.movie.view.moviemain.MovieMainActivity
 import woowacourse.movie.view.moviemain.setting.SettingFragment
 import java.text.DecimalFormat
 
-class ReservationCompletedActivity : AppCompatActivity() {
+class ReservationCompletedActivity : AppCompatActivity(), ReservationCompletedContract.View {
 
     private lateinit var binding: ActivityReservationCompletedBinding
-    private lateinit var settingManager: SettingDataManager
     private lateinit var alarmController: AlarmController
+    override lateinit var presenter: ReservationCompletedContract.Presenter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityReservationCompletedBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         alarmController = AlarmController(this)
-        val reservation = intent.getParcelableCompat<ReservationUiModel>(RESERVATION)
-        settingManager = SettingPreferencesManager(this)
-        val isAlarmOn = settingManager.getIsAlarmSetting()
 
-        requestNotificationPermission()
+        presenter = ReservationCompletedPresenter(this, SettingPreferencesManager(this))
+        val reservation = intent.getParcelableCompat<ReservationUiModel>(RESERVATION)
 
         reservation?.let {
             initViewData(it)
-            if (isAlarmOn) alarmController.registerAlarm(reservation, SettingFragment.ALARM_MINUTE_INTERVAL)
+            requestNotificationPermission()
+            presenter.decideAlarm(it)
         }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -52,12 +51,14 @@ class ReservationCompletedActivity : AppCompatActivity() {
             this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    val intent = Intent(this@ReservationCompletedActivity, MovieMainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                    startActivity(intent)
+                    onBack()
                 }
             },
         )
+    }
+
+    override fun registerAlarm(reservation: ReservationUiModel) {
+        alarmController.registerAlarm(reservation, SettingFragment.ALARM_MINUTE_INTERVAL)
     }
 
     private fun initViewData(reservation: ReservationUiModel) {
@@ -82,12 +83,16 @@ class ReservationCompletedActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                val intent = Intent(this, MovieMainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                startActivity(intent)
+                onBack()
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun onBack() {
+        val intent = Intent(this, MovieMainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        startActivity(intent)
     }
 
     private fun requestNotificationPermission() {
@@ -102,10 +107,10 @@ class ReservationCompletedActivity : AppCompatActivity() {
         ActivityResultContracts.RequestPermission(),
     ) { isGranted: Boolean ->
         if (isGranted) {
-            settingManager.setIsAlarmSetting(true)
+            presenter.setAlarm(true)
             return@registerForActivityResult
         }
-        settingManager.setIsAlarmSetting(false)
+        presenter.setAlarm(false)
     }
 
     companion object {
