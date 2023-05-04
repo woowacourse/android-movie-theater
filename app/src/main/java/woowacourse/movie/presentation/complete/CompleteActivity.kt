@@ -8,29 +8,29 @@ import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieData
-import woowacourse.movie.domain.model.tools.Movie
 import woowacourse.movie.presentation.main.MainActivity
+import woowacourse.movie.presentation.model.MovieModel
 import woowacourse.movie.presentation.model.TicketModel
 import woowacourse.movie.presentation.util.formatDotDateTimeColon
 
-class CompleteActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_completed)
+class CompleteActivity : AppCompatActivity(), CompleteContract.View {
 
-        val ticket: TicketModel = getTicket()
-        initView(ticket)
-    }
+    override val presenter: CompleteContract.Presenter by lazy { CompletePresenter(this) }
 
-    private fun getTicket(): TicketModel {
-        val ticketModel: TicketModel = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+    override val ticketModel by lazy {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra(TICKET, TicketModel::class.java)
                 ?: throw IllegalArgumentException()
         } else {
             intent.getParcelableExtra(TICKET) ?: throw IllegalArgumentException()
         }
-        return ticketModel
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_completed)
+
+        initView()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -41,34 +41,34 @@ class CompleteActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun initView(ticket: TicketModel) {
-        val movie = MovieData.findMovieById(ticket.movieId)
+    private fun initView() {
+        val movie = presenter.requireMovieModel()
         setMovieTitle(movie)
-        setMovieScreeningDate(ticket)
-        setMovieTicketCount(ticket)
-        setMoviePaymentAmount(ticket)
+        setMovieScreeningDate()
+        setMovieTicketCount()
+        setMoviePaymentAmount()
     }
 
-    private fun setMovieTitle(movie: Movie) {
-        findViewById<TextView>(R.id.textCompletedTitle).text = movie.title
+    private fun setMovieTitle(movieModel: MovieModel) {
+        findViewById<TextView>(R.id.textCompletedTitle).text = movieModel.title
     }
 
-    private fun setMovieScreeningDate(ticket: TicketModel) {
+    private fun setMovieScreeningDate() {
         findViewById<TextView>(R.id.textCompletedScreeningDate).text =
-            ticket.bookedDateTime.formatDotDateTimeColon()
+            ticketModel.bookedDateTime.formatDotDateTimeColon()
     }
 
-    private fun setMovieTicketCount(ticket: TicketModel) {
+    private fun setMovieTicketCount() {
         findViewById<TextView>(R.id.textCompletedTicketCount).text =
             getString(R.string.normal_ticket_count_seat).format(
-                ticket.count,
-                ticket.formatSeatsCombine(),
+                ticketModel.count,
+                ticketModel.formatSeatsCombine(),
             )
     }
 
-    private fun setMoviePaymentAmount(ticket: TicketModel) {
+    private fun setMoviePaymentAmount() {
         findViewById<TextView>(R.id.textCompletedPaymentAmount).text =
-            getString(R.string.payment_on_site_amount).format(ticket.paymentMoney)
+            getString(R.string.payment_on_site_amount).format(ticketModel.paymentMoney)
     }
 
     private fun startMainWithClearBackStack() {
