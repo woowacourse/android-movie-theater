@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.repository.SettingRepositoryImpl
 
 class SettingFragment : Fragment(), SettingContract.View {
     override lateinit var presenter: SettingContract.Presenter
@@ -19,7 +20,8 @@ class SettingFragment : Fragment(), SettingContract.View {
     }
 
     private fun setUpPresenter() {
-        presenter = SettingPresenter(requireContext())
+        SettingRepositoryImpl.init(requireContext())
+        presenter = SettingPresenter(SettingRepositoryImpl)
     }
 
     override fun onCreateView(

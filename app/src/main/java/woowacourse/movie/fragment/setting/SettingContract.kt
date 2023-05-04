@@ -1,5 +1,7 @@
 package woowacourse.movie.fragment.setting
 
+import android.content.SharedPreferences
+
 interface SettingContract {
     interface View {
         var presenter: Presenter
