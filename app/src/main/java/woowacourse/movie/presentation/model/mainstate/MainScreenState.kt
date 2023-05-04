@@ -4,7 +4,8 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class MainScreenState(
-    val latestScreen: MainShowState = MainShowState.Home,
-    val isShownHistory: Boolean = false,
-) : Parcelable
+sealed class MainScreenState : Parcelable {
+    object History : MainScreenState()
+    object Home : MainScreenState()
+    object Setting : MainScreenState()
+}

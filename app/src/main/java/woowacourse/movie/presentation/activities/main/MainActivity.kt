@@ -20,7 +20,7 @@ import woowacourse.movie.presentation.extensions.getParcelableCompat
 import woowacourse.movie.presentation.extensions.showFragmentByTag
 import woowacourse.movie.presentation.extensions.showToast
 import woowacourse.movie.presentation.model.Reservation
-import woowacourse.movie.presentation.model.mainstate.MainScreenState
+import woowacourse.movie.presentation.model.mainstate.MainState
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     override val presenter: MainContract.Presenter = MainPresenter()
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun onRestoreInstanceState(bundle: Bundle) {
         super.onRestoreInstanceState(bundle)
-        bundle.getParcelableCompat<MainScreenState>(MAIN_SCREEN_STATE_KEY)
+        bundle.getParcelableCompat<MainState>(MAIN_SCREEN_STATE_KEY)
             ?.let { presenter.setState(it) }
     }
 

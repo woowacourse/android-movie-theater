@@ -1,6 +1,6 @@
 package woowacourse.movie.presentation.activities.main.contract
 
-import woowacourse.movie.presentation.model.mainstate.MainScreenState
+import woowacourse.movie.presentation.model.mainstate.MainState
 
 interface MainContract {
     interface View {
@@ -26,8 +26,8 @@ interface MainContract {
         fun requireView(): View =
             view ?: throw IllegalStateException("View is not attached")
 
-        abstract fun getState(): MainScreenState
-        abstract fun setState(state: MainScreenState)
+        abstract fun getState(): MainState
+        abstract fun setState(state: MainState)
         abstract fun onShowHistoryScreen()
         abstract fun onShowHomeScreen()
         abstract fun onShowSettingScreen()
