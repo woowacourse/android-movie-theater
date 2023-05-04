@@ -17,7 +17,7 @@ class HomePresenter : HomeContract.Presenter() {
         requireView().showMoreMovies(newLoadedMovies)
     }
 
-    override fun onMovieClick(item: ListItem) {
+    override fun onItemClick(item: ListItem) {
         when (item) {
             is Movie -> requireView().showTicketScreen(item)
             is Ad -> requireView().showAdWebSite(item)

@@ -26,7 +26,7 @@ interface HomeContract {
 
         abstract fun loadMoreMovies(size: Int = DEFAULT_LOAD_SIZE)
         abstract fun loadAds(): List<ListItem>
-        abstract fun onMovieClick(item: ListItem)
+        abstract fun onItemClick(item: ListItem)
     }
 
     companion object {

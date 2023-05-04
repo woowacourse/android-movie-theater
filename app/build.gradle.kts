@@ -50,6 +50,7 @@ android {
 }
 
 dependencies {
+    testImplementation("junit:junit:4.12")
     val fragmentVersion = "1.5.5"
     val mockkVersion = "1.13.5"
 

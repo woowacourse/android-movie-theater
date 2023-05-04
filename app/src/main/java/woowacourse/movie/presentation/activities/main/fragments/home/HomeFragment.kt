@@ -34,7 +34,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeContract.View {
     private fun initMovieListAdapter() {
         movieListAdapter = MovieListAdapter(
             adTypes = presenter.loadAds(),
-            onItemClick = presenter::onMovieClick,
+            onItemClick = presenter::onItemClick,
         )
     }
 
