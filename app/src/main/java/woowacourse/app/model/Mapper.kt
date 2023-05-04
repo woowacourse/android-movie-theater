@@ -21,6 +21,10 @@ object Mapper {
         )
     }
 
+    fun List<Reservation>.toUiReservations(): List<ReservationUiModel> {
+        return this.map { it.toUiModel() }
+    }
+
     fun SelectedSeat.toUiModel(): SelectedSeatUiModel {
         return SelectedSeatUiModel(this.seats.map { it.toUiModel() }.toSet())
     }

@@ -18,11 +18,11 @@ object MovieMapper {
         3L to R.drawable.suzume_poster,
     )
 
-    private fun getThumbnail(id: Long): Int {
+    fun getThumbnail(id: Long): Int {
         return thumbnailMap[id] ?: throw IllegalArgumentException("없는 아이디 입니다")
     }
 
-    private fun getPoster(id: Long): Int {
+    fun getPoster(id: Long): Int {
         return posterMap[id] ?: throw IllegalArgumentException("없는 아이디 입니다")
     }
 

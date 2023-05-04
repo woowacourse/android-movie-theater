@@ -11,4 +11,6 @@ data class Movie(
 ) {
     val screeningDates: List<LocalDate>
         get() = screeningPeriod.getScreeningDates().map { it.value }
+    val startDate: LocalDate get() = screeningPeriod.startDate.value
+    val endDate: LocalDate get() = screeningPeriod.endDate.value
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.app.model.Mapper.toUiModel
+import woowacourse.app.model.Mapper.toUiReservations
 import woowacourse.app.ui.completed.CompletedActivity
 import woowacourse.app.usecase.reservation.ReservationUseCase
 import woowacourse.app.util.shortToast
@@ -14,7 +15,11 @@ import woowacourse.data.reservation.ReservationDatabase
 import woowacourse.data.reservation.ReservationRepositoryImpl
 import woowacourse.movie.R
 
-class BookingHistoryFragment : Fragment() {
+class BookingHistoryFragment : Fragment(), ReservationHistoryContract.View {
+
+    override val presenter: ReservationHistoryContract.Presenter by lazy {
+        ReservationHistoryPresenter(ReservationUseCase(ReservationRepositoryImpl(ReservationDatabase)))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,11 +35,11 @@ class BookingHistoryFragment : Fragment() {
         val recyclerView = requireActivity().findViewById<RecyclerView>(R.id.recyclerBookingHistory)
         val adapter = BookingHistoryAdapter(::itemClicked)
         recyclerView.adapter = adapter
-        adapter.initList(ReservationUseCase(ReservationRepositoryImpl(ReservationDatabase)).getReservations().map { it.toUiModel() })
+        adapter.initList(presenter.getReservations().toUiReservations())
     }
 
     private fun itemClicked(id: Long) {
-        val reservation = ReservationUseCase(ReservationRepositoryImpl(ReservationDatabase)).getReservation(id)
+        val reservation = presenter.getReservation(id)
         if (reservation == null) {
             noSuchElement()
             return
