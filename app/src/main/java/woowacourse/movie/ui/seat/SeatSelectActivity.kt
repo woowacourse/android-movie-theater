@@ -21,27 +21,28 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
     private val presenter = SeatSelectPresenter(this)
     private lateinit var binding: ActivitySeatSelectBinding
 
-    private lateinit var seatSelectState: SeatSelectState
-    private lateinit var cinemaName: String
-
     private lateinit var seatTable: SeatTable
 
     override fun onCreateView(savedInstanceState: Bundle?) {
-        setUpParcelable()
-        setUpBinding()
-        setUpSeatTable()
+        initBinding()
+        setUpPresenter()
+    }
+
+    private fun setUpPresenter() {
+        presenter.init(
+            intent.getParcelableExtraCompat(KEY_SEAT_SELECT)
+                ?: return keyError(KEY_SEAT_SELECT),
+            intent.getStringExtra(KEY_CINEMA_NAME)
+                ?: return keyError(KEY_CINEMA_NAME)
+        )
+    }
+
+    private fun initBinding() {
+        binding = ActivitySeatSelectBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
 
-    private fun setUpParcelable() {
-        seatSelectState = intent.getParcelableExtraCompat(KEY_SEAT_SELECT)
-            ?: return keyError(KEY_SEAT_SELECT)
-        cinemaName = intent.getStringExtra(KEY_CINEMA_NAME) ?: return keyError(KEY_CINEMA_NAME)
-    }
-
-    private fun setUpBinding() {
-        binding = ActivitySeatSelectBinding.inflate(layoutInflater)
-
+    override fun showSeatSelectState(seatSelectState: SeatSelectState) {
         binding.reservationTitle.text = seatSelectState.movieState.title
         binding.reservationConfirm.setOnClickListener {
             navigateShowDialog(seatTable.chosenSeatInfo)
@@ -49,7 +50,7 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
         binding.reservationConfirm.isClickable = false
     }
 
-    private fun setUpSeatTable() {
+    override fun initSeatTable(seatSelectState: SeatSelectState) {
         seatTable = SeatTable(binding, seatSelectState.countState) { updateSelectSeats(it) }
     }
 
@@ -79,7 +80,7 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
             negativeStringId = R.string.reservation_cancel,
             positiveStringId = R.string.reservation_complete
         ) {
-            val tickets = TicketsState.from(cinemaName, seatSelectState, seats)
+            val tickets = presenter.getTickets(seats)
             presenter.addTicket(tickets)
         }
     }
@@ -89,19 +90,12 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
     }
 
     private fun updateSelectSeats(positionStates: List<SeatPositionState>) {
-        binding.reservationConfirm.isClickable = (positionStates.size == seatSelectState.countState.value)
-
-        val tickets = TicketsState(
-            cinemaName,
-            seatSelectState.movieState,
-            seatSelectState.dateTime,
-            positionStates.toList()
-        )
-
+        binding.reservationConfirm.isClickable = (positionStates.size == presenter.getRequireCount())
+        val tickets = presenter.getTickets(positionStates)
         presenter.discountApply(tickets)
     }
 
-    override fun setMoneyText(money: MoneyState) {
+    override fun showMoneyText(money: MoneyState) {
         binding.reservationMoney.text = getString(
             R.string.discount_money,
             DecimalFormatters.convertToMoneyFormat(money)
