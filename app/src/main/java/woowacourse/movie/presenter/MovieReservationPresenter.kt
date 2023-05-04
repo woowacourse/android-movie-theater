@@ -21,6 +21,10 @@ class MovieReservationPresenter(
         WeekdayMovieTimePolicy, WeekendMovieTimePolicy
     )
 ) : MovieReservationContract.Presenter {
+    override fun initActivity(movie: MovieViewData) {
+        view.setMovieData(movie)
+    }
+
     override fun addPeopleCount(count: Int) {
         peopleCount += count
         view.setCounterText(peopleCount.value)

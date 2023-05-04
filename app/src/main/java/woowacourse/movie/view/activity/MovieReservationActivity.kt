@@ -57,9 +57,8 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         setContentView(R.layout.activity_movie_reservation)
         makeBackButton()
 
-        presenter.load(savedInstanceState?.let { BundleStateContainer(it) })
-
         initMovieReservationView(savedInstanceState)
+        presenter.load(savedInstanceState?.let { BundleStateContainer(it) })
     }
 
     private fun makeBackButton() {
@@ -71,7 +70,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
             intent.extras?.getSerializableCompat<MovieViewData>(MovieViewData.MOVIE_EXTRA_NAME)
                 ?: return finishWithError(ViewError.MissingExtras(MovieViewData.MOVIE_EXTRA_NAME))
 
-        setMovieData(movie)
+        presenter.initActivity(movie)
         makeCounterListener()
         makeSpinners(savedInstanceState, movie)
         makeReservationButtonClickListener(movie)
