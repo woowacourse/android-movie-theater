@@ -96,18 +96,13 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
 
-            val fragment =
-                supportFragmentManager.findFragmentByTag(currentType.tag)
-                    ?: createFragment(currentType).apply {
-                        add(R.id.main_fragment_container_view, this, currentType.tag)
-                    }
-            show(fragment)
+            supportFragmentManager.fragments.forEach(::hide)
 
-            FragmentType.values()
-                .filterNot { it == currentType }
-                .forEach { type ->
-                    supportFragmentManager.findFragmentByTag(type.tag)?.let(::hide)
-                }
+            supportFragmentManager.findFragmentByTag(currentType.tag)?.let {
+                show(it)
+            } ?: createFragment(currentType).run {
+                add(R.id.main_fragment_container_view, this, currentType.tag)
+            }
         }
     }
 
