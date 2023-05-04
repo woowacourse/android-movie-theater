@@ -2,7 +2,7 @@ package woowacourse.movie.feature.setting
 
 interface SettingContract {
     interface View {
-        fun setInitAlarmSettingInfo(isAlarm: Boolean)
+        fun setInitAlarmSettingInfo(initAlarmSetInfo: Boolean)
         fun alarmPermissionIsNotApprove()
     }
 

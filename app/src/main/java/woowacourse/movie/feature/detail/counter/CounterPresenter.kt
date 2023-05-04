@@ -6,29 +6,31 @@ class CounterPresenter(
     val view: CounterContract.View
 ) : CounterContract.Presenter {
 
-    override var countNumber: CountState = CountState.of(1)
+    private var _countNumber: CountState = CountState.of(1)
         set(value) {
             field = value
             view.setCountNumber(value)
         }
+    override val countNumber: CountState
+        get() = CountState.of(_countNumber.value)
 
     override fun minus() {
-        if (countNumber.value == 1) {
+        if (_countNumber.value == 1) {
             view.showLimitMin()
             return
         }
-        countNumber -= 1
+        _countNumber -= 1
     }
 
     override fun plus() {
-        if (countNumber.value == 20) {
-            view.showLimitMin()
+        if (_countNumber.value == 20) {
+            view.showLimitMax()
             return
         }
-        countNumber += 1
+        _countNumber += 1
     }
 
     override fun setCountState(countState: CountState) {
-        countNumber = countState
+        _countNumber = countState
     }
 }

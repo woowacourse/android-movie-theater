@@ -13,8 +13,8 @@ interface DateTimeContract {
     }
 
     interface Presenter {
-        var selectDate: LocalDate
-        var selectTime: LocalTime
+        val selectDate: LocalDate
+        val selectTime: LocalTime
         fun setDateTime(dateTime: LocalDateTime)
         fun clickDate(position: Int)
         fun clickTime(position: Int)

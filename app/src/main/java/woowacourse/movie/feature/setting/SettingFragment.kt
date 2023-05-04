@@ -43,8 +43,8 @@ class SettingFragment : Fragment(), SettingContract.View {
         _binding = null
     }
 
-    override fun setInitAlarmSettingInfo(isAlarm: Boolean) {
-        binding.notificationSwitch.isChecked = isAlarm
+    override fun setInitAlarmSettingInfo(initAlarmSetInfo: Boolean) {
+        binding.notificationSwitch.isChecked = initAlarmSetInfo
     }
 
     override fun alarmPermissionIsNotApprove() {
