@@ -11,6 +11,8 @@ import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
+import woowacourse.movie.contract.movieticket.MovieTicketContract
+import woowacourse.movie.presenter.movieticket.MovieTicketPresenter
 import woowacourse.movie.ui.model.MovieTicketModel
 import woowacourse.movie.ui.model.PriceModel
 import woowacourse.movie.ui.model.TicketTimeModel
@@ -18,15 +20,19 @@ import woowacourse.movie.ui.model.seat.SeatModel
 import woowacourse.movie.ui.utils.getParcelable
 import java.time.format.DateTimeFormatter
 
-class MovieTicketActivity : AppCompatActivity() {
+class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
+    override lateinit var presenter: MovieTicketContract.Presenter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_ticket)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        presenter = MovieTicketPresenter(this)
+
         setBackPressedCallback()
-        setTicketInfo()
+        initMovieTicketModel()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -34,49 +40,55 @@ class MovieTicketActivity : AppCompatActivity() {
         super.onConfigurationChanged(newConfig)
     }
 
-    private fun setBackPressedCallback() {
-        onBackPressedDispatcher.addCallback(this) {
-            goBackToMainActivity()
-        }
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                return goBackToMainActivity()
+                goBackToMainActivity()
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun goBackToMainActivity(): Boolean {
+    override fun setBackPressedCallback() {
+        onBackPressedDispatcher.addCallback(this) {
+            goBackToMainActivity()
+        }
+    }
+
+    private fun goBackToMainActivity() {
         val intent = MainActivity.createIntent(this)
         intent.flags = FLAG_ACTIVITY_CLEAR_TOP + FLAG_ACTIVITY_SINGLE_TOP
         intent.type = TYPE_MOVIE_TICKET
         startActivity(intent)
-        return true
     }
 
-    private fun setTicketInfo() {
-        val titleView: TextView by lazy { findViewById(R.id.ticket_title) }
-        val dateView: TextView by lazy { findViewById(R.id.ticket_date) }
-        val reservedSeatsView: TextView by lazy { findViewById(R.id.ticket_reserved_seats) }
-        val priceView: TextView by lazy { findViewById(R.id.ticket_price) }
-
+    override fun initMovieTicketModel() {
         intent.getParcelable<MovieTicketModel>(TICKET_EXTRA_KEY)?.let { ticketModel ->
-            titleView.text = ticketModel.title
-            dateView.text = ticketModel.time.format()
-            reservedSeatsView.text =
-                getString(
-                    R.string.reserved_seat,
-                    ticketModel.peopleCount.count,
-                    ticketModel.seats.sortedBy { seat -> seat.format() }
-                        .joinToString(", ") { seat ->
-                            seat.format()
-                        }
-                )
-            priceView.text = ticketModel.price.format()
+            presenter.setupTicketInfo(ticketModel)
         }
+    }
+
+    override fun setTextMovieTitle(title: String) {
+        findViewById<TextView>(R.id.ticket_title).text = title
+    }
+
+    override fun setTextMovieDate(ticketTime: TicketTimeModel) {
+        findViewById<TextView>(R.id.ticket_date).text = ticketTime.format()
+    }
+
+    override fun setTextMovieSeats(seats: Set<SeatModel>) {
+        findViewById<TextView>(R.id.ticket_reserved_seats).text = getString(
+            R.string.reserved_seat,
+            seats.size,
+            seats.sortedBy { seat -> seat.format() }
+                .joinToString(", ") { seat ->
+                    seat.format()
+                }
+        )
+    }
+
+    override fun setTextMovieTicketPrice(price: PriceModel) {
+        findViewById<TextView>(R.id.ticket_price).text = price.format()
     }
 
     private fun TicketTimeModel.format(): String =
