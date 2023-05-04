@@ -6,6 +6,7 @@ import woowacourse.movie.data.MovieViewData
 import woowacourse.movie.domain.Count
 import woowacourse.movie.domain.ReservationDetail
 import woowacourse.movie.domain.movieTimePolicy.MovieTime
+import woowacourse.movie.domain.movieTimePolicy.MovieTimePolicy
 import woowacourse.movie.domain.movieTimePolicy.WeekdayMovieTimePolicy
 import woowacourse.movie.domain.movieTimePolicy.WeekendMovieTimePolicy
 import woowacourse.movie.mapper.ReservationDetailMapper.toView
@@ -15,7 +16,10 @@ import java.time.LocalDateTime
 
 class MovieReservationPresenter(
     override val view: MovieReservationContract.View,
-    var peopleCount: Count = Count(PEOPLE_DEFAULT_COUNT)
+    private var peopleCount: Count = Count(PEOPLE_DEFAULT_COUNT),
+    private val movieTimePolicies: List<MovieTimePolicy> = listOf(
+        WeekdayMovieTimePolicy, WeekendMovieTimePolicy
+    )
 ) : MovieReservationContract.Presenter {
     override fun addPeopleCount(count: Int) {
         peopleCount += count
@@ -35,9 +39,7 @@ class MovieReservationPresenter(
     }
 
     override fun selectDate(date: LocalDate) {
-        val times = MovieTime(
-            listOf(WeekdayMovieTimePolicy, WeekendMovieTimePolicy)
-        ).determine(date).map { LocalFormattedTime(it) }
+        val times = MovieTime(movieTimePolicies).determine(date).map { LocalFormattedTime(it) }
         view.setTimeSpinner(times)
     }
 
