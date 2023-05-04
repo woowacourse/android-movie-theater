@@ -6,12 +6,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.app.model.HomeData
+import woowacourse.app.model.movie.MovieUiModel
 import woowacourse.app.ui.main.home.adapter.HomeViewType
 import woowacourse.movie.R
 
 class HomeAdapter(
     context: Context,
-    private val clickBook: (Long) -> Unit,
+    private val clickBook: (MovieUiModel) -> Unit,
     private val clickAd: (Intent) -> Unit,
 ) : RecyclerView.Adapter<HomeViewHolder>() {
     private val movies = mutableListOf<HomeData>()

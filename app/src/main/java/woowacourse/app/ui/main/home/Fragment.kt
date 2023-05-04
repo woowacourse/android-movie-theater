@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.app.model.movie.MovieUiModel
 import woowacourse.app.ui.booking.BookingActivity
 import woowacourse.app.ui.main.home.adapter.recyclerview.HomeAdapter
 import woowacourse.app.usecase.main.MainUseCase
@@ -42,8 +43,8 @@ class Fragment : Fragment(), HomeContract.View {
         homeAdapter.initMovies(presenter.getHomeData())
     }
 
-    private fun clickBook(movieId: Long) {
-        startActivity(BookingActivity.getIntent(requireContext(), movieId))
+    private fun clickBook(movie: MovieUiModel) {
+        startActivity(BookingActivity.getIntent(requireContext(), movie))
     }
 
     private fun clickAdvertisement(intent: Intent) {

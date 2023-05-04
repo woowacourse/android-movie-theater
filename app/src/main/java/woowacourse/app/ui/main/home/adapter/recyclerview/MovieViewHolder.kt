@@ -32,9 +32,9 @@ class MovieViewHolder(view: View) : HomeViewHolder(view) {
         runningTime.text = view.context.getString(R.string.running_time, movie.runningTime)
     }
 
-    fun setBookingClick(clickBook: (Long) -> Unit) {
+    fun setBookingClick(clickBook: (MovieUiModel) -> Unit) {
         button.setOnClickListener {
-            clickBook(movie.id)
+            clickBook(movie)
         }
     }
 }
