@@ -6,20 +6,22 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import java.time.ZoneId
-import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityReservationConfirmBinding
 import woowacourse.movie.model.TicketsState
 import woowacourse.movie.ui.BackKeyActionBarActivity
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
 
 class ReservationConfirmActivity : BackKeyActionBarActivity() {
+    private lateinit var binding: ActivityReservationConfirmBinding
     private lateinit var view: ReservationConfirmView
 
     override fun onCreateView(savedInstanceState: Bundle?) {
-        setContentView(R.layout.activity_reservation_confirm)
+        binding = ActivityReservationConfirmBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         val tickets = intent.getParcelableExtraCompat<TicketsState>(KEY_TICKETS)
             ?: return keyError(KEY_TICKETS)
-        view = ReservationConfirmView(window.decorView.rootView, tickets)
+        view = ReservationConfirmView(binding, tickets)
         setNotification(tickets)
     }
 
