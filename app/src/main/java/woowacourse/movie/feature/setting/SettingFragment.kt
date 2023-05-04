@@ -41,11 +41,11 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
             Toaster.showToast(requireContext(), "설정에서 알림 권한을 허용해주세요.")
             requestNotificationPermission()
         }
-        userSettings.set(requireContext(), UserSettings.NOTIFICATION_KEY, switchCompat.isChecked)
+        userSettings.set(requireContext(), UserSettings.TICKET_NOTIFICATION_KEY, switchCompat.isChecked)
     }
 
     private fun userNotificationSetting(): Boolean =
-        userSettings.get(requireContext(), UserSettings.NOTIFICATION_KEY)
+        userSettings.get(requireContext(), UserSettings.TICKET_NOTIFICATION_KEY)
 
     private fun requestNotificationPermission() {
         requestPermission(

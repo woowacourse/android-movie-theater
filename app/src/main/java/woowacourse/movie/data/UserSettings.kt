@@ -18,7 +18,7 @@ class UserSettings private constructor() {
     }
 
     companion object {
-        const val NOTIFICATION_KEY = "notification_key"
+        const val TICKET_NOTIFICATION_KEY = "notification_key"
 
         private var instance: UserSettings? = null
 
