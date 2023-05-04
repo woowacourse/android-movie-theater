@@ -18,14 +18,14 @@ class MovieListPresenter(
 
     private val movieRepository: MovieRepository = MovieRepository(MockMovieDataSource())
     private val adRepository: AdRepository = AdRepository(MockAdDataSource())
-    override fun makeMovieRecyclerView() {
+    override fun initMovieRecyclerView() {
         val loadMovieViewDatas: MovieViewDatas = loadMovieListData()
-        view.makeMovieRecyclerView(loadMovieViewDatas)
+        view.initMovieRecyclerView(loadMovieViewDatas)
     }
 
-    override fun setOnClickListener(data: MovieListViewData) {
+    override fun onItemClick(data: MovieListViewData) {
         when (data.viewType) {
-            MovieListViewType.MOVIE -> view.setOnMovieClickListener(data)
+            MovieListViewType.MOVIE -> view.onMovieClick(data)
             MovieListViewType.ADVERTISEMENT -> Unit
         }
     }

@@ -7,12 +7,12 @@ interface MovieListContract {
 
     interface View {
         var presenter: Presenter
-        fun makeMovieRecyclerView(movieViewDatas: MovieViewDatas)
-        fun setOnMovieClickListener(data: MovieListViewData)
+        fun initMovieRecyclerView(movieViewDatas: MovieViewDatas)
+        fun onMovieClick(data: MovieListViewData)
     }
 
     interface Presenter {
-        fun makeMovieRecyclerView()
-        fun setOnClickListener(data: MovieListViewData)
+        fun initMovieRecyclerView()
+        fun onItemClick(data: MovieListViewData)
     }
 }

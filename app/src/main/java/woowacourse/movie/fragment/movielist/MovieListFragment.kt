@@ -27,17 +27,17 @@ class MovieListFragment : Fragment(), MovieListContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter = MovieListPresenter(this)
-        presenter.makeMovieRecyclerView()
+        presenter.initMovieRecyclerView()
     }
 
-    override fun makeMovieRecyclerView(movieViewDatas: MovieViewDatas) {
+    override fun initMovieRecyclerView(movieViewDatas: MovieViewDatas) {
         val movieRecyclerView = requireView().findViewById<RecyclerView>(R.id.main_movie_list)
         movieRecyclerView.adapter = MovieAdapter(movieViewDatas) {
-            presenter.setOnClickListener(it)
+            presenter.onItemClick(it)
         }
     }
 
-    override fun setOnMovieClickListener(data: MovieListViewData) {
+    override fun onMovieClick(data: MovieListViewData) {
         MovieReservationActivity.from(
             requireContext(), data as MovieViewData
         ).run {
