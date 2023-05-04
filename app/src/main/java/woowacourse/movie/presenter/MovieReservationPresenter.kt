@@ -49,6 +49,7 @@ class MovieReservationPresenter(
 
     override fun save(outState: StateContainer) {
         outState.save(PEOPLE_COUNT_SAVE_KEY, peopleCount.value)
+        view.saveTimeSpinner(outState)
     }
 
     override fun load(savedInstanceState: StateContainer?) {

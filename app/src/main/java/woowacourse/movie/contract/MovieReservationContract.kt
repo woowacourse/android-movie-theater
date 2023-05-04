@@ -13,6 +13,7 @@ interface MovieReservationContract {
         fun setMovieData(movie: MovieViewData)
         fun setCounterText(count: Int)
         fun setTimeSpinner(times: List<LocalFormattedTime>)
+        fun saveTimeSpinner(outState: StateContainer)
         fun startReservationResultActivity(reservationDetail: ReservationDetailViewData, movie: MovieViewData)
     }
 

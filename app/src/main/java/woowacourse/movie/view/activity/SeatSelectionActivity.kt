@@ -74,7 +74,10 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         reservationButton.setOnClickListener {
             onClickReserveButton(seatTableLayout, movie, reservationDetail)
         }
-        setReservationButtonState(DEFAULT_SEAT_SIZE, reservationDetail.peopleCount)
+        setReservationButtonState(
+            seatTableLayout.selectedSeats().value.size,
+            reservationDetail.peopleCount
+        )
     }
 
     private fun onClickReserveButton(
@@ -113,7 +116,11 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         reservation: ReservationViewData,
         date: LocalDateTime
     ) {
-        registerAlarmReceiver(this, ReservationAlarmReceiver(), ReservationAlarmReceiver.ACTION_ALARM)
+        registerAlarmReceiver(
+            this,
+            ReservationAlarmReceiver(),
+            ReservationAlarmReceiver.ACTION_ALARM
+        )
 
         val alarmIntent = ReservationAlarmReceiver.from(this, reservation)
         setAlarmAtDate(this, date, alarmIntent)
@@ -123,7 +130,10 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         findViewById<TextView>(R.id.seat_selection_movie_title).text = movie.title
     }
 
-    override fun makeSeatLayout(reservationDetail: ReservationDetailViewData, seatTable: SeatTableViewData) {
+    override fun makeSeatLayout(
+        reservationDetail: ReservationDetailViewData,
+        seatTable: SeatTableViewData
+    ) {
         seatTableLayout = SeatTableLayout.from(
             findViewById(R.id.seat_selection_table),
             seatTable,
@@ -158,7 +168,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     companion object {
-        private const val DEFAULT_SEAT_SIZE = 0
         private const val SEAT_TABLE_LAYOUT_STATE_KEY = "seatTable"
 
         fun from(

@@ -19,6 +19,7 @@ import woowacourse.movie.error.ActivityError.finishWithError
 import woowacourse.movie.error.ViewError
 import woowacourse.movie.presenter.MovieReservationPresenter
 import woowacourse.movie.system.BundleStateContainer
+import woowacourse.movie.system.StateContainer
 import woowacourse.movie.system.getSerializableCompat
 import woowacourse.movie.view.widget.DateSpinner
 import woowacourse.movie.view.widget.MovieController
@@ -97,6 +98,10 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         timeSpinner.setTimes(times)
     }
 
+    override fun saveTimeSpinner(outState: StateContainer) {
+        timeSpinner.save((outState as BundleStateContainer).bundle)
+    }
+
     override fun startReservationResultActivity(
         reservationDetail: ReservationDetailViewData,
         movie: MovieViewData
@@ -119,15 +124,21 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         dateSpinner.make(
             savedInstanceState = savedInstanceState, movie = movie
         )
-        timeSpinner.make(savedInstanceState)
-        dateSpinner.spinner.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
+        dateSpinner.spinner.spinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                }
 
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-                presenter.selectDate(dateSpinner.dates[position].date)
+                override fun onItemSelected(
+                    p0: AdapterView<*>?,
+                    p1: View?,
+                    position: Int,
+                    p3: Long
+                ) {
+                    presenter.selectDate(dateSpinner.dates[position].date)
+                    timeSpinner.make(savedInstanceState)
+                }
             }
-        }
     }
 
     private fun makeReservationButtonClickListener(
