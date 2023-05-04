@@ -1,8 +1,12 @@
 package woowacourse.movie.domain.movie
 
+import java.time.LocalDate
+
 data class Movie(
     val title: String,
-    val screeningDateTimes: ScreeningDateTimes,
+    val startDate: LocalDate,
+    val endDate: LocalDate,
     val runningTime: Minute,
-    val summary: String
+    val summary: String,
+    val schedule: Schedule
 )
