@@ -12,9 +12,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieData
-import woowacourse.movie.domain.model.rules.ScreeningTimes
 import woowacourse.movie.domain.model.tools.TicketCount
 import woowacourse.movie.presentation.choiceSeat.ChoiceSeatActivity
+import woowacourse.movie.presentation.mappers.toDomainModel
 import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.model.MovieModel
 import woowacourse.movie.presentation.model.ReservationModel
@@ -49,7 +49,6 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         initBookingMovieInformationView()
         gatherClickListeners()
         initDateSpinnerSelectedListener()
-        initTimeSpinnerSelectedListener()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -64,7 +63,11 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         savedInstanceState ?: return
 
         with(savedInstanceState) {
-            presenter = BookingPresenter(this@BookingActivity, TicketCount(getInt(TICKET_COUNT)))
+            presenter = BookingPresenter(
+                this@BookingActivity,
+                TicketCount(getInt(TICKET_COUNT)),
+                movie.toDomainModel()
+            )
             dateSpinner.setSelection(getInt(DATE_POSITION), false)
             timeSpinner.setSelection(getInt(TIME_POSITION), false)
         }
@@ -80,7 +83,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
     }
 
     private fun initPresenter() {
-        presenter = BookingPresenter(this)
+        presenter = BookingPresenter(view = this, movie = movie.toDomainModel())
     }
 
     private fun gatherClickListeners() {
@@ -129,16 +132,20 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         timeSpinner.adapter = timeSpinnerAdapter
     }
 
+    override fun setDateSpinnerItems(items: List<LocalDate>) {
+        dateSpinnerAdapter.initItems(items)
+    }
+
+    override fun setTimeSpinnerItems(items: List<LocalTime>) {
+        timeSpinnerAdapter.initItems(items)
+    }
+
     private fun initDateTimes() {
-        val dates: List<LocalDate> = movie.getScreeningDates()
-        val times: List<LocalTime> = ScreeningTimes.getScreeningTime(dates[0])
-        dateSpinnerAdapter.initItems(dates)
-        timeSpinnerAdapter.initItems(times)
+        val dates = presenter.getScreeningDates()
+        presenter.getScreeningTimes(dates[0])
     }
 
     private fun initDateSpinnerSelectedListener() {
-        val dates: List<LocalDate> = movie.getScreeningDates()
-
         dateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -146,26 +153,9 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
                 position: Int,
                 id: Long
             ) {
-                convertTimeItems(position)
+                val dates = presenter.getScreeningDates()
+                presenter.getScreeningTimes(dates[position])
             }
-
-            private fun convertTimeItems(position: Int) {
-                val times: List<LocalTime> = ScreeningTimes.getScreeningTime(dates[position])
-                timeSpinnerAdapter.initItems(times)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) = Unit
-        }
-    }
-
-    private fun initTimeSpinnerSelectedListener() {
-        timeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) = Unit
 
             override fun onNothingSelected(parent: AdapterView<*>?) = Unit
         }
