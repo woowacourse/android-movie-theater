@@ -13,8 +13,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import woowacourse.movie.R
-import woowacourse.movie.model.Movie
-import woowacourse.movie.model.MovieBookingInfo
+import woowacourse.movie.presentation.model.Movie
+import woowacourse.movie.presentation.model.MovieBookingInfo
 import woowacourse.movie.presentation.extension.getParcelableCompat
 import woowacourse.movie.presentation.view.common.BackButtonActivity
 import woowacourse.movie.presentation.view.main.home.seatpick.SeatPickerActivity

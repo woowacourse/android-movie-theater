@@ -1,7 +1,7 @@
 package woowacourse.movie.presentation.view.main.home.moviedetail
 
-import woowacourse.movie.model.Movie
-import woowacourse.movie.model.MovieBookingInfo
+import woowacourse.movie.presentation.model.Movie
+import woowacourse.movie.presentation.model.MovieBookingInfo
 
 interface MovieDetailContract {
     interface View {

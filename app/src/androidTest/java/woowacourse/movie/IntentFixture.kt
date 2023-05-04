@@ -2,9 +2,9 @@ package woowacourse.movie
 
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
-import woowacourse.movie.model.BookingCompleteInfo
-import woowacourse.movie.model.Movie
-import woowacourse.movie.model.MovieBookingInfo
+import woowacourse.movie.presentation.model.BookingCompleteInfo
+import woowacourse.movie.presentation.model.Movie
+import woowacourse.movie.presentation.model.MovieBookingInfo
 import woowacourse.movie.presentation.view.main.home.bookcomplete.BookCompleteActivity
 import woowacourse.movie.presentation.view.main.home.moviedetail.MovieDetailActivity
 import woowacourse.movie.presentation.view.main.home.seatpick.SeatPickerActivity

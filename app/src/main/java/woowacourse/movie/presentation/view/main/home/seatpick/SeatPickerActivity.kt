@@ -17,7 +17,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.broadcast.bookingnotificaiotn.BookingAlarmReceiver
-import woowacourse.movie.model.ReservationResult
+import woowacourse.movie.presentation.model.ReservationResult
 import woowacourse.movie.presentation.extension.getParcelableCompat
 import woowacourse.movie.presentation.view.common.BackButtonActivity
 import woowacourse.movie.presentation.view.main.home.bookcomplete.BookCompleteActivity

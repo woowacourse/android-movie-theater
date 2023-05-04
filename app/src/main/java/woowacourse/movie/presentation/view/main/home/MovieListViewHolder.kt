@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.model.Movie
+import woowacourse.movie.presentation.model.Movie
 
 class MovieListViewHolder(
     parent: ViewGroup, private val event: (Int) -> Unit

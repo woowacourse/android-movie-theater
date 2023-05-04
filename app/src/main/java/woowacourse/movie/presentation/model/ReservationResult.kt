@@ -1,4 +1,4 @@
-package woowacourse.movie.model
+package woowacourse.movie.presentation.model
 
 import android.os.Parcelable
 import com.example.domain.Reservation

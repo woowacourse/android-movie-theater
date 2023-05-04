@@ -3,7 +3,7 @@ package woowacourse.movie.presentation.view.main.booklist
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.Reservation
-import woowacourse.movie.model.Movie
+import woowacourse.movie.presentation.model.Movie
 
 class BookingListAdapter(
     private val reservations: List<Reservation>,

@@ -1,6 +1,6 @@
 package woowacourse.movie.presentation.view.main.home.seatpick
 
-import woowacourse.movie.model.ReservationResult
+import woowacourse.movie.presentation.model.ReservationResult
 import woowacourse.movie.presentation.view.main.home.seatpick.model.SeatModel
 
 interface SeatPickerContract {

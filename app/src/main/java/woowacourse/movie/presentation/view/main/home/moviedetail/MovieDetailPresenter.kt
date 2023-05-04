@@ -1,8 +1,8 @@
 package woowacourse.movie.presentation.view.main.home.moviedetail
 
 import com.example.domain.MovieSchedule
-import woowacourse.movie.model.Movie
-import woowacourse.movie.model.MovieBookingInfo
+import woowacourse.movie.presentation.model.Movie
+import woowacourse.movie.presentation.model.MovieBookingInfo
 
 class MovieDetailPresenter(
     private val view: MovieDetailContract.View,

@@ -8,8 +8,8 @@ import com.example.domain.SeatGrade
 import com.example.domain.TicketBundle
 import woowacourse.movie.R
 import woowacourse.movie.data.SharedPreferenceUtil
-import woowacourse.movie.model.MovieBookingInfo
-import woowacourse.movie.model.ReservationResult
+import woowacourse.movie.presentation.model.MovieBookingInfo
+import woowacourse.movie.presentation.model.ReservationResult
 import woowacourse.movie.presentation.view.main.home.seatpick.model.SeatGradeModel
 import woowacourse.movie.presentation.view.main.home.seatpick.model.SeatModel
 import java.time.LocalDate
