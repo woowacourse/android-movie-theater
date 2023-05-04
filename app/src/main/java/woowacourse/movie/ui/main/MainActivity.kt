@@ -10,11 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
+import woowacourse.movie.model.SettingSharedPreference
 import woowacourse.movie.notification.NotificationChannelInfo
 import woowacourse.movie.notification.NotificationGenerator
 import woowacourse.movie.permission.getPermissionLauncher
 import woowacourse.movie.permission.requestPermission
-import woowacourse.movie.util.SettingSharedPreference
 import woowacourse.movie.util.shortToast
 
 class MainActivity : AppCompatActivity() {
@@ -31,11 +31,11 @@ class MainActivity : AppCompatActivity() {
     private val permissionLauncher: ActivityResultLauncher<String> by lazy {
         getPermissionLauncher(
             deniedCase = {
-                settingSharedPreference.receivingPushAlarm = false
+                settingSharedPreference.state = false
                 shortToast(getString(R.string.permission_denied))
             },
             allowedCase = {
-                settingSharedPreference.receivingPushAlarm = true
+                settingSharedPreference.state = true
                 shortToast(getString(R.string.permission_allowed))
             }
         )

@@ -9,11 +9,11 @@ import android.widget.Switch
 import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.model.SettingSharedPreference
 import woowacourse.movie.permission.getPermissionLauncher
 import woowacourse.movie.permission.requestPermission
-import woowacourse.movie.util.SettingSharedPreference
 
-class SettingFragment : Fragment() {
+class SettingFragment : Fragment(), SettingContract.View {
 
     private val settingSharedPreference by lazy {
         SettingSharedPreference(requireContext())
@@ -21,15 +21,19 @@ class SettingFragment : Fragment() {
     private val switch: Switch by lazy {
         requireActivity().findViewById(R.id.switchPushAlarm)
     }
+    private val settingPresenter: SettingPresenter by lazy {
+        SettingPresenter(
+            view = this,
+            settingRepository = settingSharedPreference
+        )
+    }
     private val permissionLauncher: ActivityResultLauncher<String> =
         getPermissionLauncher(
             deniedCase = {
-                switch.isChecked = false
-                settingSharedPreference.receivingPushAlarm = false
+                settingPresenter.saveSetting(false)
             },
             allowedCase = {
-                switch.isChecked = true
-                settingSharedPreference.receivingPushAlarm = true
+                settingPresenter.saveSetting(true)
             }
         )
 
@@ -44,12 +48,16 @@ class SettingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        settingPresenter.loadSetting()
         initSwitch()
     }
 
     private fun initSwitch() {
-        switch.isChecked = settingSharedPreference.receivingPushAlarm
         setCheckedChangedListener(switch)
+    }
+
+    override fun setSwitch(isChecked: Boolean) {
+        switch.isChecked = isChecked
     }
 
     private fun setCheckedChangedListener(switch: Switch) {
@@ -60,9 +68,9 @@ class SettingFragment : Fragment() {
                     permissionLauncher,
                     Manifest.permission.POST_NOTIFICATIONS
                 )
-                settingSharedPreference.receivingPushAlarm = true
+                settingPresenter.saveSetting(true)
             } else {
-                settingSharedPreference.receivingPushAlarm = false
+                settingPresenter.saveSetting(false)
             }
         }
     }
