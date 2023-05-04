@@ -75,7 +75,7 @@ class ReservationCompletedActivity : AppCompatActivity() {
                     reservation.seats.joinToString(),
                 )
             totalPrice.text =
-                getString(R.string.total_price_format).format(DECIMAL_FORMAT.format(reservation.count))
+                getString(R.string.total_price_format).format(DECIMAL_FORMAT.format(reservation.price))
         }
     }
 

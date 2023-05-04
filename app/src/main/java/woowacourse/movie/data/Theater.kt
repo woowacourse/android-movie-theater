@@ -1,5 +1,6 @@
 package woowacourse.movie.data
 
+import woowacourse.movie.R
 import woowacourse.movie.domain.policy.MorningPolicy
 import woowacourse.movie.domain.policy.MovieDayPolicy
 import woowacourse.movie.domain.policy.NightPolicy
@@ -13,6 +14,12 @@ object Theater {
         2 to Grade.S,
         3 to Grade.S,
         4 to Grade.A,
+    )
+
+    val gradeColor = mapOf(
+        Grade.B to R.color.seat_rank_b,
+        Grade.S to R.color.seat_rank_s,
+        Grade.A to R.color.seat_rank_a,
     )
     val row = 5
     val col = 4

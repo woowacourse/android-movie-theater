@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.MenuItem
+import android.view.View
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -13,7 +14,6 @@ import android.widget.Toolbar.LayoutParams
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.data.Theater
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
@@ -54,16 +54,12 @@ class SeatSelectionActivity : AppCompatActivity() {
         }
 
         seatSystem = SeatSelectSystem(Theater.info, reserveOptions.peopleCount)
-        priceSystem = PriceSystem(PriceCalculator(Theater.policies), reserveOptions.screeningDateTime)
+        priceSystem =
+            PriceSystem(PriceCalculator(Theater.policies), reserveOptions.screeningDateTime)
 
         createRows()
         setTitle(reserveOptions.title)
         setNextButton(reserveOptions.title, reserveOptions.screeningDateTime)
-        setSeatViews(
-            binding.layoutSeats.children.filterIsInstance<TableRow>()
-                .flatMap { it.children }
-                .filterIsInstance<TextView>().toList(),
-        )
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -73,7 +69,7 @@ class SeatSelectionActivity : AppCompatActivity() {
                 layoutParams = TableLayout.LayoutParams(0, 0, 1f)
             }
             for (col in 0 until theater.col) {
-                val seat = Seat(col, row)
+                val seat = Seat(row, col)
                 tableRow.addView(createSeat(seat.toUiModel()))
             }
             binding.layoutSeats.addView(tableRow)
@@ -83,10 +79,15 @@ class SeatSelectionActivity : AppCompatActivity() {
     private fun createSeat(seatUi: SeatUiModel): TextView =
         TextView(this).apply {
             text = seatUi.seatId
-            // setTextColor(getColor(seatUi.color))
+            val grade = Theater.info.getRowGrade(seatUi.row)
+            if (grade != null) {
+                Theater.gradeColor[grade]?.let {
+                    setTextColor(getColor(it))
+                }
+            }
             textAlignment = TextView.TEXT_ALIGNMENT_CENTER
             gravity = Gravity.CENTER
-            // setOnClickListener { onSeatClick(this) }
+            setOnClickListener { setSeatView(seatUi.row, seatUi.col, it) }
             background =
                 AppCompatResources.getDrawable(this@SeatSelectionActivity, R.drawable.selector_seat)
             layoutParams = TableRow.LayoutParams(0, LayoutParams.MATCH_PARENT, 1f)
@@ -110,7 +111,7 @@ class SeatSelectionActivity : AppCompatActivity() {
             setTitle(context.getString(R.string.reserve_dialog_title))
             setMessage(context.getString(R.string.reserve_dialog_detail))
             setPositiveButton(context.getString(R.string.reserve_dialog_submit)) { _, _ ->
-                onClick(ticketModel)
+                onNextClick(ticketModel)
             }
             setNegativeButton(context.getString(R.string.reserve_dialog_cancel)) { dialog, _ ->
                 dialog.dismiss()
@@ -119,8 +120,8 @@ class SeatSelectionActivity : AppCompatActivity() {
         }
     }
 
-    private fun onClick(model: ReservationUiModel) {
-        ReservationCompletedActivity.newIntent(this, model)
+    private fun onNextClick(model: ReservationUiModel) {
+        val intent = ReservationCompletedActivity.newIntent(this, model)
         startActivity(intent)
     }
 
@@ -128,51 +129,43 @@ class SeatSelectionActivity : AppCompatActivity() {
         binding.textPrice.text = getString(R.string.reservation_fee_format, price)
     }
 
-    private fun setSeatViews(seatViews: List<TextView>) {
-        seatViews.forEachIndexed { index, textView ->
-            textView.setOnClickListener {
-                val (row, col) = indexToRowCol(index)
-                val result = seatSystem.select(row, col)
-                when (result) {
-                    is SelectResult.Success.Selection -> {
-                        textView.setBackgroundColor(textView.context.getColor(R.color.select_seat))
-                        textView.isSelected = true
-                        if (result.isSelectAll) {
-                            binding.btnNext.isEnabled = true
-                        }
-                    }
-                    is SelectResult.Success.Deselection -> {
-                        textView.setBackgroundColor(textView.context.getColor(R.color.white))
-                        binding.btnNext.isEnabled = false
-                        textView.isSelected = false
-                        setPrice(result.seatPrice.toUiModel())
-                    }
-                    is SelectResult.MaxSelection -> {
-                        Toast.makeText(
-                            this,
-                            SELECT_ALL_SEAT_MESSAGE,
-                            Toast.LENGTH_LONG,
-                        )
-                            .show()
-                    }
-                    is SelectResult.WrongInput -> {
-                        Toast.makeText(
-                            this,
-                            SELECT_WRONG_SEAT_MESSAGE,
-                            Toast.LENGTH_LONG,
-                        )
-                            .show()
-                    }
+    private fun setSeatView(row: Int, col: Int, textView: View) {
+        val result = seatSystem.select(row, col)
+        when (result) {
+            is SelectResult.Success.Selection -> {
+                textView.setBackgroundColor(textView.context.getColor(R.color.select_seat))
+                textView.isSelected = true
+                if (result.isSelectAll) {
+                    binding.btnNext.isEnabled = true
                 }
-                val newPrice = priceSystem.getCurrentPrice(price, result)
-                price = newPrice
-                setPrice(newPrice.toUiModel())
+            }
+            is SelectResult.Success.Deselection -> {
+                textView.setBackgroundColor(textView.context.getColor(R.color.white))
+                binding.btnNext.isEnabled = false
+                textView.isSelected = false
+                setPrice(result.seatPrice.toUiModel())
+            }
+            is SelectResult.MaxSelection -> {
+                Toast.makeText(
+                    this,
+                    SELECT_ALL_SEAT_MESSAGE,
+                    Toast.LENGTH_LONG,
+                )
+                    .show()
+            }
+            is SelectResult.WrongInput -> {
+                Toast.makeText(
+                    this,
+                    SELECT_WRONG_SEAT_MESSAGE,
+                    Toast.LENGTH_LONG,
+                )
+                    .show()
             }
         }
+        val newPrice = priceSystem.getCurrentPrice(price, result)
+        price = newPrice
+        setPrice(newPrice.toUiModel())
     }
-
-    private fun indexToRowCol(index: Int): Pair<Int, Int> =
-        Pair((index) / Theater.col, (index) % Theater.col)
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

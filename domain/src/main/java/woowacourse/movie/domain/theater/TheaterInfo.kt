@@ -8,6 +8,6 @@ class TheaterInfo(
     private val seatCol: Int
 ) {
     fun getGradePrice(row: Int): Price? = rowGrade[row]?.price
-
+    fun getRowGrade(row: Int): Grade? = rowGrade[row]
     fun isValidSeat(selectRow: Int, selectCol: Int): Boolean = selectRow < seatRow && selectCol < seatCol
 }
