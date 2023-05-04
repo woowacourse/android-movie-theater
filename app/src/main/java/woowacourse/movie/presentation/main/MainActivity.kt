@@ -7,6 +7,8 @@ import android.content.IntentFilter
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.broadcastreceiver.AlarmReceiver
@@ -48,7 +50,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setInitialFragment() {
-        this.replace<MovieListFragment>(R.id.main_fragment_container)
+        this.supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            add<MovieListFragment>(R.id.main_fragment_container)
+        }
     }
 
     private fun initBottomNavigation() {

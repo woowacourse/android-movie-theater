@@ -11,7 +11,7 @@ import woowacourse.movie.presentation.util.formatDotDateTimeColonSeparateBar
 class BookedTicketViewHolder(
     view: View,
     clickListener: (TicketModel) -> Unit,
-    getPositionData: (Int) -> TicketModel
+    getPositionData: (Int) -> TicketModel,
 ) : ViewHolder(view) {
 
     private val textBookedTicketsDateTime: TextView =
@@ -31,7 +31,7 @@ class BookedTicketViewHolder(
     private fun setItemOnClickListener(
         view: View,
         clickListener: (TicketModel) -> Unit,
-        getPositionData: (Int) -> TicketModel
+        getPositionData: (Int) -> TicketModel,
     ) {
         view.setOnClickListener {
             clickListener(getPositionData(adapterPosition))

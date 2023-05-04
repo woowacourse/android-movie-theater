@@ -7,13 +7,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.data.BookedTicketsData
 import woowacourse.movie.presentation.complete.CompleteActivity
 import woowacourse.movie.presentation.model.TicketModel
 
-class BookedTicketsFragment : Fragment() {
+class BookedTicketsFragment : Fragment(), BookedTicketsContract.View {
 
     private val bookedTicketsAdapter by lazy { BookedTicketsAdapter(::bookedTicketsItemClickListener) }
+    override val presenter: BookedTicketsContract.Presenter by lazy {
+        BookedTicketsPresenter(this)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -25,13 +28,13 @@ class BookedTicketsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setBookedTicketsAdapter()
+        presenter.requestTickets()
     }
 
-    private fun setBookedTicketsAdapter() {
+    override fun setBookedTicketsAdapter(tickets: List<TicketModel>) {
         requireActivity().findViewById<RecyclerView>(R.id.recyclerBookedTickets).adapter =
             bookedTicketsAdapter
-        bookedTicketsAdapter.submitList(BookedTicketsData.tickets)
+        bookedTicketsAdapter.submitList(tickets)
     }
 
     private fun bookedTicketsItemClickListener(ticketModel: TicketModel) {
