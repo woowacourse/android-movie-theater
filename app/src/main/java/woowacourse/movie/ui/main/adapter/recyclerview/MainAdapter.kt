@@ -11,8 +11,8 @@ import woowacourse.movie.ui.main.adapter.MainViewType
 
 class MainAdapter(
     context: Context,
-    private val clickBook: (Long) -> Unit,
-    private val clickAd: (Intent) -> Unit,
+    private val onBooked: (Long) -> Unit,
+    private val onAdClicked: (Intent) -> Unit,
 ) : RecyclerView.Adapter<MainViewHolder>() {
     private val movies = mutableListOf<MainData>()
     private val layoutInflater = LayoutInflater.from(context)
@@ -35,8 +35,8 @@ class MainAdapter(
 
     private fun setViewHolderClick(viewHolder: MainViewHolder) {
         when (viewHolder) {
-            is MovieViewHolder -> viewHolder.setBookingClick(clickBook)
-            is AdvertisementViewHolder -> viewHolder.setAdvertisementClick(clickAd)
+            is MovieViewHolder -> viewHolder.setBookingClick(onBooked)
+            is AdvertisementViewHolder -> viewHolder.setAdvertisementClick(onAdClicked)
         }
     }
 
