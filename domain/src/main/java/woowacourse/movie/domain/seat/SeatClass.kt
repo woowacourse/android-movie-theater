@@ -12,7 +12,7 @@ enum class SeatClass(val price: Int) {
                 in 1..2 -> B
                 in 3..4 -> S
                 5 -> A
-                else -> throw IllegalArgumentException()
+                else -> throw IllegalArgumentException("왜 여기서 오류가 나 row:$row")
             }
         }
     }
