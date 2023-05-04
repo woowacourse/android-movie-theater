@@ -7,7 +7,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -19,7 +18,6 @@ import woowacourse.movie.presentation.choiceSeat.ChoiceSeatActivity
 import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.model.MovieModel
 import woowacourse.movie.presentation.model.ReservationModel
-import woowacourse.movie.presentation.util.formatDotDate
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -48,7 +46,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         initAdapters()
         initDateTimes()
         restoreData(savedInstanceState)
-        initView()
+        initBookingMovieInformationView()
         gatherClickListeners()
         initDateSpinnerSelectedListener()
         initTimeSpinnerSelectedListener()
@@ -91,41 +89,9 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         clickBookingComplete()
     }
 
-    // 요거 뷰 로직 프리젠터 이동 안해도됨
-    private fun initView() {
-        setMoviePoster()
-        setMovieTitle()
-        setMovieScreeningDate()
-        setMovieRunningTime()
-        setMovieDescription()
+    private fun initBookingMovieInformationView() {
+        BookingMovieInformationView(findViewById(R.id.layout_booking_movie_information), movie)
     }
-
-    private fun setMoviePoster() {
-        movie.poster?.let { findViewById<ImageView>(R.id.imageBookingPoster).setImageResource(it) }
-    }
-
-    private fun setMovieTitle() {
-        findViewById<TextView>(R.id.textBookingTitle).text = movie.title
-    }
-
-    private fun setMovieScreeningDate() {
-        findViewById<TextView>(R.id.textBookingScreeningDate).text =
-            getString(R.string.screening_date).format(
-                movie.screeningStartDate.formatDotDate(),
-                movie.screeningEndDate.formatDotDate()
-            )
-    }
-
-    private fun setMovieRunningTime() {
-        findViewById<TextView>(R.id.textBookingRunningTime).text =
-            getString(R.string.running_time).format(movie.runningTime)
-    }
-
-    private fun setMovieDescription() {
-        findViewById<TextView>(R.id.textBookingDescription).text = movie.description
-    }
-
-    // 여기 까지 뷰로직
 
     private fun clickMinus() {
         findViewById<Button>(R.id.buttonBookingMinus).setOnClickListener {
