@@ -6,6 +6,7 @@ import woowacourse.movie.domain.model.tools.Movie
 import woowacourse.movie.domain.model.tools.Ticket
 import woowacourse.movie.domain.model.tools.seat.Seat
 import woowacourse.movie.presentation.model.MovieModel
+import woowacourse.movie.presentation.model.SeatModel
 import woowacourse.movie.presentation.model.TicketModel
 
 fun MovieModel.toDomainModel() = Movie(
@@ -14,7 +15,7 @@ fun MovieModel.toDomainModel() = Movie(
     screeningStartDate = screeningStartDate,
     screeningEndDate = screeningEndDate,
     runningTime = runningTime,
-    description = description
+    description = description,
 )
 
 fun Movie.toPresentation() = MovieModel(
@@ -27,7 +28,7 @@ fun Movie.toPresentation() = MovieModel(
     thumbnail =
     MovieDrawableData.getMovieThumbnail(id) ?: R.drawable.default_thumbnail,
     poster =
-    MovieDrawableData.getMoviePoster(id) ?: R.drawable.default_poster
+    MovieDrawableData.getMoviePoster(id) ?: R.drawable.default_poster,
 )
 
 fun Ticket.toPresentation() = TicketModel(
@@ -35,7 +36,13 @@ fun Ticket.toPresentation() = TicketModel(
     bookedDateTime = bookedDateTime,
     count = count,
     paymentMoney = getPaymentMoney().value,
-    seats = seats.value.map { it.formatLocation() }
+    seats = seats.value.map { it.formatLocation() },
+)
+
+fun Seat.toPresentation() = SeatModel(
+    row = location.row.toString(),
+    columns = location.number + 1,
+    seatGrade = grade.name,
 )
 
 private fun Seat.formatLocation() = "${location.row}${(location.number + 1)}"
