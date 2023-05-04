@@ -17,6 +17,7 @@ import woowacourse.movie.system.SharedSetting
 
 class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.View {
     override val presenter: SettingContract.Presenter = SettingPresenter(this)
+    private lateinit var permissionResultLauncher: ActivityResultLauncher<String>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,10 +29,9 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
         val setting: Setting = SharedSetting(view.context)
         val switch = view.findViewById<SwitchCompat>(R.id.setting_push_switch)
         val permission = Manifest.permission.POST_NOTIFICATIONS
-        val permissionResultLauncher: ActivityResultLauncher<String> =
-            makePermissionResultLauncher {
-                onNotificationAddResult(switch, setting, it)
-            }
+        permissionResultLauncher = makePermissionResultLauncher {
+            onNotificationAddResult(switch, setting, it)
+        }
 
         switch.isChecked = setting.getValue(SETTING_NOTIFICATION) && PermissionLauncher.isGranted(
             requireContext(), permission
@@ -39,10 +39,7 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
 
         switch.setOnCheckedChangeListener { _, isChecked ->
             presenter.toggleNotificationSetting(
-                permissionResultLauncher,
-                setting,
-                permission,
-                isChecked
+                setting, permission, isChecked
             )
         }
     }
@@ -57,16 +54,16 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
     }
 
     override fun onNotificationSwitchCheckedChangeListener(
-        permissionResultLauncher: ActivityResultLauncher<String>,
         setting: Setting,
         permission: String,
         isChecked: Boolean
     ) {
         if (isChecked) {
-            if (PermissionLauncher.isGranted(requireContext(), permission))
-                setting.setValue(SETTING_NOTIFICATION, true)
-            else
-                requestPermission(permission, permissionResultLauncher)
+            if (PermissionLauncher.isGranted(requireContext(), permission)) setting.setValue(
+                SETTING_NOTIFICATION,
+                true
+            )
+            else requestPermission(permission, permissionResultLauncher)
             return
         }
         setting.setValue(SETTING_NOTIFICATION, false)
