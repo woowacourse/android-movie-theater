@@ -28,35 +28,22 @@ class ReservationListFragment : Fragment(), ReservationListContract.View {
         super.onViewCreated(view, savedInstanceState)
 
         presenter = ReservationListPresenter(this)
-        presenter.loadReservationData()
-
-        makeReservationRecyclerView(view, reservations)
+        presenter.initReservationRecyclerView()
     }
 
-    override fun setReservationData(reservationsViewData: ReservationsViewData) {
-        this.reservations = reservationsViewData
-    }
-
-    private fun makeReservationRecyclerView(view: View, reservations: ReservationsViewData) {
-        val recyclerView = view.findViewById<RecyclerView>(R.id.reservation_list_recycler)
-        recyclerView.adapter = ReservationAdapter(reservations, ::onClickItem)
-        val decoration = DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL)
+    override fun initReservationRecyclerView(reservationsViewData: ReservationsViewData) {
+        val recyclerView = requireView().findViewById<RecyclerView>(R.id.reservation_list_recycler)
+        recyclerView.adapter = ReservationAdapter(reservations) { presenter.onItemClick(it) }
+        val decoration =
+            DividerItemDecoration(requireView().context, DividerItemDecoration.VERTICAL)
         recyclerView.addItemDecoration(decoration)
     }
 
-    private fun onClickItem(view: View, reservation: ReservationViewData) {
+    override fun onItemClick(reservationViewData: ReservationViewData) {
         startActivity(
             ReservationResultActivity.from(
-                view.context, reservation
+                requireContext(), reservationViewData
             )
         )
-    }
-
-    companion object {
-        fun from(reservationsViewData: ReservationsViewData) = Bundle().apply {
-            putSerializable(
-                ReservationsViewData.RESERVATIONS_VIEW_DATA_EXTRA_NAME, reservationsViewData
-            )
-        }
     }
 }
