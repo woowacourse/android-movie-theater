@@ -10,11 +10,11 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.dto.AdDto
 import woowacourse.movie.movie.dto.movie.MovieDto
-import woowacourse.movie.movie.dto.movie.MovieDummy
 import woowacourse.movie.movie.moviedetail.MovieDetailActivity
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), HomeContract.View {
     private lateinit var binding: FragmentHomeBinding
+    override lateinit var presenter: HomeContract.Presenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,7 +22,8 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         setUpBinding()
-        setUpMovieData()
+        presenter = HomePresenter(this)
+        presenter.initFragment()
         return binding.root
     }
 
@@ -30,12 +31,8 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(layoutInflater)
     }
 
-    private fun setUpMovieData() {
-        val movieAdapter = MovieAdapter(
-            MovieDummy.movieDatas,
-            AdDto.getAdData(),
-        )
-
+    override fun setUpMovieData(movies: List<MovieDto>, ads: AdDto) {
+        val movieAdapter = MovieAdapter(movies, ads)
         binding.movieRv.adapter = movieAdapter
         onMovieItemClickListener(movieAdapter)
         onAdItemClickListener(movieAdapter)
