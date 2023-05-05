@@ -5,10 +5,14 @@ import woowacourse.movie.model.TicketsState
 
 interface ReservationConfirmContract {
     interface View {
+        fun setTicket(ticket: TicketsState)
         fun setMoneyTextView(money: MoneyState)
+
+        fun registerNotification(ticket: TicketsState)
     }
 
     interface Presenter {
-        fun setDiscountApplyMoney(tickets: TicketsState)
+        fun discountApplyMoney(ticket: TicketsState)
+        fun init(ticket: TicketsState)
     }
 }

@@ -9,9 +9,16 @@ class ReservationConfirmPresenter(
     private val view: ReservationConfirmContract.View
 ) : ReservationConfirmContract.Presenter {
     private val discountApplyUseCase = DiscountApplyUseCase()
+    lateinit var ticket: TicketsState
 
-    override fun setDiscountApplyMoney(tickets: TicketsState) {
-        val discountApplyMoney = discountApplyUseCase(tickets.asDomain())
+    override fun init(ticket: TicketsState) {
+        this.ticket = ticket
+        view.setTicket(ticket)
+        view.registerNotification(ticket)
+    }
+
+    override fun discountApplyMoney(ticket: TicketsState) {
+        val discountApplyMoney = discountApplyUseCase(ticket.asDomain())
         view.setMoneyTextView(discountApplyMoney.asPresentation())
     }
 }

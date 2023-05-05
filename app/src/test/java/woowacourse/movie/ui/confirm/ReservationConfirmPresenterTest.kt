@@ -16,6 +16,22 @@ import woowacourse.movie.model.TicketsState
 
 class ReservationConfirmPresenterTest {
     @Test
+    fun `예약 확인 화면을 초기화한다`() {
+        // given
+        val view = mockk<ReservationConfirmContract.View>()
+        val presenter = ReservationConfirmPresenter(view)
+        val tickets = sampleTicketsState
+        every { view.registerNotification(any()) } returns Unit
+
+        // when
+        presenter.init(tickets)
+
+        // then
+        verify { view.setTicket(tickets) }
+        verify { view.registerNotification(tickets) }
+    }
+
+    @Test
     fun `가격 할인 정책을 적용하면 화면 금액이 바뀐다`() {
         // given
         val view = mockk<ReservationConfirmContract.View>(relaxed = true)
@@ -27,7 +43,7 @@ class ReservationConfirmPresenterTest {
         } answers { println("slot = ${slot.captured}") }
 
         // when
-        presenter.setDiscountApplyMoney(tickets)
+        presenter.discountApplyMoney(tickets)
 
         // then
         assertEquals(slot.captured, MoneyState(8000))

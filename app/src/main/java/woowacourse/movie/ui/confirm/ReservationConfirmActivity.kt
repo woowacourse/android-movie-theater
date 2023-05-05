@@ -6,37 +6,64 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import java.time.ZoneId
+import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationConfirmBinding
+import woowacourse.movie.model.MoneyState
 import woowacourse.movie.model.TicketsState
 import woowacourse.movie.ui.BackKeyActionBarActivity
+import woowacourse.movie.ui.DateTimeFormatters
+import woowacourse.movie.ui.DecimalFormatters
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
 
-class ReservationConfirmActivity : BackKeyActionBarActivity() {
+class ReservationConfirmActivity : BackKeyActionBarActivity(), ReservationConfirmContract.View {
+    private var presenter = ReservationConfirmPresenter(this)
     private lateinit var binding: ActivityReservationConfirmBinding
-    private lateinit var view: ReservationConfirmView
 
     override fun onCreateView(savedInstanceState: Bundle?) {
-        binding = ActivityReservationConfirmBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        val tickets = intent.getParcelableExtraCompat<TicketsState>(KEY_TICKETS)
-            ?: return keyError(KEY_TICKETS)
-        view = ReservationConfirmView(binding, tickets)
-        setNotification(tickets)
+        initBinding()
+        initPresenter()
     }
 
-    private fun setNotification(tickets: TicketsState) {
+    private fun initBinding() {
+        binding = ActivityReservationConfirmBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
+
+    private fun initPresenter() {
+        presenter.init(
+            intent.getParcelableExtraCompat(KEY_TICKETS) ?: return keyError(KEY_TICKETS)
+        )
+    }
+
+    override fun setTicket(ticket: TicketsState) {
+        binding.reservationTitle.text = ticket.movieState.title
+        binding.reservationDate.text = DateTimeFormatters.convertToDateTime(ticket.dateTime)
+        binding.reservationCountAndSeat.text = binding.root.context.getString(
+            R.string.person_count_and_seat,
+            ticket.positions.size,
+            ticket.positions.joinToString { it.toString() },
+            ticket.cinemaName
+        )
+        presenter.discountApplyMoney(ticket)
+    }
+
+    override fun setMoneyTextView(money: MoneyState) {
+        binding.reservationMoney.text = DecimalFormatters.convertToMoneyFormat(money)
+    }
+
+    override fun registerNotification(ticket: TicketsState) {
         val alarmManager: AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        val alarmIntent = AlarmReceiver.getIntent(this, tickets).let { intent ->
+        val alarmIntent = AlarmReceiver.getIntent(this, ticket).let { intent ->
             PendingIntent.getBroadcast(
                 this,
-                tickets.hashCode(),
+                ticket.hashCode(),
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
             )
         }
 
-        val advanceNoticeDateTime = tickets.dateTime
+        val advanceNoticeDateTime = ticket.dateTime
             .minusMinutes(ADVANCE_NOTICE_MINUTES)
             .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
