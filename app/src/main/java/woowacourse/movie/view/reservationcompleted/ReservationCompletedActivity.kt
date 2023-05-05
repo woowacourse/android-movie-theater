@@ -69,14 +69,9 @@ class ReservationCompletedActivity : AppCompatActivity(), ReservationCompletedCo
                 reservation.screeningDateTime.format(DATE_FORMATTER),
                 reservation.screeningDateTime.format(TIME_FORMATTER),
             )
-            peopleCount.text = getString(R.string.reservation_people_count_format)
-                .format(
-                    getString(R.string.general_person),
-                    reservation.count,
-                    reservation.seats.joinToString(),
-                )
+            peopleCount.text = getString(R.string.reservation_count_seats_theater, reservation.count, reservation.seats.joinToString(), reservation.theaterName)
             totalPrice.text =
-                getString(R.string.total_price_format).format(DECIMAL_FORMAT.format(reservation.price))
+                getString(R.string.total_price_format, DECIMAL_FORMAT.format(reservation.price))
         }
     }
 

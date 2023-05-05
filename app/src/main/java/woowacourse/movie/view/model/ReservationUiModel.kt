@@ -10,5 +10,6 @@ data class ReservationUiModel(
     val screeningDateTime: LocalDateTime,
     val count: Int,
     val seats: List<String>,
-    val price: Int
+    val price: Int,
+    val theaterName: String
 ) : Parcelable

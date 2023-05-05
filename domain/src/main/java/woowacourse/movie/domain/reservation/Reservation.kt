@@ -9,4 +9,5 @@ data class Reservation(
     val screeningDateTime: LocalDateTime,
     val seats: List<Seat>,
     val price: Price,
+    val theaterName: String
 )

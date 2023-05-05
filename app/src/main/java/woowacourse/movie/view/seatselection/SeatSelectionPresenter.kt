@@ -41,7 +41,7 @@ class SeatSelectionPresenter(private val view: SeatSelectionContract.View, priva
     }
 
     override fun onReserveClick() {
-        val reservation = Reservation(reserveOption.title, reserveOption.screeningDateTime, seatSelectSystem.seats, price)
+        val reservation = Reservation(reserveOption.title, reserveOption.screeningDateTime, seatSelectSystem.seats, price, theater.name)
         view.showSubmitDialog(reservation.toUiModel())
     }
 
