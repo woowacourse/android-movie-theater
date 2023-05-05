@@ -70,7 +70,7 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
 
     @SuppressLint("MissingPermission")
     private fun notifyNotification(context: Context, builder: NotificationCompat.Builder) {
-        if (PermissionLauncher.isGranted(context, Manifest.permission.POST_NOTIFICATIONS)) {
+        if (isGranted(context, Manifest.permission.POST_NOTIFICATIONS)) {
             NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, builder.build())
         }
     }

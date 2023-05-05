@@ -14,9 +14,9 @@ import woowacourse.movie.contract.SettingContract
 import woowacourse.movie.data.dataSource.SharedSetting
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.presenter.SettingPresenter
-import woowacourse.movie.system.PermissionLauncher
-import woowacourse.movie.system.PermissionLauncher.makePermissionResultLauncher
-import woowacourse.movie.system.PermissionLauncher.requestPermission
+import woowacourse.movie.system.isGranted
+import woowacourse.movie.system.makePermissionResultLauncher
+import woowacourse.movie.system.requestPermission
 
 class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.View {
     override val presenter: SettingContract.Presenter = SettingPresenter(this)
@@ -28,7 +28,7 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting,container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
         return binding.root
     }
 
@@ -44,7 +44,7 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
         }
 
         binding.settingPushSwitch.isChecked =
-            SharedSetting.getValue(SETTING_NOTIFICATION) && PermissionLauncher.isGranted(
+            SharedSetting.getValue(SETTING_NOTIFICATION) && isGranted(
             requireContext(), permission
         )
 
@@ -68,7 +68,7 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
         isChecked: Boolean
     ) {
         if (isChecked) {
-            if (PermissionLauncher.isGranted(requireContext(), permission)) SharedSetting.setValue(
+            if (isGranted(requireContext(), permission)) SharedSetting.setValue(
                 SETTING_NOTIFICATION, true
             )
             else requestPermission(permission, permissionResultLauncher)
