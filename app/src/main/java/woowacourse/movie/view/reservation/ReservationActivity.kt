@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationBinding
+import woowacourse.movie.util.DATE_FORMATTER
 import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.model.ReservationOptions
@@ -29,7 +30,8 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         binding = ActivityReservationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val movie = intent.getParcelableCompat<MovieUiModel>(MOVIE)
-        if (movie == null) {
+        val theaterName = intent.getStringExtra(THEATER)
+        if (movie == null || theaterName == null) {
             Toast.makeText(this, "데이터가 없습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
             finish()
             return
@@ -37,7 +39,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         presenter = ReservationPresenter(this)
 
         setViewData(movie)
-        // setDateSpinner(movie.screeningDateTimes)
+        setDateSpinner(presenter.getSchedules(movie, theaterName))
         setPeopleCountAdjustButtonClickListener()
         setReserveButtonClickListener(movie)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -51,10 +53,10 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         binding.apply {
             moviePoster.setImageResource(movie.posterResourceId)
             movieTitle.text = movie.title
-            // movieScreeningDate.text = getString(R.string.screening_date_format).format(
-            //     movie.screeningDateTimes.keys.min().format(DATE_FORMATTER),
-            //     movie.screeningDateTimes.keys.max().format(DATE_FORMATTER),
-            // )
+            movieScreeningDate.text = getString(R.string.screening_date_format).format(
+                movie.startDate.format(DATE_FORMATTER),
+                movie.endDate.format(DATE_FORMATTER),
+            )
             movieRunningTime.text =
                 getString(R.string.running_time_format).format(movie.runningTime)
             movieSummary.text = movie.summary
