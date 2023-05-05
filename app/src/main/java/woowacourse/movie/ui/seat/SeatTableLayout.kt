@@ -76,8 +76,14 @@ class SeatTableLayout(context: Context, attrs: AttributeSet) :
     fun setSelected(row: Int, col: Int) {
         this.loopTable { rowIdx, columnIdx, seat ->
             if (rowIdx == row && columnIdx == col) {
-                seat.isSelected = !seat.isSelected
-                seat.setBackgroundColor(Color.YELLOW)
+                with(seat) {
+                    if (isSelected) {
+                        setBackgroundColor(Color.WHITE)
+                    } else {
+                        setBackgroundColor(Color.YELLOW)
+                    }
+                    isSelected = !isSelected
+                }
                 return@loopTable
             }
         }

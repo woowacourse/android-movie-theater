@@ -3,10 +3,10 @@ package woowacourse.movie.ui.seat
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivitySeatBinding
 import woowacourse.movie.model.BookedMovie
 import woowacourse.movie.ui.bookinghistory.BookingHistoryDBAdapter
 import woowacourse.movie.ui.bookinghistory.BookingHistoryDBHelper
@@ -16,18 +16,7 @@ import woowacourse.movie.util.shortToast
 
 class SeatActivity : AppCompatActivity(), SeatContract.View {
 
-    private val movieTitleText: TextView by lazy {
-        findViewById(R.id.textSeatMovieTitle)
-    }
-    private val textPayment by lazy {
-        findViewById<TextView>(R.id.textSeatPayment)
-    }
-    private val buttonConfirm by lazy {
-        findViewById<TextView>(R.id.buttonSeatConfirm)
-    }
-    private val seatTable by lazy {
-        findViewById<SeatTableLayout>(R.id.seatTableLayout)
-    }
+    private lateinit var binding: ActivitySeatBinding
     private val bookedMovie: BookedMovie? by lazy {
         intent.getParcelable(BOOKED_MOVIE, BookedMovie::class.java)
     }
@@ -50,7 +39,9 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_seat)
+
+        binding = ActivitySeatBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         seatPresenter.initMovieTitle()
         seatPresenter.initSelectedSeats()
@@ -59,7 +50,7 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
     }
 
     override fun initMovieTitleText(movieTitle: String) {
-        movieTitleText.text = movieTitle
+        binding.textSeatMovieTitle.text = movieTitle
     }
 
     override fun showCannotSelectSeat() {
@@ -70,35 +61,38 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         rowSize: Int,
         columnSize: Int
     ) {
-        seatTable.addRow(rowSize, columnSize)
-        seatTable.initSeatsText()
+        binding.seatTableLayout.addRow(rowSize, columnSize)
+        binding.seatTableLayout.initSeatsText()
     }
 
     override fun initSeatSelectListener() {
-        seatTable.setOnSeatSelectListener { row, col ->
+        binding.seatTableLayout.setOnSeatSelectListener { row, col ->
             seatPresenter.onSeatSelected(row, col)
         }
     }
 
     override fun setSeatPayment(payment: Int) {
-        textPayment.text = payment.toString()
+        binding.textSeatPayment.text = payment.toString()
     }
 
     override fun setButtonState(enabled: Boolean) {
-        buttonConfirm.isEnabled = enabled
-        if (buttonConfirm.isEnabled) {
-            buttonConfirm.setBackgroundResource(R.color.purple_700)
-            return
+        binding.buttonSeatConfirm.isEnabled = enabled
+
+        with(binding.buttonSeatConfirm) {
+            if (isEnabled) {
+                setBackgroundResource(R.color.purple_700)
+                return
+            }
+            setBackgroundResource(R.color.gray_400)
         }
-        buttonConfirm.setBackgroundResource(R.color.gray_400)
     }
 
     override fun setSeatSelected(row: Int, col: Int) {
-        seatTable.setSelected(row, col)
+        binding.seatTableLayout.setSelected(row, col)
     }
 
     private fun initConfirmButtonClickListener() {
-        buttonConfirm.setOnClickListener {
+        binding.buttonSeatConfirm.setOnClickListener {
             showDialog()
         }
     }
