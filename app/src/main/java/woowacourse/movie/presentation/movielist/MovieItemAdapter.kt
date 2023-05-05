@@ -24,8 +24,8 @@ class MovieItemAdapter(
         if (!::inflater.isInitialized) {
             inflater = LayoutInflater.from(parent.context)
         }
-        movieItemBinding = MovieListItemBinding.inflate(inflater)
-        adItemBinding = MovieListAdItemBinding.inflate(inflater)
+        movieItemBinding = MovieListItemBinding.inflate(inflater, parent, false)
+        adItemBinding = MovieListAdItemBinding.inflate(inflater, parent, false)
 
         return when (viewType) {
             R.layout.movie_list_item -> MovieViewHolder(movieItemBinding, clickBook)
