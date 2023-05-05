@@ -1,7 +1,9 @@
 package woowacourse.movie.ui.booking
 
+import woowacourse.movie.model.BookedMovie
 import woowacourse.movie.model.main.MovieUiModel
 import woowacourse.movie.ticket.TicketCount
+import java.time.LocalDateTime
 
 class BookingPresenter(
     private val bookingView: BookingContract.View,
@@ -24,5 +26,15 @@ class BookingPresenter(
         ticketCount = ticketCount.plus()
 
         bookingView.setTicketCountText(ticketCount.value)
+    }
+
+    override fun createBookedMovie(dateTime: LocalDateTime): BookedMovie {
+
+        return BookedMovie(
+            movieId = movie.id,
+            theaterId = 0,
+            ticketCount = ticketCount.value,
+            bookedDateTime = dateTime
+        )
     }
 }

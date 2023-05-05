@@ -4,12 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.model.BookedMovie
+import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.model.main.MovieMapper.toUiModel
 import woowacourse.movie.model.main.MovieUiModel
 import woowacourse.movie.movie.MovieRepository
@@ -18,25 +15,11 @@ import woowacourse.movie.util.formatScreenDate
 
 class BookingActivity : AppCompatActivity(), BookingContract.View {
 
+    private lateinit var binding: ActivityBookingBinding
     private val movie: MovieUiModel by lazy {
         MovieRepository.getMovie(
             movieId = intent.getLongExtra(MOVIE_ID, -1)
         ).toUiModel()
-    }
-    private val dateTimeSpinner: DateTimeSpinner by lazy {
-        findViewById(R.id.spinnerDateTime)
-    }
-    private val ticketCountText: TextView by lazy {
-        findViewById(R.id.textBookingTicketCount)
-    }
-    private val minusButton: Button by lazy {
-        findViewById(R.id.buttonBookingMinus)
-    }
-    private val plusButton: Button by lazy {
-        findViewById(R.id.buttonBookingPlus)
-    }
-    private val completeButton: Button by lazy {
-        findViewById(R.id.buttonBookingComplete)
     }
     private val bookingPresenter: BookingContract.Presenter by lazy {
         BookingPresenter(
@@ -48,17 +31,20 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         DateTimePresenter(
             startDate = movie.startDate,
             endDate = movie.endDate,
-            view = dateTimeSpinner
+            view = binding.spinnerDateTime
         )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_booking)
+
+        binding = ActivityBookingBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         initView()
         initTicketCountText()
-        initClickListeners()
+        initTicketCountButtonClickListener()
+        initCompleteButtonClickListener()
         initDateTimeSpinner()
     }
 
@@ -76,22 +62,21 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         super.onSaveInstanceState(outState)
 
         outState.run {
-            putInt(TICKET_COUNT, ticketCountText.text.toString().toInt())
+            putInt(TICKET_COUNT, binding.textBookingTicketCount.text.toString().toInt())
         }
     }
 
     private fun initView() {
-        findViewById<ImageView>(R.id.imageBookingPoster).setImageResource(movie.poster)
-        findViewById<TextView>(R.id.textBookingTitle).text = movie.title
-        findViewById<TextView>(R.id.textBookingScreeningDate).text =
+        binding.imageBookingPoster.setImageResource(movie.poster)
+        binding.textBookingTitle.text = movie.title
+        binding.textBookingScreeningDate.text =
             getString(
                 R.string.screening_date,
                 movie.startDate.formatScreenDate(),
                 movie.endDate.formatScreenDate(),
             )
-        findViewById<TextView>(R.id.textBookingRunningTime).text =
-            getString(R.string.running_time, movie.runningTime)
-        findViewById<TextView>(R.id.textBookingDescription).text = movie.description
+        binding.textBookingRunningTime.text = getString(R.string.running_time, movie.runningTime)
+        binding.textBookingDescription.text = movie.description
         showBackButton()
     }
 
@@ -99,14 +84,17 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         bookingPresenter.initTicketCount()
     }
 
-    private fun showBackButton() {
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    private fun initTicketCountButtonClickListener() {
+        binding.buttonBookingMinus.setOnClickListener {
+            bookingPresenter.minusTicketCount()
+        }
+        binding.buttonBookingPlus.setOnClickListener {
+            bookingPresenter.plusTicketCount()
+        }
     }
 
-    private fun initClickListeners() {
-        initMinusBtnClickListener()
-        initPlusBtnClickListener()
-        initCompleteBtnClickListener()
+    private fun showBackButton() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -117,34 +105,18 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun initMinusBtnClickListener() {
-        minusButton.setOnClickListener {
-            bookingPresenter.minusTicketCount()
-        }
-    }
-
-    private fun initPlusBtnClickListener() {
-        plusButton.setOnClickListener {
-            bookingPresenter.plusTicketCount()
-        }
-    }
-
     private fun initDateTimeSpinner() {
         dateTimePresenter.initDateTimes()
     }
 
     override fun setTicketCountText(count: Int) {
-        ticketCountText.text = count.toString()
+        binding.textBookingTicketCount.text = count.toString()
     }
 
-    private fun initCompleteBtnClickListener() {
-        completeButton.setOnClickListener {
-            val bookedMovie = BookedMovie(
-                movieId = movie.id,
-                theaterId = 0,
-                ticketCount = ticketCountText.text.toString().toInt(),
-                bookedDateTime = dateTimeSpinner.selectedDateTime
-            )
+    private fun initCompleteButtonClickListener() {
+        binding.buttonBookingComplete.setOnClickListener {
+            val bookedMovie =
+                bookingPresenter.createBookedMovie(binding.spinnerDateTime.selectedDateTime)
 
             startActivity(SeatActivity.getIntent(this, bookedMovie))
             finish()
