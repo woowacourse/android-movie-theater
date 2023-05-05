@@ -5,21 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
-import woowacourse.movie.data.MovieItemData
+import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.presentation.booking.BookingActivity
-import woowacourse.movie.presentation.model.MovieModel
 
 class MovieListFragment : Fragment(), MovieListContract.View {
+
+    private var _binding: FragmentMovieListBinding? = null
+    private val binding get() = _binding!!
+
     override val presenter: MovieListContract.Presenter by lazy { MovieListPresenter(this) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.fragment_movie_list, container, false)
+    ): View {
+        _binding = FragmentMovieListBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -28,16 +30,18 @@ class MovieListFragment : Fragment(), MovieListContract.View {
         presenter.requestMovies()
     }
 
-    override fun setMoviesAdapter(movies: List<MovieModel>) {
-        requireActivity().findViewById<RecyclerView>(R.id.recyclerMainMovie).adapter =
-            MovieItemAdapter(MOVIE_ITEMS) { clickBook(it) }
+    override fun setMoviesAdapter(movieItems: List<MovieItem>) {
+        binding.recyclerMainMovie.adapter = MovieItemAdapter(movieItems) {
+            clickBook(it)
+        }
     }
 
     private fun clickBook(movieId: Long) {
         startActivity(BookingActivity.getIntent(requireActivity(), movieId))
     }
 
-    companion object {
-        private val MOVIE_ITEMS = MovieItemData.getMovieItems()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

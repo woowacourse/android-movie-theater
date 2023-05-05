@@ -1,11 +1,12 @@
 package woowacourse.movie.presentation.movielist
 
-import woowacourse.movie.data.MovieData
-import woowacourse.movie.presentation.mappers.toPresentation
+import woowacourse.movie.data.MovieItemData
 
 class MovieListPresenter(private val view: MovieListContract.View) : MovieListContract.Presenter {
 
-    private val movies = MovieData.movies.toList()
+    private val movieItems = MovieItemData.getMovieItems()
 
-    override fun requestMovies() = view.setMoviesAdapter(movies.map { it.toPresentation() })
+    override fun requestMovies() {
+        view.setMoviesAdapter(movieItems)
+    }
 }

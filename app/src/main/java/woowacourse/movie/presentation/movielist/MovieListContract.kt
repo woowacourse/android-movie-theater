@@ -1,11 +1,9 @@
 package woowacourse.movie.presentation.movielist
 
-import woowacourse.movie.presentation.model.MovieModel
-
 interface MovieListContract {
     interface View {
         val presenter: Presenter
-        fun setMoviesAdapter(movies: List<MovieModel>)
+        fun setMoviesAdapter(movieItems: List<MovieItem>)
     }
 
     interface Presenter {
