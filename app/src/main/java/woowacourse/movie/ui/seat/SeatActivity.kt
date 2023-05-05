@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatBinding
 import woowacourse.movie.model.BookedMovie
@@ -39,14 +40,12 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        binding = ActivitySeatBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_seat)
+        binding.activity = this
 
         seatPresenter.initMovieTitle()
         seatPresenter.initSelectedSeats()
         initSeatSelectListener()
-        initConfirmButtonClickListener()
     }
 
     override fun initMovieTitleText(movieTitle: String) {
@@ -91,13 +90,7 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         binding.seatTableLayout.setSelected(row, col)
     }
 
-    private fun initConfirmButtonClickListener() {
-        binding.buttonSeatConfirm.setOnClickListener {
-            showDialog()
-        }
-    }
-
-    private fun showDialog() {
+    fun showDialog() {
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.reservation_check))
             .setMessage(getString(R.string.ask_reservation))
