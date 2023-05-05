@@ -30,7 +30,7 @@ class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityChoiceSeatBinding.inflate(layoutInflater)
+        binding = ActivityChoiceSeatBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setTheaterSeat()
         initView()
