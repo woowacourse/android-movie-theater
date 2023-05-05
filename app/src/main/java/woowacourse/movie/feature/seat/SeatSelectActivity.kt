@@ -10,7 +10,7 @@ import woowacourse.movie.data.TicketsRepository
 import woowacourse.movie.feature.BackKeyActionBarActivity
 import woowacourse.movie.feature.DecimalFormatters
 import woowacourse.movie.feature.common.customView.ConfirmView
-import woowacourse.movie.feature.notification.MovieRemainder
+import woowacourse.movie.feature.notification.MovieReminder
 import woowacourse.movie.feature.reservation.MovieDetailActivity.Companion.KEY_TICKETS
 import woowacourse.movie.feature.reservation.confirm.ReservationConfirmActivity
 import woowacourse.movie.model.CountState
@@ -109,9 +109,9 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
     }
 
     private fun setNotification(tickets: TicketsState) {
-        val movieRemainder: MovieRemainder = MovieRemainder.getInstance()
+        val movieReminder: MovieReminder = MovieReminder.getInstance()
 
-        movieRemainder.set(this, tickets)
+        movieReminder.set(this, tickets)
     }
 
     companion object {

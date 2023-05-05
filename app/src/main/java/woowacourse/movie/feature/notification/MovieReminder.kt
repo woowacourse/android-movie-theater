@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.model.TicketsState
 import java.util.Calendar
 
-class MovieRemainder {
+class MovieReminder {
 
     fun set(context: Context, tickets: TicketsState) {
         val alarmManager: AlarmManager =
@@ -46,11 +46,11 @@ class MovieRemainder {
     }
 
     companion object {
-        private var instance: MovieRemainder? = null
+        private var instance: MovieReminder? = null
 
-        fun getInstance(): MovieRemainder {
+        fun getInstance(): MovieReminder {
             return instance ?: synchronized(this) {
-                instance ?: MovieRemainder().also {
+                instance ?: MovieReminder().also {
                     instance = it
                 }
             }
