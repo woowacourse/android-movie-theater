@@ -8,7 +8,7 @@ interface MainContract {
         fun changeFragmentByItemID(itemId: Int)
         fun replaceFragment(fragment: Fragment)
         fun setSelectedFragmentView(itemId: Int)
-        fun getIntentNavigationItemId(): Int
+        fun getSavedNavigationItemId(): Int
     }
 
     interface Presenter {

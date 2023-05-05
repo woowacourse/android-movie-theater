@@ -9,7 +9,7 @@ class MainPresenter(val view: MainContract.View) : MainContract.Presenter {
     }
 
     override fun updateFragmentView() {
-        val itemId = view.getIntentNavigationItemId()
+        val itemId = view.getSavedNavigationItemId()
         view.setSelectedFragmentView(itemId)
     }
 }

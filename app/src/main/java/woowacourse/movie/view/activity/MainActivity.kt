@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         bottomNavigation.selectedItemId = selectedItemId
     }
 
-    override fun getIntentNavigationItemId(): Int {
+    override fun getSavedNavigationItemId(): Int {
         return saveState?.getInt(KEY_SELECTED_ITEM_ID) ?: R.id.home_bottom_navigation
     }
 
