@@ -2,7 +2,7 @@ package domain.seatPolicy
 
 import domain.Seat
 
-class RankBPolicy (
+class RankBPolicy(
     private val startRowCondition: Int = DEFAULT_START_CONDITION,
     private val EndRowCondition: Int = DEFAULT_END_CONDITION,
 ) : SeatPolicy {

@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 
-object SettingRepositoryImpl: SettingRepository {
-    lateinit var sharedPreferences: SharedPreferences
+object SettingRepositoryImpl : SettingRepository {
+    private lateinit var sharedPreferences: SharedPreferences
     private const val PUSH_ALARM_KEY = "pushAlarm"
     private const val SETTING = "settings"
 

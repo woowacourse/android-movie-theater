@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
 import domain.Movie
 import domain.Movies
+import woowacourse.movie.R
 import woowacourse.movie.view.model.AdvertisementUiModel
 import woowacourse.movie.view.model.MovieAdapterViewType
 import woowacourse.movie.viewholder.AdvertisementItemViewHolder

@@ -7,7 +7,14 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.isClickable
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.isNotClickable
+import androidx.test.espresso.matcher.ViewMatchers.isNotSelected
+import androidx.test.espresso.matcher.ViewMatchers.isRoot
+import androidx.test.espresso.matcher.ViewMatchers.isSelected
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
@@ -15,7 +22,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.activity.ReservationResultActivity
 import woowacourse.movie.activity.SelectSeatActivity
-import woowacourse.movie.view.model.*
+import woowacourse.movie.view.model.MovieUiModel
+import woowacourse.movie.view.model.TicketDateUiModel
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -49,7 +57,7 @@ class SelectSeatActivityTest {
     }
 
     @Test
-    fun 선택되지_않았던_좌석을_클릭했을때_선택된_상태로_바뀐다(){
+    fun 선택되지_않았던_좌석을_클릭했을때_선택된_상태로_바뀐다() {
         // given
         val seat = onView(withText("A1"))
         // when
@@ -59,7 +67,7 @@ class SelectSeatActivityTest {
     }
 
     @Test
-    fun 선택했던_좌석을_클릭했을때_선택하지_않은_상태로_바뀐다(){
+    fun 선택했던_좌석을_클릭했을때_선택하지_않은_상태로_바뀐다() {
         // given
         val seat = onView(withText("A1"))
         // when
@@ -70,7 +78,7 @@ class SelectSeatActivityTest {
     }
 
     @Test
-    fun 인원수와_같은_수만큼_좌석을_클릭하면_더이상_좌석이_선택된_상태로_변경되지_않는다(){
+    fun 인원수와_같은_수만큼_좌석을_클릭하면_더이상_좌석이_선택된_상태로_변경되지_않는다() {
         // given
         val seat1 = onView(withText("A1"))
         val seat2 = onView(withText("A2"))
@@ -86,7 +94,7 @@ class SelectSeatActivityTest {
     }
 
     @Test
-    fun 조조할인을_받고_B등급_좌석을_클릭하면_가격텍스트가_8000원_으로_바뀐다(){
+    fun 조조할인을_받고_B등급_좌석을_클릭하면_가격텍스트가_8000원_으로_바뀐다() {
         // given
         val seat = onView(withText("A1"))
         val price = onView(withId(R.id.select_seat_price_text_view))
@@ -97,7 +105,7 @@ class SelectSeatActivityTest {
     }
 
     @Test
-    fun 조조할인을_받고_A등급_좌석을_클릭하면_가격텍스트가_10000원_으로_바뀐다(){
+    fun 조조할인을_받고_A등급_좌석을_클릭하면_가격텍스트가_10000원_으로_바뀐다() {
         // given
         val seat = onView(withText("E1"))
         val price = onView(withId(R.id.select_seat_price_text_view))
@@ -108,7 +116,7 @@ class SelectSeatActivityTest {
     }
 
     @Test
-    fun 조조할인을_받고_S등급_좌석을_클릭하면_가격텍스트가_13000원_으로_바뀐다(){
+    fun 조조할인을_받고_S등급_좌석을_클릭하면_가격텍스트가_13000원_으로_바뀐다() {
         // given
         val seat = onView(withText("C1"))
         val price = onView(withId(R.id.select_seat_price_text_view))
@@ -119,7 +127,7 @@ class SelectSeatActivityTest {
     }
 
     @Test
-    fun 조조할인을_받고_S등급_좌석과_A등급_좌석을_클릭하면_가격텍스트가_23000원_으로_바뀐다(){
+    fun 조조할인을_받고_S등급_좌석과_A등급_좌석을_클릭하면_가격텍스트가_23000원_으로_바뀐다() {
         // given
         val seatS = onView(withText("C1"))
         val seatA = onView(withText("E1"))
@@ -132,7 +140,7 @@ class SelectSeatActivityTest {
     }
 
     @Test
-    fun 인원수와_같은_수만큼_좌석이_선택된_상태가_아니라면_버튼을_클릭할_수_없다(){
+    fun 인원수와_같은_수만큼_좌석이_선택된_상태가_아니라면_버튼을_클릭할_수_없다() {
         // given
         val seat1 = onView(withText("A1"))
         val seat2 = onView(withText("A2"))
@@ -145,7 +153,7 @@ class SelectSeatActivityTest {
     }
 
     @Test
-    fun 인원수와_같은_수만큼_좌석이_선택된_상태이면_버튼을_클릭할_수_있다(){
+    fun 인원수와_같은_수만큼_좌석이_선택된_상태이면_버튼을_클릭할_수_있다() {
         // given
         val seat1 = onView(withText("A1"))
         val seat2 = onView(withText("A2"))
@@ -160,7 +168,7 @@ class SelectSeatActivityTest {
     }
 
     @Test
-    fun 인원수와_같은_수만큼_좌석이_선택된_상태에서_버튼을_클릭하면_다이얼로그가_나온다(){
+    fun 인원수와_같은_수만큼_좌석이_선택된_상태에서_버튼을_클릭하면_다이얼로그가_나온다() {
         // given
         val seat1 = onView(withText("A1"))
         val seat2 = onView(withText("A2"))
@@ -176,7 +184,7 @@ class SelectSeatActivityTest {
     }
 
     @Test
-    fun 다이얼로그가_나온_상태에서_배경을_클릭해도_다이얼로그가_사라지지_않는다(){
+    fun 다이얼로그가_나온_상태에서_배경을_클릭해도_다이얼로그가_사라지지_않는다() {
         // given
         val seat1 = onView(withText("A1"))
         val seat2 = onView(withText("A2"))
@@ -194,7 +202,7 @@ class SelectSeatActivityTest {
     }
 
     @Test
-    fun 다이얼로그가_나온_상태에서_예매확인을_클릭하면_예매결과창으로_넘어간다(){
+    fun 다이얼로그가_나온_상태에서_예매확인을_클릭하면_예매결과창으로_넘어간다() {
         // given
         Intents.init()
         val seat1 = onView(withText("A1"))

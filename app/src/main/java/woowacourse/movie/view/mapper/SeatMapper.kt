@@ -19,5 +19,4 @@ object SeatMapper : DomainViewMapper<Seat, SeatUiModel> {
             domainModel.col
         )
     }
-
 }

@@ -17,5 +17,4 @@ object TicketOfficeMapper : DomainViewMapper<TicketOffice, TicketOfficeUiModel> 
             ticketCount = domainModel.peopleCount
         )
     }
-
 }

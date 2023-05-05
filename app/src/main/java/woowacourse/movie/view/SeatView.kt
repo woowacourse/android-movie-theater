@@ -5,11 +5,9 @@ import android.widget.TableRow
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import domain.Seat
-import domain.discountPolicy.DisCountPolicies
 import domain.seatPolicy.SeatPolicies
 import woowacourse.movie.R
 import woowacourse.movie.setBackgroundColorId
-import woowacourse.movie.view.mapper.SeatMapper
 import woowacourse.movie.view.mapper.SeatRankMapper
 import woowacourse.movie.view.model.SeatUiModel
 

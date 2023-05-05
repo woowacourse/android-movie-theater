@@ -6,7 +6,6 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
-import android.os.Build
 import androidx.core.app.NotificationCompat
 
 class NotificationHelper(
@@ -49,5 +48,4 @@ class NotificationHelper(
         notificationBuilder.setAutoCancel(isAutoCancel)
         notificationBuilder.setContentIntent(pendingIntent)
     }
-
 }

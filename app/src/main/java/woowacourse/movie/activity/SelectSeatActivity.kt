@@ -30,7 +30,8 @@ import java.text.NumberFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 class SelectSeatActivity : AppCompatActivity() {
     private val ticketOffice: TicketOffice by lazy {
@@ -93,11 +94,13 @@ class SelectSeatActivity : AppCompatActivity() {
         builder.setTitle(R.string.select_seat_dialog_title)
         builder.setMessage(R.string.select_seat_dialog_message)
         builder.setPositiveButton(R.string.select_seat_dialog_positive_button_text) { dialog, _ ->
-            startActivity(ReservationResultActivity.generateIntent(
-                this,
-                movieUiModel,
-                TicketsMapper.toUi(ticketOffice.tickets)
-            ))
+            startActivity(
+                ReservationResultActivity.generateIntent(
+                    this,
+                    movieUiModel,
+                    TicketsMapper.toUi(ticketOffice.tickets)
+                )
+            )
             registerAlarm()
         }
         builder.setNegativeButton(R.string.select_seat_dialog_negative_button_text) { dialog, _ ->
@@ -135,7 +138,6 @@ class SelectSeatActivity : AppCompatActivity() {
             .toInstant().toEpochMilli()
         return Date(milliSeconds)
     }
-
 
     private fun updateUi(seatView: SeatView) {
         changeSeatViewState(seatView)

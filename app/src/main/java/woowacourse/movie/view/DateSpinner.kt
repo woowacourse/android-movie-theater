@@ -6,7 +6,6 @@ import android.widget.AdapterView
 import android.widget.Spinner
 import woowacourse.movie.view.model.MovieUiModel
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 class DateSpinner(spinner: Spinner, savedStateKey: String) :
     SaveStateSpinner(savedStateKey, spinner) {

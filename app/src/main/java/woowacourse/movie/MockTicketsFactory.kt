@@ -22,5 +22,4 @@ object MockTicketsFactory {
     fun makeTickets(): Tickets {
         return Tickets(List(100) { makeTicket() })
     }
-
 }

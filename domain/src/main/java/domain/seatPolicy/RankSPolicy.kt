@@ -1,6 +1,5 @@
 package domain.seatPolicy
 
-import domain.Price
 import domain.Seat
 
 class RankSPolicy(

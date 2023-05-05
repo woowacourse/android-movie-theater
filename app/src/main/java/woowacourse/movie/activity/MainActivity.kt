@@ -12,7 +12,7 @@ import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.fragment.MoviesFragment
-import woowacourse.movie.fragment.ReservationListFragment
+import woowacourse.movie.fragment.reservationlist.ReservationListFragment
 import woowacourse.movie.fragment.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
@@ -68,7 +68,6 @@ class MainActivity : AppCompatActivity() {
             return
         }
         requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -79,7 +78,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun saveAlarmPermissionData(condition: Boolean) =
         sharedPreferencesEditor.putBoolean(REQUEST_PERMISSION_KEY, condition).apply()
-
 
     companion object {
         private const val SETTING = "settings"

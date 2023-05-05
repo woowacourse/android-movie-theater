@@ -1,6 +1,5 @@
 package domain.seatPolicy
 
-import domain.Price
 import domain.Seat
 
 data class SeatPolicies(private val seatPolicies: List<SeatPolicy> = DEFAULT_SEAT_POLICIES) {

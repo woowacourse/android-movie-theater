@@ -3,27 +3,36 @@ package woowacourse.movie.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import domain.Reservation
-import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemReservationBinding
+import woowacourse.movie.fragment.reservationlist.ReservationItemModel
+import woowacourse.movie.view.model.ReservationUiModel
 import woowacourse.movie.viewholder.ReservationViewHolder
 
-class ReservationAdapter(
-    private val reservations: List<Reservation>,
-    private val onClickEvent: (Reservation) -> Unit
-) :
+class ReservationAdapter :
     RecyclerView.Adapter<ReservationViewHolder>() {
+    private var _reservations: List<ReservationItemModel> = listOf()
+    val reservations
+        get() = _reservations.toList()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReservationViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_reservation, parent, false)
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val view = ItemReservationBinding.inflate(layoutInflater, parent, false)
 
-        return ReservationViewHolder(view, onClickEvent)
+        return ReservationViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return reservations.size
-    }
+    override fun getItemCount(): Int = reservations.size
 
     override fun onBindViewHolder(holder: ReservationViewHolder, position: Int) {
         holder.bind(reservations[position])
+    }
+
+    fun updateReservationItems(
+        reservations: List<ReservationUiModel>,
+        onClick: (ReservationUiModel) -> Unit
+    ) {
+        _reservations = reservations.map { reservation ->
+            reservation.toItemModel { onClick(reservation) }
+        }
     }
 }

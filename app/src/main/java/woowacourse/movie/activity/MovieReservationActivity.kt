@@ -16,7 +16,8 @@ import woowacourse.movie.view.MovieDateTimePicker
 import woowacourse.movie.view.MovieView
 import woowacourse.movie.view.TimeSpinner
 import woowacourse.movie.view.mapper.MovieMapper
-import woowacourse.movie.view.model.*
+import woowacourse.movie.view.model.MovieUiModel
+import woowacourse.movie.view.model.TicketDateUiModel
 
 class MovieReservationActivity : AppCompatActivity() {
     private val counter: Counter by lazy {
@@ -32,7 +33,8 @@ class MovieReservationActivity : AppCompatActivity() {
             DateSpinner(
                 findViewById(R.id.movie_reservation_date_spinner),
                 DATE_SPINNER_SAVE_STATE_KEY,
-            ), TimeSpinner(
+            ),
+            TimeSpinner(
                 findViewById(R.id.movie_reservation_time_spinner),
                 TIME_SPINNER_SAVE_STATE_KEY,
             )
