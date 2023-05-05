@@ -4,15 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityCompletedBinding
 import woowacourse.movie.model.ReservationUiModel
 import woowacourse.movie.movie.MovieRepository
 import woowacourse.movie.util.formatScreenDateTime
 import woowacourse.movie.util.getParcelable
 
 class CompletedActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityCompletedBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_completed)
@@ -36,13 +38,15 @@ class CompletedActivity : AppCompatActivity() {
 
     private fun initView(reservation: ReservationUiModel) {
         val movie = MovieRepository.getMovie(reservation.movieId)
-        findViewById<TextView>(R.id.textCompletedTitle).text = movie.title
-        findViewById<TextView>(R.id.textCompletedScreeningDate).text =
+
+        binding.textCompletedTitle.text = movie.title
+        binding.textCompletedScreeningDate.text =
             reservation.bookedDateTime.formatScreenDateTime()
-        findViewById<TextView>(R.id.textCompletedTicketCount).text =
+        binding.textCompletedTicketCount.text =
             getString(R.string.ticket_count_seat_info, reservation.count, reservation.seatPosition)
-        findViewById<TextView>(R.id.textCompletedPaymentAmount).text =
+        binding.textCompletedPaymentAmount.text =
             getString(R.string.payment_amount, reservation.payment)
+
         showBackButton()
     }
 
