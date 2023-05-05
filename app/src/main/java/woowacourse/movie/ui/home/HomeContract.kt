@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.home
 
+import woowacourse.movie.model.TheaterUiModel
 import woowacourse.movie.model.main.MainData
 
 interface HomeContract {
@@ -10,6 +11,8 @@ interface HomeContract {
     }
 
     interface Presenter {
+
+        val theaters: List<TheaterUiModel>
 
         fun initMainData()
     }

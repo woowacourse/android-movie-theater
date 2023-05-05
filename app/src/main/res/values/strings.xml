@@ -26,4 +26,5 @@
     <string name="ask_reservation">정말 예매하시겠습니까?</string>
     <string name="yes">예</string>
     <string name="no">아니요</string>
+    <string name="number_of_screening_times">%d개의 상영시간</string>
 </resources>

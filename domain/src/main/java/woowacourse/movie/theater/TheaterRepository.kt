@@ -6,11 +6,17 @@ object TheaterRepository {
         return TheaterDatabase.selectTheater(theaterId).toTheater()
     }
 
+    fun getTheaters(): List<Theater> {
+        return TheaterDatabase.theaters.map { it.toTheater() }
+    }
+
     private fun TheaterEntity.toTheater(): Theater {
         return Theater(
-            id = this.id,
-            rowSize = this.rowSize,
-            columnSize = this.columnSize,
+            id = id,
+            name = name,
+            rowSize = rowSize,
+            columnSize = columnSize,
+            screeningTimes = screeningTimes
         )
     }
 }

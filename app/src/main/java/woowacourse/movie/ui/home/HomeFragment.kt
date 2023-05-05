@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import woowacourse.movie.databinding.BottomSheetTheatersBinding
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.model.main.MainData
 import woowacourse.movie.ui.booking.BookingActivity
@@ -16,6 +18,12 @@ class HomeFragment : Fragment(), HomeContract.View {
     private lateinit var binding: FragmentHomeBinding
     private val homePresenter: HomePresenter by lazy {
         HomePresenter(this)
+    }
+    private val theaterSheetBinding: BottomSheetTheatersBinding by lazy {
+        BottomSheetTheatersBinding.inflate(layoutInflater)
+    }
+    private val bottomSheetDialog: BottomSheetDialog by lazy {
+        BottomSheetDialog(requireContext())
     }
 
     override fun onCreateView(
@@ -45,7 +53,26 @@ class HomeFragment : Fragment(), HomeContract.View {
     }
 
     private fun onBooked(movieId: Long) {
-        startActivity(BookingActivity.getIntent(requireContext(), movieId))
+        theaterSheetBinding.recyclerTheaters.adapter = TheaterRecyclerAdapter(
+            theaters = homePresenter.theaters,
+            movieId = movieId,
+            onTheaterSelected = ::onTheaterSelected
+        )
+        bottomSheetDialog.setContentView(theaterSheetBinding.root)
+        bottomSheetDialog.show()
+    }
+
+    private fun onTheaterSelected(
+        movieId: Long,
+        theaterId: Long
+    ) {
+        startActivity(
+            BookingActivity.getIntent(
+                context = requireContext(),
+                movieId = movieId,
+                theaterId = theaterId
+            )
+        )
     }
 
     private fun onAdClicked(intent: Intent) {
