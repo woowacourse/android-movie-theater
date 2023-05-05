@@ -2,7 +2,8 @@ package woowacourse.movie.domain
 
 import java.time.LocalDate
 
-class Movie(
+data class Movie(
+    val id: Int,
     val title: String,
     val screeningStartDate: LocalDate,
     val screeningEndDate: LocalDate,

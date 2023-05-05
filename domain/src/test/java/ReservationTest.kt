@@ -35,6 +35,7 @@ class ReservationTest() {
     @Test
     fun `상영 기간이 2일부터 31일인데 범위를 벗어난 1일에 예약하면 에러가 발생한다`() {
         val movie = Movie(
+            1,
             "아바타",
             LocalDate.of(2024, 3, 2),
             LocalDate.of(2024, 3, 31),
@@ -55,6 +56,7 @@ class ReservationTest() {
 
     private fun getAnyMovie(): Movie =
         Movie(
+            1,
             "아바타",
             LocalDate.now(),
             LocalDate.now().plusDays(1),

@@ -5,6 +5,7 @@ import woowacourse.movie.domain.Movie
 import woowacourse.movie.view.model.MovieListModel.MovieUiModel
 
 fun Movie.toUiModel(): MovieUiModel = MovieUiModel(
+    id,
     title,
     screeningStartDate,
     screeningEndDate,
@@ -14,6 +15,7 @@ fun Movie.toUiModel(): MovieUiModel = MovieUiModel(
 )
 
 fun MovieUiModel.toDomainModel(): Movie = Movie(
+    id,
     title,
     screeningStartDate,
     screeningEndDate,

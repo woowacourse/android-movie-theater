@@ -128,6 +128,7 @@ class ReservationAgencyTest {
 
     private fun getAnyMovie(): Movie =
         Movie(
+            1,
             "아바타",
             LocalDate.of(2023, 3, 1),
             LocalDate.of(2023, 3, 31),
