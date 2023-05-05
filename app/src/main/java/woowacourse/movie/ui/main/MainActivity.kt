@@ -25,11 +25,6 @@ class MainActivity : AppCompatActivity() {
     private val settingSharedPreference: SettingSharedPreference by lazy {
         SettingSharedPreference(this)
     }
-    private val fragmentMap = mutableMapOf<String, Fragment?>(
-        BOOKING_HISTORY_FRAGMENT to null,
-        HOME_FRAGMENT to null,
-        SETTING_FRAGMENT to null
-    )
 
     private val permissionLauncher: ActivityResultLauncher<String> by lazy {
         getPermissionLauncher(
@@ -59,33 +54,32 @@ class MainActivity : AppCompatActivity() {
         navigation.selectedItemId = R.id.action_menu_home
         navigation.setOnItemSelectedListener { menu ->
             when (menu.itemId) {
-                R.id.action_booking_history ->
-                    return@setOnItemSelectedListener replaceFragment(BOOKING_HISTORY_FRAGMENT)
-                R.id.action_menu_home ->
-                    return@setOnItemSelectedListener replaceFragment(HOME_FRAGMENT)
-                R.id.action_menu_setting ->
-                    return@setOnItemSelectedListener replaceFragment(SETTING_FRAGMENT)
+                R.id.action_booking_history -> changeFragment(BOOKING_HISTORY_FRAGMENT)
+                R.id.action_menu_home -> changeFragment(HOME_FRAGMENT)
+                R.id.action_menu_setting -> changeFragment(SETTING_FRAGMENT)
+                else -> return@setOnItemSelectedListener false
             }
-            return@setOnItemSelectedListener false
+            return@setOnItemSelectedListener true
         }
     }
 
-    private fun replaceFragment(tag: String): Boolean {
-        supportFragmentManager.findFragmentByTag(tag) ?: when (tag) {
-            BOOKING_HISTORY_FRAGMENT -> fragmentMap[BOOKING_HISTORY_FRAGMENT] =
-                BookingHistoryFragment()
-            HOME_FRAGMENT -> fragmentMap[HOME_FRAGMENT] = HomeFragment()
-            SETTING_FRAGMENT -> fragmentMap[SETTING_FRAGMENT] = SettingFragment()
-            else -> return false
-        }
+    private fun changeFragment(tag: String): Boolean {
+        val fragment = findFragment(tag) ?: return false
 
-        fragmentMap[tag]?.let {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                replace(R.id.fragmentContainerView, it, tag)
-            }
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(R.id.fragmentContainerView, fragment, tag)
         }
         return true
+    }
+
+    private fun findFragment(tag: String): Fragment? {
+        return supportFragmentManager.findFragmentByTag(tag) ?: when (tag) {
+            BOOKING_HISTORY_FRAGMENT -> BookingHistoryFragment()
+            HOME_FRAGMENT -> HomeFragment()
+            SETTING_FRAGMENT -> SettingFragment()
+            else -> null
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
