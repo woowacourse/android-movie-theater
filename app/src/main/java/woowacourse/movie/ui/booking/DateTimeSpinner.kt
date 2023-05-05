@@ -5,9 +5,9 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Spinner
 import androidx.constraintlayout.widget.ConstraintLayout
 import woowacourse.movie.R
+import woowacourse.movie.databinding.DateTimeSpinnerBinding
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -17,13 +17,7 @@ class DateTimeSpinner(
     attrs: AttributeSet,
 ) : ConstraintLayout(context, attrs), DateTimeContract.View {
 
-    private var layoutInflater: LayoutInflater? = null
-    private val dateSpinner: Spinner by lazy {
-        findViewById(R.id.movieDateSpinner)
-    }
-    private val timeSpinner: Spinner by lazy {
-        findViewById(R.id.movieTimeSpinner)
-    }
+    lateinit var binding: DateTimeSpinnerBinding
     private val dateAdapter: SpinnerAdapter<LocalDate> by lazy {
         SpinnerAdapter(context, R.layout.screening_date_time_item, R.id.textSpinnerDateTime)
     }
@@ -32,25 +26,24 @@ class DateTimeSpinner(
     }
     val selectedDateTime: LocalDateTime
         get() = LocalDateTime.of(
-            dateAdapter.getItem(dateSpinner.selectedItemPosition),
-            timeAdapter.getItem(timeSpinner.selectedItemPosition)
+            dateAdapter.getItem(binding.movieDateSpinner.selectedItemPosition),
+            timeAdapter.getItem(binding.movieTimeSpinner.selectedItemPosition)
         )
 
     init {
-        initView()
+        initBinding()
         initAdapters()
     }
 
-    private fun initView() {
-        layoutInflater ?: run {
-            layoutInflater = LayoutInflater.from(context)
-            layoutInflater?.inflate(R.layout.date_time_spinner, this, true)
-        }
+    private fun initBinding() {
+        val layoutInflater = LayoutInflater.from(context)
+
+        binding = DateTimeSpinnerBinding.inflate(layoutInflater)
     }
 
     private fun initAdapters() {
-        dateSpinner.adapter = dateAdapter
-        timeSpinner.adapter = timeAdapter
+        binding.movieDateSpinner.adapter = dateAdapter
+        binding.movieTimeSpinner.adapter = timeAdapter
     }
 
     override fun setDates(screeningDates: List<LocalDate>) {
@@ -62,7 +55,7 @@ class DateTimeSpinner(
     }
 
     override fun initDateSelectedListener(updateTimes: (selectedDate: LocalDate) -> (Unit)) {
-        dateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.movieDateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
