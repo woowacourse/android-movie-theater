@@ -11,30 +11,18 @@ class MovieListPresenterTest {
     @Test
     fun `영화 목록을 가져온다`() {
         // given
-        val movieRepository: MovieRepository = mockk(relaxed = true)
-        val presenter = MovieListPresenter(movieRepository = movieRepository)
-        every { movieRepository.allMovies() } returns listOf()
+        val view = mockk<MovieListContract.View>(relaxed = true)
+        val movieRepository = mockk<MovieRepository>(relaxed = true)
+        val advRepository = mockk<AdvRepository>(relaxed = true)
+        val presenter = MovieListPresenter(view, movieRepository, advRepository)
 
         // when
-        val movieList = presenter.getMovieList()
-
-        // then
-        assert(movieList.isEmpty())
-        verify { movieRepository.allMovies() }
-    }
-
-    @Test
-    fun `광고 목록을 가져온다`() {
-        // given
-        val advRepository: AdvRepository = mockk(relaxed = true)
-        val presenter = MovieListPresenter(advRepository = advRepository)
+        every { movieRepository.allMovies() } returns listOf()
         every { advRepository.allAdv() } returns listOf()
 
-        // when
-        val advList = presenter.getAdvList()
+        presenter.getAdapter()
 
         // then
-        assert(advList.isEmpty())
-        verify { advRepository.allAdv() }
+        verify { view.setAdapter(listOf(), listOf()) }
     }
 }

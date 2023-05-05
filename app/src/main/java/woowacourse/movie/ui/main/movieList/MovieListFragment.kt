@@ -16,7 +16,7 @@ import woowacourse.movie.ui.itemModel.AdvItemModel
 import woowacourse.movie.ui.itemModel.MovieItemModel
 import woowacourse.movie.ui.main.cinemaBottomSheet.CinemaListBottomSheet
 
-class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
+class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContract.View {
     private lateinit var presenter: MovieListContract.Presenter
 
     private lateinit var binding: FragmentMovieListBinding
@@ -26,30 +26,31 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        setUpPresenter()
-        setUpBinding()
+        initPresenter()
+        initBinding()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        presenter = MovieListPresenter()
-
-        binding.movieList.adapter = MovieListAdapter(
-            movie = presenter.getMovieList().map(::MovieItemModel),
-            adv = presenter.getAdvList().map(::AdvItemModel),
-            onClickMovie = { movieItemModel -> showCinemaBottomSheet(movieItemModel.movieState) },
-            onClickAdv = { advItemModel -> navigateAdbDetail(advItemModel.advState) }
-        )
+        presenter.getAdapter()
     }
 
-    private fun setUpBinding() {
+    private fun initBinding() {
         binding = FragmentMovieListBinding.inflate(layoutInflater)
     }
 
-    private fun setUpPresenter() {
-        presenter = MovieListPresenter()
+    private fun initPresenter() {
+        presenter = MovieListPresenter(this)
+    }
+
+    override fun setAdapter(movieList: List<MovieState>, advList: List<AdvState>) {
+        binding.movieList.adapter = MovieListAdapter(
+            movie = movieList.map(::MovieItemModel),
+            adv = advList.map(::AdvItemModel),
+            onClickMovie = { movieItemModel -> showCinemaBottomSheet(movieItemModel.movieState) },
+            onClickAdv = { advItemModel -> navigateAdbDetail(advItemModel.advState) }
+        )
     }
 
     private fun showCinemaBottomSheet(movie: MovieState) {
