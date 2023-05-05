@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
@@ -43,9 +42,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun showTheaterSelector(movie: MovieModel) {
-        TheaterSelectorFragment().apply {
-            arguments = bundleOf(TheaterSelectorFragment.MOVIE_EXTRA_KEY to movie)
-        }.show(parentFragmentManager, TheaterSelectorFragment.TAG)
+        TheaterSelectorFragment.newInstance(movie)
+            .show(parentFragmentManager, TheaterSelectorFragment.TAG)
     }
 
     private fun openAdvertiseUrl(it: AdModel) {

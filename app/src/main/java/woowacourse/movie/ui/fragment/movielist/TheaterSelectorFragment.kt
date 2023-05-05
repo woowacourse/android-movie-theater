@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
@@ -49,6 +50,12 @@ class TheaterSelectorFragment : BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "TheaterSelectorFragment"
-        const val MOVIE_EXTRA_KEY = "movie"
+        private const val MOVIE_EXTRA_KEY = "movie"
+
+        fun newInstance(movie: MovieModel): TheaterSelectorFragment {
+            return TheaterSelectorFragment().apply {
+                arguments = bundleOf(MOVIE_EXTRA_KEY to movie)
+            }
+        }
     }
 }
