@@ -8,7 +8,7 @@ import woowacourse.movie.presentation.movielist.viewholder.AdViewHolder
 import woowacourse.movie.presentation.movielist.viewholder.MovieViewHolder
 
 class MovieItemAdapter(
-    private val movieItems: List<MovieItem>,
+    private val movieItems: MutableList<MovieItem> = mutableListOf(),
     private val clickBook: (Long) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -37,5 +37,11 @@ class MovieItemAdapter(
         is MovieItem.Movie -> R.layout.movie_list_item
         is MovieItem.Ad -> R.layout.movie_list_ad_item
         else -> throw NoSuchElementException()
+    }
+
+    fun updateMovieItems(newMovieItems: List<MovieItem>) {
+        movieItems.clear()
+        movieItems.addAll(newMovieItems)
+        this.notifyDataSetChanged()
     }
 }
