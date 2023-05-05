@@ -10,7 +10,6 @@ import woowacourse.movie.ui.completed.CompletedActivity
 import woowacourse.movie.ui.setting.SettingSharedPreference
 import woowacourse.movie.util.getParcelable
 
-// TODO: MVP 적용할지 말지
 class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
