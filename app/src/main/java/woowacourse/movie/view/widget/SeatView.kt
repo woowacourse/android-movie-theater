@@ -4,30 +4,31 @@ import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.widget.TableRow
-import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.data.SeatViewData
+import woowacourse.movie.databinding.ItemSeatBinding
 
 class SeatView private constructor(
     context: Context,
     val data: SeatViewData,
     var isSeatSelected: Boolean = false
 ) : ConstraintLayout(context) {
-
+    private lateinit var binding: ItemSeatBinding
     private fun initLayout() {
-        LayoutInflater.from(context).inflate(R.layout.item_seat, this)
+        binding =
+            DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.item_seat, this, true)
 
         layoutParams = TableRow.LayoutParams(0, LayoutParams.MATCH_PARENT, 1f)
         setBackgroundColor(Color.WHITE)
     }
 
     private fun initText() {
-        val textView = findViewById<TextView>(R.id.item_seat_text)
-        textView.text = context.getString(
+        binding.itemSeatText.text = context.getString(
             R.string.seat_row_column, data.rowCharacter, data.column + COLUMN_FIXER
         )
-        textView.setTextColor(context.getColor(data.color))
+        binding.itemSeatText.setTextColor(context.getColor(data.color))
     }
 
     private fun selectSeat(selectable: () -> Boolean) {

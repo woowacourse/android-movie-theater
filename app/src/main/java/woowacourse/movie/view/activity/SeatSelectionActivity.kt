@@ -4,10 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.contract.SeatSelectionContract
 import woowacourse.movie.data.MovieViewData
@@ -16,6 +15,7 @@ import woowacourse.movie.data.ReservationDetailViewData
 import woowacourse.movie.data.ReservationViewData
 import woowacourse.movie.data.SeatTableViewData
 import woowacourse.movie.data.TheaterViewData
+import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.error.ActivityError.finishWithError
 import woowacourse.movie.error.ViewError
 import woowacourse.movie.presenter.SeatSelectionPresenter
@@ -30,20 +30,13 @@ import java.util.Locale
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     override val presenter: SeatSelectionContract.Presenter = SeatSelectionPresenter(this)
-
-    private val priceText: TextView by lazy {
-        findViewById(R.id.seat_selection_movie_price)
-    }
-
-    private val reservationButton: Button by lazy {
-        findViewById(R.id.seat_selection_reserve_button)
-    }
+    private lateinit var binding: ActivitySeatSelectionBinding
 
     private lateinit var seatTableLayout: SeatTableLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_seat_selection)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_selection)
         makeBackButton()
 
         initSeatSelectionView(savedInstanceState)
@@ -76,7 +69,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         reservationDetail: ReservationDetailViewData,
         theaterName: String
     ) {
-        reservationButton.setOnClickListener {
+        binding.seatSelectionReserveButton.setOnClickListener {
             onClickReserveButton(seatTableLayout, movie, reservationDetail, theaterName)
         }
         setReservationButtonState(
@@ -110,12 +103,12 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     override fun setReservationButtonState(seatsSize: Int, peopleCount: Int) {
-        reservationButton.isEnabled = seatsSize == peopleCount
+        binding.seatSelectionReserveButton.isEnabled = seatsSize == peopleCount
     }
 
     override fun setPriceText(price: PriceViewData) {
         val formattedPrice = NumberFormat.getNumberInstance(Locale.US).format(price.value)
-        priceText.text = getString(R.string.seat_price, formattedPrice)
+        binding.seatSelectionMoviePrice.text = getString(R.string.seat_price, formattedPrice)
     }
 
     override fun makeReservationAlarm(
@@ -131,7 +124,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     override fun setMovieData(movie: MovieViewData) {
-        findViewById<TextView>(R.id.seat_selection_movie_title).text = movie.title
+        binding.seatSelectionMovieTitle.text = movie.title
     }
 
     override fun makeSeatLayout(
@@ -139,7 +132,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         seatTable: SeatTableViewData
     ) {
         seatTableLayout = SeatTableLayout.from(
-            findViewById(R.id.seat_selection_table), seatTable, SEAT_TABLE_LAYOUT_STATE_KEY
+            binding.seatSelectionTable, seatTable, SEAT_TABLE_LAYOUT_STATE_KEY
         )
 
         seatTableLayout.onSelectSeat = {

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.widget.TableLayout
 import android.widget.TableRow
 import androidx.core.view.children
-import woowacourse.movie.R
 import woowacourse.movie.data.SeatTableViewData
 import woowacourse.movie.data.SeatsViewData
 import woowacourse.movie.system.getSerializableCompat
@@ -29,7 +28,6 @@ class SeatTableLayout(
     }
 
     fun makeSeatTable(seats: SeatTableViewData) {
-        val tableLayout = tableLayout.findViewById<TableLayout>(R.id.seat_selection_table)
         tableLayout.weightSum = seats.size.row.toFloat()
         (0 until seats.size.row).forEach {
             tableLayout.addView(makeSeatRow(it, seats))
