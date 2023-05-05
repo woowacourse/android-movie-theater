@@ -8,17 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentReservationBinding
 import woowacourse.movie.model.MovieTicketModel
-import woowacourse.movie.model.ReservationTicketMachine
 import woowacourse.movie.ui.reservation.adapter.ReservationAdapter
 import woowacourse.movie.ui.reservation.presenter.ReservationContract
 import woowacourse.movie.ui.reservation.presenter.ReservationContract.Presenter
 import woowacourse.movie.ui.reservation.presenter.ReservationPresenter
-import woowacourse.movie.ui.seat.SeatSelectionActivity
 import woowacourse.movie.ui.ticket.MovieTicketActivity
 
 class ReservationFragment : Fragment(), ReservationContract.View {
     private lateinit var reservationAdapter: ReservationAdapter
-    override lateinit var reservationTicket: List<MovieTicketModel>
     override val presenter: Presenter by lazy { ReservationPresenter(this) }
     private var _binding: FragmentReservationBinding? = null
     private val binding: FragmentReservationBinding
@@ -38,7 +35,6 @@ class ReservationFragment : Fragment(), ReservationContract.View {
 
         presenter.isEmptyMovieReservation()
         presenter.getReservationTickets()
-        initAdapter()
     }
 
     override fun onDestroyView() {
@@ -46,19 +42,23 @@ class ReservationFragment : Fragment(), ReservationContract.View {
         _binding = null
     }
 
-    private fun initAdapter() {
-        reservationAdapter = ReservationAdapter(reservationTicket, ::moveToMovieTicketActivity)
+    override fun initAdapter(reservationTickets: List<MovieTicketModel>) {
+        reservationAdapter = ReservationAdapter(reservationTickets, ::moveToMovieTicketActivity)
         binding.reservationRecyclerview.adapter = reservationAdapter
     }
 
-    private fun moveToMovieTicketActivity(position: Int) {
+    private fun moveToMovieTicketActivity(movieTicketModel: MovieTicketModel) {
         val intentToMovieTicket = Intent(context, MovieTicketActivity::class.java).apply {
-            putExtra(SeatSelectionActivity.KEY_TICKET, ReservationTicketMachine.tickets[position])
+            putExtra(KEY_TICKET, movieTicketModel)
         }
         startActivity(intentToMovieTicket)
     }
 
     override fun setTextOnEmptyState(isEmpty: Boolean) {
         if (!isEmpty) binding.reservationEmpty.visibility = View.GONE
+    }
+
+    companion object {
+        private const val KEY_TICKET = "ticket"
     }
 }

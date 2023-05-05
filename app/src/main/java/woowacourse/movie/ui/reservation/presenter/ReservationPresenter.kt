@@ -8,7 +8,7 @@ class ReservationPresenter(
 ) : ReservationContract.Presenter {
     private val reservationTickets: List<MovieTicketModel> by lazy { ReservationTicketMachine.tickets }
     override fun getReservationTickets() {
-        view.reservationTicket = reservationTickets
+        view.initAdapter(reservationTickets)
     }
 
     override fun isEmptyMovieReservation() {

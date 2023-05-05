@@ -5,7 +5,7 @@ import woowacourse.movie.ui.common.BaseView
 
 interface ReservationContract {
     interface View : BaseView<Presenter> {
-        var reservationTicket: List<MovieTicketModel>
+        fun initAdapter(reservationTickets: List<MovieTicketModel>)
         fun setTextOnEmptyState(isEmpty: Boolean)
     }
 
