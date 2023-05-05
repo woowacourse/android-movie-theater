@@ -1,7 +1,8 @@
-package woowacourse.movie
+package woowacourse.movie.model
 
 import androidx.annotation.DrawableRes
-import woowacourse.movie.movielist.ViewType
+import woowacourse.movie.R
+import woowacourse.movie.fragment.movielist.ViewType
 
 data class Ad(
     @DrawableRes

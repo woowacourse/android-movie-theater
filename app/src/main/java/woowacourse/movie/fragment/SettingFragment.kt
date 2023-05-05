@@ -11,9 +11,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.switchmaterial.SwitchMaterial
 import woowacourse.movie.BuildConfig
-import woowacourse.movie.NotificationPermission
+import woowacourse.movie.service.NotificationPermission
 import woowacourse.movie.R
-import woowacourse.movie.SharedPreferenceUtil
+import woowacourse.movie.service.SharedPreferenceUtil
 import woowacourse.movie.activity.MainActivity
 
 class SettingFragment : Fragment() {

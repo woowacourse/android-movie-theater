@@ -1,4 +1,4 @@
-package woowacourse.movie.fragment
+package woowacourse.movie.fragment.movielist
 
 import android.content.Intent
 import android.net.Uri
@@ -8,11 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.Ad
+import woowacourse.movie.model.Ad
 import woowacourse.movie.R
 import woowacourse.movie.activity.MovieDetailActivity
 import woowacourse.movie.movie.MovieMockData
-import woowacourse.movie.movielist.MovieRecyclerViewAdapter
 
 class HomeFragment : Fragment() {
 

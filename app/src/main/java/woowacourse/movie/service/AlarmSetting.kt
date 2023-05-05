@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.service
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import com.woowacourse.domain.BookHistories
-import com.woowacourse.domain.MovieBookingSeatInfo
+import com.woowacourse.domain.movie.MovieBookingSeatInfo
 import woowacourse.movie.movie.toPresentation
 import java.time.LocalDateTime
 import java.time.ZoneId

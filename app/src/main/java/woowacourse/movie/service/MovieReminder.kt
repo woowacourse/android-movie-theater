@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.service
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -9,7 +9,9 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import androidx.core.app.NotificationCompat
+import woowacourse.movie.R
 import woowacourse.movie.activity.BookCompleteActivity
+import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.movie.MovieBookingSeatInfoUIModel
 
 class MovieReminder : BroadcastReceiver() {

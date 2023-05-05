@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.service
 
 import android.Manifest
 import android.content.Context

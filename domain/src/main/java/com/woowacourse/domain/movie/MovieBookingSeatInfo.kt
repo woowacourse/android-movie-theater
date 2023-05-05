@@ -1,4 +1,4 @@
-package com.woowacourse.domain
+package com.woowacourse.domain.movie
 
 data class MovieBookingSeatInfo(
     val movieBookingInfo: MovieBookingInfo,

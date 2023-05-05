@@ -1,4 +1,4 @@
-package woowacourse.movie.fragment
+package woowacourse.movie.fragment.bookhistory
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.woowacourse.domain.BookHistories
-import woowacourse.movie.BookHistoryRecyclerViewAdapter
 import woowacourse.movie.R
 import woowacourse.movie.activity.BookCompleteActivity
 import woowacourse.movie.movie.toPresentation

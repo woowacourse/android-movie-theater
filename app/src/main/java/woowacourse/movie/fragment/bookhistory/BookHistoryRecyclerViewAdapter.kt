@@ -1,9 +1,10 @@
-package woowacourse.movie
+package woowacourse.movie.fragment.bookhistory
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.woowacourse.domain.MovieBookingSeatInfo
+import com.woowacourse.domain.movie.MovieBookingSeatInfo
+import woowacourse.movie.R
 import woowacourse.movie.movie.toPresentation
 
 class BookHistoryRecyclerViewAdapter(

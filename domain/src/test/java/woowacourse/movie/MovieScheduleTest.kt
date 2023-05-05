@@ -1,6 +1,6 @@
 package woowacourse.movie
 
-import com.woowacourse.domain.MovieSchedule
+import com.woowacourse.domain.movie.MovieSchedule
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDate

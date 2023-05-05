@@ -1,9 +1,9 @@
-package woowacourse.movie.movielist
+package woowacourse.movie.fragment.movielist
 
 import android.view.View
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.Ad
+import woowacourse.movie.model.Ad
 import woowacourse.movie.R
 
 class AdViewHolder(private val view: View, private val listener: (Ad) -> Unit, ad: Ad) :

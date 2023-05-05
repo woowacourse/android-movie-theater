@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.fragment.bookhistory
 
 import android.text.SpannableStringBuilder
 import android.text.Spanned
@@ -6,6 +6,7 @@ import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.movie.R
 import woowacourse.movie.movie.MovieBookingSeatInfoUIModel
 
 class BookHistoryViewHolder(

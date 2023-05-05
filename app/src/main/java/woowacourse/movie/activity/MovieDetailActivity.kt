@@ -11,7 +11,7 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
-import com.woowacourse.domain.MovieSchedule
+import com.woowacourse.domain.movie.MovieSchedule
 import woowacourse.movie.DateFormatter
 import woowacourse.movie.R
 import woowacourse.movie.getSerializableCompat

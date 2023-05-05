@@ -1,4 +1,4 @@
-package woowacourse.movie.movielist
+package woowacourse.movie.fragment.movielist
 
 import android.view.View
 import android.widget.Button

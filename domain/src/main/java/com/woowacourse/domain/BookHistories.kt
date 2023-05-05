@@ -1,5 +1,7 @@
 package com.woowacourse.domain
 
+import com.woowacourse.domain.movie.MovieBookingSeatInfo
+
 object BookHistories {
     private val _bookHistories = mutableListOf<MovieBookingSeatInfo>()
     val items: List<MovieBookingSeatInfo>

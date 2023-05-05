@@ -11,14 +11,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.children
 import com.woowacourse.domain.BookHistories
-import com.woowacourse.domain.MovieBookingSeatInfo
+import com.woowacourse.domain.movie.MovieBookingSeatInfo
 import com.woowacourse.domain.seat.Seat
 import com.woowacourse.domain.seat.SeatColumn
 import com.woowacourse.domain.seat.SeatGroup
 import com.woowacourse.domain.seat.SeatRow
 import com.woowacourse.domain.ticket.Ticket
 import com.woowacourse.domain.ticket.TicketBundle
-import woowacourse.movie.AlarmSetting
+import woowacourse.movie.service.AlarmSetting
 import woowacourse.movie.R
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.mapper.toDomain

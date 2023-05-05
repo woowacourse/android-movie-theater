@@ -1,7 +1,7 @@
 package woowacourse.movie.movie
 
 import androidx.annotation.DrawableRes
-import com.woowacourse.domain.Movie
+import com.woowacourse.domain.movie.Movie
 import woowacourse.movie.R
 import java.io.Serializable
 import java.time.LocalDate

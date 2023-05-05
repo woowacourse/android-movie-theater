@@ -1,6 +1,6 @@
 package woowacourse.movie.movie
 
-import com.woowacourse.domain.MovieBookingSeatInfo
+import com.woowacourse.domain.movie.MovieBookingSeatInfo
 import java.io.Serializable
 
 fun MovieBookingSeatInfoUIModel.toDomain() = MovieBookingSeatInfo(movieBookingInfo.toDomain(), seats, totalPrice)

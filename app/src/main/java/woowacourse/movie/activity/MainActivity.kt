@@ -9,11 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
-import woowacourse.movie.NotificationPermission
+import woowacourse.movie.service.NotificationPermission
 import woowacourse.movie.R
-import woowacourse.movie.SharedPreferenceUtil
-import woowacourse.movie.fragment.BookHistoryFragment
-import woowacourse.movie.fragment.HomeFragment
+import woowacourse.movie.service.SharedPreferenceUtil
+import woowacourse.movie.fragment.bookhistory.BookHistoryFragment
+import woowacourse.movie.fragment.movielist.HomeFragment
 import woowacourse.movie.fragment.SettingFragment
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener {
