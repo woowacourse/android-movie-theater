@@ -6,9 +6,8 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.contract.MovieReservationContract
 import woowacourse.movie.data.LocalFormattedDate
@@ -17,6 +16,7 @@ import woowacourse.movie.data.MovieScheduleViewData
 import woowacourse.movie.data.MovieViewData
 import woowacourse.movie.data.ReservationDetailViewData
 import woowacourse.movie.data.TheaterViewData
+import woowacourse.movie.databinding.ActivityMovieReservationBinding
 import woowacourse.movie.error.ActivityError.finishWithError
 import woowacourse.movie.error.ViewError
 import woowacourse.movie.mapper.MovieScheduleMapper.toDomain
@@ -33,16 +33,13 @@ import java.time.LocalDateTime
 
 class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.View {
     override lateinit var presenter: MovieReservationContract.Presenter
-
-    private val counterText: TextView by lazy {
-        findViewById(R.id.movie_reservation_people_count)
-    }
+    private lateinit var binding: ActivityMovieReservationBinding
 
     private val dateSpinner: DateSpinner by lazy {
         DateSpinner(
             SaveStateSpinner(
                 DATE_SPINNER_SAVE_STATE_KEY,
-                findViewById(R.id.movie_reservation_date_spinner),
+                binding.movieReservationDateSpinner,
             )
         )
     }
@@ -51,14 +48,14 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         TimeSpinner(
             SaveStateSpinner(
                 TIME_SPINNER_SAVE_STATE_KEY,
-                findViewById(R.id.movie_reservation_time_spinner),
+                binding.movieReservationTimeSpinner,
             )
         )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_reservation)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_reservation)
         makeBackButton()
 
         initMovieReservationView(savedInstanceState)
@@ -91,17 +88,17 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         MovieController.bind(
             movie = movie,
             MovieView(
-                poster = findViewById(R.id.movie_reservation_poster),
-                title = findViewById(R.id.movie_reservation_title),
-                date = findViewById(R.id.movie_reservation_date),
-                runningTime = findViewById(R.id.movie_reservation_running_time),
-                description = findViewById(R.id.movie_reservation_description)
+                poster = binding.movieReservationPoster,
+                title = binding.movieReservationTitle,
+                date = binding.movieReservationDate,
+                runningTime = binding.movieReservationRunningTime,
+                description = binding.movieReservationDescription
             )
         )
     }
 
     override fun setCounterText(count: Int) {
-        counterText.text = count.toString()
+        binding.movieReservationPeopleCount.text = count.toString()
     }
 
     override fun setTimeSpinner(times: List<LocalFormattedTime>) {
@@ -123,10 +120,10 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
     }
 
     private fun makeCounterListener() {
-        findViewById<Button>(R.id.movie_reservation_people_count_plus).setOnClickListener {
+        binding.movieReservationPeopleCountPlus.setOnClickListener {
             presenter.addPeopleCount(COUNT_FACTOR)
         }
-        findViewById<Button>(R.id.movie_reservation_people_count_minus).setOnClickListener {
+        binding.movieReservationPeopleCountMinus.setOnClickListener {
             presenter.minusPeopleCount(COUNT_FACTOR)
         }
     }
@@ -156,7 +153,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         movie: MovieViewData,
         theaterName: String
     ) {
-        findViewById<Button>(R.id.movie_reservation_button).setOnClickListener {
+        binding.movieReservationButton.setOnClickListener {
             val date = makeReservationDate(dateSpinner, timeSpinner)
             presenter.reserveMovie(date, movie, theaterName)
         }
