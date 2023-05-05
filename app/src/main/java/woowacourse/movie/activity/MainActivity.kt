@@ -1,6 +1,7 @@
 package woowacourse.movie.activity
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
@@ -23,22 +24,24 @@ class MainActivity : AppCompatActivity() {
         val bottomNavigationView =
             findViewById<BottomNavigationView>(R.id.main_bottom_navigation_view)
         bottomNavigationView.selectedItemId = R.id.action_home
-        bottomNavigationView.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.action_list -> {
-                    replaceFragment<ReservationListFragment>()
-                    true
-                }
-                R.id.action_home -> {
-                    replaceFragment<MovieListFragment>()
-                    true
-                }
-                R.id.action_setting -> {
-                    replaceFragment<SettingFragment>()
-                    true
-                }
-                else -> false
+        bottomNavigationView.setOnItemSelectedListener(this::onNavigationItemSelect)
+    }
+
+    private fun onNavigationItemSelect(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_list -> {
+                replaceFragment<ReservationListFragment>()
+                true
             }
+            R.id.action_home -> {
+                replaceFragment<MovieListFragment>()
+                true
+            }
+            R.id.action_setting -> {
+                replaceFragment<SettingFragment>()
+                true
+            }
+            else -> false
         }
     }
 
