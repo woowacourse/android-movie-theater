@@ -2,6 +2,7 @@ package woowacourse.movie.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.contract.MovieAdapterContract
@@ -22,16 +23,16 @@ class MovieAdapter(override val onClickItem: (MovieViewData, TheatersViewData) -
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (MovieListViewType.values()[viewType]) {
             MovieListViewType.MOVIE -> MovieInfoViewHolder(
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.item_movie, parent, false
+                DataBindingUtil.inflate(
+                    LayoutInflater.from(parent.context), R.layout.item_movie, parent, false
                 )
             ) {
                 presenter.onClickItem(movieListItemsViewData.value[it])
             }
 
             MovieListViewType.ADVERTISEMENT -> AdvertisementViewHolder(
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.item_advertisement, parent, false
+                DataBindingUtil.inflate(
+                    LayoutInflater.from(parent.context), R.layout.item_advertisement, parent, false
                 )
             ) {
                 presenter.onClickItem(movieListItemsViewData.value[it])

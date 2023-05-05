@@ -1,26 +1,23 @@
 package woowacourse.movie.view.viewholder
 
-import android.view.View
-import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
 import woowacourse.movie.data.MovieViewData
+import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.view.widget.MovieController
 import woowacourse.movie.view.widget.MovieView
 
-class MovieInfoViewHolder(private val view: View, onClickItem: (Int) -> Unit) :
-    RecyclerView.ViewHolder(view) {
+class MovieInfoViewHolder(binding: ItemMovieBinding, onClickItem: (Int) -> Unit) :
+    RecyclerView.ViewHolder(binding.root) {
+
     private val movieView: MovieView = MovieView(
-        poster = view.findViewById(R.id.item_movie_poster),
-        title = view.findViewById(R.id.item_movie_title),
-        date = view.findViewById(R.id.item_movie_date),
-        runningTime = view.findViewById(R.id.item_movie_running_time)
+        poster = binding.itemMoviePoster,
+        title = binding.itemMovieTitle,
+        date = binding.itemMovieDate,
+        runningTime = binding.itemMovieRunningTime
     )
 
-    private val reservation: Button = view.findViewById(R.id.item_movie_reservation_button)
-
     init {
-        reservation.setOnClickListener {
+        binding.itemMovieReservationButton.setOnClickListener {
             onClickItem(adapterPosition)
         }
     }

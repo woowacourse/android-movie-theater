@@ -1,12 +1,12 @@
 package woowacourse.movie.view.viewholder
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.movie.databinding.ItemAdvertisementBinding
 
-class AdvertisementViewHolder(private val view: View, onClickItem: (Int) -> Unit) :
-    RecyclerView.ViewHolder(view) {
+class AdvertisementViewHolder(binding: ItemAdvertisementBinding, onClickItem: (Int) -> Unit) :
+    RecyclerView.ViewHolder(binding.root) {
     init {
-        view.setOnClickListener {
+        binding.root.setOnClickListener {
             onClickItem(adapterPosition)
         }
     }

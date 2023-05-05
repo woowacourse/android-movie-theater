@@ -30,7 +30,7 @@ class MovieAdapterPresenter(
     }
 
     override fun onClickItem(movie: MovieListItemViewData) {
-        val movie = movie as MovieViewData
+        val movie = movie as? MovieViewData ?: return
         val theaters = requestTheaters()
         val movieTheaters = theaters.findTheaterByMovie(movie.toDomain()).toView()
         view.onClickItem(movie, movieTheaters)
