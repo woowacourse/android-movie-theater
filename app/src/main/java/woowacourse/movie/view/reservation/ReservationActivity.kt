@@ -10,51 +10,45 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationBinding
-import woowacourse.movie.domain.Reservation
-import woowacourse.movie.domain.ScreeningTime
 import woowacourse.movie.util.DATE_FORMATTER
 import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.view.model.MovieListModel.MovieUiModel
 import woowacourse.movie.view.model.ReservationOptions
 import woowacourse.movie.view.seatselection.SeatSelectionActivity
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
 
-class ReservationActivity : AppCompatActivity() {
+class ReservationActivity : AppCompatActivity(), ReservationContract.View {
 
     private lateinit var binding: ActivityReservationBinding
-
-    private var peopleCountSaved = 1
-    private lateinit var selectedScreeningDate: LocalDate
-    private lateinit var selectedScreeningTime: LocalTime
-    private val movie: MovieUiModel by lazy { initMovieFromIntent() }
-    private var timeSpinnerPosition = 0
+    override lateinit var presenter: ReservationContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityReservationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initViewData()
-        initSpinner()
-        initPeopleCountAdjustButtonClickListener()
-        initReserveButtonClickListener()
+        presenter = ReservationPresenter(this)
+
+        presenter.loadMovie()
+        presenter.setUpScreeningDateTime()
+        setUpPeopleCountButton()
+        setUpReserveButtonClickListener()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onResume() {
         super.onResume()
-        binding.peopleCount.text = peopleCountSaved.toString()
+        presenter.setPeopleCount()
     }
 
-    private fun initMovieFromIntent(): MovieUiModel {
+    override fun getMovie(): MovieUiModel {
         val movie = intent.getParcelableCompat<MovieUiModel>(MOVIE)
         requireNotNull(movie) { "인텐트로 받아온 데이터가 널일 수 없습니다." }
         return movie
     }
 
-    private fun initViewData() {
+    override fun initMovieView(movie: MovieUiModel) {
         binding.apply {
             moviePoster.setImageResource(movie.posterResourceId)
             movieTitle.text = movie.title
@@ -68,12 +62,9 @@ class ReservationActivity : AppCompatActivity() {
         }
     }
 
-    private fun initSpinner() {
-        selectedScreeningDate = movie.screeningStartDate
-        selectedScreeningTime = ScreeningTime(selectedScreeningDate).getFirstScreeningTime()
-
-        val screeningDates = movie.getAllScreeningDates()
-
+    override fun setUpDateSpinner(
+        screeningDates: List<LocalDate>
+    ) {
         val dateSpinnerAdapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
@@ -89,8 +80,7 @@ class ReservationActivity : AppCompatActivity() {
                     position: Int,
                     id: Long
                 ) {
-                    selectedScreeningDate = screeningDates[position]
-                    initTimeSpinner(timeSpinnerPosition)
+                    presenter.selectScreeningDate(screeningDates[position])
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) = Unit
@@ -98,9 +88,7 @@ class ReservationActivity : AppCompatActivity() {
         }
     }
 
-    private fun initTimeSpinner(selectedPosition: Int?) {
-        val screeningTimes = ScreeningTime(selectedScreeningDate).getAllScreeningTimes()
-
+    override fun setUpTimeSpinner(screeningTimes: List<LocalTime>, selectedPosition: Int?) {
         val timeSpinnerAdapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
@@ -119,7 +107,7 @@ class ReservationActivity : AppCompatActivity() {
                     position: Int,
                     id: Long
                 ) {
-                    selectedScreeningTime = screeningTimes[position]
+                    presenter.selectScreeningTime(screeningTimes[position], position)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) = Unit
@@ -127,53 +115,38 @@ class ReservationActivity : AppCompatActivity() {
         }
     }
 
-    private fun initPeopleCountAdjustButtonClickListener() {
+    private fun setUpPeopleCountButton() {
         binding.apply {
             minusButton.setOnClickListener {
-                decreasePeopleCount()
+                presenter.decreasePeopleCount()
             }
             plusButton.setOnClickListener {
-                increasePeopleCount()
+                presenter.increasePeopleCount()
             }
         }
     }
 
-    private fun ActivityReservationBinding.decreasePeopleCount() {
-        if (peopleCountSaved > Reservation.MIN_PEOPLE_COUNT) {
-            peopleCountSaved--
-            peopleCount.text = peopleCountSaved.toString()
-        }
+    override fun setPeopleCountTextView(count: Int) {
+        binding.peopleCount.text = count.toString()
     }
 
-    private fun ActivityReservationBinding.increasePeopleCount() {
-        if (peopleCountSaved < Reservation.MAX_PEOPLE_COUNT) {
-            peopleCountSaved++
-            peopleCount.text = peopleCountSaved.toString()
-        }
-    }
-
-    private fun initReserveButtonClickListener() {
+    private fun setUpReserveButtonClickListener() {
         binding.reservationButton.setOnClickListener {
-            val reservationOptions = ReservationOptions(
-                movie.title,
-                LocalDateTime.of(selectedScreeningDate, selectedScreeningTime),
-                peopleCountSaved
-            )
-            startActivity(SeatSelectionActivity.newIntent(this, reservationOptions, movie))
+            presenter.reserve()
         }
+    }
+
+    override fun openSeatSelectionActivity(
+        reservationOptions: ReservationOptions,
+        movie: MovieUiModel
+    ) {
+        startActivity(SeatSelectionActivity.newIntent(this, reservationOptions, movie))
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-
-        val reservationOptions = ReservationOptions(
-            movie.title,
-            LocalDateTime.of(selectedScreeningDate, selectedScreeningTime),
-            peopleCountSaved
-        )
-
         outState.apply {
-            putParcelable(RESERVATION_OPTIONS, reservationOptions)
+            putParcelable(RESERVATION_OPTIONS, presenter.getReservationOptions())
             putInt(SELECTED_TIME_POSITION, binding.timeSpinner.selectedItemPosition)
         }
     }
@@ -181,12 +154,14 @@ class ReservationActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 
-        timeSpinnerPosition = savedInstanceState.getInt(SELECTED_TIME_POSITION)
+        presenter.saveTimePosition(savedInstanceState.getInt(SELECTED_TIME_POSITION))
 
-        savedInstanceState.getParcelableCompat<ReservationOptions>(RESERVATION_OPTIONS)?.run {
-            selectedScreeningDate = screeningDateTime.toLocalDate()
-            selectedScreeningTime = screeningDateTime.toLocalTime()
-            peopleCountSaved = peopleCount
+        savedInstanceState.getParcelableCompat<ReservationOptions>(RESERVATION_OPTIONS)?.let {
+            presenter.restoreReservationOptions(
+                it.screeningDateTime.toLocalDate(),
+                it.screeningDateTime.toLocalTime(),
+                it.peopleCount
+            )
         }
     }
 
