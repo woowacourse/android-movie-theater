@@ -1,15 +1,17 @@
 package woowacourse.movie.ui.reservation.presenter
 
+import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.model.ReservationTicketMachine
-import woowacourse.movie.ui.reservation.presenter.ReservationContract.View
 
 class ReservationPresenter(
-    private val view: View,
+    private val view: ReservationContract.View,
 ) : ReservationContract.Presenter {
+    private val reservationTickets: List<MovieTicketModel> by lazy { ReservationTicketMachine.tickets }
+    override fun getReservationTickets() {
+        view.reservationTicket = reservationTickets
+    }
 
     override fun isEmptyMovieReservation() {
-        val isEmpty = ReservationTicketMachine.tickets.isEmpty()
-
-        view.setTextOnEmptyState(isEmpty)
+        view.setTextOnEmptyState(reservationTickets.isEmpty())
     }
 }
