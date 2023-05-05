@@ -12,13 +12,18 @@ import woowacourse.movie.model.MovieState
 import woowacourse.movie.ui.adapter.CinemaListAdapter
 import woowacourse.movie.ui.itemModel.CinemaItemModel
 import woowacourse.movie.ui.reservation.MovieDetailActivity
+import woowacourse.movie.util.getParcelableCompat
 
-class CinemaListBottomSheet(
-    private val movie: MovieState
-) : BottomSheetDialogFragment(R.layout.fragment_cinema_bottom_sheet), CinemaListContract.View {
+class CinemaListBottomSheet : BottomSheetDialogFragment(R.layout.fragment_cinema_bottom_sheet), CinemaListContract.View {
     private lateinit var presenter: CinemaListContract.Presenter
-
     private lateinit var binding: FragmentCinemaBottomSheetBinding
+
+    private lateinit var movie: MovieState
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        movie = arguments?.getParcelableCompat(KEY_MOVIE) ?: throw IllegalArgumentException()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,5 +66,14 @@ class CinemaListBottomSheet(
 
     companion object {
         const val TAG_CINEMA_LIST_BOTTOM_SHEET = "tag_cinema_list_bottom_sheet"
+        const val KEY_MOVIE = "key_movie"
+
+        fun newInstance(movie: MovieState): CinemaListBottomSheet {
+            return CinemaListBottomSheet().apply {
+                arguments = Bundle().apply {
+                    putParcelable(KEY_MOVIE, movie)
+                }
+            }
+        }
     }
 }

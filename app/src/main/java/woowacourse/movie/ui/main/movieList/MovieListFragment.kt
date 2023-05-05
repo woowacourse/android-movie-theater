@@ -54,7 +54,7 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContr
     }
 
     private fun showCinemaBottomSheet(movie: MovieState) {
-        CinemaListBottomSheet(movie)
+        CinemaListBottomSheet.newInstance(movie)
             .show(parentFragmentManager, CinemaListBottomSheet.TAG_CINEMA_LIST_BOTTOM_SHEET)
     }
 
