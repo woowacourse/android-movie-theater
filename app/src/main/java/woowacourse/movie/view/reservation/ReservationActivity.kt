@@ -41,7 +41,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         setViewData(movie)
         setDateSpinner(presenter.getSchedules(movie, theaterName))
         setPeopleCountAdjustButtonClickListener()
-        setReserveButtonClickListener(movie)
+        setReserveButtonClickListener(movie, theaterName)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -109,7 +109,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         }
     }
 
-    private fun setReserveButtonClickListener(movie: MovieUiModel) {
+    private fun setReserveButtonClickListener(movie: MovieUiModel, theaterName: String) {
         binding.reservationButton.setOnClickListener {
             val reservationOptions = ReservationOptions(
                 movie.title,
@@ -118,6 +118,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
                     binding.timeSpinner.selectedItem as LocalTime,
                 ),
                 binding.peopleCount.text.toString().toInt(),
+                theaterName,
             )
             startActivity(SeatSelectionActivity.newIntent(this, reservationOptions, movie))
         }

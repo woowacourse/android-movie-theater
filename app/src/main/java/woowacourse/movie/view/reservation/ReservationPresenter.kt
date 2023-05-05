@@ -1,6 +1,7 @@
 package woowacourse.movie.view.reservation
 
 import woowacourse.movie.domain.movie.ScreeningDateTimes
+import woowacourse.movie.util.getKeyFromIndex
 import woowacourse.movie.util.getOrEmptyList
 import woowacourse.movie.view.model.MovieUiModel
 import java.time.LocalDate
@@ -32,7 +33,7 @@ class ReservationPresenter(private val view: ReservationContract.View) :
     }
 
     override fun onDateSpinnerChanged(position: Int, screeningDateTimes: Map<LocalDate, List<LocalTime>>) {
-        val times = screeningDateTimes[screeningDateTimes.keys.toList()[position]]
+        val times = screeningDateTimes[screeningDateTimes.getKeyFromIndex(position)]
         times?.let { view.setTimeSpinner(it) }
     }
 }
