@@ -4,10 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.AdvItemLayoutBinding
+import woowacourse.movie.databinding.ItemTheaterLayoutBinding
 import woowacourse.movie.databinding.MovieItemLayoutBinding
 import woowacourse.movie.feature.common.ViewType
 import woowacourse.movie.feature.common.itemModel.ItemModel
 import woowacourse.movie.feature.common.viewHolder.ItemViewHolder
+import woowacourse.movie.feature.movieList.bottomSheet.TheaterViewHolder
 import woowacourse.movie.feature.movieList.viewHolder.AdvViewHolder
 import woowacourse.movie.feature.movieList.viewHolder.MovieViewHolder
 
@@ -32,6 +34,10 @@ class MovieListAdapter(
             ViewType.ADV -> {
                 val itemBinding = AdvItemLayoutBinding.inflate(layoutInflater, parent, false)
                 AdvViewHolder(itemBinding)
+            }
+            ViewType.THEATER -> {
+                val itemBinding = ItemTheaterLayoutBinding.inflate(layoutInflater, parent, false)
+                TheaterViewHolder(itemBinding)
             }
         }
     }

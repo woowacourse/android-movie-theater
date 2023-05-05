@@ -14,6 +14,9 @@ object TheaterRepositoryImpl : TheaterRepository {
 
     override fun getScreeningMovieTheaters(movieState: MovieState): List<TheaterState> {
         return theaters.filter { theater -> movieState in theater.screenInfos.map { it.movieState } }
+            .map {
+                it.copy(screenInfos = it.screenInfos.filter { movieState == it.movieState })
+            }
     }
 
     private val movies: List<MovieState> = listOf(

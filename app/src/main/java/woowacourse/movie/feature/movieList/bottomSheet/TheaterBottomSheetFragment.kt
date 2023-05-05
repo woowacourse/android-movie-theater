@@ -10,6 +10,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.data.TheaterRepositoryImpl
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetBinding
 import woowacourse.movie.feature.movieList.MovieListFragment
+import woowacourse.movie.feature.movieList.adapter.MovieListAdapter
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.TheaterMovieState
 import woowacourse.movie.util.getParcelableCompat
@@ -47,13 +48,14 @@ class TheaterBottomSheetFragment : BottomSheetDialogFragment(), TheaterContract.
     }
 
     override fun setTheaterAdapter(theaters: List<TheaterItemModel>) {
+        binding.rvTheater.adapter = MovieListAdapter(theaters)
     }
 
     override fun selectTheater(theater: TheaterMovieState) {
         setFragmentResult(
-            MovieListFragment.THEATER_MOVIE_KEY,
+            MovieListFragment.THEATER_SELECT_KEY,
             bundleOf(
-                MovieListFragment.THEATER_SELECT_KEY to theater
+                MovieListFragment.THEATER_MOVIE_KEY to theater
             )
         )
         dismiss()

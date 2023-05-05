@@ -67,7 +67,7 @@ class MovieListFragment : Fragment(), MovieListContract.View {
 
     override fun showBottomSheetDialog(movie: MovieState) {
         val bottomSheetFragment = TheaterBottomSheetFragment.newInstance(movie)
-        bottomSheetFragment.show(childFragmentManager, THEATER_BOTTOM_SHEET_KEY)
+        bottomSheetFragment.show(parentFragmentManager, THEATER_BOTTOM_SHEET_KEY)
     }
 
     override fun navigateAdbDetail(adv: AdvState) {
