@@ -2,6 +2,7 @@ package woowacourse.movie.feature.movieList.bottomSheet
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemTheaterLayoutBinding
 import woowacourse.movie.feature.common.itemModel.CommonItemModel
 import woowacourse.movie.feature.common.viewHolder.CommonItemViewHolder
@@ -18,5 +19,8 @@ class TheaterViewHolder(
 
 @BindingAdapter("theater_time_count_text")
 fun setTheaterTimeCountText(view: TextView, theater: TheaterState) {
-    view.text = "${theater.screenInfos.first().dateTimes.size}개의 상영시간"
+    view.text = view.context.getString(
+        R.string.theater_screening_times,
+        theater.screenInfos.first().dateTimes.size
+    )
 }

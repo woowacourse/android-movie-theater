@@ -35,4 +35,6 @@
     <string name="alarm_premission_request_message">알림 권한을 허용해주세요.</string>
     <string name="alarm_notification_approve">알람 노티피케이션 권한 승인</string>
     <string name="alarm_notification_reject">알람 노티피케이션 권한 거부</string>
+
+    <string name="theater_screening_times">%d개의 상영시간</string>
 </resources>

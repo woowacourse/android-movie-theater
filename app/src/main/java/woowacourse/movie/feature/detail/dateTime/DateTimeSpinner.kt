@@ -1,7 +1,7 @@
 package woowacourse.movie.feature.detail.dateTime
 
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
-import woowacourse.movie.model.MovieState
+import woowacourse.movie.model.TheaterMovieState
 import woowacourse.movie.util.setClickListener
 import woowacourse.movie.util.setDefaultAdapter
 import java.time.LocalDate
@@ -10,10 +10,10 @@ import java.time.LocalTime
 
 class DateTimeSpinner(
     val binding: ActivityMovieDetailBinding,
-    movieState: MovieState,
+    theaterMovieState: TheaterMovieState,
     initLocalDateTime: LocalDateTime? = null
 ) : DateTimeContract.View {
-    val presenter: DateTimeContract.Presenter = DateTimePresenter(this, movieState)
+    val presenter: DateTimeContract.Presenter = DateTimePresenter(this, theaterMovieState)
 
     val selectDateTime: LocalDateTime
         get() = LocalDateTime.of(presenter.selectDate, presenter.selectTime)

@@ -11,7 +11,6 @@ import woowacourse.movie.feature.detail.counter.ReservationCounter
 import woowacourse.movie.feature.detail.dateTime.DateTimeSpinner
 import woowacourse.movie.feature.seatSelect.SeatSelectActivity
 import woowacourse.movie.model.CountState
-import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.ReservationState
 import woowacourse.movie.model.TheaterMovieState
 import woowacourse.movie.util.getParcelableCompat
@@ -26,7 +25,7 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
     private lateinit var binding: ActivityMovieDetailBinding
 
     // Todo:
-    private lateinit var movie: MovieState
+    private lateinit var theaterMovie: TheaterMovieState
 
     private lateinit var dateTimeSpinner: DateTimeSpinner
     private lateinit var reservationCounter: ReservationCounter
@@ -34,13 +33,14 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
     private val presenter: MovieDetailContract.Presenter = MovieDetailPresenter(this)
     override fun onCreateView(savedInstanceState: Bundle?) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
-        movie = intent.getParcelableExtraCompat(KEY_THEATER_MOVIE) ?: return keyError(KEY_THEATER_MOVIE)
-        binding.movie = movie
+        theaterMovie =
+            intent.getParcelableExtraCompat(KEY_THEATER_MOVIE) ?: return keyError(KEY_THEATER_MOVIE)
+        binding.theaterMovie = theaterMovie
 
         if (savedInstanceState != null) {
             restoreInstanceState(savedInstanceState)
         } else {
-            dateTimeSpinner = DateTimeSpinner(binding, movie)
+            dateTimeSpinner = DateTimeSpinner(binding, theaterMovie)
             reservationCounter = ReservationCounter(binding)
         }
 
@@ -49,7 +49,7 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
 
         binding.reservationConfirm.setOnClickListener {
             presenter.clickConfirm(
-                movie,
+                theaterMovie.movie,
                 dateTimeSpinner.selectDateTime,
                 reservationCounter.count
             )
@@ -78,7 +78,7 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
             savedInstanceState.getParcelableCompat(KEY_COUNT) ?: return keyError(KEY_COUNT)
 
         val restoreDateTime = LocalDateTime.of(restoreSelectDate, restoreSelectTime)
-        dateTimeSpinner = DateTimeSpinner(binding, movie, restoreDateTime)
+        dateTimeSpinner = DateTimeSpinner(binding, theaterMovie, restoreDateTime)
         reservationCounter = ReservationCounter(binding, restoreCount)
     }
 

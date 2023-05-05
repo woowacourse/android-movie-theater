@@ -4,8 +4,8 @@
     <data>
 
         <variable
-            name="movie"
-            type="woowacourse.movie.model.MovieState" />
+            name="theaterMovie"
+            type="woowacourse.movie.model.TheaterMovieState" />
 
         <variable
             name="counterPresenter"
@@ -40,7 +40,7 @@
 
                 <ImageView
                     android:id="@+id/detail_image"
-                    imgId="@{movie.imgId}"
+                    imgId="@{theaterMovie.movie.imgId}"
                     android:layout_width="match_parent"
                     android:layout_height="341dp"
                     android:adjustViewBounds="true"
@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="27dp"
-                    android:text="@{movie.title}"
+                    android:text="@{theaterMovie.movie.title}"
                     android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold"
@@ -67,7 +67,7 @@
 
                 <TextView
                     android:id="@+id/detail_date"
-                    movieDetailDates="@{movie}"
+                    movieDetailDates="@{theaterMovie.movie}"
                     android:layout_width="0dp"
                     android:layout_height="20dp"
                     android:layout_marginHorizontal="20dp"
@@ -82,7 +82,7 @@
 
                 <TextView
                     android:id="@+id/detail_time"
-                    movieDetailRunningMinutes="@{movie}"
+                    movieDetailRunningMinutes="@{theaterMovie.movie}"
                     android:layout_width="0dp"
                     android:layout_height="20dp"
                     android:layout_marginHorizontal="20dp"
@@ -101,7 +101,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="38.87dp"
-                    android:text="@{movie.description}"
+                    android:text="@{theaterMovie.movie.description}"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
