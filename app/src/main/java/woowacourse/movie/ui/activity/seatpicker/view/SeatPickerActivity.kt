@@ -14,7 +14,6 @@ import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.alarm.AlarmManager
 import woowacourse.movie.broadcastreceiver.NotificationReceiver
-import woowacourse.movie.data.entity.Reservations
 import woowacourse.movie.data.entity.Seats
 import woowacourse.movie.databinding.ActivitySeatPickerBinding
 import woowacourse.movie.ui.activity.MovieTicketActivity
@@ -102,6 +101,11 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
         binding.seatPickerDoneButton.isEnabled = true
     }
 
+    override fun afterReservation(ticket: MovieTicketModel) {
+        setAlarm(ticket)
+        moveToTicketActivity(ticket)
+    }
+
     private fun Int.formatPrice(): String = getString(R.string.price, this)
 
     private fun setSeatViews(ticket: MovieTicketModel) {
@@ -152,10 +156,7 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
             .setTitle(getString(R.string.dialog_title_seat_selection_check))
             .setMessage(getString(R.string.dialog_message_seat_selection_check))
             .setPositiveButton(getString(R.string.dialog_positive_button_seat_selection_check)) { _, _ ->
-                val ticketModel = presenter.getTicketModel()
-                Reservations.addItem(ticketModel)
-                setAlarm(ticketModel)
-                moveToTicketActivity(ticketModel)
+                presenter.addReservation()
             }
             .setNegativeButton(getString(R.string.dialog_negative_button_seat_selection_check)) { dialog, _ ->
                 dialog.dismiss()

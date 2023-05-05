@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.activity.seatpicker.presenter
 
+import woowacourse.movie.data.entity.Reservations
 import woowacourse.movie.domain.MovieTicket
 import woowacourse.movie.ui.activity.seatpicker.SeatPickerContract
 import woowacourse.movie.ui.model.MovieTicketModel
@@ -48,11 +49,13 @@ class SeatPickerPresenter(private val view: SeatPickerContract.View) :
         }
     }
 
-    override fun getTicketModelWithOriginalPrice(): MovieTicketModel {
-        return ticket.mapToMovieTicketModelWithOriginalPrice()
+    override fun addReservation() {
+        val ticketModel = ticket.mapToMovieTicketModel()
+        Reservations.addItem(ticketModel)
+        view.afterReservation(ticketModel)
     }
 
-    override fun getTicketModel(): MovieTicketModel {
-        return ticket.mapToMovieTicketModel()
+    override fun getTicketModelWithOriginalPrice(): MovieTicketModel {
+        return ticket.mapToMovieTicketModelWithOriginalPrice()
     }
 }

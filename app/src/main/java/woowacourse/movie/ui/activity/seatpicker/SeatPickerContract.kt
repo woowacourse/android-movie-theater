@@ -13,9 +13,9 @@ interface SeatPickerContract {
 
         fun checkSelectionDone()
 
-        fun getTicketModelWithOriginalPrice(): MovieTicketModel
+        fun addReservation()
 
-        fun getTicketModel(): MovieTicketModel
+        fun getTicketModelWithOriginalPrice(): MovieTicketModel
     }
 
     interface View {
@@ -34,5 +34,7 @@ interface SeatPickerContract {
         fun deactivateDoneButton()
 
         fun activateDoneButton()
+
+        fun afterReservation(ticket: MovieTicketModel)
     }
 }
