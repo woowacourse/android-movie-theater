@@ -1,16 +1,20 @@
 package woowacourse.movie.presenter
 
 import woowacourse.movie.SettingPreferencesManager
+import woowacourse.movie.SharedPreferenceManager
 import woowacourse.movie.contract.SettingContract
 
-class SettingPresenter(val view: SettingContract.View) : SettingContract.Presenter {
+class SettingPresenter(
+    val view: SettingContract.View,
+    private val sharedPreferenceManager: SharedPreferenceManager
+) : SettingContract.Presenter {
 
     override fun onClickSwitch() {
-        SettingPreferencesManager.changeAlarmReceptionStatus()
+        sharedPreferenceManager.changeData()
     }
 
     override fun updateSwitchState() {
-        val isChecked = SettingPreferencesManager.getAlarmReceptionStatus()
+        val isChecked = sharedPreferenceManager.getData()
         view.setSwitchState(isChecked)
     }
 }

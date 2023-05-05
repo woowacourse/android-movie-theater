@@ -12,7 +12,7 @@ object NotificationHelper {
         notification: Notification,
         notificationId: Int
     ) {
-        if (SettingPreferencesManager.getAlarmReceptionStatus()) notificationManager.notify(
+        if (SettingPreferencesManager.getData()) notificationManager.notify(
             notificationId,
             notification
         )

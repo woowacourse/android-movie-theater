@@ -52,4 +52,5 @@ dependencies {
     debugImplementation("androidx.fragment:fragment-ktx:1.6.0-beta01")
     debugImplementation("androidx.fragment:fragment-testing:1.5.7")
     implementation("androidx.preference:preference:1.2.0")
+    testImplementation ("io.mockk:mockk-android:1.13.5")
 }

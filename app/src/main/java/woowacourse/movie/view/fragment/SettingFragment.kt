@@ -5,12 +5,14 @@ import android.view.View
 import android.widget.Switch
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.SettingPreferencesManager
 import woowacourse.movie.contract.SettingContract
 import woowacourse.movie.presenter.SettingPresenter
 
 class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.View {
 
-    override val presenter: SettingContract.Presenter = SettingPresenter(this)
+    override val presenter: SettingContract.Presenter =
+        SettingPresenter(this, SettingPreferencesManager)
     private lateinit var pushAlarmSwitch: Switch
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
