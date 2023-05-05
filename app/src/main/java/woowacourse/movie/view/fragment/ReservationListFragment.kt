@@ -1,26 +1,38 @@
 package woowacourse.movie.view.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.view.activity.ReservationResultActivity
 import woowacourse.movie.view.adapter.ReservationAdapter
 
-class ReservationListFragment : Fragment(R.layout.fragment_reservation_list) {
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        makeReservationRecyclerView(view)
+class ReservationListFragment : Fragment() {
+    private lateinit var binding: FragmentReservationListBinding
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_reservation_list, container, false)
+        return binding.root
     }
 
-    private fun makeReservationRecyclerView(view: View) {
-        val recyclerView = view.findViewById<RecyclerView>(R.id.reservation_list_recycler)
-        recyclerView.adapter = ReservationAdapter {
-            startActivity(ReservationResultActivity.from(view.context, it))
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        makeReservationRecyclerView()
+    }
+
+    private fun makeReservationRecyclerView() {
+        binding.reservationListRecycler.adapter = ReservationAdapter {
+            startActivity(ReservationResultActivity.from(binding.root.context, it))
         }.also { it.presenter.setReservation() }
-        val decoration = DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL)
-        recyclerView.addItemDecoration(decoration)
+        val decoration = DividerItemDecoration(binding.root.context, DividerItemDecoration.VERTICAL)
+        binding.reservationListRecycler.addItemDecoration(decoration)
     }
 }
