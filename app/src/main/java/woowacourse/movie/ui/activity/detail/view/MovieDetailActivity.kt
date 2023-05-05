@@ -7,12 +7,9 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Spinner
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.ui.activity.detail.MovieDetailContract
 import woowacourse.movie.ui.activity.detail.presenter.MovieDetailPresenter
 import woowacourse.movie.ui.activity.seatpicker.view.SeatPickerActivity
@@ -29,18 +26,16 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
-    private val dateSpinner: Spinner by lazy { findViewById(R.id.detail_date_spinner) }
-    private val peopleCountView by lazy { findViewById<TextView>(R.id.detail_people_count) }
+    private lateinit var binding: ActivityMovieDetailBinding
     override lateinit var presenter: MovieDetailContract.Presenter
     private var theaterName = ""
-    private val timeSpinner: Spinner by lazy { findViewById(R.id.detail_time_spinner) }
     private lateinit var timeSpinnerAdapter: ArrayAdapter<LocalTime>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_detail)
-
         presenter = MovieDetailPresenter(this)
+        setUpBinding()
+        setContentView(binding.root)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -53,7 +48,6 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
             theaterName = it.name
             setTimeSpinner(it)
         }
-        setPeopleCountController()
 
         loadSavedData(savedInstanceState)
     }
@@ -61,9 +55,9 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        outState.putInt(DATE_SPINNER_POSITION_INSTANCE_KEY, dateSpinner.selectedItemPosition)
-        outState.putInt(TIME_SPINNER_POSITION_INSTANCE_KEY, timeSpinner.selectedItemPosition)
-        outState.putInt(PEOPLE_COUNT_VALUE_INSTANCE_KEY, peopleCountView.text.toString().toInt())
+        outState.putInt(DATE_SPINNER_POSITION_INSTANCE_KEY, binding.detailDateSpinner.selectedItemPosition)
+        outState.putInt(TIME_SPINNER_POSITION_INSTANCE_KEY, binding.detailTimeSpinner.selectedItemPosition)
+        outState.putInt(PEOPLE_COUNT_VALUE_INSTANCE_KEY, binding.detailPeopleCount.text.toString().toInt())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -77,21 +71,22 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     }
 
     override fun setPeopleCount(count: Int) {
-        peopleCountView.text = count.toString()
+        binding.detailPeopleCount.text = count.toString()
+    }
+
+    private fun setUpBinding() {
+        binding = ActivityMovieDetailBinding.inflate(layoutInflater)
+        binding.presenter = presenter
     }
 
     private fun setMovieInfo(movie: MovieModel) {
-        val posterView = findViewById<ImageView>(R.id.detail_poster)
-        val titleView = findViewById<TextView>(R.id.detail_title)
-        val dateView = findViewById<TextView>(R.id.detail_date)
-        val runningTimeView = findViewById<TextView>(R.id.detail_running_time)
-        val descriptionView = findViewById<TextView>(R.id.detail_description)
-
-        posterView.setImageResource(movie.poster)
-        titleView.text = movie.title
-        dateView.text = movie.getScreenDate()
-        runningTimeView.text = movie.getRunningTime()
-        descriptionView.text = movie.description
+        with(binding) {
+            detailPoster.setImageResource(movie.poster)
+            detailTitle.text = movie.title
+            detailDate.text = movie.getScreenDate()
+            detailRunningTime.text = movie.getRunningTime()
+            detailDescription.text = movie.description
+        }
     }
 
     private fun MovieModel.getScreenDate(): String =
@@ -109,15 +104,15 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
             movie.getDatesBetweenTwoDates()
         )
         dateSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        dateSpinner.adapter = dateSpinnerAdapter
-        dateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.detailDateSpinner.adapter = dateSpinnerAdapter
+        binding.detailDateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
-                timeSpinner.setSelection(0)
+                binding.detailTimeSpinner.setSelection(0)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -126,9 +121,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     }
 
     private fun setBookingButton(movie: MovieModel) {
-        val bookingButton = findViewById<Button>(R.id.detail_booking_button)
-
-        bookingButton.setOnClickListener {
+        binding.detailBookingButton.setOnClickListener {
             moveToSeatPickerActivity(movie)
         }
     }
@@ -140,26 +133,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
             theater.times
         )
         timeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        timeSpinner.adapter = timeSpinnerAdapter
-    }
-
-    private fun setPeopleCountController() {
-        setMinusButton()
-        setPlusButton()
-    }
-
-    private fun setMinusButton() {
-        val minusButton = findViewById<Button>(R.id.detail_minus_button)
-        minusButton.setOnClickListener {
-            presenter.decreasePeopleCount()
-        }
-    }
-
-    private fun setPlusButton() {
-        val plusButton = findViewById<Button>(R.id.detail_plus_button)
-        plusButton.setOnClickListener {
-            presenter.increasePeopleCount()
-        }
+        binding.detailTimeSpinner.adapter = timeSpinnerAdapter
     }
 
     private fun moveToSeatPickerActivity(movie: MovieModel) {
@@ -167,11 +141,11 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
             movie.title,
             TicketTimeModel(
                 LocalDateTime.of(
-                    dateSpinner.selectedItem as LocalDate,
-                    timeSpinner.selectedItem as LocalTime
+                    binding.detailDateSpinner.selectedItem as LocalDate,
+                    binding.detailTimeSpinner.selectedItem as LocalTime
                 )
             ),
-            PeopleCountModel(peopleCountView.text.toString().toInt()),
+            PeopleCountModel(binding.detailPeopleCount.text.toString().toInt()),
             seats = emptySet(),
             PriceModel(0),
             theaterName
@@ -185,8 +159,8 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         val datePosition = savedInstanceState?.getInt(DATE_SPINNER_POSITION_INSTANCE_KEY) ?: 0
         val timePosition = savedInstanceState?.getInt(TIME_SPINNER_POSITION_INSTANCE_KEY) ?: 0
         val count = savedInstanceState?.getInt(PEOPLE_COUNT_VALUE_INSTANCE_KEY) ?: 1
-        dateSpinner.setSelection(datePosition)
-        timeSpinner.setSelection(timePosition)
+        binding.detailDateSpinner.setSelection(datePosition)
+        binding.detailTimeSpinner.setSelection(timePosition)
         presenter.setPeopleCount(count)
     }
 
