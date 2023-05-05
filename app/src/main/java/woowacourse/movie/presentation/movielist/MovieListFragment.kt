@@ -11,10 +11,10 @@ import woowacourse.movie.presentation.model.MovieModel
 
 class MovieListFragment : Fragment(), MovieListContract.View {
 
+    override val presenter: MovieListContract.Presenter by lazy { MovieListPresenter(this) }
+
     private var _binding: FragmentMovieListBinding? = null
     private val binding get() = _binding!!
-
-    override val presenter: MovieListContract.Presenter by lazy { MovieListPresenter(this) }
 
     override fun onCreateView(
         inflater: LayoutInflater,

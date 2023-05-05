@@ -18,11 +18,11 @@ import java.time.LocalTime
 
 class BookingActivity : AppCompatActivity(), BookingContract.View {
 
+    override val presenter: BookingContract.Presenter by lazy { BookingPresenter(this) }
+
     private lateinit var binding: ActivityBookingBinding
 
     override val movieId: Long by lazy { intent.getLongExtra(MOVIE_ID, -1) }
-
-    override val presenter: BookingContract.Presenter by lazy { BookingPresenter(this) }
 
     private val movieModel: MovieModel by lazy { presenter.requireMovieModel(movieId) }
 
