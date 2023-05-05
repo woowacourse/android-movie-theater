@@ -18,7 +18,6 @@ class SettingsPresenterTest {
 
     @Before
     fun initSettingsPresenter() {
-        // 의문점 releaxed를 없애주고 함수를 다 설정해줘도 함수 answer설정안되었다고 오류계속남
         view = mockk(relaxed = true)
         settingStorage = mockk(relaxed = true)
         presenter = SettingsPresenter(view, settingStorage)
