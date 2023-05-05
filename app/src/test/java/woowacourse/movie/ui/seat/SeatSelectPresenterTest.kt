@@ -2,47 +2,66 @@ package woowacourse.movie.ui.seat
 
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.slot
 import io.mockk.verify
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
-import org.junit.Assert.assertEquals
 import org.junit.Test
-import woowacourse.movie.model.MoneyState
+import woowacourse.movie.model.CountState
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.SeatPositionState
+import woowacourse.movie.model.SeatSelectState
 import woowacourse.movie.model.TicketsState
 
 class SeatSelectPresenterTest {
     @Test
-    fun `가격 할인 정책을 적용하면 화면 금액이 바뀐다`() {
+    fun `좌석 선택 화면을 초기화한다`() {
         // given
-        val view = mockk<SeatSelectContract.View>(relaxed = true)
+        val view = mockk<SeatSelectContract.View>()
         val presenter = SeatSelectPresenter(view)
-        val slot = slot<MoneyState>()
-        val tickets = sampleTicketsState
-        every { view.setMoneyText(capture(slot)) } answers { println("slot = ${slot.captured}") }
+        val seatSelectState = sampleSeatSelectState
+        every { view.initSeatTable(any()) } returns Unit
+        every { view.showSeatSelectState(any()) } returns Unit
+        every { view.setMoneyText(any()) } returns Unit
 
         // when
-        presenter.discountApply(tickets.positions)
+        presenter.init(seatSelectState, "")
 
         // then
-        assertEquals(slot.captured, MoneyState(8000))
-        verify { view.setMoneyText(slot.captured) }
+        verify { view.showSeatSelectState(seatSelectState) }
+        verify { view.initSeatTable(seatSelectState) }
     }
 
     @Test
-    fun `티켓을 등록하고 화면을 전환한다`() {
+    fun `좌석을 선택하면 금액이 바뀐다`() {
         // given
+        val seatPositionState = mockk<List<SeatPositionState>>(relaxed = true)
         val view = mockk<SeatSelectContract.View>(relaxed = true)
         val presenter = SeatSelectPresenter(view)
-        val tickets = sampleTicketsState
-        // when
-        presenter.addTicket(tickets.positions)
+        presenter.init(sampleSeatSelectState, "")
+        every { view.showSeatSelectState(any()) } returns Unit
 
-        // then
-        verify { view.navigateToConfirmView(tickets) }
+        // when
+        presenter.discountApply(seatPositionState)
+
+        //
+        verify { view.setMoneyText(any()) }
+    }
+
+    @Test
+    fun `티켓을 추가하면 확인페이지로 넘어간다`() {
+        // given
+        val seatPositionState = mockk<List<SeatPositionState>>(relaxed = true)
+        val view = mockk<SeatSelectContract.View>(relaxed = true)
+        val presenter = SeatSelectPresenter(view)
+        presenter.init(sampleSeatSelectState, "")
+        every { view.navigateToConfirmView(any()) } returns Unit
+
+        // when
+        presenter.addTicket(seatPositionState)
+
+        //
+        verify { view.navigateToConfirmView(any()) }
     }
 
     companion object {
@@ -59,6 +78,11 @@ class SeatSelectPresenterTest {
             ),
             LocalDateTime.MIN,
             listOf(SeatPositionState(1, 1))
+        )
+        val sampleSeatSelectState = SeatSelectState(
+            sampleTicketsState.movieState,
+            LocalDateTime.MIN,
+            countState = CountState.of(10)
         )
     }
 }
