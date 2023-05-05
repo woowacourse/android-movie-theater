@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter
 
 class ReservationAdapter(
     private val reservationInfo: List<MovieTicketModel>,
-    private val onClick: (Int) -> Unit,
+    private val onClick: (MovieTicketModel) -> Unit,
 ) : RecyclerView.Adapter<ReservationAdapter.ReservationViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReservationViewHolder {
@@ -32,15 +32,12 @@ class ReservationAdapter(
 
     class ReservationViewHolder(
         private val binding: ItemReservationBinding,
-        onClick: (Int) -> Unit,
+        private val onClick: (MovieTicketModel) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
-
-        init {
-            binding.root.setOnClickListener { onClick(adapterPosition) }
-        }
 
         fun onBind(movieTicketModel: MovieTicketModel) {
             with(binding) {
+                root.setOnClickListener { onClick(movieTicketModel) }
                 reservationTitle.text = movieTicketModel.title
                 reservationTime.text = movieTicketModel.time.toTimeFormat()
                 reservationTime.text = movieTicketModel.time.toDateFormat()
