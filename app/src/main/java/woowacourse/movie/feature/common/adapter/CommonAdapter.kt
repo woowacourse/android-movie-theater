@@ -1,4 +1,4 @@
-package woowacourse.movie.feature.movieList.adapter
+package woowacourse.movie.feature.common.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,36 +6,36 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.AdvItemLayoutBinding
 import woowacourse.movie.databinding.ItemTheaterLayoutBinding
 import woowacourse.movie.databinding.MovieItemLayoutBinding
-import woowacourse.movie.feature.common.ViewType
-import woowacourse.movie.feature.common.itemModel.ItemModel
-import woowacourse.movie.feature.common.viewHolder.ItemViewHolder
+import woowacourse.movie.feature.common.CommonViewType
+import woowacourse.movie.feature.common.itemModel.CommonItemModel
+import woowacourse.movie.feature.common.viewHolder.CommonItemViewHolder
 import woowacourse.movie.feature.movieList.bottomSheet.TheaterViewHolder
 import woowacourse.movie.feature.movieList.viewHolder.AdvViewHolder
 import woowacourse.movie.feature.movieList.viewHolder.MovieViewHolder
 
-class MovieListAdapter(
-    items: List<ItemModel>,
-) : RecyclerView.Adapter<ItemViewHolder>() {
+class CommonAdapter(
+    items: List<CommonItemModel>,
+) : RecyclerView.Adapter<CommonItemViewHolder>() {
 
-    private var _items: List<ItemModel> = items.toList()
-    val items: List<ItemModel>
+    private var _items: List<CommonItemModel> = items.toList()
+    val items: List<CommonItemModel>
         get() = _items.toList()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ItemViewHolder {
+    ): CommonItemViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return when (ViewType.of(viewType)) {
-            ViewType.MOVIE -> {
+        return when (CommonViewType.of(viewType)) {
+            CommonViewType.MOVIE -> {
                 val itemBinding = MovieItemLayoutBinding.inflate(layoutInflater, parent, false)
                 MovieViewHolder(itemBinding)
             }
-            ViewType.ADV -> {
+            CommonViewType.ADV -> {
                 val itemBinding = AdvItemLayoutBinding.inflate(layoutInflater, parent, false)
                 AdvViewHolder(itemBinding)
             }
-            ViewType.THEATER -> {
+            CommonViewType.THEATER -> {
                 val itemBinding = ItemTheaterLayoutBinding.inflate(layoutInflater, parent, false)
                 TheaterViewHolder(itemBinding)
             }
@@ -43,7 +43,7 @@ class MovieListAdapter(
     }
 
     override fun onBindViewHolder(
-        holder: ItemViewHolder,
+        holder: CommonItemViewHolder,
         position: Int
     ) {
         holder.bind(_items[position])
@@ -55,7 +55,7 @@ class MovieListAdapter(
         return _items[position].viewType.ordinal
     }
 
-    fun setItems(items: List<ItemModel>) {
+    fun setItems(items: List<CommonItemModel>) {
         _items = items.toList()
         notifyDataSetChanged()
     }

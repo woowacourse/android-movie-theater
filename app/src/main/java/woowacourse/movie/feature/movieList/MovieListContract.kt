@@ -1,6 +1,6 @@
 package woowacourse.movie.feature.movieList
 
-import woowacourse.movie.feature.common.itemModel.ItemModel
+import woowacourse.movie.feature.common.itemModel.CommonItemModel
 import woowacourse.movie.model.AdvState
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.TheaterMovieState
@@ -10,7 +10,7 @@ interface MovieListContract {
         fun navigateMovieDetail(theaterMovie: TheaterMovieState)
         fun showBottomSheetDialog(movie: MovieState)
         fun navigateAdbDetail(adv: AdvState)
-        fun updateItems(items: List<ItemModel>)
+        fun updateItems(items: List<CommonItemModel>)
     }
 
     interface Presenter {

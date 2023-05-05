@@ -3,14 +3,14 @@ package woowacourse.movie.feature.movieList.bottomSheet
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import woowacourse.movie.databinding.ItemTheaterLayoutBinding
-import woowacourse.movie.feature.common.itemModel.ItemModel
-import woowacourse.movie.feature.common.viewHolder.ItemViewHolder
+import woowacourse.movie.feature.common.itemModel.CommonItemModel
+import woowacourse.movie.feature.common.viewHolder.CommonItemViewHolder
 import woowacourse.movie.model.TheaterState
 
 class TheaterViewHolder(
     binding: ItemTheaterLayoutBinding
-) : ItemViewHolder(binding) {
-    override fun bind(itemModel: ItemModel) {
+) : CommonItemViewHolder(binding) {
+    override fun bind(itemModel: CommonItemModel) {
         val binding = binding as ItemTheaterLayoutBinding
         binding.theater = itemModel as TheaterItemModel
     }

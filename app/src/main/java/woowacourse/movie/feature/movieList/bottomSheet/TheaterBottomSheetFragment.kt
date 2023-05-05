@@ -9,8 +9,8 @@ import androidx.fragment.app.setFragmentResult
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.data.TheaterRepositoryImpl
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetBinding
+import woowacourse.movie.feature.common.adapter.CommonAdapter
 import woowacourse.movie.feature.movieList.MovieListFragment
-import woowacourse.movie.feature.movieList.adapter.MovieListAdapter
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.TheaterMovieState
 import woowacourse.movie.util.getParcelableCompat
@@ -48,7 +48,7 @@ class TheaterBottomSheetFragment : BottomSheetDialogFragment(), TheaterContract.
     }
 
     override fun setTheaterAdapter(theaters: List<TheaterItemModel>) {
-        binding.rvTheater.adapter = MovieListAdapter(theaters)
+        binding.rvTheater.adapter = CommonAdapter(theaters)
     }
 
     override fun selectTheater(theater: TheaterMovieState) {
