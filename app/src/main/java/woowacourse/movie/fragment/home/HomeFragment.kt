@@ -1,4 +1,4 @@
-package woowacourse.movie.fragment
+package woowacourse.movie.fragment.home
 
 import android.content.Intent
 import android.net.Uri
@@ -12,10 +12,11 @@ import woowacourse.movie.Ad
 import woowacourse.movie.BundleKeys
 import woowacourse.movie.R
 import woowacourse.movie.activity.MovieDetailActivity
-import woowacourse.movie.movie.MovieMockData
 import woowacourse.movie.movielist.MovieRecyclerViewAdapter
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), HomeContract.View {
+    override lateinit var presenter: HomeContract.Presenter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,30 +27,29 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setMovieRecyclerView(view)
+        presenter = HomePresenter(this)
+        setMovieRecyclerView()
     }
 
-    private fun setMovieRecyclerView(view: View) {
-        val movieRecyclerView = view.findViewById<RecyclerView>(R.id.rv_movie_list)
-
+    private fun setMovieRecyclerView() {
+        val movieRecyclerView: RecyclerView = requireView().findViewById(R.id.rv_movie_list)
         val movieRecyclerViewAdapter = MovieRecyclerViewAdapter(
-            MovieMockData.movies10000,
-            Ad.dummyAd,
-            getMovieOnClickListener(view),
-            getAdOnClickListener(),
+            presenter.fetchMovieList(),
+            presenter.fetchAd(),
+            presenter.onMovieClicked(),
+            presenter.onAdClicked(),
         )
         movieRecyclerView.adapter = movieRecyclerViewAdapter
         movieRecyclerViewAdapter.notifyDataSetChanged()
     }
 
-    private fun getAdOnClickListener() = { item: Ad ->
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
-        this.startActivity(intent)
+    override fun startMovieDetailPage(): (Int) -> Unit = { position: Int ->
+        val intent = MovieDetailActivity.intent(requireView().context)
+        intent.putExtra(BundleKeys.MOVIE_DATA_KEY, presenter.fetchMovieList()[position])
+        startActivity(intent)
     }
 
-    private fun getMovieOnClickListener(view: View) = { position: Int ->
-        val intent = MovieDetailActivity.intent(view.context)
-        intent.putExtra(BundleKeys.MOVIE_DATA_KEY, MovieMockData.movies10000[position])
-        this.startActivity(intent)
+    override fun startAdDetailPage(): (ad: Ad) -> Unit = { ad: Ad ->
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(ad.url)))
     }
 }
