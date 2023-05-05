@@ -17,8 +17,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.broadcast.bookingnotificaiotn.BookingAlarmReceiver
-import woowacourse.movie.presentation.model.ReservationResult
 import woowacourse.movie.presentation.extension.getParcelableCompat
+import woowacourse.movie.presentation.model.ReservationResult
 import woowacourse.movie.presentation.view.common.BackButtonActivity
 import woowacourse.movie.presentation.view.main.home.bookcomplete.BookCompleteActivity
 import woowacourse.movie.presentation.view.main.home.seatpick.model.SeatGradeModel
@@ -114,18 +114,18 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
         Intent(this, BookingAlarmReceiver::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }.let { intent ->
-            intent.putExtra(BookCompleteActivity.RESERVATION_ID_INTENT_KEY, reservation.id)
+            intent.putExtra(BookCompleteActivity.RESERVATION_ID_INTENT_KEY, reservation)
             intent.putExtra(
                 BookingAlarmReceiver.RESERVATION_INTENT_KEY, reservation
             )
             PendingIntent.getBroadcast(this, 0, intent, FLAG_IMMUTABLE)
         }
 
-    override fun showBookCompleteView(reservationId: Long) {
+    override fun showBookCompleteView(reservation: ReservationResult) {
         val intent = BookCompleteActivity.getIntent(this).apply {
             putExtra(
                 BookCompleteActivity.RESERVATION_ID_INTENT_KEY,
-                reservationId
+                reservation
             )
         }
         startActivity(intent)

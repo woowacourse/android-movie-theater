@@ -1,13 +1,13 @@
 package woowacourse.movie.presentation.view.main.home.seatpick
 
 import android.content.Context
-import com.example.domain.Reservation
-import com.example.domain.ReservationRepository
 import com.example.domain.Seat
 import com.example.domain.SeatGrade
 import com.example.domain.TicketBundle
 import woowacourse.movie.R
 import woowacourse.movie.data.SharedPreferenceUtil
+import woowacourse.movie.data.database.MovieHelper
+import woowacourse.movie.data.model.MovieBookingEntity
 import woowacourse.movie.presentation.model.MovieBookingInfo
 import woowacourse.movie.presentation.model.ReservationResult
 import woowacourse.movie.presentation.view.main.home.seatpick.model.SeatGradeModel
@@ -47,23 +47,23 @@ class SeatPickerPresenter(
     }
 
     override fun bookComplete() {
-        val reservation = Reservation(
-            ticketBundle.calculateTotalPrice(movieBookingInfo!!.date, movieBookingInfo.time),
+        val movieBookingEntity = MovieBookingEntity(
+            movieBookingInfo!!.movieInfo.title,
+            movieBookingInfo.date,
+            movieBookingInfo.time,
             ticketBundle.tickets.size,
             ticketBundle.getSeatNames().joinToString(", "),
-            movieBookingInfo.movieInfo.title,
-            movieBookingInfo.date,
-            movieBookingInfo.time
+            ticketBundle.calculateTotalPrice(movieBookingInfo.date, movieBookingInfo.time)
         )
-        ReservationRepository.save(reservation)
+        MovieHelper(context).writeMovie(movieBookingEntity)
 
         val allowedPushNotification =
             SharedPreferenceUtil(context).getBoolean(
                 context.getString(R.string.push_alarm_setting),
                 false
             )
-        setAlarm(reservation, allowedPushNotification)
-        view.showBookCompleteView(reservation.id ?: -1)
+        setAlarm(movieBookingEntity, allowedPushNotification)
+        view.showBookCompleteView(ReservationResult.from(movieBookingEntity))
     }
 
     override fun setSeatInfo(seatIndex: Int): SeatModel {
@@ -100,12 +100,12 @@ class SeatPickerPresenter(
     }
 
     private fun setAlarm(
-        reservation: Reservation,
+        bookingData: MovieBookingEntity,
         allowedPushNotification: Boolean
     ) {
         val screeningDateTime = LocalDateTime.of(
-            LocalDate.parse(reservation.date, DateTimeFormatter.ISO_DATE),
-            LocalTime.parse(reservation.time, DateTimeFormatter.ofPattern("H:mm"))
+            LocalDate.parse(bookingData.date, DateTimeFormatter.ISO_DATE),
+            LocalTime.parse(bookingData.time, DateTimeFormatter.ofPattern("H:mm"))
         )
 
         val notificationTime =
@@ -113,7 +113,7 @@ class SeatPickerPresenter(
                     TIME_MILLS_OF_HALF_HOUR
 
         if (allowedPushNotification)
-            view.updateNotification(ReservationResult.from(reservation), notificationTime)
+            view.updateNotification(ReservationResult.from(bookingData), notificationTime)
     }
 
     private fun isTicketCountMax(): Boolean {

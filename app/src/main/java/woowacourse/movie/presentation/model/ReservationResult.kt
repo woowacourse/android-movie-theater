@@ -1,8 +1,8 @@
 package woowacourse.movie.presentation.model
 
 import android.os.Parcelable
-import com.example.domain.Reservation
 import kotlinx.android.parcel.Parcelize
+import woowacourse.movie.data.model.MovieBookingEntity
 
 @Parcelize
 data class ReservationResult(
@@ -16,15 +16,15 @@ data class ReservationResult(
 ) : Parcelable {
 
     companion object {
-        fun from(reservation: Reservation): ReservationResult {
+        fun from(bookings: MovieBookingEntity): ReservationResult {
             return ReservationResult(
-                reservation.id ?: -1,
-                reservation.totalPrice,
-                reservation.ticketCount,
-                reservation.seatNames,
-                reservation.movieTitle,
-                reservation.date,
-                reservation.time
+                bookings.id,
+                bookings.totalPrice,
+                bookings.personCount,
+                bookings.seatNames,
+                bookings.title,
+                bookings.date,
+                bookings.time
             )
         }
     }

@@ -11,7 +11,7 @@ interface SeatPickerContract {
         fun showTicketIsMaxCountView(ticketCount: Int)
         fun showConfirmDialog()
         fun updateNotification(reservationResult: ReservationResult, notificationTimeStamp: Long)
-        fun showBookCompleteView(reservationId: Long)
+        fun showBookCompleteView(reservation: ReservationResult)
         fun updateTotalPriceView(totalPrice: Int)
     }
 

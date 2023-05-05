@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.Reservation
 import woowacourse.movie.R
+import woowacourse.movie.presentation.model.ReservationResult
 
 class BookingListViewHolder(
     parent: ViewGroup,
@@ -26,9 +26,9 @@ class BookingListViewHolder(
         }
     }
 
-    fun bind(reservation: Reservation) {
-        bookingMovieTitle.text = reservation.movieTitle
+    fun bind(bookings: ReservationResult) {
+        bookingMovieTitle.text = bookings.movieTitle
         bookingDate.text = itemView.context.getString(R.string.booking_complete_date)
-            .format(reservation.date.replace("-", "."), reservation.time)
+            .format(bookings.date.replace("-", "."), bookings.time)
     }
 }
