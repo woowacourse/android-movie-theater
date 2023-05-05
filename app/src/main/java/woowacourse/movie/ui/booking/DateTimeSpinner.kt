@@ -38,7 +38,11 @@ class DateTimeSpinner(
     private fun initBinding() {
         val layoutInflater = LayoutInflater.from(context)
 
-        binding = DateTimeSpinnerBinding.inflate(layoutInflater)
+        binding = DateTimeSpinnerBinding.inflate(
+            layoutInflater,
+            this,
+            true
+        )
     }
 
     private fun initAdapters() {

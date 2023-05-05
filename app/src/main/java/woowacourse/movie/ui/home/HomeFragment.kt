@@ -6,17 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.model.main.MainData
 import woowacourse.movie.ui.booking.BookingActivity
 import woowacourse.movie.ui.main.adapter.recyclerview.MainAdapter
 
 class HomeFragment : Fragment(), HomeContract.View {
 
-    private val moviesRecyclerView: RecyclerView by lazy {
-        requireActivity().findViewById(R.id.listMainMovie)
-    }
+    private lateinit var binding: FragmentHomeBinding
     private val homePresenter: HomePresenter by lazy {
         HomePresenter(this)
     }
@@ -25,8 +22,10 @@ class HomeFragment : Fragment(), HomeContract.View {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        binding = FragmentHomeBinding.inflate(layoutInflater)
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,7 +40,7 @@ class HomeFragment : Fragment(), HomeContract.View {
             onAdClicked = ::onAdClicked,
         )
 
-        moviesRecyclerView.adapter = mainAdapter
+        binding.listMainMovie.adapter = mainAdapter
         mainAdapter.initMovies(mainData)
     }
 
