@@ -13,11 +13,10 @@ object AlarmSettingRepositoryImpl : AlarmSettingRepository {
         )
     }
 
-    override var enablePushNotification: Boolean
-        get() = prefs.getBoolean(NOTIFICATIONS, false)
-        set(value) {
-            prefs.edit().putBoolean(NOTIFICATIONS, value).apply()
-        }
-
     private const val NOTIFICATIONS = "notifications"
+    override fun getEnablePushNotification(): Boolean = prefs.getBoolean(NOTIFICATIONS, false)
+
+    override fun setEnablePushNotification(value: Boolean) {
+        prefs.edit().putBoolean(NOTIFICATIONS, value).apply()
+    }
 }

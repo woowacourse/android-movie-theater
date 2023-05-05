@@ -7,11 +7,11 @@ class SettingPresenter(
     private val settingRepository: AlarmSettingRepository
 ) : SettingContract.Presenter {
     override fun loadAlarmSettingInfo() {
-        view.setInitAlarmSettingInfo(settingRepository.enablePushNotification)
+        view.setInitAlarmSettingInfo(settingRepository.getEnablePushNotification())
     }
 
     override fun changeSwitchCheckedState(isPermissionApprove: Boolean, isSwitchChecked: Boolean) {
         if (!isPermissionApprove) view.alarmPermissionIsNotApprove()
-        settingRepository.enablePushNotification = isSwitchChecked
+        settingRepository.setEnablePushNotification(isSwitchChecked)
     }
 }

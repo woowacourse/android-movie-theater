@@ -8,7 +8,7 @@ class AlarmReceiverPresenter(
     private val alarmSettingRepository: AlarmSettingRepository
 ) : AlarmReceiverContract.Presenter {
     override fun receiveAlarmSignal(tickets: TicketsState) {
-        val isNotification = alarmSettingRepository.enablePushNotification
+        val isNotification = alarmSettingRepository.getEnablePushNotification()
         if (isNotification.not()) return
         view.generateMovieAlarmNotification(tickets)
     }

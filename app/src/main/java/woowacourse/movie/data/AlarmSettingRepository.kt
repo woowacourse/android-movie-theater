@@ -1,5 +1,6 @@
 package woowacourse.movie.data
 
 interface AlarmSettingRepository {
-    var enablePushNotification: Boolean
+    fun getEnablePushNotification(): Boolean
+    fun setEnablePushNotification(value: Boolean)
 }
