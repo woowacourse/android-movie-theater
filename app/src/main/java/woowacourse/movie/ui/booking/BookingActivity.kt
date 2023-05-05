@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.model.main.MovieUiModel
@@ -32,14 +33,12 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        binding = ActivityBookingBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_booking)
+        binding.presenter = bookingPresenter
 
         bookingPresenter.initMovie()
         bookingPresenter.initTicketCount()
         bookingPresenter.initDateTimes()
-        initTicketCountButtonClickListener()
         initCompleteButtonClickListener()
     }
 
@@ -85,15 +84,6 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
 
     override fun setDates(screeningDates: List<LocalDate>) {
         binding.spinnerDateTime.setDates(screeningDates)
-    }
-
-    private fun initTicketCountButtonClickListener() {
-        binding.buttonBookingMinus.setOnClickListener {
-            bookingPresenter.minusTicketCount()
-        }
-        binding.buttonBookingPlus.setOnClickListener {
-            bookingPresenter.plusTicketCount()
-        }
     }
 
     private fun showBackButton() {
