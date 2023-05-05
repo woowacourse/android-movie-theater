@@ -4,6 +4,8 @@ import woowacourse.movie.datasource.MockAdDataSource
 import woowacourse.movie.datasource.MockMovieDataSource
 import woowacourse.movie.domain.advertismentPolicy.AdvertisementPolicy
 import woowacourse.movie.domain.advertismentPolicy.MovieAdvertisementPolicy
+import woowacourse.movie.domain.dataSource.AdDataSource
+import woowacourse.movie.domain.dataSource.MovieDataSource
 import woowacourse.movie.domain.repository.AdRepository
 import woowacourse.movie.domain.repository.MovieRepository
 import woowacourse.movie.view.data.MovieListViewData
@@ -13,11 +15,13 @@ import woowacourse.movie.view.mapper.AdvertisementMapper.toView
 import woowacourse.movie.view.mapper.MovieMapper.toView
 
 class MovieListPresenter(
-    private val view: MovieListContract.View
+    private val view: MovieListContract.View,
+    movieDataSource: MovieDataSource = MockMovieDataSource(),
+    adDataSource: AdDataSource = MockAdDataSource()
 ) : MovieListContract.Presenter {
 
-    private val movieRepository: MovieRepository = MovieRepository(MockMovieDataSource())
-    private val adRepository: AdRepository = AdRepository(MockAdDataSource())
+    private val movieRepository: MovieRepository = MovieRepository(movieDataSource)
+    private val adRepository: AdRepository = AdRepository(adDataSource)
     override fun initMovieRecyclerView() {
         val loadMovieViewDatas: MovieViewDatas = loadMovieListData()
         view.initMovieRecyclerView(loadMovieViewDatas)
