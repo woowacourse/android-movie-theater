@@ -1,4 +1,4 @@
-package woowacourse.movie.fragment.bookhistory
+package woowacourse.movie.fragment.bookhistory.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.woowacourse.domain.BookHistories
 import woowacourse.movie.R
 import woowacourse.movie.activity.BookCompleteActivity
+import woowacourse.movie.fragment.bookhistory.adapter.BookHistoryRecyclerViewAdapter
 import woowacourse.movie.movie.toPresentation
 
 class BookHistoryFragment : Fragment(), BookHistoryContract.View {

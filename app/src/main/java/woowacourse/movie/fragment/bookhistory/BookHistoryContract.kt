@@ -1,5 +1,7 @@
 package woowacourse.movie.fragment.bookhistory
 
+import woowacourse.movie.fragment.bookhistory.adapter.BookHistoryRecyclerViewAdapter
+
 interface BookHistoryContract {
 
     interface View {

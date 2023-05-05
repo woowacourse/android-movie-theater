@@ -1,4 +1,4 @@
-package woowacourse.movie.fragment.bookhistory
+package woowacourse.movie.fragment.bookhistory.adapter
 
 import android.text.SpannableStringBuilder
 import android.text.Spanned
