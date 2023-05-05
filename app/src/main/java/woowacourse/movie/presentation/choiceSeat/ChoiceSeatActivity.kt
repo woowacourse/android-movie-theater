@@ -2,7 +2,6 @@ package woowacourse.movie.presentation.choiceSeat
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TableLayout
@@ -27,21 +26,22 @@ import woowacourse.movie.model.data.storage.SettingStorage
 import woowacourse.movie.presentation.complete.CompleteActivity
 import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.model.ReservationModel
+import woowacourse.movie.presentation.util.getParcelableExtraCompat
+import woowacourse.movie.util.intentDataNullProcess
 
 class ChoiceSeatActivity : AppCompatActivity() {
 
     private lateinit var settingStorage: SettingStorage
     private val seats: Seats = Seats()
     private var paymentAmount: Money = Money(INITIAL_PAYMENT_AMOUNT)
-    private val reservation by lazy {
-        initReservation()
-    }
+    private lateinit var reservation: ReservationModel
     private val confirmButton by lazy {
         findViewById<Button>(R.id.buttonChoiceConfirm)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initExtraData()
         initSettingStorage()
         setContentView(R.layout.activity_choice_seat)
         setTheaterSeat()
@@ -52,11 +52,11 @@ class ChoiceSeatActivity : AppCompatActivity() {
         settingStorage = SettingPreference(this)
     }
 
-    private fun initReservation() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        intent.getParcelableExtra(RESERVATION, ReservationModel::class.java)
-            ?: throw IllegalArgumentException()
-    } else {
-        intent.getParcelableExtra(RESERVATION) ?: throw IllegalArgumentException()
+    private fun initExtraData() {
+        reservation = intent.getParcelableExtraCompat<ReservationModel>(RESERVATION)
+            ?: return this.intentDataNullProcess(
+                RESERVATION
+            )
     }
 
     private fun initView() {
