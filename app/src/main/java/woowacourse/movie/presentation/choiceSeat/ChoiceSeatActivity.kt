@@ -12,14 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.data.BookedTickets
-import woowacourse.movie.domain.model.rules.SeatsPayment
-import woowacourse.movie.domain.model.tools.Money
 import woowacourse.movie.domain.model.tools.seat.Location
-import woowacourse.movie.domain.model.tools.seat.Seat
 import woowacourse.movie.domain.model.tools.seat.SeatGrade
-import woowacourse.movie.domain.model.tools.seat.SeatRow
-import woowacourse.movie.domain.model.tools.seat.Seats
-import woowacourse.movie.domain.model.tools.seat.Theater
 import woowacourse.movie.model.data.local.SettingPreference
 import woowacourse.movie.model.data.remote.DummyMovieStorage
 import woowacourse.movie.presentation.complete.CompleteActivity
@@ -31,24 +25,31 @@ import woowacourse.movie.util.intentDataNullProcess
 class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
 
     override lateinit var presenter: ChoiceSeatContract.Presenter
-    private val seats: Seats = Seats()
-    private var paymentAmount: Money = Money(INITIAL_PAYMENT_AMOUNT)
+
     private lateinit var reservation: ReservationModel
     private val confirmButton by lazy {
         findViewById<Button>(R.id.buttonChoiceConfirm)
     }
+    private val textChoicePaymentAmount by lazy {
+        findViewById<TextView>(R.id.textChoicePaymentAmount)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initPresenter()
-        initExtraData()
         setContentView(R.layout.activity_choice_seat)
+        initExtraData()
+        initPresenter()
         setTheaterSeat()
         initView()
     }
 
     private fun initPresenter() {
-        presenter = ChoiceSeatPresenter(this, SettingPreference(this), DummyMovieStorage())
+        presenter = ChoiceSeatPresenter(
+            view = this,
+            settingStorage = SettingPreference(this),
+            movieStorage = DummyMovieStorage(),
+            reservation = reservation
+        )
     }
 
     private fun initExtraData() {
@@ -61,15 +62,17 @@ class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
     private fun initView() {
         val movie = presenter.getMovieById(reservation.movieId)
         setTitle(movie.title)
-        setPaymentAmount(Money(INITIAL_PAYMENT_AMOUNT))
-        setConfirmButton()
+        setConfirmButtonClickListener()
     }
 
-    private fun setConfirmButton() {
+    private fun setTitle(title: String) {
+        findViewById<TextView>(R.id.textChoiceTitle).text = title
+    }
+
+    private fun setConfirmButtonClickListener() {
         confirmButton.setOnClickListener {
             showConfirmCheckDialog()
         }
-        confirmButton.isEnabled = false
     }
 
     private fun showConfirmCheckDialog() {
@@ -88,7 +91,7 @@ class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
 
     private fun confirmBookMovie() {
         val movie = presenter.getMovieById(reservation.movieId).toPresentation()
-        val ticketModel = movie.reserve(reservation, seats)
+        val ticketModel = movie.reserve(reservation, presenter.getSeats())
         BookedTickets.tickets.add(ticketModel)
         if (presenter.getNotificationSettings()) MovieNoticeAlarmManager(
             this,
@@ -98,76 +101,52 @@ class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
         finishAffinity()
     }
 
-    private fun setTitle(title: String) {
-        findViewById<TextView>(R.id.textChoiceTitle).text = title
-    }
-
-    private fun setPaymentAmount(amount: Money) {
-        paymentAmount = amount
-        findViewById<TextView>(R.id.textChoicePaymentAmount).text =
-            getString(R.string.payment_amount, amount.value)
+    override fun updateTextChoicePaymentAmount(paymentAmount: Int) {
+        textChoicePaymentAmount.text = getString(R.string.payment_amount, paymentAmount)
     }
 
     private fun setTheaterSeat() {
-        val theater = Theater.of(rows, columns)
-        val seatsTable = findViewById<TableLayout>(R.id.tableSeats)
+        findViewById<TableLayout>(R.id.tableSeats)
             .children
             .filterIsInstance<TableRow>()
             .flatMap { it.children }
             .filterIsInstance<TextView>()
             .forEachIndexed { index, view ->
-                setSeat(index, view, theater)
+                setSeat(index, view)
             }
     }
 
-    private fun setSeat(index: Int, view: TextView, theater: Theater) {
-        val column = index % THEATER_COLUMN
-        val location = Location(indexToRow(index), column)
-        val seat = requireNotNull(theater.findSeat(location))
+    private fun setSeat(index: Int, view: TextView) {
+        val column = index % ChoiceSeatPresenter.THEATER_COLUMN
+        val location = presenter.getLocation(index, column)
 
         setSeatText(view, location)
-        setSeatTextColor(view, seat.grade)
+        setSeatTextColor(view, presenter.getSeatGrade(location))
         view.setOnClickListener {
-            clickSeat(seat, view)
+            clickSeat(index, column, view)
         }
     }
 
-    private fun clickSeat(seat: Seat, view: TextView) {
+    private fun clickSeat(row: Int, column: Int, view: TextView) {
         when {
-            view.isSelected -> unSelectSeat(seat, view)
-            seats.size >= reservation.count -> return
-            else -> selectSeat(seat, view)
+            view.isSelected -> unSelectSeat(row, column, view)
+            presenter.checkReservationCountFull() -> return
+            else -> selectSeat(row, column, view)
         }
     }
 
-    private fun unSelectSeat(seat: Seat, view: TextView) {
-        removeSeat(seat)
+    private fun unSelectSeat(row: Int, column: Int, view: TextView) {
+        presenter.removeSeat(row = row, column = column)
         view.isSelected = false
     }
 
-    private fun selectSeat(seat: Seat, view: TextView) {
-        addSeat(seat)
+    private fun selectSeat(row: Int, column: Int, view: TextView) {
+        presenter.addSeat(row = row, column = column)
         view.isSelected = true
     }
 
-    private fun addSeat(seat: Seat) {
-        seats.addSeat(seat)
-        val paymentMoney =
-            SeatsPayment(seats).getDiscountedMoneyByDateTime(reservation.bookedDateTime)
-        setPaymentAmount(paymentMoney)
-        checkCountEqual()
-    }
-
-    private fun removeSeat(seat: Seat) {
-        seats.removeSeat(seat)
-        val paymentMoney =
-            SeatsPayment(seats).getDiscountedMoneyByDateTime(reservation.bookedDateTime)
-        setPaymentAmount(paymentMoney)
-        checkCountEqual()
-    }
-
-    private fun checkCountEqual() {
-        if (seats.size == reservation.count) {
+    override fun updateConfirmButtonState(reservationCountFull: Boolean) {
+        if (reservationCountFull) {
             confirmButton.isEnabled = true
             return
         }
@@ -191,17 +170,9 @@ class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
         }
     }
 
-    private fun indexToRow(index: Int): SeatRow {
-        val rows = SeatRow.values().toList()
-        return rows[index / THEATER_COLUMN]
-    }
-
     companion object {
-        private const val THEATER_COLUMN = 4
         private const val COLUMN_ADDITION = 1
-        private const val INITIAL_PAYMENT_AMOUNT = 0
-        private val rows = SeatRow.values().toList()
-        private val columns = List(THEATER_COLUMN) { it }
+
         private const val RESERVATION = "RESERVATION"
 
         fun getIntent(context: Context, reservation: ReservationModel): Intent {
