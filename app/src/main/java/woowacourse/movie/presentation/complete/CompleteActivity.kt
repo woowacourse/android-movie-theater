@@ -5,9 +5,9 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityCompleteBinding
 import woowacourse.movie.presentation.main.MainActivity
 import woowacourse.movie.presentation.model.MovieModel
 import woowacourse.movie.presentation.model.TicketModel
@@ -16,6 +16,8 @@ import woowacourse.movie.presentation.util.formatDotDateTimeColon
 class CompleteActivity : AppCompatActivity(), CompleteContract.View {
 
     override val presenter: CompleteContract.Presenter by lazy { CompletePresenter(this) }
+
+    private lateinit var binding: ActivityCompleteBinding
 
     override val ticketModel by lazy {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -28,7 +30,8 @@ class CompleteActivity : AppCompatActivity(), CompleteContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_completed)
+        binding = ActivityCompleteBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         initView()
     }
@@ -50,16 +53,16 @@ class CompleteActivity : AppCompatActivity(), CompleteContract.View {
     }
 
     private fun setMovieTitle(movieModel: MovieModel) {
-        findViewById<TextView>(R.id.textCompletedTitle).text = movieModel.title
+        binding.textCompletedTitle.text = movieModel.title
     }
 
     private fun setMovieScreeningDate() {
-        findViewById<TextView>(R.id.textCompletedScreeningDate).text =
+        binding.textCompletedScreeningDate.text =
             ticketModel.bookedDateTime.formatDotDateTimeColon()
     }
 
     private fun setMovieTicketCount() {
-        findViewById<TextView>(R.id.textCompletedTicketCount).text =
+        binding.textCompletedTicketCount.text =
             getString(R.string.normal_ticket_count_seat).format(
                 ticketModel.count,
                 ticketModel.formatSeatsCombine(),
@@ -67,7 +70,7 @@ class CompleteActivity : AppCompatActivity(), CompleteContract.View {
     }
 
     private fun setMoviePaymentAmount() {
-        findViewById<TextView>(R.id.textCompletedPaymentAmount).text =
+        binding.textCompletedPaymentAmount.text =
             getString(R.string.payment_on_site_amount).format(ticketModel.paymentMoney)
     }
 
