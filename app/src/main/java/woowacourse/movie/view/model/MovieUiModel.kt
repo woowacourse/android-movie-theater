@@ -8,8 +8,10 @@ import java.time.LocalTime
 @Parcelize
 data class MovieUiModel(
     val title: String,
-    val screeningDateTimes: Map<LocalDate, List<LocalTime>>,
+    val startDate: LocalDate,
+    val endDate: LocalDate,
     val runningTime: Int,
     val posterResourceId: Int,
     val summary: String,
+    val schedule: Map<String, Map<LocalDate, List<LocalTime>>>,
 ) : Parcelable
