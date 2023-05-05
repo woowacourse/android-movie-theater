@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.feature.main
 
 import io.mockk.Runs
 import io.mockk.every
@@ -7,10 +7,8 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.feature.main.MainContract
-import woowacourse.movie.feature.main.MainPresenter
 
-class MainPresenterTest {
+internal class MainPresenterTest {
     private lateinit var mainPresenter: MainContract.Presenter
     private lateinit var view: MainContract.View
 
