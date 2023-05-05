@@ -1,6 +1,6 @@
 package woowacourse.movie.view.seatselection
 
-import woowacourse.movie.data.ReservationMockRepository
+import woowacourse.movie.data.SeatDatabase
 import woowacourse.movie.domain.ReservationAgency
 import woowacourse.movie.domain.Seat
 import woowacourse.movie.domain.repository.ReservationRepository
@@ -10,7 +10,9 @@ import woowacourse.movie.view.model.ReservationOptions
 import woowacourse.movie.view.model.SeatUiModel
 
 class SeatSelectionPresenter(
-    private val view: SeatSelectionContract.View
+    private val view: SeatSelectionContract.View,
+    private val reservationRepository: ReservationRepository,
+    private val seatDatabase: SeatDatabase
 ) : SeatSelectionContract.Presenter {
 
     private val reservationOptions: ReservationOptions? by lazy {
@@ -19,7 +21,6 @@ class SeatSelectionPresenter(
     private lateinit var reservationAgency: ReservationAgency
     private var selectedSeatCount = 0
     private var selectedSeats: List<Seat> = emptyList()
-    private val reservationRepository: ReservationRepository = ReservationMockRepository
 
     override fun setUp() {
         view.initSeatButtons(Seat.MIN_ROW..Seat.MAX_ROW, Seat.MIN_COLUMN..Seat.MAX_COLUMN)
@@ -81,7 +82,8 @@ class SeatSelectionPresenter(
     override fun reserveSeats() {
         val reservation = reservationAgency.reserve(selectedSeats)
         reservation?.let {
-            reservationRepository.add(reservation)
+            val reservationId = reservationRepository.add(reservation)
+            seatDatabase.addSeats(reservation.seats, reservationId)
             view.registerReservationAlarm(reservation.toUiModel())
         }
     }

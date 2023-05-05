@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.data.ReservationDatabase
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.view.model.ReservationUiModel
 import woowacourse.movie.view.reservationcompleted.ReservationCompletedActivity
@@ -41,7 +42,10 @@ class ReservationListFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter = ReservationListPresenter(this)
+        presenter = ReservationListPresenter(
+            this,
+            ReservationDatabase(requireActivity().applicationContext)
+        )
         presenter.loadReservationList()
     }
 }

@@ -10,7 +10,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.switchmaterial.SwitchMaterial
 import woowacourse.movie.AlarmPreference
 import woowacourse.movie.R
-import woowacourse.movie.data.ReservationMockRepository
+import woowacourse.movie.data.ReservationDatabase
+import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.util.isGranted
 import woowacourse.movie.util.requestRequiredPermissions
 import woowacourse.movie.view.alarm.ReservationAlarmManager
@@ -97,7 +98,8 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
     }
 
     private fun resetAlarms() {
-        val reservations = ReservationMockRepository.findAll().map { it.toUiModel() }
+        val reservationDatabase: ReservationRepository = ReservationDatabase(requireActivity().applicationContext)
+        val reservations = reservationDatabase.findAll().map { it.toUiModel() }
         reservationAlarmManager.registerAlarms(reservations, ALARM_MINUTE_INTERVAL)
     }
 
