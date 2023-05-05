@@ -24,24 +24,27 @@ class ReservationListFragment : Fragment(), ReservationListContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        setUpBinding()
-        setUpPresenter()
+        initBinding()
+        initPresenter()
         return binding.root
     }
 
-    private fun setUpBinding() {
+    private fun initBinding() {
         binding = FragmentReservationListBinding.inflate(layoutInflater)
     }
 
-    private fun setUpPresenter() {
-        presenter = ReservationListPresenter()
+    private fun initPresenter() {
+        presenter = ReservationListPresenter(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        presenter.getReservationList()
+    }
 
+    override fun setAdapter(tickets: List<TicketsState>) {
         adapter = ReservationListAdapter(
-            presenter.getReservationList().map(::TicketsItemModel)
+            tickets.map(::TicketsItemModel)
         ) { ticketsItemModel ->
             navigateReservationConfirm(ticketsItemModel.ticketsState)
         }

@@ -10,15 +10,16 @@ class ReservationListPresenterTest {
     @Test
     fun `예매 내역을 가져온다`() {
         // given
-        val ticketsRepository = mockk<TicketsRepository>()
-        val presenter = ReservationListPresenter(ticketsRepository)
-        every { ticketsRepository.allTickets() } returns emptyList()
+        val view = mockk<ReservationListContract.View>(relaxed = true)
+        val ticketsRepository = mockk<TicketsRepository>(relaxed = true)
+        val presenter = ReservationListPresenter(view, ticketsRepository)
 
         // when
-        val reservationList = presenter.getReservationList()
+        every { ticketsRepository.allTickets() } returns listOf()
+
+        presenter.getReservationList()
 
         // then
-        assert(reservationList.isEmpty())
-        verify { ticketsRepository.allTickets() }
+        verify { view.setAdapter(listOf()) }
     }
 }
