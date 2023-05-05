@@ -14,7 +14,7 @@ class SettingsFragment : Fragment(), SettingsContract.View {
     override lateinit var presenter: SettingsContract.Presenter
 
     private var _binding: FragmentSettingsBinding? = null
-    private val binding = _binding!!
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,5 +44,10 @@ class SettingsFragment : Fragment(), SettingsContract.View {
         notificationSwitch.setOnCheckedChangeListener { _, isChecked ->
             presenter.isNotifiable = isChecked
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
