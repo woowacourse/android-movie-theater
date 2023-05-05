@@ -7,31 +7,26 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingBinding
-import woowacourse.movie.model.main.MovieMapper.toUiModel
 import woowacourse.movie.model.main.MovieUiModel
-import woowacourse.movie.movie.MovieRepository
 import woowacourse.movie.ui.seat.SeatActivity
 import woowacourse.movie.util.formatScreenDate
+import java.time.LocalDate
+import java.time.LocalTime
 
 class BookingActivity : AppCompatActivity(), BookingContract.View {
 
     private lateinit var binding: ActivityBookingBinding
-    private val movie: MovieUiModel by lazy {
-        MovieRepository.getMovie(
-            movieId = intent.getLongExtra(MOVIE_ID, -1)
-        ).toUiModel()
+    private val movieId: Long by lazy {
+        intent.getLongExtra(MOVIE_ID, -1)
+    }
+    private val theaterId: Long by lazy {
+        intent.getLongExtra(THEATER_ID, 0)
     }
     private val bookingPresenter: BookingContract.Presenter by lazy {
         BookingPresenter(
-            bookingView = this,
-            movie = movie,
-        )
-    }
-    private val dateTimePresenter: DateTimeContract.Presenter by lazy {
-        DateTimePresenter(
-            startDate = movie.startDate,
-            endDate = movie.endDate,
-            view = binding.spinnerDateTime
+            view = this,
+            movieId = movieId,
+            theaterId = theaterId
         )
     }
 
@@ -41,11 +36,11 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         binding = ActivityBookingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initView()
-        initTicketCountText()
+        bookingPresenter.initMovie()
+        bookingPresenter.initTicketCount()
+        bookingPresenter.initDateTimes()
         initTicketCountButtonClickListener()
         initCompleteButtonClickListener()
-        initDateTimeSpinner()
     }
 
     override fun onRestoreInstanceState(
@@ -66,7 +61,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         }
     }
 
-    private fun initView() {
+    override fun initView(movie: MovieUiModel) {
         binding.imageBookingPoster.setImageResource(movie.poster)
         binding.textBookingTitle.text = movie.title
         binding.textBookingScreeningDate.text =
@@ -80,8 +75,16 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         showBackButton()
     }
 
-    private fun initTicketCountText() {
-        bookingPresenter.initTicketCount()
+    override fun setTicketCountText(count: Int) {
+        binding.textBookingTicketCount.text = count.toString()
+    }
+
+    override fun setTimes(screeningTimes: List<LocalTime>) {
+        binding.spinnerDateTime.setTimes(screeningTimes)
+    }
+
+    override fun setDates(screeningDates: List<LocalDate>) {
+        binding.spinnerDateTime.setDates(screeningDates)
     }
 
     private fun initTicketCountButtonClickListener() {
@@ -103,14 +106,6 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
             return true
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun initDateTimeSpinner() {
-        dateTimePresenter.initDateTimes()
-    }
-
-    override fun setTicketCountText(count: Int) {
-        binding.textBookingTicketCount.text = count.toString()
     }
 
     private fun initCompleteButtonClickListener() {

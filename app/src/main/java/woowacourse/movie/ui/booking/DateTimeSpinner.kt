@@ -3,8 +3,6 @@ package woowacourse.movie.ui.booking
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
-import android.widget.AdapterView
 import androidx.constraintlayout.widget.ConstraintLayout
 import woowacourse.movie.R
 import woowacourse.movie.databinding.DateTimeSpinnerBinding
@@ -15,7 +13,7 @@ import java.time.LocalTime
 class DateTimeSpinner(
     context: Context,
     attrs: AttributeSet,
-) : ConstraintLayout(context, attrs), DateTimeContract.View {
+) : ConstraintLayout(context, attrs) {
 
     lateinit var binding: DateTimeSpinnerBinding
     private val dateAdapter: SpinnerAdapter<LocalDate> by lazy {
@@ -50,28 +48,11 @@ class DateTimeSpinner(
         binding.movieTimeSpinner.adapter = timeAdapter
     }
 
-    override fun setDates(screeningDates: List<LocalDate>) {
+    fun setDates(screeningDates: List<LocalDate>) {
         dateAdapter.initItems(screeningDates)
     }
 
-    override fun setTimes(screeningTimes: List<LocalTime>) {
+    fun setTimes(screeningTimes: List<LocalTime>) {
         timeAdapter.initItems(screeningTimes)
-    }
-
-    override fun initDateSelectedListener(updateTimes: (selectedDate: LocalDate) -> (Unit)) {
-        binding.movieDateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long,
-            ) {
-                dateAdapter.getItem(position)?.let { screeningDate ->
-                    updateTimes(screeningDate)
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) = Unit
-        }
     }
 }

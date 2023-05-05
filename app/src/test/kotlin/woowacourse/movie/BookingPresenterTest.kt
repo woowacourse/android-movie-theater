@@ -8,6 +8,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.ui.booking.BookingContract
+import java.time.LocalDate
+import java.time.LocalTime
 
 class BookingPresenterTest {
 
@@ -17,6 +19,7 @@ class BookingPresenterTest {
     @Before
     fun setUp() {
         view = mockk()
+        // given 극장은 선릉이다. (10시부터 두시간 간격으로 6개의 상영시간을 가진다)
         bookingPresenter = BookingPresenter(view)
     }
 
@@ -65,5 +68,56 @@ class BookingPresenterTest {
         val actual = slot.captured
         assertEquals(2, actual)
         verify { view.setTicketCountText(actual) }
+    }
+
+    @Test
+    fun `상영 기간이 4월 26일부터 4월 30일인 경우 date 정보를 나타내는 spinner에 그 사이 기간들을 넣는다`() {
+        //given
+        val slot = slot<List<LocalDate>>()
+
+        every { view.setDates(capture(slot)) } answers { println(slot.captured) }
+        ignoreTimes(view)
+
+        //when
+        bookingPresenter.initDateTimes()
+
+        //then
+        val actual = slot.captured
+        val expected = listOf(
+            LocalDate.of(2023, 4, 26),
+            LocalDate.of(2023, 4, 27),
+            LocalDate.of(2023, 4, 28),
+            LocalDate.of(2023, 4, 29),
+            LocalDate.of(2023, 4, 30)
+        )
+
+        assertEquals(actual, expected)
+        verify { view.setDates(actual) }
+    }
+
+    @Test
+    fun `선릉 극장을 선택한 경우 10시부터 두시간 간격으로 6개의 상영시간을 time 정보를 가진 spinner에 넣는다`() {
+        //given 기본 극장은 선릉으로 설정되어 있다
+        val slot = slot<List<LocalTime>>()
+
+        every { view.setTimes(capture(slot)) } answers { println(slot.captured) }
+        ignoreDates(view)
+
+        //when
+        bookingPresenter.initDateTimes()
+
+        //then
+        val actual = slot.captured
+        val expected = listOf(
+            LocalTime.of(10, 0),
+            LocalTime.of(12, 0),
+            LocalTime.of(14, 0),
+            LocalTime.of(16, 0),
+            LocalTime.of(18, 0),
+            LocalTime.of(20, 0)
+        )
+
+        assertEquals(actual, expected)
+        verify { view.setTimes(expected) }
     }
 }
