@@ -20,6 +20,7 @@ object MovieMockRepository : MovieRepository {
                 "“꿈이 아니었어” 규슈, 시코쿠, 고베, 도쿄 재난을 막기 위해 일본 전역을 돌며 필사적으로 문을 닫아가던 중 어릴 적 고향에 닿은 ‘스즈메’는 잊고 있던 진실과 마주하게 되는데…",
             Schedule(
                 mapOf(
+                    "정말아주아주아주아주아주아주아주긴극장이름" to listOf(LocalTime.of(13, 0), LocalTime.of(15, 0), LocalTime.of(17, 0), LocalTime.of(19, 0)),
                     "선릉 극장" to listOf(LocalTime.of(13, 0), LocalTime.of(15, 0), LocalTime.of(17, 0), LocalTime.of(19, 0)),
                     "잠실 극장" to listOf(LocalTime.of(9, 0)),
                     "강남 극장" to listOf(LocalTime.of(12, 0), LocalTime.of(14, 0), LocalTime.of(16, 0))

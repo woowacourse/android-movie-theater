@@ -26,6 +26,7 @@ object TheaterMockRepository : TheaterRepository {
     )
 
     val theaters: List<Theater> = listOf(
+        Theater("정말아주아주아주아주아주아주아주긴극장이름", seatInfo, policies),
         Theater("선릉 극장", seatInfo, policies),
         Theater("잠실 극장", seatInfo, policies),
         Theater("강남 극장", seatInfo, policies),
