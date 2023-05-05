@@ -306,7 +306,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:gravity="center"
-            android:background="@color/seat_picker_done_button_off"
+            android:background="@drawable/selector_seat_picker_done"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/white" />

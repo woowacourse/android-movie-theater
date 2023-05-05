@@ -96,14 +96,12 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
 
     override fun deactivateDoneButton() {
         val doneButton = findViewById<TextView>(R.id.seat_picker_done_button)
-        doneButton.setBackgroundColor(getColor(R.color.seat_picker_done_button_off))
-        doneButton.isClickable = false
+        doneButton.isEnabled = false
     }
 
     override fun activateDoneButton() {
         val doneButton = findViewById<TextView>(R.id.seat_picker_done_button)
-        doneButton.setBackgroundColor(getColor(R.color.seat_picker_done_button_on))
-        doneButton.isClickable = true
+        doneButton.isEnabled = true
     }
 
     private fun Int.formatPrice(): String = getString(R.string.price, this)
