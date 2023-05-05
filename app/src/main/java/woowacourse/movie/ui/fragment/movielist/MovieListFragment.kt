@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.contract.movielist.MovieListContract
+import woowacourse.movie.presenter.movielist.MovieListPresenter
 import woowacourse.movie.ui.activity.MovieDetailActivity
 import woowacourse.movie.ui.entity.Ads
 import woowacourse.movie.ui.entity.Movies
@@ -16,7 +18,10 @@ import woowacourse.movie.ui.fragment.movielist.adapter.MovieAdapter
 import woowacourse.movie.ui.model.AdModel
 import woowacourse.movie.ui.model.MovieModel
 
-class MovieListFragment : Fragment() {
+class MovieListFragment : Fragment(), MovieListContract.View {
+    private lateinit var moviesView: RecyclerView
+
+    override lateinit var presenter: MovieListContract.Presenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,14 +34,17 @@ class MovieListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val moviesView = view.findViewById<RecyclerView>(R.id.rv_movie)
-        setMovieList(moviesView)
+        presenter = MovieListPresenter(this)
+
+        moviesView = view.findViewById(R.id.rv_movie)
+        presenter.setupMovieList(Movies().getAll(), Ads().getAll())
+        presenter.loadMovieList()
     }
 
-    private fun setMovieList(moviesView: RecyclerView) {
+    override fun setMovieList(movies: List<MovieModel>, ads: List<AdModel>) {
         moviesView.adapter = MovieAdapter(
-            movies = Movies().getAll(),
-            ads = Ads().getAll(),
+            movies = movies,
+            ads = ads,
             onMovieItemClick = { moveToDetailActivity(it) },
             onAdItemClick = { openAdvertiseUrl(it) }
         )
@@ -47,8 +55,8 @@ class MovieListFragment : Fragment() {
         startActivity(intent)
     }
 
-    private fun openAdvertiseUrl(it: AdModel) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.url))
+    private fun openAdvertiseUrl(ad: AdModel) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(ad.url))
         startActivity(intent)
     }
 }
