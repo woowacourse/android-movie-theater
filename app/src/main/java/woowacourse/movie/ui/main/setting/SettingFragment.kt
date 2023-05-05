@@ -21,16 +21,16 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        setUpBinding()
-        setUpPresenter()
+        initBinding()
+        initPresenter()
         return binding.root
     }
 
-    private fun setUpBinding() {
+    private fun initBinding() {
         binding = FragmentSettingBinding.inflate(layoutInflater)
     }
 
-    private fun setUpPresenter() {
+    private fun initPresenter() {
         presenter = SettingPresenter(this, DefaultPreference(requireContext()))
     }
 

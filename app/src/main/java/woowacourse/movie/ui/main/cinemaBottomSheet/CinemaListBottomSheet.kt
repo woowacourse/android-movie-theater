@@ -25,13 +25,21 @@ class CinemaListBottomSheet(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        setUpBinding()
-        setUpPresenter()
+        initBinding()
+        initPresenter()
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.getCinemaList(movie)
+    }
+
+    private fun initBinding() {
+        binding = FragmentCinemaBottomSheetBinding.inflate(layoutInflater)
+    }
+
+    private fun initPresenter() {
+        presenter = CinemaListPresenter(this)
     }
 
     override fun setAdapter(cinemas: List<CinemaState>) {
@@ -41,14 +49,6 @@ class CinemaListBottomSheet(
             navigateMovieDetail(itemModel)
         }
         binding.bottomSheetMovieList.adapter = adapter
-    }
-
-    private fun setUpBinding() {
-        binding = FragmentCinemaBottomSheetBinding.inflate(layoutInflater)
-    }
-
-    private fun setUpPresenter() {
-        presenter = CinemaListPresenter(this)
     }
 
     private fun navigateMovieDetail(cinemaItemModel: CinemaItemModel) {
