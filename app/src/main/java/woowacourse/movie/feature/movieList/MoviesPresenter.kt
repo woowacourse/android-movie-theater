@@ -5,6 +5,7 @@ import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.feature.common.itemModel.ItemModel
 import woowacourse.movie.feature.movieList.itemModel.AdvItemModel
 import woowacourse.movie.feature.movieList.itemModel.MovieItemModel
+import woowacourse.movie.model.TheaterMovieState
 
 class MoviesPresenter(
     val view: MovieListContract.View,
@@ -14,12 +15,16 @@ class MoviesPresenter(
 
     override fun loadMovieAndAdvItemList() {
         val movie = movieRepository.allMovies().map {
-            it.toItemModel { movie -> view.navigateMovieDetail(movie) }
+            it.toItemModel { movie -> view.showBottomSheetDialog(movie) }
         }
         val adv = advRepository.allAdv().map {
             it.toItemModel { adv -> view.navigateAdbDetail(adv) }
         }
         view.updateItems(combineMovieAndAdvItems(movie, adv))
+    }
+
+    override fun receiveTheaterInfo(theaterMovie: TheaterMovieState) {
+        view.navigateMovieDetail(theaterMovie)
     }
 
     private fun combineMovieAndAdvItems(

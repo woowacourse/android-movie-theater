@@ -13,6 +13,7 @@ import woowacourse.movie.feature.seatSelect.SeatSelectActivity
 import woowacourse.movie.model.CountState
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.ReservationState
+import woowacourse.movie.model.TheaterMovieState
 import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.getSerializableCompat
@@ -24,6 +25,7 @@ import java.time.LocalTime
 class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View {
     private lateinit var binding: ActivityMovieDetailBinding
 
+    // Todo:
     private lateinit var movie: MovieState
 
     private lateinit var dateTimeSpinner: DateTimeSpinner
@@ -32,7 +34,7 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
     private val presenter: MovieDetailContract.Presenter = MovieDetailPresenter(this)
     override fun onCreateView(savedInstanceState: Bundle?) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
-        movie = intent.getParcelableExtraCompat(KEY_MOVIE) ?: return keyError(KEY_MOVIE)
+        movie = intent.getParcelableExtraCompat(KEY_THEATER_MOVIE) ?: return keyError(KEY_THEATER_MOVIE)
         binding.movie = movie
 
         if (savedInstanceState != null) {
@@ -81,13 +83,13 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
     }
 
     companion object {
-        fun getIntent(context: Context, movie: MovieState): Intent {
+        fun getIntent(context: Context, theaterMovie: TheaterMovieState): Intent {
             val intent = Intent(context, MovieDetailActivity::class.java)
-            intent.putExtra(KEY_MOVIE, movie)
+            intent.putExtra(KEY_THEATER_MOVIE, theaterMovie)
             return intent
         }
 
-        private const val KEY_MOVIE = "key_movie"
+        private const val KEY_THEATER_MOVIE = "key_theater_movie"
         private const val KEY_COUNT = "key_reservation_count"
         private const val KEY_DATE = "key_reservation_date"
         private const val KEY_TIME = "key_reservation_time"

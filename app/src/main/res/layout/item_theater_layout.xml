@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="theater"
+            type="woowacourse.movie.feature.movieList.bottomSheet.TheaterItemModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{()->theater.onClick.invoke(theater.theater)}"
+        android:paddingStart="24dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="26dp">
+
+        <LinearLayout
+            android:id="@+id/theater_info_box"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@id/navigate_theater"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/theater_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="@{theater.theater.theaterName}"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="선릉 극장" />
+
+            <TextView
+                android:id="@+id/theater_time_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="12sp"
+                tools:text="2개의 상영시간" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/navigate_theater"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/baseline_chevron_right_24"
+            app:layout_constraintBottom_toBottomOf="@id/theater_info_box"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/theater_info_box"
+            app:layout_constraintTop_toTopOf="@id/theater_info_box" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
