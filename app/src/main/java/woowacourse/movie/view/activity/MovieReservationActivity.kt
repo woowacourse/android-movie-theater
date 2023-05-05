@@ -7,18 +7,24 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import domain.Movie
 import woowacourse.movie.R
+import woowacourse.movie.contract.MovieReservationContract
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.model.MovieUiModel
 import woowacourse.movie.model.TicketDateUiModel
+import woowacourse.movie.presenter.MovieReservationPresenter
 import woowacourse.movie.view.Counter
 import woowacourse.movie.view.DateSpinner
 import woowacourse.movie.view.MovieDateTimePicker
 import woowacourse.movie.view.MovieView
 import woowacourse.movie.view.TimeSpinner
+import java.time.LocalTime
 
-class MovieReservationActivity : AppCompatActivity() {
+class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.View {
+    override val presenter: MovieReservationContract.Presenter by lazy {
+        MovieReservationPresenter(this, counter.getCount())
+    }
+    private val movieUiModel: MovieUiModel by lazy { getMovieModelView() }
     private val counter: Counter by lazy {
         Counter(
             findViewById(R.id.movie_reservation_people_count_minus),
@@ -46,16 +52,12 @@ class MovieReservationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_reservation)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        val movieViewModel = getMovieModelView()
-        if (movieViewModel == null) {
-            finishActivityWithMessage(getString(R.string.movie_data_null_error))
-        } else {
-            renderMovieView(movieViewModel)
-            counter.load(savedInstanceState)
-            movieDateTimePicker.makeView(movieViewModel, savedInstanceState)
-            reservationButtonClick(movieViewModel)
-        }
+        counter.load(savedInstanceState)
+        renderMovieView(movieUiModel)
+        counter.setButtonsClick(presenter::onMinusTicketCount, presenter::onPlusTicketCount)
+        movieDateTimePicker.setDateList(movieUiModel)
+        movieDateTimePicker.setDateSelectListener(presenter::onSelectDate, savedInstanceState)
+        reservationButtonClick(presenter::onReservationButtonClick)
     }
 
     private fun renderMovieView(movieUiModel: MovieUiModel) {
@@ -73,21 +75,20 @@ class MovieReservationActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun getMovieModelView(): MovieUiModel? {
-        return intent.extras?.getSerializableCompat(MOVIE_KEY_VALUE)
+    private fun getMovieModelView(): MovieUiModel {
+        val movieUiModel = intent.extras?.getSerializableCompat<MovieUiModel>(MOVIE_KEY_VALUE)
+            ?: finishActivityWithMessage(getString(R.string.movie_data_null_error))
+        return movieUiModel as MovieUiModel
     }
 
-    private fun reservationButtonClick(movieUiModel: MovieUiModel) {
+    private fun reservationButtonClick(clickEvent: () -> Unit) {
         reservationButton.setOnClickListener {
-            val dateTime = TicketDateUiModel(movieDateTimePicker.getSelectedDateTime())
-            val peopleCount = counter.getCount()
-            SelectSeatActivity.start(this, peopleCount, dateTime, movieUiModel)
+            clickEvent()
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-
         counter.save(outState)
         movieDateTimePicker.save(outState)
     }
@@ -97,6 +98,23 @@ class MovieReservationActivity : AppCompatActivity() {
             android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun setTimeSpinner(times: List<LocalTime>) {
+        movieDateTimePicker.timeSpinner.setAdapter(times)
+    }
+
+    override fun setCounterText(count: Int) {
+        counter.applyToView(count.toString())
+    }
+
+    override fun startSeatSelectActivity(peopleCount: Int) {
+        SelectSeatActivity.start(
+            this,
+            peopleCount,
+            TicketDateUiModel(movieDateTimePicker.getSelectedDateTime()),
+            movieUiModel
+        )
     }
 
     companion object {
