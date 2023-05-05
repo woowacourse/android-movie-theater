@@ -1,11 +1,11 @@
-package woowacourse.movie.utils
+package woowacourse.movie.model.data
 
 import woowacourse.movie.R
 import woowacourse.movie.model.MovieListModel
 import java.time.LocalDate
 
-object MockData {
-    val movies = List(300) {
+class MockData {
+    private val movies = List(300) {
         MovieListModel.MovieModel(
             R.drawable.about_time,
             "About Time $it",
@@ -16,7 +16,7 @@ object MockData {
         )
     }
 
-    val ad = MovieListModel.AdModel(
+    private val ad = MovieListModel.AdModel(
         R.drawable.ad,
         "https://github.com/woowacourse",
     )
