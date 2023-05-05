@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.bookedticketlist
 
+import woowacourse.movie.presentation.model.MovieModel
 import woowacourse.movie.presentation.model.TicketModel
 
 interface BookedTicketsContract {
@@ -10,5 +11,6 @@ interface BookedTicketsContract {
 
     interface Presenter {
         fun changeTickets()
+        fun getMovieModel(ticketModel: TicketModel): MovieModel
     }
 }

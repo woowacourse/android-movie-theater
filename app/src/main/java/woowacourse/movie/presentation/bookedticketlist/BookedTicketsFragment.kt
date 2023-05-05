@@ -14,9 +14,14 @@ class BookedTicketsFragment : Fragment(), BookedTicketsContract.View {
     private var _binding: FragmentBookedTicketsBinding? = null
     private val binding get() = _binding!!
 
-    private val bookedTicketsAdapter by lazy { BookedTicketsAdapter(::bookedTicketsItemClickListener) }
     override val presenter: BookedTicketsContract.Presenter by lazy {
         BookedTicketsPresenter(this)
+    }
+    private val bookedTicketsAdapter by lazy {
+        BookedTicketsAdapter(
+            ::bookedTicketsItemClickListener,
+            presenter::getMovieModel,
+        )
     }
 
     override fun onCreateView(
