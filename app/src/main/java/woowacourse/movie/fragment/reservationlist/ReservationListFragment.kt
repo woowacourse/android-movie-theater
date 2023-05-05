@@ -15,7 +15,6 @@ import woowacourse.movie.view.data.ReservationsViewData
 
 class ReservationListFragment : Fragment(), ReservationListContract.View {
     override lateinit var presenter: ReservationListContract.Presenter
-    private lateinit var reservations: ReservationsViewData
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,7 +32,8 @@ class ReservationListFragment : Fragment(), ReservationListContract.View {
 
     override fun initReservationRecyclerView(reservationsViewData: ReservationsViewData) {
         val recyclerView = requireView().findViewById<RecyclerView>(R.id.reservation_list_recycler)
-        recyclerView.adapter = ReservationAdapter(reservations) { presenter.onItemClick(it) }
+        recyclerView.adapter =
+            ReservationAdapter(reservationsViewData) { presenter.onItemClick(it) }
         val decoration =
             DividerItemDecoration(requireView().context, DividerItemDecoration.VERTICAL)
         recyclerView.addItemDecoration(decoration)

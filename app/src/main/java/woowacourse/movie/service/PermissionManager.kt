@@ -14,23 +14,23 @@ object PermissionManager {
     fun requestNotificationPermission(
         fragment: Fragment,
         requestPermissionLauncher: ActivityResultLauncher<String>,
-        requestPermission: () -> Unit
+        notifyForGetPermission: () -> Unit
     ) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             if (!fragment.shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                requestPermission()
+                notifyForGetPermission()
             }
         }
     }
 
     fun getRequestPermissionLauncher(
         fragment: Fragment,
-        onGranted: () -> Unit
+        onDenied: () -> Unit
     ): ActivityResultLauncher<String> {
         return fragment.registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (!isGranted) {
-                onGranted()
+                onDenied()
             }
         }
     }

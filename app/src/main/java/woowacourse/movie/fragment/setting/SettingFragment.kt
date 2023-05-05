@@ -8,10 +8,8 @@ import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.domain.setting.SettingRepository
 import woowacourse.movie.service.PermissionManager
 import woowacourse.movie.service.PermissionManager.checkNotificationSelfPermission
-import woowacourse.movie.service.PermissionManager.requestNotificationPermission
 import woowacourse.movie.view.setting.SharedSettingRepository
 
 class SettingFragment : Fragment(), SettingContract.View {
@@ -20,14 +18,10 @@ class SettingFragment : Fragment(), SettingContract.View {
         get() = requireContext().checkNotificationSelfPermission()
 
     private val requestPermissionLauncher =
-        PermissionManager.getRequestPermissionLauncher(this, ::onPermissionGranted)
+        PermissionManager.getRequestPermissionLauncher(this, ::onPermissionDenied)
 
     private val switch: SwitchCompat by lazy {
         requireView().findViewById(R.id.setting_push_switch)
-    }
-
-    private val settingRepository: SettingRepository by lazy {
-        SharedSettingRepository(requireContext())
     }
 
     override fun onCreateView(
@@ -35,43 +29,39 @@ class SettingFragment : Fragment(), SettingContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        presenter = SettingPresenter(this, settingRepository)
         return inflater.inflate(R.layout.fragment_setting, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        presenter = SettingPresenter(this, SharedSettingRepository(requireContext()))
         initSwitch()
+    }
+
+    private fun initSwitch() {
+        presenter.initSwitchStatus(permissionStatus)
+        switch.setOnCheckedChangeListener { _, isChecked ->
+            presenter.updateSwitchStatus(
+                permissionStatus, isChecked
+            )
+        }
     }
 
     override fun setSwitchStatus(setting: Boolean) {
         switch.isChecked = setting
     }
 
-    private fun initSwitch() {
-        initSwitchCheckStatus()
-        switch.setOnCheckedChangeListener { _, isChecked ->
-            onCheckedChange(isChecked)
-        }
-    }
-
-    private fun initSwitchCheckStatus() {
-        presenter.initSwitchStatus(permissionStatus)
-    }
-
-    private fun onCheckedChange(isChecked: Boolean) {
-        presenter.updateSwitchStatus(
-            permissionStatus,
-            { requestNotificationPermission(this, requestPermissionLauncher, ::requestPermission) },
-            isChecked
+    override fun requestPermission() {
+        PermissionManager.requestNotificationPermission(
+            this, requestPermissionLauncher, ::notifyForGetPermission
         )
     }
 
-    private fun onPermissionGranted() {
+    private fun onPermissionDenied() {
         switch.isChecked = false
     }
 
-    private fun requestPermission() {
+    private fun notifyForGetPermission() {
         Toast.makeText(
             requireContext(),
             requireContext().getString(R.string.permission_instruction_ment),

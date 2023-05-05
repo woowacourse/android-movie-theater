@@ -18,12 +18,11 @@ class SettingPresenter(
 
     override fun updateSwitchStatus(
         permission: Boolean,
-        action: () -> Unit,
         isChecked: Boolean
     ) {
         settingRepository.setValue(SETTING_NOTIFICATION, isChecked)
         if (isChecked && !permission) {
-            action()
+            view.requestPermission()
         }
     }
 }
