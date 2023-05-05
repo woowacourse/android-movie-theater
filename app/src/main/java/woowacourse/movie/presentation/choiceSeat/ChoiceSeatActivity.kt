@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.data.BookedTickets
-import woowacourse.movie.data.MovieData
 import woowacourse.movie.domain.model.rules.SeatsPayment
 import woowacourse.movie.domain.model.tools.Money
 import woowacourse.movie.domain.model.tools.seat.Location
@@ -22,16 +21,16 @@ import woowacourse.movie.domain.model.tools.seat.SeatRow
 import woowacourse.movie.domain.model.tools.seat.Seats
 import woowacourse.movie.domain.model.tools.seat.Theater
 import woowacourse.movie.model.data.local.SettingPreference
-import woowacourse.movie.model.data.storage.SettingStorage
+import woowacourse.movie.model.data.remote.DummyMovieStorage
 import woowacourse.movie.presentation.complete.CompleteActivity
 import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.model.ReservationModel
 import woowacourse.movie.presentation.util.getParcelableExtraCompat
 import woowacourse.movie.util.intentDataNullProcess
 
-class ChoiceSeatActivity : AppCompatActivity() {
+class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
 
-    private lateinit var settingStorage: SettingStorage
+    override lateinit var presenter: ChoiceSeatContract.Presenter
     private val seats: Seats = Seats()
     private var paymentAmount: Money = Money(INITIAL_PAYMENT_AMOUNT)
     private lateinit var reservation: ReservationModel
@@ -41,15 +40,15 @@ class ChoiceSeatActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initPresenter()
         initExtraData()
-        initSettingStorage()
         setContentView(R.layout.activity_choice_seat)
         setTheaterSeat()
         initView()
     }
 
-    private fun initSettingStorage() {
-        settingStorage = SettingPreference(this)
+    private fun initPresenter() {
+        presenter = ChoiceSeatPresenter(this, SettingPreference(this), DummyMovieStorage())
     }
 
     private fun initExtraData() {
@@ -60,7 +59,7 @@ class ChoiceSeatActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        val movie = MovieData.findMovieById(reservation.movieId)
+        val movie = presenter.getMovieById(reservation.movieId)
         setTitle(movie.title)
         setPaymentAmount(Money(INITIAL_PAYMENT_AMOUNT))
         setConfirmButton()
@@ -88,10 +87,10 @@ class ChoiceSeatActivity : AppCompatActivity() {
     }
 
     private fun confirmBookMovie() {
-        val movie = MovieData.findMovieById(reservation.movieId).toPresentation()
+        val movie = presenter.getMovieById(reservation.movieId).toPresentation()
         val ticketModel = movie.reserve(reservation, seats)
         BookedTickets.tickets.add(ticketModel)
-        if (settingStorage.getNotificationSettings()) MovieNoticeAlarmManager(
+        if (presenter.getNotificationSettings()) MovieNoticeAlarmManager(
             this,
             ticketModel
         ).setAlarm(ticketModel.bookedDateTime)
