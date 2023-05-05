@@ -26,7 +26,11 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
     override fun onCreateView(savedInstanceState: Bundle?) {
         initBinding()
         initPresenter()
-        setUpInstanceState(savedInstanceState)
+        initConfirmButton()
+        initCountButton()
+        if (savedInstanceState == null) {
+            initInstanceState()
+        }
     }
 
     private fun initPresenter() {
@@ -41,9 +45,22 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
         setContentView(binding.root)
     }
 
-    override fun setBinding(movie: MovieState) {
-        binding.movieDetailView = this
-        binding.movieDetailPreseter = presenter
+    private fun initConfirmButton() {
+        binding.reservationConfirm.setOnClickListener {
+            presenter.onReserveButtonClick()
+        }
+    }
+
+    private fun initCountButton() {
+        binding.plus.setOnClickListener {
+            presenter.onPlusClick()
+        }
+        binding.minus.setOnClickListener {
+            presenter.onMinusClick()
+        }
+    }
+
+    override fun setMovie(movie: MovieState) {
         binding.movie = movie
     }
 
@@ -60,13 +77,6 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
         SeatSelectActivity.startActivity(this, cinemaName, seatSelectState)
     }
 
-    private fun setUpInstanceState(savedInstanceState: Bundle?) {
-        when (savedInstanceState) {
-            null -> initInstanceState()
-            else -> restoreInstanceState(savedInstanceState)
-        }
-    }
-
     private fun initInstanceState() {
         dateTimeSpinner = DateTimeSpinner(
             binding,
@@ -75,7 +85,9 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
         )
     }
 
-    private fun restoreInstanceState(savedInstanceState: Bundle) {
+    override fun onRestoreInstanceState(
+        savedInstanceState: Bundle
+    ) {
         val restoreSelectDate: LocalDate =
             savedInstanceState.getSerializableCompat(KEY_DATE) ?: return keyError(KEY_DATE)
         val restoreSelectTime: LocalTime =

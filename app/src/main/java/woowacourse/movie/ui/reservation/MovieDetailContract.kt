@@ -9,7 +9,7 @@ interface MovieDetailContract {
     interface View {
         var presenter: Presenter
         fun setCounterText(count: Int)
-        fun setBinding(movie: MovieState)
+        fun setMovie(movie: MovieState)
         fun navigateSeatSelectActivity(movie: MovieState, cinemaName: String)
     }
 
@@ -18,8 +18,8 @@ interface MovieDetailContract {
         fun init(cinemaName: String, movie: MovieState)
         fun onPlusClick()
         fun onMinusClick()
+        fun onReserveButtonClick()
         fun getMovieRunningDates(): List<LocalDate>
         fun getMovieRunningTimes(): List<LocalTime>
-        fun onReserveButtonClick()
     }
 }

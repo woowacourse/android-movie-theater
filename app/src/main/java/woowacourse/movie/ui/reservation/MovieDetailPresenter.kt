@@ -26,7 +26,7 @@ class MovieDetailPresenter(
     override fun init(cinemaName: String, movie: MovieState) {
         this.cinemaName = cinemaName
         this.movie = movie
-        view.setBinding(movie)
+        view.setMovie(movie)
     }
     override fun onPlusClick() { count += 1 }
 

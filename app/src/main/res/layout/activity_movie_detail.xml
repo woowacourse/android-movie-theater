@@ -5,12 +5,6 @@
 
     <data>
         <variable
-            name="movieDetailView"
-            type="woowacourse.movie.ui.reservation.MovieDetailContract.View" />
-        <variable
-            name="movieDetailPreseter"
-            type="woowacourse.movie.ui.reservation.MovieDetailContract.Presenter" />
-        <variable
             name="movie"
             type="woowacourse.movie.model.MovieState" />
     </data>
@@ -145,7 +139,6 @@
                 android:layout_marginBottom="22dp"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
-                android:onClick="@{() -> movieDetailPreseter.onMinusClick()}"
                 android:padding="0dp"
                 android:text="@string/minus"
                 android:textSize="25sp"
@@ -159,7 +152,6 @@
                 android:layout_marginBottom="22dp"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
-                android:onClick="@{() -> movieDetailPreseter.onPlusClick()}"
                 android:padding="0dp"
                 android:text="@string/plus"
 
@@ -191,7 +183,6 @@
                 android:insetBottom="0dp"
                 android:padding="0dp"
                 android:text="@string/reservation_complete"
-                android:onClick="@{() -> movieDetailPreseter.onReserveButtonClick()}"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/end_guide"

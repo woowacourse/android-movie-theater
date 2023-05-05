@@ -101,7 +101,7 @@ class MovieDetailPresenterTest {
         presenter.getMovieRunningTimes()
 
         // then
-        verify { view.setBinding(sampleMovieState) }
+        verify { view.setMovie(sampleMovieState) }
     }
 
     companion object {
