@@ -1,15 +1,14 @@
 package woowacourse.movie.presenter
 
-import domain.Reservation
 import woowacourse.movie.contract.ReservationListContract
 import woowacourse.movie.mock.MockReservationsFactory
+import woowacourse.movie.model.ReservationUiModel
 import woowacourse.movie.model.mapper.ReservationMapper.toUi
 
 class ReservationListPresenter(val view: ReservationListContract.View) :
     ReservationListContract.Presenter {
 
-    override fun reservationItemClick(reservation: Reservation) {
-        val reservationUiModel = reservation.toUi()
+    override fun reservationItemClick(reservationUiModel: ReservationUiModel) {
         val movieUiModel = reservationUiModel.movie
         val ticketsUiModel = reservationUiModel.tickets
         view.startReservationResultActivity(movieUiModel, ticketsUiModel)
@@ -17,6 +16,7 @@ class ReservationListPresenter(val view: ReservationListContract.View) :
 
     override fun updateReservationList() {
         val reservationList = MockReservationsFactory.makeReservations()
-        view.setAdapter(reservationList)
+        val reservationUiModelList = reservationList.map { it.toUi() }
+        view.setAdapter(reservationUiModelList)
     }
 }

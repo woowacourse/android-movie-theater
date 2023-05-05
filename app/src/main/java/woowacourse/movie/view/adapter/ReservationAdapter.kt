@@ -3,13 +3,13 @@ package woowacourse.movie.view.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import domain.Reservation
 import woowacourse.movie.R
+import woowacourse.movie.model.ReservationUiModel
 import woowacourse.movie.view.adapter.viewholder.ReservationViewHolder
 
 class ReservationAdapter(
-    private val reservations: List<Reservation>,
-    private val onClickEvent: (Reservation) -> Unit
+    private val reservations: List<ReservationUiModel>,
+    private val onClickEvent: (ReservationUiModel) -> Unit
 ) :
     RecyclerView.Adapter<ReservationViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReservationViewHolder {
