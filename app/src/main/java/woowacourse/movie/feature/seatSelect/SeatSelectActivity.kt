@@ -9,9 +9,9 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.data.TicketsRepositoryImpl
 import woowacourse.movie.databinding.ActivitySeatSelectBinding
+import woowacourse.movie.feature.alarm.AlarmReceiver
 import woowacourse.movie.feature.common.BackKeyActionBarActivity
 import woowacourse.movie.feature.common.customView.SeatView
-import woowacourse.movie.feature.confirm.AlarmReceiver
 import woowacourse.movie.feature.confirm.ReservationConfirmActivity
 import woowacourse.movie.model.MoneyState
 import woowacourse.movie.model.ReservationState
