@@ -5,6 +5,7 @@ import woowacourse.movie.ticket.Ticket
 import java.time.LocalDateTime
 
 data class Reservation(
+    val theaterId: Long,
     val tickets: Set<Ticket>,
     val paymentType: PaymentType = PaymentType.OFFLINE,
 ) {

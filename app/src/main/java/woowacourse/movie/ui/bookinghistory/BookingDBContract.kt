@@ -2,6 +2,7 @@ package woowacourse.movie.ui.bookinghistory
 
 object BookingDBContract {
 
+    const val THEATER_ID = "theater_Id"
     const val TABLE_NAME = "booking_history"
     const val MOVIE_TITLE = "movie_title"
     const val MOVIE_ID = "movie_id"

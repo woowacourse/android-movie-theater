@@ -16,6 +16,7 @@ class BookingHistoryDBHelper(
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(
             "CREATE TABLE ${BookingDBContract.TABLE_NAME}(" +
+                "${BookingDBContract.THEATER_ID} int," +
                 "${BookingDBContract.MOVIE_ID} int," +
                 "${BookingDBContract.SEAT} text," +
                 "${BookingDBContract.MOVIE_TITLE} text," +

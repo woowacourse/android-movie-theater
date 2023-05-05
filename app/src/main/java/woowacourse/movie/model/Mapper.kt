@@ -46,6 +46,7 @@ object Mapper {
 
     fun Reservation.toUiModel(): ReservationUiModel {
         return ReservationUiModel(
+            theaterId = this.theaterId,
             tickets = this.tickets.map { it.toUiModel() }.toSet(),
             paymentType = this.paymentType,
             payment = this.payment,

@@ -19,6 +19,7 @@ class BookingHistoryDBAdapter(db: BookingHistoryDBHelper) : BookingHistoryReposi
     private val cursor = writableDB.query(
         BookingDBContract.TABLE_NAME,
         arrayOf(
+            BookingDBContract.THEATER_ID,
             BookingDBContract.MOVIE_ID,
             BookingDBContract.MOVIE_TITLE,
             BookingDBContract.TICKET_COUNT,
@@ -35,6 +36,7 @@ class BookingHistoryDBAdapter(db: BookingHistoryDBHelper) : BookingHistoryReposi
 
     override fun insertBookingHistory(reservationUiModel: ReservationUiModel) {
         val values = ContentValues().apply {
+            put(BookingDBContract.THEATER_ID, reservationUiModel.theaterId)
             put(BookingDBContract.MOVIE_ID, reservationUiModel.movieId)
             put(BookingDBContract.MOVIE_TITLE, reservationUiModel.movieTitle)
             put(BookingDBContract.TICKET_COUNT, reservationUiModel.count)
@@ -73,6 +75,8 @@ class BookingHistoryDBAdapter(db: BookingHistoryDBHelper) : BookingHistoryReposi
     }
 
     private fun Cursor.getReservation(): ReservationUiModel {
+        val theaterId =
+            getInt(getColumnIndexOrThrow(BookingDBContract.THEATER_ID)).toLong()
         val movieId =
             getInt(getColumnIndexOrThrow(BookingDBContract.MOVIE_ID)).toLong()
         val ticketCount =
@@ -91,6 +95,7 @@ class BookingHistoryDBAdapter(db: BookingHistoryDBHelper) : BookingHistoryReposi
             getInt(getColumnIndexOrThrow(BookingDBContract.PAYMENT))
 
         return ReservationUiModel(
+            theaterId = theaterId,
             tickets = seat.map {
                 TicketUiModel(
                     movieId = movieId,
