@@ -13,40 +13,43 @@ import woowacourse.movie.R
 import woowacourse.movie.activity.BookCompleteActivity
 import woowacourse.movie.movie.toPresentation
 
-class BookHistoryFragment : Fragment() {
+class BookHistoryFragment : Fragment(), BookHistoryContract.View {
+    override lateinit var presenter: BookHistoryContract.Presenter
+    private val movieRecyclerView: RecyclerView by lazy { requireView().findViewById(R.id.recyclerview_book_history_list) }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        presenter = BookHistoryPresenter(this)
         return inflater.inflate(R.layout.fragment_book_history, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setMovieRecyclerView(view)
+        makeDivider()
+        presenter.setMovieRecyclerView(onClickBookHistory())
     }
 
-    private fun setMovieRecyclerView(view: View) {
-        val movieRecyclerView = view.findViewById<RecyclerView>(R.id.recyclerview_book_history_list)
+    private fun makeDivider() {
         movieRecyclerView.addItemDecoration(
             DividerItemDecoration(
-                view.context,
+                requireContext(),
                 LinearLayout.VERTICAL
             )
         )
-        val bookHistoryRecyclerViewAdapter = BookHistoryRecyclerViewAdapter(
-            BookHistories.items,
-            onClickBookHistory(view)
-        )
-        movieRecyclerView.adapter = bookHistoryRecyclerViewAdapter
     }
 
-    private fun onClickBookHistory(view: View) = { position: Int ->
+    private fun onClickBookHistory() = { position: Int ->
         val intent = BookCompleteActivity.getIntent(
-            view.context,
+            requireContext(),
             BookHistories.items[position].toPresentation()
         )
         this.startActivity(intent)
+    }
+
+    override fun setMovieRecyclerView(bookHistoryRecyclerViewAdapter: BookHistoryRecyclerViewAdapter) {
+        movieRecyclerView.adapter = bookHistoryRecyclerViewAdapter
     }
 }
