@@ -9,6 +9,6 @@ interface BookedTicketsContract {
     }
 
     interface Presenter {
-        fun requestTickets()
+        fun changeTickets()
     }
 }

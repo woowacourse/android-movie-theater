@@ -8,7 +8,7 @@ class BookedTicketsPresenter(private val view: BookedTicketsContract.View) :
 
     private lateinit var tickets: List<TicketModel>
 
-    override fun requestTickets() {
+    override fun changeTickets() {
         tickets = BookedTicketsData.tickets.toList()
         view.setBookedTicketsAdapter(BookedTicketsData.tickets)
     }
