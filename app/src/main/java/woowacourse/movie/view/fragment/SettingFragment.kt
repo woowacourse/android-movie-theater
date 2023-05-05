@@ -2,13 +2,17 @@ package woowacourse.movie.view.fragment
 
 import android.Manifest
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.widget.SwitchCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.contract.SettingContract
 import woowacourse.movie.data.dataSource.SharedSetting
+import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.presenter.SettingPresenter
 import woowacourse.movie.system.PermissionLauncher
 import woowacourse.movie.system.PermissionLauncher.makePermissionResultLauncher
@@ -17,6 +21,16 @@ import woowacourse.movie.system.PermissionLauncher.requestPermission
 class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.View {
     override val presenter: SettingContract.Presenter = SettingPresenter(this)
     private lateinit var permissionResultLauncher: ActivityResultLauncher<String>
+    private lateinit var binding: FragmentSettingBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting,container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -24,19 +38,17 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
     }
 
     override fun makeSettingSwitch() {
-        val view = view ?: return
-        val switch = view.findViewById<SwitchCompat>(R.id.setting_push_switch)
         val permission = Manifest.permission.POST_NOTIFICATIONS
         permissionResultLauncher = makePermissionResultLauncher {
-            onNotificationAddResult(switch, it)
+            onNotificationAddResult(binding.settingPushSwitch, it)
         }
 
-        switch.isChecked =
+        binding.settingPushSwitch.isChecked =
             SharedSetting.getValue(SETTING_NOTIFICATION) && PermissionLauncher.isGranted(
             requireContext(), permission
         )
 
-        switch.setOnCheckedChangeListener { _, isChecked ->
+        binding.settingPushSwitch.setOnCheckedChangeListener { _, isChecked ->
             presenter.toggleNotificationSetting(
                 permission, isChecked
             )
