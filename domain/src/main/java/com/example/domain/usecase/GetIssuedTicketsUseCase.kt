@@ -7,7 +7,12 @@ import com.example.domain.ticketSeller.TicketSeller
 import java.time.LocalDateTime
 
 class GetIssuedTicketsUseCase(private val ticketSeller: TicketSeller = TicketSeller()) {
-    operator fun invoke(movie: Movie, dateTime: LocalDateTime, seats: List<SeatPosition>): Tickets {
-        return ticketSeller.issueTickets(movie, dateTime, seats)
+    operator fun invoke(
+        theaterName: String,
+        movie: Movie,
+        dateTime: LocalDateTime,
+        seats: List<SeatPosition>
+    ): Tickets {
+        return ticketSeller.issueTickets(theaterName, movie, dateTime, seats)
     }
 }

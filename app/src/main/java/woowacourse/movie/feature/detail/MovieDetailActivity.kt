@@ -49,7 +49,7 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
 
         binding.reservationConfirm.setOnClickListener {
             presenter.clickConfirm(
-                theaterMovie.movie,
+                theaterMovie,
                 dateTimeSpinner.selectDateTime,
                 reservationCounter.count
             )

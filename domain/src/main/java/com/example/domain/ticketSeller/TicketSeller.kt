@@ -15,16 +15,22 @@ class TicketSeller(private val discountPolicy: DiscountPolicy = DefaultDiscountP
         return Money(seats.sumOf { discountPolicy.discount(movie, dateTime, it).value })
     }
 
-    fun issueTickets(movie: Movie, dateTime: LocalDateTime, seats: List<SeatPosition>): Tickets {
-        return Tickets(seats.map { issueTicket(movie, dateTime, it) })
+    fun issueTickets(
+        theaterName: String,
+        movie: Movie,
+        dateTime: LocalDateTime,
+        seats: List<SeatPosition>
+    ): Tickets {
+        return Tickets(seats.map { issueTicket(theaterName, movie, dateTime, it) })
     }
 
     private fun issueTicket(
+        theaterName: String,
         movie: Movie,
         dateTime: LocalDateTime,
         seatPosition: SeatPosition
     ): Ticket {
         val discountedMoney = discountPolicy.discount(movie, dateTime, seatPosition)
-        return Ticket(movie, dateTime, seatPosition, discountedMoney)
+        return Ticket(theaterName, movie, dateTime, seatPosition, discountedMoney)
     }
 }

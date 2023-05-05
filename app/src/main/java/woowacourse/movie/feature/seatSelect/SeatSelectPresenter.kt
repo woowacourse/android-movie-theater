@@ -40,6 +40,7 @@ class SeatSelectPresenter(
 
     override fun clickDialogConfirm() {
         val tickets = getIssuedTicketsUseCase(
+            reservationState.theaterName,
             reservationState.movieState.asDomain(),
             reservationState.dateTime,
             seats.map { it.asDomain() }

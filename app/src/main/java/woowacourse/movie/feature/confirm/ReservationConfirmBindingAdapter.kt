@@ -8,8 +8,9 @@ import woowacourse.movie.model.TicketsState
 @BindingAdapter("reservationCountAndSeats")
 fun setReservationCountAndSeats(view: TextView, tickets: TicketsState) {
     view.text = view.context.getString(
-        R.string.person_count_and_seat,
+        R.string.person_count_and_seat_theater,
         tickets.tickets.size,
-        tickets.tickets.map { it.seatPositionState }.joinToString { it.toString() }
+        tickets.tickets.map { it.seatPositionState }.joinToString { it.toString() },
+        tickets.theaterName
     )
 }

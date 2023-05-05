@@ -1,8 +1,8 @@
 package woowacourse.movie.feature.detail
 
 import woowacourse.movie.model.CountState
-import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.ReservationState
+import woowacourse.movie.model.TheaterMovieState
 import java.time.LocalDateTime
 
 interface MovieDetailContract {
@@ -11,6 +11,10 @@ interface MovieDetailContract {
     }
 
     interface Presenter {
-        fun clickConfirm(movie: MovieState, dateTime: LocalDateTime, reservationCount: CountState)
+        fun clickConfirm(
+            theaterMovieState: TheaterMovieState,
+            dateTime: LocalDateTime,
+            reservationCount: CountState
+        )
     }
 }

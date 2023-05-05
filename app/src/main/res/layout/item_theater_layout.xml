@@ -37,7 +37,6 @@
                 android:text="@{theater.theater.theaterName}"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:textStyle="bold"
                 tools:text="선릉 극장" />
 
             <TextView
