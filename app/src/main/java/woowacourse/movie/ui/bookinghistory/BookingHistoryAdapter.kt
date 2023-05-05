@@ -3,7 +3,7 @@ package woowacourse.movie.ui.bookinghistory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.BookingHistoryItemBinding
 import woowacourse.movie.model.ReservationUiModel
 
 class BookingHistoryAdapter(
@@ -13,9 +13,9 @@ class BookingHistoryAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookingHistoryViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.booking_history_item, parent, false)
+        val binding = BookingHistoryItemBinding.inflate(layoutInflater, parent, false)
 
-        return BookingHistoryViewHolder(view).apply {
+        return BookingHistoryViewHolder(binding).apply {
             setOnReservationClickListener(onClicked = clickItem)
         }
     }
