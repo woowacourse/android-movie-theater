@@ -1,52 +1,53 @@
-package woowacourse.movie.fragment
+package woowacourse.movie.fragment.bookhistory
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.BookHistories
 import woowacourse.movie.BookHistoryRecyclerViewAdapter
-import woowacourse.movie.BundleKeys
 import woowacourse.movie.R
 import woowacourse.movie.activity.BookCompleteActivity
 
-class BookHistoryFragment : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_book_history, container, false)
-    }
+class BookHistoryFragment : Fragment(R.layout.fragment_book_history), BookHistoryContract.View {
+
+    override lateinit var presenter: BookHistoryContract.Presenter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        presenter = BookHistoryPresenter(this)
         super.onViewCreated(view, savedInstanceState)
         setMovieRecyclerView(view)
     }
 
+    override fun showDetailPage(dataPosition: Int) {
+        startActivity(
+            BookCompleteActivity.intent(
+                requireContext(),
+                presenter.getData()[dataPosition]
+            )
+        )
+    }
+
     private fun setMovieRecyclerView(view: View) {
-        val movieRecyclerView = view.findViewById<RecyclerView>(R.id.rv_book_history_list)
+        val movieRecyclerView: RecyclerView = requireView().findViewById(R.id.rv_book_history_list)
         movieRecyclerView.addItemDecoration(
             DividerItemDecoration(
                 view.context,
                 LinearLayout.VERTICAL
             )
         )
+
         val bookHistoryRecyclerViewAdapter = BookHistoryRecyclerViewAdapter(
-            BookHistories.items,
-            getBookHistoryOnClickListener(view)
+            presenter.getData(),
+            getBookHistoryOnClickListener()
         )
+
         movieRecyclerView.adapter = bookHistoryRecyclerViewAdapter
         bookHistoryRecyclerViewAdapter.notifyDataSetChanged()
     }
 
-    private fun getBookHistoryOnClickListener(view: View) = { position: Int ->
-        val intent = BookCompleteActivity.intent(view.context)
-        intent.putExtra(BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY, BookHistories.items[position])
-        this.startActivity(intent)
+    private fun getBookHistoryOnClickListener() = { position: Int ->
+        showDetailPage(position)
     }
 }
