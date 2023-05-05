@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.data.TicketsRepositoryImpl
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.feature.common.OnDataUpdate
+import woowacourse.movie.feature.common.adapter.CommonAdapter
 import woowacourse.movie.feature.confirm.ReservationConfirmActivity
-import woowacourse.movie.feature.reservationList.adapter.ReservationListAdapter
 import woowacourse.movie.feature.reservationList.itemModel.TicketsItemModel
 import woowacourse.movie.model.TicketsState
 
@@ -21,7 +21,7 @@ class ReservationListFragment : Fragment(), ReservationListContract.View, OnData
 
     private lateinit var presenter: ReservationListContract.Presenter
 
-    private lateinit var adapter: ReservationListAdapter
+    private lateinit var adapter: CommonAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,7 +35,7 @@ class ReservationListFragment : Fragment(), ReservationListContract.View, OnData
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter = ReservationPresenter(this, TicketsRepositoryImpl)
-        adapter = ReservationListAdapter()
+        adapter = CommonAdapter()
         binding.rvReservation.adapter = adapter
         presenter.loadTicketsItemList()
     }
@@ -51,7 +51,7 @@ class ReservationListFragment : Fragment(), ReservationListContract.View, OnData
     }
 
     override fun updateItems(items: List<TicketsItemModel>) {
-        adapter.setItemChanged(items)
+        adapter.setItems(items)
     }
 
     override fun onUpdateData() {
