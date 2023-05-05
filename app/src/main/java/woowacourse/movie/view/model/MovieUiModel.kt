@@ -13,5 +13,5 @@ data class MovieUiModel(
     val runningTime: Int,
     val posterResourceId: Int,
     val summary: String,
-    val schedule: Map<String, Map<LocalDate, List<LocalTime>>>,
+    val schedule: Map<String, List<LocalTime>>,
 ) : Parcelable

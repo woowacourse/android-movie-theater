@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationBinding
-import woowacourse.movie.util.DATE_FORMATTER
 import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.model.ReservationOptions
@@ -38,7 +37,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         presenter = ReservationPresenter(this)
 
         setViewData(movie)
-        setDateSpinner(movie.screeningDateTimes)
+        // setDateSpinner(movie.screeningDateTimes)
         setPeopleCountAdjustButtonClickListener()
         setReserveButtonClickListener(movie)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -52,10 +51,10 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         binding.apply {
             moviePoster.setImageResource(movie.posterResourceId)
             movieTitle.text = movie.title
-            movieScreeningDate.text = getString(R.string.screening_date_format).format(
-                movie.screeningDateTimes.keys.min().format(DATE_FORMATTER),
-                movie.screeningDateTimes.keys.max().format(DATE_FORMATTER),
-            )
+            // movieScreeningDate.text = getString(R.string.screening_date_format).format(
+            //     movie.screeningDateTimes.keys.min().format(DATE_FORMATTER),
+            //     movie.screeningDateTimes.keys.max().format(DATE_FORMATTER),
+            // )
             movieRunningTime.text =
                 getString(R.string.running_time_format).format(movie.runningTime)
             movieSummary.text = movie.summary
@@ -152,10 +151,12 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         private const val SELECTED_DATE_POSITION = "SELECTED_DATE_POSITION"
         private const val SELECTED_TIME_POSITION = "SELECTED_TIME_POSITION"
         private const val MOVIE = "MOVIE"
+        private const val THEATER = "THEATER"
 
-        fun newIntent(context: Context, movie: MovieUiModel): Intent {
+        fun newIntent(context: Context, movie: MovieUiModel, theaterName: String): Intent {
             val intent = Intent(context, ReservationActivity::class.java)
             intent.putExtra(MOVIE, movie)
+            intent.putExtra(THEATER, theaterName)
             return intent
         }
     }

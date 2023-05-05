@@ -17,8 +17,8 @@ sealed class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             binding.movieTitle.text = movie.title
             binding.movieScreeningDate.text =
                 context.getString(R.string.screening_date_format).format(
-                    movie.screeningDateTimes.keys.min().format(DATE_FORMATTER),
-                    movie.screeningDateTimes.keys.max().format(DATE_FORMATTER),
+                    movie.startDate.format(DATE_FORMATTER),
+                    movie.endDate.format(DATE_FORMATTER),
                 )
 
             binding.movieRunningTime.text =

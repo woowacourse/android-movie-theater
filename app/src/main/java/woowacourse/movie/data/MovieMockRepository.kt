@@ -18,7 +18,13 @@ object MovieMockRepository : MovieRepository {
                 "그의 뒤를 쫓아 산속 폐허에서 발견한 낡은 문. ‘스즈메’가 무언가에 이끌리듯 문을 열자 마을에 재난의 위기가 닥쳐오고 가문 대대로 문 너머의 재난을 봉인하는 ‘소타’를 도와 간신히 문을 닫는다. " +
                 "“닫아야만 하잖아요, 여기를!” 재난을 막았다는 안도감도 잠시, 수수께끼의 고양이 ‘다이진’이 나타나 ‘소타’를 의자로 바꿔 버리고 일본 각지의 폐허에 재난을 부르는 문이 열리기 시작하자 ‘스즈메’는 의자가 된 ‘소타’와 함께 재난을 막기 위한 여정에 나선다." +
                 "“꿈이 아니었어” 규슈, 시코쿠, 고베, 도쿄 재난을 막기 위해 일본 전역을 돌며 필사적으로 문을 닫아가던 중 어릴 적 고향에 닿은 ‘스즈메’는 잊고 있던 진실과 마주하게 되는데…",
-            Schedule(mapOf("잠실 극장" to listOf(LocalTime.of(9, 0)))),
+            Schedule(
+                mapOf(
+                    "선릉 극장" to listOf(LocalTime.of(13, 0), LocalTime.of(15, 0), LocalTime.of(17, 0), LocalTime.of(19, 0)),
+                    "잠실 극장" to listOf(LocalTime.of(9, 0)),
+                    "강남 극장" to listOf(LocalTime.of(12, 0), LocalTime.of(14, 0), LocalTime.of(16, 0))
+                )
+            ),
         ),
         Movie(
             "해리 포터와 마법사의 돌",
@@ -42,6 +48,7 @@ object MovieMockRepository : MovieRepository {
             Schedule(
                 mapOf(
                     "선릉 극장" to listOf(LocalTime.of(9, 0), LocalTime.of(11, 0), LocalTime.of(15, 0)),
+                    "강남 극장" to listOf(LocalTime.of(12, 0), LocalTime.of(14, 0), LocalTime.of(16, 0))
                 ),
             ),
         ),
@@ -53,6 +60,7 @@ object MovieMockRepository : MovieRepository {
             "어벤져스 실사영화 시리즈의 4번째 작품이자, 마블 시네마틱 유니버스의 스물두번째 작품이며, 페이즈 3의 10번째 작품이자 지난 2008년, 아이언맨을 시작으로 장장 11년 동안 이어져 왔던 인피니티 사가의 최종편.",
             Schedule(
                 mapOf(
+                    "선릉 극장" to listOf(LocalTime.of(9, 0), LocalTime.of(11, 0), LocalTime.of(15, 0)),
                     "잠실 극장" to listOf(LocalTime.of(11, 0), LocalTime.of(14, 0)),
                 ),
             ),
