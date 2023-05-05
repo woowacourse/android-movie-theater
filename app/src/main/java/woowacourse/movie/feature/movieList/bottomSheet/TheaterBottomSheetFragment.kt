@@ -54,9 +54,7 @@ class TheaterBottomSheetFragment : BottomSheetDialogFragment(), TheaterContract.
     override fun selectTheater(theater: TheaterMovieState) {
         setFragmentResult(
             MovieListFragment.THEATER_SELECT_KEY,
-            bundleOf(
-                MovieListFragment.THEATER_MOVIE_KEY to theater
-            )
+            bundleOf(MovieListFragment.THEATER_MOVIE_KEY to theater)
         )
         dismiss()
     }

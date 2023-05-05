@@ -57,4 +57,7 @@ dependencies {
     testImplementation("org.robolectric:robolectric:4.9")
 
     implementation("androidx.fragment:fragment-ktx:1.5.7")
+
+    testImplementation("io.mockk:mockk-android:1.13.5")
+    testImplementation("io.mockk:mockk-agent:1.13.5")
 }
