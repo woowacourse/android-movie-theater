@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
@@ -17,6 +16,7 @@ import woowacourse.movie.alarm.AlarmManager
 import woowacourse.movie.broadcastreceiver.NotificationReceiver
 import woowacourse.movie.data.entity.Reservations
 import woowacourse.movie.data.entity.Seats
+import woowacourse.movie.databinding.ActivitySeatPickerBinding
 import woowacourse.movie.ui.activity.MovieTicketActivity
 import woowacourse.movie.ui.activity.seatpicker.SeatPickerContract
 import woowacourse.movie.ui.activity.seatpicker.presenter.SeatPickerPresenter
@@ -28,14 +28,15 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 
 class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
+    private lateinit var binding: ActivitySeatPickerBinding
     override lateinit var presenter: SeatPickerContract.Presenter
     private val seats = Seats().getAll()
     private val seatTable = mutableMapOf<SeatModel, TextView>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_seat_picker)
-
         presenter = SeatPickerPresenter(this)
+        binding = ActivitySeatPickerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -80,8 +81,7 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
     }
 
     override fun updatePrice(price: Int) {
-        val priceView = findViewById<TextView>(R.id.seat_picker_price)
-        priceView.text = price.formatPrice()
+        binding.seatPickerPrice.text = price.formatPrice()
     }
 
     override fun notifyUnableToReserveMore() {
@@ -95,19 +95,17 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
     }
 
     override fun deactivateDoneButton() {
-        val doneButton = findViewById<TextView>(R.id.seat_picker_done_button)
-        doneButton.isEnabled = false
+        binding.seatPickerDoneButton.isEnabled = false
     }
 
     override fun activateDoneButton() {
-        val doneButton = findViewById<TextView>(R.id.seat_picker_done_button)
-        doneButton.isEnabled = true
+        binding.seatPickerDoneButton.isEnabled = true
     }
 
     private fun Int.formatPrice(): String = getString(R.string.price, this)
 
     private fun setSeatViews(ticket: MovieTicketModel) {
-        val seatViews = findViewById<TableLayout>(R.id.layout_seat)
+        val seatViews = binding.layoutSeat
             .children
             .filterIsInstance<TableRow>()
             .flatMap { it.children }
@@ -138,15 +136,12 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
     }
 
     private fun setTicketViews(ticket: MovieTicketModel) {
-        val titleView = findViewById<TextView>(R.id.seat_picker_title)
-        val priceView = findViewById<TextView>(R.id.seat_picker_price)
-        titleView.text = ticket.title
-        priceView.text = ticket.price.amount.formatPrice()
+        binding.seatPickerTitle.text = ticket.title
+        binding.seatPickerPrice.text = ticket.price.amount.formatPrice()
     }
 
     private fun setDoneButton() {
-        val doneButton = findViewById<TextView>(R.id.seat_picker_done_button)
-        doneButton.setOnClickListener {
+        binding.seatPickerDoneButton.setOnClickListener {
             showReservationCheckDialog()
         }
         presenter.checkSelectionDone()
