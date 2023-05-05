@@ -1,15 +1,16 @@
 package woowacourse.movie.fragment.reservationlist
 
-import woowacourse.movie.datasource.ReservationDataSource
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.view.data.ReservationViewData
 import woowacourse.movie.view.data.ReservationsViewData
 import woowacourse.movie.view.mapper.ReservationMapper.toView
 
-class ReservationListPresenter(private val view: ReservationListContract.View) :
+class ReservationListPresenter(
+    private val view: ReservationListContract.View,
+    reservationDataSource: woowacourse.movie.domain.dataSource.ReservationDataSource
+) :
     ReservationListContract.Presenter {
 
-    private val reservationDataSource: ReservationDataSource = ReservationDataSource()
     private val reservationRepository = ReservationRepository(reservationDataSource)
 
     override fun initReservationRecyclerView() {
