@@ -9,17 +9,25 @@ import woowacourse.movie.ui.BackKeyActionBarActivity
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
 
-class AdvDetailActivity : BackKeyActionBarActivity() {
-    private lateinit var advDetailView: AdvDetailView
+class AdvDetailActivity : BackKeyActionBarActivity(), AdvDetailContract.View {
     private lateinit var binding: ActivityAdvDetailBinding
     override fun onCreateView(savedInstanceState: Bundle?) {
+        initBinding()
+        initPresenter()
+    }
+
+    private fun initBinding() {
         binding = ActivityAdvDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+    }
 
-        val advState: AdvState = intent.getParcelableExtraCompat(KEY_ADV)
-            ?: return keyError(KEY_ADV)
+    private fun initPresenter() {
+        val presenter = AdvDetailPresenter(this)
+        presenter.init(intent.getParcelableExtraCompat(KEY_ADV) ?: return keyError(KEY_ADV))
+    }
 
-        advDetailView = AdvDetailView(binding, advState)
+    override fun setAdv(advState: AdvState) {
+        binding.adv = advState
     }
 
     companion object {
