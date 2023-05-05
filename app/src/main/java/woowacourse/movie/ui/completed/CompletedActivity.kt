@@ -8,27 +8,33 @@ import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityCompletedBinding
 import woowacourse.movie.model.ReservationUiModel
-import woowacourse.movie.movie.MovieRepository
+import woowacourse.movie.model.main.MovieUiModel
 import woowacourse.movie.util.formatScreenDateTime
 import woowacourse.movie.util.getParcelable
 
-// todo mvp 적용하기
-class CompletedActivity : AppCompatActivity() {
+class CompletedActivity : AppCompatActivity(), CompletedContract.View {
 
     private lateinit var binding: ActivityCompletedBinding
+    private val reservation: ReservationUiModel by lazy {
+        intent.getParcelable(
+            RESERVATION,
+            ReservationUiModel::class.java
+        ) ?: throw IllegalArgumentException(RECEIVING_RESERVATION_ERROR)
+    }
+    private val presenter: CompletedPresenter by lazy {
+        CompletedPresenter(
+            view = this,
+            reservation = reservation
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityCompletedBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        getResult()?.let {
-            initView(it)
-        } ?: finish()
-    }
-
-    private fun getResult(): ReservationUiModel? {
-        return intent.getParcelable(RESERVATION, ReservationUiModel::class.java)
+        presenter.initReservation()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -39,16 +45,24 @@ class CompletedActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun initView(reservation: ReservationUiModel) {
-        val movie = MovieRepository.getMovie(reservation.movieId)
-
-        binding.textCompletedTitle.text = movie.title
-        binding.textCompletedScreeningDate.text =
-            reservation.bookedDateTime.formatScreenDateTime()
-        binding.textCompletedTicketCount.text =
-            getString(R.string.ticket_count_seat_info, reservation.count, reservation.seatPosition)
-        binding.textCompletedPaymentAmount.text =
-            getString(R.string.payment_amount, reservation.payment)
+    override fun initView(
+        movie: MovieUiModel,
+        theaterName: String
+    ) {
+        with(binding) {
+            textCompletedTitle.text = movie.title
+            textCompletedScreeningDate.text =
+                reservation.bookedDateTime.formatScreenDateTime()
+            textCompletedTicketCount.text =
+                getString(
+                    R.string.ticket_count_seat_info,
+                    reservation.count,
+                    reservation.seatPosition,
+                    theaterName
+                )
+            textCompletedPaymentAmount.text =
+                getString(R.string.payment_amount, reservation.payment)
+        }
 
         showBackButton()
     }
@@ -59,6 +73,7 @@ class CompletedActivity : AppCompatActivity() {
 
     companion object {
         private const val RESERVATION = "RESERVATION"
+        private const val RECEIVING_RESERVATION_ERROR = "예약한 영화의 정보를 받아올 수 없습니다."
 
         fun getIntent(context: Context, reservation: ReservationUiModel): Intent {
             return Intent(context, CompletedActivity::class.java).apply {

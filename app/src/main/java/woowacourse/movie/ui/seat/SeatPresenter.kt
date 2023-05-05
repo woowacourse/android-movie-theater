@@ -60,6 +60,9 @@ class SeatPresenter(
             movie.reserve(bookedMovie.bookedDateTime, it)
         }
 
-        return Reservation(tickets.toSet()).toUiModel()
+        return Reservation(
+            theaterId = bookedMovie.theaterId,
+            tickets = tickets.toSet()
+        ).toUiModel()
     }
 }
