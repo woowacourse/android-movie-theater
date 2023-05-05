@@ -13,7 +13,7 @@ class ReservationTest() {
             "[ERROR] 예매 인원은 최소 1명 이상 최대 200명 이하여야 합니다.",
             IllegalArgumentException::class.java
         ) {
-            Reservation(getAnyMovie(), listOf(), LocalDateTime.now(), Money(0))
+            Reservation(1, getAnyMovie(), listOf(), LocalDateTime.now(), Money(0))
         }
     }
 
@@ -24,6 +24,7 @@ class ReservationTest() {
             IllegalArgumentException::class.java
         ) {
             Reservation(
+                1,
                 getAnyMovie(),
                 List<Seat>(21) { Seat(1, 1) },
                 LocalDateTime.now(),
@@ -46,6 +47,7 @@ class ReservationTest() {
 
         assertThrows(IllegalArgumentException::class.java) {
             Reservation(
+                1,
                 movie,
                 listOf(Seat(1, 1)),
                 LocalDateTime.of(2024, 3, 1, 12, 0),

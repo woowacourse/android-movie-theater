@@ -4,7 +4,7 @@ import woowacourse.movie.domain.Reservation
 
 interface ReservationRepository {
 
-    fun add(reservation: Reservation)
+    fun add(reservation: Reservation): Int
 
     fun findAll(): List<Reservation>
 }

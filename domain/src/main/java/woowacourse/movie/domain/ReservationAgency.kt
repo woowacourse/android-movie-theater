@@ -10,7 +10,7 @@ class ReservationAgency(
 
     fun reserve(seats: List<Seat>): Reservation? = if (canReserve(seats)) {
         Reservation(
-            movie, seats, selectedDateTime, calculateReservationFee(seats)
+            -1, movie, seats, selectedDateTime, calculateReservationFee(seats)
         )
     } else null
 
