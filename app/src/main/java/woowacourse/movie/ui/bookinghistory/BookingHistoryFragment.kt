@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.FragmentBookingHistoryBinding
 import woowacourse.movie.model.ReservationUiModel
 import woowacourse.movie.ui.completed.CompletedActivity
 
 class BookingHistoryFragment : Fragment(), BookingHistoryContract.View {
+
+    lateinit var binding: FragmentBookingHistoryBinding
 
     private val bookingHistoryDBHelper: BookingHistoryDBHelper by lazy {
         BookingHistoryDBHelper(requireContext())
@@ -24,16 +25,15 @@ class BookingHistoryFragment : Fragment(), BookingHistoryContract.View {
             repository = bookingHistoryDBAdapter
         )
     }
-    private val recyclerView: RecyclerView by lazy {
-        requireActivity().findViewById(R.id.recyclerBookingHistory)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.fragment_booking_history, container, false)
+    ): View {
+        binding = FragmentBookingHistoryBinding.inflate(inflater)
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,7 +45,7 @@ class BookingHistoryFragment : Fragment(), BookingHistoryContract.View {
     override fun initAdapter(bookingHistories: List<ReservationUiModel>) {
         val adapter = BookingHistoryAdapter(::itemClicked)
 
-        recyclerView.adapter = adapter
+        binding.recyclerBookingHistory.adapter = adapter
         adapter.initList(bookingHistories)
     }
 
