@@ -22,10 +22,10 @@
         </receiver>
 
         <activity
-            android:name=".activity.SeatPickerActivity"
+            android:name=".activity.seatpicker.SeatPickerActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.BookCompleteActivity"
+            android:name=".activity.bookcomplete.BookCompleteActivity"
             android:exported="false" />
         <activity
             android:name=".activity.moviedetail.MovieDetailActivity"

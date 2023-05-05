@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.BookHistoryRecyclerViewAdapter
 import woowacourse.movie.R
-import woowacourse.movie.activity.BookCompleteActivity
+import woowacourse.movie.activity.bookcomplete.BookCompleteActivity
 
 class BookHistoryFragment : Fragment(R.layout.fragment_book_history), BookHistoryContract.View {
 
