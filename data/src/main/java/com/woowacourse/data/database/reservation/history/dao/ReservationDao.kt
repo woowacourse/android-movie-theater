@@ -10,6 +10,7 @@ import com.woowacourse.data.database.reservation.ReservationDatabase
 import com.woowacourse.data.database.reservation.history.contract.HistoryContract
 import com.woowacourse.data.database.reservation.history.contract.HistoryContract.Entry.COLUMN_DATE
 import com.woowacourse.data.database.reservation.history.contract.HistoryContract.Entry.COLUMN_MOVIE_TITLE
+import com.woowacourse.data.database.reservation.history.contract.HistoryContract.Entry.COLUMN_THEATER_NAME
 import com.woowacourse.data.database.reservation.history.contract.HistoryContract.Entry.COLUMN_TICKET_COUNT
 import com.woowacourse.data.database.reservation.history.contract.HistoryContract.Entry.COLUMN_TIME
 import com.woowacourse.data.database.reservation.history.contract.HistoryContract.Entry.COLUMN_TOTAL_PRICE
@@ -51,13 +52,16 @@ class ReservationDao(context: Context) {
     private fun getHistory(cursor: Cursor, db: SQLiteDatabase): DataReservation {
         val historyId = cursor.getInt(cursor.getColumnIndex(_ID))
         val movieTitle = cursor.getString(cursor.getColumnIndex(COLUMN_MOVIE_TITLE))
+        val theaterName = cursor.getString(cursor.getColumnIndex(COLUMN_THEATER_NAME))
         val date = cursor.getString(cursor.getColumnIndex(COLUMN_DATE))
         val time = cursor.getString(cursor.getColumnIndex(COLUMN_TIME))
         val ticketCount = cursor.getInt(cursor.getColumnIndex(COLUMN_TICKET_COUNT))
         val totalPrice = cursor.getInt(cursor.getColumnIndex(COLUMN_TOTAL_PRICE))
         val seats = getSeats(db, historyId)
+
         return DataReservation(
             movieTitle,
+            theaterName,
             MovieDate.of(date),
             MovieTime.of(time),
             Ticket(ticketCount),
@@ -99,6 +103,7 @@ class ReservationDao(context: Context) {
     ): Long {
         val movieContentValues = ContentValues().apply {
             put(COLUMN_MOVIE_TITLE, item.movieTitle)
+            put(COLUMN_THEATER_NAME, item.theaterName)
             put(COLUMN_DATE, item.formattedMovieDate)
             put(COLUMN_TIME, item.formattedMovieTime)
             put(COLUMN_TICKET_COUNT, item.ticketCount)

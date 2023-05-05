@@ -5,6 +5,7 @@ import woowacourse.movie.presentation.model.Reservation
 
 fun Reservation.toDomain(): DomainReservation = DomainReservation(
     movieTitle,
+    theaterName,
     movieDate.toDomain(),
     movieTime.toDomain(),
     ticket.toDomain(),
@@ -14,6 +15,7 @@ fun Reservation.toDomain(): DomainReservation = DomainReservation(
 
 fun DomainReservation.toPresentation(): Reservation = Reservation(
     movieTitle,
+    theaterName,
     movieDate.toPresentation(),
     movieTime.toPresentation(),
     ticket.toPresentation(),

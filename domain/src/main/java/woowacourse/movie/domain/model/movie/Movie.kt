@@ -15,6 +15,7 @@ data class Movie(
     val introduce: String,
 ) {
     fun reserve(
+        theaterName: String,
         reservedDate: MovieDate,
         reservedTime: MovieTime,
         ticket: Ticket,
@@ -25,6 +26,7 @@ data class Movie(
 
         return Reservation(
             title,
+            theaterName,
             reservedDate,
             reservedTime,
             ticket,

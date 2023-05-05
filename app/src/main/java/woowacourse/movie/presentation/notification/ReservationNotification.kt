@@ -4,9 +4,9 @@ import android.app.PendingIntent
 import android.content.Context
 import android.os.Parcelable
 import woowacourse.movie.R
-import woowacourse.movie.presentation.activities.seatpicker.SeatPickerActivity.Companion.REMINDER_TIME_MINUTES_AGO
-import woowacourse.movie.presentation.activities.ticketingresult.TicketingResultActivity
 import woowacourse.movie.presentation.model.Reservation
+import woowacourse.movie.presentation.views.seatpicker.SeatPickerActivity.Companion.REMINDER_TIME_MINUTES_AGO
+import woowacourse.movie.presentation.views.ticketingresult.TicketingResultActivity
 
 class ReservationNotification(
     override val channelId: String = "reservation_reminder",

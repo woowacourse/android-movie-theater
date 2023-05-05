@@ -4,6 +4,7 @@ typealias DataReservation = Reservation
 
 data class Reservation(
     val movieTitle: String,
+    val theaterName: String,
     val movieDate: DataMovieDate,
     val movieTime: DataMovieTime,
     val ticket: DataTicket,

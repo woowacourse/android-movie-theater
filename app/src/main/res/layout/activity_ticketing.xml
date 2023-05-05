@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.activities.ticketing.TicketingActivity">
+    tools:context=".presentation.views.ticketing.TicketingActivity">
 
     <ScrollView
         android:id="@+id/movie_info_sv"

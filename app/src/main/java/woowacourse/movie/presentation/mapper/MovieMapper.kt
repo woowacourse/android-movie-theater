@@ -8,4 +8,11 @@ fun Movie.toDomain(): DomainMovie =
     DomainMovie(title, startDate, endDate, runningTime, introduce)
 
 fun DomainMovie.toPresentation(@DrawableRes thumbnailResId: Int): Movie =
-    Movie(title, startDate, endDate, runningTime, introduce, thumbnailResId)
+    Movie(
+        title = title,
+        startDate = startDate,
+        endDate = endDate,
+        runningTime = runningTime,
+        introduce = introduce,
+        thumbnail = thumbnailResId
+    )

@@ -47,6 +47,9 @@ android {
             useLegacyPackaging = true
         }
     }
+    dataBinding {
+        enable = true
+    }
 }
 
 dependencies {

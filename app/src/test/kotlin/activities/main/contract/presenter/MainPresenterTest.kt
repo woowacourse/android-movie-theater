@@ -6,8 +6,8 @@ import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.presentation.activities.main.contract.MainContract
-import woowacourse.movie.presentation.activities.main.contract.presenter.MainPresenter
+import woowacourse.movie.presentation.views.main.contract.MainContract
+import woowacourse.movie.presentation.views.main.contract.presenter.MainPresenter
 import woowacourse.movie.presentation.model.mainstate.MainScreenState
 import woowacourse.movie.presentation.model.mainstate.MainState
 

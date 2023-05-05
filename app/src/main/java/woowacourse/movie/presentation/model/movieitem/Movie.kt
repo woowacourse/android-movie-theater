@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter
 
 @Parcelize
 data class Movie(
+    val id: Int = 0,
     val title: String,
     val startDate: LocalDate,
     val endDate: LocalDate,
@@ -24,9 +25,10 @@ data class Movie(
 
         private const val DEFAULT_LOAD_SIZE = 20
         private var loadedSize = 0
-        private val dummy: List<Movie> = List(10_000) {
+        private val dummy: List<Movie> = List(10_000) { id ->
             Movie(
-                "해리 포터와 마법사의 돌 $it",
+                id,
+                "해리 포터와 마법사의 돌 $id",
                 LocalDate.of(2023, 4, 1),
                 LocalDate.of(2023, 4, 30),
                 152,

@@ -10,6 +10,7 @@ typealias DomainReservation = Reservation
 
 data class Reservation(
     val movieTitle: String,
+    val theaterName: String,
     val movieDate: MovieDate,
     val movieTime: MovieTime,
     val ticket: Ticket,
