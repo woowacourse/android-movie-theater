@@ -9,7 +9,7 @@ import java.time.LocalTime
 
 class ReservationPresenter(private val view: ReservationContract.View) :
     ReservationContract.Presenter {
-    private var peopleCountSaved = 0
+    private var peopleCountSaved = 1
 
     override fun getSchedules(movie: MovieUiModel, theater: String): Map<LocalDate, List<LocalTime>> {
         val startDate = movie.startDate
