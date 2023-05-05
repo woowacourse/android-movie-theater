@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.contract.ReservationResultContract
 import woowacourse.movie.data.MovieViewData
@@ -13,6 +14,7 @@ import woowacourse.movie.data.PriceViewData
 import woowacourse.movie.data.ReservationDetailViewData
 import woowacourse.movie.data.ReservationViewData
 import woowacourse.movie.data.SeatsViewData
+import woowacourse.movie.databinding.ActivityReservationResultBinding
 import woowacourse.movie.error.ActivityError.finishWithError
 import woowacourse.movie.error.ViewError
 import woowacourse.movie.presenter.ReservationResultPresenter
@@ -25,10 +27,11 @@ import java.util.Locale
 
 class ReservationResultActivity : AppCompatActivity(), ReservationResultContract.View {
     override val presenter: ReservationResultContract.Presenter = ReservationResultPresenter(this)
+    private lateinit var binding: ActivityReservationResultBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_reservation_result)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_reservation_result)
         makeBackButton()
 
         initReservationResultView()
@@ -48,34 +51,28 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
 
     override fun setMovieData(movie: MovieViewData) {
         MovieController.bind(
-            movie = movie,
-            MovieView(
-                title = findViewById(R.id.movie_reservation_result_title),
+            movie = movie, MovieView(
+                title = binding.movieReservationResultTitle,
             )
         )
     }
 
     override fun setReservationDetailData(reservationDetail: ReservationDetailViewData) {
-        val date = findViewById<TextView>(R.id.movie_reservation_result_date)
         val dateFormat =
-            DateTimeFormatter.ofPattern(date.context.getString(R.string.reservation_datetime_format))
-        date.text = dateFormat.format(reservationDetail.date)
+            DateTimeFormatter.ofPattern(getString(R.string.reservation_datetime_format))
+        binding.movieReservationResultDate.text = dateFormat.format(reservationDetail.date)
     }
 
     override fun setPriceData(price: PriceViewData) {
-        val priceText = findViewById<TextView>(R.id.movie_reservation_result_price)
         val formattedPrice = NumberFormat.getNumberInstance(Locale.US).format(price.value)
-        priceText.text = priceText.context.getString(R.string.reservation_price, formattedPrice)
+        binding.movieReservationResultPrice.text =
+            getString(R.string.reservation_price, formattedPrice)
     }
 
     override fun setSeatData(
-        reservationDetail: ReservationDetailViewData,
-        seats: SeatsViewData,
-        theaterName: String
+        reservationDetail: ReservationDetailViewData, seats: SeatsViewData, theaterName: String
     ) {
-        val peopleCount = findViewById<TextView>(R.id.movie_reservation_result_people_count)
-
-        peopleCount.text = peopleCount.context.getString(
+        binding.movieReservationResultPeopleCount.text = getString(
             R.string.reservation_people_count,
             reservationDetail.peopleCount,
             formatSeats(seats),
@@ -98,8 +95,7 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
 
     companion object {
         fun from(
-            context: Context,
-            reservation: ReservationViewData
+            context: Context, reservation: ReservationViewData
         ): Intent {
             return Intent(context, ReservationResultActivity::class.java).apply {
                 putExtra(ReservationViewData.RESERVATION_EXTRA_NAME, reservation)
