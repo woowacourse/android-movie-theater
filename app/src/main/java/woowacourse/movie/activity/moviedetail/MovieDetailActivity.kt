@@ -1,4 +1,4 @@
-package woowacourse.movie.activity
+package woowacourse.movie.activity.moviedetail
 
 import android.content.Context
 import android.content.Intent
@@ -11,18 +11,23 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import com.woowacourse.domain.Counter
 import com.woowacourse.domain.MovieSchedule
 import woowacourse.movie.BundleKeys.MOVIE_BOOKING_INFO_KEY
 import woowacourse.movie.BundleKeys.MOVIE_DATA_KEY
 import woowacourse.movie.DateFormatter
 import woowacourse.movie.R
+import woowacourse.movie.activity.BackButtonActivity
+import woowacourse.movie.activity.SeatPickerActivity
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.movie.Movie
 import woowacourse.movie.movie.MovieBookingInfo
 import java.time.LocalDate
 
-class MovieDetailActivity : BackButtonActivity() {
+class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
+    override lateinit var presenter: MovieDetailContract.Presenter
     private var needSpinnerInitialize = true
+
     private val dateSpinner: Spinner by lazy { findViewById(R.id.sp_movie_date) }
     private val timeSpinner: Spinner by lazy { findViewById(R.id.sp_movie_time) }
     private val personCountTextView by lazy { findViewById<TextView>(R.id.tv_ticket_count) }
@@ -30,6 +35,7 @@ class MovieDetailActivity : BackButtonActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
+        presenter = MovieDetailPresenter(this, movieData = getMovieData())
         needSpinnerInitialize = true
 
         val movieData = getMovieData()
@@ -47,10 +53,7 @@ class MovieDetailActivity : BackButtonActivity() {
         reloadTicketCountInstance(savedInstanceState)
     }
 
-    private fun getMovieData() = (
-        intent.getSerializableCompat(MOVIE_DATA_KEY)
-            ?: Movie.dummyData
-        )
+    private fun getMovieData() = (intent.getSerializableCompat(MOVIE_DATA_KEY) ?: Movie.dummyData)
 
     private fun finishIfDummyData(movieData: Movie) {
         if (movieData == Movie.dummyData) {
@@ -75,36 +78,36 @@ class MovieDetailActivity : BackButtonActivity() {
 
     private fun setClickListener(movieData: Movie) {
 
-        var currentCount = personCountTextView.text.toString().toInt()
-
         findViewById<Button>(R.id.bt_ticket_count_minus).setOnClickListener {
-            if (personCountTextView.text == MIN_TICKET) {
+            if (presenter.isMinTicketCount()) {
                 Toast.makeText(this, getString(R.string.cant_lower_one), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            currentCount--
-            personCountTextView.text = currentCount.toString()
+            presenter.subTicket()
         }
 
         findViewById<Button>(R.id.bt_ticket_count_plus).setOnClickListener {
-            currentCount++
-            personCountTextView.text = currentCount.toString()
+            presenter.addTicket()
         }
 
         findViewById<Button>(R.id.bt_to_seat_picker).setOnClickListener {
-            val intent = SeatPickerActivity.intent(this)
-            intent.putExtra(
-                MOVIE_BOOKING_INFO_KEY,
-                MovieBookingInfo(
-                    movieData,
-                    DateFormatter.format(LocalDate.parse(dateSpinner.selectedItem.toString())),
-                    timeSpinner.selectedItem.toString(),
-                    currentCount
-                )
-            )
-            startActivity(intent)
+            startSeatPickerPage(movieData)
             finish()
         }
+    }
+
+    override fun startSeatPickerPage(movieData: Movie) {
+        val intent = SeatPickerActivity.intent(this)
+        intent.putExtra(
+            MOVIE_BOOKING_INFO_KEY,
+            MovieBookingInfo(
+                movieData,
+                DateFormatter.format(LocalDate.parse(dateSpinner.selectedItem.toString())),
+                timeSpinner.selectedItem.toString(),
+                presenter.getTicketCount()
+            )
+        )
+        startActivity(intent)
     }
 
     private fun setSpinnerSelectedListener(
@@ -128,7 +131,8 @@ class MovieDetailActivity : BackButtonActivity() {
                     timeSpinner.setSelection(
                         (
                             savedInstanceState.getString(TIME_KEY)
-                                ?: movieSchedule.getScheduleTimes(dateSpinner.selectedItem.toString()).first()
+                                ?: movieSchedule.getScheduleTimes(dateSpinner.selectedItem.toString())
+                                    .first()
                             ).toInt()
                     )
                     needSpinnerInitialize = false
@@ -154,8 +158,17 @@ class MovieDetailActivity : BackButtonActivity() {
 
     private fun reloadTicketCountInstance(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
-            personCountTextView.text = savedInstanceState.getString(TICKET_COUNT_KEY)
+            presenter = MovieDetailPresenter(
+                this,
+                Counter(savedInstanceState.getString(TICKET_COUNT_KEY)?.toInt() ?: 1),
+                getMovieData()
+            )
+            setTicketCountText(presenter.getTicketCount())
         }
+    }
+
+    override fun setTicketCountText(count: Int) {
+        personCountTextView.text = count.toString()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -169,7 +182,6 @@ class MovieDetailActivity : BackButtonActivity() {
         private const val TICKET_COUNT_KEY = "ticketCount"
         private const val DATE_KEY = "date"
         private const val TIME_KEY = "time"
-        private const val MIN_TICKET = "1"
 
         fun intent(context: Context) = Intent(context, MovieDetailActivity::class.java)
     }
