@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.booking
 
+import woowacourse.movie.domain.model.tools.Movie
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -25,6 +26,8 @@ interface BookingContract {
 
         fun getScreeningTimes(date: LocalDate): List<LocalTime>
 
-        fun getScreeningDates(): List<LocalDate>
+        fun getScreeningDates(movieId: Long): List<LocalDate>
+
+        fun getMovieById(movieId: Long): Movie
     }
 }

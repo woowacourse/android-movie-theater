@@ -11,10 +11,9 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieData
 import woowacourse.movie.domain.model.tools.TicketCount
+import woowacourse.movie.model.data.remote.DummyMovieStorage
 import woowacourse.movie.presentation.choiceSeat.ChoiceSeatActivity
-import woowacourse.movie.presentation.mappers.toDomainModel
 import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.model.MovieModel
 import woowacourse.movie.presentation.model.ReservationModel
@@ -25,10 +24,8 @@ import java.time.LocalTime
 class BookingActivity : AppCompatActivity(), BookingContract.View {
 
     override lateinit var presenter: BookingContract.Presenter
-    private val movie: MovieModel by lazy {
-        val movieId = intent.getLongExtra(MOVIE_ID, -1)
-        MovieData.findMovieById(movieId).toPresentation()
-    }
+    private val movieId: Long by lazy { intent.getLongExtra(MOVIE_ID, -1) }
+    private lateinit var movieModel: MovieModel
     private val textBookingTicketCount by lazy { findViewById<TextView>(R.id.textBookingTicketCount) }
     private val dateSpinner by lazy { findViewById<Spinner>(R.id.spinnerScreeningDate) }
     private val timeSpinner by lazy { findViewById<Spinner>(R.id.spinnerScreeningTime) }
@@ -43,6 +40,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_booking)
         initPresenter()
+        initMovieModel()
         initAdapters()
         initDateTimes()
         restoreData(savedInstanceState)
@@ -66,7 +64,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
             presenter = BookingPresenter(
                 this@BookingActivity,
                 TicketCount(getInt(TICKET_COUNT)),
-                movie.toDomainModel()
+                DummyMovieStorage()
             )
             dateSpinner.setSelection(getInt(DATE_POSITION), false)
             timeSpinner.setSelection(getInt(TIME_POSITION), false)
@@ -83,7 +81,11 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
     }
 
     private fun initPresenter() {
-        presenter = BookingPresenter(view = this, movie = movie.toDomainModel())
+        presenter = BookingPresenter(view = this, movieStorage = DummyMovieStorage())
+    }
+
+    private fun initMovieModel() {
+        movieModel = presenter.getMovieById(movieId).toPresentation()
     }
 
     private fun gatherClickListeners() {
@@ -93,7 +95,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
     }
 
     private fun initBookingMovieInformationView() {
-        BookingMovieInformationView(findViewById(R.id.layout_booking_movie_information), movie)
+        BookingMovieInformationView(findViewById(R.id.layout_booking_movie_information), movieModel)
     }
 
     private fun clickMinus() {
@@ -123,7 +125,8 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
             dateSpinnerAdapter.getItem(findViewById<Spinner>(R.id.spinnerScreeningDate).selectedItemPosition),
             timeSpinnerAdapter.getItem(findViewById<Spinner>(R.id.spinnerScreeningTime).selectedItemPosition)
         )
-        val reservation = ReservationModel(movie.id, dateTime, presenter.getTicketCurrentCount())
+        val reservation =
+            ReservationModel(movieModel.id, dateTime, presenter.getTicketCurrentCount())
         startActivity(ChoiceSeatActivity.getIntent(this, reservation))
     }
 
@@ -141,7 +144,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
     }
 
     private fun initDateTimes() {
-        val dates = presenter.getScreeningDates()
+        val dates = presenter.getScreeningDates(movieId)
         presenter.getScreeningTimes(dates[0])
     }
 
@@ -153,7 +156,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
                 position: Int,
                 id: Long
             ) {
-                val dates = presenter.getScreeningDates()
+                val dates = presenter.getScreeningDates(movieId)
                 presenter.getScreeningTimes(dates[position])
             }
 
