@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.activity.MovieDetailActivity
+import woowacourse.movie.fragment.movielist.adapter.MovieRecyclerViewAdapter
 import woowacourse.movie.model.AdUIModel
 import woowacourse.movie.movie.MovieMockData
 import woowacourse.movie.movie.toPresentation

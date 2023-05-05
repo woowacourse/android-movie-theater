@@ -2,6 +2,7 @@ package woowacourse.movie.fragment.movielist
 
 import com.woowacourse.domain.Ad
 import woowacourse.movie.R
+import woowacourse.movie.fragment.movielist.adapter.MovieRecyclerViewAdapter
 import woowacourse.movie.model.AdUIModel
 import woowacourse.movie.model.toPresentation
 import woowacourse.movie.movie.MovieMockData

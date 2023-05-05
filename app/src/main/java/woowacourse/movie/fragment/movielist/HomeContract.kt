@@ -1,5 +1,6 @@
 package woowacourse.movie.fragment.movielist
 
+import woowacourse.movie.fragment.movielist.adapter.MovieRecyclerViewAdapter
 import woowacourse.movie.model.AdUIModel
 
 interface HomeContract {
