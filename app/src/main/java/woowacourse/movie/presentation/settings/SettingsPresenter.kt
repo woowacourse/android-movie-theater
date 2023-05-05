@@ -7,11 +7,13 @@ class SettingsPresenter(
     private val settingsData: SettingsData,
 ) : SettingsContract.Presenter {
 
+    override var isNotifiable: Boolean
+        get() = settingsData.isAvailable
+        set(value) {
+            settingsData.isAvailable = value
+        }
+
     init {
         view.initNotificationSwitch(settingsData.isAvailable)
-    }
-
-    override fun setNotifiable(isNotifiable: Boolean) {
-        settingsData.isAvailable = isNotifiable
     }
 }

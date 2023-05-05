@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
-import woowacourse.movie.R
 import woowacourse.movie.data.settings.SettingsPreference
 
 class SettingsFragment : Fragment(), SettingsContract.View {
@@ -25,9 +23,10 @@ class SettingsFragment : Fragment(), SettingsContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val prefKey = SettingsAllowance.NOTIFICATION_PREF_KEY
         presenter = SettingsPresenter(
             this,
-            SettingsPreference.getInstance("notification", requireContext()),
+            SettingsPreference.getInstance(prefKey, requireContext()),
         )
     }
 
@@ -38,7 +37,7 @@ class SettingsFragment : Fragment(), SettingsContract.View {
         notificationSwitch.isChecked = isNotifiable
 
         notificationSwitch.setOnCheckedChangeListener { _, isChecked ->
-            presenter.setNotifiable(isChecked)
+            presenter.isNotifiable = isChecked
         }
     }
 }

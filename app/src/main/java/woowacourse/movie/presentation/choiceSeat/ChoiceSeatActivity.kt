@@ -12,14 +12,18 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import woowacourse.movie.R
-import woowacourse.movie.presentation.allowance.NotificationAllowance
+import woowacourse.movie.data.settings.SettingsPreference
+import woowacourse.movie.presentation.allowance.SettingsAllowance
 import woowacourse.movie.presentation.complete.CompleteActivity
 import woowacourse.movie.presentation.model.ReservationModel
 import woowacourse.movie.presentation.model.SeatModel
 
 class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
 
-    override val presenter: ChoiceSeatContract.Presenter by lazy { ChoiceSeatPresenter(this) }
+    override val presenter: ChoiceSeatContract.Presenter by lazy {
+        val prefKey = SettingsAllowance.NOTIFICATION_PREF_KEY
+        ChoiceSeatPresenter(this, SettingsPreference.getInstance(prefKey, this))
+    }
     override val reservation by lazy { initReservation() }
     private val confirmButton by lazy { findViewById<Button>(R.id.buttonChoiceConfirm) }
 
@@ -143,14 +147,12 @@ class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
     private fun confirmBookMovie() {
         val ticketModel = presenter.reserveTicketModel()
 
-        if (isNotifiable()) {
+        if (presenter.isNotifiable) {
             MovieNoticeAlarmManager(this, ticketModel).setAlarm(ticketModel.bookedDateTime)
         }
         startActivity(CompleteActivity.getIntent(this, ticketModel))
         finishAffinity()
     }
-
-    private fun isNotifiable(): Boolean = NotificationAllowance.isNotifiable(this)
 
     companion object {
         private const val RESERVATION = "RESERVATION"

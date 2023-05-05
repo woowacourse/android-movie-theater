@@ -15,6 +15,7 @@ interface ChoiceSeatContract {
     }
 
     interface Presenter {
+        var isNotifiable: Boolean
         fun reserveTicketModel(): TicketModel
         fun getMovieModel(): MovieModel
         fun addSeat(index: Int): Boolean

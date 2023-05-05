@@ -7,6 +7,6 @@ interface SettingsContract {
     }
 
     interface Presenter {
-        fun setNotifiable(isNotifiable: Boolean)
+        var isNotifiable: Boolean
     }
 }

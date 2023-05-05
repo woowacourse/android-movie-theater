@@ -2,6 +2,7 @@ package woowacourse.movie.presentation.choiceSeat
 
 import woowacourse.movie.data.BookedTicketsData
 import woowacourse.movie.data.MovieData
+import woowacourse.movie.data.settings.SettingsData
 import woowacourse.movie.domain.model.rules.SeatsPayment
 import woowacourse.movie.domain.model.tools.Money
 import woowacourse.movie.domain.model.tools.TicketCount
@@ -14,8 +15,17 @@ import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.model.SeatModel
 import woowacourse.movie.presentation.model.TicketModel
 
-class ChoiceSeatPresenter(private val view: ChoiceSeatContract.View) :
+class ChoiceSeatPresenter(
+    private val view: ChoiceSeatContract.View,
+    private val settingsData: SettingsData,
+) :
     ChoiceSeatContract.Presenter {
+
+    override var isNotifiable: Boolean
+        get() = settingsData.isAvailable
+        set(value) {
+            settingsData.isAvailable = value
+        }
 
     private val seats: Seats = Seats()
 
