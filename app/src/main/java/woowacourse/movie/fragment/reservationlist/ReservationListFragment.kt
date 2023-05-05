@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.activity.ReservationResultActivity
+import woowacourse.movie.datasource.ReservationDataSource
 import woowacourse.movie.fragment.reservationlist.adapter.ReservationAdapter
 import woowacourse.movie.view.data.ReservationViewData
 import woowacourse.movie.view.data.ReservationsViewData
@@ -26,7 +27,7 @@ class ReservationListFragment : Fragment(), ReservationListContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter = ReservationListPresenter(this)
+        presenter = ReservationListPresenter(this, ReservationDataSource())
         presenter.initReservationRecyclerView()
     }
 

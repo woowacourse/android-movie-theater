@@ -1,92 +1,83 @@
-package woowacourse.movie.activity
+package woowacourse.movie.activity.moviereservation
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.Count
-import woowacourse.movie.domain.model.ReservationDetail
+import woowacourse.movie.activity.SeatSelectionActivity
 import woowacourse.movie.view.data.LocalFormattedDate
 import woowacourse.movie.view.data.LocalFormattedTime
 import woowacourse.movie.view.data.MovieViewData
-import woowacourse.movie.view.data.ReservationDetailViewData
 import woowacourse.movie.view.error.ActivityError.finishWithError
 import woowacourse.movie.view.error.ViewError
 import woowacourse.movie.view.getSerializable
-import woowacourse.movie.view.mapper.ReservationDetailMapper.toView
-import woowacourse.movie.view.widget.Counter
 import woowacourse.movie.view.widget.DateSpinner
 import woowacourse.movie.view.widget.MovieController
 import woowacourse.movie.view.widget.MovieView
-import woowacourse.movie.view.widget.SaveStateCounter
 import woowacourse.movie.view.widget.SaveStateSpinner
 import woowacourse.movie.view.widget.TimeSpinner
 import java.time.LocalDateTime
 
-class MovieReservationActivity : AppCompatActivity() {
-    private val counter: SaveStateCounter by lazy {
-        SaveStateCounter(
-            Counter(
-                findViewById(R.id.movie_reservation_people_count_minus),
-                findViewById(R.id.movie_reservation_people_count_plus),
-                findViewById(R.id.movie_reservation_people_count),
-                Count(INITIAL_COUNT),
-            ),
-            COUNTER_SAVE_STATE_KEY,
-        )
+class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.View {
+    override lateinit var presenter: MovieReservationContract.Presenter
+    private val countText: TextView by lazy {
+        findViewById(R.id.movie_reservation_people_count)
     }
 
-    private val dateSpinner: DateSpinner by lazy {
-        DateSpinner(
-            SaveStateSpinner(
-                DATE_SPINNER_SAVE_STATE_KEY,
-                findViewById(R.id.movie_reservation_date_spinner),
-            )
-        )
+    private val dateSpinner: Spinner by lazy {
+        findViewById(R.id.movie_reservation_date_spinner)
+    }
+    private val timeSpinner: Spinner by lazy {
+        findViewById(R.id.movie_reservation_time_spinner)
     }
 
-    private val timeSpinner: TimeSpinner by lazy {
-        TimeSpinner(
-            SaveStateSpinner(
-                TIME_SPINNER_SAVE_STATE_KEY,
-                findViewById(R.id.movie_reservation_time_spinner),
-            )
-        )
+    private val saveStateDateSpinner: SaveStateSpinner by lazy {
+        SaveStateSpinner(DATE_SPINNER_SAVE_STATE_KEY, dateSpinner)
+    }
+    private val dateSpinnerManager: DateSpinner by lazy {
+        DateSpinner(findViewById(R.id.movie_reservation_date_spinner))
+    }
+
+    private val timeSpinnerManager: TimeSpinner by lazy {
+        TimeSpinner(findViewById(R.id.movie_reservation_time_spinner))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_reservation)
-
+        presenter = MovieReservationPresenter(
+            this, saveStateDateSpinner, SaveStateSpinner(TIME_SPINNER_SAVE_STATE_KEY, timeSpinner)
+        )
         initMovieReservationView(savedInstanceState)
     }
 
     private fun initMovieReservationView(savedInstanceState: Bundle?) {
         makeBackButton()
+        initButton()
         val movie = intent.extras?.getSerializable<MovieViewData>(MovieViewData.MOVIE_EXTRA_NAME)
             ?: return finishWithError(ViewError.MissingExtras(MovieViewData.MOVIE_EXTRA_NAME))
-        makeCounter(savedInstanceState)
-        makeSpinners(savedInstanceState, movie)
+        presenter.initCount(savedInstanceState)
+        presenter.initDateSpinner(movie, savedInstanceState)
         renderMovie(movie)
         makeReservationButtonClickListener(movie)
     }
 
+    private fun initButton() {
+        findViewById<Button>(R.id.movie_reservation_people_count_minus).setOnClickListener {
+            presenter.minusCount()
+        }
+        findViewById<Button>(R.id.movie_reservation_people_count_plus).setOnClickListener {
+            presenter.plusCount()
+        }
+    }
+
     private fun makeBackButton() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    private fun makeCounter(savedInstanceState: Bundle?) {
-        counter.applyToView()
-        counter.load(savedInstanceState)
-    }
-
-    private fun makeSpinners(savedInstanceState: Bundle?, movie: MovieViewData) {
-        dateSpinner.make(
-            savedInstanceState = savedInstanceState, movie = movie, timeSpinner = timeSpinner
-        )
     }
 
     private fun renderMovie(movie: MovieViewData) {
@@ -106,33 +97,25 @@ class MovieReservationActivity : AppCompatActivity() {
         movie: MovieViewData
     ) {
         findViewById<Button>(R.id.movie_reservation_button).setOnClickListener {
-            val reservationDetail = makeReservationDetail(dateSpinner, timeSpinner, counter.counter)
+            val reservationDetail = presenter.getReservationDetailView(
+                LocalDateTime.of(
+                    (dateSpinner.selectedItem as LocalFormattedDate).date,
+                    (timeSpinner.selectedItem as LocalFormattedTime).time
+                ),
+                countText.text.toString().toInt()
+            )
             SeatSelectionActivity.from(this, movie, reservationDetail).run {
                 startActivity(this)
             }
         }
     }
 
-    private fun makeReservationDetail(
-        dateSpinner: DateSpinner,
-        timeSpinner: TimeSpinner,
-        counter: Counter
-    ): ReservationDetailViewData {
-        return ReservationDetail(
-            LocalDateTime.of(
-                (dateSpinner.spinner.spinner.selectedItem as LocalFormattedDate).date,
-                (timeSpinner.spinner.spinner.selectedItem as LocalFormattedTime).time
-            ),
-            counter.count.value
-        ).toView()
-    }
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        counter.save(outState)
-        dateSpinner.save(outState)
-        timeSpinner.save(outState)
+        presenter.saveCount(outState)
+        presenter.saveDate(outState)
+        presenter.saveTime(outState)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -142,9 +125,21 @@ class MovieReservationActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun initCount(count: Int) {
+        countText.text = count.toString()
+    }
+
+    override fun initDateSpinner(dateIndex: Int, timeIndex: Int, dates: List<LocalFormattedDate>) {
+        dateSpinnerManager.initSpinner(
+            dates, timeSpinnerManager, dateIndex, timeIndex
+        )
+    }
+
+    override fun setCount(count: Int) {
+        countText.text = count.toString()
+    }
+
     companion object {
-        private const val INITIAL_COUNT = 1
-        private const val COUNTER_SAVE_STATE_KEY = "counter"
         private const val DATE_SPINNER_SAVE_STATE_KEY = "date_spinner"
         private const val TIME_SPINNER_SAVE_STATE_KEY = "time_spinner"
         fun from(context: Context, movie: MovieViewData): Intent {

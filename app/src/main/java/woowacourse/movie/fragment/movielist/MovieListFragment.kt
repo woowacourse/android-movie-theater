@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.activity.MovieReservationActivity
+import woowacourse.movie.activity.moviereservation.MovieReservationActivity
 import woowacourse.movie.fragment.movielist.adapter.MovieAdapter
 import woowacourse.movie.view.data.MovieListViewData
 import woowacourse.movie.view.data.MovieViewData

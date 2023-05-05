@@ -17,6 +17,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
+import woowacourse.movie.activity.moviereservation.MovieReservationActivity
 import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.Image
 import woowacourse.movie.domain.model.Movie
