@@ -4,9 +4,9 @@ import android.view.View
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.model.Ad
+import woowacourse.movie.model.AdUIModel
 
-class AdViewHolder(private val view: View, private val listener: (Ad) -> Unit, ad: Ad) :
+class AdViewHolder(private val view: View, private val listener: (AdUIModel) -> Unit, ad: AdUIModel) :
     RecyclerView.ViewHolder(view) {
     val adImage = itemView.findViewById<ImageView>(R.id.iv_ad)
 
@@ -16,7 +16,7 @@ class AdViewHolder(private val view: View, private val listener: (Ad) -> Unit, a
         }
     }
 
-    fun bind(item: Ad) {
+    fun bind(item: AdUIModel) {
         adImage.setImageResource(item.adImage)
     }
 }

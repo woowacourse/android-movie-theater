@@ -10,43 +10,41 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.activity.MovieDetailActivity
-import woowacourse.movie.model.Ad
+import woowacourse.movie.model.AdUIModel
 import woowacourse.movie.movie.MovieMockData
+import woowacourse.movie.movie.toPresentation
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), HomeContract.View {
+    override lateinit var presenter: HomeContract.Presenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        presenter = HomePresenter(this)
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setMovieRecyclerView(view)
+        presenter.setMovieRecyclerView(onClickMovie(), onClickAd())
     }
 
-    private fun setMovieRecyclerView(view: View) {
-        val movieRecyclerView = view.findViewById<RecyclerView>(R.id.recyclerview_movie_list)
-
-        val movieRecyclerViewAdapter = MovieRecyclerViewAdapter(
-            MovieMockData.movies10000,
-            Ad.dummyAd,
-            onClickMovie(view),
-            onClickAd(),
-        )
-        movieRecyclerView.adapter = movieRecyclerViewAdapter
-    }
-
-    private fun onClickAd() = { item: Ad ->
+    private fun onClickAd() = { item: AdUIModel ->
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
         this.startActivity(intent)
     }
 
-    private fun onClickMovie(view: View) = { position: Int ->
-        val intent = MovieDetailActivity.getIntent(view.context, MovieMockData.movies10000[position])
+    private fun onClickMovie() = { position: Int ->
+        val intent =
+            MovieDetailActivity.getIntent(requireContext(), MovieMockData.movies10000[position].toPresentation())
         this.startActivity(intent)
+    }
+
+    override fun setMovieRecyclerView(recyclerViewAdapter: MovieRecyclerViewAdapter) {
+        val movieRecyclerView =
+            requireView().findViewById<RecyclerView>(R.id.recyclerview_movie_list)
+        movieRecyclerView.adapter = recyclerViewAdapter
     }
 }

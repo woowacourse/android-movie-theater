@@ -7,9 +7,9 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import woowacourse.movie.R
-import woowacourse.movie.fragment.setting.SettingFragment
 import woowacourse.movie.fragment.bookhistory.BookHistoryFragment
 import woowacourse.movie.fragment.movielist.HomeFragment
+import woowacourse.movie.fragment.setting.SettingFragment
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener {
 

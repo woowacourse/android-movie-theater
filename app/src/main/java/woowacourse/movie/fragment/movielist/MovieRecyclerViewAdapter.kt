@@ -3,15 +3,16 @@ package woowacourse.movie.fragment.movielist
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.woowacourse.domain.ViewType
 import woowacourse.movie.R
-import woowacourse.movie.model.Ad
+import woowacourse.movie.model.AdUIModel
 import woowacourse.movie.movie.MovieUIModel
 
 class MovieRecyclerViewAdapter(
     private val movies: List<MovieUIModel>,
-    private val ad: Ad,
+    private val ad: AdUIModel,
     private val movieOnItemClicked: (Int) -> Unit,
-    private val adOnItemClicked: (Ad) -> Unit,
+    private val adOnItemClicked: (AdUIModel) -> Unit,
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

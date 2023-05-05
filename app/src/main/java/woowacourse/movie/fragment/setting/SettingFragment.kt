@@ -8,8 +8,6 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.woowacourse.domain.SettingRepository
 import woowacourse.movie.R
-import woowacourse.movie.fragment.setting.SettingContract
-import woowacourse.movie.fragment.setting.SettingPresenter
 import woowacourse.movie.service.NotificationPermission
 import woowacourse.movie.service.NotificationPermission.checkNotificationPermission
 import woowacourse.movie.service.SharedPreferenceUtil

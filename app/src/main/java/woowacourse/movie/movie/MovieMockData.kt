@@ -1,11 +1,12 @@
 package woowacourse.movie.movie
 
+import com.woowacourse.domain.movie.Movie
 import woowacourse.movie.R
 import java.time.LocalDate
 
 object MovieMockData {
-    val movies = listOf(
-        MovieUIModel(
+    private val movies = listOf(
+        Movie(
             R.drawable.harry_potter,
             "해리포터",
             123,
@@ -15,7 +16,7 @@ object MovieMockData {
             LocalDate.of(2023, 4, 1),
             LocalDate.of(2023, 5, 10),
         ),
-        MovieUIModel(
+        Movie(
             R.drawable.interstellar,
             "인터스텔라",
             169,
@@ -23,7 +24,7 @@ object MovieMockData {
             LocalDate.of(2023, 4, 4),
             LocalDate.of(2023, 7, 4),
         ),
-        MovieUIModel(
+        Movie(
             R.drawable.ironman,
             "아이언맨",
             150,
@@ -31,7 +32,7 @@ object MovieMockData {
             LocalDate.of(2023, 4, 29),
             LocalDate.of(2023, 7, 8),
         ),
-        MovieUIModel(
+        Movie(
             R.drawable.hansan,
             "한산",
             169,
@@ -39,7 +40,7 @@ object MovieMockData {
             LocalDate.of(2023, 4, 1),
             LocalDate.of(2023, 6, 28),
         ),
-        MovieUIModel(
+        Movie(
             R.drawable.tazza,
             "타짜",
             130,
