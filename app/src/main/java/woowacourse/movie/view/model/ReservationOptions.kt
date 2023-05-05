@@ -8,5 +8,6 @@ import java.time.LocalDateTime
 data class ReservationOptions(
     val title: String,
     val screeningDateTime: LocalDateTime,
-    val peopleCount: Int
+    val peopleCount: Int,
+    val theaterName: String
 ) : Parcelable

@@ -2,6 +2,7 @@ package woowacourse.movie.view.seatselection
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Gravity
 import android.view.MenuItem
@@ -15,17 +16,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.children
 import woowacourse.movie.R
-import woowacourse.movie.data.Theater
+import woowacourse.movie.data.TheaterMockRepository
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
-import woowacourse.movie.domain.price.PriceCalculator
-import woowacourse.movie.domain.system.PriceSystem
 import woowacourse.movie.domain.system.Seat
-import woowacourse.movie.domain.system.SeatSelectSystem
 import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.view.mapper.toUiModel
 import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.model.ReservationOptions
 import woowacourse.movie.view.model.ReservationUiModel
+import woowacourse.movie.view.model.SeatInfoUiModel
 import woowacourse.movie.view.model.SeatUiModel
 import woowacourse.movie.view.reservationcompleted.ReservationCompletedActivity
 
@@ -42,7 +41,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             .filterIsInstance<TextView>().toList()
     }
 
-    private val theater = Theater
     private lateinit var reserveOptions: ReservationOptions
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,44 +55,41 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             return
         }
         reserveOptions = options
-        val seatSystem = SeatSelectSystem(Theater.info, reserveOptions.peopleCount)
-        val priceSystem =
-            PriceSystem(PriceCalculator(Theater.policies), reserveOptions.screeningDateTime)
 
-        presenter = SeatSelectionPresenter(this, seatSystem, priceSystem)
+        presenter = SeatSelectionPresenter(this, options, TheaterMockRepository)
 
-        createRows()
+        createRows(presenter.getSeatInfoUiModel(TheaterMockRepository.gradeColor))
         setTitle(reserveOptions.title)
         setNextButton()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    private fun createRows() {
-        for (row in 0 until theater.row) {
+    private fun createRows(seatInfoUiModel: SeatInfoUiModel) {
+        for (row in 0 until seatInfoUiModel.row) {
             val tableRow = TableRow(this).apply {
                 layoutParams = TableLayout.LayoutParams(0, 0, 1f)
             }
-            for (col in 0 until theater.col) {
+            for (col in 0 until seatInfoUiModel.col) {
                 val seat = Seat(row, col)
-                tableRow.addView(createSeat(seat.toUiModel()))
+                tableRow.addView(createSeat(seat.toUiModel(), seatInfoUiModel.colorOfRow))
             }
             binding.layoutSeats.addView(tableRow)
         }
     }
 
-    private fun createSeat(seatUi: SeatUiModel): TextView =
+    private fun createSeat(seatUi: SeatUiModel, colorOfRow: Map<Int, Int>): TextView =
         TextView(this).apply {
             text = seatUi.seatId
-            val grade = Theater.info.getRowGrade(seatUi.row)
-            if (grade != null) {
-                Theater.gradeColor[grade]?.let {
-                    setTextColor(getColor(it))
-                }
+            colorOfRow[seatUi.row]?.let {
+                setTextColor(getColor(it))
             }
+            setTypeface(null, Typeface.BOLD)
+            textSize = 22F
             textAlignment = TextView.TEXT_ALIGNMENT_CENTER
             gravity = Gravity.CENTER
             setOnClickListener { presenter.onSeatClick(seatUi.row, seatUi.col) }
-            background = AppCompatResources.getDrawable(this@SeatSelectionActivity, R.drawable.seat_selector)
+            background =
+                AppCompatResources.getDrawable(this@SeatSelectionActivity, R.drawable.seat_selector)
             layoutParams = TableRow.LayoutParams(0, LayoutParams.MATCH_PARENT, 1f)
         }
 
@@ -104,7 +99,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     private fun setNextButton() {
         binding.btnNext.setOnClickListener {
-            presenter.onReserveClick(reserveOptions.title, reserveOptions.screeningDateTime)
+            presenter.onReserveClick()
         }
     }
 
@@ -127,14 +122,14 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         startActivity(intent)
     }
 
-    override fun setSelectionSeat(row: Int, col: Int, isClickableButton: Boolean) {
-        val textView = seats[rowColToIndex(row, col)]
+    override fun setSelectionSeat(index: Int, isClickableButton: Boolean) {
+        val textView = seats[index]
         textView.isSelected = true
         if (isClickableButton) binding.btnNext.isEnabled = true
     }
 
-    override fun setDeselectionSeat(row: Int, col: Int) {
-        val textView = seats[rowColToIndex(row, col)]
+    override fun setDeselectionSeat(index: Int) {
+        val textView = seats[index]
         binding.btnNext.isEnabled = false
         textView.isSelected = false
     }
@@ -154,8 +149,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     override fun setPrice(price: String) {
         binding.textPrice.text = getString(R.string.reservation_fee_format, price)
     }
-
-    private fun rowColToIndex(row: Int, col: Int): Int = row * Theater.col + col
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

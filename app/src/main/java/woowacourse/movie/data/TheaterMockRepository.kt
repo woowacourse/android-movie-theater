@@ -41,7 +41,7 @@ object TheaterMockRepository : TheaterRepository {
         return theaters
     }
 
-    fun findTheater(title: String): Theater {
-        return theaters.find { it.name == title } ?: throw java.lang.IllegalArgumentException("존재하지 않는 상영관입니다.")
+    override fun findTheater(name: String): Theater {
+        return theaters.find { it.name == name } ?: throw java.lang.IllegalArgumentException("존재하지 않는 상영관입니다.")
     }
 }
