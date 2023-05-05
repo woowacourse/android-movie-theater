@@ -32,7 +32,7 @@ class MovieReminder : BroadcastReceiver() {
     }
 
     private fun getPushAlarmAllowed(context: Context) =
-        SharedPreferenceUtil(context).getSettingValue(
+        SharedPreferenceUtil(context).getValue(
             SETTING_PUSH_ALARM_SWITCH_KEY,
             false
         )
