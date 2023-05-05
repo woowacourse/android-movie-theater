@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.presentation.booking.BookingActivity
+import woowacourse.movie.presentation.model.MovieModel
 
 class MovieListFragment : Fragment(), MovieListContract.View {
 
@@ -31,13 +32,11 @@ class MovieListFragment : Fragment(), MovieListContract.View {
     }
 
     override fun setMoviesAdapter(movieItems: List<MovieItem>) {
-        binding.recyclerMainMovie.adapter = MovieItemAdapter(movieItems) {
-            clickBook(it)
-        }
+        binding.recyclerMainMovie.adapter = MovieItemAdapter(movieItems) { clickBook(it) }
     }
 
-    private fun clickBook(movieId: Long) {
-        startActivity(BookingActivity.getIntent(requireActivity(), movieId))
+    private fun clickBook(movie: MovieModel) {
+        startActivity(BookingActivity.getIntent(requireActivity(), movie.id))
     }
 
     override fun onDestroyView() {

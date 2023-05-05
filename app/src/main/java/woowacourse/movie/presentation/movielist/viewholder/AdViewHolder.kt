@@ -4,10 +4,10 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.MovieListAdItemBinding
 import woowacourse.movie.presentation.movielist.MovieItem
 
-class AdViewHolder(private val viewBinding: MovieListAdItemBinding) :
-    RecyclerView.ViewHolder(viewBinding.root) {
+class AdViewHolder(private val binding: MovieListAdItemBinding) :
+    RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: MovieItem.Ad) {
-        viewBinding.imageMainAd.setImageResource(item.adImage)
+        binding.imageMainAd.setImageResource(item.adImage)
     }
 }
