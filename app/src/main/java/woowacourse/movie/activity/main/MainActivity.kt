@@ -1,4 +1,4 @@
-package woowacourse.movie.activity
+package woowacourse.movie.activity.main
 
 import android.Manifest.permission.POST_NOTIFICATIONS
 import android.os.Build
@@ -8,36 +8,54 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import com.google.android.material.switchmaterial.SwitchMaterial
 import woowacourse.movie.BundleKeys.IS_CAN_PUSH_CHECKED
 import woowacourse.movie.BundleKeys.REQUEST_NOTIFICATION_PERMISSION
-import woowacourse.movie.BundleKeys.SETTING_PUSH_ALARM_SWITCH_KEY
+import woowacourse.movie.DataRepository
 import woowacourse.movie.PermissionManager
+import woowacourse.movie.PermissionManagerImpl
 import woowacourse.movie.R
 import woowacourse.movie.SharedPreferenceUtil
-import woowacourse.movie.fragment.BookHistoryFragment
-import woowacourse.movie.fragment.HomeFragment
-import woowacourse.movie.fragment.SettingFragment
+import woowacourse.movie.fragment.bookhistory.BookHistoryFragment
+import woowacourse.movie.fragment.home.HomeFragment
+import woowacourse.movie.fragment.setting.SettingFragment
+import woowacourse.movie.fragment.setting.SettingFragmentFactory
 
-class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener {
+class MainActivity :
+    AppCompatActivity(),
+    NavigationBarView.OnItemSelectedListener,
+    MainContract.View {
+
+    override lateinit var presenter: MainContract.Presenter
     private val fragments = mutableMapOf<Int, Fragment>()
     private val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
             progressIsGrantedNotificationPermission()
         )
+    private val permissionManager: PermissionManager =
+        PermissionManagerImpl(this, requestPermissionLauncher)
+    private val sharedPreferenceRepository: DataRepository by lazy {
+        SharedPreferenceUtil(this)
+    }
+    lateinit var settingFragmentFactory: SettingFragmentFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        settingFragmentFactory = SettingFragmentFactory(requestPermissionLauncher)
+        supportFragmentManager.fragmentFactory = settingFragmentFactory
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        presenter = MainPresenter(this, sharedPreferenceRepository)
+
         requestNotificationPermission()
         findViewById<BottomNavigationView>(R.id.bnv_main).setOnItemSelectedListener(this)
-        supportFragmentManager.beginTransaction().add(
-            R.id.fl_main,
-            fragments.getOrPut(R.id.page_book_history) { BookHistoryFragment() }
-        ).commit()
+        supportFragmentManager.commit {
+            add(R.id.fl_main, fragments.getOrPut(R.id.page_book_history) { BookHistoryFragment() })
+        }
         setRequestPermissionListener()
     }
 
@@ -53,10 +71,8 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     private fun requestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            PermissionManager.requestPermission(
+            permissionManager.requestPermission(
                 permission = POST_NOTIFICATIONS,
-                activity = this,
-                activityResultLauncher = requestPermissionLauncher,
                 ifDeniedDescription = this.getString(R.string.if_permission_is_denied_cant_use_notification_service)
             )
         }
@@ -73,7 +89,11 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 return true
             }
             R.id.page_setting -> {
-                replaceFragment(fragments.getOrPut(R.id.page_setting) { SettingFragment() })
+                val fragment = supportFragmentManager.fragmentFactory.instantiate(
+                    classLoader,
+                    SettingFragment::class.java.name
+                )
+                replaceFragment(fragment)
                 return true
             }
         }
@@ -81,8 +101,9 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fl_main, fragment).commitAllowingStateLoss()
+        supportFragmentManager.commit {
+            replace(R.id.fl_main, fragment)
+        }
     }
 
     private fun progressIsGrantedNotificationPermission() = { isGranted: Boolean ->
@@ -92,11 +113,10 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 getString(R.string.notification_permission_is_denied),
             Toast.LENGTH_SHORT
         ).show()
-        SharedPreferenceUtil.setBooleanValue(this, SETTING_PUSH_ALARM_SWITCH_KEY, isGranted)
-        updatePushAlarmSwitch(isGranted)
+        presenter.saveSwitchData(isGranted)
     }
 
-    private fun updatePushAlarmSwitch(wantChecked: Boolean) {
+    override fun updatePushAlarmSwitch(wantChecked: Boolean) {
         supportFragmentManager.findFragmentById(R.id.fl_main)?.view?.findViewById<SwitchMaterial>(
             R.id.sw_setting_can_push
         )?.isChecked = wantChecked
