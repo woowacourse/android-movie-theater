@@ -4,7 +4,7 @@ import woowacourse.movie.data.AlarmSettingRepository
 
 class SettingPresenter(
     val view: SettingContract.View,
-    val settingRepository: AlarmSettingRepository
+    private val settingRepository: AlarmSettingRepository
 ) : SettingContract.Presenter {
     override fun loadAlarmSettingInfo() {
         view.setInitAlarmSettingInfo(settingRepository.enablePushNotification)

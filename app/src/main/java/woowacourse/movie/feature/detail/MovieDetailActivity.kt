@@ -24,7 +24,6 @@ import java.time.LocalTime
 class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View {
     private lateinit var binding: ActivityMovieDetailBinding
 
-    // Todo:
     private lateinit var theaterMovie: TheaterMovieState
 
     private lateinit var dateTimeSpinner: DateTimeSpinner

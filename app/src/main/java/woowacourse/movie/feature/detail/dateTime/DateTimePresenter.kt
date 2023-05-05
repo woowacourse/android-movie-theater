@@ -10,8 +10,6 @@ class DateTimePresenter(
     val view: DateTimeContract.View,
     theaterMovieState: TheaterMovieState
 ) : DateTimeContract.Presenter {
-//    private val getMovieRunningTimeUseCase = GetMovieRunningTimeUseCase()
-
     private var runningDates: List<LocalDate> = theaterMovieState.movie.asDomain().runningDates.toList()
 
     private var _selectDate: LocalDate = runningDates.first()
@@ -31,7 +29,6 @@ class DateTimePresenter(
 
     override fun setDateTime(dateTime: LocalDateTime) {
         _selectDate = dateTime.toLocalDate()
-//        updateRunningTimes()
         _selectTime = dateTime.toLocalTime()
         view.setSelectDate(runningDates.indexOf(selectDate))
         view.setSelectTime(runningTimes.indexOf(selectTime))
@@ -39,16 +36,9 @@ class DateTimePresenter(
 
     override fun clickDate(position: Int) {
         _selectDate = runningDates[position]
-//        updateRunningTimes()
-//        _selectTime = runningTimes.first()
     }
 
     override fun clickTime(position: Int) {
         _selectTime = runningTimes[position]
     }
-
-//    private fun updateRunningTimes() {
-//        runningTimes = getMovieRunningTimeUseCase(selectDate)
-//        view.setTimeSpinnerAdapter(runningTimes.toList())
-//    }
 }

@@ -10,8 +10,8 @@ import woowacourse.movie.model.mapper.asPresentation
 
 class SeatSelectPresenter(
     val view: SeatSelectContract.View,
-    val reservationState: ReservationState,
-    val ticketsRepository: TicketsRepository
+    private val reservationState: ReservationState,
+    private val ticketsRepository: TicketsRepository
 ) : SeatSelectContract.Presenter {
     private val discountApplyUseCase = DiscountApplyUseCase()
     private val getIssuedTicketsUseCase = GetIssuedTicketsUseCase()

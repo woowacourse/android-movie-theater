@@ -5,7 +5,7 @@ import woowacourse.movie.model.TicketsState
 
 class AlarmReceiverPresenter(
     val view: AlarmReceiverContract.View,
-    val alarmSettingRepository: AlarmSettingRepository
+    private val alarmSettingRepository: AlarmSettingRepository
 ) : AlarmReceiverContract.Presenter {
     override fun receiveAlarmSignal(tickets: TicketsState) {
         val isNotification = alarmSettingRepository.enablePushNotification

@@ -7,7 +7,7 @@ import woowacourse.movie.model.TheaterState
 
 class TheaterPresenter(
     val view: TheaterContract.View,
-    val theaterRepository: TheaterRepository
+    private val theaterRepository: TheaterRepository
 ) : TheaterContract.Presenter {
     override fun loadTheatersData(movie: MovieState) {
         val theaters = theaterRepository.getScreeningMovieTheaters(movie)

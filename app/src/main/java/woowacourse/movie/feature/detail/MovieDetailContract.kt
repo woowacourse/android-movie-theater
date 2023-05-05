@@ -12,7 +12,7 @@ interface MovieDetailContract {
 
     interface Presenter {
         fun clickConfirm(
-            theaterMovieState: TheaterMovieState,
+            theaterMovie: TheaterMovieState,
             dateTime: LocalDateTime,
             reservationCount: CountState
         )

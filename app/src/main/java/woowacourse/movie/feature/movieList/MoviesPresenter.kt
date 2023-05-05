@@ -9,8 +9,8 @@ import woowacourse.movie.model.TheaterMovieState
 
 class MoviesPresenter(
     val view: MovieListContract.View,
-    val movieRepository: MovieRepository,
-    val advRepository: AdvRepository
+    private val movieRepository: MovieRepository,
+    private val advRepository: AdvRepository
 ) : MovieListContract.Presenter {
 
     override fun loadMovieAndAdvItemList() {
