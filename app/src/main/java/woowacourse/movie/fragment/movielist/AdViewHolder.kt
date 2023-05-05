@@ -3,8 +3,8 @@ package woowacourse.movie.fragment.movielist
 import android.view.View
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.model.Ad
 import woowacourse.movie.R
+import woowacourse.movie.model.Ad
 
 class AdViewHolder(private val view: View, private val listener: (Ad) -> Unit, ad: Ad) :
     RecyclerView.ViewHolder(view) {

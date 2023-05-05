@@ -18,7 +18,6 @@ import com.woowacourse.domain.seat.SeatGroup
 import com.woowacourse.domain.seat.SeatRow
 import com.woowacourse.domain.ticket.Ticket
 import com.woowacourse.domain.ticket.TicketBundle
-import woowacourse.movie.service.AlarmSetting
 import woowacourse.movie.R
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.mapper.toDomain
@@ -27,6 +26,7 @@ import woowacourse.movie.model.SeatGroupModel
 import woowacourse.movie.movie.MovieBookingInfoUiModel
 import woowacourse.movie.movie.toDomain
 import woowacourse.movie.movie.toPresentation
+import woowacourse.movie.service.AlarmSetting
 
 class SeatPickerActivity : BackButtonActivity() {
     private val seatTableLayout: TableLayout by lazy { findViewById(R.id.tl_seats) }

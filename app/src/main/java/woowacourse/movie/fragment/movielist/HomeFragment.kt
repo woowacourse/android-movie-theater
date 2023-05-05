@@ -8,9 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.model.Ad
 import woowacourse.movie.R
 import woowacourse.movie.activity.MovieDetailActivity
+import woowacourse.movie.model.Ad
 import woowacourse.movie.movie.MovieMockData
 
 class HomeFragment : Fragment() {

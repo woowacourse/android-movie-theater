@@ -3,8 +3,8 @@ package woowacourse.movie.fragment.movielist
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.model.Ad
 import woowacourse.movie.R
+import woowacourse.movie.model.Ad
 import woowacourse.movie.movie.MovieUIModel
 
 class MovieRecyclerViewAdapter(
