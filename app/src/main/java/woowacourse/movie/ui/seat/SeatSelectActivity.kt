@@ -25,10 +25,15 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
 
     override fun onCreateView(savedInstanceState: Bundle?) {
         initBinding()
-        setUpPresenter()
+        initPresenter()
     }
 
-    private fun setUpPresenter() {
+    private fun initBinding() {
+        binding = ActivitySeatSelectBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
+
+    private fun initPresenter() {
         presenter.init(
             intent.getParcelableExtraCompat(KEY_SEAT_SELECT)
                 ?: return keyError(KEY_SEAT_SELECT),
@@ -37,9 +42,11 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
         )
     }
 
-    private fun initBinding() {
-        binding = ActivitySeatSelectBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun setMoneyText(money: MoneyState) {
+        binding.reservationMoney.text = getString(
+            R.string.discount_money,
+            DecimalFormatters.convertToMoneyFormat(money)
+        )
     }
 
     override fun showSeatSelectState(seatSelectState: SeatSelectState) {
@@ -54,34 +61,14 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
         seatTable = SeatTable(binding, seatSelectState.countState) { updateSelectSeats(it) }
     }
 
-    override fun onRestoreInstanceState(
-        savedInstanceState: Bundle
-    ) {
-        super.onRestoreInstanceState(savedInstanceState)
-        val restoreState: ArrayList<SeatPositionState> =
-            savedInstanceState.getParcelableArrayListCompat(KEY_SEAT_RESTORE) ?: return keyError(
-                KEY_SEAT_RESTORE
-            )
-        seatTable.chosenSeatUpdate(restoreState.toList())
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putParcelableArrayList(
-            KEY_SEAT_RESTORE,
-            ArrayList(seatTable.chosenSeatInfo)
-        )
-    }
-
-    private fun navigateShowDialog(seats: List<SeatPositionState>) {
+    private fun navigateShowDialog(positionStates: List<SeatPositionState>) {
         showAskDialog(
             titleId = R.string.reservation_confirm,
             messageId = R.string.ask_really_reservation,
             negativeStringId = R.string.reservation_cancel,
             positiveStringId = R.string.reservation_complete
         ) {
-            val tickets = presenter.getTickets(seats)
-            presenter.addTicket(tickets)
+            presenter.addTicket(positionStates)
         }
     }
 
@@ -91,14 +78,24 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
 
     private fun updateSelectSeats(positionStates: List<SeatPositionState>) {
         binding.reservationConfirm.isClickable = (positionStates.size == presenter.getRequireCount())
-        val tickets = presenter.getTickets(positionStates)
-        presenter.discountApply(tickets)
+        presenter.discountApply(positionStates)
     }
 
-    override fun showMoneyText(money: MoneyState) {
-        binding.reservationMoney.text = getString(
-            R.string.discount_money,
-            DecimalFormatters.convertToMoneyFormat(money)
+    override fun onRestoreInstanceState(
+        savedInstanceState: Bundle
+    ) {
+        super.onRestoreInstanceState(savedInstanceState)
+        val restoreState: ArrayList<SeatPositionState> =
+            savedInstanceState.getParcelableArrayListCompat(KEY_SEAT_RESTORE)
+                ?: return keyError(KEY_SEAT_RESTORE)
+        seatTable.chosenSeatUpdate(restoreState.toList())
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelableArrayList(
+            KEY_SEAT_RESTORE,
+            ArrayList(seatTable.chosenSeatInfo)
         )
     }
 

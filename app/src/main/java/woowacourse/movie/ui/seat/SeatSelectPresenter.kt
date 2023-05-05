@@ -24,17 +24,25 @@ class SeatSelectPresenter(
         view.initSeatTable(seatSelectState)
     }
 
-    override fun discountApply(tickets: TicketsState) {
-        view.showMoneyText(discountApplyUseCase(tickets.asDomain()).asPresentation())
+    override fun discountApply(positionStates: List<SeatPositionState>) {
+        val tickets = TicketsState(
+            cinemaName,
+            seatSelectState.movieState,
+            seatSelectState.dateTime,
+            positionStates
+        )
+        view.setMoneyText(discountApplyUseCase(tickets.asDomain()).asPresentation())
     }
 
-    override fun addTicket(tickets: TicketsState) {
+    override fun addTicket(positionStates: List<SeatPositionState>) {
+        val tickets = TicketsState(
+            cinemaName,
+            seatSelectState.movieState,
+            seatSelectState.dateTime,
+            positionStates
+        )
         TicketsRepository.addTicket(tickets)
         view.navigateToConfirmView(tickets)
-    }
-
-    override fun getTickets(seats: List<SeatPositionState>): TicketsState {
-        return TicketsState(cinemaName, seatSelectState.movieState, seatSelectState.dateTime, seats)
     }
 
     override fun getRequireCount(): Int {

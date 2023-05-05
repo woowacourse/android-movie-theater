@@ -9,14 +9,13 @@ interface SeatSelectContract {
     interface View {
         fun initSeatTable(seatSelectState: SeatSelectState)
         fun showSeatSelectState(seatSelectState: SeatSelectState)
-        fun showMoneyText(money: MoneyState)
+        fun setMoneyText(money: MoneyState)
         fun navigateToConfirmView(tickets: TicketsState)
     }
 
     interface Presenter {
-        fun discountApply(tickets: TicketsState)
-        fun addTicket(tickets: TicketsState)
-        fun getTickets(seats: List<SeatPositionState>): TicketsState
+        fun discountApply(positionStates: List<SeatPositionState>)
+        fun addTicket(positionStates: List<SeatPositionState>)
         fun getRequireCount(): Int
     }
 }

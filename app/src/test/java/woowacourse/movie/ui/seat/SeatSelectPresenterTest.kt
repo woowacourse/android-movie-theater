@@ -22,14 +22,14 @@ class SeatSelectPresenterTest {
         val presenter = SeatSelectPresenter(view)
         val slot = slot<MoneyState>()
         val tickets = sampleTicketsState
-        every { view.showMoneyText(capture(slot)) } answers { println("slot = ${slot.captured}") }
+        every { view.setMoneyText(capture(slot)) } answers { println("slot = ${slot.captured}") }
 
         // when
-        presenter.discountApply(tickets)
+        presenter.discountApply(tickets.positions)
 
         // then
         assertEquals(slot.captured, MoneyState(8000))
-        verify { view.showMoneyText(slot.captured) }
+        verify { view.setMoneyText(slot.captured) }
     }
 
     @Test
@@ -39,7 +39,7 @@ class SeatSelectPresenterTest {
         val presenter = SeatSelectPresenter(view)
         val tickets = sampleTicketsState
         // when
-        presenter.addTicket(tickets)
+        presenter.addTicket(tickets.positions)
 
         // then
         verify { view.navigateToConfirmView(tickets) }
