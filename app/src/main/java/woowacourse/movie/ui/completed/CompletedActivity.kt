@@ -12,12 +12,15 @@ import woowacourse.movie.movie.MovieRepository
 import woowacourse.movie.util.formatScreenDateTime
 import woowacourse.movie.util.getParcelable
 
+// todo mvp 적용하기
 class CompletedActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCompletedBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_completed)
+
+        binding = ActivityCompletedBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         getResult()?.let {
             initView(it)
