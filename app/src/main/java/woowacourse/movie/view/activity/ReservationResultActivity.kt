@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
@@ -51,7 +50,8 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
 
     override fun setMovieData(movie: MovieViewData) {
         MovieController.bind(
-            movie = movie, MovieView(
+            movie = movie,
+            MovieView(
                 title = binding.movieReservationResultTitle,
             )
         )
@@ -70,7 +70,9 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
     }
 
     override fun setSeatData(
-        reservationDetail: ReservationDetailViewData, seats: SeatsViewData, theaterName: String
+        reservationDetail: ReservationDetailViewData,
+        seats: SeatsViewData,
+        theaterName: String
     ) {
         binding.movieReservationResultPeopleCount.text = getString(
             R.string.reservation_people_count,
@@ -95,7 +97,8 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
 
     companion object {
         fun from(
-            context: Context, reservation: ReservationViewData
+            context: Context,
+            reservation: ReservationViewData
         ): Intent {
             return Intent(context, ReservationResultActivity::class.java).apply {
                 putExtra(ReservationViewData.RESERVATION_EXTRA_NAME, reservation)
