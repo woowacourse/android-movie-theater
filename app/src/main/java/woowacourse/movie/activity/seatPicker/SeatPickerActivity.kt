@@ -9,12 +9,14 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.core.view.children
+import androidx.databinding.DataBindingUtil
 import com.woowacourse.domain.movie.MovieBookingSeatInfo
 import com.woowacourse.domain.seat.Seat
 import woowacourse.movie.R
 import woowacourse.movie.activity.BackButtonActivity
 import woowacourse.movie.activity.bookComplete.BookCompleteActivity
 import woowacourse.movie.data.BookingHistoryDBHelper
+import woowacourse.movie.databinding.ActivitySeatPickerBinding
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.model.MovieBookingInfoUiModel
@@ -26,15 +28,16 @@ import woowacourse.movie.service.AlarmSetting
 
 class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
     override lateinit var presenter: SeatPickerContract.Presenter
-    private val seatTableLayout: TableLayout by lazy { findViewById(R.id.tl_seats) }
-    private val pickDoneButton: Button by lazy { findViewById(R.id.bt_seat_picker_done) }
-    private val seatPickerTicketPrice: TextView by lazy { findViewById(R.id.tv_seat_picker_ticket_price) }
-    private val movieTitle: TextView by lazy { findViewById(R.id.tv_seat_picker_movie) }
+    private lateinit var binding: ActivitySeatPickerBinding
+    private val seatTableLayout: TableLayout by lazy { binding.tlSeats }
+    private val pickDoneButton: Button by lazy { binding.btSeatPickerDone }
+    private val seatPickerTicketPrice: TextView by lazy { binding.tvSeatPickerTicketPrice }
+    private val movieTitle: TextView by lazy { binding.tvSeatPickerMovie }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_seat_picker)
         presenter = SeatPickerPresenter(this, getMovieBookingInfo().toDomain())
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_picker)
 
         presenter.initMovieTitle()
         initSeatName()

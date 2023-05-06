@@ -3,10 +3,11 @@ package woowacourse.movie.activity.bookComplete
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.activity.BackButtonActivity
+import woowacourse.movie.databinding.ActivityBookCompleteBinding
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.model.BookingHistoryData
 import woowacourse.movie.model.MovieBookingSeatInfoUIModel
@@ -16,10 +17,10 @@ import woowacourse.movie.model.toHistoryData
 class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
 
     override lateinit var presenter: BookCompleteContract.Presenter
+    private lateinit var binding: ActivityBookCompleteBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_book_complete)
         val movieBookingSeatInfo = getMovieBookingSeatInfo()
         val historyData = getMovieHistoryData()
 
@@ -28,6 +29,7 @@ class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
         } else {
             BookCompletePresenter(this, movieBookingSeatInfo)
         }
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_book_complete)
 
         presenter.initView()
         presenter.hasDummyData()
@@ -50,17 +52,17 @@ class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
             } else {
                 ticketData
             }
-        findViewById<TextView>(R.id.tv_book_movie_title).text =
+        binding.tvBookMovieTitle.text =
             data.title
-        findViewById<TextView>(R.id.tv_book_date).text =
+        binding.tvBookDate.text =
             data.date
-        findViewById<TextView>(R.id.tv_book_person_count).text =
+        binding.tvBookPersonCount.text =
             getString(
                 R.string.book_person_count,
                 data.numberOfPeople,
                 data.seat.joinToString(", ")
             )
-        findViewById<TextView>(R.id.tv_book_total_pay).text =
+        binding.tvBookTotalPay.text =
             getString(R.string.book_total_pay, data.price)
     }
 

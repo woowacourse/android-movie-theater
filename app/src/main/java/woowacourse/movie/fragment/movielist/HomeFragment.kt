@@ -6,17 +6,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.activity.moviedetail.MovieDetailActivity
 import woowacourse.movie.data.MovieMockData
+import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.fragment.movielist.adapter.MovieRecyclerViewAdapter
 import woowacourse.movie.model.AdUIModel
 import woowacourse.movie.model.toPresentation
 
 class HomeFragment : Fragment(), HomeContract.View {
     override lateinit var presenter: HomeContract.Presenter
+    private lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,7 +26,8 @@ class HomeFragment : Fragment(), HomeContract.View {
         savedInstanceState: Bundle?
     ): View? {
         presenter = HomePresenter(this)
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,8 +47,6 @@ class HomeFragment : Fragment(), HomeContract.View {
     }
 
     override fun setMovieRecyclerView(recyclerViewAdapter: MovieRecyclerViewAdapter) {
-        val movieRecyclerView =
-            requireView().findViewById<RecyclerView>(R.id.recyclerview_movie_list)
-        movieRecyclerView.adapter = recyclerViewAdapter
+        binding.recyclerviewMovieList.adapter = recyclerViewAdapter
     }
 }

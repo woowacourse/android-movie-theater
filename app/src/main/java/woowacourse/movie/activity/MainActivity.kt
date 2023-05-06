@@ -3,10 +3,11 @@ package woowacourse.movie.activity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.fragment.bookhistory.BookHistoryFragment
 import woowacourse.movie.fragment.movielist.HomeFragment
 import woowacourse.movie.fragment.setting.SettingFragment
@@ -16,12 +17,13 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private val bookHistoryFragment: Fragment by lazy { BookHistoryFragment() }
     private val homeFragment: Fragment by lazy { HomeFragment() }
     private val settingFragment: Fragment by lazy { SettingFragment() }
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        findViewById<BottomNavigationView>(R.id.navigation_main).setOnItemSelectedListener(this)
+        binding.navigationMain.setOnItemSelectedListener(this)
 
         supportFragmentManager.beginTransaction().add(R.id.framelayout_main, bookHistoryFragment).commit()
     }
