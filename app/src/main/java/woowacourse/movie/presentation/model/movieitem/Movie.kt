@@ -2,6 +2,7 @@ package woowacourse.movie.presentation.model.movieitem
 
 import android.os.Parcelable
 import androidx.annotation.DrawableRes
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import woowacourse.movie.R
 import java.time.LocalDate
@@ -17,11 +18,16 @@ data class Movie(
     val introduce: String,
     @DrawableRes val thumbnail: Int,
 ) : ListItem, Parcelable {
-    val LocalDate.formattedDate: String
-        get() = this.format(DateTimeFormatter.ofPattern(MOVIE_DATE_PATTERN))
+    @IgnoredOnParcel
+    val formattedStartDate: String =
+        startDate.format(DateTimeFormatter.ofPattern(MOVIE_DATE_PATTERN))
+
+    @IgnoredOnParcel
+    val formattedEndDate: String =
+        endDate.format(DateTimeFormatter.ofPattern(MOVIE_DATE_PATTERN))
 
     companion object {
-        private const val MOVIE_DATE_PATTERN = "yyyy.MM.dd"
+        internal const val MOVIE_DATE_PATTERN = "yyyy.MM.dd"
 
         private const val DEFAULT_LOAD_SIZE = 20
         private var loadedSize = 0

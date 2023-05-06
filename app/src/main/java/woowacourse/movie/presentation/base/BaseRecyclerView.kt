@@ -23,6 +23,9 @@ class BaseRecyclerView {
         override fun getItemCount(): Int = items.size
 
         protected fun ViewGroup.inflate(resId: Int, attach: Boolean = false): View =
-            LayoutInflater.from(context).inflate(resId, this, attach)
+            layoutInflater().inflate(resId, this, attach)
+
+        protected fun ViewGroup.layoutInflater(): LayoutInflater =
+            LayoutInflater.from(context)
     }
 }

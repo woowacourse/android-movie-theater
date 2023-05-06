@@ -79,8 +79,8 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnCl
             findViewById<TextView>(R.id.title_tv).text = title
             findViewById<TextView>(R.id.date_tv).text = getString(
                 R.string.movie_release_date,
-                startDate.formattedDate,
-                endDate.formattedDate
+                formattedStartDate,
+                formattedEndDate,
             )
             findViewById<TextView>(R.id.running_time_tv).text =
                 getString(R.string.movie_running_time, runningTime)
