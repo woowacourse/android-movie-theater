@@ -34,6 +34,9 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    dataBinding {
+        enable = true
+    }
 }
 
 dependencies {
@@ -55,4 +58,7 @@ dependencies {
 
     // Mockk
     testImplementation("io.mockk:mockk:1.13.5")
+
+    // BottomSheet
+    implementation("com.google.android.material:material:1.5.0-alpha02")
 }

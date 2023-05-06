@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="movieTheaterName"
+            type="String" />
+        <variable
+            name="timeTableCount"
+            type="Integer" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            tools:text="선릉 극장"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_width="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text="@{movieTheaterName}"
+            android:fontFamily="@font/roboto_medium"
+            android:includeFontPadding="false"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_movie_theater_name"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            tools:text="3개의 상영 시간"
+            android:textSize="12sp"
+            android:fontFamily="@font/roboto_medium"
+            android:includeFontPadding="false"
+            android:layout_marginTop="5dp"
+            android:text="@{String.valueOf(timeTableCount)+`개의 상영 시간`}"
+            android:layout_marginBottom="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_time_table_count"
+            app:layout_constraintTop_toBottomOf="@+id/tv_movie_theater_name"
+            app:layout_constraintStart_toStartOf="@+id/tv_movie_theater_name"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_arrow"
+            android:id="@+id/iv_next"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
