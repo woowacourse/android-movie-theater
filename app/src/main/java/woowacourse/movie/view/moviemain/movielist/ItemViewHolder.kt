@@ -11,19 +11,16 @@ import woowacourse.movie.view.model.MovieUiModel
 
 sealed class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     class MovieItemViewHolder(private val binding: MovieItemBinding) : ItemViewHolder(binding.root) {
-        fun set(movie: MovieUiModel, clickListener: View.OnClickListener) {
+        fun set(movie: MovieUiModel, onClick: MovieListAdapter.OnItemClick) {
             val context = binding.movieTitle.context
+            binding.movie = movie
+            binding.onItemClick = onClick
             binding.moviePoster.setImageResource(movie.posterResourceId)
-            binding.movieTitle.text = movie.title
             binding.movieScreeningDate.text =
                 context.getString(R.string.screening_date_format).format(
                     movie.startDate.format(DATE_FORMATTER),
                     movie.endDate.format(DATE_FORMATTER),
                 )
-
-            binding.movieRunningTime.text =
-                context.getString(R.string.running_time_format, movie.runningTime)
-            binding.reserveNowButton.setOnClickListener(clickListener)
         }
     }
 
