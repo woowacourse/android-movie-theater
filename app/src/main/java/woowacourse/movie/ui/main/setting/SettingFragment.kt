@@ -7,11 +7,15 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.repository.SettingRepositoryImpl
 
 class SettingFragment : Fragment(), SettingContract.View {
+    private var _binding: FragmentSettingBinding? = null
+    private val binding
+        get() = _binding!!
+
     override lateinit var presenter: SettingContract.Presenter
-    private lateinit var pushAlarmSwitch: SwitchCompat
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,26 +32,32 @@ class SettingFragment : Fragment(), SettingContract.View {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_setting, container, false)
-        pushAlarmSwitch = view.findViewById(R.id.setting_push_alarm_switch)
+    ): View {
+        _binding = FragmentSettingBinding.inflate(inflater, container, false)
 
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setUpSwitchClick()
+        updateSwitch()
     }
 
     override fun updateSwitch() {
-        pushAlarmSwitch.isChecked = presenter.getNotificationState()
+        binding.settingPushAlarmSwitch.isChecked = presenter.getNotificationState()
     }
 
     private fun setUpSwitchClick() {
-        pushAlarmSwitch.setOnClickListener {
-            presenter.setSwitchState(pushAlarmSwitch.isChecked)
+        binding.settingPushAlarmSwitch.setOnClickListener {
+            presenter.setSwitchState(binding.settingPushAlarmSwitch.isChecked)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        _binding = null
     }
 }
