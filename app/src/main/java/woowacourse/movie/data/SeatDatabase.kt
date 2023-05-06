@@ -11,15 +11,16 @@ import woowacourse.movie.data.model.SeatEntity.Companion.RESERVATION_ID_COLUMN
 import woowacourse.movie.data.model.SeatEntity.Companion.ROW_COLUMN
 import woowacourse.movie.data.model.SeatEntity.Companion.TABLE_NAME
 import woowacourse.movie.domain.Seat
+import woowacourse.movie.domain.repository.SeatRepository
 
 class SeatDatabase(
     val context: Context
-) {
+) : SeatRepository {
     private val db: SQLiteDatabase by lazy {
         SeatDbHelper(context).writableDatabase
     }
 
-    fun addSeats(seats: List<Seat>, reservationId: Int) {
+    override fun addSeats(seats: List<Seat>, reservationId: Int) {
         seats.forEach { seat ->
             val values = ContentValues()
             with(values) {
@@ -31,7 +32,7 @@ class SeatDatabase(
         }
     }
 
-    fun findSeatsByReservationId(id: Int): List<Seat> {
+    override fun findSeatsByReservationId(id: Int): List<Seat> {
         val seats = mutableListOf<Seat>()
 
         val cursor = getSeatsCursor(id)

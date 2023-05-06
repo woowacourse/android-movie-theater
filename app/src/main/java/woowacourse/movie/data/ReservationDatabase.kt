@@ -14,6 +14,7 @@ import woowacourse.movie.data.model.ReservationEntity.Companion.TABLE_NAME
 import woowacourse.movie.domain.Reservation
 import woowacourse.movie.domain.repository.MovieRepository
 import woowacourse.movie.domain.repository.ReservationRepository
+import woowacourse.movie.domain.repository.SeatRepository
 
 class ReservationDatabase(
     val context: Context
@@ -22,7 +23,7 @@ class ReservationDatabase(
     private val db: SQLiteDatabase by lazy {
         ReservationDbHelper(context).writableDatabase
     }
-    private val seatDatabase: SeatDatabase by lazy {
+    private val seatRepository: SeatRepository by lazy {
         SeatDatabase(context)
     }
     private val movieRepository: MovieRepository = MovieMockRepository
@@ -59,7 +60,7 @@ class ReservationDatabase(
                 )
             )
             val movie = movieRepository.findById(data.movieId)
-            val seats = seatDatabase.findSeatsByReservationId(data.id)
+            val seats = seatRepository.findSeatsByReservationId(data.id)
             movie?.let {
                 reservations.add(data.toDomain(movie, seats))
             }

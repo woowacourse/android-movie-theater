@@ -1,9 +1,9 @@
 package woowacourse.movie.view.seatselection
 
-import woowacourse.movie.data.SeatDatabase
 import woowacourse.movie.domain.ReservationAgency
 import woowacourse.movie.domain.Seat
 import woowacourse.movie.domain.repository.ReservationRepository
+import woowacourse.movie.domain.repository.SeatRepository
 import woowacourse.movie.view.mapper.toDomainModel
 import woowacourse.movie.view.mapper.toUiModel
 import woowacourse.movie.view.model.ReservationOptions
@@ -12,7 +12,7 @@ import woowacourse.movie.view.model.SeatUiModel
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
     private val reservationRepository: ReservationRepository,
-    private val seatDatabase: SeatDatabase
+    private val seatRepository: SeatRepository
 ) : SeatSelectionContract.Presenter {
 
     private val reservationOptions: ReservationOptions? by lazy {
@@ -83,7 +83,7 @@ class SeatSelectionPresenter(
         val reservation = reservationAgency.reserve(selectedSeats)
         reservation?.let {
             val reservationId = reservationRepository.add(reservation)
-            seatDatabase.addSeats(reservation.seats, reservationId)
+            seatRepository.addSeats(reservation.seats, reservationId)
             view.registerReservationAlarm(reservation.toUiModel())
         }
     }
