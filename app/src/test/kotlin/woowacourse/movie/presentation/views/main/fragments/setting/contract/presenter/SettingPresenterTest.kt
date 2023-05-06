@@ -16,26 +16,23 @@ class SettingPresenterTest {
     @Before
     fun setUp() {
         view = mockk(relaxed = true)
-        presenter = SettingPresenter(view, mockk {
+        presenter = SettingPresenter(mockk {
             every { getBoolean(any(), any()) } returns false
             every { setBoolean(any(), any()) } returns Unit
         })
+        presenter.attach(view)
     }
 
     @Test
     fun 푸시_스위치_상태를_가져와서_뷰에_반영한다() {
         // given
-        val slot = slot<Boolean>()
-        presenter = SettingPresenter(view, mockk {
-            every { getBoolean(any(), any()) } returns false
-        })
-        every { view.changePushSwitchState(capture(slot)) } answers { nothing }
+        /* ... */
 
         // when
-        presenter.getPushSwitchState()
+        val actual = presenter.getPushSwitchState()
 
         // then
-        assertEquals(false, slot.captured)
+        assertEquals(false, actual)
     }
 
     @Test
@@ -43,9 +40,6 @@ class SettingPresenterTest {
         // given
         val slot = slot<Boolean>()
         val newState = true
-        presenter = SettingPresenter(view, mockk {
-            every { setBoolean(any(), newState) } returns Unit
-        })
         every { view.changePushSwitchState(capture(slot)) } answers { nothing }
 
         // when
