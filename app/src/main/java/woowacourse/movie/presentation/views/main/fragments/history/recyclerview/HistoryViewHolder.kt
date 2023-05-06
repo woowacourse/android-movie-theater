@@ -1,28 +1,19 @@
 package woowacourse.movie.presentation.views.main.fragments.history.recyclerview
 
-import android.view.View
-import android.widget.TextView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemHistoryBinding
 import woowacourse.movie.presentation.base.BaseRecyclerView
 import woowacourse.movie.presentation.model.Reservation
 
 class HistoryViewHolder(
-    view: View,
+    private val binding: ItemHistoryBinding,
     onClick: (Int) -> Unit,
-) : BaseRecyclerView.BaseViewHolder(view) {
-    private val movieDateTextView: TextView = view.findViewById(R.id.movie_date_text_view)
-    private val movieTimeTextView: TextView = view.findViewById(R.id.movie_time_text_view)
-    private val movieTitleTextView: TextView = view.findViewById(R.id.movie_title_text_view)
+) : BaseRecyclerView.BaseViewHolder(binding.root) {
 
     init {
-        view.setOnClickListener { onClick(adapterPosition) }
+        binding.root.setOnClickListener { onClick(adapterPosition) }
     }
 
     override fun <T> bind(item: T) {
-        if (item !is Reservation) return
-
-        movieDateTextView.text = item.formattedDate
-        movieTimeTextView.text = item.formattedTime
-        movieTitleTextView.text = item.movieTitle
+        binding.history = (item as? Reservation) ?: return
     }
 }

@@ -1,7 +1,7 @@
 package woowacourse.movie.presentation.views.main.fragments.history.recyclerview
 
 import android.view.ViewGroup
-import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemHistoryBinding
 import woowacourse.movie.presentation.base.BaseRecyclerView
 import woowacourse.movie.presentation.model.movieitem.ListItem
 
@@ -13,7 +13,8 @@ class HistoryListAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): BaseRecyclerView.BaseViewHolder {
-        return HistoryViewHolder(parent.inflate(R.layout.item_history), onItemViewClick)
+        val historyBinding = ItemHistoryBinding.inflate(parent.layoutInflater(), parent, false)
+        return HistoryViewHolder(historyBinding, onItemViewClick)
     }
 
     fun appendAll(newItems: List<ListItem>) {
