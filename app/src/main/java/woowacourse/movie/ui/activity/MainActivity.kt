@@ -13,16 +13,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
+import woowacourse.movie.contract.main.MainContract
 import woowacourse.movie.permission.SinglePermissionRequester
+import woowacourse.movie.presenter.main.MainPresenter
 import woowacourse.movie.ui.fragment.FragmentType
-import woowacourse.movie.ui.fragment.movielist.MovieListFragment
-import woowacourse.movie.ui.fragment.reservationlist.ReservationListFragment
 import woowacourse.movie.ui.fragment.reservationlist.ReservationListFragment.Companion.KEY_UPDATE_RESERVATION_ITEM
-import woowacourse.movie.ui.fragment.settings.SettingsFragment
 import woowacourse.movie.ui.storage.SettingsStorage
 import woowacourse.movie.ui.utils.showSnack
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContract.View {
     private val bottomNavigationView by lazy { findViewById<BottomNavigationView>(R.id.main_bottom_navigation) }
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -32,9 +31,13 @@ class MainActivity : AppCompatActivity() {
             setSelfRequestPermission()
         }
 
+    override lateinit var presenter: MainContract.Present
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        presenter = MainPresenter(this)
 
         requestPermission()
 
@@ -43,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavigationView.setOnItemSelectedListener {
             val type = getFragmentType(it.itemId)
-            changeFragment(type)
+            presenter.setFragment(type)
             true
         }
     }
@@ -107,40 +110,34 @@ class MainActivity : AppCompatActivity() {
 
     private fun initFragment(itemId: Int) {
         bottomNavigationView.selectedItemId = itemId
-        changeFragment(getFragmentType(itemId))
+        val type = getFragmentType(itemId)
+        presenter.setFragment(type)
     }
 
-    private fun getFragmentType(itemId: Int): FragmentType = when (itemId) {
-        R.id.bottom_item_list -> FragmentType.RESERVATION_LIST
-        R.id.bottom_item_home -> FragmentType.HOME
-        R.id.bottom_item_settings -> FragmentType.SETTING
-        else -> throw IllegalArgumentException(getString(R.string.error_not_existing_item_id))
+    private fun getFragmentType(itemId: Int): FragmentType =
+        when (itemId) {
+            R.id.bottom_item_list -> FragmentType.RESERVATION_LIST
+            R.id.bottom_item_home -> FragmentType.HOME
+            R.id.bottom_item_settings -> FragmentType.SETTING
+            else -> throw IllegalArgumentException(getString(R.string.error_not_existing_item_id))
+        }
+
+    override fun showFragment(type: FragmentType) {
+        supportFragmentManager.findFragmentByTag(type.tag)?.let {
+            changeFragment(it, false, type)
+            return
+        }
+        changeFragment(presenter.createFragment(type), true, type)
     }
 
-    private fun changeFragment(currentType: FragmentType) {
+    private fun changeFragment(fragment: Fragment, isCreated: Boolean, type: FragmentType) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
 
-            val fragment =
-                supportFragmentManager.findFragmentByTag(currentType.tag)
-                    ?: createFragment(currentType).apply {
-                        add(R.id.main_fragment_container_view, this, currentType.tag)
-                    }
+            if (isCreated) add(R.id.main_fragment_container_view, fragment, type.tag)
+
+            supportFragmentManager.fragments.forEach(::hide)
             show(fragment)
-
-            FragmentType.values()
-                .filterNot { it == currentType }
-                .forEach { type ->
-                    supportFragmentManager.findFragmentByTag(type.tag)?.let(::hide)
-                }
-        }
-    }
-
-    private fun createFragment(currentType: FragmentType): Fragment {
-        return when (currentType) {
-            FragmentType.RESERVATION_LIST -> ReservationListFragment()
-            FragmentType.HOME -> MovieListFragment()
-            FragmentType.SETTING -> SettingsFragment()
         }
     }
 
