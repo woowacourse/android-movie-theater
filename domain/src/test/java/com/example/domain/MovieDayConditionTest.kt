@@ -1,7 +1,6 @@
 package com.example.domain
 
 import com.example.domain.discountPolicy.condition.MovieDayCondition
-import com.example.domain.model.Movie
 import com.example.domain.model.Ticket
 import com.example.domain.model.seat.SeatPosition
 import java.time.LocalDate
@@ -16,17 +15,8 @@ class MovieDayConditionTest {
         val date = LocalDate.of(2023, 4, 10)
         val time = LocalTime.of(16, 0)
         val dateTime = LocalDateTime.of(date, time)
-        val mockMovie = Movie(
-            "",
-            "title",
-            LocalDate.now(),
-            LocalDate.now(),
-            listOf(LocalTime.of(20, 0)),
-            120,
-            ""
-        )
         val position = SeatPosition(3, 1) // 15000원
-        val ticket = Ticket(mockMovie, dateTime, position)
+        val ticket = Ticket("movieTitle", dateTime, position)
 
         val movieDayCondition = MovieDayCondition()
         val actual = movieDayCondition.isDiscountable(ticket)

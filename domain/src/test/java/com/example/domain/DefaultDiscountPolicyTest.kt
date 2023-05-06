@@ -2,7 +2,6 @@ package com.example.domain
 
 import com.example.domain.discountPolicy.DefaultDiscountPolicy
 import com.example.domain.model.Money
-import com.example.domain.model.Movie
 import com.example.domain.model.Ticket
 import com.example.domain.model.seat.SeatPosition
 import java.time.LocalDate
@@ -18,7 +17,7 @@ class DefaultDiscountPolicyTest {
         val time = LocalTime.of(12, 0)
         val dateTime = LocalDateTime.of(date, time)
         val position = SeatPosition(3, 1) // 15000원
-        val ticket = Ticket(mockMovie, dateTime, position)
+        val ticket = Ticket("movieTitle", dateTime, position)
 
         val discountCalculator = DefaultDiscountPolicy()
         val actual = discountCalculator.discount(ticket)
@@ -33,7 +32,7 @@ class DefaultDiscountPolicyTest {
         val time = LocalTime.of(10, 0)
         val dateTime = LocalDateTime.of(date, time)
         val position = SeatPosition(3, 1) // 15000원
-        val ticket = Ticket(mockMovie, dateTime, position)
+        val ticket = Ticket("movieTitle", dateTime, position)
 
         val discountCalculator = DefaultDiscountPolicy()
         val actual = discountCalculator.discount(ticket)
@@ -48,7 +47,7 @@ class DefaultDiscountPolicyTest {
         val time = LocalTime.of(22, 0)
         val dateTime = LocalDateTime.of(date, time)
         val position = SeatPosition(3, 1) // 15000원
-        val ticket = Ticket(mockMovie, dateTime, position)
+        val ticket = Ticket("movieTitle", dateTime, position)
 
         val discountCalculator = DefaultDiscountPolicy()
         val actual = discountCalculator.discount(ticket)
@@ -63,24 +62,12 @@ class DefaultDiscountPolicyTest {
         val time = LocalTime.of(10, 0)
         val dateTime = LocalDateTime.of(date, time)
         val position = SeatPosition(3, 1) // 15000원
-        val ticket = Ticket(mockMovie, dateTime, position)
+        val ticket = Ticket("movieTitle", dateTime, position)
 
         val discountCalculator = DefaultDiscountPolicy()
         val actual = discountCalculator.discount(ticket)
         val expected = Money(11500)
 
         assertThat(actual).isEqualTo(expected)
-    }
-
-    companion object {
-        private val mockMovie = Movie(
-            "",
-            "title",
-            LocalDate.now(),
-            LocalDate.now(),
-            listOf(LocalTime.now()),
-            120,
-            ""
-        )
     }
 }
