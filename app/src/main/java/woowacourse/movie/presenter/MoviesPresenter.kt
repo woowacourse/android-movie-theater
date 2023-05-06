@@ -17,7 +17,7 @@ class MoviesPresenter(val view: MoviesContract.View) : MoviesContract.Presenter 
     }
 
     override fun updateMovieList() {
-        val movies = MockMoviesFactory.makeMovies()
+        val movies = MockMoviesFactory.movies
         val movieUiModels = movies.value.map { it.toUi() }
         val advertisementUiModel = MockAdvertisementFactory.generateAdvertisement()
         view.setAdapter(movieUiModels, advertisementUiModel)
