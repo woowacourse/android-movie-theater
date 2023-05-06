@@ -2,35 +2,40 @@ package woowacourse.movie.presentation.complete
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieData
 import woowacourse.movie.domain.model.tools.Movie
+import woowacourse.movie.model.data.remote.DummyMovieStorage
 import woowacourse.movie.presentation.main.MainActivity
 import woowacourse.movie.presentation.model.TicketModel
 import woowacourse.movie.presentation.util.formatDotDateTimeColon
+import woowacourse.movie.presentation.util.getParcelableExtraCompat
+import woowacourse.movie.util.intentDataNullProcess
 
-class CompleteActivity : AppCompatActivity() {
+class CompleteActivity : AppCompatActivity(), CompleteContract.View {
+
+    override lateinit var presenter: CompleteContract.Presenter
+    private lateinit var ticketModel: TicketModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_completed)
 
-        val ticket: TicketModel = getTicket()
-        initView(ticket)
+        getTicket()
+        initPresenter()
+        initView(ticketModel)
     }
 
-    private fun getTicket(): TicketModel {
-        val ticketModel: TicketModel = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(TICKET, TicketModel::class.java)
-                ?: throw IllegalArgumentException()
-        } else {
-            intent.getParcelableExtra(TICKET) ?: throw IllegalArgumentException()
-        }
-        return ticketModel
+    private fun initPresenter() {
+        presenter = CompletePresenter(this, DummyMovieStorage())
+    }
+
+    private fun getTicket() {
+        ticketModel = intent.getParcelableExtraCompat<TicketModel>(TICKET)
+            ?: return this.intentDataNullProcess(TICKET)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -42,7 +47,7 @@ class CompleteActivity : AppCompatActivity() {
     }
 
     private fun initView(ticket: TicketModel) {
-        val movie = MovieData.findMovieById(ticket.movieId)
+        val movie = presenter.getMovieById(ticket.movieId)
         setMovieTitle(movie)
         setMovieScreeningDate(ticket)
         setMovieTicketCount(ticket)
