@@ -12,10 +12,17 @@ import woowacourse.movie.model.TicketsUiModel
 import woowacourse.movie.view.activity.ReservationResultActivity
 import woowacourse.movie.view.adapter.ReservationAdapter
 import woowacourse.movie.presenter.ReservationListPresenter
+import woowacourse.movie.sql.ReservationDbHelper
 
 class ReservationListFragment : Fragment(R.layout.fragment_reservation_list),
     ReservationListContract.View {
-    override val presenter: ReservationListContract.Presenter = ReservationListPresenter(this)
+    override val presenter: ReservationListContract.Presenter by lazy {
+        ReservationListPresenter(
+            this,
+            ReservationDbHelper(requireContext())
+        )
+    }
+
     private lateinit var recyclerView: RecyclerView
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

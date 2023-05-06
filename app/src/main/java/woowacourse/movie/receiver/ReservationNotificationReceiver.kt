@@ -11,6 +11,8 @@ import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.model.mapper.MovieMapper.toUi
 import woowacourse.movie.model.MovieUiModel
 import woowacourse.movie.model.TicketsUiModel
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 class ReservationNotificationReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, receivedIntent: Intent) {
@@ -19,8 +21,10 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
         val sendingIntent =
             ReservationResultActivity.generateIntent(context, movieUiModel, ticketsUiModel)
         val pendingIntent = PendingIntent.getActivity(
-            context, REQUEST_CODE, sendingIntent,
-            PendingIntent.FLAG_IMMUTABLE
+            context,
+            LocalDateTime.now().second,
+            sendingIntent,
+            PendingIntent.FLAG_MUTABLE
         )
 
         val notificationData = NotificationData(
@@ -65,7 +69,6 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
         private const val CHANNEL_NAME = "Channel1"
         private const val KEY_MOVIE_VALUE = "KEY_MOVIE_VALUE"
         private const val KEY_TICKETS_VALUE = "KEY_TICKETS_VALUE"
-        private const val REQUEST_CODE = 123
         private const val NOTIFICATION_ID = 1
     }
 }

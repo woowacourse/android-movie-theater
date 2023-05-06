@@ -10,6 +10,7 @@ import woowacourse.movie.model.MovieUiModel
 import woowacourse.movie.model.TicketsUiModel
 import java.sql.Date
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.ZoneId
 import java.util.*
 
@@ -34,9 +35,9 @@ class ReservationAlarmManager(
     private fun generatedPendingIntent(context: Context, receiverIntent: Intent): PendingIntent {
         return PendingIntent.getBroadcast(
             context,
-            REQUEST_CODE,
+            LocalTime.now().second,
             receiverIntent,
-            PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_MUTABLE
         )
     }
 
@@ -69,7 +70,6 @@ class ReservationAlarmManager(
     }
 
     companion object {
-        private const val REQUEST_CODE = 125
         private const val ALARM_TIME = 30L
     }
 }

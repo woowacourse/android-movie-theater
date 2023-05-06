@@ -40,9 +40,9 @@ class ReservationDbHelper(context: Context) :
         val reservationDate = reservation.tickets.list.first().date
         val formattedDateTime =
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(reservationDate)
-        val seats = reservation.toUi().tickets.list.joinToString {
+        val seats = reservation.toUi().tickets.list.joinToString(","){
             it.seat.row.toString() + it.seat.col.toString()
-        }
+        }.trim()
         val values = ContentValues().apply {
             put(ReservationContract.TABLE_COLUMN_MOVIE_TITLE, movieTitle)
             put(ReservationContract.TABLE_COLUMN_RESERVATION_DATE, formattedDateTime)
@@ -81,16 +81,16 @@ class ReservationDbHelper(context: Context) :
 
     private fun getReservationDate(cursor: Cursor): LocalDateTime {
         val formattedDateTime =
-            cursor.getString(cursor.getColumnIndexOrThrow(ReservationContract.TABLE_COLUMN_MOVIE_TITLE))
+            cursor.getString(cursor.getColumnIndexOrThrow(ReservationContract.TABLE_COLUMN_RESERVATION_DATE))
         return formattedDateTime.toLocalDateTime()
     }
 
     private fun getSeats(cursor: Cursor): List<Seat> {
         val stringSeats =
             cursor.getString(cursor.getColumnIndexOrThrow(ReservationContract.TABLE_COLUMN_SEATS))
-        val splitStringSeats = stringSeats.split(",")
+        val splitStringSeats = stringSeats.trim().split(",")
         return splitStringSeats.map {
-            SeatUiModel(it.first(), it.substring(1).toInt())
+            SeatUiModel(it.first(),it.substring(1).toInt())
                 .toDomain()
         }
     }
