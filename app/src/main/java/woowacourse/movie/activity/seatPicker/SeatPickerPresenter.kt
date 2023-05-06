@@ -11,9 +11,6 @@ import com.woowacourse.domain.seat.SeatRow
 import com.woowacourse.domain.ticket.Ticket
 import com.woowacourse.domain.ticket.TicketBundle
 import woowacourse.movie.mapper.toPresentation
-import woowacourse.movie.movie.MovieBookingInfoUiModel
-import woowacourse.movie.movie.toDomain
-import woowacourse.movie.movie.toPresentation
 
 class SeatPickerPresenter(
     val view: SeatPickerContract.View,

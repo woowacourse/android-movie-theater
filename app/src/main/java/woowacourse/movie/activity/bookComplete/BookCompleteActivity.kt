@@ -8,8 +8,8 @@ import android.widget.Toast
 import woowacourse.movie.R
 import woowacourse.movie.activity.BackButtonActivity
 import woowacourse.movie.getSerializableCompat
-import woowacourse.movie.movie.MovieBookingSeatInfoUIModel
-import woowacourse.movie.movie.toDomain
+import woowacourse.movie.model.MovieBookingSeatInfoUIModel
+import woowacourse.movie.model.toDomain
 
 class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
 

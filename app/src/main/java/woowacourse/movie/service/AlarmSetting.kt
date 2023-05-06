@@ -5,9 +5,9 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
-import woowacourse.movie.data.BookHistories
 import com.woowacourse.domain.movie.MovieBookingSeatInfo
-import woowacourse.movie.movie.toPresentation
+import woowacourse.movie.data.BookHistories
+import woowacourse.movie.model.toPresentation
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter

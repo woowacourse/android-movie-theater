@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.DateFormatter
 import woowacourse.movie.R
-import woowacourse.movie.movie.MovieUIModel
+import woowacourse.movie.model.MovieUIModel
 
 class MovieRecyclerViewHolder(
     private val view: View,

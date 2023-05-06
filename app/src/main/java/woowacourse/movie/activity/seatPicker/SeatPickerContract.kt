@@ -5,7 +5,6 @@ import android.widget.TextView
 import com.woowacourse.domain.movie.MovieBookingSeatInfo
 import com.woowacourse.domain.seat.Seat
 import com.woowacourse.domain.seat.SeatGroup
-import woowacourse.movie.movie.MovieBookingInfoUiModel
 
 interface SeatPickerContract {
 

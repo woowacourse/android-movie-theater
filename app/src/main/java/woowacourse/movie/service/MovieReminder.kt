@@ -12,7 +12,7 @@ import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
 import woowacourse.movie.activity.bookComplete.BookCompleteActivity
 import woowacourse.movie.getSerializableCompat
-import woowacourse.movie.movie.MovieBookingSeatInfoUIModel
+import woowacourse.movie.model.MovieBookingSeatInfoUIModel
 
 class MovieReminder : BroadcastReceiver() {
 

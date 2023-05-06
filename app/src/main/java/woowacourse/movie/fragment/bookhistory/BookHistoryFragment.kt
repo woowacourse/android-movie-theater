@@ -8,11 +8,11 @@ import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.data.BookHistories
 import woowacourse.movie.R
 import woowacourse.movie.activity.bookComplete.BookCompleteActivity
+import woowacourse.movie.data.BookHistories
 import woowacourse.movie.fragment.bookhistory.adapter.BookHistoryRecyclerViewAdapter
-import woowacourse.movie.movie.toPresentation
+import woowacourse.movie.model.toPresentation
 
 class BookHistoryFragment : Fragment(), BookHistoryContract.View {
     override lateinit var presenter: BookHistoryContract.Presenter

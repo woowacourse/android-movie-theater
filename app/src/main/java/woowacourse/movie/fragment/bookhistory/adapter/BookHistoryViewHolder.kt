@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.movie.MovieBookingSeatInfoUIModel
+import woowacourse.movie.model.MovieBookingSeatInfoUIModel
 
 class BookHistoryViewHolder(
     private val view: View,

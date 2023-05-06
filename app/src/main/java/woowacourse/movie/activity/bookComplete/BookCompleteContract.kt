@@ -1,7 +1,7 @@
 package woowacourse.movie.activity.bookComplete
 
 import com.woowacourse.domain.movie.MovieBookingSeatInfo
-import woowacourse.movie.movie.MovieBookingSeatInfoUIModel
+import woowacourse.movie.model.MovieBookingSeatInfoUIModel
 
 interface BookCompleteContract {
 

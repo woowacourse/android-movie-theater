@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.woowacourse.domain.movie.MovieBookingSeatInfo
 import woowacourse.movie.R
-import woowacourse.movie.movie.toPresentation
+import woowacourse.movie.model.toPresentation
 
 class BookHistoryRecyclerViewAdapter(
     private val bookHistory: List<MovieBookingSeatInfo>,

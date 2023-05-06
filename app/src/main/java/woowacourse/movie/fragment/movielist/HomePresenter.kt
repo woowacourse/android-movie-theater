@@ -2,11 +2,11 @@ package woowacourse.movie.fragment.movielist
 
 import com.woowacourse.domain.Ad
 import woowacourse.movie.R
+import woowacourse.movie.data.MovieMockData
 import woowacourse.movie.fragment.movielist.adapter.MovieRecyclerViewAdapter
 import woowacourse.movie.model.AdUIModel
+import woowacourse.movie.model.MovieUIModel
 import woowacourse.movie.model.toPresentation
-import woowacourse.movie.data.MovieMockData
-import woowacourse.movie.movie.MovieUIModel
 
 class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter {
 

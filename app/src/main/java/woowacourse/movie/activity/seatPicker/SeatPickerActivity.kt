@@ -9,18 +9,18 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.core.view.children
-import woowacourse.movie.data.BookHistories
 import com.woowacourse.domain.movie.MovieBookingSeatInfo
 import com.woowacourse.domain.seat.Seat
 import woowacourse.movie.R
 import woowacourse.movie.activity.BackButtonActivity
 import woowacourse.movie.activity.bookComplete.BookCompleteActivity
+import woowacourse.movie.data.BookHistories
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.mapper.toDomain
+import woowacourse.movie.model.MovieBookingInfoUiModel
 import woowacourse.movie.model.SeatGroupModel
-import woowacourse.movie.movie.MovieBookingInfoUiModel
-import woowacourse.movie.movie.toDomain
-import woowacourse.movie.movie.toPresentation
+import woowacourse.movie.model.toDomain
+import woowacourse.movie.model.toPresentation
 import woowacourse.movie.service.AlarmSetting
 
 class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {

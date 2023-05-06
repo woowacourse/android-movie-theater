@@ -1,14 +1,13 @@
 package woowacourse.movie.activity.bookComplete
 
 import com.woowacourse.domain.movie.MovieBookingSeatInfo
-import woowacourse.movie.movie.MovieBookingSeatInfoUIModel
-import woowacourse.movie.movie.toPresentation
+import woowacourse.movie.model.MovieBookingSeatInfoUIModel
+import woowacourse.movie.model.toPresentation
 
 class BookCompletePresenter(
     val view: BookCompleteContract.View,
     override val movieBookingSeatInfo: MovieBookingSeatInfo,
 ) : BookCompleteContract.Presenter {
-
 
     override fun initView() {
         view.initView(movieBookingSeatInfo.toPresentation())

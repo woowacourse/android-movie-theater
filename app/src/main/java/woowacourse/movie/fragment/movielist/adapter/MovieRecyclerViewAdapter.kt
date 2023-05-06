@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.woowacourse.domain.ViewType
 import woowacourse.movie.R
 import woowacourse.movie.model.AdUIModel
-import woowacourse.movie.movie.MovieUIModel
+import woowacourse.movie.model.MovieUIModel
 
 class MovieRecyclerViewAdapter(
     private val movies: List<MovieUIModel>,

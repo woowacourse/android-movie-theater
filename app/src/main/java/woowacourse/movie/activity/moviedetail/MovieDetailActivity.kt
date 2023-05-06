@@ -19,9 +19,9 @@ import woowacourse.movie.R
 import woowacourse.movie.activity.BackButtonActivity
 import woowacourse.movie.activity.seatPicker.SeatPickerActivity
 import woowacourse.movie.getSerializableCompat
-import woowacourse.movie.movie.MovieUIModel
-import woowacourse.movie.movie.toDomain
-import woowacourse.movie.movie.toPresentation
+import woowacourse.movie.model.MovieUIModel
+import woowacourse.movie.model.toDomain
+import woowacourse.movie.model.toPresentation
 import java.time.LocalDate
 
 class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
@@ -90,7 +90,6 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
                 movieData.toDomain(), LocalDate.parse(dateSpinner.selectedItem.toString()),
                 timeSpinner.selectedItem.toString()
             )
-
         }
     }
 
