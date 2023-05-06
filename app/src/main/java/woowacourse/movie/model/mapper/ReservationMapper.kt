@@ -18,7 +18,7 @@ object ReservationMapper : DomainViewMapper<Reservation, ReservationUiModel> {
     override fun Reservation.toUi(): ReservationUiModel {
         return ReservationUiModel(
             movie.toUi(),
-            detail.toUi()
+            tickets.toUi()
         )
     }
 }
