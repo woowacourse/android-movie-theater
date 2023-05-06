@@ -1,0 +1,53 @@
+package woowacourse.movie.activity.moviedetail
+
+import com.woowacourse.domain.movie.Movie
+import com.woowacourse.domain.movie.MovieBookingInfo
+import com.woowacourse.domain.movie.MovieSchedule
+import woowacourse.movie.DateFormatter
+import java.time.LocalDate
+
+class MovieDetailPresenter(val view: MovieDetailContract.View) : MovieDetailContract.Presenter {
+
+    private var peopleCount = MIN_TICKET
+
+    override fun getScheduleDate(startDate: LocalDate, endDate: LocalDate) {
+        val movieSchedule = MovieSchedule(startDate, endDate)
+        view.setScheduleDate(movieSchedule)
+    }
+
+    override fun initView(movieData: Movie) {
+        view.initView(movieData)
+    }
+
+    override fun addPeople() {
+        peopleCount += 1
+        view.setCountText(peopleCount)
+    }
+
+    override fun subPeople() {
+        if (peopleCount == MIN_TICKET) {
+            view.showGuideMessage(CANT_LOWER_ONE)
+        } else {
+            peopleCount -= 1
+            view.setCountText(peopleCount)
+        }
+    }
+
+    override fun getMovieBookingInfo(
+        movieData: Movie,
+        selectDate: LocalDate,
+        selectTime: String
+    ): MovieBookingInfo {
+        return MovieBookingInfo(
+            movieData,
+            DateFormatter.format(selectDate),
+            selectTime,
+            peopleCount
+        )
+    }
+
+    companion object {
+        private const val MIN_TICKET = 1
+        private const val CANT_LOWER_ONE = "1장 이상의 표를 선택해 주세요."
+    }
+}

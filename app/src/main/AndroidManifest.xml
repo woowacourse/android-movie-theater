@@ -28,7 +28,7 @@
             android:name=".activity.BookCompleteActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.MovieDetailActivity"
+            android:name=".activity.moviedetail.MovieDetailActivity"
             android:exported="false" />
         <activity
             android:name=".activity.MainActivity"

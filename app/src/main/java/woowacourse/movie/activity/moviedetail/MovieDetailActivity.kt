@@ -1,4 +1,4 @@
-package woowacourse.movie.activity
+package woowacourse.movie.activity.moviedetail
 
 import android.content.Context
 import android.content.Intent
@@ -11,35 +11,43 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import com.woowacourse.domain.movie.Movie
 import com.woowacourse.domain.movie.MovieSchedule
 import woowacourse.movie.DateFormatter
 import woowacourse.movie.R
+import woowacourse.movie.activity.BackButtonActivity
+import woowacourse.movie.activity.SeatPickerActivity
 import woowacourse.movie.getSerializableCompat
-import woowacourse.movie.movie.MovieBookingInfoUiModel
 import woowacourse.movie.movie.MovieUIModel
+import woowacourse.movie.movie.toDomain
+import woowacourse.movie.movie.toPresentation
 import java.time.LocalDate
 
-class MovieDetailActivity : BackButtonActivity() {
+class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
+
+    override lateinit var presenter: MovieDetailContract.Presenter
     private var needSpinnerInitialize = true
     private val dateSpinner: Spinner by lazy { findViewById(R.id.sp_movie_date) }
     private val timeSpinner: Spinner by lazy { findViewById(R.id.sp_movie_time) }
     private val personCountTextView by lazy { findViewById<TextView>(R.id.tv_ticket_count) }
+    lateinit var movieSchedule: MovieSchedule
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
+        presenter = MovieDetailPresenter(this)
         needSpinnerInitialize = true
+
+        setCountText(1)
 
         val movieData = getMovieData()
         finishIfDummyData(movieData)
 
-        initView(movieData)
-
-        val movieSchedule = MovieSchedule(movieData.startDate, movieData.endDate)
-        val scheduleDate = movieSchedule.getScheduleDates()
-
-        initView(movieData)
+        presenter.getScheduleDate(movieData.startDate, movieData.endDate)
+        presenter.initView(movieData.toDomain())
         setClickListener(movieData)
+
+        val scheduleDate = movieSchedule.getScheduleDates()
         setSpinnerSelectedListener(movieSchedule, scheduleDate, savedInstanceState)
         setSpinnerAdapter(scheduleDate, movieSchedule)
         reloadTicketCountInstance(savedInstanceState)
@@ -57,46 +65,31 @@ class MovieDetailActivity : BackButtonActivity() {
         }
     }
 
-    private fun initView(movieData: MovieUIModel) {
-        findViewById<ImageView>(R.id.iv_movie_poster).setImageResource(movieData.poster)
-        findViewById<TextView>(R.id.tv_movie_title).text = movieData.title
-        findViewById<TextView>(R.id.tv_movie_screening_period).text =
-            getString(
-                R.string.movie_screening_period,
-                DateFormatter.format(movieData.startDate),
-                DateFormatter.format(movieData.endDate)
-            )
-        findViewById<TextView>(R.id.tv_movie_running_time).text =
-            getString(R.string.movie_running_time, movieData.runningTime)
-        findViewById<TextView>(R.id.tv_movie_synopsis).text = movieData.synopsis
+    private fun setClickListener(movieData: MovieUIModel) {
+        clickPlusBtn()
+        clickMinusBtn()
+        clickSeatPickerBtn(movieData)
     }
 
-    private fun setClickListener(movieData: MovieUIModel) {
-
-        var currentCount = personCountTextView.text.toString().toInt()
-
-        findViewById<Button>(R.id.bt_ticket_count_minus).setOnClickListener {
-            if (personCountTextView.text == MIN_TICKET) {
-                Toast.makeText(this, getString(R.string.cant_lower_one), Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            currentCount--
-            personCountTextView.text = currentCount.toString()
-        }
-
+    private fun clickPlusBtn() {
         findViewById<Button>(R.id.bt_ticket_count_plus).setOnClickListener {
-            currentCount++
-            personCountTextView.text = currentCount.toString()
+            presenter.addPeople()
         }
+    }
 
+    private fun clickMinusBtn() {
+        findViewById<Button>(R.id.bt_ticket_count_minus).setOnClickListener {
+            presenter.subPeople()
+        }
+    }
+
+    private fun clickSeatPickerBtn(movieData: MovieUIModel) {
         findViewById<Button>(R.id.bt_to_seat_picker).setOnClickListener {
-            val movieBookingInfo = MovieBookingInfoUiModel(
-                movieData,
-                DateFormatter.format(LocalDate.parse(dateSpinner.selectedItem.toString())),
-                timeSpinner.selectedItem.toString(),
-                currentCount
+            val movieBookingInfo = presenter.getMovieBookingInfo(
+                movieData.toDomain(), LocalDate.parse(dateSpinner.selectedItem.toString()),
+                timeSpinner.selectedItem.toString()
             )
-            val intent = SeatPickerActivity.getIntent(this, movieBookingInfo)
+            val intent = SeatPickerActivity.getIntent(this, movieBookingInfo.toPresentation())
             startActivity(intent)
             finish()
         }
@@ -161,12 +154,37 @@ class MovieDetailActivity : BackButtonActivity() {
         outState.putString(TICKET_COUNT_KEY, personCountTextView.text.toString())
     }
 
+    override fun setScheduleDate(schedule: MovieSchedule) {
+        movieSchedule = schedule
+    }
+
+    override fun initView(movieData: Movie) {
+        findViewById<ImageView>(R.id.iv_movie_poster).setImageResource(movieData.poster)
+        findViewById<TextView>(R.id.tv_movie_title).text = movieData.title
+        findViewById<TextView>(R.id.tv_movie_screening_period).text =
+            getString(
+                R.string.movie_screening_period,
+                DateFormatter.format(movieData.startDate),
+                DateFormatter.format(movieData.endDate)
+            )
+        findViewById<TextView>(R.id.tv_movie_running_time).text =
+            getString(R.string.movie_running_time, movieData.runningTime)
+        findViewById<TextView>(R.id.tv_movie_synopsis).text = movieData.synopsis
+    }
+
+    override fun setCountText(count: Int) {
+        personCountTextView.text = count.toString()
+    }
+
+    override fun showGuideMessage(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
+
     companion object {
         private const val MOVIE_DATA_KEY = "movieData"
         private const val TICKET_COUNT_KEY = "ticketCount"
         private const val DATE_KEY = "date"
         private const val TIME_KEY = "time"
-        private const val MIN_TICKET = "1"
 
         fun getIntent(context: Context, movie: MovieUIModel): Intent {
             val intent = Intent(context, MovieDetailActivity::class.java)
