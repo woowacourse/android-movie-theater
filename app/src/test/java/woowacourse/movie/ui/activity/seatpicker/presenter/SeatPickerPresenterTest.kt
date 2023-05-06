@@ -5,26 +5,16 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
+import woowacourse.movie.createMovieTicketModel
 import woowacourse.movie.ui.activity.seatpicker.SeatPickerContract
-import woowacourse.movie.ui.model.MovieTicketModel
-import woowacourse.movie.ui.model.PeopleCountModel
-import woowacourse.movie.ui.model.PriceModel
-import woowacourse.movie.ui.model.TicketTimeModel
 import woowacourse.movie.ui.model.seat.ColumnModel
 import woowacourse.movie.ui.model.seat.RankModel
 import woowacourse.movie.ui.model.seat.RowModel
 import woowacourse.movie.ui.model.seat.SeatModel
-import java.time.LocalDateTime
 
 internal class SeatPickerPresenterTest {
     private lateinit var presenter: SeatPickerPresenter
-    private val ticket = MovieTicketModel(
-        "글로의 50가지 그림자",
-        TicketTimeModel(LocalDateTime.now()),
-        PeopleCountModel(1),
-        emptySet(),
-        PriceModel(0)
-    )
+    private val ticket = createMovieTicketModel()
     private lateinit var view: SeatPickerContract.View
 
     @Before

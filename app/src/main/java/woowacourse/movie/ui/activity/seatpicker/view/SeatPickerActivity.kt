@@ -3,6 +3,7 @@ package woowacourse.movie.ui.activity.seatpicker.view
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TableRow
@@ -14,6 +15,7 @@ import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.alarm.AlarmManager
 import woowacourse.movie.broadcastreceiver.NotificationReceiver
+import woowacourse.movie.data.db.DBHelper
 import woowacourse.movie.data.entity.Seats
 import woowacourse.movie.databinding.ActivitySeatPickerBinding
 import woowacourse.movie.ui.activity.MovieTicketActivity
@@ -28,6 +30,7 @@ import java.time.ZonedDateTime
 
 class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
     private lateinit var binding: ActivitySeatPickerBinding
+    private val db: SQLiteDatabase by lazy { DBHelper(this).writableDatabase }
     override lateinit var presenter: SeatPickerContract.Presenter
     private val seats = Seats().getAll()
     private val seatTable = mutableMapOf<SeatModel, TextView>()
@@ -42,6 +45,11 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
         loadSavedData(savedInstanceState)
 
         setDoneButton()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        db.close()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -156,7 +164,7 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
             .setTitle(getString(R.string.dialog_title_seat_selection_check))
             .setMessage(getString(R.string.dialog_message_seat_selection_check))
             .setPositiveButton(getString(R.string.dialog_positive_button_seat_selection_check)) { _, _ ->
-                presenter.addReservation()
+                presenter.addReservation(db)
             }
             .setNegativeButton(getString(R.string.dialog_negative_button_seat_selection_check)) { dialog, _ ->
                 dialog.dismiss()

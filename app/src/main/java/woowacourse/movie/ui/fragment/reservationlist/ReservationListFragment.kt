@@ -44,6 +44,7 @@ class ReservationListFragment : Fragment() {
     private fun setReservationView(reservationView: RecyclerView) {
         reservationView.addItemDecoration(DividerItemDecoration(reservationView.context, LinearLayoutManager.VERTICAL))
         reservationAdapter = ReservationAdapter(Reservations.getAll()) { moveToTicketActivity(it) }
+        itemsCount = reservationAdapter.itemCount
         reservationView.adapter = reservationAdapter
     }
 

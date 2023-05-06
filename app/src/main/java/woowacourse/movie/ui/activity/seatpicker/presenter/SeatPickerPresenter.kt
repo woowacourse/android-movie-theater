@@ -1,5 +1,9 @@
 package woowacourse.movie.ui.activity.seatpicker.presenter
 
+import android.database.sqlite.SQLiteDatabase
+import woowacourse.movie.data.db.SeatContract
+import woowacourse.movie.data.db.TicketContract
+import woowacourse.movie.data.db.TicketSeatContract
 import woowacourse.movie.data.entity.Reservations
 import woowacourse.movie.domain.MovieTicket
 import woowacourse.movie.ui.activity.seatpicker.SeatPickerContract
@@ -49,13 +53,24 @@ class SeatPickerPresenter(private val view: SeatPickerContract.View) :
         }
     }
 
-    override fun addReservation() {
+    override fun addReservation(db: SQLiteDatabase) {
         val ticketModel = ticket.mapToMovieTicketModel()
         Reservations.addItem(ticketModel)
+        insertReservationToDatabase(db, ticketModel)
         view.afterReservation(ticketModel)
     }
 
     override fun getTicketModelWithOriginalPrice(): MovieTicketModel {
         return ticket.mapToMovieTicketModelWithOriginalPrice()
+    }
+
+    private fun insertReservationToDatabase(db: SQLiteDatabase, ticket: MovieTicketModel) {
+        val ticketId = TicketContract.createRecord(db, ticket)
+        ticket.seats.forEach {
+            val cursor = SeatContract.readRecordBySeat(db, it)
+            cursor.moveToFirst()
+            val seatId = cursor.getInt(cursor.getColumnIndexOrThrow(SeatContract.COLUMN_ID))
+            TicketSeatContract.createRecord(db, ticketId, seatId)
+        }
     }
 }
