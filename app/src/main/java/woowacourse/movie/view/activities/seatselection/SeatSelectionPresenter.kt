@@ -70,7 +70,7 @@ class SeatSelectionPresenter(
         val seatPoints = seatNames.map { convertSeatNameToSeatPoint(it) }
         val reservation = screening.reserve(screeningDateTime, seatPoints)
         ReservationRepository.save(reservation)
-        view.startReservationResultActivity(
+        view.setReservation(
             reservation.id
                 ?: throw IllegalArgumentException("만약 예매 아이디가 널이면 ReservationRepository의 로직이 잘못된 것입니다.")
         )

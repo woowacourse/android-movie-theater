@@ -32,4 +32,8 @@
     <string name="reservation_list">예매 내역</string>
     <string name="home">홈</string>
     <string name="setting">설정</string>
+
+    <!--  예매 알림 관련  -->
+    <string name="reservation_notification">예매 알림</string>
+    <string name="reservation_notification_message_format">%s %s분 후에 상영</string>
 </resources>

@@ -1,5 +1,8 @@
 package woowacourse.movie.view.activities.seatselection
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -15,7 +18,11 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.Toolbar
 import woowacourse.movie.R
 import woowacourse.movie.view.activities.reservationresult.ReservationResultActivity
+import woowacourse.movie.view.broadcast.AlarmReceiver
+import woowacourse.movie.view.broadcast.AlarmReceiver.Companion.RESERVATION_ID
+import woowacourse.movie.view.utils.getPushAlarmReceptionIsWanted
 import java.time.LocalDateTime
+import java.time.ZoneId
 import kotlin.properties.Delegates
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
@@ -54,7 +61,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             showDialogAskingIfYouWantToMakeReservation()
         }
     }
-
 
     private fun showDialogAskingIfYouWantToMakeReservation() {
         AlertDialog.Builder(this).apply {
@@ -119,9 +125,34 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         reservationFeeView.text = getString(R.string.fee_format).format(fee)
     }
 
-    override fun startReservationResultActivity(reservationId: Long) {
+    override fun setReservation(reservationId: Long) {
+        if (getPushAlarmReceptionIsWanted(this)) {
+            sendNotificationAboutReservationAt(
+                getScreeningDateTimeFromIntent().minusMinutes(30),
+                reservationId
+            )
+        }
+
         ReservationResultActivity.startActivity(this, reservationId)
     }
+
+    private fun sendNotificationAboutReservationAt(dateTime: LocalDateTime, reservationId: Long) {
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val alarmIntent = createAlarmIntent(reservationId)
+
+        val notificationTime = dateTime.atZone(ZoneId.of("Asia/Seoul")).toInstant().toEpochMilli()
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, notificationTime, alarmIntent)
+    }
+
+    private fun createAlarmIntent(reservationId: Long): PendingIntent =
+        Intent(this, AlarmReceiver::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            putExtra(RESERVATION_ID, reservationId)
+        }.let {
+            PendingIntent.getBroadcast(this, 0, it, FLAG_IMMUTABLE)
+        }
 
     companion object {
         const val SCREENING_ID = "SCREENING_ID"

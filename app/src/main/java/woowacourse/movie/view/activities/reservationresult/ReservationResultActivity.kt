@@ -43,7 +43,7 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
     }
 
     companion object {
-        private const val RESERVATION_ID = "RESERVATION_ID"
+        const val RESERVATION_ID = "RESERVATION_ID"
         private val DATE_TIME_FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm")
         val DECIMAL_FORMAT = DecimalFormat("#,###")
 

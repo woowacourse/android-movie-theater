@@ -16,6 +16,6 @@ interface SeatSelectionContract {
 
         fun setReservationFee(fee: Int)
 
-        fun startReservationResultActivity(reservationId: Long)
+        fun setReservation(reservationId: Long)
     }
 }
