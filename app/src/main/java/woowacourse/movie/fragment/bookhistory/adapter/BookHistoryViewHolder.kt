@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.model.MovieBookingSeatInfoUIModel
+import woowacourse.movie.model.BookingHistoryData
 
 class BookHistoryViewHolder(
     private val view: View,
@@ -23,8 +23,8 @@ class BookHistoryViewHolder(
         }
     }
 
-    fun bind(movieBookingSeatInfo: MovieBookingSeatInfoUIModel) {
-        val dateAndTime = movieBookingSeatInfo.movieBookingInfo.formatBookHistoryDate()
+    fun bind(movieHistoryData: BookingHistoryData) {
+        val dateAndTime = movieHistoryData.date
         val spannableStringBuilder = SpannableStringBuilder(dateAndTime)
         val grayColorSpan =
             ForegroundColorSpan(view.context.getColor(R.color.book_history_separator))
@@ -37,7 +37,7 @@ class BookHistoryViewHolder(
         )
 
         date.text = spannableStringBuilder
-        title.text = movieBookingSeatInfo.movieBookingInfo.movieInfo.title
+        title.text = movieHistoryData.title
     }
 
     private fun getSeparatorPosition(dateAndTime: String) = dateAndTime.length - TIME_LENGTH

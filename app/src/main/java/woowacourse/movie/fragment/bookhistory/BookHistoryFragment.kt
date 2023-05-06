@@ -12,7 +12,6 @@ import woowacourse.movie.R
 import woowacourse.movie.activity.bookComplete.BookCompleteActivity
 import woowacourse.movie.data.BookHistories
 import woowacourse.movie.fragment.bookhistory.adapter.BookHistoryRecyclerViewAdapter
-import woowacourse.movie.model.toPresentation
 
 class BookHistoryFragment : Fragment(), BookHistoryContract.View {
     override lateinit var presenter: BookHistoryContract.Presenter
@@ -34,7 +33,7 @@ class BookHistoryFragment : Fragment(), BookHistoryContract.View {
     private fun onClickBookHistory() = { position: Int ->
         val intent = BookCompleteActivity.getIntent(
             requireContext(),
-            BookHistories.items[position].toPresentation()
+            BookHistories.items[position]
         )
         startActivity(intent)
     }

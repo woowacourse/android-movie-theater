@@ -1,18 +1,17 @@
 package woowacourse.movie.activity.bookComplete
 
-import com.woowacourse.domain.movie.MovieBookingSeatInfo
-import woowacourse.movie.model.MovieBookingSeatInfoUIModel
+import woowacourse.movie.model.TicketData
 
 interface BookCompleteContract {
 
     interface View {
         var presenter: Presenter
-        fun initView(movieBookingSeatInfo: MovieBookingSeatInfoUIModel)
+        fun initView(ticketData: TicketData)
         fun displayToastIfDummyData()
     }
 
     interface Presenter {
-        val movieBookingSeatInfo: MovieBookingSeatInfo
+        val data: TicketData
         fun initView()
         fun hasDummyData()
     }

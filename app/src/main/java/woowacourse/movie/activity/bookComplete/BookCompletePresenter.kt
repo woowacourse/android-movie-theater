@@ -1,20 +1,19 @@
 package woowacourse.movie.activity.bookComplete
 
-import com.woowacourse.domain.movie.MovieBookingSeatInfo
 import woowacourse.movie.model.MovieBookingSeatInfoUIModel
-import woowacourse.movie.model.toPresentation
+import woowacourse.movie.model.TicketData
 
 class BookCompletePresenter(
     val view: BookCompleteContract.View,
-    override val movieBookingSeatInfo: MovieBookingSeatInfo,
+    override val data: TicketData,
 ) : BookCompleteContract.Presenter {
 
     override fun initView() {
-        view.initView(movieBookingSeatInfo.toPresentation())
+        view.initView(data)
     }
 
     override fun hasDummyData() {
-        if (movieBookingSeatInfo.toPresentation() == MovieBookingSeatInfoUIModel.dummyData) {
+        if (data == MovieBookingSeatInfoUIModel.dummyData) {
             view.displayToastIfDummyData()
         }
     }

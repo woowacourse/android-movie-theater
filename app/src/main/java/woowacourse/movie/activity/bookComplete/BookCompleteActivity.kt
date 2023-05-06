@@ -8,8 +8,10 @@ import android.widget.Toast
 import woowacourse.movie.R
 import woowacourse.movie.activity.BackButtonActivity
 import woowacourse.movie.getSerializableCompat
+import woowacourse.movie.model.BookingHistoryData
 import woowacourse.movie.model.MovieBookingSeatInfoUIModel
-import woowacourse.movie.model.toDomain
+import woowacourse.movie.model.TicketData
+import woowacourse.movie.model.toHistoryData
 
 class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
 
@@ -18,7 +20,15 @@ class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_complete)
-        presenter = BookCompletePresenter(this, getMovieBookingSeatInfo().toDomain())
+        val movieBookingSeatInfo = getMovieBookingSeatInfo()
+        val historyData = getMovieHistoryData()
+
+        presenter = if (movieBookingSeatInfo.seats.isEmpty()) {
+            BookCompletePresenter(this, historyData)
+        } else {
+            BookCompletePresenter(this, movieBookingSeatInfo)
+        }
+
         presenter.initView()
         presenter.hasDummyData()
     }
@@ -28,19 +38,30 @@ class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
             ?: MovieBookingSeatInfoUIModel.dummyData
     }
 
-    override fun initView(movieBookingSeatInfo: MovieBookingSeatInfoUIModel) {
+    private fun getMovieHistoryData(): BookingHistoryData {
+        return intent.getSerializableCompat(MOVIE_BOOKING_HISTORY_KEY)
+            ?: BookingHistoryData("데이터를 불러올 수 없습니다.", "", 0, listOf(), "")
+    }
+
+    override fun initView(ticketData: TicketData) {
+        val data: BookingHistoryData =
+            if (ticketData !is BookingHistoryData) {
+                (ticketData as MovieBookingSeatInfoUIModel).toHistoryData()
+            } else {
+                ticketData
+            }
         findViewById<TextView>(R.id.tv_book_movie_title).text =
-            movieBookingSeatInfo.movieBookingInfo.movieInfo.title
+            data.title
         findViewById<TextView>(R.id.tv_book_date).text =
-            movieBookingSeatInfo.movieBookingInfo.formatBookingTime()
+            data.date
         findViewById<TextView>(R.id.tv_book_person_count).text =
             getString(
                 R.string.book_person_count,
-                movieBookingSeatInfo.movieBookingInfo.ticketCount,
-                movieBookingSeatInfo.seats.joinToString(", ")
+                data.numberOfPeople,
+                data.seat.joinToString(", ")
             )
         findViewById<TextView>(R.id.tv_book_total_pay).text =
-            getString(R.string.book_total_pay, movieBookingSeatInfo.totalPrice)
+            getString(R.string.book_total_pay, data.price)
     }
 
     override fun displayToastIfDummyData() {
@@ -53,9 +74,16 @@ class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
 
     companion object {
         private const val MOVIE_BOOKING_SEAT_INFO_KEY = "movieBookingSeatInfo"
+        private const val MOVIE_BOOKING_HISTORY_KEY = "movieBookingHistoryData"
         fun getIntent(context: Context, movieBookingSeatInfo: MovieBookingSeatInfoUIModel): Intent {
             val intent = Intent(context, BookCompleteActivity::class.java)
             intent.putExtra(MOVIE_BOOKING_SEAT_INFO_KEY, movieBookingSeatInfo)
+            return intent
+        }
+
+        fun getIntent(context: Context, movieBookingData: BookingHistoryData): Intent {
+            val intent = Intent(context, BookCompleteActivity::class.java)
+            intent.putExtra(MOVIE_BOOKING_HISTORY_KEY, movieBookingData)
             return intent
         }
     }
