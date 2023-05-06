@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.data.MovieMockRepository
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.view.model.MovieListModel
 import woowacourse.movie.view.reservation.ReservationActivity
@@ -28,7 +29,7 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContr
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = MovieListPresenter(this)
+        presenter = MovieListPresenter(this, MovieMockRepository)
         presenter.loadMovieList()
     }
 

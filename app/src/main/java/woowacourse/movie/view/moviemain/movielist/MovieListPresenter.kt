@@ -1,17 +1,15 @@
 package woowacourse.movie.view.moviemain.movielist
 
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieMockRepository
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.repository.MovieRepository
 import woowacourse.movie.view.mapper.toUiModel
 import woowacourse.movie.view.model.MovieListModel
 
 class MovieListPresenter(
-    private val view: MovieListContract.View
+    private val view: MovieListContract.View,
+    private val movieRepository: MovieRepository
 ) : MovieListContract.Presenter {
-
-    private val movieRepository: MovieRepository = MovieMockRepository
 
     override fun loadMovieList() {
         val movies = movieRepository.findAll()
