@@ -14,6 +14,7 @@ import woowacourse.movie.domain.Screening
 import woowacourse.movie.domain.Theater
 import woowacourse.movie.domain.repository.MovieRepository
 import woowacourse.movie.domain.repository.TheaterRepository
+import woowacourse.movie.view.mapper.toMovieTheater
 import woowacourse.movie.view.mapper.toUiModel
 import woowacourse.movie.view.model.MovieListModel
 import java.time.LocalDate
@@ -51,11 +52,16 @@ class MovieListPresenterTest {
     fun `영화가 클릭되면 극장 선택 Bottom Sheet Dialog가 열린다`() {
         val movie = fakeMovie().toUiModel()
         every { theaterRepository.findTheaterByMovieId(movie.id) } returns fakeTheaters()
-        every { view.openTheaterBottomSheet(fakeTheaters()) } returns Unit
+        every {
+            view.openTheaterBottomSheet(
+                fakeTheaters().map { it.toMovieTheater(movie.id) },
+                movie
+            )
+        } returns Unit
 
         movieListPresenter.onItemClick(movie)
 
-        verify { view.openTheaterBottomSheet(any()) }
+        verify { view.openTheaterBottomSheet(any(), any()) }
     }
 
     @Test

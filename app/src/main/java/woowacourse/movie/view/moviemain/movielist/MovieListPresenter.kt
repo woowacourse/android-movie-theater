@@ -4,6 +4,7 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.repository.MovieRepository
 import woowacourse.movie.domain.repository.TheaterRepository
+import woowacourse.movie.view.mapper.toMovieTheater
 import woowacourse.movie.view.mapper.toUiModel
 import woowacourse.movie.view.model.MovieListModel
 
@@ -45,9 +46,7 @@ class MovieListPresenter(
     override fun onItemClick(item: MovieListModel) {
         when (item) {
             is MovieListModel.MovieUiModel -> {
-                val movieId = item.id
-                loadTheaterList(movieId)
-                // view.openReservationActivity(item, "선릉 극장")
+                loadTheaterList(item)
             }
             is MovieListModel.MovieAdModel -> {
                 view.openAdPage(item)
@@ -55,9 +54,9 @@ class MovieListPresenter(
         }
     }
 
-    override fun loadTheaterList(movieId: Int) {
-        val theaters = theaterRepository.findTheaterByMovieId(movieId)
-        view.openTheaterBottomSheet(theaters)
+    override fun loadTheaterList(movie: MovieListModel.MovieUiModel) {
+        val theaters = theaterRepository.findTheaterByMovieId(movie.id)
+        view.openTheaterBottomSheet(theaters.map { it.toMovieTheater(movie.id) }, movie)
     }
 
     companion object {

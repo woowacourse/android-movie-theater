@@ -7,13 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieMockRepository
 import woowacourse.movie.data.TheaterMockRepository
 import woowacourse.movie.databinding.FragmentMovieListBinding
-import woowacourse.movie.domain.Theater
 import woowacourse.movie.view.model.MovieListModel
+import woowacourse.movie.view.model.MovieTheater
 import woowacourse.movie.view.reservation.ReservationActivity
 
 class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContract.View {
@@ -54,14 +53,20 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContr
         startActivity(intent)
     }
 
-    override fun openTheaterBottomSheet(theaters: List<Theater>) {
-        val bottomSheetDialog = BottomSheetDialog(requireContext())
-        bottomSheetDialog.setContentView(
-            layoutInflater.inflate(
-                R.layout.bottom_sheet_theater,
-                null
-            )
-        )
-        bottomSheetDialog.show()
+    override fun openTheaterBottomSheet(
+        theaters: List<MovieTheater>,
+        movie: MovieListModel.MovieUiModel
+    ) {
+        val movieTheaterAdapter = MovieTheaterAdapter(
+            theaters
+        ) { item ->
+            openReservationActivity(movie, item.name)
+        }
+        val movieTheaterDialog = MovieTheaterDialog(movieTheaterAdapter)
+        movieTheaterDialog.show(parentFragmentManager, MOVIE_THEATER_DIALOG_TAG)
+    }
+
+    companion object {
+        private const val MOVIE_THEATER_DIALOG_TAG = "MOVIE_THEATER_DIALOG_TAG"
     }
 }

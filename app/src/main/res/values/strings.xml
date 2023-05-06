@@ -32,4 +32,5 @@
     <string name="screening_after_30_minutes">%s 30분 후에 상영</string>
     <string name="push_notification_title">푸시 알림 수신</string>
     <string name="notification_description">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+    <string name="screening_timeslot">%s개의 상영 시간</string>
 </resources>
