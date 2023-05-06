@@ -1,5 +1,9 @@
 package woowacourse.movie.presenter
 
+import domain.DateRange
+import domain.Movie
+import domain.Reservation
+import domain.Tickets
 import io.mockk.*
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
@@ -9,24 +13,30 @@ import woowacourse.movie.model.MovieUiModel
 import woowacourse.movie.model.SeatUiModel
 import woowacourse.movie.model.TicketDateUiModel
 import woowacourse.movie.model.TicketsUiModel
+import woowacourse.movie.model.mapper.MovieMapper.toDomain
+import woowacourse.movie.sql.ReservationDbHelperInterface
 import woowacourse.movie.view.SeatView
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 class SelectSeatPresenterTest {
     private lateinit var presenter: SelectSeatContract.Presenter
     private lateinit var view: SelectSeatContract.View
     private lateinit var movieUiModel: MovieUiModel
+    private lateinit var reservationDb: ReservationDbHelperInterface
     private var peopleCount: Int = 3
 
     @Before
     fun setUp() {
         view = mockk()
-        movieUiModel = mockk()
+        movieUiModel = MovieUiModel(1, "", LocalDate.MAX, LocalDate.MIN, 0, "")
+        reservationDb = mockk()
         presenter = SelectSeatPresenter(
             view,
             peopleCount,
             LocalDateTime.of(2023, 5, 6, 11, 0),
-            movieUiModel
+            movieUiModel,
+            reservationDb
         )
     }
 
@@ -67,10 +77,11 @@ class SelectSeatPresenterTest {
     }
 
     @Test
-    fun 다이얼로그_확인_버튼을_누르면_알림을_보내고_예약_결과창으로_넘어간다() {
+    fun 다이얼로그_확인_버튼을_누르면_알림을_보내고_예약_결과창으로_넘어가고_데이터베이스에_저장한다() {
         // given
         val slotStartActivity = slot<TicketsUiModel>()
         val slotRegisterAlarm = slot<TicketsUiModel>()
+        every { reservationDb.saveReservation(any()) } just runs
         every {
             view.startReservationResultActivity(
                 movieUiModel,
@@ -83,6 +94,7 @@ class SelectSeatPresenterTest {
         // then
         verify { view.startReservationResultActivity(movieUiModel, slotStartActivity.captured) }
         verify { view.registerAlarm(movieUiModel, slotRegisterAlarm.captured) }
+        verify { reservationDb.saveReservation(any())}
     }
 
     @Test

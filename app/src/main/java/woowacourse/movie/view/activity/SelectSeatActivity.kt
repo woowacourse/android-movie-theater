@@ -18,6 +18,7 @@ import woowacourse.movie.setBackgroundColorId
 import woowacourse.movie.view.MovieView
 import woowacourse.movie.view.SeatTable
 import woowacourse.movie.presenter.SelectSeatPresenter
+import woowacourse.movie.sql.ReservationDbHelper
 import java.text.NumberFormat
 import java.time.LocalDateTime
 import java.util.*
@@ -29,7 +30,8 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
             view = this,
             peopleCount = receivePeopleCount(),
             date = receiveTicketDateTime(),
-            movieUiModel = receiveMovieUiModel()
+            movieUiModel = receiveMovieUiModel(),
+            reservationDbHelper = ReservationDbHelper(this)
         )
     }
     private val movieUiModel: MovieUiModel by lazy {

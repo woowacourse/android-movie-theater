@@ -1,5 +1,6 @@
 package woowacourse.movie.presenter
 
+import domain.Reservation
 import domain.Seat
 import domain.TicketOffice
 import domain.Tickets
@@ -7,7 +8,9 @@ import domain.discountPolicy.DisCountPolicies
 import woowacourse.movie.contract.SelectSeatContract
 import woowacourse.movie.model.MovieUiModel
 import woowacourse.movie.model.SeatUiModel
+import woowacourse.movie.model.mapper.MovieMapper.toDomain
 import woowacourse.movie.model.mapper.TicketsMapper.toUi
+import woowacourse.movie.sql.ReservationDbHelperInterface
 import woowacourse.movie.view.SeatView
 import java.time.LocalDateTime
 
@@ -15,7 +18,8 @@ class SelectSeatPresenter(
     val view: SelectSeatContract.View,
     peopleCount: Int,
     date: LocalDateTime,
-    val movieUiModel: MovieUiModel
+    val movieUiModel: MovieUiModel,
+    val reservationDbHelper: ReservationDbHelperInterface
 ) : SelectSeatContract.Presenter {
     private val ticketOffice =
         TicketOffice(Tickets(listOf()), DisCountPolicies(), date, peopleCount)
@@ -53,6 +57,8 @@ class SelectSeatPresenter(
     override fun onClickDialogPositiveButton() {
         view.startReservationResultActivity(movieUiModel, ticketOffice.tickets.toUi())
         view.registerAlarm(movieUiModel, ticketOffice.tickets.toUi())
+        val reservation = Reservation(movieUiModel.toDomain(), ticketOffice.tickets)
+        reservationDbHelper.saveReservation(reservation)
     }
 
     override fun onClickDialogCancelButton() {
