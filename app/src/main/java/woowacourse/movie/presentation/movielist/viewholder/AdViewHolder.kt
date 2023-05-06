@@ -2,7 +2,7 @@ package woowacourse.movie.presentation.movielist.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.MovieListAdItemBinding
-import woowacourse.movie.presentation.movielist.MovieItem
+import woowacourse.movie.presentation.movielist.movie.MovieItem
 
 class AdViewHolder(private val binding: MovieListAdItemBinding) :
     RecyclerView.ViewHolder(binding.root) {

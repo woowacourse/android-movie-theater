@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.movielist
+package woowacourse.movie.presentation.movielist.movie
 
 import woowacourse.movie.data.MovieItemData
 

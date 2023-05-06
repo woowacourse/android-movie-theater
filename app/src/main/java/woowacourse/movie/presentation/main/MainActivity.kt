@@ -11,7 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.broadcastreceiver.AlarmReceiver
 import woowacourse.movie.presentation.bookedticketlist.BookedTicketsFragment
-import woowacourse.movie.presentation.movielist.MovieListFragment
+import woowacourse.movie.presentation.movielist.movie.MovieListFragment
 import woowacourse.movie.presentation.settings.SettingsFragment
 import woowacourse.movie.presentation.util.checkPermissionTiramisu
 import woowacourse.movie.presentation.util.replace

@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.MovieListItemBinding
 import woowacourse.movie.presentation.model.MovieModel
-import woowacourse.movie.presentation.movielist.MovieItem
+import woowacourse.movie.presentation.movielist.movie.MovieItem
 import woowacourse.movie.presentation.util.formatDotDate
 
 class MovieViewHolder(private val binding: MovieListItemBinding, clickBook: (MovieModel) -> Unit) :

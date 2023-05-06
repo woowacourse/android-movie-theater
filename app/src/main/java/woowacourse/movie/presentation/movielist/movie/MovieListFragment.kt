@@ -1,10 +1,12 @@
-package woowacourse.movie.presentation.movielist
+package woowacourse.movie.presentation.movielist.movie
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.presentation.booking.BookingActivity
 import woowacourse.movie.presentation.model.MovieModel
@@ -36,6 +38,10 @@ class MovieListFragment : Fragment(), MovieListContract.View {
     }
 
     private fun clickBook(movie: MovieModel) {
+        val bottomSheetView = layoutInflater.inflate(R.layout.bottom_sheet_cinema, null)
+        val bottomSheetDialog = BottomSheetDialog(requireContext())
+        bottomSheetDialog.setContentView(bottomSheetView)
+
         startActivity(BookingActivity.getIntent(requireActivity(), movie.id))
     }
 
