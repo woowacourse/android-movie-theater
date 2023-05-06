@@ -1,6 +1,6 @@
 package woowacourse.movie.fragment.bookhistory
 
-import com.woowacourse.domain.BookHistories
+import woowacourse.movie.data.BookHistories
 import woowacourse.movie.fragment.bookhistory.adapter.BookHistoryRecyclerViewAdapter
 
 class BookHistoryPresenter(val view: BookHistoryContract.View) : BookHistoryContract.Presenter {

@@ -9,7 +9,7 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.core.view.children
-import com.woowacourse.domain.BookHistories
+import woowacourse.movie.data.BookHistories
 import com.woowacourse.domain.movie.MovieBookingSeatInfo
 import com.woowacourse.domain.seat.Seat
 import woowacourse.movie.R

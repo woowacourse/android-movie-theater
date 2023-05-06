@@ -8,7 +8,7 @@ import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import com.woowacourse.domain.BookHistories
+import woowacourse.movie.data.BookHistories
 import woowacourse.movie.R
 import woowacourse.movie.activity.bookComplete.BookCompleteActivity
 import woowacourse.movie.fragment.bookhistory.adapter.BookHistoryRecyclerViewAdapter

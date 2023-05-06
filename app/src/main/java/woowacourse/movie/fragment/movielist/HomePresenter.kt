@@ -5,9 +5,8 @@ import woowacourse.movie.R
 import woowacourse.movie.fragment.movielist.adapter.MovieRecyclerViewAdapter
 import woowacourse.movie.model.AdUIModel
 import woowacourse.movie.model.toPresentation
-import woowacourse.movie.movie.MovieMockData
+import woowacourse.movie.data.MovieMockData
 import woowacourse.movie.movie.MovieUIModel
-import woowacourse.movie.movie.toPresentation
 
 class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter {
 

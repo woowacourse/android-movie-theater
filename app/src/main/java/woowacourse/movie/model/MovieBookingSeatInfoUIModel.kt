@@ -1,4 +1,4 @@
-package woowacourse.movie.movie
+package woowacourse.movie.model
 
 import com.woowacourse.domain.movie.MovieBookingSeatInfo
 import java.io.Serializable

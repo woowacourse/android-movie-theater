@@ -1,4 +1,4 @@
-package com.woowacourse.domain
+package woowacourse.movie.data
 
 import com.woowacourse.domain.movie.MovieBookingSeatInfo
 

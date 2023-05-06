@@ -5,7 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
-import com.woowacourse.domain.BookHistories
+import woowacourse.movie.data.BookHistories
 import com.woowacourse.domain.movie.MovieBookingSeatInfo
 import woowacourse.movie.movie.toPresentation
 import java.time.LocalDateTime
