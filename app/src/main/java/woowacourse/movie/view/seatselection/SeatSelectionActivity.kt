@@ -17,6 +17,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.data.TheaterMockRepository
+import woowacourse.movie.data.reservation.ReservationDbRepository
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.domain.system.Seat
 import woowacourse.movie.util.getParcelableCompat
@@ -56,7 +57,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         }
         reserveOptions = options
 
-        presenter = SeatSelectionPresenter(this, options, TheaterMockRepository)
+        presenter = SeatSelectionPresenter(this, options, ReservationDbRepository(this), TheaterMockRepository)
 
         createRows(presenter.getSeatInfoUiModel(TheaterMockRepository.gradeColor))
         setTitle(reserveOptions.title)
@@ -99,16 +100,16 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     private fun setNextButton() {
         binding.btnNext.setOnClickListener {
-            presenter.onReserveClick()
+            showSubmitDialog()
         }
     }
 
-    override fun showSubmitDialog(reservation: ReservationUiModel) {
+    private fun showSubmitDialog() {
         AlertDialog.Builder(this).run {
             setTitle(context.getString(R.string.reserve_dialog_title))
             setMessage(context.getString(R.string.reserve_dialog_detail))
             setPositiveButton(context.getString(R.string.reserve_dialog_submit)) { _, _ ->
-                onReserveClick(reservation)
+                presenter.onReserveClick()
             }
             setNegativeButton(context.getString(R.string.reserve_dialog_cancel)) { dialog, _ ->
                 dialog.dismiss()
@@ -117,7 +118,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         }.show()
     }
 
-    private fun onReserveClick(model: ReservationUiModel) {
+    override fun onReserveClick(model: ReservationUiModel) {
         val intent = ReservationCompletedActivity.newIntent(this, model)
         startActivity(intent)
     }

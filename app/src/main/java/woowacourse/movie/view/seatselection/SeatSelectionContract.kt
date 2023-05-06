@@ -15,7 +15,7 @@ interface SeatSelectionContract {
         fun maxSelectionToast()
         fun wrongInputToast()
         fun setPrice(price: String)
-        fun showSubmitDialog(reservation: ReservationUiModel)
+        fun onReserveClick(model: ReservationUiModel)
     }
 
     interface Presenter {

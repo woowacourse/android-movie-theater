@@ -1,8 +1,8 @@
 package woowacourse.movie.view.moviemain.reservationlist
 
-import woowacourse.movie.data.reservation.ReservationMockRepository
+import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.view.mapper.toUiModel
 
-class ReservationListPresenter : ReservationListContract.Presenter {
-    override fun getReservations() = ReservationMockRepository.findAll().map { it.toUiModel() }
+class ReservationListPresenter(private val reservationRespository: ReservationRepository) : ReservationListContract.Presenter {
+    override fun getReservations() = reservationRespository.findAll().map { it.toUiModel() }
 }

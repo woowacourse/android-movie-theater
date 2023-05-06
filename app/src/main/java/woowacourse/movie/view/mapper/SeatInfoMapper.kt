@@ -10,5 +10,5 @@ fun SeatInfo.toUiModel(colorOfGrade: Map<Grade, Int>): SeatInfoUiModel {
     repeat(size.row) {
         colorOfRow[it] = colorOfGrade[gradeOfRow[it]] ?: R.color.black
     }
-    return SeatInfoUiModel(size.row, size.col, colorOfRow.toMap()) // UI그리기를 위함
+    return SeatInfoUiModel(size.row, size.col, colorOfRow.toMap())
 }

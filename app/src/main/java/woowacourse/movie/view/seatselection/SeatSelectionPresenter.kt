@@ -2,6 +2,7 @@ package woowacourse.movie.view.seatselection
 
 import woowacourse.movie.domain.price.Price
 import woowacourse.movie.domain.price.PriceCalculator
+import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.TheaterRepository
 import woowacourse.movie.domain.reservation.Reservation
 import woowacourse.movie.domain.system.PriceSystem
@@ -12,11 +13,18 @@ import woowacourse.movie.view.mapper.toUiModel
 import woowacourse.movie.view.model.ReservationOptions
 import woowacourse.movie.view.model.SeatInfoUiModel
 
-class SeatSelectionPresenter(private val view: SeatSelectionContract.View, private val reserveOption: ReservationOptions, theaterRepository: TheaterRepository) : SeatSelectionContract.Presenter {
+class SeatSelectionPresenter(
+    private val view: SeatSelectionContract.View,
+    private val reserveOption: ReservationOptions,
+    private val reservationRepository: ReservationRepository,
+    theaterRepository: TheaterRepository,
+) : SeatSelectionContract.Presenter {
     private var price = Price(0)
     override val theater = theaterRepository.findTheater(reserveOption.theaterName)
-    override val seatSelectSystem: SeatSelectSystem = SeatSelectSystem(theater.seatInfo, reserveOption.peopleCount)
-    override val priceSystem: PriceSystem = PriceSystem(PriceCalculator(theater.discountPolicies), reserveOption.screeningDateTime)
+    override val seatSelectSystem: SeatSelectSystem =
+        SeatSelectSystem(theater.seatInfo, reserveOption.peopleCount)
+    override val priceSystem: PriceSystem =
+        PriceSystem(PriceCalculator(theater.discountPolicies), reserveOption.screeningDateTime)
 
     override fun onSeatClick(row: Int, col: Int) {
         val result = seatSelectSystem.select(row, col)
@@ -41,8 +49,15 @@ class SeatSelectionPresenter(private val view: SeatSelectionContract.View, priva
     }
 
     override fun onReserveClick() {
-        val reservation = Reservation(reserveOption.title, reserveOption.screeningDateTime, seatSelectSystem.seats, price, theater.name)
-        view.showSubmitDialog(reservation.toUiModel())
+        val reservation = Reservation(
+            reserveOption.title,
+            reserveOption.screeningDateTime,
+            seatSelectSystem.seats,
+            price,
+            theater.name,
+        )
+        reservationRepository.add(reservation)
+        view.onReserveClick(reservation.toUiModel())
     }
 
     override fun getSeatInfoUiModel(colorOfGrade: Map<Grade, Int>): SeatInfoUiModel {
