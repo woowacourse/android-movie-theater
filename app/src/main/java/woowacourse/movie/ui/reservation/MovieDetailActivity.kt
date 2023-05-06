@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.model.CountState
@@ -18,7 +17,7 @@ import woowacourse.movie.util.getSerializableCompat
 import woowacourse.movie.util.keyError
 
 class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View {
-    override var presenter: MovieDetailContract.Presenter = MovieDetailPresenter(this)
+    override lateinit var presenter: MovieDetailContract.Presenter
 
     private lateinit var binding: ActivityMovieDetailBinding
     private lateinit var dateTimeSpinner: DateTimeSpinner
@@ -28,13 +27,12 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
         initPresenter()
         initConfirmButton()
         initCountButton()
-        if (savedInstanceState == null) {
-            initInstanceState()
-        }
+        presenter.getMovieRunningDateTimes()
     }
 
     private fun initPresenter() {
-        presenter.init(
+        presenter = MovieDetailPresenter(
+            this,
             movie = intent.getParcelableExtraCompat(KEY_MOVIE) ?: return keyError(KEY_MOVIE),
             cinemaName = intent.getStringExtra(KEY_CINEMA_NAME) ?: return keyError(KEY_CINEMA_NAME)
         )
@@ -77,11 +75,11 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
         SeatSelectActivity.startActivity(this, cinemaName, seatSelectState)
     }
 
-    private fun initInstanceState() {
+    override fun setDateTimeSpinner(dates: List<LocalDate>, times: List<LocalTime>) {
         dateTimeSpinner = DateTimeSpinner(
             binding,
-            presenter::getMovieRunningDates,
-            presenter::getMovieRunningTimes
+            dates,
+            times
         )
     }
 
@@ -94,13 +92,8 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
             savedInstanceState.getSerializableCompat(KEY_TIME) ?: return keyError(KEY_TIME)
         val restoreCount: CountState =
             savedInstanceState.getParcelableCompat(KEY_COUNT) ?: return keyError(KEY_COUNT)
-        dateTimeSpinner = DateTimeSpinner(
-            binding,
-            presenter::getMovieRunningDates,
-            presenter::getMovieRunningTimes,
-            LocalDateTime.of(restoreSelectDate, restoreSelectTime)
-        )
 
+        dateTimeSpinner.updateSelectDateTime(restoreSelectDate, restoreSelectTime)
         presenter.count = restoreCount
     }
 
