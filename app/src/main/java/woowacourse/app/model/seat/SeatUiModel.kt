@@ -1,4 +1,4 @@
-package woowacourse.app.model.ticket
+package woowacourse.app.model.seat
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

@@ -3,6 +3,7 @@ package woowacourse.app.model.ticket
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import woowacourse.app.model.movie.MovieUiModel
+import woowacourse.app.model.seat.SeatUiModel
 import woowacourse.app.ui.seat.SeatRow
 import java.time.LocalDateTime
 

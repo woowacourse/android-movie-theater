@@ -1,8 +1,7 @@
-package woowacourse.app.model
+package woowacourse.app.model.seat
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.app.model.ticket.SeatUiModel
 
 @Parcelize
 data class SelectedSeatUiModel(val selectedSeat: Set<SeatUiModel>) : Parcelable
