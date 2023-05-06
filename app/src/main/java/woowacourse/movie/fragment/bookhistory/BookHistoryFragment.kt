@@ -10,11 +10,13 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.activity.bookComplete.BookCompleteActivity
-import woowacourse.movie.data.BookHistories
+import woowacourse.movie.data.BookingHistoryDBHelper
 import woowacourse.movie.fragment.bookhistory.adapter.BookHistoryRecyclerViewAdapter
+import woowacourse.movie.model.BookingHistoryData
 
 class BookHistoryFragment : Fragment(), BookHistoryContract.View {
     override lateinit var presenter: BookHistoryContract.Presenter
+    private val db by lazy { BookingHistoryDBHelper(requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,13 +29,14 @@ class BookHistoryFragment : Fragment(), BookHistoryContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.setMovieRecyclerView(onClickBookHistory())
+        val bookingHistoryData = db.getData()
+        presenter.setMovieRecyclerView(bookingHistoryData, onClickBookHistory(bookingHistoryData))
     }
 
-    private fun onClickBookHistory() = { position: Int ->
+    private fun onClickBookHistory(bookingHistoryData: List<BookingHistoryData>) = { position: Int ->
         val intent = BookCompleteActivity.getIntent(
             requireContext(),
-            BookHistories.items[position]
+            bookingHistoryData[position]
         )
         startActivity(intent)
     }

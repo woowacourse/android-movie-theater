@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import com.woowacourse.domain.movie.MovieBookingSeatInfo
-import woowacourse.movie.data.BookHistories
 import woowacourse.movie.model.toPresentation
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -30,7 +29,7 @@ class AlarmSetting {
         movieBookingSeatInfo: MovieBookingSeatInfo
     ): PendingIntent {
         val intent = Intent(context, MovieReminder::class.java)
-        val notificationId = BookHistories.items.size
+        val notificationId = System.currentTimeMillis().toInt()
         intent.putExtra(
             MOVIE_BOOKING_SEAT_INFO_KEY,
             movieBookingSeatInfo.toPresentation()

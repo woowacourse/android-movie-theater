@@ -14,12 +14,13 @@ import com.woowacourse.domain.seat.Seat
 import woowacourse.movie.R
 import woowacourse.movie.activity.BackButtonActivity
 import woowacourse.movie.activity.bookComplete.BookCompleteActivity
-import woowacourse.movie.data.BookHistories
+import woowacourse.movie.data.BookingHistoryDBHelper
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.model.MovieBookingInfoUiModel
 import woowacourse.movie.model.SeatGroupModel
 import woowacourse.movie.model.toDomain
+import woowacourse.movie.model.toHistoryData
 import woowacourse.movie.model.toPresentation
 import woowacourse.movie.service.AlarmSetting
 
@@ -127,11 +128,13 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
     }
 
     override fun onClickDoneBtn(movieBookingSeatInfo: MovieBookingSeatInfo) {
+        val movieBookingSeatInfoUIModel = movieBookingSeatInfo.toPresentation()
+        val db = BookingHistoryDBHelper(this)
         val intent =
-            BookCompleteActivity.getIntent(this, movieBookingSeatInfo.toPresentation())
+            BookCompleteActivity.getIntent(this, movieBookingSeatInfoUIModel)
 
         AlarmSetting().setAlarm(this, movieBookingSeatInfo)
-        BookHistories.saveBookingInfo(movieBookingSeatInfo)
+        db.insertData(movieBookingSeatInfoUIModel.toHistoryData())
 
         startActivity(intent)
         finish()

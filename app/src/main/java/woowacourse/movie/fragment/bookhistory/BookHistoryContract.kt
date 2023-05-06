@@ -1,6 +1,7 @@
 package woowacourse.movie.fragment.bookhistory
 
 import woowacourse.movie.fragment.bookhistory.adapter.BookHistoryRecyclerViewAdapter
+import woowacourse.movie.model.BookingHistoryData
 
 interface BookHistoryContract {
 
@@ -10,6 +11,9 @@ interface BookHistoryContract {
     }
 
     interface Presenter {
-        fun setMovieRecyclerView(onClickItem: (Int) -> Unit)
+        fun setMovieRecyclerView(
+            bookingHistoryData: List<BookingHistoryData>,
+            onClickItem: (Int) -> Unit
+        )
     }
 }
