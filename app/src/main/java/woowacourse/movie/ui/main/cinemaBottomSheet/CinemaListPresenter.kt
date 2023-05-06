@@ -1,7 +1,7 @@
 package woowacourse.movie.ui.main.cinemaBottomSheet
 
-import woowacourse.movie.data.CinemaRepository
 import woowacourse.movie.model.MovieState
+import woowacourse.movie.repository.CinemaRepository
 
 class CinemaListPresenter(
     private val view: CinemaListContract.View,

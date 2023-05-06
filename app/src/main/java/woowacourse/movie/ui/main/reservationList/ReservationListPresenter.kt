@@ -1,6 +1,6 @@
 package woowacourse.movie.ui.main.reservationList
 
-import woowacourse.movie.data.TicketsRepository
+import woowacourse.movie.repository.TicketsRepository
 
 class ReservationListPresenter(
     private val view: ReservationListContract.View,

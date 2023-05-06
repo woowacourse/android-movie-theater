@@ -4,7 +4,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Test
-import woowacourse.movie.data.TicketsRepository
+import woowacourse.movie.repository.TicketsRepository
 
 class ReservationListPresenterTest {
     @Test

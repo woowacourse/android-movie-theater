@@ -1,12 +1,11 @@
-package woowacourse.movie.data
+package com.example.domain.repository
 
-import woowacourse.movie.R
-import woowacourse.movie.model.AdvState
+import com.example.domain.model.Adv
 
 object AdvRepository {
-    private val adbs: List<AdvState> = List(3) {
-        AdvState(
-            R.drawable.adv_wooteco,
+    private val adbs: List<Adv> = List(3) {
+        Adv(
+            "android.resource://woowacourse.movie/drawable/adv_wooteco",
             "배달의민족 운영사인 우아한형제들에서 운영하는 개발자 교육 프로그램.\n" +
                 "\n" +
                 "NHN NEXT 교수 출신인 박재성(자바지기)의 주도로 설립되었으며, 삼성 청년 SW 아카데미와 같이 실질적으로는 무료로 교육을 제공하나, 명목상으로 각 레벨당 100만원의 강의료가 책정되어 있으며 중도 포기시 납부해야 한다.\n" +
@@ -21,5 +20,5 @@ object AdvRepository {
         )
     }
 
-    fun allAdv(): List<AdvState> = adbs.toList()
+    fun allAdv(): List<Adv> = adbs.toList()
 }

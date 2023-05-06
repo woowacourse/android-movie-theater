@@ -1,4 +1,4 @@
-package woowacourse.movie.data
+package woowacourse.movie.repository
 
 import woowacourse.movie.model.TicketsState
 

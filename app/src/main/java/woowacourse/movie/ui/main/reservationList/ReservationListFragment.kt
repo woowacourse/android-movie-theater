@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import woowacourse.movie.data.TicketsRepository
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.model.TicketsState
+import woowacourse.movie.repository.TicketsRepository
 import woowacourse.movie.ui.adapter.ReservationListAdapter
 import woowacourse.movie.ui.confirm.ReservationConfirmActivity
 import woowacourse.movie.ui.itemModel.TicketsItemModel

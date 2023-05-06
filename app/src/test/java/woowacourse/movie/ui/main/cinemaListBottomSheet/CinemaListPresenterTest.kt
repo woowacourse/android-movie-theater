@@ -7,8 +7,8 @@ import io.mockk.verify
 import java.time.LocalDate
 import java.time.LocalTime
 import org.junit.Test
-import woowacourse.movie.data.CinemaRepository
 import woowacourse.movie.model.MovieState
+import woowacourse.movie.repository.CinemaRepository
 import woowacourse.movie.ui.main.cinemaBottomSheet.CinemaListContract
 import woowacourse.movie.ui.main.cinemaBottomSheet.CinemaListPresenter
 

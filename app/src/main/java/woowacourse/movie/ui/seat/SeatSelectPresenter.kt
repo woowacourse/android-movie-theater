@@ -1,12 +1,12 @@
 package woowacourse.movie.ui.seat
 
 import com.example.domain.usecase.DiscountApplyUseCase
-import woowacourse.movie.data.TicketsRepository
 import woowacourse.movie.model.SeatPositionState
 import woowacourse.movie.model.SeatSelectState
 import woowacourse.movie.model.TicketsState
 import woowacourse.movie.model.mapper.asDomain
 import woowacourse.movie.model.mapper.asPresentation
+import woowacourse.movie.repository.TicketsRepository
 
 class SeatSelectPresenter(
     private val view: SeatSelectContract.View
