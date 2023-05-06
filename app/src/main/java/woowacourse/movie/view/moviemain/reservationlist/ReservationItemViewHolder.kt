@@ -14,16 +14,14 @@ class ReservationItemViewHolder(
     RecyclerView.ViewHolder(binding.root) {
     fun bind(reservation: ReservationUiModel) {
         val context = binding.root.context
+        binding.reservation = reservation
+        binding.onItemClick = onItemClick
         with(binding) {
             reservationDatetime.text = context.getString(
                 R.string.datetime_with_line,
                 reservation.screeningDateTime.format(DATE_FORMATTER),
                 reservation.screeningDateTime.format(TIME_FORMATTER),
             )
-            movieTitle.text = reservation.title
-        }
-        binding.reservationLayout.setOnClickListener {
-            onItemClick.onClick(reservation)
         }
     }
 }
