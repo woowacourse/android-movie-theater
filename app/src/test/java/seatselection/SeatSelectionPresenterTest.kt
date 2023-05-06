@@ -1,4 +1,4 @@
-package moviemain
+package seatselection
 
 import io.mockk.every
 import io.mockk.just

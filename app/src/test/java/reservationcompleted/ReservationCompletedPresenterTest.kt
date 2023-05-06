@@ -1,4 +1,4 @@
-package moviemain
+package reservationcompleted
 
 import io.mockk.every
 import io.mockk.just
