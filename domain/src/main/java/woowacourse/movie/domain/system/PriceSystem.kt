@@ -6,17 +6,17 @@ import java.time.LocalDateTime
 
 class PriceSystem(
     private val calculator: PriceCalculator,
-    private val playingDateTime: LocalDateTime,
+    private val screeningDateTime: LocalDateTime,
 ) {
     fun getCurrentPrice(existingPrice: Price, result: SelectResult): Price {
         return when (result) {
             is SelectResult.Success.Deselection -> existingPrice - calculator.calculate(
                 result.seatPrice,
-                playingDateTime,
+                screeningDateTime,
             )
             is SelectResult.Success.Selection -> existingPrice + calculator.calculate(
                 result.seatPrice,
-                playingDateTime,
+                screeningDateTime,
             )
             is SelectResult.MaxSelection -> existingPrice
             is SelectResult.WrongInput -> existingPrice
