@@ -52,5 +52,4 @@ dependencies {
     testImplementation("io.mockk:mockk-android:1.13.5")
 
     implementation(project(":domain"))
-    implementation(project(":data"))
 }

@@ -7,8 +7,8 @@ import io.mockk.verify
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.app.ui.booking.BookingContract
-import woowacourse.app.ui.booking.BookingPresenter
+import woowacourse.app.presentation.ui.booking.BookingContract
+import woowacourse.app.presentation.ui.booking.BookingPresenter
 import woowacourse.domain.movie.Movie
 import woowacourse.domain.movie.ScreeningDate
 import woowacourse.domain.movie.ScreeningPeriod

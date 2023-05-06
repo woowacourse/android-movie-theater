@@ -7,7 +7,7 @@
 
         <variable
             name="presenter"
-            type="woowacourse.app.ui.seat.SeatContract.Presenter" />
+            type="woowacourse.app.presentation.ui.seat.SeatContract.Presenter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -92,7 +92,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <woowacourse.app.ui.seat.SeatTableLayout
+                <woowacourse.app.presentation.ui.seat.SeatTableLayout
                     android:id="@+id/seatTableLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

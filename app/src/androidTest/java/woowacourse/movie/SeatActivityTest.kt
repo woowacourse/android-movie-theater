@@ -16,11 +16,11 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import org.hamcrest.CoreMatchers.not
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.app.model.BookedMovieUiModel
-import woowacourse.app.model.movie.MovieMapper.toUiModel
-import woowacourse.app.ui.seat.SeatActivity
-import woowacourse.data.movie.MovieEntity
-import woowacourse.data.movie.MovieMapper.toMovie
+import woowacourse.app.data.movie.MovieEntity
+import woowacourse.app.data.movie.MovieMapper.toMovie
+import woowacourse.app.presentation.model.BookedMovieUiModel
+import woowacourse.app.presentation.model.movie.MovieMapper.toUiModel
+import woowacourse.app.presentation.ui.seat.SeatActivity
 import java.time.LocalDate
 import java.time.LocalDateTime
 

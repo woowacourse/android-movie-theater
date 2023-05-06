@@ -6,10 +6,10 @@ import io.mockk.verify
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.app.model.BookedMovie
-import woowacourse.app.ui.seat.SeatContract
-import woowacourse.app.ui.seat.SeatPresenter
-import woowacourse.app.usecase.theater.TheaterUseCase
+import woowacourse.app.presentation.model.BookedMovie
+import woowacourse.app.presentation.ui.seat.SeatContract
+import woowacourse.app.presentation.ui.seat.SeatPresenter
+import woowacourse.app.presentation.usecase.theater.TheaterUseCase
 import woowacourse.domain.BoxOffice
 import woowacourse.domain.movie.Movie
 import woowacourse.domain.movie.ScreeningPeriod
