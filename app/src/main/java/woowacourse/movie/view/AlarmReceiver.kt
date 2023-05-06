@@ -1,4 +1,4 @@
-package woowacourse.movie.view.seatselection
+package woowacourse.movie.view
 
 import android.Manifest
 import android.app.Notification

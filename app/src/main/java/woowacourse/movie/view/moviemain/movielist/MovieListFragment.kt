@@ -5,12 +5,14 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.data.movie.MovieMockRepository
+import woowacourse.movie.data.movie.MoviePosterMockRepository
 import woowacourse.movie.view.model.MovieUiModel
 
 class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val presenter = MovieListPresenter()
+        val presenter = MovieListPresenter(MovieMockRepository, MoviePosterMockRepository)
         val movies = presenter.getMovieListData()
 
         val movieAdapter = MovieListAdapter(3, movies, ::onClick)

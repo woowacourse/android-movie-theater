@@ -1,4 +1,4 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.movie
 
 import woowacourse.movie.R
 

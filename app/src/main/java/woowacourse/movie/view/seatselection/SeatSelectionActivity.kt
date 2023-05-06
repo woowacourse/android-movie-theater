@@ -16,8 +16,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.children
 import woowacourse.movie.R
-import woowacourse.movie.data.TheaterMockRepository
 import woowacourse.movie.data.reservation.ReservationDbRepository
+import woowacourse.movie.data.theater.TheaterMockRepository
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.domain.system.Seat
 import woowacourse.movie.util.getParcelableCompat

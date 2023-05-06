@@ -7,7 +7,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import woowacourse.movie.view.model.ReservationUiModel
-import woowacourse.movie.view.seatselection.AlarmReceiver
 import java.time.ZoneId
 
 class AlarmController(private val context: Context) {

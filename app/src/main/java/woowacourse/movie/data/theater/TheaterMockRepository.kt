@@ -1,4 +1,4 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.theater
 
 import woowacourse.movie.R
 import woowacourse.movie.domain.policy.MorningPolicy
