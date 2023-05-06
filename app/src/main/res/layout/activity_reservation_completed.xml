@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="reservation"
+            type="woowacourse.movie.view.model.ReservationUiModel" />
+    </data>
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -30,6 +37,7 @@
             android:textColor="@color/black"
             android:textSize="25sp"
             android:textStyle="bold"
+            android:text="@{reservation.title}"
             tools:text="해리 포터와 마법사의 돌" />
 
         <TextView
@@ -67,3 +75,4 @@
     </LinearLayout>
 
 </ScrollView>
+</layout>

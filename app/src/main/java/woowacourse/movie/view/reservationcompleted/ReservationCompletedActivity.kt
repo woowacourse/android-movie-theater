@@ -39,6 +39,7 @@ class ReservationCompletedActivity : AppCompatActivity(), ReservationCompletedCo
 
         presenter = ReservationCompletedPresenter(this, SettingPreferencesManager(this))
         val reservation = intent.getParcelableCompat<ReservationUiModel>(RESERVATION)
+        binding.reservation = reservation
 
         reservation?.let {
             initViewData(it)
@@ -63,7 +64,6 @@ class ReservationCompletedActivity : AppCompatActivity(), ReservationCompletedCo
 
     private fun initViewData(reservation: ReservationUiModel) {
         with(binding) {
-            movieTitle.text = reservation.title
             movieScreeningDate.text = getString(
                 R.string.datetime_with_space,
                 reservation.screeningDateTime.format(DATE_FORMATTER),
