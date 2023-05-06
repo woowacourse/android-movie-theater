@@ -17,12 +17,14 @@ import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
 
 class ReservationConfirmActivity : BackKeyActionBarActivity(), ReservationConfirmContract.View {
-    private var presenter = ReservationConfirmPresenter(this)
+    private lateinit var presenter: ReservationConfirmPresenter
     private lateinit var binding: ActivityReservationConfirmBinding
 
     override fun onCreateView(savedInstanceState: Bundle?) {
         initBinding()
         initPresenter()
+
+        presenter.getTicket()
     }
 
     private fun initBinding() {
@@ -31,7 +33,8 @@ class ReservationConfirmActivity : BackKeyActionBarActivity(), ReservationConfir
     }
 
     private fun initPresenter() {
-        presenter.init(
+        presenter = ReservationConfirmPresenter(
+            this,
             intent.getParcelableExtraCompat(KEY_TICKETS) ?: return keyError(KEY_TICKETS)
         )
     }

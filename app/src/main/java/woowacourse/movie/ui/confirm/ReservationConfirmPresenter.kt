@@ -6,13 +6,12 @@ import woowacourse.movie.model.mapper.asDomain
 import woowacourse.movie.model.mapper.asPresentation
 
 class ReservationConfirmPresenter(
-    private val view: ReservationConfirmContract.View
+    private val view: ReservationConfirmContract.View,
+    private val ticket: TicketsState
 ) : ReservationConfirmContract.Presenter {
     private val discountApplyUseCase = DiscountApplyUseCase()
-    lateinit var ticket: TicketsState
 
-    override fun init(ticket: TicketsState) {
-        this.ticket = ticket
+    override fun getTicket() {
         view.setTicket(ticket)
         view.registerNotification(ticket)
     }

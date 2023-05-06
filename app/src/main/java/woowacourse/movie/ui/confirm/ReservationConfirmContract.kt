@@ -13,6 +13,7 @@ interface ReservationConfirmContract {
 
     interface Presenter {
         fun discountApplyMoney(ticket: TicketsState)
-        fun init(ticket: TicketsState)
+
+        fun getTicket()
     }
 }
