@@ -6,7 +6,7 @@ class AdvDetailPresenter(
     private val view: AdvDetailContract.View
 ) : AdvDetailContract.Presenter {
 
-    override fun init(advState: AdvState) {
+    override fun getAdv(advState: AdvState) {
         view.setAdv(advState)
     }
 }

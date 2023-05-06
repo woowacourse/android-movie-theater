@@ -16,7 +16,7 @@ class AdvDetailPresenterTest {
         every { view.setAdv(any()) } returns Unit
 
         // when
-        presenter.init(advState)
+        presenter.getAdv(advState)
 
         //
         verify { view.setAdv(advState) }

@@ -23,7 +23,7 @@ class AdvDetailActivity : BackKeyActionBarActivity(), AdvDetailContract.View {
 
     private fun initPresenter() {
         val presenter = AdvDetailPresenter(this)
-        presenter.init(intent.getParcelableExtraCompat(KEY_ADV) ?: return keyError(KEY_ADV))
+        presenter.getAdv(intent.getParcelableExtraCompat(KEY_ADV) ?: return keyError(KEY_ADV))
     }
 
     override fun setAdv(advState: AdvState) {

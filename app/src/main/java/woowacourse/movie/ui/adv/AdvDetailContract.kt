@@ -8,6 +8,6 @@ interface AdvDetailContract {
     }
 
     interface Presenter {
-        fun init(advState: AdvState)
+        fun getAdv(advState: AdvState)
     }
 }
