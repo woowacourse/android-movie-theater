@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import domain.Movie
 import woowacourse.movie.R
-import woowacourse.movie.view.mapper.MovieMapper
+import woowacourse.movie.data.model.mapper.MovieMapper
 import java.time.format.DateTimeFormatter
 
 class MovieItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {

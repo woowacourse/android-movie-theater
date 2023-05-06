@@ -5,21 +5,21 @@
 
     <data>
 
-        <import type="woowacourse.movie.view.TicketFormatter" />
+        <import type="woowacourse.movie.data.model.TicketFormatter" />
 
         <variable
             name="tickets"
-            type="woowacourse.movie.view.model.TicketsUiModel" />
+            type="woowacourse.movie.data.model.uimodel.TicketsUiModel" />
 
         <variable
             name="movie"
-            type="woowacourse.movie.view.model.MovieUiModel" />
+            type="woowacourse.movie.data.model.uimodel.MovieUiModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activity.reservationresult.ReservationResultActivity">
+        tools:context=".ui.reservationresult.ReservationResultActivity">
 
         <TextView
             android:id="@+id/movie_reservation_result_information"

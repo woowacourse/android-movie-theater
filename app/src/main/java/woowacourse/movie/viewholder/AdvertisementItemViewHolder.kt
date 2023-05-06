@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.view.model.AdvertisementUiModel
+import woowacourse.movie.data.model.uimodel.AdvertisementUiModel
 
 class AdvertisementItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val image: ImageView

@@ -3,9 +3,9 @@ package woowacourse.movie.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.movie.data.model.ReservationItemModel
+import woowacourse.movie.data.model.uimodel.ReservationUiModel
 import woowacourse.movie.databinding.ItemReservationBinding
-import woowacourse.movie.fragment.reservationlist.ReservationItemModel
-import woowacourse.movie.view.model.ReservationUiModel
 import woowacourse.movie.viewholder.ReservationViewHolder
 
 class ReservationAdapter :

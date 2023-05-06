@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import domain.Movie
 import domain.Movies
 import woowacourse.movie.R
-import woowacourse.movie.view.model.AdvertisementUiModel
-import woowacourse.movie.view.model.MovieAdapterViewType
+import woowacourse.movie.data.model.uimodel.AdvertisementUiModel
+import woowacourse.movie.data.model.uimodel.MovieAdapterViewType
 import woowacourse.movie.viewholder.AdvertisementItemViewHolder
 import woowacourse.movie.viewholder.MovieItemViewHolder
 
