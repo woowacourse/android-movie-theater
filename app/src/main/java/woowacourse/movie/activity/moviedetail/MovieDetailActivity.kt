@@ -16,7 +16,7 @@ import com.woowacourse.domain.movie.MovieSchedule
 import woowacourse.movie.DateFormatter
 import woowacourse.movie.R
 import woowacourse.movie.activity.BackButtonActivity
-import woowacourse.movie.activity.SeatPickerActivity
+import woowacourse.movie.activity.seatPicker.SeatPickerActivity
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.movie.MovieUIModel
 import woowacourse.movie.movie.toDomain

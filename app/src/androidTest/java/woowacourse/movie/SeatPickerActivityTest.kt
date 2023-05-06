@@ -26,7 +26,7 @@ import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.movie.activity.SeatPickerActivity
+import woowacourse.movie.activity.seatPicker.SeatPickerActivity
 import woowacourse.movie.movie.MovieBookingInfoUiModel
 import woowacourse.movie.movie.MovieUIModel
 import java.time.LocalDate

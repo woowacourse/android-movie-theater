@@ -22,7 +22,7 @@
         </receiver>
 
         <activity
-            android:name=".activity.SeatPickerActivity"
+            android:name=".activity.seatPicker.SeatPickerActivity"
             android:exported="false" />
         <activity
             android:name=".activity.BookCompleteActivity"
