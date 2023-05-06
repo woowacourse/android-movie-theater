@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import domain.Ticket
 import domain.TicketOffice
 import woowacourse.movie.R
+import woowacourse.movie.activity.reservationresult.ReservationResultActivity
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.receiver.ReservationNotificationReceiver
 import woowacourse.movie.setBackgroundColorId
@@ -95,7 +96,7 @@ class SelectSeatActivity : AppCompatActivity() {
         builder.setMessage(R.string.select_seat_dialog_message)
         builder.setPositiveButton(R.string.select_seat_dialog_positive_button_text) { dialog, _ ->
             startActivity(
-                ReservationResultActivity.generateIntent(
+                ReservationResultActivity.getIntent(
                     this,
                     movieUiModel,
                     TicketsMapper.toUi(ticketOffice.tickets)

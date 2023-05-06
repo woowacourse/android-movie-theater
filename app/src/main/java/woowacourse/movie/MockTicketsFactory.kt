@@ -11,7 +11,7 @@ object MockTicketsFactory {
 
     fun makeTicket(): Ticket {
         return Ticket(
-            date = LocalDateTime.of(2023, 5, 8, 0, 0),
+            date = LocalDateTime.of(2023, 4, 8, 16, 0),
             seat = Seat(
                 1, 1, SeatPolicies()
             ),
@@ -20,6 +20,6 @@ object MockTicketsFactory {
     }
 
     fun makeTickets(): Tickets {
-        return Tickets(List(100) { makeTicket() })
+        return Tickets(List(5) { makeTicket() })
     }
 }

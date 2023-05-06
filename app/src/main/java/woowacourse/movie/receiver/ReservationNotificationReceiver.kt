@@ -7,7 +7,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.activity.ReservationResultActivity
+import woowacourse.movie.activity.reservationresult.ReservationResultActivity
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.model.TicketsUiModel
@@ -20,7 +20,7 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
         val notificationManager = reservationNotificationHelper.generateNotificationManger()
         val notificationBuilder =
             reservationNotificationHelper.generateNotificationBuilder(notificationManager)
-        val sendingIntent = ReservationResultActivity.generateIntent(context, movieUiModel, ticketsUiModel)
+        val sendingIntent = ReservationResultActivity.getIntent(context, movieUiModel, ticketsUiModel)
         val pendingIntent = PendingIntent.getActivity(
             context,
             123,

@@ -20,8 +20,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import woowacourse.movie.activity.ReservationResultActivity
 import woowacourse.movie.activity.SelectSeatActivity
+import woowacourse.movie.activity.reservationresult.ReservationResultActivity
 import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.model.TicketDateUiModel
 import java.time.LocalDate
