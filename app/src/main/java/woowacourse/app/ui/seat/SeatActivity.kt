@@ -3,52 +3,65 @@ package woowacourse.app.ui.seat
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
+import woowacourse.app.model.BookedMovieUiModel
+import woowacourse.app.model.Mapper.toBookedMovie
 import woowacourse.app.model.Mapper.toUiModel
-import woowacourse.app.model.SelectedSeatUiModel
-import woowacourse.app.model.ticket.TicketMapper.toDomainModel
+import woowacourse.app.model.seat.SeatMapper.toDomainModel
+import woowacourse.app.model.seat.SeatMapper.toUiModel
+import woowacourse.app.model.seat.SeatRankColor
+import woowacourse.app.model.seat.SelectedSeatUiModel
 import woowacourse.app.ui.completed.CompletedActivity
-import woowacourse.app.usecase.movie.MovieUseCase
 import woowacourse.app.usecase.theater.TheaterUseCase
 import woowacourse.app.util.getParcelable
 import woowacourse.app.util.getParcelableBundle
 import woowacourse.app.util.shortToast
-import woowacourse.data.movie.MovieRepositoryImpl
 import woowacourse.data.reservation.ReservationDatabase
 import woowacourse.data.reservation.ReservationRepositoryImpl
+import woowacourse.data.theater.TheaterDatabase
 import woowacourse.data.theater.TheaterRepositoryImpl
 import woowacourse.domain.BoxOffice
-import woowacourse.domain.SelectResult
-import woowacourse.domain.SelectedSeat
-import woowacourse.domain.movie.Movie
-import woowacourse.domain.theater.Theater
+import woowacourse.domain.reservation.Reservation
+import woowacourse.domain.ticket.Position
 import woowacourse.domain.ticket.Seat
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivitySeatBinding
 
-class SeatActivity : AppCompatActivity() {
-    private val textPayment by lazy { findViewById<TextView>(R.id.textSeatPayment) }
-    private val buttonConfirm by lazy { findViewById<TextView>(R.id.buttonSeatConfirm) }
-    private val table by lazy { findViewById<SeatTableLayout>(R.id.seatTableLayout) }
-
-    private lateinit var bookedMovie: woowacourse.app.model.BookedMovie
-    private lateinit var movie: Movie
-    private lateinit var theater: Theater
-    private lateinit var selectedSeat: SelectedSeat
+class SeatActivity : AppCompatActivity(), SeatContract.View {
+    private val binding: ActivitySeatBinding by lazy { ActivitySeatBinding.inflate(layoutInflater) }
+    override lateinit var presenter: SeatPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_seat)
-        getData()
-        initSeatTable()
-        initView()
-        clickConfirmButton()
+        setContentView(binding.root)
+        initPresenter()
+        binding.presenter = presenter
+        presenter.setTable()
+    }
+
+    private fun initPresenter() {
+        val bookedMovieUiModel = getData()
+        presenter = SeatPresenter(
+            this,
+            BoxOffice(ReservationRepositoryImpl(ReservationDatabase)),
+            bookedMovieUiModel.toBookedMovie(),
+            TheaterUseCase(TheaterRepositoryImpl(TheaterDatabase)),
+        )
+    }
+
+    private fun getData(): BookedMovieUiModel {
+        val bookedMovieUiModel = intent.getParcelable(BOOKED_MOVIE, BookedMovieUiModel::class.java)
+        if (bookedMovieUiModel == null) {
+            shortToast(R.string.error_no_such_data)
+            finish()
+        }
+        return bookedMovieUiModel!!
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putParcelable("SELECTED_SEAT", selectedSeat.toUiModel())
+        outState.putParcelable("SELECTED_SEAT", presenter.selectedSeat.toUiModel())
         super.onSaveInstanceState(outState)
     }
 
@@ -61,50 +74,52 @@ class SeatActivity : AppCompatActivity() {
 
     private fun restoreSelectedSeat(selectedSeatUiModel: SelectedSeatUiModel) {
         selectedSeatUiModel.selectedSeat.forEach {
-            setSeatState(it.toDomainModel())
+            presenter.selectSeat(it.toDomainModel())
         }
     }
 
-    private fun getData() {
-        bookedMovie =
-            intent.getParcelable(BOOKED_MOVIE, woowacourse.app.model.BookedMovie::class.java)
-                ?: return finish()
-        movie = MovieUseCase(MovieRepositoryImpl()).getMovie(bookedMovie.movieId) ?: return finish()
-        theater = TheaterUseCase(TheaterRepositoryImpl()).getTheater(bookedMovie.theaterId)
-            ?: return finish()
-        selectedSeat = SelectedSeat(bookedMovie.ticketCount)
+    override fun errorControl() {
+        shortToast(R.string.error_no_such_theater)
+        finish()
     }
 
-    private fun initSeatTable() {
-        table.setTable(theater.rowSize, theater.columnSize)
-        table.setColorRange(
+    override fun showSeatFull() {
+        shortToast(R.string.no_more_seat)
+    }
+
+    override fun setTableSize(rowSize: Int, columnSize: Int) {
+        binding.seatTableLayout.setTable(rowSize, columnSize)
+    }
+
+    override fun setTableColor(
+        sRank: List<IntRange>,
+        aRank: List<IntRange>,
+        bRank: List<IntRange>,
+    ) {
+        binding.seatTableLayout.setColorRange(
             mapOf(
-                theater.sRankRange to R.color.green_400,
-                theater.aRankRange to R.color.blue_500,
-                theater.bRankRange to R.color.purple_400,
+                sRank to SeatRankColor.S.colorId,
+                aRank to SeatRankColor.A.colorId,
+                bRank to SeatRankColor.B.colorId,
             ),
         )
-        table.setClickListener { clickedPosition ->
-            val seat = theater.selectSeat(clickedPosition)
-            setSeatState(seat)
+    }
+
+    override fun setTableClickListener(getSeat: (clickedPosition: Position) -> Seat) {
+        binding.seatTableLayout.setClickListener { clickedPosition ->
+            val seat = getSeat(clickedPosition)
+            presenter.selectSeat(seat)
         }
     }
 
-    private fun setSeatState(seat: Seat) {
-        val view = table[seat.position.row][seat.position.column]
-        val result = selectedSeat.clickSeat(seat)
-        when (result) {
-            SelectResult.Select.Full -> shortToast(R.string.no_more_seat)
-            SelectResult.Select.Success -> view.isSelected = !view.isSelected
-            SelectResult.Unselect -> view.isSelected = !view.isSelected
-        }
-        setConfirmButtonEnable(selectedSeat.isSeatFull)
-        setPayment()
+    override fun selectSeatView(seat: Seat) {
+        val view = binding.seatTableLayout[seat.position.row][seat.position.column]
+        view.isSelected = !view.isSelected
     }
 
-    private fun setConfirmButtonEnable(isSeatFull: Boolean) {
+    override fun setConfirmButtonEnable(isSeatFull: Boolean) {
+        val buttonConfirm = binding.buttonSeatConfirm
         buttonConfirm.isEnabled = isSeatFull
-
         if (buttonConfirm.isEnabled) {
             buttonConfirm.setBackgroundResource(R.color.purple_700)
             return
@@ -112,57 +127,36 @@ class SeatActivity : AppCompatActivity() {
         buttonConfirm.setBackgroundResource(R.color.gray_400)
     }
 
-    private fun clickConfirmButton() {
-        buttonConfirm.setOnClickListener {
-            showDialog()
-        }
-    }
-
-    private fun completeBooking() {
-        val reservation =
-            BoxOffice(ReservationRepositoryImpl(ReservationDatabase)).makeReservation(
-                movie,
-                bookedMovie.bookedDateTime,
-                selectedSeat.seats,
-            )
+    override fun completeBooking(reservation: Reservation) {
         ScreeningTimeReminder(this, reservation.toUiModel())
         startActivity(CompletedActivity.getIntent(this, reservation.toUiModel()))
         finish()
     }
 
-    private fun showDialog() {
+    override fun showDialog() {
         AlertDialog.Builder(this)
             .setTitle(R.string.booking_confirm)
             .setMessage(R.string.booking_really)
-            .setPositiveButton(R.string.yes) { _, _ -> completeBooking() }
+            .setPositiveButton(R.string.yes) { _, _ -> presenter.completeBooking() }
             .setNegativeButton(R.string.no) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
     }
 
-    private fun setPayment() {
-        textPayment.text =
-            getString(
-                R.string.won,
-                BoxOffice(ReservationRepositoryImpl(ReservationDatabase)).getPayment(
-                    movie,
-                    bookedMovie.bookedDateTime,
-                    selectedSeat.seats,
-                ),
-            )
-    }
-
-    private fun initView() {
-        findViewById<TextView>(R.id.textSeatMovieTitle).text = movie.title
+    override fun setPaymentText(payment: Int) {
+        binding.textSeatPayment.text = getString(R.string.won, payment)
     }
 
     companion object {
         private const val BOOKED_MOVIE = "BOOKED_MOVIE"
 
-        fun getIntent(context: Context, bookedMovie: woowacourse.app.model.BookedMovie): Intent {
+        fun getIntent(
+            context: Context,
+            bookedMovieUiModel: BookedMovieUiModel,
+        ): Intent {
             return Intent(context, SeatActivity::class.java).apply {
-                putExtra(BOOKED_MOVIE, bookedMovie)
+                putExtra(BOOKED_MOVIE, bookedMovieUiModel)
             }
         }
     }

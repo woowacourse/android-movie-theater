@@ -29,5 +29,6 @@
 
     <string name="error_no_such_reservation">"해당 예매내역이 없습니다. 앱을 다시 시작해주세요"</string>
     <string name="error_no_such_movie">"해당 영화가 없습니다. 앱을 다시 시작해주세요"</string>
-    <string name="error_no_such_theater">"해당 상영관이 없습니다. 앱을 다시 시작해주세요"</string>
+    <string name="error_no_such_theater">"해당 상영관이 없습니다."</string>
+    <string name="error_no_such_data">데이터 전달에 오류가 생겼습니다.</string>
 </resources>

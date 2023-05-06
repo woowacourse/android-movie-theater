@@ -1,8 +1,8 @@
 package woowacourse.app.model
 
+import woowacourse.app.model.movie.MovieMapper.toDomainModel
 import woowacourse.app.model.movie.MovieMapper.toUiModel
 import woowacourse.app.model.ticket.TicketMapper.toUiModel
-import woowacourse.domain.SelectedSeat
 import woowacourse.domain.reservation.Reservation
 
 object Mapper {
@@ -25,7 +25,12 @@ object Mapper {
         return this.map { it.toUiModel() }
     }
 
-    fun SelectedSeat.toUiModel(): SelectedSeatUiModel {
-        return SelectedSeatUiModel(this.seats.map { it.toUiModel() }.toSet())
+    fun BookedMovieUiModel.toBookedMovie(): BookedMovie {
+        return BookedMovie(
+            movie = this.movie.toDomainModel(),
+            theaterId = this.theaterId,
+            ticketCount = this.ticketCount,
+            bookedDateTime = this.bookedDateTime,
+        )
     }
 }

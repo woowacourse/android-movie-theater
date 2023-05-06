@@ -16,20 +16,32 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import org.hamcrest.CoreMatchers.not
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.app.model.BookedMovie
+import woowacourse.app.model.BookedMovieUiModel
+import woowacourse.app.model.movie.MovieMapper.toUiModel
 import woowacourse.app.ui.seat.SeatActivity
+import woowacourse.data.movie.MovieEntity
+import woowacourse.data.movie.MovieMapper.toMovie
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 class SeatActivityTest {
-    private val bookedMovie =
-        BookedMovie(1, 0, 2, LocalDateTime.of(2024, 3, 1, 10, 0))
+    private val movieUiModel = MovieEntity(
+        1,
+        "해리 포터와 마법사의 돌",
+        LocalDate.of(2023, 4, 26),
+        LocalDate.of(2023, 4, 30),
+        152,
+        "《해리 포터와 마법사의 돌》은 2001년 J. K. 롤링의 동명 소설을 원작으로 하여 만든, 영국과 미국 합작, 판타지 영화이다. 해리포터 시리즈 영화 8부작 중 첫 번째에 해당하는 작품이다. 크리스 콜럼버스가 감독을 맡았다.",
+    ).toMovie().toUiModel()
+    private val bookedMovieUiModel =
+        BookedMovieUiModel(movieUiModel, 0, 2, LocalDateTime.of(2024, 3, 1, 10, 0))
 
     @get:Rule
     var activityScenarioRule: ActivityScenarioRule<SeatActivity> =
         ActivityScenarioRule(
             SeatActivity.getIntent(
                 ApplicationProvider.getApplicationContext(),
-                bookedMovie,
+                bookedMovieUiModel,
             ),
         )
 

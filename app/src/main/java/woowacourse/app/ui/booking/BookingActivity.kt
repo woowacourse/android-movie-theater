@@ -5,9 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import woowacourse.app.model.BookedMovie
+import woowacourse.app.model.BookedMovieUiModel
 import woowacourse.app.model.movie.MovieMapper
 import woowacourse.app.model.movie.MovieMapper.toDomainModel
+import woowacourse.app.model.movie.MovieMapper.toUiModel
 import woowacourse.app.model.movie.MovieUiModel
 import woowacourse.app.ui.seat.SeatActivity
 import woowacourse.app.util.getParcelable
@@ -91,8 +92,8 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
 
     override fun clickBookingComplete(ticketCount: Int) {
         val dateTime = binding.spinnerDateTime.selectedDateTime
-        val bookedMovie = BookedMovie(presenter.movie.id, 0, ticketCount, dateTime)
-        startActivity(SeatActivity.getIntent(this, bookedMovie))
+        val bookedMovieUiModel = BookedMovieUiModel(presenter.movie.toUiModel(), 0, ticketCount, dateTime)
+        startActivity(SeatActivity.getIntent(this, bookedMovieUiModel))
         finish()
     }
 

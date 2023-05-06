@@ -1,7 +1,7 @@
 package woowacourse.data.theater
 
-object TheaterDatabase {
-    val theaters = listOf<TheaterEntity>(
+object TheaterDatabase : TheaterDataSource {
+    private val theaters = listOf<TheaterEntity>(
         TheaterEntity(
             id = 0,
             rowSize = 5,
@@ -28,7 +28,11 @@ object TheaterDatabase {
         ),
     )
 
-    fun selectTheater(id: Long): TheaterEntity? {
-        return theaters.find { it.id == id }
+    override fun getTheaterEntities(): List<TheaterEntity> {
+        return theaters.toList()
+    }
+
+    override fun getTheaterEntity(theaterId: Long): TheaterEntity? {
+        return theaters.find { it.id == theaterId }
     }
 }
