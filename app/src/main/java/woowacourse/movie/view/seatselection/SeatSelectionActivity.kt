@@ -42,8 +42,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             .filterIsInstance<TextView>().toList()
     }
 
-    private lateinit var reserveOptions: ReservationOptions
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySeatSelectionBinding.inflate(layoutInflater)
@@ -55,12 +53,16 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             finish()
             return
         }
-        reserveOptions = options
 
-        presenter = SeatSelectionPresenter(this, options, ReservationDbRepository(this), TheaterMockRepository)
+        presenter = SeatSelectionPresenter(
+            this,
+            options,
+            ReservationDbRepository(this),
+            TheaterMockRepository,
+        )
 
         createRows(presenter.getSeatInfoUiModel(TheaterMockRepository.gradeColor))
-        setTitle(reserveOptions.title)
+        setTitle(options.title)
         setNextButton()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
