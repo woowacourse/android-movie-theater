@@ -31,7 +31,7 @@ class ChoiceSeatPresenter(
 
     private var paymentAmount: Money = Money(INITIAL_PAYMENT_AMOUNT)
 
-    private val movie = MovieData.findMovieById(view.reservation.movieId)
+    private val movie = MovieData.findMovieById(view.reservation.cinemaModel.movieId)
 
     private val theater = Theater.of(rows, columns)
 

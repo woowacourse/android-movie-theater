@@ -1,21 +1,20 @@
 package woowacourse.movie.presentation.booking
 
 import woowacourse.movie.data.MovieData
-import woowacourse.movie.domain.model.rules.ScreeningTimes
 import woowacourse.movie.domain.model.tools.Movie
 import woowacourse.movie.domain.model.tools.TicketCount
 import woowacourse.movie.presentation.mappers.toPresentation
+import woowacourse.movie.presentation.model.CinemaModel
 import woowacourse.movie.presentation.model.MovieModel
 import woowacourse.movie.presentation.model.ReservationModel
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 
 class BookingPresenter(
     private val view: BookingContract.View,
 ) : BookingContract.Presenter {
 
-    private var movie: Movie = MovieData.findMovieById(view.movieId)
+    private val movie: Movie = MovieData.findMovieById(view.cinemaModel.movieId)
     private var ticketCount: TicketCount = TicketCount()
 
     override fun requireMovieModel(id: Long): MovieModel = movie.toPresentation()
@@ -39,11 +38,11 @@ class BookingPresenter(
         view.setTicketCount(ticketCount.value)
     }
 
-    override fun reserveMovie(localDateTime: LocalDateTime): ReservationModel =
-        ReservationModel(movie.id, localDateTime, ticketCount.value)
+    override fun reserveMovie(
+        cinemaModel: CinemaModel,
+        localDateTime: LocalDateTime,
+    ): ReservationModel =
+        ReservationModel(cinemaModel, localDateTime, ticketCount.value)
 
     override fun getScreeningDate(): List<LocalDate> = movie.getScreeningDates()
-
-    override fun getScreeningTime(position: Int): List<LocalTime> =
-        ScreeningTimes.getScreeningTime(getScreeningDate()[position])
 }

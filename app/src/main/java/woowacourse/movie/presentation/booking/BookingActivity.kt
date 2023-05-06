@@ -2,14 +2,15 @@ package woowacourse.movie.presentation.booking
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
-import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.presentation.choiceSeat.ChoiceSeatActivity
+import woowacourse.movie.presentation.complete.CompleteActivity
+import woowacourse.movie.presentation.model.CinemaModel
 import woowacourse.movie.presentation.model.MovieModel
 import woowacourse.movie.presentation.util.formatDotDate
 import java.time.LocalDate
@@ -22,9 +23,16 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
 
     private lateinit var binding: ActivityBookingBinding
 
-    override val movieId: Long by lazy { intent.getLongExtra(MOVIE_ID, -1) }
+    override val cinemaModel: CinemaModel by lazy {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra(CINEMA_MODEL, CinemaModel::class.java)
+                ?: throw IllegalArgumentException()
+        } else {
+            intent.getParcelableExtra(CompleteActivity.TICKET) ?: throw IllegalArgumentException()
+        }
+    }
 
-    private val movieModel: MovieModel by lazy { presenter.requireMovieModel(movieId) }
+    private val movieModel: MovieModel by lazy { presenter.requireMovieModel(cinemaModel.movieId) }
 
     private val dateSpinnerAdapter by lazy {
         SpinnerAdapter<LocalDate>(this, R.layout.screening_date_time_item, R.id.textSpinnerDateTime)
@@ -43,7 +51,6 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         restoreData(savedInstanceState)
         initDateTimes()
         gatherClickListeners()
-        initDateSpinnerSelectedListener()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -142,7 +149,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
             dateSpinnerAdapter.getItem(binding.spinnerScreeningDate.selectedItemPosition),
             timeSpinnerAdapter.getItem(binding.spinnerScreeningTime.selectedItemPosition),
         )
-        val reservation = presenter.reserveMovie(dateTime)
+        val reservation = presenter.reserveMovie(cinemaModel, dateTime)
         startActivity(ChoiceSeatActivity.getIntent(this, reservation))
     }
 
@@ -153,40 +160,18 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
 
     private fun initDateTimes() {
         dateSpinnerAdapter.initItems(presenter.getScreeningDate())
-        timeSpinnerAdapter.initItems(presenter.getScreeningTime(INITIAL_DATE_SPINNER_POSITION))
-    }
-
-    private fun initDateSpinnerSelectedListener() {
-        binding.spinnerScreeningDate.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long,
-                ) {
-                    convertTimeItems(position)
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) = Unit
-            }
-    }
-
-    override fun convertTimeItems(position: Int) {
-        val times: List<LocalTime> = presenter.getScreeningTime(position)
-        timeSpinnerAdapter.initItems(times)
+        timeSpinnerAdapter.initItems(cinemaModel.movieTimes)
     }
 
     companion object {
-        private const val MOVIE_ID = "MOVIE_ID"
+        private const val CINEMA_MODEL = "CINEMA_MODEL"
         private const val TICKET_COUNT = "TICKET_COUNT"
         private const val DATE_POSITION = "DATE_POSITION"
         private const val TIME_POSITION = "TIME_POSITION"
-        private const val INITIAL_DATE_SPINNER_POSITION = 0
         private const val INITIAL_TICKET_COUNT = 1
-        fun getIntent(context: Context, movieId: Long): Intent {
+        fun getIntent(context: Context, cinemaModel: CinemaModel): Intent {
             return Intent(context, BookingActivity::class.java).apply {
-                putExtra(MOVIE_ID, movieId)
+                putExtra(CINEMA_MODEL, cinemaModel)
             }
         }
     }
