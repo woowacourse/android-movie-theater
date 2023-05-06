@@ -7,6 +7,6 @@ interface MovieListContract {
     }
 
     interface Presenter {
-        fun requestMovies()
+        fun setMovies()
     }
 }
