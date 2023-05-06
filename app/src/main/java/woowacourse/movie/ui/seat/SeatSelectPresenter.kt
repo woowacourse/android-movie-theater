@@ -1,6 +1,5 @@
 package woowacourse.movie.ui.seat
 
-import com.example.domain.repository.TicketsRepository
 import com.example.domain.usecase.DiscountApplyUseCase
 import woowacourse.movie.dbHelper.TicketsDbHelper
 import woowacourse.movie.model.SeatPositionState
@@ -11,17 +10,13 @@ import woowacourse.movie.model.mapper.asPresentation
 
 class SeatSelectPresenter(
     private val view: SeatSelectContract.View,
-    private val ticketsDbHelper: TicketsDbHelper
+    private val ticketsDbHelper: TicketsDbHelper,
+    private val seatSelectState: SeatSelectState,
+    private val cinemaName: String
 ) : SeatSelectContract.Presenter {
     private val discountApplyUseCase = DiscountApplyUseCase()
 
-    private lateinit var seatSelectState: SeatSelectState
-    private lateinit var cinemaName: String
-
-    fun init(seatSelectState: SeatSelectState, cinemaName: String) {
-        this.seatSelectState = seatSelectState
-        this.cinemaName = cinemaName
-
+    override fun getSeatSelectState() {
         view.showSeatSelectState(seatSelectState)
         view.initSeatTable(seatSelectState)
     }
@@ -43,7 +38,6 @@ class SeatSelectPresenter(
             seatSelectState.dateTime,
             positionStates
         )
-        TicketsRepository.addTicket(tickets.asDomain())
         ticketsDbHelper.insert(tickets)
         view.navigateToConfirmView(tickets)
     }

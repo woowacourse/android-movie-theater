@@ -19,7 +19,7 @@ import woowacourse.movie.util.keyError
 import woowacourse.movie.util.showAskDialog
 
 class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
-    private val presenter = SeatSelectPresenter(this, TicketsDbHelper(this))
+    private lateinit var presenter: SeatSelectPresenter
     private lateinit var binding: ActivitySeatSelectBinding
 
     private lateinit var seatTable: SeatTable
@@ -27,6 +27,7 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
     override fun onCreateView(savedInstanceState: Bundle?) {
         initBinding()
         initPresenter()
+        presenter.getSeatSelectState()
     }
 
     private fun initBinding() {
@@ -35,11 +36,11 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
     }
 
     private fun initPresenter() {
-        presenter.init(
-            intent.getParcelableExtraCompat(KEY_SEAT_SELECT)
-                ?: return keyError(KEY_SEAT_SELECT),
-            intent.getStringExtra(KEY_CINEMA_NAME)
-                ?: return keyError(KEY_CINEMA_NAME)
+        presenter = SeatSelectPresenter(
+            this,
+            TicketsDbHelper(this),
+            intent.getParcelableExtraCompat(KEY_SEAT_SELECT) ?: return keyError(KEY_SEAT_SELECT),
+            intent.getStringExtra(KEY_CINEMA_NAME) ?: return keyError(KEY_CINEMA_NAME)
         )
     }
 

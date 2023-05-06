@@ -14,6 +14,7 @@ interface SeatSelectContract {
     }
 
     interface Presenter {
+        fun getSeatSelectState()
         fun discountApply(positionStates: List<SeatPositionState>)
         fun addTicket(positionStates: List<SeatPositionState>)
         fun getRequireCount(): Int
