@@ -2,7 +2,6 @@ package woowacourse.movie.presentation.choiceSeat
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.widget.TableRow
 import android.widget.TextView
@@ -10,22 +9,25 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import woowacourse.movie.R
+import woowacourse.movie.data.movie.MockMovieData
 import woowacourse.movie.data.settings.SettingsPreference
 import woowacourse.movie.databinding.ActivityChoiceSeatBinding
 import woowacourse.movie.presentation.allowance.SettingsAllowance
 import woowacourse.movie.presentation.complete.CompleteActivity
 import woowacourse.movie.presentation.model.ReservationModel
 import woowacourse.movie.presentation.model.SeatModel
+import woowacourse.movie.presentation.model.TicketModel
+import woowacourse.movie.presentation.util.getParcelableExtraCompat
 
 class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
 
     override val presenter: ChoiceSeatContract.Presenter by lazy {
         val prefKey = SettingsAllowance.NOTIFICATION_PREF_KEY
-        ChoiceSeatPresenter(this, SettingsPreference.getInstance(prefKey, this))
+        ChoiceSeatPresenter(this, MockMovieData, SettingsPreference.getInstance(prefKey, this))
     }
     private lateinit var binding: ActivityChoiceSeatBinding
 
-    override val reservation by lazy { initReservation() }
+    private val reservation by lazy { initReservation() }
     private val confirmButton by lazy { binding.buttonChoiceConfirm }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,12 +38,8 @@ class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
         initView()
     }
 
-    private fun initReservation() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        intent.getParcelableExtra(RESERVATION, ReservationModel::class.java)
-            ?: throw IllegalArgumentException()
-    } else {
-        intent.getParcelableExtra(RESERVATION) ?: throw IllegalArgumentException()
-    }
+    private fun initReservation() =
+        intent.getParcelableExtraCompat<ReservationModel>(RESERVATION) ?: throw NoSuchElementException()
 
     private fun setTheaterSeat() {
         val seatsTable = binding.tableSeats
@@ -73,13 +71,13 @@ class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
     }
 
     private fun unSelectSeat(index: Int, view: TextView) {
-        val result = presenter.subSeat(index)
+        val result = presenter.subSeat(index, reservation)
         if (!result) return
         view.isSelected = false
     }
 
     private fun selectSeat(index: Int, view: TextView) {
-        val result = presenter.addSeat(index)
+        val result = presenter.addSeat(index, reservation)
         if (!result) return
         view.isSelected = true
     }
@@ -110,13 +108,12 @@ class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
     }
 
     private fun initView() {
-        val movieModel = presenter.getMovieModel()
-        setTitle(movieModel.title)
+        presenter.setMovieTitle(reservation.movieId)
         setPaymentAmount(INITIAL_PAYMENT_MONEY)
         setConfirmButton()
     }
 
-    private fun setTitle(title: String) {
+    override fun setMovieTitleView(title: String) {
         binding.textChoiceTitle.text = title
     }
 
@@ -137,7 +134,7 @@ class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
             .setTitle(getString(R.string.dialog_choice_confirm_title))
             .setMessage(getString(R.string.dialog_choice_confirm_message))
             .setPositiveButton(getString(R.string.dialog_choice_positive_button)) { _, _ ->
-                confirmBookMovie()
+                presenter.reserveTicketModel(reservation)
             }
             .setNegativeButton(getString(R.string.dialog_choice_negative_button)) { dialog, _ ->
                 dialog.dismiss()
@@ -146,9 +143,7 @@ class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
             .show()
     }
 
-    private fun confirmBookMovie() {
-        val ticketModel = presenter.reserveTicketModel()
-
+    override fun confirmBookMovie(ticketModel: TicketModel) {
         if (presenter.isNotifiable) {
             MovieNoticeAlarmManager(this, ticketModel).setAlarm(ticketModel.bookedDateTime)
         }
