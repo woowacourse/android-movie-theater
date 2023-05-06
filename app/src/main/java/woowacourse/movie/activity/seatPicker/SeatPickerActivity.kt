@@ -35,6 +35,7 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
         setContentView(R.layout.activity_seat_picker)
         presenter = SeatPickerPresenter(this, getMovieBookingInfo().toDomain())
 
+        presenter.initMovieTitle()
         initSeatName()
         initSeatNameColor()
         reloadData(savedInstanceState)

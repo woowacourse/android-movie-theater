@@ -30,7 +30,7 @@ class SeatPickerPresenter(
             movieBookingInfo.time
         )
 
-    init {
+    override fun initMovieTitle() {
         view.initMovieTitle(movieBookingInfo.movieInfo.title)
     }
 

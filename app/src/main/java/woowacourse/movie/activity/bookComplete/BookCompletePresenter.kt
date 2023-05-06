@@ -9,7 +9,8 @@ class BookCompletePresenter(
     override val movieBookingSeatInfo: MovieBookingSeatInfo,
 ) : BookCompleteContract.Presenter {
 
-    init {
+
+    override fun initView() {
         view.initView(movieBookingSeatInfo.toPresentation())
     }
 

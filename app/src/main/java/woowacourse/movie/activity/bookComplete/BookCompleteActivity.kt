@@ -19,6 +19,7 @@ class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_complete)
         presenter = BookCompletePresenter(this, getMovieBookingSeatInfo().toDomain())
+        presenter.initView()
         presenter.hasDummyData()
     }
 

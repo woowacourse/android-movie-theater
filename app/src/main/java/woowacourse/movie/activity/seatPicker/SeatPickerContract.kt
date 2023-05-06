@@ -29,6 +29,7 @@ interface SeatPickerContract {
 
     interface Presenter {
         val isEnoughTicketNum: Boolean
+        fun initMovieTitle()
         fun getMovieBookingSeatInfo(price: String)
         fun setSeatGroup(seatGroup: SeatGroup)
         fun onClickSeat(index: Int, seat: TextView)

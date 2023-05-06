@@ -13,6 +13,7 @@ interface BookCompleteContract {
 
     interface Presenter {
         val movieBookingSeatInfo: MovieBookingSeatInfo
+        fun initView()
         fun hasDummyData()
     }
 }
