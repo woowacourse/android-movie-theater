@@ -10,20 +10,24 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.contract.reservationlist.ReservationListContract
+import woowacourse.movie.presenter.reservationlist.ReservationListPresenter
 import woowacourse.movie.ui.activity.MovieTicketActivity
 import woowacourse.movie.ui.entity.Reservations
 import woowacourse.movie.ui.fragment.reservationlist.adapter.ReservationAdapter
 import woowacourse.movie.ui.model.MovieTicketModel
 
-class ReservationListFragment : Fragment() {
+class ReservationListFragment : Fragment(), ReservationListContract.View {
+    private lateinit var reservationView: RecyclerView
     private lateinit var reservationAdapter: ReservationAdapter
-    private var itemsCount = 0
+
+    override lateinit var presenter: ReservationListContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setFragmentResultListener(KEY_UPDATE_RESERVATION_ITEM) { _, _ ->
-            applyItemsInsertion()
+            if (::presenter.isInitialized) presenter.setItemsInsertion()
         }
     }
 
@@ -38,27 +42,31 @@ class ReservationListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val reservationView = view.findViewById<RecyclerView>(R.id.rv_reservation)
-        setReservationView(reservationView)
+        presenter = ReservationListPresenter(this)
+
+        reservationView = view.findViewById(R.id.rv_reservation)
+        presenter.setupReservations(Reservations.getAll())
+        presenter.loadReservations()
     }
 
-    private fun setReservationView(reservationView: RecyclerView) {
-        reservationView.addItemDecoration(DividerItemDecoration(reservationView.context, LinearLayoutManager.VERTICAL))
-        reservationAdapter = ReservationAdapter(Reservations.getAll()) { moveToTicketActivity(it) }
+    override fun setReservationView(movieTickets: List<MovieTicketModel>) {
+        reservationView.addItemDecoration(
+            DividerItemDecoration(
+                reservationView.context,
+                LinearLayoutManager.VERTICAL
+            )
+        )
+        reservationAdapter = ReservationAdapter(movieTickets) { moveToTicketActivity(it) }
         reservationView.adapter = reservationAdapter
+    }
+
+    override fun updateReservationViewItem(itemSize: Int, diffSize: Int) {
+        reservationAdapter.notifyItemRangeChanged(itemSize, diffSize)
     }
 
     private fun moveToTicketActivity(ticketModel: MovieTicketModel) {
         val intent = MovieTicketActivity.createIntent(requireActivity(), ticketModel)
         startActivity(intent)
-    }
-
-    private fun applyItemsInsertion() {
-        val countDifference = Reservations.getSize() - itemsCount
-        if (countDifference > 0) {
-            reservationAdapter.notifyItemRangeInserted(itemsCount, countDifference)
-            itemsCount = Reservations.getSize()
-        }
     }
 
     companion object {
