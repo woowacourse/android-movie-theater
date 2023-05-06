@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.action_booking_history ->
                     return@setOnItemSelectedListener replaceFragment(BookingHistoryFragment())
                 R.id.action_menu_home ->
-                    return@setOnItemSelectedListener replaceFragment(woowacourse.app.ui.main.home.Fragment())
+                    return@setOnItemSelectedListener replaceFragment(woowacourse.app.ui.main.home.HomeFragment())
                 R.id.action_menu_setting ->
                     return@setOnItemSelectedListener replaceFragment(SettingFragment())
             }

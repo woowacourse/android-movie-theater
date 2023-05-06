@@ -12,12 +12,13 @@ import woowacourse.app.ui.booking.BookingActivity
 import woowacourse.app.ui.main.home.adapter.recyclerview.HomeAdapter
 import woowacourse.app.usecase.main.MainUseCase
 import woowacourse.data.advertisement.AdvertisementRepositoryImpl
+import woowacourse.data.movie.MovieDatabase
 import woowacourse.data.movie.MovieRepositoryImpl
 import woowacourse.movie.R
 
-class Fragment : Fragment(), HomeContract.View {
+class HomeFragment : Fragment(), HomeContract.View {
     override val presenter: HomeContract.Presenter by lazy {
-        HomePresenter(MainUseCase(AdvertisementRepositoryImpl(), MovieRepositoryImpl()))
+        HomePresenter(MainUseCase(AdvertisementRepositoryImpl(), MovieRepositoryImpl(MovieDatabase)))
     }
 
     override fun onCreateView(
