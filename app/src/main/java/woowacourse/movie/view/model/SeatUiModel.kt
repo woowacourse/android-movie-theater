@@ -10,7 +10,7 @@ class SeatUiModel(val row: Int, val col: Int) : Parcelable {
     companion object {
         fun of(seatId: String): SeatUiModel {
             val row = seatId[0].code - 'A'.code
-            val col = seatId.substring(1..seatId.lastIndex).toInt() - 1
+            val col = seatId.substring(1).toInt() - 1
             return SeatUiModel(row, col)
         }
     }

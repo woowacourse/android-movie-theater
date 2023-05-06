@@ -52,7 +52,7 @@ class ReservationDbHelper(context: Context) :
             val seats: String = cursor.getString(cursor.getColumnIndexOrThrow(ReservationConstract.TABLE_COLUMN_SEATS))
             val price: Int = cursor.getInt(cursor.getColumnIndexOrThrow(ReservationConstract.TABLE_COLUMN_PRICE))
             val theater: String = cursor.getString(cursor.getColumnIndexOrThrow(ReservationConstract.TABLE_COLUMN_THEATER))
-            reservations.add(Reservation(title, LocalDateTime.parse(screeningDateTimes, DATETIME_FORMATTER), seats.split(",").map { SeatUiModel.of(it).toDomain() }, Price(price), theater))
+            reservations.add(Reservation(title, LocalDateTime.parse(screeningDateTimes, DATETIME_FORMATTER), seats.split(",").map { SeatUiModel.of(it.trim()).toDomain() }, Price(price), theater))
         }
         cursor.close()
         return reservations
