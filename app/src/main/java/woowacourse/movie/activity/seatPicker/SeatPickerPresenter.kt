@@ -35,11 +35,10 @@ class SeatPickerPresenter(
     }
 
     override fun getMovieBookingSeatInfo(
-        movieBookingInfo: MovieBookingInfoUiModel,
-        price: String
+        price: String,
     ) {
         val movieBookingSeatInfo = MovieBookingSeatInfo(
-            movieBookingInfo.toDomain(),
+            movieBookingInfo,
             seatGroup.sorted().seats.map {
                 SeatPickerActivity.formatSeatName(it.row.value, it.column.value)
             },

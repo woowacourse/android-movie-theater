@@ -97,10 +97,7 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
                 .setPositiveButton(
                     getString(R.string.alert_dialog_book_done)
                 ) { _, _ ->
-                    presenter.getMovieBookingSeatInfo(
-                        getMovieBookingInfo(),
-                        seatPickerTicketPrice.text.toString()
-                    )
+                    presenter.getMovieBookingSeatInfo(seatPickerTicketPrice.text.toString())
                 }.setNegativeButton(
                     getString(R.string.alert_dialog_book_cancel)
                 ) { dialog, _ ->

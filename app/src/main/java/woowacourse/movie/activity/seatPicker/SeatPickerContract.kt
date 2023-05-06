@@ -18,19 +18,18 @@ interface SeatPickerContract {
             newSeat: Seat,
             seat: TextView,
         )
+
         fun progressAddSeat(
             newSeat: Seat,
             seat: TextView,
         )
+
         fun setPriceText(price: Int)
     }
 
     interface Presenter {
         val isEnoughTicketNum: Boolean
-        fun getMovieBookingSeatInfo(
-            movieBookingInfo: MovieBookingInfoUiModel,
-            price: String,
-        )
+        fun getMovieBookingSeatInfo(price: String)
         fun setSeatGroup(seatGroup: SeatGroup)
         fun onClickSeat(index: Int, seat: TextView)
         fun save(outState: Bundle)
