@@ -38,7 +38,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         }
         presenter = ReservationPresenter(this)
         binding.presenter = presenter
-
+        binding.movie = movie
         setViewData(movie)
         setDateSpinner(presenter.getSchedules(movie, theaterName))
         setReserveButtonClickListener(movie, theaterName)
@@ -52,14 +52,10 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     private fun setViewData(movie: MovieUiModel) {
         binding.apply {
             moviePoster.setImageResource(movie.posterResourceId)
-            movieTitle.text = movie.title
             movieScreeningDate.text = getString(R.string.screening_date_format).format(
                 movie.startDate.format(DATE_FORMATTER),
                 movie.endDate.format(DATE_FORMATTER),
             )
-            movieRunningTime.text =
-                getString(R.string.running_time_format).format(movie.runningTime)
-            movieSummary.text = movie.summary
         }
     }
 
