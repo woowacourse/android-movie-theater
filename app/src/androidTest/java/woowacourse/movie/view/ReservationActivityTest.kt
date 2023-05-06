@@ -20,6 +20,7 @@ import java.time.LocalDate
 class ReservationActivityTest {
 
     private val movie = MovieListModel.MovieUiModel(
+        1,
         "해리 포터와 마법사의 돌",
         LocalDate.of(2024, 3, 1),
         LocalDate.of(2024, 3, 31),
