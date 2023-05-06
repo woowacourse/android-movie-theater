@@ -12,9 +12,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.view.getPushAlarmReceptionIsWanted
-import woowacourse.movie.view.postNotificationPermissionIsGranted
-import woowacourse.movie.view.setPushAlarmReceptionIsWanted
+import woowacourse.movie.view.utils.getPushAlarmReceptionIsWanted
+import woowacourse.movie.view.utils.postNotificationPermissionIsGranted
+import woowacourse.movie.view.utils.setPushAlarmReceptionIsWanted
 
 class SettingFragment : Fragment() {
 
