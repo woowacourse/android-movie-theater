@@ -7,8 +7,6 @@ import woowacourse.movie.presentation.model.movieitem.Movie
 interface HomeContract {
     interface View {
         val presenter: Presenter
-
-        fun showMoreMovies(items: List<ListItem>)
         fun showTheaterPickerScreen(item: Movie)
         fun showAdWebSite(item: Ad)
     }
@@ -26,7 +24,7 @@ interface HomeContract {
 
         fun requireView(): View = view ?: throw IllegalStateException("View is not attached")
 
-        abstract fun loadMoreMovies(size: Int = DEFAULT_LOAD_SIZE)
+        abstract fun loadMoreMovies(size: Int = DEFAULT_LOAD_SIZE): List<ListItem>
         abstract fun loadAds(): List<ListItem>
         abstract fun onItemClick(item: ListItem)
     }

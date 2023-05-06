@@ -3,54 +3,33 @@ package woowacourse.movie.presentation.views.main.fragments.home
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.presentation.model.movieitem.Ad
-import woowacourse.movie.presentation.model.movieitem.ListItem
 import woowacourse.movie.presentation.model.movieitem.Movie
 import woowacourse.movie.presentation.views.main.fragments.home.contract.HomeContract
 import woowacourse.movie.presentation.views.main.fragments.home.contract.presenter.HomePresenter
-import woowacourse.movie.presentation.views.main.fragments.home.recyclerview.MovieListAdapter
-import woowacourse.movie.presentation.views.main.fragments.home.recyclerview.OnEndScrollListener
 import woowacourse.movie.presentation.views.main.fragments.theater.TheaterPickerDialog
 
 class HomeFragment : Fragment(R.layout.fragment_home), HomeContract.View {
-    override val presenter: HomeContract.Presenter = HomePresenter()
+    override val presenter: HomeContract.Presenter by lazy { HomePresenter() }
 
-    private lateinit var movieListAdapter: MovieListAdapter
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         presenter.attach(this)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initRecyclerView()
-        presenter.loadMoreMovies()
-    }
-
-    private fun initMovieListAdapter() {
-        movieListAdapter = MovieListAdapter(
-            adTypes = presenter.loadAds(),
-            onItemClick = presenter::onItemClick,
-        )
-    }
-
-    private fun initRecyclerView() {
-        val movieRecyclerView = requireView().findViewById<RecyclerView>(R.id.movies_rv)
-
-        initMovieListAdapter()
-        movieRecyclerView.adapter = movieListAdapter
-        movieRecyclerView.addOnScrollListener(
-            OnEndScrollListener { presenter.loadMoreMovies() }
-        )
-    }
-
-    override fun showMoreMovies(items: List<ListItem>) {
-        movieListAdapter.appendAll(items)
+        _binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+        binding.presenter = presenter
+        return binding.root
     }
 
     override fun showTheaterPickerScreen(item: Movie) {
@@ -63,9 +42,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeContract.View {
         startActivity(intent)
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
+        _binding = null
         presenter.detach()
-        super.onDestroy()
+        super.onDestroyView()
     }
 
     companion object {

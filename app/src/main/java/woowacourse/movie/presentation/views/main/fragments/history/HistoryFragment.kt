@@ -47,9 +47,9 @@ class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.Vie
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
         presenter.detach()
+        super.onDestroyView()
     }
 
     companion object {

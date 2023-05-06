@@ -25,7 +25,7 @@ class MovieViewHolder(
     override fun <T> bind(item: T) {
         if (item !is Movie) return
 
-        with(item as Movie) {
+        with(item) {
             posterImageView.setImageResource(thumbnail)
             titleTextView.text = title
             dateTextView.text = dateTextView.context.getString(

@@ -10,11 +10,11 @@ class HomePresenter : HomeContract.Presenter() {
 
     override fun loadAds(): List<ListItem> = Ad.provideDummy()
 
-    override fun loadMoreMovies(size: Int) {
+    override fun loadMoreMovies(size: Int): List<ListItem> {
         val newLoadedMovies = Movie.provideDummy(size)
-
         loadedMovie.addAll(newLoadedMovies)
-        requireView().showMoreMovies(newLoadedMovies)
+
+        return newLoadedMovies
     }
 
     override fun onItemClick(item: ListItem) {
