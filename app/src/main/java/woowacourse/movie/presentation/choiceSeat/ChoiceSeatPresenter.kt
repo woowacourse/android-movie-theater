@@ -31,14 +31,19 @@ class ChoiceSeatPresenter(
 
     private var paymentAmount: Money = Money(INITIAL_PAYMENT_AMOUNT)
 
-    private val movie = MovieData.findMovieById(view.reservation.cinemaModel.movieId)
+    private val movie = MovieData.findMovieById(view.reservation.movieId)
 
     private val theater = Theater.of(rows, columns)
 
     override fun reserveTicketModel(): TicketModel {
         val reservation = view.reservation
         val ticket =
-            movie.reserve(reservation.bookedDateTime, TicketCount(reservation.count), seats)
+            movie.reserve(
+                reservation.cinemaName,
+                reservation.bookedDateTime,
+                TicketCount(reservation.count),
+                seats,
+            )
         val ticketModel = ticket.toPresentation()
         BookedTicketsData.tickets.add(ticketModel)
 

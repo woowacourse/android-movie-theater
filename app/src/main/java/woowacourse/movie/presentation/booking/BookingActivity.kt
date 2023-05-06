@@ -24,12 +24,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
     private lateinit var binding: ActivityBookingBinding
 
     override val cinemaModel: CinemaModel by lazy {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(CINEMA_MODEL, CinemaModel::class.java)
-                ?: throw IllegalArgumentException()
-        } else {
-            intent.getParcelableExtra(CompleteActivity.TICKET) ?: throw IllegalArgumentException()
-        }
+        initCinemaModel()
     }
 
     private val movieModel: MovieModel by lazy { presenter.requireMovieModel(cinemaModel.movieId) }
@@ -51,6 +46,15 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         restoreData(savedInstanceState)
         initDateTimes()
         gatherClickListeners()
+    }
+
+    private fun initCinemaModel(): CinemaModel {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra(CINEMA_MODEL, CinemaModel::class.java)
+                ?: throw IllegalArgumentException()
+        } else {
+            intent.getParcelableExtra(CompleteActivity.TICKET) ?: throw IllegalArgumentException()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

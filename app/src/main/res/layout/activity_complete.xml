@@ -50,13 +50,17 @@
         <TextView
             android:id="@+id/textCompletedTicketCount"
             style="@style/Text_RobotoMediumBLACK_20"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="36dp"
             android:layout_marginTop="72dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textCompletedScreeningDate"
-            tools:text="일반 1명 | B3, D2" />
+            tools:text="일반 1명 | B3, D2 | 강남 극장" />
 
         <TextView
             android:id="@+id/textCompletedPaymentAmount"

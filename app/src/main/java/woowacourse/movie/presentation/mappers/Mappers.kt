@@ -33,6 +33,7 @@ fun Movie.toPresentation() = MovieModel(
 
 fun Ticket.toPresentation() = TicketModel(
     movieId = movieId,
+    cinemaName = cinemaName,
     bookedDateTime = bookedDateTime,
     count = count,
     paymentMoney = getPaymentMoney().value,

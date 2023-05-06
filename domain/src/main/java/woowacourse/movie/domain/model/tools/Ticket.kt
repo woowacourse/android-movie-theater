@@ -6,9 +6,10 @@ import java.time.LocalDateTime
 
 data class Ticket(
     val movieId: Long,
+    val cinemaName: String,
     val bookedDateTime: LocalDateTime,
     val count: Int,
-    val seats: Seats
+    val seats: Seats,
 ) {
     fun getPaymentMoney(): Money = SeatsPayment(seats).getDiscountedMoneyByDateTime(bookedDateTime)
 }

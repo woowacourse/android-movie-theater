@@ -7,6 +7,7 @@ import java.time.LocalDateTime
 @Parcelize
 data class TicketModel(
     val movieId: Long,
+    val cinemaName: String,
     val bookedDateTime: LocalDateTime,
     val count: Int,
     val paymentMoney: Int,

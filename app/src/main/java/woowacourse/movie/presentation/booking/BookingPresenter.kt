@@ -42,7 +42,7 @@ class BookingPresenter(
         cinemaModel: CinemaModel,
         localDateTime: LocalDateTime,
     ): ReservationModel =
-        ReservationModel(cinemaModel, localDateTime, ticketCount.value)
+        ReservationModel(cinemaModel.movieId, cinemaModel.cinemaName, localDateTime, ticketCount.value)
 
     override fun getScreeningDate(): List<LocalDate> = movie.getScreeningDates()
 }

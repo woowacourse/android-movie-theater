@@ -20,7 +20,11 @@ class CompleteActivity : AppCompatActivity(), CompleteContract.View {
     private lateinit var binding: ActivityCompleteBinding
 
     override val ticketModel by lazy {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        initTicketModel()
+    }
+
+    private fun initTicketModel(): TicketModel {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra(TICKET, TicketModel::class.java)
                 ?: throw IllegalArgumentException()
         } else {
@@ -63,9 +67,10 @@ class CompleteActivity : AppCompatActivity(), CompleteContract.View {
 
     private fun setMovieTicketCount() {
         binding.textCompletedTicketCount.text =
-            getString(R.string.normal_ticket_count_seat).format(
+            getString(R.string.normal_ticket_count_seat_cinema).format(
                 ticketModel.count,
                 ticketModel.formatSeatsCombine(),
+                ticketModel.cinemaName,
             )
     }
 

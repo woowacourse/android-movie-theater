@@ -36,6 +36,13 @@ class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
         initView()
     }
 
+    private fun initReservation() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        intent.getParcelableExtra(RESERVATION, ReservationModel::class.java)
+            ?: throw IllegalArgumentException()
+    } else {
+        intent.getParcelableExtra(RESERVATION) ?: throw IllegalArgumentException()
+    }
+
     private fun setTheaterSeat() {
         val seatsTable = binding.tableSeats
             .children
@@ -100,13 +107,6 @@ class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
             GRADE_S -> view.setTextColor(getColor(R.color.green_300))
             GRADE_A -> view.setTextColor(getColor(R.color.blue_700))
         }
-    }
-
-    private fun initReservation() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        intent.getParcelableExtra(RESERVATION, ReservationModel::class.java)
-            ?: throw IllegalArgumentException()
-    } else {
-        intent.getParcelableExtra(RESERVATION) ?: throw IllegalArgumentException()
     }
 
     private fun initView() {
