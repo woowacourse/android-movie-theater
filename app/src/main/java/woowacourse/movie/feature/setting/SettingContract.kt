@@ -2,7 +2,7 @@ package woowacourse.movie.feature.setting
 
 interface SettingContract {
     interface View {
-        fun setMovieReminderNotificationChecked(value: Boolean)
+        fun setMovieReminderChecked(value: Boolean)
         fun requestPermission()
     }
 

@@ -49,7 +49,7 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
         notificationSwitch = view.findViewById(R.id.notification_switch)
     }
 
-    override fun setMovieReminderNotificationChecked(value: Boolean) {
+    override fun setMovieReminderChecked(value: Boolean) {
         notificationSwitch.isChecked = value
     }
 

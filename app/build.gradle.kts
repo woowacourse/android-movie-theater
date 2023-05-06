@@ -40,6 +40,11 @@ dependencies {
     implementation(project(":domain"))
     implementation("androidx.fragment:fragment-ktx:1.2.5")
 
+    testImplementation("io.mockk:mockk-android:1.13.5")
+    testImplementation("io.mockk:mockk-agent:1.13.5")
+    androidTestImplementation("io.mockk:mockk-android:1.13.5")
+    androidTestImplementation("io.mockk:mockk-agent:1.13.5")
+
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.0")
     implementation("com.google.android.material:material:1.7.0")
