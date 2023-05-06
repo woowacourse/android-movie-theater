@@ -64,6 +64,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 presenter.reserve(selectedSeatNames)
             }
             setNegativeButton(getString(R.string.cancel)) { _, _ -> }
+            setCancelable(false)
         }
             .create()
             .show()
