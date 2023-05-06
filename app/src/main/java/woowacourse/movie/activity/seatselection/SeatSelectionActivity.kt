@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.activity.ReservationResultActivity
+import woowacourse.movie.activity.reservationresult.ReservationResultActivity
 import woowacourse.movie.service.AlarmMaker
 import woowacourse.movie.view.data.MovieViewData
 import woowacourse.movie.view.data.PriceViewData
