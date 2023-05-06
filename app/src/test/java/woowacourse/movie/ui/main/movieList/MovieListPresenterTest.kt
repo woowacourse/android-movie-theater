@@ -1,11 +1,11 @@
 package woowacourse.movie.ui.main.movieList
 
 import com.example.domain.repository.AdvRepository
+import com.example.domain.repository.MovieRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Test
-import woowacourse.movie.repository.MovieRepository
 
 class MovieListPresenterTest {
     @Test

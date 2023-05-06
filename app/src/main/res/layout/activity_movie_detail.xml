@@ -36,7 +36,7 @@
                     android:adjustViewBounds="true"
                     android:maxHeight="340dp"
                     android:scaleType="centerInside"
-                    android:imageResource="@{movie.imgId}"
+                    android:src="@{movie.imgUri}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

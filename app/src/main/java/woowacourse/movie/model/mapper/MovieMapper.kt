@@ -1,26 +1,26 @@
 package woowacourse.movie.model.mapper
 
+import android.net.Uri
 import com.example.domain.model.Movie
-import java.time.LocalTime
 import woowacourse.movie.model.MovieState
 
 fun MovieState.asDomain(): Movie = Movie(
-    imgId,
+    imgUri.toString(),
     title,
     startDate,
     endDate,
-    screeningTimes.map { toString() },
+    screeningTimes,
     runningTime,
     description
 )
 
 fun Movie.asPresentation(): MovieState =
     MovieState(
-        imgId,
+        Uri.parse(imgUri),
         title,
         startDate,
         endDate,
-        screeningTimes.map(LocalTime::parse),
+        screeningTimes,
         runningTime,
         description
     )

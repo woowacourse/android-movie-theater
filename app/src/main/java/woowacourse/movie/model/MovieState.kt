@@ -1,15 +1,14 @@
 package woowacourse.movie.model
 
+import android.net.Uri
 import android.os.Parcelable
-import androidx.annotation.DrawableRes
 import java.time.LocalDate
 import java.time.LocalTime
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class MovieState(
-    @DrawableRes
-    val imgId: Int,
+    val imgUri: Uri,
     val title: String,
     val startDate: LocalDate,
     val endDate: LocalDate,

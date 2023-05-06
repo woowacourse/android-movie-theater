@@ -1,14 +1,13 @@
-package woowacourse.movie.repository
+package com.example.domain.repository
 
+import com.example.domain.model.Movie
 import java.time.LocalDate
 import java.time.LocalTime
-import woowacourse.movie.R
-import woowacourse.movie.model.MovieState
 
 object MovieRepository {
-    private val movies: List<MovieState> = List(25) {
-        MovieState(
-            R.drawable.slamdunk,
+    private val movies: List<Movie> = List(25) {
+        Movie(
+            "android.resource://woowacourse.movie/drawable/slamdunk",
             "더 퍼스트 슬램덩크 $it",
             LocalDate.of(2023, 4, 26),
             LocalDate.of(2023, 4, 28),
@@ -20,9 +19,9 @@ object MovieRepository {
         )
     }
 
-    private val movies2: List<MovieState> = List(25) {
-        MovieState(
-            R.drawable.slamdunk,
+    private val movies2: List<Movie> = List(25) {
+        Movie(
+            "android.resource://woowacourse.movie/drawable/slamdunk",
             "더 퍼스트 슬램덩크 $it",
             LocalDate.of(2023, 4, 26),
             LocalDate.of(2023, 4, 28),
@@ -34,6 +33,6 @@ object MovieRepository {
         )
     }
 
-    fun allMovies(): List<MovieState> = movies.toList()
-    fun allMovies2(): List<MovieState> = movies2.toList()
+    fun allMovies(): List<Movie> = movies.toList()
+    fun allMovies2(): List<Movie> = movies2.toList()
 }
