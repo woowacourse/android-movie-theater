@@ -16,7 +16,7 @@ import woowacourse.movie.model.mapper.asPresentation
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
 
-class ReservationConfirmActivity : BackKeyActionBarActivity() {
+class TicketsConfirmActivity : BackKeyActionBarActivity() {
 
     private val discountApplyUseCase = DiscountApplyUseCase()
     private val titleTextView: TextView by lazy { findViewById(R.id.reservation_title) }
@@ -24,16 +24,20 @@ class ReservationConfirmActivity : BackKeyActionBarActivity() {
     private val moneyTextView: TextView by lazy { findViewById(R.id.reservation_money) }
     private val reservationCountTextView: TextView by lazy { findViewById(R.id.reservation_count_and_seat) }
 
+    private lateinit var tickets: TicketsState
+
     override fun onCreateView(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_reservation_confirm)
-        val tickets = intent.getParcelableExtraCompat<TicketsState>(KEY_TICKETS)
-            ?: return keyError(KEY_TICKETS)
-        setInitReservationData(tickets)
+        init()
+
+        setContents()
     }
 
-    private fun setInitReservationData(
-        tickets: TicketsState
-    ) {
+    private fun init() {
+        tickets = intent.getParcelableExtraCompat(KEY_TICKETS) ?: return keyError(KEY_TICKETS)
+    }
+
+    private fun setContents() {
         titleTextView.text = tickets.movieState.title
         dateTextView.text =
             DateTimeFormatters.convertToDateTime(tickets.dateTime)
@@ -43,10 +47,10 @@ class ReservationConfirmActivity : BackKeyActionBarActivity() {
                 tickets.positions.size,
                 tickets.positions.joinToString { it.toString() }
             )
-        setDiscountApplyMoney(tickets)
+        setDiscountApplyMoney()
     }
 
-    private fun setDiscountApplyMoney(tickets: TicketsState) {
+    private fun setDiscountApplyMoney() {
         val discountApplyMoney = discountApplyUseCase(tickets.asDomain())
         moneyTextView.text =
             DecimalFormatters.convertToMoneyFormat(discountApplyMoney.asPresentation())
@@ -54,7 +58,7 @@ class ReservationConfirmActivity : BackKeyActionBarActivity() {
 
     companion object {
         fun startActivity(context: Context, tickets: TicketsState) {
-            val intent = Intent(context, ReservationConfirmActivity::class.java).apply {
+            val intent = Intent(context, TicketsConfirmActivity::class.java).apply {
                 putExtra(KEY_TICKETS, tickets)
             }
             context.startActivity(intent)

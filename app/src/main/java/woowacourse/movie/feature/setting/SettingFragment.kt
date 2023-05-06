@@ -14,19 +14,19 @@ import woowacourse.movie.util.requestPermission
 
 class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.View {
 
-    private lateinit var presenter: SettingContract.Presenter
-
-    private lateinit var notificationSwitch: SwitchCompat
     private val movieReminderSetting by lazy {
         MovieReminderSetting.getInstance().init(requireContext())
     }
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
 
+    private lateinit var presenter: SettingContract.Presenter
+    private lateinit var notificationSwitch: SwitchCompat
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         init(view)
+
         notificationSwitch.setOnCheckedChangeListener { _, isChecked ->
             val hasPermission: Boolean = hasPermission(requireActivity(), Manifest.permission.POST_NOTIFICATIONS)
             presenter.changeMovieReminderChecked(hasPermission, isChecked)

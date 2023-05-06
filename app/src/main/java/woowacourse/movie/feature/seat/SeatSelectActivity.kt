@@ -12,7 +12,7 @@ import woowacourse.movie.feature.DecimalFormatters
 import woowacourse.movie.feature.common.customView.ConfirmView
 import woowacourse.movie.feature.notification.MovieReminder
 import woowacourse.movie.feature.reservation.MovieDetailActivity.Companion.KEY_TICKETS
-import woowacourse.movie.feature.reservation.confirm.ReservationConfirmActivity
+import woowacourse.movie.feature.reservation.confirm.TicketsConfirmActivity
 import woowacourse.movie.model.CountState
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.SeatPositionState
@@ -89,7 +89,7 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
     }
 
     private fun navigateReservationConfirmActivity(tickets: TicketsState) {
-        ReservationConfirmActivity.startActivity(this, tickets)
+        TicketsConfirmActivity.startActivity(this, tickets)
     }
 
     private fun updateSelectSeats(positionStates: List<SeatPositionState>) {

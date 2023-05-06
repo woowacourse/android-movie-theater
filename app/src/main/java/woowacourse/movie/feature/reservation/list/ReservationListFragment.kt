@@ -9,7 +9,7 @@ import woowacourse.movie.R
 import woowacourse.movie.data.TicketsRepository
 import woowacourse.movie.feature.common.itemModel.TicketsItemModel
 import woowacourse.movie.feature.reservation.MovieDetailActivity
-import woowacourse.movie.feature.reservation.confirm.ReservationConfirmActivity
+import woowacourse.movie.feature.reservation.confirm.TicketsConfirmActivity
 import woowacourse.movie.model.TicketsState
 
 class ReservationListFragment : Fragment(R.layout.fragment_reservation_list) {
@@ -43,7 +43,7 @@ class ReservationListFragment : Fragment(R.layout.fragment_reservation_list) {
     }
 
     private fun navigateReservationConfirm(ticketsState: TicketsState) {
-        val intent = Intent(activity, ReservationConfirmActivity::class.java)
+        val intent = Intent(activity, TicketsConfirmActivity::class.java)
         intent.putExtra(MovieDetailActivity.KEY_TICKETS, ticketsState)
         startActivity(intent)
     }
