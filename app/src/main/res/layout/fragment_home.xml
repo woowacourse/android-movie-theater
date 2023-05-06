@@ -6,10 +6,6 @@
     <data>
 
         <variable
-            name="hostFragment"
-            type="androidx.fragment.app.Fragment" />
-
-        <variable
             name="presenter"
             type="woowacourse.movie.presentation.views.main.fragments.home.contract.HomeContract.Presenter" />
     </data>
@@ -25,7 +21,6 @@
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:presenter="@{presenter}"
-            android:host="@{hostFragment}"
             tools:listitem="@layout/item_movie" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
