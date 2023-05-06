@@ -9,7 +9,9 @@ import woowacourse.movie.presentation.extensions.getParcelableCompat
 import woowacourse.movie.presentation.extensions.showBackButton
 import woowacourse.movie.presentation.model.item.Reservation
 
-class TicketingResultActivity : AppCompatActivity() {
+class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.View {
+
+    override lateinit var presenter: TicketingResultPresenter
     private val reservation: Reservation by lazy {
         intent.getParcelableCompat(RESERVATION_KEY)!!
     }
@@ -17,16 +19,14 @@ class TicketingResultActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ticketing_result)
+
+        presenter = TicketingResultPresenter(this)
+        presenter.updateMovieInformation(reservation)
+        presenter.updatePaymentPrice(reservation)
         showBackButton()
-        showTicketingResult()
     }
 
-    private fun showTicketingResult() {
-        showMovieInformation()
-        showPaymentPrice()
-    }
-
-    private fun showMovieInformation() {
+    override fun showMovieInformation(reservation: Reservation) {
         val movieDate = reservation.movieDate
         val movieTime = reservation.movieTime
 
@@ -42,7 +42,7 @@ class TicketingResultActivity : AppCompatActivity() {
         )
     }
 
-    private fun showPaymentPrice() {
+    override fun showPaymentPrice(reservation: Reservation) {
         val ticket = reservation.ticket
         val ticketPrice = reservation.ticketPrice
 
