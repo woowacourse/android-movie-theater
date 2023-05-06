@@ -16,6 +16,7 @@ interface SeatSelectionContract {
         val selectedSeatsModel: SelectedSeatsModel
 
         fun updateSelectedSeatsModel(selectedSeatsModel: SelectedSeatsModel)
+        fun isAlarmSwitchOn(): Boolean
         fun clickSeat(seat: SeatModel, isSelected: Boolean)
         fun isSelected(seat: SeatModel): Boolean
         fun isSelectionDone(): Boolean

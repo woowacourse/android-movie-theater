@@ -9,9 +9,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
+import woowacourse.movie.data.alarm.AlarmStateRepository
 import woowacourse.movie.ui.alarm.ReservationAlarmManager
 import woowacourse.movie.ui.moviedetail.MovieDetailActivity
-import woowacourse.movie.ui.setting.SettingFragment
 import woowacourse.movie.ui.ticket.MovieTicketActivity
 import woowacourse.movie.uimodel.MovieTicketModel
 import woowacourse.movie.uimodel.PeopleCountModel
@@ -19,7 +19,6 @@ import woowacourse.movie.uimodel.ReservationModel
 import woowacourse.movie.uimodel.SeatModel
 import woowacourse.movie.uimodel.SelectedSeatsModel
 import woowacourse.movie.utils.failLoadingData
-import woowacourse.movie.utils.getPreferences
 import woowacourse.movie.utils.getSerializableExtraCompat
 import woowacourse.movie.utils.showToast
 import java.time.LocalDateTime
@@ -69,7 +68,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             intent.getSerializableExtraCompat(MovieDetailActivity.KEY_PEOPLE_COUNT)
                 ?: return failLoadingData()
 
-        presenter = SeatSelectionPresenter(this, movieTitle, movieTime, peopleCount)
+        presenter = SeatSelectionPresenter(this, AlarmStateRepository(this), movieTitle, movieTime, peopleCount)
     }
 
     private fun loadSavedData(savedInstanceState: Bundle?) {
@@ -167,9 +166,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun MovieTicketModel.makeAlarm() {
-        if (this@SeatSelectionActivity.getPreferences()
-                .getBoolean(SettingFragment.KEY_SWITCH, false)
-        ) {
+        if (presenter.isAlarmSwitchOn()) {
             reservationAlarmManager.makeAlarm(this)
         }
     }

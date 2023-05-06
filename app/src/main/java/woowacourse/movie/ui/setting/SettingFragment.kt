@@ -9,16 +9,18 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.data.alarm.AlarmStateRepository
 import woowacourse.movie.ui.alarm.ReservationAlarmManager
 import woowacourse.movie.uimodel.MovieTicketModel
 import woowacourse.movie.uimodel.ReservationModel
-import woowacourse.movie.utils.getPreferences
 
 class SettingFragment : Fragment() {
     private lateinit var toggleButton: SwitchCompat
+    private val repository: AlarmStateRepository by lazy {
+        AlarmStateRepository(requireContext())
+    }
     private val reservationAlarmManager by lazy { ReservationAlarmManager(requireContext()) }
     private val requestPermissionLauncher by lazy {
         registerForActivityResult(
@@ -72,12 +74,12 @@ class SettingFragment : Fragment() {
 
     private fun initToggleButton(view: View) {
         toggleButton = view.findViewById(R.id.setting_switch)
-        toggleButton.isChecked = requireContext().getPreferences().getBoolean(KEY_SWITCH, false)
+        toggleButton.isChecked = repository.getData()
     }
 
     private fun setClickEventOnToggleButton() {
         toggleButton.setOnCheckedChangeListener { _, isChecked ->
-            requireContext().getPreferences().edit { putBoolean(KEY_SWITCH, isChecked) }
+            repository.saveData(isChecked)
             setAlarms(isChecked)
         }
     }

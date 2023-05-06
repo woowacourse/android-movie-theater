@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.seat
 
+import woowacourse.movie.data.alarm.AlarmStateRepository
 import woowacourse.movie.domain.seat.SelectedSeats
 import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toModel
@@ -10,6 +11,7 @@ import java.time.LocalDateTime
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
+    private val repository: AlarmStateRepository,
     val movieTitle: String,
     val movieTime: LocalDateTime,
     val peopleCountModel: PeopleCountModel,
@@ -26,6 +28,10 @@ class SeatSelectionPresenter(
     override fun updateSelectedSeatsModel(selectedSeatsModel: SelectedSeatsModel) {
         selectedSeats = selectedSeatsModel.toDomain()
         updateView(selectedSeats.getAllPrice(movieTime), isSelectionDone())
+    }
+
+    override fun isAlarmSwitchOn(): Boolean {
+        return repository.getData()
     }
 
     override fun clickSeat(seat: SeatModel, isSelected: Boolean) {
