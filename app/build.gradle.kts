@@ -59,6 +59,6 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.1")
     implementation(project(":domain"))
-
+    debugImplementation("androidx.fragment:fragment-ktx:1.6.0-beta01")
     debugImplementation("androidx.fragment:fragment-testing:1.5.7")
 }
