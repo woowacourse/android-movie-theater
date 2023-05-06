@@ -5,9 +5,20 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 class ScreeningTime(
-    private val date: LocalDate
+    private val date: LocalDate,
+    private val timeslot: List<Int>?
 ) {
-    fun getAllScreeningTimes(): List<LocalTime> {
+    fun getScreeningTimes(): List<LocalTime> {
+        val all = getAllScreeningTimes()
+        if (timeslot == null) return all
+        val screeningTimes = mutableListOf<LocalTime>()
+        timeslot.forEach { index ->
+            screeningTimes.add(all[index])
+        }
+        return screeningTimes
+    }
+
+    private fun getAllScreeningTimes(): List<LocalTime> {
         val screeningTimes = mutableListOf<LocalTime>()
         val firstScreeningTime = getFirstScreeningTime()
         var screeningTime = getFirstScreeningTime()

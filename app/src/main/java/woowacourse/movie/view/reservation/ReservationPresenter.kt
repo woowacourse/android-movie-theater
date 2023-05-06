@@ -25,7 +25,7 @@ class ReservationPresenter(
 
     override fun setUpScreeningDateTime() {
         selectedScreeningDate = movie.screeningStartDate
-        selectedScreeningTime = ScreeningTime(selectedScreeningDate).getFirstScreeningTime()
+        selectedScreeningTime = ScreeningTime(selectedScreeningDate, null).getFirstScreeningTime()
 
         val screeningDates = movie.getAllScreeningDates()
         view.setUpDateSpinner(screeningDates)
@@ -37,7 +37,7 @@ class ReservationPresenter(
     }
 
     private fun setUpScreeningTime() {
-        val screeningTimes = ScreeningTime(selectedScreeningDate).getAllScreeningTimes()
+        val screeningTimes = ScreeningTime(selectedScreeningDate, null).getScreeningTimes()
         view.setUpTimeSpinner(screeningTimes, timeSpinnerPosition)
     }
 

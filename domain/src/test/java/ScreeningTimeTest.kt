@@ -10,9 +10,9 @@ class ScreeningTimeTest {
     fun `영화의 상영일이 평일이라면 상영 시간은 오전 10시부터 자정까지 2시간 간격으로 있다`() {
 
         val screeningDate = LocalDate.of(2023, 3, 1) // 수요일
-        val screeningTime = ScreeningTime(screeningDate)
+        val screeningTime = ScreeningTime(screeningDate, null)
 
-        val actual = screeningTime.getAllScreeningTimes()
+        val actual = screeningTime.getScreeningTimes()
 
         val expected = listOf(
             LocalTime.of(10, 0),
@@ -31,9 +31,9 @@ class ScreeningTimeTest {
     fun `영화의 상영일이 주말이라면 상영 시간은 오전 9시부터 자정까지 2시간 간격으로 있다`() {
 
         val screeningDate = LocalDate.of(2023, 3, 4) // 토요일
-        val screeningTime = ScreeningTime(screeningDate)
+        val screeningTime = ScreeningTime(screeningDate, null)
 
-        val actual = screeningTime.getAllScreeningTimes()
+        val actual = screeningTime.getScreeningTimes()
 
         val expected = listOf(
             LocalTime.of(9, 0),
