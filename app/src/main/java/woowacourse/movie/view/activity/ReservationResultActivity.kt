@@ -8,37 +8,35 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
+import woowacourse.movie.contract.ReservationResultContract
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.view.MovieView
 import woowacourse.movie.model.mapper.TicketsMapper
 import woowacourse.movie.model.mapper.TicketsMapper.toDomain
 import woowacourse.movie.model.MovieUiModel
 import woowacourse.movie.model.TicketsUiModel
+import woowacourse.movie.presenter.ReservationResultPresenter
 import java.text.NumberFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class ReservationResultActivity : AppCompatActivity() {
+class ReservationResultActivity() : AppCompatActivity(), ReservationResultContract.View {
+
+    override val presenter: ReservationResultContract.Presenter by lazy {
+        ReservationResultPresenter(
+            this,
+            ticketsUiModel
+        )
+    }
     private val movieTitleTextView: TextView by lazy { findViewById(R.id.movie_reservation_result_title) }
     private val dateTextView: TextView by lazy { findViewById(R.id.movie_reservation_result_date) }
     private val peopleCountTextView: TextView by lazy { findViewById(R.id.movie_reservation_result_people_count) }
     private val seatTextView: TextView by lazy { findViewById(R.id.movie_reservation_result_seat) }
     private val priceTextView: TextView by lazy { findViewById(R.id.movie_reservation_result_price) }
-    private val ticketsUiModel: TicketsUiModel by lazy {
-        receiveTicketsUiModel() ?: run {
-            finishActivityWithMessage(getString(R.string.reservation_data_null_error))
-            TicketsUiModel((listOf()))
-        }
-    }
 
-    private val movieUiModel: MovieUiModel by lazy {
-        receiveMovieViewModel() ?: run {
-            finishActivityWithMessage(getString(R.string.reservation_data_null_error))
-            MovieUiModel(0, "qwe", LocalDate.MAX, LocalDate.MAX, 0, "")
-        }
-    }
-
+    private val ticketsUiModel: TicketsUiModel by lazy { receiveTicketsUiModel() }
+    private val movieUiModel: MovieUiModel by lazy { receiveMovieViewModel() }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reservation_result)
@@ -60,7 +58,7 @@ class ReservationResultActivity : AppCompatActivity() {
         renderDate()
         renderPeopleCount()
         renderSeatInformation()
-        renderPrice(ticketsUiModel)
+        presenter.updatePrice()
     }
 
     private fun renderDate() {
@@ -83,19 +81,22 @@ class ReservationResultActivity : AppCompatActivity() {
         }
     }
 
-    private fun renderPrice(ticketsUiModel: TicketsUiModel) {
-        val tickets = ticketsUiModel.toDomain()
+    override fun setPriceTextView(price: Int) {
         val formattedPrice =
-            NumberFormat.getNumberInstance(Locale.US).format(tickets.price.value)
+            NumberFormat.getNumberInstance(Locale.US).format(price)
         priceTextView.text = getString(R.string.reservation_price).format(formattedPrice)
     }
 
-    private fun receiveTicketsUiModel(): TicketsUiModel? {
-        return intent.extras?.getSerializableCompat(TICKETS_KEY_VALUE)
+    private fun receiveTicketsUiModel(): TicketsUiModel {
+        val ticketsUiModel = intent.extras?.getSerializableCompat<TicketsUiModel>(TICKETS_KEY_VALUE)
+            ?: finishActivityWithMessage(getString(R.string.reservation_data_null_error))
+        return ticketsUiModel as TicketsUiModel
     }
 
-    private fun receiveMovieViewModel(): MovieUiModel? {
-        return intent.extras?.getSerializableCompat(MOVIE_KEY_VALUE)
+    private fun receiveMovieViewModel(): MovieUiModel {
+        val movieUiModel = intent.extras?.getSerializableCompat<MovieUiModel>(MOVIE_KEY_VALUE)
+            ?: finishActivityWithMessage(getString(R.string.movie_data_null_error))
+        return movieUiModel as MovieUiModel
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
