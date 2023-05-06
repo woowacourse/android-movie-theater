@@ -34,7 +34,7 @@ class SeatPickerPresenterTest {
 
         val ticketingState = TicketingState(
             movie = movie,
-            theater = mockk(),
+            theater = mockk(relaxed = true),
             ticket = Ticket(1),
             movieDate = MovieDate(2023, 5, 5),
             movieTime = MovieTime(10, 10),

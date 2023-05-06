@@ -25,6 +25,7 @@ internal class HistoryPresenterTest {
     private lateinit var view: HistoryContract.View
     private val reservation: Reservation = Reservation(
         "title",
+        "theater",
         MovieDate(2023, 3, 3),
         MovieTime(5, 5),
         Ticket(5),

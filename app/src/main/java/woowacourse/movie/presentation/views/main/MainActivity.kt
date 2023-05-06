@@ -7,9 +7,11 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.presentation.extensions.checkPermissions
 import woowacourse.movie.presentation.extensions.getParcelableCompat
 import woowacourse.movie.presentation.extensions.showFragmentByTag
@@ -24,6 +26,7 @@ import woowacourse.movie.presentation.views.main.fragments.setting.SettingFragme
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     override val presenter: MainContract.Presenter = MainPresenter()
+    private lateinit var binding: ActivityMainBinding
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -33,7 +36,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.presenter = presenter
         presenter.attach(this)
     }
 

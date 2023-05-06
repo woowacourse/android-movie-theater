@@ -7,9 +7,7 @@ interface HistoryContract {
     interface View {
         val presenter: Presenter
 
-        fun showHistories(items: List<ListItem>)
         fun showMoreHistory(item: ListItem)
-        fun showDetails(item: ListItem)
     }
 
     abstract class Presenter {
@@ -27,7 +25,6 @@ interface HistoryContract {
             view ?: throw IllegalStateException("View is not attached")
 
         abstract fun addHistory(item: Reservation)
-        abstract fun loadHistories()
-        abstract fun onClickItem(item: ListItem)
+        abstract fun loadHistories(): List<Reservation>
     }
 }

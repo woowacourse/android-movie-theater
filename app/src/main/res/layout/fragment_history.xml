@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.views.main.fragments.history.HistoryFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/history_recycler_view"
+    <data>
+
+        <variable
+            name="presenter"
+            type="woowacourse.movie.presentation.views.main.fragments.history.contract.HistoryContract.Presenter" />
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        tools:listitem="@layout/item_history"
-        tools:itemCount="5"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:context=".presentation.views.main.fragments.history.HistoryFragment">
 
-</FrameLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/history_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:presenter="@{presenter}"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_history" />
+
+    </FrameLayout>
+</layout>
