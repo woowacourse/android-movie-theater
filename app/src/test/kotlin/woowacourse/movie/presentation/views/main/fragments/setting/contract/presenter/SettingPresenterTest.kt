@@ -32,7 +32,7 @@ class SettingPresenterTest {
         every { view.changePushSwitchState(capture(slot)) } answers { nothing }
 
         // when
-        presenter.fetchPushSwitchState()
+        presenter.getPushSwitchState()
 
         // then
         assertEquals(false, slot.captured)

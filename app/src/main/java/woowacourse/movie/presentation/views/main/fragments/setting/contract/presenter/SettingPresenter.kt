@@ -4,26 +4,23 @@ import com.woowacourse.data.datasource.cache.CacheDataSource
 import woowacourse.movie.presentation.views.main.fragments.setting.contract.SettingContract
 
 class SettingPresenter(
-    view: SettingContract.View,
     private val cacheDataSource: CacheDataSource,
-) : SettingContract.Presenter(view) {
+) : SettingContract.Presenter() {
 
-    override fun fetchPushSwitchState() {
-        val pushState = cacheDataSource.getBoolean(PUSH_ALLOW_KEY, false)
-        view.changePushSwitchState(pushState)
+    override fun getPushSwitchState(): Boolean =
+        cacheDataSource.getBoolean(PUSH_ALLOW_KEY, false)
+
+    override fun onPushSwitchClicked(newState: Boolean) {
+        if (requireView().checkPushPermission()) {
+            updatePushAllow(newState)
+        } else {
+            requireView().showPushPermissionDialog()
+        }
     }
 
     override fun updatePushAllow(newState: Boolean) {
         cacheDataSource.setBoolean(PUSH_ALLOW_KEY, newState)
-        view.changePushSwitchState(newState)
-    }
-
-    override fun onPushSwitchClicked(newState: Boolean) {
-        if (view.checkPushPermission()) {
-            updatePushAllow(newState)
-        } else {
-            view.showPushPermissionDialog()
-        }
+        requireView().changePushSwitchState(newState)
     }
 
     companion object {

@@ -5,12 +5,15 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.woowacourse.data.datasource.cache.local.LocalCacheDataSource
 import woowacourse.movie.R
+import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.presentation.extensions.checkPermissionTiramisu
 import woowacourse.movie.presentation.extensions.createAlertDialog
 import woowacourse.movie.presentation.extensions.message
@@ -20,13 +23,12 @@ import woowacourse.movie.presentation.extensions.title
 import woowacourse.movie.presentation.views.main.fragments.setting.contract.SettingContract
 import woowacourse.movie.presentation.views.main.fragments.setting.contract.presenter.SettingPresenter
 
-class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.View {
+class SettingFragment : Fragment(), SettingContract.View {
     override val presenter: SettingContract.Presenter by lazy {
-        SettingPresenter(
-            view = this,
-            cacheDataSource = LocalCacheDataSource.getInstance(requireContext()),
-        )
+        SettingPresenter(cacheDataSource = LocalCacheDataSource.getInstance(requireContext()))
     }
+    private var _binding: FragmentSettingBinding? = null
+    private val binding get() = _binding!!
 
     private val pushSwitch: SwitchMaterial by lazy { requireView().findViewById(R.id.notification_push_switch) }
 
@@ -37,16 +39,15 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
             presenter.updatePushAllow(isPushPermissionGranted)
         }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initPushSwitch()
-    }
-
-    private fun initPushSwitch() {
-        presenter.fetchPushSwitchState()
-        pushSwitch.setOnCheckedChangeListener { _, newState ->
-            presenter.onPushSwitchClicked(newState)
-        }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        presenter.attach(this)
+        _binding = FragmentSettingBinding.inflate(inflater, container, false)
+        binding.presenter = presenter
+        return binding.root
     }
 
     override fun changePushSwitchState(newState: Boolean) {
@@ -71,6 +72,12 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
             Uri.parse("package:${requireContext().packageName}")
         ).addCategory(Intent.CATEGORY_DEFAULT)
         settingScreenLauncher.launch(appDetailsIntent)
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        presenter.detach()
+        super.onDestroyView()
     }
 
     companion object {
