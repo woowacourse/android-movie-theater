@@ -36,9 +36,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     private val seatTableLayout: SeatTableLayout by lazy {
         SeatTableLayout.from(
-            findViewById(R.id.seat_selection_table),
-            SEAT_ROW_COUNT,
-            SEAT_COLUMN_COUNT
+            findViewById(R.id.seat_selection_table), SEAT_ROW_COUNT, SEAT_COLUMN_COUNT
         )
     }
 
@@ -47,8 +45,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         setContentView(R.layout.activity_seat_selection)
 
         presenter = SeatSelectionPresenter(
-            this,
-            SaveStateSeats(SEAT_TABLE_LAYOUT_STATE_KEY, seatTableLayout)
+            this, SaveStateSeats(SEAT_TABLE_LAYOUT_STATE_KEY, seatTableLayout), this
         )
         initSeatSelectionView(savedInstanceState)
     }

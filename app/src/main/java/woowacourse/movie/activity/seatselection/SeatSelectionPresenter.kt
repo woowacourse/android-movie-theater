@@ -1,5 +1,6 @@
 package woowacourse.movie.activity.seatselection
 
+import android.content.Context
 import android.os.Bundle
 import woowacourse.movie.datasource.ReservationDataSource
 import woowacourse.movie.domain.model.TicketBox
@@ -22,7 +23,10 @@ import java.util.Locale
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
     private val saveStateSeats: SaveState,
-    private val reservationDataSource: woowacourse.movie.domain.dataSource.ReservationDataSource = ReservationDataSource()
+    private val context: Context,
+    private val reservationDataSource: woowacourse.movie.domain.dataSource.ReservationDataSource = ReservationDataSource(
+        context
+    )
 ) :
     SeatSelectionContract.Presenter {
     override fun initPrice(price: PriceViewData) {

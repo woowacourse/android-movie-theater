@@ -1,19 +1,19 @@
 package woowacourse.movie.datasource
 
+import android.content.Context
+import woowacourse.movie.database.ReservationDB
 import woowacourse.movie.domain.dataSource.ReservationDataSource
 import woowacourse.movie.domain.model.Reservation
 
-class ReservationDataSource :
+class ReservationDataSource(context: Context) :
     ReservationDataSource {
+
+    private val reservationDB = ReservationDB(context)
     override fun getData(): List<Reservation> {
-        return data
+        return reservationDB.getReservationData() ?: listOf()
     }
 
     override fun addData(data: Reservation) {
-        Companion.data.add(data)
-    }
-
-    companion object {
-        private val data: MutableList<Reservation> = mutableListOf()
+        reservationDB.insertData(data)
     }
 }

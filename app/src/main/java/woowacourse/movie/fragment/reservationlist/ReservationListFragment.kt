@@ -27,7 +27,7 @@ class ReservationListFragment : Fragment(), ReservationListContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter = ReservationListPresenter(this, ReservationDataSource())
+        presenter = ReservationListPresenter(this, ReservationDataSource(this.requireContext()))
         presenter.initReservationRecyclerView()
     }
 
