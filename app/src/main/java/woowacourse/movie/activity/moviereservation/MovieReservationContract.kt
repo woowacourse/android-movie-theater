@@ -1,7 +1,7 @@
 package woowacourse.movie.activity.moviereservation
 
 import android.os.Bundle
-import woowacourse.movie.activity.MovieRenderContract
+import woowacourse.movie.activity.utils.MovieRenderContract
 import woowacourse.movie.view.data.LocalFormattedDate
 import woowacourse.movie.view.data.MovieViewData
 import woowacourse.movie.view.data.ReservationDetailViewData

@@ -1,4 +1,4 @@
-package woowacourse.movie.activity
+package woowacourse.movie.activity.utils
 
 import woowacourse.movie.view.data.DateRangeViewData
 import woowacourse.movie.view.data.MovieViewData
