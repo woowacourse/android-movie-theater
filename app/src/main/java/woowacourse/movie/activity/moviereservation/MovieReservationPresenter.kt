@@ -13,7 +13,7 @@ import woowacourse.movie.view.widget.SaveStateCounter
 import java.time.LocalDateTime
 
 class MovieReservationPresenter(
-    private val view: MovieReservationContract.View,
+    override val view: MovieReservationContract.View,
     private val saveStateDateSpinner: SaveState,
     private val saveStateTimeSpinner: SaveState
 ) : MovieReservationContract.Presenter {
@@ -64,7 +64,6 @@ class MovieReservationPresenter(
     }
 
     companion object {
-
         private const val COUNTER_SAVE_STATE_KEY = "counter"
     }
 }

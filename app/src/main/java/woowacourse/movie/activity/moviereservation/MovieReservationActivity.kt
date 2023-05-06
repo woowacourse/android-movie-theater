@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -17,8 +18,6 @@ import woowacourse.movie.view.error.ActivityError.finishWithError
 import woowacourse.movie.view.error.ViewError
 import woowacourse.movie.view.getSerializable
 import woowacourse.movie.view.widget.DateSpinnerManager
-import woowacourse.movie.view.widget.MovieController
-import woowacourse.movie.view.widget.MovieView
 import woowacourse.movie.view.widget.SaveStateSpinner
 import woowacourse.movie.view.widget.TimeSpinnerManager
 import java.time.LocalDateTime
@@ -63,7 +62,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
             ?: return finishWithError(ViewError.MissingExtras(MovieViewData.MOVIE_EXTRA_NAME))
         presenter.initCount(savedInstanceState)
         presenter.initDateSpinner(movie, savedInstanceState)
-        renderMovie(movie)
+        presenter.renderMovie(movie)
         makeReservationButtonClickListener(movie)
     }
 
@@ -78,19 +77,6 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
 
     private fun makeBackButton() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    private fun renderMovie(movie: MovieViewData) {
-        MovieController.bind(
-            movie = movie,
-            MovieView(
-                poster = findViewById(R.id.movie_reservation_poster),
-                title = findViewById(R.id.movie_reservation_title),
-                date = findViewById(R.id.movie_reservation_date),
-                runningTime = findViewById(R.id.movie_reservation_running_time),
-                description = findViewById(R.id.movie_reservation_description)
-            )
-        )
     }
 
     private fun makeReservationButtonClickListener(
@@ -136,6 +122,20 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
 
     override fun setCount(count: Int) {
         countText.text = count.toString()
+    }
+
+    override fun renderMovie(
+        image: Int,
+        title: String,
+        date: String,
+        runningTime: String,
+        description: String
+    ) {
+        findViewById<ImageView>(R.id.movie_reservation_poster).setImageResource(image)
+        findViewById<TextView>(R.id.movie_reservation_title).text = title
+        findViewById<TextView>(R.id.movie_reservation_date).text = date
+        findViewById<TextView>(R.id.movie_reservation_running_time).text = runningTime
+        findViewById<TextView>(R.id.movie_reservation_description).text = description
     }
 
     companion object {
