@@ -1,7 +1,7 @@
 package woowacourse.movie.presentation.bookedticketlist
 
 import woowacourse.movie.data.BookedTicketsData
-import woowacourse.movie.data.MovieData
+import woowacourse.movie.data.movie.MockMovieData
 import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.model.TicketModel
 
@@ -16,5 +16,5 @@ class BookedTicketsPresenter(private val view: BookedTicketsContract.View) :
     }
 
     override fun getMovieModel(ticketModel: TicketModel) =
-        MovieData.findMovieById(ticketModel.movieId).toPresentation()
+        MockMovieData.findMovieById(ticketModel.movieId).toPresentation()
 }

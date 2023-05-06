@@ -7,7 +7,7 @@ import android.content.Context
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieData
+import woowacourse.movie.data.movie.MockMovieData
 import woowacourse.movie.presentation.complete.CompleteActivity
 import woowacourse.movie.presentation.model.TicketModel
 import woowacourse.movie.presentation.util.checkPermissionTiramisu
@@ -26,7 +26,7 @@ object BookedTicketNotification {
                 .setContentText(
                     context.getString(
                         R.string.booked_ticket_notification_content,
-                        MovieData.findMovieById(ticket.movieId).title,
+                        MockMovieData.findMovieById(ticket.movieId).title,
                     ),
                 )
                 .setPriority(NotificationCompat.PRIORITY_HIGH)

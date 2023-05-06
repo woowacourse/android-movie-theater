@@ -9,16 +9,16 @@ import java.time.LocalDateTime
 interface BookingContract {
     interface View {
         val presenter: Presenter
-        val cinemaModel: CinemaModel
         fun setTicketCount(count: Int)
+        fun reservationMovie(reservationModel: ReservationModel)
     }
 
     interface Presenter {
         fun setTicketCount(count: Int)
-        fun requireMovieModel(id: Long): MovieModel
+        fun requireMovieModel(movieId: Long): MovieModel
         fun addTicket()
         fun subTicket()
-        fun getScreeningDate(): List<LocalDate>
-        fun reserveMovie(cinemaModel: CinemaModel, localDateTime: LocalDateTime): ReservationModel
+        fun getScreeningDate(movieId: Long): List<LocalDate>
+        fun reserveMovie(cinemaModel: CinemaModel, localDateTime: LocalDateTime)
     }
 }

@@ -2,29 +2,35 @@ package woowacourse.movie.presentation.booking
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
+import woowacourse.movie.data.movie.MockMovieData
 import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.presentation.choiceSeat.ChoiceSeatActivity
-import woowacourse.movie.presentation.complete.CompleteActivity
 import woowacourse.movie.presentation.model.CinemaModel
 import woowacourse.movie.presentation.model.MovieModel
+import woowacourse.movie.presentation.model.ReservationModel
 import woowacourse.movie.presentation.util.formatDotDate
+import woowacourse.movie.presentation.util.getParcelableExtraCompat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
 class BookingActivity : AppCompatActivity(), BookingContract.View {
 
-    override val presenter: BookingContract.Presenter by lazy { BookingPresenter(this) }
+    override val presenter: BookingContract.Presenter by lazy {
+        BookingPresenter(
+            MockMovieData,
+            this,
+        )
+    }
 
     private lateinit var binding: ActivityBookingBinding
 
-    override val cinemaModel: CinemaModel by lazy {
-        initCinemaModel()
+    private val cinemaModel: CinemaModel by lazy {
+        intent.getParcelableExtraCompat(CINEMA_MODEL) ?: throw NoSuchElementException()
     }
 
     private val movieModel: MovieModel by lazy { presenter.requireMovieModel(cinemaModel.movieId) }
@@ -46,15 +52,6 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         restoreData(savedInstanceState)
         initDateTimes()
         gatherClickListeners()
-    }
-
-    private fun initCinemaModel(): CinemaModel {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(CINEMA_MODEL, CinemaModel::class.java)
-                ?: throw IllegalArgumentException()
-        } else {
-            intent.getParcelableExtra(CompleteActivity.TICKET) ?: throw IllegalArgumentException()
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -153,8 +150,11 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
             dateSpinnerAdapter.getItem(binding.spinnerScreeningDate.selectedItemPosition),
             timeSpinnerAdapter.getItem(binding.spinnerScreeningTime.selectedItemPosition),
         )
-        val reservation = presenter.reserveMovie(cinemaModel, dateTime)
-        startActivity(ChoiceSeatActivity.getIntent(this, reservation))
+        presenter.reserveMovie(cinemaModel, dateTime)
+    }
+
+    override fun reservationMovie(reservationModel: ReservationModel) {
+        startActivity(ChoiceSeatActivity.getIntent(this, reservationModel))
     }
 
     private fun initAdapters() {
@@ -163,7 +163,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
     }
 
     private fun initDateTimes() {
-        dateSpinnerAdapter.initItems(presenter.getScreeningDate())
+        dateSpinnerAdapter.initItems(presenter.getScreeningDate(movieModel.id))
         timeSpinnerAdapter.initItems(cinemaModel.movieTimes)
     }
 

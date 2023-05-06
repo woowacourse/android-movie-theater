@@ -1,10 +1,11 @@
 package woowacourse.movie.data
 
+import woowacourse.movie.data.movie.MockMovieData
 import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.movielist.movie.MovieItem
 
 object MovieItemData {
-    private val movies = MovieData.movies.map { MovieItem.Movie(it.toPresentation()) }
+    private val movies = MockMovieData.movies.map { MovieItem.Movie(it.toPresentation()) }
     private val ads = AdData.ads
 
     fun getMovieItems(): List<MovieItem> {
