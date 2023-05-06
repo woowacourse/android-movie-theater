@@ -30,11 +30,12 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatBinding
 
 class SeatActivity : AppCompatActivity(), SeatContract.View {
-    private val binding: ActivitySeatBinding by lazy { ActivitySeatBinding.inflate(layoutInflater) }
+    private lateinit var binding: ActivitySeatBinding
     override lateinit var presenter: SeatPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivitySeatBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initPresenter()
         binding.presenter = presenter
