@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="theaterName"
+            type="String" />
+        <variable
+            name="timeCount"
+            type="Integer" />
+        <variable
+            name="onItemClick"
+            type="woowacourse.movie.view.moviemain.movielist.TheaterListAdapter.OnItemClick" />
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/layout_theater_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="?attr/selectableItemBackground"
-    android:padding="24dp">
+    android:padding="24dp"
+    android:onClick="@{() -> onItemClick.onClick(theaterName)}">
 
     <TextView
         android:id="@+id/text_theater_name"
@@ -14,6 +28,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:text="@{theaterName}"
         tools:text="선릉 극장"
         android:textColor="@color/black"
         android:textSize="16sp" />
@@ -21,6 +36,7 @@
         android:id="@+id/text_screening_time_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@{String.format(@string/screening_times_count, timeCount)}"
         tools:text="3개의 상영 시간"
         android:textSize="12sp"
         android:layout_marginTop="2dp"
@@ -37,3 +53,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
