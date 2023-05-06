@@ -1,12 +1,12 @@
 package woowacourse.movie.ui.seat
 
+import com.example.domain.repository.TicketsRepository
 import com.example.domain.usecase.DiscountApplyUseCase
 import woowacourse.movie.model.SeatPositionState
 import woowacourse.movie.model.SeatSelectState
 import woowacourse.movie.model.TicketsState
 import woowacourse.movie.model.mapper.asDomain
 import woowacourse.movie.model.mapper.asPresentation
-import woowacourse.movie.repository.TicketsRepository
 
 class SeatSelectPresenter(
     private val view: SeatSelectContract.View
@@ -41,7 +41,7 @@ class SeatSelectPresenter(
             seatSelectState.dateTime,
             positionStates
         )
-        TicketsRepository.addTicket(tickets)
+        TicketsRepository.addTicket(tickets.asDomain())
         view.navigateToConfirmView(tickets)
     }
 

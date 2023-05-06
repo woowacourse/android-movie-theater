@@ -4,11 +4,11 @@ import com.example.domain.discountPolicy.condition.JoJoNightCondition
 import com.example.domain.model.Movie
 import com.example.domain.model.Ticket
 import com.example.domain.model.seat.SeatPosition
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 
 class JoJoNightConditionTest {
     @Test
@@ -17,10 +17,11 @@ class JoJoNightConditionTest {
         val time = LocalTime.of(10, 0)
         val dateTime = LocalDateTime.of(date, time)
         val mockMovie = Movie(
-            0,
+            "",
             "title",
             LocalDate.now(),
             LocalDate.now(),
+            listOf(LocalTime.of(20, 0)),
             120,
             ""
         )

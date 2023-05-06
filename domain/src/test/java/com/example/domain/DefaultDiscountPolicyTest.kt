@@ -5,11 +5,11 @@ import com.example.domain.model.Money
 import com.example.domain.model.Movie
 import com.example.domain.model.Ticket
 import com.example.domain.model.seat.SeatPosition
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 
 class DefaultDiscountPolicyTest {
     @Test
@@ -74,10 +74,11 @@ class DefaultDiscountPolicyTest {
 
     companion object {
         private val mockMovie = Movie(
-            0,
+            "",
             "title",
             LocalDate.now(),
             LocalDate.now(),
+            listOf(LocalTime.now()),
             120,
             ""
         )

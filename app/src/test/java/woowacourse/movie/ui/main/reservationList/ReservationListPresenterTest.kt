@@ -1,10 +1,10 @@
 package woowacourse.movie.ui.main.reservationList
 
+import com.example.domain.repository.TicketsRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Test
-import woowacourse.movie.repository.TicketsRepository
 
 class ReservationListPresenterTest {
     @Test

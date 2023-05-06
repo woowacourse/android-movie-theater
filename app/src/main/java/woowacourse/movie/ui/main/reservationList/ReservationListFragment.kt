@@ -6,9 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.domain.repository.TicketsRepository
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.model.TicketsState
-import woowacourse.movie.repository.TicketsRepository
+import woowacourse.movie.model.mapper.asPresentation
 import woowacourse.movie.ui.adapter.ReservationListAdapter
 import woowacourse.movie.ui.confirm.ReservationConfirmActivity
 import woowacourse.movie.ui.itemModel.TicketsItemModel
@@ -54,7 +55,7 @@ class ReservationListFragment : Fragment(), ReservationListContract.View {
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         adapter.setItemChanged(
-            TicketsRepository.allTickets().map(::TicketsItemModel)
+            TicketsRepository.allTickets().map { TicketsItemModel(it.asPresentation()) }
         )
     }
 

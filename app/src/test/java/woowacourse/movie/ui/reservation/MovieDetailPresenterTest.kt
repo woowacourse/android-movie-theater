@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.reservation
 
+import android.net.Uri
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
@@ -106,7 +107,7 @@ class MovieDetailPresenterTest {
 
     companion object {
         val sampleMovieState = MovieState(
-            1,
+            Uri.parse(""),
             "title",
             LocalDate.MIN,
             LocalDate.MIN.plusDays(3),
