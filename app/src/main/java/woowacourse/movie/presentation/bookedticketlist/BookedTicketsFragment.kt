@@ -8,12 +8,19 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.data.BookedTickets
+import woowacourse.movie.model.data.remote.DummyMovieStorage
 import woowacourse.movie.presentation.complete.CompleteActivity
 import woowacourse.movie.presentation.model.TicketModel
 
 class BookedTicketsFragment : Fragment() {
 
-    private val bookedTicketsAdapter by lazy { BookedTicketsAdapter(::bookedTicketsItemClickListener) }
+    private val bookedTicketsAdapter by lazy {
+        BookedTicketsAdapter(
+            ::bookedTicketsItemClickListener,
+            BookedTicketPresenter(DummyMovieStorage())
+        )
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

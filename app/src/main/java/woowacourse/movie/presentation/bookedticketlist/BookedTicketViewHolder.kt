@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieData
+import woowacourse.movie.domain.model.tools.Movie
 import woowacourse.movie.presentation.model.TicketModel
 import woowacourse.movie.presentation.util.formatDotDateTimeColonSeparateBar
 
@@ -22,10 +22,10 @@ class BookedTicketViewHolder(
         setItemOnClickListener(view, clickListener, getPositionData)
     }
 
-    fun bind(ticketModel: TicketModel) {
+    fun bind(ticketModel: TicketModel, getMovieDataById: (Long) -> Movie) {
         textBookedTicketsDateTime.text =
             ticketModel.bookedDateTime.formatDotDateTimeColonSeparateBar()
-        textBookedTicketsTitle.text = MovieData.findMovieById(ticketModel.movieId).title
+        textBookedTicketsTitle.text = getMovieDataById(ticketModel.movieId).title
     }
 
     private fun setItemOnClickListener(

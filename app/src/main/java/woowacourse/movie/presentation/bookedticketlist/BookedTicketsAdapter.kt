@@ -8,8 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.presentation.model.TicketModel
 
-class BookedTicketsAdapter(private val clickListener: (TicketModel) -> Unit) :
-    ListAdapter<TicketModel, RecyclerView.ViewHolder>(ticketDiffUtil) {
+class BookedTicketsAdapter(
+    private val clickListener: (TicketModel) -> Unit,
+    override val presenter: BookedTicketsContract.Presenter
+) :
+    ListAdapter<TicketModel, RecyclerView.ViewHolder>(ticketDiffUtil),
+    BookedTicketsContract.Adapter {
     private lateinit var inflater: LayoutInflater
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -25,7 +29,7 @@ class BookedTicketsAdapter(private val clickListener: (TicketModel) -> Unit) :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val viewHolder = holder as BookedTicketViewHolder
-        viewHolder.bind(getItem(position))
+        viewHolder.bind(getItem(position), presenter::getMovieById)
     }
 
     companion object {
