@@ -14,7 +14,9 @@ import woowacourse.movie.ui.itemModel.CinemaItemModel
 import woowacourse.movie.ui.reservation.MovieDetailActivity
 import woowacourse.movie.util.getParcelableCompat
 
-class CinemaListBottomSheet : BottomSheetDialogFragment(R.layout.fragment_cinema_bottom_sheet), CinemaListContract.View {
+class CinemaListBottomSheet :
+    BottomSheetDialogFragment(R.layout.fragment_cinema_bottom_sheet),
+    CinemaListContract.View {
     private lateinit var presenter: CinemaListContract.Presenter
     private lateinit var binding: FragmentCinemaBottomSheetBinding
 
