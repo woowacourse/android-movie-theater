@@ -4,6 +4,7 @@ import java.time.LocalDateTime
 
 data class Reservation(
     val id: Int,
+    val theaterName: String,
     val movie: Movie,
     val seats: List<Seat>,
     val screeningDateTime: LocalDateTime,
