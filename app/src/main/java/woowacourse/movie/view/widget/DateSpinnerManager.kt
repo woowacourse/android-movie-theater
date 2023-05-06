@@ -7,10 +7,10 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import woowacourse.movie.view.data.LocalFormattedDate
 
-class DateSpinner(val spinner: Spinner) {
+class DateSpinnerManager(val spinner: Spinner) {
     fun initSpinner(
         dates: List<LocalFormattedDate>,
-        timeSpinner: TimeSpinner,
+        timeSpinnerManager: TimeSpinnerManager,
         dateIndex: Int,
         timeIndex: Int
     ) {
@@ -23,7 +23,7 @@ class DateSpinner(val spinner: Spinner) {
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                timeSpinner.initSpinner(dates[p2].date, timeIndex)
+                timeSpinnerManager.initSpinner(dates[p2].date, timeIndex)
             }
         }
     }

@@ -16,11 +16,11 @@ import woowacourse.movie.view.data.MovieViewData
 import woowacourse.movie.view.error.ActivityError.finishWithError
 import woowacourse.movie.view.error.ViewError
 import woowacourse.movie.view.getSerializable
-import woowacourse.movie.view.widget.DateSpinner
+import woowacourse.movie.view.widget.DateSpinnerManager
 import woowacourse.movie.view.widget.MovieController
 import woowacourse.movie.view.widget.MovieView
 import woowacourse.movie.view.widget.SaveStateSpinner
-import woowacourse.movie.view.widget.TimeSpinner
+import woowacourse.movie.view.widget.TimeSpinnerManager
 import java.time.LocalDateTime
 
 class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.View {
@@ -39,12 +39,12 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
     private val saveStateDateSpinner: SaveStateSpinner by lazy {
         SaveStateSpinner(DATE_SPINNER_SAVE_STATE_KEY, dateSpinner)
     }
-    private val dateSpinnerManager: DateSpinner by lazy {
-        DateSpinner(findViewById(R.id.movie_reservation_date_spinner))
+    private val dateSpinnerManager: DateSpinnerManager by lazy {
+        DateSpinnerManager(findViewById(R.id.movie_reservation_date_spinner))
     }
 
-    private val timeSpinnerManager: TimeSpinner by lazy {
-        TimeSpinner(findViewById(R.id.movie_reservation_time_spinner))
+    private val timeSpinnerManager: TimeSpinnerManager by lazy {
+        TimeSpinnerManager(findViewById(R.id.movie_reservation_time_spinner))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

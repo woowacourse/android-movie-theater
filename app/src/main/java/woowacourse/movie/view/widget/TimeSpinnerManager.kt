@@ -9,7 +9,7 @@ import woowacourse.movie.domain.movieTimePolicy.WeekendMovieTime
 import woowacourse.movie.view.data.LocalFormattedTime
 import java.time.LocalDate
 
-class TimeSpinner(val spinner: Spinner) {
+class TimeSpinnerManager(val spinner: Spinner) {
     fun initSpinner(
         date: LocalDate,
         timeIndex: Int
