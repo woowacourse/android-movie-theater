@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activities.screeninglist.ScreeningListActivity">
+    tools:context=".view.activities.home.fragments.screeninglist.ScreeningListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/screening_list_view"

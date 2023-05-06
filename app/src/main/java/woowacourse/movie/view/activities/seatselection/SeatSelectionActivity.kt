@@ -28,7 +28,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_seat_selection2)
+        setContentView(R.layout.activity_seat_selection)
         presenter = SeatSelectionPresenter(
             this,
             intent.getLongExtra(SCREENING_ID, -1),

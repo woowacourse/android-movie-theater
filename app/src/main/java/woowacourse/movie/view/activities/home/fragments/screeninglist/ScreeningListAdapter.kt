@@ -1,4 +1,4 @@
-package woowacourse.movie.view.activities.screeninglist
+package woowacourse.movie.view.activities.home.fragments.screeninglist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

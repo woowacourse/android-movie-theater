@@ -1,11 +1,12 @@
-package woowacourse.movie.view.activities.screeninglist
+package woowacourse.movie.view.activities.home.fragments.screeninglist
 
 import woowacourse.movie.R
 import woowacourse.movie.domain.screening.Screening
 import woowacourse.movie.repository.ScreeningRepository
 import woowacourse.movie.view.PosterResourceProvider
 
-class ScreeningListPresenter(private val view: ScreeningListContract.View): ScreeningListContract.Presenter {
+class ScreeningListPresenter(private val view: ScreeningListContract.View):
+    ScreeningListContract.Presenter {
 
     override fun loadScreenings() {
         val screenings = ScreeningRepository.findAll()

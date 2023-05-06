@@ -15,4 +15,8 @@ object ReservationRepository {
     fun findById(id: Long): Reservation? {
         return reservations[id]
     }
+
+    fun findAll(): List<Reservation> {
+        return reservations.values.toList()
+    }
 }

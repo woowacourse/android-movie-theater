@@ -1,4 +1,4 @@
-package woowacourse.movie.view.activities.screeninglist
+package woowacourse.movie.view.activities.home.fragments.screeninglist
 
 interface ScreeningListContract {
     interface Presenter {

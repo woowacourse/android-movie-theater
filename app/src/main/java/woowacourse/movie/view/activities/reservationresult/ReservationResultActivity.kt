@@ -15,7 +15,7 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_reservation_result2)
+        setContentView(R.layout.activity_reservation_result)
 
         presenter = ReservationResultPresenter(this, intent.getLongExtra(RESERVATION_ID, -1))
         presenter.loadReservation()
@@ -44,7 +44,7 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
 
     companion object {
         private const val RESERVATION_ID = "RESERVATION_ID"
-        val DATE_TIME_FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm")
+        private val DATE_TIME_FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm")
         val DECIMAL_FORMAT = DecimalFormat("#,###")
 
         fun startActivity(context: Context, reservationId: Long) {
