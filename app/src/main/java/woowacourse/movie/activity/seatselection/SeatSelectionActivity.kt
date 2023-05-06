@@ -54,16 +54,29 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun initSeatSelectionView(savedInstanceState: Bundle?) {
-        val movie = intent.extras?.getSerializable<MovieViewData>(MovieViewData.MOVIE_EXTRA_NAME)
-            ?: return finishWithError(ViewError.MissingExtras(MovieViewData.MOVIE_EXTRA_NAME))
-        val reservationDetail =
-            intent.extras?.getSerializable<ReservationDetailViewData>(ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME)
-                ?: return finishWithError(ViewError.MissingExtras(ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME))
+        val movie = getIntentMovieData() ?: return finishWithError(
+            ViewError.MissingExtras(
+                MovieViewData.MOVIE_EXTRA_NAME
+            )
+        )
+        val reservationDetail = getIntentReservationData() ?: return finishWithError(
+            ViewError.MissingExtras(ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME)
+        )
 
         initMovieView(movie)
-        presenter.initPrice(PriceViewData())
+        initPrice(PriceViewData())
         initSeatTableLayout(movie, reservationDetail, savedInstanceState)
     }
+
+    private fun initPrice(priceViewData: PriceViewData) {
+        presenter.initPrice(priceViewData)
+    }
+
+    private fun getIntentMovieData(): MovieViewData? =
+        intent.extras?.getSerializable<MovieViewData>(MovieViewData.MOVIE_EXTRA_NAME)
+
+    private fun getIntentReservationData(): ReservationDetailViewData? =
+        intent.extras?.getSerializable<ReservationDetailViewData>(ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME)
 
     private fun initSeatTableLayout(
         movie: MovieViewData,
@@ -71,7 +84,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         savedInstanceState: Bundle?
     ) {
         initReserveButton(seatTableLayout, movie, reservationDetail)
-
         makeBackButton()
 
         seatTableLayout.onSelectSeat = {

@@ -58,13 +58,19 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
     private fun initMovieReservationView(savedInstanceState: Bundle?) {
         makeBackButton()
         initButton()
-        val movie = intent.extras?.getSerializable<MovieViewData>(MovieViewData.MOVIE_EXTRA_NAME)
-            ?: return finishWithError(ViewError.MissingExtras(MovieViewData.MOVIE_EXTRA_NAME))
+        val movie = getIntentMovieData() ?: return finishWithError(
+            ViewError.MissingExtras(
+                MovieViewData.MOVIE_EXTRA_NAME
+            )
+        )
         presenter.initCount(savedInstanceState)
         presenter.initDateSpinner(movie, savedInstanceState)
         presenter.renderMovie(movie)
         makeReservationButtonClickListener(movie)
     }
+
+    private fun getIntentMovieData(): MovieViewData? =
+        intent.extras?.getSerializable<MovieViewData>(MovieViewData.MOVIE_EXTRA_NAME)
 
     private fun initButton() {
         findViewById<Button>(R.id.movie_reservation_people_count_minus).setOnClickListener {
