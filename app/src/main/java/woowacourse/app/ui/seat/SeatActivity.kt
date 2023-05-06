@@ -61,7 +61,9 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putParcelable("SELECTED_SEAT", presenter.selectedSeat.toUiModel())
+        val selectedSeatUiModel =
+            SelectedSeatUiModel(presenter.getSelectedSeats().map { it.toUiModel() }.toSet())
+        outState.putParcelable("SELECTED_SEAT", selectedSeatUiModel)
         super.onSaveInstanceState(outState)
     }
 

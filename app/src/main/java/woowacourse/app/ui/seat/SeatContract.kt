@@ -27,6 +27,7 @@ interface SeatContract {
 
     interface Presenter {
         val movie: Movie
+        fun getSelectedSeats(): Set<Seat>
         fun selectSeat(seat: Seat)
         fun setPayment()
         fun setTable()

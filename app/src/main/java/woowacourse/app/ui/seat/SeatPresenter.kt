@@ -15,9 +15,13 @@ class SeatPresenter(
     private val bookedMovie: BookedMovie,
     theaterUseCase: TheaterUseCase,
 ) : SeatContract.Presenter {
-    val selectedSeat = SelectedSeat(bookedMovie.ticketCount)
+    private val selectedSeat = SelectedSeat(bookedMovie.ticketCount)
     private val theater: Theater? = theaterUseCase.getTheater(bookedMovie.theaterId)
     override val movie: Movie get() = bookedMovie.movie
+
+    override fun getSelectedSeats(): Set<Seat> {
+        return selectedSeat.seats.toSet()
+    }
 
     override fun selectSeat(seat: Seat) {
         val result = selectedSeat.clickSeat(seat)
