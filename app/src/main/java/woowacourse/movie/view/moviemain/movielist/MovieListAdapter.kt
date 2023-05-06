@@ -1,6 +1,5 @@
 package woowacourse.movie.view.moviemain.movielist
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -36,7 +35,6 @@ class MovieListAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = movies[position - ((position + 1) / (adInterval + 1))]
-        Log.d("index", (position - ((position + 1) / (adInterval + 1))).toString())
         when (holder) {
             is ItemViewHolder.MovieItemViewHolder -> {
                 holder.set(item) {
