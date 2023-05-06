@@ -27,7 +27,7 @@ interface ReservationContract {
         fun selectScreeningDate(date: LocalDate)
         fun selectScreeningTime(time: LocalTime, position: Int)
         fun saveTimePosition(position: Int)
-        fun getReservationOptions(): ReservationOptions
+        fun getReservationOptions(theaterName: String): ReservationOptions
         fun restoreReservationOptions(
             screeningDate: LocalDate,
             screeningTime: LocalTime,
@@ -35,6 +35,6 @@ interface ReservationContract {
         )
 
         fun setPeopleCount()
-        fun reserve()
+        fun reserve(theaterName: String)
     }
 }

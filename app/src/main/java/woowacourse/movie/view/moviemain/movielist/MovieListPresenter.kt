@@ -3,12 +3,14 @@ package woowacourse.movie.view.moviemain.movielist
 import woowacourse.movie.R
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.repository.MovieRepository
+import woowacourse.movie.domain.repository.TheaterRepository
 import woowacourse.movie.view.mapper.toUiModel
 import woowacourse.movie.view.model.MovieListModel
 
 class MovieListPresenter(
     private val view: MovieListContract.View,
-    private val movieRepository: MovieRepository
+    private val movieRepository: MovieRepository,
+    private val theaterRepository: TheaterRepository
 ) : MovieListContract.Presenter {
 
     override fun loadMovieList() {
@@ -43,12 +45,19 @@ class MovieListPresenter(
     override fun onItemClick(item: MovieListModel) {
         when (item) {
             is MovieListModel.MovieUiModel -> {
-                view.openReservationActivity(item)
+                val movieId = item.id
+                loadTheaterList(movieId)
+                // view.openReservationActivity(item, "선릉 극장")
             }
             is MovieListModel.MovieAdModel -> {
                 view.openAdPage(item)
             }
         }
+    }
+
+    override fun loadTheaterList(movieId: Int) {
+        val theaters = theaterRepository.findTheaterByMovieId(movieId)
+        view.openTheaterBottomSheet(theaters)
     }
 
     companion object {

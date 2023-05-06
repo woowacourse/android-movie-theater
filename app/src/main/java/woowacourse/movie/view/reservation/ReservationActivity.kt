@@ -131,8 +131,9 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     }
 
     private fun setUpReserveButtonClickListener() {
+        val theaterName = intent.getStringExtra(THEATER_NAME)
         binding.reservationButton.setOnClickListener {
-            presenter.reserve()
+            theaterName?.let { presenter.reserve(it) }
         }
     }
 
@@ -145,8 +146,13 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        val theaterName = intent.getStringExtra(THEATER_NAME)
         outState.apply {
-            putParcelable(RESERVATION_OPTIONS, presenter.getReservationOptions())
+            theaterName?.let {
+                putParcelable(
+                    RESERVATION_OPTIONS, presenter.getReservationOptions(it)
+                )
+            }
             putInt(SELECTED_TIME_POSITION, binding.timeSpinner.selectedItemPosition)
         }
     }
@@ -176,9 +182,11 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         private const val SELECTED_TIME_POSITION = "SELECTED_TIME_POSITION"
         private const val RESERVATION_OPTIONS = "RESERVATION_OPTIONS"
         private const val MOVIE = "MOVIE"
-        fun newIntent(context: Context, movie: MovieUiModel): Intent {
+        private const val THEATER_NAME = "THEATER_NAME"
+        fun newIntent(context: Context, movie: MovieUiModel, theaterName: String): Intent {
             val intent = Intent(context, ReservationActivity::class.java)
             intent.putExtra(MOVIE, movie)
+            intent.putExtra(THEATER_NAME, theaterName)
             return intent
         }
     }

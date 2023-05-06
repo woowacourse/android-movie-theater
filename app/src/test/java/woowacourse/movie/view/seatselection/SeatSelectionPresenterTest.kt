@@ -80,6 +80,7 @@ internal class SeatSelectionPresenterTest {
     private fun fakeReservationOptions(): ReservationOptions {
         val movie = fakeMovie()
         return ReservationOptions(
+            "선릉 극장",
             movie.title,
             LocalDateTime.of(movie.screeningStartDate, LocalTime.of(9, 0)),
             2

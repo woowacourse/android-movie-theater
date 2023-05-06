@@ -10,7 +10,10 @@ import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.domain.Minute
 import woowacourse.movie.domain.Movie
+import woowacourse.movie.domain.Screening
+import woowacourse.movie.domain.Theater
 import woowacourse.movie.domain.repository.MovieRepository
+import woowacourse.movie.domain.repository.TheaterRepository
 import woowacourse.movie.view.mapper.toUiModel
 import woowacourse.movie.view.model.MovieListModel
 import java.time.LocalDate
@@ -19,12 +22,14 @@ class MovieListPresenterTest {
     private lateinit var movieListPresenter: MovieListPresenter
     private lateinit var view: MovieListContract.View
     private lateinit var movieRepository: MovieRepository
+    private lateinit var theaterRepository: TheaterRepository
 
     @Before
     fun setUp() {
         view = mockk()
         movieRepository = mockk()
-        movieListPresenter = MovieListPresenter(view, movieRepository)
+        theaterRepository = mockk()
+        movieListPresenter = MovieListPresenter(view, movieRepository, theaterRepository)
     }
 
     @Test
@@ -43,13 +48,14 @@ class MovieListPresenterTest {
     }
 
     @Test
-    fun `영화가 클릭되면 ReservationActivity를 시작한다`() {
+    fun `영화가 클릭되면 극장 선택 Bottom Sheet Dialog가 열린다`() {
         val movie = fakeMovie().toUiModel()
-        every { view.openReservationActivity(movie) } returns Unit
+        every { theaterRepository.findTheaterByMovieId(movie.id) } returns fakeTheaters()
+        every { view.openTheaterBottomSheet(fakeTheaters()) } returns Unit
 
         movieListPresenter.onItemClick(movie)
 
-        verify { view.openReservationActivity(movie) }
+        verify { view.openTheaterBottomSheet(any()) }
     }
 
     @Test
@@ -79,5 +85,17 @@ class MovieListPresenterTest {
     private fun fakeAd() = MovieListModel.MovieAdModel(
         R.drawable.woowacourse_banner,
         "https://woowacourse.github.io/"
+    )
+
+    private fun fakeTheaters() = listOf<Theater>(
+        Theater(
+            "선릉 극장",
+            listOf(
+                Screening(1, listOf(0, 1, 2, 5, 7)),
+                Screening(2, listOf(2, 3, 4, 5)),
+                Screening(3, listOf(3)),
+                Screening(4, listOf(5, 6))
+            )
+        )
     )
 }

@@ -7,7 +7,7 @@ import woowacourse.movie.data.model.SeatEntity
 
 class SeatDbHelper(
     context: Context
-) : SQLiteOpenHelper(context, DB_NAME, null, 2) {
+) : SQLiteOpenHelper(context, DB_NAME, null, 3) {
 
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(

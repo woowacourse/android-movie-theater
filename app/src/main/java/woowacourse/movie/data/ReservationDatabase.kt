@@ -11,6 +11,7 @@ import woowacourse.movie.data.model.ReservationEntity.Companion.ID_COLUMN
 import woowacourse.movie.data.model.ReservationEntity.Companion.MOVIE_ID_COLUMN
 import woowacourse.movie.data.model.ReservationEntity.Companion.SCREENING_DATETIME_COLUMN
 import woowacourse.movie.data.model.ReservationEntity.Companion.TABLE_NAME
+import woowacourse.movie.data.model.ReservationEntity.Companion.THEATER_NAME_COLUMN
 import woowacourse.movie.domain.Reservation
 import woowacourse.movie.domain.repository.MovieRepository
 import woowacourse.movie.domain.repository.ReservationRepository
@@ -31,6 +32,7 @@ class ReservationDatabase(
     override fun add(reservation: Reservation): Int {
         val values = ContentValues()
         with(values) {
+            put(THEATER_NAME_COLUMN, reservation.theaterName)
             put(MOVIE_ID_COLUMN, reservation.movie.id)
             put(SCREENING_DATETIME_COLUMN, reservation.screeningDateTime.toString())
             put(FEE_COLUMN, reservation.finalReservationFee.amount)
@@ -48,6 +50,9 @@ class ReservationDatabase(
             val data = ReservationEntity(
                 cursor.getInt(
                     cursor.getColumnIndexOrThrow(ID_COLUMN)
+                ),
+                cursor.getString(
+                    cursor.getColumnIndexOrThrow(THEATER_NAME_COLUMN)
                 ),
                 cursor.getInt(
                     cursor.getColumnIndexOrThrow(MOVIE_ID_COLUMN)
@@ -75,6 +80,7 @@ class ReservationDatabase(
             TABLE_NAME,
             arrayOf(
                 ID_COLUMN,
+                THEATER_NAME_COLUMN,
                 MOVIE_ID_COLUMN,
                 SCREENING_DATETIME_COLUMN,
                 FEE_COLUMN

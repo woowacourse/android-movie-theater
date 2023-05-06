@@ -57,6 +57,7 @@ internal class ReservationListPresenterTest {
         )
         return Reservation(
             1,
+            "선릉 극장",
             movie,
             listOf(Seat(1, 1)),
             LocalDateTime.of(2024, 3, 5, 12, 0),

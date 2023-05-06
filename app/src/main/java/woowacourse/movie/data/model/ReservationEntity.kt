@@ -8,6 +8,7 @@ import java.time.LocalDateTime
 
 data class ReservationEntity(
     val id: Int,
+    val theaterName: String,
     val movieId: Int,
     val screeningDateTime: String,
     val fee: Int
@@ -18,6 +19,7 @@ data class ReservationEntity(
     ): Reservation {
         return Reservation(
             id,
+            theaterName,
             movie,
             seats,
             LocalDateTime.parse(screeningDateTime),
@@ -28,6 +30,7 @@ data class ReservationEntity(
     companion object {
         const val TABLE_NAME = "RESERVATION"
         const val ID_COLUMN = "ID"
+        const val THEATER_NAME_COLUMN = "THEATER_NAME"
         const val MOVIE_ID_COLUMN = "MOVIE_ID"
         const val SCREENING_DATETIME_COLUMN = "SCREENING_DATETIME"
         const val FEE_COLUMN = "FEE"

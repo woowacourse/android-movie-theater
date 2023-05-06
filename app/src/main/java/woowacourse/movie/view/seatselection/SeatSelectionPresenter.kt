@@ -72,6 +72,7 @@ class SeatSelectionPresenter(
 
         if (movie != null && reservationOptions != null) {
             reservationAgency = ReservationAgency(
+                reservationOptions!!.theaterName,
                 movie,
                 reservationOptions!!.peopleCount,
                 reservationOptions!!.screeningDateTime,

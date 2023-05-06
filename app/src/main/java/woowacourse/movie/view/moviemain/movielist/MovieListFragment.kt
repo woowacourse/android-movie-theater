@@ -7,9 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieMockRepository
+import woowacourse.movie.data.TheaterMockRepository
 import woowacourse.movie.databinding.FragmentMovieListBinding
+import woowacourse.movie.domain.Theater
 import woowacourse.movie.view.model.MovieListModel
 import woowacourse.movie.view.reservation.ReservationActivity
 
@@ -29,7 +32,7 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContr
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = MovieListPresenter(this, MovieMockRepository)
+        presenter = MovieListPresenter(this, MovieMockRepository, TheaterMockRepository)
         presenter.loadMovieList()
     }
 
@@ -41,13 +44,24 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContr
         binding.movieRecyclerview.adapter = movieAdapter
     }
 
-    override fun openReservationActivity(item: MovieListModel.MovieUiModel) {
-        val intent = ReservationActivity.newIntent(requireContext(), item)
+    override fun openReservationActivity(item: MovieListModel.MovieUiModel, theaterName: String) {
+        val intent = ReservationActivity.newIntent(requireContext(), item, theaterName)
         startActivity(intent)
     }
 
     override fun openAdPage(item: MovieListModel.MovieAdModel) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
         startActivity(intent)
+    }
+
+    override fun openTheaterBottomSheet(theaters: List<Theater>) {
+        val bottomSheetDialog = BottomSheetDialog(requireContext())
+        bottomSheetDialog.setContentView(
+            layoutInflater.inflate(
+                R.layout.bottom_sheet_theater,
+                null
+            )
+        )
+        bottomSheetDialog.show()
     }
 }

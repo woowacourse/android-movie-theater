@@ -6,6 +6,7 @@ import java.time.LocalDateTime
 
 @Parcelize
 data class ReservationOptions(
+    val theaterName: String,
     val title: String,
     val screeningDateTime: LocalDateTime,
     val peopleCount: Int

@@ -68,8 +68,9 @@ class ReservationPresenter(
         timeSpinnerPosition = position
     }
 
-    override fun getReservationOptions(): ReservationOptions =
+    override fun getReservationOptions(theaterName: String): ReservationOptions =
         ReservationOptions(
+            theaterName,
             movie.title,
             LocalDateTime.of(selectedScreeningDate, selectedScreeningTime),
             peopleCountSaved
@@ -85,8 +86,9 @@ class ReservationPresenter(
         peopleCountSaved = peopleCount
     }
 
-    override fun reserve() {
+    override fun reserve(theaterName: String) {
         val reservationOptions = ReservationOptions(
+            theaterName,
             movie.title,
             LocalDateTime.of(selectedScreeningDate, selectedScreeningTime),
             peopleCountSaved
