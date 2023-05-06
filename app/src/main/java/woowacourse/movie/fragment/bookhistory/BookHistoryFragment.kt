@@ -16,7 +16,6 @@ import woowacourse.movie.movie.toPresentation
 
 class BookHistoryFragment : Fragment(), BookHistoryContract.View {
     override lateinit var presenter: BookHistoryContract.Presenter
-    private val movieRecyclerView: RecyclerView by lazy { requireView().findViewById(R.id.recyclerview_book_history_list) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,17 +28,7 @@ class BookHistoryFragment : Fragment(), BookHistoryContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        makeDivider()
         presenter.setMovieRecyclerView(onClickBookHistory())
-    }
-
-    private fun makeDivider() {
-        movieRecyclerView.addItemDecoration(
-            DividerItemDecoration(
-                requireContext(),
-                LinearLayout.VERTICAL
-            )
-        )
     }
 
     private fun onClickBookHistory() = { position: Int ->
@@ -47,10 +36,22 @@ class BookHistoryFragment : Fragment(), BookHistoryContract.View {
             requireContext(),
             BookHistories.items[position].toPresentation()
         )
-        this.startActivity(intent)
+        startActivity(intent)
     }
 
     override fun setMovieRecyclerView(bookHistoryRecyclerViewAdapter: BookHistoryRecyclerViewAdapter) {
-        movieRecyclerView.adapter = bookHistoryRecyclerViewAdapter
+        val bookHistoryRecyclerView =
+            requireView().findViewById<RecyclerView>(R.id.recyclerview_book_history_list)
+        makeDivider(bookHistoryRecyclerView)
+        bookHistoryRecyclerView.adapter = bookHistoryRecyclerViewAdapter
+    }
+
+    private fun makeDivider(bookHistoryRecyclerView: RecyclerView) {
+        bookHistoryRecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                LinearLayout.VERTICAL
+            )
+        )
     }
 }
