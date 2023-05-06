@@ -7,7 +7,7 @@ object ReservationDatabase : ReservationDataSource {
     private val bookings = mutableListOf<ReservationEntity>(
         ReservationEntity(
             0,
-            movie = MovieDatabase.selectMovie(1) ?: throw IllegalArgumentException(),
+            movie = MovieDatabase.getMovieEntity(1) ?: throw IllegalArgumentException(),
             LocalDateTime.of(2024, 3, 1, 10, 0),
             0,
             listOf<SeatEntity>(SeatEntity(2, 0, 0)),

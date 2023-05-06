@@ -2,8 +2,8 @@ package woowacourse.data.movie
 
 import java.time.LocalDate
 
-object MovieDatabase {
-    val movies = listOf<MovieEntity>(
+object MovieDatabase : MovieDataSource {
+    private val movies = listOf<MovieEntity>(
         MovieEntity(
             1,
             "해리 포터와 마법사의 돌",
@@ -110,7 +110,11 @@ object MovieDatabase {
         ),
     )
 
-    fun selectMovie(id: Long): MovieEntity? {
-        return movies.find { it.id == id }
+    override fun getMovieEntities(): List<MovieEntity> {
+        return movies.toList()
+    }
+
+    override fun getMovieEntity(movieId: Long): MovieEntity? {
+        return movies.find { it.id == movieId }
     }
 }
