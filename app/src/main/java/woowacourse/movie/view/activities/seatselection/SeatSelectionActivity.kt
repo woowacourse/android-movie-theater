@@ -10,6 +10,7 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.annotation.ColorRes
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.Toolbar
 import woowacourse.movie.R
@@ -50,8 +51,22 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private fun initReservationButtonOnClickListener() {
         val reservationButton = findViewById<Button>(R.id.reservation_btn)
         reservationButton.setOnClickListener {
-            presenter.reserve(selectedSeatNames)
+            showDialogAskingIfYouWantToMakeReservation()
         }
+    }
+
+
+    private fun showDialogAskingIfYouWantToMakeReservation() {
+        AlertDialog.Builder(this).apply {
+            setTitle(getString(R.string.reservation_dialog_title))
+            setMessage(getString(R.string.reservation_dialog_message))
+            setPositiveButton(getString(R.string.confirm_reservation)) { _, _ ->
+                presenter.reserve(selectedSeatNames)
+            }
+            setNegativeButton(getString(R.string.cancel)) { _, _ -> }
+        }
+            .create()
+            .show()
     }
 
     override fun setSeats(seatUIStates: List<List<SeatUIState>>) {

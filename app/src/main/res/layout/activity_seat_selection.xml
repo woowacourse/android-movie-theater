@@ -87,7 +87,7 @@
             android:enabled="false"
             android:gravity="center"
             android:background="@color/disabled_button_color"
-            android:text="@string/reservation_complete"
+            android:text="@string/ok"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"

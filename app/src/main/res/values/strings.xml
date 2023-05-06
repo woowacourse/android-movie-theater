@@ -9,7 +9,6 @@
     <string name="screen">SCREEN</string>
     <string name="not_exist_seat_point">좌석 없음</string>
     <string name="fee_format">%s원</string>
-    <string name="reservation_complete">확인</string>
     <string name="reservation_dialog_title">예매 확인</string>
     <string name="reservation_dialog_message">정말 예매하시겠습니까?</string>
     <string name="confirm_reservation">예매 완료</string>
