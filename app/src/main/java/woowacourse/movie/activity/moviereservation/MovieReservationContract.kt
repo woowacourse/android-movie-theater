@@ -23,8 +23,7 @@ interface MovieReservationContract {
         fun plusCount()
         fun minusCount()
         fun getReservationDetailView(
-            date: LocalDateTime,
-            peopleCount: Int
+            date: LocalDateTime
         ): ReservationDetailViewData
     }
 }

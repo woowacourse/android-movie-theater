@@ -16,8 +16,7 @@ class MovieReservationPresenter(
     private val view: MovieReservationContract.View,
     private val saveStateDateSpinner: SaveState,
     private val saveStateTimeSpinner: SaveState
-) :
-    MovieReservationContract.Presenter {
+) : MovieReservationContract.Presenter {
 
     private val counter = Counter(Count(1))
 
@@ -59,10 +58,9 @@ class MovieReservationPresenter(
     }
 
     override fun getReservationDetailView(
-        date: LocalDateTime,
-        peopleCount: Int
+        date: LocalDateTime
     ): ReservationDetailViewData {
-        return ReservationDetail(date, peopleCount).toView()
+        return ReservationDetail(date, counter.count.value).toView()
     }
 
     companion object {

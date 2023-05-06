@@ -101,8 +101,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
                 LocalDateTime.of(
                     (dateSpinner.selectedItem as LocalFormattedDate).date,
                     (timeSpinner.selectedItem as LocalFormattedTime).time
-                ),
-                countText.text.toString().toInt()
+                )
             )
             SeatSelectionActivity.from(this, movie, reservationDetail).run {
                 startActivity(this)
