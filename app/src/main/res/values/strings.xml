@@ -38,4 +38,7 @@
     <!-- FragmentSettings  -->
     <string name="textPushPermissionTitle">푸시 알림 수신</string>
     <string name="textPushPermissionDescription">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+
+    <!-- BottomCinema -->
+    <string name="cinema_times_count">%d개의 상영 시간</string>
 </resources>
