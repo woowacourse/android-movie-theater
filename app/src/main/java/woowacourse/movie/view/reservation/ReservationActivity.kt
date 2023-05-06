@@ -37,10 +37,10 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
             return
         }
         presenter = ReservationPresenter(this)
+        binding.presenter = presenter
 
         setViewData(movie)
         setDateSpinner(presenter.getSchedules(movie, theaterName))
-        setPeopleCountAdjustButtonClickListener()
         setReserveButtonClickListener(movie, theaterName)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -95,17 +95,6 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         )
         binding.timeSpinner.apply {
             adapter = timeSpinnerAdapter
-        }
-    }
-
-    private fun setPeopleCountAdjustButtonClickListener() {
-        binding.apply {
-            minusButton.setOnClickListener {
-                presenter.onMinusClick()
-            }
-            plusButton.setOnClickListener {
-                presenter.onPlusClick()
-            }
         }
     }
 
