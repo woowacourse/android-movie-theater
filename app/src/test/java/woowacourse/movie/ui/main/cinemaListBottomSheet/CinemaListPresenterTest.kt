@@ -1,5 +1,8 @@
 package woowacourse.movie.ui.main.cinemaListBottomSheet
 
+import android.net.Uri
+import com.example.domain.model.Movie
+import com.example.domain.repository.CinemaRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
@@ -8,7 +11,6 @@ import java.time.LocalDate
 import java.time.LocalTime
 import org.junit.Test
 import woowacourse.movie.model.MovieState
-import woowacourse.movie.repository.CinemaRepository
 import woowacourse.movie.ui.main.cinemaBottomSheet.CinemaListContract
 import woowacourse.movie.ui.main.cinemaBottomSheet.CinemaListPresenter
 
@@ -19,7 +21,7 @@ class CinemaListPresenterTest {
         val view: CinemaListContract.View = mockk(relaxed = true)
         val cinemaRepository: CinemaRepository = mockk(relaxed = true)
         val presenter = CinemaListPresenter(view, cinemaRepository)
-        val slot = slot<MovieState>()
+        val slot = slot<Movie>()
         every { cinemaRepository.allCinema() } returns listOf()
         every { cinemaRepository.findCinema(capture(slot)) } returns listOf()
 
@@ -33,7 +35,7 @@ class CinemaListPresenterTest {
 
     companion object {
         val sampleMovieState = MovieState(
-            1,
+            Uri.parse(""),
             "title",
             LocalDate.MIN,
             LocalDate.MIN.plusDays(3),

@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.confirm
 
+import android.net.Uri
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
@@ -55,7 +56,7 @@ class ReservationConfirmPresenterTest {
         val sampleTicketsState = TicketsState(
             cinemaName = "cinemaName",
             MovieState(
-                1,
+                Uri.parse(""),
                 "title",
                 LocalDate.MIN,
                 LocalDate.MIN.plusDays(3),
