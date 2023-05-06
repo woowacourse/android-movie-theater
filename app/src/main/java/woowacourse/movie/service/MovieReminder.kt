@@ -10,7 +10,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
-import woowacourse.movie.activity.BookCompleteActivity
+import woowacourse.movie.activity.bookComplete.BookCompleteActivity
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.movie.MovieBookingSeatInfoUIModel
 

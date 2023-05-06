@@ -25,7 +25,7 @@
             android:name=".activity.seatPicker.SeatPickerActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.BookCompleteActivity"
+            android:name=".activity.bookComplete.BookCompleteActivity"
             android:exported="false" />
         <activity
             android:name=".activity.moviedetail.MovieDetailActivity"

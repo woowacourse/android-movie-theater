@@ -14,7 +14,7 @@ import com.woowacourse.domain.movie.MovieBookingSeatInfo
 import com.woowacourse.domain.seat.Seat
 import woowacourse.movie.R
 import woowacourse.movie.activity.BackButtonActivity
-import woowacourse.movie.activity.BookCompleteActivity
+import woowacourse.movie.activity.bookComplete.BookCompleteActivity
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.model.SeatGroupModel
