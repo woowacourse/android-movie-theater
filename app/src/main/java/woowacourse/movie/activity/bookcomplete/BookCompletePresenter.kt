@@ -7,7 +7,7 @@ class BookCompletePresenter(
 ) : BookCompleteContract.Presenter {
 
     override fun initBookCompletePage(movieBookingSeatInfo: MovieBookingSeatInfo) {
-        view.initMovieTitle(movieBookingSeatInfo.movieBookingInfo.movieInfo.title)
+        view.initMovieTitle(movieBookingSeatInfo.movieBookingInfo.title)
         view.initBookDate(movieBookingSeatInfo.movieBookingInfo.formatBookingTime())
         view.initBookPersonCount(
             movieBookingSeatInfo.movieBookingInfo.ticketCount,

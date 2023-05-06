@@ -3,7 +3,7 @@ package woowacourse.movie.movie
 import java.io.Serializable
 
 data class MovieBookingInfo(
-    val movieInfo: Movie,
+    val title: String,
     val date: String,
     val time: String,
     val ticketCount: Int
@@ -26,7 +26,7 @@ data class MovieBookingInfo(
 
     companion object {
         val dummyData = MovieBookingInfo(
-            Movie.dummyData,
+            Movie.dummyData.title,
             "",
             "",
             0

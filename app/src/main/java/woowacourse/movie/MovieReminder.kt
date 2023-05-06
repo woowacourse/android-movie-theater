@@ -80,7 +80,7 @@ class MovieReminder : BroadcastReceiver() {
         setContentText(
             context.getString(
                 R.string.notification_content,
-                movieBookingSeatInfo.movieBookingInfo.movieInfo.title
+                movieBookingSeatInfo.movieBookingInfo.title
             )
         )
         setContentIntent(contentPendingIntent)

@@ -18,7 +18,7 @@ import woowacourse.movie.BundleKeys.MOVIE_DATA_KEY
 import woowacourse.movie.DateFormatter
 import woowacourse.movie.R
 import woowacourse.movie.activity.BackButtonActivity
-import woowacourse.movie.activity.SeatPickerActivity
+import woowacourse.movie.activity.seatpicker.SeatPickerActivity
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.movie.Movie
 import woowacourse.movie.movie.MovieBookingInfo
@@ -101,7 +101,7 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
         intent.putExtra(
             MOVIE_BOOKING_INFO_KEY,
             MovieBookingInfo(
-                movieData,
+                movieData.title,
                 DateFormatter.format(LocalDate.parse(dateSpinner.selectedItem.toString())),
                 timeSpinner.selectedItem.toString(),
                 presenter.getTicketCount()
