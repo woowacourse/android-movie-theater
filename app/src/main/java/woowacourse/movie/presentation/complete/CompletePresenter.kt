@@ -1,13 +1,14 @@
 package woowacourse.movie.presentation.complete
 
-import woowacourse.movie.data.MovieData
-import woowacourse.movie.presentation.mappers.toPresentation
-import woowacourse.movie.presentation.model.MovieModel
+import woowacourse.movie.data.movie.MovieData
 
 class CompletePresenter(
+    private val movieData: MovieData,
     private val view: CompleteContract.View,
 ) : CompleteContract.Presenter {
 
-    override fun requireMovieModel(): MovieModel =
-        MovieData.findMovieById(view.ticketModel.movieId).toPresentation()
+    override fun setMovieTitle(movieId: Long) {
+        val movieTitle = movieData.findMovieById(movieId).title
+        view.setMovieTitle(movieTitle)
+    }
 }

@@ -2,34 +2,35 @@ package woowacourse.movie.presentation.complete
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
+import woowacourse.movie.data.movie.MockMovieData
 import woowacourse.movie.databinding.ActivityCompleteBinding
 import woowacourse.movie.presentation.main.MainActivity
-import woowacourse.movie.presentation.model.MovieModel
 import woowacourse.movie.presentation.model.TicketModel
 import woowacourse.movie.presentation.util.formatDotDateTimeColon
+import woowacourse.movie.presentation.util.getParcelableExtraCompat
 
 class CompleteActivity : AppCompatActivity(), CompleteContract.View {
 
-    override val presenter: CompleteContract.Presenter by lazy { CompletePresenter(this) }
+    override val presenter: CompleteContract.Presenter by lazy {
+        CompletePresenter(
+            MockMovieData,
+            this,
+        )
+    }
 
     private lateinit var binding: ActivityCompleteBinding
 
-    override val ticketModel by lazy {
+    private val ticketModel by lazy {
         initTicketModel()
     }
 
     private fun initTicketModel(): TicketModel {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(TICKET, TicketModel::class.java)
-                ?: throw IllegalArgumentException()
-        } else {
-            intent.getParcelableExtra(TICKET) ?: throw IllegalArgumentException()
-        }
+        return intent.getParcelableExtraCompat<TicketModel>(TICKET)
+            ?: throw NoSuchElementException()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,15 +50,14 @@ class CompleteActivity : AppCompatActivity(), CompleteContract.View {
     }
 
     private fun initView() {
-        val movie = presenter.requireMovieModel()
-        setMovieTitle(movie)
+        presenter.setMovieTitle(ticketModel.movieId)
         setMovieScreeningDate()
         setMovieTicketCount()
         setMoviePaymentAmount()
     }
 
-    private fun setMovieTitle(movieModel: MovieModel) {
-        binding.textCompletedTitle.text = movieModel.title
+    override fun setMovieTitle(movieTitle: String) {
+        binding.textCompletedTitle.text = movieTitle
     }
 
     private fun setMovieScreeningDate() {
