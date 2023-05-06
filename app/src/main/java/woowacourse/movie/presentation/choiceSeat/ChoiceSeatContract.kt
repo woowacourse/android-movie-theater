@@ -25,11 +25,13 @@ interface ChoiceSeatContract {
         fun issueTicket(): Ticket
 
         fun checkReservationCountFull(): Boolean
+
         fun addSeat(row: Int, column: Int)
 
         fun removeSeat(row: Int, column: Int)
 
         fun getLocation(row: Int, column: Int): Location
+
         fun getSeatGrade(location: Location): SeatGrade
 
         fun getMovieById(movieId: Long): Movie
