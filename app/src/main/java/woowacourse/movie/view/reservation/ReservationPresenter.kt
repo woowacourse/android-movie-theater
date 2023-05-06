@@ -19,7 +19,7 @@ class ReservationPresenter(private val view: ReservationContract.View) :
     }
 
     override fun onMinusClick() {
-        if (peopleCountSaved > 0) {
+        if (peopleCountSaved > 1) {
             peopleCountSaved--
             view.setCount(peopleCountSaved)
         }
