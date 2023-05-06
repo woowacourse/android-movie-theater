@@ -13,6 +13,7 @@ interface MovieDetailContract {
         fun initView(movieData: Movie)
         fun setCountText(count: Int)
         fun showGuideMessage(msg: String)
+        fun setIntent(movieBookingInfo: MovieBookingInfo)
     }
 
     interface Presenter {
@@ -24,6 +25,6 @@ interface MovieDetailContract {
             movieData: Movie,
             selectDate: LocalDate,
             selectTime: String
-        ): MovieBookingInfo
+        )
     }
 }

@@ -12,6 +12,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import com.woowacourse.domain.movie.Movie
+import com.woowacourse.domain.movie.MovieBookingInfo
 import com.woowacourse.domain.movie.MovieSchedule
 import woowacourse.movie.DateFormatter
 import woowacourse.movie.R
@@ -85,13 +86,11 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
 
     private fun clickSeatPickerBtn(movieData: MovieUIModel) {
         findViewById<Button>(R.id.bt_to_seat_picker).setOnClickListener {
-            val movieBookingInfo = presenter.getMovieBookingInfo(
+            presenter.getMovieBookingInfo(
                 movieData.toDomain(), LocalDate.parse(dateSpinner.selectedItem.toString()),
                 timeSpinner.selectedItem.toString()
             )
-            val intent = SeatPickerActivity.getIntent(this, movieBookingInfo.toPresentation())
-            startActivity(intent)
-            finish()
+
         }
     }
 
@@ -178,6 +177,12 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
 
     override fun showGuideMessage(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun setIntent(movieBookingInfo: MovieBookingInfo) {
+        val intent = SeatPickerActivity.getIntent(this, movieBookingInfo.toPresentation())
+        startActivity(intent)
+        finish()
     }
 
     companion object {

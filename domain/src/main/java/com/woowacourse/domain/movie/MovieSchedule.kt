@@ -4,7 +4,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
-class MovieSchedule(private val startDate: LocalDate, private val endDate: LocalDate) {
+data class MovieSchedule(private val startDate: LocalDate, private val endDate: LocalDate) {
 
     fun getScheduleDates(): List<String> = getDatesBetweenTwoDates().map {
         it.format(dateTimeFormatter)

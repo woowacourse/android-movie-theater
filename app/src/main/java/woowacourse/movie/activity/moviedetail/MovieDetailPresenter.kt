@@ -37,13 +37,14 @@ class MovieDetailPresenter(val view: MovieDetailContract.View) : MovieDetailCont
         movieData: Movie,
         selectDate: LocalDate,
         selectTime: String
-    ): MovieBookingInfo {
-        return MovieBookingInfo(
+    ) {
+        val movieBookingInfo = MovieBookingInfo(
             movieData,
             DateFormatter.format(selectDate),
             selectTime,
             peopleCount
         )
+        view.setIntent(movieBookingInfo)
     }
 
     companion object {
