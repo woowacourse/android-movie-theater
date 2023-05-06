@@ -37,7 +37,7 @@ class ReservationConfirmActivity : BackKeyActionBarActivity(), ReservationConfir
     }
 
     override fun setTicket(ticket: TicketsState) {
-        binding.reservationTitle.text = ticket.movieState.title
+        binding.reservationTitle.text = ticket.movieName
         binding.reservationDate.text = DateTimeFormatters.convertToDateTime(ticket.dateTime)
         binding.reservationCountAndSeat.text = binding.root.context.getString(
             R.string.person_count_and_seat,

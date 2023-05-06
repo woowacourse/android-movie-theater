@@ -9,7 +9,7 @@ import woowacourse.movie.model.TicketsState
 fun TicketsState.asDomain(): Tickets = Tickets(
     positions.map {
         Ticket(
-            movieState.asDomain(),
+            movieName,
             dateTime,
             it.asDomain()
         )
@@ -18,7 +18,7 @@ fun TicketsState.asDomain(): Tickets = Tickets(
 
 fun Tickets.asPresentation(): TicketsState = TicketsState(
     "영화관",
-    this.tickets.first().movie.asPresentation(),
+    this.tickets.first().movieTitle,
     this.tickets.first().dateTime,
     this.tickets.map { it.position.asPresentation() }
 )

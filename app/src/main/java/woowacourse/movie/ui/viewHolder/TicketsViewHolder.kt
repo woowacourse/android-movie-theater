@@ -33,6 +33,6 @@ class TicketsViewHolder(
                 DateTimeFormatters.convertToDate(item.ticketsState.dateTime.toLocalDate()),
                 item.ticketsState.dateTime.toLocalTime().toString()
             )
-        movieNameTextView.text = item.ticketsState.movieState.title
+        movieNameTextView.text = item.ticketsState.movieName
     }
 }

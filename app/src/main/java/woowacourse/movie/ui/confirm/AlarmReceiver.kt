@@ -27,7 +27,7 @@ class AlarmReceiver : BroadcastReceiver() {
             iconResId = R.drawable.ic_launcher_foreground,
             contentTitle = context.getString(R.string.alarm_receiver_notification_title),
             contentText = context.getString(R.string.alarm_receiver_notification_text).format(
-                tickets.movieState.title
+                tickets.movieName
             ),
             cancelable = true
         )

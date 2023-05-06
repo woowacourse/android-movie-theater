@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectBinding
+import woowacourse.movie.dbHelper.TicketsDbHelper
 import woowacourse.movie.model.MoneyState
 import woowacourse.movie.model.SeatPositionState
 import woowacourse.movie.model.SeatSelectState
@@ -18,7 +19,7 @@ import woowacourse.movie.util.keyError
 import woowacourse.movie.util.showAskDialog
 
 class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
-    private val presenter = SeatSelectPresenter(this)
+    private val presenter = SeatSelectPresenter(this, TicketsDbHelper(this))
     private lateinit var binding: ActivitySeatSelectBinding
 
     private lateinit var seatTable: SeatTable
@@ -77,7 +78,8 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
     }
 
     private fun updateSelectSeats(positionStates: List<SeatPositionState>) {
-        binding.reservationConfirm.isClickable = (positionStates.size == presenter.getRequireCount())
+        binding.reservationConfirm.isClickable =
+            (positionStates.size == presenter.getRequireCount())
         presenter.discountApply(positionStates)
     }
 
