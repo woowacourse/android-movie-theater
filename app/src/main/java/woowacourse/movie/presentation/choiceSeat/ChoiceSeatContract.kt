@@ -1,9 +1,9 @@
 package woowacourse.movie.presentation.choiceSeat
 
 import woowacourse.movie.domain.model.tools.Movie
+import woowacourse.movie.domain.model.tools.Ticket
 import woowacourse.movie.domain.model.tools.seat.Location
 import woowacourse.movie.domain.model.tools.seat.SeatGrade
-import woowacourse.movie.domain.model.tools.seat.Seats
 
 interface ChoiceSeatContract {
     interface View {
@@ -14,10 +14,15 @@ interface ChoiceSeatContract {
         fun updateConfirmButtonState(reservationCountFull: Boolean)
     }
 
+    interface AlarmManager {
+        fun setAlarm(ticket: Ticket)
+    }
+
     interface Presenter {
         val view: View
+        val alarmManager: AlarmManager
 
-        fun getSeats(): Seats
+        fun issueTicket(): Ticket
 
         fun checkReservationCountFull(): Boolean
         fun addSeat(row: Int, column: Int)
@@ -28,7 +33,5 @@ interface ChoiceSeatContract {
         fun getSeatGrade(location: Location): SeatGrade
 
         fun getMovieById(movieId: Long): Movie
-
-        fun getNotificationSettings(): Boolean
     }
 }

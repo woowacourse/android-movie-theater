@@ -1,8 +1,11 @@
 package woowacourse.movie.presentation.choiceSeat
 
+import woowacourse.movie.data.BookedTickets
 import woowacourse.movie.domain.model.rules.SeatsPayment
 import woowacourse.movie.domain.model.tools.Money
 import woowacourse.movie.domain.model.tools.Movie
+import woowacourse.movie.domain.model.tools.Ticket
+import woowacourse.movie.domain.model.tools.TicketCount
 import woowacourse.movie.domain.model.tools.seat.Location
 import woowacourse.movie.domain.model.tools.seat.Seat
 import woowacourse.movie.domain.model.tools.seat.SeatGrade
@@ -11,10 +14,12 @@ import woowacourse.movie.domain.model.tools.seat.Seats
 import woowacourse.movie.domain.model.tools.seat.Theater
 import woowacourse.movie.model.data.storage.MovieStorage
 import woowacourse.movie.model.data.storage.SettingStorage
+import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.model.ReservationModel
 
 class ChoiceSeatPresenter(
     override val view: ChoiceSeatContract.View,
+    override val alarmManager: ChoiceSeatContract.AlarmManager,
     private val settingStorage: SettingStorage,
     private val movieStorage: MovieStorage,
     private var paymentAmount: Money = Money(INITIAL_PAYMENT_AMOUNT),
@@ -26,7 +31,15 @@ class ChoiceSeatPresenter(
         updateConfirmButton()
     }
 
-    override fun getSeats(): Seats = seats
+    override fun issueTicket(): Ticket {
+        val movie: Movie = getMovieById(reservation.movieId)
+        val ticket: Ticket =
+            movie.reserve(reservation.bookedDateTime, TicketCount(reservation.count), seats)
+        // Ticket 관리하는 sqlite로 추후 교환
+        BookedTickets.tickets.add(ticket.toPresentation())
+        if (settingStorage.getNotificationSettings()) alarmManager.setAlarm(ticket)
+        return ticket
+    }
 
     private val theater: Theater = Theater.of(rows, columns)
 
@@ -75,8 +88,6 @@ class ChoiceSeatPresenter(
         )
 
     override fun getMovieById(movieId: Long): Movie = movieStorage.getMovieById(movieId)
-
-    override fun getNotificationSettings() = settingStorage.getNotificationSettings()
 
     companion object {
         private const val INITIAL_PAYMENT_AMOUNT = 0

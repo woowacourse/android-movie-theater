@@ -11,7 +11,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import woowacourse.movie.R
-import woowacourse.movie.data.BookedTickets
 import woowacourse.movie.domain.model.tools.seat.Location
 import woowacourse.movie.domain.model.tools.seat.SeatGrade
 import woowacourse.movie.model.data.local.SettingPreference
@@ -46,6 +45,7 @@ class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
     private fun initPresenter() {
         presenter = ChoiceSeatPresenter(
             view = this,
+            alarmManager = MovieNoticeAlarmManager(this),
             settingStorage = SettingPreference(this),
             movieStorage = DummyMovieStorage(),
             reservation = reservation
@@ -90,14 +90,7 @@ class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
     }
 
     private fun confirmBookMovie() {
-        val movie = presenter.getMovieById(reservation.movieId).toPresentation()
-        val ticketModel = movie.reserve(reservation, presenter.getSeats())
-        BookedTickets.tickets.add(ticketModel)
-        if (presenter.getNotificationSettings()) MovieNoticeAlarmManager(
-            this,
-            ticketModel
-        ).setAlarm(ticketModel.bookedDateTime)
-        startActivity(CompleteActivity.getIntent(this, ticketModel))
+        startActivity(CompleteActivity.getIntent(this, presenter.issueTicket().toPresentation()))
         finishAffinity()
     }
 
