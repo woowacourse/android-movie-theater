@@ -9,7 +9,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.presentation.extensions.checkPermissions
@@ -43,8 +42,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun initView() {
         requestNotificationPermission()
-        initBottomNavigationView()
-        showHomeScreen()
     }
 
     override fun onSaveInstanceState(bundle: Bundle) {
@@ -56,19 +53,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         super.onRestoreInstanceState(bundle)
         bundle.getParcelableCompat<MainState>(MAIN_SCREEN_STATE_KEY)
             ?.let { presenter.setState(it) }
-    }
-
-    private fun initBottomNavigationView() {
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
-        bottomNavigationView.selectedItemId = R.id.home
-        bottomNavigationView.setOnItemSelectedListener { menu ->
-            when (menu.itemId) {
-                R.id.history -> presenter.onShowHistoryScreen()
-                R.id.home -> presenter.onShowHomeScreen()
-                R.id.setting -> presenter.onShowSettingScreen()
-            }
-            return@setOnItemSelectedListener true
-        }
     }
 
     override fun showHistoryScreen() {
