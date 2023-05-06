@@ -5,7 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import woowacourse.movie.activity.SeatSelectionActivity
+import woowacourse.movie.activity.seatselection.SeatSelectionActivity
 import woowacourse.movie.domain.setting.SettingRepository
 import woowacourse.movie.fragment.setting.SettingFragment
 import woowacourse.movie.view.data.ReservationViewData

@@ -1,4 +1,4 @@
-package woowacourse.movie.activity
+package woowacourse.movie.activity.seatselection
 
 import android.content.Context
 import android.content.Intent
@@ -9,11 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.datasource.ReservationDataSource
-import woowacourse.movie.domain.model.Price
-import woowacourse.movie.domain.model.TicketBox
-import woowacourse.movie.domain.reservationNotificationPolicy.MovieReservationNotification
-import woowacourse.movie.domain.reservationNotificationPolicy.ReservationNotificationPolicy
+import woowacourse.movie.activity.ReservationResultActivity
 import woowacourse.movie.service.AlarmMaker
 import woowacourse.movie.view.data.MovieViewData
 import woowacourse.movie.view.data.PriceViewData
@@ -23,16 +19,12 @@ import woowacourse.movie.view.data.SeatsViewData
 import woowacourse.movie.view.error.ActivityError.finishWithError
 import woowacourse.movie.view.error.ViewError
 import woowacourse.movie.view.getSerializable
-import woowacourse.movie.view.mapper.MovieMapper.toDomain
-import woowacourse.movie.view.mapper.PriceMapper.toView
-import woowacourse.movie.view.mapper.ReservationDetailMapper.toDomain
-import woowacourse.movie.view.mapper.ReservationMapper.toView
-import woowacourse.movie.view.mapper.SeatsMapper.toDomain
+import woowacourse.movie.view.widget.SaveStateSeats
 import woowacourse.movie.view.widget.SeatTableLayout
-import java.text.NumberFormat
-import java.util.Locale
+import java.time.LocalDateTime
 
-class SeatSelectionActivity : AppCompatActivity() {
+class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
+    override lateinit var presenter: SeatSelectionContract.Presenter
 
     private val priceText: TextView by lazy {
         findViewById(R.id.seat_selection_movie_price)
@@ -46,8 +38,7 @@ class SeatSelectionActivity : AppCompatActivity() {
         SeatTableLayout.from(
             findViewById(R.id.seat_selection_table),
             SEAT_ROW_COUNT,
-            SEAT_COLUMN_COUNT,
-            SEAT_TABLE_LAYOUT_STATE_KEY
+            SEAT_COLUMN_COUNT
         )
     }
 
@@ -55,6 +46,10 @@ class SeatSelectionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seat_selection)
 
+        presenter = SeatSelectionPresenter(
+            this,
+            SaveStateSeats(SEAT_TABLE_LAYOUT_STATE_KEY, seatTableLayout)
+        )
         initSeatSelectionView(savedInstanceState)
     }
 
@@ -66,7 +61,7 @@ class SeatSelectionActivity : AppCompatActivity() {
                 ?: return finishWithError(ViewError.MissingExtras(ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME))
 
         initMovieView(movie)
-        setPriceView(PriceViewData())
+        presenter.initPrice(PriceViewData())
         initSeatTableLayout(movie, reservationDetail, savedInstanceState)
     }
 
@@ -86,8 +81,7 @@ class SeatSelectionActivity : AppCompatActivity() {
         seatTableLayout.seatSelectCondition = { seatsSize ->
             seatsSize < reservationDetail.peopleCount
         }
-
-        seatTableLayout.load(savedInstanceState)
+        presenter.loadSeat(savedInstanceState)
     }
 
     private fun makeBackButton() {
@@ -95,14 +89,16 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     private fun onSelectSeat(seats: SeatsViewData, reservationDetail: ReservationDetailViewData) {
-        val price: Price = seats.toDomain().calculateDiscountedPrice(reservationDetail.toDomain())
-        setPriceView(price.toView())
+        presenter.setSeatsPrice(seats, reservationDetail)
         setReservationButtonState(seats.seats.size, reservationDetail.peopleCount)
     }
 
-    private fun setPriceView(price: PriceViewData) {
-        val formattedPrice = NumberFormat.getNumberInstance(Locale.US).format(price.value)
-        priceText.text = getString(R.string.seat_price, formattedPrice)
+    override fun setPriceView(price: String) {
+        priceText.text = price
+    }
+
+    override fun makeAlarm(alarmDate: LocalDateTime, reservation: ReservationViewData) {
+        AlarmMaker.make(alarmDate, reservation, this)
     }
 
     private fun setReservationButtonState(
@@ -142,25 +138,11 @@ class SeatSelectionActivity : AppCompatActivity() {
         movie: MovieViewData,
         reservationDetail: ReservationDetailViewData
     ) {
-        val ticketBox = TicketBox(ReservationDataSource())
         val seats = seatTableLayout.selectedSeats()
-        val reservation =
-            ticketBox.ticketing(movie.toDomain(), reservationDetail.toDomain(), seats.toDomain())
-                .toView()
-        makeReservationAlarm(reservation, MovieReservationNotification, baseContext)
-        startReservationResultActivity(reservation)
+        presenter.reserveMovie(seats, movie, reservationDetail)
     }
 
-    private fun makeReservationAlarm(
-        reservation: ReservationViewData,
-        reservationNotificationPolicy: ReservationNotificationPolicy,
-        context: Context
-    ) {
-        val date = reservationNotificationPolicy.calculateTime(reservation.reservationDetail.date)
-        AlarmMaker.make(date, reservation, context)
-    }
-
-    private fun startReservationResultActivity(
+    override fun startReservationResultActivity(
         reservation: ReservationViewData
     ) {
         ReservationResultActivity.from(
@@ -170,13 +152,17 @@ class SeatSelectionActivity : AppCompatActivity() {
         }
     }
 
+    override fun setSeatsClick(row: Int, column: Int) {
+        seatTableLayout.findSeatViewByRowAndColumn(row, column)?.callOnClick()
+    }
+
     private fun initMovieView(movie: MovieViewData) {
         findViewById<TextView>(R.id.seat_selection_movie_title).text = movie.title
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        seatTableLayout.save(outState)
+        presenter.saveSeat(outState)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

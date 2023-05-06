@@ -1,6 +1,5 @@
 package woowacourse.movie.view.widget
 
-import android.os.Bundle
 import android.widget.TableLayout
 import android.widget.TableRow
 import androidx.core.view.children
@@ -11,13 +10,11 @@ import woowacourse.movie.domain.seat.Seats
 import woowacourse.movie.view.data.SeatTable
 import woowacourse.movie.view.data.SeatsViewData
 import woowacourse.movie.view.data.TableSize
-import woowacourse.movie.view.getSerializable
 import woowacourse.movie.view.mapper.MovieSeatMapper.toView
 
 class SeatTableLayout(
-    private val tableLayout: TableLayout,
-    override val saveStateKey: String
-) : SaveState {
+    private val tableLayout: TableLayout
+) {
     var onSelectSeat: (SeatsViewData) -> Unit = {}
     var seatSelectCondition: (Int) -> Boolean = { true }
 
@@ -65,19 +62,7 @@ class SeatTableLayout(
         }
     }
 
-    override fun save(outState: Bundle) {
-        outState.putSerializable(saveStateKey, selectedSeats())
-    }
-
-    override fun load(savedInstanceState: Bundle?) {
-        savedInstanceState ?: return
-        val seats = savedInstanceState.getSerializable<SeatsViewData>(saveStateKey) ?: return
-        seats.seats.forEach {
-            findSeatViewByRowAndColumn(it.row, it.column)?.callOnClick()
-        }
-    }
-
-    private fun findSeatViewByRowAndColumn(row: Int, column: Int): SeatView? {
+    fun findSeatViewByRowAndColumn(row: Int, column: Int): SeatView? {
         return tableLayout.children.flatMap { tableRow ->
             (tableRow as TableRow).children
         }.filterIsInstance<SeatView>().find {
@@ -89,11 +74,10 @@ class SeatTableLayout(
         fun from(
             tableLayout: TableLayout,
             row: Int,
-            column: Int,
-            saveStateKey: String
+            column: Int
         ): SeatTableLayout {
             val seatTable = makeSeatTable(row, column)
-            return SeatTableLayout(tableLayout, saveStateKey).also {
+            return SeatTableLayout(tableLayout).also {
                 it.makeSeatTable(seatTable)
             }
         }
