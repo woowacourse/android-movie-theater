@@ -53,6 +53,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             finish()
             return
         }
+        binding.options = options
 
         presenter = SeatSelectionPresenter(
             this,
@@ -62,7 +63,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         )
 
         createRows(presenter.getSeatInfoUiModel(TheaterMockRepository.gradeColor))
-        setTitle(options.title)
         setNextButton()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -95,10 +95,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 AppCompatResources.getDrawable(this@SeatSelectionActivity, R.drawable.seat_selector)
             layoutParams = TableRow.LayoutParams(0, LayoutParams.MATCH_PARENT, 1f)
         }
-
-    private fun setTitle(title: String) {
-        binding.textTitle.text = title
-    }
 
     private fun setNextButton() {
         binding.btnNext.setOnClickListener {
