@@ -27,7 +27,7 @@ class SeatSelectionPresenter(
     SeatSelectionContract.Presenter {
     override fun initPrice(price: PriceViewData) {
         val formattedPrice = NumberFormat.getNumberInstance(Locale.US).format(price.value)
-        view.setPriceView("%s원".format(formattedPrice))
+        view.setPriceView(SEAT_PRICE.format(formattedPrice))
     }
 
     override fun setSeatsPrice(
@@ -63,5 +63,9 @@ class SeatSelectionPresenter(
         seatsViewData.seats.forEach {
             view.setSeatsClick(it.row, it.column)
         }
+    }
+
+    companion object {
+        private const val SEAT_PRICE = "%s원"
     }
 }
