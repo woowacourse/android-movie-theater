@@ -6,7 +6,6 @@ interface TicketingResultContract {
     interface View {
         val presenter: Presenter
 
-        fun showTicketingResult(reservation: Reservation)
         fun showMainScreen(reservation: Reservation)
         fun close()
     }
@@ -26,5 +25,6 @@ interface TicketingResultContract {
             view ?: throw IllegalStateException("View is not attached")
 
         abstract fun onShowMainScreen()
+        abstract fun getReservation(): Reservation
     }
 }

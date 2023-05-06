@@ -4,10 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityTicketingResultBinding
 import woowacourse.movie.presentation.extensions.getParcelableCompat
 import woowacourse.movie.presentation.extensions.showBackButton
 import woowacourse.movie.presentation.model.Reservation
@@ -18,6 +19,7 @@ import woowacourse.movie.presentation.views.ticketingresult.presenter.TicketingR
 
 class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.View {
     override val presenter: TicketingResultContract.Presenter by lazy { makePresenter() }
+    private lateinit var binding: ActivityTicketingResultBinding
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -27,41 +29,11 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_ticketing_result)
-        showBackButton()
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_ticketing_result)
         presenter.attach(this)
+        binding.reservation = presenter.getReservation()
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
-    }
-
-    override fun showTicketingResult(reservation: Reservation) {
-        showMovieInformation(reservation)
-        showPaymentPrice(reservation)
-    }
-
-    private fun showMovieInformation(reservation: Reservation) {
-        val movieDate = reservation.movieDate
-        val movieTime = reservation.movieTime
-
-        findViewById<TextView>(R.id.title_tv).text = reservation.movieTitle
-        findViewById<TextView>(R.id.seats_tv).text = reservation.seats.sorted().toString()
-        findViewById<TextView>(R.id.date_tv).text = getString(
-            R.string.book_date_time,
-            movieDate.year, movieDate.month, movieDate.day, movieTime.hour, movieTime.min
-        )
-        findViewById<TextView>(R.id.theater_tv).text = reservation.theaterName
-    }
-
-    private fun showPaymentPrice(reservation: Reservation) {
-        val ticket = reservation.ticket
-        val ticketPrice = reservation.ticketPrice
-
-        findViewById<TextView>(R.id.regular_count_tv).text =
-            getString(R.string.regular_count, ticket.count)
-        findViewById<TextView>(R.id.pay_result_tv).text = getString(
-            R.string.movie_pay_result,
-            ticketPrice.amount,
-            getString(R.string.on_site_payment)
-        )
+        showBackButton()
     }
 
     override fun showMainScreen(reservation: Reservation) {

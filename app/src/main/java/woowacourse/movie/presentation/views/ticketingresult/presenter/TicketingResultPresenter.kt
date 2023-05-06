@@ -8,13 +8,10 @@ class TicketingResultPresenter(
     private val fromMainScreen: Boolean,
 ) : TicketingResultContract.Presenter() {
 
-    override fun attach(view: TicketingResultContract.View) {
-        super.attach(view)
-        requireView().showTicketingResult(reservation)
-    }
-
     override fun onShowMainScreen() {
         if (!fromMainScreen) requireView().showMainScreen(reservation)
         requireView().close()
     }
+
+    override fun getReservation(): Reservation = reservation.copy()
 }
