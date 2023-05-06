@@ -1,4 +1,4 @@
-package woowacourse.app.ui.main.setting
+package woowacourse.app.presentation.ui.main.setting
 
 import android.Manifest
 import android.app.NotificationManager
@@ -9,13 +9,15 @@ import android.view.ViewGroup
 import android.widget.Switch
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import woowacourse.app.ui.seat.NotiChannel
-import woowacourse.app.util.SettingSharedPreference
-import woowacourse.app.util.createChannel
-import woowacourse.app.util.requestNotificationPermission
+import woowacourse.app.data.pushAlarm.SettingSharedPreference
+import woowacourse.app.presentation.ui.seat.NotiChannel
+import woowacourse.app.presentation.util.createChannel
+import woowacourse.app.presentation.util.requestNotificationPermission
 import woowacourse.movie.R
 
-class SettingFragment : Fragment() {
+class SettingFragment : Fragment(), SettingContract.View {
+    override lateinit var presenter: SettingContract.Presenter
+
     private val switch: Switch by lazy {
         requireActivity().findViewById(R.id.switchPushAlarm)
     }
@@ -42,23 +44,22 @@ class SettingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val settingSharePreference = SettingSharedPreference(view.context)
-        setSwitch(settingSharePreference)
+        presenter = SettingPresenter(this, SettingSharedPreference(view.context))
     }
 
-    private fun setSwitch(settingSharePreference: SettingSharedPreference) {
-        switch.isChecked = settingSharePreference.receivingPushAlarm
-        setSwitchCheckedChange(settingSharePreference)
+    override fun setSwitch(isPushAlarmOn: Boolean) {
+        switch.isChecked = isPushAlarmOn
+        setSwitchCheckedChange()
     }
 
-    private fun setSwitchCheckedChange(settingSharePreference: SettingSharedPreference) {
+    private fun setSwitchCheckedChange() {
         switch.setOnCheckedChangeListener { switch, isChecked ->
             if (isChecked) {
                 switch.context.requestNotificationPermission {
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
             }
-            settingSharePreference.receivingPushAlarm = isChecked
+            presenter.setPushAlarmSetting(isChecked)
         }
     }
 }
