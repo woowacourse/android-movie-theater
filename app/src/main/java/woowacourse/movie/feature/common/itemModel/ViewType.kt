@@ -1,9 +1,12 @@
 package woowacourse.movie.feature.common.itemModel
 
-enum class ViewType(val id: Int) {
-    MOVIE(0),
-    ADV(1);
-    // TODO: ordinal로 변경 필요...
+import androidx.annotation.LayoutRes
+import woowacourse.movie.R
+
+enum class ViewType(@LayoutRes val layoutRes: Int) {
+    MOVIE(R.layout.item_movie),
+    ADV(R.layout.item_adv),
+    TICKETS(R.layout.item_reservation);
 
     companion object {
         fun of(id: Int): ViewType = values()[id]

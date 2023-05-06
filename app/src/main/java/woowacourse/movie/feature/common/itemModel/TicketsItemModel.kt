@@ -6,5 +6,5 @@ class TicketsItemModel(
     val ticketsState: TicketsState,
     override val onClick: (position: Int) -> Unit
 ) : ItemModel {
-    override val viewType: ViewType = ViewType.MOVIE
+    override val viewType: ViewType = ViewType.TICKETS
 }

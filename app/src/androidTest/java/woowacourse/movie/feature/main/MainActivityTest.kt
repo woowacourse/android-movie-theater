@@ -53,7 +53,7 @@ class MainActivityTest {
                 viewType =
                     it.findViewById<RecyclerView>(R.id.rv_main).adapter!!.getItemViewType(index)
             }
-            assertEquals(R.layout.adv_item_layout, viewType)
+            assertEquals(R.layout.item_adv, viewType)
         }
     }
 
@@ -64,7 +64,7 @@ class MainActivityTest {
             viewType =
                 it.findViewById<RecyclerView>(R.id.rv_main).adapter!!.getItemViewType(2)
         }
-        assertEquals(R.layout.movie_item_layout, viewType)
+        assertEquals(R.layout.item_movie, viewType)
     }
 
     @Test

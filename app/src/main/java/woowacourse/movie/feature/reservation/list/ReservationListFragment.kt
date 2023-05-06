@@ -1,50 +1,46 @@
 package woowacourse.movie.feature.reservation.list
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.data.TicketsRepository
-import woowacourse.movie.feature.common.itemModel.TicketsItemModel
-import woowacourse.movie.feature.reservation.MovieDetailActivity
+import woowacourse.movie.feature.common.adapter.CommonListAdapter
 import woowacourse.movie.feature.reservation.confirm.TicketsConfirmActivity
 import woowacourse.movie.model.TicketsState
 
 class ReservationListFragment : Fragment(R.layout.fragment_reservation_list) {
 
     private lateinit var reservationRecyclerView: RecyclerView
-    private lateinit var adapter: ReservationListAdapter
+    private lateinit var adapter: CommonListAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        reservationRecyclerView = view.findViewById(R.id.reservation_rv)
-        adapter = ReservationListAdapter(
-            TicketsRepository.allTickets().map {
-                it.toItemModel { position ->
-                    navigateReservationConfirm((adapter.reservations[position] as TicketsItemModel).ticketsState)
-                }
-            }
-        )
-        reservationRecyclerView.adapter = adapter
+        init(view)
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        adapter.setItemChanged(
-            TicketsRepository.allTickets().map {
-                it.toItemModel { position ->
-                    navigateReservationConfirm((adapter.reservations[position] as TicketsItemModel).ticketsState)
-                }
+        setItems()
+    }
+
+    private fun init(view: View) {
+        reservationRecyclerView = view.findViewById(R.id.reservation_rv)
+        adapter = CommonListAdapter()
+        setItems()
+        reservationRecyclerView.adapter = adapter
+    }
+
+    private fun setItems() {
+        adapter.setItems(
+            TicketsRepository.allTickets().map { ticketState ->
+                ticketState.toItemModel { navigateReservationConfirm(ticketState) }
             }
         )
     }
 
     private fun navigateReservationConfirm(ticketsState: TicketsState) {
-        val intent = Intent(activity, TicketsConfirmActivity::class.java)
-        intent.putExtra(MovieDetailActivity.KEY_TICKETS, ticketsState)
-        startActivity(intent)
+        TicketsConfirmActivity.startActivity(requireActivity(), ticketsState)
     }
 }
