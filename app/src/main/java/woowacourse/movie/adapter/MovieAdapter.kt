@@ -1,23 +1,38 @@
 package woowacourse.movie.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import domain.Movie
-import domain.Movies
-import woowacourse.movie.R
+import woowacourse.movie.data.model.itemmodel.AdvertisementItemModel
+import woowacourse.movie.data.model.itemmodel.MovieItemModel
 import woowacourse.movie.data.model.uimodel.AdvertisementUiModel
 import woowacourse.movie.data.model.uimodel.MovieAdapterViewType
+import woowacourse.movie.data.model.uimodel.MovieUiModel
+import woowacourse.movie.databinding.ItemAdvertisementBinding
+import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.viewholder.AdvertisementItemViewHolder
 import woowacourse.movie.viewholder.MovieItemViewHolder
 
-class MovieAdapter(
-    private val movies: Movies,
-    private val advertisementUiModel: AdvertisementUiModel,
-    private val advertisementClickEvent: (AdvertisementUiModel) -> Unit,
-    private val movieListClickEvent: (Movie) -> Unit
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MovieAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var _movies: List<MovieItemModel> = listOf()
+    val movies
+        get() = _movies.toList()
+    private var _advertisement: AdvertisementItemModel? = null
+    val advertisement
+        get() = _advertisement!!
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+
+        return when (MovieAdapterViewType.find(viewType)) {
+            MovieAdapterViewType.MOVIE -> MovieItemViewHolder(
+                ItemMovieBinding.inflate(layoutInflater, parent, false)
+            )
+            MovieAdapterViewType.ADVERTISEMENT -> AdvertisementItemViewHolder(
+                ItemAdvertisementBinding.inflate(layoutInflater, parent, false)
+            )
+        }
+    }
 
     override fun getItemViewType(position: Int): Int {
         return when (position % CYCLE) {
@@ -26,32 +41,29 @@ class MovieAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when (MovieAdapterViewType.find(viewType)) {
-            MovieAdapterViewType.MOVIE -> MovieItemViewHolder(
-                inflateView(parent, R.layout.item_movie)
-            )
-            MovieAdapterViewType.ADVERTISEMENT -> AdvertisementItemViewHolder(
-                inflateView(parent, R.layout.item_advertisement)
-            )
+    override fun getItemCount(): Int = 10_000
+
+    override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
+        when (viewHolder) {
+            is AdvertisementItemViewHolder -> viewHolder.bind(advertisement)
+            is MovieItemViewHolder -> viewHolder.bind(movies[position])
         }
     }
 
-    private fun inflateView(viewGroup: ViewGroup, layoutId: Int): View {
-        return LayoutInflater.from(viewGroup.context).inflate(layoutId, viewGroup, false)
+    fun updateMovieItems(
+        movies: List<MovieUiModel>,
+        onClick: (MovieUiModel) -> Unit
+    ) {
+        _movies = movies.map { movie ->
+            movie.toItemModel { onClick(movie) }
+        }
     }
 
-    override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-        if (viewHolder is AdvertisementItemViewHolder) viewHolder.bind(
-            advertisementUiModel, advertisementClickEvent
-        )
-        if (viewHolder is MovieItemViewHolder) viewHolder.bind(
-            movies.value[position], movieListClickEvent
-        )
-    }
-
-    override fun getItemCount(): Int {
-        return 10_000
+    fun updateAdvertisementItems(
+        advertisement: AdvertisementUiModel,
+        onClick: (AdvertisementUiModel) -> Unit
+    ) {
+        _advertisement = advertisement.toItemModel(onClick)
     }
 
     companion object {

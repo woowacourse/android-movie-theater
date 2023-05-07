@@ -103,15 +103,15 @@ class MovieReservationActivity : AppCompatActivity() {
 
     companion object {
         private const val MOVIE_KEY_VALUE = "movie"
-        fun start(context: Context, movie: Movie) {
-            val intent = Intent(context, MovieReservationActivity::class.java)
-            val movieUiModel = MovieMapper.toUi(movie)
-            intent.putExtra(MOVIE_KEY_VALUE, movieUiModel)
-            context.startActivity(intent)
-        }
-
         private const val COUNTER_SAVE_STATE_KEY = "counter"
         private const val DATE_SPINNER_SAVE_STATE_KEY = "date_spinner"
         private const val TIME_SPINNER_SAVE_STATE_KEY = "time_spinner"
+
+        fun getIntent(context: Context, movie: Movie): Intent {
+            val intent = Intent(context, MovieReservationActivity::class.java)
+            val movieUiModel = MovieMapper.toUi(movie)
+            intent.putExtra(MOVIE_KEY_VALUE, movieUiModel)
+            return intent
+        }
     }
 }
