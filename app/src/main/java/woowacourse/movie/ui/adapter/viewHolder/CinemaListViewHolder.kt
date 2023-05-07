@@ -1,8 +1,8 @@
-package woowacourse.movie.ui.viewHolder
+package woowacourse.movie.ui.adapter.viewHolder
 
 import woowacourse.movie.databinding.ItemCinemaBottomSheetBinding
-import woowacourse.movie.ui.itemModel.CinemaItemModel
-import woowacourse.movie.ui.itemModel.ItemModel
+import woowacourse.movie.ui.adapter.itemModel.CinemaItemModel
+import woowacourse.movie.ui.adapter.itemModel.ItemModel
 
 class CinemaListViewHolder(
     private val binding: ItemCinemaBottomSheetBinding,

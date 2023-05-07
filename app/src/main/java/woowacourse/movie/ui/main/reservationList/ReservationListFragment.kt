@@ -8,8 +8,8 @@ import woowacourse.movie.dbHelper.TicketsDbHelper
 import woowacourse.movie.model.TicketsState
 import woowacourse.movie.ui.BaseFragment
 import woowacourse.movie.ui.adapter.ReservationListAdapter
+import woowacourse.movie.ui.adapter.itemModel.TicketsItemModel
 import woowacourse.movie.ui.confirm.ReservationConfirmActivity
-import woowacourse.movie.ui.itemModel.TicketsItemModel
 
 class ReservationListFragment : BaseFragment(), ReservationListContract.View {
     override lateinit var presenter: ReservationListContract.Presenter

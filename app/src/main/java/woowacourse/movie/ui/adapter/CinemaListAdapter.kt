@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemCinemaBottomSheetBinding
-import woowacourse.movie.ui.itemModel.CinemaItemModel
-import woowacourse.movie.ui.itemModel.ItemModel
-import woowacourse.movie.ui.viewHolder.CinemaListViewHolder
-import woowacourse.movie.ui.viewHolder.ItemViewHolder
+import woowacourse.movie.ui.adapter.itemModel.CinemaItemModel
+import woowacourse.movie.ui.adapter.itemModel.ItemModel
+import woowacourse.movie.ui.adapter.viewHolder.CinemaListViewHolder
+import woowacourse.movie.ui.adapter.viewHolder.ItemViewHolder
 
 class CinemaListAdapter(
     cinemas: List<ItemModel>,

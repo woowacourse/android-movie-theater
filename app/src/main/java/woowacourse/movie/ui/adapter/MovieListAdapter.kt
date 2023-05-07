@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemAdvLayoutBinding
 import woowacourse.movie.databinding.ItemMovieLayoutBinding
-import woowacourse.movie.ui.itemModel.AdvItemModel
-import woowacourse.movie.ui.itemModel.ItemModel
-import woowacourse.movie.ui.itemModel.MovieItemModel
-import woowacourse.movie.ui.viewHolder.AdvViewHolder
-import woowacourse.movie.ui.viewHolder.ItemViewHolder
-import woowacourse.movie.ui.viewHolder.MovieViewHolder
+import woowacourse.movie.ui.adapter.itemModel.AdvItemModel
+import woowacourse.movie.ui.adapter.itemModel.ItemModel
+import woowacourse.movie.ui.adapter.itemModel.MovieItemModel
+import woowacourse.movie.ui.adapter.viewHolder.AdvViewHolder
+import woowacourse.movie.ui.adapter.viewHolder.ItemViewHolder
+import woowacourse.movie.ui.adapter.viewHolder.MovieViewHolder
 
 class MovieListAdapter(
     movie: List<MovieItemModel>,

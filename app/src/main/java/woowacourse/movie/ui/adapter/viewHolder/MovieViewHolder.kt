@@ -1,8 +1,8 @@
-package woowacourse.movie.ui.viewHolder
+package woowacourse.movie.ui.adapter.viewHolder
 
 import woowacourse.movie.databinding.ItemMovieLayoutBinding
-import woowacourse.movie.ui.itemModel.ItemModel
-import woowacourse.movie.ui.itemModel.MovieItemModel
+import woowacourse.movie.ui.adapter.itemModel.ItemModel
+import woowacourse.movie.ui.adapter.itemModel.MovieItemModel
 
 class MovieViewHolder(
     private val binding: ItemMovieLayoutBinding,

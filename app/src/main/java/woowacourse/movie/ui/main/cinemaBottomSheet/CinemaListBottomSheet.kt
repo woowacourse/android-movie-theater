@@ -8,7 +8,7 @@ import woowacourse.movie.model.CinemaState
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.ui.BaseBottomSheetDialogFragment
 import woowacourse.movie.ui.adapter.CinemaListAdapter
-import woowacourse.movie.ui.itemModel.CinemaItemModel
+import woowacourse.movie.ui.adapter.itemModel.CinemaItemModel
 import woowacourse.movie.ui.reservation.MovieDetailActivity
 import woowacourse.movie.util.getParcelableCompat
 

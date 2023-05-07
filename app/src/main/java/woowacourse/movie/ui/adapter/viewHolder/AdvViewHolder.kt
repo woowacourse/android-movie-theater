@@ -1,8 +1,8 @@
-package woowacourse.movie.ui.viewHolder
+package woowacourse.movie.ui.adapter.viewHolder
 
 import woowacourse.movie.databinding.ItemAdvLayoutBinding
-import woowacourse.movie.ui.itemModel.AdvItemModel
-import woowacourse.movie.ui.itemModel.ItemModel
+import woowacourse.movie.ui.adapter.itemModel.AdvItemModel
+import woowacourse.movie.ui.adapter.itemModel.ItemModel
 
 class AdvViewHolder(
     private val binding: ItemAdvLayoutBinding,

@@ -26,9 +26,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
+import woowacourse.movie.ui.adapter.itemModel.AdvItemModel
+import woowacourse.movie.ui.adapter.itemModel.MovieItemModel
 import woowacourse.movie.ui.adv.AdvDetailActivity
-import woowacourse.movie.ui.itemModel.AdvItemModel
-import woowacourse.movie.ui.itemModel.MovieItemModel
 import woowacourse.movie.ui.reservation.MovieDetailActivity
 
 @RunWith(AndroidJUnit4::class)

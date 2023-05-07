@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.itemModel
+package woowacourse.movie.ui.adapter.itemModel
 
 import woowacourse.movie.model.AdvState
 
