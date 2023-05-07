@@ -9,14 +9,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.data.movie.MovieRepositoryImpl
 import woowacourse.movie.ui.home.adapter.ItemClickListener
 import woowacourse.movie.ui.home.adapter.MovieListAdapter
 import woowacourse.movie.ui.moviedetail.MovieDetailActivity
 import woowacourse.movie.uimodel.MovieListModel
-import woowacourse.movie.utils.MockData
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), HomeContract.View {
     private lateinit var moviesView: RecyclerView
+
+    override val presenter by lazy {
+        HomePresenter(this, MovieRepositoryImpl())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,11 +32,11 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setMovieList(view, MockData.getMoviesWithAds())
+        moviesView = view.findViewById(R.id.main_movie_list)
+        presenter.setMovieList()
     }
 
-    private fun setMovieList(view: View, movies: List<MovieListModel>) {
-        moviesView = view.findViewById(R.id.main_movie_list)
+    override fun setMovieList(movies: List<MovieListModel>) {
         moviesView.adapter = MovieListAdapter(
             movies,
             object : ItemClickListener {
