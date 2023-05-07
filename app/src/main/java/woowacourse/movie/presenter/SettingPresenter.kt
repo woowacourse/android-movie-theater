@@ -1,7 +1,6 @@
 package woowacourse.movie.presenter
 
-import woowacourse.movie.SettingPreferencesManager
-import woowacourse.movie.SharedPreferenceManager
+import woowacourse.movie.database.SharedPreferenceManager
 import woowacourse.movie.contract.SettingContract
 
 class SettingPresenter(

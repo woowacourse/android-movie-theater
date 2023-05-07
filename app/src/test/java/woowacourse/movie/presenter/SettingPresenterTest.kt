@@ -4,12 +4,10 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
-import junit.framework.TestCase
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.SettingPreferencesManager
-import woowacourse.movie.SharedPreferenceManager
+import woowacourse.movie.database.SharedPreferenceManager
 import woowacourse.movie.contract.SettingContract
 
 class SettingPresenterTest {

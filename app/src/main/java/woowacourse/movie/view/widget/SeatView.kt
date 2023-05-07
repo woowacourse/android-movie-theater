@@ -1,16 +1,12 @@
-package woowacourse.movie.view
+package woowacourse.movie.view.widget
 
 import android.view.Gravity
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import domain.Seat
-import domain.discountPolicy.DisCountPolicies
-import domain.seatPolicy.SeatPolicies
 import woowacourse.movie.R
 import woowacourse.movie.setBackgroundColorId
-import woowacourse.movie.model.mapper.SeatMapper
-import woowacourse.movie.model.mapper.SeatRankMapper
 import woowacourse.movie.model.mapper.SeatRankMapper.toUi
 import woowacourse.movie.model.SeatUiModel
 

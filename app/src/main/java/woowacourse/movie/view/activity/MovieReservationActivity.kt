@@ -13,11 +13,11 @@ import woowacourse.movie.databinding.ActivityMovieReservationBinding
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.model.*
 import woowacourse.movie.presenter.MovieReservationPresenter
-import woowacourse.movie.view.Counter
-import woowacourse.movie.view.DateSpinner
-import woowacourse.movie.view.MovieDateTimePicker
-import woowacourse.movie.view.MovieView
-import woowacourse.movie.view.TimeSpinner
+import woowacourse.movie.view.widget.Counter
+import woowacourse.movie.view.widget.DateSpinner
+import woowacourse.movie.view.widget.MovieDateTimePicker
+import woowacourse.movie.view.widget.MovieView
+import woowacourse.movie.view.widget.TimeSpinner
 import java.time.LocalDate
 import java.time.LocalTime
 

@@ -1,9 +1,8 @@
-package woowacourse.movie.view
+package woowacourse.movie.view.widget
 
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import woowacourse.movie.model.MovieUiModel
 import woowacourse.movie.model.TheaterUiModel
 import java.time.LocalDate
 import java.time.LocalDateTime

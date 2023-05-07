@@ -9,8 +9,8 @@ import woowacourse.movie.model.MovieUiModel
 import woowacourse.movie.model.TheatersUiModel
 import woowacourse.movie.model.TicketOfficeUiModel
 import woowacourse.movie.model.TicketsUiModel
-import woowacourse.movie.sql.ReservationDbHelperInterface
-import woowacourse.movie.view.SeatView
+import woowacourse.movie.database.ReservationDbHelperInterface
+import woowacourse.movie.view.widget.SeatView
 import java.time.LocalDate
 import java.time.LocalDateTime
 

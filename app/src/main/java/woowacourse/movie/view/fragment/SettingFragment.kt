@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Switch
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.SettingPreferencesManager
+import woowacourse.movie.database.SettingPreferencesManager
 import woowacourse.movie.contract.SettingContract
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.presenter.SettingPresenter

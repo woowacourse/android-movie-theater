@@ -1,4 +1,4 @@
-package woowacourse.movie.sql
+package woowacourse.movie.database
 
 import domain.Reservation
 

@@ -1,4 +1,4 @@
-package woowacourse.movie.sql
+package woowacourse.movie.database
 
 object ReservationContract {
     const val TABLE_NAME = "Reservation"

@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.database
 
 interface SharedPreferenceManager {
     fun changeData()

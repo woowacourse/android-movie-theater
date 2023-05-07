@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -17,12 +15,11 @@ import woowacourse.movie.databinding.ActivitySelectSeatBinding
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.model.*
 import woowacourse.movie.setBackgroundColorId
-import woowacourse.movie.view.MovieView
-import woowacourse.movie.view.SeatTable
+import woowacourse.movie.view.widget.MovieView
+import woowacourse.movie.view.widget.SeatTable
 import woowacourse.movie.presenter.SelectSeatPresenter
-import woowacourse.movie.sql.ReservationDbHelper
+import woowacourse.movie.database.ReservationDbHelper
 import java.text.NumberFormat
-import java.time.LocalDateTime
 import java.util.*
 
 class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {

@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -12,14 +11,11 @@ import woowacourse.movie.R
 import woowacourse.movie.contract.ReservationResultContract
 import woowacourse.movie.databinding.ActivityReservationResultBinding
 import woowacourse.movie.getSerializableCompat
-import woowacourse.movie.view.MovieView
-import woowacourse.movie.model.mapper.TicketsMapper
-import woowacourse.movie.model.mapper.TicketsMapper.toDomain
+import woowacourse.movie.view.widget.MovieView
 import woowacourse.movie.model.MovieUiModel
 import woowacourse.movie.model.TicketsUiModel
 import woowacourse.movie.presenter.ReservationResultPresenter
 import java.text.NumberFormat
-import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
 

@@ -1,7 +1,6 @@
-package woowacourse.movie.view
+package woowacourse.movie.view.widget
 
 import android.widget.Spinner
-import woowacourse.movie.model.MovieUiModel
 import woowacourse.movie.util.LocalFormattedDate
 import java.time.LocalDate
 

@@ -2,9 +2,6 @@ package woowacourse.movie.presenter
 
 import domain.Reservation
 import domain.Seat
-import domain.TicketOffice
-import domain.Tickets
-import domain.discountPolicy.DisCountPolicies
 import woowacourse.movie.contract.SelectSeatContract
 import woowacourse.movie.model.MovieUiModel
 import woowacourse.movie.model.SeatUiModel
@@ -12,9 +9,8 @@ import woowacourse.movie.model.TicketOfficeUiModel
 import woowacourse.movie.model.mapper.MovieMapper.toDomain
 import woowacourse.movie.model.mapper.TicketOfficeMapper.toDomain
 import woowacourse.movie.model.mapper.TicketsMapper.toUi
-import woowacourse.movie.sql.ReservationDbHelperInterface
-import woowacourse.movie.view.SeatView
-import java.time.LocalDateTime
+import woowacourse.movie.database.ReservationDbHelperInterface
+import woowacourse.movie.view.widget.SeatView
 
 class SelectSeatPresenter(
     val view: SelectSeatContract.View,

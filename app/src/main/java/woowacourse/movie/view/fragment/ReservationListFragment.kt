@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.contract.ReservationListContract
 import woowacourse.movie.databinding.FragmentReservationListBinding
@@ -16,7 +15,7 @@ import woowacourse.movie.model.TicketsUiModel
 import woowacourse.movie.view.activity.ReservationResultActivity
 import woowacourse.movie.view.adapter.ReservationAdapter
 import woowacourse.movie.presenter.ReservationListPresenter
-import woowacourse.movie.sql.ReservationDbHelper
+import woowacourse.movie.database.ReservationDbHelper
 
 class ReservationListFragment : Fragment(R.layout.fragment_reservation_list),
     ReservationListContract.View {

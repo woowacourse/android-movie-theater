@@ -2,7 +2,7 @@ package woowacourse.movie.contract
 
 import woowacourse.movie.model.MovieUiModel
 import woowacourse.movie.model.TicketsUiModel
-import woowacourse.movie.view.SeatView
+import woowacourse.movie.view.widget.SeatView
 
 interface SelectSeatContract {
     interface Presenter {
