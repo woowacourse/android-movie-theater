@@ -11,6 +11,7 @@ fun MovieDto.mapToMovie(): Movie {
         runningTime = this.runningTime,
         description = this.description,
         moviePoster = this.moviePoster,
+        theaters = this.theaters.mapToMovieTheaters(),
     )
 }
 
@@ -22,5 +23,6 @@ fun Movie.mapToMovieDto(): MovieDto {
         runningTime = this.runningTime,
         description = this.description,
         moviePoster = this.moviePoster,
+        theaters = this.theaters.mapToMovieTheatersDto()
     )
 }

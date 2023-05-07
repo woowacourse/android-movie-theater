@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.dto.AdDto
 import woowacourse.movie.movie.dto.movie.MovieDto
-import woowacourse.movie.movie.moviedetail.MovieDetailActivity
+import woowacourse.movie.movie.theater.TheaterSheetFragment
 
 class HomeFragment : Fragment(), HomeContract.View {
     private lateinit var binding: FragmentHomeBinding
@@ -41,11 +41,14 @@ class HomeFragment : Fragment(), HomeContract.View {
     private fun onMovieItemClickListener(adapter: MovieAdapter) {
         adapter.itemMovieClick = object : OnClickListener<MovieDto> {
             override fun onClick(item: MovieDto) {
-                val intent = Intent(context, MovieDetailActivity::class.java)
-                intent.putExtra(MOVIE_KEY, item)
-                startActivity(intent)
+                showTheaterSheet(item)
             }
         }
+    }
+
+    private fun showTheaterSheet(item: MovieDto){
+        TheaterSheetFragment.newInstance(item)
+            .show(parentFragmentManager, TheaterSheetFragment.THEATER_KEY)
     }
 
     private fun onAdItemClickListener(adapter: MovieAdapter) {
@@ -58,6 +61,6 @@ class HomeFragment : Fragment(), HomeContract.View {
     }
 
     companion object {
-        private const val MOVIE_KEY = "movie"
+        const val MOVIE_KEY = "movie"
     }
 }

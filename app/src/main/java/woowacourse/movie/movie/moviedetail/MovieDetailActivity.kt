@@ -7,21 +7,20 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-import domain.DayOfWeek
 import domain.movieinfo.MovieDate
 import domain.movieinfo.MovieTime
-import domain.screeningschedule.ReservationTime
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
-import woowacourse.movie.movie.dto.movie.MovieDateDto
 import woowacourse.movie.movie.dto.movie.MovieDto
 import woowacourse.movie.movie.dto.movie.SeatMovieDto
+import woowacourse.movie.movie.dto.theater.MovieTheaterDto
 import woowacourse.movie.movie.dto.ticket.TicketCountDto
 import woowacourse.movie.movie.mapper.movie.mapToMovieDateDto
 import woowacourse.movie.movie.mapper.movie.mapToMovieTimeDto
 import woowacourse.movie.movie.mapper.ticket.mapToTicketCount
 import woowacourse.movie.movie.mapper.ticket.mapToTicketCountDto
 import woowacourse.movie.movie.seat.SeatSelectionActivity
+import woowacourse.movie.movie.theater.TheaterSheetFragment.Companion.THEATER_KEY
 import woowacourse.movie.movie.utils.getParcelableCompat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -64,7 +63,8 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
 
     private fun initDetailData() {
         val movie = intent.getParcelableCompat<MovieDto>(MOVIE_KEY)
-        movie?.let { presenter.initActivity(movie) }
+        val theater = intent.getParcelableCompat<MovieTheaterDto>(THEATER_KEY)
+        movie?.let { theater?.let { presenter.initActivity(movie, theater) } }
     }
 
     override fun showMovieInfo(poster: Int, title: String, description: String) {
@@ -139,19 +139,15 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
                 position: Int,
                 id: Long,
             ) {
-                setTimeSpinner(
-                    MovieDate.of(selectDateSpinner.getItemAtPosition(position) as String)
-                        .mapToMovieDateDto(),
-                )
+                setTimeSpinner()
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
     }
 
-    override fun setTimeSpinner(selectedDay: MovieDateDto) {
-        selectTimeSpinner.adapter = getTimeSpinnerAdapter(selectedDay)
+    override fun setTimeSpinner() {
+        selectTimeSpinner.adapter = getTimeSpinnerAdapter()
         selectTimeSpinner.setSelection(timeSpinnerPosition)
 
         selectTimeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -163,7 +159,6 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
             ) {
                 timeSpinnerPosition = position
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
@@ -180,11 +175,11 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         return dateAdapter
     }
 
-    private fun getTimeSpinnerAdapter(selectedDay: MovieDateDto): ArrayAdapter<String> {
+    private fun getTimeSpinnerAdapter(): ArrayAdapter<String> {
         val timeAdapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
-            ReservationTime(DayOfWeek.checkDayOfWeek(selectedDay.date)).getIntervalTimes(),
+            presenter.getTimes(),
         )
 
         timeAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
@@ -211,7 +206,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
 
     companion object {
         const val SEAT_BASE_INFORMATION_KEY = "seat_base_info"
-        private const val MOVIE_KEY = "movie"
+        const val MOVIE_KEY = "movie"
         private const val DATE_SPINNER_POSITION = "date_spinner_position"
         private const val TIME_SPINNER_POSITION = "time_spinner_position"
     }

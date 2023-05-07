@@ -3,6 +3,7 @@ package woowacourse.movie.movie.dto.movie
 import android.os.Parcelable
 import androidx.annotation.DrawableRes
 import kotlinx.parcelize.Parcelize
+import woowacourse.movie.movie.dto.theater.MovieTheatersDto
 import woowacourse.movie.movie.movielist.ViewType
 import java.time.LocalDate
 
@@ -15,4 +16,5 @@ data class MovieDto(
     val runningTime: Int,
     val description: String,
     @DrawableRes val moviePoster: Int,
+    val theaters: MovieTheatersDto,
 ) : Parcelable

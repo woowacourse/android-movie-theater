@@ -3,26 +3,30 @@ package woowacourse.movie.movie.moviedetail
 import domain.movieinfo.Movie
 import domain.screeningschedule.ReservationDate
 import woowacourse.movie.movie.dto.movie.MovieDto
+import woowacourse.movie.movie.dto.theater.MovieTheaterDto
 import woowacourse.movie.movie.dto.ticket.TicketCountDto
 import woowacourse.movie.movie.mapper.movie.mapToMovie
 
 class MovieDetailPresenter(private val view: MovieDetailContract.View) :
     MovieDetailContract.Presenter {
+    lateinit var movie: Movie
+    lateinit var theater: MovieTheaterDto
 
-    override fun initActivity(movieDto: MovieDto) {
-        val movie = movieDto.mapToMovie()
+    override fun initActivity(movieDto: MovieDto, theater: MovieTheaterDto) {
+        movie = movieDto.mapToMovie()
+        this.theater = theater
         view.showMovieInfo(movie.moviePoster, movie.title, movie.description)
-        view.showMovieDateInfo(getMovieDate(movie), getMovieTime(movie))
+        view.showMovieDateInfo(getMovieDate(), getMovieTime())
         view.showNumberOfPeople()
         view.onClickBookBtnListener(movieDto)
-        view.setDateSpinner(getIntervalDays(movie))
+        view.setDateSpinner(getIntervalDays())
     }
 
-    override fun getMovieDate(movie: Movie): String {
+    override fun getMovieDate(): String {
         return view.formatMovieRunningDate(movie.startDate, movie.endDate)
     }
 
-    override fun getMovieTime(movie: Movie): String {
+    override fun getMovieTime(): String {
         return view.formatMovieRunningTime(movie.runningTime)
     }
 
@@ -34,7 +38,13 @@ class MovieDetailPresenter(private val view: MovieDetailContract.View) :
         return movieTicket.numberOfPeople.toString()
     }
 
-    override fun getIntervalDays(movie: Movie): List<String> {
+    override fun getIntervalDays(): List<String> {
         return ReservationDate(movie.startDate, movie.endDate).getIntervalDays()
+    }
+    override fun getTimes(): List<String> {
+        val times = theater.time
+        return times.asSequence()
+            .map { it.toString() }
+            .toList()
     }
 }

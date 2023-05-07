@@ -1,8 +1,7 @@
 package woowacourse.movie.movie.moviedetail
 
-import domain.movieinfo.Movie
-import woowacourse.movie.movie.dto.movie.MovieDateDto
 import woowacourse.movie.movie.dto.movie.MovieDto
+import woowacourse.movie.movie.dto.theater.MovieTheaterDto
 import woowacourse.movie.movie.dto.ticket.TicketCountDto
 import java.time.LocalDate
 
@@ -19,15 +18,16 @@ interface MovieDetailContract {
         fun onClickIncreaseBtnListener()
         fun onClickBookBtnListener(movie: MovieDto)
         fun setDateSpinner(intervalDate: List<String>)
-        fun setTimeSpinner(selectedDay: MovieDateDto)
+        fun setTimeSpinner()
     }
 
     interface Presenter {
-        fun initActivity(movieDto: MovieDto)
-        fun getMovieDate(movie: Movie): String
-        fun getMovieTime(movie: Movie): String
+        fun initActivity(movieDto: MovieDto, theater: MovieTheaterDto)
+        fun getMovieDate(): String
+        fun getMovieTime(): String
         fun decreaseCount(movieTicket: TicketCountDto): String
         fun increaseCount(movieTicket: TicketCountDto): String
-        fun getIntervalDays(movie: Movie): List<String>
+        fun getIntervalDays(): List<String>
+        fun getTimes(): List<String>
     }
 }
