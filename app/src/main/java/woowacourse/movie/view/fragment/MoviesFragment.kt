@@ -3,11 +3,15 @@ package woowacourse.movie.view.fragment
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.contract.MoviesContract
+import woowacourse.movie.databinding.FragmentMoviesBinding
 import woowacourse.movie.view.activity.MovieReservationActivity
 import woowacourse.movie.view.adapter.MovieAdapter
 import woowacourse.movie.model.AdvertisementUiModel
@@ -16,12 +20,19 @@ import woowacourse.movie.presenter.MoviesPresenter
 
 
 class MoviesFragment : Fragment(R.layout.fragment_movies), MoviesContract.View {
-    override val presenter: MoviesContract.Presenter = MoviesPresenter(this)
-    private lateinit var movieRecyclerView: RecyclerView
+    override val presenter: MoviesContract.Presenter by lazy { MoviesPresenter(this) }
+    private lateinit var binding: FragmentMoviesBinding
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        movieRecyclerView = view.findViewById(R.id.main_movie_list)
         presenter.updateMovieList()
     }
 
@@ -29,7 +40,7 @@ class MoviesFragment : Fragment(R.layout.fragment_movies), MoviesContract.View {
         movieUiModels: List<MovieUiModel>,
         advertisementUiModel: AdvertisementUiModel
     ) {
-        movieRecyclerView.adapter = MovieAdapter(
+        binding.mainMovieList.adapter = MovieAdapter(
             movieUiModels = movieUiModels,
             advertisementUiModel = advertisementUiModel,
             advertisementClickEvent = presenter::onAdvertisementItemClick,

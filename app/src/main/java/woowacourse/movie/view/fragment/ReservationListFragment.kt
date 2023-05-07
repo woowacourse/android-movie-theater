@@ -1,11 +1,15 @@
 package woowacourse.movie.view.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.contract.ReservationListContract
+import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.model.MovieUiModel
 import woowacourse.movie.model.ReservationUiModel
 import woowacourse.movie.model.TicketsUiModel
@@ -16,22 +20,34 @@ import woowacourse.movie.sql.ReservationDbHelper
 
 class ReservationListFragment : Fragment(R.layout.fragment_reservation_list),
     ReservationListContract.View {
+    private lateinit var binding: FragmentReservationListBinding
     override val presenter: ReservationListContract.Presenter by lazy {
         ReservationListPresenter(
             this,
             ReservationDbHelper(requireContext())
         )
     }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_reservation_list,
+            container,
+            false
+        )
+        return binding.root
+    }
 
-    private lateinit var recyclerView: RecyclerView
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView = view.findViewById(R.id.reservation_recycler_view)
         presenter.updateReservationList()
     }
 
     override fun setAdapter(reservationUiModelList: List<ReservationUiModel>) {
-        recyclerView.adapter =
+        binding.reservationRecyclerView.adapter =
             ReservationAdapter(reservationUiModelList, presenter::reservationItemClick)
     }
 
