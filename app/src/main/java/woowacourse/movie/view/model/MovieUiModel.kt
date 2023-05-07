@@ -5,6 +5,9 @@ import kotlinx.parcelize.Parcelize
 import java.time.LocalDate
 import java.time.LocalTime
 
+typealias TheaterName = String
+typealias ScreeningTimes = List<LocalTime>
+
 @Parcelize
 data class MovieUiModel(
     val title: String,
@@ -13,5 +16,5 @@ data class MovieUiModel(
     val runningTime: Int,
     val posterResourceId: Int,
     val summary: String,
-    val schedule: Map<String, List<LocalTime>>,
+    val schedule: Map<TheaterName, ScreeningTimes>,
 ) : Parcelable
