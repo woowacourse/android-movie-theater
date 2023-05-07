@@ -16,6 +16,10 @@
         <variable
             name="tickets"
             type="domain.Tickets" />
+
+        <variable
+            name="theater"
+            type="woowacourse.movie.data.model.uimodel.TheaterUiModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

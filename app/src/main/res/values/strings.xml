@@ -12,7 +12,7 @@
     <string name="movie_running_time">러닝타임: %d분</string>
     <string name="movie_date_format">yyyy-MM-dd</string>
 
-    <string name="reservation_seat_count_detail">일반 %d명 | %s</string>
+    <string name="reservation_seat_count_detail">일반 %d명 | %s | %s</string>
     <string name="reservation_price">%s원 (현장 결제)</string>
 
     <string name="movie_extra_name">movie</string>
@@ -40,4 +40,8 @@
     <string name="alarm_title">"예매 알림"</string>
     <string name="alarm_content">\"%s 30분 후에 상영\"</string>
     <string name="advertisement_content_description">Advertisement</string>
+
+    <string name="theater_time_table_count_format">%d개의 상영 시간</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

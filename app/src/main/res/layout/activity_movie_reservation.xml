@@ -9,6 +9,10 @@
             type="woowacourse.movie.data.model.uimodel.MovieUiModel" />
 
         <variable
+            name="theater"
+            type="woowacourse.movie.data.model.uimodel.TheaterUiModel" />
+
+        <variable
             name="counter"
             type="woowacourse.movie.data.model.Counter" />
     </data>

@@ -5,7 +5,9 @@ import domain.Ticket
 import domain.TicketOffice
 import woowacourse.movie.data.model.SeatTable
 import woowacourse.movie.data.model.SeatView
+import woowacourse.movie.data.model.mapper.TheaterMapper
 import woowacourse.movie.data.model.uimodel.SeatUiModel
+import woowacourse.movie.data.model.uimodel.TheaterUiModel
 import java.time.LocalDateTime
 
 class SelectSeatPresenter(
@@ -21,12 +23,13 @@ class SelectSeatPresenter(
         seatTable.makeSeatTable()
     }
 
-    override fun updateSeatState(seatView: SeatView, dateTime: LocalDateTime) {
+    override fun updateSeatState(seatView: SeatView, dateTime: LocalDateTime, theater: TheaterUiModel) {
         val ticket =
             ticketOffice.generateTicket(
                 dateTime,
                 SeatUiModel.toNumber(seatView.row),
-                seatView.col
+                seatView.col,
+                TheaterMapper.toDomain(theater)
             )
         if (ticketOffice.tickets.isContainSameTicket(ticket)) {
             setViewNotSelected(seatView, ticket)

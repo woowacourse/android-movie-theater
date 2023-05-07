@@ -13,6 +13,7 @@ import woowacourse.movie.data.model.DateSpinner
 import woowacourse.movie.data.model.MovieDateTimePicker
 import woowacourse.movie.data.model.TimeSpinner
 import woowacourse.movie.data.model.mapper.MovieMapper
+import woowacourse.movie.data.model.uimodel.TheaterUiModel
 import woowacourse.movie.data.model.uimodel.TicketDateUiModel
 import woowacourse.movie.databinding.ActivityMovieReservationBinding
 import woowacourse.movie.getSerializableCompat
@@ -30,12 +31,17 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
 
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_reservation)
 
-        setUpPresenter()
         setUpUiModels()
+        setUpPresenter()
         setUpDateTimePicker(savedInstanceState)
         setUpCounter(savedInstanceState)
         setUpOnCLick()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun setUpUiModels() {
+        binding.movie = intent.extras?.getSerializableCompat(MOVIE_KEY_VALUE) ?: throw IllegalStateException(MOVIE_DATA_NOT_FOUND_ERROR)
+        binding.theater = intent.extras?.getSerializableCompat(THEATER_KEY_VALUE) ?: throw IllegalStateException(MOVIE_DATA_NOT_FOUND_ERROR)
     }
 
     private fun setUpPresenter() {
@@ -50,13 +56,10 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
                 TimeSpinner(
                     binding.spReservationTime,
                     TIME_SPINNER_SAVE_STATE_KEY,
+                    binding.theater!!
                 )
             )
         )
-    }
-
-    private fun setUpUiModels() {
-        binding.movie = intent.extras?.getSerializableCompat(MOVIE_KEY_VALUE) ?: throw IllegalStateException(MOVIE_DATA_NOT_FOUND_ERROR)
     }
 
     private fun setUpCounter(savedInstanceState: Bundle?) {
@@ -79,7 +82,8 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
                 context = this,
                 peopleCount = presenter.getCount(),
                 ticketDateUiModel = TicketDateUiModel(presenter.getSelectedDateTime()),
-                movieUiModel = binding.movie!!
+                movieUiModel = binding.movie!!,
+                theaterUiModel = binding.theater!!
             )
             startActivity(intent)
         }
@@ -104,15 +108,17 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
 
     companion object {
         private const val MOVIE_KEY_VALUE = "movie"
+        private const val THEATER_KEY_VALUE = "theater"
         private const val COUNTER_SAVE_STATE_KEY = "counter"
         private const val DATE_SPINNER_SAVE_STATE_KEY = "date_spinner"
         private const val TIME_SPINNER_SAVE_STATE_KEY = "time_spinner"
         private const val MOVIE_DATA_NOT_FOUND_ERROR = "영화 데이터가 찾을 수 없습니다."
 
-        fun getIntent(context: Context, movie: Movie): Intent {
+        fun getIntent(context: Context, movie: Movie, theaterUiModel: TheaterUiModel): Intent {
             val intent = Intent(context, MovieReservationActivity::class.java)
             val movieUiModel = MovieMapper.toUi(movie)
             intent.putExtra(MOVIE_KEY_VALUE, movieUiModel)
+            intent.putExtra(THEATER_KEY_VALUE, theaterUiModel)
             return intent
         }
     }

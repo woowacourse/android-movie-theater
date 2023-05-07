@@ -16,5 +16,6 @@
     <color name="seat_rank_a_color">#1B48E9</color>
     <color name="seat_rank_s_color">#19D358</color>
     <color name="selected_seat_color">#FAFF00</color>
+    <color name="black_05">#80000000</color>
 
 </resources>

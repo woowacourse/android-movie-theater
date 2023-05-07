@@ -8,7 +8,8 @@ object TicketMapper : DomainViewMapper<Ticket, TicketUiModel> {
     override fun toUi(domainModel: Ticket): TicketUiModel {
         return TicketUiModel(
             date = domainModel.date,
-            seat = SeatMapper.toUi(domainModel.seat)
+            seat = SeatMapper.toUi(domainModel.seat),
+            theater = TheaterMapper.toUi(domainModel.theater)
         )
     }
 
@@ -16,7 +17,8 @@ object TicketMapper : DomainViewMapper<Ticket, TicketUiModel> {
         return Ticket(
             ticketUiModel.date,
             SeatMapper.toDomain(ticketUiModel.seat),
-            DisCountPolicies()
+            DisCountPolicies(),
+            TheaterMapper.toDomain(ticketUiModel.theater)
         )
     }
 }

@@ -15,6 +15,7 @@ import woowacourse.movie.data.model.SeatTable
 import woowacourse.movie.data.model.SeatView
 import woowacourse.movie.data.model.mapper.TicketsMapper
 import woowacourse.movie.data.model.uimodel.MovieUiModel
+import woowacourse.movie.data.model.uimodel.TheaterUiModel
 import woowacourse.movie.data.model.uimodel.TicketDateUiModel
 import woowacourse.movie.data.model.uimodel.TicketsUiModel
 import woowacourse.movie.databinding.ActivitySelectSeatBinding
@@ -63,6 +64,8 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
             intent.extras?.getSerializableCompat(MOVIE_KEY_VALUE) ?: throw IllegalStateException()
         binding.ticketDate =
             intent.extras?.getSerializableCompat(TICKET_KEY) ?: throw IllegalStateException()
+        binding.theater =
+            intent.extras?.getSerializableCompat(THEATER_KEY_VALUE) ?: throw IllegalStateException()
         binding.tickets = presenter.tickets
     }
 
@@ -130,7 +133,7 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
     }
 
     private fun changeSeatState(seatView: SeatView) {
-        presenter.updateSeatState(seatView, binding.ticketDate!!.date)
+        presenter.updateSeatState(seatView, binding.ticketDate!!.date, binding.theater!!)
     }
 
     override fun updateSeatView(seatView: SeatView, isSelected: Boolean) {
@@ -160,16 +163,19 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
         private const val PEOPLE_COUNT_KEY = "peopleCount"
         private const val TICKET_KEY = "ticket"
         private const val MOVIE_KEY_VALUE = "movie"
+        private const val THEATER_KEY_VALUE = "theater"
         fun getIntent(
             context: Context,
             peopleCount: Int,
             ticketDateUiModel: TicketDateUiModel,
-            movieUiModel: MovieUiModel
+            movieUiModel: MovieUiModel,
+            theaterUiModel: TheaterUiModel
         ): Intent {
             val intent = Intent(context, SelectSeatActivity::class.java)
             intent.putExtra(PEOPLE_COUNT_KEY, peopleCount)
             intent.putExtra(TICKET_KEY, ticketDateUiModel)
             intent.putExtra(MOVIE_KEY_VALUE, movieUiModel)
+            intent.putExtra(THEATER_KEY_VALUE, theaterUiModel)
             return intent
         }
     }

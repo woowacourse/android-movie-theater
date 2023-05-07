@@ -11,9 +11,9 @@ class TicketOffice(
     val peopleCount: Int
 ) {
 
-    fun generateTicket(date: LocalDateTime, seatRow: Int, seatCol: Int): Ticket {
+    fun generateTicket(date: LocalDateTime, seatRow: Int, seatCol: Int, theater: Theater): Ticket {
         val seat = Seat(seatRow, seatCol, seatPolicies)
-        return Ticket(date, seat, disCountPolicies)
+        return Ticket(date, seat, disCountPolicies, theater)
     }
 
     fun isAvailableAddTicket(): Boolean = tickets.list.size < peopleCount
