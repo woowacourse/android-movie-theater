@@ -12,7 +12,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.google.android.material.switchmaterial.SwitchMaterial
 import woowacourse.movie.R
 import woowacourse.movie.data.setting.SettingPreferencesRepository
 import woowacourse.movie.databinding.FragmentSettingBinding
@@ -21,7 +20,6 @@ import woowacourse.movie.view.model.ReservationUiModel
 
 class SettingFragment : Fragment(), SettingContract.View {
 
-    private lateinit var toggle: SwitchMaterial
     private lateinit var alarmController: AlarmController
     private lateinit var binding: FragmentSettingBinding
     override lateinit var presenter: SettingContract.Presenter
@@ -29,8 +27,8 @@ class SettingFragment : Fragment(), SettingContract.View {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        savedInstanceState: Bundle?,
+    ): View {
         presenter = SettingPresenter(this, SettingPreferencesRepository(requireContext()))
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
         binding.presenter = presenter
@@ -40,13 +38,11 @@ class SettingFragment : Fragment(), SettingContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         alarmController = AlarmController(requireContext())
-
-        toggle = view.findViewById(R.id.setting_toggle)
         presenter.initToggle()
     }
 
     override fun setToggle(isOn: Boolean) {
-        toggle.isChecked = isOn
+        binding.settingToggle.isChecked = isOn
     }
 
     override fun setAlarms(reservations: List<ReservationUiModel>) {
