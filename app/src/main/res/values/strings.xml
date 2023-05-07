@@ -27,4 +27,8 @@
     <string name="yes">예</string>
     <string name="no">아니요</string>
     <string name="number_of_screening_times">%d개의 상영시간</string>
+
+    <string name="start_column">1</string>
+    <string name="start_row">A</string>
+    <string name="purple">#8E13EF</string>
 </resources>

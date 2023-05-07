@@ -10,8 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import woowacourse.movie.R
 
-class SeatTableLayout(context: Context, attrs: AttributeSet) :
-    TableLayout(context, attrs) {
+class SeatTableLayout(context: Context, attrs: AttributeSet) : TableLayout(context, attrs) {
 
     init {
         this.isStretchAllColumns = true
@@ -59,7 +58,10 @@ class SeatTableLayout(context: Context, attrs: AttributeSet) :
 
     fun initSeatsText() {
         this.loopTable { rowIdx, columnIdx, seat ->
-            val seatText = (START_ROW + rowIdx) + (START_COL + columnIdx).toString()
+            val seatText =
+                (context.getString(R.string.start_row).first().code + rowIdx).toChar() +
+                    (context.getString(R.string.start_column).toInt() + columnIdx).toString()
+
             seat.text = seatText
             setSeatTextColor(seat, rowIdx)
         }
@@ -67,7 +69,7 @@ class SeatTableLayout(context: Context, attrs: AttributeSet) :
 
     private fun setSeatTextColor(seat: TextView, row: Int) {
         when (row) {
-            in MAGENTA_RANGE -> seat.setTextColor(PURPLE)
+            in MAGENTA_RANGE -> seat.setTextColor(Color.parseColor(context.getString(R.string.purple)))
             in GREEN_RANGE -> seat.setTextColor(Color.GREEN)
             else -> seat.setTextColor(Color.BLUE)
         }
@@ -110,8 +112,5 @@ class SeatTableLayout(context: Context, attrs: AttributeSet) :
 
         private val MAGENTA_RANGE = 0..1
         private val GREEN_RANGE = 2..3
-        private val PURPLE = Color.parseColor("#8E13EF")
-        private const val START_ROW = 'A'
-        private const val START_COL = 1
     }
 }
