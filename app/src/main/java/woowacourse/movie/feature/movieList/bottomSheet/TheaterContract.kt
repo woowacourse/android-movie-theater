@@ -2,7 +2,7 @@ package woowacourse.movie.feature.movieList.bottomSheet
 
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.TheaterMovieState
-import woowacourse.movie.model.TheaterState
+import woowacourse.movie.model.TheaterScreeningState
 
 interface TheaterContract {
     interface View {
@@ -12,6 +12,6 @@ interface TheaterContract {
 
     interface Presenter {
         fun loadTheatersData(movie: MovieState)
-        fun clickTheater(theater: TheaterState, movie: MovieState)
+        fun clickTheater(theater: TheaterScreeningState, movie: MovieState)
     }
 }

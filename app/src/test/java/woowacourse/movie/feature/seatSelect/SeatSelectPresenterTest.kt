@@ -119,6 +119,7 @@ internal class SeatSelectPresenterTest {
         "선릉 극장",
         MovieState(
             R.drawable.imitation_game_poster,
+            2,
             "이미테이션 게임",
             LocalDate.of(2023, 5, 1),
             LocalDate.of(2023, 8, 20),

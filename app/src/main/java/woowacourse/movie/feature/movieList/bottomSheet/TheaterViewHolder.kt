@@ -6,7 +6,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemTheaterLayoutBinding
 import woowacourse.movie.feature.common.itemModel.CommonItemModel
 import woowacourse.movie.feature.common.viewHolder.CommonItemViewHolder
-import woowacourse.movie.model.TheaterState
+import woowacourse.movie.model.TheaterScreeningState
 
 class TheaterViewHolder(
     binding: ItemTheaterLayoutBinding
@@ -18,9 +18,9 @@ class TheaterViewHolder(
 }
 
 @BindingAdapter("theater_time_count_text")
-fun setTheaterTimeCountText(view: TextView, theater: TheaterState) {
+fun setTheaterTimeCountText(view: TextView, theater: TheaterScreeningState) {
     view.text = view.context.getString(
         R.string.theater_screening_times,
-        theater.screenInfos.first().dateTimes.size
+        theater.screeningInfos.first().screeningDateTimes.size
     )
 }

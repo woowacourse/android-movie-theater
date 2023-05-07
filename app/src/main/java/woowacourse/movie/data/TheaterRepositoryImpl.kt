@@ -2,26 +2,27 @@ package woowacourse.movie.data
 
 import woowacourse.movie.R
 import woowacourse.movie.model.MovieState
-import woowacourse.movie.model.ScreenMovieInfo
-import woowacourse.movie.model.TheaterState
+import woowacourse.movie.model.ScreeningMovieState
+import woowacourse.movie.model.TheaterScreeningState
 import java.time.LocalDate
 import java.time.LocalTime
 
 object TheaterRepositoryImpl : TheaterRepository {
-    override fun getAllTheaters(): List<TheaterState> {
+    override fun getAllTheaters(): List<TheaterScreeningState> {
         return theaters.toList()
     }
 
-    override fun getScreeningMovieTheaters(movieState: MovieState): List<TheaterState> {
-        return theaters.filter { theater -> movieState in theater.screenInfos.map { it.movieState } }
+    override fun getScreeningMovieTheaters(movieState: MovieState): List<TheaterScreeningState> {
+        return theaters.filter { theater -> movieState in theater.screeningInfos.map { it.movie } }
             .map {
-                it.copy(screenInfos = it.screenInfos.filter { movieState == it.movieState })
+                it.copy(screeningInfos = it.screeningInfos.filter { movieState == it.movie })
             }
     }
 
     private val movies: List<MovieState> = listOf(
         MovieState(
             R.drawable.slamdunk_poster,
+            0,
             "더 퍼스트 슬램덩크",
             LocalDate.of(2023, 4, 29),
             LocalDate.of(2023, 5, 20),
@@ -32,6 +33,7 @@ object TheaterRepositoryImpl : TheaterRepository {
         ),
         MovieState(
             R.drawable.ga_oh_galaxy_poster,
+            1,
             "가디언즈 오브 갤럭시: Volume 3",
             LocalDate.of(2023, 5, 3),
             LocalDate.of(2023, 7, 20),
@@ -40,6 +42,7 @@ object TheaterRepositoryImpl : TheaterRepository {
         ),
         MovieState(
             R.drawable.imitation_game_poster,
+            2,
             "이미테이션 게임",
             LocalDate.of(2023, 5, 1),
             LocalDate.of(2023, 8, 20),
@@ -48,11 +51,11 @@ object TheaterRepositoryImpl : TheaterRepository {
         )
     )
 
-    private val theaters: List<TheaterState> = listOf(
-        TheaterState(
+    private val theaters: List<TheaterScreeningState> = listOf(
+        TheaterScreeningState(
             "선릉 극장",
             listOf(
-                ScreenMovieInfo(
+                ScreeningMovieState(
                     movies[0],
                     listOf(
                         LocalTime.of(10, 0),
@@ -63,7 +66,7 @@ object TheaterRepositoryImpl : TheaterRepository {
                         LocalTime.of(20, 0),
                     )
                 ),
-                ScreenMovieInfo(
+                ScreeningMovieState(
                     movies[1],
                     listOf(
                         LocalTime.of(12, 0),
@@ -71,7 +74,7 @@ object TheaterRepositoryImpl : TheaterRepository {
                         LocalTime.of(20, 0),
                     )
                 ),
-                ScreenMovieInfo(
+                ScreeningMovieState(
                     movies[2],
                     listOf(
                         LocalTime.of(10, 0),
@@ -81,10 +84,10 @@ object TheaterRepositoryImpl : TheaterRepository {
                 ),
             )
         ),
-        TheaterState(
+        TheaterScreeningState(
             "잠실 극장",
             listOf(
-                ScreenMovieInfo(
+                ScreeningMovieState(
                     movies[0],
                     listOf(
                         LocalTime.of(10, 0),
@@ -92,7 +95,7 @@ object TheaterRepositoryImpl : TheaterRepository {
                         LocalTime.of(20, 0),
                     )
                 ),
-                ScreenMovieInfo(
+                ScreeningMovieState(
                     movies[1],
                     listOf(
                         LocalTime.of(10, 0),
@@ -103,7 +106,7 @@ object TheaterRepositoryImpl : TheaterRepository {
                         LocalTime.of(20, 0),
                     )
                 ),
-                ScreenMovieInfo(
+                ScreeningMovieState(
                     movies[2],
                     listOf(
                         LocalTime.of(12, 0),
@@ -112,10 +115,10 @@ object TheaterRepositoryImpl : TheaterRepository {
                 ),
             )
         ),
-        TheaterState(
+        TheaterScreeningState(
             "강남 극장",
             listOf(
-                ScreenMovieInfo(
+                ScreeningMovieState(
                     movies[0],
                     listOf(
                         LocalTime.of(12, 0),
@@ -123,7 +126,7 @@ object TheaterRepositoryImpl : TheaterRepository {
                         LocalTime.of(20, 0),
                     )
                 ),
-                ScreenMovieInfo(
+                ScreeningMovieState(
                     movies[2],
                     listOf(
                         LocalTime.of(10, 0),

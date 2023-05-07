@@ -41,7 +41,7 @@
             android:layout_width="332dp"
             android:layout_height="43dp"
             android:gravity="center"
-            android:text="@{tickets.movieState.title}"
+            android:text="@{tickets.movie.title}"
             android:textColor="@color/black"
             android:textSize="25sp"
             android:textStyle="bold"

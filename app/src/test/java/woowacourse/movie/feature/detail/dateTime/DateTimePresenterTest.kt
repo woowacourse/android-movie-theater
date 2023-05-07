@@ -58,6 +58,7 @@ internal class DateTimePresenterTest {
         "선릉 극장",
         MovieState(
             R.drawable.ga_oh_galaxy_poster,
+            1,
             "가디언즈 오브 갤럭시: Volume 3",
             LocalDate.of(2023, 5, 3),
             LocalDate.of(2023, 7, 20),

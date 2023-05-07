@@ -31,7 +31,7 @@ class MovieListFragment : Fragment(), MovieListContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setFragmentResultListener(THEATER_SELECT_KEY) { requestKey, bundle ->
+        setFragmentResultListener(THEATER_SELECT_KEY) { _, bundle ->
             val theaterMovie = bundle.getParcelableCompat<TheaterMovieState>(THEATER_MOVIE_KEY)
                 ?: return@setFragmentResultListener
             presenter.receiveTheaterInfo(theaterMovie)

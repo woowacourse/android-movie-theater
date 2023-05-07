@@ -47,6 +47,7 @@ internal class ReservationPresenterTest {
             "선릉 극장",
             MovieState(
                 R.drawable.ga_oh_galaxy_poster,
+                1,
                 "가디언즈 오브 갤럭시: Volume 3",
                 LocalDate.of(2023, 5, 3),
                 LocalDate.of(2023, 7, 20),
@@ -61,6 +62,7 @@ internal class ReservationPresenterTest {
             "강남 극장",
             MovieState(
                 R.drawable.imitation_game_poster,
+                2,
                 "이미테이션 게임",
                 LocalDate.of(2023, 5, 1),
                 LocalDate.of(2023, 8, 20),

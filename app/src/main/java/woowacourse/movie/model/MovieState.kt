@@ -10,6 +10,7 @@ import java.time.LocalDate
 data class MovieState(
     @DrawableRes
     val imgId: Int,
+    val movieId: Int,
     val title: String,
     val startDate: LocalDate,
     val endDate: LocalDate,

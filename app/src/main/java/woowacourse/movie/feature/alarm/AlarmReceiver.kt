@@ -25,7 +25,7 @@ class AlarmReceiver : BroadcastReceiver(), AlarmReceiverContract.View {
             R.drawable.ic_launcher_foreground,
             context.getString(R.string.alarm_receiver_notification_title),
             context.getString(R.string.alarm_receiver_notification_text)
-                .format(tickets.movieState.title),
+                .format(tickets.movie.title),
             true
         )
     }

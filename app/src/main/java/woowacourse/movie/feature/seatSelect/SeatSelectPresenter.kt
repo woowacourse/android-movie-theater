@@ -26,7 +26,7 @@ class SeatSelectPresenter(
 
     override fun clickSeat(index: Int) {
         val seatPosition = convertIndexToPosition(index)
-        if (seatPosition !in seats && seats.size >= reservationState.countState.value) return
+        if (seatPosition !in seats && seats.size >= reservationState.selectCount.value) return
 
         if (seatPosition in _seats) _seats.remove(seatPosition)
         else _seats.add(seatPosition)
@@ -43,7 +43,7 @@ class SeatSelectPresenter(
         val tickets = getIssuedTicketsUseCase(
             reservationState.theaterName,
             reservationState.movieState.asDomain(),
-            reservationState.dateTime,
+            reservationState.selectDateTime,
             seats.map { it.asDomain() }
         ).asPresentation()
 
@@ -74,12 +74,12 @@ class SeatSelectPresenter(
     private fun updateMoneyAndConfirmBtnState() {
         val money = discountApplyUseCase(
             reservationState.movieState.asDomain(),
-            reservationState.dateTime,
+            reservationState.selectDateTime,
             seats.map { it.asDomain() }
         ).asPresentation()
         view.changePredictMoney(money)
 
-        view.setConfirmClickable(seats.size == reservationState.countState.value)
+        view.setConfirmClickable(seats.size == reservationState.selectCount.value)
     }
 
     private fun convertIndexToPosition(index: Int): SeatPositionState {

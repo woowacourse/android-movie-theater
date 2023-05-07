@@ -8,6 +8,6 @@ import java.time.LocalDateTime
 data class ReservationState(
     val theaterName: String,
     val movieState: MovieState,
-    val dateTime: LocalDateTime,
-    val countState: CountState
+    val selectDateTime: LocalDateTime,
+    val selectCount: CountState
 ) : Parcelable

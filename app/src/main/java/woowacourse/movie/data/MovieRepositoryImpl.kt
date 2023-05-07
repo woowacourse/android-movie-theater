@@ -12,6 +12,7 @@ object MovieRepositoryImpl : MovieRepository {
             add(
                 MovieState(
                     R.drawable.slamdunk_poster,
+                    0,
                     "더 퍼스트 슬램덩크",
                     LocalDate.of(2023, 4, 29),
                     LocalDate.of(2023, 5, 20),
@@ -24,6 +25,7 @@ object MovieRepositoryImpl : MovieRepository {
             add(
                 MovieState(
                     R.drawable.ga_oh_galaxy_poster,
+                    1,
                     "가디언즈 오브 갤럭시: Volume 3",
                     LocalDate.of(2023, 5, 3),
                     LocalDate.of(2023, 7, 20),
@@ -34,6 +36,7 @@ object MovieRepositoryImpl : MovieRepository {
             add(
                 MovieState(
                     R.drawable.imitation_game_poster,
+                    2,
                     "이미테이션 게임",
                     LocalDate.of(2023, 5, 1),
                     LocalDate.of(2023, 8, 20),
