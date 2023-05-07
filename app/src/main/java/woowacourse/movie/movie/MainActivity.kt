@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onNavigationBarClickListener(bottomNavigationView: BottomNavigationView) {
+        bottomNavigationView.selectedItemId = R.id.home
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home -> setFragment(TAG_HOME_FRAGMENT, HomeFragment())
