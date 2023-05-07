@@ -15,14 +15,20 @@ import woowacourse.movie.presentation.model.item.Reservation
 
 class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.View {
     override lateinit var presenter: HistoryContract.Presenter
+    private lateinit var historyRecyclerView: RecyclerView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter = HistoryPresenter(this)
-        val historyRecyclerView = view.findViewById<RecyclerView>(R.id.history_recycler_view)
+        historyRecyclerView = view.findViewById<RecyclerView>(R.id.history_recycler_view)
+        val db = HistoryDbHelper(requireContext())
+        presenter = HistoryPresenter(this, db)
+        presenter.getData()
+    }
+
+    override fun setAdapterData(items: List<Reservation>) {
         val historyAdapter = HistoryListAdapter { presenter.onClicked(it) }
-        historyAdapter.appendAll(Reservation.provideDummy())
+        historyAdapter.appendAll(items)
         historyRecyclerView.adapter = historyAdapter
         historyRecyclerView.addItemDecoration(
             DividerItemDecoration(

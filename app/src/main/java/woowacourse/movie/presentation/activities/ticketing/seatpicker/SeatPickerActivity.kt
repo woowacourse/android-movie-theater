@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.presentation.activities.main.alarm.PushAlarmManager
+import woowacourse.movie.presentation.activities.main.fragments.history.HistoryDbHelper
 import woowacourse.movie.presentation.activities.main.fragments.home.HomeFragment
 import woowacourse.movie.presentation.activities.ticketing.TicketingActivity
 import woowacourse.movie.presentation.activities.ticketingresult.TicketingResultActivity
@@ -160,6 +161,9 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
             seats = presenter.getPickedSeats(),
             ticketPrice = presenter.calculateTotalPrice(movieDate, movieTime),
         )
+
+        val db = HistoryDbHelper(this)
+        db.insertData(reservation)
 
         registerPushBroadcast(reservation)
 
