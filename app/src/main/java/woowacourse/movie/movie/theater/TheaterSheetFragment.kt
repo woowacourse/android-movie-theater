@@ -9,16 +9,15 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.databinding.FragmentTheaterSheetBinding
 import woowacourse.movie.movie.dto.movie.MovieDto
 import woowacourse.movie.movie.dto.theater.MovieTheaterDto
-import woowacourse.movie.movie.dto.theater.MovieTheatersDto
 import woowacourse.movie.movie.moviedetail.MovieDetailActivity
 import woowacourse.movie.movie.moviedetail.MovieDetailActivity.Companion.MOVIE_KEY
 import woowacourse.movie.movie.movielist.HomeFragment
 import woowacourse.movie.movie.movielist.OnClickListener
 import woowacourse.movie.movie.utils.getParcelableCompat
 
-class TheaterSheetFragment : BottomSheetDialogFragment() {
+class TheaterSheetFragment : BottomSheetDialogFragment(), TheaterContract.View {
     private lateinit var binding: FragmentTheaterSheetBinding
-    private lateinit var movie: MovieDto
+    override lateinit var presenter: TheaterContract.Presenter
 
     private lateinit var adapter: TheaterAdapter
 
@@ -28,8 +27,8 @@ class TheaterSheetFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         setUpBinding()
+        presenter = TheaterPresenter(this)
         initDetailData()
-        setUpTheaterData(movie.theaters)
         return binding.root
     }
 
@@ -37,13 +36,13 @@ class TheaterSheetFragment : BottomSheetDialogFragment() {
         binding = FragmentTheaterSheetBinding.inflate(layoutInflater)
     }
 
-    private fun initDetailData() {
-        movie = arguments?.getParcelableCompat(MOVIE_KEY) ?: throw IllegalArgumentException()
+    override fun initDetailData() {
+        val movie = arguments?.getParcelableCompat<MovieDto>(MOVIE_KEY) ?: throw IllegalArgumentException()
+        presenter.initFragment(movie)
     }
 
-    private fun setUpTheaterData(theaters: MovieTheatersDto) {
-        val theaterAdapter = TheaterAdapter(theaters.theaters)
-
+    override fun setUpTheaterData(movie: MovieDto) {
+        val theaterAdapter = TheaterAdapter(movie.theaters.theaters)
         adapter = theaterAdapter
         binding.theaterRecyclerview.adapter = adapter
 
