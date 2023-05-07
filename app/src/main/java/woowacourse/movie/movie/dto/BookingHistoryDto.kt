@@ -10,5 +10,9 @@ object BookingHistoryDto : java.io.Serializable {
         bookingHistory.add(movie)
     }
 
+    fun deleteAll() {
+        bookingHistory.clear()
+    }
+
     fun getHistory(): List<BookingMovieEntity> = bookingHistory.toList()
 }

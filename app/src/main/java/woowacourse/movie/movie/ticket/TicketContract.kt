@@ -1,7 +1,6 @@
 package woowacourse.movie.movie.ticket
 
 import woowacourse.movie.movie.dto.movie.BookingMovieEntity
-import woowacourse.movie.movie.dto.seat.SeatsDto
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -20,6 +19,6 @@ interface TicketContract {
         fun initActivity(bookingMovieEntity: BookingMovieEntity)
         fun getDateInfo(bookingMovieEntity: BookingMovieEntity): String
         fun getTicketInfo(bookingMovieEntity: BookingMovieEntity): String
-        fun getTicketPrice(seats: SeatsDto, date: LocalDate, time: LocalTime): String
+        // fun getTicketPrice(seats: SeatsDto, date: LocalDate, time: LocalTime): String
     }
 }

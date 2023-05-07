@@ -4,13 +4,17 @@ import android.app.AlarmManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import domain.Seat
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
+import woowacourse.movie.movie.database.DBController
+import woowacourse.movie.movie.database.TicketDataDBHelper
 import woowacourse.movie.movie.dto.BookingHistoryDto
+import woowacourse.movie.movie.dto.movie.BookingMovieEntity
 import woowacourse.movie.movie.dto.movie.SeatMovieDto
 import woowacourse.movie.movie.dto.seat.SeatsDto
 import woowacourse.movie.movie.moviedetail.MovieDetailActivity.Companion.SEAT_BASE_INFORMATION_KEY
@@ -24,10 +28,12 @@ import woowacourse.movie.movie.view.SeatSelectView
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private lateinit var binding: ActivitySeatSelectionBinding
     override lateinit var presenter: SeatSelectionContract.Presenter
+    private lateinit var dBController: DBController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySeatSelectionBinding.inflate(layoutInflater)
+        dBController = DBController(TicketDataDBHelper(this).writableDatabase)
         setToolBar()
         presenter = SeatSelectionPresenter(this)
         setContentView(binding.root)
@@ -130,12 +136,18 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     private fun moveActivity() {
         val bookingMovie = presenter.getBookingMovie()
+        storeData(bookingMovie)
         val intent = Intent(this, TicketActivity::class.java)
         intent.putExtra(BOOKING_MOVIE_KEY, bookingMovie)
         putAlarm()
         BookingHistoryDto.add(bookingMovie)
         startActivity(intent)
         finish()
+    }
+
+    private fun storeData(bookingMovie: BookingMovieEntity) {
+        Log.d("test", "storeData 진입")
+        dBController.insertDB(bookingMovie)
     }
 
     override fun putAlarm() {

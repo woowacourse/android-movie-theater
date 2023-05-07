@@ -5,7 +5,6 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -33,15 +32,13 @@ class NotificationBuilder(val context: Context) {
         val builder = NotificationCompat.Builder(context, CHANNEL_ID).apply {
             setSmallIcon(R.drawable.cute_android)
             setContentTitle(NOTIFICATION_TITLE)
-            setContentText(NOTIFICATION_TEXT.format(bookingMovie.movie.title))
+            setContentText(NOTIFICATION_TEXT.format(bookingMovie.title))
             priority = NotificationCompat.PRIORITY_DEFAULT
             setContentIntent(PendingIntentBuilder(context).createNotificationPendingIntent(bookingMovie))
             setAutoCancel(true)
         }
-        Log.d("test", "알람 빌더 성공")
 
         notifyBuilder(context, builder)
-        Log.d("test", "빌드 성공")
     }
 
     private fun notifyBuilder(context: Context, builder: NotificationCompat.Builder) {

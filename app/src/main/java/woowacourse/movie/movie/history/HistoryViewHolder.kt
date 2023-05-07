@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter
 class HistoryViewHolder(private val binding: HistoryItemBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(item: BookingMovieEntity) {
         binding.historyDatetime.text = formatMovieDateTime(item.date, item.time)
-        binding.historyTitle.text = item.movie.title
+        binding.historyTitle.text = item.title
     }
 
     private fun formatMovieDateTime(date: MovieDateDto, time: MovieTimeDto): String {

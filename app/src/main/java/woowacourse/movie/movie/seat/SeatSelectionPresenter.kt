@@ -68,13 +68,18 @@ class SeatSelectionPresenter(private val view: SeatSelectionContract.View) :
     }
 
     override fun getBookingMovie(): BookingMovieEntity {
+        val price = seats.caculateSeatPrice(
+            LocalDateTime.of(seatBaseInfo.movieDate.date, seatBaseInfo.movieTime.time)
+        )
+
         return BookingMovieEntity(
-            seatBaseInfo.movie,
+            seatBaseInfo.movie.title,
             seatBaseInfo.movieDate,
             seatBaseInfo.movieTime,
             seatBaseInfo.ticketCount,
-            seats.mapToSeatsDto(),
+            seats.mapToSeatsDto().getSeatsPositionToString(),
             seatBaseInfo.theaterName,
+            price
         )
     }
 

@@ -13,6 +13,9 @@ import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
+import woowacourse.movie.movie.database.DBController
+import woowacourse.movie.movie.database.TicketDataDBHelper
+import woowacourse.movie.movie.dto.BookingHistoryDto
 import woowacourse.movie.movie.history.HistoryFragment
 import woowacourse.movie.movie.movielist.HomeFragment
 import woowacourse.movie.movie.setting.SettingFragment
@@ -22,10 +25,13 @@ import woowacourse.movie.movie.utils.Toaster
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var dBController: DBController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        dBController = DBController(TicketDataDBHelper(this).writableDatabase)
+        dBController.findAllDB()
         setContentView(binding.root)
         requestNotificationPermission()
         SettingPreference.initSharedPreferences(applicationContext)
@@ -92,6 +98,12 @@ class MainActivity : AppCompatActivity() {
     ) { isCheck: Boolean ->
         if (isCheck) Toaster.showToast(this@MainActivity, PERMIT_PERMISSION_MESSAGE)
         else Toaster.showToast(this@MainActivity, DENIED_PERMISSION_MESSAGE)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        BookingHistoryDto.deleteAll()
+        dBController.closeDB()
     }
 
     companion object {
