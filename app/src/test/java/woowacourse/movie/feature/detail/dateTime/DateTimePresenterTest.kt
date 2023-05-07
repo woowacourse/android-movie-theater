@@ -1,5 +1,6 @@
 package woowacourse.movie.feature.detail.dateTime
 
+import com.example.domain.repository.dataSource.theaterDataSources
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -10,6 +11,7 @@ import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.SelectTheaterAndMovieState
+import woowacourse.movie.model.mapper.asPresentation
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -55,7 +57,7 @@ internal class DateTimePresenterTest {
     }
 
     private val mockTheaterMovie = SelectTheaterAndMovieState(
-        "선릉 극장",
+        theaterDataSources[0].asPresentation(),
         MovieState(
             R.drawable.ga_oh_galaxy_poster,
             1,

@@ -1,6 +1,8 @@
 package woowacourse.movie.feature.setting
 
 import com.example.domain.repository.AlarmSettingRepository
+import com.example.domain.usecase.LoadAlarmSettingInfoUseCase
+import com.example.domain.usecase.SetAlarmSettingUseCase
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -19,7 +21,11 @@ internal class SettingPresenterTest {
     fun init() {
         view = mockk()
         settingRepository = mockk()
-        presenter = SettingPresenter(view, settingRepository)
+        presenter = SettingPresenter(
+            view,
+            LoadAlarmSettingInfoUseCase(settingRepository),
+            SetAlarmSettingUseCase(settingRepository)
+        )
     }
 
     @Test

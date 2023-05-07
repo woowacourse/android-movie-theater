@@ -1,6 +1,8 @@
 package woowacourse.movie.feature.seatSelect
 
 import com.example.domain.repository.TicketsRepository
+import com.example.domain.repository.dataSource.theaterDataSources
+import com.example.domain.usecase.AddReservationTicketsUseCase
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -15,6 +17,7 @@ import woowacourse.movie.model.MoneyState
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.SeatPositionState
 import woowacourse.movie.model.SelectReservationState
+import woowacourse.movie.model.mapper.asPresentation
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -35,7 +38,7 @@ internal class SeatSelectPresenterTest {
         every { view.changePredictMoney(capture(moneySlot)) } just Runs
         every { view.setConfirmClickable(capture(clickableSlot)) } just Runs
         ticketsRepository = mockk()
-        presenter = SeatSelectPresenter(view, mockkReservation, ticketsRepository)
+        presenter = SeatSelectPresenter(view, mockkReservation, AddReservationTicketsUseCase(ticketsRepository))
     }
 
     @Test
@@ -116,7 +119,7 @@ internal class SeatSelectPresenterTest {
     }
 
     private val mockkReservation = SelectReservationState(
-        "선릉 극장",
+        theaterDataSources[0].asPresentation(),
         MovieState(
             R.drawable.imitation_game_poster,
             2,
