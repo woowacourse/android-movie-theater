@@ -1,8 +1,11 @@
 package woowacourse.movie.fragment.bookhistory
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
@@ -11,12 +14,22 @@ import woowacourse.movie.BookHistoryRecyclerViewAdapter
 import woowacourse.movie.BookingHistoryRepository
 import woowacourse.movie.R
 import woowacourse.movie.activity.bookcomplete.BookCompleteActivity
+import woowacourse.movie.databinding.FragmentBookHistoryBinding
 
-class BookHistoryFragment : Fragment(R.layout.fragment_book_history), BookHistoryContract.View {
-
+class BookHistoryFragment : Fragment(), BookHistoryContract.View {
+    private lateinit var binding: FragmentBookHistoryBinding
     override lateinit var presenter: BookHistoryContract.Presenter
     private val bookHistory: BookingHistoryRepository by lazy {
         BookingHistoryRepository(BookHistories.getDBInstance(requireContext()))
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_book_history, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
