@@ -6,91 +6,82 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import domain.Ticket
+import androidx.databinding.DataBindingUtil
 import domain.TicketOffice
 import woowacourse.movie.R
-import woowacourse.movie.data.model.MovieView
 import woowacourse.movie.data.model.SeatTable
 import woowacourse.movie.data.model.SeatView
 import woowacourse.movie.data.model.mapper.TicketsMapper
 import woowacourse.movie.data.model.uimodel.MovieUiModel
-import woowacourse.movie.data.model.uimodel.SeatUiModel
 import woowacourse.movie.data.model.uimodel.TicketDateUiModel
 import woowacourse.movie.data.model.uimodel.TicketsUiModel
+import woowacourse.movie.databinding.ActivitySelectSeatBinding
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.notification.ReservationNotificationReceiver
 import woowacourse.movie.setBackgroundColorId
 import woowacourse.movie.ui.reservationresult.ReservationResultActivity
-import java.sql.Date
-import java.text.NumberFormat
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
-import java.util.Calendar
-import java.util.Locale
 
-class SelectSeatActivity : AppCompatActivity() {
-    private val ticketOffice: TicketOffice by lazy {
-        receiveTicketOfficeData()
-    }
+class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
+    override lateinit var presenter: SelectSeatContract.Presenter
 
-    private val ticketDateTime: LocalDateTime by lazy {
-        receiveTicketDateTimeData() ?: run {
-            finishActivityWithToast(getString(R.string.reservation_data_null_error))
-            LocalDateTime.now()
-        }
-    }
-
-    private val movieUiModel: MovieUiModel by lazy {
-        receiveMovieViewModelData() ?: run {
-            finishActivityWithToast(getString(R.string.reservation_data_null_error))
-            MovieUiModel(0, "", LocalDate.MAX, LocalDate.MAX, 0, "")
-        }
-    }
-
-    private val seatTable: SeatTable by lazy {
-        SeatTable(
-            tableLayout = findViewById(R.id.select_seat_tableLayout),
-            rowSize = 5,
-            colSize = 4,
-            ::updateUi
-        )
-    }
-
-    private val priceTextView: TextView by lazy {
-        findViewById(R.id.select_seat_price_text_view)
-    }
-
-    private val checkButton: Button by lazy {
-        findViewById(R.id.select_seat_check_button)
-    }
+    private var _binding: ActivitySelectSeatBinding? = null
+    private val binding
+        get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_select_seat)
-        seatTable.makeSeatTable()
-        MovieView(title = findViewById(R.id.select_seat_movie_title_text_view)).render(
-            movieUiModel
+
+        _binding = DataBindingUtil.setContentView(this, R.layout.activity_select_seat)
+
+        setUpPresenter()
+        setUpUiModels()
+        setUpSeatTable()
+        setUpOnClick()
+    }
+
+    private fun setUpPresenter() {
+        presenter = SelectSeatPresenter(
+            view = this,
+            seatTable = SeatTable(
+                tableLayout = binding.selectSeatTableLayout,
+                rowSize = 5,
+                colSize = 4,
+                ::updateUi
+            ),
+            ticketOffice = TicketOffice(
+                peopleCount = intent.getIntExtra(PEOPLE_COUNT_KEY, 1)
+            )
         )
-        changePriceTextView()
-        checkButtonClick()
     }
 
-    private fun checkButtonClick() {
-        checkButton.setOnClickListener {
-            val dialog = createReservationAlertDialog()
-            dialog.setCanceledOnTouchOutside(false)
-            dialog.show()
+    private fun setUpUiModels() {
+        binding.movie =
+            intent.extras?.getSerializableCompat(MOVIE_KEY_VALUE) ?: throw IllegalStateException()
+        binding.ticketDate =
+            intent.extras?.getSerializableCompat(TICKET_KEY) ?: throw IllegalStateException()
+        binding.tickets = presenter.tickets
+    }
+
+    private fun setUpSeatTable() {
+        presenter.setSeatTable()
+    }
+
+    private fun setUpOnClick() {
+        binding.btnSelectSeat.run {
+            setOnClickListener {
+                val dialog = createReservationAlertDialog()
+                dialog.setCanceledOnTouchOutside(false)
+                dialog.show()
+            }
+            isClickable = false
         }
-        checkButton.isClickable = false
     }
 
-    private fun createReservationAlertDialog(): AlertDialog {
+    override fun createReservationAlertDialog(): AlertDialog {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.select_seat_dialog_title)
         builder.setMessage(R.string.select_seat_dialog_message)
@@ -98,8 +89,8 @@ class SelectSeatActivity : AppCompatActivity() {
             startActivity(
                 ReservationResultActivity.getIntent(
                     this,
-                    movieUiModel,
-                    TicketsMapper.toUi(ticketOffice.tickets)
+                    binding.movie!!,
+                    TicketsMapper.toUi(presenter.tickets)
                 )
             )
             registerAlarm()
@@ -111,102 +102,58 @@ class SelectSeatActivity : AppCompatActivity() {
     }
 
     private fun registerAlarm() {
-        val ticketsUiModel = TicketsMapper.toUi(ticketOffice.tickets)
+        val ticketsUiModel = TicketsMapper.toUi(presenter.tickets)
         val receiverIntent = generateReceiverIntent(ticketsUiModel)
         val pendingIntent =
             PendingIntent.getBroadcast(this, 125, receiverIntent, PendingIntent.FLAG_IMMUTABLE)
         val alarmManager: AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val timeMillis = getTimeInMillis()
+        val timeMillis = getAlarmDateTime(binding.ticketDate!!.date, 30)
         alarmManager[AlarmManager.RTC, timeMillis] = pendingIntent
     }
 
     private fun generateReceiverIntent(ticketsUiModel: TicketsUiModel): Intent {
         val receiverIntent = Intent(this, ReservationNotificationReceiver::class.java)
-        receiverIntent.putExtra("movie", movieUiModel)
+        receiverIntent.putExtra("movie", binding.movie)
         return receiverIntent.putExtra("tickets", ticketsUiModel)
     }
 
-    private fun getTimeInMillis(): Long {
-        val sqlDate = getAlarmDateTime(ticketDateTime, 30)
-        val calendar: Calendar = Calendar.getInstance()
-        calendar.time = sqlDate
-        return calendar.timeInMillis
-    }
-
-    private fun getAlarmDateTime(localDateTime: LocalDateTime, minute: Long): Date {
-        val milliSeconds: Long = localDateTime.atZone(ZoneId.systemDefault())
+    private fun getAlarmDateTime(localDateTime: LocalDateTime, minute: Long): Long {
+        return localDateTime.atZone(ZoneId.systemDefault())
             .minusMinutes(minute)
             .toInstant().toEpochMilli()
-        return Date(milliSeconds)
     }
 
     private fun updateUi(seatView: SeatView) {
-        changeSeatViewState(seatView)
-        changePriceTextView()
+        changeSeatState(seatView)
         changeCheckButtonState()
+        updateTicketView()
     }
 
-    private fun changeSeatViewState(seatView: SeatView) {
-        val ticket =
-            ticketOffice.generateTicket(
-                ticketDateTime,
-                SeatUiModel.toNumber(seatView.row),
-                seatView.col
-            )
-        if (ticketOffice.tickets.isContainSameTicket(ticket)) {
-            setViewNotSelected(seatView, ticket)
-        } else {
-            setViewSelected(seatView, ticket)
+    private fun changeSeatState(seatView: SeatView) {
+        presenter.updateSeatState(seatView, binding.ticketDate!!.date)
+    }
+
+    override fun updateSeatView(seatView: SeatView, isSelected: Boolean) {
+        seatView.view.isSelected = !isSelected
+        when (isSelected) {
+            true -> seatView.setBackgroundColorId(R.color.selected_seat_color)
+            false -> seatView.setBackgroundColorId(R.color.white)
         }
-    }
-
-    private fun setViewNotSelected(seatView: SeatView, ticket: Ticket) {
-        ticketOffice.deleteTicket(ticket)
-        seatView.view.isSelected = false
-        seatView.setBackgroundColorId(color = R.color.white)
-    }
-
-    private fun setViewSelected(seatView: SeatView, ticket: Ticket) {
-        if (ticketOffice.isAvailableAddTicket()) {
-            ticketOffice.addTicket(ticket)
-            seatView.view.isSelected = true
-            seatView.setBackgroundColorId(color = R.color.seat_selection_selected_seat_color)
-        }
-    }
-
-    private fun changePriceTextView() {
-        val formattedPrice =
-            NumberFormat.getNumberInstance(Locale.US).format(ticketOffice.tickets.price.value)
-        priceTextView.text = getString(R.string.select_seat_price_format).format(formattedPrice)
     }
 
     private fun changeCheckButtonState() {
-        if (!ticketOffice.isAvailableAddTicket()) {
-            checkButton.setBackgroundColorId(R.color.select_seat_clickable_check_button_background)
-            checkButton.isClickable = true
-        } else {
-            checkButton.setBackgroundColorId(R.color.select_seat_non_clickable_check_button_background)
-            checkButton.isClickable = false
+        presenter.updateButtonState(binding.btnSelectSeat)
+    }
+
+    override fun updateButtonView(isClickable: Boolean) {
+        when (isClickable) {
+            true -> binding.btnSelectSeat.setBackgroundColorId(R.color.check_button_unavailable)
+            false -> binding.btnSelectSeat.setBackgroundColorId(R.color.check_button_available)
         }
     }
 
-    private fun finishActivityWithToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG)
-        finish()
-    }
-
-    private fun receiveTicketOfficeData(): TicketOffice {
-        val peopleCount = intent.getIntExtra(PEOPLE_COUNT_KEY, 0)
-        if (peopleCount == 0) finishActivityWithToast(getString(R.string.reservation_data_null_error))
-        return TicketOffice(peopleCount = peopleCount)
-    }
-
-    private fun receiveMovieViewModelData(): MovieUiModel? {
-        return intent.extras?.getSerializableCompat(MOVIE_KEY_VALUE)
-    }
-
-    private fun receiveTicketDateTimeData(): LocalDateTime? {
-        return intent.extras?.getSerializableCompat<TicketDateUiModel>(TICKET_KEY)?.date
+    override fun updateTicketView() {
+        binding.tickets = presenter.tickets
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
