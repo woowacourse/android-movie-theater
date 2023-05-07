@@ -9,7 +9,7 @@ import woowacourse.movie.ui.ticket.MovieTicketActivity
 
 class ReservationPresenter(
     private val view: ReservationContract.View,
-    private val requireContext: Context,
+    private val reservationFragmentContext: Context,
 ) : ReservationContract.Presenter {
     private val reservationTickets: List<MovieTicketModel> by lazy { ReservationTicketMachine.tickets }
     override fun initAdapter() {
@@ -22,11 +22,11 @@ class ReservationPresenter(
     }
 
     private fun setEventOnReservationItems(movieTicketModel: MovieTicketModel) {
-        requireContext.startActivity(movieTicketModel.moveToMovieTicketActivity())
+        reservationFragmentContext.startActivity(movieTicketModel.moveToMovieTicketActivity())
     }
 
     private fun MovieTicketModel.moveToMovieTicketActivity(): Intent =
-        Intent(requireContext, MovieTicketActivity::class.java).apply {
+        Intent(reservationFragmentContext, MovieTicketActivity::class.java).apply {
             putExtra(KEY_TICKET, this@moveToMovieTicketActivity)
         }
 
