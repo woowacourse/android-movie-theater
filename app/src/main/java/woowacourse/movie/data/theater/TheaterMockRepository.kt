@@ -25,7 +25,7 @@ object TheaterMockRepository : TheaterRepository {
         NightPolicy(),
     )
 
-    val theaters: List<Theater> = listOf(
+    private val theaters: List<Theater> = listOf(
         Theater("정말아주아주아주아주아주아주아주긴극장이름", seatInfo, policies),
         Theater("선릉 극장", seatInfo, policies),
         Theater("잠실 극장", seatInfo, policies),
@@ -43,6 +43,8 @@ object TheaterMockRepository : TheaterRepository {
     }
 
     override fun findTheater(name: String): Theater {
-        return theaters.find { it.name == name } ?: throw java.lang.IllegalArgumentException("존재하지 않는 상영관입니다.")
+        val theater = theaters.find { it.name == name }
+        requireNotNull(theater) { "존재하지 않는 상영관입니다." }
+        return theater
     }
 }
