@@ -30,7 +30,7 @@ class ReservationListFragment : BaseFragment(), ReservationListContract.View {
         presenter.setUpReservationList()
     }
 
-    override fun setTickets(tickets: List<TicketsState>) {
+    override fun showTickets(tickets: List<TicketsState>) {
         adapter = ReservationListAdapter(
             tickets.map(::TicketsItemModel)
         ) { ticketsItemModel ->

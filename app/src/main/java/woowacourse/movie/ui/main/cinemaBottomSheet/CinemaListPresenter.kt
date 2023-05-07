@@ -13,7 +13,7 @@ class CinemaListPresenter(
     private val movie: MovieState
 ) : CinemaListContract.Presenter {
     override fun setUpCinemaList() {
-        view.setCinemaList(
+        view.showCinemaList(
             repository.findCinema(movie.asDomain()).map(Cinema::asPresentation),
             movie
         )

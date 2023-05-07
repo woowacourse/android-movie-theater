@@ -7,6 +7,6 @@ class AdvDetailPresenter(
     advState: AdvState
 ) : AdvDetailContract.Presenter {
     init {
-        view.setAdv(advState)
+        view.showAdv(advState)
     }
 }

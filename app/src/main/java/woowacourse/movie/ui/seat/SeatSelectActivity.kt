@@ -41,23 +41,26 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
         )
     }
 
-    override fun setMoneyText(money: MoneyState) {
+    override fun initSeatTable(seatSelectState: SeatSelectState) {
+        seatTable = SeatTable(binding, seatSelectState.countState) { updateSelectSeats(it) }
+    }
+
+    override fun showMoneyText(money: MoneyState) {
         binding.reservationMoney.text = getString(
             R.string.discount_money,
             DecimalFormatters.convertToMoneyFormat(money)
         )
     }
 
-    override fun setSeatSelectState(seatSelectState: SeatSelectState) {
+    override fun showReservationTitle(seatSelectState: SeatSelectState) {
         binding.reservationTitle.text = seatSelectState.movieState.title
+    }
+
+    override fun setReservationConfirm(seatSelectState: SeatSelectState) {
         binding.reservationConfirm.setOnClickListener {
             navigateShowDialog(seatTable.chosenSeatInfo)
         }
         binding.reservationConfirm.isClickable = false
-    }
-
-    override fun initSeatTable(seatSelectState: SeatSelectState) {
-        seatTable = SeatTable(binding, seatSelectState.countState) { updateSelectSeats(it) }
     }
 
     override fun navigateToConfirmView(tickets: TicketsState) {
@@ -78,7 +81,7 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
     private fun updateSelectSeats(positionStates: List<SeatPositionState>) {
         binding.reservationConfirm.isClickable =
             (positionStates.size == presenter.getRequireCount())
-        presenter.discountApply(positionStates)
+        presenter.discountMoneyApply(positionStates)
     }
 
     override fun onRestoreInstanceState(

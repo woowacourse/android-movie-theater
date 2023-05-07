@@ -18,17 +18,17 @@ class SeatSelectPresenter(
 
     override fun setUpSeatSelectState() {
         view.initSeatTable(seatSelectState)
-        view.setSeatSelectState(seatSelectState)
+        view.showReservationTitle(seatSelectState)
     }
 
-    override fun discountApply(positionStates: List<SeatPositionState>) {
+    override fun discountMoneyApply(positionStates: List<SeatPositionState>) {
         val tickets = TicketsState(
             cinemaName,
             seatSelectState.movieState.title,
             seatSelectState.dateTime,
             positionStates
         )
-        view.setMoneyText(discountApplyUseCase(tickets.asDomain()).asPresentation())
+        view.showMoneyText(discountApplyUseCase(tickets.asDomain()).asPresentation())
     }
 
     override fun addTicket(positionStates: List<SeatPositionState>) {

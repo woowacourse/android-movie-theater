@@ -30,7 +30,7 @@ class MovieDetailPresenterTest {
     fun `표의 초기 값이 1이고 값을 추가하면 2가 된다`() {
         // given
         val slot = slot<Int>()
-        every { view.setCountText(capture(slot)) } answers { println("slot : ${slot.captured}") }
+        every { view.showCountText(capture(slot)) } answers { println("slot : ${slot.captured}") }
         assertEquals(presenter.count.value, 1)
 
         // when
@@ -38,14 +38,14 @@ class MovieDetailPresenterTest {
 
         // then
         assertEquals(slot.captured, 2)
-        verify { view.setCountText(slot.captured) }
+        verify { view.showCountText(slot.captured) }
     }
 
     @Test
     fun `표가 2장이상일 때 1씩 떨어진다`() {
         // given
         val slot = slot<Int>()
-        every { view.setCountText(capture(slot)) } answers { println("slot : ${slot.captured}") }
+        every { view.showCountText(capture(slot)) } answers { println("slot : ${slot.captured}") }
         presenter.plusCount()
         assertEquals(presenter.count.value, 2)
 
@@ -54,14 +54,14 @@ class MovieDetailPresenterTest {
 
         // then
         assertEquals(slot.captured, 1)
-        verify { view.setCountText(slot.captured) }
+        verify { view.showCountText(slot.captured) }
     }
 
     @Test
     fun `표는 1장 밑으로 떨어지지 않는다`() {
         // given
         val slot = slot<Int>()
-        every { view.setCountText(capture(slot)) } answers { println("slot : ${slot.captured}") }
+        every { view.showCountText(capture(slot)) } answers { println("slot : ${slot.captured}") }
         assertEquals(presenter.count.value, 1)
 
         // when
@@ -69,7 +69,7 @@ class MovieDetailPresenterTest {
 
         // then
         assertEquals(slot.captured, 1)
-        verify { view.setCountText(slot.captured) }
+        verify { view.showCountText(slot.captured) }
     }
 
     @Test

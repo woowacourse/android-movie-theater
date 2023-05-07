@@ -6,7 +6,7 @@ import woowacourse.movie.ui.BaseContract
 
 interface CinemaListContract {
     interface View {
-        fun setCinemaList(cinemas: List<CinemaState>, movie: MovieState)
+        fun showCinemaList(cinemas: List<CinemaState>, movie: MovieState)
     }
     interface Presenter : BaseContract.Presenter {
         fun setUpCinemaList()

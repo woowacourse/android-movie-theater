@@ -30,16 +30,18 @@ class MovieListFragment : BaseFragment(), MovieListContract.View {
         presenter = MovieListPresenter(this)
     }
 
-    override fun setMovieList(movieList: List<MovieState>, advList: List<AdvState>) {
+    override fun showMovieList(movieList: List<MovieState>, advList: List<AdvState>) {
         binding.movieList.adapter = MovieListAdapter(
             movie = movieList.map(::MovieItemModel),
             adv = advList.map(::AdvItemModel),
-            onClickMovie = { movieItemModel -> showCinemaBottomSheet(movieItemModel.movieState) },
+            onClickMovie = { movieItemModel ->
+                navigateToCinemaBottomSheet(movieItemModel.movieState)
+            },
             onClickAdv = { advItemModel -> navigateAdbDetail(advItemModel.advState) }
         )
     }
 
-    private fun showCinemaBottomSheet(movie: MovieState) {
+    private fun navigateToCinemaBottomSheet(movie: MovieState) {
         CinemaListBottomSheet.newInstance(movie)
             .show(parentFragmentManager, CinemaListBottomSheet.TAG_CINEMA_LIST_BOTTOM_SHEET)
     }

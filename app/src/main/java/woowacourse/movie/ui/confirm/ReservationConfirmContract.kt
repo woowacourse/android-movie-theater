@@ -6,8 +6,8 @@ import woowacourse.movie.ui.BaseContract
 
 interface ReservationConfirmContract {
     interface View {
-        fun setTicket(ticket: TicketsState)
-        fun setMoney(money: MoneyState)
+        fun showTicket(ticket: TicketsState)
+        fun showMoney(money: MoneyState)
         fun registerNotification(ticket: TicketsState)
     }
 

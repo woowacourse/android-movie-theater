@@ -23,6 +23,6 @@ class AdvDetailPresenterTest {
         AdvDetailPresenter(view, advState)
 
         // then
-        verify { view.setAdv(advState) }
+        verify { view.showAdv(advState) }
     }
 }

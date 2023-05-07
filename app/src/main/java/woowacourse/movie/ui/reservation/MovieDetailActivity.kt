@@ -55,11 +55,11 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
         }
     }
 
-    override fun setMovie(movie: MovieState) {
+    override fun showMovie(movie: MovieState) {
         binding.movie = movie
     }
 
-    override fun setCountText(count: Int) {
+    override fun showCountText(count: Int) {
         binding.count.text = count.toString()
     }
 

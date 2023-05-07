@@ -33,7 +33,7 @@ class CinemaListBottomSheet : BaseBottomSheetDialogFragment(), CinemaListContrac
         )
     }
 
-    override fun setCinemaList(cinemas: List<CinemaState>, movie: MovieState) {
+    override fun showCinemaList(cinemas: List<CinemaState>, movie: MovieState) {
         val adapter = CinemaListAdapter(
             cinemas = cinemas.map { CinemaItemModel(it, movie) }
         ) { itemModel ->

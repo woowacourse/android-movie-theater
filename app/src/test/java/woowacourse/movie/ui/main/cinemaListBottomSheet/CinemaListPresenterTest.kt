@@ -38,6 +38,6 @@ class CinemaListPresenterTest {
 
         // then
         verify { cinemaRepository.findCinema(slot.captured) }
-        verify { view.setCinemaList(listOf(), movie) }
+        verify { view.showCinemaList(listOf(), movie) }
     }
 }

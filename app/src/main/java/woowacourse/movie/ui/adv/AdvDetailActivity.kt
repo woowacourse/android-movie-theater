@@ -23,7 +23,7 @@ class AdvDetailActivity : BackKeyActionBarActivity(), AdvDetailContract.View {
         )
     }
 
-    override fun setAdv(advState: AdvState) {
+    override fun showAdv(advState: AdvState) {
         binding.adv = advState
     }
 

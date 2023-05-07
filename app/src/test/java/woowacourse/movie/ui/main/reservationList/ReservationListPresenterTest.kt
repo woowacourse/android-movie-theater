@@ -30,6 +30,6 @@ class ReservationListPresenterTest {
         presenter.setUpReservationList()
 
         // then
-        verify { view.setTickets(listOf()) }
+        verify { view.showTickets(listOf()) }
     }
 }

@@ -35,7 +35,7 @@ class ReservationConfirmActivity : BackKeyActionBarActivity(), ReservationConfir
         )
     }
 
-    override fun setTicket(ticket: TicketsState) {
+    override fun showTicket(ticket: TicketsState) {
         binding.reservationTitle.text = ticket.movieName
         binding.reservationDate.text = DateTimeFormatters.convertToDateTime(ticket.dateTime)
         binding.reservationCountAndSeat.text = binding.root.context.getString(
@@ -46,7 +46,7 @@ class ReservationConfirmActivity : BackKeyActionBarActivity(), ReservationConfir
         )
     }
 
-    override fun setMoney(money: MoneyState) {
+    override fun showMoney(money: MoneyState) {
         binding.reservationMoney.text = DecimalFormatters.convertToMoneyFormat(money)
     }
 

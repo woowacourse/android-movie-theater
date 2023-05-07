@@ -12,7 +12,7 @@ class MovieListPresenter(
     private val advRepository: AdvRepository = AdvSameRepository
 ) : MovieListContract.Presenter {
     override fun setUpMovieList() {
-        view.setMovieList(
+        view.showMovieList(
             movieRepository.allMovies().map { it.asPresentation() },
             advRepository.allAdv().map { it.asPresentation() }
         )

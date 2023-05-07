@@ -81,7 +81,7 @@ class MovieListPresenterTest {
 
         // then
         verify {
-            view.setMovieList(listOf(fakeMovieState), listOf(fakeAdvState))
+            view.showMovieList(listOf(fakeMovieState), listOf(fakeAdvState))
         }
     }
 }

@@ -5,7 +5,7 @@ import woowacourse.movie.ui.BaseContract
 
 interface ReservationListContract {
     interface View {
-        fun setTickets(tickets: List<TicketsState>)
+        fun showTickets(tickets: List<TicketsState>)
     }
 
     interface Presenter : BaseContract.Presenter {

@@ -12,13 +12,13 @@ class MovieDetailPresenter(
 ) : MovieDetailContract.Presenter {
     private val getMovieRunningDateUseCase = GetMovieRunningDateUseCase()
     init {
-        view.setMovie(movie)
+        view.showMovie(movie)
     }
 
     override var count: CountState = CountState.of(1)
         set(value) {
             field = value
-            view.setCountText(value.value)
+            view.showCountText(value.value)
         }
 
     override fun plusCount() { count += 1 }

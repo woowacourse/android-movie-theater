@@ -5,7 +5,7 @@ import woowacourse.movie.ui.BaseContract
 
 interface AdvDetailContract {
     interface View {
-        fun setAdv(advState: AdvState)
+        fun showAdv(advState: AdvState)
     }
 
     interface Presenter : BaseContract.Presenter

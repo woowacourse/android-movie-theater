@@ -12,12 +12,12 @@ class ReservationConfirmPresenter(
     private val discountApplyUseCase = DiscountApplyUseCase()
 
     override fun setUpTicket() {
-        view.setTicket(ticket)
+        view.showTicket(ticket)
         view.registerNotification(ticket)
     }
 
     override fun discountApplyMoney(ticket: TicketsState) {
         val discountApplyMoney = discountApplyUseCase(ticket.asDomain())
-        view.setMoney(discountApplyMoney.asPresentation())
+        view.showMoney(discountApplyMoney.asPresentation())
     }
 }

@@ -8,9 +8,9 @@ import woowacourse.movie.ui.BaseContract
 
 interface MovieDetailContract {
     interface View {
-        fun setCountText(count: Int)
-        fun setMovie(movie: MovieState)
         fun initDateTimeSpinner(dates: List<LocalDate>, times: List<LocalTime>)
+        fun showCountText(count: Int)
+        fun showMovie(movie: MovieState)
         fun navigateToSeatSelectActivity(movie: MovieState, cinemaName: String)
     }
 

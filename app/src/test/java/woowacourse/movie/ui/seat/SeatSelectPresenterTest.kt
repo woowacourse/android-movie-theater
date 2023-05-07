@@ -30,17 +30,17 @@ class SeatSelectPresenterTest {
         presenter.setUpSeatSelectState()
 
         // then
-        verify { view.setSeatSelectState(seatSelectState) }
+        verify { view.showReservationTitle(seatSelectState) }
         verify { view.initSeatTable(seatSelectState) }
     }
 
     @Test
     fun `할인 적용 금액을 보여준다`() {
         // when
-        presenter.discountApply(emptyList())
+        presenter.discountMoneyApply(emptyList())
 
         // then
-        verify { view.setMoneyText(any()) }
+        verify { view.showMoneyText(any()) }
     }
 
     @Test

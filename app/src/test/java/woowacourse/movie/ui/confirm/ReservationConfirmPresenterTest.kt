@@ -25,7 +25,7 @@ class ReservationConfirmPresenterTest {
         presenter.setUpTicket()
 
         // then
-        verify { view.setTicket(any()) }
+        verify { view.showTicket(any()) }
         verify { view.registerNotification(any()) }
     }
 
@@ -35,6 +35,6 @@ class ReservationConfirmPresenterTest {
         presenter.discountApplyMoney(tickets)
 
         // then
-        verify { view.setMoney(any()) }
+        verify { view.showMoney(any()) }
     }
 }
