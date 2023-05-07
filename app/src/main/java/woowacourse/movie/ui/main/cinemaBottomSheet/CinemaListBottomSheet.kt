@@ -2,7 +2,7 @@ package woowacourse.movie.ui.main.cinemaBottomSheet
 
 import android.os.Bundle
 import android.view.View
-import com.example.domain.repository.CinemaRepository
+import com.example.domain.repositoryImpl.CinemaSampleRepository
 import woowacourse.movie.databinding.FragmentCinemaBottomSheetBinding
 import woowacourse.movie.model.CinemaState
 import woowacourse.movie.model.MovieState
@@ -28,7 +28,7 @@ class CinemaListBottomSheet : BaseBottomSheetDialogFragment(), CinemaListContrac
     override fun initPresenter() {
         presenter = CinemaListPresenter(
             this,
-            CinemaRepository,
+            CinemaSampleRepository,
             arguments?.getParcelableCompat(KEY_MOVIE) ?: throw IllegalArgumentException()
         )
     }

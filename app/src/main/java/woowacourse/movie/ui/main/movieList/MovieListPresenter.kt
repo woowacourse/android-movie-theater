@@ -2,12 +2,14 @@ package woowacourse.movie.ui.main.movieList
 
 import com.example.domain.repository.AdvRepository
 import com.example.domain.repository.MovieRepository
+import com.example.domain.repositoryImpl.AdvSameRepository
+import com.example.domain.repositoryImpl.MovieSameRepository
 import woowacourse.movie.model.mapper.asPresentation
 
 class MovieListPresenter(
     private val view: MovieListContract.View,
-    private val movieRepository: MovieRepository = MovieRepository,
-    private val advRepository: AdvRepository = AdvRepository
+    private val movieRepository: MovieRepository = MovieSameRepository,
+    private val advRepository: AdvRepository = AdvSameRepository
 ) : MovieListContract.Presenter {
     override fun setUpMovieList() {
         view.setMovieList(
