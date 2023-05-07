@@ -6,21 +6,19 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Spinner
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityMovieDetailBinding
+import woowacourse.movie.presentation.extension.getParcelableCompat
 import woowacourse.movie.presentation.model.Movie
 import woowacourse.movie.presentation.model.MovieBookingInfo
-import woowacourse.movie.presentation.extension.getParcelableCompat
 import woowacourse.movie.presentation.view.common.BackButtonActivity
 import woowacourse.movie.presentation.view.main.home.seatpick.SeatPickerActivity
 
 class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
-
+    private lateinit var binding: ActivityMovieDetailBinding
     private var restoreInstanceFlag = true
     private val presenter: MovieDetailContract.Presenter by lazy {
         MovieDetailPresenter(
@@ -29,13 +27,9 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
         )
     }
 
-    private val dateSpinner: Spinner by lazy { findViewById(R.id.sp_movie_date) }
-    private val timeSpinner: Spinner by lazy { findViewById(R.id.sp_movie_time) }
-    private val ticketCountTextView: TextView by lazy { findViewById(R.id.tv_ticket_count) }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_detail)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
         restoreInstanceFlag = true
         presenter.onCreate()
         presenter.getMovieSchedule()
@@ -44,11 +38,11 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
     }
 
     override fun initView(movie: Movie) {
-        findViewById<ImageView>(R.id.iv_movie_poster).setImageResource(movie.poster)
-        findViewById<TextView>(R.id.tv_movie_title).text = movie.title
-        findViewById<TextView>(R.id.tv_movie_release_date).text = movie.releaseDate
-        findViewById<TextView>(R.id.tv_movie_running_time).text = movie.runningTime
-        findViewById<TextView>(R.id.tv_movie_synopsis).text = movie.synopsis
+        binding.ivMoviePoster.setImageResource(movie.poster)
+        binding.tvMovieTitle.text = movie.title
+        binding.tvMovieReleaseDate.text = movie.releaseDate
+        binding.tvMovieRunningTime.text = movie.runningTime
+        binding.tvMovieSynopsis.text = movie.synopsis
     }
 
     override fun finishErrorView() {
@@ -58,12 +52,12 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
     }
 
     override fun updateScheduleDateView(scheduleDate: List<String>, scheduleTime: List<String>) {
-        dateSpinner.adapter = ArrayAdapter(
+        binding.spMovieDate.adapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
             scheduleDate
         )
-        timeSpinner.adapter = ArrayAdapter(
+        binding.spMovieTime.adapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
             scheduleTime
@@ -74,26 +68,26 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
         savedInstanceState: Bundle?,
     ) {
         if (savedInstanceState != null) {
-            ticketCountTextView.text =
+            binding.tvTicketCount.text =
                 savedInstanceState.getString(USER_TICKET_COUNT_BUNDLE_KEY)
         }
     }
 
     override fun updateScheduleTimeView(movieScheduleTime: List<String>) {
-        dateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.spMovieDate.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 adapterView: AdapterView<*>?,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
-                timeSpinner.adapter = ArrayAdapter(
+                binding.spMovieTime.adapter = ArrayAdapter(
                     this@MovieDetailActivity,
                     android.R.layout.simple_spinner_item,
                     movieScheduleTime
                 )
                 if (restoreInstanceFlag && bundleOf().isEmpty.not()) {
-                    timeSpinner.setSelection(
+                    binding.spMovieTime.setSelection(
                         (
                                 bundleOf().getString(MOVIE_INFO_TIME_BUNDLE_KEY)
                                     ?: movieScheduleTime.first()
@@ -108,25 +102,25 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
     }
 
     private fun setClickListener() {
-        findViewById<Button>(R.id.bt_ticket_count_minus).setOnClickListener {
-            presenter.removeTicket(ticketCountTextView.text.toString().toInt())
+        binding.btTicketCountMinus.setOnClickListener {
+            presenter.removeTicket(binding.tvTicketCount.text.toString().toInt())
         }
 
-        findViewById<Button>(R.id.bt_ticket_count_plus).setOnClickListener {
-            presenter.addTicket(ticketCountTextView.text.toString().toInt())
+        binding.btTicketCountPlus.setOnClickListener {
+            presenter.addTicket(binding.tvTicketCount.text.toString().toInt())
         }
 
-        findViewById<Button>(R.id.bt_book_complete).setOnClickListener {
+        binding.btBookComplete.setOnClickListener {
             presenter.getMovieBookingInfo(
-                ticketCountTextView.text.toString().toInt(),
-                dateSpinner.selectedItem.toString(),
-                timeSpinner.selectedItem.toString()
+                binding.tvTicketCount.text.toString().toInt(),
+                binding.spMovieDate.selectedItem.toString(),
+                binding.spMovieTime.selectedItem.toString()
             )
         }
     }
 
     override fun updateTicketCountView(currentTicketCount: Int) {
-        ticketCountTextView.text = currentTicketCount.toString()
+        binding.tvTicketCount.text = currentTicketCount.toString()
     }
 
     override fun showErrorTicketCountIsZeroView() {
@@ -152,11 +146,11 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
         super.onSaveInstanceState(outState)
         outState.putString(
             MOVIE_INFO_TIME_BUNDLE_KEY,
-            timeSpinner.selectedItemPosition.toString()
+            binding.spMovieTime.selectedItemPosition.toString()
         )
         outState.putString(
             USER_TICKET_COUNT_BUNDLE_KEY,
-            ticketCountTextView.text.toString()
+            binding.tvTicketCount.text.toString()
         )
     }
 
