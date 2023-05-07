@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.databinding.FragmentSelectTheaterBottomSheetBinding
 import woowacourse.movie.model.data.remote.DummyMovieTheaterStorage
+import woowacourse.movie.presentation.booking.BookingActivity
 import kotlin.properties.Delegates
 
 class SelectTheaterBottomSheet : BottomSheetDialogFragment(), SelectTheaterContract.View {
@@ -55,7 +56,7 @@ class SelectTheaterBottomSheet : BottomSheetDialogFragment(), SelectTheaterContr
     }
 
     private fun initAdapter() {
-        selectTheaterAdapter = SelectTheaterAdapter(movieId, presenter)
+        selectTheaterAdapter = SelectTheaterAdapter(movieId, ::clickBook, presenter)
     }
 
     private fun initRecyclerViewMovieTheater() {
@@ -63,6 +64,11 @@ class SelectTheaterBottomSheet : BottomSheetDialogFragment(), SelectTheaterContr
             binding.rvMovieTheaterSelect.adapter = selectTheaterAdapter
             selectTheaterAdapter.submitList(presenter.getTheatersByMovieId(movieId))
         }
+    }
+
+    private fun clickBook(theater: String) {
+        startActivity(BookingActivity.getIntent(requireActivity(), movieId, theater))
+        dismiss()
     }
 
     override fun onDestroyView() {

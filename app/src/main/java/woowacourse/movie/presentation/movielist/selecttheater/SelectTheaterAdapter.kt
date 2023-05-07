@@ -9,6 +9,7 @@ import woowacourse.movie.databinding.SelectTheaterBottomSheetItemBinding
 
 class SelectTheaterAdapter(
     private val movieId: Long,
+    private val clickBook: (String) -> Unit,
     override val presenter: SelectTheaterContract.Presenter
 ) :
     ListAdapter<String, RecyclerView.ViewHolder>(SelectTheaterDiffUtil),
@@ -21,7 +22,7 @@ class SelectTheaterAdapter(
             inflater = LayoutInflater.from(parent.context)
         }
         val binding = SelectTheaterBottomSheetItemBinding.inflate(inflater, parent, false)
-        return SelectTheaterViewHolder(binding)
+        return SelectTheaterViewHolder(binding, clickBook, ::getItem)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

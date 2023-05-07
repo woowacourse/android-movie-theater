@@ -165,14 +165,16 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
     }
 
     companion object {
+        private const val THEATER = "theater"
         private const val MOVIE_ID = "MOVIE_ID"
         private const val TICKET_COUNT = "TICKET_COUNT"
         private const val DATE_POSITION = "DATE_POSITION"
         private const val TIME_POSITION = "TIME_POSITION"
 
-        fun getIntent(context: Context, movieId: Long): Intent {
+        fun getIntent(context: Context, movieId: Long, theater: String): Intent {
             return Intent(context, BookingActivity::class.java).apply {
                 putExtra(MOVIE_ID, movieId)
+                putExtra(THEATER, theater)
             }
         }
     }
