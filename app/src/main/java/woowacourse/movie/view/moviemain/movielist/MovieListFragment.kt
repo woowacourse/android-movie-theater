@@ -9,15 +9,17 @@ import woowacourse.movie.data.movie.MovieMockRepository
 import woowacourse.movie.data.movie.MoviePosterMockRepository
 import woowacourse.movie.view.model.MovieUiModel
 
-class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
+class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContract.View {
+    override var presenter: MovieListContract.Presenter = MovieListPresenter(this, MovieMockRepository, MoviePosterMockRepository)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val presenter = MovieListPresenter(MovieMockRepository, MoviePosterMockRepository)
-        val movies = presenter.getMovieListData()
+        presenter.fetchMovieList()
+    }
 
+    override fun showMovieList(movies: List<MovieUiModel>) {
         val movieAdapter = MovieListAdapter(3, movies, ::onClick)
-        val movieListView = view.findViewById<RecyclerView>(R.id.movie_recyclerview)
-        movieListView.adapter = movieAdapter
+        val movieListView = view?.findViewById<RecyclerView>(R.id.movie_recyclerview)
+        movieListView?.adapter = movieAdapter
     }
 
     private fun onClick(item: MovieUiModel) {
