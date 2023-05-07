@@ -1,11 +1,11 @@
 package woowacourse.movie.ui.reservation.presenter
 
-import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.ui.common.BaseView
+import woowacourse.movie.ui.reservation.adapter.ReservationAdapter
 
 interface ReservationContract {
     interface View : BaseView<Presenter> {
-        fun initAdapter(reservationTickets: List<MovieTicketModel>)
+        var reservationAdapter: ReservationAdapter
         fun setTextOnEmptyState(isEmpty: Boolean)
     }
 
