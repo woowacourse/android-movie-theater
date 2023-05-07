@@ -8,4 +8,5 @@ data class BookingHistoryData(
     val numberOfPeople: Int,
     val seat: List<String>,
     val price: String,
+    val theater: String,
 ) : Serializable, TicketData

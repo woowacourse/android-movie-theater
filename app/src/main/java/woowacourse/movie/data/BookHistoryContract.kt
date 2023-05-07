@@ -10,4 +10,5 @@ object BookHistoryContract : BaseColumns {
     const val TABLE_COLUMN_NUMBER_OF_PEOPLE = "movieNumberOfPeople"
     const val TABLE_COLUMN_SEATS = "bookedSeats"
     const val TABLE_COLUMN_PRICE = "totalPrice"
+    const val TABLE_COLUMN_THEATER = "theater"
 }

@@ -42,7 +42,7 @@ class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
 
     private fun getMovieHistoryData(): BookingHistoryData {
         return intent.getSerializableCompat(MOVIE_BOOKING_HISTORY_KEY)
-            ?: BookingHistoryData("데이터를 불러올 수 없습니다.", "", 0, listOf(), "")
+            ?: BookingHistoryData("데이터를 불러올 수 없습니다.", "", 0, listOf(), "", "")
     }
 
     override fun initView(ticketData: TicketData) {
@@ -60,7 +60,8 @@ class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
             getString(
                 R.string.book_person_count,
                 data.numberOfPeople,
-                data.seat.joinToString(", ")
+                data.seat.joinToString(", "),
+                data.theater
             )
         binding.tvBookTotalPay.text =
             getString(R.string.book_total_pay, data.price)

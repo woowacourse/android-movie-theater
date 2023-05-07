@@ -81,5 +81,6 @@ object MovieMockData {
         ),
         Theater("잠실 극장", secondTheaterSchedule),
         Theater("강남 극장", thirdTheaterSchedule),
+        Theater("너무너무너무 긴 이름을 가진 극장", thirdTheaterSchedule),
     )
 }

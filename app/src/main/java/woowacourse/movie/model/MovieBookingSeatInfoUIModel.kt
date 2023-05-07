@@ -13,7 +13,8 @@ fun MovieBookingSeatInfoUIModel.toHistoryData() = BookingHistoryData(
     movieBookingInfo.theaterMovie.movieInfo.movie.title,
     movieBookingInfo.formatBookHistoryDate(),
     movieBookingInfo.ticketCount,
-    seats, totalPrice
+    seats, totalPrice,
+    movieBookingInfo.theaterMovie.name
 )
 
 data class MovieBookingSeatInfoUIModel(

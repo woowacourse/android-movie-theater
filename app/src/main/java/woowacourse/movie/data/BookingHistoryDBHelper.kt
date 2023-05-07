@@ -19,7 +19,8 @@ class BookingHistoryDBHelper(context: Context?) :
                 " ${BookHistoryContract.TABLE_COLUMN_DATE} varchar(10)," +
                 " ${BookHistoryContract.TABLE_COLUMN_NUMBER_OF_PEOPLE} int," +
                 " ${BookHistoryContract.TABLE_COLUMN_SEATS} varchar(100)," +
-                " ${BookHistoryContract.TABLE_COLUMN_PRICE} varchar(10)" +
+                " ${BookHistoryContract.TABLE_COLUMN_PRICE} varchar(10)," +
+                " ${BookHistoryContract.TABLE_COLUMN_THEATER} varchar(50)" +
                 ");"
         )
     }
@@ -49,8 +50,10 @@ class BookingHistoryDBHelper(context: Context?) :
             cursor.getString(cursor.getColumnIndexOrThrow(BookHistoryContract.TABLE_COLUMN_SEATS))
         val price =
             cursor.getString(cursor.getColumnIndexOrThrow(BookHistoryContract.TABLE_COLUMN_PRICE))
+        val theater =
+            cursor.getString(cursor.getColumnIndexOrThrow(BookHistoryContract.TABLE_COLUMN_THEATER))
 
-        return BookingHistoryData(title, date, numberOfPeople, seats.split(","), price)
+        return BookingHistoryData(title, date, numberOfPeople, seats.split(","), price, theater)
     }
 
     fun insertData(bookingHistoryData: BookingHistoryData) {
@@ -63,6 +66,7 @@ class BookingHistoryDBHelper(context: Context?) :
             )
             put(BookHistoryContract.TABLE_COLUMN_SEATS, bookingHistoryData.seat.joinToString(","))
             put(BookHistoryContract.TABLE_COLUMN_PRICE, bookingHistoryData.price)
+            put(BookHistoryContract.TABLE_COLUMN_THEATER, bookingHistoryData.theater)
         }
         db.insert(BookHistoryContract.TABLE_NAME, null, values)
     }
