@@ -5,5 +5,5 @@ import com.example.domain.model.Tickets
 interface TicketsRepository {
     fun allTickets(): List<Tickets>
 
-    fun addTicket(ticket: Tickets)
+    fun addTickets(tickets: Tickets)
 }

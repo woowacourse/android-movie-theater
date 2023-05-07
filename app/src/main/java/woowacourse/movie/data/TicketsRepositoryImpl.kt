@@ -2,13 +2,16 @@ package woowacourse.movie.data
 
 import com.example.domain.model.Tickets
 import com.example.domain.repository.TicketsRepository
+import woowacourse.movie.data.sqlite.ReservationTicketsDao
 
-object TicketsRepositoryImpl : TicketsRepository {
-    private val tickets: MutableList<Tickets> = mutableListOf()
+class TicketsRepositoryImpl(
+    val reservationTicketsDao: ReservationTicketsDao
+) : TicketsRepository {
+    override fun allTickets(): List<Tickets> {
+        return reservationTicketsDao.selectAllTickets()
+    }
 
-    override fun allTickets(): List<Tickets> = tickets.toList()
-
-    override fun addTicket(ticket: Tickets) {
-        this.tickets.add(ticket)
+    override fun addTickets(tickets: Tickets) {
+        reservationTicketsDao.insertTickets(tickets)
     }
 }

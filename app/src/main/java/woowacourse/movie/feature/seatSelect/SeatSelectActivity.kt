@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import com.example.domain.usecase.AddReservationTicketsUseCase
 import woowacourse.movie.R
 import woowacourse.movie.data.TicketsRepositoryImpl
+import woowacourse.movie.data.sqlite.ReservationTicketsDao
 import woowacourse.movie.databinding.ActivitySeatSelectBinding
 import woowacourse.movie.feature.alarm.AlarmReceiver
 import woowacourse.movie.feature.common.BackKeyActionBarActivity
@@ -33,6 +34,8 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
 
     private lateinit var presenter: SeatSelectContract.Presenter
 
+    private lateinit var reservationTicketsDao: ReservationTicketsDao
+
     override fun onCreateView(savedInstanceState: Bundle?) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_select)
         reservationState =
@@ -40,10 +43,15 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
                 KEY_SELECT_RESERVATION
             )
         initClickListener()
+        reservationTicketsDao = ReservationTicketsDao(this)
         presenter = SeatSelectPresenter(
             this,
             reservationState,
-            AddReservationTicketsUseCase(TicketsRepositoryImpl)
+            AddReservationTicketsUseCase(
+                TicketsRepositoryImpl(
+                    reservationTicketsDao
+                )
+            )
         )
         binding.movie = reservationState.movie
     }
@@ -117,6 +125,11 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
         requestCode: Int
     ) {
         setAlarm(AlarmReceiver.getIntent(this, tickets), triggerDateTime, requestCode)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        reservationTicketsDao.close()
     }
 
     companion object {

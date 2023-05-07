@@ -104,7 +104,7 @@ internal class SeatSelectPresenterTest {
     fun 다이얼로그_확인_버튼을_클릭하면_예매_확인_화면으로_넘어간다() {
         every { view.seatToggle(any()) } just Runs
         every { view.setReservationAlarm(any(), any(), any()) } just Runs
-        every { ticketsRepository.addTicket(any()) } just Runs
+        every { ticketsRepository.addTickets(any()) } just Runs
         every { view.navigateReservationConfirm(any()) } just Runs
 
         // 좌석선택
@@ -114,7 +114,7 @@ internal class SeatSelectPresenterTest {
         presenter.clickDialogConfirm()
 
         verify { view.setReservationAlarm(any(), any(), any()) }
-        verify { ticketsRepository.addTicket(any()) }
+        verify { ticketsRepository.addTickets(any()) }
         verify { view.navigateReservationConfirm(any()) }
     }
 
