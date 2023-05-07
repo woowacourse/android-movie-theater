@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
+import com.example.domain.usecase.GetMovieAndAdvItemsUseCase
 import woowacourse.movie.data.AdvRepositoryImpl
 import woowacourse.movie.data.MovieRepositoryImpl
 import woowacourse.movie.databinding.FragmentMovieListBinding
@@ -32,8 +33,9 @@ class MovieListFragment : Fragment(), MovieListContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setFragmentResultListener(THEATER_SELECT_KEY) { _, bundle ->
-            val theaterMovie = bundle.getParcelableCompat<SelectTheaterAndMovieState>(THEATER_MOVIE_KEY)
-                ?: return@setFragmentResultListener
+            val theaterMovie =
+                bundle.getParcelableCompat<SelectTheaterAndMovieState>(THEATER_MOVIE_KEY)
+                    ?: return@setFragmentResultListener
             presenter.receiveTheaterInfo(theaterMovie)
         }
     }
@@ -49,7 +51,10 @@ class MovieListFragment : Fragment(), MovieListContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = MoviesPresenter(this, MovieRepositoryImpl, AdvRepositoryImpl)
+        presenter = MoviesPresenter(
+            this,
+            GetMovieAndAdvItemsUseCase(MovieRepositoryImpl(), AdvRepositoryImpl())
+        )
         adapter = CommonAdapter()
         presenter.loadMovieAndAdvItemList() // 뷰가 그려질때마다 데이터 다시 불러옴. 캐싱 적용 안함
         binding.rvMovie.adapter = adapter

@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.domain.usecase.LoadAlarmSettingInfoUseCase
+import com.example.domain.usecase.SetAlarmSettingUseCase
 import woowacourse.movie.R
 import woowacourse.movie.data.AlarmSettingRepositoryImpl
 import woowacourse.movie.databinding.FragmentSettingBinding
@@ -30,7 +32,11 @@ class SettingFragment : Fragment(), SettingContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = SettingPresenter(this, AlarmSettingRepositoryImpl)
+        presenter = SettingPresenter(
+            this,
+            LoadAlarmSettingInfoUseCase(AlarmSettingRepositoryImpl),
+            SetAlarmSettingUseCase(AlarmSettingRepositoryImpl)
+        )
         presenter.loadAlarmSettingInfo()
         binding.notificationSwitch.setOnCheckedChangeListener { _, isChecked ->
             val isPermission = requireActivity().hasPermissions(PERMISSIONS)

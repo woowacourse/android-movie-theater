@@ -1,17 +1,24 @@
 package woowacourse.movie.feature.setting
 
-import woowacourse.movie.data.AlarmSettingRepository
+import com.example.domain.usecase.LoadAlarmSettingInfoUseCase
+import com.example.domain.usecase.SetAlarmSettingUseCase
 
 class SettingPresenter(
     val view: SettingContract.View,
-    private val settingRepository: AlarmSettingRepository
+    private val loadAlarmSettingInfoUseCase: LoadAlarmSettingInfoUseCase,
+    private val setAlarmSettingUseCase: SetAlarmSettingUseCase
 ) : SettingContract.Presenter {
     override fun loadAlarmSettingInfo() {
-        view.setInitAlarmSettingInfo(settingRepository.getEnablePushNotification())
+        loadAlarmSettingInfoUseCase(
+            onSuccess = { view.setInitAlarmSettingInfo(it) },
+            onFailure = { }
+        )
     }
 
     override fun changeSwitchCheckedState(isPermissionApprove: Boolean, isSwitchChecked: Boolean) {
         if (!isPermissionApprove) view.alarmPermissionIsNotApprove()
-        settingRepository.setEnablePushNotification(isSwitchChecked)
+        setAlarmSettingUseCase(isSwitchChecked, {}, {
+            // 문제 발생. 토스트 띄워야 함.
+        })
     }
 }

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
+import com.example.domain.usecase.GetTheaterScreeningInfoByMovieUseCase
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.data.TheaterRepositoryImpl
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetBinding
@@ -43,7 +44,7 @@ class TheaterBottomSheetFragment : BottomSheetDialogFragment(), TheaterContract.
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = TheaterPresenter(this, TheaterRepositoryImpl)
+        presenter = TheaterPresenter(this, GetTheaterScreeningInfoByMovieUseCase(TheaterRepositoryImpl))
         presenter.loadTheatersData(movie)
     }
 

@@ -1,5 +1,7 @@
 package woowacourse.movie.feature.movieList
 
+import com.example.domain.repository.AdvRepository
+import com.example.domain.repository.MovieRepository
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -9,8 +11,6 @@ import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.data.AdvRepository
-import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.feature.common.itemModel.CommonItemModel
 import woowacourse.movie.feature.movieList.itemModel.AdvItemModel
 import woowacourse.movie.feature.movieList.itemModel.MovieItemModel

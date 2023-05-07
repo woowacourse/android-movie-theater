@@ -1,8 +1,8 @@
 package woowacourse.movie.feature.seatSelect
 
+import com.example.domain.usecase.AddReservationTicketsUseCase
 import com.example.domain.usecase.DiscountApplyUseCase
 import com.example.domain.usecase.GetIssuedTicketsUseCase
-import woowacourse.movie.data.TicketsRepository
 import woowacourse.movie.model.SeatPositionState
 import woowacourse.movie.model.SelectReservationState
 import woowacourse.movie.model.mapper.asDomain
@@ -11,7 +11,7 @@ import woowacourse.movie.model.mapper.asPresentation
 class SeatSelectPresenter(
     val view: SeatSelectContract.View,
     private val reservationState: SelectReservationState,
-    private val ticketsRepository: TicketsRepository
+    private val addReservationTicketsUseCase: AddReservationTicketsUseCase
 ) : SeatSelectContract.Presenter {
     private val discountApplyUseCase = DiscountApplyUseCase()
     private val getIssuedTicketsUseCase = GetIssuedTicketsUseCase()
@@ -52,7 +52,7 @@ class SeatSelectPresenter(
             tickets.dateTime.minusMinutes(NOTIFICATION_ADJUST_MINUTES),
             tickets.hashCode()
         )
-        ticketsRepository.addTicket(tickets)
+        addReservationTicketsUseCase(tickets.asDomain(), {}, {})
         view.navigateReservationConfirm(tickets)
     }
 

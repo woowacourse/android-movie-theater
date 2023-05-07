@@ -1,6 +1,6 @@
 package woowacourse.movie.feature.alarm
 
-import woowacourse.movie.data.AlarmSettingRepository
+import com.example.domain.repository.AlarmSettingRepository
 import woowacourse.movie.model.TicketsState
 
 class AlarmReceiverPresenter(

@@ -1,5 +1,6 @@
 package woowacourse.movie.feature.reservationList
 
+import com.example.domain.repository.TicketsRepository
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -8,7 +9,6 @@ import io.mockk.slot
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.data.TicketsRepository
 import woowacourse.movie.feature.reservationList.itemModel.TicketsItemModel
 import woowacourse.movie.model.MoneyState
 import woowacourse.movie.model.MovieState

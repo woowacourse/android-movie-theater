@@ -1,26 +1,35 @@
 package woowacourse.movie.feature.movieList
 
-import woowacourse.movie.data.AdvRepository
-import woowacourse.movie.data.MovieRepository
+import com.example.domain.usecase.GetMovieAndAdvItemsUseCase
 import woowacourse.movie.feature.common.itemModel.CommonItemModel
 import woowacourse.movie.feature.movieList.itemModel.AdvItemModel
 import woowacourse.movie.feature.movieList.itemModel.MovieItemModel
 import woowacourse.movie.model.SelectTheaterAndMovieState
+import woowacourse.movie.model.mapper.asPresentation
 
 class MoviesPresenter(
     val view: MovieListContract.View,
-    private val movieRepository: MovieRepository,
-    private val advRepository: AdvRepository
+    private val getMovieAndAdvItemsUseCase: GetMovieAndAdvItemsUseCase,
 ) : MovieListContract.Presenter {
 
     override fun loadMovieAndAdvItemList() {
-        val movie = movieRepository.allMovies().map {
-            it.toItemModel { movie -> view.showBottomSheetDialog(movie) }
-        }
-        val adv = advRepository.allAdv().map {
-            it.toItemModel { adv -> view.navigateAdbDetail(adv) }
-        }
-        view.updateItems(combineMovieAndAdvItems(movie, adv))
+        getMovieAndAdvItemsUseCase(
+            onSuccess = { movies, advs ->
+                val movieItems = movies.map {
+                    it.asPresentation().toItemModel { movieState ->
+                        view.showBottomSheetDialog(movieState)
+                    }
+                }
+                val advItems = advs.map {
+                    it.asPresentation().toItemModel { advState ->
+                        view.navigateAdbDetail(advState)
+                    }
+                }
+                view.updateItems(combineMovieAndAdvItems(movieItems, advItems))
+            },
+            onFailure = {
+            }
+        )
     }
 
     override fun receiveTheaterInfo(theaterMovie: SelectTheaterAndMovieState) {

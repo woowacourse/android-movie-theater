@@ -1,20 +1,31 @@
 package woowacourse.movie.feature.movieList.bottomSheet
 
-import woowacourse.movie.data.TheaterRepository
+import com.example.domain.usecase.GetTheaterScreeningInfoByMovieUseCase
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.SelectTheaterAndMovieState
-import woowacourse.movie.model.TheaterScreeningState
+import woowacourse.movie.model.TheaterScreeningInfoState
+import woowacourse.movie.model.mapper.asDomain
+import woowacourse.movie.model.mapper.asPresentation
 
 class TheaterPresenter(
     val view: TheaterContract.View,
-    private val theaterRepository: TheaterRepository
+    private val getTheaterScreeningInfoByMovieUseCase: GetTheaterScreeningInfoByMovieUseCase
 ) : TheaterContract.Presenter {
     override fun loadTheatersData(movie: MovieState) {
-        val theaters = theaterRepository.getScreeningMovieTheaters(movie)
-        view.setTheaterAdapter(theaters.map { it.toItemModel { clickTheater(it, movie) } })
+        getTheaterScreeningInfoByMovieUseCase(
+            movie.asDomain(),
+            onSuccess = {
+                view.setTheaterAdapter(
+                    it.map {
+                        it.asPresentation().toItemModel { clickTheater(it, movie) }
+                    }
+                )
+            },
+            onFailure = { }
+        )
     }
 
-    override fun clickTheater(theater: TheaterScreeningState, movie: MovieState) {
+    override fun clickTheater(theater: TheaterScreeningInfoState, movie: MovieState) {
         val theaterMovie = SelectTheaterAndMovieState(
             theater.theater,
             movie,

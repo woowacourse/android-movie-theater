@@ -1,4 +1,4 @@
-package woowacourse.movie.data
+package com.example.domain.repository
 
 interface AlarmSettingRepository {
     fun getEnablePushNotification(): Boolean

@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 import java.time.LocalTime
 
 @Parcelize
-data class ScreeningMovieState(
+data class ScreeningMovieTimesState(
     val movie: MovieState,
     val screeningDateTimes: List<LocalTime>
 ) : Parcelable

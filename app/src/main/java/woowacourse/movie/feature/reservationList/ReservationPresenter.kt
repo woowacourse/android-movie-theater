@@ -1,15 +1,24 @@
 package woowacourse.movie.feature.reservationList
 
-import woowacourse.movie.data.TicketsRepository
+import com.example.domain.usecase.GetAllReservationTicketsUseCase
+import woowacourse.movie.model.mapper.asPresentation
 
 class ReservationPresenter(
     val view: ReservationListContract.View,
-    private val ticketsRepository: TicketsRepository
+    private val getAllReservationTicketsUseCase: GetAllReservationTicketsUseCase
 ) : ReservationListContract.Presenter {
     override fun loadTicketsItemList() {
-        val tickets = ticketsRepository.allTickets().map {
-            it.convertToItemModel { tickets -> view.navigateReservationConfirm(tickets) }
-        }
-        view.updateItems(tickets)
+        getAllReservationTicketsUseCase(
+            onSuccess = {
+                val ticketsItems = it.map {
+                    it.asPresentation().convertToItemModel { tickets ->
+                        view.navigateReservationConfirm(tickets)
+                    }
+                }
+                view.updateItems(ticketsItems)
+            },
+            onFailure = {
+            }
+        )
     }
 }

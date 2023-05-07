@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.domain.usecase.GetAllReservationTicketsUseCase
 import woowacourse.movie.data.TicketsRepositoryImpl
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.feature.common.OnDataUpdate
@@ -34,7 +35,8 @@ class ReservationListFragment : Fragment(), ReservationListContract.View, OnData
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = ReservationPresenter(this, TicketsRepositoryImpl)
+        presenter =
+            ReservationPresenter(this, GetAllReservationTicketsUseCase(TicketsRepositoryImpl))
         adapter = CommonAdapter()
         binding.rvReservation.adapter = adapter
         presenter.loadTicketsItemList()

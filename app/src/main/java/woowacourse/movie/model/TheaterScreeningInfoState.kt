@@ -5,11 +5,11 @@ import kotlinx.parcelize.Parcelize
 import woowacourse.movie.feature.movieList.bottomSheet.TheaterItemModel
 
 @Parcelize
-data class TheaterScreeningState(
+data class TheaterScreeningInfoState(
     val theater: TheaterState,
-    val screeningInfos: List<ScreeningMovieState>
+    val screeningInfos: List<ScreeningMovieTimesState>
 ) : Parcelable {
-    fun toItemModel(onClick: (TheaterScreeningState) -> Unit): TheaterItemModel {
+    fun toItemModel(onClick: (TheaterScreeningInfoState) -> Unit): TheaterItemModel {
         return TheaterItemModel(this, onClick)
     }
 }

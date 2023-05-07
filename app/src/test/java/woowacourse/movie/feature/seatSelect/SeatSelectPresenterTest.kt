@@ -1,5 +1,6 @@
 package woowacourse.movie.feature.seatSelect
 
+import com.example.domain.repository.TicketsRepository
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -9,7 +10,6 @@ import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.data.TicketsRepository
 import woowacourse.movie.model.CountState
 import woowacourse.movie.model.MoneyState
 import woowacourse.movie.model.MovieState

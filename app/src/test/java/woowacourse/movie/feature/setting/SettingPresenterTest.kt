@@ -1,5 +1,6 @@
 package woowacourse.movie.feature.setting
 
+import com.example.domain.repository.AlarmSettingRepository
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -8,7 +9,6 @@ import io.mockk.slot
 import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.data.AlarmSettingRepository
 
 internal class SettingPresenterTest {
     private lateinit var view: SettingContract.View

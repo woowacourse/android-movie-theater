@@ -1,13 +1,14 @@
 package woowacourse.movie.data
 
-import woowacourse.movie.model.TicketsState
+import com.example.domain.model.Tickets
+import com.example.domain.repository.TicketsRepository
 
 object TicketsRepositoryImpl : TicketsRepository {
-    override fun allTickets(): List<TicketsState> = tickets.toList()
+    private val tickets: MutableList<Tickets> = mutableListOf()
 
-    override fun addTicket(ticket: TicketsState) {
+    override fun allTickets(): List<Tickets> = tickets.toList()
+
+    override fun addTicket(ticket: Tickets) {
         this.tickets.add(ticket)
     }
-
-    private val tickets: MutableList<TicketsState> = mutableListOf()
 }

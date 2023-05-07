@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.TableRow
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
+import com.example.domain.usecase.AddReservationTicketsUseCase
 import woowacourse.movie.R
 import woowacourse.movie.data.TicketsRepositoryImpl
 import woowacourse.movie.databinding.ActivitySeatSelectBinding
@@ -35,9 +36,15 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
     override fun onCreateView(savedInstanceState: Bundle?) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_select)
         reservationState =
-            intent.getParcelableExtraCompat(KEY_SELECT_RESERVATION) ?: return keyError(KEY_SELECT_RESERVATION)
+            intent.getParcelableExtraCompat(KEY_SELECT_RESERVATION) ?: return keyError(
+                KEY_SELECT_RESERVATION
+            )
         initClickListener()
-        presenter = SeatSelectPresenter(this, reservationState, TicketsRepositoryImpl)
+        presenter = SeatSelectPresenter(
+            this,
+            reservationState,
+            AddReservationTicketsUseCase(TicketsRepositoryImpl)
+        )
         binding.movie = reservationState.movie
     }
 
