@@ -10,12 +10,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.data.alarm.AlarmStateRepositoryImpl
+import woowacourse.movie.data.reservation.ReservationRepositoryImpl
 import woowacourse.movie.ui.alarm.ReservationAlarmManager
 import woowacourse.movie.ui.moviedetail.MovieDetailActivity
 import woowacourse.movie.ui.ticket.MovieTicketActivity
 import woowacourse.movie.uimodel.MovieTicketModel
 import woowacourse.movie.uimodel.PeopleCountModel
-import woowacourse.movie.uimodel.ReservationModel
 import woowacourse.movie.uimodel.SeatModel
 import woowacourse.movie.uimodel.SelectedSeatsModel
 import woowacourse.movie.utils.failLoadingData
@@ -68,7 +68,14 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             intent.getSerializableExtraCompat(MovieDetailActivity.KEY_PEOPLE_COUNT)
                 ?: return failLoadingData()
 
-        presenter = SeatSelectionPresenter(this, AlarmStateRepositoryImpl(this), movieTitle, movieTime, peopleCount)
+        presenter = SeatSelectionPresenter(
+            this,
+            AlarmStateRepositoryImpl(this),
+            ReservationRepositoryImpl(this),
+            movieTitle,
+            movieTime,
+            peopleCount,
+        )
     }
 
     private fun loadSavedData(savedInstanceState: Bundle?) {
@@ -162,7 +169,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun setReservationData(ticket: MovieTicketModel) {
-        ReservationModel.add(ticket)
+        presenter.addReservation(ticket)
     }
 
     private fun MovieTicketModel.makeAlarm() {

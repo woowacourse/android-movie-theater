@@ -9,12 +9,16 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.data.reservation.ReservationRepository
+import woowacourse.movie.data.reservation.ReservationRepositoryImpl
 import woowacourse.movie.ui.reservation.adapter.ReservationAdapter
 import woowacourse.movie.ui.ticket.MovieTicketActivity
-import woowacourse.movie.uimodel.ReservationModel
 
 class ReservationFragment : Fragment() {
     private lateinit var reservationView: RecyclerView
+    private val repository: ReservationRepository by lazy {
+        ReservationRepositoryImpl(requireContext())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,13 +46,13 @@ class ReservationFragment : Fragment() {
     }
 
     private fun setReservationViewAdapter() {
-        reservationView.adapter = ReservationAdapter(ReservationModel.tickets) {
+        reservationView.adapter = ReservationAdapter(repository.getData()) {
             moveToMovieTicketActivity(it)
         }
     }
 
     private fun setTextOnEmptyState(view: View) {
-        if (ReservationModel.tickets.isNotEmpty()) {
+        if (repository.getData().isNotEmpty()) {
             view.findViewById<TextView>(R.id.reservation_empty).isVisible = false
         }
     }
@@ -56,7 +60,7 @@ class ReservationFragment : Fragment() {
     private fun moveToMovieTicketActivity(position: Int) {
         startActivity(
             MovieTicketActivity.getIntent(
-                ReservationModel.tickets[position],
+                repository.getData()[position],
                 requireContext(),
             ),
         )

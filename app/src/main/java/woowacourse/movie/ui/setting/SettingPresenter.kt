@@ -1,21 +1,22 @@
 package woowacourse.movie.ui.setting
 
 import woowacourse.movie.data.alarm.AlarmStateRepository
-import woowacourse.movie.uimodel.ReservationModel
+import woowacourse.movie.data.reservation.ReservationRepository
 
 class SettingPresenter(
     private val view: SettingContract.View,
-    private val repository: AlarmStateRepository,
+    private val alarmStateRepository: AlarmStateRepository,
+    private val reservationRepository: ReservationRepository,
 ) : SettingContract.Presenter {
     override fun checkSwitchState() {
-        view.setToggleButton(repository.getData())
+        view.setToggleButton(alarmStateRepository.getData())
     }
 
     override fun clickSwitch(isChecked: Boolean) {
-        repository.saveData(isChecked)
+        alarmStateRepository.saveData(isChecked)
         checkSwitchState()
 
-        val tickets = ReservationModel.tickets
+        val tickets = reservationRepository.getData()
         if (isChecked) {
             tickets.forEach { view.setAlarms(it) }
         } else {

@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.data.alarm.AlarmStateRepositoryImpl
+import woowacourse.movie.data.reservation.ReservationRepositoryImpl
 import woowacourse.movie.ui.alarm.ReservationAlarmManager
 import woowacourse.movie.uimodel.MovieTicketModel
 
@@ -29,6 +30,7 @@ class SettingFragment : Fragment(), SettingContract.View {
         SettingPresenter(
             this,
             AlarmStateRepositoryImpl(requireContext()),
+            ReservationRepositoryImpl(requireContext()),
         )
     }
 
