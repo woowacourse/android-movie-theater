@@ -11,16 +11,15 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 import woowacourse.movie.AlarmPreference
 import woowacourse.movie.R
 import woowacourse.movie.data.ReservationDatabase
-import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.util.isGranted
 import woowacourse.movie.util.requestRequiredPermissions
 import woowacourse.movie.view.alarm.ReservationAlarmManager
-import woowacourse.movie.view.mapper.toUiModel
+import woowacourse.movie.view.model.ReservationUiModel
 
-class SettingFragment : Fragment(R.layout.fragment_setting) {
+class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.View {
 
+    override lateinit var presenter: SettingContract.Presenter
     private lateinit var reservationAlarmManager: ReservationAlarmManager
-    private lateinit var alarmPreference: AlarmPreference
     private lateinit var toggle: SwitchMaterial
     private var initialToggleValue: Boolean = false
 
@@ -28,23 +27,27 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
         ActivityResultContracts.RequestPermission(),
     ) { isGranted: Boolean ->
         if (isGranted) {
-            toggle.isChecked = true
-            alarmPreference.setIsAlarmOn(true)
+            presenter.setAlarmPreference(true)
         } else {
             Toast.makeText(
                 requireContext(),
                 "권한을 설정해야 알림을 받을 수 있습니다. 설정에서 알림을 켜주세요.",
                 Toast.LENGTH_LONG
             ).show()
-            toggle.isChecked = false
-            alarmPreference.setIsAlarmOn(false)
+            presenter.setAlarmPreference(false)
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        alarmPreference = AlarmPreference.getInstance(requireActivity().applicationContext)
+        presenter = SettingPresenter(
+            this,
+            AlarmPreference.getInstance(requireActivity().applicationContext),
+            ReservationDatabase(requireActivity().applicationContext)
+        )
+
+        // alarmPreference = AlarmPreference.getInstance(requireActivity().applicationContext)
         reservationAlarmManager = ReservationAlarmManager(requireContext())
     }
 
@@ -52,21 +55,18 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
         super.onViewCreated(view, savedInstanceState)
 
         toggle = view.findViewById(R.id.setting_toggle)
-        val isAlarmOn = alarmPreference.isAlarmOn(false)
-
-        initToggle(toggle, isAlarmOn)
-    }
-
-    private fun initToggle(toggle: SwitchMaterial, isAlarmOn: Boolean) {
-        toggle.isChecked = isAlarmOn
-        initialToggleValue = isAlarmOn
         toggle.setOnCheckedChangeListener { _, isChecked ->
-            setToggleChangeListener(isChecked)
+            if (isChecked) requestNotificationPermission()
         }
+        presenter.loadAlarmSetting()
     }
 
-    private fun setToggleChangeListener(isChecked: Boolean) {
-        if (isChecked) requestNotificationPermission()
+    override fun initToggleState(isAlarmOn: Boolean) {
+        initialToggleValue = isAlarmOn
+    }
+
+    override fun setToggleState(isAlarmOn: Boolean) {
+        toggle.isChecked = isAlarmOn
     }
 
     private fun requestNotificationPermission(): Boolean {
@@ -89,21 +89,14 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
 
     private fun applyChange(isToggleChecked: Boolean) {
         if (isToggleChecked) {
-            resetAlarms()
-            alarmPreference.setIsAlarmOn(true)
+            presenter.onResetAlarms()
         } else {
             reservationAlarmManager.cancelAlarms()
-            alarmPreference.setIsAlarmOn(false)
+            presenter.setAlarmPreference(false)
         }
     }
 
-    private fun resetAlarms() {
-        val reservationDatabase: ReservationRepository = ReservationDatabase(requireActivity().applicationContext)
-        val reservations = reservationDatabase.findAll().map { it.toUiModel() }
-        reservationAlarmManager.registerAlarms(reservations, ALARM_MINUTE_INTERVAL)
-    }
-
-    companion object {
-        const val ALARM_MINUTE_INTERVAL = 30L
+    override fun resetAlarms(reservations: List<ReservationUiModel>, timeInterval: Long) {
+        reservationAlarmManager.registerAlarms(reservations, timeInterval)
     }
 }

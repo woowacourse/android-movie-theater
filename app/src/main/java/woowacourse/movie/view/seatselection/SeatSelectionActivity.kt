@@ -24,7 +24,7 @@ import woowacourse.movie.view.model.MovieListModel.MovieUiModel
 import woowacourse.movie.view.model.ReservationOptions
 import woowacourse.movie.view.model.ReservationUiModel
 import woowacourse.movie.view.model.SeatUiModel
-import woowacourse.movie.view.moviemain.setting.SettingFragment
+import woowacourse.movie.view.moviemain.setting.SettingPresenter
 import woowacourse.movie.view.reservationcompleted.ReservationCompletedActivity
 import java.text.DecimalFormat
 
@@ -150,7 +150,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
         if (isAlarmOn) reservationAlarmManager.registerAlarm(
             reservation,
-            SettingFragment.ALARM_MINUTE_INTERVAL
+            SettingPresenter.ALARM_MINUTE_INTERVAL
         )
         startActivity(ReservationCompletedActivity.newIntent(this, reservation))
     }
