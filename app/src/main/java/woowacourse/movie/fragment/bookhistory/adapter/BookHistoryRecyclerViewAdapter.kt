@@ -3,7 +3,7 @@ package woowacourse.movie.fragment.bookhistory.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemBookHistoryListBinding
 import woowacourse.movie.model.BookingHistoryData
 
 class BookHistoryRecyclerViewAdapter(
@@ -12,9 +12,8 @@ class BookHistoryRecyclerViewAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_book_history_list, parent, false)
-        return BookHistoryViewHolder(view, bookHistoryOnClickListener)
+        val binding = ItemBookHistoryListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return BookHistoryViewHolder(binding, bookHistoryOnClickListener)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

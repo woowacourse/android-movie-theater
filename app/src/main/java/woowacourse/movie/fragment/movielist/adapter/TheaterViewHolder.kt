@@ -1,21 +1,20 @@
 package woowacourse.movie.fragment.movielist.adapter
 
-import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.woowacourse.domain.TheaterMovie
-import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemTheaterListBinding
 
 class TheaterViewHolder(
-    private val view: View,
+    private val binding: ItemTheaterListBinding,
     private val theaterOnClickListener: (Int) -> Unit,
-) : RecyclerView.ViewHolder(view) {
+) : RecyclerView.ViewHolder(binding.root) {
 
-    private val name: TextView = view.findViewById(R.id.tv_theater_name)
-    private val numberOfScreeningTime: TextView = view.findViewById(R.id.tv_theater_time_num)
+    private val name: TextView = binding.tvTheaterName
+    private val numberOfScreeningTime: TextView = binding.tvTheaterTimeNum
 
     init {
-        view.setOnClickListener {
+        binding.root.setOnClickListener {
             theaterOnClickListener(bindingAdapterPosition)
         }
     }

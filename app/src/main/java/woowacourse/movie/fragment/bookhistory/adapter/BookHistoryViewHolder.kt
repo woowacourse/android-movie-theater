@@ -3,22 +3,22 @@ package woowacourse.movie.fragment.bookhistory.adapter
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
-import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemBookHistoryListBinding
 import woowacourse.movie.model.BookingHistoryData
 
 class BookHistoryViewHolder(
-    private val view: View,
+    private val binding: ItemBookHistoryListBinding,
     private val bookHistoryOnClickListener: (Int) -> Unit,
-) : RecyclerView.ViewHolder(view) {
+) : RecyclerView.ViewHolder(binding.root) {
 
-    val date: TextView = view.findViewById(R.id.tv_book_history_date)
-    val title: TextView = view.findViewById(R.id.tv_book_history_title)
+    val date: TextView = binding.tvBookHistoryDate
+    val title: TextView = binding.tvBookHistoryTitle
 
     init {
-        view.setOnClickListener {
+        binding.root.setOnClickListener {
             bookHistoryOnClickListener(bindingAdapterPosition)
         }
     }
@@ -27,7 +27,7 @@ class BookHistoryViewHolder(
         val dateAndTime = movieHistoryData.date
         val spannableStringBuilder = SpannableStringBuilder(dateAndTime)
         val grayColorSpan =
-            ForegroundColorSpan(view.context.getColor(R.color.book_history_separator))
+            ForegroundColorSpan(binding.root.context.getColor(R.color.book_history_separator))
         val separatorPosition = getSeparatorPosition(dateAndTime)
         spannableStringBuilder.setSpan(
             grayColorSpan,

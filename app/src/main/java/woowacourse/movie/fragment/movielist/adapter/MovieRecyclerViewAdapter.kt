@@ -4,7 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.woowacourse.domain.ViewType
-import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemAdListBinding
+import woowacourse.movie.databinding.ItemMovieListBinding
 import woowacourse.movie.model.AdUIModel
 import woowacourse.movie.model.MovieUIModel
 
@@ -19,14 +20,14 @@ class MovieRecyclerViewAdapter(
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (ViewType.values()[viewType]) {
             ViewType.MOVIE -> {
-                val view = LayoutInflater.from(viewGroup.context)
-                    .inflate(R.layout.item_movie_list, viewGroup, false)
-                MovieRecyclerViewHolder(view, movieOnItemClicked)
+                val binding =
+                    ItemMovieListBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
+                MovieRecyclerViewHolder(binding, movieOnItemClicked)
             }
             ViewType.AD -> {
-                val view = LayoutInflater.from(viewGroup.context)
-                    .inflate(R.layout.item_ad_list, viewGroup, false)
-                AdViewHolder(view, adOnItemClicked, ad)
+                val binding =
+                    ItemAdListBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
+                AdViewHolder(binding, adOnItemClicked, ad)
             }
         }
     }

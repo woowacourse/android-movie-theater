@@ -1,25 +1,25 @@
 package woowacourse.movie.fragment.movielist.adapter
 
-import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.DateFormatter
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemMovieListBinding
 import woowacourse.movie.model.MovieUIModel
 
 class MovieRecyclerViewHolder(
-    private val view: View,
+    private val binding: ItemMovieListBinding,
     private val listener: (Int) -> Unit
 ) :
-    RecyclerView.ViewHolder(view) {
+    RecyclerView.ViewHolder(binding.root) {
 
-    val poster: ImageView = view.findViewById(R.id.iv_movie_poster)
-    val title: TextView = view.findViewById(R.id.tv_movie_title)
-    val screeningPeriod: TextView = view.findViewById(R.id.tv_movie_screening_period)
-    val runningTime: TextView = view.findViewById(R.id.tv_movie_running_time)
-    val bookButton: Button = view.findViewById(R.id.bt_book_now)
+    private val poster: ImageView = binding.ivMoviePoster
+    private val title: TextView = binding.tvMovieTitle
+    private val screeningPeriod: TextView = binding.tvMovieScreeningPeriod
+    private val runningTime: TextView = binding.tvMovieRunningTime
+    private val bookButton: Button = binding.btBookNow
 
     init {
         bookButton.setOnClickListener {
@@ -30,12 +30,12 @@ class MovieRecyclerViewHolder(
     fun bind(movieData: MovieUIModel) {
         poster.setImageResource(movieData.poster)
         title.text = movieData.title
-        screeningPeriod.text = view.context.getString(
+        screeningPeriod.text = binding.root.context.getString(
             R.string.movie_screening_period,
             DateFormatter.format(movieData.startDate),
             DateFormatter.format(movieData.endDate)
         )
         runningTime.text =
-            view.context.getString(R.string.movie_running_time, movieData.runningTime)
+            binding.root.context.getString(R.string.movie_running_time, movieData.runningTime)
     }
 }
