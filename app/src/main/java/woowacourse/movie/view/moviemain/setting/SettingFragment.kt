@@ -23,6 +23,12 @@ class SettingFragment : Fragment(), SettingContract.View {
     private lateinit var alarmController: AlarmController
     private lateinit var binding: FragmentSettingBinding
     override lateinit var presenter: SettingContract.Presenter
+    override val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+        if (!isGranted) {
+            Toast.makeText(requireContext(), NOTICE_REQUEST_PERMISSION_MESSAGE, Toast.LENGTH_LONG).show()
+            setToggle(false)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,13 +58,6 @@ class SettingFragment : Fragment(), SettingContract.View {
         alarmController.cancelAlarms()
     }
 
-    override val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-        if (!isGranted) {
-            Toast.makeText(requireContext(), "권한을 설정해야 알림을 받을 수 있습니다. 설정에서 알림을 켜주세요.", Toast.LENGTH_LONG).show()
-            setToggle(false)
-        }
-    }
-
     override fun requestNotificationPermission(): Boolean {
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
@@ -77,6 +76,7 @@ class SettingFragment : Fragment(), SettingContract.View {
     }
 
     companion object {
+        private const val NOTICE_REQUEST_PERMISSION_MESSAGE = "권한을 설정해야 알림을 받을 수 있습니다. 설정에서 알림을 켜주세요."
         const val ALARM_MINUTE_INTERVAL = 30L
         const val TAG_SETTING = "SETTING"
     }
