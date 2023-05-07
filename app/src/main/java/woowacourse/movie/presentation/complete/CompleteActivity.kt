@@ -4,29 +4,30 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.tools.Movie
+import woowacourse.movie.databinding.ActivityCompletedBinding
 import woowacourse.movie.model.data.remote.DummyMovieStorage
 import woowacourse.movie.presentation.main.MainActivity
 import woowacourse.movie.presentation.model.TicketModel
-import woowacourse.movie.presentation.util.formatDotDateTimeColon
 import woowacourse.movie.presentation.util.getParcelableExtraCompat
 import woowacourse.movie.util.intentDataNullProcess
 
 class CompleteActivity : AppCompatActivity(), CompleteContract.View {
+
+    private lateinit var binding: ActivityCompletedBinding
 
     override lateinit var presenter: CompleteContract.Presenter
     private lateinit var ticketModel: TicketModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_completed)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_completed)
 
         getTicket()
         initPresenter()
-        initView(ticketModel)
+        initBindingData(ticketModel)
     }
 
     private fun initPresenter() {
@@ -46,34 +47,9 @@ class CompleteActivity : AppCompatActivity(), CompleteContract.View {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun initView(ticket: TicketModel) {
-        val movie = presenter.getMovieById(ticket.movieId)
-        setMovieTitle(movie)
-        setMovieScreeningDate(ticket)
-        setMovieTicketCount(ticket)
-        setMoviePaymentAmount(ticket)
-    }
-
-    private fun setMovieTitle(movie: Movie) {
-        findViewById<TextView>(R.id.textCompletedTitle).text = movie.title
-    }
-
-    private fun setMovieScreeningDate(ticket: TicketModel) {
-        findViewById<TextView>(R.id.textCompletedScreeningDate).text =
-            ticket.bookedDateTime.formatDotDateTimeColon()
-    }
-
-    private fun setMovieTicketCount(ticket: TicketModel) {
-        findViewById<TextView>(R.id.textCompletedTicketCount).text =
-            getString(R.string.normal_ticket_count_seat).format(
-                ticket.count,
-                ticket.formatSeatsCombine()
-            )
-    }
-
-    private fun setMoviePaymentAmount(ticket: TicketModel) {
-        findViewById<TextView>(R.id.textCompletedPaymentAmount).text =
-            getString(R.string.payment_on_site_amount).format(ticket.paymentMoney)
+    private fun initBindingData(ticket: TicketModel) {
+        binding.movie = presenter.getMovieById(ticket.movieId)
+        binding.ticket = ticket
     }
 
     override fun finish() {
@@ -90,12 +66,6 @@ class CompleteActivity : AppCompatActivity(), CompleteContract.View {
             return Intent(context, CompleteActivity::class.java).apply {
                 putExtra(TICKET, ticketModel)
             }
-        }
-
-        private fun TicketModel.formatSeatsCombine(): String {
-            val stringBuilder = StringBuilder()
-            this.seats.forEach { stringBuilder.append("$it ") }
-            return stringBuilder.toString()
         }
     }
 }
