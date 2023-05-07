@@ -1,14 +1,14 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.movieitem
 
 import woowacourse.movie.data.movie.MockMovieData
 import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.movielist.movie.MovieItem
 
-object MovieItemData {
+object MockMovieItemData : MovieItemData {
     private val movies = MockMovieData.movies.map { MovieItem.Movie(it.toPresentation()) }
     private val ads = AdData.ads
 
-    fun getMovieItems(): List<MovieItem> {
+    override fun getMovieItems(): List<MovieItem> {
         val movieItemModels = mutableListOf<MovieItem>()
         val mutableMovieModel = movies.toMutableList()
         val mutableAdModel = ads.toMutableList()

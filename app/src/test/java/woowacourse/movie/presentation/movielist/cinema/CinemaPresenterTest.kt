@@ -11,15 +11,15 @@ import org.junit.Test
 import woowacourse.movie.data.cinema.CinemaData
 import woowacourse.movie.domain.model.tools.cinema.Cinema
 import woowacourse.movie.domain.model.tools.cinema.MovieTimes
-import woowacourse.movie.presentation.FakeMovieData
-import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.model.CinemaModel
+import woowacourse.movie.presentation.model.MovieModel
+import java.time.LocalDate
 
 class CinemaPresenterTest {
     private lateinit var view: CinemaContract.View
     private lateinit var presenter: CinemaContract.Presenter
 
-    object FakeCinemaData : CinemaData {
+    private object FakeCinemaData : CinemaData {
         override fun getCinemas(): List<Cinema> = listOf(
             Cinema.of(
                 "선릉",
@@ -46,8 +46,16 @@ class CinemaPresenterTest {
     fun `극장을 목록을 세팅한다`() {
         // given
         val cinemaModelSlot = slot<List<CinemaModel>>()
-        // FakeMovie 해리포터 사용
-        val movieModel = FakeMovieData.findMovieById(1L).toPresentation()
+        val movieModel = MovieModel(
+            1L,
+            "TestTitle",
+            LocalDate.of(2023, 5, 8),
+            LocalDate.of(2023, 5, 15),
+            220,
+            "TestDescription",
+            1,
+            1,
+        )
         every { view.setCinemaItemAdapter(capture(cinemaModelSlot)) } just runs
 
         // when

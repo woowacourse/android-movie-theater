@@ -22,7 +22,7 @@ class ChoiceSeatPresenterTest {
     private lateinit var presenter: ChoiceSeatContract.Presenter
     private lateinit var reservationModel: ReservationModel
 
-    object FakeSettingsData : SettingsData {
+    private object FakeSettingsData : SettingsData {
         override var isAvailable: Boolean = true
     }
 

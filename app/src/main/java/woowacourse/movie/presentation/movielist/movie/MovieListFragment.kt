@@ -5,13 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import woowacourse.movie.data.movieitem.MockMovieItemData
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.presentation.model.MovieModel
 import woowacourse.movie.presentation.movielist.cinema.CinemaBottomSheetFragment
 
 class MovieListFragment : Fragment(), MovieListContract.View {
 
-    override val presenter: MovieListContract.Presenter by lazy { MovieListPresenter(this) }
+    override val presenter: MovieListContract.Presenter by lazy {
+        MovieListPresenter(this, MockMovieItemData)
+    }
 
     private var _binding: FragmentMovieListBinding? = null
     private val binding get() = _binding!!
