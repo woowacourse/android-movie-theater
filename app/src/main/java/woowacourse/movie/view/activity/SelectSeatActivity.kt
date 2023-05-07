@@ -9,9 +9,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.ReservationAlarmManager
 import woowacourse.movie.contract.SelectSeatContract
+import woowacourse.movie.databinding.ActivitySelectSeatBinding
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.model.*
 import woowacourse.movie.setBackgroundColorId
@@ -34,37 +36,30 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
             reservationDbHelper = ReservationDbHelper(this)
         )
     }
+    private lateinit var binding: ActivitySelectSeatBinding
     private val movieUiModel: MovieUiModel by lazy {
         receiveMovieUiModel()
     }
 
     private val seatTable: SeatTable by lazy {
         SeatTable(
-            tableLayout = findViewById(R.id.select_seat_tableLayout),
+            tableLayout = binding.selectSeatTableLayout,
             rowSize = 5,
             colSize = 4,
             presenter::onClickSeat
         )
     }
 
-    private val priceTextView: TextView by lazy {
-        findViewById(R.id.select_seat_price_text_view)
-    }
-
-    private val checkButton: Button by lazy {
-        findViewById(R.id.select_seat_check_button)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_select_seat)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_select_seat)
         seatTable.makeSeatTable()
-        MovieView(title = findViewById(R.id.select_seat_movie_title_text_view)).render(
+        MovieView(title = binding.selectSeatMovieTitleTextView).render(
             movieUiModel
         )
         presenter.onPriceTextChange()
         presenter.onCheckButtonStateChange()
-        checkButton.setOnClickListener { presenter.onClickCheckButton() }
+        binding.selectSeatCheckButton.setOnClickListener { presenter.onClickCheckButton() }
     }
 
     private fun receivePeopleCount(): Int {
@@ -145,16 +140,16 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
     override fun setPriceText(price: Int) {
         val formattedPrice =
             NumberFormat.getNumberInstance(Locale.US).format(price)
-        priceTextView.text = formattedPrice
+        binding.selectSeatPriceTextView.text = formattedPrice
     }
 
     override fun setCheckButtonClickable(isClickable: Boolean) {
-        checkButton.isClickable = isClickable
+        binding.selectSeatCheckButton.isClickable = isClickable
     }
 
     override fun setCheckButtonColor(isSelected: Boolean) {
-        if (isSelected) checkButton.setBackgroundColorId(R.color.select_seat_clickable_check_button_background)
-        else checkButton.setBackgroundColorId(R.color.select_seat_non_clickable_check_button_background)
+        if (isSelected) binding.selectSeatCheckButton.setBackgroundColorId(R.color.select_seat_clickable_check_button_background)
+        else binding.selectSeatCheckButton.setBackgroundColorId(R.color.select_seat_non_clickable_check_button_background)
     }
 
     companion object {

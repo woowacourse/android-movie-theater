@@ -7,11 +7,13 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.contract.MainContract
+import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.presenter.MainPresenter
 import woowacourse.movie.view.fragment.MoviesFragment
 import woowacourse.movie.view.fragment.ReservationListFragment
@@ -19,8 +21,8 @@ import woowacourse.movie.view.fragment.SettingFragment
 
 class MainActivity : AppCompatActivity(), MainContract.View {
 
-    override val presenter: MainContract.Presenter = MainPresenter(this)
-    private val bottomNavigation: BottomNavigationView by lazy { findViewById(R.id.bottom_navigation) }
+    override val presenter: MainContract.Presenter by lazy { MainPresenter(this) }
+    private lateinit var binding: ActivityMainBinding
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
     private var saveState: Bundle? = null
@@ -28,12 +30,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     private val settingFragment = SettingFragment()
     private val reservationListFragment = ReservationListFragment()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         saveState = savedInstanceState
-        bottomNavigation.setOnItemSelectedListener {
+        binding.bottomNavigation.setOnItemSelectedListener {
             presenter.onClickBottomNavigationItem(it.itemId)
         }
         presenter.updateFragmentView()
@@ -82,11 +83,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(KEY_SELECTED_ITEM_ID, bottomNavigation.selectedItemId)
+        outState.putInt(KEY_SELECTED_ITEM_ID, binding.bottomNavigation.selectedItemId)
     }
 
     override fun setSelectedFragmentView(selectedItemId: Int) {
-        bottomNavigation.selectedItemId = selectedItemId
+        binding.bottomNavigation.selectedItemId = selectedItemId
     }
 
     override fun getSavedNavigationItemId(): Int {
