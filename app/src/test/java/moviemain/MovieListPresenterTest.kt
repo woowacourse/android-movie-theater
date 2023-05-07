@@ -4,10 +4,10 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.data.movie.MoviePosterRepository
 import woowacourse.movie.domain.movie.Minute
 import woowacourse.movie.domain.movie.Movie
 import woowacourse.movie.domain.movie.Schedule
+import woowacourse.movie.domain.repository.MoviePosterRepository
 import woowacourse.movie.domain.repository.MovieRepository
 import woowacourse.movie.view.moviemain.movielist.MovieListContract
 import woowacourse.movie.view.moviemain.movielist.MovieListPresenter

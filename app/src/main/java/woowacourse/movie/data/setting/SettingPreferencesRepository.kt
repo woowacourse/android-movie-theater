@@ -2,8 +2,9 @@ package woowacourse.movie.data.setting
 
 import android.content.Context
 import androidx.preference.PreferenceManager
+import woowacourse.movie.domain.repository.SettingRepository
 
-class SettingPreferencesManager(context: Context) : SettingDataManager {
+class SettingPreferencesRepository(context: Context) : SettingRepository {
     private val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     override fun getIsAlarmSetting(): Boolean = sharedPreferences.getBoolean(IS_ALARM_ON, false)
     override fun setIsAlarmSetting(isOn: Boolean) {

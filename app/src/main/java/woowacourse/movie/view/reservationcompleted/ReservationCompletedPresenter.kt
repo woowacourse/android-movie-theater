@@ -1,9 +1,9 @@
 package woowacourse.movie.view.reservationcompleted
 
-import woowacourse.movie.data.setting.SettingDataManager
+import woowacourse.movie.domain.repository.SettingRepository
 import woowacourse.movie.view.model.ReservationUiModel
 
-class ReservationCompletedPresenter(private val view: ReservationCompletedContract.View, private val settingManager: SettingDataManager) : ReservationCompletedContract.Presenter {
+class ReservationCompletedPresenter(private val view: ReservationCompletedContract.View, private val settingManager: SettingRepository) : ReservationCompletedContract.Presenter {
     override fun decideAlarm(reservation: ReservationUiModel) {
         if (settingManager.getIsAlarmSetting()) view.registerAlarm(reservation)
     }

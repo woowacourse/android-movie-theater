@@ -1,13 +1,13 @@
 package woowacourse.movie.view.moviemain.setting
 
 import woowacourse.movie.data.reservation.ReservationMockRepository
-import woowacourse.movie.data.setting.SettingDataManager
 import woowacourse.movie.domain.repository.ReservationRepository
+import woowacourse.movie.domain.repository.SettingRepository
 import woowacourse.movie.view.mapper.toUiModel
 
 class SettingPresenter(
     private val view: SettingContract.View,
-    private val settingManager: SettingDataManager,
+    private val settingManager: SettingRepository,
 ) : SettingContract.Presenter {
 
     override fun initToggle() {

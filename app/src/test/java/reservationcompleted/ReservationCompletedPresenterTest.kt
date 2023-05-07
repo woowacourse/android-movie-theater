@@ -8,7 +8,7 @@ import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.data.setting.SettingDataManager
+import woowacourse.movie.domain.repository.SettingRepository
 import woowacourse.movie.view.model.ReservationUiModel
 import woowacourse.movie.view.reservationcompleted.ReservationCompletedContract
 import woowacourse.movie.view.reservationcompleted.ReservationCompletedPresenter
@@ -17,7 +17,7 @@ import java.time.LocalDateTime
 class ReservationCompletedPresenterTest {
     private lateinit var presenter: ReservationCompletedContract.Presenter
     private lateinit var view: ReservationCompletedContract.View
-    private val settingManager = object : SettingDataManager {
+    private val settingManager = object : SettingRepository {
         private var isAlarm = false
         override fun getIsAlarmSetting(): Boolean {
             return isAlarm

@@ -9,7 +9,7 @@ import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.data.setting.SettingDataManager
+import woowacourse.movie.domain.repository.SettingRepository
 import woowacourse.movie.view.moviemain.setting.SettingContract
 import woowacourse.movie.view.moviemain.setting.SettingPresenter
 
@@ -24,7 +24,7 @@ class SettingPresenterTest {
         every { view.setAlarms(any()) } just runs
         every { view.cancelAlarms() } just runs
 
-        val settingManager = object : SettingDataManager {
+        val settingManager = object : SettingRepository {
             private var isAlarm = false
             override fun getIsAlarmSetting(): Boolean {
                 return isAlarm

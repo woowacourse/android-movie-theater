@@ -1,6 +1,7 @@
 package woowacourse.movie.data.movie
 
 import woowacourse.movie.R
+import woowacourse.movie.domain.repository.MoviePosterRepository
 
 object MoviePosterMockRepository : MoviePosterRepository {
     private val posters = mapOf(

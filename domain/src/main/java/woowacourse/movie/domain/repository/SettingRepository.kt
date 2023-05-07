@@ -1,6 +1,6 @@
-package woowacourse.movie.data.setting
+package woowacourse.movie.domain.repository
 
-interface SettingDataManager {
+interface SettingRepository {
     fun getIsAlarmSetting(): Boolean
     fun setIsAlarmSetting(isOn: Boolean)
 }

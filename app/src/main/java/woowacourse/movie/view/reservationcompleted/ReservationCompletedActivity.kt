@@ -13,7 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import woowacourse.movie.R
-import woowacourse.movie.data.setting.SettingPreferencesManager
+import woowacourse.movie.data.setting.SettingPreferencesRepository
 import woowacourse.movie.databinding.ActivityReservationCompletedBinding
 import woowacourse.movie.util.DATE_FORMATTER
 import woowacourse.movie.util.TIME_FORMATTER
@@ -37,7 +37,7 @@ class ReservationCompletedActivity : AppCompatActivity(), ReservationCompletedCo
 
         alarmController = AlarmController(this)
 
-        presenter = ReservationCompletedPresenter(this, SettingPreferencesManager(this))
+        presenter = ReservationCompletedPresenter(this, SettingPreferencesRepository(this))
         val reservation = intent.getParcelableCompat<ReservationUiModel>(RESERVATION)
         binding.reservation = reservation
 
