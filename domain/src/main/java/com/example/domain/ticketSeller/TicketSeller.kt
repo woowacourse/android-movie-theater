@@ -4,6 +4,7 @@ import com.example.domain.discountPolicy.DefaultDiscountPolicy
 import com.example.domain.discountPolicy.DiscountPolicy
 import com.example.domain.model.Money
 import com.example.domain.model.Movie
+import com.example.domain.model.Theater
 import com.example.domain.model.Ticket
 import com.example.domain.model.Tickets
 import com.example.domain.model.seat.SeatPosition
@@ -16,21 +17,21 @@ class TicketSeller(private val discountPolicy: DiscountPolicy = DefaultDiscountP
     }
 
     fun issueTickets(
-        theaterName: String,
+        theater: Theater,
         movie: Movie,
         dateTime: LocalDateTime,
         seats: List<SeatPosition>
     ): Tickets {
-        return Tickets(seats.map { issueTicket(theaterName, movie, dateTime, it) })
+        return Tickets(seats.map { issueTicket(theater, movie, dateTime, it) })
     }
 
     private fun issueTicket(
-        theaterName: String,
+        theater: Theater,
         movie: Movie,
         dateTime: LocalDateTime,
         seatPosition: SeatPosition
     ): Ticket {
         val discountedMoney = discountPolicy.discount(movie, dateTime, seatPosition)
-        return Ticket(theaterName, movie, dateTime, seatPosition, discountedMoney)
+        return Ticket(theater, movie, dateTime, seatPosition, discountedMoney)
     }
 }

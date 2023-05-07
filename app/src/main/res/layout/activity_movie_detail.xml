@@ -5,15 +5,11 @@
 
         <variable
             name="theaterMovie"
-            type="woowacourse.movie.model.TheaterMovieState" />
+            type="woowacourse.movie.model.SelectTheaterAndMovieState" />
 
         <variable
             name="counterPresenter"
             type="woowacourse.movie.feature.detail.counter.CounterContract.Presenter" />
-
-        <variable
-            name="dateTimePresenter"
-            type="woowacourse.movie.feature.detail.dateTime.DateTimeContract.Presenter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

@@ -9,7 +9,7 @@ import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.model.MovieState
-import woowacourse.movie.model.TheaterMovieState
+import woowacourse.movie.model.SelectTheaterAndMovieState
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -54,7 +54,7 @@ internal class DateTimePresenterTest {
         verify { view.setSelectTime(any()) }
     }
 
-    private val mockTheaterMovie = TheaterMovieState(
+    private val mockTheaterMovie = SelectTheaterAndMovieState(
         "선릉 극장",
         MovieState(
             R.drawable.ga_oh_galaxy_poster,

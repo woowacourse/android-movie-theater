@@ -16,7 +16,7 @@ import woowacourse.movie.feature.movieList.itemModel.AdvItemModel
 import woowacourse.movie.feature.movieList.itemModel.MovieItemModel
 import woowacourse.movie.model.AdvState
 import woowacourse.movie.model.MovieState
-import woowacourse.movie.model.TheaterMovieState
+import woowacourse.movie.model.SelectTheaterAndMovieState
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -146,7 +146,7 @@ internal class MoviesPresenterTest {
         )
     )
 
-    private val mockTheater = TheaterMovieState(
+    private val mockTheater = SelectTheaterAndMovieState(
         "선릉 극장",
         mockMovies[0],
         listOf(LocalTime.of(10, 0), LocalTime.of(12, 0))

@@ -14,8 +14,8 @@ import woowacourse.movie.feature.common.BackKeyActionBarActivity
 import woowacourse.movie.feature.common.customView.SeatView
 import woowacourse.movie.feature.confirm.ReservationConfirmActivity
 import woowacourse.movie.model.MoneyState
-import woowacourse.movie.model.ReservationState
 import woowacourse.movie.model.SeatPositionState
+import woowacourse.movie.model.SelectReservationState
 import woowacourse.movie.model.TicketsState
 import woowacourse.movie.util.getParcelableArrayListCompat
 import woowacourse.movie.util.getParcelableExtraCompat
@@ -28,17 +28,17 @@ import kotlin.collections.ArrayList
 class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
     private lateinit var binding: ActivitySeatSelectBinding
 
-    private lateinit var reservationState: ReservationState
+    private lateinit var reservationState: SelectReservationState
 
     private lateinit var presenter: SeatSelectContract.Presenter
 
     override fun onCreateView(savedInstanceState: Bundle?) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_select)
         reservationState =
-            intent.getParcelableExtraCompat(KEY_RESERVATION) ?: return keyError(KEY_RESERVATION)
+            intent.getParcelableExtraCompat(KEY_SELECT_RESERVATION) ?: return keyError(KEY_SELECT_RESERVATION)
         initClickListener()
         presenter = SeatSelectPresenter(this, reservationState, TicketsRepositoryImpl)
-        binding.movie = reservationState.movieState
+        binding.movie = reservationState.movie
     }
 
     private fun getAllSeatView(): List<SeatView> {
@@ -113,13 +113,13 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
     }
 
     companion object {
-        fun getIntent(context: Context, reservationState: ReservationState): Intent {
+        fun getIntent(context: Context, reservationState: SelectReservationState): Intent {
             val intent = Intent(context, SeatSelectActivity::class.java)
-            intent.putExtra(KEY_RESERVATION, reservationState)
+            intent.putExtra(KEY_SELECT_RESERVATION, reservationState)
             return intent
         }
 
-        private const val KEY_RESERVATION = "key_reservation"
+        private const val KEY_SELECT_RESERVATION = "key_reservation"
         private const val SEAT_RESTORE_KEY = "seat_restore_key"
     }
 }

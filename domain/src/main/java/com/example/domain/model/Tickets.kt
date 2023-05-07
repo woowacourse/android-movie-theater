@@ -7,8 +7,8 @@ class Tickets(tickets: List<Ticket>) {
     val tickets: List<Ticket>
         get() = _tickets.toList()
 
-    val theaterName: String
-        get() = _tickets.first().theaterName
+    val theater: Theater
+        get() = _tickets.first().theater
 
     val movie: Movie
         get() = _tickets.first().movie

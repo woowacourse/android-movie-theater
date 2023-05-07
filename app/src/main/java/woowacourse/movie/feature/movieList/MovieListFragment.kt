@@ -16,7 +16,7 @@ import woowacourse.movie.feature.detail.MovieDetailActivity
 import woowacourse.movie.feature.movieList.bottomSheet.TheaterBottomSheetFragment
 import woowacourse.movie.model.AdvState
 import woowacourse.movie.model.MovieState
-import woowacourse.movie.model.TheaterMovieState
+import woowacourse.movie.model.SelectTheaterAndMovieState
 import woowacourse.movie.util.getParcelableCompat
 
 class MovieListFragment : Fragment(), MovieListContract.View {
@@ -32,7 +32,7 @@ class MovieListFragment : Fragment(), MovieListContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setFragmentResultListener(THEATER_SELECT_KEY) { _, bundle ->
-            val theaterMovie = bundle.getParcelableCompat<TheaterMovieState>(THEATER_MOVIE_KEY)
+            val theaterMovie = bundle.getParcelableCompat<SelectTheaterAndMovieState>(THEATER_MOVIE_KEY)
                 ?: return@setFragmentResultListener
             presenter.receiveTheaterInfo(theaterMovie)
         }
@@ -50,7 +50,7 @@ class MovieListFragment : Fragment(), MovieListContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter = MoviesPresenter(this, MovieRepositoryImpl, AdvRepositoryImpl)
-        adapter = CommonAdapter(listOf())
+        adapter = CommonAdapter()
         presenter.loadMovieAndAdvItemList() // 뷰가 그려질때마다 데이터 다시 불러옴. 캐싱 적용 안함
         binding.rvMovie.adapter = adapter
     }
@@ -60,8 +60,8 @@ class MovieListFragment : Fragment(), MovieListContract.View {
         _binding = null
     }
 
-    override fun navigateMovieDetail(theaterMovie: TheaterMovieState) {
-        val intent = MovieDetailActivity.getIntent(requireContext(), theaterMovie)
+    override fun navigateMovieDetail(selectTheaterMovie: SelectTheaterAndMovieState) {
+        val intent = MovieDetailActivity.getIntent(requireContext(), selectTheaterMovie)
         startActivity(intent)
     }
 

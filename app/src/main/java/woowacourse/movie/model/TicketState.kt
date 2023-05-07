@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 
 @Parcelize
 data class TicketState(
-    val theaterName: String,
+    val theater: TheaterState,
     val movie: MovieState,
     val dateTime: LocalDateTime,
     val seatPositionState: SeatPositionState,

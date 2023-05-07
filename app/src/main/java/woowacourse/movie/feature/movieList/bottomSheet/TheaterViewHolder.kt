@@ -13,7 +13,7 @@ class TheaterViewHolder(
 ) : CommonItemViewHolder(binding) {
     override fun bind(itemModel: CommonItemModel) {
         val binding = binding as ItemTheaterLayoutBinding
-        binding.theater = itemModel as TheaterItemModel
+        binding.itemModel = itemModel as TheaterItemModel
     }
 }
 

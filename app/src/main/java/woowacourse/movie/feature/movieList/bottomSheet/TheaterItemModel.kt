@@ -5,7 +5,7 @@ import woowacourse.movie.feature.common.itemModel.CommonItemModel
 import woowacourse.movie.model.TheaterScreeningState
 
 data class TheaterItemModel(
-    val theater: TheaterScreeningState,
+    val theaterScreening: TheaterScreeningState,
     val onClick: (TheaterScreeningState) -> Unit
 ) : CommonItemModel {
     override val viewType: CommonViewType = CommonViewType.THEATER

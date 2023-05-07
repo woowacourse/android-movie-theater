@@ -4,6 +4,7 @@ import woowacourse.movie.R
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.ScreeningMovieState
 import woowacourse.movie.model.TheaterScreeningState
+import woowacourse.movie.model.TheaterState
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -53,7 +54,7 @@ object TheaterRepositoryImpl : TheaterRepository {
 
     private val theaters: List<TheaterScreeningState> = listOf(
         TheaterScreeningState(
-            "선릉 극장",
+            TheaterState(0, "선릉 극장"),
             listOf(
                 ScreeningMovieState(
                     movies[0],
@@ -85,7 +86,7 @@ object TheaterRepositoryImpl : TheaterRepository {
             )
         ),
         TheaterScreeningState(
-            "잠실 극장",
+            TheaterState(0, "잠실 극장"),
             listOf(
                 ScreeningMovieState(
                     movies[0],
@@ -116,7 +117,7 @@ object TheaterRepositoryImpl : TheaterRepository {
             )
         ),
         TheaterScreeningState(
-            "강남 극장",
+            TheaterState(0, "강남 극장"),
             listOf(
                 ScreeningMovieState(
                     movies[0],

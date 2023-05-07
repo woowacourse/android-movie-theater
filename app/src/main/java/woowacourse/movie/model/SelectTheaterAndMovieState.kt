@@ -5,8 +5,8 @@ import kotlinx.parcelize.Parcelize
 import java.time.LocalTime
 
 @Parcelize
-data class TheaterMovieState(
-    val theaterName: String,
+data class SelectTheaterAndMovieState(
+    val theater: TheaterState,
     val movie: MovieState,
-    val times: List<LocalTime>
+    val allowTimes: List<LocalTime>
 ) : Parcelable

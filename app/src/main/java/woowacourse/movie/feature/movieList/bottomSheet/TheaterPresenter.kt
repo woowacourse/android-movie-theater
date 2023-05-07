@@ -2,7 +2,7 @@ package woowacourse.movie.feature.movieList.bottomSheet
 
 import woowacourse.movie.data.TheaterRepository
 import woowacourse.movie.model.MovieState
-import woowacourse.movie.model.TheaterMovieState
+import woowacourse.movie.model.SelectTheaterAndMovieState
 import woowacourse.movie.model.TheaterScreeningState
 
 class TheaterPresenter(
@@ -15,8 +15,8 @@ class TheaterPresenter(
     }
 
     override fun clickTheater(theater: TheaterScreeningState, movie: MovieState) {
-        val theaterMovie = TheaterMovieState(
-            theater.theaterName,
+        val theaterMovie = SelectTheaterAndMovieState(
+            theater.theater,
             movie,
             theater.screeningInfos.find { it.movie == movie }?.screeningDateTimes ?: listOf()
         )

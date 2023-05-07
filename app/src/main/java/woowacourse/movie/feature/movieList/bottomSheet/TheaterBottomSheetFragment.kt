@@ -12,7 +12,7 @@ import woowacourse.movie.databinding.FragmentTheaterBottomSheetBinding
 import woowacourse.movie.feature.common.adapter.CommonAdapter
 import woowacourse.movie.feature.movieList.MovieListFragment
 import woowacourse.movie.model.MovieState
-import woowacourse.movie.model.TheaterMovieState
+import woowacourse.movie.model.SelectTheaterAndMovieState
 import woowacourse.movie.util.getParcelableCompat
 
 class TheaterBottomSheetFragment : BottomSheetDialogFragment(), TheaterContract.View {
@@ -51,7 +51,7 @@ class TheaterBottomSheetFragment : BottomSheetDialogFragment(), TheaterContract.
         binding.rvTheater.adapter = CommonAdapter(theaters)
     }
 
-    override fun selectTheater(theater: TheaterMovieState) {
+    override fun selectTheater(theater: SelectTheaterAndMovieState) {
         setFragmentResult(
             MovieListFragment.THEATER_SELECT_KEY,
             bundleOf(MovieListFragment.THEATER_MOVIE_KEY to theater)

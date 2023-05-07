@@ -1,6 +1,6 @@
 package woowacourse.movie.feature.detail.dateTime
 
-import woowacourse.movie.model.TheaterMovieState
+import woowacourse.movie.model.SelectTheaterAndMovieState
 import woowacourse.movie.model.mapper.asDomain
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -8,7 +8,7 @@ import java.time.LocalTime
 
 class DateTimePresenter(
     val view: DateTimeContract.View,
-    theaterMovieState: TheaterMovieState
+    theaterMovieState: SelectTheaterAndMovieState
 ) : DateTimeContract.Presenter {
     private var runningDates: List<LocalDate> = theaterMovieState.movie.asDomain().runningDates.toList()
 
@@ -16,7 +16,7 @@ class DateTimePresenter(
     override val selectDate: LocalDate
         get() = _selectDate
 
-    private var runningTimes: List<LocalTime> = theaterMovieState.times.toList()
+    private var runningTimes: List<LocalTime> = theaterMovieState.allowTimes.toList()
 
     private var _selectTime: LocalTime = runningTimes.first()
     override val selectTime: LocalTime

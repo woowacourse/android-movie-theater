@@ -5,7 +5,7 @@ import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.feature.common.itemModel.CommonItemModel
 import woowacourse.movie.feature.movieList.itemModel.AdvItemModel
 import woowacourse.movie.feature.movieList.itemModel.MovieItemModel
-import woowacourse.movie.model.TheaterMovieState
+import woowacourse.movie.model.SelectTheaterAndMovieState
 
 class MoviesPresenter(
     val view: MovieListContract.View,
@@ -23,7 +23,7 @@ class MoviesPresenter(
         view.updateItems(combineMovieAndAdvItems(movie, adv))
     }
 
-    override fun receiveTheaterInfo(theaterMovie: TheaterMovieState) {
+    override fun receiveTheaterInfo(theaterMovie: SelectTheaterAndMovieState) {
         view.navigateMovieDetail(theaterMovie)
     }
 

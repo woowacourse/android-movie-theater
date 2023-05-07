@@ -13,8 +13,8 @@ import woowacourse.movie.data.TicketsRepository
 import woowacourse.movie.model.CountState
 import woowacourse.movie.model.MoneyState
 import woowacourse.movie.model.MovieState
-import woowacourse.movie.model.ReservationState
 import woowacourse.movie.model.SeatPositionState
+import woowacourse.movie.model.SelectReservationState
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -115,7 +115,7 @@ internal class SeatSelectPresenterTest {
         verify { view.navigateReservationConfirm(any()) }
     }
 
-    private val mockkReservation = ReservationState(
+    private val mockkReservation = SelectReservationState(
         "선릉 극장",
         MovieState(
             R.drawable.imitation_game_poster,

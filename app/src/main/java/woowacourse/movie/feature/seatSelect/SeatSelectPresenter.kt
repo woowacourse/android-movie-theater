@@ -3,14 +3,14 @@ package woowacourse.movie.feature.seatSelect
 import com.example.domain.usecase.DiscountApplyUseCase
 import com.example.domain.usecase.GetIssuedTicketsUseCase
 import woowacourse.movie.data.TicketsRepository
-import woowacourse.movie.model.ReservationState
 import woowacourse.movie.model.SeatPositionState
+import woowacourse.movie.model.SelectReservationState
 import woowacourse.movie.model.mapper.asDomain
 import woowacourse.movie.model.mapper.asPresentation
 
 class SeatSelectPresenter(
     val view: SeatSelectContract.View,
-    private val reservationState: ReservationState,
+    private val reservationState: SelectReservationState,
     private val ticketsRepository: TicketsRepository
 ) : SeatSelectContract.Presenter {
     private val discountApplyUseCase = DiscountApplyUseCase()
@@ -41,8 +41,8 @@ class SeatSelectPresenter(
 
     override fun clickDialogConfirm() {
         val tickets = getIssuedTicketsUseCase(
-            reservationState.theaterName,
-            reservationState.movieState.asDomain(),
+            reservationState.theater.asDomain(),
+            reservationState.movie.asDomain(),
             reservationState.selectDateTime,
             seats.map { it.asDomain() }
         ).asPresentation()
@@ -73,7 +73,7 @@ class SeatSelectPresenter(
 
     private fun updateMoneyAndConfirmBtnState() {
         val money = discountApplyUseCase(
-            reservationState.movieState.asDomain(),
+            reservationState.movie.asDomain(),
             reservationState.selectDateTime,
             seats.map { it.asDomain() }
         ).asPresentation()

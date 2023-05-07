@@ -11,6 +11,6 @@ fun setReservationCountAndSeats(view: TextView, tickets: TicketsState) {
         R.string.person_count_and_seat_theater,
         tickets.tickets.size,
         tickets.tickets.map { it.seatPositionState }.joinToString { it.toString() },
-        tickets.theaterName
+        tickets.theater.theaterName
     )
 }

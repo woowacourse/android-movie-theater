@@ -6,7 +6,7 @@ import woowacourse.movie.feature.movieList.bottomSheet.TheaterItemModel
 
 @Parcelize
 data class TheaterScreeningState(
-    val theaterName: String,
+    val theater: TheaterState,
     val screeningInfos: List<ScreeningMovieState>
 ) : Parcelable {
     fun toItemModel(onClick: (TheaterScreeningState) -> Unit): TheaterItemModel {
