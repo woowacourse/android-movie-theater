@@ -1,69 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.reservationcompleted.ReservationCompletedActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+
+        <variable
+            name="reservation"
+            type="woowacourse.movie.view.model.ReservationUiModel" />
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        tools:context=".view.reservationcompleted.ReservationCompletedActivity">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/purple_500"
-            android:gravity="center"
-            android:paddingTop="64dp"
-            android:paddingBottom="8dp"
-            android:text="@string/movie_start_notification"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/movie_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:paddingHorizontal="16dp"
-            tools:text="해리 포터와 마법사의 돌" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/purple_500"
+                android:gravity="center"
+                android:paddingTop="64dp"
+                android:paddingBottom="8dp"
+                android:text="@string/movie_start_notification"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/movie_screening_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:paddingHorizontal="16dp"
-            tools:text="2024.3.1" />
+            <TextView
+                android:id="@+id/movie_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:text="@{reservation.title}"
+                android:paddingHorizontal="16dp"
+                tools:text="해리 포터와 마법사의 돌" />
 
-        <TextView
-            android:id="@+id/people_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:paddingHorizontal="16dp"
-            tools:text="일반 1명" />
+            <TextView
+                android:id="@+id/movie_screening_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:format="@{@string/datetime_with_space}"
+                app:screeningDateTime="@{reservation.screeningDateTime}"
+                android:paddingHorizontal="16dp"
+                tools:text="2024.3.1" />
 
-        <TextView
-            android:id="@+id/total_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            tools:text="13,000원" />
+            <TextView
+                android:id="@+id/reservation_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:paddingHorizontal="16dp"
+                app:format="@{@string/reservation_detail_format}"
+                app:reserveType="@{@string/general_person}"
+                app:peopleCount="@{reservation.peopleCount}"
+                app:seats="@{reservation.seats}"
+                app:theaterName="@{reservation.theaterName}"
+                tools:text="일반 1명" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/total_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:stringFormat="@{@string/reservation_fee_format}"
+                app:fee="@{reservation.finalReservationFee}"
+                tools:text="13,000원" />
 
-</ScrollView>
+        </LinearLayout>
+
+    </ScrollView>
+</layout>
