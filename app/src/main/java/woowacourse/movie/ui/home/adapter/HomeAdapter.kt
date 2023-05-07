@@ -8,6 +8,7 @@ import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.model.MovieListModel
 import woowacourse.movie.model.MovieListModel.AdModel
 import woowacourse.movie.model.MovieListModel.MovieModel
+import woowacourse.movie.ui.home.HomeItemClickListener
 import woowacourse.movie.ui.home.adapter.HomeAdapterViewType.AD
 import woowacourse.movie.ui.home.adapter.HomeAdapterViewType.MOVIE
 import woowacourse.movie.ui.home.adapter.viewholder.AdvertisementViewHolder
@@ -15,7 +16,7 @@ import woowacourse.movie.ui.home.adapter.viewholder.MovieViewHolder
 
 class HomeAdapter(
     private val modelItems: List<MovieListModel>,
-    private val onItemClick: ItemClickListener,
+    private val onItemClick: HomeItemClickListener,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

@@ -8,7 +8,7 @@ import woowacourse.movie.model.MovieListModel.AdModel
 import woowacourse.movie.model.MovieListModel.MovieModel
 import woowacourse.movie.model.data.MockData
 import woowacourse.movie.ui.home.adapter.HomeAdapter
-import woowacourse.movie.ui.home.adapter.ItemClickListener
+import woowacourse.movie.ui.home.HomeItemClickListener
 import woowacourse.movie.ui.moviedetail.MovieDetailActivity
 
 class HomePresenter(
@@ -22,7 +22,7 @@ class HomePresenter(
         view.homeAdapter = HomeAdapter(movieWithAdvertisement, setEventOnClickListener())
     }
 
-    private fun setEventOnClickListener(): ItemClickListener = object : ItemClickListener {
+    private fun setEventOnClickListener(): HomeItemClickListener = object : HomeItemClickListener {
         override fun onMovieItemClick(movie: MovieModel) {
             moveToDetailActivity(movie)
         }
