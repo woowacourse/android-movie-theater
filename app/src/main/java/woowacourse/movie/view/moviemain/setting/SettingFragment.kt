@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.data.reservation.ReservationDbRepository
 import woowacourse.movie.data.setting.SettingPreferencesRepository
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.view.AlarmController
@@ -35,7 +36,7 @@ class SettingFragment : Fragment(), SettingContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        presenter = SettingPresenter(this, SettingPreferencesRepository(requireContext()))
+        presenter = SettingPresenter(this, SettingPreferencesRepository(requireContext()), ReservationDbRepository(requireContext()))
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
         binding.presenter = presenter
         return binding.root

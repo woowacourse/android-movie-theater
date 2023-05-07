@@ -13,6 +13,6 @@ interface SettingContract {
 
     interface Presenter {
         fun initToggle()
-        fun onClick(isOn: Boolean)
+        fun changeAlarmState(isOn: Boolean)
     }
 }
