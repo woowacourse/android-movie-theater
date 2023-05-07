@@ -32,10 +32,11 @@ class SettingFragment : Fragment(), SettingContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val alarmSettingRepositoryImpl = AlarmSettingRepositoryImpl(requireContext())
         presenter = SettingPresenter(
             this,
-            LoadAlarmSettingInfoUseCase(AlarmSettingRepositoryImpl),
-            SetAlarmSettingUseCase(AlarmSettingRepositoryImpl)
+            LoadAlarmSettingInfoUseCase(alarmSettingRepositoryImpl),
+            SetAlarmSettingUseCase(alarmSettingRepositoryImpl)
         )
         presenter.loadAlarmSettingInfo()
         binding.notificationSwitch.setOnCheckedChangeListener { _, isChecked ->

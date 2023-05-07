@@ -44,7 +44,10 @@ class TheaterBottomSheetFragment : BottomSheetDialogFragment(), TheaterContract.
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = TheaterPresenter(this, GetTheaterScreeningInfoByMovieUseCase(TheaterRepositoryImpl))
+        presenter = TheaterPresenter(
+            this,
+            GetTheaterScreeningInfoByMovieUseCase(TheaterRepositoryImpl())
+        )
         presenter.loadTheatersData(movie)
     }
 

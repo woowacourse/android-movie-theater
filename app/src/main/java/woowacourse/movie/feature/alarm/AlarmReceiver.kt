@@ -3,6 +3,7 @@ package woowacourse.movie.feature.alarm
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import com.example.domain.usecase.LoadAlarmSettingInfoUseCase
 import woowacourse.movie.R
 import woowacourse.movie.data.AlarmSettingRepositoryImpl
 import woowacourse.movie.model.TicketsState
@@ -16,7 +17,10 @@ class AlarmReceiver : BroadcastReceiver(), AlarmReceiverContract.View {
     override fun onReceive(context: Context, intent: Intent?) {
         val tickets: TicketsState = intent?.extras?.getParcelableCompat(TICKETS) ?: return
         this.context = context
-        presenter = AlarmReceiverPresenter(this, AlarmSettingRepositoryImpl)
+        presenter = AlarmReceiverPresenter(
+            this,
+            LoadAlarmSettingInfoUseCase(AlarmSettingRepositoryImpl(context))
+        )
         presenter.receiveAlarmSignal(tickets)
     }
 

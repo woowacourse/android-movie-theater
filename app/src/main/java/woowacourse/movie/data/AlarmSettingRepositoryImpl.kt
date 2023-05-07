@@ -4,10 +4,10 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.example.domain.repository.AlarmSettingRepository
 
-object AlarmSettingRepositoryImpl : AlarmSettingRepository {
-    private lateinit var prefs: SharedPreferences
+class AlarmSettingRepositoryImpl(context: Context) : AlarmSettingRepository {
+    private val prefs: SharedPreferences
 
-    fun init(context: Context) {
+    init {
         prefs = context.getSharedPreferences(
             "notifications_prefs",
             Context.MODE_PRIVATE
@@ -20,5 +20,7 @@ object AlarmSettingRepositoryImpl : AlarmSettingRepository {
         prefs.edit().putBoolean(NOTIFICATIONS, value).apply()
     }
 
-    private const val NOTIFICATIONS = "notifications"
+    companion object {
+        private const val NOTIFICATIONS = "notifications"
+    }
 }
