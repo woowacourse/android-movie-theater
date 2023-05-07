@@ -9,13 +9,13 @@ import woowacourse.movie.ui.BaseContract
 interface SeatSelectContract {
     interface View {
         fun initSeatTable(seatSelectState: SeatSelectState)
-        fun showSeatSelectState(seatSelectState: SeatSelectState)
+        fun setSeatSelectState(seatSelectState: SeatSelectState)
         fun setMoneyText(money: MoneyState)
         fun navigateToConfirmView(tickets: TicketsState)
     }
 
     interface Presenter : BaseContract.Presenter {
-        fun getSeatSelectState()
+        fun setUpSeatSelectState()
         fun discountApply(positionStates: List<SeatPositionState>)
         fun addTicket(positionStates: List<SeatPositionState>)
         fun getRequireCount(): Int

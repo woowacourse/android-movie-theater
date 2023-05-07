@@ -18,16 +18,16 @@ class CinemaListPresenterTest {
         val view: CinemaListContract.View = mockk(relaxed = true)
         val cinemaRepository: CinemaRepository = mockk(relaxed = true)
         val movie: MovieState = mockk(relaxed = true)
-        val presenter = CinemaListPresenter(view, cinemaRepository)
+        val presenter = CinemaListPresenter(view, cinemaRepository, movie)
         val slot = slot<Movie>()
         every { cinemaRepository.allCinema() } returns listOf()
         every { cinemaRepository.findCinema(capture(slot)) } returns listOf()
 
         // when
-        presenter.getCinemaList(movie)
+        presenter.setUpCinemaList()
 
         // then
         verify { cinemaRepository.findCinema(slot.captured) }
-        verify { view.setAdapter(listOf()) }
+        verify { view.setCinemaList(listOf(), movie) }
     }
 }

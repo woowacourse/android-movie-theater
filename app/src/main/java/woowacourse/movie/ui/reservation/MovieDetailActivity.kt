@@ -25,7 +25,7 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
     override fun onCreateView(savedInstanceState: Bundle?) {
         initConfirmButton()
         initCountButton()
-        presenter.getMovieRunningDateTimes()
+        presenter.setUpDateTime()
     }
 
     override fun initPresenter() {
@@ -42,16 +42,16 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
 
     private fun initConfirmButton() {
         binding.reservationConfirm.setOnClickListener {
-            presenter.onReserveButtonClick()
+            presenter.submitReservation()
         }
     }
 
     private fun initCountButton() {
         binding.plus.setOnClickListener {
-            presenter.onPlusClick()
+            presenter.plusCount()
         }
         binding.minus.setOnClickListener {
-            presenter.onMinusClick()
+            presenter.minusCount()
         }
     }
 
@@ -59,11 +59,11 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
         binding.movie = movie
     }
 
-    override fun setCounterText(count: Int) {
+    override fun setCountText(count: Int) {
         binding.count.text = count.toString()
     }
 
-    override fun navigateSeatSelectActivity(movie: MovieState, cinemaName: String) {
+    override fun navigateToSeatSelectActivity(movie: MovieState, cinemaName: String) {
         val seatSelectState = SeatSelectState(
             movie,
             dateTimeSpinner.getSelectDateTime(),
@@ -72,7 +72,7 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
         SeatSelectActivity.startActivity(this, cinemaName, seatSelectState)
     }
 
-    override fun setDateTimeSpinner(dates: List<LocalDate>, times: List<LocalTime>) {
+    override fun initDateTimeSpinner(dates: List<LocalDate>, times: List<LocalTime>) {
         dateTimeSpinner = DateTimeSpinner(
             binding,
             dates,

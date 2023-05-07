@@ -17,9 +17,9 @@ class ReservationListPresenterTest {
         every { ticketsDbHelper.getAll() } returns listOf()
 
         // when
-        presenter.getReservationList()
+        presenter.setUpReservationList()
 
         // then
-        verify { view.setAdapter(listOf()) }
+        verify { view.setTickets(listOf()) }
     }
 }

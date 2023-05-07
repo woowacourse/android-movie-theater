@@ -16,9 +16,9 @@ class SeatSelectPresenter(
 ) : SeatSelectContract.Presenter {
     private val discountApplyUseCase = DiscountApplyUseCase()
 
-    override fun getSeatSelectState() {
-        view.showSeatSelectState(seatSelectState)
+    override fun setUpSeatSelectState() {
         view.initSeatTable(seatSelectState)
+        view.setSeatSelectState(seatSelectState)
     }
 
     override fun discountApply(positionStates: List<SeatPositionState>) {

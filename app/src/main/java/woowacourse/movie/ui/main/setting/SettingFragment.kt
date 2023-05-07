@@ -23,7 +23,7 @@ class SettingFragment : BaseFragment(), SettingContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.getBoolean(NOTIFICATIONS, false)
+        presenter.setUpSwitch(NOTIFICATIONS, false)
 
         binding.notificationSwitch.setOnCheckedChangeListener { switchCompat, _ ->
             val permission = requireContext().hasPermissions(PERMISSIONS)
@@ -34,7 +34,7 @@ class SettingFragment : BaseFragment(), SettingContract.View {
                     false
                 }
             }
-            presenter.setBoolean(NOTIFICATIONS, isChecked)
+            presenter.updateSwitch(NOTIFICATIONS, isChecked)
         }
     }
 

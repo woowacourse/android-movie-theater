@@ -8,7 +8,5 @@ interface AdvDetailContract {
         fun setAdv(advState: AdvState)
     }
 
-    interface Presenter : BaseContract.Presenter {
-        fun getAdv(advState: AdvState)
-    }
+    interface Presenter : BaseContract.Presenter
 }

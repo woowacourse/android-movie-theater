@@ -18,7 +18,7 @@ class ReservationConfirmPresenterTest {
         every { view.registerNotification(any()) } returns Unit
 
         // when
-        presenter.getTicket()
+        presenter.setUpTicket()
 
         // then
         verify { view.setTicket(any()) }
@@ -32,12 +32,12 @@ class ReservationConfirmPresenterTest {
         val tickets: TicketsState = mockk(relaxed = true)
         val presenter = ReservationConfirmPresenter(view, tickets)
 
-        every { view.setMoneyTextView(any()) } returns Unit
+        every { view.setMoney(any()) } returns Unit
 
         // when
         presenter.discountApplyMoney(tickets)
 
         // then
-        verify { view.setMoneyTextView(any()) }
+        verify { view.setMoney(any()) }
     }
 }

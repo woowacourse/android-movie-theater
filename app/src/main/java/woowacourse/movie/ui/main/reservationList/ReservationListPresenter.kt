@@ -6,7 +6,7 @@ class ReservationListPresenter(
     private val view: ReservationListContract.View,
     private val ticketsDbHelper: TicketsDbHelper
 ) : ReservationListContract.Presenter {
-    override fun getReservationList() {
-        view.setAdapter(ticketsDbHelper.getAll())
+    override fun setUpReservationList() {
+        view.setTickets(ticketsDbHelper.getAll())
     }
 }

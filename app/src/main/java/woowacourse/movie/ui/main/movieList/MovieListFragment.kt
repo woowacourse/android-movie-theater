@@ -2,9 +2,7 @@ package woowacourse.movie.ui.main.movieList
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.model.AdvState
 import woowacourse.movie.model.MovieState
@@ -19,19 +17,9 @@ class MovieListFragment : BaseFragment(), MovieListContract.View {
     override lateinit var presenter: MovieListContract.Presenter
     override lateinit var binding: FragmentMovieListBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        initPresenter()
-        initBinding()
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.getAdapter()
+        presenter.setUpMovieList()
     }
 
     override fun initBinding() {
@@ -42,7 +30,7 @@ class MovieListFragment : BaseFragment(), MovieListContract.View {
         presenter = MovieListPresenter(this)
     }
 
-    override fun setAdapter(movieList: List<MovieState>, advList: List<AdvState>) {
+    override fun setMovieList(movieList: List<MovieState>, advList: List<AdvState>) {
         binding.movieList.adapter = MovieListAdapter(
             movie = movieList.map(::MovieItemModel),
             adv = advList.map(::AdvItemModel),

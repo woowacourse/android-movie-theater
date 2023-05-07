@@ -8,17 +8,17 @@ import woowacourse.movie.ui.BaseContract
 
 interface MovieDetailContract {
     interface View {
-        fun setCounterText(count: Int)
+        fun setCountText(count: Int)
         fun setMovie(movie: MovieState)
-        fun navigateSeatSelectActivity(movie: MovieState, cinemaName: String)
-        fun setDateTimeSpinner(dates: List<LocalDate>, times: List<LocalTime>)
+        fun initDateTimeSpinner(dates: List<LocalDate>, times: List<LocalTime>)
+        fun navigateToSeatSelectActivity(movie: MovieState, cinemaName: String)
     }
 
     interface Presenter : BaseContract.Presenter {
         var count: CountState
-        fun onPlusClick()
-        fun onMinusClick()
-        fun onReserveButtonClick()
-        fun getMovieRunningDateTimes()
+        fun plusCount()
+        fun minusCount()
+        fun submitReservation()
+        fun setUpDateTime()
     }
 }

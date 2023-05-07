@@ -3,10 +3,10 @@ package woowacourse.movie.ui.adv
 import woowacourse.movie.model.AdvState
 
 class AdvDetailPresenter(
-    private val view: AdvDetailContract.View
+    view: AdvDetailContract.View,
+    advState: AdvState
 ) : AdvDetailContract.Presenter {
-
-    override fun getAdv(advState: AdvState) {
+    init {
         view.setAdv(advState)
     }
 }

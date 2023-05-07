@@ -7,7 +7,7 @@ interface SettingContract {
         fun setSwitchChecked(boolean: Boolean)
     }
     interface Presenter : BaseContract.Presenter {
-        fun getBoolean(notifications: String, boolean: Boolean)
-        fun setBoolean(notifications: String, boolean: Boolean)
+        fun setUpSwitch(notifications: String, boolean: Boolean)
+        fun updateSwitch(notifications: String, boolean: Boolean)
     }
 }

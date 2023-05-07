@@ -8,9 +8,13 @@ import woowacourse.movie.model.mapper.asPresentation
 
 class CinemaListPresenter(
     private val view: CinemaListContract.View,
-    private val repository: CinemaRepository = CinemaRepository
+    private val repository: CinemaRepository = CinemaRepository,
+    private val movie: MovieState
 ) : CinemaListContract.Presenter {
-    override fun getCinemaList(movie: MovieState) {
-        view.setAdapter(repository.findCinema(movie.asDomain()).map(Cinema::asPresentation))
+    override fun setUpCinemaList() {
+        view.setCinemaList(
+            repository.findCinema(movie.asDomain()).map(Cinema::asPresentation),
+            movie
+        )
     }
 }

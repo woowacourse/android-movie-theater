@@ -22,7 +22,9 @@ abstract class BackKeyActionBarActivity : AppCompatActivity() {
     protected abstract fun initPresenter()
     protected abstract fun initBinding()
 
-    abstract fun onCreateView(savedInstanceState: Bundle?)
+    open fun onCreateView(savedInstanceState: Bundle?) {
+        // do nothing
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {

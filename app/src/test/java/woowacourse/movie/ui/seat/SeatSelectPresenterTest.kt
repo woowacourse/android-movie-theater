@@ -17,10 +17,10 @@ class SeatSelectPresenterTest {
         val presenter = SeatSelectPresenter(view, ticketsDbHelper, seatSelectState, cinemaName)
 
         // when
-        presenter.getSeatSelectState()
+        presenter.setUpSeatSelectState()
 
         // then
-        verify { view.showSeatSelectState(seatSelectState) }
+        verify { view.setSeatSelectState(seatSelectState) }
         verify { view.initSeatTable(seatSelectState) }
     }
 

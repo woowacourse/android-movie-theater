@@ -25,7 +25,7 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
     private lateinit var seatTable: SeatTable
 
     override fun onCreateView(savedInstanceState: Bundle?) {
-        presenter.getSeatSelectState()
+        presenter.setUpSeatSelectState()
     }
 
     override fun initBinding() {
@@ -48,7 +48,7 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
         )
     }
 
-    override fun showSeatSelectState(seatSelectState: SeatSelectState) {
+    override fun setSeatSelectState(seatSelectState: SeatSelectState) {
         binding.reservationTitle.text = seatSelectState.movieState.title
         binding.reservationConfirm.setOnClickListener {
             navigateShowDialog(seatTable.chosenSeatInfo)
@@ -60,6 +60,10 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
         seatTable = SeatTable(binding, seatSelectState.countState) { updateSelectSeats(it) }
     }
 
+    override fun navigateToConfirmView(tickets: TicketsState) {
+        ReservationConfirmActivity.startActivity(this, tickets)
+    }
+
     private fun navigateShowDialog(positionStates: List<SeatPositionState>) {
         showAskDialog(
             titleId = R.string.reservation_confirm,
@@ -69,10 +73,6 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
         ) {
             presenter.addTicket(positionStates)
         }
-    }
-
-    override fun navigateToConfirmView(tickets: TicketsState) {
-        ReservationConfirmActivity.startActivity(this, tickets)
     }
 
     private fun updateSelectSeats(positionStates: List<SeatPositionState>) {

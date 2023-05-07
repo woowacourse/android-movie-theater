@@ -17,15 +17,15 @@ class MovieDetailPresenterTest {
         val movie: MovieState = mockk(relaxed = true)
         val presenter = MovieDetailPresenter(view, "cinemaName", movie)
         val slot = slot<Int>()
-        every { view.setCounterText(capture(slot)) } answers { println("slot : ${slot.captured}") }
+        every { view.setCountText(capture(slot)) } answers { println("slot : ${slot.captured}") }
         assertEquals(presenter.count.value, 1)
 
         // when
-        presenter.onPlusClick()
+        presenter.plusCount()
 
         // then
         assertEquals(slot.captured, 2)
-        verify { view.setCounterText(slot.captured) }
+        verify { view.setCountText(slot.captured) }
     }
 
     @Test
@@ -35,15 +35,15 @@ class MovieDetailPresenterTest {
         val movie: MovieState = mockk(relaxed = true)
         val presenter = MovieDetailPresenter(view, "cinemaName", movie)
         val slot = slot<Int>()
-        every { view.setCounterText(capture(slot)) } answers { println("slot : ${slot.captured}") }
+        every { view.setCountText(capture(slot)) } answers { println("slot : ${slot.captured}") }
         assertEquals(presenter.count.value, 1)
 
         // when
-        presenter.onMinusClick()
+        presenter.minusCount()
 
         // then
         assertEquals(slot.captured, 1)
-        verify { view.setCounterText(slot.captured) }
+        verify { view.setCountText(slot.captured) }
     }
 
     @Test
@@ -57,13 +57,13 @@ class MovieDetailPresenterTest {
             movie.screeningTimes
         } returns listOf(LocalTime.parse("10:00"), LocalTime.parse("12:00"))
 
-        every { view.setDateTimeSpinner(any(), movie.screeningTimes) } returns Unit
+        every { view.initDateTimeSpinner(any(), movie.screeningTimes) } returns Unit
 
         // when
-        presenter.getMovieRunningDateTimes()
+        presenter.setUpDateTime()
 
         // then
-        verify { view.setDateTimeSpinner(any(), movie.screeningTimes) }
+        verify { view.initDateTimeSpinner(any(), movie.screeningTimes) }
     }
 
     @Test
@@ -74,9 +74,9 @@ class MovieDetailPresenterTest {
         val presenter = MovieDetailPresenter(view, "cinemaName", movie)
 
         // when
-        presenter.onReserveButtonClick()
+        presenter.submitReservation()
 
         // then
-        verify { view.navigateSeatSelectActivity(movie, "cinemaName") }
+        verify { view.navigateToSeatSelectActivity(movie, "cinemaName") }
     }
 }

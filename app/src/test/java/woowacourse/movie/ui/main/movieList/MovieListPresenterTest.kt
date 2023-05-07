@@ -20,9 +20,9 @@ class MovieListPresenterTest {
         every { movieRepository.allMovies() } returns listOf()
         every { advRepository.allAdv() } returns listOf()
 
-        presenter.getAdapter()
+        presenter.setUpMovieList()
 
         // then
-        verify { view.setAdapter(listOf(), listOf()) }
+        verify { view.setMovieList(listOf(), listOf()) }
     }
 }

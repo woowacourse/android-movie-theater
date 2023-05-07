@@ -6,10 +6,10 @@ import woowacourse.movie.ui.BaseContract
 
 interface MovieListContract {
     interface View {
-        fun setAdapter(movieList: List<MovieState>, advList: List<AdvState>)
+        fun setMovieList(movieList: List<MovieState>, advList: List<AdvState>)
     }
 
     interface Presenter : BaseContract.Presenter {
-        fun getAdapter()
+        fun setUpMovieList()
     }
 }

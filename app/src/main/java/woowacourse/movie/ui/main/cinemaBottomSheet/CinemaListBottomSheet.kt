@@ -2,6 +2,7 @@ package woowacourse.movie.ui.main.cinemaBottomSheet
 
 import android.os.Bundle
 import android.view.View
+import com.example.domain.repository.CinemaRepository
 import woowacourse.movie.databinding.FragmentCinemaBottomSheetBinding
 import woowacourse.movie.model.CinemaState
 import woowacourse.movie.model.MovieState
@@ -15,16 +16,9 @@ class CinemaListBottomSheet : BaseBottomSheetDialogFragment(), CinemaListContrac
     override lateinit var presenter: CinemaListContract.Presenter
     override lateinit var binding: FragmentCinemaBottomSheetBinding
 
-    private lateinit var movie: MovieState
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        movie = arguments?.getParcelableCompat(KEY_MOVIE) ?: throw IllegalArgumentException()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.getCinemaList(movie)
+        presenter.setUpCinemaList()
     }
 
     override fun initBinding() {
@@ -32,10 +26,14 @@ class CinemaListBottomSheet : BaseBottomSheetDialogFragment(), CinemaListContrac
     }
 
     override fun initPresenter() {
-        presenter = CinemaListPresenter(this)
+        presenter = CinemaListPresenter(
+            this,
+            CinemaRepository,
+            arguments?.getParcelableCompat(KEY_MOVIE) ?: throw IllegalArgumentException()
+        )
     }
 
-    override fun setAdapter(cinemas: List<CinemaState>) {
+    override fun setCinemaList(cinemas: List<CinemaState>, movie: MovieState) {
         val adapter = CinemaListAdapter(
             cinemas = cinemas.map { CinemaItemModel(it, movie) }
         ) { itemModel ->

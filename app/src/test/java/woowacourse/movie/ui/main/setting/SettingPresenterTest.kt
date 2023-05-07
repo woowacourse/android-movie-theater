@@ -19,7 +19,7 @@ class SettingPresenterTest {
         every { sharedPreferences.getBoolean("notifications", false) } returns true
 
         // when
-        presenter.getBoolean("notifications", false)
+        presenter.setUpSwitch("notifications", false)
 
         // then
         verify { sharedPreferences.getBoolean("notifications", false) }
@@ -42,7 +42,7 @@ class SettingPresenterTest {
         }
 
         // when
-        presenter.setBoolean("notifications", true)
+        presenter.updateSwitch("notifications", true)
 
         // then
         verify { sharedPreferences.setBoolean("notifications", true) }

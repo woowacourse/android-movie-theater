@@ -12,11 +12,10 @@ class AdvDetailPresenterTest {
         // given
         val view = mockk<AdvDetailContract.View>()
         val advState = mockk<AdvState>()
-        val presenter = AdvDetailPresenter(view)
         every { view.setAdv(any()) } returns Unit
 
         // when
-        presenter.getAdv(advState)
+        AdvDetailPresenter(view, advState)
 
         //
         verify { view.setAdv(advState) }

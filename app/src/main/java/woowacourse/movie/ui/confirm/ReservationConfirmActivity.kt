@@ -21,7 +21,7 @@ class ReservationConfirmActivity : BackKeyActionBarActivity(), ReservationConfir
     override lateinit var binding: ActivityReservationConfirmBinding
 
     override fun onCreateView(savedInstanceState: Bundle?) {
-        presenter.getTicket()
+        presenter.setUpTicket()
     }
 
     override fun initBinding() {
@@ -44,10 +44,9 @@ class ReservationConfirmActivity : BackKeyActionBarActivity(), ReservationConfir
             ticket.positions.joinToString { it.toString() },
             ticket.cinemaName
         )
-        presenter.discountApplyMoney(ticket)
     }
 
-    override fun setMoneyTextView(money: MoneyState) {
+    override fun setMoney(money: MoneyState) {
         binding.reservationMoney.text = DecimalFormatters.convertToMoneyFormat(money)
     }
 

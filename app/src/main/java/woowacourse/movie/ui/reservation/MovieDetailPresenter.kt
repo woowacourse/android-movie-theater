@@ -1,7 +1,6 @@
 package woowacourse.movie.ui.reservation
 
 import com.example.domain.usecase.GetMovieRunningDateUseCase
-import com.example.domain.usecase.GetMovieRunningTimeUseCase
 import woowacourse.movie.model.CountState
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.mapper.asDomain
@@ -12,8 +11,6 @@ class MovieDetailPresenter(
     val movie: MovieState
 ) : MovieDetailContract.Presenter {
     private val getMovieRunningDateUseCase = GetMovieRunningDateUseCase()
-    private val getMovieRunningTimeUseCase = GetMovieRunningTimeUseCase()
-
     init {
         view.setMovie(movie)
     }
@@ -21,18 +18,18 @@ class MovieDetailPresenter(
     override var count: CountState = CountState.of(1)
         set(value) {
             field = value
-            view.setCounterText(value.value)
+            view.setCountText(value.value)
         }
 
-    override fun onPlusClick() { count += 1 }
+    override fun plusCount() { count += 1 }
 
-    override fun onMinusClick() { count -= 1 }
+    override fun minusCount() { count -= 1 }
 
-    override fun getMovieRunningDateTimes() {
-        view.setDateTimeSpinner(getMovieRunningDateUseCase(movie.asDomain()), movie.screeningTimes)
+    override fun setUpDateTime() {
+        view.initDateTimeSpinner(getMovieRunningDateUseCase(movie.asDomain()), movie.screeningTimes)
     }
 
-    override fun onReserveButtonClick() {
-        view.navigateSeatSelectActivity(movie, cinemaName)
+    override fun submitReservation() {
+        view.navigateToSeatSelectActivity(movie, cinemaName)
     }
 }

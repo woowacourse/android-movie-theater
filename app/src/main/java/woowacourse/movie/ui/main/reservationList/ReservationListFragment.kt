@@ -27,10 +27,10 @@ class ReservationListFragment : BaseFragment(), ReservationListContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.getReservationList()
+        presenter.setUpReservationList()
     }
 
-    override fun setAdapter(tickets: List<TicketsState>) {
+    override fun setTickets(tickets: List<TicketsState>) {
         adapter = ReservationListAdapter(
             tickets.map(::TicketsItemModel)
         ) { ticketsItemModel ->
@@ -41,7 +41,7 @@ class ReservationListFragment : BaseFragment(), ReservationListContract.View {
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        if (!hidden) { presenter.getReservationList() }
+        if (!hidden) { presenter.setUpReservationList() }
     }
 
     private fun navigateReservationConfirm(ticketsState: TicketsState) {
