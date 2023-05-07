@@ -1,5 +1,7 @@
 package activity
 
+import com.woowacourse.domain.ScreeningSchedule
+import com.woowacourse.domain.TheaterMovie
 import com.woowacourse.domain.movie.Movie
 import com.woowacourse.domain.movie.MovieBookingInfo
 import com.woowacourse.domain.movie.MovieBookingSeatInfo
@@ -16,6 +18,7 @@ import org.junit.Test
 import woowacourse.movie.activity.seatPicker.SeatPickerContract
 import woowacourse.movie.activity.seatPicker.SeatPickerPresenter
 import java.time.LocalDate
+import java.time.LocalTime
 
 class SeatPickerPresenterTest {
     private lateinit var presenter: SeatPickerPresenter
@@ -25,7 +28,9 @@ class SeatPickerPresenterTest {
     fun setUp() {
         val movieData =
             Movie(0, "title", 200, "synopsis", LocalDate.of(2023, 5, 1), LocalDate.of(2023, 5, 5))
-        val movieBookingInfo = MovieBookingInfo(movieData, "2023.5.2", "09:00", 2)
+        val theaterMovie =
+            TheaterMovie("theater", ScreeningSchedule(movieData, listOf(LocalTime.of(9, 0))))
+        val movieBookingInfo = MovieBookingInfo(theaterMovie, "2023.5.2", "09:00", 2)
         view = mockk()
         presenter = SeatPickerPresenter(view, movieBookingInfo)
     }

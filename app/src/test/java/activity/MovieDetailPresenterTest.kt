@@ -1,5 +1,7 @@
 package activity
 
+import com.woowacourse.domain.ScreeningSchedule
+import com.woowacourse.domain.TheaterMovie
 import com.woowacourse.domain.movie.Movie
 import com.woowacourse.domain.movie.MovieBookingInfo
 import com.woowacourse.domain.movie.MovieSchedule
@@ -13,6 +15,7 @@ import woowacourse.movie.DateFormatter
 import woowacourse.movie.activity.moviedetail.MovieDetailContract
 import woowacourse.movie.activity.moviedetail.MovieDetailPresenter
 import java.time.LocalDate
+import java.time.LocalTime
 
 class MovieDetailPresenterTest {
 
@@ -28,15 +31,18 @@ class MovieDetailPresenterTest {
     @Test
     fun 영화상영날짜를_만든다() {
         // given
+        val movieData =
+            Movie(0, "title", 200, "synopsis", LocalDate.of(2023, 5, 1), LocalDate.of(2023, 5, 5))
+        val screeningSchedule = ScreeningSchedule(movieData, listOf(LocalTime.of(9, 0)))
         val slot = slot<MovieSchedule>()
         every { view.setScheduleDate(capture(slot)) } answers { nothing }
 
         // when: (request Data)
-        presenter.getScheduleDate(LocalDate.of(2023, 5, 1), LocalDate.of(2023, 5, 5))
+        presenter.getScheduleDate(screeningSchedule)
 
         // then: 주어진 시작 날짜와 끝 날짜에 맞는 MovieSchedule 반환
         val actual = slot.captured
-        val expect = MovieSchedule(LocalDate.of(2023, 5, 1), LocalDate.of(2023, 5, 5))
+        val expect = MovieSchedule(screeningSchedule)
         Assert.assertEquals(expect, actual)
     }
 
@@ -106,13 +112,15 @@ class MovieDetailPresenterTest {
             Movie(0, "title", 200, "synopsis", LocalDate.of(2023, 5, 1), LocalDate.of(2023, 5, 5))
         val selectDate = LocalDate.of(2023, 5, 2)
         val selectTime = "09:00"
-        val expect = MovieBookingInfo(movieData, DateFormatter.format(selectDate), selectTime, 1)
+        val theaterMovie =
+            TheaterMovie("theater", ScreeningSchedule(movieData, listOf(LocalTime.of(9, 0))))
+        val expect = MovieBookingInfo(theaterMovie, DateFormatter.format(selectDate), selectTime, 1)
 
         val slot = slot<MovieBookingInfo>()
         every { view.setIntent(capture(slot)) } answers { nothing }
 
         // when
-        presenter.getMovieBookingInfo(movieData, selectDate, selectTime)
+        presenter.getMovieBookingInfo(theaterMovie, selectDate, selectTime)
 
         // then
         val actual = slot.captured
