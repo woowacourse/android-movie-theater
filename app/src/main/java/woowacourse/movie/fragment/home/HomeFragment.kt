@@ -6,23 +6,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.Ad
 import woowacourse.movie.BundleKeys
 import woowacourse.movie.R
-import woowacourse.movie.activity.MovieDetailActivity
+import woowacourse.movie.activity.moviedetail.MovieDetailActivity
+import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.movielist.MovieRecyclerViewAdapter
 
 class HomeFragment : Fragment(), HomeContract.View {
     override lateinit var presenter: HomeContract.Presenter
-
+    private lateinit var binding: FragmentHomeBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,14 +34,13 @@ class HomeFragment : Fragment(), HomeContract.View {
     }
 
     private fun setMovieRecyclerView() {
-        val movieRecyclerView: RecyclerView = requireView().findViewById(R.id.rv_movie_list)
         val movieRecyclerViewAdapter = MovieRecyclerViewAdapter(
             presenter.fetchMovieList(),
             presenter.fetchAd(),
             presenter.onMovieClicked(),
             presenter.onAdClicked(),
         )
-        movieRecyclerView.adapter = movieRecyclerViewAdapter
+        binding.rvMovieList.adapter = movieRecyclerViewAdapter
         movieRecyclerViewAdapter.notifyDataSetChanged()
     }
 
