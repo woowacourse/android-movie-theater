@@ -3,19 +3,26 @@ package woowacourse.movie.ui.main.setting
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.DefaultPreference
 
 class SettingPresenterTest {
+    private lateinit var view: SettingContract.View
+    private lateinit var sharedPreferences: DefaultPreference
+    private lateinit var presenter: SettingPresenter
+
+    @Before
+    fun setUp() {
+        // given
+        view = mockk(relaxed = true)
+        sharedPreferences = mockk(relaxed = true)
+        presenter = SettingPresenter(view, sharedPreferences)
+    }
+
     @Test
     fun `값을 sharedPreference에서 가져온다`() {
         // given
-        val view: SettingContract.View = mockk(relaxed = true)
-        val sharedPreferences: DefaultPreference = mockk(relaxed = true)
-        val presenter = SettingPresenter(
-            view,
-            sharedPreferences
-        )
         every { sharedPreferences.getBoolean("notifications", false) } returns true
 
         // when
@@ -29,12 +36,6 @@ class SettingPresenterTest {
     @Test
     fun `값을 설정하여 sharedPreference에 저장한다`() {
         // given
-        val view: SettingContract.View = mockk(relaxed = true)
-        val sharedPreferences: DefaultPreference = mockk(relaxed = true)
-        val presenter = SettingPresenter(
-            view,
-            sharedPreferences
-        )
         every {
             sharedPreferences.setBoolean("notifications", true)
         } answers {
