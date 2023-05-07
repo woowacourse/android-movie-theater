@@ -1,21 +1,31 @@
 package woowacourse.movie.presenter
 
+import domain.Reservation
 import io.mockk.*
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.contract.ReservationListContract
 import woowacourse.movie.model.ReservationUiModel
+import woowacourse.movie.model.mapper.ReservationMapper.toUi
+import woowacourse.movie.sql.ReservationDbHelperInterface
 
 class ReservationListPresenterTest {
     private lateinit var presenter: ReservationListPresenter
     private lateinit var view: ReservationListContract.View
     private lateinit var reservationUiModel: ReservationUiModel
+    private lateinit var reservationDb: ReservationDbHelperInterface
 
     @Before
     fun setUp() {
         view = mockk()
         reservationUiModel = mockk()
-        presenter = ReservationListPresenter(view)
+        reservationDb = object : ReservationDbHelperInterface {
+            override fun saveReservation(reservation: Reservation) = Unit
+            override fun getReservations(): List<Reservation> {
+                return listOf()
+            }
+        }
+        presenter = ReservationListPresenter(view, reservationDb)
     }
 
     @Test
@@ -39,14 +49,14 @@ class ReservationListPresenterTest {
     }
 
     @Test
-    fun 예매목들을_만들고_예매목록을_화면에_띄운다() {
+    fun 저장되있는_예매목록을_화면에_띄운다() {
         // given
-        val slot = slot<List<ReservationUiModel>>()
-        every { view.setAdapter(capture(slot)) } answers { println("slot = ${slot.captured}") }
+        val reservations = reservationDb.getReservations()
+        val reservationUiModels = reservations.map { it.toUi() }
+        every { view.setAdapter(reservationUiModels) } just runs
         // when
         presenter.updateReservationList()
         // then
-        val actual = slot.captured
-        verify { view.setAdapter(actual) }
+        verify { view.setAdapter(reservationUiModels) }
     }
 }

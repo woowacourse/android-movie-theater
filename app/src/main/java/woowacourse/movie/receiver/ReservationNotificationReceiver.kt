@@ -45,13 +45,13 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
     }
 
     private fun receiveTicketsUiModel(intent: Intent): TicketsUiModel {
-        return intent.extras?.getSerializableCompat(KEY_TICKETS_VALUE) ?: TicketsUiModel(listOf())
-
+        return intent.extras?.getSerializableCompat(KEY_TICKETS_VALUE)
+            ?: throw IllegalArgumentException(TICKET_DATA_ERROR)
     }
 
     private fun receiveMovieViewModel(intent: Intent): MovieUiModel {
         return intent.extras?.getSerializableCompat(KEY_MOVIE_VALUE)
-            ?: MockMoviesFactory.generateMovie(0).toUi()
+            ?: throw IllegalArgumentException(MOVIE_DATA_ERROR)
     }
 
     companion object {
@@ -65,6 +65,8 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
             return receiverIntent.putExtra(KEY_TICKETS_VALUE, ticketsUiModel)
         }
 
+        private const val TICKET_DATA_ERROR = "티켓 데이터가 없어요"
+        private const val MOVIE_DATA_ERROR = "영화 데이터가 없어요"
         private const val CHANNEL_ID = "channel1"
         private const val CHANNEL_NAME = "Channel1"
         private const val KEY_MOVIE_VALUE = "KEY_MOVIE_VALUE"
