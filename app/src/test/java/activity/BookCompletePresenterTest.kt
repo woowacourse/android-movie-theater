@@ -27,7 +27,7 @@ class BookCompletePresenterTest {
     fun 화면을_초기화한다() {
         // given
         val slot = slot<TicketData>()
-        every { view.initView(capture(slot)) } answers {nothing}
+        every { view.initView(capture(slot)) } answers { nothing }
 
         // when
         presenter.initView()
