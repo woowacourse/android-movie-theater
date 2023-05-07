@@ -1,15 +1,17 @@
 package woowacourse.movie.model.mapper
 
-import domain.DateRange
+
 import domain.Movie
 import woowacourse.movie.model.MovieUiModel
+import woowacourse.movie.model.mapper.TheatersMapper.toDomain
+import woowacourse.movie.model.mapper.TheatersMapper.toUi
 
 object MovieMapper : DomainViewMapper<Movie, MovieUiModel> {
     override fun MovieUiModel.toDomain(): Movie {
         return Movie(
             imagePath = picture.toString(),
             title = title,
-            date = DateRange(startDate, endDate),
+            theaters = theaters.toDomain(),
             runningTime = runningTime,
             description = description
         )
@@ -19,8 +21,9 @@ object MovieMapper : DomainViewMapper<Movie, MovieUiModel> {
         return MovieUiModel(
             picture = imagePath.toInt(),
             title = title,
-            startDate = date.startDate,
-            endDate = date.endDate,
+            startDate = theaters.getStartDate(),
+            endDate = theaters.getEndDate(),
+            theaters = theaters.toUi(),
             runningTime = runningTime,
             description = description
         )

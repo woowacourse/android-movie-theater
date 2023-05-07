@@ -10,15 +10,17 @@ object TicketMapper : DomainViewMapper<Ticket, TicketUiModel> {
     override fun Ticket.toUi(): TicketUiModel {
         return TicketUiModel(
             date = date,
-            seat = seat.toUi()
+            seat = seat.toUi(),
+            theaterName = theaterName
         )
     }
 
     override fun TicketUiModel.toDomain(): Ticket {
         return Ticket(
-            date,
-            seat.toDomain(),
-            DisCountPolicies()
+            date = date,
+            seat = seat.toDomain(),
+            theaterName = theaterName,
+            disCountPolicies = DisCountPolicies()
         )
     }
 }

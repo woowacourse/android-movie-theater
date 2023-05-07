@@ -10,10 +10,7 @@ data class MovieUiModel(
     val title: String,
     val startDate: LocalDate,
     val endDate: LocalDate,
+    val theaters: TheatersUiModel,
     val runningTime: Int,
     val description: String,
-) : UiModel, Serializable {
-    fun getDateList(): List<LocalDate> {
-        return (0..Period.between(startDate, endDate).days).map { startDate.plusDays(it.toLong()) }
-    }
-}
+) : UiModel, Serializable
