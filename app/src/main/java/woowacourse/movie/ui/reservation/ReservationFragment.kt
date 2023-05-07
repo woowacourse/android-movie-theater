@@ -9,16 +9,18 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.data.reservation.ReservationRepository
 import woowacourse.movie.data.reservation.ReservationRepositoryImpl
 import woowacourse.movie.ui.reservation.adapter.ReservationAdapter
 import woowacourse.movie.ui.ticket.MovieTicketActivity
+import woowacourse.movie.uimodel.MovieTicketModel
 
-class ReservationFragment : Fragment() {
-    private lateinit var reservationView: RecyclerView
-    private val repository: ReservationRepository by lazy {
-        ReservationRepositoryImpl(requireContext())
+class ReservationFragment : Fragment(), ReservationContract.View {
+
+    override val presenter by lazy {
+        ReservationPresenter(this, ReservationRepositoryImpl(requireContext()))
     }
+
+    private lateinit var reservationView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,30 +39,34 @@ class ReservationFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        setReservationViewAdapter()
+        presenter.setAdapter()
     }
 
     private fun initAdapter(view: View) {
         reservationView = view.findViewById(R.id.reservation_recyclerview)
-        setReservationViewAdapter()
+        presenter.setAdapter()
     }
 
-    private fun setReservationViewAdapter() {
-        reservationView.adapter = ReservationAdapter(repository.getData()) {
-            moveToMovieTicketActivity(it)
+    override fun setReservationViewAdapter(tickets: List<MovieTicketModel>) {
+        reservationView.adapter = ReservationAdapter(tickets) {
+            presenter.clickItem(it)
         }
+    }
+
+    override fun clickItem(ticket: MovieTicketModel) {
+        moveToMovieTicketActivity(ticket)
     }
 
     private fun setTextOnEmptyState(view: View) {
-        if (repository.getData().isNotEmpty()) {
-            view.findViewById<TextView>(R.id.reservation_empty).isVisible = false
+        if (presenter.isReservationEmpty()) {
+            view.findViewById<TextView>(R.id.reservation_empty).isVisible = true
         }
     }
 
-    private fun moveToMovieTicketActivity(position: Int) {
+    private fun moveToMovieTicketActivity(ticket: MovieTicketModel) {
         startActivity(
             MovieTicketActivity.getIntent(
-                repository.getData()[position],
+                ticket,
                 requireContext(),
             ),
         )
