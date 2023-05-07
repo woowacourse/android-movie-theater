@@ -1,14 +1,14 @@
 package woowacourse.movie.ui.fragment.settings
 
 interface SettingsContract {
-    interface Presentation {
+    interface Presenter {
         fun changePushNotificationState(enable: Boolean)
 
         fun checkPushNotificationState()
     }
 
     interface View {
-        var presentation: Presentation
+        var presenter: Presenter
 
         fun setPushNotificationState(enable: Boolean)
     }

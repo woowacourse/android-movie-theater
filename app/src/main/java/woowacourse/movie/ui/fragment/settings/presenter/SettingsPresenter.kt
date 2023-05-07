@@ -6,7 +6,7 @@ import woowacourse.movie.ui.fragment.settings.SettingsContract
 class SettingsPresenter(
     private val settingsStorage: SettingsStorage,
     private val view: SettingsContract.View
-) : SettingsContract.Presentation {
+) : SettingsContract.Presenter {
     override fun changePushNotificationState(enable: Boolean) {
         settingsStorage.enablePushNotification = enable
     }
