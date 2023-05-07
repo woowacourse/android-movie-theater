@@ -12,6 +12,7 @@ import woowacourse.movie.presentation.model.item.Ad
 import woowacourse.movie.presentation.model.item.ListItem
 import woowacourse.movie.presentation.model.item.Movie
 import woowacourse.movie.presentation.model.item.Reservation
+import woowacourse.movie.presentation.model.item.Theater
 
 class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.View {
     override lateinit var presenter: HistoryContract.Presenter
@@ -48,6 +49,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.Vie
             }
             is Ad -> {}
             is Movie -> {}
+            is Theater -> {}
         }
     }
 }

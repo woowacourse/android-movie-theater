@@ -8,6 +8,7 @@ import woowacourse.movie.presentation.model.item.Ad
 import woowacourse.movie.presentation.model.item.ListItem
 import woowacourse.movie.presentation.model.item.Movie
 import woowacourse.movie.presentation.model.item.Reservation
+import woowacourse.movie.presentation.model.item.Theater
 
 class NativeAdViewHolder(
     view: View,
@@ -26,6 +27,7 @@ class NativeAdViewHolder(
             }
             is Movie -> {}
             is Reservation -> {}
+            is Theater -> {}
         }
     }
 }

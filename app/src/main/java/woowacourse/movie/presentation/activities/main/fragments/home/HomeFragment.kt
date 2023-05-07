@@ -8,10 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import woowacourse.movie.R
+import woowacourse.movie.presentation.activities.main.fragments.theaterPicker.TheaterPickerDialog
 import woowacourse.movie.presentation.activities.ticketing.TicketingActivity
 import woowacourse.movie.presentation.model.item.Ad
 import woowacourse.movie.presentation.model.item.Movie
 import woowacourse.movie.presentation.model.item.Reservation
+import woowacourse.movie.presentation.model.item.Theater
 
 class HomeFragment : Fragment(R.layout.fragment_home), HomeContract.View {
     override lateinit var presenter: HomePresenter
@@ -33,6 +35,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeContract.View {
                     is Movie -> presenter.onClickedMovie(item)
                     is Ad -> presenter.onClickedAd(item)
                     is Reservation -> {}
+                    is Theater -> {}
                 }
             },
         ).also { it.appendAll(Movie.provideDummy()) }
@@ -52,6 +55,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeContract.View {
         val intent = Intent(requireContext(), TicketingActivity::class.java)
             .putExtra(MOVIE_KEY, movie)
         startActivity(intent)
+    }
+
+    override fun selectTheater(movie: Movie) {
+        val theaterPickerDialog = TheaterPickerDialog.getInstance(movie)
+        theaterPickerDialog.show(parentFragmentManager, TheaterPickerDialog.TAG)
     }
 
     override fun accessAdWebPage(ads: Ad) {

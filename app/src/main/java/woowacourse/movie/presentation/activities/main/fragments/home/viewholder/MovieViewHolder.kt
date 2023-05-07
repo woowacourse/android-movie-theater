@@ -10,6 +10,7 @@ import woowacourse.movie.presentation.model.item.Ad
 import woowacourse.movie.presentation.model.item.ListItem
 import woowacourse.movie.presentation.model.item.Movie
 import woowacourse.movie.presentation.model.item.Reservation
+import woowacourse.movie.presentation.model.item.Theater
 
 class MovieViewHolder(
     view: View,
@@ -42,6 +43,7 @@ class MovieViewHolder(
             }
             is Reservation -> {}
             is Ad -> {}
+            is Theater -> {}
         }
         if (item !is Movie) return
     }

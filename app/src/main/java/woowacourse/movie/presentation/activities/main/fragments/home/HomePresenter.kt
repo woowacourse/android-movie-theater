@@ -7,7 +7,7 @@ class HomePresenter(
     val view: HomeContract.View,
 ) : HomeContract.Presenter {
     override fun onClickedMovie(movie: Movie) {
-        view.startTicketingActivity(movie)
+        view.selectTheater(movie)
     }
 
     override fun onClickedAd(ads: Ad) {

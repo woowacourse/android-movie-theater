@@ -7,6 +7,7 @@ interface HomeContract {
     interface View {
         val presenter: Presenter
 
+        fun selectTheater(movie: Movie)
         fun startTicketingActivity(movie: Movie)
         fun accessAdWebPage(ads: Ad)
     }
