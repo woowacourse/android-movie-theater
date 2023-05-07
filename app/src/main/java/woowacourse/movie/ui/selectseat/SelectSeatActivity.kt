@@ -220,17 +220,17 @@ class SelectSeatActivity : AppCompatActivity() {
         private const val PEOPLE_COUNT_KEY = "peopleCount"
         private const val TICKET_KEY = "ticket"
         private const val MOVIE_KEY_VALUE = "movie"
-        fun start(
+        fun getIntent(
             context: Context,
             peopleCount: Int,
             ticketDateUiModel: TicketDateUiModel,
             movieUiModel: MovieUiModel
-        ) {
+        ): Intent {
             val intent = Intent(context, SelectSeatActivity::class.java)
             intent.putExtra(PEOPLE_COUNT_KEY, peopleCount)
             intent.putExtra(TICKET_KEY, ticketDateUiModel)
             intent.putExtra(MOVIE_KEY_VALUE, movieUiModel)
-            context.startActivity(intent)
+            return intent
         }
     }
 }

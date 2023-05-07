@@ -1,31 +1,26 @@
 package woowacourse.movie.data.model
 
-import android.widget.Button
 import android.widget.TextView
 
 class Counter(
-    minusButton: Button,
-    plusButton: Button,
-    private val countText: TextView,
+    count: TextView,
     savedStateKey: String
-) : woowacourse.movie.data.model.SaveStateTextView(countText, saveStateKey = savedStateKey) {
-    init {
-        applyToView(woowacourse.movie.data.model.Counter.Companion.INITIAL_COUNT.toString())
-        minusButton.setOnClickListener {
-            applyToView((getCount() - woowacourse.movie.data.model.Counter.Companion.COUNT_FACTOR).toString())
-        }
+) : SaveStateTextView(count, savedStateKey) {
 
-        plusButton.setOnClickListener {
-            applyToView((getCount() + woowacourse.movie.data.model.Counter.Companion.COUNT_FACTOR).toString())
-        }
+    private var _count = MINIMUM_TICKET_COUNT
+    val count
+        get() = _count
+
+    fun add(): Int {
+        return ++_count
     }
 
-    fun getCount(): Int {
-        return countText.text.toString().toInt()
+    fun sub(): Int {
+        _count = (--_count).coerceAtLeast(MINIMUM_TICKET_COUNT)
+        return _count
     }
 
     companion object {
-        private const val INITIAL_COUNT = 1
-        private const val COUNT_FACTOR = 1
+        private const val MINIMUM_TICKET_COUNT = 1
     }
 }

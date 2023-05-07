@@ -2,9 +2,7 @@ package woowacourse.movie.data.model
 
 import android.os.Bundle
 import woowacourse.movie.data.model.uimodel.MovieUiModel
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 
 class MovieDateTimePicker(
     private val dateSpinner: DateSpinner,
@@ -21,16 +19,8 @@ class MovieDateTimePicker(
     }
 
     fun getSelectedDateTime(): LocalDateTime {
-        val date = getSelectedDate()
-        val time = getSelectedTime()
+        val date = dateSpinner.getSelectedDate()
+        val time = timeSpinner.getSelectedTime()
         return LocalDateTime.of(date, time)
-    }
-
-    private fun getSelectedDate(): LocalDate {
-        return dateSpinner.getSelectedDate()
-    }
-
-    private fun getSelectedTime(): LocalTime {
-        return timeSpinner.getSelectedTime()
     }
 }

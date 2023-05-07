@@ -16,7 +16,7 @@ open class SaveStateTextView(private val textView: TextView, override val saveSt
         }
     }
 
-    fun applyToView(text: String?) {
+    private fun applyToView(text: String?) {
         textView.text = text
     }
 }
