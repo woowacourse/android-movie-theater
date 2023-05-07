@@ -133,7 +133,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
             timeSpinnerAdapter.getItem(findViewById<Spinner>(R.id.spinnerScreeningTime).selectedItemPosition)
         )
         val reservation =
-            ReservationModel(movieModel.id, dateTime, presenter.getTicketCurrentCount())
+            ReservationModel(movieModel.id, dateTime, presenter.getTicketCurrentCount(), theater)
         startActivity(ChoiceSeatActivity.getIntent(this, reservation))
     }
 

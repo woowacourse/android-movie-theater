@@ -11,7 +11,7 @@ class DummyMovieTheaterStorageTest {
         val movieTheaterStorage = DummyMovieTheaterStorage()
 
         // when
-        val expected = listOf<String>("seolleung", "gangnam")
+        val expected = listOf<String>("선릉", "강남")
 
         // then
         assertEquals(expected, movieTheaterStorage.getTheatersByMovieId(1))
@@ -23,7 +23,7 @@ class DummyMovieTheaterStorageTest {
         val movieTheaterStorage = DummyMovieTheaterStorage()
 
         // when
-        val expected = listOf<String>("seolleung", "gangnam", "gamsil")
+        val expected = listOf<String>("선릉", "강남", "잠실")
 
         // then
         assertEquals(expected, movieTheaterStorage.getTheatersByMovieId(2))
@@ -46,6 +46,6 @@ class DummyMovieTheaterStorageTest {
         )
 
         // then
-        assertEquals(expected, movieTheaterStorage.getTheaterTimeTableByMovieId(1, "seolleung"))
+        assertEquals(expected, movieTheaterStorage.getTheaterTimeTableByMovieId(1, "선릉"))
     }
 }

@@ -44,7 +44,7 @@ class ChoiceSeatPresenterTest {
             "《해리 포터와 마법사의 돌》은 2001년 J. K. 롤링의 동명 소설을 원작으로 하여 만든, 영국과 미국 합작, 판타지 영화이다. 해리포터 시리즈 영화 8부작 중 첫 번째에 해당하는 작품이다. 크리스 콜럼버스가 감독을 맡았다."
         )
         // 영화 해리포터의 2024-03-03-09:00 티켓 3장 티켓을 구입하였다.
-        reservation = ReservationModel(movie.id, LocalDateTime.of(2024, 3, 3, 9, 0), 3)
+        reservation = ReservationModel(movie.id, LocalDateTime.of(2024, 3, 3, 9, 0), 3, "강남")
         presenter = ChoiceSeatPresenter(
             view = view,
             alarmManager = alarmManager,
@@ -81,7 +81,7 @@ class ChoiceSeatPresenterTest {
             "《해리 포터와 마법사의 돌》은 2001년 J. K. 롤링의 동명 소설을 원작으로 하여 만든, 영국과 미국 합작, 판타지 영화이다. 해리포터 시리즈 영화 8부작 중 첫 번째에 해당하는 작품이다. 크리스 콜럼버스가 감독을 맡았다."
         )
         // 영화 해리포터의 2024-03-03-09:00 티켓 3장 티켓을 구입하였다.
-        reservation = ReservationModel(movie.id, LocalDateTime.of(2024, 3, 3, 9, 0), 3)
+        reservation = ReservationModel(movie.id, LocalDateTime.of(2024, 3, 3, 9, 0), 3, "강남")
         presenter = ChoiceSeatPresenter(
             view = view,
             alarmManager = alarmManager,
@@ -119,7 +119,7 @@ class ChoiceSeatPresenterTest {
             "《해리 포터와 마법사의 돌》은 2001년 J. K. 롤링의 동명 소설을 원작으로 하여 만든, 영국과 미국 합작, 판타지 영화이다. 해리포터 시리즈 영화 8부작 중 첫 번째에 해당하는 작품이다. 크리스 콜럼버스가 감독을 맡았다."
         )
         // 영화 해리포터의 2024-03-03-09:00 티켓 3장 티켓을 구입하였다.
-        reservation = ReservationModel(movie.id, LocalDateTime.of(2024, 3, 3, 9, 0), 3)
+        reservation = ReservationModel(movie.id, LocalDateTime.of(2024, 3, 3, 9, 0), 3, "강남")
         presenter = ChoiceSeatPresenter(
             view = view,
             alarmManager = alarmManager,
@@ -173,7 +173,7 @@ class ChoiceSeatPresenterTest {
             "《해리 포터와 마법사의 돌》은 2001년 J. K. 롤링의 동명 소설을 원작으로 하여 만든, 영국과 미국 합작, 판타지 영화이다. 해리포터 시리즈 영화 8부작 중 첫 번째에 해당하는 작품이다. 크리스 콜럼버스가 감독을 맡았다."
         )
         // 영화 해리포터의 2024-03-03-09:00 티켓 3장 티켓을 구입하였다.
-        reservation = ReservationModel(movie.id, LocalDateTime.of(2024, 3, 3, 9, 0), 3)
+        reservation = ReservationModel(movie.id, LocalDateTime.of(2024, 3, 3, 9, 0), 3, "강남")
         presenter = ChoiceSeatPresenter(
             view = view,
             alarmManager = alarmManager,
