@@ -6,14 +6,21 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.data.reservation.ReservationDbRepository
+import woowacourse.movie.view.model.ReservationUiModel
 import woowacourse.movie.view.reservationcompleted.ReservationCompletedActivity
 
-class ReservationListFragment : Fragment(R.layout.fragment_reservation_list) {
+class ReservationListFragment : Fragment(R.layout.fragment_reservation_list), ReservationListContract.View {
+    override lateinit var presenter: ReservationListContract.Presenter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerview)
-        val reservations = ReservationListPresenter(ReservationDbRepository(requireContext())).getReservations()
-        recyclerView.adapter = ReservationListAdapter(reservations) { reservation ->
+        presenter = ReservationListPresenter(this, ReservationDbRepository(requireContext()))
+        presenter.fetchReservations()
+    }
+
+    override fun showReservations(reservations: List<ReservationUiModel>) {
+        val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerview)
+        recyclerView?.adapter = ReservationListAdapter(reservations) { reservation ->
             val intent = ReservationCompletedActivity.newIntent(requireContext(), reservation)
             startActivity(intent)
         }
