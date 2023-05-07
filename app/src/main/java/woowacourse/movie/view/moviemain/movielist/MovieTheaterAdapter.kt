@@ -38,14 +38,9 @@ class MovieTheaterAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movieTheater: MovieTheater) {
-            binding.apply {
-                theaterNameTextview.text = movieTheater.name
-                screeningInfoTextview.text =
-                    binding.root.context.getString(R.string.screening_timeslot)
-                        .format(movieTheater.screeningTimeslot.size)
-                movieTheaterLayout.setOnClickListener {
-                    onTheaterClickListener.onClick(movieTheater)
-                }
+            binding.movieTheaterItem = movieTheater
+            binding.movieTheaterLayout.setOnClickListener {
+                onTheaterClickListener.onClick(movieTheater)
             }
         }
     }

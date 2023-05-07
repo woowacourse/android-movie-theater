@@ -1,37 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/movie_theater_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingHorizontal="32dp"
-    android:paddingVertical="16dp">
+<layout>
 
-    <TextView
-        android:id="@+id/theater_name_textview"
-        android:layout_width="wrap_content"
+    <data>
+
+        <variable
+            name="movieTheaterItem"
+            type="woowacourse.movie.view.model.MovieTheater" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/movie_theater_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="선릉 극장"
-        android:textColor="@color/black"
-        android:textSize="16sp" />
+        android:paddingHorizontal="32dp"
+        android:paddingVertical="16dp">
 
-    <TextView
-        android:id="@+id/screening_info_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/theater_name_textview"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="3개의 상영 시간" />
+        <TextView
+            android:id="@+id/theater_name_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@{movieTheaterItem.name}"
+            tools:text="선릉 극장"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/ic_next" />
+        <TextView
+            android:id="@+id/screening_info_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/screening_timeslot(movieTheaterItem.screeningTimeslot.size)}"
+            app:layout_constraintTop_toBottomOf="@id/theater_name_textview"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="3개의 상영 시간" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/next_icon"
+            android:src="@drawable/ic_next" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
