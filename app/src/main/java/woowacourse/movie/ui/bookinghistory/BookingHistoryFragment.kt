@@ -11,7 +11,9 @@ import woowacourse.movie.ui.completed.CompletedActivity
 
 class BookingHistoryFragment : Fragment(), BookingHistoryContract.View {
 
-    lateinit var binding: FragmentBookingHistoryBinding
+    private var _binding: FragmentBookingHistoryBinding? = null
+    private val binding: FragmentBookingHistoryBinding
+        get() = _binding!!
 
     private val bookingHistoryPresenter: BookingHistoryPresenter by lazy {
         BookingHistoryPresenter(
@@ -25,7 +27,7 @@ class BookingHistoryFragment : Fragment(), BookingHistoryContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentBookingHistoryBinding.inflate(inflater)
+        _binding = FragmentBookingHistoryBinding.inflate(inflater)
 
         return binding.root
     }
@@ -49,5 +51,11 @@ class BookingHistoryFragment : Fragment(), BookingHistoryContract.View {
             reservation = reservationUiModel,
         )
         startActivity(intent)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _binding = null
     }
 }

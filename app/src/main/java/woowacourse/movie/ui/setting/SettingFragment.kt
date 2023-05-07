@@ -13,7 +13,10 @@ import woowacourse.movie.permission.requestPermission
 
 class SettingFragment : Fragment(), SettingContract.View {
 
-    lateinit var binding: FragmentSettingBinding
+    private var _binding: FragmentSettingBinding? = null
+    private val binding: FragmentSettingBinding
+        get() = _binding!!
+
     private val settingPresenter: SettingPresenter by lazy {
         SettingPresenter(
             view = this,
@@ -35,7 +38,7 @@ class SettingFragment : Fragment(), SettingContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentSettingBinding.inflate(layoutInflater)
+        _binding = FragmentSettingBinding.inflate(layoutInflater)
 
         return binding.root
     }
@@ -64,5 +67,11 @@ class SettingFragment : Fragment(), SettingContract.View {
                 settingPresenter.saveSetting(false)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _binding = null
     }
 }

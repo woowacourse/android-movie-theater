@@ -16,7 +16,10 @@ import woowacourse.movie.ui.main.adapter.recyclerview.MainAdapter
 
 class HomeFragment : Fragment(), HomeContract.View {
 
-    private lateinit var binding: FragmentHomeBinding
+    private var _binding: FragmentHomeBinding? = null
+    private val binding
+        get() = _binding!!
+
     private val homePresenter: HomePresenter by lazy {
         HomePresenter(
             view = this,
@@ -35,7 +38,7 @@ class HomeFragment : Fragment(), HomeContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentHomeBinding.inflate(layoutInflater)
+        _binding = FragmentHomeBinding.inflate(layoutInflater)
 
         return binding.root
     }
@@ -81,5 +84,11 @@ class HomeFragment : Fragment(), HomeContract.View {
 
     private fun onAdClicked(intent: Intent) {
         startActivity(intent)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _binding = null
     }
 }
