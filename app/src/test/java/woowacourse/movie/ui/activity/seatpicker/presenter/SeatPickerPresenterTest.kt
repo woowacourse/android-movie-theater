@@ -40,7 +40,7 @@ internal class SeatPickerPresenterTest {
 
         // when
         val seat = SeatModel(RowModel.of(1), ColumnModel.of(1), RankModel.A)
-        presenter.reserveSeat(seat)
+        presenter.handleSeatSelection(false, seat)
 
         // then
         verify {
@@ -56,11 +56,11 @@ internal class SeatPickerPresenterTest {
         justRun { view.updatePrice(any()) }
         justRun { view.notifyUnableToReserveMore() }
         val seat1 = SeatModel(RowModel.of(1), ColumnModel.of(1), RankModel.A)
-        presenter.reserveSeat(seat1)
+        presenter.handleSeatSelection(false, seat1)
 
         // when
         val seat2 = SeatModel(RowModel.of(1), ColumnModel.of(2), RankModel.A)
-        presenter.reserveSeat(seat2)
+        presenter.handleSeatSelection(false, seat2)
 
         // then
         verify { view.notifyUnableToReserveMore() }
@@ -74,7 +74,7 @@ internal class SeatPickerPresenterTest {
 
         // when
         val seat = SeatModel(RowModel.of(1), ColumnModel.of(1), RankModel.A)
-        presenter.cancelSeat(seat)
+        presenter.handleSeatSelection(true, seat)
 
         // then
         verify {
@@ -102,7 +102,7 @@ internal class SeatPickerPresenterTest {
         justRun { view.updatePrice(any()) }
         justRun { view.activateDoneButton() }
         val seat1 = SeatModel(RowModel.of(1), ColumnModel.of(1), RankModel.A)
-        presenter.reserveSeat(seat1)
+        presenter.handleSeatSelection(false, seat1)
 
         // when
         presenter.checkSelectionDone()

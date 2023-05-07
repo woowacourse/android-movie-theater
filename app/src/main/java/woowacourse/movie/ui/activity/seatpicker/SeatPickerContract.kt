@@ -8,9 +8,7 @@ interface SeatPickerContract {
     interface Presenter {
         fun initTicket(ticketModel: MovieTicketModel)
 
-        fun reserveSeat(seat: SeatModel)
-
-        fun cancelSeat(seat: SeatModel)
+        fun handleSeatSelection(isReserved: Boolean, seat: SeatModel)
 
         fun checkSelectionDone()
 

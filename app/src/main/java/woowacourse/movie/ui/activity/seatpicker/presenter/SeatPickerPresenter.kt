@@ -23,7 +23,15 @@ class SeatPickerPresenter(private val view: SeatPickerContract.View) :
         view.applyTicketData(ticket.mapToMovieTicketModel())
     }
 
-    override fun reserveSeat(seat: SeatModel) {
+    override fun handleSeatSelection(isReserved: Boolean, seat: SeatModel) {
+        if (isReserved) {
+            cancelSeat(seat)
+            return
+        }
+        reserveSeat(seat)
+    }
+
+    private fun reserveSeat(seat: SeatModel) {
         if (ticket.canReserveSeat()) {
             addSeat(seat)
             return
@@ -38,7 +46,7 @@ class SeatPickerPresenter(private val view: SeatPickerContract.View) :
         view.updatePrice(price.amount)
     }
 
-    override fun cancelSeat(seat: SeatModel) {
+    private fun cancelSeat(seat: SeatModel) {
         ticket.cancelSeat(seat.mapToSeat())
         val price = ticket.getDiscountPrice()
         view.setSeatCanceled(seat)

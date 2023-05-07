@@ -144,7 +144,7 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
         view.text = getString(R.string.seat, seat.row.letter, seat.column.value)
         view.setTextColor(getColor(seat.rank.color))
         view.setOnClickListener {
-            selectSeat(view, seat)
+            presenter.handleSeatSelection(view.isSelected, seat)
             presenter.checkSelectionDone()
         }
     }
@@ -156,17 +156,6 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
     }
 
     private fun Int.formatPrice(): String = getString(R.string.price, this)
-
-    private fun selectSeat(
-        view: TextView,
-        seat: SeatModel
-    ) {
-        if (view.isSelected) {
-            presenter.cancelSeat(seat)
-            return
-        }
-        presenter.reserveSeat(seat)
-    }
 
     private fun setTicketViews(ticket: MovieTicketModel) {
         binding.seatPickerTitle.text = ticket.title
