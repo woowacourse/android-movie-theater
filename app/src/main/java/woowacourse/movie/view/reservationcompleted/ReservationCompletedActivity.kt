@@ -29,6 +29,9 @@ class ReservationCompletedActivity : AppCompatActivity(), ReservationCompletedCo
     private lateinit var binding: ActivityReservationCompletedBinding
     private lateinit var alarmController: AlarmController
     override lateinit var presenter: ReservationCompletedContract.Presenter
+    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+        presenter.setAlarm(isGranted)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,16 +99,6 @@ class ReservationCompletedActivity : AppCompatActivity(), ReservationCompletedCo
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         }
-    }
-
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission(),
-    ) { isGranted: Boolean ->
-        if (isGranted) {
-            presenter.setAlarm(true)
-            return@registerForActivityResult
-        }
-        presenter.setAlarm(false)
     }
 
     companion object {
