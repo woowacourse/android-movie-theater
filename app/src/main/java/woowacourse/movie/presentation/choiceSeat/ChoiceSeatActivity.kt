@@ -13,6 +13,7 @@ import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.tools.seat.Location
 import woowacourse.movie.domain.model.tools.seat.SeatGrade
+import woowacourse.movie.model.data.local.BookedTicketPreference
 import woowacourse.movie.model.data.local.SettingPreference
 import woowacourse.movie.model.data.remote.DummyMovieStorage
 import woowacourse.movie.presentation.complete.CompleteActivity
@@ -48,6 +49,7 @@ class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
             alarmManager = MovieNoticeAlarmManager(this),
             settingStorage = SettingPreference(this),
             movieStorage = DummyMovieStorage(),
+            bookedTicketStorage = BookedTicketPreference(this),
             reservation = reservation
         )
     }

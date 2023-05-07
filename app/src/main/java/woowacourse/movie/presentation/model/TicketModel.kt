@@ -35,5 +35,24 @@ data class TicketModel private constructor(
                 seats,
                 theater
             )
+
+        fun fromSerializableTicketModel(
+            ticketId: Int,
+            movieId: Long,
+            bookedDateTime: LocalDateTime,
+            count: Int,
+            paymentMoney: Int,
+            seats: List<String>,
+            theater: String
+        ): TicketModel =
+            TicketModel(
+                ticketId,
+                movieId,
+                bookedDateTime,
+                count,
+                paymentMoney,
+                seats,
+                theater
+            )
     }
 }

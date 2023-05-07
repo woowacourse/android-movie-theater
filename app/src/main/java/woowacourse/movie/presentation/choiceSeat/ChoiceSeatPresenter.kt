@@ -11,6 +11,7 @@ import woowacourse.movie.domain.model.tools.seat.SeatGrade
 import woowacourse.movie.domain.model.tools.seat.SeatRow
 import woowacourse.movie.domain.model.tools.seat.Seats
 import woowacourse.movie.domain.model.tools.seat.Theater
+import woowacourse.movie.model.data.storage.BookedTicketStorage
 import woowacourse.movie.model.data.storage.MovieStorage
 import woowacourse.movie.model.data.storage.SettingStorage
 import woowacourse.movie.presentation.model.ReservationModel
@@ -20,6 +21,7 @@ class ChoiceSeatPresenter(
     override val alarmManager: ChoiceSeatContract.AlarmManager,
     private val settingStorage: SettingStorage,
     private val movieStorage: MovieStorage,
+    private val bookedTicketStorage: BookedTicketStorage,
     private var paymentAmount: Money = Money(INITIAL_PAYMENT_AMOUNT),
     private val seats: Seats = Seats(),
     private val reservation: ReservationModel
@@ -38,8 +40,7 @@ class ChoiceSeatPresenter(
                 seats,
                 reservation.theater
             )
-        // Ticket 관리하는 sqlite로 추후 교환
-        // BookedTickets.tickets.add(ticket.toPresentation())
+        bookedTicketStorage.addBookedTicket(ticket)
         if (settingStorage.getNotificationSettings()) alarmManager.setAlarm(ticket)
         return ticket
     }

@@ -7,19 +7,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.data.BookedTickets
+import woowacourse.movie.model.data.local.BookedTicketPreference
 import woowacourse.movie.model.data.remote.DummyMovieStorage
 import woowacourse.movie.presentation.complete.CompleteActivity
 import woowacourse.movie.presentation.model.TicketModel
 
-class BookedTicketsFragment : Fragment() {
+class BookedTicketsFragment() : Fragment(), BookedTicketsContract.View {
 
-    private val bookedTicketsAdapter by lazy {
-        BookedTicketsAdapter(
-            ::bookedTicketsItemClickListener,
-            BookedTicketPresenter(DummyMovieStorage())
-        )
-    }
+    override lateinit var presenter: BookedTicketsContract.Presenter
+
+    private lateinit var bookedTicketsAdapter: BookedTicketsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,13 +29,24 @@ class BookedTicketsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initPresenter()
+        initAdapter()
         setBookedTicketsAdapter()
+    }
+
+    private fun initPresenter() {
+        presenter =
+            BookedTicketPresenter(DummyMovieStorage(), BookedTicketPreference(requireContext()))
+    }
+
+    private fun initAdapter() {
+        bookedTicketsAdapter = BookedTicketsAdapter(::bookedTicketsItemClickListener, presenter)
     }
 
     private fun setBookedTicketsAdapter() {
         requireActivity().findViewById<RecyclerView>(R.id.recyclerBookedTickets).adapter =
             bookedTicketsAdapter
-        bookedTicketsAdapter.submitList(BookedTickets.tickets)
+        bookedTicketsAdapter.submitList(presenter.getBookedTickets())
     }
 
     private fun bookedTicketsItemClickListener(ticketModel: TicketModel) {

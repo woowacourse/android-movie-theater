@@ -3,6 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
     id("kotlin-kapt")
+    // kotlinx serialization
+    kotlin("plugin.serialization") version "1.8.10"
 }
 
 android {
@@ -62,4 +64,8 @@ dependencies {
 
     // BottomSheet
     implementation("com.google.android.material:material:1.5.0-alpha02")
+
+    // kotlinx serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
 }
