@@ -17,8 +17,7 @@ class ReservationPresenter(
                 }
                 view.updateItems(ticketsItems)
             },
-            onFailure = {
-            }
+            onFailure = { }
         )
     }
 }

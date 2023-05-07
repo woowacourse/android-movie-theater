@@ -52,7 +52,12 @@ class SeatSelectPresenter(
             tickets.dateTime.minusMinutes(NOTIFICATION_ADJUST_MINUTES),
             tickets.hashCode()
         )
-        addReservationTicketsUseCase(tickets.asDomain(), {}, {})
+
+        addReservationTicketsUseCase(
+            tickets.asDomain(),
+            onSuccess = { },
+            onFailure = { }
+        )
         view.navigateReservationConfirm(tickets)
     }
 

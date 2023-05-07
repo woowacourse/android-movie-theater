@@ -6,11 +6,7 @@ import com.example.domain.repository.TicketsRepository
 class GetAllReservationTicketsUseCase(private val ticketsRepository: TicketsRepository) {
     operator fun invoke(onSuccess: (List<Tickets>) -> Unit, onFailure: () -> Unit) {
         kotlin.runCatching { ticketsRepository.allTickets() }
-            .onSuccess {
-                onSuccess(it)
-            }
-            .onFailure {
-                onFailure()
-            }
+            .onSuccess { onSuccess(it) }
+            .onFailure { onFailure() }
     }
 }

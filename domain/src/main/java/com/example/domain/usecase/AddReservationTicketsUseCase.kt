@@ -7,12 +7,8 @@ class AddReservationTicketsUseCase(
     private val ticketsRepository: TicketsRepository,
 ) {
     operator fun invoke(tickets: Tickets, onSuccess: () -> Unit = {}, onFailure: () -> Unit = {}) {
-        kotlin.runCatching {
-            ticketsRepository.addTickets(tickets)
-        }.onSuccess {
-            onSuccess()
-        }.onFailure {
-            onFailure()
-        }
+        kotlin.runCatching { ticketsRepository.addTickets(tickets) }
+            .onSuccess { onSuccess() }
+            .onFailure { onFailure() }
     }
 }

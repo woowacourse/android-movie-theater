@@ -10,12 +10,8 @@ class SetAlarmSettingUseCase(
         onSuccess: () -> Unit = {},
         onFailure: () -> Unit = {}
     ) {
-        kotlin.runCatching {
-            settingRepository.setEnablePushNotification(alarmSettingInfo)
-        }.onSuccess {
-            onSuccess()
-        }.onFailure {
-            onFailure()
-        }
+        kotlin.runCatching { settingRepository.setEnablePushNotification(alarmSettingInfo) }
+            .onSuccess { onSuccess() }
+            .onFailure { onFailure() }
     }
 }

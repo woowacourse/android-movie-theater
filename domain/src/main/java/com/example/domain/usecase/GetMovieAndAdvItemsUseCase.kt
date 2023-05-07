@@ -14,20 +14,20 @@ class GetMovieAndAdvItemsUseCase(
         onFailure: () -> Unit = {}
     ) {
         var movie: List<Movie> = listOf()
-        kotlin.runCatching { movieRepository.allMovies() }.onFailure {
-            onFailure()
-            return@invoke
-        }.onSuccess {
-            movie = it
-        }
+        kotlin.runCatching { movieRepository.allMovies() }
+            .onSuccess { movie = it }
+            .onFailure {
+                onFailure()
+                return@invoke
+            }
 
         var adv: List<Adv> = listOf()
-        kotlin.runCatching { advRepository.allAdv() }.onFailure {
-            onFailure()
-            return@invoke
-        }.onSuccess {
-            adv = it
-        }
+        kotlin.runCatching { advRepository.allAdv() }
+            .onSuccess { adv = it }
+            .onFailure {
+                onFailure()
+                return@invoke
+            }
 
         onSuccess(movie, adv)
     }

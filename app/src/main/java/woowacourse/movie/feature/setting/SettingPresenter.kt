@@ -17,8 +17,10 @@ class SettingPresenter(
 
     override fun changeSwitchCheckedState(isPermissionApprove: Boolean, isSwitchChecked: Boolean) {
         if (!isPermissionApprove) view.alarmPermissionIsNotApprove()
-        setAlarmSettingUseCase(isSwitchChecked, {}, {
-            // 문제 발생. 토스트 띄워야 함.
-        })
+        setAlarmSettingUseCase(
+            isSwitchChecked,
+            onSuccess = { },
+            onFailure = { }
+        )
     }
 }
