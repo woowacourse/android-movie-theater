@@ -26,15 +26,13 @@ internal class SeatSelectionPresenterTest {
 
     @Before
     fun setUp() {
-        view = mockk()
-        reservationRepository = mockk()
-        seatRepository = mockk()
+        view = mockk(relaxed = true)
+        reservationRepository = mockk(relaxed = true)
+        seatRepository = mockk(relaxed = true)
         seatSelectionPresenter = SeatSelectionPresenter(
             view, reservationRepository, seatRepository
         )
-        every { view.initSeatButtons(1..5, 1..4) } returns Unit
         every { view.getReservationOptions() } returns fakeReservationOptions()
-        every { view.initReserveLayout(any()) } returns Unit
         every { view.getMovie() } returns fakeMovie().toUiModel()
         seatSelectionPresenter.setUp()
     }
@@ -42,11 +40,8 @@ internal class SeatSelectionPresenterTest {
     @Test
     fun `선택한 좌석을 예매하면 예매에 해당하는 알림이 등록된다`() {
         every { view.findSelectedSeatsIndex() } returns listOf(0, 1)
-        every { view.enableReservation(any()) } returns Unit
         val reservationSlot = slot<ReservationUiModel>()
         every { view.registerReservationAlarm(capture(reservationSlot)) } returns Unit
-        every { reservationRepository.add(any()) } returns 1
-        every { seatRepository.addSeats(any(), any()) } returns Unit
 
         val peopleCount = 2
         val movie = fakeMovie()
