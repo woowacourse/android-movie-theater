@@ -3,14 +3,16 @@ package woowacourse.movie.presentation.view.main.home.bookcomplete
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityBookCompleteBinding
 import woowacourse.movie.presentation.extension.getParcelableCompat
 import woowacourse.movie.presentation.model.ReservationResult
 import woowacourse.movie.presentation.view.common.BackButtonActivity
 
 class BookCompleteActivity : BackButtonActivity(), BookingCompleteContract.View {
+    private lateinit var binding: ActivityBookCompleteBinding
     private val presenter: BookingCompleteContract.Presenter by lazy {
         BookingCompletePresenter(
             this, intent.getParcelableCompat(RESERVATION_ID_INTENT_KEY)
@@ -19,7 +21,7 @@ class BookCompleteActivity : BackButtonActivity(), BookingCompleteContract.View 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_book_complete)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_book_complete)
         presenter.onCreate()
     }
 
@@ -29,15 +31,15 @@ class BookCompleteActivity : BackButtonActivity(), BookingCompleteContract.View 
     }
 
     override fun initView(reservationResult: ReservationResult) {
-        findViewById<TextView>(R.id.tv_book_movie_title).text = reservationResult.movieTitle
-        findViewById<TextView>(R.id.tv_book_date).text =
+        binding.tvBookMovieTitle.text = reservationResult.movieTitle
+        binding.tvBookDate.text =
             formatBookingTime(reservationResult.date, reservationResult.time)
-        findViewById<TextView>(R.id.tv_book_person_count).text =
+        binding.tvBookPersonCount.text =
             getString(R.string.book_person_info).format(
                 reservationResult.ticketCount,
                 reservationResult.seatNames
             )
-        findViewById<TextView>(R.id.tv_book_total_pay).text =
+        binding.tvBookTotalPay.text =
             getString(R.string.book_total_pay).format(
                 reservationResult.totalPrice
             )
