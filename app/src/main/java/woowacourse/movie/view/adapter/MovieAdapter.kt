@@ -3,8 +3,12 @@ package woowacourse.movie.view.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemAdvertisementBinding
+import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.model.AdvertisementUiModel
 import woowacourse.movie.model.MovieAdapterViewType
 import woowacourse.movie.model.MovieUiModel
@@ -18,6 +22,8 @@ class MovieAdapter(
     private val movieListClickEvent: (MovieUiModel) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private lateinit var advertisementBinding: ItemAdvertisementBinding
+    private lateinit var movieBinding: ItemMovieBinding
     override fun getItemViewType(position: Int): Int {
         return when (position % CYCLE) {
             ADVERTISEMENT_TURN -> MovieAdapterViewType.ADVERTISEMENT.value
@@ -28,16 +34,16 @@ class MovieAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (MovieAdapterViewType.find(viewType)) {
             MovieAdapterViewType.MOVIE -> MovieItemViewHolder(
-                inflateView(parent, R.layout.item_movie)
+                DataBindingUtil.inflate(
+                    LayoutInflater.from(parent.context), R.layout.item_movie, parent, false
+                )
             )
             MovieAdapterViewType.ADVERTISEMENT -> AdvertisementItemViewHolder(
-                inflateView(parent, R.layout.item_advertisement)
+                DataBindingUtil.inflate(
+                    LayoutInflater.from(parent.context), R.layout.item_advertisement, parent, false
+                )
             )
         }
-    }
-
-    private fun inflateView(viewGroup: ViewGroup, layoutId: Int): View {
-        return LayoutInflater.from(viewGroup.context).inflate(layoutId, viewGroup, false)
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {

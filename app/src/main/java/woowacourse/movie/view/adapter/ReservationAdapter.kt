@@ -2,8 +2,10 @@ package woowacourse.movie.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemReservationBinding
 import woowacourse.movie.model.ReservationUiModel
 import woowacourse.movie.view.adapter.viewholder.ReservationViewHolder
 
@@ -13,10 +15,10 @@ class ReservationAdapter(
 ) :
     RecyclerView.Adapter<ReservationViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReservationViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_reservation, parent, false)
-
-        return ReservationViewHolder(view, onClickEvent)
+        val binding = DataBindingUtil.inflate<ItemReservationBinding>(
+            LayoutInflater.from(parent.context), R.layout.item_reservation, parent, false
+        )
+        return ReservationViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
@@ -24,6 +26,6 @@ class ReservationAdapter(
     }
 
     override fun onBindViewHolder(holder: ReservationViewHolder, position: Int) {
-        holder.bind(reservations[position])
+        holder.bind(reservations[position], onClickEvent)
     }
 }
