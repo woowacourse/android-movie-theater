@@ -23,7 +23,8 @@ class TicketPresenter(private val view: TicketContract.View) : TicketContract.Pr
     override fun getTicketInfo(bookingMovieEntity: BookingMovieEntity): String {
         val count = bookingMovieEntity.ticketCount.numberOfPeople
         val seats = bookingMovieEntity.seats.getSeatsPositionToString()
-        return view.formatTicketSeat(count, seats)
+        val theater = bookingMovieEntity.theaterName
+        return view.formatTicketSeat(count, seats, theater)
     }
 
     override fun getTicketPrice(seats: SeatsDto, date: LocalDate, time: LocalTime): String {

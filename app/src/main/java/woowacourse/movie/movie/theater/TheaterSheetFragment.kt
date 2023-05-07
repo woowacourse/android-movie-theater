@@ -61,7 +61,7 @@ class TheaterSheetFragment : BottomSheetDialogFragment() {
     companion object {
         const val THEATER_KEY = "theater_key"
 
-        fun newInstance(item: MovieDto): TheaterSheetFragment{
+        fun newInstance(item: MovieDto): TheaterSheetFragment {
             return TheaterSheetFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable(HomeFragment.MOVIE_KEY, item)

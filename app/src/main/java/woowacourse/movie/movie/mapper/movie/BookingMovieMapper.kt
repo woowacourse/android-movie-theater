@@ -8,9 +8,9 @@ import woowacourse.movie.movie.mapper.ticket.mapToTicketCount
 import woowacourse.movie.movie.mapper.ticket.mapToTicketCountDto
 
 fun BookingMovieEntity.mapToDomain(): BookingMovie {
-    return BookingMovie(this.movie.mapToMovie(), this.date.mapToMovieDate(), this.time.mapToMovieTime(), this.ticketCount.mapToTicketCount(), this.seats.mapToSeats())
+    return BookingMovie(this.movie.mapToMovie(), this.date.mapToMovieDate(), this.time.mapToMovieTime(), this.ticketCount.mapToTicketCount(), this.seats.mapToSeats(), this.theaterName)
 }
 
 fun BookingMovie.mapToUIModel(): BookingMovieEntity {
-    return BookingMovieEntity(this.movie.mapToMovieDto(), this.date.mapToMovieDateDto(), this.time.mapToMovieTimeDto(), this.ticketCount.mapToTicketCountDto(), this.seats.mapToSeatsDto())
+    return BookingMovieEntity(this.movie.mapToMovieDto(), this.date.mapToMovieDateDto(), this.time.mapToMovieTimeDto(), this.ticketCount.mapToTicketCountDto(), this.seats.mapToSeatsDto(), this.theaterName)
 }

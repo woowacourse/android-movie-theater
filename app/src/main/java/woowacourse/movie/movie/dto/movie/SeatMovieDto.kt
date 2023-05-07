@@ -10,4 +10,5 @@ data class SeatMovieDto(
     val movie: MovieDto,
     val movieDate: MovieDateDto,
     val movieTime: MovieTimeDto,
+    val theaterName: String,
 ) : Parcelable

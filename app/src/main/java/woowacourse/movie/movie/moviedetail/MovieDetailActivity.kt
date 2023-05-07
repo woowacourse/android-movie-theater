@@ -108,7 +108,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         }
     }
 
-    override fun onClickBookBtnListener(movie: MovieDto) {
+    override fun onClickBookBtnListener(movie: MovieDto, theater: MovieTheaterDto) {
         binding.bookButton.setOnClickListener {
             val selectedDate = MovieDate.of(selectDateSpinner.selectedItem.toString())
             val selectedTime = MovieTime.of(selectTimeSpinner.selectedItem.toString())
@@ -120,7 +120,8 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
                     movieTicket,
                     movie,
                     selectedDate.mapToMovieDateDto(),
-                    selectedTime.mapToMovieTimeDto()
+                    selectedTime.mapToMovieTimeDto(),
+                    theater.place
                 )
             )
             startActivity(intent)

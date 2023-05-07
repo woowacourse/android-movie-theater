@@ -12,4 +12,5 @@ data class BookingMovieEntity(
     val time: MovieTimeDto,
     val ticketCount: TicketCountDto,
     val seats: SeatsDto,
+    val theaterName: String,
 ) : Parcelable

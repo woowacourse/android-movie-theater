@@ -12,7 +12,7 @@ interface TicketContract {
         fun showTicketInfo(seatInfo: String)
         fun showTicketPrice(ticketPrice: String)
         fun formatTicketDateTime(date: LocalDate, time: LocalTime): String
-        fun formatTicketSeat(count: Int, seats: String): String
+        fun formatTicketSeat(count: Int, seats: String, theater: String): String
         fun formatTicketPrice(totalTicketPrice: Int): String
     }
 

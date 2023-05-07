@@ -18,7 +18,7 @@ class MovieDetailPresenter(private val view: MovieDetailContract.View) :
         view.showMovieInfo(movie.moviePoster, movie.title, movie.description)
         view.showMovieDateInfo(getMovieDate(), getMovieTime())
         view.showNumberOfPeople()
-        view.onClickBookBtnListener(movieDto)
+        view.onClickBookBtnListener(movieDto, theater)
         view.setDateSpinner(getIntervalDays())
     }
 

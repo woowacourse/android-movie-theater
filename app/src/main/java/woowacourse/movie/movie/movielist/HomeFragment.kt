@@ -46,7 +46,7 @@ class HomeFragment : Fragment(), HomeContract.View {
         }
     }
 
-    private fun showTheaterSheet(item: MovieDto){
+    private fun showTheaterSheet(item: MovieDto) {
         TheaterSheetFragment.newInstance(item)
             .show(parentFragmentManager, TheaterSheetFragment.THEATER_KEY)
     }

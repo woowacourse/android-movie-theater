@@ -16,7 +16,7 @@ interface MovieDetailContract {
         fun showNumberOfPeople()
         fun onClickDecreaseBtnListener()
         fun onClickIncreaseBtnListener()
-        fun onClickBookBtnListener(movie: MovieDto)
+        fun onClickBookBtnListener(movie: MovieDto, theater: MovieTheaterDto)
         fun setDateSpinner(intervalDate: List<String>)
         fun setTimeSpinner()
     }

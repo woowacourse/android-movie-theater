@@ -73,7 +73,8 @@ class SeatSelectionPresenter(private val view: SeatSelectionContract.View) :
             seatBaseInfo.movieDate,
             seatBaseInfo.movieTime,
             seatBaseInfo.ticketCount,
-            seats.mapToSeatsDto()
+            seats.mapToSeatsDto(),
+            seatBaseInfo.theaterName,
         )
     }
 

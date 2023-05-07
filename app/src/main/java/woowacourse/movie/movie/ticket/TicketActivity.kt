@@ -54,8 +54,8 @@ class TicketActivity : AppCompatActivity(), TicketContract.View {
         return formatDate.plus(" $formatTime")
     }
 
-    override fun formatTicketSeat(count: Int, seats: String): String {
-        return getString(R.string.ticket_info, count, seats)
+    override fun formatTicketSeat(count: Int, seats: String, theater: String): String {
+        return getString(R.string.ticket_info, count, seats, theater)
     }
 
     override fun formatTicketPrice(totalTicketPrice: Int): String {

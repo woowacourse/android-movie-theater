@@ -28,10 +28,16 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySeatSelectionBinding.inflate(layoutInflater)
+        setToolBar()
         presenter = SeatSelectionPresenter(this)
         setContentView(binding.root)
         initData()
         setUpState(savedInstanceState)
+    }
+
+    private fun setToolBar() {
+        setSupportActionBar(binding.seatSelectionToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun initData() {
