@@ -14,6 +14,8 @@ class SelectTheaterBottomSheet : BottomSheetDialogFragment(), SelectTheaterContr
     override lateinit var presenter: SelectTheaterContract.Presenter
 
     private var movieId by Delegates.notNull<Long>()
+    private var screeningState by Delegates.notNull<Boolean>()
+    private lateinit var selectTheaterAdapter: SelectTheaterAdapter
 
     private var _binding: FragmentSelectTheaterBottomSheetBinding? = null
     private val binding get() = requireNotNull(_binding)
@@ -31,7 +33,9 @@ class SelectTheaterBottomSheet : BottomSheetDialogFragment(), SelectTheaterContr
         super.onViewCreated(view, savedInstanceState)
         initArgumentData()
         initPresenter()
-        presenter.checkScreeningState()
+        checkScreeningState()
+        initAdapter()
+        initRecyclerViewMovieTheater()
     }
 
     private fun initArgumentData() {
@@ -44,6 +48,21 @@ class SelectTheaterBottomSheet : BottomSheetDialogFragment(), SelectTheaterContr
 
     override fun setViewByScreeningState(screeningState: Boolean) {
         binding.screeningState = screeningState
+    }
+
+    private fun checkScreeningState() {
+        screeningState = presenter.checkScreeningState()
+    }
+
+    private fun initAdapter() {
+        selectTheaterAdapter = SelectTheaterAdapter(movieId, presenter)
+    }
+
+    private fun initRecyclerViewMovieTheater() {
+        if (screeningState) {
+            binding.rvMovieTheaterSelect.adapter = selectTheaterAdapter
+            selectTheaterAdapter.submitList(presenter.getTheatersByMovieId(movieId))
+        }
     }
 
     override fun onDestroyView() {

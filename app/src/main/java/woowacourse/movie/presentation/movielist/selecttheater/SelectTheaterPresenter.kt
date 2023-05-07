@@ -14,7 +14,9 @@ class SelectTheaterPresenter(
     override fun getTheaterTimeTableCountByMovieId(movieId: Long, theater: String): Int =
         movieTheaterStorage.getTheaterTimeTableByMovieId(movieId, theater).size
 
-    override fun checkScreeningState() {
-        view.setViewByScreeningState(getTheatersByMovieId(movieId).isNotEmpty())
+    override fun checkScreeningState(): Boolean {
+        val screeningState = getTheatersByMovieId(movieId).isNotEmpty()
+        view.setViewByScreeningState(screeningState)
+        return screeningState
     }
 }

@@ -7,6 +7,10 @@ interface SelectTheaterContract {
         fun setViewByScreeningState(screeningState: Boolean)
     }
 
+    interface Adapter {
+        val presenter: Presenter
+    }
+
     interface Presenter {
         val view: View
 
@@ -14,6 +18,6 @@ interface SelectTheaterContract {
 
         fun getTheaterTimeTableCountByMovieId(movieId: Long, theater: String): Int
 
-        fun checkScreeningState()
+        fun checkScreeningState(): Boolean
     }
 }

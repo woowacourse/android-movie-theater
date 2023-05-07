@@ -1,18 +1,33 @@
 package woowacourse.movie.presentation.movielist.selecttheater
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.movie.databinding.SelectTheaterBottomSheetItemBinding
 
-class SelectTheaterAdapter : ListAdapter<String, RecyclerView.ViewHolder>(SelectTheaterDiffUtil) {
+class SelectTheaterAdapter(
+    private val movieId: Long,
+    override val presenter: SelectTheaterContract.Presenter
+) :
+    ListAdapter<String, RecyclerView.ViewHolder>(SelectTheaterDiffUtil),
+    SelectTheaterContract.Adapter {
+
+    private lateinit var inflater: LayoutInflater
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        TODO("Not yet implemented")
+        if (!::inflater.isInitialized) {
+            inflater = LayoutInflater.from(parent.context)
+        }
+        val binding = SelectTheaterBottomSheetItemBinding.inflate(inflater, parent, false)
+        return SelectTheaterViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val viewHolder = holder as SelectTheaterViewHolder
+        val theater: String = getItem(position)
+        viewHolder.bind(theater, presenter.getTheaterTimeTableCountByMovieId(movieId, theater))
     }
 
     companion object {
