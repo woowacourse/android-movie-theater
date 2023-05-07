@@ -14,13 +14,10 @@ import woowacourse.movie.permission.requestPermission
 class SettingFragment : Fragment(), SettingContract.View {
 
     lateinit var binding: FragmentSettingBinding
-    private val settingSharedPreference by lazy {
-        SettingSharedPreference(requireContext())
-    }
     private val settingPresenter: SettingPresenter by lazy {
         SettingPresenter(
             view = this,
-            settingRepository = settingSharedPreference
+            settingRepository = SettingSharedPreference(requireContext())
         )
     }
     private val permissionLauncher: ActivityResultLauncher<String> =

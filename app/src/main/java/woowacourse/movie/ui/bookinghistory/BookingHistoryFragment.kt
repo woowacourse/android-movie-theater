@@ -13,16 +13,10 @@ class BookingHistoryFragment : Fragment(), BookingHistoryContract.View {
 
     lateinit var binding: FragmentBookingHistoryBinding
 
-    private val bookingHistoryDBHelper: BookingHistoryDBHelper by lazy {
-        BookingHistoryDBHelper(requireContext())
-    }
-    private val bookingHistoryDBAdapter: BookingHistoryDBAdapter by lazy {
-        BookingHistoryDBAdapter(bookingHistoryDBHelper)
-    }
     private val bookingHistoryPresenter: BookingHistoryPresenter by lazy {
         BookingHistoryPresenter(
             view = this,
-            repository = bookingHistoryDBAdapter
+            repository = BookingHistoryDBAdapter(BookingHistoryDBHelper(requireContext()))
         )
     }
 

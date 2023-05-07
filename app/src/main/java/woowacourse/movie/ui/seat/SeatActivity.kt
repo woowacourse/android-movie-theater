@@ -21,17 +21,11 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
     private val bookedMovie: BookedMovie? by lazy {
         intent.getParcelable(BOOKED_MOVIE, BookedMovie::class.java)
     }
-    private val bookingHistoryDBHelper: BookingHistoryDBHelper by lazy {
-        BookingHistoryDBHelper(this)
-    }
-    private val bookingHistoryDBAdapter: BookingHistoryDBAdapter by lazy {
-        BookingHistoryDBAdapter(bookingHistoryDBHelper)
-    }
     private val seatPresenter: SeatPresenter by lazy {
         bookedMovie?.let {
             SeatPresenter(
                 view = this,
-                repository = bookingHistoryDBAdapter,
+                repository = BookingHistoryDBAdapter(BookingHistoryDBHelper(this)),
                 timeReminder = ScreeningTimeReminder(this),
                 bookedMovie = it,
             )
