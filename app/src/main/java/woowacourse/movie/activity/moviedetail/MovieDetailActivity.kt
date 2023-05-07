@@ -6,11 +6,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import com.woowacourse.domain.Counter
 import com.woowacourse.domain.MovieSchedule
 import woowacourse.movie.BundleKeys.MOVIE_BOOKING_INFO_KEY
@@ -19,12 +18,14 @@ import woowacourse.movie.DateFormatter
 import woowacourse.movie.R
 import woowacourse.movie.activity.BackButtonActivity
 import woowacourse.movie.activity.seatpicker.SeatPickerActivity
+import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.movie.Movie
 import woowacourse.movie.movie.MovieBookingInfo
 import java.time.LocalDate
 
 class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
+    private lateinit var binding: ActivityMovieDetailBinding
     override lateinit var presenter: MovieDetailContract.Presenter
     private var needSpinnerInitialize = true
 
@@ -34,7 +35,7 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_detail)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
         presenter = MovieDetailPresenter(this, movieData = getMovieData())
         needSpinnerInitialize = true
 
@@ -63,22 +64,22 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
     }
 
     private fun initView(movieData: Movie) {
-        findViewById<ImageView>(R.id.iv_movie_poster).setImageResource(movieData.poster)
-        findViewById<TextView>(R.id.tv_movie_title).text = movieData.title
-        findViewById<TextView>(R.id.tv_movie_screening_period).text =
+        binding.ivMoviePoster.setImageResource(movieData.poster)
+        binding.tvMovieTitle.text = movieData.title
+        binding.tvMovieScreeningPeriod.text =
             getString(
                 R.string.movie_screening_period,
                 DateFormatter.format(movieData.startDate),
                 DateFormatter.format(movieData.endDate)
             )
-        findViewById<TextView>(R.id.tv_movie_running_time).text =
+        binding.tvMovieRunningTime.text =
             getString(R.string.movie_running_time, movieData.runningTime)
-        findViewById<TextView>(R.id.tv_movie_synopsis).text = movieData.synopsis
+        binding.tvMovieSynopsis.text = movieData.synopsis
     }
 
     private fun setClickListener(movieData: Movie) {
 
-        findViewById<Button>(R.id.bt_ticket_count_minus).setOnClickListener {
+        binding.btTicketCountMinus.setOnClickListener {
             if (presenter.isMinTicketCount()) {
                 Toast.makeText(this, getString(R.string.cant_lower_one), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -86,11 +87,11 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
             presenter.subTicket()
         }
 
-        findViewById<Button>(R.id.bt_ticket_count_plus).setOnClickListener {
+        binding.btTicketCountPlus.setOnClickListener {
             presenter.addTicket()
         }
 
-        findViewById<Button>(R.id.bt_to_seat_picker).setOnClickListener {
+        binding.btToSeatPicker.setOnClickListener {
             startSeatPickerPage(movieData)
             finish()
         }
@@ -129,11 +130,9 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
                 )
                 if (needSpinnerInitialize && savedInstanceState != null) {
                     timeSpinner.setSelection(
-                        (
-                            savedInstanceState.getString(TIME_KEY)
-                                ?: movieSchedule.getScheduleTimes(dateSpinner.selectedItem.toString())
-                                    .first()
-                            ).toInt()
+                        (savedInstanceState.getString(TIME_KEY) ?: movieSchedule.getScheduleTimes(
+                            dateSpinner.selectedItem.toString()
+                        ).first()).toInt()
                     )
                     needSpinnerInitialize = false
                 }
