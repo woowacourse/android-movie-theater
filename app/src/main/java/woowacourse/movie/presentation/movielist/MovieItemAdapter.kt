@@ -9,7 +9,7 @@ import woowacourse.movie.presentation.movielist.viewholder.MovieViewHolder
 
 class MovieItemAdapter(
     private val movieItems: MutableList<MovieItem> = mutableListOf(),
-    private val clickBook: (Long) -> Unit
+    private val clickMovieListItem: (Long) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -17,7 +17,7 @@ class MovieItemAdapter(
         val view = LayoutInflater.from(parent.context)
             .inflate(viewType, parent, false)
         return when (viewType) {
-            R.layout.movie_list_item -> MovieViewHolder(view, clickBook)
+            R.layout.movie_list_item -> MovieViewHolder(view, clickMovieListItem)
             R.layout.movie_list_ad_item -> AdViewHolder(view)
             else -> throw NoSuchElementException()
         }

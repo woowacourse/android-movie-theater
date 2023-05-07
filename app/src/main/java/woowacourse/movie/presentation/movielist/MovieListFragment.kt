@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.model.data.remote.DummyMovieStorage
-import woowacourse.movie.presentation.booking.BookingActivity
+import woowacourse.movie.presentation.movielist.selecttheater.SelectTheaterBottomSheet
 
 class MovieListFragment : Fragment(), MovieListContract.View {
-    private val movieItemAdapter by lazy { MovieItemAdapter() { clickBook(it) } }
+    private val movieItemAdapter by lazy { MovieItemAdapter() { clickMovieListItem(it) } }
     override lateinit var presenter: MovieListContract.Presenter
 
     override fun onCreateView(
@@ -47,7 +47,12 @@ class MovieListFragment : Fragment(), MovieListContract.View {
         movieItemAdapter.updateMovieItems(movieItems)
     }
 
-    private fun clickBook(movieId: Long) {
-        startActivity(BookingActivity.getIntent(requireActivity(), movieId))
+    private fun clickMovieListItem(movieId: Long) {
+        val bottomSheet = SelectTheaterBottomSheet()
+        bottomSheet.arguments = SelectTheaterBottomSheet.getBundle(movieId)
+        bottomSheet.show(
+            requireActivity().supportFragmentManager,
+            this.javaClass.name
+        )
     }
 }

@@ -38,4 +38,7 @@
     <!-- FragmentSettings  -->
     <string name="textPushPermissionTitle">푸시 알림 수신</string>
     <string name="textPushPermissionDescription">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+
+    <!-- SelectTheaterBottomSheet  -->
+    <string name="tv_no_screening">해당 영화는 현재 상영중이지 않습니다.</string>
 </resources>
