@@ -5,6 +5,8 @@ import domain.movieTimePolicy.MovieTime
 import domain.movieTimePolicy.WeekdayMovieTime
 import domain.movieTimePolicy.WeekendMovieTime
 import woowacourse.movie.contract.MovieReservationContract
+import woowacourse.movie.model.TheaterUiModel
+import woowacourse.movie.model.mapper.TheaterMapper.toDomain
 import java.time.LocalDate
 
 class MovieReservationPresenter(
@@ -12,11 +14,16 @@ class MovieReservationPresenter(
     ticketCount: Int,
 ) : MovieReservationContract.Presenter {
     private var count = Count(ticketCount)
-    override fun onSelectDate(date: LocalDate) {
-        val times = MovieTime(
-            listOf(WeekdayMovieTime, WeekendMovieTime)
-        ).determine(date)
-        view.setTimeSpinner(times)
+    override fun updateDateSpinner(theaterUiModel: TheaterUiModel) {
+        val theater = theaterUiModel.toDomain()
+        val dates = theater.getAllScreenDates()
+        view.setDateSpinner(dates)
+    }
+
+    override fun onSelectDate(theaterUiModel: TheaterUiModel, date: LocalDate) {
+        val theater = theaterUiModel.toDomain()
+        val screenTimes = theater.getScreenTimesOnDate(date)
+        view.setTimeSpinner(screenTimes)
     }
 
     override fun onPlusTicketCount() {

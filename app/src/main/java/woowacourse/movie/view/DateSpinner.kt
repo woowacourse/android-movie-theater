@@ -8,11 +8,12 @@ import java.time.LocalDate
 class DateSpinner(spinner: Spinner, savedStateKey: String) :
     SaveStateSpinner(savedStateKey, spinner) {
     fun setAdapter(
-        movieUiModel: MovieUiModel,
+        dates: List<LocalDate>,
     ) {
-        val dates = movieUiModel.getDateList().map { LocalFormattedDate(it) }
+        val dates = dates.map { LocalFormattedDate(it) }
         setArrayAdapter(dates)
     }
+
     fun getSelectedDate(): LocalDate {
         return (spinner.selectedItem as LocalFormattedDate).date
     }

@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -12,22 +11,24 @@ import woowacourse.movie.R
 import woowacourse.movie.contract.MovieReservationContract
 import woowacourse.movie.databinding.ActivityMovieReservationBinding
 import woowacourse.movie.getSerializableCompat
-import woowacourse.movie.model.MovieUiModel
-import woowacourse.movie.model.TicketDateUiModel
+import woowacourse.movie.model.*
 import woowacourse.movie.presenter.MovieReservationPresenter
 import woowacourse.movie.view.Counter
 import woowacourse.movie.view.DateSpinner
 import woowacourse.movie.view.MovieDateTimePicker
 import woowacourse.movie.view.MovieView
 import woowacourse.movie.view.TimeSpinner
+import java.time.LocalDate
 import java.time.LocalTime
 
 class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.View {
     override val presenter: MovieReservationContract.Presenter by lazy {
         MovieReservationPresenter(this, counter.getCount())
     }
+
     private lateinit var binding: ActivityMovieReservationBinding
-    private val movieUiModel: MovieUiModel by lazy { getMovieModelView() }
+    private val movieUiModel: MovieUiModel by lazy { receiveMovieUiModel() }
+    private val theaterUiModel: TheaterUiModel by lazy { receiveTheaterUiModel() }
     private val counter: Counter by lazy {
         Counter(
             binding.movieReservationPeopleCountMinus,
@@ -55,8 +56,12 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         counter.load(savedInstanceState)
         renderMovieView(movieUiModel)
         counter.setButtonsClick(presenter::onMinusTicketCount, presenter::onPlusTicketCount)
-        movieDateTimePicker.setDateList(movieUiModel)
-        movieDateTimePicker.setDateSelectListener(presenter::onSelectDate, savedInstanceState)
+        presenter.updateDateSpinner(theaterUiModel)
+        movieDateTimePicker.setDateSelectListener(
+            theaterUiModel,
+            presenter::onSelectDate,
+            savedInstanceState
+        )
         reservationButtonClick(presenter::onReservationButtonClick)
     }
 
@@ -75,11 +80,18 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         finish()
     }
 
-    private fun getMovieModelView(): MovieUiModel {
+    private fun receiveMovieUiModel(): MovieUiModel {
         val movieUiModel = intent.extras?.getSerializableCompat<MovieUiModel>(MOVIE_KEY_VALUE)
             ?: finishActivityWithMessage(getString(R.string.movie_data_null_error))
         return movieUiModel as MovieUiModel
     }
+
+    private fun receiveTheaterUiModel(): TheaterUiModel {
+        val theaterUiModel = intent.extras?.getSerializableCompat<TheaterUiModel>(THEATER_KEY_VALUE)
+            ?: finishActivityWithMessage(getString(R.string.movie_data_null_error))
+        return theaterUiModel as TheaterUiModel
+    }
+
 
     private fun reservationButtonClick(clickEvent: () -> Unit) {
         binding.movieReservationButton.setOnClickListener {
@@ -100,6 +112,10 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         return super.onOptionsItemSelected(item)
     }
 
+    override fun setDateSpinner(date: List<LocalDate>) {
+        movieDateTimePicker.dateSpinner.setAdapter(date)
+    }
+
     override fun setTimeSpinner(times: List<LocalTime>) {
         movieDateTimePicker.timeSpinner.setAdapter(times)
     }
@@ -109,19 +125,26 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
     }
 
     override fun startSeatSelectActivity(peopleCount: Int) {
+        val ticketOfficeUiModel = TicketOfficeUiModel(
+            TicketsUiModel(listOf()),
+            peopleCount,
+            theaterUiModel.name,
+            movieDateTimePicker.getSelectedDateTime(),
+        )
         SelectSeatActivity.start(
             this,
-            peopleCount,
-            TicketDateUiModel(movieDateTimePicker.getSelectedDateTime()),
+            ticketOfficeUiModel,
             movieUiModel
         )
     }
 
     companion object {
         private const val MOVIE_KEY_VALUE = "movie"
-        fun start(context: Context, movieUiModel: MovieUiModel) {
+        private const val THEATER_KEY_VALUE = "Theater"
+        fun start(context: Context, movieUiModel: MovieUiModel, theaterUiModel: TheaterUiModel) {
             val intent = Intent(context, MovieReservationActivity::class.java)
             intent.putExtra(MOVIE_KEY_VALUE, movieUiModel)
+            intent.putExtra(THEATER_KEY_VALUE, theaterUiModel)
             context.startActivity(intent)
         }
 

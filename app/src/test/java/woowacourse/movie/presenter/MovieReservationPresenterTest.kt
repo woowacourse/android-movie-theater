@@ -5,31 +5,46 @@ import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.contract.MovieReservationContract
+import woowacourse.movie.model.TheaterUiModel
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 class MovieReservationPresenterTest {
     private lateinit var presenter: MovieReservationContract.Presenter
     private lateinit var view: MovieReservationContract.View
+    private lateinit var theaterUiModel: TheaterUiModel
 
     @Before
     fun setUp() {
         view = mockk()
+        theaterUiModel = mockk()
         presenter = MovieReservationPresenter(view, 1)
+    }
+
+    @Test
+    fun 날짜_Spinner를_업데이트한다() {
+        // given
+        every { theaterUiModel.name } returns "선릉"
+        every { theaterUiModel.screenTimes } returns listOf(LocalDateTime.now(), LocalDateTime.MAX)
+        every { view.setDateSpinner(any()) } just runs
+        // when
+        presenter.updateDateSpinner(theaterUiModel)
+        // then
+        verify { view.setDateSpinner(any()) }
     }
 
     @Test
     fun 날짜를_선택했을때_해당되는_시간들을_생성하고_Spinner에_배치한다() {
         // given
-        val slot = slot<List<LocalTime>>()
         val date = LocalDate.of(2023, 5, 6)
-        every { view.setTimeSpinner(capture(slot)) } just runs
+        every { theaterUiModel.name } returns "선릉"
+        every { theaterUiModel.screenTimes } returns listOf(LocalDateTime.now(), LocalDateTime.MAX)
+        every { view.setTimeSpinner(any()) } just runs
         // when
-        presenter.onSelectDate(date)
+        presenter.onSelectDate(theaterUiModel, date)
         // then
-        assertEquals(slot.captured.first(), LocalTime.of(9, 0))
-        assertEquals(slot.captured.last(), LocalTime.of(23, 0))
-        verify { view.setTimeSpinner(slot.captured) }
+        verify { view.setTimeSpinner(any()) }
     }
 
     @Test
