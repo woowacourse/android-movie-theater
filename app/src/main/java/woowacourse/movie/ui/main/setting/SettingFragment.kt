@@ -4,18 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
-import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.repository.SettingRepositoryImpl
 
 class SettingFragment : Fragment(), SettingContract.View {
+    override lateinit var presenter: SettingContract.Presenter
+
     private var _binding: FragmentSettingBinding? = null
     private val binding
         get() = _binding!!
-
-    override lateinit var presenter: SettingContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

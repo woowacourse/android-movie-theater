@@ -26,14 +26,15 @@ class ReservationListFragment : Fragment(), ReservationListContract.View {
     ): View {
         _binding = FragmentReservationListBinding.inflate(inflater, container, false)
 
+        setUpPresenter()
+        setUpAdapter()
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setUpPresenter()
-        setUpAdapter()
         setUpOnClick()
     }
 
@@ -56,13 +57,13 @@ class ReservationListFragment : Fragment(), ReservationListContract.View {
         _binding = null
     }
 
-    override fun setOnReservationItemClick(reservationUiModel: ReservationUiModel) {
-        val intent = ReservationResultActivity.getIntent(requireContext(), reservationUiModel.movie, reservationUiModel.tickets)
-        startActivity(intent)
-    }
-
     override fun updateReservations() {
         val reservations = presenter.getReservations()
         adapter.updateReservationItems(reservations, ::setOnReservationItemClick)
+    }
+
+    override fun setOnReservationItemClick(reservationUiModel: ReservationUiModel) {
+        val intent = ReservationResultActivity.getIntent(requireContext(), reservationUiModel.movie, reservationUiModel.tickets)
+        startActivity(intent)
     }
 }

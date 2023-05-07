@@ -5,12 +5,12 @@ enum class MovieAdapterViewType(val value: Int) {
     ADVERTISEMENT(2);
 
     companion object {
+        private const val VIEW_TYPE_ERROR = "잘못된 viewtype이 들어왔어요"
+
         fun find(number: Int): MovieAdapterViewType {
             return values().find { it.value == number } ?: throw IllegalArgumentException(
                 VIEW_TYPE_ERROR
             )
         }
-
-        private const val VIEW_TYPE_ERROR = "잘못된 viewtype이 들어왔어요"
     }
 }

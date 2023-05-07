@@ -1,6 +1,6 @@
 package woowacourse.movie.data.model.uimodel
 
-import woowacourse.movie.data.model.ReservationItemModel
+import woowacourse.movie.data.model.itemmodel.ReservationItemModel
 import java.io.Serializable
 
 data class ReservationUiModel(

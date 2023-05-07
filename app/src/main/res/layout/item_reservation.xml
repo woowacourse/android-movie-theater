@@ -7,7 +7,7 @@
 
         <variable
             name="reservations"
-            type="woowacourse.movie.data.model.ReservationItemModel" />
+            type="woowacourse.movie.data.model.itemmodel.ReservationItemModel" />
     </data>
 
     <LinearLayout

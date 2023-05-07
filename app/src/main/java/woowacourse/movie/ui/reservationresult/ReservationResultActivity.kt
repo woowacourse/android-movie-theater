@@ -12,11 +12,11 @@ import woowacourse.movie.databinding.ActivityReservationResultBinding
 import woowacourse.movie.getSerializableCompat
 
 class ReservationResultActivity : AppCompatActivity(), ReservationResultContract.View {
+    override lateinit var presenter: ReservationResultContract.Presenter
+
     private var _binding: ActivityReservationResultBinding? = null
     private val binding
         get() = _binding!!
-
-    override lateinit var presenter: ReservationResultContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

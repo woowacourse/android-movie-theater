@@ -39,4 +39,5 @@
 
     <string name="alarm_title">"예매 알림"</string>
     <string name="alarm_content">\"%s 30분 후에 상영\"</string>
+    <string name="advertisement_content_description">Advertisement</string>
 </resources>

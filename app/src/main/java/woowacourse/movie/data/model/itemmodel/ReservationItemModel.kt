@@ -1,4 +1,4 @@
-package woowacourse.movie.data.model
+package woowacourse.movie.data.model.itemmodel
 
 import woowacourse.movie.data.model.uimodel.ReservationUiModel
 
