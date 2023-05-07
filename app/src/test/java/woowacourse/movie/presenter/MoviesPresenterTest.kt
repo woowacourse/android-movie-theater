@@ -1,5 +1,6 @@
 package woowacourse.movie.presenter
 
+import domain.Theaters
 import io.mockk.*
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
@@ -7,11 +8,15 @@ import org.junit.Test
 import woowacourse.movie.contract.MoviesContract
 import woowacourse.movie.model.AdvertisementUiModel
 import woowacourse.movie.model.MovieUiModel
+import woowacourse.movie.model.TheaterUiModel
+import woowacourse.movie.model.TheatersUiModel
 
 class MoviesPresenterTest {
     private lateinit var presenter: MoviesPresenter
     private lateinit var view: MoviesContract.View
     private lateinit var movieUiModel: MovieUiModel
+    private lateinit var theatersUiModel: TheatersUiModel
+    private lateinit var theaterUiModel: TheaterUiModel
     private lateinit var advertisementUiModel: AdvertisementUiModel
 
     @Before
@@ -19,19 +24,33 @@ class MoviesPresenterTest {
         view = mockk()
         movieUiModel = mockk()
         advertisementUiModel = mockk()
+        theatersUiModel = mockk()
+        theaterUiModel = mockk()
         presenter = MoviesPresenter(view)
     }
 
     @Test
-    fun 영화_목록을_클릭하면_예매화면으로_넘어간다() {
+    fun 바텀시트를_클릭하면_영화화면으로_넘어간다() {
         // given
-        every {
-            view.startMovieReservationActivity(movieUiModel)
-        } just runs
+        every { movieUiModel.theaters } returns TheatersUiModel(listOf())
+        every { view.showBottomSheet(any()) } just runs
+        every { view.startMovieReservationActivity(any(), any()) } just runs
+        // when
+        presenter.onMovieItemClick(movieUiModel)
+        presenter.onTheaterItemClick(theaterUiModel)
+        // then
+        verify { view.startMovieReservationActivity(any(), any()) }
+    }
+
+    @Test
+    fun 영화_목록을_클릭하면_바텀시트를_보여준다() {
+        // given
+        every { movieUiModel.theaters } returns TheatersUiModel(listOf())
+        every { view.showBottomSheet(any()) } just runs
         // when
         presenter.onMovieItemClick(movieUiModel)
         // then
-        verify { view.startMovieReservationActivity(movieUiModel) }
+        verify { view.showBottomSheet(any()) }
     }
 
     @Test

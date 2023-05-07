@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import woowacourse.movie.R
 import woowacourse.movie.contract.MoviesContract
 import woowacourse.movie.databinding.FragmentMoviesBinding
@@ -16,7 +17,10 @@ import woowacourse.movie.view.activity.MovieReservationActivity
 import woowacourse.movie.view.adapter.MovieAdapter
 import woowacourse.movie.model.AdvertisementUiModel
 import woowacourse.movie.model.MovieUiModel
+import woowacourse.movie.model.TheaterUiModel
+import woowacourse.movie.model.TheatersUiModel
 import woowacourse.movie.presenter.MoviesPresenter
+import woowacourse.movie.view.adapter.TheaterAdapter
 
 
 class MoviesFragment : Fragment(R.layout.fragment_movies), MoviesContract.View {
@@ -44,12 +48,28 @@ class MoviesFragment : Fragment(R.layout.fragment_movies), MoviesContract.View {
             movieUiModels = movieUiModels,
             advertisementUiModel = advertisementUiModel,
             advertisementClickEvent = presenter::onAdvertisementItemClick,
-            presenter::onMovieItemClick
+            movieListClickEvent = presenter::onMovieItemClick
         )
     }
 
-    override fun startMovieReservationActivity(movieUiModel: MovieUiModel) {
-        MovieReservationActivity.start(requireContext(), movieUiModel)
+    override fun showBottomSheet(theatersUiModel: TheatersUiModel) {
+        val bottomSheetDialog = BottomSheetDialog(
+            requireContext()
+        )
+        val bottomSheetView = LayoutInflater.from(requireContext()).inflate(
+            R.layout.bottom_sheet, null
+        )
+        bottomSheetView.findViewById<RecyclerView>(R.id.theater_recycler_view).adapter =
+            TheaterAdapter(requireContext(), theatersUiModel, presenter::onTheaterItemClick)
+        bottomSheetDialog.setContentView(bottomSheetView)
+        bottomSheetDialog.show()
+    }
+
+    override fun startMovieReservationActivity(
+        movieUiModel: MovieUiModel,
+        theaterUiModel: TheaterUiModel
+    ) {
+        MovieReservationActivity.start(requireContext(), movieUiModel, theaterUiModel)
     }
 
     override fun startAdvertisementUrl(url: String) {

@@ -22,8 +22,6 @@ class MovieAdapter(
     private val movieListClickEvent: (MovieUiModel) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private lateinit var advertisementBinding: ItemAdvertisementBinding
-    private lateinit var movieBinding: ItemMovieBinding
     override fun getItemViewType(position: Int): Int {
         return when (position % CYCLE) {
             ADVERTISEMENT_TURN -> MovieAdapterViewType.ADVERTISEMENT.value
