@@ -17,22 +17,18 @@ import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
 
 class ReservationConfirmActivity : BackKeyActionBarActivity(), ReservationConfirmContract.View {
-    private lateinit var presenter: ReservationConfirmPresenter
-    private lateinit var binding: ActivityReservationConfirmBinding
+    override lateinit var presenter: ReservationConfirmContract.Presenter
+    override lateinit var binding: ActivityReservationConfirmBinding
 
     override fun onCreateView(savedInstanceState: Bundle?) {
-        initBinding()
-        initPresenter()
-
         presenter.getTicket()
     }
 
-    private fun initBinding() {
+    override fun initBinding() {
         binding = ActivityReservationConfirmBinding.inflate(layoutInflater)
-        setContentView(binding.root)
     }
 
-    private fun initPresenter() {
+    override fun initPresenter() {
         presenter = ReservationConfirmPresenter(
             this,
             intent.getParcelableExtraCompat(KEY_TICKETS) ?: return keyError(KEY_TICKETS)

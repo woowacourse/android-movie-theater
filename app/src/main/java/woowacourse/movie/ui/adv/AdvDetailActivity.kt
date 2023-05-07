@@ -10,19 +10,16 @@ import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
 
 class AdvDetailActivity : BackKeyActionBarActivity(), AdvDetailContract.View {
-    private lateinit var binding: ActivityAdvDetailBinding
-    override fun onCreateView(savedInstanceState: Bundle?) {
-        initBinding()
-        initPresenter()
-    }
+    override lateinit var presenter: AdvDetailContract.Presenter
+    override lateinit var binding: ActivityAdvDetailBinding
+    override fun onCreateView(savedInstanceState: Bundle?) {}
 
-    private fun initBinding() {
+    override fun initBinding() {
         binding = ActivityAdvDetailBinding.inflate(layoutInflater)
-        setContentView(binding.root)
     }
 
-    private fun initPresenter() {
-        val presenter = AdvDetailPresenter(this)
+    override fun initPresenter() {
+        presenter = AdvDetailPresenter(this)
         presenter.getAdv(intent.getParcelableExtraCompat(KEY_ADV) ?: return keyError(KEY_ADV))
     }
 

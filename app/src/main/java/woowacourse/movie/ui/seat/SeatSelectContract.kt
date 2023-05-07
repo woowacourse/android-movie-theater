@@ -4,6 +4,7 @@ import woowacourse.movie.model.MoneyState
 import woowacourse.movie.model.SeatPositionState
 import woowacourse.movie.model.SeatSelectState
 import woowacourse.movie.model.TicketsState
+import woowacourse.movie.ui.BaseContract
 
 interface SeatSelectContract {
     interface View {
@@ -13,7 +14,7 @@ interface SeatSelectContract {
         fun navigateToConfirmView(tickets: TicketsState)
     }
 
-    interface Presenter {
+    interface Presenter : BaseContract.Presenter {
         fun getSeatSelectState()
         fun discountApply(positionStates: List<SeatPositionState>)
         fun addTicket(positionStates: List<SeatPositionState>)

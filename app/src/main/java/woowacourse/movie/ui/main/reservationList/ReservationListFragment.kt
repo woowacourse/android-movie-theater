@@ -2,38 +2,26 @@ package woowacourse.movie.ui.main.reservationList
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.dbHelper.TicketsDbHelper
 import woowacourse.movie.model.TicketsState
+import woowacourse.movie.ui.BaseFragment
 import woowacourse.movie.ui.adapter.ReservationListAdapter
 import woowacourse.movie.ui.confirm.ReservationConfirmActivity
 import woowacourse.movie.ui.itemModel.TicketsItemModel
 
-class ReservationListFragment : Fragment(), ReservationListContract.View {
-    private lateinit var presenter: ReservationListContract.Presenter
-    private lateinit var binding: FragmentReservationListBinding
+class ReservationListFragment : BaseFragment(), ReservationListContract.View {
+    override lateinit var presenter: ReservationListContract.Presenter
+    override lateinit var binding: FragmentReservationListBinding
 
     private lateinit var adapter: ReservationListAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        initBinding()
-        initPresenter()
-        return binding.root
-    }
-
-    private fun initBinding() {
+    override fun initBinding() {
         binding = FragmentReservationListBinding.inflate(layoutInflater)
     }
 
-    private fun initPresenter() {
+    override fun initPresenter() {
         presenter = ReservationListPresenter(this, TicketsDbHelper(requireContext()))
     }
 

@@ -18,19 +18,17 @@ import woowacourse.movie.util.keyError
 
 class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View {
     override lateinit var presenter: MovieDetailContract.Presenter
+    override lateinit var binding: ActivityMovieDetailBinding
 
-    private lateinit var binding: ActivityMovieDetailBinding
     private lateinit var dateTimeSpinner: DateTimeSpinner
 
     override fun onCreateView(savedInstanceState: Bundle?) {
-        initBinding()
-        initPresenter()
         initConfirmButton()
         initCountButton()
         presenter.getMovieRunningDateTimes()
     }
 
-    private fun initPresenter() {
+    override fun initPresenter() {
         presenter = MovieDetailPresenter(
             this,
             movie = intent.getParcelableExtraCompat(KEY_MOVIE) ?: return keyError(KEY_MOVIE),
@@ -38,9 +36,8 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
         )
     }
 
-    private fun initBinding() {
+    override fun initBinding() {
         binding = ActivityMovieDetailBinding.inflate(layoutInflater)
-        setContentView(binding.root)
     }
 
     private fun initConfirmButton() {

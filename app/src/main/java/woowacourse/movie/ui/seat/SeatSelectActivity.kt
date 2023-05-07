@@ -19,23 +19,20 @@ import woowacourse.movie.util.keyError
 import woowacourse.movie.util.showAskDialog
 
 class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
-    private lateinit var presenter: SeatSelectPresenter
-    private lateinit var binding: ActivitySeatSelectBinding
+    override lateinit var presenter: SeatSelectContract.Presenter
+    override lateinit var binding: ActivitySeatSelectBinding
 
     private lateinit var seatTable: SeatTable
 
     override fun onCreateView(savedInstanceState: Bundle?) {
-        initBinding()
-        initPresenter()
         presenter.getSeatSelectState()
     }
 
-    private fun initBinding() {
+    override fun initBinding() {
         binding = ActivitySeatSelectBinding.inflate(layoutInflater)
-        setContentView(binding.root)
     }
 
-    private fun initPresenter() {
+    override fun initPresenter() {
         presenter = SeatSelectPresenter(
             this,
             TicketsDbHelper(this),

@@ -1,24 +1,19 @@
 package woowacourse.movie.ui.main.cinemaBottomSheet
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentCinemaBottomSheetBinding
 import woowacourse.movie.model.CinemaState
 import woowacourse.movie.model.MovieState
+import woowacourse.movie.ui.BaseBottomSheetDialogFragment
 import woowacourse.movie.ui.adapter.CinemaListAdapter
 import woowacourse.movie.ui.itemModel.CinemaItemModel
 import woowacourse.movie.ui.reservation.MovieDetailActivity
 import woowacourse.movie.util.getParcelableCompat
 
-class CinemaListBottomSheet :
-    BottomSheetDialogFragment(R.layout.fragment_cinema_bottom_sheet),
-    CinemaListContract.View {
-    private lateinit var presenter: CinemaListContract.Presenter
-    private lateinit var binding: FragmentCinemaBottomSheetBinding
+class CinemaListBottomSheet : BaseBottomSheetDialogFragment(), CinemaListContract.View {
+    override lateinit var presenter: CinemaListContract.Presenter
+    override lateinit var binding: FragmentCinemaBottomSheetBinding
 
     private lateinit var movie: MovieState
 
@@ -27,25 +22,16 @@ class CinemaListBottomSheet :
         movie = arguments?.getParcelableCompat(KEY_MOVIE) ?: throw IllegalArgumentException()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        initBinding()
-        initPresenter()
-        return binding.root
-    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.getCinemaList(movie)
     }
 
-    private fun initBinding() {
+    override fun initBinding() {
         binding = FragmentCinemaBottomSheetBinding.inflate(layoutInflater)
     }
 
-    private fun initPresenter() {
+    override fun initPresenter() {
         presenter = CinemaListPresenter(this)
     }
 

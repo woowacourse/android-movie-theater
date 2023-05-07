@@ -1,13 +1,14 @@
 package woowacourse.movie.ui.main.reservationList
 
 import woowacourse.movie.model.TicketsState
+import woowacourse.movie.ui.BaseContract
 
 interface ReservationListContract {
     interface View {
         fun setAdapter(tickets: List<TicketsState>)
     }
 
-    interface Presenter {
+    interface Presenter : BaseContract.Presenter {
         fun getReservationList()
     }
 }

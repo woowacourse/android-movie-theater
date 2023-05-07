@@ -4,17 +4,17 @@ import java.time.LocalDate
 import java.time.LocalTime
 import woowacourse.movie.model.CountState
 import woowacourse.movie.model.MovieState
+import woowacourse.movie.ui.BaseContract
 
 interface MovieDetailContract {
     interface View {
-        var presenter: Presenter
         fun setCounterText(count: Int)
         fun setMovie(movie: MovieState)
         fun navigateSeatSelectActivity(movie: MovieState, cinemaName: String)
         fun setDateTimeSpinner(dates: List<LocalDate>, times: List<LocalTime>)
     }
 
-    interface Presenter {
+    interface Presenter : BaseContract.Presenter {
         var count: CountState
         fun onPlusClick()
         fun onMinusClick()

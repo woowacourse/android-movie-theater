@@ -5,21 +5,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.model.AdvState
 import woowacourse.movie.model.MovieState
+import woowacourse.movie.ui.BaseFragment
 import woowacourse.movie.ui.adapter.MovieListAdapter
 import woowacourse.movie.ui.adv.AdvDetailActivity
 import woowacourse.movie.ui.itemModel.AdvItemModel
 import woowacourse.movie.ui.itemModel.MovieItemModel
 import woowacourse.movie.ui.main.cinemaBottomSheet.CinemaListBottomSheet
 
-class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContract.View {
-    private lateinit var presenter: MovieListContract.Presenter
-
-    private lateinit var binding: FragmentMovieListBinding
+class MovieListFragment : BaseFragment(), MovieListContract.View {
+    override lateinit var presenter: MovieListContract.Presenter
+    override lateinit var binding: FragmentMovieListBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,11 +34,11 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContr
         presenter.getAdapter()
     }
 
-    private fun initBinding() {
+    override fun initBinding() {
         binding = FragmentMovieListBinding.inflate(layoutInflater)
     }
 
-    private fun initPresenter() {
+    override fun initPresenter() {
         presenter = MovieListPresenter(this)
     }
 

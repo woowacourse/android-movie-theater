@@ -1,36 +1,23 @@
 package woowacourse.movie.ui.main.setting
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import woowacourse.movie.DefaultPreference
-import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentSettingBinding
+import woowacourse.movie.ui.BaseFragment
 import woowacourse.movie.ui.Toaster
 import woowacourse.movie.ui.main.MainActivity.Companion.PERMISSIONS
 import woowacourse.movie.util.hasPermissions
 
-class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.View {
-    private lateinit var presenter: SettingContract.Presenter
-    private lateinit var binding: FragmentSettingBinding
+class SettingFragment : BaseFragment(), SettingContract.View {
+    override lateinit var presenter: SettingContract.Presenter
+    override lateinit var binding: FragmentSettingBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        initBinding()
-        initPresenter()
-        return binding.root
-    }
-
-    private fun initBinding() {
+    override fun initBinding() {
         binding = FragmentSettingBinding.inflate(layoutInflater)
     }
 
-    private fun initPresenter() {
+    override fun initPresenter() {
         presenter = SettingPresenter(this, DefaultPreference(requireContext()))
     }
 
