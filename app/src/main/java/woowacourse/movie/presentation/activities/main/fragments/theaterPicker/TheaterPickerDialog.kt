@@ -7,7 +7,6 @@ import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
-import woowacourse.movie.presentation.activities.main.fragments.home.HomeFragment.Companion.MOVIE_KEY
 import woowacourse.movie.presentation.activities.ticketing.TicketingActivity
 import woowacourse.movie.presentation.extensions.getParcelableCompat
 import woowacourse.movie.presentation.model.item.Movie
@@ -15,31 +14,34 @@ import woowacourse.movie.presentation.model.item.Theater
 
 class TheaterPickerDialog : BottomSheetDialogFragment(R.layout.fragment_bottom_sheet), TheaterPickerDialogContract.View {
     override lateinit var presenter: TheaterPickerDialogPresenter
-    private val movie: Movie by lazy { requireArguments().getParcelableCompat(MOVIE_KEY)!! }
     private lateinit var theaterRecyclerView: RecyclerView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter = TheaterPickerDialogPresenter(this)
+        val movie: Movie by lazy { requireArguments().getParcelableCompat(MOVIE_KEY)!! }
+        presenter = TheaterPickerDialogPresenter(this, movie)
         theaterRecyclerView = view.findViewById(R.id.theater_recycler_view)
         initRecyclerView()
     }
 
     private fun initRecyclerView() {
-        val theaterAdapter = TheaterListAdapter { presenter.moveTicketingActivity(movie) }
+        val theaterAdapter = TheaterListAdapter(presenter::moveTicketingActivity)
         theaterAdapter.appendAll(Theater.provideDummyData())
         theaterRecyclerView.adapter = theaterAdapter
     }
 
-    override fun startTicketingActivity(movie: Movie) {
+    override fun startTicketingActivity(theater: Theater) {
         val intent = Intent(requireContext(), TicketingActivity::class.java)
-            .putExtra(MOVIE_KEY, movie)
+            .putExtra(MOVIE_KEY, presenter.movie)
+            .putExtra(THEATER_KEY, theater)
         startActivity(intent)
     }
 
     companion object {
         const val TAG = "TheaterPickerDialog"
+        internal const val MOVIE_KEY = "movie_key"
+        internal const val THEATER_KEY = "theater_key"
 
         fun getInstance(movie: Movie): TheaterPickerDialog = TheaterPickerDialog().apply {
             arguments = bundleOf(MOVIE_KEY to movie)

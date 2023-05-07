@@ -1,8 +1,6 @@
 package woowacourse.movie.presentation.activities.ticketing
 
-import woowacourse.movie.domain.model.movie.DomainMovieTime
 import woowacourse.movie.domain.model.ticket.DomainTicket
-import woowacourse.movie.presentation.mapper.toDomain
 import woowacourse.movie.presentation.mapper.toPresentation
 import woowacourse.movie.presentation.model.MovieDate
 import woowacourse.movie.presentation.model.MovieTime
@@ -44,10 +42,7 @@ class TicketingPresenter(
         view.setMovieData(movie)
     }
 
-    override fun updateMovieTimes(date: MovieDate?) {
-        val domainDate = date?.toDomain() ?: return
-        val movieTimes = DomainMovieTime.runningTimes(!domainDate.isWeekend(), domainDate.isToday())
-            .map { it.toPresentation() }
-        view.setMovieTimes(movieTimes)
+    override fun updateMovieTimes() {
+        view.setMovieTimes()
     }
 }

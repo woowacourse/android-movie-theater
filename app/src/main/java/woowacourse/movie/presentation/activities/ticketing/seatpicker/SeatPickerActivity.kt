@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.presentation.activities.main.alarm.PushAlarmManager
 import woowacourse.movie.presentation.activities.main.fragments.history.HistoryDbHelper
-import woowacourse.movie.presentation.activities.main.fragments.home.HomeFragment
+import woowacourse.movie.presentation.activities.main.fragments.theaterPicker.TheaterPickerDialog
 import woowacourse.movie.presentation.activities.ticketing.TicketingActivity
 import woowacourse.movie.presentation.activities.ticketingresult.TicketingResultActivity
 import woowacourse.movie.presentation.extensions.createAlertDialog
@@ -48,7 +48,7 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
         intent.getParcelableCompat<MovieTime>(TicketingActivity.MOVIE_TIME_KEY)!!
     }
     private val ticket by lazy { intent.getParcelableCompat<Ticket>(TicketingActivity.TICKET_KEY)!! }
-    private val movie by lazy { intent.getParcelableCompat<Movie>(HomeFragment.MOVIE_KEY)!! }
+    private val movie by lazy { intent.getParcelableCompat<Movie>(TheaterPickerDialog.MOVIE_KEY)!! }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

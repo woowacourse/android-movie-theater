@@ -13,7 +13,7 @@ interface TicketingContract {
         fun startSeatPickerActivity()
         fun showToast(message: String)
         fun setMovieData(movie: Movie)
-        fun setMovieTimes(movieTimes: List<MovieTime>)
+        fun setMovieTimes()
     }
 
     interface Presenter {
@@ -24,6 +24,6 @@ interface TicketingContract {
         fun moveToSeatPickerActivity(selectedDate: MovieDate?, selectedTime: MovieTime?)
         fun getMovieTicket(): Ticket
         fun showMovieIntroduce()
-        fun updateMovieTimes(date: MovieDate?)
+        fun updateMovieTimes()
     }
 }

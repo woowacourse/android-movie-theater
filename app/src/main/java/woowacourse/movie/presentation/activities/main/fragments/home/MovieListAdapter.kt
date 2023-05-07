@@ -14,7 +14,7 @@ class MovieListAdapter(
     private val adInterval: Int = DEFAULT_AD_INTERVAL,
     private val adTypes: List<ListItem>,
     onItemClick: (ListItem) -> Unit = {},
-) : BaseRecyclerView.Adapter(onItemClick) {
+) : BaseRecyclerView.Adapter<ListItem>(onItemClick) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

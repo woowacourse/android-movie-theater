@@ -6,7 +6,6 @@ import android.widget.TextView
 import woowacourse.movie.R
 import woowacourse.movie.presentation.base.BaseRecyclerView
 import woowacourse.movie.presentation.model.item.Ad
-import woowacourse.movie.presentation.model.item.ListItem
 import woowacourse.movie.presentation.model.item.Movie
 import woowacourse.movie.presentation.model.item.Reservation
 import woowacourse.movie.presentation.model.item.Theater
@@ -23,7 +22,7 @@ class TheaterViewHolder(
         next.setOnClickListener { onClick(adapterPosition) }
     }
 
-    override fun bind(item: ListItem) {
+    override fun <T>bind(item: T) {
         when (item) {
             is Theater -> {
                 theaterName.text = item.theaterName

@@ -1,15 +1,15 @@
 package woowacourse.movie.presentation.activities.main.fragments.theaterPicker
 
-import woowacourse.movie.presentation.model.item.Movie
+import woowacourse.movie.presentation.model.item.Theater
 
 interface TheaterPickerDialogContract {
     interface View {
         val presenter: Presenter
 
-        fun startTicketingActivity(movie: Movie)
+        fun startTicketingActivity(theater: Theater)
     }
 
     interface Presenter {
-        fun moveTicketingActivity(movie: Movie)
+        fun moveTicketingActivity(theater: Theater)
     }
 }

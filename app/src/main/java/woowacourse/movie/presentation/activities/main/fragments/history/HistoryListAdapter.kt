@@ -8,7 +8,7 @@ import woowacourse.movie.presentation.model.item.ListItem
 
 class HistoryListAdapter(
     onItemClick: (ListItem) -> Unit = {},
-) : BaseRecyclerView.Adapter(onItemClick) {
+) : BaseRecyclerView.Adapter<ListItem>(onItemClick) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,

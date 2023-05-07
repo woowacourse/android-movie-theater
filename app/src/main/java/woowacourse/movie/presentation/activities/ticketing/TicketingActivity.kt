@@ -14,7 +14,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.movie.DomainMovieDate
-import woowacourse.movie.presentation.activities.main.fragments.home.HomeFragment.Companion.MOVIE_KEY
+import woowacourse.movie.presentation.activities.main.fragments.theaterPicker.TheaterPickerDialog.Companion.MOVIE_KEY
+import woowacourse.movie.presentation.activities.main.fragments.theaterPicker.TheaterPickerDialog.Companion.THEATER_KEY
 import woowacourse.movie.presentation.activities.ticketing.seatpicker.SeatPickerActivity
 import woowacourse.movie.presentation.extensions.getParcelableCompat
 import woowacourse.movie.presentation.extensions.showBackButton
@@ -23,6 +24,7 @@ import woowacourse.movie.presentation.model.MovieDate
 import woowacourse.movie.presentation.model.MovieTime
 import woowacourse.movie.presentation.model.Ticket
 import woowacourse.movie.presentation.model.item.Movie
+import woowacourse.movie.presentation.model.item.Theater
 
 class TicketingActivity : AppCompatActivity(), View.OnClickListener, TicketingContract.View {
     override lateinit var presenter: TicketingPresenter
@@ -35,7 +37,10 @@ class TicketingActivity : AppCompatActivity(), View.OnClickListener, TicketingCo
             DomainMovieDate.releaseDates(from = startDate, to = endDate).map { it.toPresentation() }
         } ?: emptyList()
     }
-    private val movieTimes = mutableListOf<MovieTime>()
+
+    private val movieTimes: List<MovieTime> by lazy {
+        intent.getParcelableCompat<Theater>(THEATER_KEY)?.run { screenTimes } ?: emptyList()
+    }
 
     private val movieDateAdapter: ArrayAdapter<String> by lazy {
         ArrayAdapter(
@@ -60,6 +65,7 @@ class TicketingActivity : AppCompatActivity(), View.OnClickListener, TicketingCo
         restoreState(savedInstanceState)
 
         presenter.showMovieIntroduce()
+        presenter.updateMovieTimes()
         showBackButton()
 
         initSpinnerConfig()
@@ -112,7 +118,6 @@ class TicketingActivity : AppCompatActivity(), View.OnClickListener, TicketingCo
                     id: Long,
                 ) {
                     selectedDate = movieDates[pos]
-                    presenter.updateMovieTimes(selectedDate)
                     selectedTime = movieTimes.first()
                 }
 
@@ -120,20 +125,11 @@ class TicketingActivity : AppCompatActivity(), View.OnClickListener, TicketingCo
             }
     }
 
-    override fun setMovieTimes(newMovieTimes: List<MovieTime>) {
-        movieTimes.clear()
-        movieTimes.addAll(newMovieTimes)
-
-        updateMovieTimeAdapter(
-            movieTimes.map { movieTime ->
-                getString(R.string.book_time, movieTime.hour, movieTime.min)
-            },
-        )
-    }
-
-    private fun updateMovieTimeAdapter(movieTime: List<String>) {
-        movieTimeAdapter.clear()
-        movieTimeAdapter.addAll(movieTime)
+    override fun setMovieTimes() {
+        val times = movieTimes.map { movieTime ->
+            getString(R.string.book_time, movieTime.hour, movieTime.min)
+        }
+        movieTimeAdapter.addAll(times)
     }
 
     private fun restoreState(savedInstanceState: Bundle?) {
@@ -142,8 +138,7 @@ class TicketingActivity : AppCompatActivity(), View.OnClickListener, TicketingCo
             selectedTime = getParcelableCompat(SELECTED_TIME_STATE_KEY)!!
             presenter.movie = getParcelableCompat(TICKET_COUNT_STATE_KEY)!!
         }
-
-        presenter.updateMovieTimes(selectedDate)
+        presenter.updateMovieTimes()
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {

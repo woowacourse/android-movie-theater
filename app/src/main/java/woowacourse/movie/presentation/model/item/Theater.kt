@@ -2,11 +2,15 @@ package woowacourse.movie.presentation.model.item
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import woowacourse.movie.presentation.model.MovieDate
 import woowacourse.movie.presentation.model.MovieTime
+
+typealias PresentationTheater = Theater
 
 @Parcelize
 data class Theater(
     val theaterName: String,
+    val screenDates: List<MovieDate>,
     val screenTimes: List<MovieTime>,
 ) : ListItem, Parcelable {
 
@@ -15,6 +19,9 @@ data class Theater(
             Theater(
                 "선릉 극장",
                 listOf(
+                    MovieDate.now(),
+                ),
+                listOf(
                     MovieTime(11, 0),
                     MovieTime(17, 0),
                     MovieTime(19, 0),
@@ -22,6 +29,9 @@ data class Theater(
             ),
             Theater(
                 "잠실 극장",
+                listOf(
+                    MovieDate.now(),
+                ),
                 listOf(
                     MovieTime(11, 0),
                     MovieTime(12, 0),
@@ -37,6 +47,9 @@ data class Theater(
             ),
             Theater(
                 "강남 극장",
+                listOf(
+                    MovieDate.now(),
+                ),
                 listOf(
                     MovieTime(11, 0),
                     MovieTime(22, 0),

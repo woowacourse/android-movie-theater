@@ -5,7 +5,6 @@ import android.widget.ImageView
 import woowacourse.movie.R
 import woowacourse.movie.presentation.base.BaseRecyclerView
 import woowacourse.movie.presentation.model.item.Ad
-import woowacourse.movie.presentation.model.item.ListItem
 import woowacourse.movie.presentation.model.item.Movie
 import woowacourse.movie.presentation.model.item.Reservation
 import woowacourse.movie.presentation.model.item.Theater
@@ -20,7 +19,7 @@ class NativeAdViewHolder(
         nativeAdsImageView.setOnClickListener { onAdClick(adapterPosition) }
     }
 
-    override fun bind(item: ListItem) {
+    override fun <T>bind(item: T) {
         when (item) {
             is Ad -> {
                 nativeAdsImageView.setImageResource(item.bannerResId)
