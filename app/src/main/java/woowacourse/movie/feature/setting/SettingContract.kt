@@ -4,6 +4,8 @@ interface SettingContract {
     interface View {
         fun setInitAlarmSettingInfo(initAlarmSetInfo: Boolean)
         fun alarmPermissionIsNotApprove()
+        fun errorLoadAlarmInfo()
+        fun errorSetAlarmInfo()
     }
 
     interface Presenter {

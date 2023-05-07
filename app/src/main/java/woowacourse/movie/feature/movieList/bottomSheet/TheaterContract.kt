@@ -8,6 +8,8 @@ interface TheaterContract {
     interface View {
         fun setTheaterAdapter(theaters: List<TheaterItemModel>)
         fun selectTheater(theater: SelectTheaterAndMovieState)
+        fun loadTheaterIsEmpty()
+        fun errorLoadTheaterData()
     }
 
     interface Presenter {

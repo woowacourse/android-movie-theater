@@ -11,6 +11,7 @@ interface MovieListContract {
         fun showBottomSheetDialog(movie: MovieState)
         fun navigateAdbDetail(adv: AdvState)
         fun updateItems(items: List<CommonItemModel>)
+        fun errorLoadData()
     }
 
     interface Presenter {

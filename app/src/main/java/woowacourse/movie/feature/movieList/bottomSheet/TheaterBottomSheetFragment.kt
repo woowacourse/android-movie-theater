@@ -8,8 +8,10 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import com.example.domain.usecase.GetTheaterScreeningInfoByMovieUseCase
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import woowacourse.movie.R
 import woowacourse.movie.data.TheaterRepositoryImpl
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetBinding
+import woowacourse.movie.feature.common.Toaster
 import woowacourse.movie.feature.common.adapter.CommonAdapter
 import woowacourse.movie.feature.movieList.MovieListFragment
 import woowacourse.movie.model.MovieState
@@ -60,6 +62,16 @@ class TheaterBottomSheetFragment : BottomSheetDialogFragment(), TheaterContract.
             MovieListFragment.THEATER_SELECT_KEY,
             bundleOf(MovieListFragment.THEATER_MOVIE_KEY to theater)
         )
+        dismiss()
+    }
+
+    override fun loadTheaterIsEmpty() {
+        binding.theaterIsEmptyText.visibility = View.VISIBLE
+        binding.rvTheater.visibility = View.GONE
+    }
+
+    override fun errorLoadTheaterData() {
+        Toaster.showToast(requireContext(), getString(R.string.error_load_theater_data))
         dismiss()
     }
 

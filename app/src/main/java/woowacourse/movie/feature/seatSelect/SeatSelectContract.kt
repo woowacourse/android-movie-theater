@@ -17,8 +17,7 @@ interface SeatSelectContract {
             triggerDateTime: LocalDateTime,
             requestCode: Int
         )
-
-        // todo: 예약 실패 시 띄울 토스트 만들어야 함
+        fun errorAddReservationTickets()
     }
 
     interface Presenter {

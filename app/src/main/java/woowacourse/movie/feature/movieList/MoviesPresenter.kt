@@ -27,7 +27,7 @@ class MoviesPresenter(
                 }
                 view.updateItems(combineMovieAndAdvItems(movieItems, advItems))
             },
-            onFailure = { }
+            onFailure = { view.errorLoadData() }
         )
     }
 

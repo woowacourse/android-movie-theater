@@ -17,7 +17,7 @@ class ReservationPresenter(
                 }
                 view.updateItems(ticketsItems)
             },
-            onFailure = { }
+            onFailure = { view.errorLoadReservationTicketsData() }
         )
     }
 }

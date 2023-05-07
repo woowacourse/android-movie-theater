@@ -13,6 +13,7 @@ import woowacourse.movie.data.sqlite.ReservationTicketsDao
 import woowacourse.movie.databinding.ActivitySeatSelectBinding
 import woowacourse.movie.feature.alarm.AlarmReceiver
 import woowacourse.movie.feature.common.BackKeyActionBarActivity
+import woowacourse.movie.feature.common.Toaster
 import woowacourse.movie.feature.common.customView.SeatView
 import woowacourse.movie.feature.confirm.ReservationConfirmActivity
 import woowacourse.movie.model.MoneyState
@@ -125,6 +126,10 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
         requestCode: Int
     ) {
         setAlarm(AlarmReceiver.getIntent(this, tickets), triggerDateTime, requestCode)
+    }
+
+    override fun errorAddReservationTickets() {
+        Toaster.showToast(this, getString(R.string.error_add_reservation_tickets))
     }
 
     override fun onDestroy() {

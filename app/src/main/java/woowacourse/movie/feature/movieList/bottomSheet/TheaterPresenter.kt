@@ -15,13 +15,18 @@ class TheaterPresenter(
         getTheaterScreeningInfoByMovieUseCase(
             movie.asDomain(),
             onSuccess = {
+                if (it.isEmpty()) {
+                    view.loadTheaterIsEmpty()
+                    return@getTheaterScreeningInfoByMovieUseCase
+                }
+
                 view.setTheaterAdapter(
                     it.map {
                         it.asPresentation().toItemModel { clickTheater(it, movie) }
                     }
                 )
             },
-            onFailure = { }
+            onFailure = { view.errorLoadTheaterData() }
         )
     }
 

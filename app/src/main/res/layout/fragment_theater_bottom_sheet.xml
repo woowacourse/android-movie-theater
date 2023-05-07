@@ -8,12 +8,20 @@
         android:layout_height="300dp"
         tools:context=".feature.movieList.bottomSheet.TheaterBottomSheetFragment">
 
+        <TextView
+            android:id="@+id/theater_is_empty_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/load_theater_empty"
+            android:visibility="gone"
+            android:gravity="center"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_theater"
             android:layout_width="match_parent"
-            android:paddingTop="26dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:paddingTop="26dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

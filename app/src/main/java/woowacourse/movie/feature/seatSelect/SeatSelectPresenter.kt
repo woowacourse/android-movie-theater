@@ -47,18 +47,20 @@ class SeatSelectPresenter(
             seats.map { it.asDomain() }
         ).asPresentation()
 
-        view.setReservationAlarm(
-            tickets,
-            tickets.dateTime.minusMinutes(NOTIFICATION_ADJUST_MINUTES),
-            tickets.hashCode()
-        )
-
         addReservationTicketsUseCase(
             tickets.asDomain(),
-            onSuccess = { },
-            onFailure = { }
+            onSuccess = {
+                view.setReservationAlarm(
+                    tickets,
+                    tickets.dateTime.minusMinutes(NOTIFICATION_ADJUST_MINUTES),
+                    tickets.hashCode()
+                )
+                view.navigateReservationConfirm(tickets)
+            },
+            onFailure = {
+                view.errorAddReservationTickets()
+            }
         )
-        view.navigateReservationConfirm(tickets)
     }
 
     override fun updateChosenSeats(chosen: List<SeatPositionState>) {

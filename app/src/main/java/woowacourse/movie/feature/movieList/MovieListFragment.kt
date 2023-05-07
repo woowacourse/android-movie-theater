@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import com.example.domain.usecase.GetMovieAndAdvItemsUseCase
+import woowacourse.movie.R
 import woowacourse.movie.data.AdvRepositoryImpl
 import woowacourse.movie.data.MovieRepositoryImpl
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.feature.adv.AdvDetailActivity
+import woowacourse.movie.feature.common.Toaster
 import woowacourse.movie.feature.common.adapter.CommonAdapter
 import woowacourse.movie.feature.common.itemModel.CommonItemModel
 import woowacourse.movie.feature.detail.MovieDetailActivity
@@ -82,6 +84,10 @@ class MovieListFragment : Fragment(), MovieListContract.View {
 
     override fun updateItems(items: List<CommonItemModel>) {
         adapter.setItems(items)
+    }
+
+    override fun errorLoadData() {
+        Toaster.showToast(requireContext(), getString(R.string.error_load_movie_data))
     }
 
     companion object {

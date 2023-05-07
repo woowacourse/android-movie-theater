@@ -11,7 +11,7 @@ class SettingPresenter(
     override fun loadAlarmSettingInfo() {
         loadAlarmSettingInfoUseCase(
             onSuccess = { view.setInitAlarmSettingInfo(it) },
-            onFailure = { }
+            onFailure = { view.errorLoadAlarmInfo() }
         )
     }
 
@@ -20,7 +20,7 @@ class SettingPresenter(
         setAlarmSettingUseCase(
             isSwitchChecked,
             onSuccess = { },
-            onFailure = { }
+            onFailure = { view.errorSetAlarmInfo() }
         )
     }
 }

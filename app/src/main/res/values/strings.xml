@@ -37,4 +37,11 @@
     <string name="alarm_notification_reject">알람 노티피케이션 권한 거부</string>
 
     <string name="theater_screening_times">%d개의 상영시간</string>
+    <string name="error_load_movie_data">영화 목록을 불러오던 중 문제가 발생했습니다\n잠시후 다시 시도해주세요</string>
+    <string name="error_load_reservation_tickets_data">예약 목록을 불러오는데 문제가 발생했습니다\n잠시후 다시 시도해주세요</string>
+    <string name="error_add_reservation_tickets">예약하는 과정에서 문제가 발생했습니다\n잠시후 다시 시도해주세요</string>
+    <string name="error_load_alarm_setting_info">알람 설정 정보를 불러오는 과정에서 문제가 발생했습니다\n잠시후 다시 시도해주세요</string>
+    <string name="error_set_alarm_setting_info">알람 설정을 변경하는 과정에서 문제가 발생했습니다\n잠시후 다시 시도해주세요</string>
+    <string name="error_load_theater_data">극장정보를 불러오는 과정에서 문제가 발생했습니다\n잠시후 다시 시도해주세요</string>
+    <string name="load_theater_empty">해당 영화를 상영하는 극장이 없습니다</string>
 </resources>

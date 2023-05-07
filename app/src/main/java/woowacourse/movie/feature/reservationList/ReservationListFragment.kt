@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.domain.usecase.GetAllReservationTicketsUseCase
+import woowacourse.movie.R
 import woowacourse.movie.data.TicketsRepositoryImpl
 import woowacourse.movie.data.sqlite.ReservationTicketsDao
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.feature.common.OnDataUpdate
+import woowacourse.movie.feature.common.Toaster
 import woowacourse.movie.feature.common.adapter.CommonAdapter
 import woowacourse.movie.feature.confirm.ReservationConfirmActivity
 import woowacourse.movie.feature.reservationList.itemModel.TicketsItemModel
@@ -65,6 +67,10 @@ class ReservationListFragment : Fragment(), ReservationListContract.View, OnData
 
     override fun updateItems(items: List<TicketsItemModel>) {
         adapter.setItems(items)
+    }
+
+    override fun errorLoadReservationTicketsData() {
+        Toaster.showToast(requireContext(), getString(R.string.error_load_reservation_tickets_data))
     }
 
     override fun onUpdateData() {

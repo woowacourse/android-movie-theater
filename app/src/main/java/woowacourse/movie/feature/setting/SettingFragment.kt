@@ -61,4 +61,13 @@ class SettingFragment : Fragment(), SettingContract.View {
             getString(R.string.alarm_premission_request_message)
         )
     }
+
+    override fun errorLoadAlarmInfo() {
+        Toaster.showToast(requireContext(), getString(R.string.error_load_alarm_setting_info))
+        binding.notificationSwitch.isEnabled = false
+    }
+
+    override fun errorSetAlarmInfo() {
+        Toaster.showToast(requireContext(), getString(R.string.error_set_alarm_setting_info))
+    }
 }

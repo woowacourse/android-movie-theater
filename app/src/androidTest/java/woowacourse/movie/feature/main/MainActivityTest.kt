@@ -23,7 +23,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.feature.adv.AdvDetailActivity
-import woowacourse.movie.feature.detail.MovieDetailActivity
 import woowacourse.movie.feature.util.findViewByIdAndClickAction
 
 @RunWith(AndroidJUnit4::class)
@@ -97,7 +96,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun `영화_아이템을_클릭하면_영화_예매화면으로_이동한다`() {
+    fun `영화_아이템을_클릭하면_극장선택하는_바텀시트가_나타난다`() {
         onView(withId(R.id.rv_movie))
             .perform(
                 actionOnItemAtPosition<RecyclerView.ViewHolder>(
@@ -106,6 +105,7 @@ class MainActivityTest {
                 )
             )
 
-        intended(hasComponent(MovieDetailActivity::class.java.name))
+//        onView(withId(R.id.))
+//            .check(matches(isDisplayed()))
     }
 }

@@ -7,6 +7,7 @@ interface ReservationListContract {
     interface View {
         fun navigateReservationConfirm(ticketsState: TicketsState)
         fun updateItems(items: List<TicketsItemModel>)
+        fun errorLoadReservationTicketsData()
     }
 
     interface Presenter {
