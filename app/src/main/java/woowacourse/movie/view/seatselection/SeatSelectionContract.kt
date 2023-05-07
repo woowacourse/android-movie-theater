@@ -21,8 +21,8 @@ interface SeatSelectionContract {
 
     interface Presenter {
         fun setUp()
-        fun createSeat(row: Int, col: Int): SeatUiModel
-        fun selectSeat(): Boolean
+        fun createSeat(row: Int, col: Int, onCreateSeat: (SeatUiModel) -> Unit)
+        fun selectSeat(onSeatNotSelected: () -> Unit)
         fun deselectSeat()
         fun reserveSeats()
     }

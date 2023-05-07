@@ -30,21 +30,21 @@ class SeatSelectionPresenter(
         initReservationAgency()
     }
 
-    override fun createSeat(row: Int, col: Int): SeatUiModel {
-        return Seat(col, row).toUiModel()
+    override fun createSeat(row: Int, col: Int, onCreateSeat: (SeatUiModel) -> Unit) {
+        onCreateSeat(Seat(col, row).toUiModel())
     }
 
-    override fun selectSeat(): Boolean {
+    override fun selectSeat(onSeatNotSelected: () -> Unit) {
         reservationOptions?.let {
             if (selectedSeatCount < it.peopleCount) {
                 selectedSeatCount++
                 if (selectedSeatCount == it.peopleCount) {
                     onSelectionDone()
                 }
-                return true
+                return
             }
         }
-        return false
+        onSeatNotSelected()
     }
 
     private fun onSelectionDone() {

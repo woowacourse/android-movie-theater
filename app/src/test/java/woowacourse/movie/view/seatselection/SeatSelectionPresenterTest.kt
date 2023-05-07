@@ -51,7 +51,7 @@ internal class SeatSelectionPresenterTest {
         val peopleCount = 2
         val movie = fakeMovie()
         repeat(peopleCount) {
-            seatSelectionPresenter.selectSeat()
+            seatSelectionPresenter.selectSeat() {}
         }
         seatSelectionPresenter.reserveSeats()
 

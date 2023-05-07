@@ -68,15 +68,16 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 layoutParams = TableLayout.LayoutParams(0, 0, 1f)
             }
             for (col in colRange) {
-                val seat = presenter.createSeat(row, col)
-                tableRow.addView(createSeatButton(this, seat))
+                presenter.createSeat(row, col) {
+                    tableRow.addView(createSeatButton(it))
+                }
             }
             binding.seatTablelayout.addView(tableRow)
         }
     }
 
-    private fun createSeatButton(context: Context, seatUi: SeatUiModel): AppCompatButton =
-        AppCompatButton(context).apply {
+    private fun createSeatButton(seatUi: SeatUiModel): AppCompatButton =
+        AppCompatButton(this).apply {
             text = seatUi.name
             setTextColor(getColor(seatUi.color))
             setOnClickListener { onSeatClick(this) }
@@ -92,7 +93,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             return
         }
         seat.isSelected = true
-        if (!presenter.selectSeat()) seat.isSelected = false
+        presenter.selectSeat { seat.isSelected = false }
     }
 
     override fun findSelectedSeatsIndex(): List<Int> {
