@@ -39,7 +39,7 @@ class AlarmController(private val context: Context) {
         alarmManager.cancel(pendingIntent)
     }
 
-    fun createChannel() {
+    private fun createChannel() {
         val channel = NotificationChannel(AlarmReceiver.CHANNEL_ID, CHANNER_NAME, NotificationManager.IMPORTANCE_DEFAULT)
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (!notificationManager.notificationChannels.contains(channel)) notificationManager.createNotificationChannel(channel)
