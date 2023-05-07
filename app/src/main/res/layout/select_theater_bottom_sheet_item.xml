@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:textColor="@color/black"
             android:textSize="16sp"
-            android:text="@{movieTheaterName}"
+            android:text="@{movieTheaterName+` 극장`}"
             android:fontFamily="@font/roboto_medium"
             android:includeFontPadding="false"
             android:layout_height="wrap_content"

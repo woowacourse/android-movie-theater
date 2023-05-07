@@ -98,7 +98,7 @@ class DummyMovieTheaterStorage : MovieTheaterStorage {
     )
 
     private val movieTheaterData: Map<String, List<MovieTimeTable>> =
-        mapOf("seolleung" to seolleung, "gangnam" to gangnam, "gamsil" to gamsil)
+        mapOf("선릉" to seolleung, "강남" to gangnam, "잠실" to gamsil)
 
     override fun getTheatersByMovieId(movieId: Long): List<String> =
         movieTheaterData.filter { eachData ->
