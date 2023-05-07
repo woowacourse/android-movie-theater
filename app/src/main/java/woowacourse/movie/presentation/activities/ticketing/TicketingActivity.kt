@@ -59,17 +59,19 @@ class TicketingActivity : AppCompatActivity(), View.OnClickListener, TicketingCo
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ticketing)
 
-        val movie = intent.getParcelableCompat<Movie>(MOVIE_KEY)!!
-        presenter = TicketingPresenter(this, movie)
-
+        initView()
         restoreState(savedInstanceState)
-
-        presenter.showMovieIntroduce()
-        presenter.updateMovieTimes()
         showBackButton()
 
         initSpinnerConfig()
         initViewClickListener()
+    }
+
+    private fun initView() {
+        val movie = intent.getParcelableCompat<Movie>(MOVIE_KEY)!!
+        presenter = TicketingPresenter(this, movie)
+        presenter.showMovieIntroduce()
+        presenter.updateMovieTimes()
     }
 
     private fun initViewClickListener() {
