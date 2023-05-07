@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.data.db.DBHelper
 import woowacourse.movie.data.entity.Reservations
 import woowacourse.movie.ui.activity.MovieTicketActivity
 import woowacourse.movie.ui.fragment.reservationlist.adapter.ReservationAdapter
@@ -24,6 +25,8 @@ class ReservationListFragment : Fragment() {
         setFragmentResultListener(REQUEST_KEY_ITEM_INSERTION) { _, _ ->
             applyItemsInsertion()
         }
+
+        setUpReservations()
     }
 
     override fun onCreateView(
@@ -39,6 +42,12 @@ class ReservationListFragment : Fragment() {
 
         val reservationView = view.findViewById<RecyclerView>(R.id.rv_reservation)
         setReservationView(reservationView)
+    }
+
+    private fun setUpReservations() {
+        val db = DBHelper(requireContext()).readableDatabase
+        Reservations.restore(db)
+        db.close()
     }
 
     private fun setReservationView(reservationView: RecyclerView) {
