@@ -70,7 +70,7 @@ class SeatPickerPresenter(
         view.afterReservation(ticketModel)
     }
 
-    override fun getTicketModelWithOriginalPrice(): MovieTicketModel {
+    override fun getTicketForSaving(): MovieTicketModel {
         return ticket.mapToMovieTicketModelWithOriginalPrice()
     }
 

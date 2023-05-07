@@ -50,7 +50,7 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        val ticket = presenter.getTicketModelWithOriginalPrice()
+        val ticket = presenter.getTicketForSaving()
         outState.putParcelable(TICKET_INSTANCE_KEY, ticket)
     }
 

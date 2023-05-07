@@ -13,7 +13,7 @@ interface SeatPickerContract {
 
         fun completeReservation()
 
-        fun getTicketModelWithOriginalPrice(): MovieTicketModel
+        fun getTicketForSaving(): MovieTicketModel
     }
 
     interface View {
