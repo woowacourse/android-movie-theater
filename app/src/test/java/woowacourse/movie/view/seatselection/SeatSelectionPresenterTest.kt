@@ -57,6 +57,7 @@ internal class SeatSelectionPresenterTest {
 
         val actual = reservationSlot.captured
         val expected = ReservationUiModel(
+            "선릉 극장",
             movie.title,
             LocalDateTime.of(movie.screeningStartDate, LocalTime.of(9, 0)),
             peopleCount,
