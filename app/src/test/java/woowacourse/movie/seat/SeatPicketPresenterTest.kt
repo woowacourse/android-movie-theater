@@ -7,16 +7,16 @@ import io.mockk.verify
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.contract.seat.SeatPickerContract
-import woowacourse.movie.presenter.seat.SeatPicketPresenter
-import woowacourse.movie.ui.model.MovieTicketModel
-import woowacourse.movie.ui.model.PeopleCountModel
-import woowacourse.movie.ui.model.PriceModel
-import woowacourse.movie.ui.model.TicketTimeModel
-import woowacourse.movie.ui.model.seat.ColumnModel
-import woowacourse.movie.ui.model.seat.RankModel
-import woowacourse.movie.ui.model.seat.RowModel
-import woowacourse.movie.ui.model.seat.SeatModel
+import woowacourse.movie.model.MovieTicketModel
+import woowacourse.movie.model.PeopleCountModel
+import woowacourse.movie.model.PriceModel
+import woowacourse.movie.model.TicketTimeModel
+import woowacourse.movie.model.seat.ColumnModel
+import woowacourse.movie.model.seat.RankModel
+import woowacourse.movie.model.seat.RowModel
+import woowacourse.movie.model.seat.SeatModel
+import woowacourse.movie.view.seat.SeatPickerContract
+import woowacourse.movie.view.seat.SeatPicketPresenter
 import java.time.LocalDateTime
 
 class SeatPicketPresenterTest {

@@ -6,11 +6,11 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import woowacourse.movie.R
+import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.notification.NotificationCreator
-import woowacourse.movie.ui.activity.MovieTicketActivity
-import woowacourse.movie.ui.model.MovieTicketModel
-import woowacourse.movie.ui.storage.SettingsStorage
-import woowacourse.movie.ui.utils.getParcelable
+import woowacourse.movie.storage.SettingsStorage
+import woowacourse.movie.utils.getParcelable
+import woowacourse.movie.view.movieTicket.MovieTicketActivity
 
 class NotificationReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {

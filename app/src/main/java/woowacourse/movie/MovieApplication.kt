@@ -1,7 +1,7 @@
 package woowacourse.movie
 
 import android.app.Application
-import woowacourse.movie.ui.storage.SettingsStorage
+import woowacourse.movie.storage.SettingsStorage
 
 class MovieApplication : Application() {
     override fun onCreate() {

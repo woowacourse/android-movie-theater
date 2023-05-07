@@ -24,18 +24,18 @@
             android:permission="android.permission.POST_NOTIFICATIONS" />
 
         <activity
-            android:name=".ui.activity.SeatPickerActivity"
+            android:name=".view.seat.SeatPickerActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.MovieTicketActivity"
+            android:name=".view.movieTicket.MovieTicketActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.MovieDetailActivity"
+            android:name=".view.movieDetail.MovieDetailActivity"
             android:configChanges="screenSize|orientation"
             android:exported="false"
             android:screenOrientation="sensor" />
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name=".view.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

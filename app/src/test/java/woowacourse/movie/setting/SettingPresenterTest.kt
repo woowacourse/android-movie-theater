@@ -8,9 +8,9 @@ import io.mockk.verify
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.contract.setting.SettingContract
-import woowacourse.movie.presenter.setting.SettingPresenter
-import woowacourse.movie.ui.storage.PushNotificationRepository
+import woowacourse.movie.storage.PushNotificationRepository
+import woowacourse.movie.view.setting.SettingContract
+import woowacourse.movie.view.setting.SettingPresenter
 
 class SettingPresenterTest {
     private lateinit var presenter: SettingContract.Present
