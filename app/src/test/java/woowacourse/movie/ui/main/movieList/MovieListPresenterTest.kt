@@ -24,25 +24,6 @@ class MovieListPresenterTest {
 
     private lateinit var presenter: MovieListPresenter
 
-    private lateinit var fakeMovieState: MovieState
-
-    private val fakeMovie = Movie(
-        imgUri = "",
-        title = "fakeTitle",
-        startDate = LocalDate.MIN,
-        endDate = LocalDate.MIN,
-        screeningTimes = listOf(LocalTime.MIN),
-        runningTime = 0,
-        description = "fakeDescription"
-    )
-
-    private lateinit var fakeAdvState: AdvState
-
-    private val fakeAdv = Adv(
-        imageUrl = "",
-        advDescription = "fakeDescription"
-    )
-
     @Before
     fun setUp() {
         // given
@@ -50,27 +31,18 @@ class MovieListPresenterTest {
         movieRepository = mockk(relaxed = true)
         advRepository = mockk(relaxed = true)
         uri = mockk(relaxed = true)
+
         presenter = MovieListPresenter(view, movieRepository, advRepository)
-
-        fakeMovieState = MovieState(
-            imgUri = uri,
-            title = "fakeTitle",
-            startDate = LocalDate.MIN,
-            endDate = LocalDate.MIN,
-            screeningTimes = listOf(LocalTime.MIN),
-            runningTime = 0,
-            description = "fakeDescription"
-        )
-
-        fakeAdvState = AdvState(
-            imageUri = uri,
-            advDescription = "fakeDescription"
-        )
     }
 
     @Test
     fun `영화 목록을 가져온다`() {
         // given
+        val fakeMovie = getFakeMovie()
+        val fakeAdv = getFakeAdv()
+        val fakeMovieState = getFakeMovieState()
+        val fakeAdvState = getFakeAdvState()
+
         mockkStatic(Uri::class)
         every { Uri.parse(any()) } returns uri
         every { movieRepository.allMovies() } returns listOf(fakeMovie)
@@ -80,8 +52,36 @@ class MovieListPresenterTest {
         presenter.setUpMovieList()
 
         // then
-        verify {
-            view.showMovieList(listOf(fakeMovieState), listOf(fakeAdvState))
-        }
+        verify { view.showMovieList(listOf(fakeMovieState), listOf(fakeAdvState)) }
     }
+
+    private fun getFakeMovie(): Movie = Movie(
+        imgUri = "",
+        title = "fakeTitle",
+        startDate = LocalDate.MIN,
+        endDate = LocalDate.MIN,
+        screeningTimes = listOf(LocalTime.MIN),
+        runningTime = 0,
+        description = "fakeDescription"
+    )
+
+    private fun getFakeMovieState(): MovieState = MovieState(
+        imgUri = uri,
+        title = "fakeTitle",
+        startDate = LocalDate.MIN,
+        endDate = LocalDate.MIN,
+        screeningTimes = listOf(LocalTime.MIN),
+        runningTime = 0,
+        description = "fakeDescription"
+    )
+
+    private fun getFakeAdvState(): AdvState = AdvState(
+        imageUri = uri,
+        advDescription = "fakeDescription"
+    )
+
+    private fun getFakeAdv(): Adv = Adv(
+        imageUrl = "",
+        advDescription = "fakeDescription"
+    )
 }
