@@ -39,6 +39,10 @@ class ReservationDB(context: Context) {
         }
         values.put(ReservationTableNames.TABLE_COLUMN_SEATS, formattedSeats)
         values.put(ReservationTableNames.TABLE_COLUMN_PRICE, reservation.price.value)
+        values.put(
+            ReservationTableNames.TABLE_COLUMN_THEATER_NAME,
+            reservation.reservationDetail.theaterName
+        )
         return db.insert(ReservationTableNames.TABLE_NAME, null, values)
     }
 
@@ -143,9 +147,13 @@ class ReservationDB(context: Context) {
                         RESERVATION_DATE_TIME_FORMAT
                     )
                 )
+                val theaterName = reservationCursor.getString(
+                    reservationCursor.getColumnIndexOrThrow(ReservationTableNames.TABLE_COLUMN_THEATER_NAME)
+                )
 
-                reservationDetail = ReservationDetail(formattedDateTime, peopleCount)
-                reservation = Reservation(movie, reservationDetail, seats, Price(price))
+                reservationDetail = ReservationDetail(formattedDateTime, peopleCount, theaterName)
+                reservation =
+                    Reservation(movie, reservationDetail, seats, Price(price))
             }
             reservationCursor.close()
 

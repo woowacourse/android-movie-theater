@@ -12,7 +12,8 @@ class ReservationDBHelper(context: Context) : SQLiteOpenHelper(context, "reserva
                 "  ${ReservationTableNames.TABLE_COLUMN_DATE} varchar(255) not null," +
                 "  ${ReservationTableNames.TABLE_COLUMN_COUNT} int not null," +
                 "  ${ReservationTableNames.TABLE_COLUMN_SEATS} varchar(255)," +
-                "  ${ReservationTableNames.TABLE_COLUMN_PRICE} int not null" +
+                "  ${ReservationTableNames.TABLE_COLUMN_PRICE} int not null," +
+                "  ${ReservationTableNames.TABLE_COLUMN_THEATER_NAME} varchar(255) not null" +
                 ");"
         )
 

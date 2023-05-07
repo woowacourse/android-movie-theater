@@ -50,8 +50,11 @@ class SeatSelectionPresenter(
     ) {
         val ticketBox = TicketBox(reservationDataSource)
         val reservation: ReservationViewData =
-            ticketBox.ticketing(movie.toDomain(), reservationDetail.toDomain(), seats.toDomain())
-                .toView()
+            ticketBox.ticketing(
+                movie.toDomain(),
+                reservationDetail.toDomain(),
+                seats.toDomain()
+            ).toView()
         val alarmDate: LocalDateTime =
             MovieReservationNotification.calculateTime(reservation.reservationDetail.date)
         view.makeAlarm(alarmDate, reservation)

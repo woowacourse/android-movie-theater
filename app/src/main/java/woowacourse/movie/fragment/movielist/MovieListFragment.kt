@@ -7,15 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.activity.moviereservation.MovieReservationActivity
+import woowacourse.movie.dialog.TheaterDialog
+import woowacourse.movie.domain.model.TheatersMock
 import woowacourse.movie.fragment.movielist.adapter.MovieAdapter
 import woowacourse.movie.view.data.MovieListViewData
 import woowacourse.movie.view.data.MovieViewData
 import woowacourse.movie.view.data.MovieViewDatas
+import woowacourse.movie.view.mapper.MovieMapper.toDomain
 
 class MovieListFragment : Fragment(), MovieListContract.View {
     override lateinit var presenter: MovieListContract.Presenter
-
+    val theaters = TheatersMock.getTheaters()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,11 +39,10 @@ class MovieListFragment : Fragment(), MovieListContract.View {
         }
     }
 
-    override fun onMovieClick(data: MovieListViewData) {
-        MovieReservationActivity.from(
-            requireContext(), data as MovieViewData
-        ).run {
-            startActivity(this)
-        }
+    override fun onMovieClick(_data: MovieListViewData) {
+        val data = _data as MovieViewData
+        val dialog = TheaterDialog(data.toDomain(), theaters)
+        dialog.isCancelable = true
+        dialog.show(requireActivity().supportFragmentManager, "TheaterDialog")
     }
 }

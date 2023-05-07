@@ -5,7 +5,8 @@ import java.time.LocalDateTime
 
 data class ReservationDetailViewData(
     val date: LocalDateTime,
-    val peopleCount: Int
+    val peopleCount: Int,
+    val theaterName: String
 ) : Serializable {
     companion object {
         const val RESERVATION_DETAIL_EXTRA_NAME = "reservation_detail"

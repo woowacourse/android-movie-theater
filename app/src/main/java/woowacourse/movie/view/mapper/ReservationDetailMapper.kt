@@ -7,14 +7,16 @@ object ReservationDetailMapper : Mapper<ReservationDetail, ReservationDetailView
     override fun ReservationDetail.toView(): ReservationDetailViewData {
         return ReservationDetailViewData(
             date,
-            peopleCount
+            peopleCount,
+            theaterName
         )
     }
 
     override fun ReservationDetailViewData.toDomain(): ReservationDetail {
         return ReservationDetail(
             date,
-            peopleCount
+            peopleCount,
+            theaterName
         )
     }
 }

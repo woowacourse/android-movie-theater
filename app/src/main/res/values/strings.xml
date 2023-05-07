@@ -12,7 +12,7 @@
     <string name="movie_running_time">러닝타임: %d분</string>
     <string name="movie_date_format">yyyy-MM-dd</string>
 
-    <string name="reservation_people_count">일반 %d명 | %s</string>
+    <string name="reservation_people_count">일반 %d명 | %s | %s 극장</string>
     <string name="reservation_price">%s원 (현장 결제)</string>
     <string name="reservation_datetime_format">yyyy-MM-dd HH:mm</string>
 
@@ -43,4 +43,7 @@
     <string name="fragment_error_log_message">%s 프래그먼트에서 %s Extra가 필요합니다.</string>
     <string name="fragment_error_toast_message">프래그먼트 실행에 오류가 발생했습니다.</string>
     <string name="log_tag">HKHK</string>
+
+    <string name="theater_name">%s 극장</string>
+    <string name="theater_times_count">%d개의 상영 시간</string>
 </resources>

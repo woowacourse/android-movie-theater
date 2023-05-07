@@ -6,4 +6,8 @@ data class TheaterMovieViewData(
     val theaterName: String = "",
     val movie: MovieViewData,
     val screenTimes: List<LocalTime>
-) : java.io.Serializable
+) : java.io.Serializable {
+    companion object {
+        const val THEATER_MOVIE_EXTRA_NAME = "theaterMovie"
+    }
+}

@@ -14,11 +14,11 @@ class ReservationResultPresenter(val view: ReservationResultContract.View) :
         reservationViewData: ReservationViewData
     ) {
         val formattedDate = getFormattedDate(reservationViewData.reservationDetail.date)
-        val formattedCount =
-            getFormattedCount(
-                reservationViewData.reservationDetail.peopleCount,
-                reservationViewData.seats
-            )
+        val formattedCount = getFormattedCount(
+            reservationViewData.reservationDetail.peopleCount,
+            reservationViewData.seats,
+            reservationViewData.reservationDetail.theaterName
+        )
         val formattedPrice = getFormattedPrice(reservationViewData.price)
         view.renderReservation(formattedDate, formattedCount, formattedPrice)
     }
@@ -28,11 +28,13 @@ class ReservationResultPresenter(val view: ReservationResultContract.View) :
         return dateFormat.format(date)
     }
 
-    private fun getFormattedCount(peopleCount: Int, seats: SeatsViewData): String =
-        RESERVATION_PEOPLE_COUNT.format(
-            peopleCount,
-            formatSeats(seats)
-        )
+    private fun getFormattedCount(
+        peopleCount: Int,
+        seats: SeatsViewData,
+        theaterName: String
+    ): String = RESERVATION_PEOPLE_COUNT.format(
+        peopleCount, formatSeats(seats), theaterName
+    )
 
     private fun formatSeats(seats: SeatsViewData): String {
         return seats.seats.joinToString {
@@ -46,7 +48,7 @@ class ReservationResultPresenter(val view: ReservationResultContract.View) :
 
     companion object {
         private const val RESERVATION_DATETIME_FORMAT = "yyyy-MM-dd HH:mm"
-        private const val RESERVATION_PEOPLE_COUNT = "일반 %d명 | %s"
+        private const val RESERVATION_PEOPLE_COUNT = "일반 %d명 | %s | %s 극장"
         private const val SEAT_ROW_COLUMN = "%c%d"
         private const val RESERVATION_PRICE = "%s원 (현장 결제)"
     }

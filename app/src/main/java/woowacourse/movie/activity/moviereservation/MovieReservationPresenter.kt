@@ -4,8 +4,9 @@ import android.os.Bundle
 import woowacourse.movie.domain.model.Count
 import woowacourse.movie.domain.model.ReservationDetail
 import woowacourse.movie.view.data.LocalFormattedDate
-import woowacourse.movie.view.data.MovieViewData
+import woowacourse.movie.view.data.LocalFormattedTime
 import woowacourse.movie.view.data.ReservationDetailViewData
+import woowacourse.movie.view.data.TheaterMovieViewData
 import woowacourse.movie.view.mapper.ReservationDetailMapper.toView
 import woowacourse.movie.view.widget.Counter
 import woowacourse.movie.view.widget.SaveState
@@ -40,13 +41,17 @@ class MovieReservationPresenter(
     }
 
     override fun initDateSpinner(
-        movie: MovieViewData,
+        movie: TheaterMovieViewData,
         bundle: Bundle?
     ) {
         val dateIndex = saveStateDateSpinner.load(bundle) as Int
+        val dates = movie.movie.date.toList().map { LocalFormattedDate(it) }
+        view.initDateSpinner(dateIndex, dates)
+    }
+
+    override fun initTimeSpinner(theaterMovie: TheaterMovieViewData, bundle: Bundle?) {
         val timeIndex = saveStateTimeSpinner.load(bundle) as Int
-        val dates = movie.date.toList().map { LocalFormattedDate(it) }
-        view.initDateSpinner(dateIndex, timeIndex, dates)
+        view.initTimeSpinner(timeIndex, theaterMovie.screenTimes.map { LocalFormattedTime(it) })
     }
 
     override fun plusCount() {
@@ -58,9 +63,10 @@ class MovieReservationPresenter(
     }
 
     override fun getReservationDetailView(
-        date: LocalDateTime
+        date: LocalDateTime,
+        theaterName: String
     ): ReservationDetailViewData {
-        return ReservationDetail(date, counter.count.value).toView()
+        return ReservationDetail(date, counter.count.value, theaterName).toView()
     }
 
     companion object {

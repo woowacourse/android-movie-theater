@@ -13,7 +13,7 @@ import woowacourse.movie.R
 import woowacourse.movie.activity.seatselection.SeatSelectionActivity
 import woowacourse.movie.view.data.LocalFormattedDate
 import woowacourse.movie.view.data.LocalFormattedTime
-import woowacourse.movie.view.data.MovieViewData
+import woowacourse.movie.view.data.TheaterMovieViewData
 import woowacourse.movie.view.error.ActivityError.finishWithError
 import woowacourse.movie.view.error.ViewError
 import woowacourse.movie.view.getSerializable
@@ -60,17 +60,18 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         initButton()
         val movie = getIntentMovieData() ?: return finishWithError(
             ViewError.MissingExtras(
-                MovieViewData.MOVIE_EXTRA_NAME
+                TheaterMovieViewData.THEATER_MOVIE_EXTRA_NAME
             )
         )
         presenter.initCount(savedInstanceState)
         presenter.initDateSpinner(movie, savedInstanceState)
+        presenter.initTimeSpinner(movie, savedInstanceState)
         presenter.renderMovie(movie)
         makeReservationButtonClickListener(movie)
     }
 
-    private fun getIntentMovieData(): MovieViewData? =
-        intent.extras?.getSerializable<MovieViewData>(MovieViewData.MOVIE_EXTRA_NAME)
+    private fun getIntentMovieData(): TheaterMovieViewData? =
+        intent.extras?.getSerializable<TheaterMovieViewData>(TheaterMovieViewData.THEATER_MOVIE_EXTRA_NAME)
 
     private fun initButton() {
         findViewById<Button>(R.id.movie_reservation_people_count_minus).setOnClickListener {
@@ -86,16 +87,17 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
     }
 
     private fun makeReservationButtonClickListener(
-        movie: MovieViewData
+        movie: TheaterMovieViewData
     ) {
         findViewById<Button>(R.id.movie_reservation_button).setOnClickListener {
             val reservationDetail = presenter.getReservationDetailView(
                 LocalDateTime.of(
                     (dateSpinner.selectedItem as LocalFormattedDate).date,
                     (timeSpinner.selectedItem as LocalFormattedTime).time
-                )
+                ),
+                movie.theaterName
             )
-            SeatSelectionActivity.from(this, movie, reservationDetail).run {
+            SeatSelectionActivity.from(this, movie.movie, reservationDetail).run {
                 startActivity(this)
             }
         }
@@ -120,10 +122,14 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         countText.text = count.toString()
     }
 
-    override fun initDateSpinner(dateIndex: Int, timeIndex: Int, dates: List<LocalFormattedDate>) {
+    override fun initDateSpinner(dateIndex: Int, dates: List<LocalFormattedDate>) {
         dateSpinnerManager.initSpinner(
-            dates, timeSpinnerManager, dateIndex, timeIndex
+            dates, dateIndex
         )
+    }
+
+    override fun initTimeSpinner(timeIndex: Int, times: List<LocalFormattedTime>) {
+        timeSpinnerManager.initSpinner(times, timeIndex)
     }
 
     override fun setCount(count: Int) {
@@ -147,9 +153,9 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
     companion object {
         private const val DATE_SPINNER_SAVE_STATE_KEY = "date_spinner"
         private const val TIME_SPINNER_SAVE_STATE_KEY = "time_spinner"
-        fun from(context: Context, movie: MovieViewData): Intent {
+        fun from(context: Context, theaterMovie: TheaterMovieViewData): Intent {
             return Intent(context, MovieReservationActivity::class.java).apply {
-                putExtra(MovieViewData.MOVIE_EXTRA_NAME, movie)
+                putExtra(TheaterMovieViewData.THEATER_MOVIE_EXTRA_NAME, theaterMovie)
             }
         }
     }

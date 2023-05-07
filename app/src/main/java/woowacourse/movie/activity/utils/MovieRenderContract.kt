@@ -1,7 +1,7 @@
 package woowacourse.movie.activity.utils
 
 import woowacourse.movie.view.data.DateRangeViewData
-import woowacourse.movie.view.data.MovieViewData
+import woowacourse.movie.view.data.TheaterMovieViewData
 import java.time.format.DateTimeFormatter
 
 interface MovieRenderContract {
@@ -19,15 +19,15 @@ interface MovieRenderContract {
     interface Presenter {
         val view: View
 
-        fun renderMovie(movie: MovieViewData) {
-            val movieDate: String = formatMovieDate(movie.date)
-            val movieRunningTime: String = formatMovieRunningTime(movie.runningTime)
+        fun renderMovie(movie: TheaterMovieViewData) {
+            val movieDate: String = formatMovieDate(movie.movie.date)
+            val movieRunningTime: String = formatMovieRunningTime(movie.movie.runningTime)
             view.renderMovie(
-                image = movie.poster.resource,
-                title = movie.title,
+                image = movie.movie.poster.resource,
+                title = movie.movie.title,
                 date = movieDate,
                 runningTime = movieRunningTime,
-                description = movie.description
+                description = movie.movie.description
             )
         }
 

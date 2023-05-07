@@ -17,7 +17,7 @@ object MovieMock {
             "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
         ),
         Movie(
-            Image(1),
+            Image(0),
             "해리 포터 2",
             DateRange(
                 LocalDate.of(2022, 2, 1),
@@ -27,7 +27,7 @@ object MovieMock {
             "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
         ),
         Movie(
-            Image(2),
+            Image(0),
             "해리 포터 3",
             DateRange(
                 LocalDate.of(2023, 3, 1),
@@ -37,7 +37,7 @@ object MovieMock {
             "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
         ),
         Movie(
-            Image(3),
+            Image(0),
             "해리 포터 4",
             DateRange(
                 LocalDate.of(2024, 4, 1),
