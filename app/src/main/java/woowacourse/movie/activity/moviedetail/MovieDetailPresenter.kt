@@ -1,5 +1,6 @@
 package woowacourse.movie.activity.moviedetail
 
+import com.woowacourse.domain.ScreeningSchedule
 import com.woowacourse.domain.TheaterMovie
 import com.woowacourse.domain.movie.Movie
 import com.woowacourse.domain.movie.MovieBookingInfo
@@ -11,8 +12,8 @@ class MovieDetailPresenter(val view: MovieDetailContract.View) : MovieDetailCont
 
     private var peopleCount = MIN_TICKET
 
-    override fun getScheduleDate(startDate: LocalDate, endDate: LocalDate) {
-        val movieSchedule = MovieSchedule(startDate, endDate)
+    override fun getScheduleDate(screeningSchedule: ScreeningSchedule) {
+        val movieSchedule = MovieSchedule(screeningSchedule)
         view.setScheduleDate(movieSchedule)
     }
 

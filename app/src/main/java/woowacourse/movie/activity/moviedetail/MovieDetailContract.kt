@@ -1,5 +1,6 @@
 package woowacourse.movie.activity.moviedetail
 
+import com.woowacourse.domain.ScreeningSchedule
 import com.woowacourse.domain.TheaterMovie
 import com.woowacourse.domain.movie.Movie
 import com.woowacourse.domain.movie.MovieBookingInfo
@@ -18,7 +19,7 @@ interface MovieDetailContract {
     }
 
     interface Presenter {
-        fun getScheduleDate(startDate: LocalDate, endDate: LocalDate)
+        fun getScheduleDate(screeningSchedule: ScreeningSchedule)
         fun initView(movieData: Movie)
         fun addPeople()
         fun subPeople()

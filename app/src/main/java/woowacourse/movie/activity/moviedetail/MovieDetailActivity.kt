@@ -46,12 +46,12 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
         val movieData = getMovieData()
         finishIfDummyData(movieData)
 
-        presenter.getScheduleDate(movieData.movieInfo.movie.startDate, movieData.movieInfo.movie.endDate)
+        presenter.getScheduleDate(movieData.movieInfo.toDomain())
         presenter.initView(movieData.movieInfo.movie.toDomain())
         setClickListener(movieData)
 
         val scheduleDate = movieSchedule.getScheduleDates()
-        setSpinnerSelectedListener(movieSchedule, scheduleDate, savedInstanceState)
+        setSpinnerSelectedListener(movieSchedule, savedInstanceState)
         setSpinnerAdapter(scheduleDate, movieSchedule)
         reloadTicketCountInstance(savedInstanceState)
     }
@@ -97,8 +97,7 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
 
     private fun setSpinnerSelectedListener(
         movieSchedule: MovieSchedule,
-        scheduleDate: List<String>,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         dateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -110,13 +109,13 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
                 timeSpinner.adapter = ArrayAdapter(
                     this@MovieDetailActivity,
                     android.R.layout.simple_spinner_item,
-                    movieSchedule.getScheduleTimes(scheduleDate[position])
+                    movieSchedule.getScheduleTimes()
                 )
                 if (needSpinnerInitialize && savedInstanceState != null) {
                     timeSpinner.setSelection(
                         (
                             savedInstanceState.getString(TIME_KEY)
-                                ?: movieSchedule.getScheduleTimes(dateSpinner.selectedItem.toString())
+                                ?: movieSchedule.getScheduleTimes()
                                     .first()
                             ).toInt()
                     )
@@ -137,7 +136,7 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
         timeSpinner.adapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
-            movieSchedule.getScheduleTimes(scheduleDate.first())
+            movieSchedule.getScheduleTimes()
         )
     }
 

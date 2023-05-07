@@ -1,10 +1,14 @@
 package com.woowacourse.domain.movie
 
+import com.woowacourse.domain.ScreeningSchedule
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
-data class MovieSchedule(private val startDate: LocalDate, private val endDate: LocalDate) {
+data class MovieSchedule(val screeningSchedule: ScreeningSchedule) {
+
+    private val startDate = screeningSchedule.movie.startDate
+    private val endDate = screeningSchedule.movie.endDate
 
     fun getScheduleDates(): List<String> = getDatesBetweenTwoDates().map {
         it.format(dateTimeFormatter)
@@ -18,37 +22,12 @@ data class MovieSchedule(private val startDate: LocalDate, private val endDate: 
         }
     }
 
-    fun getScheduleTimes(date: String): List<String> {
-        val selectedDate = LocalDate.parse(date, dateTimeFormatter)
-        val dayOfWeek = selectedDate.dayOfWeek.value
-
-        if (dayOfWeek in weekend) {
-            return getValidTimes(weekendTimes)
-        }
-        return getValidTimes(weekdayTimes)
+    fun getScheduleTimes(): List<String> {
+        return screeningSchedule.screeningTime.map { it.toString() }
     }
-
-    private fun getValidTimes(times: IntRange): List<String> =
-        (times step INTERVAL_TIME).map {
-            TIME_FORMAT.format(it)
-        }
 
     companion object {
         private const val DATE_PATTERN = "yyyy-MM-dd"
         private val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern(DATE_PATTERN)
-
-        private const val WEEKEND_START_TIME = 9
-        private const val WEEKDAY_START_TIME = 10
-        private const val END_TIME = 24
-
-        private val weekendTimes = WEEKEND_START_TIME..END_TIME
-        private val weekdayTimes = WEEKDAY_START_TIME..END_TIME
-
-        private const val SATURDAY = 6
-        private const val SUNDAY = 7
-        private val weekend = SATURDAY..SUNDAY
-
-        private const val INTERVAL_TIME = 2
-        private const val TIME_FORMAT = "%02d:00"
     }
 }
