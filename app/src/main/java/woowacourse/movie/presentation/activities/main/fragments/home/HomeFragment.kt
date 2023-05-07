@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import woowacourse.movie.R
 import woowacourse.movie.presentation.activities.main.fragments.theaterPicker.TheaterPickerDialog
-import woowacourse.movie.presentation.activities.ticketing.TicketingActivity
 import woowacourse.movie.presentation.model.item.Ad
 import woowacourse.movie.presentation.model.item.Movie
 import woowacourse.movie.presentation.model.item.Reservation
@@ -49,12 +48,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeContract.View {
                 }
             }
         })
-    }
-
-    override fun startTicketingActivity(movie: Movie) {
-        val intent = Intent(requireContext(), TicketingActivity::class.java)
-            .putExtra(MOVIE_KEY, movie)
-        startActivity(intent)
     }
 
     override fun selectTheater(movie: Movie) {

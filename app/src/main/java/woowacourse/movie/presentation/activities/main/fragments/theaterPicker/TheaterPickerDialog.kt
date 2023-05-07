@@ -13,20 +13,26 @@ import woowacourse.movie.presentation.extensions.getParcelableCompat
 import woowacourse.movie.presentation.model.item.Movie
 import woowacourse.movie.presentation.model.item.Theater
 
-class TheaterPickerDialog : BottomSheetDialogFragment(R.layout.fragment_bottom_sheet) {
+class TheaterPickerDialog : BottomSheetDialogFragment(R.layout.fragment_bottom_sheet), TheaterPickerDialogContract.View {
+    override lateinit var presenter: TheaterPickerDialogPresenter
     private val movie: Movie by lazy { requireArguments().getParcelableCompat(MOVIE_KEY)!! }
     private lateinit var theaterRecyclerView: RecyclerView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        presenter = TheaterPickerDialogPresenter(this)
         theaterRecyclerView = view.findViewById(R.id.theater_recycler_view)
-        val theaterAdapter = TheaterListAdapter { startTicketingActivity(movie) }
+        initRecyclerView()
+    }
+
+    private fun initRecyclerView() {
+        val theaterAdapter = TheaterListAdapter { presenter.moveTicketingActivity(movie) }
         theaterAdapter.appendAll(Theater.provideDummyData())
         theaterRecyclerView.adapter = theaterAdapter
     }
 
-    private fun startTicketingActivity(movie: Movie) {
+    override fun startTicketingActivity(movie: Movie) {
         val intent = Intent(requireContext(), TicketingActivity::class.java)
             .putExtra(MOVIE_KEY, movie)
         startActivity(intent)
