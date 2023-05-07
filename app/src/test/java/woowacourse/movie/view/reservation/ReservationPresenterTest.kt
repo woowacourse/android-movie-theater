@@ -66,7 +66,8 @@ internal class ReservationPresenterTest {
         every { view.setUpTimeSpinner(capture(screeningTimeSlot), 0) } returns Unit
 
         reservationPresenter.selectScreeningDate(
-            LocalDate.of(2024, 3, 1)
+            LocalDate.of(2024, 3, 1),
+            null
         )
 
         val expected = listOf(

@@ -13,6 +13,7 @@ import woowacourse.movie.databinding.ActivityReservationBinding
 import woowacourse.movie.util.DATE_FORMATTER
 import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.view.model.MovieListModel.MovieUiModel
+import woowacourse.movie.view.model.MovieTheater
 import woowacourse.movie.view.model.ReservationOptions
 import woowacourse.movie.view.seatselection.SeatSelectionActivity
 import java.time.LocalDate
@@ -80,7 +81,10 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
                     position: Int,
                     id: Long
                 ) {
-                    presenter.selectScreeningDate(screeningDates[position])
+                    presenter.selectScreeningDate(
+                        screeningDates[position],
+                        intent.getParcelableCompat<MovieTheater>(MOVIE_THEATER)?.screeningTimeslot
+                    )
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) = Unit
@@ -131,9 +135,9 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     }
 
     private fun setUpReserveButtonClickListener() {
-        val theaterName = intent.getStringExtra(THEATER_NAME)
+        val movieTheater = intent.getParcelableCompat<MovieTheater>(MOVIE_THEATER)
         binding.reservationButton.setOnClickListener {
-            theaterName?.let { presenter.reserve(it) }
+            movieTheater?.let { presenter.reserve(it) }
         }
     }
 
@@ -146,11 +150,11 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        val theaterName = intent.getStringExtra(THEATER_NAME)
+        val movieTheater = intent.getParcelableCompat<MovieTheater>(MOVIE_THEATER)
         outState.apply {
-            theaterName?.let {
+            movieTheater?.let {
                 putParcelable(
-                    RESERVATION_OPTIONS, presenter.getReservationOptions(it)
+                    RESERVATION_OPTIONS, presenter.getReservationOptions(it.name)
                 )
             }
             putInt(SELECTED_TIME_POSITION, binding.timeSpinner.selectedItemPosition)
@@ -182,11 +186,11 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         private const val SELECTED_TIME_POSITION = "SELECTED_TIME_POSITION"
         private const val RESERVATION_OPTIONS = "RESERVATION_OPTIONS"
         private const val MOVIE = "MOVIE"
-        private const val THEATER_NAME = "THEATER_NAME"
-        fun newIntent(context: Context, movie: MovieUiModel, theaterName: String): Intent {
+        private const val MOVIE_THEATER = "MOVIE_THEATER"
+        fun newIntent(context: Context, movie: MovieUiModel, movieTheater: MovieTheater): Intent {
             val intent = Intent(context, ReservationActivity::class.java)
             intent.putExtra(MOVIE, movie)
-            intent.putExtra(THEATER_NAME, theaterName)
+            intent.putExtra(MOVIE_THEATER, movieTheater)
             return intent
         }
     }

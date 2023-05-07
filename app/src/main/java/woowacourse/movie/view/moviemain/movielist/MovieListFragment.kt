@@ -43,8 +43,11 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContr
         binding.movieRecyclerview.adapter = movieAdapter
     }
 
-    override fun openReservationActivity(item: MovieListModel.MovieUiModel, theaterName: String) {
-        val intent = ReservationActivity.newIntent(requireContext(), item, theaterName)
+    override fun openReservationActivity(
+        item: MovieListModel.MovieUiModel,
+        movieTheater: MovieTheater
+    ) {
+        val intent = ReservationActivity.newIntent(requireContext(), item, movieTheater)
         startActivity(intent)
     }
 
@@ -60,7 +63,7 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContr
         val movieTheaterAdapter = MovieTheaterAdapter(
             theaters
         ) { item ->
-            openReservationActivity(movie, item.name)
+            openReservationActivity(movie, item)
         }
         val movieTheaterDialog = MovieTheaterDialog(movieTheaterAdapter)
         movieTheaterDialog.show(parentFragmentManager, MOVIE_THEATER_DIALOG_TAG)

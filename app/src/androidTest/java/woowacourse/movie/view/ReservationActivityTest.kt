@@ -13,6 +13,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.view.model.MovieListModel
+import woowacourse.movie.view.model.MovieTheater
 import woowacourse.movie.view.reservation.ReservationActivity
 import java.time.LocalDate
 
@@ -29,9 +30,15 @@ class ReservationActivityTest {
         "《해리 포터와 마법사의 돌》은 2001년 J. K. 롤링의 동명 소설을 원작으로 하여 만든, 영국과 미국 합작, 판타지 영화이다. 해리포터 시리즈 영화 8부작 중 첫 번째에 해당하는 작품이다. 크리스 콜럼버스가 감독을 맡았다."
     )
 
+    private val movieTheater = MovieTheater(
+        "선릉 극장",
+        listOf(0, 1, 2, 3, 4)
+    )
+
     private val intent = ReservationActivity.newIntent(
         ApplicationProvider.getApplicationContext(),
-        movie
+        movie,
+        movieTheater
     )
 
     @get:Rule

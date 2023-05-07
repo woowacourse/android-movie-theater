@@ -3,6 +3,7 @@ package woowacourse.movie.view.reservation
 import woowacourse.movie.domain.Reservation
 import woowacourse.movie.domain.ScreeningTime
 import woowacourse.movie.view.model.MovieListModel
+import woowacourse.movie.view.model.MovieTheater
 import woowacourse.movie.view.model.ReservationOptions
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -31,13 +32,13 @@ class ReservationPresenter(
         view.setUpDateSpinner(screeningDates)
     }
 
-    override fun selectScreeningDate(date: LocalDate) {
+    override fun selectScreeningDate(date: LocalDate, timeslot: List<Int>?) {
         selectedScreeningDate = date
-        setUpScreeningTime()
+        setUpScreeningTime(timeslot)
     }
 
-    private fun setUpScreeningTime() {
-        val screeningTimes = ScreeningTime(selectedScreeningDate, null).getScreeningTimes()
+    private fun setUpScreeningTime(timeslot: List<Int>?) {
+        val screeningTimes = ScreeningTime(selectedScreeningDate, timeslot).getScreeningTimes()
         view.setUpTimeSpinner(screeningTimes, timeSpinnerPosition)
     }
 
@@ -86,9 +87,9 @@ class ReservationPresenter(
         peopleCountSaved = peopleCount
     }
 
-    override fun reserve(theaterName: String) {
+    override fun reserve(movieTheater: MovieTheater) {
         val reservationOptions = ReservationOptions(
-            theaterName,
+            movieTheater.name,
             movie.title,
             LocalDateTime.of(selectedScreeningDate, selectedScreeningTime),
             peopleCountSaved

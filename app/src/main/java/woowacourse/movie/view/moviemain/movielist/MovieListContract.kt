@@ -8,7 +8,7 @@ interface MovieListContract {
         var presenter: Presenter
         fun showMovieList(dataList: List<MovieListModel>)
         fun openTheaterBottomSheet(theaters: List<MovieTheater>, movie: MovieListModel.MovieUiModel)
-        fun openReservationActivity(item: MovieListModel.MovieUiModel, theaterName: String)
+        fun openReservationActivity(item: MovieListModel.MovieUiModel, movieTheater: MovieTheater)
         fun openAdPage(item: MovieListModel.MovieAdModel)
     }
 
