@@ -1,5 +1,6 @@
 package woowacourse.movie.activity.moviedetail
 
+import com.woowacourse.domain.TheaterMovie
 import com.woowacourse.domain.movie.Movie
 import com.woowacourse.domain.movie.MovieBookingInfo
 import com.woowacourse.domain.movie.MovieSchedule
@@ -22,7 +23,7 @@ interface MovieDetailContract {
         fun addPeople()
         fun subPeople()
         fun getMovieBookingInfo(
-            movieData: Movie,
+            movieData: TheaterMovie,
             selectDate: LocalDate,
             selectTime: String
         )

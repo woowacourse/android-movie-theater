@@ -3,11 +3,14 @@ package woowacourse.movie.model
 import com.woowacourse.domain.movie.MovieBookingInfo
 import java.io.Serializable
 
-fun MovieBookingInfoUiModel.toDomain() = MovieBookingInfo(movieInfo.toDomain(), date, time, ticketCount)
-fun MovieBookingInfo.toPresentation() = MovieBookingInfoUiModel(movieInfo.toPresentation(), date, time, ticketCount)
+fun MovieBookingInfoUiModel.toDomain() =
+    MovieBookingInfo(theaterMovie.toDomain(), date, time, ticketCount)
+
+fun MovieBookingInfo.toPresentation() =
+    MovieBookingInfoUiModel(theaterMovie.toPresentation(), date, time, ticketCount)
 
 data class MovieBookingInfoUiModel(
-    val movieInfo: MovieUIModel,
+    val theaterMovie: TheaterMovieUIModel,
     val date: String,
     val time: String,
     val ticketCount: Int
@@ -25,7 +28,12 @@ data class MovieBookingInfoUiModel(
 
     companion object {
         val dummyData = MovieBookingInfoUiModel(
-            MovieUIModel.dummyData,
+            TheaterMovieUIModel(
+                "",
+                ScreeningScheduleUIModel(
+                    MovieUIModel.dummyData, emptyList()
+                )
+            ),
             "",
             "",
             0

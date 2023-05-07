@@ -81,14 +81,14 @@ class MovieReminder : BroadcastReceiver() {
         setLargeIcon(
             BitmapFactory.decodeResource(
                 context.resources,
-                movieBookingSeatInfo.movieBookingInfo.movieInfo.poster
+                movieBookingSeatInfo.movieBookingInfo.theaterMovie.movieInfo.movie.poster
             )
         )
         setContentTitle(context.getString(R.string.notification_title))
         setContentText(
             context.getString(
                 R.string.notification_content,
-                movieBookingSeatInfo.movieBookingInfo.movieInfo.title
+                movieBookingSeatInfo.movieBookingInfo.theaterMovie.movieInfo.movie.title
             )
         )
         setContentIntent(contentPendingIntent)

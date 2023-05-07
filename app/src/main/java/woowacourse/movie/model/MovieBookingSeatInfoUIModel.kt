@@ -10,7 +10,7 @@ fun MovieBookingSeatInfo.toPresentation() =
     MovieBookingSeatInfoUIModel(movieBookingInfo.toPresentation(), seats, totalPrice)
 
 fun MovieBookingSeatInfoUIModel.toHistoryData() = BookingHistoryData(
-    movieBookingInfo.movieInfo.title,
+    movieBookingInfo.theaterMovie.movieInfo.movie.title,
     movieBookingInfo.formatBookHistoryDate(),
     movieBookingInfo.ticketCount,
     seats, totalPrice

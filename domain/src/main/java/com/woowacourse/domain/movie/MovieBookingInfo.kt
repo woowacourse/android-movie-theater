@@ -1,7 +1,9 @@
 package com.woowacourse.domain.movie
 
+import com.woowacourse.domain.TheaterMovie
+
 data class MovieBookingInfo(
-    val movieInfo: Movie,
+    val theaterMovie: TheaterMovie,
     val date: String,
     val time: String,
     val ticketCount: Int

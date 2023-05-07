@@ -1,5 +1,6 @@
 package woowacourse.movie.activity.moviedetail
 
+import com.woowacourse.domain.TheaterMovie
 import com.woowacourse.domain.movie.Movie
 import com.woowacourse.domain.movie.MovieBookingInfo
 import com.woowacourse.domain.movie.MovieSchedule
@@ -34,7 +35,7 @@ class MovieDetailPresenter(val view: MovieDetailContract.View) : MovieDetailCont
     }
 
     override fun getMovieBookingInfo(
-        movieData: Movie,
+        movieData: TheaterMovie,
         selectDate: LocalDate,
         selectTime: String
     ) {

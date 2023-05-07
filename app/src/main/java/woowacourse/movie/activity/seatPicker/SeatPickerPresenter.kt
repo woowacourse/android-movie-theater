@@ -28,7 +28,7 @@ class SeatPickerPresenter(
         )
 
     override fun initMovieTitle() {
-        view.initMovieTitle(movieBookingInfo.movieInfo.title)
+        view.initMovieTitle(movieBookingInfo.theaterMovie.movieInfo.movie.title)
     }
 
     override fun getMovieBookingSeatInfo(
@@ -71,7 +71,7 @@ class SeatPickerPresenter(
     }
 
     override fun save(outState: Bundle) {
-        outState.putString(SeatPickerActivity.MOVIE_TITLE, movieBookingInfo.movieInfo.title)
+        outState.putString(SeatPickerActivity.MOVIE_TITLE, movieBookingInfo.theaterMovie.movieInfo.movie.title)
         outState.putString(SeatPickerActivity.TICKET_PRICE, price.toString())
         outState.putSerializable(SeatPickerActivity.PICKED_SEAT, seatGroup.toPresentation())
     }

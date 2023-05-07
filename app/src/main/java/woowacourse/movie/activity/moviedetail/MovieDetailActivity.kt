@@ -19,6 +19,8 @@ import woowacourse.movie.activity.seatPicker.SeatPickerActivity
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.model.MovieUIModel
+import woowacourse.movie.model.ScreeningScheduleUIModel
+import woowacourse.movie.model.TheaterMovieUIModel
 import woowacourse.movie.model.toDomain
 import woowacourse.movie.model.toPresentation
 import java.time.LocalDate
@@ -44,8 +46,8 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
         val movieData = getMovieData()
         finishIfDummyData(movieData)
 
-        presenter.getScheduleDate(movieData.startDate, movieData.endDate)
-        presenter.initView(movieData.toDomain())
+        presenter.getScheduleDate(movieData.movieInfo.movie.startDate, movieData.movieInfo.movie.endDate)
+        presenter.initView(movieData.movieInfo.movie.toDomain())
         setClickListener(movieData)
 
         val scheduleDate = movieSchedule.getScheduleDates()
@@ -56,17 +58,17 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
 
     private fun getMovieData() = (
         intent.getSerializableCompat(MOVIE_DATA_KEY)
-            ?: MovieUIModel.dummyData
+            ?: TheaterMovieUIModel("", ScreeningScheduleUIModel(MovieUIModel.dummyData, emptyList()))
         )
 
-    private fun finishIfDummyData(movieData: MovieUIModel) {
-        if (movieData == MovieUIModel.dummyData) {
+    private fun finishIfDummyData(movieData: TheaterMovieUIModel) {
+        if (movieData.movieInfo.movie == MovieUIModel.dummyData) {
             Toast.makeText(this, getString(R.string.cant_get_movie_data), Toast.LENGTH_SHORT).show()
             this.finish()
         }
     }
 
-    private fun setClickListener(movieData: MovieUIModel) {
+    private fun setClickListener(movieData: TheaterMovieUIModel) {
         clickPlusBtn()
         clickMinusBtn()
         clickSeatPickerBtn(movieData)
@@ -84,7 +86,7 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
         }
     }
 
-    private fun clickSeatPickerBtn(movieData: MovieUIModel) {
+    private fun clickSeatPickerBtn(movieData: TheaterMovieUIModel) {
         binding.btToSeatPicker.setOnClickListener {
             presenter.getMovieBookingInfo(
                 movieData.toDomain(), LocalDate.parse(dateSpinner.selectedItem.toString()),
@@ -190,9 +192,9 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
         private const val DATE_KEY = "date"
         private const val TIME_KEY = "time"
 
-        fun getIntent(context: Context, movie: MovieUIModel): Intent {
+        fun getIntent(context: Context, theaterMovie: TheaterMovieUIModel): Intent {
             val intent = Intent(context, MovieDetailActivity::class.java)
-            intent.putExtra(MOVIE_DATA_KEY, movie)
+            intent.putExtra(MOVIE_DATA_KEY, theaterMovie)
             return intent
         }
     }

@@ -1,8 +1,11 @@
 package woowacourse.movie.data
 
+import com.woowacourse.domain.ScreeningSchedule
+import com.woowacourse.domain.Theater
 import com.woowacourse.domain.movie.Movie
 import woowacourse.movie.R
 import java.time.LocalDate
+import java.time.LocalTime
 
 object MovieMockData {
     private val movies = listOf(
@@ -50,4 +53,33 @@ object MovieMockData {
         )
     )
     val movies10000 = List(10000) { index -> movies[index % movies.size] }
+
+    private val firstTheaterSchedule = listOf(
+        ScreeningSchedule(movies[0], listOf(LocalTime.of(9, 0), LocalTime.of(15, 0))),
+        ScreeningSchedule(movies[1], listOf(LocalTime.of(9, 0), LocalTime.of(15, 0), LocalTime.of(21, 0))),
+        ScreeningSchedule(movies[2], listOf(LocalTime.of(11, 0), LocalTime.of(17, 0))),
+    )
+
+    private val secondTheaterSchedule = listOf(
+        ScreeningSchedule(movies[3], listOf(LocalTime.of(10, 0), LocalTime.of(19, 0))),
+        ScreeningSchedule(movies[4], listOf(LocalTime.of(9, 0), LocalTime.of(18, 0))),
+        ScreeningSchedule(movies[0], listOf(LocalTime.of(9, 0), LocalTime.of(15, 0), LocalTime.of(22, 0))),
+    )
+
+    private val thirdTheaterSchedule = listOf(
+        ScreeningSchedule(movies[0], listOf(LocalTime.of(9, 0), LocalTime.of(15, 0), LocalTime.of(22, 0))),
+        ScreeningSchedule(movies[3], listOf(LocalTime.of(12, 0), LocalTime.of(15, 0), LocalTime.of(20, 0))),
+        ScreeningSchedule(movies[1], listOf(LocalTime.of(11, 0), LocalTime.of(13, 0))),
+        ScreeningSchedule(movies[2], listOf(LocalTime.of(10, 0), LocalTime.of(15, 0))),
+        ScreeningSchedule(movies[4], listOf(LocalTime.of(9, 0), LocalTime.of(16, 0), LocalTime.of(21, 0))),
+    )
+
+    val theaterData = listOf(
+        Theater(
+            "선릉 극장",
+            firstTheaterSchedule
+        ),
+        Theater("잠실 극장", secondTheaterSchedule),
+        Theater("강남 극장", thirdTheaterSchedule),
+    )
 }
