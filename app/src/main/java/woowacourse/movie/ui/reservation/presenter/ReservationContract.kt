@@ -10,7 +10,7 @@ interface ReservationContract {
     }
 
     interface Presenter {
-        fun getReservationTickets()
+        fun initAdapter()
         fun isEmptyMovieReservation()
     }
 }

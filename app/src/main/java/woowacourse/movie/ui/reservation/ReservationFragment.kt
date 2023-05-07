@@ -31,8 +31,8 @@ class ReservationFragment : Fragment(), ReservationContract.View {
         super.onViewCreated(view, savedInstanceState)
 
         presenter.isEmptyMovieReservation()
-        presenter.getReservationTickets()
-        initAdapter()
+        presenter.initAdapter()
+        attachAdapter()
     }
 
     override fun onDestroyView() {
@@ -44,7 +44,7 @@ class ReservationFragment : Fragment(), ReservationContract.View {
         if (!isEmpty) binding.reservationEmpty.visibility = View.GONE
     }
 
-    private fun initAdapter() {
+    private fun attachAdapter() {
         binding.reservationRecyclerview.adapter = reservationAdapter
     }
 }

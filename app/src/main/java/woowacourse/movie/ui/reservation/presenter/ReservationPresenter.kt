@@ -12,7 +12,7 @@ class ReservationPresenter(
     private val requireContext: Context,
 ) : ReservationContract.Presenter {
     private val reservationTickets: List<MovieTicketModel> by lazy { ReservationTicketMachine.tickets }
-    override fun getReservationTickets() {
+    override fun initAdapter() {
         view.reservationAdapter =
             ReservationAdapter(reservationTickets, ::setEventOnReservationItems)
     }
