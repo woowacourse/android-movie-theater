@@ -25,7 +25,7 @@ class SettingsPresenterTest {
     }
 
     @Test
-    fun `초기값을 false 로 세팅한다`() {
+    fun `알림 가능한지 읽어와서 false 이면 스위치 초기값을 false 로 세팅한다`() {
         // given & when
         FakeSettingsData.isAvailable = false
         val isNotifiableSlot = slot<Boolean>()
@@ -41,7 +41,7 @@ class SettingsPresenterTest {
     }
 
     @Test
-    fun `초기값을 true 로 세팅한다`() {
+    fun `알림 가능한지 읽어와서 true 이면 스위치 초기값을 true 로 세팅한다`() {
         // given
         FakeSettingsData.isAvailable = true
         val isNotifiableSlot = slot<Boolean>()

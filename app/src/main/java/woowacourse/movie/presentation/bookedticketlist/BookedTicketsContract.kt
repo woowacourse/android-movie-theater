@@ -10,7 +10,7 @@ interface BookedTicketsContract {
     }
 
     interface Presenter {
-        fun changeTickets()
+        fun setBookedTickets()
         fun getMovieModel(ticketModel: TicketModel): MovieModel
     }
 }

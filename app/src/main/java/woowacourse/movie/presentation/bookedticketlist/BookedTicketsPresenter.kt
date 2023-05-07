@@ -1,20 +1,21 @@
 package woowacourse.movie.presentation.bookedticketlist
 
-import woowacourse.movie.data.BookedTicketsData
-import woowacourse.movie.data.movie.MockMovieData
+import woowacourse.movie.data.bookedticket.BookedTicketsData
+import woowacourse.movie.data.movie.MovieData
 import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.model.TicketModel
 
-class BookedTicketsPresenter(private val view: BookedTicketsContract.View) :
+class BookedTicketsPresenter(
+    private val view: BookedTicketsContract.View,
+    private val bookedTicketsData: BookedTicketsData,
+    private val movieData: MovieData,
+) :
     BookedTicketsContract.Presenter {
 
-    private lateinit var tickets: List<TicketModel>
-
-    override fun changeTickets() {
-        tickets = BookedTicketsData.tickets.toList()
-        view.setBookedTicketsAdapter(BookedTicketsData.tickets)
+    override fun setBookedTickets() {
+        view.setBookedTicketsAdapter(bookedTicketsData.getTickets())
     }
 
     override fun getMovieModel(ticketModel: TicketModel) =
-        MockMovieData.findMovieById(ticketModel.movieId).toPresentation()
+        movieData.findMovieById(ticketModel.movieId).toPresentation()
 }

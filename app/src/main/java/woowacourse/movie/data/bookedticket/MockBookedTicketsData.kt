@@ -1,12 +1,12 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.bookedticket
 
 import woowacourse.movie.presentation.model.TicketModel
 import java.time.LocalDateTime
 
-object BookedTicketsData {
+object MockBookedTicketsData : BookedTicketsData {
 
     // fake data
-    val tickets = mutableListOf<TicketModel>(
+    private val tickets = mutableListOf<TicketModel>(
         TicketModel(
             1,
             "선릉",
@@ -40,4 +40,10 @@ object BookedTicketsData {
             listOf("A1", "B1", "C1"),
         ),
     )
+
+    override fun getTickets(): List<TicketModel> = tickets.toList()
+
+    override fun addTickets(ticketModel: TicketModel) {
+        tickets.add(ticketModel)
+    }
 }

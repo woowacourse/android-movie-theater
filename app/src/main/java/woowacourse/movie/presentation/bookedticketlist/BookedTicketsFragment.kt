@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import woowacourse.movie.data.bookedticket.MockBookedTicketsData
+import woowacourse.movie.data.movie.MockMovieData
 import woowacourse.movie.databinding.FragmentBookedTicketsBinding
 import woowacourse.movie.presentation.complete.CompleteActivity
 import woowacourse.movie.presentation.model.TicketModel
@@ -15,7 +17,7 @@ class BookedTicketsFragment : Fragment(), BookedTicketsContract.View {
     private val binding get() = _binding!!
 
     override val presenter: BookedTicketsContract.Presenter by lazy {
-        BookedTicketsPresenter(this)
+        BookedTicketsPresenter(this, MockBookedTicketsData, MockMovieData)
     }
     private val bookedTicketsAdapter by lazy {
         BookedTicketsAdapter(
@@ -36,7 +38,7 @@ class BookedTicketsFragment : Fragment(), BookedTicketsContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.changeTickets()
+        presenter.setBookedTickets()
     }
 
     override fun setBookedTicketsAdapter(tickets: List<TicketModel>) {

@@ -1,6 +1,6 @@
 package woowacourse.movie.presentation.choiceSeat
 
-import woowacourse.movie.data.BookedTicketsData
+import woowacourse.movie.data.bookedticket.MockBookedTicketsData
 import woowacourse.movie.data.movie.MovieData
 import woowacourse.movie.data.settings.SettingsData
 import woowacourse.movie.domain.model.rules.SeatsPayment
@@ -46,7 +46,7 @@ class ChoiceSeatPresenter(
                 seats,
             )
         val ticketModel = ticket.toPresentation()
-        BookedTicketsData.tickets.add(ticketModel)
+        MockBookedTicketsData.addTickets(ticketModel)
 
         view.confirmBookMovie(ticketModel)
     }
