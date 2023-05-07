@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.AdapterView
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
@@ -13,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.tools.TicketCount
 import woowacourse.movie.model.data.remote.DummyMovieStorage
+import woowacourse.movie.model.data.remote.DummyMovieTheaterStorage
 import woowacourse.movie.presentation.choiceSeat.ChoiceSeatActivity
 import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.model.MovieModel
@@ -25,6 +25,9 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
 
     override lateinit var presenter: BookingContract.Presenter
     private val movieId: Long by lazy { intent.getLongExtra(MOVIE_ID, -1) }
+    private val theater: String by lazy {
+        intent.getStringExtra(THEATER) ?: throw IllegalStateException(NULL_THEATER_ERROR)
+    }
     private lateinit var movieModel: MovieModel
     private val textBookingTicketCount by lazy { findViewById<TextView>(R.id.textBookingTicketCount) }
     private val dateSpinner by lazy { findViewById<Spinner>(R.id.spinnerScreeningDate) }
@@ -46,7 +49,6 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         restoreData(savedInstanceState)
         initBookingMovieInformationView()
         gatherClickListeners()
-        initDateSpinnerSelectedListener()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -64,7 +66,8 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
             presenter = BookingPresenter(
                 this@BookingActivity,
                 TicketCount(getInt(TICKET_COUNT)),
-                DummyMovieStorage()
+                DummyMovieStorage(),
+                DummyMovieTheaterStorage()
             )
             dateSpinner.setSelection(getInt(DATE_POSITION), false)
             timeSpinner.setSelection(getInt(TIME_POSITION), false)
@@ -81,7 +84,11 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
     }
 
     private fun initPresenter() {
-        presenter = BookingPresenter(view = this, movieStorage = DummyMovieStorage())
+        presenter = BookingPresenter(
+            view = this,
+            movieStorage = DummyMovieStorage(),
+            movieTheaterStorage = DummyMovieTheaterStorage()
+        )
     }
 
     private fun initMovieModel() {
@@ -144,24 +151,8 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
     }
 
     private fun initDateTimes() {
-        val dates = presenter.getScreeningDates(movieId)
-        presenter.getScreeningTimes(dates[0])
-    }
-
-    private fun initDateSpinnerSelectedListener() {
-        dateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val dates = presenter.getScreeningDates(movieId)
-                presenter.getScreeningTimes(dates[position])
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) = Unit
-        }
+        presenter.getScreeningDates(movieId)
+        presenter.getScreeningTimes(movieId, theater)
     }
 
     companion object {
@@ -170,6 +161,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         private const val TICKET_COUNT = "TICKET_COUNT"
         private const val DATE_POSITION = "DATE_POSITION"
         private const val TIME_POSITION = "TIME_POSITION"
+        private const val NULL_THEATER_ERROR = "영화관 정보가 전달되지 않았습니다"
 
         fun getIntent(context: Context, movieId: Long, theater: String): Intent {
             return Intent(context, BookingActivity::class.java).apply {

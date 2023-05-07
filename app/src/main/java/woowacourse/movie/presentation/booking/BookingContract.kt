@@ -24,9 +24,9 @@ interface BookingContract {
 
         fun getTicketCurrentCount(): Int
 
-        fun getScreeningTimes(date: LocalDate): List<LocalTime>
+        fun getScreeningTimes(movieId: Long, theater: String)
 
-        fun getScreeningDates(movieId: Long): List<LocalDate>
+        fun getScreeningDates(movieId: Long)
 
         fun getMovieById(movieId: Long): Movie
     }
