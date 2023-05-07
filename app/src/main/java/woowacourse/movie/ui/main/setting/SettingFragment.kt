@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import woowacourse.movie.DefaultPreference
 import woowacourse.movie.databinding.FragmentSettingBinding
-import woowacourse.movie.ui.BaseFragment
 import woowacourse.movie.ui.Toaster
+import woowacourse.movie.ui.base.BaseFragment
 import woowacourse.movie.ui.main.MainActivity.Companion.PERMISSIONS
 import woowacourse.movie.util.hasPermissions
 

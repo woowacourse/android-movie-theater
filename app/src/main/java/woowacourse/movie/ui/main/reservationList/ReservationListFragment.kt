@@ -6,9 +6,9 @@ import android.view.View
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.dbHelper.TicketsDbHelper
 import woowacourse.movie.model.TicketsState
-import woowacourse.movie.ui.BaseFragment
 import woowacourse.movie.ui.adapter.ReservationListAdapter
 import woowacourse.movie.ui.adapter.itemModel.TicketsItemModel
+import woowacourse.movie.ui.base.BaseFragment
 import woowacourse.movie.ui.confirm.ReservationConfirmActivity
 
 class ReservationListFragment : BaseFragment(), ReservationListContract.View {

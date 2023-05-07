@@ -4,7 +4,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 import woowacourse.movie.model.CountState
 import woowacourse.movie.model.MovieState
-import woowacourse.movie.ui.BaseContract
+import woowacourse.movie.ui.base.BaseContract
 
 interface MovieDetailContract {
     interface View {

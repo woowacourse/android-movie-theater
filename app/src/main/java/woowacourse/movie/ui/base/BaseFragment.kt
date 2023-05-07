@@ -1,13 +1,13 @@
-package woowacourse.movie.ui
+package woowacourse.movie.ui.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import androidx.fragment.app.Fragment
 
-abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
+abstract class BaseFragment : Fragment() {
     protected abstract val presenter: BaseContract.Presenter
     protected abstract val binding: ViewDataBinding
 

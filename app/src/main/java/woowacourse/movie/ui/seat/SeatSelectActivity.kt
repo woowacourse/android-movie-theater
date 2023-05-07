@@ -10,15 +10,15 @@ import woowacourse.movie.model.MoneyState
 import woowacourse.movie.model.SeatPositionState
 import woowacourse.movie.model.SeatSelectState
 import woowacourse.movie.model.TicketsState
-import woowacourse.movie.ui.BackKeyActionBarActivity
 import woowacourse.movie.ui.DecimalFormatters
+import woowacourse.movie.ui.base.BaseBackKeyActionBarActivity
 import woowacourse.movie.ui.confirm.ReservationConfirmActivity
 import woowacourse.movie.util.getParcelableArrayListCompat
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
 import woowacourse.movie.util.showAskDialog
 
-class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
+class SeatSelectActivity : BaseBackKeyActionBarActivity(), SeatSelectContract.View {
     override lateinit var presenter: SeatSelectContract.Presenter
     override lateinit var binding: ActivitySeatSelectBinding
 

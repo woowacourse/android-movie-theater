@@ -4,7 +4,7 @@ import woowacourse.movie.model.MoneyState
 import woowacourse.movie.model.SeatPositionState
 import woowacourse.movie.model.SeatSelectState
 import woowacourse.movie.model.TicketsState
-import woowacourse.movie.ui.BaseContract
+import woowacourse.movie.ui.base.BaseContract
 
 interface SeatSelectContract {
     interface View {

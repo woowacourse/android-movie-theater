@@ -2,7 +2,7 @@ package woowacourse.movie.ui.main.movieList
 
 import woowacourse.movie.model.AdvState
 import woowacourse.movie.model.MovieState
-import woowacourse.movie.ui.BaseContract
+import woowacourse.movie.ui.base.BaseContract
 
 interface MovieListContract {
     interface View {

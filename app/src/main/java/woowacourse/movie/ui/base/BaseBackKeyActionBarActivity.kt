@@ -1,11 +1,11 @@
-package woowacourse.movie.ui
+package woowacourse.movie.ui.base
 
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 
-abstract class BackKeyActionBarActivity : AppCompatActivity() {
+abstract class BaseBackKeyActionBarActivity : AppCompatActivity() {
     protected abstract val presenter: BaseContract.Presenter
     protected abstract val binding: ViewDataBinding
 

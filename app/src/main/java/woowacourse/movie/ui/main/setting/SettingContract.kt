@@ -1,6 +1,6 @@
 package woowacourse.movie.ui.main.setting
 
-import woowacourse.movie.ui.BaseContract
+import woowacourse.movie.ui.base.BaseContract
 
 interface SettingContract {
     interface View {

@@ -10,13 +10,13 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationConfirmBinding
 import woowacourse.movie.model.MoneyState
 import woowacourse.movie.model.TicketsState
-import woowacourse.movie.ui.BackKeyActionBarActivity
 import woowacourse.movie.ui.DateTimeFormatters
 import woowacourse.movie.ui.DecimalFormatters
+import woowacourse.movie.ui.base.BaseBackKeyActionBarActivity
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
 
-class ReservationConfirmActivity : BackKeyActionBarActivity(), ReservationConfirmContract.View {
+class ReservationConfirmActivity : BaseBackKeyActionBarActivity(), ReservationConfirmContract.View {
     override lateinit var presenter: ReservationConfirmContract.Presenter
     override lateinit var binding: ActivityReservationConfirmBinding
 

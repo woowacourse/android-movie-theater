@@ -2,7 +2,7 @@ package woowacourse.movie.ui.confirm
 
 import woowacourse.movie.model.MoneyState
 import woowacourse.movie.model.TicketsState
-import woowacourse.movie.ui.BaseContract
+import woowacourse.movie.ui.base.BaseContract
 
 interface ReservationConfirmContract {
     interface View {

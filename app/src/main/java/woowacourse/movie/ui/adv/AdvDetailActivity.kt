@@ -4,11 +4,11 @@ import android.content.Context
 import android.content.Intent
 import woowacourse.movie.databinding.ActivityAdvDetailBinding
 import woowacourse.movie.model.AdvState
-import woowacourse.movie.ui.BackKeyActionBarActivity
+import woowacourse.movie.ui.base.BaseBackKeyActionBarActivity
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
 
-class AdvDetailActivity : BackKeyActionBarActivity(), AdvDetailContract.View {
+class AdvDetailActivity : BaseBackKeyActionBarActivity(), AdvDetailContract.View {
     override lateinit var presenter: AdvDetailContract.Presenter
     override lateinit var binding: ActivityAdvDetailBinding
 

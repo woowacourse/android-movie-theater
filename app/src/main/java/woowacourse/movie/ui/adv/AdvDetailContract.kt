@@ -1,7 +1,7 @@
 package woowacourse.movie.ui.adv
 
 import woowacourse.movie.model.AdvState
-import woowacourse.movie.ui.BaseContract
+import woowacourse.movie.ui.base.BaseContract
 
 interface AdvDetailContract {
     interface View {

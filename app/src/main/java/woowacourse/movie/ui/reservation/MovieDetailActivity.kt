@@ -9,14 +9,14 @@ import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.model.CountState
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.SeatSelectState
-import woowacourse.movie.ui.BackKeyActionBarActivity
+import woowacourse.movie.ui.base.BaseBackKeyActionBarActivity
 import woowacourse.movie.ui.seat.SeatSelectActivity
 import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.getSerializableCompat
 import woowacourse.movie.util.keyError
 
-class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View {
+class MovieDetailActivity : BaseBackKeyActionBarActivity(), MovieDetailContract.View {
     override lateinit var presenter: MovieDetailContract.Presenter
     override lateinit var binding: ActivityMovieDetailBinding
 
