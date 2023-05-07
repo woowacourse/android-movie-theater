@@ -8,5 +8,5 @@ import java.time.LocalDateTime
 data class TicketOptState(
     val movieState: MovieState,
     val dateTime: LocalDateTime,
-    val countState: CountState
+    val count: Int
 ) : Parcelable

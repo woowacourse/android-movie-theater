@@ -48,7 +48,7 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
         confirmView.setOnClickListener { navigateShowDialog(seatTable.chosenSeatInfo) }
         confirmView.isClickable = false // 클릭리스너를 설정하면 clickable이 자동으로 참이 되기 때문
 
-        seatTable = SeatTable(window.decorView.rootView, ticketOptState.countState) {
+        seatTable = SeatTable(window.decorView.rootView, CountState.of(ticketOptState.count)) {
             updateSelectSeats(it)
         }
     }
@@ -93,7 +93,7 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
     }
 
     private fun updateSelectSeats(positionStates: List<SeatPositionState>) {
-        confirmView.isClickable = (positionStates.size == ticketOptState.countState.value)
+        confirmView.isClickable = (positionStates.size == ticketOptState.count)
 
         val tickets = TicketsState(
             ticketOptState.movieState,
@@ -117,9 +117,9 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
     companion object {
         private const val SEAT_RESTORE_KEY = "seat_restore_key"
 
-        fun startActivity(context: Context, movie: MovieState, dateTime: LocalDateTime, count: CountState) {
+        fun startActivity(context: Context, movie: MovieState, dateTime: LocalDateTime, ticketCount: Int) {
             val intent = Intent(context, SeatSelectActivity::class.java).apply {
-                val ticketOptState = TicketOptState(movie, dateTime, count)
+                val ticketOptState = TicketOptState(movie, dateTime, ticketCount)
                 putExtra(KEY_TICKETS, ticketOptState)
             }
             context.startActivity(intent)

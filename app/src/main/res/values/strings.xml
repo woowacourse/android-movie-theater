@@ -1,10 +1,13 @@
 <resources>
+
+    <string name="error_reservation_min_count">예약 인원은 최소 한명 이상이어야 합니다</string>
+    <string name="error_reservation_max_count">예약 인원은 최대 20명 이하이어야 합니다</string>
+
     <string name="app_name">Movie</string>
     <string name="running_date">상영일: %s ~ %s</string>
     <string name="tilde">" ~ "</string>
     <string name="running_time">"러닝타임: %d분"</string>
     <string name="now_reservation">지금 예매</string>
-    <string name="error_reservation_min_count">예약 인원은 최소 한명 이상이어야 합니다</string>
     <string name="minus">-</string>
     <string name="plus">+</string>
     <string name="reservation_cancel">취소</string>

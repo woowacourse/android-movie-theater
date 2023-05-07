@@ -18,7 +18,7 @@ data class TicketsState(
 
     companion object {
         fun from(ticketOptState: TicketOptState, seats: List<SeatPositionState>): TicketsState {
-            require(ticketOptState.countState.value == seats.size) {
+            require(ticketOptState.count == seats.size) {
                 ERROR_NO_MATCH_SEAT_SIZE
             }
             return TicketsState(
