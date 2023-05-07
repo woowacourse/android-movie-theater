@@ -35,7 +35,7 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
     private val seatTable = mutableMapOf<SeatModel, TextView>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = SeatPickerPresenter(this)
+        presenter = SeatPickerPresenter(db, this)
         binding = ActivitySeatPickerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -46,11 +46,6 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
         loadSavedData(savedInstanceState)
 
         setDoneButton()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        db.close()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -174,7 +169,7 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
             .setTitle(getString(R.string.dialog_title_seat_selection_check))
             .setMessage(getString(R.string.dialog_message_seat_selection_check))
             .setPositiveButton(getString(R.string.dialog_positive_button_seat_selection_check)) { _, _ ->
-                presenter.addReservation(db)
+                presenter.completeReservation()
             }
             .setNegativeButton(getString(R.string.dialog_negative_button_seat_selection_check)) { dialog, _ ->
                 dialog.dismiss()

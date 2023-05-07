@@ -14,8 +14,10 @@ import woowacourse.movie.ui.model.mapToMovieTicketModelWithOriginalPrice
 import woowacourse.movie.ui.model.seat.SeatModel
 import woowacourse.movie.ui.model.seat.mapToSeat
 
-class SeatPickerPresenter(private val view: SeatPickerContract.View) :
-    SeatPickerContract.Presenter {
+class SeatPickerPresenter(
+    private val db: SQLiteDatabase,
+    private val view: SeatPickerContract.View
+) : SeatPickerContract.Presenter {
     private lateinit var ticket: MovieTicket
 
     override fun initTicket(ticketModel: MovieTicketModel) {
@@ -61,10 +63,10 @@ class SeatPickerPresenter(private val view: SeatPickerContract.View) :
         }
     }
 
-    override fun addReservation(db: SQLiteDatabase) {
+    override fun completeReservation() {
         val ticketModel = ticket.mapToMovieTicketModel()
-        Reservations.addItem(ticketModel)
-        insertReservationToDatabase(db, ticketModel)
+        addReservation(ticketModel)
+        db.close()
         view.afterReservation(ticketModel)
     }
 
@@ -72,7 +74,12 @@ class SeatPickerPresenter(private val view: SeatPickerContract.View) :
         return ticket.mapToMovieTicketModelWithOriginalPrice()
     }
 
-    private fun insertReservationToDatabase(db: SQLiteDatabase, ticket: MovieTicketModel) {
+    private fun addReservation(ticketModel: MovieTicketModel) {
+        Reservations.addItem(ticketModel)
+        insertReservationToDatabase(ticketModel)
+    }
+
+    private fun insertReservationToDatabase(ticket: MovieTicketModel) {
         val ticketId = TicketContract.createRecord(db, ticket)
         ticket.seats.forEach {
             val cursor = SeatContract.readRecordBySeat(db, it)

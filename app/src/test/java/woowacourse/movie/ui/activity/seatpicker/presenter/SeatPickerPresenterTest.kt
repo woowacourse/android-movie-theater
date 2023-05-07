@@ -1,5 +1,7 @@
 package woowacourse.movie.ui.activity.seatpicker.presenter
 
+import android.database.sqlite.SQLiteDatabase
+import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.verify
@@ -13,14 +15,16 @@ import woowacourse.movie.ui.model.seat.RowModel
 import woowacourse.movie.ui.model.seat.SeatModel
 
 internal class SeatPickerPresenterTest {
+    private lateinit var database: SQLiteDatabase
     private lateinit var presenter: SeatPickerPresenter
     private val ticket = createMovieTicketModel()
     private lateinit var view: SeatPickerContract.View
 
     @Before
     fun setUp() {
+        database = mockk()
         view = mockk()
-        presenter = SeatPickerPresenter(view)
+        presenter = SeatPickerPresenter(database, view)
 
         justRun { view.applyTicketData(any()) }
         presenter.initTicket(ticket)
@@ -109,5 +113,20 @@ internal class SeatPickerPresenterTest {
 
         // then
         verify { view.activateDoneButton() }
+    }
+
+    @Test
+    fun addReservation() {
+        // given
+        every { database.insert(any(), any(), any()) } returns -1
+        every { database.query(any(), any(), any(), any(), any(), any(), any()) } returns null
+        justRun { database.close() }
+        justRun { view.afterReservation(any()) }
+
+        // when
+        presenter.completeReservation()
+
+        // then
+        verify { view.afterReservation(any()) }
     }
 }

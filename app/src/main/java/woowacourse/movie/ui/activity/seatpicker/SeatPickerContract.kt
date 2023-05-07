@@ -1,6 +1,5 @@
 package woowacourse.movie.ui.activity.seatpicker
 
-import android.database.sqlite.SQLiteDatabase
 import woowacourse.movie.ui.model.MovieTicketModel
 import woowacourse.movie.ui.model.seat.SeatModel
 
@@ -12,7 +11,7 @@ interface SeatPickerContract {
 
         fun checkSelectionDone()
 
-        fun addReservation(db: SQLiteDatabase)
+        fun completeReservation()
 
         fun getTicketModelWithOriginalPrice(): MovieTicketModel
     }
