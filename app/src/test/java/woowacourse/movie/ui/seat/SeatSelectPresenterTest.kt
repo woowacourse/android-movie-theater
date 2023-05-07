@@ -40,6 +40,7 @@ class SeatSelectPresenterTest {
         presenter.discountMoneyApply(emptyList())
 
         // then
+        verify { view.setConfirmClickable(true) }
         verify { view.showMoneyText(any()) }
     }
 
@@ -51,14 +52,5 @@ class SeatSelectPresenterTest {
         // then
         verify { ticketsDbHelper.insert(any()) }
         verify { view.navigateToConfirmView(any()) }
-    }
-
-    @Test
-    fun `필요한 티켓 수를 반환한다`() {
-        // when
-        presenter.getRequireCount()
-
-        // then
-        verify { seatSelectState.countState.value }
     }
 }

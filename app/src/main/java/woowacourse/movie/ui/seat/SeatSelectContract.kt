@@ -11,6 +11,7 @@ interface SeatSelectContract {
         fun initSeatTable(seatSelectState: SeatSelectState)
         fun showReservationTitle(seatSelectState: SeatSelectState)
         fun showMoneyText(money: MoneyState)
+        fun setConfirmClickable(clickable: Boolean)
         fun setReservationConfirm(seatSelectState: SeatSelectState)
         fun navigateToConfirmView(tickets: TicketsState)
     }
@@ -19,6 +20,5 @@ interface SeatSelectContract {
         fun setUpSeatSelectState()
         fun discountMoneyApply(positionStates: List<SeatPositionState>)
         fun addTicket(positionStates: List<SeatPositionState>)
-        fun getRequireCount(): Int
     }
 }

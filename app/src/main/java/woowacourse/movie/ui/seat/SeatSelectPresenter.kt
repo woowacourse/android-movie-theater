@@ -29,6 +29,7 @@ class SeatSelectPresenter(
             positionStates
         )
         view.showMoneyText(discountApplyUseCase(tickets.asDomain()).asPresentation())
+        view.setConfirmClickable(positionStates.size == seatSelectState.countState.value)
     }
 
     override fun addTicket(positionStates: List<SeatPositionState>) {
@@ -40,9 +41,5 @@ class SeatSelectPresenter(
         )
         ticketsDbHelper.insert(tickets)
         view.navigateToConfirmView(tickets)
-    }
-
-    override fun getRequireCount(): Int {
-        return seatSelectState.countState.value
     }
 }
