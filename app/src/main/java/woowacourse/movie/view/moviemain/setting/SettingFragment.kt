@@ -23,7 +23,7 @@ class SettingFragment : Fragment(), SettingContract.View {
     private lateinit var alarmController: AlarmController
     private lateinit var binding: FragmentSettingBinding
     override lateinit var presenter: SettingContract.Presenter
-    override val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
         if (!isGranted) {
             Toast.makeText(requireContext(), NOTICE_REQUEST_PERMISSION_MESSAGE, Toast.LENGTH_LONG).show()
             setToggle(false)
