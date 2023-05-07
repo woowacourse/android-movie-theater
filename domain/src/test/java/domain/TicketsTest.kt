@@ -35,6 +35,6 @@ class TicketsTest {
         val date = LocalDate.of(2023, 4, 20)
         val time = LocalTime.of(10, 0)
         val dateTime = LocalDateTime.of(date, time)
-        return Ticket(dateTime, Seat(3, 3), DisCountPolicies())
+        return Ticket(dateTime, Seat(3, 3),"선릉", DisCountPolicies())
     }
 }

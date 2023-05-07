@@ -8,6 +8,7 @@ import java.time.LocalDateTime
 data class Ticket(
     val date: LocalDateTime,
     val seat: Seat,
+    val theaterName: String,
     val disCountPolicies: DisCountPolicies
 ) {
     val discountPrice: Price

@@ -6,14 +6,15 @@ import java.time.LocalDateTime
 
 class TicketOffice(
     val tickets: Tickets = Tickets(listOf()),
-    private val disCountPolicies: DisCountPolicies = DisCountPolicies(),
-    private val date: LocalDateTime,
+    val disCountPolicies: DisCountPolicies = DisCountPolicies(),
+    val date: LocalDateTime,
+    val theaterName: String,
     val peopleCount: Int
 ) {
 
     fun generateTicket(seatRow: Int, seatCol: Int): Ticket {
         val seat = Seat(seatRow, seatCol)
-        return Ticket(date, seat, disCountPolicies)
+        return Ticket(date, seat, theaterName, disCountPolicies)
     }
 
     fun isAvailableAddTicket(): Boolean = tickets.list.size < peopleCount

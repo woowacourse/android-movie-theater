@@ -15,7 +15,6 @@ import java.time.LocalTime
 
 class TicketTest {
     private val disCountPolicies = DisCountPolicies(listOf(MovieDay(), OffTime()))
-
     @Test
     internal fun `좌석이 1행 3열이고, 상영시간이 무비데이가 아닌 토요일 9시일 때, 가격은 7000원이다`() {
         // given
@@ -23,7 +22,7 @@ class TicketTest {
         val date = LocalDate.of(2023, 4, 22)
         val time = LocalTime.of(9, 0)
         val dateTime = LocalDateTime.of(date, time)
-        val ticket = Ticket(dateTime, seat, disCountPolicies)
+        val ticket = Ticket(dateTime, seat, "선릉", disCountPolicies)
         // when
         val actual = ticket.discountPrice.value
         // then
@@ -38,7 +37,7 @@ class TicketTest {
         val date = LocalDate.of(2023, 4, 22)
         val time = LocalTime.of(9, 0)
         val dateTime = LocalDateTime.of(date, time)
-        val ticket = Ticket(dateTime, seat,disCountPolicies)
+        val ticket = Ticket(dateTime, seat, "선릉", disCountPolicies)
         // when
         val actual = ticket.discountPrice.value
         // then
@@ -53,7 +52,7 @@ class TicketTest {
         val date = LocalDate.of(2023, 4, 20)
         val time = LocalTime.of(10, 0)
         val dateTime = LocalDateTime.of(date, time)
-        val ticket = Ticket(dateTime, seat, disCountPolicies)
+        val ticket = Ticket(dateTime, seat, "선릉", disCountPolicies)
         // when
         val actual = ticket.discountPrice.value
         // then

@@ -1,19 +1,12 @@
 package woowacourse.movie.presenter
 
-import domain.DateRange
-import domain.Movie
-import domain.Reservation
-import domain.Tickets
 import io.mockk.*
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.contract.SelectSeatContract
 import woowacourse.movie.model.MovieUiModel
-import woowacourse.movie.model.SeatUiModel
-import woowacourse.movie.model.TicketDateUiModel
 import woowacourse.movie.model.TicketsUiModel
-import woowacourse.movie.model.mapper.MovieMapper.toDomain
 import woowacourse.movie.sql.ReservationDbHelperInterface
 import woowacourse.movie.view.SeatView
 import java.time.LocalDate

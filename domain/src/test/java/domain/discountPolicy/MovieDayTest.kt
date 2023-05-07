@@ -17,6 +17,7 @@ class MovieDayTest {
         val ticket = Ticket(
             date,
             Seat(1,3),
+            "선릉",
             DisCountPolicies()
         )
 
@@ -35,6 +36,7 @@ class MovieDayTest {
         val ticket = Ticket(
             date,
             Seat(1,3),
+            "선릉",
             DisCountPolicies()
         )
 
