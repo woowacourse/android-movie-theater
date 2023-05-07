@@ -6,6 +6,8 @@ import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.contract.SelectSeatContract
 import woowacourse.movie.model.MovieUiModel
+import woowacourse.movie.model.TheatersUiModel
+import woowacourse.movie.model.TicketOfficeUiModel
 import woowacourse.movie.model.TicketsUiModel
 import woowacourse.movie.sql.ReservationDbHelperInterface
 import woowacourse.movie.view.SeatView
@@ -17,17 +19,22 @@ class SelectSeatPresenterTest {
     private lateinit var view: SelectSeatContract.View
     private lateinit var movieUiModel: MovieUiModel
     private lateinit var reservationDb: ReservationDbHelperInterface
-    private var peopleCount: Int = 3
 
     @Before
     fun setUp() {
         view = mockk()
-        movieUiModel = MovieUiModel(1, "", LocalDate.MAX, LocalDate.MIN, 0, "")
+        movieUiModel =
+            MovieUiModel(1, "", LocalDate.MAX, LocalDate.MIN, TheatersUiModel(listOf()), 0, "")
         reservationDb = mockk()
+        val ticketOfficeUiModel = TicketOfficeUiModel(
+            TicketsUiModel(listOf()),
+            3,
+            "선릉",
+            LocalDateTime.of(2023, 5, 6, 11, 0)
+        )
         presenter = SelectSeatPresenter(
             view,
-            peopleCount,
-            LocalDateTime.of(2023, 5, 6, 11, 0),
+            ticketOfficeUiModel,
             movieUiModel,
             reservationDb
         )
@@ -87,7 +94,7 @@ class SelectSeatPresenterTest {
         // then
         verify { view.startReservationResultActivity(movieUiModel, slotStartActivity.captured) }
         verify { view.registerAlarm(movieUiModel, slotRegisterAlarm.captured) }
-        verify { reservationDb.saveReservation(any())}
+        verify { reservationDb.saveReservation(any()) }
     }
 
     @Test

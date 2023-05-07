@@ -25,6 +25,7 @@ class ReservationDbHelper(context: Context) :
             "CREATE TABLE ${ReservationContract.TABLE_NAME} (" +
                     "${ReservationContract.TABLE_COLUMN_MOVIE_TITLE} varchar(30) not null," +
                     "${ReservationContract.TABLE_COLUMN_RESERVATION_DATE} varchar(20) not null," +
+                    "${ReservationContract.TABLE_COLUMN_THEATER_NAME} varchar(30) not null," +
                     "${ReservationContract.TABLE_COLUMN_SEATS} varchar(100) not null" +
                     ");",
         )
@@ -37,14 +38,16 @@ class ReservationDbHelper(context: Context) :
 
     override fun saveReservation(reservation: Reservation) {
         val movieTitle = reservation.movie.title
+        val theaterName = reservation.tickets.list.first().theaterName
         val reservationDate = reservation.tickets.list.first().date
         val formattedDateTime =
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(reservationDate)
-        val seats = reservation.toUi().tickets.list.joinToString(","){
+        val seats = reservation.toUi().tickets.list.joinToString(",") {
             it.seat.row.toString() + it.seat.col.toString()
         }.trim()
         val values = ContentValues().apply {
             put(ReservationContract.TABLE_COLUMN_MOVIE_TITLE, movieTitle)
+            put(ReservationContract.TABLE_COLUMN_THEATER_NAME, theaterName)
             put(ReservationContract.TABLE_COLUMN_RESERVATION_DATE, formattedDateTime)
             put(ReservationContract.TABLE_COLUMN_SEATS, seats)
         }
@@ -74,9 +77,14 @@ class ReservationDbHelper(context: Context) :
     private fun getTickets(cursor: Cursor): Tickets {
         val reservationDate = getReservationDate(cursor)
         val seats = getSeats(cursor)
+        val theaterName = getTheaterName(cursor)
         return Tickets(seats.map {
-            Ticket(date = reservationDate, it, DisCountPolicies())
+            Ticket(date = reservationDate, it, theaterName, DisCountPolicies())
         })
+    }
+
+    private fun getTheaterName(cursor: Cursor): String {
+        return cursor.getString(cursor.getColumnIndexOrThrow(ReservationContract.TABLE_COLUMN_THEATER_NAME))
     }
 
     private fun getReservationDate(cursor: Cursor): LocalDateTime {
@@ -90,7 +98,7 @@ class ReservationDbHelper(context: Context) :
             cursor.getString(cursor.getColumnIndexOrThrow(ReservationContract.TABLE_COLUMN_SEATS))
         val splitStringSeats = stringSeats.trim().split(",")
         return splitStringSeats.map {
-            SeatUiModel(it.first(),it.substring(1).toInt())
+            SeatUiModel(it.first(), it.substring(1).toInt())
                 .toDomain()
         }
     }

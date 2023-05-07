@@ -30,8 +30,7 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
     override val presenter: SelectSeatContract.Presenter by lazy {
         SelectSeatPresenter(
             view = this,
-            peopleCount = receivePeopleCount(),
-            date = receiveTicketDateTime(),
+            ticketOfficeUiModel = receiveTicketOfficeUiModel(),
             movieUiModel = receiveMovieUiModel(),
             reservationDbHelper = ReservationDbHelper(this)
         )
@@ -62,12 +61,6 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
         binding.selectSeatCheckButton.setOnClickListener { presenter.onClickCheckButton() }
     }
 
-    private fun receivePeopleCount(): Int {
-        val peopleCount = intent.getIntExtra(PEOPLE_COUNT_KEY, 0)
-        if (peopleCount == 0) finishActivityWithToast(getString(R.string.reservation_data_null_error))
-        return peopleCount
-    }
-
     private fun receiveMovieUiModel(): MovieUiModel {
         val movieUiModel = intent.extras?.getSerializableCompat<MovieUiModel>(MOVIE_KEY_VALUE)
             ?: finishActivityWithToast(
@@ -76,10 +69,11 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
         return movieUiModel as MovieUiModel
     }
 
-    private fun receiveTicketDateTime(): LocalDateTime {
-        val date = intent.extras?.getSerializableCompat<TicketDateUiModel>(TICKET_KEY)?.date
-            ?: finishActivityWithToast(getString(R.string.reservation_data_null_error))
-        return date as LocalDateTime
+    private fun receiveTicketOfficeUiModel(): TicketOfficeUiModel {
+        val ticketOfficeUiModel = intent.extras?.getSerializableCompat<TicketOfficeUiModel>(
+            TICKET_OFFICE_KEY
+        ) ?: finishActivityWithToast(getString(R.string.reservation_data_null_error))
+        return ticketOfficeUiModel as TicketOfficeUiModel
     }
 
     private fun finishActivityWithToast(message: String) {
@@ -153,18 +147,15 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
     }
 
     companion object {
-        private const val PEOPLE_COUNT_KEY = "peopleCount"
-        private const val TICKET_KEY = "ticket"
+        private const val TICKET_OFFICE_KEY = "ticket_office"
         private const val MOVIE_KEY_VALUE = "movie"
         fun start(
             context: Context,
-            peopleCount: Int,
-            ticketDateUiModel: TicketDateUiModel,
+            ticketOfficeUiModel: TicketOfficeUiModel,
             movieUiModel: MovieUiModel
         ) {
             val intent = Intent(context, SelectSeatActivity::class.java)
-            intent.putExtra(PEOPLE_COUNT_KEY, peopleCount)
-            intent.putExtra(TICKET_KEY, ticketDateUiModel)
+            intent.putExtra(TICKET_OFFICE_KEY, ticketOfficeUiModel)
             intent.putExtra(MOVIE_KEY_VALUE, movieUiModel)
             context.startActivity(intent)
         }
