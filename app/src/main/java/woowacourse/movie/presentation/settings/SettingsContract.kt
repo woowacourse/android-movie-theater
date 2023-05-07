@@ -8,5 +8,7 @@ interface SettingsContract {
 
     interface Presenter {
         var isNotifiable: Boolean
+
+        fun initNotifiable()
     }
 }

@@ -28,11 +28,16 @@ class SettingsFragment : Fragment(), SettingsContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initPresenter()
+    }
+
+    private fun initPresenter() {
         val prefKey = SettingsAllowance.NOTIFICATION_PREF_KEY
         presenter = SettingsPresenter(
             this,
             SettingsPreference.getInstance(prefKey, requireContext()),
         )
+        presenter.initNotifiable()
     }
 
     override fun initNotificationSwitch(isNotifiable: Boolean) {
