@@ -5,31 +5,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.service.PermissionManager
 import woowacourse.movie.service.PermissionManager.checkNotificationSelfPermission
 import woowacourse.movie.view.setting.SharedSettingRepository
 
 class SettingFragment : Fragment(), SettingContract.View {
     override lateinit var presenter: SettingContract.Presenter
+    private val binding: FragmentSettingBinding by lazy {
+        FragmentSettingBinding.inflate(layoutInflater)
+    }
     private val permissionStatus
         get() = requireContext().checkNotificationSelfPermission()
 
     private val requestPermissionLauncher =
         PermissionManager.getRequestPermissionLauncher(this, ::onPermissionDenied)
 
-    private val switch: SwitchCompat by lazy {
-        requireView().findViewById(R.id.setting_push_switch)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_setting, container, false)
+    ): View {
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,7 +39,7 @@ class SettingFragment : Fragment(), SettingContract.View {
 
     private fun initSwitch() {
         presenter.initSwitchStatus(permissionStatus)
-        switch.setOnCheckedChangeListener { _, isChecked ->
+        binding.settingPushSwitch.setOnCheckedChangeListener { _, isChecked ->
             presenter.updateSwitchStatus(
                 permissionStatus, isChecked
             )
@@ -48,7 +47,7 @@ class SettingFragment : Fragment(), SettingContract.View {
     }
 
     override fun setSwitchStatus(setting: Boolean) {
-        switch.isChecked = setting
+        binding.settingPushSwitch.isChecked = setting
     }
 
     override fun requestPermission() {
@@ -58,7 +57,7 @@ class SettingFragment : Fragment(), SettingContract.View {
     }
 
     private fun onPermissionDenied() {
-        switch.isChecked = false
+        binding.settingPushSwitch.isChecked = false
     }
 
     private fun notifyForGetPermission() {

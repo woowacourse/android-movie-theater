@@ -4,12 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.activity.reservationresult.ReservationResultActivity
+import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.service.AlarmMaker
 import woowacourse.movie.view.data.MovieViewData
 import woowacourse.movie.view.data.PriceViewData
@@ -25,25 +24,19 @@ import java.time.LocalDateTime
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     override lateinit var presenter: SeatSelectionContract.Presenter
-
-    private val priceText: TextView by lazy {
-        findViewById(R.id.seat_selection_movie_price)
-    }
-
-    private val reservationButton: Button by lazy {
-        findViewById(R.id.seat_selection_reserve_button)
+    private val binding: ActivitySeatSelectionBinding by lazy {
+        ActivitySeatSelectionBinding.inflate(layoutInflater)
     }
 
     private val seatTableLayout: SeatTableLayout by lazy {
         SeatTableLayout.from(
-            findViewById(R.id.seat_selection_table), SEAT_ROW_COUNT, SEAT_COLUMN_COUNT
+            binding.seatSelectionTable, SEAT_ROW_COUNT, SEAT_COLUMN_COUNT
         )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_seat_selection)
-
+        setContentView(binding.root)
         presenter = SeatSelectionPresenter(
             this, SaveStateSeats(SEAT_TABLE_LAYOUT_STATE_KEY, seatTableLayout), this
         )
@@ -103,7 +96,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     override fun setPriceView(price: String) {
-        priceText.text = price
+        binding.seatSelectionMoviePrice.text = price
     }
 
     override fun makeAlarm(alarmDate: LocalDateTime, reservation: ReservationViewData) {
@@ -114,7 +107,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         seatsSize: Int,
         peopleCount: Int
     ) {
-        reservationButton.isEnabled = seatsSize == peopleCount
+        binding.seatSelectionReserveButton.isEnabled = seatsSize == peopleCount
     }
 
     private fun initReserveButton(
@@ -122,7 +115,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         movie: MovieViewData,
         reservationDetail: ReservationDetailViewData
     ) {
-        reservationButton.setOnClickListener {
+        binding.seatSelectionReserveButton.setOnClickListener {
             onClickReserveButton(seatTableLayout, movie, reservationDetail)
         }
         setReservationButtonState(DEFAULT_SEAT_SIZE, reservationDetail.peopleCount)
@@ -166,7 +159,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun initMovieView(movie: MovieViewData) {
-        findViewById<TextView>(R.id.seat_selection_movie_title).text = movie.title
+        binding.seatSelectionMovieTitle.text = movie.title
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

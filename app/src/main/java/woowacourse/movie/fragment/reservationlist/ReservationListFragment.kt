@@ -6,9 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
 import woowacourse.movie.activity.reservationresult.ReservationResultActivity
+import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.datasource.ReservationDataSource
 import woowacourse.movie.fragment.reservationlist.adapter.ReservationAdapter
 import woowacourse.movie.view.data.ReservationViewData
@@ -16,12 +15,16 @@ import woowacourse.movie.view.data.ReservationsViewData
 
 class ReservationListFragment : Fragment(), ReservationListContract.View {
     override lateinit var presenter: ReservationListContract.Presenter
+    private val binding: FragmentReservationListBinding by lazy {
+        FragmentReservationListBinding.inflate(layoutInflater)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_reservation_list, container, false)
+    ): View {
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,12 +35,11 @@ class ReservationListFragment : Fragment(), ReservationListContract.View {
     }
 
     override fun initReservationRecyclerView(reservationsViewData: ReservationsViewData) {
-        val recyclerView = requireView().findViewById<RecyclerView>(R.id.reservation_list_recycler)
-        recyclerView.adapter =
+        binding.reservationListRecycler.adapter =
             ReservationAdapter(reservationsViewData) { presenter.onItemClick(it) }
         val decoration =
             DividerItemDecoration(requireView().context, DividerItemDecoration.VERTICAL)
-        recyclerView.addItemDecoration(decoration)
+        binding.reservationListRecycler.addItemDecoration(decoration)
     }
 
     override fun onItemClick(reservationViewData: ReservationViewData) {

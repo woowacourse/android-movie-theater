@@ -4,9 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityReservationResultBinding
 import woowacourse.movie.view.data.MovieViewData
 import woowacourse.movie.view.data.ReservationViewData
 import woowacourse.movie.view.error.ActivityError.finishWithError
@@ -16,10 +15,13 @@ import woowacourse.movie.view.getSerializable
 class ReservationResultActivity : AppCompatActivity(), ReservationResultContract.View {
 
     override lateinit var presenter: ReservationResultContract.Presenter
+    private val binding: ActivityReservationResultBinding by lazy {
+        ActivityReservationResultBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_reservation_result)
+        setContentView(binding.root)
         presenter = ReservationResultPresenter(this)
         initReservationResultView()
     }
@@ -44,7 +46,7 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
     private fun renderMovie(
         movie: MovieViewData
     ) {
-        findViewById<TextView>(R.id.movie_reservation_result_title).text = movie.title
+        binding.movieReservationResultTitle.text = movie.title
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -55,9 +57,9 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
     }
 
     override fun renderReservation(date: String, peopleCount: String, price: String) {
-        findViewById<TextView>(R.id.movie_reservation_result_date).text = date
-        findViewById<TextView>(R.id.movie_reservation_result_people_count).text = peopleCount
-        findViewById<TextView>(R.id.movie_reservation_result_price).text = price
+        binding.movieReservationResultDate.text = date
+        binding.movieReservationResultPeopleCount.text = peopleCount
+        binding.movieReservationResultPrice.text = price
     }
 
     companion object {

@@ -3,7 +3,7 @@ package woowacourse.movie.fragment.reservationlist.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemReservationBinding
 import woowacourse.movie.view.data.ReservationViewData
 import woowacourse.movie.view.data.ReservationsViewData
 
@@ -12,8 +12,10 @@ class ReservationAdapter(
     private val onClickItem: (ReservationViewData) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val binding: ItemReservationBinding =
+            ItemReservationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ReservationViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_reservation, parent, false)
+            binding
         ) { onClickItem(reservationsViewData.value[it]) }
     }
 

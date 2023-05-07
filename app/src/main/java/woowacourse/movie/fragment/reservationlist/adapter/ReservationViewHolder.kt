@@ -1,29 +1,26 @@
 package woowacourse.movie.fragment.reservationlist.adapter
 
-import android.view.View
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemReservationBinding
 import woowacourse.movie.view.data.ReservationViewData
 import java.time.format.DateTimeFormatter
 
 class ReservationViewHolder(
-    view: View,
+    val binding: ItemReservationBinding,
     onClickItem: (Int) -> Unit
-) : RecyclerView.ViewHolder(view) {
-    private val dateTime: TextView = view.findViewById(R.id.item_reservation_datetime)
-    private val title: TextView = view.findViewById(R.id.item_reservation_title)
+) : RecyclerView.ViewHolder(binding.root) {
 
     init {
-        view.setOnClickListener {
+        binding.root.setOnClickListener {
             onClickItem(adapterPosition)
         }
     }
 
     fun bind(reservation: ReservationViewData) {
         val dateFormat =
-            DateTimeFormatter.ofPattern(dateTime.context.getString(R.string.reservation_item_datetime_format))
-        dateTime.text = dateFormat.format(reservation.reservationDetail.date)
-        title.text = reservation.movie.title
+            DateTimeFormatter.ofPattern(binding.root.context.getString(R.string.reservation_item_datetime_format))
+        binding.itemReservationDatetime.text = dateFormat.format(reservation.reservationDetail.date)
+        binding.itemReservationTitle.text = reservation.movie.title
     }
 }

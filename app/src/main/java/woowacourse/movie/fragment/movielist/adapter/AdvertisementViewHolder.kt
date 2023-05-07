@@ -1,12 +1,12 @@
 package woowacourse.movie.fragment.movielist.adapter
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.movie.databinding.ItemAdvertisementBinding
 
-class AdvertisementViewHolder(view: View, onClickItem: (Int) -> Unit) :
-    RecyclerView.ViewHolder(view) {
+class AdvertisementViewHolder(binding: ItemAdvertisementBinding, onClickItem: (Int) -> Unit) :
+    RecyclerView.ViewHolder(binding.root) {
     init {
-        view.setOnClickListener {
+        binding.root.setOnClickListener {
             onClickItem(adapterPosition)
         }
     }

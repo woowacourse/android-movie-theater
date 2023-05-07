@@ -3,26 +3,30 @@ package woowacourse.movie.fragment.movielist.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemAdvertisementBinding
+import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.view.data.MovieListViewData
 import woowacourse.movie.view.data.MovieListViewType
 import woowacourse.movie.view.data.MovieViewData
 import woowacourse.movie.view.data.MovieViewDatas
 
 class MovieAdapter(
-    val movieViewDatas: MovieViewDatas,
+    private val movieViewDatas: MovieViewDatas,
     val onClickItem: (data: MovieListViewData) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val movieBinding: ItemMovieBinding =
+            ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val adBinding: ItemAdvertisementBinding =
+            ItemAdvertisementBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return when (MovieListViewType.values()[viewType]) {
             MovieListViewType.MOVIE -> MovieInfoViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
+                movieBinding
             ) { onClickItem(movieViewDatas.value[it]) }
 
             MovieListViewType.ADVERTISEMENT -> AdvertisementViewHolder(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_advertisement, parent, false)
+                adBinding
             ) { onClickItem(movieViewDatas.value[it]) }
         }
     }

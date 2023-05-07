@@ -1,31 +1,40 @@
 package woowacourse.movie.fragment.movielist.adapter
 
-import android.view.View
-import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemMovieBinding
+import woowacourse.movie.view.data.DateRangeViewData
 import woowacourse.movie.view.data.MovieViewData
-import woowacourse.movie.view.widget.MovieController
-import woowacourse.movie.view.widget.MovieView
+import java.time.format.DateTimeFormatter
 
-class MovieInfoViewHolder(view: View, onClickItem: (Int) -> Unit) :
-    RecyclerView.ViewHolder(view) {
-    private val movieView: MovieView = MovieView(
-        poster = view.findViewById(R.id.item_movie_poster),
-        title = view.findViewById(R.id.item_movie_title),
-        date = view.findViewById(R.id.item_movie_date),
-        runningTime = view.findViewById(R.id.item_movie_running_time)
-    )
-
-    private val reservation: Button = view.findViewById(R.id.item_movie_reservation_button)
+class MovieInfoViewHolder(private val binding: ItemMovieBinding, onClickItem: (Int) -> Unit) :
+    RecyclerView.ViewHolder(binding.root) {
 
     init {
-        reservation.setOnClickListener {
+        binding.itemMovieReservationButton.setOnClickListener {
             onClickItem(adapterPosition)
         }
     }
 
     fun bind(movieViewData: MovieViewData) {
-        MovieController.bind(movieViewData, movieView)
+        binding.apply {
+            itemMoviePoster.setImageResource(movieViewData.poster.resource)
+            itemMovieTitle.text = movieViewData.title
+            itemMovieDate.text = formatDate(movieViewData.date)
+            itemMovieRunningTime.text =
+                root.context.getString(R.string.movie_running_time, movieViewData.runningTime)
+        }
+    }
+
+    private fun formatDate(dateRangeViewData: DateRangeViewData): String {
+        binding.apply {
+            val dateFormat =
+                DateTimeFormatter.ofPattern(root.context.getString(R.string.movie_date_format))
+            return root.context.getString(
+                R.string.movie_date,
+                dateFormat.format(dateRangeViewData.startDate),
+                dateFormat.format(dateRangeViewData.endDate)
+            )
+        }
     }
 }
