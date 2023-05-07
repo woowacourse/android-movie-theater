@@ -7,9 +7,10 @@ import woowacourse.movie.PaymentType
 import woowacourse.movie.model.Mapper.toUiModel
 import woowacourse.movie.model.ReservationUiModel
 import woowacourse.movie.model.TicketUiModel
+import woowacourse.movie.ticket.Position
+import woowacourse.movie.ticket.Seat
 import woowacourse.movie.ui.seat.SeatRow
 import woowacourse.movie.util.formatScreenDateTime
-import woowacourse.movie.util.toSeat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -110,6 +111,13 @@ class BookingHistoryDBAdapter(db: BookingHistoryDBHelper) : BookingHistoryReposi
             bookedDateTime = bookingDateTime,
             count = ticketCount
         )
+    }
+
+    private fun String.toSeat(): Seat {
+        val row = this[0] - 'A'
+        val col = this.substring(1).toInt()
+
+        return Seat.valueOf(Position(row, col))
     }
 
     companion object {
