@@ -22,7 +22,10 @@ class HomePresenterTest {
     @Before
     fun setUp() {
         view = mockk()
-        homePresenter = HomePresenter(view)
+        homePresenter = HomePresenter(
+            view = view,
+            repository = MainModelHandler
+        )
     }
 
     @Test

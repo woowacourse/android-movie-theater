@@ -10,6 +10,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import woowacourse.movie.databinding.BottomSheetTheatersBinding
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.model.main.MainData
+import woowacourse.movie.model.main.MainModelHandler
 import woowacourse.movie.ui.booking.BookingActivity
 import woowacourse.movie.ui.main.adapter.recyclerview.MainAdapter
 
@@ -17,7 +18,10 @@ class HomeFragment : Fragment(), HomeContract.View {
 
     private lateinit var binding: FragmentHomeBinding
     private val homePresenter: HomePresenter by lazy {
-        HomePresenter(this)
+        HomePresenter(
+            view = this,
+            repository = MainModelHandler
+        )
     }
     private val theaterSheetBinding: BottomSheetTheatersBinding by lazy {
         BottomSheetTheatersBinding.inflate(layoutInflater)
