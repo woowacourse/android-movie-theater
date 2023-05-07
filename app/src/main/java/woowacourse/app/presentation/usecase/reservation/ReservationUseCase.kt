@@ -10,6 +10,6 @@ class ReservationUseCase(private val reservationRepository: ReservationRepositor
     }
 
     fun getReservation(id: Long): Reservation? {
-        return getReservation(id)
+        return reservationRepository.getReservation(id)
     }
 }

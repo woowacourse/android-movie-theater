@@ -6,8 +6,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
-import woowacourse.app.data.reservation.ReservationDatabase
+import woowacourse.app.data.movie.MovieDao
+import woowacourse.app.data.reservation.ReservationDao
 import woowacourse.app.data.reservation.ReservationRepositoryImpl
+import woowacourse.app.data.reservation.SeatDao
 import woowacourse.app.data.theater.TheaterDatabase
 import woowacourse.app.data.theater.TheaterRepositoryImpl
 import woowacourse.app.presentation.model.BookedMovieUiModel
@@ -46,7 +48,13 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         val bookedMovieUiModel = getData()
         presenter = SeatPresenter(
             this,
-            BoxOffice(ReservationRepositoryImpl(ReservationDatabase)),
+            BoxOffice(
+                ReservationRepositoryImpl(
+                    ReservationDao(this),
+                    SeatDao(this),
+                    MovieDao(this),
+                ),
+            ),
             bookedMovieUiModel.toBookedMovie(),
             TheaterUseCase(TheaterRepositoryImpl(TheaterDatabase)),
         )

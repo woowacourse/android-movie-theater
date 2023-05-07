@@ -8,7 +8,5 @@ interface ReservationRepository {
 
     fun getReservation(id: Long): Reservation?
 
-    fun addReservation(reservation: Reservation)
-
     fun makeReservation(tickets: Set<Ticket>): Reservation
 }

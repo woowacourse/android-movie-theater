@@ -19,11 +19,11 @@ object MovieMapper {
     )
 
     fun getThumbnail(id: Long): Int {
-        return thumbnailMap[id] ?: throw IllegalArgumentException("없는 아이디 입니다")
+        return thumbnailMap[id] ?: throw IllegalArgumentException("없는 아이디 입니다. 현재 아이디 $id")
     }
 
     fun getPoster(id: Long): Int {
-        return posterMap[id] ?: throw IllegalArgumentException("없는 아이디 입니다")
+        return posterMap[id] ?: throw IllegalArgumentException("없는 아이디 입니다. 현재 아이디 $id")
     }
 
     fun Movie.toUiModel(): MovieUiModel {

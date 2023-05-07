@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.app.data.reservation.ReservationDatabase
+import woowacourse.app.data.movie.MovieDao
+import woowacourse.app.data.reservation.ReservationDao
 import woowacourse.app.data.reservation.ReservationRepositoryImpl
+import woowacourse.app.data.reservation.SeatDao
 import woowacourse.app.presentation.model.Mapper.toUiModel
 import woowacourse.app.presentation.model.Mapper.toUiReservations
 import woowacourse.app.presentation.ui.completed.CompletedActivity
@@ -18,7 +20,15 @@ import woowacourse.movie.R
 class BookingHistoryFragment : Fragment(), ReservationHistoryContract.View {
 
     override val presenter: ReservationHistoryContract.Presenter by lazy {
-        ReservationHistoryPresenter(ReservationUseCase(ReservationRepositoryImpl(ReservationDatabase)))
+        ReservationHistoryPresenter(
+            ReservationUseCase(
+                ReservationRepositoryImpl(
+                    ReservationDao(requireContext()),
+                    SeatDao(requireContext()),
+                    MovieDao(requireContext()),
+                ),
+            ),
+        )
     }
 
     override fun onCreateView(

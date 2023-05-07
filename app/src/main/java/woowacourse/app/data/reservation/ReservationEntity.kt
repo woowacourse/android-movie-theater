@@ -1,12 +1,10 @@
 package woowacourse.app.data.reservation
 
-import woowacourse.app.data.movie.MovieEntity
 import java.time.LocalDateTime
 
 data class ReservationEntity(
     val id: Long,
-    val movie: MovieEntity,
+    val movieId: Long,
     val bookedDateTime: LocalDateTime,
     val paymentType: Int,
-    val seats: List<SeatEntity>,
 )

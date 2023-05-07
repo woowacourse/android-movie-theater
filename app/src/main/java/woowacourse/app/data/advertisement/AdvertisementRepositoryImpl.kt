@@ -4,12 +4,18 @@ import woowacourse.app.data.advertisement.AdvertisementMapper.toAdvertisement
 import woowacourse.domain.advertisement.Advertisement
 import woowacourse.domain.advertisement.AdvertisementRepository
 
-class AdvertisementRepositoryImpl : AdvertisementRepository {
+class AdvertisementRepositoryImpl(private val advertisementDataSource: AdvertisementDataSource) :
+    AdvertisementRepository {
     override fun getAdvertisements(): List<Advertisement> {
-        return AdvertisementDatabase.advertisements.map { it.toAdvertisement() }
+        return advertisementDataSource.getAdvertisementEntities().map { it.toAdvertisement() }
     }
 
     override fun getAdvertisement(id: Long): Advertisement? {
-        return AdvertisementDatabase.selectAdvertisement(id)?.toAdvertisement()
+        return advertisementDataSource.getAdvertisementEntity(id)?.toAdvertisement()
+    }
+
+    override fun addAdvertisement(link: String): Advertisement {
+        val advertisementEntity = advertisementDataSource.addAdvertisementEntity(link)
+        return advertisementEntity.toAdvertisement()
     }
 }

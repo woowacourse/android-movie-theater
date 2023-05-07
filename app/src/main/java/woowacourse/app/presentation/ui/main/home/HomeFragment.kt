@@ -7,8 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.app.data.advertisement.AdvertisementDao
 import woowacourse.app.data.advertisement.AdvertisementRepositoryImpl
-import woowacourse.app.data.movie.MovieDatabase
+import woowacourse.app.data.movie.MovieDao
 import woowacourse.app.data.movie.MovieRepositoryImpl
 import woowacourse.app.presentation.model.movie.MovieUiModel
 import woowacourse.app.presentation.ui.booking.BookingActivity
@@ -18,7 +19,12 @@ import woowacourse.movie.R
 
 class HomeFragment : Fragment(), HomeContract.View {
     override val presenter: HomeContract.Presenter by lazy {
-        HomePresenter(MainUseCase(AdvertisementRepositoryImpl(), MovieRepositoryImpl(MovieDatabase)))
+        HomePresenter(
+            MainUseCase(
+                AdvertisementRepositoryImpl(AdvertisementDao(requireContext())),
+                MovieRepositoryImpl(MovieDao(requireContext())),
+            ),
+        )
     }
 
     override fun onCreateView(
