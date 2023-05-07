@@ -3,7 +3,7 @@ package woowacourse.movie.ui.fragment.movielist.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.TheaterItemBinding
 import woowacourse.movie.ui.model.TheaterModel
 
 class TheaterAdapter(
@@ -13,8 +13,8 @@ class TheaterAdapter(
     private val onTheaterItemViewClick: (Int) -> Unit = { onTheaterItemClick(theaters[it]) }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.theater_item, parent, false)
-        return TheaterViewHolder(view, onTheaterItemViewClick)
+        val binding = TheaterItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return TheaterViewHolder(binding, onTheaterItemViewClick)
     }
 
     override fun getItemCount(): Int = theaters.size

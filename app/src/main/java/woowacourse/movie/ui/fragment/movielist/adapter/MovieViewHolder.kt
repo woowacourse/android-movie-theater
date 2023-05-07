@@ -1,6 +1,5 @@
 package woowacourse.movie.ui.fragment.movielist.adapter
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.MovieItemBinding
@@ -8,13 +7,11 @@ import woowacourse.movie.ui.model.MovieModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class MovieViewHolder(view: View, private val onItemViewClick: (Int) -> Unit) :
-    RecyclerView.ViewHolder(view) {
-    private val binding: MovieItemBinding
+class MovieViewHolder(private val binding: MovieItemBinding, private val onItemViewClick: (Int) -> Unit) :
+    RecyclerView.ViewHolder(binding.root) {
 
     init {
-        binding = MovieItemBinding.bind(view)
-        view.setOnClickListener { onItemViewClick(absoluteAdapterPosition) }
+        binding.root.setOnClickListener { onItemViewClick(absoluteAdapterPosition) }
         binding.itemBookingButton.setOnClickListener { onItemViewClick(absoluteAdapterPosition) }
     }
 

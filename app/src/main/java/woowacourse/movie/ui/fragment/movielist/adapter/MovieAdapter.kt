@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import woowacourse.movie.R
+import woowacourse.movie.databinding.MovieItemBinding
 import woowacourse.movie.ui.model.AdModel
 import woowacourse.movie.ui.model.MovieModel
 
@@ -21,10 +22,9 @@ class MovieAdapter(
         val types = MovieListViewType.values()
         return when (types[viewType]) {
             MovieListViewType.MOVIE_VIEW -> {
-                val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.movie_item, parent, false)
+                val binding = MovieItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-                MovieViewHolder(view, onMovieItemViewClick)
+                MovieViewHolder(binding, onMovieItemViewClick)
             }
             MovieListViewType.AD_VIEW -> {
                 val view = LayoutInflater.from(parent.context)
