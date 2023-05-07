@@ -1,3 +1,4 @@
 package woowacourse.movie.view.model
-
-class SeatInfoUiModel(val row: Int, val col: Int, val colorOfRow: Map<Int, Int>)
+typealias row = Int
+typealias colorId = Int
+class SeatInfoUiModel(val maxRow: Int, val maxCol: Int, val colorOfRow: Map<row, colorId>)

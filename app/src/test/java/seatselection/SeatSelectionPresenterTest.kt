@@ -78,7 +78,7 @@ class SeatSelectionPresenterTest {
         )
         val actual = presenter.getSeatInfoUiModel(gradeColor)
         val expected = mapOf(0 to 1, 1 to 2, 2 to 3)
-        println(actual.row)
+        println(actual.maxRow)
         assertEquals(expected, actual.colorOfRow)
     }
 

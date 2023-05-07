@@ -68,11 +68,11 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun createRows(seatInfoUiModel: SeatInfoUiModel) {
-        for (row in 0 until seatInfoUiModel.row) {
+        for (row in 0 until seatInfoUiModel.maxRow) {
             val tableRow = TableRow(this).apply {
                 layoutParams = TableLayout.LayoutParams(0, 0, 1f)
             }
-            for (col in 0 until seatInfoUiModel.col) {
+            for (col in 0 until seatInfoUiModel.maxCol) {
                 val seat = Seat(row, col)
                 tableRow.addView(createSeat(seat.toUiModel(), seatInfoUiModel.colorOfRow))
             }
