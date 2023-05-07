@@ -8,7 +8,8 @@ data class Ticket(
     val movieId: Long,
     val bookedDateTime: LocalDateTime,
     val count: Int,
-    val seats: Seats
+    val seats: Seats,
+    val theater: String
 ) {
     fun getPaymentMoney(): Money = SeatsPayment(seats).getDiscountedMoneyByDateTime(bookedDateTime)
 }

@@ -90,7 +90,12 @@ class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
     }
 
     private fun confirmBookMovie() {
-        startActivity(CompleteActivity.getIntent(this, presenter.issueTicket().toPresentation()))
+        startActivity(
+            CompleteActivity.getIntent(
+                this,
+                presenter.issueTicket().toPresentation(this)
+            )
+        )
         finishAffinity()
     }
 

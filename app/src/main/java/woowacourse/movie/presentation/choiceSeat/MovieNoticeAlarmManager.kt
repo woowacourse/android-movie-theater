@@ -19,7 +19,7 @@ class MovieNoticeAlarmManager(private val context: Context) : ChoiceSeatContract
         reservationTime.minusMinutes(30L)
 
     override fun setAlarm(ticket: Ticket) {
-        val pendingIntent = getPendingIntent(ticket.toPresentation())
+        val pendingIntent = getPendingIntent(ticket.toPresentation(context))
         val alarmTime = convertReservationTimeToMillis(ticket.bookedDateTime)
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
@@ -36,8 +36,12 @@ class MovieNoticeAlarmManager(private val context: Context) : ChoiceSeatContract
     private fun getPendingIntent(ticketModel: TicketModel): PendingIntent? {
         val pendingIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
             intent.putExtra(CompleteActivity.TICKET, ticketModel)
-            // Ticket Id 로 requestCode 변경해야함
-            PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.getBroadcast(
+                context,
+                ticketModel.ticketId,
+                intent,
+                PendingIntent.FLAG_IMMUTABLE
+            )
         }
         return pendingIntent
     }

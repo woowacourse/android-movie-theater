@@ -1,6 +1,5 @@
 package woowacourse.movie.presentation.choiceSeat
 
-import woowacourse.movie.data.BookedTickets
 import woowacourse.movie.domain.model.rules.SeatsPayment
 import woowacourse.movie.domain.model.tools.Money
 import woowacourse.movie.domain.model.tools.Movie
@@ -14,7 +13,6 @@ import woowacourse.movie.domain.model.tools.seat.Seats
 import woowacourse.movie.domain.model.tools.seat.Theater
 import woowacourse.movie.model.data.storage.MovieStorage
 import woowacourse.movie.model.data.storage.SettingStorage
-import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.model.ReservationModel
 
 class ChoiceSeatPresenter(
@@ -34,9 +32,14 @@ class ChoiceSeatPresenter(
     override fun issueTicket(): Ticket {
         val movie: Movie = getMovieById(reservation.movieId)
         val ticket: Ticket =
-            movie.reserve(reservation.bookedDateTime, TicketCount(reservation.count), seats)
+            movie.reserve(
+                reservation.bookedDateTime,
+                TicketCount(reservation.count),
+                seats,
+                reservation.theater
+            )
         // Ticket 관리하는 sqlite로 추후 교환
-        BookedTickets.tickets.add(ticket.toPresentation())
+        // BookedTickets.tickets.add(ticket.toPresentation())
         if (settingStorage.getNotificationSettings()) alarmManager.setAlarm(ticket)
         return ticket
     }
