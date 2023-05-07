@@ -9,7 +9,6 @@ import java.time.LocalTime
 interface ReservationContract {
     interface View {
         val presenter: Presenter
-        fun getMovie(): MovieListModel.MovieUiModel
         fun initMovieView(movie: MovieListModel.MovieUiModel)
         fun setUpDateSpinner(screeningDates: List<LocalDate>)
         fun setUpTimeSpinner(screeningTimes: List<LocalTime>, selectedPosition: Int?)
@@ -21,7 +20,6 @@ interface ReservationContract {
     }
 
     interface Presenter {
-        fun loadMovie()
         fun setUpScreeningDateTime()
         fun increasePeopleCount()
         fun decreasePeopleCount()

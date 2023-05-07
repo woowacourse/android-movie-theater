@@ -10,17 +10,16 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 class ReservationPresenter(
-    private val view: ReservationContract.View
+    private val view: ReservationContract.View,
+    private val movie: MovieListModel.MovieUiModel
 ) : ReservationContract.Presenter {
 
-    lateinit var movie: MovieListModel.MovieUiModel
     private var peopleCountSaved = 1
     private lateinit var selectedScreeningDate: LocalDate
     private lateinit var selectedScreeningTime: LocalTime
     private var timeSpinnerPosition = 0
 
-    override fun loadMovie() {
-        movie = view.getMovie()
+    init {
         view.initMovieView(movie)
     }
 
@@ -34,10 +33,6 @@ class ReservationPresenter(
 
     override fun selectScreeningDate(date: LocalDate, timeslot: List<Int>?) {
         selectedScreeningDate = date
-        setUpScreeningTime(timeslot)
-    }
-
-    private fun setUpScreeningTime(timeslot: List<Int>?) {
         val screeningTimes = ScreeningTime(selectedScreeningDate, timeslot).getScreeningTimes()
         view.setUpTimeSpinner(screeningTimes, timeSpinnerPosition)
     }

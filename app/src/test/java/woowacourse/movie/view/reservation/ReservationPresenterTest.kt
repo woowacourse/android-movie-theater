@@ -21,21 +21,18 @@ internal class ReservationPresenterTest {
 
     @Before
     fun setUp() {
-        view = mockk()
+        view = mockk(relaxed = true)
         val movie = fakeMovie().toUiModel()
-        reservationPresenter = ReservationPresenter(view).apply {
-            this.movie = movie
-        }
+        reservationPresenter = ReservationPresenter(view, movie)
     }
 
     @Test
     fun `영화 정보를 띄운다`() {
         val slot = slot<MovieListModel.MovieUiModel>()
         val movie = fakeMovie().toUiModel()
-        every { view.getMovie() } returns movie
         every { view.initMovieView(capture(slot)) } returns Unit
 
-        reservationPresenter.loadMovie()
+        reservationPresenter = ReservationPresenter(view, movie)
 
         val expected = fakeMovie().toUiModel()
         val actual = slot.captured

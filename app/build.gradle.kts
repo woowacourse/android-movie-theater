@@ -37,6 +37,9 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    dataBinding {
+        enable = true
+    }
     packagingOptions {
         resources {
             excludes += "META-INF/LICENSE.md"

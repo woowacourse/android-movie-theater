@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationBinding
 import woowacourse.movie.util.DATE_FORMATTER
@@ -26,12 +27,12 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityReservationBinding.inflate(layoutInflater)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_reservation)
+        binding.movie = getMovie()
         setContentView(binding.root)
 
-        presenter = ReservationPresenter(this)
+        presenter = ReservationPresenter(this, getMovie())
 
-        presenter.loadMovie()
         presenter.setUpScreeningDateTime()
         setUpPeopleCountButton()
         setUpReserveButtonClickListener()
@@ -43,7 +44,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         presenter.setPeopleCount()
     }
 
-    override fun getMovie(): MovieUiModel {
+    private fun getMovie(): MovieUiModel {
         val movie = intent.getParcelableCompat<MovieUiModel>(MOVIE)
         requireNotNull(movie) { "인텐트로 받아온 데이터가 널일 수 없습니다." }
         return movie
@@ -52,14 +53,12 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     override fun initMovieView(movie: MovieUiModel) {
         binding.apply {
             moviePoster.setImageResource(movie.posterResourceId)
-            movieTitle.text = movie.title
             movieScreeningDate.text = getString(R.string.screening_date_format).format(
                 movie.screeningStartDate.format(DATE_FORMATTER),
                 movie.screeningEndDate.format(DATE_FORMATTER)
             )
             movieRunningTime.text =
                 getString(R.string.running_time_format).format(movie.runningTime)
-            movieSummary.text = movie.summary
         }
     }
 
