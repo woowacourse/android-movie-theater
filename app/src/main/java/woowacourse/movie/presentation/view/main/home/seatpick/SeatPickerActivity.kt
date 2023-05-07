@@ -8,15 +8,16 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
-import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.Dimension
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.broadcast.bookingnotificaiotn.BookingAlarmReceiver
+import woowacourse.movie.databinding.ActivitySeatPickerBinding
 import woowacourse.movie.presentation.extension.getParcelableCompat
 import woowacourse.movie.presentation.model.ReservationResult
 import woowacourse.movie.presentation.view.common.BackButtonActivity
@@ -24,6 +25,7 @@ import woowacourse.movie.presentation.view.main.home.bookcomplete.BookCompleteAc
 import woowacourse.movie.presentation.view.main.home.seatpick.model.SeatGradeModel
 
 class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
+    private lateinit var binding: ActivitySeatPickerBinding
     private val presenter: SeatPickerContract.Presenter by lazy {
         SeatPickerPresenter(
             view = this,
@@ -33,10 +35,10 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
             )
         )
     }
-    private val totalPriceTextView by lazy { findViewById<TextView>(R.id.tv_seat_picker_total_price) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_seat_picker)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_picker)
 
         presenter.onCreate()
     }
@@ -54,20 +56,19 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
     }
 
     private fun initBookingInfoView(movieTitle: String) {
-        findViewById<TextView>(R.id.tv_seat_picker_movie_title).text =
+        binding.tvSeatPickerMovieTitle.text =
             movieTitle
         presenter.getDefaultTotalPrice()
 
     }
 
     override fun updateDefaultTotalPriceView(value: Int) {
-        totalPriceTextView.text = value.toString()
+        binding.tvSeatPickerTotalPrice.text = value.toString()
     }
 
     private fun setConfirmView(
     ) {
-        val confirmTextView = findViewById<TextView>(R.id.tv_seat_picker_confirm)
-        confirmTextView.setOnClickListener {
+        binding.tvSeatPickerConfirm.setOnClickListener {
             presenter.confirmBooking()
         }
     }
@@ -132,7 +133,7 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
     }
 
     private fun initSeatPickerView() {
-        findViewById<TableLayout>(R.id.tb_seat_picker).children
+        binding.tbSeatPicker.children
             .filterIsInstance<TableRow>()
             .flatMap { it.children }
             .filterIsInstance<TextView>()
@@ -166,7 +167,7 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
     }
 
     override fun updateTotalPriceView(totalPrice: Int) {
-        totalPriceTextView.text = totalPrice.toString()
+        binding.tvSeatPickerTotalPrice.text = totalPrice.toString()
     }
 
     companion object {
