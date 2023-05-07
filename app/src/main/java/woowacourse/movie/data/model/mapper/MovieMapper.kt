@@ -2,6 +2,7 @@ package woowacourse.movie.data.model.mapper
 
 import domain.DateRange
 import domain.Movie
+import domain.Movies
 import woowacourse.movie.data.model.uimodel.MovieUiModel
 
 object MovieMapper : DomainViewMapper<Movie, MovieUiModel> {
@@ -24,5 +25,12 @@ object MovieMapper : DomainViewMapper<Movie, MovieUiModel> {
             runningTime = movie.runningTime,
             description = movie.description
         )
+    }
+
+    fun toUi(movies: Movies): List<MovieUiModel> {
+        return movies.value.map {
+            movie ->
+            toUi(movie)
+        }
     }
 }
