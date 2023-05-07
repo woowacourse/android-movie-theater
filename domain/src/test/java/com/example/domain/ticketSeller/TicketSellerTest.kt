@@ -4,6 +4,7 @@ import com.example.domain.model.Money
 import com.example.domain.model.Movie
 import com.example.domain.model.Ticket
 import com.example.domain.model.seat.SeatPosition
+import com.example.domain.repository.dataSource.theaterDataSources
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -40,17 +41,19 @@ internal class TicketSellerTest {
             SeatPosition(5, 2)
         )
 
-        val tickets = ticketSeller.issueTickets(movie, dateTime, seats)
+        val tickets = ticketSeller.issueTickets(theaterDataSources[0], movie, dateTime, seats)
         assertAll(
             "모든 티켓의 정보가 일치한다",
             {
                 val actual = tickets.tickets[0]
-                val expected = Ticket(movie, dateTime, SeatPosition(3, 1), Money(11500))
+                val expected =
+                    Ticket(theaterDataSources[0], movie, dateTime, SeatPosition(3, 1), Money(11500))
                 assertThat(actual).isEqualTo(expected)
             },
             {
                 val actual = tickets.tickets[1]
-                val expected = Ticket(movie, dateTime, SeatPosition(5, 2), Money(8800))
+                val expected =
+                    Ticket(theaterDataSources[0], movie, dateTime, SeatPosition(5, 2), Money(8800))
                 assertThat(actual).isEqualTo(expected)
             }
         )
