@@ -56,6 +56,7 @@ class ReservationResultActivity() : AppCompatActivity(), ReservationResultContra
         renderDate()
         renderPeopleCount()
         renderSeatInformation()
+        renderTheaterInformation()
         presenter.updatePrice()
     }
 
@@ -78,6 +79,10 @@ class ReservationResultActivity() : AppCompatActivity(), ReservationResultContra
             if (index != ticketsUiModel.list.size - 1) binding.movieReservationResultSeat.text =
                 binding.movieReservationResultSeat.text.toString() + ", "
         }
+    }
+
+    private fun renderTheaterInformation() {
+        binding.movieReservationResultTheater.text = ticketsUiModel.list.first().theaterName
     }
 
     override fun setPriceTextView(price: Int) {

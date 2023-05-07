@@ -40,4 +40,6 @@
     <string name="notification_refuse_two_time_warning_message">만약 이번에도 권한을 거부한다면, 다시 앱을 설치하셔야 권한 허용이 가능합니다</string>
     <string name="reservation_notification_title">예매 알림</string>
     <string name="reservation_notification_description">30분 후에 상영</string>
+    <string name="theater_name_format">%s 극장</string>
+    <string name="theater_time_count_format">%d개의 상영 시간</string>
 </resources>
