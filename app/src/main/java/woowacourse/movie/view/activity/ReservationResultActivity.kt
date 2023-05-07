@@ -38,6 +38,10 @@ class ReservationResultActivity() : AppCompatActivity(), ReservationResultContra
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_reservation_result)
+        initView()
+    }
+
+    fun initView(){
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         renderMovieView()
         renderReservationDetailView()

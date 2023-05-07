@@ -36,10 +36,7 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
         )
     }
     private lateinit var binding: ActivitySelectSeatBinding
-    private val movieUiModel: MovieUiModel by lazy {
-        receiveMovieUiModel()
-    }
-
+    private val movieUiModel: MovieUiModel by lazy { receiveMovieUiModel() }
     private val seatTable: SeatTable by lazy {
         SeatTable(
             tableLayout = binding.selectSeatTableLayout,
@@ -52,6 +49,10 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_select_seat)
+        initView()
+    }
+
+    fun initView() {
         seatTable.makeSeatTable()
         MovieView(title = binding.selectSeatMovieTitleTextView).render(
             movieUiModel
@@ -87,7 +88,6 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
         }
         return super.onOptionsItemSelected(item)
     }
-
 
     override fun showDialog() {
         val dialog = createReservationAlertDialog()

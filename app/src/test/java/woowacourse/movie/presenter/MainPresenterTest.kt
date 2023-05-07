@@ -16,7 +16,6 @@ class MainPresenterTest {
         presenter = MainPresenter(view)
     }
 
-
     @Test
     fun 바텀네비게이션_매뉴를_클릭했을때_해당ItemID의_Fragment를_보여준다() {
         // given

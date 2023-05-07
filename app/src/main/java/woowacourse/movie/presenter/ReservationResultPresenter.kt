@@ -10,8 +10,7 @@ import java.util.*
 class ReservationResultPresenter(
     val view: ReservationResultContract.View,
     val ticketsUiModel: TicketsUiModel
-) :
-    ReservationResultContract.Presenter {
+) : ReservationResultContract.Presenter {
     override fun updatePrice() {
         val tickets = ticketsUiModel.toDomain()
         view.setPriceTextView(tickets.price.value)

@@ -34,6 +34,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         saveState = savedInstanceState
+        initView()
+    }
+
+    fun initView(){
         binding.bottomNavigation.setOnItemSelectedListener {
             presenter.onClickBottomNavigationItem(it.itemId)
         }

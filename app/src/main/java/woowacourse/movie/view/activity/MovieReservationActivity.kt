@@ -53,10 +53,18 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_reservation)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        initView(savedInstanceState)
+        setViewListener(savedInstanceState)
+    }
+
+    private fun initView(savedInstanceState: Bundle?) {
         counter.load(savedInstanceState)
         renderMovieView(movieUiModel)
         counter.setButtonsClick(presenter::onMinusTicketCount, presenter::onPlusTicketCount)
         presenter.updateDateSpinner(theaterUiModel)
+    }
+
+    private fun setViewListener(savedInstanceState: Bundle?) {
         movieDateTimePicker.setDateSelectListener(
             theaterUiModel,
             presenter::onSelectDate,

@@ -8,7 +8,6 @@ class SettingPresenter(
     val view: SettingContract.View,
     private val sharedPreferenceManager: SharedPreferenceManager
 ) : SettingContract.Presenter {
-
     override fun onClickSwitch() {
         sharedPreferenceManager.changeData()
     }
