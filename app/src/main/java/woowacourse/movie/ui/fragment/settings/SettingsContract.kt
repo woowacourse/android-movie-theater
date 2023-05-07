@@ -4,10 +4,12 @@ interface SettingsContract {
     interface Presentation {
         fun changePushNotificationState(enable: Boolean)
 
-        fun getPushNotificationState(): Boolean
+        fun checkPushNotificationState()
     }
 
     interface View {
         var presentation: Presentation
+
+        fun setPushNotificationState(enable: Boolean)
     }
 }

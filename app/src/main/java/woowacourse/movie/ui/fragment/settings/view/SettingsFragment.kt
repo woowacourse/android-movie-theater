@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.data.storage.SettingsStorage
 import woowacourse.movie.ui.fragment.settings.SettingsContract
-import woowacourse.movie.ui.fragment.settings.presentation.SettingsPresentation
+import woowacourse.movie.ui.fragment.settings.presenter.SettingsPresenter
 
 class SettingsFragment : Fragment(), SettingsContract.View {
     override lateinit var presentation: SettingsContract.Presentation
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -24,14 +24,19 @@ class SettingsFragment : Fragment(), SettingsContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presentation = SettingsPresentation()
+        presentation = SettingsPresenter(SettingsStorage, this)
 
         initPushNotificationSwitch(view)
     }
 
+    override fun setPushNotificationState(enable: Boolean) {
+        val pushNotificationSwitch = view?.findViewById<SwitchCompat>(R.id.push_notification_switch)
+        pushNotificationSwitch?.isChecked = enable
+    }
+
     private fun initPushNotificationSwitch(view: View) {
         val pushNotificationSwitch = view.findViewById<SwitchCompat>(R.id.push_notification_switch)
-        pushNotificationSwitch.isChecked = presentation.getPushNotificationState()
+        presentation.checkPushNotificationState()
         pushNotificationSwitch.setOnCheckedChangeListener { _, isChecked ->
             presentation.changePushNotificationState(isChecked)
         }
