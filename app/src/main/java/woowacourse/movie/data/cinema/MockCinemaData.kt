@@ -1,10 +1,10 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.cinema
 
 import woowacourse.movie.domain.model.tools.cinema.Cinema
 import woowacourse.movie.domain.model.tools.cinema.MovieTimes
 
-object CinemaData {
-    val Cinemas = listOf(
+object MockCinemaData : CinemaData {
+    override fun getCinemas() = listOf(
         Cinema.of(
             "선릉",
             1L to MovieTimes.of(9, 15, 2),

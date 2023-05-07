@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import woowacourse.movie.data.cinema.MockCinemaData
 import woowacourse.movie.databinding.FragmentCinemaBottomSheetBinding
 import woowacourse.movie.presentation.booking.BookingActivity
 import woowacourse.movie.presentation.model.CinemaModel
@@ -14,7 +15,9 @@ class CinemaBottomSheetFragment(
     private val movieModel: MovieModel,
 ) : BottomSheetDialogFragment(), CinemaContract.View {
 
-    override val presenter: CinemaContract.Presenter by lazy { CinemaPresenter(this) }
+    override val presenter: CinemaContract.Presenter by lazy {
+        CinemaPresenter(this, MockCinemaData)
+    }
 
     private var _binding: FragmentCinemaBottomSheetBinding? = null
     private val binding get() = _binding!!

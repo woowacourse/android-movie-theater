@@ -18,11 +18,12 @@ class CompletePresenterTest {
     @Before
     fun `setUp`() {
         view = mockk()
+        // FakeMovieData 사용
         presenter = CompletePresenter(FakeMovieData, view)
     }
 
     @Test
-    fun `영화 제목을 view 에 set 한다`() {
+    fun `Id 가 1이면 해리포터 영화 제목을 세팅 한다`() {
         val movieTitleSlot = slot<String>()
         every { view.setMovieTitle(capture(movieTitleSlot)) } just runs
 

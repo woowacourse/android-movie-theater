@@ -22,6 +22,7 @@ class BookingPresenterTest {
     @Before
     fun `setUp`() {
         view = mockk()
+        // FakeMovieData 사용
         presenter = BookingPresenter(FakeMovieData, view)
     }
 

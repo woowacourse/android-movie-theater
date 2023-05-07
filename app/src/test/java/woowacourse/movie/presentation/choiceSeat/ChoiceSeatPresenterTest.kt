@@ -29,6 +29,7 @@ class ChoiceSeatPresenterTest {
     @Before
     fun setUp() {
         view = mockk()
+        // FakeMovieData 사용
         presenter = ChoiceSeatPresenter(view, FakeMovieData, FakeSettingsData)
         reservationModel = ReservationModel(
             1L,
@@ -39,7 +40,7 @@ class ChoiceSeatPresenterTest {
     }
 
     @Test
-    fun `MovieId 가 1이면 해리 포터 영화 제목을 view 에 set 한다`() {
+    fun `MovieId 가 1이면 해리 포터 영화 제목을 세팅 한다`() {
         // given
         val movieTitleSlot = slot<String>()
         every { view.setMovieTitleView(capture(movieTitleSlot)) } just runs
