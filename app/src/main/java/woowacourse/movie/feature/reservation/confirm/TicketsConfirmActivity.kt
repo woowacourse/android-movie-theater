@@ -8,7 +8,7 @@ import woowacourse.movie.R
 import woowacourse.movie.feature.BackKeyActionBarActivity
 import woowacourse.movie.feature.DateTimeFormatters
 import woowacourse.movie.feature.DecimalFormatters
-import woowacourse.movie.feature.reservation.MovieDetailActivity.Companion.KEY_TICKETS
+import woowacourse.movie.feature.reservation.reserve.MovieDetailActivity.Companion.KEY_TICKETS
 import woowacourse.movie.model.MoneyState
 import woowacourse.movie.model.TicketsState
 import woowacourse.movie.util.getParcelableExtraCompat

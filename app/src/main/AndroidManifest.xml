@@ -28,7 +28,7 @@
             android:name=".feature.reservation.confirm.TicketsConfirmActivity"
             android:exported="false" />
         <activity
-            android:name=".feature.reservation.MovieDetailActivity"
+            android:name=".feature.reservation.reserve.MovieDetailActivity"
             android:exported="false" />
         <activity
             android:name=".feature.main.MainActivity"

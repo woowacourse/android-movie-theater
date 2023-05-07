@@ -27,7 +27,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.feature.adv.AdvDetailActivity
-import woowacourse.movie.feature.reservation.MovieDetailActivity
+import woowacourse.movie.feature.reservation.reserve.MovieDetailActivity
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest

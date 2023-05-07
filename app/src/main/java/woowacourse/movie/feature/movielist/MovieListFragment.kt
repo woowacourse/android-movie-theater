@@ -8,7 +8,7 @@ import woowacourse.movie.R
 import woowacourse.movie.feature.adv.AdvDetailActivity
 import woowacourse.movie.feature.common.adapter.CommonListAdapter
 import woowacourse.movie.feature.common.itemModel.ItemModel
-import woowacourse.movie.feature.reservation.MovieDetailActivity
+import woowacourse.movie.feature.reservation.reserve.MovieDetailActivity
 import woowacourse.movie.model.AdvState
 import woowacourse.movie.model.MovieState
 

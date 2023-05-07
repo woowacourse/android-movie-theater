@@ -1,4 +1,4 @@
-package woowacourse.movie.feature.reservation
+package woowacourse.movie.feature.reservation.reserve.selection
 
 import android.view.View
 import android.widget.Button

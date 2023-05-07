@@ -11,8 +11,8 @@ import woowacourse.movie.feature.BackKeyActionBarActivity
 import woowacourse.movie.feature.DecimalFormatters
 import woowacourse.movie.feature.common.customView.ConfirmView
 import woowacourse.movie.feature.notification.MovieReminder
-import woowacourse.movie.feature.reservation.MovieDetailActivity.Companion.KEY_TICKETS
 import woowacourse.movie.feature.reservation.confirm.TicketsConfirmActivity
+import woowacourse.movie.feature.reservation.reserve.MovieDetailActivity.Companion.KEY_TICKETS
 import woowacourse.movie.model.CountState
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.SeatPositionState
