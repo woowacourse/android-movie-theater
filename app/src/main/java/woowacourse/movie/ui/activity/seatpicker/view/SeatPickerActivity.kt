@@ -11,7 +11,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.alarm.AlarmManager
 import woowacourse.movie.broadcastreceiver.NotificationReceiver
@@ -32,7 +31,7 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
     private lateinit var binding: ActivitySeatPickerBinding
     private val db: SQLiteDatabase by lazy { DBHelper(this).writableDatabase }
     override lateinit var presenter: SeatPickerContract.Presenter
-    private val seats = Seats().getAll()
+    private val seats = Seats()
     private val seatTable = mutableMapOf<SeatModel, TextView>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +40,8 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
         setContentView(binding.root)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        createSeatViews()
 
         loadSavedData(savedInstanceState)
 
@@ -114,27 +115,47 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
         moveToTicketActivity(ticket)
     }
 
-    private fun Int.formatPrice(): String = getString(R.string.price, this)
-
-    private fun setSeatViews(ticket: MovieTicketModel) {
-        val seatViews = binding.layoutSeat
-            .children
-            .filterIsInstance<TableRow>()
-            .flatMap { it.children }
-            .filterIsInstance<TextView>()
-            .toList()
-
-        seatViews.zip(seats) { view, seat ->
-            seatTable[seat] = view
-            view.text = getString(R.string.seat, seat.row.letter, seat.column.value)
-            view.setTextColor(getColor(seat.rank.color))
-            if (ticket.isSelectedSeat(seat)) view.isSelected = true
-            view.setOnClickListener {
-                selectSeat(view, seat)
-                presenter.checkSelectionDone()
-            }
+    private fun createSeatViews() {
+        val seatTable = binding.layoutSeat
+        (0 until seats.rowSize).forEach { index ->
+            val tableRow = createRowView(index)
+            seatTable.addView(tableRow)
         }
     }
+
+    private fun createRowView(rowIndex: Int): TableRow {
+        val tableRow = TableRow(this)
+        (0 until seats.columnSize).forEach { columnIndex ->
+            val seatLayout = layoutInflater.inflate(R.layout.seat_item, null)
+            val seat = seats.getSeat(rowIndex, columnIndex)
+            val view = seatLayout.findViewById<TextView>(R.id.tv_seat)
+            initSeatView(view, seat)
+            tableRow.addView(seatLayout)
+        }
+        return tableRow
+    }
+
+    private fun initSeatView(
+        view: TextView,
+        seat: SeatModel
+    ) {
+        seatTable[seat] = view
+
+        view.text = getString(R.string.seat, seat.row.letter, seat.column.value)
+        view.setTextColor(getColor(seat.rank.color))
+        view.setOnClickListener {
+            selectSeat(view, seat)
+            presenter.checkSelectionDone()
+        }
+    }
+
+    private fun setSeatViews(ticket: MovieTicketModel) {
+        seatTable.forEach { (seat, view) ->
+            if (ticket.isSelectedSeat(seat)) view.isSelected = true
+        }
+    }
+
+    private fun Int.formatPrice(): String = getString(R.string.price, this)
 
     private fun selectSeat(
         view: TextView,
