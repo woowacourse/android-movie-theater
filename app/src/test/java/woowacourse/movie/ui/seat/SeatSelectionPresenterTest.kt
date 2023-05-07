@@ -9,6 +9,7 @@ import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import woowacourse.movie.data.alarm.AlarmStateRepository
 import woowacourse.movie.uimodel.PeopleCountModel
 import woowacourse.movie.uimodel.SeatModel
 import woowacourse.movie.uimodel.SelectedSeatsModel
@@ -25,8 +26,21 @@ internal class SeatSelectionPresenterTest {
         every { view.updatePriceText(0) } just Runs
         every { view.updateButtonEnablement(false) } just Runs
 
+        val alarmStateRepository = object : AlarmStateRepository {
+            private var isAlarmOn: Boolean = false
+
+            override fun getData(): Boolean {
+                return isAlarmOn
+            }
+
+            override fun saveData(dataSource: Boolean) {
+                isAlarmOn = dataSource
+            }
+        }
+
         presenter = SeatSelectionPresenter(
             view,
+            alarmStateRepository,
             "title",
             LocalDateTime.of(2023, 4, 30, 15, 0),
             PeopleCountModel(2),

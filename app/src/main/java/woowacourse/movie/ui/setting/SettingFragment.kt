@@ -11,21 +11,25 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.data.alarm.AlarmStateRepository
+import woowacourse.movie.data.alarm.AlarmStateRepositoryImpl
 import woowacourse.movie.ui.alarm.ReservationAlarmManager
 import woowacourse.movie.uimodel.MovieTicketModel
-import woowacourse.movie.uimodel.ReservationModel
 
-class SettingFragment : Fragment() {
+class SettingFragment : Fragment(), SettingContract.View {
     private lateinit var toggleButton: SwitchCompat
-    private val repository: AlarmStateRepository by lazy {
-        AlarmStateRepository(requireContext())
-    }
+
     private val reservationAlarmManager by lazy { ReservationAlarmManager(requireContext()) }
     private val requestPermissionLauncher by lazy {
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
         ) {}
+    }
+
+    override val presenter by lazy {
+        SettingPresenter(
+            this,
+            AlarmStateRepositoryImpl(requireContext()),
+        )
     }
 
     override fun onCreateView(
@@ -74,28 +78,25 @@ class SettingFragment : Fragment() {
 
     private fun initToggleButton(view: View) {
         toggleButton = view.findViewById(R.id.setting_switch)
-        toggleButton.isChecked = repository.getData()
+        presenter.checkSwitchState()
+    }
+
+    override fun setToggleButton(isChecked: Boolean) {
+        toggleButton.isChecked = isChecked
     }
 
     private fun setClickEventOnToggleButton() {
         toggleButton.setOnCheckedChangeListener { _, isChecked ->
-            repository.saveData(isChecked)
-            setAlarms(isChecked)
+            presenter.clickSwitch(isChecked)
         }
     }
 
-    private fun setAlarms(isChecked: Boolean) {
-        if (isChecked) {
-            iterateOnTickets(reservationAlarmManager::makeAlarm)
-        } else {
-            iterateOnTickets(reservationAlarmManager::cancelAlarm)
-        }
+    override fun setAlarms(ticket: MovieTicketModel) {
+        reservationAlarmManager.makeAlarm(ticket)
     }
 
-    private fun iterateOnTickets(event: (MovieTicketModel) -> Unit) {
-        ReservationModel.tickets.forEach { ticket ->
-            event(ticket)
-        }
+    override fun cancelAlarms(ticket: MovieTicketModel) {
+        reservationAlarmManager.cancelAlarm(ticket)
     }
 
     companion object {
