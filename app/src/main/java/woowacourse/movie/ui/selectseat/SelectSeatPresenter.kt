@@ -49,8 +49,7 @@ class SelectSeatPresenter(
     }
 
     override fun updateButtonState(button: Button) {
-        val isClickable = ticketOffice.isAvailableAddTicket()
-        button.isClickable = !isClickable
-        view.updateButtonView(isClickable)
+        val isEnabled = ticketOffice.isAvailableAddTicket()
+        button.isEnabled = !isEnabled
     }
 }

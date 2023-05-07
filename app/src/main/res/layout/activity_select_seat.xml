@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="movie"
             type="woowacourse.movie.data.model.uimodel.MovieUiModel" />
@@ -33,7 +34,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/select_seat_screen_text_view"
@@ -64,28 +65,28 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
+                android:text="@{movie.title}"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="@{movie.title}"
                 tools:text="해리 포터와 마법사의 돌" />
 
             <TextView
                 android:id="@+id/select_seat_price_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{@string/select_seat_price_format(tickets.price.value)}"
                 app:layout_constraintStart_toStartOf="@id/select_seat_movie_title_text_view"
                 app:layout_constraintTop_toBottomOf="@id/select_seat_movie_title_text_view"
-                android:text="@{@string/select_seat_price_format(tickets.price.value)}"
                 tools:text="0원" />
 
             <Button
                 android:id="@+id/btn_select_seat"
                 android:layout_width="88dp"
                 android:layout_height="0dp"
-                android:backgroundTint="@color/check_button_unavailable"
+                android:background="@drawable/selector_reservation_button"
                 android:clickable="false"
                 android:text="@string/select_seat_check"
                 android:textColor="@color/white"

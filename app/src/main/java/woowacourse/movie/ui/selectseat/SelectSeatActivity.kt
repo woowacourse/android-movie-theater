@@ -77,7 +77,7 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
                 dialog.setCanceledOnTouchOutside(false)
                 dialog.show()
             }
-            isClickable = false
+            isEnabled = false
         }
     }
 
@@ -143,13 +143,6 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
 
     private fun changeCheckButtonState() {
         presenter.updateButtonState(binding.btnSelectSeat)
-    }
-
-    override fun updateButtonView(isClickable: Boolean) {
-        when (isClickable) {
-            true -> binding.btnSelectSeat.setBackgroundColorId(R.color.check_button_unavailable)
-            false -> binding.btnSelectSeat.setBackgroundColorId(R.color.check_button_available)
-        }
     }
 
     override fun updateTicketView() {

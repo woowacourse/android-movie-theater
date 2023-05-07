@@ -14,8 +14,6 @@ interface SelectSeatContract {
 
         fun updateSeatView(seatView: SeatView, isSelected: Boolean)
 
-        fun updateButtonView(isClickable: Boolean)
-
         fun updateTicketView()
     }
 

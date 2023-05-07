@@ -9,8 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="reservation_result_background">#9160F9</color>
     <color name="select_seat_screen_background">#494949</color>
-    <color name="check_button_unavailable">#B7B7B7</color>
-    <color name="check_button_available">#6200EE</color>
+    <color name="check_button_inactive">#B7B7B7</color>
+    <color name="check_button_active">#6200EE</color>
     <color name="select_seat_background">#EAEAEA</color>
     <color name="seat_rank_b_color">#8E13EF</color>
     <color name="seat_rank_a_color">#1B48E9</color>
