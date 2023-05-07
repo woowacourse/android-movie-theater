@@ -7,9 +7,9 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import com.google.android.material.switchmaterial.SwitchMaterial
 import woowacourse.movie.BundleKeys.IS_CAN_PUSH_CHECKED
@@ -19,6 +19,7 @@ import woowacourse.movie.PermissionManager
 import woowacourse.movie.PermissionManagerImpl
 import woowacourse.movie.R
 import woowacourse.movie.SharedPreferenceUtil
+import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.fragment.bookhistory.BookHistoryFragment
 import woowacourse.movie.fragment.home.HomeFragment
 import woowacourse.movie.fragment.setting.SettingFragment
@@ -29,6 +30,7 @@ class MainActivity :
     NavigationBarView.OnItemSelectedListener,
     MainContract.View {
 
+    private lateinit var binding: ActivityMainBinding
     override lateinit var presenter: MainContract.Presenter
     private val fragments = mutableMapOf<Int, Fragment>()
     private val requestPermissionLauncher =
@@ -47,12 +49,12 @@ class MainActivity :
         settingFragmentFactory = SettingFragmentFactory(requestPermissionLauncher)
         supportFragmentManager.fragmentFactory = settingFragmentFactory
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         presenter = MainPresenter(this, sharedPreferenceRepository)
 
         requestNotificationPermission()
-        findViewById<BottomNavigationView>(R.id.bnv_main).setOnItemSelectedListener(this)
+        binding.bnvMain.setOnItemSelectedListener(this)
         supportFragmentManager.commit {
             add(R.id.fl_main, fragments.getOrPut(R.id.page_book_history) { BookHistoryFragment() })
         }
