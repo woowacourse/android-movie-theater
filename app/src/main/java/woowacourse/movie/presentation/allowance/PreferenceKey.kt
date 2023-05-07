@@ -1,6 +1,6 @@
 package woowacourse.movie.presentation.allowance
 
-object SettingsAllowance {
+object PreferenceKey {
 
     const val NOTIFICATION_PREF_KEY = "Notification"
 }

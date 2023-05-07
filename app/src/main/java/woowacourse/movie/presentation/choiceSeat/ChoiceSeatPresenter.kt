@@ -1,6 +1,6 @@
 package woowacourse.movie.presentation.choiceSeat
 
-import woowacourse.movie.data.bookedticket.MockBookedTicketsData
+import woowacourse.movie.data.bookedticket.BookedTicketsData
 import woowacourse.movie.data.movie.MovieData
 import woowacourse.movie.data.settings.SettingsData
 import woowacourse.movie.domain.model.rules.SeatsPayment
@@ -20,6 +20,7 @@ class ChoiceSeatPresenter(
     private val view: ChoiceSeatContract.View,
     private val movieData: MovieData,
     private val settingsData: SettingsData,
+    private val ticketsData: BookedTicketsData,
 ) :
     ChoiceSeatContract.Presenter {
 
@@ -46,7 +47,7 @@ class ChoiceSeatPresenter(
                 seats,
             )
         val ticketModel = ticket.toPresentation()
-        MockBookedTicketsData.addTickets(ticketModel)
+        ticketsData.addTickets(ticketModel)
 
         view.confirmBookMovie(ticketModel)
     }

@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import woowacourse.movie.data.bookedticket.MockBookedTicketsData
+import woowacourse.movie.data.bookedticket.TicketDBHelper
+import woowacourse.movie.data.bookedticket.TicketsDBAdapter
 import woowacourse.movie.data.movie.MockMovieData
 import woowacourse.movie.databinding.FragmentBookedTicketsBinding
 import woowacourse.movie.presentation.complete.CompleteActivity
 import woowacourse.movie.presentation.model.TicketModel
+import java.time.LocalDateTime
 
 class BookedTicketsFragment : Fragment(), BookedTicketsContract.View {
 
@@ -17,7 +19,11 @@ class BookedTicketsFragment : Fragment(), BookedTicketsContract.View {
     private val binding get() = _binding!!
 
     override val presenter: BookedTicketsContract.Presenter by lazy {
-        BookedTicketsPresenter(this, MockBookedTicketsData, MockMovieData)
+        BookedTicketsPresenter(
+            this,
+            TicketsDBAdapter(TicketDBHelper(requireContext())),
+            MockMovieData,
+        )
     }
     private val bookedTicketsAdapter by lazy {
         BookedTicketsAdapter(
@@ -44,7 +50,11 @@ class BookedTicketsFragment : Fragment(), BookedTicketsContract.View {
     override fun setBookedTicketsAdapter(tickets: List<TicketModel>) {
         binding.recyclerBookedTickets.adapter =
             bookedTicketsAdapter
-        bookedTicketsAdapter.submitList(tickets)
+        if (tickets == emptyList<TicketModel>()) {
+            bookedTicketsAdapter.submitList(emptyTicketModel)
+        } else {
+            bookedTicketsAdapter.submitList(tickets)
+        }
     }
 
     private fun bookedTicketsItemClickListener(ticketModel: TicketModel) {
@@ -55,5 +65,18 @@ class BookedTicketsFragment : Fragment(), BookedTicketsContract.View {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        private val emptyTicketModel = listOf(
+            TicketModel(
+                1,
+                "티켓이 하나도 없습니다",
+                LocalDateTime.of(9999, 9, 9, 9, 9),
+                1,
+                0,
+                listOf("좌석 없음"),
+            ),
+        )
     }
 }

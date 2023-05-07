@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.data.settings.SettingsPreference
 import woowacourse.movie.databinding.FragmentSettingsBinding
-import woowacourse.movie.presentation.allowance.SettingsAllowance
+import woowacourse.movie.presentation.allowance.PreferenceKey
 
 class SettingsFragment : Fragment(), SettingsContract.View {
 
@@ -32,7 +32,7 @@ class SettingsFragment : Fragment(), SettingsContract.View {
     }
 
     private fun initPresenter() {
-        val prefKey = SettingsAllowance.NOTIFICATION_PREF_KEY
+        val prefKey = PreferenceKey.NOTIFICATION_PREF_KEY
         presenter = SettingsPresenter(
             this,
             SettingsPreference.getInstance(prefKey, requireContext()),

@@ -58,4 +58,7 @@ dependencies {
 
     // mockk
     testImplementation("io.mockk:mockk-android:1.13.5")
+
+    // gson
+    implementation("com.google.code.gson:gson:2.8.7")
 }

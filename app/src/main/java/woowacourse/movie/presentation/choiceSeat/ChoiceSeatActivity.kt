@@ -9,10 +9,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import woowacourse.movie.R
+import woowacourse.movie.data.bookedticket.TicketDBHelper
+import woowacourse.movie.data.bookedticket.TicketsDBAdapter
 import woowacourse.movie.data.movie.MockMovieData
 import woowacourse.movie.data.settings.SettingsPreference
 import woowacourse.movie.databinding.ActivityChoiceSeatBinding
-import woowacourse.movie.presentation.allowance.SettingsAllowance
+import woowacourse.movie.presentation.allowance.PreferenceKey
 import woowacourse.movie.presentation.complete.CompleteActivity
 import woowacourse.movie.presentation.model.ReservationModel
 import woowacourse.movie.presentation.model.SeatModel
@@ -22,8 +24,13 @@ import woowacourse.movie.presentation.util.getParcelableExtraCompat
 class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
 
     override val presenter: ChoiceSeatContract.Presenter by lazy {
-        val prefKey = SettingsAllowance.NOTIFICATION_PREF_KEY
-        ChoiceSeatPresenter(this, MockMovieData, SettingsPreference.getInstance(prefKey, this))
+        val settingsPrefKey = PreferenceKey.NOTIFICATION_PREF_KEY
+        ChoiceSeatPresenter(
+            this,
+            MockMovieData,
+            SettingsPreference.getInstance(settingsPrefKey, this),
+            TicketsDBAdapter(TicketDBHelper(this)),
+        )
     }
     private lateinit var binding: ActivityChoiceSeatBinding
 
@@ -39,7 +46,8 @@ class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
     }
 
     private fun initReservation() =
-        intent.getParcelableExtraCompat<ReservationModel>(RESERVATION) ?: throw NoSuchElementException()
+        intent.getParcelableExtraCompat<ReservationModel>(RESERVATION)
+            ?: throw NoSuchElementException()
 
     private fun setTheaterSeat() {
         val seatsTable = binding.tableSeats

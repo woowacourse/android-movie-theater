@@ -13,6 +13,7 @@ import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.data.settings.SettingsData
 import woowacourse.movie.presentation.FakeMovieData
+import woowacourse.movie.presentation.MockBookedTicketsData
 import woowacourse.movie.presentation.model.ReservationModel
 import woowacourse.movie.presentation.model.TicketModel
 import java.time.LocalDateTime
@@ -30,7 +31,8 @@ class ChoiceSeatPresenterTest {
     fun setUp() {
         view = mockk()
         // FakeMovieData 사용
-        presenter = ChoiceSeatPresenter(view, FakeMovieData, FakeSettingsData)
+        presenter =
+            ChoiceSeatPresenter(view, FakeMovieData, FakeSettingsData, MockBookedTicketsData)
         reservationModel = ReservationModel(
             1L,
             "선릉",
