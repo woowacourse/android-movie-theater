@@ -50,7 +50,15 @@
 - [x] Settings
 
 ### MVP 테스트
+
 - [x] Booking
+- [x] ChoiceSeat
+- [x] Complete
+- [x] settings
+- [x] Cinema
+- [x] MovieList
+- [x] BookedTicket
+
 ### 기능 요구 사항
 
 - [x] 영화 선택 후 극장을 선택할 수 있다.
