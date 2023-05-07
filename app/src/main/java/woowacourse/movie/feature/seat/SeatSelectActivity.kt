@@ -13,7 +13,6 @@ import woowacourse.movie.feature.common.customView.ConfirmView
 import woowacourse.movie.feature.notification.MovieReminder
 import woowacourse.movie.feature.reservation.confirm.TicketsConfirmActivity
 import woowacourse.movie.feature.reservation.reserve.MovieDetailActivity.Companion.KEY_TICKETS
-import woowacourse.movie.model.CountState
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.SeatPositionState
 import woowacourse.movie.model.TicketOptState
@@ -48,7 +47,7 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
         confirmView.setOnClickListener { navigateShowDialog(seatTable.chosenSeatInfo) }
         confirmView.isClickable = false // 클릭리스너를 설정하면 clickable이 자동으로 참이 되기 때문
 
-        seatTable = SeatTable(window.decorView.rootView, CountState.of(ticketOptState.count)) {
+        seatTable = SeatTable(window.decorView.rootView, ticketOptState.count) {
             updateSelectSeats(it)
         }
     }

@@ -6,12 +6,11 @@ import android.widget.TableRow
 import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.feature.common.customView.SeatView
-import woowacourse.movie.model.CountState
 import woowacourse.movie.model.SeatPositionState
 
 class SeatTable(
     root: View,
-    private val maxSelectCount: CountState,
+    private val maxSelectCount: Int,
     private val update: (List<SeatPositionState>) -> Unit
 ) {
     private val seats: TableLayout = root.findViewById(R.id.seats)
@@ -50,7 +49,7 @@ class SeatTable(
 
     private fun clickSeat(view: SeatView) {
         val oldChosenCount = chosenSeatInfo.size
-        if (view.isChosen.not() && oldChosenCount >= maxSelectCount.value) return
+        if (view.isChosen.not() && oldChosenCount >= maxSelectCount) return
         view.toggle()
         update(chosenSeatInfo)
     }

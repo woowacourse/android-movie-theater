@@ -11,10 +11,8 @@ import woowacourse.movie.feature.main.MainActivity.Companion.KEY_MOVIE
 import woowacourse.movie.feature.reservation.reserve.count.TicketCounterView
 import woowacourse.movie.feature.reservation.reserve.selection.DateTimeSpinner
 import woowacourse.movie.feature.seat.SeatSelectActivity
-import woowacourse.movie.model.CountState
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.mapper.asDomain
-import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.getSerializableCompat
 import woowacourse.movie.util.keyError
@@ -76,8 +74,6 @@ class MovieDetailActivity : BackKeyActionBarActivity() {
             savedInstanceState.getSerializableCompat(KEY_DATE) ?: return keyError(KEY_DATE)
         val restoreSelectTime: LocalTime =
             savedInstanceState.getSerializableCompat(KEY_TIME) ?: return keyError(KEY_TIME)
-        val restoreCount: CountState =
-            savedInstanceState.getParcelableCompat(KEY_COUNT) ?: return keyError(KEY_COUNT)
         dateTimeSpinner = DateTimeSpinner(
             binding,
             movie,
