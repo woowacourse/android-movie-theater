@@ -1,22 +1,22 @@
 package woowacourse.movie.ui.booking
 
 import woowacourse.movie.model.BookedMovie
+import woowacourse.movie.model.main.MainModelRepository
 import woowacourse.movie.model.main.MovieMapper.toUiModel
 import woowacourse.movie.movie.Movie
-import woowacourse.movie.movie.MovieRepository
 import woowacourse.movie.theater.Theater
-import woowacourse.movie.theater.TheaterRepository
 import woowacourse.movie.ticket.TicketCount
 import java.time.LocalDateTime
 
 class BookingPresenter(
     private val view: BookingContract.View,
+    repository: MainModelRepository,
     movieId: Long,
     theaterId: Long
 ) : BookingContract.Presenter {
 
-    override val movie: Movie = MovieRepository.getMovie(movieId)
-    override val theater: Theater = TheaterRepository.getTheater(theaterId)
+    override val movie: Movie = repository.findMovieById(movieId)
+    override val theater: Theater = repository.findTheaterById(theaterId)
     override var ticketCount: TicketCount = TicketCount()
 
     override fun initMovie() {

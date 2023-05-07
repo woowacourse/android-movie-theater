@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingBinding
+import woowacourse.movie.model.main.MainModelHandler
 import woowacourse.movie.model.main.MovieUiModel
 import woowacourse.movie.ui.seat.SeatActivity
 import woowacourse.movie.util.formatScreenDate
@@ -26,6 +27,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
     private val bookingPresenter: BookingContract.Presenter by lazy {
         BookingPresenter(
             view = this,
+            repository = MainModelHandler,
             movieId = movieId,
             theaterId = theaterId
         )
