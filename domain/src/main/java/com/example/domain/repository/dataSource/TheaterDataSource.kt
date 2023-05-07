@@ -7,8 +7,8 @@ import java.time.LocalTime
 
 val theaterDataSources = listOf<Theater>(
     Theater(0, "선릉 극장"),
-    Theater(0, "잠실 극장"),
-    Theater(0, "강남 극장"),
+    Theater(1, "잠실 극장"),
+    Theater(2, "강남 극장"),
 )
 
 val theaterMovieScreeningTimesDataSources = listOf<TheaterScreeningInfo>(
