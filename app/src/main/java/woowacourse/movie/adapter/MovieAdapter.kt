@@ -63,7 +63,7 @@ class MovieAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         advertisement: AdvertisementUiModel,
         onClick: (AdvertisementUiModel) -> Unit
     ) {
-        _advertisement = advertisement.toItemModel(onClick)
+        _advertisement = advertisement.toItemModel { onClick(advertisement) }
     }
 
     companion object {

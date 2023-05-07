@@ -28,7 +28,9 @@ class MoviesPresenter(
     }
 
     private fun setUpAdvertisementClickListener() {
-        view.setOnAdvertisementItemClick(repository.advertisements)
+        repository.advertisements.toItemModel {
+            view.setOnAdvertisementItemClick(repository.advertisements)
+        }
         view.updateAdvertisements()
     }
 }
