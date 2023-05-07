@@ -35,6 +35,7 @@ class MovieTest {
                 Location(SeatRow.B, 1),
                 Location(SeatRow.C, 1),
             ),
+            "강남"
         )
 
         val movie = Movie(
@@ -54,6 +55,7 @@ class MovieTest {
                 Location(SeatRow.B, 1),
                 Location(SeatRow.C, 1),
             ),
+            "강남"
         )
 
         assertThat(actual).isEqualTo(expected)
@@ -73,6 +75,7 @@ class MovieTest {
                 Location(SeatRow.B, 1),
                 Location(SeatRow.C, 1),
             ),
+            "강남"
         )
 
         val movie = Movie(
@@ -93,6 +96,7 @@ class MovieTest {
                     Location(SeatRow.B, 1),
                     Location(SeatRow.C, 1),
                 ),
+                "강남"
             )
         }
     }
