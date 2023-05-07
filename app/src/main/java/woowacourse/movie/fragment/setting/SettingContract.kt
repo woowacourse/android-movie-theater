@@ -5,7 +5,7 @@ interface SettingContract {
         var presenter: Presenter
 
         fun reRequestPermission(isChecked: Boolean)
-        fun synchronizeCanPushSwitch(isChecked: Boolean)
+        fun updateCanPushSwitch(isChecked: Boolean)
         fun disableCanPushSwitch()
     }
 

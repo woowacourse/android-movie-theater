@@ -12,7 +12,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.movie.activity.MainActivity
+import woowacourse.movie.activity.main.MainActivity
 
 class SettingFragmentTest {
     @get:Rule

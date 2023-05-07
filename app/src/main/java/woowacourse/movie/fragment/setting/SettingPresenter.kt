@@ -5,15 +5,14 @@ import woowacourse.movie.DataRepository
 class SettingPresenter(
     private val view: SettingContract.View,
     private val sharedPreferenceRepository: DataRepository,
-
-    ) : SettingContract.Presenter {
+) : SettingContract.Presenter {
 
     override fun saveCanPushAlarmSwitchData(isChecked: Boolean) {
         sharedPreferenceRepository.setBooleanValue(isChecked)
     }
 
     override fun loadCanPushAlarmSwitchData(default: Boolean) {
-        view.synchronizeCanPushSwitch(sharedPreferenceRepository.getBooleanValue(default))
+        view.updateCanPushSwitch(sharedPreferenceRepository.getBooleanValue(default))
     }
 
     override fun onClickCanPushSwitch(
@@ -21,6 +20,8 @@ class SettingPresenter(
         isForeverDeniedPermission: Boolean,
         isChecked: Boolean
     ) {
+        saveCanPushAlarmSwitchData(isChecked)
+        if(!isChecked) return
         if (isPermissionDenied) {
             if (isForeverDeniedPermission) {
                 view.disableCanPushSwitch()
