@@ -7,12 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import woowacourse.movie.adapter.MovieAdapter
 import woowacourse.movie.data.model.mapper.MovieMapper
 import woowacourse.movie.data.model.uimodel.AdvertisementUiModel
 import woowacourse.movie.data.model.uimodel.MovieUiModel
+import woowacourse.movie.data.model.uimodel.TheaterUiModel
 import woowacourse.movie.databinding.FragmentMoviesBinding
+import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.repository.MoviesRepositoryImpl
+import woowacourse.movie.ui.main.TheaterBottomDialogFragment
 import woowacourse.movie.ui.moviereservation.MovieReservationActivity
 
 class MoviesFragment : Fragment(), MoviesContract.View {
@@ -67,8 +71,13 @@ class MoviesFragment : Fragment(), MoviesContract.View {
     }
 
     override fun setOnMovieItemClick(movieUiModel: MovieUiModel) {
-        val intent = MovieReservationActivity.getIntent(requireContext(), MovieMapper.toDomain(movieUiModel))
-        startActivity(intent)
+        val theaterBottomDialogFragment = TheaterBottomDialogFragment()
+        theaterBottomDialogFragment.show(parentFragmentManager, THEATER_BOTTOM_DIALOG_TAG)
+        setFragmentResultListener("requestKey") { requestKey, bundle ->
+            val theater: TheaterUiModel = bundle.getSerializableCompat("bundleKey") ?: throw IllegalStateException("못찾음")
+            val intent = MovieReservationActivity.getIntent(requireContext(), MovieMapper.toDomain(movieUiModel), theater)
+            startActivity(intent)
+        }
     }
 
     override fun updateAdvertisements() {
@@ -79,5 +88,9 @@ class MoviesFragment : Fragment(), MoviesContract.View {
     override fun setOnAdvertisementItemClick(advertisementUiModel: AdvertisementUiModel) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(advertisementUiModel.url))
         startActivity(intent)
+    }
+
+    companion object {
+        private const val THEATER_BOTTOM_DIALOG_TAG = "THEATER_BOTTOM_DIALOG_TAG"
     }
 }
