@@ -3,6 +3,9 @@
 
     <data>
 
+        <import type="woowacourse.movie.util.DateTimeFormatters" />
+        <import type="woowacourse.movie.R"/>
+
         <variable
             name="theaterMovie"
             type="woowacourse.movie.model.SelectTheaterAndMovieState" />
@@ -63,12 +66,12 @@
 
                 <TextView
                     android:id="@+id/detail_date"
-                    movieDetailDates="@{theaterMovie.movie}"
                     android:layout_width="0dp"
                     android:layout_height="20dp"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="34dp"
                     android:gravity="center_vertical"
+                    android:text="@{DateTimeFormatters.INSTANCE.convertToDateTildeDate(context,theaterMovie.movie.startDate,theaterMovie.movie.endDate)}"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -78,7 +81,7 @@
 
                 <TextView
                     android:id="@+id/detail_time"
-                    movieDetailRunningMinutes="@{theaterMovie.movie}"
+                    android:text="@{context.getString(R.string.running_time, theaterMovie.movie.runningTime)}"
                     android:layout_width="0dp"
                     android:layout_height="20dp"
                     android:layout_marginHorizontal="20dp"
