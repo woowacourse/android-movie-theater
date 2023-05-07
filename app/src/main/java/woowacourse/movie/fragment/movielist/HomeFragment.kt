@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.woowacourse.domain.Theater
 import com.woowacourse.domain.TheaterMovie
 import woowacourse.movie.R
 import woowacourse.movie.activity.moviedetail.MovieDetailActivity
@@ -39,16 +38,12 @@ class HomeFragment : Fragment(), HomeContract.View {
     }
 
     private fun onClickMovie() = { position: Int ->
-//        val intent =
-//            MovieDetailActivity.getIntent(
-//                requireContext(),
-//                MovieMockData.movies10000[position].toPresentation()
-//            )
-//        this.startActivity(intent)
-        val hasMovieTheater = MovieMockData.theaterData.filter { theater ->
-            theater.schedules.any { it.movie == MovieMockData.movies10000[position] }
+        val theaterMovie = mutableListOf<TheaterMovie>()
+        for (theater in MovieMockData.theaterData) {
+            val hasMovie = theater.schedules.filter { it.movie == MovieMockData.movies10000[position] }
+            if (hasMovie.isNotEmpty()) theaterMovie.add(TheaterMovie(theater.name, hasMovie.first()))
         }
-        presenter.setTheaterRecyclerView(hasMovieTheater, onClickTheater(hasMovieTheater))
+        presenter.setTheaterRecyclerView(theaterMovie, onClickTheater(theaterMovie))
     }
 
     private fun onClickAd() = { item: AdUIModel ->
@@ -56,16 +51,11 @@ class HomeFragment : Fragment(), HomeContract.View {
         this.startActivity(intent)
     }
 
-    private fun onClickTheater(theaters: List<Theater>) = { position: Int ->
-        val theaterMovie = TheaterMovie(
-            theaters[position].name,
-            theaters[position].schedules.first { it.movie == MovieMockData.movies10000[0] }
-        )
-
+    private fun onClickTheater(theaterMovies: List<TheaterMovie>) = { position: Int ->
         val intent =
             MovieDetailActivity.getIntent(
                 requireContext(),
-                theaterMovie.toPresentation()
+                theaterMovies[position].toPresentation()
             )
         this.startActivity(intent)
     }

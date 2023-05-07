@@ -3,7 +3,7 @@ package woowacourse.movie.fragment.movielist.adapter
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.woowacourse.domain.Theater
+import com.woowacourse.domain.TheaterMovie
 import woowacourse.movie.R
 
 class TheaterViewHolder(
@@ -20,10 +20,10 @@ class TheaterViewHolder(
         }
     }
 
-    fun bind(theaterData: Theater) {
-        name.text = theaterData.name
+    fun bind(theaterMovie: TheaterMovie) {
+        name.text = theaterMovie.name
         numberOfScreeningTime.text =
-            FORMATTER_NUMBER_OF_SCREENING_TIME.format(theaterData.schedules.size + 1)
+            FORMATTER_NUMBER_OF_SCREENING_TIME.format(theaterMovie.movieInfo.screeningTime.size)
     }
 
     companion object {

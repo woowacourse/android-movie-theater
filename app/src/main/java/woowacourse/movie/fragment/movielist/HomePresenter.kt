@@ -1,7 +1,7 @@
 package woowacourse.movie.fragment.movielist
 
 import com.woowacourse.domain.Ad
-import com.woowacourse.domain.Theater
+import com.woowacourse.domain.TheaterMovie
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieMockData
 import woowacourse.movie.fragment.movielist.adapter.MovieRecyclerViewAdapter
@@ -31,9 +31,9 @@ class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter {
         return Ad(R.drawable.ad, "https://woowacourse.github.io/").toPresentation()
     }
 
-    override fun setTheaterRecyclerView(theaters: List<Theater>, onClickTheater: (Int) -> Unit) {
+    override fun setTheaterRecyclerView(theaterMovies: List<TheaterMovie>, onClickTheater: (Int) -> Unit) {
         val theaterRecyclerViewAdapter = TheaterRecyclerViewAdapter(
-            theaters,
+            theaterMovies,
             onClickTheater
         )
         view.setTheaterRecyclerView(theaterRecyclerViewAdapter)
