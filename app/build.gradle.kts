@@ -33,6 +33,9 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    dataBinding {
+        enable = true
+    }
 }
 
 dependencies {
@@ -44,6 +47,7 @@ dependencies {
     implementation("androidx.test.espresso:espresso-contrib:3.5.1")
     implementation("androidx.fragment:fragment-ktx:1.5.7")
     testImplementation("junit:junit:4.13.2")
+    testImplementation("io.mockk:mockk-android:1.13.5")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     testImplementation("pl.pragmatists:JUnitParams:1.1.0")

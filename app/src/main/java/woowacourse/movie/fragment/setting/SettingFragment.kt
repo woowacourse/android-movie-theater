@@ -7,23 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.core.os.bundleOf
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
-import com.google.android.material.switchmaterial.SwitchMaterial
 import woowacourse.movie.BundleKeys.IS_CAN_PUSH_CHECKED
 import woowacourse.movie.BundleKeys.REQUEST_NOTIFICATION_PERMISSION
 import woowacourse.movie.PermissionManagerImpl
 import woowacourse.movie.R
 import woowacourse.movie.SharedPreferenceUtil
+import woowacourse.movie.databinding.FragmentSettingBinding
 
 class SettingFragment(
     activityResultLauncher: ActivityResultLauncher<String>
 ) : Fragment(), SettingContract.View {
-
+    private lateinit var binding: FragmentSettingBinding
     override lateinit var presenter: SettingContract.Presenter
-    private val canPushSwitchView: SwitchMaterial by lazy {
-        requireView().findViewById(R.id.sw_setting_can_push)
-    }
     private val permissionManager by lazy {
         PermissionManagerImpl(
             requireActivity(),
@@ -35,8 +33,9 @@ class SettingFragment(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_setting, container, false)
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,16 +53,16 @@ class SettingFragment(
         )
     }
 
-    override fun synchronizeCanPushSwitch(isChecked: Boolean) {
-        canPushSwitchView.isChecked = isChecked
+    override fun updateCanPushSwitch(isChecked: Boolean) {
+        binding.swSettingCanPush.isChecked = isChecked
     }
 
     override fun disableCanPushSwitch() {
-        canPushSwitchView.isEnabled = false
+        binding.swSettingCanPush.isEnabled = false
     }
 
     private fun setCanPushSwitchOnClickListener() {
-        canPushSwitchView.setOnCheckedChangeListener { _, isChecked ->
+        binding.swSettingCanPush.setOnCheckedChangeListener { _, isChecked ->
             presenter.onClickCanPushSwitch(
                 isPermissionDenied = permissionManager.isPermissionDenied(POST_NOTIFICATIONS),
                 isForeverDeniedPermission = permissionManager.isPermissionDeniedForever(
