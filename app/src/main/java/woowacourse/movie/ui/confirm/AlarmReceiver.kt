@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import woowacourse.movie.DefaultPreference
 import woowacourse.movie.R
+import woowacourse.movie.SharedPreference
 import woowacourse.movie.model.TicketsState
 import woowacourse.movie.ui.main.setting.SettingFragment.Companion.NOTIFICATIONS
 import woowacourse.movie.util.NotificationArgs
@@ -14,7 +15,7 @@ import woowacourse.movie.util.sendNotification
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
         val tickets = intent?.extras?.getParcelableCompat<TicketsState>(KEY_TICKETS) ?: return
-        val sharedPreference = DefaultPreference(context)
+        val sharedPreference: SharedPreference = DefaultPreference(context)
         val isNotification = sharedPreference.getBoolean(NOTIFICATIONS, false)
 
         if (isNotification) {

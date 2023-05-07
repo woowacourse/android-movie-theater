@@ -1,10 +1,10 @@
 package woowacourse.movie.ui.main.setting
 
-import woowacourse.movie.DefaultPreference
+import woowacourse.movie.SharedPreference
 
 class SettingPresenter(
     private val view: SettingContract.View,
-    private val sharedPreferences: DefaultPreference
+    private val sharedPreferences: SharedPreference
 ) : SettingContract.Presenter {
     override fun setUpSwitch(notifications: String, boolean: Boolean) {
         view.setSwitchChecked(sharedPreferences.getBoolean(notifications, boolean))
@@ -12,6 +12,6 @@ class SettingPresenter(
 
     override fun updateSwitch(notifications: String, boolean: Boolean) {
         sharedPreferences.setBoolean(notifications, boolean)
-        view.setSwitchChecked(boolean)
+        view.setSwitchChecked(sharedPreferences.getBoolean(notifications, boolean))
     }
 }
