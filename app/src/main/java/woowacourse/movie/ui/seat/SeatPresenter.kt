@@ -65,4 +65,12 @@ class SeatPresenter(
             tickets = tickets.toSet()
         ).toUiModel()
     }
+
+    override fun onSeatReservationCompleted() {
+        val reservation = createReservation().also {
+            addReservation(it)
+        }
+
+        view.showSeatReservationDialog(reservation)
+    }
 }

@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatBinding
 import woowacourse.movie.model.BookedMovie
+import woowacourse.movie.model.ReservationUiModel
 import woowacourse.movie.ui.bookinghistory.BookingHistoryDBAdapter
 import woowacourse.movie.ui.bookinghistory.BookingHistoryDBHelper
 import woowacourse.movie.ui.completed.CompletedActivity
@@ -35,7 +36,7 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat)
-        binding.activity = this
+        binding.presenter = seatPresenter
 
         seatPresenter.initMovieTitle()
         seatPresenter.initSelectedSeats()
@@ -84,21 +85,18 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         binding.seatTableLayout.setSelected(row, col)
     }
 
-    fun showDialog() {
+    override fun showSeatReservationDialog(reservation: ReservationUiModel) {
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.reservation_check))
             .setMessage(getString(R.string.ask_reservation))
-            .setPositiveButton(getString(R.string.yes)) { _, _ -> completeBooking() }
+            .setPositiveButton(getString(R.string.yes)) { _, _ -> navigateToCompletedView(reservation) }
             .setNegativeButton(R.string.no) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
     }
 
-    private fun completeBooking() {
-        val reservation = seatPresenter.createReservation()
-
-        seatPresenter.addReservation(reservation)
+    private fun navigateToCompletedView(reservation: ReservationUiModel) {
         startActivity(CompletedActivity.getIntent(this, reservation))
         finish()
     }

@@ -16,6 +16,7 @@ interface SeatContract {
         fun setSeatSelected(row: Int, col: Int)
         fun setSeatPayment(payment: Int)
         fun setButtonState(enabled: Boolean)
+        fun showSeatReservationDialog(reservation: ReservationUiModel)
     }
 
     interface Presenter {
@@ -29,5 +30,6 @@ interface SeatContract {
         fun onSeatSelected(row: Int, col: Int)
         fun addReservation(reservationUiModel: ReservationUiModel)
         fun createReservation(): ReservationUiModel
+        fun onSeatReservationCompleted()
     }
 }

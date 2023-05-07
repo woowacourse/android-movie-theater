@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="activity"
-            type="woowacourse.movie.ui.seat.SeatActivity" />
+            name="presenter"
+            type="woowacourse.movie.ui.seat.SeatPresenter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -55,7 +55,7 @@
                 android:enabled="false"
                 android:fontFamily="@font/roboto_bold"
                 android:gravity="center"
-                android:onClick="@{() -> activity.showDialog()}"
+                android:onClick="@{() -> presenter.onSeatReservationCompleted()}"
                 android:text="@string/confirm"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
