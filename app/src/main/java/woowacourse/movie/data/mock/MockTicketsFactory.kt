@@ -9,17 +9,17 @@ import java.time.LocalDateTime
 
 object MockTicketsFactory {
 
-    fun makeTicket(): Ticket {
+    fun makeTicket(row: Int, col: Int): Ticket {
         return Ticket(
             date = LocalDateTime.of(2023, 4, 8, 16, 0),
             seat = Seat(
-                1, 1, SeatPolicies()
+                row+1, col+1, SeatPolicies()
             ),
             DisCountPolicies()
         )
     }
 
     fun makeTickets(): Tickets {
-        return Tickets(List(5) { makeTicket() })
+        return Tickets(List(3) { makeTicket(it, it) })
     }
 }

@@ -9,7 +9,7 @@ import java.time.LocalDate
 object MockMoviesFactory {
     fun makeMovies(): Movies {
         return Movies(
-            List(100) { (generateMovie(it)) }
+            List(5) { (generateMovie(it)) }
         )
     }
 

@@ -41,12 +41,12 @@ class MovieAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    override fun getItemCount(): Int = 10_000
+    override fun getItemCount(): Int = movies.size + (movies.size / ADVERTISEMENT_TURN)
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         when (viewHolder) {
             is AdvertisementItemViewHolder -> viewHolder.bind(advertisement)
-            is MovieItemViewHolder -> viewHolder.bind(movies[position])
+            is MovieItemViewHolder -> viewHolder.bind(movies[position - (position / CYCLE)])
         }
     }
 
