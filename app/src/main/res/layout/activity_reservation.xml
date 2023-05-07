@@ -8,6 +8,14 @@
         <variable
             name="movie"
             type="woowacourse.movie.view.model.MovieListModel.MovieUiModel" />
+
+        <variable
+            name="movieTheater"
+            type="woowacourse.movie.view.model.MovieTheater" />
+
+        <variable
+            name="presenter"
+            type="woowacourse.movie.view.reservation.ReservationPresenter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -110,6 +118,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/minus"
                 android:textSize="25sp"
+                android:onClick="@{() -> presenter.decreasePeopleCount()}"
                 app:layout_constraintStart_toStartOf="@id/reservation_layout"
                 app:layout_constraintTop_toBottomOf="@id/date_spinner" />
 
@@ -119,6 +128,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/plus"
                 android:textSize="25sp"
+                android:onClick="@{() -> presenter.increasePeopleCount()}"
                 app:layout_constraintEnd_toEndOf="@id/reservation_layout"
                 app:layout_constraintTop_toBottomOf="@id/date_spinner" />
 
@@ -140,6 +150,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16.75dp"
                 android:text="@string/reservation_complete"
+                android:onClick="@{() -> presenter.reserve(movieTheater)}"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@id/reservation_layout"
                 app:layout_constraintTop_toBottomOf="@id/minus_button" />

@@ -29,13 +29,13 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_reservation)
         binding.movie = getMovie()
+        binding.movieTheater = intent.getParcelableCompat<MovieTheater>(MOVIE_THEATER)
         setContentView(binding.root)
 
         presenter = ReservationPresenter(this, getMovie())
+        binding.presenter = presenter as ReservationPresenter
 
         presenter.setUpScreeningDateTime()
-        setUpPeopleCountButton()
-        setUpReserveButtonClickListener()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -118,26 +118,8 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         }
     }
 
-    private fun setUpPeopleCountButton() {
-        binding.apply {
-            minusButton.setOnClickListener {
-                presenter.decreasePeopleCount()
-            }
-            plusButton.setOnClickListener {
-                presenter.increasePeopleCount()
-            }
-        }
-    }
-
     override fun setPeopleCountTextView(count: Int) {
         binding.peopleCount.text = count.toString()
-    }
-
-    private fun setUpReserveButtonClickListener() {
-        val movieTheater = intent.getParcelableCompat<MovieTheater>(MOVIE_THEATER)
-        binding.reservationButton.setOnClickListener {
-            movieTheater?.let { presenter.reserve(it) }
-        }
     }
 
     override fun openSeatSelectionActivity(
