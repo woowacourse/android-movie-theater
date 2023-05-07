@@ -198,7 +198,7 @@ class SeatSelectionActivity : AppCompatActivity() {
     companion object {
         const val ROW_SIZE = 5
         const val COLUMN_SIZE = 4
-        const val KEY_TICKET = "ticket"
+        const val KEY_TICKET = "TICKET"
         private const val KEY_SEATS = "seats"
     }
 }
