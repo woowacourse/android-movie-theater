@@ -1,15 +1,14 @@
-package woowacourse.movie.activity
+package woowacourse.movie.activity.seatpicker
 
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.children
+import androidx.databinding.DataBindingUtil
 import com.woowacourse.domain.seat.Seat
 import com.woowacourse.domain.seat.SeatColumn
 import com.woowacourse.domain.seat.SeatGroup
@@ -18,36 +17,41 @@ import com.woowacourse.domain.ticket.Ticket
 import com.woowacourse.domain.ticket.TicketBundle
 import woowacourse.movie.AlarmSetter
 import woowacourse.movie.BookHistories
+import woowacourse.movie.BookingHistoryRepository
 import woowacourse.movie.BundleKeys
 import woowacourse.movie.BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY
 import woowacourse.movie.MovieReminder
 import woowacourse.movie.R
+import woowacourse.movie.activity.BackButtonActivity
+import woowacourse.movie.activity.bookcomplete.BookCompleteActivity
+import woowacourse.movie.databinding.ActivitySeatPickerBinding
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toPresentation
 import woowacourse.movie.model.SeatGroupModel
+import woowacourse.movie.movie.Movie
 import woowacourse.movie.movie.MovieBookingInfo
 import woowacourse.movie.movie.MovieBookingSeatInfo
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class SeatPickerActivity : BackButtonActivity() {
-    private val seatTableLayout: TableLayout by lazy { findViewById(R.id.tl_seats) }
-    private val pickDoneButton: Button by lazy { findViewById(R.id.bt_seat_picker_done) }
-    private val seatPickerTicketPrice: TextView by lazy { findViewById(R.id.tv_seat_picker_ticket_price) }
-    private val movieTitle: TextView by lazy { findViewById(R.id.tv_seat_picker_movie) }
+class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
+    private lateinit var binding: ActivitySeatPickerBinding
+    override lateinit var presenter: SeatPickerContract.Presenter
     private var seatGroup = SeatGroup()
     private lateinit var ticketBundle: TicketBundle
+    private val bookHistory: BookingHistoryRepository by lazy {
+        BookingHistoryRepository(BookHistories.getDBInstance(this))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_seat_picker)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_picker)
 
         val movieBookingInfo = getMovieBookingInfo()
-
-        initSeatName()
-        initSeatNameColor()
-        initMovieTitle(movieBookingInfo)
+        presenter = SeatPickerPresenter(this, movieBookingInfo)
+        initSeat()
+        setMovieTitle(movieBookingInfo.title)
         ticketBundle = TicketBundle(count = movieBookingInfo.ticketCount)
         reloadData(savedInstanceState)
 
@@ -58,6 +62,11 @@ class SeatPickerActivity : BackButtonActivity() {
     private fun getMovieBookingInfo(): MovieBookingInfo {
         return intent.getSerializableCompat(BundleKeys.MOVIE_BOOKING_INFO_KEY)
             ?: MovieBookingInfo.dummyData
+    }
+
+    override fun initSeat() {
+        initSeatName()
+        initSeatNameColor()
     }
 
     private fun initSeatName() {
@@ -85,25 +94,21 @@ class SeatPickerActivity : BackButtonActivity() {
     }
 
     private fun getRowSeats() =
-        seatTableLayout.children
+        binding.tlSeats.children
             .filterIsInstance<TableRow>()
             .toList()
 
     private fun getSeats() =
-        seatTableLayout.children
+        binding.tlSeats.children
             .filterIsInstance<TableRow>()
             .flatMap { it.children }
             .filterIsInstance<TextView>()
             .toList()
 
-    private fun initMovieTitle(movieBookingInfo: MovieBookingInfo) {
-        movieTitle.text = movieBookingInfo.movieInfo.title
-    }
-
     private fun reloadData(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
-            movieTitle.text = savedInstanceState.getString(MOVIE_TITLE)
-            seatPickerTicketPrice.text = savedInstanceState.getString(TICKET_PRICE)
+            setMovieTitle(savedInstanceState.getString(MOVIE_TITLE) ?: Movie.dummyData.title)
+            setTicketPrice(savedInstanceState.getString(TICKET_PRICE) ?: "0원")
             seatGroup =
                 (savedInstanceState.getSerializable(PICKED_SEAT) as SeatGroupModel).toDomain()
             val seatNames = seatGroup.seats.map {
@@ -121,14 +126,24 @@ class SeatPickerActivity : BackButtonActivity() {
         }
     }
 
+    override fun setMovieTitle(title: String) {
+        binding.tvSeatPickerMovie.text = title
+    }
+
+    override fun setTicketPrice(price: String) {
+        binding.tvSeatPickerTicketPrice.text = price
+    }
+
     private fun setPickDoneButtonClickListener() {
-        pickDoneButton.setOnClickListener {
+        binding.btSeatPickerDone.setOnClickListener {
             AlertDialog.Builder(this).apply {
                 setTitle(getString(R.string.alert_dialog_book_confirm))
                 setMessage(getString(R.string.alert_dialog_book_re_confirm))
                 setPositiveButton(getString(R.string.alert_dialog_book_done)) { _, _ ->
                     val movieBookingSeatInfo = getMovieBookingSeatInfo()
                     BookHistories.items.add(movieBookingSeatInfo)
+                    bookHistory.insert(movieBookingSeatInfo)
+
                     setMovieAlarm(movieBookingSeatInfo)
                     startActivity(getIntent(movieBookingSeatInfo))
                     finish()
@@ -147,7 +162,7 @@ class SeatPickerActivity : BackButtonActivity() {
         seatGroup.sorted().seats.map {
             formatSeatName(it.row.value, it.column.value)
         },
-        seatPickerTicketPrice.text.toString()
+        binding.tvSeatPickerTicketPrice.text.toString()
     )
 
     private fun setMovieAlarm(movieBookingSeatInfo: MovieBookingSeatInfo) {
@@ -168,9 +183,7 @@ class SeatPickerActivity : BackButtonActivity() {
     }
 
     private fun getIntent(movieBookingSeatInfo: MovieBookingSeatInfo): Intent {
-        val bookCompleteActivityIntent = BookCompleteActivity.intent(this)
-        bookCompleteActivityIntent.putExtra(MOVIE_BOOKING_SEAT_INFO_KEY, movieBookingSeatInfo)
-        return bookCompleteActivityIntent
+        return BookCompleteActivity.intent(this, movieBookingSeatInfo)
     }
 
     private fun setSeatsOnClickListener(movieBookingInfo: MovieBookingInfo) {
@@ -198,7 +211,7 @@ class SeatPickerActivity : BackButtonActivity() {
         ticketBundle = ticketBundle.add(Ticket(newSeat.getSeatTier().price))
         seat.setBackgroundColor(getColor(R.color.picked_seat_color))
         setPickDoneButtonColor()
-        seatPickerTicketPrice.text =
+        setTicketPrice(
             getString(
                 R.string.ticket_price_format,
                 ticketBundle.calculateTotalPrice(
@@ -206,6 +219,7 @@ class SeatPickerActivity : BackButtonActivity() {
                     movieBookingInfo.time
                 )
             )
+        )
     }
 
     private fun progressRemoveSeat(
@@ -217,7 +231,7 @@ class SeatPickerActivity : BackButtonActivity() {
         ticketBundle = ticketBundle.remove(Ticket(newSeat.getSeatTier().price))
         seat.setBackgroundColor(getColor(R.color.unpicked_seat_color))
         setPickDoneButtonColor()
-        seatPickerTicketPrice.text =
+        setTicketPrice(
             getString(
                 R.string.ticket_price_format,
                 ticketBundle.calculateTotalPrice(
@@ -225,16 +239,17 @@ class SeatPickerActivity : BackButtonActivity() {
                     movieBookingInfo.time
                 )
             )
+        )
     }
 
     private fun setPickDoneButtonColor() {
-        pickDoneButton.isEnabled = !seatGroup.canAdd(ticketBundle.count)
+        binding.btSeatPickerDone.isEnabled = !seatGroup.canAdd(ticketBundle.count)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(MOVIE_TITLE, movieTitle.text.toString())
-        outState.putString(TICKET_PRICE, seatPickerTicketPrice.text.toString())
+        outState.putString(MOVIE_TITLE, binding.tvSeatPickerMovie.text.toString())
+        outState.putString(TICKET_PRICE, binding.tvSeatPickerTicketPrice.text.toString())
         outState.putSerializable(PICKED_SEAT, seatGroup.toPresentation())
     }
 
