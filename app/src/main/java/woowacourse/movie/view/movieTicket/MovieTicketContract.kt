@@ -17,7 +17,7 @@ interface MovieTicketContract {
 
         fun setTextMovieDate(ticketTime: TicketTimeModel)
 
-        fun setTextMovieSeats(seats: Set<SeatModel>)
+        fun setTextMovieSeats(seats: Set<SeatModel>, theater: String)
 
         fun setTextMovieTicketPrice(price: PriceModel)
     }

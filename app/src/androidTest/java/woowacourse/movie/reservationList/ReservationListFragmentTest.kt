@@ -42,6 +42,7 @@ class ReservationListFragmentTest {
     fun setUp() {
         Reservations.addItem(
             MovieTicketModel(
+                theater = "선릉 극장",
                 title = "써니",
                 time = TicketTimeModel(LocalDateTime.of(2023, 4, 11, 20, 0)),
                 peopleCount = PeopleCountModel(1),

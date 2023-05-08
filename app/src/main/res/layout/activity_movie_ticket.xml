@@ -50,6 +50,8 @@
         android:id="@+id/ticket_reserved_seats"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:ellipsize="end"
         app:layout_constraintStart_toStartOf="@id/ticket_title"
         app:layout_constraintEnd_toEndOf="@id/ticket_title"
         app:layout_constraintTop_toTopOf="parent"

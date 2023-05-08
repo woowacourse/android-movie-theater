@@ -61,6 +61,7 @@ class ReservationListPresenterTest {
 
     companion object {
         private val dummyTicket = MovieTicketModel(
+            "횡성 극장",
             "그레이의 50가지 그림자 1",
             TicketTimeModel(LocalDateTime.of(2023, 5, 1, 13, 0)),
             PeopleCountModel(2),

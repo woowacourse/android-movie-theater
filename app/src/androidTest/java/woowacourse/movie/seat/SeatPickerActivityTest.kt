@@ -25,6 +25,7 @@ import java.time.LocalDateTime
 
 class SeatPickerActivityTest {
     private val ticket = MovieTicketModel(
+        "선릉 극장",
         "글로의 50가지 그림자",
         TicketTimeModel(LocalDateTime.now()),
         PeopleCountModel(1),

@@ -75,14 +75,15 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
         findViewById<TextView>(R.id.ticket_date).text = ticketTime.format()
     }
 
-    override fun setTextMovieSeats(seats: Set<SeatModel>) {
+    override fun setTextMovieSeats(seats: Set<SeatModel>, theater: String) {
         findViewById<TextView>(R.id.ticket_reserved_seats).text = getString(
             R.string.reserved_seat,
             seats.size,
             seats.sortedBy { seat -> seat.format() }
                 .joinToString(", ") { seat ->
                     seat.format()
-                }
+                },
+            theater
         )
     }
 

@@ -1,10 +1,9 @@
 package woowacourse.movie.view.movieDetail
 
 import woowacourse.movie.domain.PeopleCount
-import woowacourse.movie.domain.TimesGenerator
 import woowacourse.movie.model.MovieModel
 import woowacourse.movie.model.mapToMovie
-import java.time.LocalDate
+import java.time.LocalTime
 
 class MovieDetailPresenter(private val view: MovieDetailContract.View) :
     MovieDetailContract.Presenter {
@@ -29,7 +28,7 @@ class MovieDetailPresenter(private val view: MovieDetailContract.View) :
         view.setDateSpinner(movie.mapToMovie().getDatesBetweenTwoDates())
     }
 
-    override fun setScreeningTimes(date: LocalDate) {
-        view.setTimeSpinner(TimesGenerator.getTimesByDate(date))
+    override fun setScreeningTimes(screeningTimes: List<LocalTime>) {
+        view.setTimeSpinner(screeningTimes)
     }
 }

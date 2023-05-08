@@ -24,6 +24,6 @@ interface MovieDetailContract {
 
         fun setScreeningDates(movie: MovieModel)
 
-        fun setScreeningTimes(date: LocalDate)
+        fun setScreeningTimes(screeningTimes: List<LocalTime>)
     }
 }

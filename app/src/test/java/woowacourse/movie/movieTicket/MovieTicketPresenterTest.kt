@@ -28,7 +28,7 @@ class MovieTicketPresenterTest {
         // given
         justRun { view.setTextMovieTitle(dummyTicket.title) }
         justRun { view.setTextMovieDate(dummyTicket.time) }
-        justRun { view.setTextMovieSeats(dummyTicket.seats) }
+        justRun { view.setTextMovieSeats(dummyTicket.seats, dummyTicket.theater) }
         justRun { view.setTextMovieTicketPrice(dummyTicket.price) }
 
         // when
@@ -37,12 +37,13 @@ class MovieTicketPresenterTest {
         // then
         verify { view.setTextMovieTitle(dummyTicket.title) }
         verify { view.setTextMovieDate(dummyTicket.time) }
-        verify { view.setTextMovieSeats(dummyTicket.seats) }
+        verify { view.setTextMovieSeats(dummyTicket.seats, dummyTicket.theater) }
         verify { view.setTextMovieTicketPrice(dummyTicket.price) }
     }
 
     companion object {
         private val dummyTicket = MovieTicketModel(
+            "횡성 극장",
             "그레이의 50가지 그림자 1",
             TicketTimeModel(LocalDateTime.of(2023, 5, 1, 13, 0)),
             PeopleCountModel(2),

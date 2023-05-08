@@ -11,7 +11,7 @@ class MovieTicketPresenter(private val view: MovieTicketContract.View) :
 
         view.setTextMovieTitle(ticketModel.title)
         view.setTextMovieDate(ticketModel.time)
-        view.setTextMovieSeats(ticketModel.seats)
+        view.setTextMovieSeats(ticketModel.seats, ticketModel.theater)
         view.setTextMovieTicketPrice(ticketModel.price)
     }
 }

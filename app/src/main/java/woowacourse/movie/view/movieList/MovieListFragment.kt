@@ -13,8 +13,8 @@ import woowacourse.movie.entity.Ads
 import woowacourse.movie.entity.Movies
 import woowacourse.movie.model.AdModel
 import woowacourse.movie.model.MovieModel
-import woowacourse.movie.view.movieDetail.MovieDetailActivity
 import woowacourse.movie.view.movieList.adapter.MovieAdapter
+import woowacourse.movie.view.movieList.bottomSheet.TheaterSheetFragment
 
 class MovieListFragment : Fragment(), MovieListContract.View {
     private lateinit var moviesView: RecyclerView
@@ -43,18 +43,24 @@ class MovieListFragment : Fragment(), MovieListContract.View {
         moviesView.adapter = MovieAdapter(
             movies = movies,
             ads = ads,
-            onMovieItemClick = { moveToDetailActivity(it) },
+            onMovieItemClick = { openTheaters(it) },
             onAdItemClick = { openAdvertiseUrl(it) }
         )
     }
 
-    private fun moveToDetailActivity(movie: MovieModel) {
-        val intent = MovieDetailActivity.createIntent(requireActivity(), movie)
-        startActivity(intent)
+    private fun openTheaters(movie: MovieModel) {
+        val theaterSheet = TheaterSheetFragment().apply {
+            arguments = Bundle().apply { putParcelable(THEATER_SHEET_KEY, movie) }
+        }
+        theaterSheet.show(parentFragmentManager, THEATER_SHEET_KEY)
     }
 
     private fun openAdvertiseUrl(ad: AdModel) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(ad.url))
         startActivity(intent)
+    }
+
+    companion object {
+        internal const val THEATER_SHEET_KEY = "theater_bottom_sheet"
     }
 }

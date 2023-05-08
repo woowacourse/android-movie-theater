@@ -21,4 +21,6 @@
     <color name="settings_description">#666666</color>
     <color name="settings_switch_track_off">#BDBCBC</color>
     <color name="settings_switch_thumb_off">#717171</color>
+    <color name="theater_bottom_sheet_screening_time">#8A8A8A</color>
+    <color name="theater_bottom_sheet_button_next">#5F5F5F</color>
 </resources>

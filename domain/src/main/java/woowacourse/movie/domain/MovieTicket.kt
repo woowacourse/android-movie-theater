@@ -3,6 +3,7 @@ package woowacourse.movie.domain
 import woowacourse.movie.domain.seat.Seat
 
 class MovieTicket(
+    val theater: String,
     val title: String,
     val time: TicketTime,
     val peopleCount: PeopleCount,

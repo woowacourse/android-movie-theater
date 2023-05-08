@@ -12,7 +12,8 @@ fun MovieModel.mapToMovie(): Movie {
         startDate,
         endDate,
         runningTime,
-        description
+        description,
+        theaters.map { it.mapToTheater() }
     )
 }
 
@@ -25,4 +26,5 @@ data class MovieModel(
     val endDate: LocalDate,
     val runningTime: Int,
     val description: String,
+    val theaters: List<TheaterModel>
 ) : Parcelable

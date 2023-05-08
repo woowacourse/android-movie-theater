@@ -17,6 +17,7 @@ import woowacourse.movie.model.MovieModel
 import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.model.PeopleCountModel
 import woowacourse.movie.model.PriceModel
+import woowacourse.movie.model.TheaterModel
 import woowacourse.movie.model.TicketTimeModel
 import woowacourse.movie.utils.getParcelable
 import woowacourse.movie.view.seat.SeatPickerActivity
@@ -31,6 +32,8 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     private val timeSpinner: Spinner by lazy { findViewById(R.id.detail_time_spinner) }
     private lateinit var timeSpinnerAdapter: ArrayAdapter<LocalTime>
 
+    private lateinit var theater: TheaterModel
+
     override lateinit var presenter: MovieDetailContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,11 +44,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
 
         presenter = MovieDetailPresenter(this)
 
-        intent.getParcelable<MovieModel>(MOVIE_EXTRA_KEY)?.let {
-            setMovieInfo(it)
-            setBookingButton(it)
-            presenter.setScreeningDates(it)
-        }
+        initIntentData()
 
         setMinusButton()
         setPlusButton()
@@ -69,6 +68,19 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun initIntentData() {
+        intent.getParcelable<MovieModel>(MOVIE_EXTRA_KEY)?.let {
+            setMovieInfo(it)
+            setBookingButton(it)
+            presenter.setScreeningDates(it)
+        }
+
+        intent.getParcelable<TheaterModel>(THEATER_EXTRA_KEY)?.let {
+            theater = it
+            presenter.setScreeningTimes(theater.screeningTimes)
+        }
     }
 
     private fun setMovieInfo(movie: MovieModel) {
@@ -117,6 +129,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
 
     private fun moveToSeatPickerActivity(movie: MovieModel) {
         val ticket = MovieTicketModel(
+            theater.name,
             movie.title,
             TicketTimeModel(
                 LocalDateTime.of(
@@ -162,7 +175,6 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
                 id: Long
             ) {
                 timeSpinner.setSelection(0)
-                presenter.setScreeningTimes(dateSpinner.selectedItem as LocalDate)
                 timeSpinnerAdapter.notifyDataSetChanged()
             }
 
@@ -184,12 +196,14 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     companion object {
         private const val DATE_SPINNER_POSITION_INSTANCE_KEY = "date_position"
         private const val MOVIE_EXTRA_KEY = "movie"
+        private const val THEATER_EXTRA_KEY = "theater"
         private const val PEOPLE_COUNT_VALUE_INSTANCE_KEY = "count"
         private const val TIME_SPINNER_POSITION_INSTANCE_KEY = "time_position"
 
-        fun createIntent(context: Context, movie: MovieModel): Intent {
+        fun createIntent(context: Context, movie: MovieModel, theater: TheaterModel): Intent {
             val intent = Intent(context, MovieDetailActivity::class.java)
             intent.putExtra(MOVIE_EXTRA_KEY, movie)
+            intent.putExtra(THEATER_EXTRA_KEY, theater)
             return intent
         }
     }

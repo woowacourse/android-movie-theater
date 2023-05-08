@@ -8,6 +8,7 @@ import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.model.MovieModel
+import woowacourse.movie.model.TheaterModel
 import woowacourse.movie.view.movieDetail.MovieDetailContract
 import woowacourse.movie.view.movieDetail.MovieDetailPresenter
 import java.time.LocalDate
@@ -70,31 +71,14 @@ class MovieDetailPresenterTest {
     }
 
     @Test
-    fun `평일 상영일로 변경하면 상영 시작 시간은 9시부터다`() {
+    fun `상영 시간은 영화관이 갖는 상영시작 시간이다`() {
         // given
-        val weekday = LocalDate.of(2023, 5, 1)
+        val theater = TheaterModel("횡성 극장", listOf(LocalTime.of(10, 0)))
         val slot = slot<List<LocalTime>>()
         justRun { view.setTimeSpinner(capture(slot)) }
 
         // when
-        presenter.setScreeningTimes(weekday)
-
-        // then
-        val actual = slot.captured
-        val expected = LocalTime.of(9, 0)
-        assertEquals(expected, actual[0])
-        verify { view.setTimeSpinner(actual) }
-    }
-
-    @Test
-    fun `주말 상영일로 변경하면 상영 시작 시간은 10시부터다`() {
-        // given
-        val weekend = LocalDate.of(2023, 5, 6)
-        val slot = slot<List<LocalTime>>()
-        justRun { view.setTimeSpinner(capture(slot)) }
-
-        // when
-        presenter.setScreeningTimes(weekend)
+        presenter.setScreeningTimes(theater.screeningTimes)
 
         // then
         val actual = slot.captured
@@ -110,7 +94,8 @@ class MovieDetailPresenterTest {
             LocalDate.of(2023, 5, 1),
             LocalDate.of(2023, 5, 10),
             105,
-            "모든 과거를 잊고 서로에게 더 깊게 빠져든 ‘크리스찬 그레이’와 ‘아나스타샤’. 그레이의 독특한 취향으로 시작된 이 비밀스러운 관계는 더 큰 자극을 원하는 아나스타샤로 인해 역전되고, 마침내 그녀의 본능이 지배하는 마지막 절정의 순간을 맞이하게 되는데…"
+            "모든 과거를 잊고 서로에게 더 깊게 빠져든 ‘크리스찬 그레이’와 ‘아나스타샤’. 그레이의 독특한 취향으로 시작된 이 비밀스러운 관계는 더 큰 자극을 원하는 아나스타샤로 인해 역전되고, 마침내 그녀의 본능이 지배하는 마지막 절정의 순간을 맞이하게 되는데…",
+            listOf()
         )
     }
 }

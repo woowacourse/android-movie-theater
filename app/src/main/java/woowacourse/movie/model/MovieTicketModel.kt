@@ -9,6 +9,7 @@ import woowacourse.movie.model.seat.mapToSeatModel
 
 fun MovieTicketModel.mapToMovieTicket(): MovieTicket {
     return MovieTicket(
+        theater,
         title,
         time.mapToTicketTime(),
         peopleCount.mapToPeopleCount(),
@@ -19,6 +20,7 @@ fun MovieTicketModel.mapToMovieTicket(): MovieTicket {
 
 fun MovieTicket.mapToMovieTicketModel(): MovieTicketModel {
     return MovieTicketModel(
+        theater,
         title,
         time.mapToTicketTimeModel(),
         peopleCount.mapToPeopleCountModel(),
@@ -29,6 +31,7 @@ fun MovieTicket.mapToMovieTicketModel(): MovieTicketModel {
 
 fun MovieTicket.mapToMovieTicketModelWithOriginalPrice(): MovieTicketModel {
     return MovieTicketModel(
+        theater,
         title,
         time.mapToTicketTimeModel(),
         peopleCount.mapToPeopleCountModel(),
@@ -39,6 +42,7 @@ fun MovieTicket.mapToMovieTicketModelWithOriginalPrice(): MovieTicketModel {
 
 @Parcelize
 data class MovieTicketModel(
+    val theater: String,
     val title: String,
     val time: TicketTimeModel,
     val peopleCount: PeopleCountModel,
