@@ -15,16 +15,16 @@ import woowacourse.movie.presentation.views.seatpicker.contract.SeatPickerContra
 class SeatPickerPresenter(
     private val seatRowSize: Int = 5,
     private val seatColSize: Int = 4,
+    view: SeatPickerContract.View,
     private val ticketingState: TicketingState,
     private val historyRepository: HistoryRepository,
-) : SeatPickerContract.Presenter() {
+) : SeatPickerContract.Presenter(view) {
     private var pickedSeats: DomainPickedSeats = DomainPickedSeats()
 
-    override fun attach(view: SeatPickerContract.View) {
-        super.attach(view)
-        requireView().showMovieTitle(ticketingState.movie.title)
+    init {
+        view.showMovieTitle(ticketingState.movie.title)
         updatePriceTextAndReservationEnabled()
-        requireView().initSeatTable(seatRowSize, seatColSize)
+        view.initSeatTable(seatRowSize, seatColSize)
     }
 
     override fun getState(): PickedSeats = pickedSeats.toPresentation()
@@ -32,12 +32,12 @@ class SeatPickerPresenter(
     override fun setState(state: PickedSeats) {
         pickedSeats = state.toDomain()
         updatePriceTextAndReservationEnabled()
-        requireView().fetchPickedSeatViews(state.indices(seatColSize))
+        view.fetchPickedSeatViews(state.indices(seatColSize))
     }
 
     private fun updatePriceTextAndReservationEnabled() {
-        requireView().updateTotalPriceView(calculateTotalPrice().toPresentation())
-        requireView().updateReservationBtnEnabled(isAllPicked())
+        view.updateTotalPriceView(calculateTotalPrice().toPresentation())
+        view.updateReservationBtnEnabled(isAllPicked())
     }
 
     override fun reserveMovie() {
@@ -53,8 +53,8 @@ class SeatPickerPresenter(
         )
 
         historyRepository.add(reservation)
-        requireView().registerPushBroadcast(reservation.toPresentation())
-        requireView().showTicketingResultScreen(reservation.toPresentation())
+        view.registerPushBroadcast(reservation.toPresentation())
+        view.showTicketingResultScreen(reservation.toPresentation())
     }
 
     private fun isPicked(seat: Seat): Boolean = pickedSeats.isPicked(seat.toDomain())
@@ -62,7 +62,7 @@ class SeatPickerPresenter(
     override fun onClickSeat(seat: Seat): Unit = when {
         isPicked(seat) -> unpick(seat)
         !isAllPicked() -> pick(seat)
-        else -> requireView().showSeatExceedAlertMessage()
+        else -> view.showSeatExceedAlertMessage()
     }
 
     private fun pick(seat: Seat) {
@@ -77,7 +77,7 @@ class SeatPickerPresenter(
 
     private fun updateViewWithSeat(seat: Seat, isPicked: Boolean) {
         updatePriceTextAndReservationEnabled()
-        requireView().setSeatViewPickState(seat.toIndex(seatColSize), isPicked)
+        view.setSeatViewPickState(seat.toIndex(seatColSize), isPicked)
     }
 
     override fun isAllPicked(): Boolean =

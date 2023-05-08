@@ -43,7 +43,6 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener, SeatPicker
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_picker)
-        presenter.attach(this)
         initViewClickListener()
         showBackButton()
     }
@@ -152,12 +151,8 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener, SeatPicker
         }.show()
     }
 
-    override fun onDestroy() {
-        presenter.detach()
-        super.onDestroy()
-    }
-
     private fun makePresenter(): SeatPickerContract.Presenter = SeatPickerPresenter(
+        view = this,
         ticketingState = intent.getParcelableCompat(TICKETING_STATE_KEY)!!,
         historyRepository = LocalHistoryRepository(
             LocalHistoryDataSource(ReservationDao(this))

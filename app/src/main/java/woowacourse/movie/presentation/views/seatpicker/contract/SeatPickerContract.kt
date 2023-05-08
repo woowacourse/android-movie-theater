@@ -20,20 +20,7 @@ interface SeatPickerContract {
         fun showSeatExceedAlertMessage()
     }
 
-    abstract class Presenter {
-        private var view: View? = null
-
-        open fun attach(view: View) {
-            this.view = view
-        }
-
-        open fun detach() {
-            this.view = null
-        }
-
-        protected fun requireView(): View =
-            view ?: throw IllegalStateException("View is not attached")
-
+    abstract class Presenter(protected val view: View) {
         abstract fun setState(state: PickedSeats)
         abstract fun getState(): PickedSeats
         abstract fun reserveMovie()
