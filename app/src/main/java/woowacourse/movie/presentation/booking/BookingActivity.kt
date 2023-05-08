@@ -46,7 +46,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         super.onCreate(savedInstanceState)
         binding = ActivityBookingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        this.supportFragmentManager
         initAdapters()
         initView()
         restoreData(savedInstanceState)

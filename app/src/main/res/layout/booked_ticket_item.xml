@@ -3,6 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <import
+            alias="DateExtension"
+            type="woowacourse.movie.presentation.util.DateExtensionKt" />
+        <variable
+            name="ticket"
+            type="woowacourse.movie.presentation.model.TicketModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:background="?attr/selectableItemBackground"
         android:layout_width="match_parent"

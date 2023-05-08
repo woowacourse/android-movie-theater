@@ -1,7 +1,6 @@
 package woowacourse.movie.presentation.movielist.cinema
 
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
 import woowacourse.movie.databinding.CinemaListItemBinding
 import woowacourse.movie.presentation.model.CinemaModel
 
@@ -19,10 +18,6 @@ class CinemaItemViewHolder(
 
     fun bind(cinemaModel: CinemaModel) {
         _cinemaModel = cinemaModel
-        binding.textCinemaName.text = cinemaModel.cinemaName
-        val context = binding.textCinemaTimesCount.context
-        val timesCount = cinemaModel.movieTimes.size
-        binding.textCinemaTimesCount.text =
-            context.getString(R.string.cinema_times_count, timesCount)
+        binding.cinema = cinemaModel
     }
 }
