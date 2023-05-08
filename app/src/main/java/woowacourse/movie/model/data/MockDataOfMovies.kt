@@ -4,7 +4,7 @@ import woowacourse.movie.R
 import woowacourse.movie.model.MovieListModel
 import java.time.LocalDate
 
-class MockData {
+class MockDataOfMovies {
     private val movies = List(300) {
         MovieListModel.MovieModel(
             R.drawable.about_time,
