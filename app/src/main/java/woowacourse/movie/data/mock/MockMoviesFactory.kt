@@ -7,6 +7,8 @@ import woowacourse.movie.R
 import java.time.LocalDate
 
 object MockMoviesFactory {
+    val movies = makeMovies()
+
     fun makeMovies(): Movies {
         return Movies(
             List(5) { (generateMovie(it)) }

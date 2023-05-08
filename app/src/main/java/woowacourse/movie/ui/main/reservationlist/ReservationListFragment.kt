@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.adapter.ReservationAdapter
 import woowacourse.movie.data.model.uimodel.ReservationUiModel
 import woowacourse.movie.databinding.FragmentReservationListBinding
+import woowacourse.movie.db.TicketDBHelper
 import woowacourse.movie.repository.ReservationListRepositoryImpl
 import woowacourse.movie.ui.reservationresult.ReservationResultActivity
 
@@ -39,7 +40,7 @@ class ReservationListFragment : Fragment(), ReservationListContract.View {
     }
 
     private fun setUpPresenter() {
-        presenter = ReservationListPresenter(this, ReservationListRepositoryImpl)
+        presenter = ReservationListPresenter(this, ReservationListRepositoryImpl, TicketDBHelper(requireContext()))
     }
 
     private fun setUpAdapter() {

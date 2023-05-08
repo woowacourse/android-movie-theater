@@ -9,16 +9,19 @@ import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import domain.Reservation
 import domain.TicketOffice
 import woowacourse.movie.R
 import woowacourse.movie.data.model.SeatTable
 import woowacourse.movie.data.model.SeatView
+import woowacourse.movie.data.model.mapper.MovieMapper
 import woowacourse.movie.data.model.mapper.TicketsMapper
 import woowacourse.movie.data.model.uimodel.MovieUiModel
 import woowacourse.movie.data.model.uimodel.TheaterUiModel
 import woowacourse.movie.data.model.uimodel.TicketDateUiModel
 import woowacourse.movie.data.model.uimodel.TicketsUiModel
 import woowacourse.movie.databinding.ActivitySelectSeatBinding
+import woowacourse.movie.db.TicketDBHelper
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.notification.ReservationNotificationReceiver
 import woowacourse.movie.setBackgroundColorId
@@ -55,7 +58,8 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
             ),
             ticketOffice = TicketOffice(
                 peopleCount = intent.getIntExtra(PEOPLE_COUNT_KEY, 1)
-            )
+            ),
+            TicketDBHelper(this)
         )
     }
 
@@ -89,6 +93,7 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
         builder.setTitle(R.string.select_seat_dialog_title)
         builder.setMessage(R.string.select_seat_dialog_message)
         builder.setPositiveButton(R.string.select_seat_dialog_positive_button_text) { dialog, _ ->
+            presenter.updateReservation(Reservation(MovieMapper.toDomain(binding.movie!!), presenter.tickets))
             startActivity(
                 ReservationResultActivity.getIntent(
                     this,

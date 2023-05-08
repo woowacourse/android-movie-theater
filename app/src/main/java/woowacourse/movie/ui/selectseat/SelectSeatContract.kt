@@ -2,6 +2,7 @@ package woowacourse.movie.ui.selectseat
 
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
+import domain.Reservation
 import domain.Tickets
 import woowacourse.movie.data.model.SeatView
 import woowacourse.movie.data.model.uimodel.TheaterUiModel
@@ -26,5 +27,6 @@ interface SelectSeatContract {
         fun updateSeatState(seatView: SeatView, dateTime: LocalDateTime, theater: TheaterUiModel)
 
         fun updateButtonState(button: Button)
+        fun updateReservation(reservation: Reservation)
     }
 }

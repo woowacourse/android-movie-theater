@@ -1,6 +1,7 @@
 package woowacourse.movie.ui.selectseat
 
 import android.widget.Button
+import domain.Reservation
 import domain.Ticket
 import domain.TicketOffice
 import woowacourse.movie.data.model.SeatTable
@@ -8,12 +9,14 @@ import woowacourse.movie.data.model.SeatView
 import woowacourse.movie.data.model.mapper.TheaterMapper
 import woowacourse.movie.data.model.uimodel.SeatUiModel
 import woowacourse.movie.data.model.uimodel.TheaterUiModel
+import woowacourse.movie.db.DBHelper
 import java.time.LocalDateTime
 
 class SelectSeatPresenter(
     private val view: SelectSeatContract.View,
     private val seatTable: SeatTable,
-    private val ticketOffice: TicketOffice
+    private val ticketOffice: TicketOffice,
+    private val dbHelper: DBHelper
 ) : SelectSeatContract.Presenter {
 
     override val tickets
@@ -54,5 +57,9 @@ class SelectSeatPresenter(
     override fun updateButtonState(button: Button) {
         val isEnabled = ticketOffice.isAvailableAddTicket()
         button.isEnabled = !isEnabled
+    }
+
+    override fun updateReservation(reservation: Reservation) {
+        dbHelper.saveReservation(reservation)
     }
 }
