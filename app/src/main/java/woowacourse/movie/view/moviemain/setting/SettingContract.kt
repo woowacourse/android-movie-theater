@@ -13,6 +13,6 @@ interface SettingContract {
     interface Presenter {
         fun loadAlarmSetting()
         fun setAlarmPreference(isAlarmOn: Boolean)
-        fun onResetAlarms()
+        fun resetAlarms()
     }
 }

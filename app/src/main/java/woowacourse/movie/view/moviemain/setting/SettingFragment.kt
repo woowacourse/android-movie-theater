@@ -97,7 +97,7 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
 
     private fun applyChange(isToggleChecked: Boolean) {
         if (isToggleChecked) {
-            presenter.onResetAlarms()
+            presenter.resetAlarms()
         } else {
             reservationAlarmManager.cancelAlarms()
             presenter.setAlarmPreference(false)

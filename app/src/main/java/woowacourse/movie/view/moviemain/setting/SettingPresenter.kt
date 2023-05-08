@@ -20,7 +20,7 @@ class SettingPresenter(
         view.setToggleState(isAlarmOn)
     }
 
-    override fun onResetAlarms() {
+    override fun resetAlarms() {
         val reservations = reservationRepository.findAll().map { it.toUiModel() }
         alarmPreference.setIsAlarmOn(true)
         view.resetAlarms(reservations, ALARM_MINUTE_INTERVAL)

@@ -62,7 +62,7 @@ class SettingPresenterTest {
         val reservationsSlot = slot<List<ReservationUiModel>>()
         every { view.resetAlarms(capture(reservationsSlot), any()) } returns Unit
 
-        presenter.onResetAlarms()
+        presenter.resetAlarms()
 
         val expected = listOf(fakeReservation().toUiModel())
         assertEquals(expected, reservationsSlot.captured)
