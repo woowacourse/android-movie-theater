@@ -14,7 +14,6 @@ class MovieDetailPresenter(
 
     override fun getMovieData(intent: Intent) {
         movie = intent.getParcelableCompat(KEY_MOVIE) ?: throw IllegalArgumentException()
-        val v = view.dateTimeSpinnerView
 
         view.apply {
             setMovieInfo(movie)
@@ -41,9 +40,9 @@ class MovieDetailPresenter(
     }
 
     companion object {
-        const val KEY_TITLE = "title"
-        const val KEY_TIME = "time"
-        const val KEY_PEOPLE_COUNT = "count"
-        const val KEY_MOVIE = "movie"
+        private const val KEY_TITLE = "title"
+        private const val KEY_TIME = "time"
+        private const val KEY_PEOPLE_COUNT = "count"
+        private const val KEY_MOVIE = "movie"
     }
 }
