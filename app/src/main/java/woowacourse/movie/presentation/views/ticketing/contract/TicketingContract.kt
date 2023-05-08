@@ -23,8 +23,8 @@ interface TicketingContract {
         abstract fun setState(ticketingState: TicketingState)
         abstract fun plusCount()
         abstract fun minusCount()
-        abstract fun onClickTicketingButton()
-        abstract fun onSelectMovieDate(position: Int)
-        abstract fun onSelectMovieTime(position: Int)
+        abstract fun doTicketing()
+        abstract fun changeMovieDate(position: Int)
+        abstract fun changeMovieTime(position: Int)
     }
 }

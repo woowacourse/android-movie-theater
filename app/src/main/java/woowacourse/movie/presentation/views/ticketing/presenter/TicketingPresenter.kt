@@ -17,7 +17,6 @@ class TicketingPresenter(
         from = state.movie.startDate,
         to = state.movie.endDate
     ).map { it.toPresentation() }
-
     private val movieTimes = mutableListOf<MovieTime>()
 
     init {
@@ -46,7 +45,7 @@ class TicketingPresenter(
         view.updateCount(state.ticketCount)
     }
 
-    override fun onClickTicketingButton() {
+    override fun doTicketing() {
         if (state.isNotSelectedDateTime) {
             view.showUnSelectDateTimeAlertMessage()
             return
@@ -54,12 +53,12 @@ class TicketingPresenter(
         view.showSeatPickerScreen(getState())
     }
 
-    override fun onSelectMovieDate(position: Int) {
+    override fun changeMovieDate(position: Int) {
         state = state.copy(movieDate = movieDates[position], movieTime = movieTimes.firstOrNull())
         updateRunningTimes(state.movieDate)
     }
 
-    override fun onSelectMovieTime(position: Int) {
+    override fun changeMovieTime(position: Int) {
         state = state.copy(movieTime = movieTimes.getOrNull(position))
     }
 

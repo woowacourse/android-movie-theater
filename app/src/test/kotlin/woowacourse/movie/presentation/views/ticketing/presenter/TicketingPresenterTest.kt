@@ -99,7 +99,7 @@ internal class TicketingPresenterTest {
         presenter.setState(ticketingState)
 
         // when
-        presenter.onClickTicketingButton()
+        presenter.doTicketing()
 
         // then
         verify(exactly = 1) { view.showUnSelectDateTimeAlertMessage() }
@@ -118,7 +118,7 @@ internal class TicketingPresenterTest {
         presenter.setState(ticketingState)
 
         // when
-        presenter.onClickTicketingButton()
+        presenter.doTicketing()
 
         // then
         verify(exactly = 1) { view.showSeatPickerScreen(any()) }

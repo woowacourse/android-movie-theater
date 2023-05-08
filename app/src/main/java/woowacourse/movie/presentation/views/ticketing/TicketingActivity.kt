@@ -113,12 +113,12 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnCl
 
     private fun initMovieTimeSpinnerListener() {
         binding.movieTimeSpinner.onItemSelectedListener =
-            OnSpinnerItemSelectedListener { presenter.onSelectMovieTime(it) }
+            OnSpinnerItemSelectedListener { presenter.changeMovieTime(it) }
     }
 
     private fun initMovieDateSpinnerListener() {
         binding.movieDateSpinner.onItemSelectedListener =
-            OnSpinnerItemSelectedListener { presenter.onSelectMovieDate(it) }
+            OnSpinnerItemSelectedListener { presenter.changeMovieDate(it) }
     }
 
     override fun showTicketingState(ticketCount: Int, movieDatePos: Int, movieTimePos: Int) {
@@ -156,7 +156,7 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnCl
         when (view.id) {
             R.id.minus_btn -> presenter.minusCount()
             R.id.plus_btn -> presenter.plusCount()
-            R.id.ticketing_btn -> presenter.onClickTicketingButton()
+            R.id.ticketing_btn -> presenter.doTicketing()
         }
     }
 
