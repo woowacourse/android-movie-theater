@@ -39,13 +39,15 @@ class BookingHistoryFragment : Fragment(), BookingHistoryContract.View {
     }
 
     override fun initAdapter(bookingHistories: List<ReservationUiModel>) {
-        val adapter = BookingHistoryAdapter(::itemClicked)
+        val adapter = BookingHistoryAdapter(
+            onBookingHistoryClicked = ::navigateToCompleteView
+        )
 
         binding.recyclerBookingHistory.adapter = adapter
         adapter.initList(bookingHistories)
     }
 
-    private fun itemClicked(reservationUiModel: ReservationUiModel) {
+    private fun navigateToCompleteView(reservationUiModel: ReservationUiModel) {
         val intent = CompletedActivity.getIntent(
             context = requireActivity(),
             reservation = reservationUiModel,

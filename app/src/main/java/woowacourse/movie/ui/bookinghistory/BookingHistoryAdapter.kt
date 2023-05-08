@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.model.ReservationUiModel
 
 class BookingHistoryAdapter(
-    private val clickItem: (reservation: ReservationUiModel) -> Unit,
+    private val onBookingHistoryClicked: (reservation: ReservationUiModel) -> Unit,
 ) : RecyclerView.Adapter<BookingHistoryViewHolder>() {
     private val bookingHistory = mutableListOf<ReservationUiModel>()
 
@@ -16,7 +16,7 @@ class BookingHistoryAdapter(
 
     override fun onBindViewHolder(holder: BookingHistoryViewHolder, position: Int) {
         holder.bind(bookingHistory[position])
-        holder.setOnReservationClickListener(clickItem)
+        holder.setOnReservationClickListener(onBookingHistoryClicked)
     }
 
     override fun getItemCount(): Int {
