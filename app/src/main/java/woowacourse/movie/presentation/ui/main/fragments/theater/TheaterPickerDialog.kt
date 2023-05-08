@@ -1,15 +1,14 @@
 package woowacourse.movie.presentation.ui.main.fragments.theater
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.woowacourse.data.database.theater.dao.TheaterLocalDBDao
 import com.woowacourse.data.datasource.theater.local.LocalTheaterDataSource
 import com.woowacourse.data.repository.theater.local.LocalTheaterRepository
+import woowacourse.movie.R
 import woowacourse.movie.databinding.DialogTheaterPickerBinding
+import woowacourse.movie.presentation.base.BaseFragmentDialog
 import woowacourse.movie.presentation.extensions.getParcelableCompat
 import woowacourse.movie.presentation.model.movieitem.Movie
 import woowacourse.movie.presentation.model.theater.Theater
@@ -18,7 +17,8 @@ import woowacourse.movie.presentation.ui.main.fragments.theater.contract.Theater
 import woowacourse.movie.presentation.ui.main.fragments.theater.contract.presenter.TheaterPresenter
 import woowacourse.movie.presentation.ui.ticketing.TicketingActivity
 
-class TheaterPickerDialog : BottomSheetDialogFragment(), TheaterContract.View {
+class TheaterPickerDialog : BaseFragmentDialog<DialogTheaterPickerBinding>(), TheaterContract.View {
+    override val layoutResId: Int = R.layout.dialog_theater_picker
     override val presenter: TheaterContract.Presenter by lazy {
         TheaterPresenter(
             view = this,
@@ -29,21 +29,9 @@ class TheaterPickerDialog : BottomSheetDialogFragment(), TheaterContract.View {
         )
     }
 
-    private var _binding: DialogTheaterPickerBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        dialog?.setCanceledOnTouchOutside(false)
-        _binding = DialogTheaterPickerBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        dialog?.setCanceledOnTouchOutside(false)
         binding.presenter = presenter
         binding.rvAdapter = TheaterListAdapter()
     }
@@ -55,11 +43,6 @@ class TheaterPickerDialog : BottomSheetDialogFragment(), TheaterContract.View {
     override fun showTicketingScreen(movie: Movie, theater: Theater) {
         startActivity(TicketingActivity.getIntent(requireContext(), movie, theater))
         dismiss()
-    }
-
-    override fun onDestroyView() {
-        _binding = null
-        super.onDestroyView()
     }
 
     companion object {
