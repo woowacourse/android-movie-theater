@@ -21,6 +21,7 @@ import woowacourse.movie.view.activities.reservationresult.ReservationResultActi
 import woowacourse.movie.view.broadcast.AlarmReceiver
 import woowacourse.movie.view.broadcast.AlarmReceiver.Companion.RESERVATION_ID
 import woowacourse.movie.view.utils.getPushAlarmReceptionIsWanted
+import woowacourse.movie.view.utils.showToast
 import java.time.LocalDateTime
 import java.time.ZoneId
 import kotlin.properties.Delegates
@@ -56,10 +57,21 @@ class SeatSelectionActivity : BackButtonActivity(), SeatSelectionContract.View {
         }
 
     private fun initReservationButtonOnClickListener() {
-        val reservationButton = findViewById<Button>(R.id.reservation_btn)
-        reservationButton.setOnClickListener {
-            showDialogAskingIfYouWantToMakeReservation()
+        fun onReservationButtonClick() {
+            if (intent.getIntExtra(AUDIENCE_COUNT, 1) == selectedSeatNames.size) {
+                showDialogAskingIfYouWantToMakeReservation()
+            } else {
+                showToast(
+                    this,
+                    getString(R.string.number_of_seats_must_be_selected).format(
+                        intent.getIntExtra(AUDIENCE_COUNT, 1)
+                    )
+                )
+            }
         }
+
+        val reservationButton = findViewById<Button>(R.id.reservation_btn)
+        reservationButton.setOnClickListener { onReservationButtonClick() }
     }
 
     private fun showDialogAskingIfYouWantToMakeReservation() {
@@ -157,11 +169,18 @@ class SeatSelectionActivity : BackButtonActivity(), SeatSelectionContract.View {
     companion object {
         const val SCREENING_ID = "SCREENING_ID"
         const val SCREENING_DATE_TIME = "SCREENING_DATE_TIME"
+        const val AUDIENCE_COUNT = "AUDIENCE_COUNT"
 
-        fun startActivity(context: Context, screeningId: Long, screeningDateTime: LocalDateTime) {
+        fun startActivity(
+            context: Context,
+            screeningId: Long,
+            screeningDateTime: LocalDateTime,
+            selectedAudienceCount: Int
+        ) {
             val intent = Intent(context, SeatSelectionActivity::class.java).apply {
                 putExtra(SCREENING_ID, screeningId)
                 putExtra(SCREENING_DATE_TIME, screeningDateTime)
+                putExtra(AUDIENCE_COUNT, selectedAudienceCount)
             }
             context.startActivity(intent)
         }

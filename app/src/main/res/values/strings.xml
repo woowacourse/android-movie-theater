@@ -11,6 +11,7 @@
     <string name="fee_format">%s원</string>
     <string name="reservation_dialog_title">예매 확인</string>
     <string name="reservation_dialog_message">정말 예매하시겠습니까?</string>
+    <string name="number_of_seats_must_be_selected">%d개의 좌석을 선택해야 합니다.</string>
     <string name="confirm_reservation">예매 완료</string>
     <string name="ok">확인</string>
     <string name="cancel">취소</string>
@@ -36,4 +37,6 @@
     <!--  예매 알림 관련  -->
     <string name="reservation_notification">예매 알림</string>
     <string name="reservation_notification_message_format">%s %s분 후에 상영</string>
+    <string name="minus_btn_text">-</string>
+    <string name="plus_btn_text">+</string>
 </resources>

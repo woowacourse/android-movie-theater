@@ -10,6 +10,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import woowacourse.movie.view.activities.seatselection.SeatSelectionActivity.Companion.AUDIENCE_COUNT
 import woowacourse.movie.view.activities.seatselection.SeatSelectionActivity.Companion.SCREENING_DATE_TIME
 import woowacourse.movie.view.activities.seatselection.SeatSelectionActivity.Companion.SCREENING_ID
 import java.time.LocalDateTime
@@ -20,6 +21,7 @@ class SeatSelectionActivityTest {
     private val intent = Intent(ApplicationProvider.getApplicationContext(), SeatSelectionActivity::class.java).apply {
         putExtra(SCREENING_ID, 1L)
         putExtra(SCREENING_DATE_TIME, LocalDateTime.of(2024, 3, 1, 10, 0))
+        putExtra(AUDIENCE_COUNT, 1)
     }
 
     @get:Rule

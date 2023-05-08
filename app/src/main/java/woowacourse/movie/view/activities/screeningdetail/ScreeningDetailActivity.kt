@@ -12,11 +12,15 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import kotlin.properties.Delegates
 
 class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.View {
 
     private lateinit var presenter: ScreeningDetailContract.Presenter
     private var timeSpinnerPosition: Int = 0
+    private var audienceCount: Int by Delegates.observable(1) { _, _, new ->
+        findViewById<TextView>(R.id.audience_count_tv).text = new.toString()
+    }
     private var savedInstanceState: Bundle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +31,12 @@ class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.Vi
         val screeningId = intent.getLongExtra(SCREENING_ID, -1)
         presenter = ScreeningDetailPresenter(this, screeningId)
         presenter.loadScreeningData()
+        initAudienceCountTextView()
         initSeatSelectionButtonOnClickListener(screeningId)
+    }
+
+    private fun initAudienceCountTextView() {
+        findViewById<TextView>(R.id.audience_count_tv).text = audienceCount.toString()
     }
 
     private fun initSeatSelectionButtonOnClickListener(screeningId: Long) {
@@ -44,7 +53,12 @@ class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.Vi
             return LocalDateTime.of(selectedDate, selectedTime)
         }
 
-        SeatSelectionActivity.startActivity(this, screeningId, getSelectedScreeningDateTime())
+        SeatSelectionActivity.startActivity(
+            this,
+            screeningId,
+            getSelectedScreeningDateTime(),
+            audienceCount
+        )
     }
 
     override fun setScreening(screeningDetailUIState: ScreeningDetailUIState) {
@@ -69,6 +83,8 @@ class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.Vi
         summaryView.text = screeningDetailUIState.summary
 
         initSpinners(screeningDetailUIState.screeningDateTimes)
+
+        initAudienceCountAdjustButtons(screeningDetailUIState.maxAudienceCount)
     }
 
     private fun initSpinners(screeningDateTimes: Map<LocalDate, List<LocalTime>>) {
@@ -121,18 +137,37 @@ class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.Vi
         }
     }
 
+    private fun initAudienceCountAdjustButtons(maxAudienceCount: Int) {
+        val minusButton = findViewById<Button>(R.id.minus_audience_count_btn)
+        minusButton.setOnClickListener {
+            if (audienceCount > 1) audienceCount--
+        }
+        val plusButton = findViewById<Button>(R.id.plus_audience_count_btn)
+        plusButton.setOnClickListener {
+            if (audienceCount < maxAudienceCount) audienceCount++
+        }
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
         outState.apply {
             putInt(TIME_SPINNER_POSITION, timeSpinnerPosition)
+            putInt(AUDIENCE_COUNT, audienceCount)
         }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        audienceCount = savedInstanceState.getInt(AUDIENCE_COUNT)
     }
 
     companion object {
         const val SCREENING_ID = "SCREENING_ID"
         private val DATE_FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
         private const val TIME_SPINNER_POSITION = "TIME_SPINNER_POSITION"
+        private const val AUDIENCE_COUNT = "AUDIENCE_COUNT"
 
         fun startActivity(context: Context, screeningId: Long) {
             val intent = Intent(context, ScreeningDetailActivity::class.java).apply {

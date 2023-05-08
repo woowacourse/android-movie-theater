@@ -81,15 +81,58 @@
             android:id="@+id/date_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="17dp"
             app:layout_constraintStart_toStartOf="@id/reservation_layout"
+            app:layout_constraintBottom_toTopOf="@id/minus_audience_count_btn"
             app:layout_constraintTop_toTopOf="@id/reservation_layout" />
 
         <Spinner
             android:id="@+id/time_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="17dp"
             app:layout_constraintStart_toEndOf="@id/date_spinner"
+            app:layout_constraintBottom_toTopOf="@id/minus_audience_count_btn"
             app:layout_constraintTop_toTopOf="@id/reservation_layout" />
+
+        <Button
+            android:id="@+id/minus_audience_count_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="19dp"
+            android:background="@color/design_default_color_primary"
+            android:text="@string/minus_btn_text"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/date_spinner"
+            app:layout_constraintBottom_toTopOf="@id/seat_selection_btn"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/audience_count_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/plus_audience_count_btn"
+            app:layout_constraintEnd_toStartOf="@id/plus_audience_count_btn"
+            app:layout_constraintStart_toEndOf="@id/minus_audience_count_btn"
+            app:layout_constraintTop_toTopOf="@id/minus_audience_count_btn"
+            tools:text="1" />
+
+        <Button
+            android:id="@+id/plus_audience_count_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="19dp"
+            android:background="@color/design_default_color_primary"
+            android:text="@string/plus_btn_text"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/date_spinner"
+            app:layout_constraintBottom_toTopOf="@id/seat_selection_btn"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <Button
             android:id="@+id/seat_selection_btn"
@@ -98,8 +141,7 @@
             android:layout_marginTop="16.75dp"
             android:text="@string/seat_selection"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@id/reservation_layout"
-            app:layout_constraintTop_toBottomOf="@id/date_spinner" />
+            app:layout_constraintBottom_toBottomOf="@id/reservation_layout" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

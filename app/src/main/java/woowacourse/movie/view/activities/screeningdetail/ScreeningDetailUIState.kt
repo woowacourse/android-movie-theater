@@ -13,6 +13,7 @@ data class ScreeningDetailUIState(
     val runningTime: Int,
     val summary: String,
     val screeningDateTimes: Map<LocalDate, List<LocalTime>>,
+    val maxAudienceCount: Int,
     val screeningId: Long
 ) {
 
@@ -30,6 +31,7 @@ data class ScreeningDetailUIState(
                 movie.runningTime.value,
                 movie.summary,
                 screening.screeningRange.screeningDateTimes,
+                screening.theater.seats.size,
                 screeningId
             )
         }
