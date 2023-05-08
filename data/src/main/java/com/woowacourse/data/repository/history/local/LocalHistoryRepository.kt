@@ -3,7 +3,7 @@ package com.woowacourse.data.repository.history.local
 import com.woowacourse.data.datasource.history.HistoryDataSource
 import com.woowacourse.data.mapper.toData
 import com.woowacourse.data.mapper.toDomain
-import com.woowacourse.data.repository.history.HistoryRepository
+import woowacourse.movie.domain.model.repository.HistoryRepository
 import woowacourse.movie.domain.model.reservation.DomainReservation
 
 class LocalHistoryRepository(private val dataSource: HistoryDataSource) : HistoryRepository {

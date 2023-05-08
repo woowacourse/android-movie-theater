@@ -3,8 +3,8 @@ package com.woowacourse.data.repository.theater.local
 import com.woowacourse.data.datasource.theater.TheaterDataSource
 import com.woowacourse.data.mapper.toData
 import com.woowacourse.data.mapper.toDomain
-import com.woowacourse.data.repository.theater.TheaterRepository
 import woowacourse.movie.domain.model.movie.DomainMovieDate
+import woowacourse.movie.domain.model.repository.TheaterRepository
 import woowacourse.movie.domain.model.theater.DomainTheater
 
 class LocalTheaterRepository(private val dataSource: TheaterDataSource) : TheaterRepository {

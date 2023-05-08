@@ -1,4 +1,4 @@
-package com.woowacourse.data.repository.theater
+package woowacourse.movie.domain.model.repository
 
 import woowacourse.movie.domain.model.movie.DomainMovieDate
 import woowacourse.movie.domain.model.theater.DomainTheater

@@ -1,6 +1,5 @@
 package woowacourse.movie.presentation.views.main.fragments.history.contract.presenter
 
-import com.woowacourse.data.repository.history.HistoryRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

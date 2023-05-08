@@ -1,6 +1,5 @@
 package woowacourse.movie.presentation.views.main.fragments.theater.contract.presenter
 
-import com.woowacourse.data.repository.theater.TheaterRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot

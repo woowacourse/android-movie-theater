@@ -1,6 +1,6 @@
 package woowacourse.movie.presentation.views.main.fragments.theater.contract.presenter
 
-import com.woowacourse.data.repository.theater.TheaterRepository
+import woowacourse.movie.domain.model.repository.TheaterRepository
 import woowacourse.movie.domain.model.theater.DomainTheater
 import woowacourse.movie.presentation.mapper.toPresentation
 import woowacourse.movie.presentation.model.movieitem.Movie

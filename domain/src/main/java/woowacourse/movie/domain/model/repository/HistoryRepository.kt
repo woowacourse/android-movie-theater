@@ -1,4 +1,4 @@
-package com.woowacourse.data.repository.history
+package woowacourse.movie.domain.model.repository
 
 import woowacourse.movie.domain.model.reservation.Reservation
 

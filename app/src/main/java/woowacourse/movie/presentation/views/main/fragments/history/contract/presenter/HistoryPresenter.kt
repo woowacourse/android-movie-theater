@@ -1,6 +1,6 @@
 package woowacourse.movie.presentation.views.main.fragments.history.contract.presenter
 
-import com.woowacourse.data.repository.history.HistoryRepository
+import woowacourse.movie.domain.model.repository.HistoryRepository
 import woowacourse.movie.domain.model.reservation.DomainReservation
 import woowacourse.movie.presentation.mapper.toDomain
 import woowacourse.movie.presentation.mapper.toPresentation

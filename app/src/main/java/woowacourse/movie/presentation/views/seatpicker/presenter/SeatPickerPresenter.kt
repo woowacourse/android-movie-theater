@@ -1,9 +1,9 @@
 package woowacourse.movie.presentation.views.seatpicker.presenter
 
-import com.woowacourse.data.repository.history.HistoryRepository
 import woowacourse.movie.domain.model.discount.policy.MovieDayDiscountPolicy
 import woowacourse.movie.domain.model.discount.policy.MovieTimeDiscountPolicy
 import woowacourse.movie.domain.model.movie.DomainTicketPrice
+import woowacourse.movie.domain.model.repository.HistoryRepository
 import woowacourse.movie.domain.model.seat.DomainPickedSeats
 import woowacourse.movie.presentation.mapper.toDomain
 import woowacourse.movie.presentation.mapper.toPresentation
