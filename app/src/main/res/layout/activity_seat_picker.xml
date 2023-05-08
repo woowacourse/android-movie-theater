@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="presenter"
+            type="woowacourse.movie.presentation.ui.seatpicker.presenter.SeatPickerPresenter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -94,6 +97,7 @@
                 android:background="@drawable/background_movie_done"
                 android:enabled="false"
                 android:gravity="center"
+                android:onClick="@{() -> presenter.reserve()}"
                 android:text="@string/done"
                 android:textColor="@color/white"
                 android:textSize="18sp"

@@ -63,6 +63,10 @@ class SeatPickerPresenter(
         else -> view.showSeatExceedAlertMessage()
     }
 
+    override fun reserve() {
+        view.showTicketingConfirmDialog()
+    }
+
     private fun isPicked(seat: Seat): Boolean = pickedSeats.isPicked(seat.toDomain())
 
     private fun unpick(seat: Seat) {

@@ -3,23 +3,20 @@ package woowacourse.movie.presentation.ui.seatpicker
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import android.widget.TableRow
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import com.woowacourse.data.database.reservation.ReservationDatabase
 import com.woowacourse.data.database.reservation.history.dao.ReservationDao
 import com.woowacourse.data.datasource.history.local.LocalHistoryDataSource
 import com.woowacourse.data.repository.history.local.LocalHistoryRepository
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatPickerBinding
+import woowacourse.movie.presentation.base.BaseActivity
 import woowacourse.movie.presentation.extensions.createAlertDialog
 import woowacourse.movie.presentation.extensions.getParcelableCompat
 import woowacourse.movie.presentation.extensions.message
 import woowacourse.movie.presentation.extensions.negativeButton
 import woowacourse.movie.presentation.extensions.positiveButton
-import woowacourse.movie.presentation.extensions.showBackButton
 import woowacourse.movie.presentation.extensions.showToast
 import woowacourse.movie.presentation.extensions.title
 import woowacourse.movie.presentation.model.PickedSeats
@@ -35,18 +32,17 @@ import woowacourse.movie.presentation.ui.seatpicker.contract.SeatPickerContract
 import woowacourse.movie.presentation.ui.seatpicker.presenter.SeatPickerPresenter
 import woowacourse.movie.presentation.ui.ticketingresult.TicketingResultActivity
 
-class SeatPickerActivity : AppCompatActivity(), View.OnClickListener, SeatPickerContract.View {
+class SeatPickerActivity :
+    BaseActivity<ActivitySeatPickerBinding>(true),
+    SeatPickerContract.View {
+    override val layoutResId: Int = R.layout.activity_seat_picker
     override lateinit var presenter: SeatPickerContract.Presenter
-    private lateinit var binding: ActivitySeatPickerBinding
 
     private val seatViews: MutableList<View> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_picker)
         presenter = makePresenter()
-        initViewClickListener()
-        showBackButton()
     }
 
     override fun onSaveInstanceState(bundle: Bundle) {
@@ -111,10 +107,6 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener, SeatPicker
         }
     }
 
-    private fun initViewClickListener() {
-        binding.doneBtn.setOnClickListener(this)
-    }
-
     override fun registerPushBroadcast(reservation: Reservation) {
         val alarmIntent = Intent(this, ReservationPushReceiver::class.java)
         val alarmManager = PushAlarmManager(this)
@@ -131,20 +123,7 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener, SeatPicker
         finish()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> finish()
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onClick(view: View) {
-        when (view.id) {
-            R.id.done_btn -> showTicketingConfirmDialog()
-        }
-    }
-
-    private fun showTicketingConfirmDialog() {
+    override fun showTicketingConfirmDialog() {
         createAlertDialog(false) {
             title(getString(R.string.ticketing_confirm_title))
             message(getString(R.string.ticketing_confirm_message))
@@ -158,7 +137,7 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener, SeatPicker
         ticketingState = intent.getParcelableCompat(TICKETING_STATE_KEY)!!,
         historyRepository = LocalHistoryRepository(
             LocalHistoryDataSource(ReservationDao(ReservationDatabase(this)))
-        ),
+        )
     )
 
     companion object {
