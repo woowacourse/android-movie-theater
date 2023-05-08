@@ -10,7 +10,7 @@ fun Reservation.toDomain(): DomainReservation = DomainReservation(
     movieTime.toDomain(),
     ticket.toDomain(),
     seats.toDomain(),
-    ticketPrice.toDomain(),
+    totalPrice.toDomain(),
 )
 
 fun DomainReservation.toPresentation(): Reservation = Reservation(

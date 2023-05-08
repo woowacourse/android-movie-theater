@@ -9,9 +9,16 @@ class TicketingResultPresenter(
     private val fromMainScreen: Boolean,
 ) : TicketingResultContract.Presenter(view) {
 
+    init {
+        view.showMovieTitle(reservation.movieTitle)
+        view.showTheaterName(reservation.theaterName)
+        view.showTicketingDate(reservation.movieDate, reservation.movieTime)
+        view.showSeats(reservation.seats)
+        view.showTicket(reservation.ticket)
+        view.showTicketPrice(reservation.totalPrice)
+    }
+
     override fun onShowMainScreen() {
         view.showMainScreen(reservation, fromMainScreen)
     }
-
-    override fun getReservation(): Reservation = reservation.copy()
 }

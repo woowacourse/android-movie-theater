@@ -36,7 +36,7 @@ import woowacourse.movie.presentation.views.seatpicker.presenter.SeatPickerPrese
 import woowacourse.movie.presentation.views.ticketingresult.TicketingResultActivity
 
 class SeatPickerActivity : AppCompatActivity(), View.OnClickListener, SeatPickerContract.View {
-    override val presenter: SeatPickerContract.Presenter by lazy { makePresenter() }
+    override lateinit var presenter: SeatPickerContract.Presenter
     private lateinit var binding: ActivitySeatPickerBinding
 
     private val seatViews: MutableList<View> = mutableListOf()
@@ -44,6 +44,7 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener, SeatPicker
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_picker)
+        presenter = makePresenter()
         initViewClickListener()
         showBackButton()
     }
