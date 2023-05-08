@@ -2,7 +2,7 @@
     <string name="app_name">Movie</string>
     <string name="movie_booking_button">지금 예매</string>
     <string name="book_can_cancel_before_start_movie">영화 상영 시작 시간 15분 전까지\n취소가 가능합니다.</string>
-    <string name="book_person_count">일반 %d명 | %s</string>
+    <string name="book_person_count">일반 %d명 | %s | %s</string>
     <string name="book_total_pay">%s (현장 결제)</string>
     <string name="cant_get_movie_booking_data">영화 예약 정보를 불러오지 못했습니다. 다시 시도해 주세요.</string>
     <string name="cant_lower_one">1장 이상의 표를 선택해 주세요.</string>
@@ -37,4 +37,5 @@
     <string name="if_permission_is_denied_cant_use_notification_service">알림 권한이 없으면 알림 서비스를 이용하실 수 없습니다.</string>
     <string name="notification_permission_is_granted">알림 권한을 받았습니다.</string>
     <string name="notification_permission_is_denied">알림 권한을 획득하지 못하였습니다.</string>
+    <string name="bottom_sheet_dialog_running_theater_count">%d개의 상영시간</string>
 </resources>

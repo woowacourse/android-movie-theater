@@ -5,8 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import woowacourse.movie.BundleKeys
 import woowacourse.movie.BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY
 import woowacourse.movie.R
+import woowacourse.movie.Theater
 import woowacourse.movie.activity.BackButtonActivity
 import woowacourse.movie.databinding.ActivityBookCompleteBinding
 import woowacourse.movie.getSerializableCompat
@@ -24,6 +26,10 @@ class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
         presenter = BookCompletePresenter(this)
         progressIfDummyData(movieBookingData)
         presenter.initBookCompletePage(movieBookingData)
+    }
+
+    private fun getTheaterData(): Theater {
+        return intent.getSerializableCompat(BundleKeys.THEATER_DATA_KEY) ?: Theater.dummyData
     }
 
     private fun getMovieBookingSeatInfo(): MovieBookingSeatInfo {
@@ -54,7 +60,8 @@ class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
             getString(
                 R.string.book_person_count,
                 ticketCount,
-                seats.joinToString(", ")
+                seats.joinToString(", "),
+                getTheaterData().name
             )
     }
 

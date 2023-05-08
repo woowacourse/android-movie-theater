@@ -9,9 +9,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.Ad
-import woowacourse.movie.BundleKeys
+import woowacourse.movie.BottomSheetTheaterPicker
 import woowacourse.movie.R
-import woowacourse.movie.activity.moviedetail.MovieDetailActivity
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.movielist.MovieRecyclerViewAdapter
 
@@ -44,10 +43,9 @@ class HomeFragment : Fragment(), HomeContract.View {
         movieRecyclerViewAdapter.notifyDataSetChanged()
     }
 
-    override fun startMovieDetailPage(): (Int) -> Unit = { position: Int ->
-        val intent = MovieDetailActivity.intent(requireView().context)
-        intent.putExtra(BundleKeys.MOVIE_DATA_KEY, presenter.fetchMovieList()[position])
-        startActivity(intent)
+    override fun showTheaterPicker(): (Int) -> Unit = {
+        val bottomSheetTheaterPicker = BottomSheetTheaterPicker(it)
+        bottomSheetTheaterPicker.show(parentFragmentManager, bottomSheetTheaterPicker.tag)
     }
 
     override fun startAdDetailPage(): (ad: Ad) -> Unit = { ad: Ad ->

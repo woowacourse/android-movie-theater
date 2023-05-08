@@ -22,6 +22,7 @@ import woowacourse.movie.BundleKeys
 import woowacourse.movie.BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY
 import woowacourse.movie.MovieReminder
 import woowacourse.movie.R
+import woowacourse.movie.Theater
 import woowacourse.movie.activity.BackButtonActivity
 import woowacourse.movie.activity.bookcomplete.BookCompleteActivity
 import woowacourse.movie.databinding.ActivitySeatPickerBinding
@@ -62,6 +63,10 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
     private fun getMovieBookingInfo(): MovieBookingInfo {
         return intent.getSerializableCompat(BundleKeys.MOVIE_BOOKING_INFO_KEY)
             ?: MovieBookingInfo.dummyData
+    }
+
+    private fun getTheaterData(): Theater {
+        return intent.getSerializableCompat(BundleKeys.THEATER_DATA_KEY) ?: Theater.dummyData
     }
 
     override fun initSeat() {
@@ -145,7 +150,12 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
                     bookHistory.insert(movieBookingSeatInfo)
 
                     setMovieAlarm(movieBookingSeatInfo)
-                    startActivity(getIntent(movieBookingSeatInfo))
+                    startActivity(
+                        getIntent(movieBookingSeatInfo).putExtra(
+                            BundleKeys.THEATER_DATA_KEY,
+                            getTheaterData()
+                        )
+                    )
                     finish()
                 }
                 setNegativeButton(getString(R.string.alert_dialog_book_cancel)) { dialog, _ ->
