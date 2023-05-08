@@ -8,14 +8,13 @@ import woowacourse.movie.R
 import woowacourse.movie.presentation.model.ReservationResult
 
 class BookingListViewHolder(
-    parent: ViewGroup,
+    private val parent: ViewGroup,
     private val event: (Int) -> Unit
 ) :
     RecyclerView.ViewHolder(
         LayoutInflater.from(parent.context)
             .inflate(R.layout.item_booking_list, parent, false)
     ) {
-
 
     private val bookingDate: TextView = itemView.findViewById(R.id.tv_booking_date)
     private val bookingMovieTitle: TextView = itemView.findViewById(R.id.tv_booking_movie_title)

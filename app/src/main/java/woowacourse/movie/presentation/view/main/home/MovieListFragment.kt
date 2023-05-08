@@ -34,6 +34,15 @@ class MovieListFragment : Fragment(), MovieListContract.View {
             movies,
             ContextCompat.getDrawable(requireContext(), R.drawable.advertise_wooteco)!!
         ) {
+//            TheaterFragment.newInstance(it.title)
+//            val theaterFragment = TheaterFragment().apply {
+//                arguments = bundleOf().apply {
+//                    putString("KEY", it.title)
+//                }
+//            }
+//            theaterFragment.show(
+//                childFragmentManager, theaterFragment.tag
+//            )
             val intent = MovieDetailActivity.getIntent(requireContext())
             intent.putExtra(MovieDetailActivity.MOVIE_DATA_INTENT_KEY, it)
             requireContext().startActivity(intent)

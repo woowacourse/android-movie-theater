@@ -35,5 +35,7 @@
 
     <string name="booking_notification_title">예매 알림</string>
     <string name="booking_notification_content">%s 30분 후 상영</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
