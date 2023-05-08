@@ -7,7 +7,8 @@ import io.mockk.runs
 import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.contract.SettingContract
+import woowacourse.movie.setting.SettingContract
+import woowacourse.movie.setting.SettingPresenter
 
 class SettingPresenterTest {
     lateinit var settingPresenter: SettingContract.Presenter

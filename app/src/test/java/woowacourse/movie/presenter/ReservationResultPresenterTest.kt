@@ -7,13 +7,14 @@ import io.mockk.runs
 import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.contract.ReservationResultContract
+import woowacourse.movie.common.mapper.ReservationMapper.toView
 import woowacourse.movie.domain.Price
 import woowacourse.movie.domain.Reservation
 import woowacourse.movie.domain.ReservationDetail
 import woowacourse.movie.domain.mock.MovieMock
 import woowacourse.movie.domain.seat.Seats
-import woowacourse.movie.mapper.ReservationMapper.toView
+import woowacourse.movie.reservationResult.ReservationResultContract
+import woowacourse.movie.reservationResult.ReservationResultPresenter
 import java.time.LocalDateTime
 
 class ReservationResultPresenterTest {

@@ -9,10 +9,11 @@ import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.contract.MovieAdapterContract
-import woowacourse.movie.data.MovieListItemsViewData
-import woowacourse.movie.data.repository.AdvertisementRepository
-import woowacourse.movie.data.repository.MovieRepository
+import woowacourse.movie.common.mapper.AdvertisementMapper.toView
+import woowacourse.movie.common.mapper.MovieMapper.toView
+import woowacourse.movie.common.model.MovieListItemsViewData
+import woowacourse.movie.common.repository.AdvertisementRepository
+import woowacourse.movie.common.repository.MovieRepository
 import woowacourse.movie.domain.Advertisement
 import woowacourse.movie.domain.DateRange
 import woowacourse.movie.domain.Image
@@ -22,8 +23,8 @@ import woowacourse.movie.domain.advertismentPolicy.MovieAdvertisementPolicy
 import woowacourse.movie.domain.mock.AdvertisementMock
 import woowacourse.movie.domain.mock.AdvertisementPolicyMock
 import woowacourse.movie.domain.mock.MovieMock
-import woowacourse.movie.mapper.AdvertisementMapper.toView
-import woowacourse.movie.mapper.MovieMapper.toView
+import woowacourse.movie.movieList.MovieAdapterContract
+import woowacourse.movie.movieList.MovieAdapterPresenter
 import java.time.LocalDate
 
 class MovieAdapterPresenterTest {

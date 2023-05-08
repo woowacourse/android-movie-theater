@@ -9,16 +9,17 @@ import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.contract.MovieReservationContract
-import woowacourse.movie.data.ReservationDetailViewData
+import woowacourse.movie.common.mapper.MovieMapper.toView
+import woowacourse.movie.common.mapper.ReservationDetailMapper.toView
+import woowacourse.movie.common.model.ReservationDetailViewData
+import woowacourse.movie.common.system.StateContainer
 import woowacourse.movie.domain.Count
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.MovieSchedule
 import woowacourse.movie.domain.ReservationDetail
 import woowacourse.movie.domain.mock.MovieMock
-import woowacourse.movie.mapper.MovieMapper.toView
-import woowacourse.movie.mapper.ReservationDetailMapper.toView
-import woowacourse.movie.system.StateContainer
+import woowacourse.movie.movieReservation.MovieReservationContract
+import woowacourse.movie.movieReservation.MovieReservationPresenter
 import java.time.LocalDateTime
 
 class MovieReservationPresenterTest {

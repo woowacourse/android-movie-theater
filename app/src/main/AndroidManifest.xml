@@ -12,11 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Movie"
         tools:targetApi="31">
-        <activity android:name=".view.activity.SeatSelectionActivity" />
-        <activity android:name=".view.activity.ReservationResultActivity" />
-        <activity android:name=".view.activity.MovieReservationActivity" />
+        <activity android:name=".seatSelection.SeatSelectionActivity" />
+        <activity android:name=".reservationResult.ReservationResultActivity" />
+        <activity android:name=".movieReservation.MovieReservationActivity" />
         <activity
-            android:name=".view.activity.MainActivity"
+            android:name=".common.view.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +26,7 @@
         </activity>
 
         <receiver
-            android:name=".system.NotificationSetReceiver"
+            android:name=".common.system.NotificationSetReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

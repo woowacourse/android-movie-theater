@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        tools:context=".view.fragment.ReservationListFragment">
+        tools:context=".reservationList.ReservationListFragment">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/reservation_list_recycler"
             android:layout_width="match_parent"
