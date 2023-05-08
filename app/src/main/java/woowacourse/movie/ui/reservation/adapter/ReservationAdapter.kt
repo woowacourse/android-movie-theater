@@ -1,11 +1,10 @@
 package woowacourse.movie.ui.reservation.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemReservationBinding
 import woowacourse.movie.uimodel.MovieTicketModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -22,7 +21,7 @@ class ReservationAdapter(
             false,
         )
 
-        return ReservationViewHolder(view, onClick)
+        return ReservationViewHolder(ItemReservationBinding.bind(view), onClick)
     }
 
     override fun getItemCount(): Int = reservationInfo.size
@@ -32,21 +31,17 @@ class ReservationAdapter(
     }
 
     class ReservationViewHolder(
-        itemView: View,
+        private val binding: ItemReservationBinding,
         onClick: (Int) -> Unit,
-    ) : RecyclerView.ViewHolder(itemView) {
-        private val dateView: TextView by lazy { itemView.findViewById(R.id.reservation_date) }
-        private val timeView: TextView by lazy { itemView.findViewById(R.id.reservation_time) }
-        private val titleView: TextView by lazy { itemView.findViewById(R.id.reservation_title) }
-
+    ) : RecyclerView.ViewHolder(binding.root) {
         init {
-            itemView.setOnClickListener { onClick(adapterPosition) }
+            binding.root.setOnClickListener { onClick(adapterPosition) }
         }
 
         fun onBind(movieTicketModel: MovieTicketModel) {
-            dateView.text = movieTicketModel.time.dateFormat()
-            timeView.text = movieTicketModel.time.timeFormat()
-            titleView.text = movieTicketModel.title
+            binding.reservationDate.text = movieTicketModel.time.dateFormat()
+            binding.reservationTime.text = movieTicketModel.time.timeFormat()
+            binding.reservationTitle.text = movieTicketModel.title
         }
 
         private fun LocalDateTime.dateFormat(): String = format(

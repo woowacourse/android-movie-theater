@@ -8,12 +8,9 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Spinner
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.ui.seat.SeatSelectionActivity
 import woowacourse.movie.uimodel.MovieListModel
 import woowacourse.movie.uimodel.PeopleCountModel
@@ -29,27 +26,14 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
 
     override val presenter = MovieDetailPresenter(this)
 
-    private val minusButton: Button by lazy {
-        findViewById(R.id.detail_minus_button)
-    }
-    private val plusButton: Button by lazy {
-        findViewById(R.id.detail_plus_button)
-    }
-    private val peopleCountView: TextView by lazy {
-        findViewById(R.id.detail_people_count)
-    }
-    private val dateSpinner: Spinner by lazy {
-        findViewById(R.id.detail_date_spinner)
-    }
-    private val timeSpinner: Spinner by lazy {
-        findViewById(R.id.detail_time_spinner)
-    }
+    private lateinit var binding: ActivityMovieDetailBinding
 
     private lateinit var timeSpinnerAdapter: ArrayAdapter<LocalTime>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_detail)
+        binding = ActivityMovieDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val movie: MovieListModel.MovieModel =
@@ -65,8 +49,8 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
         super.onSaveInstanceState(outState, outPersistentState)
 
-        outState.putInt(KEY_DATE_POSITION, dateSpinner.selectedItemPosition)
-        outState.putInt(KEY_TIME_POSITION, timeSpinner.selectedItemPosition)
+        outState.putInt(KEY_DATE_POSITION, binding.detailDateSpinner.selectedItemPosition)
+        outState.putInt(KEY_TIME_POSITION, binding.detailTimeSpinner.selectedItemPosition)
         outState.putSerializable(KEY_PEOPLE_COUNT, presenter.peopleCountModel)
     }
 
@@ -81,13 +65,12 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     }
 
     private fun setMovieInfo(movie: MovieListModel.MovieModel) {
-        findViewById<ImageView>(R.id.detail_poster).setImageResource(movie.poster)
-        findViewById<TextView>(R.id.detail_title).text = movie.title
-        findViewById<TextView>(R.id.detail_date).text =
+        binding.detailPoster.setImageResource(movie.poster)
+        binding.detailTitle.text = movie.title
+        binding.detailDate.text =
             getString(R.string.screening_date, movie.startDate.format(), movie.endDate.format())
-        findViewById<TextView>(R.id.detail_running_time).text =
-            getString(R.string.running_time, movie.runningTime)
-        findViewById<TextView>(R.id.detail_description).text = movie.description
+        binding.detailRunningTime.text = getString(R.string.running_time, movie.runningTime)
+        binding.detailDescription.text = movie.description
     }
 
     private fun LocalDate.format(): String =
@@ -106,32 +89,33 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         )
         dateSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-        dateSpinner.adapter = dateSpinnerAdapter
-        dateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long,
-            ) {
-                presenter.updateTimesByDate(dateSpinner.selectedItem as LocalDate)
-                timeSpinner.setSelection(0)
-                timeSpinnerAdapter.notifyDataSetChanged()
-            }
+        binding.detailDateSpinner.adapter = dateSpinnerAdapter
+        binding.detailDateSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long,
+                ) {
+                    presenter.updateTimesByDate(binding.detailDateSpinner.selectedItem as LocalDate)
+                    binding.detailTimeSpinner.setSelection(0)
+                    timeSpinnerAdapter.notifyDataSetChanged()
+                }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) = Unit
-        }
+                override fun onNothingSelected(parent: AdapterView<*>?) = Unit
+            }
     }
 
     private fun setTimeSpinner() {
-        presenter.updateTimesByDate(dateSpinner.selectedItem as LocalDate)
+        presenter.updateTimesByDate(binding.detailDateSpinner.selectedItem as LocalDate)
         timeSpinnerAdapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
             presenter.times,
         )
         timeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        timeSpinner.adapter = timeSpinnerAdapter
+        binding.detailTimeSpinner.adapter = timeSpinnerAdapter
     }
 
     private fun initPeopleCountController() {
@@ -141,25 +125,23 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     }
 
     private fun setMinusButton() {
-        minusButton.setOnClickListener {
+        binding.detailMinusButton.setOnClickListener {
             presenter.minusCount()
         }
     }
 
     private fun setPlusButton() {
-        plusButton.setOnClickListener {
+        binding.detailPlusButton.setOnClickListener {
             presenter.addCount()
         }
     }
 
     override fun setPeopleCountView(count: Int) {
-        peopleCountView.text = "$count"
+        binding.detailPeopleCount.text = "$count"
     }
 
     private fun initBookingButton(movie: MovieListModel.MovieModel) {
-        val bookingButton = findViewById<Button>(R.id.detail_booking_button)
-
-        bookingButton.setOnClickListener {
+        binding.detailBookingButton.setOnClickListener {
             moveToSeatSelectionActivity(movie)
         }
     }
@@ -170,8 +152,8 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
             putExtra(
                 KEY_TIME,
                 LocalDateTime.of(
-                    dateSpinner.selectedItem as LocalDate,
-                    timeSpinner.selectedItem as LocalTime,
+                    binding.detailDateSpinner.selectedItem as LocalDate,
+                    binding.detailTimeSpinner.selectedItem as LocalTime,
                 ),
             )
             putExtra(KEY_PEOPLE_COUNT, presenter.peopleCountModel)
@@ -181,8 +163,8 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     }
 
     private fun loadSavedData(savedInstanceState: Bundle?) {
-        dateSpinner.setSelection(savedInstanceState?.getInt(KEY_DATE_POSITION) ?: 0)
-        timeSpinner.setSelection(savedInstanceState?.getInt(KEY_TIME_POSITION) ?: 0)
+        binding.detailDateSpinner.setSelection(savedInstanceState?.getInt(KEY_DATE_POSITION) ?: 0)
+        binding.detailTimeSpinner.setSelection(savedInstanceState?.getInt(KEY_TIME_POSITION) ?: 0)
         presenter.updatePeopleCount(
             savedInstanceState?.getSerializableExtraCompat<PeopleCountModel>(KEY_PEOPLE_COUNT)?.count
                 ?: 1,

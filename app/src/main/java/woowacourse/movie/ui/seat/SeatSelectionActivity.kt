@@ -5,12 +5,12 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TableLayout
 import android.widget.TableRow
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.data.alarm.AlarmStateRepositoryImpl
 import woowacourse.movie.data.reservation.ReservationRepositoryImpl
+import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.ui.alarm.ReservationAlarmManager
 import woowacourse.movie.ui.moviedetail.MovieDetailActivity
 import woowacourse.movie.ui.ticket.MovieTicketActivity
@@ -27,14 +27,14 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     override lateinit var presenter: SeatSelectionPresenter
 
-    private val priceTextView by lazy { findViewById<TextView>(R.id.seat_price) }
-    private val selectButton by lazy { findViewById<TextView>(R.id.seat_confirm_button) }
+    private lateinit var binding: ActivitySeatSelectionBinding
 
     private val reservationAlarmManager by lazy { ReservationAlarmManager(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_seat_selection)
+        binding = ActivitySeatSelectionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setPresenter()
@@ -96,11 +96,11 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     override fun initMovieTitleView(title: String) {
-        findViewById<TextView>(R.id.seat_movie_title).text = title
+        binding.seatMovieTitle.text = title
     }
 
     private fun initSelectButton() {
-        selectButton.setOnClickListener {
+        binding.seatConfirmButton.setOnClickListener {
             makeDialog().show()
         }
     }
@@ -161,11 +161,11 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     override fun updatePriceText(price: Int) {
-        priceTextView.text = getString(R.string.price_with_unit, price)
+        binding.seatPrice.text = getString(R.string.price_with_unit, price)
     }
 
     override fun updateButtonEnablement(isSelectionDone: Boolean) {
-        selectButton.isEnabled = isSelectionDone
+        binding.seatConfirmButton.isEnabled = isSelectionDone
     }
 
     private fun setReservationData(ticket: MovieTicketModel) {

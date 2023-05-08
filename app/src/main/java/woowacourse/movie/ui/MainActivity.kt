@@ -5,8 +5,8 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.ui.home.HomeFragment
 import woowacourse.movie.ui.reservation.ReservationFragment
 import woowacourse.movie.ui.setting.SettingFragment
@@ -14,19 +14,18 @@ import woowacourse.movie.ui.setting.SettingFragment
 class MainActivity : AppCompatActivity() {
     private var lastSelectedFragmentTag = ""
 
-    private val bottomNavigationView: BottomNavigationView by lazy {
-        findViewById(R.id.main_bottom_navigation_view)
-    }
-
     private val fragments = mapOf(
         FRAGMENT_HOME to HomeFragment(),
         FRAGMENT_RESERVATION to ReservationFragment(),
         FRAGMENT_SETTING to SettingFragment(),
     )
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         initFragmentContainerView()
         setBottomNavigationView()
@@ -68,8 +67,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setBottomNavigationView() {
-        bottomNavigationView.selectedItemId = R.id.menu_item_home
-        bottomNavigationView.setOnItemSelectedListener { selectedIcon ->
+        binding.mainBottomNavigationView.selectedItemId = R.id.menu_item_home
+        binding.mainBottomNavigationView.setOnItemSelectedListener { selectedIcon ->
             changeFragment(getTag(selectedIcon))
             true
         }

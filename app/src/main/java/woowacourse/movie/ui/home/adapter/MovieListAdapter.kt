@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemAdBinding
+import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.uimodel.MovieListModel
 
 class MovieListAdapter(
@@ -13,18 +15,20 @@ class MovieListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            MovieListViewType.MOVIE.value ->
-                MovieItemViewHolder(
-                    LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false),
-                ) {
+            MovieListViewType.MOVIE.value -> {
+                val view =
+                    LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
+                MovieItemViewHolder(ItemMovieBinding.bind(view)) {
                     onItemClick.onMovieItemClick(modelItems[it] as MovieListModel.MovieModel)
                 }
-            MovieListViewType.AD.value ->
-                AdItemViewHolder(
-                    LayoutInflater.from(parent.context).inflate(R.layout.item_ad, parent, false),
-                ) {
+            }
+            MovieListViewType.AD.value -> {
+                val view =
+                    LayoutInflater.from(parent.context).inflate(R.layout.item_ad, parent, false)
+                AdItemViewHolder(ItemAdBinding.bind(view)) {
                     onItemClick.onAdItemClick(modelItems[it] as MovieListModel.AdModel)
                 }
+            }
             else -> throw IllegalStateException()
         }
     }

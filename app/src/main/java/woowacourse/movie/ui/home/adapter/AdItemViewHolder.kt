@@ -1,23 +1,18 @@
 package woowacourse.movie.ui.home.adapter
 
-import android.view.View
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemAdBinding
 import woowacourse.movie.uimodel.MovieListModel
 
 class AdItemViewHolder(
-    view: View,
+    private val binding: ItemAdBinding,
     private val onItemClick: (Int) -> Unit,
-) : RecyclerView.ViewHolder(view) {
-
-    private val banner = view.findViewById<ImageView>(R.id.item_banner)
-
+) : RecyclerView.ViewHolder(binding.root) {
     init {
-        banner.setOnClickListener { onItemClick(adapterPosition) }
+        binding.itemBanner.setOnClickListener { onItemClick(adapterPosition) }
     }
 
     fun bind(ad: MovieListModel.AdModel) {
-        banner.setImageResource(ad.banner)
+        binding.itemBanner.setImageResource(ad.banner)
     }
 }

@@ -7,24 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.data.alarm.AlarmStateRepositoryImpl
 import woowacourse.movie.data.reservation.ReservationRepositoryImpl
+import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.ui.alarm.ReservationAlarmManager
 import woowacourse.movie.uimodel.MovieTicketModel
 
 class SettingFragment : Fragment(), SettingContract.View {
-    private lateinit var toggleButton: SwitchCompat
-
-    private val reservationAlarmManager by lazy { ReservationAlarmManager(requireContext()) }
-    private val requestPermissionLauncher by lazy {
-        registerForActivityResult(
-            ActivityResultContracts.RequestPermission(),
-        ) {}
-    }
 
     override val presenter by lazy {
         SettingPresenter(
@@ -34,19 +27,29 @@ class SettingFragment : Fragment(), SettingContract.View {
         )
     }
 
+    private lateinit var binding: FragmentSettingBinding
+
+    private val reservationAlarmManager by lazy { ReservationAlarmManager(requireContext()) }
+    private val requestPermissionLauncher by lazy {
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+        ) {}
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.fragment_setting, container, false)
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         requestNotificationPermission(view)
-        initToggleButton(view)
+        initToggleButton()
         setClickEventOnToggleButton()
     }
 
@@ -78,17 +81,16 @@ class SettingFragment : Fragment(), SettingContract.View {
         }
     }
 
-    private fun initToggleButton(view: View) {
-        toggleButton = view.findViewById(R.id.setting_switch)
+    private fun initToggleButton() {
         presenter.checkSwitchState()
     }
 
     override fun setToggleButton(isChecked: Boolean) {
-        toggleButton.isChecked = isChecked
+        binding.settingSwitch.isChecked = isChecked
     }
 
     private fun setClickEventOnToggleButton() {
-        toggleButton.setOnCheckedChangeListener { _, isChecked ->
+        binding.settingSwitch.setOnCheckedChangeListener { _, isChecked ->
             presenter.clickSwitch(isChecked)
         }
     }
