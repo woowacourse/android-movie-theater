@@ -2,9 +2,7 @@ package woowacourse.movie.view.moviemain.movielist
 
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.slot
 import io.mockk.verify
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
@@ -34,17 +32,13 @@ class MovieListPresenterTest {
 
     @Test
     fun `리포지토리에서 영화 목록 받아와 뷰에 띄운다`() {
-        val movieSlot = slot<List<MovieListModel>>()
-        every { view.showMovieList(capture(movieSlot)) } returns Unit
         every { movieRepository.findAll() } returns fakeMovies()
 
         movieListPresenter.loadMovieList()
 
-        val expected = fakeMovies().map { it.toUiModel() }
-        val actual = movieSlot.captured
+        val dataList = fakeMovies().map { it.toUiModel() }
 
-        assertEquals(expected, actual)
-        verify { view.showMovieList(expected) }
+        verify { view.showMovieList(dataList) }
     }
 
     @Test
