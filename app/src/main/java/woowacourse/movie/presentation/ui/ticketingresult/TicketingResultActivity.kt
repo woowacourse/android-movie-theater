@@ -3,14 +3,11 @@ package woowacourse.movie.presentation.ui.ticketingresult
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityTicketingResultBinding
+import woowacourse.movie.presentation.base.BaseActivity
 import woowacourse.movie.presentation.extensions.getParcelableCompat
-import woowacourse.movie.presentation.extensions.showBackButton
 import woowacourse.movie.presentation.model.MovieDate
 import woowacourse.movie.presentation.model.MovieTime
 import woowacourse.movie.presentation.model.PickedSeats
@@ -22,9 +19,12 @@ import woowacourse.movie.presentation.ui.main.MainActivity
 import woowacourse.movie.presentation.ui.ticketingresult.contract.TicketingResultContract
 import woowacourse.movie.presentation.ui.ticketingresult.presenter.TicketingResultPresenter
 
-class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.View {
+class TicketingResultActivity :
+    BaseActivity<ActivityTicketingResultBinding>(true),
+    TicketingResultContract.View {
+    override val layoutResId: Int = R.layout.activity_ticketing_result
+    override val onClickBackButton: () -> Unit by lazy { presenter::onShowMainScreen }
     override lateinit var presenter: TicketingResultContract.Presenter
-    private lateinit var binding: ActivityTicketingResultBinding
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -34,10 +34,8 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_ticketing_result)
         presenter = makePresenter()
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
-        showBackButton()
     }
 
     override fun showMainScreen(reservation: Reservation, fromMainScreen: Boolean) {
@@ -45,13 +43,6 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
             startActivity(MainActivity.getIntent(this, reservation))
         }
         finish()
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> presenter.onShowMainScreen()
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun showMovieTitle(title: String) {
