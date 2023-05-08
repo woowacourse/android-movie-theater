@@ -7,15 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.presentation.model.movieitem.Ad
+import woowacourse.movie.presentation.model.movieitem.ListItem
 import woowacourse.movie.presentation.model.movieitem.Movie
 import woowacourse.movie.presentation.views.main.fragments.home.contract.HomeContract
 import woowacourse.movie.presentation.views.main.fragments.home.contract.presenter.HomePresenter
+import woowacourse.movie.presentation.views.main.fragments.home.recyclerview.MovieListAdapter
 import woowacourse.movie.presentation.views.main.fragments.theater.TheaterPickerDialog
 
-class HomeFragment : Fragment(R.layout.fragment_home), HomeContract.View {
+class HomeFragment : Fragment(), HomeContract.View {
     override val presenter: HomeContract.Presenter by lazy { HomePresenter(view = this) }
 
     private var _binding: FragmentHomeBinding? = null
@@ -31,14 +32,27 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeContract.View {
         return binding.root
     }
 
-    override fun showTheaterPickerScreen(item: Movie) {
-        val theaterPickerDialog = TheaterPickerDialog.getInstance(item)
-        theaterPickerDialog.show(childFragmentManager, TheaterPickerDialog.TAG)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        presenter.loadAds()
+    }
+
+    override fun setupAdView(ads: List<ListItem>) {
+        binding.rvAdapter = MovieListAdapter(adTypes = ads)
+    }
+
+    override fun showMoreMovies(items: List<Movie>) {
+        (binding.rvAdapter as MovieListAdapter).appendAll(items)
     }
 
     override fun showAdWebSite(item: Ad) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
         startActivity(intent)
+    }
+
+    override fun showTheaterPicker(item: Movie) {
+        val theaterPickerDialog = TheaterPickerDialog.getInstance(item)
+        theaterPickerDialog.show(childFragmentManager, TheaterPickerDialog.TAG)
     }
 
     override fun onDestroyView() {

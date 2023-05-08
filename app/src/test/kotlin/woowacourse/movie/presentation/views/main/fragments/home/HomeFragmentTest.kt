@@ -40,10 +40,10 @@ class HomeFragmentTest {
         val item = mockk<Movie>()
 
         // when
-        presenter.onItemClick(item)
+        presenter.handleItem(item)
 
         // then
-        verify(exactly = 1) { view.showTheaterPickerScreen(item) }
+        verify(exactly = 1) { view.showTheaterPicker(item) }
     }
 
     @Test
@@ -52,7 +52,7 @@ class HomeFragmentTest {
         val item = mockk<Ad>()
 
         // when
-        presenter.onItemClick(item)
+        presenter.handleItem(item)
 
         // then
         verify(exactly = 1) { view.showAdWebSite(item) }

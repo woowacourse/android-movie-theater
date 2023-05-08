@@ -6,7 +6,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 
 @BindingAdapter("app:onChangedHistory", "app:onChangedHome", "app:onChangedSetting")
-fun BottomNavigationView.setNavItemStateChange(
+fun BottomNavigationView.setMainNavItemStateChange(
     onChangedHistory: () -> Unit,
     onChangedHome: () -> Unit,
     onChangedSetting: () -> Unit,

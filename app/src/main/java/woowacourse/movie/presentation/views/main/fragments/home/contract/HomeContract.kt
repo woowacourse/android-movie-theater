@@ -7,14 +7,16 @@ import woowacourse.movie.presentation.model.movieitem.Movie
 interface HomeContract {
     interface View {
         val presenter: Presenter
-        fun showTheaterPickerScreen(item: Movie)
+        fun setupAdView(ads: List<ListItem>)
+        fun showMoreMovies(items: List<Movie>)
         fun showAdWebSite(item: Ad)
+        fun showTheaterPicker(item: Movie)
     }
 
     abstract class Presenter(protected val view: View) {
-        abstract fun loadMoreMovies(size: Int = DEFAULT_LOAD_SIZE): List<ListItem>
-        abstract fun loadAds(): List<ListItem>
-        abstract fun onItemClick(item: ListItem)
+        abstract fun loadMoreMovies(size: Int = DEFAULT_LOAD_SIZE)
+        abstract fun loadAds()
+        abstract fun handleItem(item: ListItem)
     }
 
     companion object {

@@ -8,18 +8,20 @@ import woowacourse.movie.presentation.views.main.fragments.home.contract.HomeCon
 class HomePresenter(view: HomeContract.View) : HomeContract.Presenter(view) {
     private val loadedMovie = mutableSetOf<ListItem>()
 
-    override fun loadAds(): List<ListItem> = Ad.provideDummy()
+    override fun loadAds() {
+        view.setupAdView(Ad.provideDummy())
+    }
 
-    override fun loadMoreMovies(size: Int): List<ListItem> {
+    override fun loadMoreMovies(size: Int) {
         val newLoadedMovies = Movie.provideDummy(size)
         loadedMovie.addAll(newLoadedMovies)
 
-        return newLoadedMovies
+        view.showMoreMovies(newLoadedMovies)
     }
 
-    override fun onItemClick(item: ListItem) {
+    override fun handleItem(item: ListItem) {
         when (item) {
-            is Movie -> view.showTheaterPickerScreen(item)
+            is Movie -> view.showTheaterPicker(item)
             is Ad -> view.showAdWebSite(item)
         }
     }

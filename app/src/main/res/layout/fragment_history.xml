@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        
+
         <import type="woowacourse.movie.presentation.views.main.fragments.history.recyclerview.HistoryListAdapter" />
 
         <variable

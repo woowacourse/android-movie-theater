@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 class OnEndScrollListener(private val onScrollEnd: () -> Unit) : OnScrollListener() {
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
-        if (!recyclerView.canScrollVertically(DOWN_DIRECTION) && dy > 0) onScrollEnd()
+        if (!recyclerView.canScrollVertically(DOWN_DIRECTION) && dy > 0) {
+            onScrollEnd()
+        }
     }
 
     companion object {
