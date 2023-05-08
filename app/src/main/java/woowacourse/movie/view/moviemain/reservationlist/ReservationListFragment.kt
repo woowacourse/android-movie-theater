@@ -3,13 +3,16 @@ package woowacourse.movie.view.moviemain.reservationlist
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.data.reservation.ReservationDbRepository
 import woowacourse.movie.view.model.ReservationUiModel
 import woowacourse.movie.view.reservationcompleted.ReservationCompletedActivity
 
-class ReservationListFragment : Fragment(R.layout.fragment_reservation_list), ReservationListContract.View {
+class ReservationListFragment :
+    Fragment(R.layout.fragment_reservation_list),
+    ReservationListContract.View {
     override lateinit var presenter: ReservationListContract.Presenter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -28,5 +31,9 @@ class ReservationListFragment : Fragment(R.layout.fragment_reservation_list), Re
 
     companion object {
         const val TAG_RESERVATION_LIST = "RESERVATION_LIST"
+        fun of(supportFragmentManager: FragmentManager): ReservationListFragment {
+            return supportFragmentManager.findFragmentByTag(TAG_RESERVATION_LIST) as? ReservationListFragment
+                ?: ReservationListFragment()
+        }
     }
 }

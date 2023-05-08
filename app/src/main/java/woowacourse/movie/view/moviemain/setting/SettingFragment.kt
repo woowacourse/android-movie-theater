@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import woowacourse.movie.R
 import woowacourse.movie.data.reservation.ReservationDbRepository
 import woowacourse.movie.data.setting.SettingPreferencesRepository
@@ -24,19 +25,28 @@ class SettingFragment : Fragment(), SettingContract.View {
     private lateinit var alarmController: AlarmController
     private lateinit var binding: FragmentSettingBinding
     override lateinit var presenter: SettingContract.Presenter
-    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-        if (!isGranted) {
-            Toast.makeText(requireContext(), NOTICE_REQUEST_PERMISSION_MESSAGE, Toast.LENGTH_LONG).show()
-            setToggle(false)
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (!isGranted) {
+                Toast.makeText(
+                    requireContext(),
+                    NOTICE_REQUEST_PERMISSION_MESSAGE,
+                    Toast.LENGTH_LONG,
+                ).show()
+                setToggle(false)
+            }
         }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        presenter = SettingPresenter(this, SettingPreferencesRepository(requireContext()), ReservationDbRepository(requireContext()))
+        presenter = SettingPresenter(
+            this,
+            SettingPreferencesRepository(requireContext()),
+            ReservationDbRepository(requireContext()),
+        )
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
         binding.presenter = presenter
         return binding.root
@@ -55,6 +65,7 @@ class SettingFragment : Fragment(), SettingContract.View {
     override fun setAlarms(reservations: List<ReservationUiModel>) {
         alarmController.registerAlarms(reservations, ALARM_MINUTE_INTERVAL)
     }
+
     override fun cancelAlarms() {
         alarmController.cancelAlarms()
     }
@@ -77,8 +88,14 @@ class SettingFragment : Fragment(), SettingContract.View {
     }
 
     companion object {
-        private const val NOTICE_REQUEST_PERMISSION_MESSAGE = "권한을 설정해야 알림을 받을 수 있습니다. 설정에서 알림을 켜주세요."
+        private const val NOTICE_REQUEST_PERMISSION_MESSAGE =
+            "권한을 설정해야 알림을 받을 수 있습니다. 설정에서 알림을 켜주세요."
         const val ALARM_MINUTE_INTERVAL = 30L
         const val TAG_SETTING = "SETTING"
+
+        fun of(supportFragmentManager: FragmentManager): SettingFragment {
+            return supportFragmentManager.findFragmentByTag(TAG_SETTING) as? SettingFragment
+                ?: SettingFragment()
+        }
     }
 }
