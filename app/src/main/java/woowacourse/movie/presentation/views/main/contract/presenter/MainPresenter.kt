@@ -5,12 +5,12 @@ import woowacourse.movie.presentation.model.mainstate.MainState
 import woowacourse.movie.presentation.views.main.contract.MainContract
 
 class MainPresenter(
+    view: MainContract.View,
     private var state: MainState = MainState(),
-) : MainContract.Presenter() {
+) : MainContract.Presenter(view) {
 
-    override fun attach(view: MainContract.View) {
-        super.attach(view)
-        requireView().initView()
+    init {
+        view.initView()
     }
 
     override fun getState(): MainState = state.copy()
@@ -19,25 +19,25 @@ class MainPresenter(
         this.state = state.copy()
 
         when (state.latestScreen) {
-            MainScreenState.Home -> requireView().showHomeScreen()
-            MainScreenState.History -> requireView().showHistoryScreen()
-            MainScreenState.Setting -> requireView().showSettingScreen()
+            MainScreenState.Home -> view.showHomeScreen()
+            MainScreenState.History -> view.showHistoryScreen()
+            MainScreenState.Setting -> view.showSettingScreen()
         }
     }
 
     override fun onShowHistoryScreen() {
         state = state.copy(isShownHistory = true, latestScreen = MainScreenState.History)
-        requireView().showHistoryScreen()
+        view.showHistoryScreen()
     }
 
     override fun onShowHomeScreen() {
         state = state.copy(latestScreen = MainScreenState.Home)
-        requireView().showHomeScreen()
+        view.showHomeScreen()
     }
 
     override fun onShowSettingScreen() {
         state = state.copy(latestScreen = MainScreenState.Setting)
-        requireView().showSettingScreen()
+        view.showSettingScreen()
     }
 
     override fun wasShownHistory(): Boolean = state.isShownHistory

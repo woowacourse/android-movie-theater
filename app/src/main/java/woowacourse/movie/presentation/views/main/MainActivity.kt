@@ -24,7 +24,7 @@ import woowacourse.movie.presentation.views.main.fragments.home.HomeFragment
 import woowacourse.movie.presentation.views.main.fragments.setting.SettingFragment
 
 class MainActivity : AppCompatActivity(), MainContract.View {
-    override val presenter: MainContract.Presenter = MainPresenter()
+    override val presenter: MainContract.Presenter by lazy { MainPresenter(this) }
     private lateinit var binding: ActivityMainBinding
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.presenter = presenter
-        presenter.attach(this)
     }
 
     override fun initView() {
@@ -87,11 +86,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                 .findFragmentByTag(HistoryFragment.TAG) as HistoryFragment
             historyFragment.addHistory(intent?.getParcelableCompat(RESERVATION_KEY))
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.detach()
     }
 
     companion object {

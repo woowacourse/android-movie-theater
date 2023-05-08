@@ -12,19 +12,7 @@ interface MainContract {
         fun showSettingScreen()
     }
 
-    abstract class Presenter {
-        private var view: View? = null
-
-        open fun attach(view: View) {
-            this.view = view
-        }
-
-        fun detach() {
-            view = null
-        }
-
-        fun requireView(): View =
-            view ?: throw IllegalStateException("View is not attached")
+    abstract class Presenter(protected val view: View) {
 
         abstract fun getState(): MainState
         abstract fun setState(state: MainState)
