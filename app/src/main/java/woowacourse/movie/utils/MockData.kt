@@ -4,7 +4,7 @@ import woowacourse.movie.R
 import woowacourse.movie.uimodel.MovieListModel
 import woowacourse.movie.uimodel.TheaterModel
 import java.time.LocalDate
-import java.time.LocalDateTime
+import java.time.LocalTime
 
 object MockData {
     private val movies = List(300) {
@@ -41,18 +41,21 @@ object MockData {
         TheaterModel(
             "잠실",
             3,
-            listOf(
-                LocalDateTime.of(2023, 5, 8, 11, 0),
-                LocalDateTime.of(2023, 5, 8, 17, 0),
-                LocalDateTime.of(2023, 5, 9, 14, 0),
+            mapOf<LocalDate, List<LocalTime>>(
+                LocalDate.of(2023, 5, 8) to
+                    listOf(LocalTime.of(11, 0), LocalTime.of(17, 0)),
+                LocalDate.of(2023, 5, 9) to
+                    listOf(LocalTime.of(14, 0)),
             ),
         ),
         TheaterModel(
             "선릉",
             2,
-            listOf(
-                LocalDateTime.of(2023, 5, 8, 19, 0),
-                LocalDateTime.of(2023, 5, 9, 10, 0),
+            mapOf<LocalDate, List<LocalTime>>(
+                LocalDate.of(2023, 5, 8) to
+                    listOf(LocalTime.of(19, 0)),
+                LocalDate.of(2023, 5, 9) to
+                    listOf(LocalTime.of(10, 0)),
             ),
         ),
     )

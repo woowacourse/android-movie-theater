@@ -14,6 +14,7 @@ import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.ui.home.adapter.ItemClickListener
 import woowacourse.movie.ui.home.adapter.MovieListAdapter
 import woowacourse.movie.ui.home.bottomsheet.TheaterSelectionFragment
+import woowacourse.movie.ui.moviedetail.MovieDetailActivity
 import woowacourse.movie.uimodel.MovieListModel
 
 class HomeFragment : Fragment(), HomeContract.View {
@@ -56,7 +57,7 @@ class HomeFragment : Fragment(), HomeContract.View {
     private fun showTheaterBottomDialog(movie: MovieListModel.MovieModel) {
         val theaterSelectionBottomDialog = TheaterSelectionFragment()
         val bundle = Bundle()
-        bundle.putParcelable("key", movie)
+        bundle.putParcelable(MovieDetailActivity.KEY_MOVIE, movie)
         theaterSelectionBottomDialog.arguments = bundle
         theaterSelectionBottomDialog.show(childFragmentManager, theaterSelectionBottomDialog.tag)
     }

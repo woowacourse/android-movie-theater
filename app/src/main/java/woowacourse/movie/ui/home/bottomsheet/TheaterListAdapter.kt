@@ -9,7 +9,7 @@ import woowacourse.movie.uimodel.TheaterModel
 
 class TheaterListAdapter(
     private val modelItems: List<TheaterModel>,
-    private val onItemClick: () -> Unit,
+    private val onItemClick: (Int) -> Unit,
 ) : RecyclerView.Adapter<TheaterListAdapter.TheaterListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TheaterListViewHolder {
@@ -30,11 +30,11 @@ class TheaterListAdapter(
 
     class TheaterListViewHolder(
         private val binding: ItemTheaterBinding,
-        onClick: () -> Unit,
+        onClick: (Int) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.root.setOnClickListener { onClick() }
-            binding.itemTheaterButton.setOnClickListener { onClick() }
+            binding.root.setOnClickListener { onClick(adapterPosition) }
+            binding.itemTheaterButton.setOnClickListener { onClick(adapterPosition) }
         }
 
         fun onBind(theaterModel: TheaterModel) {

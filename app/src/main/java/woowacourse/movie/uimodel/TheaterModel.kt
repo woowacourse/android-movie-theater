@@ -1,9 +1,13 @@
 package woowacourse.movie.uimodel
 
-import java.time.LocalDateTime
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+import java.time.LocalDate
+import java.time.LocalTime
 
+@Parcelize
 data class TheaterModel(
     val name: String,
     val size: Int,
-    val times: List<LocalDateTime>,
-)
+    val times: Map<LocalDate, List<LocalTime>>,
+) : Parcelable

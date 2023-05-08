@@ -10,6 +10,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterSelectionBinding
 import woowacourse.movie.ui.moviedetail.MovieDetailActivity
 import woowacourse.movie.uimodel.MovieListModel
+import woowacourse.movie.uimodel.TheaterModel
 import woowacourse.movie.utils.MockData
 import woowacourse.movie.utils.getParcelableCompat
 
@@ -25,22 +26,20 @@ class TheaterSelectionFragment : BottomSheetDialogFragment() {
     ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_theater_selection, container, false)
-        movie = arguments?.getParcelableCompat<MovieListModel.MovieModel>("key")
-            ?: throw IllegalArgumentException()
+        movie = arguments?.getParcelableCompat(MovieDetailActivity.KEY_MOVIE) ?: throw IllegalArgumentException()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.theaterRecyclerview.adapter = TheaterListAdapter(
-            MockData.getTheaterList(),
-        ) {
-            moveToDetailActivity()
+        val theaters = MockData.getTheaterList()
+        binding.theaterRecyclerview.adapter = TheaterListAdapter(theaters) {
+            moveToDetailActivity(theaters[it])
         }
     }
 
-    private fun moveToDetailActivity() {
-        startActivity(MovieDetailActivity.getIntent(movie, requireContext()))
+    private fun moveToDetailActivity(theaterModel: TheaterModel) {
+        startActivity(MovieDetailActivity.getIntent(movie, theaterModel, requireContext()))
     }
 }

@@ -1,16 +1,15 @@
 package woowacourse.movie.ui.moviedetail
 
 import woowacourse.movie.domain.PeopleCount
-import woowacourse.movie.domain.TimesGenerator
-import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toModel
-import woowacourse.movie.uimodel.MovieListModel
 import woowacourse.movie.uimodel.PeopleCountModel
+import woowacourse.movie.uimodel.TheaterModel
 import java.time.LocalDate
 import java.time.LocalTime
 
 class MovieDetailPresenter(
     private val view: MovieDetailContract.View,
+    private val theater: TheaterModel,
 ) : MovieDetailContract.Presenter {
 
     private var peopleCount = PeopleCount()
@@ -31,16 +30,21 @@ class MovieDetailPresenter(
         view.setPeopleCountView(peopleCount.count)
     }
 
+    override fun setDateSpinner() {
+        view.setDateSpinner(theater.times.keys.toList())
+    }
+
+    override fun setTimeSpinner(date: LocalDate) {
+        updateTimesByDate(date)
+        view.setTimeSpinner()
+    }
+
     override fun updatePeopleCount(count: Int) {
         peopleCount = PeopleCount(count)
     }
 
     override fun updateTimesByDate(date: LocalDate) {
         _times.clear()
-        _times.addAll(TimesGenerator.getTimesByDate(date))
-    }
-
-    override fun getDatesBetweenTwoDates(movie: MovieListModel.MovieModel): List<LocalDate> {
-        return movie.toDomain().getDatesBetweenTwoDates()
+        _times.addAll(theater.times[date] ?: throw IllegalArgumentException())
     }
 }
