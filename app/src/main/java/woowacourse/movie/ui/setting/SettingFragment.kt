@@ -7,17 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import woowacourse.movie.R
+import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.model.ReservationTicketMachine
 import woowacourse.movie.model.data.AlarmSwitchStateImpl
 import woowacourse.movie.ui.alarm.Alarm
 
 class SettingFragment : Fragment() {
-    private lateinit var toggleButton: SwitchCompat
     private val alarmSwitchStateImpl: AlarmSwitchStateImpl by lazy {
         AlarmSwitchStateImpl.getInstance(
             requireContext(),
@@ -27,23 +25,30 @@ class SettingFragment : Fragment() {
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission(),
     ) {}
+    private var _binding: FragmentSettingBinding? = null
+    private val binding: FragmentSettingBinding
+        get() = requireNotNull(_binding)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_setting, container, false)
-
-        requestNotificationPermission(view)
-        initToggleButton(view)
-        setClickEventOnToggleButton()
-        return view
+    ): View {
+        _binding = FragmentSettingBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    private fun requestNotificationPermission(view: View) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        requestNotificationPermission()
+        initToggleButton()
+        setClickEventOnToggleButton()
+    }
+
+    private fun requestNotificationPermission() {
         if (ContextCompat.checkSelfPermission(
-                view.context,
+                requireContext(),
                 android.Manifest.permission.POST_NOTIFICATIONS,
             ) != PackageManager.PERMISSION_GRANTED
         ) {
@@ -59,13 +64,12 @@ class SettingFragment : Fragment() {
         }
     }
 
-    private fun initToggleButton(view: View) {
-        toggleButton = view.findViewById(R.id.setting_switch)
-        toggleButton.isChecked = alarmSwitchStateImpl.isAlarmActivated
+    private fun initToggleButton() {
+        binding.settingSwitch.isChecked = alarmSwitchStateImpl.isAlarmActivated
     }
 
     private fun setClickEventOnToggleButton() {
-        toggleButton.setOnCheckedChangeListener { _, isChecked ->
+        binding.settingSwitch.setOnCheckedChangeListener { _, isChecked ->
             alarmSwitchStateImpl.isAlarmActivated = isChecked
             setAlarms(isChecked)
         }
