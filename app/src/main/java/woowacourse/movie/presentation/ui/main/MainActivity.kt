@@ -82,8 +82,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         if (presenter.wasShownHistory()) {
-            val historyFragment = supportFragmentManager
-                .findFragmentByTag(HistoryFragment.TAG) as HistoryFragment
+            val historyFragment = HistoryFragment.getInstance(supportFragmentManager)
             historyFragment.addHistory(intent?.getParcelableCompat(RESERVATION_KEY))
         }
     }

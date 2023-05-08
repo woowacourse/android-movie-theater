@@ -2,6 +2,7 @@ package woowacourse.movie.presentation.ui.main.fragments.history
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.FragmentManager
 import com.woowacourse.data.database.reservation.ReservationDatabase
 import com.woowacourse.data.database.reservation.history.dao.ReservationDao
 import com.woowacourse.data.datasource.history.local.LocalHistoryDataSource
@@ -51,5 +52,8 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(), HistoryContract.
 
     companion object {
         internal const val TAG = "HistoryFragment"
+
+        fun getInstance(fragmentManager: FragmentManager): HistoryFragment =
+            fragmentManager.findFragmentByTag(TAG) as? HistoryFragment ?: HistoryFragment()
     }
 }
