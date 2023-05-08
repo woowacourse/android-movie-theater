@@ -2,33 +2,45 @@ package woowacourse.movie.presentation.activities.main.fragments.theaterPicker
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.recyclerview.widget.RecyclerView
+import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
+import woowacourse.movie.databinding.FragmentTheaterPickerDialogBinding
 import woowacourse.movie.presentation.activities.ticketing.TicketingActivity
 import woowacourse.movie.presentation.extensions.getParcelableCompat
 import woowacourse.movie.presentation.model.item.Movie
 import woowacourse.movie.presentation.model.item.Theater
 
-class TheaterPickerDialog : BottomSheetDialogFragment(R.layout.fragment_bottom_sheet), TheaterPickerDialogContract.View {
+class TheaterPickerDialog : BottomSheetDialogFragment(), TheaterPickerDialogContract.View {
     override lateinit var presenter: TheaterPickerDialogPresenter
-    private lateinit var theaterRecyclerView: RecyclerView
+    private lateinit var binding: FragmentTheaterPickerDialogBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_theater_picker_dialog, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val movie: Movie by lazy { requireArguments().getParcelableCompat(MOVIE_KEY)!! }
-        presenter = TheaterPickerDialogPresenter(this, movie)
-        theaterRecyclerView = view.findViewById(R.id.theater_recycler_view)
-        initRecyclerView()
+        initView()
     }
 
-    private fun initRecyclerView() {
+    private fun initView() {
+        val movie: Movie by lazy { requireArguments().getParcelableCompat(MOVIE_KEY)!! }
+
+        presenter = TheaterPickerDialogPresenter(this, movie)
         val theaterAdapter = TheaterListAdapter(presenter::moveTicketingActivity)
         theaterAdapter.appendAll(Theater.provideDummyData())
-        theaterRecyclerView.adapter = theaterAdapter
+        binding.theaterRecyclerView.adapter = theaterAdapter
     }
 
     override fun startTicketingActivity(theater: Theater) {
