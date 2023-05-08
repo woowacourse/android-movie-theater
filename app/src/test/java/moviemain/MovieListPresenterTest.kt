@@ -13,7 +13,6 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.movie.Minute
 import woowacourse.movie.domain.movie.Movie
 import woowacourse.movie.domain.movie.Schedule
-import woowacourse.movie.domain.repository.MoviePosterRepository
 import woowacourse.movie.domain.repository.MovieRepository
 import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.moviemain.movielist.MovieListContract
@@ -42,12 +41,8 @@ class MovieListPresenterTest {
                 )
             }
         }
-        val posterRepository = object : MoviePosterRepository {
-            override fun findPoster(title: String): Int {
-                return R.drawable.harry_potter1_poster
-            }
-        }
-        presenter = MovieListPresenter(view, movieRepository, posterRepository)
+
+        presenter = MovieListPresenter(view, movieRepository)
     }
 
     @Test
