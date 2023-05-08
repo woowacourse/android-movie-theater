@@ -11,7 +11,6 @@ class SettingPresenter(
 ) : SettingContract.Presenter {
 
     override fun loadAlarmSetting() {
-        view.setToggleState(alarmPreference.isAlarmOn(false))
         view.initToggleState(alarmPreference.isAlarmOn(false))
     }
 

@@ -71,6 +71,7 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
 
     override fun initToggleState(isAlarmOn: Boolean) {
         initialToggleValue = isAlarmOn
+        toggle.isChecked = isAlarmOn
     }
 
     override fun setToggleState(isAlarmOn: Boolean) {
