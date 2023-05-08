@@ -11,7 +11,7 @@ interface HistoryContract {
     }
 
     interface Presenter {
-        fun onClicked(item: ListItem)
-        fun getData()
+        fun onItemClicked(item: ListItem)
+        fun setAdapterDataFromDb()
     }
 }

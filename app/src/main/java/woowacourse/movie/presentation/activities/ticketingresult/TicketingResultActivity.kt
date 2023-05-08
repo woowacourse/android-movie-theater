@@ -29,7 +29,7 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
         showBackButton()
     }
 
-    override fun showMovieInformation(reservation: Reservation) {
+    override fun setMovieInformation(reservation: Reservation) {
         val movieDate = reservation.movieDate
         val movieTime = reservation.movieTime
 
@@ -46,7 +46,7 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
         )
     }
 
-    override fun showPaymentPrice(reservation: Reservation) {
+    override fun setPaymentPrice(reservation: Reservation) {
         val ticket = reservation.ticket
         val ticketPrice = reservation.ticketPrice
 

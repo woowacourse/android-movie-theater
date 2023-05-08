@@ -7,10 +7,10 @@ class TicketingResultPresenter(
 ) : TicketingResultContract.Presenter {
 
     override fun updateMovieInformation(reservation: Reservation) {
-        view.showMovieInformation(reservation)
+        view.setMovieInformation(reservation)
     }
 
     override fun updatePaymentPrice(reservation: Reservation) {
-        view.showPaymentPrice(reservation)
+        view.setPaymentPrice(reservation)
     }
 }

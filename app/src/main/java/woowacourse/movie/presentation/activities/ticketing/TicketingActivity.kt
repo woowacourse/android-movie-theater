@@ -72,7 +72,7 @@ class TicketingActivity : AppCompatActivity(), View.OnClickListener, TicketingCo
     private fun initView() {
         val movie = intent.getParcelableCompat<Movie>(MOVIE_KEY)!!
         presenter = TicketingPresenter(this, movie)
-        presenter.showMovieIntroduce()
+        presenter.updateMovieDetails()
         presenter.updateMovieTimes()
     }
 
@@ -165,7 +165,7 @@ class TicketingActivity : AppCompatActivity(), View.OnClickListener, TicketingCo
             }
 
             R.id.ticketing_btn -> {
-                presenter.moveToSeatPickerActivity(selectedDate, selectedTime)
+                presenter.moveNextActivity(selectedDate, selectedTime)
             }
         }
     }
@@ -204,7 +204,7 @@ class TicketingActivity : AppCompatActivity(), View.OnClickListener, TicketingCo
         binding.ticketCountTv.text = movieTicket.count.toString()
     }
 
-    override fun setMovieData(movie: Movie) {
+    override fun setMovieDetails(movie: Movie) {
         with(movie) {
             binding.posterIv.setImageResource(thumbnail)
             binding.titleTv.text = title

@@ -43,8 +43,8 @@ class HomeFragment : Fragment(), HomeContract.View {
             adTypes = Ad.provideDummy(),
             onItemClick = { item ->
                 when (item) {
-                    is Movie -> presenter.onClickedMovie(item)
-                    is Ad -> presenter.onClickedAd(item)
+                    is Movie -> presenter.onMovieClicked(item)
+                    is Ad -> presenter.onAdClicked(item)
                     is Reservation -> {}
                     is Theater -> {}
                 }
@@ -62,12 +62,12 @@ class HomeFragment : Fragment(), HomeContract.View {
         })
     }
 
-    override fun selectTheater(movie: Movie) {
+    override fun showTheaterList(movie: Movie) {
         val theaterPickerDialog = TheaterPickerDialog.getInstance(movie)
         theaterPickerDialog.show(parentFragmentManager, TheaterPickerDialog.TAG)
     }
 
-    override fun accessAdWebPage(ads: Ad) {
+    override fun moveAdWebPage(ads: Ad) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(ads.url))
         startActivity(intent)
     }

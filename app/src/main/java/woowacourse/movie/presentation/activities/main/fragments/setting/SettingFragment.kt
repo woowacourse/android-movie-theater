@@ -50,7 +50,7 @@ class SettingFragment : Fragment(), SettingContract.View {
 
         pushSwitch.isChecked = presenter.getPushAllowPreference(PUSH_ALLOW_KEY, isPushAllowed)
         pushSwitch.setOnCheckedChangeListener { _, isAllowed ->
-            presenter.onCheckedChangeListener(isPermittedPushPermission(), isAllowed)
+            presenter.onSwitchChanged(isPermittedPushPermission(), isAllowed)
         }
     }
 

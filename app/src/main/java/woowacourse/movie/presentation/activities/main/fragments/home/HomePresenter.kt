@@ -6,11 +6,11 @@ import woowacourse.movie.presentation.model.item.Movie
 class HomePresenter(
     val view: HomeContract.View,
 ) : HomeContract.Presenter {
-    override fun onClickedMovie(movie: Movie) {
-        view.selectTheater(movie)
+    override fun onMovieClicked(movie: Movie) {
+        view.showTheaterList(movie)
     }
 
-    override fun onClickedAd(ads: Ad) {
-        view.accessAdWebPage(ads)
+    override fun onAdClicked(ads: Ad) {
+        view.moveAdWebPage(ads)
     }
 }

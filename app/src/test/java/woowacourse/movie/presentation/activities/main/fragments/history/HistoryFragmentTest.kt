@@ -36,7 +36,7 @@ internal class HistoryFragmentTest {
         val expected = "가디언즈 오브 갤럭시"
 
         // when
-        presenter.getData()
+        presenter.setAdapterDataFromDb()
         val actual = slot.captured[0].movieTitle
 
         // then
@@ -52,7 +52,7 @@ internal class HistoryFragmentTest {
         val expected = "가디언즈 오브 갤럭시"
 
         // when
-        presenter.onClicked(reservation)
+        presenter.onItemClicked(reservation)
         val actual = slot.captured.movieTitle
 
         // then

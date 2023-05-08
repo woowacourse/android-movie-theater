@@ -13,6 +13,6 @@ interface SettingContract {
     interface Presenter {
         fun setPushAllowPreference(key: String, value: Boolean)
         fun getPushAllowPreference(key: String, defaultValue: Boolean): Boolean
-        fun onCheckedChangeListener(isPermittedPushPermission: Boolean, isAllowed: Boolean)
+        fun onSwitchChanged(isPermittedPushPermission: Boolean, isAllowed: Boolean)
     }
 }

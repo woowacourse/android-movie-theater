@@ -7,12 +7,12 @@ interface HomeContract {
     interface View {
         val presenter: Presenter
 
-        fun selectTheater(movie: Movie)
-        fun accessAdWebPage(ads: Ad)
+        fun showTheaterList(movie: Movie)
+        fun moveAdWebPage(ads: Ad)
     }
 
     interface Presenter {
-        fun onClickedMovie(movie: Movie)
-        fun onClickedAd(ads: Ad)
+        fun onMovieClicked(movie: Movie)
+        fun onAdClicked(ads: Ad)
     }
 }

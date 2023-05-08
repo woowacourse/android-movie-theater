@@ -27,7 +27,7 @@ class TicketingPresenter(
         view.setTicketCountText(movieTicket.toPresentation())
     }
 
-    override fun moveToSeatPickerActivity(selectedDate: MovieDate?, selectedTime: MovieTime?) {
+    override fun moveNextActivity(selectedDate: MovieDate?, selectedTime: MovieTime?) {
         if (selectedDate == null || selectedTime == null) {
             view.showToast("날짜와 시간을 선택해주세요!")
         }
@@ -38,8 +38,8 @@ class TicketingPresenter(
         return movieTicket.toPresentation()
     }
 
-    override fun showMovieIntroduce() {
-        view.setMovieData(movie)
+    override fun updateMovieDetails() {
+        view.setMovieDetails(movie)
     }
 
     override fun updateMovieTimes() {

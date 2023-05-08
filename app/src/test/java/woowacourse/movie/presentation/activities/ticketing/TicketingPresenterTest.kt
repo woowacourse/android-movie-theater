@@ -84,10 +84,10 @@ internal class TicketingPresenterTest {
         presenter = TicketingPresenter(view, movie)
 
         val slot = slot<Movie>()
-        every { view.setMovieData(capture(slot)) } just Runs
+        every { view.setMovieDetails(capture(slot)) } just Runs
 
         // when
-        presenter.showMovieIntroduce()
+        presenter.updateMovieDetails()
 
         // then
         val expected = "가디언즈 오브 갤럭시"

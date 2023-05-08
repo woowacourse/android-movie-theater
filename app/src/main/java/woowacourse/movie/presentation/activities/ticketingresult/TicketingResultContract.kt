@@ -6,8 +6,8 @@ interface TicketingResultContract {
     interface View {
         val presenter: TicketingResultPresenter
 
-        fun showMovieInformation(reservation: Reservation)
-        fun showPaymentPrice(reservation: Reservation)
+        fun setMovieInformation(reservation: Reservation)
+        fun setPaymentPrice(reservation: Reservation)
     }
 
     interface Presenter {

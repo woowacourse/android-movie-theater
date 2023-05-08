@@ -28,7 +28,7 @@ internal class TicketingResultPresenterTest {
         // given
         every { reservation.movieTitle } returns "가디언즈 오브 갤럭시"
         val slot = slot<Reservation>()
-        every { view.showMovieInformation(capture(slot)) } just Runs
+        every { view.setMovieInformation(capture(slot)) } just Runs
 
         // when
         presenter.updateMovieInformation(reservation)
@@ -45,7 +45,7 @@ internal class TicketingResultPresenterTest {
         // given
         every { reservation.ticketPrice.amount } returns 13_000
         val slot = slot<Reservation>()
-        every { view.showMovieInformation(capture(slot)) } just Runs
+        every { view.setMovieInformation(capture(slot)) } just Runs
 
         // when
         presenter.updateMovieInformation(reservation)
@@ -62,7 +62,7 @@ internal class TicketingResultPresenterTest {
         // given
         every { reservation.seats.toString() } returns "A1"
         val slot = slot<Reservation>()
-        every { view.showMovieInformation(capture(slot)) } just Runs
+        every { view.setMovieInformation(capture(slot)) } just Runs
 
         // when
         presenter.updateMovieInformation(reservation)

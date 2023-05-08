@@ -13,7 +13,7 @@ class SettingPresenter(
         return view.getSharedPreference().getBoolean(key, defaultValue)
     }
 
-    override fun onCheckedChangeListener(isPermittedPushPermission: Boolean, isAllowed: Boolean) {
+    override fun onSwitchChanged(isPermittedPushPermission: Boolean, isAllowed: Boolean) {
         if (isAllowed && !isPermittedPushPermission) {
             view.showPushPermissionDialog()
         } else {

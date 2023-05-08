@@ -12,7 +12,7 @@ interface TicketingContract {
         fun setTicketCountText(movieTicket: Ticket)
         fun startSeatPickerActivity()
         fun showToast(message: String)
-        fun setMovieData(movie: Movie)
+        fun setMovieDetails(movie: Movie)
         fun setMovieTimes()
     }
 
@@ -21,9 +21,9 @@ interface TicketingContract {
         fun subTicketCount()
         fun setTicketCount()
 
-        fun moveToSeatPickerActivity(selectedDate: MovieDate?, selectedTime: MovieTime?)
+        fun moveNextActivity(selectedDate: MovieDate?, selectedTime: MovieTime?)
         fun getMovieTicket(): Ticket
-        fun showMovieIntroduce()
+        fun updateMovieDetails()
         fun updateMovieTimes()
     }
 }
