@@ -47,7 +47,6 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
             ReservationDatabase(requireActivity().applicationContext)
         )
 
-        // alarmPreference = AlarmPreference.getInstance(requireActivity().applicationContext)
         reservationAlarmManager = ReservationAlarmManager(requireContext())
     }
 
