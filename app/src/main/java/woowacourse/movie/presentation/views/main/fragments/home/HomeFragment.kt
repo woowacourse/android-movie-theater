@@ -16,7 +16,7 @@ import woowacourse.movie.presentation.views.main.fragments.home.contract.present
 import woowacourse.movie.presentation.views.main.fragments.theater.TheaterPickerDialog
 
 class HomeFragment : Fragment(R.layout.fragment_home), HomeContract.View {
-    override val presenter: HomeContract.Presenter by lazy { HomePresenter() }
+    override val presenter: HomeContract.Presenter by lazy { HomePresenter(view = this) }
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -26,7 +26,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        presenter.attach(this)
         _binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         binding.presenter = presenter
         return binding.root
@@ -44,7 +43,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeContract.View {
 
     override fun onDestroyView() {
         _binding = null
-        presenter.detach()
         super.onDestroyView()
     }
 

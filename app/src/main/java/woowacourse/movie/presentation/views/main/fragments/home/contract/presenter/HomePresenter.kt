@@ -5,7 +5,7 @@ import woowacourse.movie.presentation.model.movieitem.ListItem
 import woowacourse.movie.presentation.model.movieitem.Movie
 import woowacourse.movie.presentation.views.main.fragments.home.contract.HomeContract
 
-class HomePresenter : HomeContract.Presenter() {
+class HomePresenter(view: HomeContract.View) : HomeContract.Presenter(view) {
     private val loadedMovie = mutableSetOf<ListItem>()
 
     override fun loadAds(): List<ListItem> = Ad.provideDummy()
@@ -19,8 +19,8 @@ class HomePresenter : HomeContract.Presenter() {
 
     override fun onItemClick(item: ListItem) {
         when (item) {
-            is Movie -> requireView().showTheaterPickerScreen(item)
-            is Ad -> requireView().showAdWebSite(item)
+            is Movie -> view.showTheaterPickerScreen(item)
+            is Ad -> view.showAdWebSite(item)
         }
     }
 }
