@@ -1,5 +1,6 @@
 package woowacourse.movie.view.seatselection
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
@@ -19,10 +20,9 @@ import woowacourse.movie.R
 import woowacourse.movie.data.reservation.ReservationDbRepository
 import woowacourse.movie.data.theater.TheaterMockRepository
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
-import woowacourse.movie.domain.system.Seat
+import woowacourse.movie.domain.theater.Grade
 import woowacourse.movie.util.DECIMAL_FORMAT
 import woowacourse.movie.util.getParcelableCompat
-import woowacourse.movie.view.mapper.toUiModel
 import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.model.ReservationOptions
 import woowacourse.movie.view.model.ReservationUiModel
@@ -62,39 +62,43 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             TheaterMockRepository,
         )
 
-        presenter.fetchSeatsData(TheaterMockRepository.gradeColor)
+        presenter.fetchSeatsData(
+            mapOf(
+                Grade.B to R.color.seat_rank_b,
+                Grade.S to R.color.seat_rank_s,
+                Grade.A to R.color.seat_rank_a,
+            ),
+        )
         setNextButton()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun createSeats(seatInfo: SeatInfoUiModel) {
-        for (row in 0 until seatInfo.maxRow) {
-            val tableRow = TableRow(this).apply {
-                layoutParams = TableLayout.LayoutParams(0, 0, 1f)
-            }
-            for (col in 0 until seatInfo.maxCol) {
-                val seat = Seat(row, col)
-                tableRow.addView(createSeat(seat.toUiModel(), seatInfo.colorOfRow))
-            }
-            binding.layoutSeats.addView(tableRow)
+    override fun createRow(seatInfo: SeatInfoUiModel) {
+        val tableRow = TableRow(this).apply {
+            layoutParams = TableLayout.LayoutParams(0, 0, 1f)
         }
+        binding.layoutSeats.addView(tableRow)
     }
 
-    private fun createSeat(seatUi: SeatUiModel, colorOfRow: Map<Int, Int>): TextView =
-        TextView(this).apply {
-            text = seatUi.seatId
-            colorOfRow[seatUi.row]?.let {
-                setTextColor(getColor(it))
-            }
+    @SuppressLint("ResourceType")
+    override fun createSeat(seat: SeatUiModel) {
+        val textView = TextView(this).apply {
+            text = seat.seatId
+            println("- ${seat.color}")
+            setTextColor(resources.getColor(seat.color))
             setTypeface(null, Typeface.BOLD)
             textSize = 22F
             textAlignment = TextView.TEXT_ALIGNMENT_CENTER
             gravity = Gravity.CENTER
-            setOnClickListener { presenter.updateSeat(seatUi.row, seatUi.col) }
+            setOnClickListener { presenter.updateSeat(seat.row, seat.col) }
             background =
                 AppCompatResources.getDrawable(this@SeatSelectionActivity, R.drawable.seat_selector)
             layoutParams = TableRow.LayoutParams(0, LayoutParams.MATCH_PARENT, 1f)
         }
+        binding.layoutSeats.children.filterIsInstance<TableRow>().toList()[seat.row].addView(
+            textView,
+        )
+    }
 
     private fun setNextButton() {
         binding.btnNext.setOnClickListener {
@@ -146,7 +150,8 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     override fun setPrice(price: Int) {
-        binding.textPrice.text = getString(R.string.reservation_fee_format, DECIMAL_FORMAT.format(price))
+        binding.textPrice.text =
+            getString(R.string.reservation_fee_format, DECIMAL_FORMAT.format(price))
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

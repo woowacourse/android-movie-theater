@@ -80,14 +80,14 @@ class SeatSelectionPresenterTest {
         )
 
         val slot = slot<SeatInfoUiModel>()
-        every { view.createSeats(capture(slot)) } just runs
+        every { view.createRow(capture(slot)) } just runs
 
         presenter.fetchSeatsData(gradeColor)
 
         val expected = SeatInfoUiModel(3, 4, mapOf(0 to 1, 1 to 2, 2 to 3))
 
         assertEquals(expected, slot.captured)
-        verify { view.createSeats(expected) }
+        verify { view.createRow(expected) }
     }
 
     @Test

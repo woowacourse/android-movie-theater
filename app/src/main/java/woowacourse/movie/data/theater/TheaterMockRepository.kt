@@ -1,6 +1,5 @@
 package woowacourse.movie.data.theater
 
-import woowacourse.movie.R
 import woowacourse.movie.domain.policy.MorningPolicy
 import woowacourse.movie.domain.policy.MovieDayPolicy
 import woowacourse.movie.domain.policy.NightPolicy
@@ -30,12 +29,6 @@ object TheaterMockRepository : TheaterRepository {
         Theater("선릉 극장", seatInfo, policies),
         Theater("잠실 극장", seatInfo, policies),
         Theater("강남 극장", seatInfo, policies),
-    )
-
-    val gradeColor = mapOf(
-        Grade.B to R.color.seat_rank_b,
-        Grade.S to R.color.seat_rank_s,
-        Grade.A to R.color.seat_rank_a,
     )
 
     override fun findAll(): List<Theater> {
