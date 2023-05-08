@@ -30,7 +30,6 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_ticketing_result)
-        presenter.attach(this)
         binding.reservation = presenter.getReservation()
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
         showBackButton()
@@ -52,6 +51,7 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
     }
 
     private fun makePresenter() = TicketingResultPresenter(
+        view = this,
         reservation = intent.getParcelableCompat(RESERVATION_KEY)!!,
         fromMainScreen = intent.getBooleanExtra(FROM_KEY, true),
     )

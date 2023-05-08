@@ -10,20 +10,7 @@ interface TicketingResultContract {
         fun close()
     }
 
-    abstract class Presenter {
-        private var view: View? = null
-
-        open fun attach(view: View) {
-            this.view = view
-        }
-
-        fun detach() {
-            view = null
-        }
-
-        fun requireView(): View =
-            view ?: throw IllegalStateException("View is not attached")
-
+    abstract class Presenter(protected val view: View) {
         abstract fun onShowMainScreen()
         abstract fun getReservation(): Reservation
     }
