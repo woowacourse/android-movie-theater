@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
+import woowacourse.movie.data.theater.TheaterRepositoryImpl
 import woowacourse.movie.databinding.FragmentTheaterSelectionBinding
 import woowacourse.movie.ui.moviedetail.MovieDetailActivity
 import woowacourse.movie.uimodel.MovieListModel
@@ -14,7 +15,11 @@ import woowacourse.movie.uimodel.TheaterModel
 import woowacourse.movie.utils.MockData
 import woowacourse.movie.utils.getParcelableCompat
 
-class TheaterSelectionFragment : BottomSheetDialogFragment() {
+class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionContract.View {
+
+    override val presenter by lazy {
+        TheaterSelectionPresenter(this, TheaterRepositoryImpl())
+    }
 
     private lateinit var binding: FragmentTheaterSelectionBinding
     private lateinit var movie: MovieListModel.MovieModel
@@ -26,7 +31,8 @@ class TheaterSelectionFragment : BottomSheetDialogFragment() {
     ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_theater_selection, container, false)
-        movie = arguments?.getParcelableCompat(MovieDetailActivity.KEY_MOVIE) ?: throw IllegalArgumentException()
+        movie = arguments?.getParcelableCompat(MovieDetailActivity.KEY_MOVIE)
+            ?: throw IllegalArgumentException()
         return binding.root
     }
 
@@ -34,6 +40,12 @@ class TheaterSelectionFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val theaters = MockData.getTheaterList()
+        binding.theaterRecyclerview.adapter = TheaterListAdapter(theaters) {
+            moveToDetailActivity(theaters[it])
+        }
+    }
+
+    override fun setTheaterList(theaters: List<TheaterModel>) {
         binding.theaterRecyclerview.adapter = TheaterListAdapter(theaters) {
             moveToDetailActivity(theaters[it])
         }

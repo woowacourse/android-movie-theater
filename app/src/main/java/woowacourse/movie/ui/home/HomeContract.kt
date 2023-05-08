@@ -9,5 +9,7 @@ interface HomeContract {
         fun setMovieList(movies: List<MovieListModel>)
     }
 
-    interface Presenter
+    interface Presenter {
+        fun setMovieList()
+    }
 }

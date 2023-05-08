@@ -6,7 +6,7 @@ class HomePresenter(
     private val view: HomeContract.View,
     private val repository: MovieRepository,
 ) : HomeContract.Presenter {
-    fun setMovieList() {
+    override fun setMovieList() {
         val movies = repository.getData()
         view.setMovieList(movies)
     }
