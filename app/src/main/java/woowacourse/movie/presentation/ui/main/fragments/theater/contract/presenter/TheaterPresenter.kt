@@ -3,8 +3,8 @@ package woowacourse.movie.presentation.ui.main.fragments.theater.contract.presen
 import woowacourse.movie.domain.model.repository.TheaterRepository
 import woowacourse.movie.domain.model.theater.DomainTheater
 import woowacourse.movie.presentation.mapper.toPresentation
+import woowacourse.movie.presentation.model.movieitem.ListItem
 import woowacourse.movie.presentation.model.movieitem.Movie
-import woowacourse.movie.presentation.model.theater.PresentationTheater
 import woowacourse.movie.presentation.ui.main.fragments.theater.contract.TheaterContract
 
 class TheaterPresenter(
@@ -21,7 +21,7 @@ class TheaterPresenter(
         view.showTheaterList(newTheaters.map { it.toPresentation() })
     }
 
-    override fun handleItem(item: PresentationTheater) {
+    override fun handleItem(item: ListItem) {
         view.showTicketingScreen(movie, item)
     }
 }

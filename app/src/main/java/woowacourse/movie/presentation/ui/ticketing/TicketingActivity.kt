@@ -18,7 +18,6 @@ import woowacourse.movie.presentation.model.MovieTime
 import woowacourse.movie.presentation.model.TicketingState
 import woowacourse.movie.presentation.model.movieitem.ListItem
 import woowacourse.movie.presentation.model.movieitem.Movie
-import woowacourse.movie.presentation.model.theater.Theater
 import woowacourse.movie.presentation.ui.seatpicker.SeatPickerActivity
 import woowacourse.movie.presentation.ui.ticketing.contract.TicketingContract
 import woowacourse.movie.presentation.ui.ticketing.listener.OnSpinnerItemSelectedListener
@@ -175,7 +174,7 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnCl
         private const val THEATER_KEY = "theater_key"
         private const val TICKETING_STATE_KEY = "ticketing_state_key"
 
-        fun getIntent(context: Context, movie: ListItem, theater: Theater): Intent =
+        fun getIntent(context: Context, movie: ListItem, theater: ListItem): Intent =
             Intent(context, TicketingActivity::class.java)
                 .putExtra(MOVIE_KEY, movie)
                 .putExtra(THEATER_KEY, theater)

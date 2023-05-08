@@ -33,6 +33,7 @@
             app:layout_constraintHeight_max="250dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:onListItemClick="@{(item) -> presenter.handleItem(item)}"
             app:onAdapted="@{presenter::loadTheaterList}"
             tools:itemCount="3"
             tools:listitem="@layout/item_theater" />

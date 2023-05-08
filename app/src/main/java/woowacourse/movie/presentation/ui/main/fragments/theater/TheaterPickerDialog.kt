@@ -10,8 +10,8 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.DialogTheaterPickerBinding
 import woowacourse.movie.presentation.base.BaseFragmentDialog
 import woowacourse.movie.presentation.extensions.getParcelableCompat
+import woowacourse.movie.presentation.model.movieitem.ListItem
 import woowacourse.movie.presentation.model.movieitem.Movie
-import woowacourse.movie.presentation.model.theater.Theater
 import woowacourse.movie.presentation.ui.main.fragments.theater.adapter.TheaterListAdapter
 import woowacourse.movie.presentation.ui.main.fragments.theater.contract.TheaterContract
 import woowacourse.movie.presentation.ui.main.fragments.theater.contract.presenter.TheaterPresenter
@@ -36,11 +36,11 @@ class TheaterPickerDialog : BaseFragmentDialog<DialogTheaterPickerBinding>(), Th
         binding.rvAdapter = TheaterListAdapter()
     }
 
-    override fun showTheaterList(items: List<Theater>) {
+    override fun showTheaterList(items: List<ListItem>) {
         binding.rvAdapter?.appendAll(items)
     }
 
-    override fun showTicketingScreen(movie: Movie, theater: Theater) {
+    override fun showTicketingScreen(movie: Movie, theater: ListItem) {
         startActivity(TicketingActivity.getIntent(requireContext(), movie, theater))
         dismiss()
     }
