@@ -33,6 +33,7 @@ import woowacourse.movie.presentation.model.Ticket
 import woowacourse.movie.presentation.model.TicketPrice
 import woowacourse.movie.presentation.model.item.Movie
 import woowacourse.movie.presentation.model.item.Reservation
+import woowacourse.movie.presentation.model.item.Theater
 import woowacourse.movie.presentation.receiver.ReservationPushReceiver
 
 class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
@@ -49,6 +50,7 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
     }
     private val ticket by lazy { intent.getParcelableCompat<Ticket>(TicketingActivity.TICKET_KEY)!! }
     private val movie by lazy { intent.getParcelableCompat<Movie>(TheaterPickerDialog.MOVIE_KEY)!! }
+    private val theater by lazy { intent.getParcelableCompat<Theater>(TheaterPickerDialog.THEATER_KEY)!! }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -159,6 +161,7 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
             movieTime = movieTime,
             ticket = ticket,
             seats = presenter.getPickedSeats(),
+            theaterName = theater.theaterName,
             ticketPrice = presenter.calculateTotalPrice(movieDate, movieTime),
         )
 

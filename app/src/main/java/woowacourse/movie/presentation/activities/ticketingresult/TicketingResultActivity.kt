@@ -32,6 +32,7 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
 
         findViewById<TextView>(R.id.title_tv).text = reservation.movieTitle
         findViewById<TextView>(R.id.seats_tv).text = reservation.seats.sorted().toString()
+        findViewById<TextView>(R.id.theater_name_tv).text = reservation.theaterName
         findViewById<TextView>(R.id.date_tv).text = getString(
             R.string.book_date_time,
             movieDate.year,

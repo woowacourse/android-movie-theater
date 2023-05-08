@@ -38,9 +38,11 @@ class TicketingActivity : AppCompatActivity(), View.OnClickListener, TicketingCo
         } ?: emptyList()
     }
 
-    private val movieTimes: List<MovieTime> by lazy {
-        intent.getParcelableCompat<Theater>(THEATER_KEY)?.run { screenTimes } ?: emptyList()
+    private val theater: Theater by lazy {
+        intent.getParcelableCompat(THEATER_KEY) ?: Theater.EMPTY
     }
+
+    private val movieTimes: List<MovieTime> by lazy { theater.screenTimes }
 
     private val movieDateAdapter: ArrayAdapter<String> by lazy {
         ArrayAdapter(
@@ -131,6 +133,7 @@ class TicketingActivity : AppCompatActivity(), View.OnClickListener, TicketingCo
         val times = movieTimes.map { movieTime ->
             getString(R.string.book_time, movieTime.hour, movieTime.min)
         }
+        movieTimeAdapter.clear()
         movieTimeAdapter.addAll(times)
     }
 
@@ -177,7 +180,8 @@ class TicketingActivity : AppCompatActivity(), View.OnClickListener, TicketingCo
                 .putExtra(MOVIE_KEY, intent.getParcelableCompat<Movie>(MOVIE_KEY))
                 .putExtra(TICKET_KEY, presenter.getMovieTicket())
                 .putExtra(MOVIE_DATE_KEY, selectedDate)
-                .putExtra(MOVIE_TIME_KEY, selectedTime),
+                .putExtra(MOVIE_TIME_KEY, selectedTime)
+                .putExtra(THEATER_KEY, theater),
         )
         finish()
     }

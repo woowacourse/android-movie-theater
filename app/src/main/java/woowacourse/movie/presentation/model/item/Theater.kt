@@ -15,6 +15,8 @@ data class Theater(
 ) : ListItem, Parcelable {
 
     companion object {
+        val EMPTY = Theater("", emptyList(), emptyList())
+
         private val dummyData = listOf(
             Theater(
                 "선릉 극장",
