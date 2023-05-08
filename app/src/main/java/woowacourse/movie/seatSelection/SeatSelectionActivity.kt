@@ -17,6 +17,7 @@ import woowacourse.movie.common.model.ReservationDetailViewData
 import woowacourse.movie.common.model.ReservationViewData
 import woowacourse.movie.common.model.SeatTableViewData
 import woowacourse.movie.common.model.TheaterViewData
+import woowacourse.movie.common.system.App
 import woowacourse.movie.common.system.BroadcastAlarm.registerAlarmReceiver
 import woowacourse.movie.common.system.BroadcastAlarm.setAlarmAtDate
 import woowacourse.movie.common.system.ReservationAlarmReceiver
@@ -32,7 +33,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private lateinit var binding: ActivitySeatSelectionBinding
 
     private lateinit var seatTableLayout: SeatTableLayout
-    private lateinit var movieDao: MovieDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,9 +58,8 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             intent.extras?.getSerializableCompat<String>(TheaterViewData.THEATER_EXTRA_NAME)
                 ?: return finishWithError(ViewError.MissingExtras(TheaterViewData.THEATER_EXTRA_NAME))
 
-        movieDao = MovieDao(this)
         presenter = SeatSelectionPresenter(
-            this, movie = movie, reservationDetail = reservationDetail, movieDao = movieDao
+            this, movie = movie, reservationDetail = reservationDetail, movieDao = App.movieDao
         )
         seatTableLayout.load(savedInstanceState)
         initReserveButton(seatTableLayout, movie, reservationDetail, theaterName)

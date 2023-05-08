@@ -13,6 +13,7 @@ import woowacourse.movie.common.model.MovieScheduleViewData
 import woowacourse.movie.common.model.MovieViewData
 import woowacourse.movie.common.model.TheaterViewData
 import woowacourse.movie.common.model.TheatersViewData
+import woowacourse.movie.common.system.App
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.databinding.ItemTheaterBinding
 import woowacourse.movie.movieReservation.MovieReservationActivity
@@ -35,7 +36,7 @@ class MovieListFragment : Fragment() {
 
     private fun makeMovieRecyclerView() {
         binding.movieListRecycler.adapter =
-            MovieAdapter(MovieDao(requireContext()), ::makeTheaterDialog)
+            MovieAdapter(App.movieDao, ::makeTheaterDialog)
     }
 
     private fun makeTheaterDialog(movieViewData: MovieViewData, theaters: TheatersViewData) {
