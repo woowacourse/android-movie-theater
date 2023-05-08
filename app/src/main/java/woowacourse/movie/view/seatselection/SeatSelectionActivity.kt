@@ -55,7 +55,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             return
         }
         binding.options = options
-
         presenter = SeatSelectionPresenter(
             this,
             options,
@@ -63,19 +62,19 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             TheaterMockRepository,
         )
 
-        createRows(presenter.getSeatInfoUiModel(TheaterMockRepository.gradeColor))
+        presenter.fetchSeatsData(TheaterMockRepository.gradeColor)
         setNextButton()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    private fun createRows(seatInfoUiModel: SeatInfoUiModel) {
-        for (row in 0 until seatInfoUiModel.maxRow) {
+    override fun createSeats(seatInfo: SeatInfoUiModel) {
+        for (row in 0 until seatInfo.maxRow) {
             val tableRow = TableRow(this).apply {
                 layoutParams = TableLayout.LayoutParams(0, 0, 1f)
             }
-            for (col in 0 until seatInfoUiModel.maxCol) {
+            for (col in 0 until seatInfo.maxCol) {
                 val seat = Seat(row, col)
-                tableRow.addView(createSeat(seat.toUiModel(), seatInfoUiModel.colorOfRow))
+                tableRow.addView(createSeat(seat.toUiModel(), seatInfo.colorOfRow))
             }
             binding.layoutSeats.addView(tableRow)
         }
@@ -91,7 +90,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             textSize = 22F
             textAlignment = TextView.TEXT_ALIGNMENT_CENTER
             gravity = Gravity.CENTER
-            setOnClickListener { presenter.onSeatClick(seatUi.row, seatUi.col) }
+            setOnClickListener { presenter.updateSeat(seatUi.row, seatUi.col) }
             background =
                 AppCompatResources.getDrawable(this@SeatSelectionActivity, R.drawable.seat_selector)
             layoutParams = TableRow.LayoutParams(0, LayoutParams.MATCH_PARENT, 1f)
@@ -108,7 +107,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             setTitle(context.getString(R.string.reserve_dialog_title))
             setMessage(context.getString(R.string.reserve_dialog_detail))
             setPositiveButton(context.getString(R.string.reserve_dialog_submit)) { _, _ ->
-                presenter.onReserveClick()
+                presenter.reserve()
             }
             setNegativeButton(context.getString(R.string.reserve_dialog_cancel)) { dialog, _ ->
                 dialog.dismiss()
@@ -122,23 +121,23 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         startActivity(intent)
     }
 
-    override fun setSelectionSeat(index: Int, isClickableButton: Boolean) {
+    override fun onSeatSelectedByIndex(index: Int, isClickableButton: Boolean) {
         val textView = seats[index]
         textView.isSelected = true
         if (isClickableButton) binding.btnNext.isEnabled = true
     }
 
-    override fun setDeselectionSeat(index: Int) {
+    override fun onSeatDeselectedByIndex(index: Int) {
         val textView = seats[index]
         binding.btnNext.isEnabled = false
         textView.isSelected = false
     }
 
-    override fun maxSelectionToast() {
+    override fun showSeatMaxSelectionToast() {
         showToast(SELECT_ALL_SEAT_MESSAGE)
     }
 
-    override fun wrongInputToast() {
+    override fun showWrongInputToast() {
         showToast(SELECT_WRONG_SEAT_MESSAGE)
     }
 
