@@ -12,6 +12,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "android-movie-ticket"
+rootProject.name = "android-movie-theater"
 include(":app")
 include(":domain")
