@@ -15,12 +15,13 @@ import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.movie.MovieBookingSeatInfo
 
 class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
-    private lateinit var binding: ActivityBookCompleteBinding
+    private var _binding: ActivityBookCompleteBinding? = null
+    private val binding get() = _binding!!
     override lateinit var presenter: BookCompleteContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_book_complete)
+        _binding = DataBindingUtil.setContentView(this, R.layout.activity_book_complete)
 
         val movieBookingData = getMovieBookingSeatInfo()
         presenter = BookCompletePresenter(this)
@@ -68,6 +69,11 @@ class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
     override fun initBookTotalPrice(totalPrice: String) {
         binding.tvBookTotalPay.text =
             getString(R.string.book_total_pay, totalPrice)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     companion object {

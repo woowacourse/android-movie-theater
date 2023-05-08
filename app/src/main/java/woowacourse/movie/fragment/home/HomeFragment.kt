@@ -15,14 +15,15 @@ import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.movielist.MovieRecyclerViewAdapter
 
 class HomeFragment : Fragment(), HomeContract.View {
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
     override lateinit var presenter: HomeContract.Presenter
-    private lateinit var binding: FragmentHomeBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         return binding.root
     }
 
@@ -50,5 +51,10 @@ class HomeFragment : Fragment(), HomeContract.View {
 
     override fun startAdDetailPage(): (ad: Ad) -> Unit = { ad: Ad ->
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(ad.url)))
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

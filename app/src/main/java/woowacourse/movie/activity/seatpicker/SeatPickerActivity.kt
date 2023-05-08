@@ -37,7 +37,9 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
-    private lateinit var binding: ActivitySeatPickerBinding
+    private var _binding: ActivitySeatPickerBinding? = null
+    private val binding get() = _binding!!
+
     override lateinit var presenter: SeatPickerContract.Presenter
     private var seatGroup = SeatGroup()
     private lateinit var ticketBundle: TicketBundle
@@ -47,12 +49,11 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_picker)
+        _binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_picker)
 
         val movieBookingInfo = getMovieBookingInfo()
         presenter = SeatPickerPresenter(this, movieBookingInfo)
-        initSeat()
-        setMovieTitle(movieBookingInfo.title)
+        presenter.initPage()
         ticketBundle = TicketBundle(count = movieBookingInfo.ticketCount)
         reloadData(savedInstanceState)
 
@@ -141,29 +142,33 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
 
     private fun setPickDoneButtonClickListener() {
         binding.btSeatPickerDone.setOnClickListener {
-            AlertDialog.Builder(this).apply {
-                setTitle(getString(R.string.alert_dialog_book_confirm))
-                setMessage(getString(R.string.alert_dialog_book_re_confirm))
-                setPositiveButton(getString(R.string.alert_dialog_book_done)) { _, _ ->
-                    val movieBookingSeatInfo = getMovieBookingSeatInfo()
-                    BookHistories.items.add(movieBookingSeatInfo)
-                    bookHistory.insert(movieBookingSeatInfo)
+            presenter.onPickDoneButtonClicked()
+        }
+    }
 
-                    setMovieAlarm(movieBookingSeatInfo)
-                    startActivity(
-                        getIntent(movieBookingSeatInfo).putExtra(
-                            BundleKeys.THEATER_DATA_KEY,
-                            getTheaterData()
-                        )
+    override fun showDialog() {
+        AlertDialog.Builder(this).apply {
+            setTitle(getString(R.string.alert_dialog_book_confirm))
+            setMessage(getString(R.string.alert_dialog_book_re_confirm))
+            setPositiveButton(getString(R.string.alert_dialog_book_done)) { _, _ ->
+                val movieBookingSeatInfo = getMovieBookingSeatInfo()
+                BookHistories.items.add(movieBookingSeatInfo)
+                bookHistory.insert(movieBookingSeatInfo)
+
+                setMovieAlarm(movieBookingSeatInfo)
+                startActivity(
+                    getIntent(movieBookingSeatInfo).putExtra(
+                        BundleKeys.THEATER_DATA_KEY,
+                        getTheaterData()
                     )
-                    finish()
-                }
-                setNegativeButton(getString(R.string.alert_dialog_book_cancel)) { dialog, _ ->
-                    dialog.dismiss()
-                }
-                setCancelable(false)
-                show()
+                )
+                finish()
             }
+            setNegativeButton(getString(R.string.alert_dialog_book_cancel)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            setCancelable(false)
+            show()
         }
     }
 
@@ -261,6 +266,11 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
         outState.putString(MOVIE_TITLE, binding.tvSeatPickerMovie.text.toString())
         outState.putString(TICKET_PRICE, binding.tvSeatPickerTicketPrice.text.toString())
         outState.putSerializable(PICKED_SEAT, seatGroup.toPresentation())
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     companion object {

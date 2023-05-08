@@ -20,7 +20,8 @@ import woowacourse.movie.databinding.FragmentSettingBinding
 class SettingFragment(
     activityResultLauncher: ActivityResultLauncher<String>
 ) : Fragment(), SettingContract.View {
-    private lateinit var binding: FragmentSettingBinding
+    private var _binding: FragmentSettingBinding? = null
+    private val binding get() = _binding!!
     override lateinit var presenter: SettingContract.Presenter
     private val permissionManager by lazy {
         PermissionManagerImpl(
@@ -34,7 +35,7 @@ class SettingFragment(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
         return binding.root
     }
 
@@ -71,5 +72,10 @@ class SettingFragment(
                 isChecked = isChecked,
             )
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

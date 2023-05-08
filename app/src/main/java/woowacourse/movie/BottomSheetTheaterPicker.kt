@@ -14,13 +14,14 @@ import woowacourse.movie.movie.MovieMockData
 class BottomSheetTheaterPicker(
     private val pickedMoviePosition: Int
 ) : BottomSheetDialogFragment() {
-    private lateinit var binding: BottomSheetTheatersBinding
+    private var _binding: BottomSheetTheatersBinding? = null
+    private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding =
+        _binding =
             DataBindingUtil.inflate(inflater, R.layout.bottom_sheet_theaters, container, false)
         return binding.root
     }
@@ -44,5 +45,10 @@ class BottomSheetTheaterPicker(
         val intent = MovieDetailActivity.intent(requireContext())
         intent.putExtra(BundleKeys.MOVIE_DATA_KEY, MovieMockData.movies10000[pickedMoviePosition])
         startActivity(intent)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

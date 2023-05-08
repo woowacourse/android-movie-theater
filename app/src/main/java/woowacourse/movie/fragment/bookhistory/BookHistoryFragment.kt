@@ -17,7 +17,8 @@ import woowacourse.movie.activity.bookcomplete.BookCompleteActivity
 import woowacourse.movie.databinding.FragmentBookHistoryBinding
 
 class BookHistoryFragment : Fragment(), BookHistoryContract.View {
-    private lateinit var binding: FragmentBookHistoryBinding
+    private var _binding: FragmentBookHistoryBinding? = null
+    private val binding get() = _binding!!
     override lateinit var presenter: BookHistoryContract.Presenter
     private val bookHistory: BookingHistoryRepository by lazy {
         BookingHistoryRepository(BookHistories.getDBInstance(requireContext()))
@@ -28,7 +29,8 @@ class BookHistoryFragment : Fragment(), BookHistoryContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_book_history, container, false)
+        _binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_book_history, container, false)
         return binding.root
     }
 
@@ -75,5 +77,10 @@ class BookHistoryFragment : Fragment(), BookHistoryContract.View {
 
     private fun getBookHistoryOnClickListener() = { position: Int ->
         showDetailPage(position)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
