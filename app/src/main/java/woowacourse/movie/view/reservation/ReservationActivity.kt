@@ -118,11 +118,11 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         }
     }
 
-    override fun setPeopleCountTextView(count: Int) {
+    override fun setPeopleCountText(count: Int) {
         binding.peopleCount.text = count.toString()
     }
 
-    override fun openSeatSelectionActivity(
+    override fun toSeatSelectionScreen(
         reservationOptions: ReservationOptions,
         movie: MovieUiModel
     ) {

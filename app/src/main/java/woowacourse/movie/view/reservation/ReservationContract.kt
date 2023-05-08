@@ -12,8 +12,8 @@ interface ReservationContract {
         fun initMovieView(movie: MovieListModel.MovieUiModel)
         fun setUpDateSpinner(screeningDates: List<LocalDate>)
         fun setUpTimeSpinner(screeningTimes: List<LocalTime>, selectedPosition: Int?)
-        fun setPeopleCountTextView(count: Int)
-        fun openSeatSelectionActivity(
+        fun setPeopleCountText(count: Int)
+        fun toSeatSelectionScreen(
             reservationOptions: ReservationOptions,
             movie: MovieListModel.MovieUiModel
         )

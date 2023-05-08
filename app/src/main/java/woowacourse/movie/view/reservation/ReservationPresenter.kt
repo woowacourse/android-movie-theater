@@ -38,20 +38,20 @@ class ReservationPresenter(
     }
 
     override fun setPeopleCount() {
-        view.setPeopleCountTextView(peopleCountSaved)
+        view.setPeopleCountText(peopleCountSaved)
     }
 
     override fun increasePeopleCount() {
         if (peopleCountSaved < Reservation.MAX_PEOPLE_COUNT) {
             peopleCountSaved++
-            view.setPeopleCountTextView(peopleCountSaved)
+            view.setPeopleCountText(peopleCountSaved)
         }
     }
 
     override fun decreasePeopleCount() {
         if (peopleCountSaved > Reservation.MIN_PEOPLE_COUNT) {
             peopleCountSaved--
-            view.setPeopleCountTextView(peopleCountSaved)
+            view.setPeopleCountText(peopleCountSaved)
         }
     }
 
@@ -89,6 +89,6 @@ class ReservationPresenter(
             LocalDateTime.of(selectedScreeningDate, selectedScreeningTime),
             peopleCountSaved
         )
-        view.openSeatSelectionActivity(reservationOptions, movie)
+        view.toSeatSelectionScreen(reservationOptions, movie)
     }
 }

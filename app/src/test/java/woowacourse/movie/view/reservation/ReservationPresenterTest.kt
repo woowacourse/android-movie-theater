@@ -83,7 +83,7 @@ internal class ReservationPresenterTest {
     @Test
     fun `예매 인원을 하나 증가시키면 인원은 2명이다`() {
         val countSlot = slot<Int>()
-        every { view.setPeopleCountTextView(capture(countSlot)) } returns Unit
+        every { view.setPeopleCountText(capture(countSlot)) } returns Unit
 
         reservationPresenter.increasePeopleCount()
 
@@ -94,7 +94,7 @@ internal class ReservationPresenterTest {
     fun `예매 인원 초기값 1에서 인원을 감소시키면 인원수 뷰가 변경되지 않는다`() {
         reservationPresenter.decreasePeopleCount()
 
-        verify(exactly = 0) { view.setPeopleCountTextView(any()) }
+        verify(exactly = 0) { view.setPeopleCountText(any()) }
     }
 
     private fun fakeMovie() = Movie(
