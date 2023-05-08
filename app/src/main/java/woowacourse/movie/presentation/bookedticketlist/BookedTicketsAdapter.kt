@@ -22,7 +22,7 @@ class BookedTicketsAdapter(
         }
         bookedTicketBinding = BookedTicketItemBinding.inflate(inflater)
 
-        return BookedTicketViewHolder(bookedTicketBinding, getMovieModel, clickListener, ::getItem)
+        return BookedTicketViewHolder(bookedTicketBinding, getMovieModel, clickListener)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

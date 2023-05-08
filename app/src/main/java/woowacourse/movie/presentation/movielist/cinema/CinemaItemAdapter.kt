@@ -25,8 +25,5 @@ class CinemaItemAdapter(
         holder.bind(cinema)
     }
 
-    override fun getItemCount(): Int {
-        val size = cinemaModels.size
-        return size
-    }
+    override fun getItemCount() = cinemaModels.size
 }
