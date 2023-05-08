@@ -7,12 +7,11 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
 import android.widget.Spinner
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityTicketingBinding
 import woowacourse.movie.domain.model.movie.DomainMovieDate
 import woowacourse.movie.presentation.activities.main.fragments.theaterPicker.TheaterPickerDialog.Companion.MOVIE_KEY
 import woowacourse.movie.presentation.activities.main.fragments.theaterPicker.TheaterPickerDialog.Companion.THEATER_KEY
@@ -28,6 +27,7 @@ import woowacourse.movie.presentation.model.item.Theater
 
 class TicketingActivity : AppCompatActivity(), View.OnClickListener, TicketingContract.View {
     override lateinit var presenter: TicketingPresenter
+    private lateinit var binding: ActivityTicketingBinding
 
     private var selectedDate: MovieDate? = null
     private var selectedTime: MovieTime? = null
@@ -54,12 +54,12 @@ class TicketingActivity : AppCompatActivity(), View.OnClickListener, TicketingCo
     private val movieTimeAdapter: ArrayAdapter<String> by lazy {
         ArrayAdapter(this, android.R.layout.simple_spinner_item, mutableListOf())
     }
-    private val movieTimeSpinner: Spinner by lazy { findViewById(R.id.movie_time_spinner) }
-    private val movieDateSpinner: Spinner by lazy { findViewById(R.id.movie_date_spinner) }
+    private val movieTimeSpinner: Spinner by lazy { binding.movieTimeSpinner }
+    private val movieDateSpinner: Spinner by lazy { binding.movieDateSpinner }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_ticketing)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_ticketing)
 
         initView()
         restoreState(savedInstanceState)
@@ -77,9 +77,9 @@ class TicketingActivity : AppCompatActivity(), View.OnClickListener, TicketingCo
     }
 
     private fun initViewClickListener() {
-        findViewById<Button>(R.id.minus_btn).setOnClickListener(this@TicketingActivity)
-        findViewById<Button>(R.id.plus_btn).setOnClickListener(this@TicketingActivity)
-        findViewById<Button>(R.id.ticketing_btn).setOnClickListener(this@TicketingActivity)
+        binding.minusBtn.setOnClickListener(this@TicketingActivity)
+        binding.plusBtn.setOnClickListener(this@TicketingActivity)
+        binding.ticketingBtn.setOnClickListener(this@TicketingActivity)
     }
 
     private fun initSpinnerConfig() {
@@ -201,21 +201,21 @@ class TicketingActivity : AppCompatActivity(), View.OnClickListener, TicketingCo
     }
 
     override fun setTicketCountText(movieTicket: Ticket) {
-        findViewById<TextView>(R.id.ticket_count_tv).text = movieTicket.count.toString()
+        binding.ticketCountTv.text = movieTicket.count.toString()
     }
 
     override fun setMovieData(movie: Movie) {
         with(movie) {
-            findViewById<ImageView>(R.id.poster_iv).setImageResource(thumbnail)
-            findViewById<TextView>(R.id.title_tv).text = title
-            findViewById<TextView>(R.id.date_tv).text = getString(
+            binding.posterIv.setImageResource(thumbnail)
+            binding.titleTv.text = title
+            binding.dateTv.text = getString(
                 R.string.movie_release_date,
                 startDate.formattedDate,
                 endDate.formattedDate,
             )
-            findViewById<TextView>(R.id.running_time_tv).text =
+            binding.runningTimeTv.text =
                 getString(R.string.movie_running_time, runningTime)
-            findViewById<TextView>(R.id.introduce_tv).text = introduce
+            binding.introduceTv.text = introduce
         }
     }
 
