@@ -17,9 +17,9 @@ import woowacourse.movie.view.moviemain.movielist.MovieListFragment
 import woowacourse.movie.view.moviemain.reservationlist.ReservationListFragment
 import woowacourse.movie.view.moviemain.setting.SettingFragment
 
-class MovieMainActivity : AppCompatActivity(), MovieMainContract.View {
-    lateinit var binding: ActivityMovieMainBinding
-    override lateinit var presenter: MovieMainContract.Presenter
+class MovieMainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMovieMainBinding
+    private lateinit var presenter: MovieMainContract.Presenter
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission(),
@@ -43,14 +43,14 @@ class MovieMainActivity : AppCompatActivity(), MovieMainContract.View {
         requestNotificationPermission()
     }
 
-    override fun setUpBottomNavigation() {
+    private fun setUpBottomNavigation() {
         binding.navigationView.setOnItemSelectedListener { item ->
             setMenuItemClickListener(item)
         }
         binding.navigationView.selectedItemId = R.id.action_home
     }
 
-    override fun requestNotificationPermission() {
+    private fun requestNotificationPermission() {
         val permissionsRequired = mutableListOf<String>()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) permissionsRequired.add(Manifest.permission.POST_NOTIFICATIONS)
         this.requestRequiredPermissions(permissionsRequired, requestPermissionLauncher::launch)
