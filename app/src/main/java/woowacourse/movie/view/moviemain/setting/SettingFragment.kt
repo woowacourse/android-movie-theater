@@ -45,7 +45,7 @@ class SettingFragment : Fragment(), SettingContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         alarmController = AlarmController(requireContext())
-        presenter.initToggle()
+        presenter.initState()
     }
 
     override fun setToggle(isOn: Boolean) {

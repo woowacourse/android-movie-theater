@@ -12,7 +12,7 @@ interface SettingContract {
     }
 
     interface Presenter {
-        fun initToggle()
+        fun initState()
         fun changeAlarmState(isOn: Boolean)
     }
 }

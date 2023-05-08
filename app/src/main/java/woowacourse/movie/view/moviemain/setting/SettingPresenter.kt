@@ -10,7 +10,7 @@ class SettingPresenter(
     private val reservationRepository: ReservationRepository
 ) : SettingContract.Presenter {
 
-    override fun initToggle() {
+    override fun initState() {
         view.setToggle(settingManager.getIsAlarmSetting())
     }
 
