@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.TableRow
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.woowacourse.data.database.reservation.ReservationDatabase
 import com.woowacourse.data.database.reservation.history.dao.ReservationDao
 import com.woowacourse.data.datasource.history.local.LocalHistoryDataSource
 import com.woowacourse.data.repository.history.local.LocalHistoryRepository
@@ -155,7 +156,7 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener, SeatPicker
         view = this,
         ticketingState = intent.getParcelableCompat(TICKETING_STATE_KEY)!!,
         historyRepository = LocalHistoryRepository(
-            LocalHistoryDataSource(ReservationDao(this))
+            LocalHistoryDataSource(ReservationDao(ReservationDatabase(this)))
         ),
     )
 

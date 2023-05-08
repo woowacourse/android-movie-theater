@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.woowacourse.data.database.reservation.ReservationDatabase
 import com.woowacourse.data.database.reservation.history.dao.ReservationDao
 import com.woowacourse.data.datasource.history.local.LocalHistoryDataSource
 import com.woowacourse.data.repository.history.local.LocalHistoryRepository
@@ -21,7 +22,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.Vie
         HistoryPresenter(
             view = this,
             historyRepository = LocalHistoryRepository(
-                LocalHistoryDataSource(ReservationDao(requireContext()))
+                LocalHistoryDataSource(ReservationDao(ReservationDatabase(requireContext())))
             )
         )
     }

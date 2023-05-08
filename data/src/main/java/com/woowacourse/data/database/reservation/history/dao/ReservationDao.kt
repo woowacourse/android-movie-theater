@@ -2,7 +2,6 @@ package com.woowacourse.data.database.reservation.history.dao
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
-import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.provider.BaseColumns._ID
@@ -26,8 +25,7 @@ import com.woowacourse.data.model.Seat
 import com.woowacourse.data.model.Ticket
 import com.woowacourse.data.model.TicketPrice
 
-class ReservationDao(context: Context) {
-    private val database: ReservationDatabase = ReservationDatabase(context)
+class ReservationDao(private val database: ReservationDatabase) {
 
     fun getAll(): List<DataReservation> {
         database.readableDatabase.use { db ->
