@@ -7,11 +7,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import woowacourse.app.data.movie.MovieDao
 import woowacourse.app.data.pushAlarm.PushAlarmDataSource
 import woowacourse.app.data.pushAlarm.SettingSharedPreference
+import woowacourse.app.data.reservation.ReservationDao
+import woowacourse.app.data.reservation.ReservationRepositoryImpl
+import woowacourse.app.data.reservation.SeatDao
+import woowacourse.app.presentation.model.Mapper.toUiModel
 import woowacourse.app.presentation.model.ReservationUiModel
 import woowacourse.app.presentation.ui.completed.CompletedActivity
 import woowacourse.app.presentation.util.getParcelable
+import woowacourse.domain.reservation.ReservationRepository
 import woowacourse.movie.R
 
 class AlarmReceiver : BroadcastReceiver() {
@@ -19,6 +25,18 @@ class AlarmReceiver : BroadcastReceiver() {
     private lateinit var notificationManager: NotificationManager
 
     override fun onReceive(context: Context, intent: Intent) {
+        if (intent.action == "android.intent.action.BOOT_COMPLETED") {
+            val reservationRepository: ReservationRepository =
+                ReservationRepositoryImpl(
+                    ReservationDao(context),
+                    SeatDao(context),
+                    MovieDao(context),
+                )
+            val reservations = reservationRepository.getReservations().map { it.toUiModel() }
+            notificationManager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            reservations.forEach { createNotification(context, it) }
+        }
         if (!isAvailableReceivingAlarm(context)) return
         notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

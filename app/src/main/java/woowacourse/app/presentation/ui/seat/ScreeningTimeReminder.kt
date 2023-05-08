@@ -5,7 +5,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.os.Build
 import woowacourse.app.presentation.model.ReservationUiModel
-import java.time.LocalDateTime
 import java.util.TimeZone
 
 class ScreeningTimeReminder(
@@ -42,15 +41,9 @@ class ScreeningTimeReminder(
                 .toInstant()
                 .toEpochMilli()
 
-        val testTime = LocalDateTime.now()
-            .plusSeconds(10)
-            .atZone(TimeZone.getDefault().toZoneId())
-            .toInstant()
-            .toEpochMilli()
-
         alarmManager.set(
             AlarmManager.RTC_WAKEUP,
-            testTime,
+            screeningDateTime,
             alarmIntent,
         )
     }
