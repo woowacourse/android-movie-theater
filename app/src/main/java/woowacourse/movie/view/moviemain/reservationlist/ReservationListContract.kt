@@ -6,11 +6,11 @@ interface ReservationListContract {
     interface View {
         val presenter: Presenter
         fun showReservationList(reservations: List<ReservationUiModel>)
-        fun openReservationCompletedActivity(reservation: ReservationUiModel)
+        fun toReservationCompletedScreen(reservation: ReservationUiModel)
     }
 
     interface Presenter {
         fun loadReservationList()
-        fun onReservationCompleted(reservation: ReservationUiModel)
+        fun finishReservation(reservation: ReservationUiModel)
     }
 }

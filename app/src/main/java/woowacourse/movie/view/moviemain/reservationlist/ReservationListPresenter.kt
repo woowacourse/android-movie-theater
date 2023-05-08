@@ -14,7 +14,7 @@ class ReservationListPresenter(
         view.showReservationList(reservations)
     }
 
-    override fun onReservationCompleted(reservation: ReservationUiModel) {
-        view.openReservationCompletedActivity(reservation)
+    override fun finishReservation(reservation: ReservationUiModel) {
+        view.toReservationCompletedScreen(reservation)
     }
 }

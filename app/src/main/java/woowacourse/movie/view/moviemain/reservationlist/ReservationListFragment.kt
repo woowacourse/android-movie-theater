@@ -24,11 +24,11 @@ class ReservationListFragment :
         binding.recyclerview.adapter = ReservationListAdapter(
             reservations
         ) {
-            presenter.onReservationCompleted(it)
+            presenter.finishReservation(it)
         }
     }
 
-    override fun openReservationCompletedActivity(reservation: ReservationUiModel) {
+    override fun toReservationCompletedScreen(reservation: ReservationUiModel) {
         val intent = ReservationCompletedActivity.newIntent(requireContext(), reservation)
         startActivity(intent)
     }
