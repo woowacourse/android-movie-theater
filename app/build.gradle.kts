@@ -49,7 +49,6 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.fragment:fragment-ktx:1.4.0")
     implementation(project(":domain"))
-    implementation(project(":data"))
     testImplementation("junit:junit:4.13.2")
     testImplementation("io.mockk:mockk-android:1.13.5")
     testImplementation("io.mockk:mockk-agent:1.13.5")
