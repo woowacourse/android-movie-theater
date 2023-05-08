@@ -36,8 +36,6 @@ object TheaterMockRepository : TheaterRepository {
     }
 
     override fun findTheater(name: String): Theater {
-        val theater = theaters.find { it.name == name }
-        requireNotNull(theater) { "존재하지 않는 상영관입니다." }
-        return theater
+        return requireNotNull(theaters.find { it.name == name }) { "존재하지 않는 상영관입니다." }
     }
 }
