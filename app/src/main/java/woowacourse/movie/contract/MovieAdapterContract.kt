@@ -8,13 +8,13 @@ import woowacourse.movie.data.TheatersViewData
 interface MovieAdapterContract {
     interface View {
         val presenter: Presenter
-        val onClickItem: (MovieViewData, TheatersViewData) -> Unit
+        fun onClickItem(movieViewData: MovieViewData, theatersViewData: TheatersViewData)
         fun setAdapterData(movies: MovieListItemsViewData)
     }
 
     interface Presenter {
         val view: View
         fun setMovieList()
-        fun onClickItem(movie: MovieListItemViewData)
+        fun makeTheaterDialog(movie: MovieListItemViewData)
     }
 }

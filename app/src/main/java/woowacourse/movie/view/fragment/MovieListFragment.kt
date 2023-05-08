@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieListViewType
 import woowacourse.movie.data.MovieScheduleViewData
 import woowacourse.movie.data.MovieViewData
 import woowacourse.movie.data.TheaterViewData
@@ -35,19 +34,14 @@ class MovieListFragment : Fragment() {
     }
 
     private fun makeMovieRecyclerView() {
-        binding.movieListRecycler.adapter = MovieAdapter(::onClickItem).also { it.presenter.setMovieList() }
+        binding.movieListRecycler.adapter =
+            MovieAdapter(::makeTheaterDialog).also { it.presenter.setMovieList() }
     }
 
-    private fun onClickItem(movieViewData: MovieViewData, theatersViewData: TheatersViewData) {
-        when (movieViewData.viewType) {
-            MovieListViewType.MOVIE -> createTheaterDialog(movieViewData, theatersViewData)
-            MovieListViewType.ADVERTISEMENT -> Unit
-        }
-    }
-
-    private fun createTheaterDialog(movieViewData: MovieViewData, theaters: TheatersViewData) {
+    private fun makeTheaterDialog(movieViewData: MovieViewData, theaters: TheatersViewData) {
         val bottomSheetDialog = BottomSheetDialog(requireContext())
-        val bottomSheetView = layoutInflater.inflate(R.layout.bottom_sheet_theater, binding.root as ViewGroup, false)
+        val bottomSheetView =
+            layoutInflater.inflate(R.layout.bottom_sheet_theater, binding.root as ViewGroup, false)
         theaters.value.forEach { theater ->
             val item = makeTheaterItem(movieViewData, theater, bottomSheetView as ViewGroup)
             bottomSheetView.addView(item)
@@ -63,7 +57,12 @@ class MovieListFragment : Fragment() {
     ): View? {
         val movieSchedule =
             theater.movieSchedules.find { it.movie.title == movieViewData.title } ?: return null
-        val item = DataBindingUtil.inflate<ItemTheaterBinding>(layoutInflater, R.layout.item_theater, root, false)
+        val item = DataBindingUtil.inflate<ItemTheaterBinding>(
+            layoutInflater,
+            R.layout.item_theater,
+            root,
+            false
+        )
         item.itemTheaterName.text = theater.name
         item.itemTheaterSchedule.text = getString(R.string.schedule_count, movieSchedule.times.size)
         item.root.setOnClickListener {

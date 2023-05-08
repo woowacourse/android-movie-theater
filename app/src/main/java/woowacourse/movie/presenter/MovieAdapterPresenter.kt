@@ -29,7 +29,7 @@ class MovieAdapterPresenter(
         view.setAdapterData(movies)
     }
 
-    override fun onClickItem(movie: MovieListItemViewData) {
+    override fun makeTheaterDialog(movie: MovieListItemViewData) {
         val movie = movie as? MovieViewData ?: return
         val theaters = requestTheaters()
         val movieTheaters = theaters.findTheaterByMovie(movie.toDomain()).toView()

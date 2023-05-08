@@ -1,6 +1,7 @@
 package woowacourse.movie.view.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -14,11 +15,17 @@ import woowacourse.movie.presenter.MovieAdapterPresenter
 import woowacourse.movie.view.viewholder.AdvertisementViewHolder
 import woowacourse.movie.view.viewholder.MovieInfoViewHolder
 
-class MovieAdapter(override val onClickItem: (MovieViewData, TheatersViewData) -> Unit) :
+class MovieAdapter(val createTheaterDialog: (MovieViewData, TheatersViewData) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), MovieAdapterContract.View {
     private var movieListItemsViewData: MovieListItemsViewData = MovieListItemsViewData(emptyList())
 
     override val presenter: MovieAdapterContract.Presenter = MovieAdapterPresenter(this)
+    override fun onClickItem(movieViewData: MovieViewData, theatersViewData: TheatersViewData) {
+        when (movieViewData.viewType) {
+            MovieListViewType.MOVIE -> createTheaterDialog(movieViewData, theatersViewData)
+            MovieListViewType.ADVERTISEMENT -> Unit
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (MovieListViewType.values()[viewType]) {
@@ -27,7 +34,7 @@ class MovieAdapter(override val onClickItem: (MovieViewData, TheatersViewData) -
                     LayoutInflater.from(parent.context), R.layout.item_movie, parent, false
                 )
             ) {
-                presenter.onClickItem(movieListItemsViewData.value[it])
+                presenter.makeTheaterDialog(movieListItemsViewData.value[it])
             }
 
             MovieListViewType.ADVERTISEMENT -> AdvertisementViewHolder(
@@ -35,7 +42,7 @@ class MovieAdapter(override val onClickItem: (MovieViewData, TheatersViewData) -
                     LayoutInflater.from(parent.context), R.layout.item_advertisement, parent, false
                 )
             ) {
-                presenter.onClickItem(movieListItemsViewData.value[it])
+                presenter.makeTheaterDialog(movieListItemsViewData.value[it])
             }
         }
     }
