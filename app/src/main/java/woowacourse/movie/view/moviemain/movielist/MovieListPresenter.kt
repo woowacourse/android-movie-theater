@@ -43,20 +43,20 @@ class MovieListPresenter(
         }
     }
 
-    override fun onItemClick(item: MovieListModel) {
+    override fun decideNextAction(item: MovieListModel) {
         when (item) {
             is MovieListModel.MovieUiModel -> {
                 loadTheaterList(item)
             }
             is MovieListModel.MovieAdModel -> {
-                view.openAdPage(item)
+                view.toAdScreen(item)
             }
         }
     }
 
     override fun loadTheaterList(movie: MovieListModel.MovieUiModel) {
         val theaters = theaterRepository.findTheaterByMovieId(movie.id)
-        view.openTheaterBottomSheet(theaters.map { it.toMovieTheater(movie.id) }, movie)
+        view.showTheaterList(theaters.map { it.toMovieTheater(movie.id) }, movie)
     }
 
     companion object {

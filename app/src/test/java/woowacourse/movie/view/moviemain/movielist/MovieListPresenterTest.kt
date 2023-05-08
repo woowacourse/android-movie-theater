@@ -53,25 +53,25 @@ class MovieListPresenterTest {
         val movie = fakeMovie().toUiModel()
         every { theaterRepository.findTheaterByMovieId(movie.id) } returns fakeTheaters()
         every {
-            view.openTheaterBottomSheet(
+            view.showTheaterList(
                 fakeTheaters().map { it.toMovieTheater(movie.id) },
                 movie
             )
         } returns Unit
 
-        movieListPresenter.onItemClick(movie)
+        movieListPresenter.decideNextAction(movie)
 
-        verify { view.openTheaterBottomSheet(any(), any()) }
+        verify { view.showTheaterList(any(), any()) }
     }
 
     @Test
     fun `광고가 클릭되면 광고 화면을 연다`() {
         val ad = fakeAd()
-        every { view.openAdPage(ad) } returns Unit
+        every { view.toAdScreen(ad) } returns Unit
 
-        movieListPresenter.onItemClick(ad)
+        movieListPresenter.decideNextAction(ad)
 
-        verify { view.openAdPage(ad) }
+        verify { view.toAdScreen(ad) }
     }
 
     private fun fakeMovies() = listOf<Movie>(

@@ -38,12 +38,12 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContr
     override fun showMovieList(dataList: List<MovieListModel>) {
         val movieAdapter = MovieListAdapter(
             dataList = dataList
-        ) { item -> presenter.onItemClick(item) }
+        ) { item -> presenter.decideNextAction(item) }
 
         binding.movieRecyclerview.adapter = movieAdapter
     }
 
-    override fun openReservationActivity(
+    override fun toReservationScreen(
         item: MovieListModel.MovieUiModel,
         movieTheater: MovieTheater
     ) {
@@ -51,19 +51,19 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContr
         startActivity(intent)
     }
 
-    override fun openAdPage(item: MovieListModel.MovieAdModel) {
+    override fun toAdScreen(item: MovieListModel.MovieAdModel) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
         startActivity(intent)
     }
 
-    override fun openTheaterBottomSheet(
+    override fun showTheaterList(
         theaters: List<MovieTheater>,
         movie: MovieListModel.MovieUiModel
     ) {
         val movieTheaterAdapter = MovieTheaterAdapter(
             theaters
         ) { item ->
-            openReservationActivity(movie, item)
+            toReservationScreen(movie, item)
         }
         val movieTheaterDialog = MovieTheaterDialog(movieTheaterAdapter)
         movieTheaterDialog.show(parentFragmentManager, MOVIE_THEATER_DIALOG_TAG)

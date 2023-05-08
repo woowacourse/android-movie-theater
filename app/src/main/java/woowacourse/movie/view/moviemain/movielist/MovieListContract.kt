@@ -7,14 +7,14 @@ interface MovieListContract {
     interface View {
         var presenter: Presenter
         fun showMovieList(dataList: List<MovieListModel>)
-        fun openTheaterBottomSheet(theaters: List<MovieTheater>, movie: MovieListModel.MovieUiModel)
-        fun openReservationActivity(item: MovieListModel.MovieUiModel, movieTheater: MovieTheater)
-        fun openAdPage(item: MovieListModel.MovieAdModel)
+        fun showTheaterList(theaters: List<MovieTheater>, movie: MovieListModel.MovieUiModel)
+        fun toReservationScreen(item: MovieListModel.MovieUiModel, movieTheater: MovieTheater)
+        fun toAdScreen(item: MovieListModel.MovieAdModel)
     }
 
     interface Presenter {
         fun loadMovieList()
         fun loadTheaterList(movie: MovieListModel.MovieUiModel)
-        fun onItemClick(item: MovieListModel)
+        fun decideNextAction(item: MovieListModel)
     }
 }
