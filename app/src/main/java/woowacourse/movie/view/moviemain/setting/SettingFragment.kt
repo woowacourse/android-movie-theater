@@ -10,7 +10,10 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.switchmaterial.SwitchMaterial
 import woowacourse.movie.AlarmPreference
 import woowacourse.movie.R
+import woowacourse.movie.data.MovieMockRepository
 import woowacourse.movie.data.ReservationDatabase
+import woowacourse.movie.data.SeatDatabase
+import woowacourse.movie.data.dbhelper.ReservationDbHelper
 import woowacourse.movie.util.isGranted
 import woowacourse.movie.util.requestRequiredPermissions
 import woowacourse.movie.view.alarm.ReservationAlarmManager
@@ -41,10 +44,16 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val reservationDb = ReservationDatabase(
+            ReservationDbHelper(requireContext()).writableDatabase,
+            SeatDatabase(requireContext()),
+            MovieMockRepository
+        )
+
         presenter = SettingPresenter(
             this,
             AlarmPreference.getInstance(requireActivity().applicationContext),
-            ReservationDatabase(requireActivity().applicationContext)
+            reservationDb
         )
 
         reservationAlarmManager = ReservationAlarmManager(requireContext())

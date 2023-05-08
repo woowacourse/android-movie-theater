@@ -1,10 +1,8 @@
 package woowacourse.movie.data
 
 import android.content.ContentValues
-import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import woowacourse.movie.data.dbhelper.ReservationDbHelper
 import woowacourse.movie.data.model.ReservationEntity
 import woowacourse.movie.data.model.ReservationEntity.Companion.FEE_COLUMN
 import woowacourse.movie.data.model.ReservationEntity.Companion.ID_COLUMN
@@ -18,16 +16,10 @@ import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.SeatRepository
 
 class ReservationDatabase(
-    val context: Context
+    private val reservationDb: SQLiteDatabase,
+    private val seatRepository: SeatRepository,
+    private val movieRepository: MovieRepository
 ) : ReservationRepository {
-
-    private val db: SQLiteDatabase by lazy {
-        ReservationDbHelper(context).writableDatabase
-    }
-    private val seatRepository: SeatRepository by lazy {
-        SeatDatabase(context)
-    }
-    private val movieRepository: MovieRepository = MovieMockRepository
 
     override fun add(reservation: Reservation): Int {
         val values = ContentValues()
@@ -37,7 +29,7 @@ class ReservationDatabase(
             put(SCREENING_DATETIME_COLUMN, reservation.screeningDateTime.toString())
             put(FEE_COLUMN, reservation.finalReservationFee.amount)
         }
-        return db.insert(TABLE_NAME, null, values).toInt()
+        return reservationDb.insert(TABLE_NAME, null, values).toInt()
     }
 
     override fun findAll(): List<Reservation> {
@@ -76,7 +68,7 @@ class ReservationDatabase(
     }
 
     private fun getReservationCursor(): Cursor {
-        return db.query(
+        return reservationDb.query(
             TABLE_NAME,
             arrayOf(
                 ID_COLUMN,

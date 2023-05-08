@@ -15,8 +15,10 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.core.view.children
 import woowacourse.movie.AlarmPreference
 import woowacourse.movie.R
+import woowacourse.movie.data.MovieMockRepository
 import woowacourse.movie.data.ReservationDatabase
 import woowacourse.movie.data.SeatDatabase
+import woowacourse.movie.data.dbhelper.ReservationDbHelper
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.view.alarm.ReservationAlarmManager
@@ -38,9 +40,15 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         binding = ActivitySeatSelectionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val reservationDb = ReservationDatabase(
+            ReservationDbHelper(this).writableDatabase,
+            SeatDatabase(this),
+            MovieMockRepository
+        )
+
         presenter = SeatSelectionPresenter(
             this,
-            ReservationDatabase(applicationContext),
+            reservationDb,
             SeatDatabase(applicationContext)
         )
 

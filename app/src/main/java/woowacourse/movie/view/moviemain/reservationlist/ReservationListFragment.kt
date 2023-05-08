@@ -6,7 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.data.MovieMockRepository
 import woowacourse.movie.data.ReservationDatabase
+import woowacourse.movie.data.SeatDatabase
+import woowacourse.movie.data.dbhelper.ReservationDbHelper
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.view.model.ReservationUiModel
 import woowacourse.movie.view.reservationcompleted.ReservationCompletedActivity
@@ -44,7 +47,11 @@ class ReservationListFragment :
 
         presenter = ReservationListPresenter(
             this,
-            ReservationDatabase(requireActivity().applicationContext)
+            ReservationDatabase(
+                ReservationDbHelper(requireContext()).writableDatabase,
+                SeatDatabase(requireContext()),
+                MovieMockRepository
+            )
         )
         presenter.loadReservationList()
     }
