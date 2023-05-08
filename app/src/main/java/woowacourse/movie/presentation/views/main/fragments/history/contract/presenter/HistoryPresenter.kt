@@ -8,13 +8,14 @@ import woowacourse.movie.presentation.model.Reservation
 import woowacourse.movie.presentation.views.main.fragments.history.contract.HistoryContract
 
 class HistoryPresenter(
+    view: HistoryContract.View,
     private val historyRepository: HistoryRepository,
-) : HistoryContract.Presenter() {
+) : HistoryContract.Presenter(view) {
     private val loadedHistories = mutableSetOf<DomainReservation>()
 
     override fun addHistory(item: Reservation) {
         loadedHistories.add(item.toDomain())
-        requireView().showMoreHistory(item)
+        view.showMoreHistory(item)
     }
 
     override fun loadHistories(): List<Reservation> {

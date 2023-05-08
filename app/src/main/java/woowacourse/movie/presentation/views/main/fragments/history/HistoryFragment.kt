@@ -19,11 +19,13 @@ import woowacourse.movie.presentation.views.main.fragments.history.recyclerview.
 class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.View {
     override val presenter: HistoryContract.Presenter by lazy {
         HistoryPresenter(
+            view = this,
             historyRepository = LocalHistoryRepository(
                 LocalHistoryDataSource(ReservationDao(requireContext()))
             )
         )
     }
+
     private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
 
@@ -32,7 +34,6 @@ class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.Vie
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        presenter.attach(this)
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
         binding.presenter = presenter
         return binding.root
@@ -48,7 +49,6 @@ class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.Vie
 
     override fun onDestroyView() {
         _binding = null
-        presenter.detach()
         super.onDestroyView()
     }
 
