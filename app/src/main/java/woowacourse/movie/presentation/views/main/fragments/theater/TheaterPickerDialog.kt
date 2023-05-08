@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.woowacourse.data.database.theater.dao.TheaterDao
+import com.woowacourse.data.database.theater.dao.TheaterLocalDBDao
 import com.woowacourse.data.datasource.theater.local.LocalTheaterDataSource
 import com.woowacourse.data.repository.theater.local.LocalTheaterRepository
 import woowacourse.movie.databinding.DialogTheaterPickerBinding
@@ -64,7 +64,7 @@ class TheaterPickerDialog : BottomSheetDialogFragment(), TheaterContract.View {
             view = this,
             movie = movie,
             theaterRepository = LocalTheaterRepository(
-                LocalTheaterDataSource(TheaterDao(requireContext()))
+                LocalTheaterDataSource(TheaterLocalDBDao(requireContext()))
             )
         )
     }
