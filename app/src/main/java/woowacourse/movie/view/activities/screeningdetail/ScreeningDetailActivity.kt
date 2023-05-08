@@ -2,18 +2,18 @@ package woowacourse.movie.view.activities.screeningdetail
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import woowacourse.movie.R
+import woowacourse.movie.view.activities.common.BackButtonActivity
 import woowacourse.movie.view.activities.seatselection.SeatSelectionActivity
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
-class ScreeningDetailActivity : AppCompatActivity(), ScreeningDetailContract.View {
+class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.View {
 
     private lateinit var presenter: ScreeningDetailContract.Presenter
     private var timeSpinnerPosition: Int = 0

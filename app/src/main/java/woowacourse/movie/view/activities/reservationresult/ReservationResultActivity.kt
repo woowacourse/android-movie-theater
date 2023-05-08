@@ -2,14 +2,14 @@ package woowacourse.movie.view.activities.reservationresult
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import woowacourse.movie.R
+import woowacourse.movie.view.activities.common.BackButtonActivity
 import java.text.DecimalFormat
 import java.time.format.DateTimeFormatter
 
-class ReservationResultActivity : AppCompatActivity(), ReservationResultContract.View {
+class ReservationResultActivity : BackButtonActivity(), ReservationResultContract.View {
 
     private lateinit var presenter: ReservationResultContract.Presenter
 

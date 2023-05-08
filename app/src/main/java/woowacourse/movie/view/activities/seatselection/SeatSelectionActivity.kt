@@ -6,7 +6,6 @@ import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TableLayout
@@ -17,6 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.Toolbar
 import woowacourse.movie.R
+import woowacourse.movie.view.activities.common.BackButtonActivity
 import woowacourse.movie.view.activities.reservationresult.ReservationResultActivity
 import woowacourse.movie.view.broadcast.AlarmReceiver
 import woowacourse.movie.view.broadcast.AlarmReceiver.Companion.RESERVATION_ID
@@ -25,7 +25,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import kotlin.properties.Delegates
 
-class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
+class SeatSelectionActivity : BackButtonActivity(), SeatSelectionContract.View {
 
     private lateinit var presenter: SeatSelectionContract.Presenter
 
