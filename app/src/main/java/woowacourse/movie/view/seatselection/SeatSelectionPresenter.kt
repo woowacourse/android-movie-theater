@@ -32,7 +32,6 @@ class SeatSelectionPresenter(
             view.createRow(seatUiInfo)
             for (col in 0 until seatUiInfo.maxCol) {
                 val seat = Seat(row, col).toUiModel(seatUiInfo.colorOfRow[row] ?: 0)
-                println(seatUiInfo.colorOfRow[row])
                 view.createSeat(seat)
             }
         }

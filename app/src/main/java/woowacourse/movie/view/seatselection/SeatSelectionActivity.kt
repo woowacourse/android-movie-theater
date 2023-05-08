@@ -1,6 +1,5 @@
 package woowacourse.movie.view.seatselection
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
@@ -15,6 +14,7 @@ import android.widget.Toolbar.LayoutParams
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.data.reservation.ReservationDbRepository
@@ -80,12 +80,10 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         binding.layoutSeats.addView(tableRow)
     }
 
-    @SuppressLint("ResourceType")
     override fun createSeat(seat: SeatUiModel) {
         val textView = TextView(this).apply {
             text = seat.seatId
-            println("- ${seat.color}")
-            setTextColor(resources.getColor(seat.color))
+            setTextColor(ContextCompat.getColor(context, seat.color))
             setTypeface(null, Typeface.BOLD)
             textSize = 22F
             textAlignment = TextView.TEXT_ALIGNMENT_CENTER
