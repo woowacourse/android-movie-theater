@@ -60,7 +60,7 @@ class SeatSelectionActivityTest {
     private val intent = SeatSelectionActivity.newIntent(
         ApplicationProvider.getApplicationContext(),
         reservationOptions,
-        movie.toUiModel(R.drawable.harry_potter1_poster),
+        movie.toUiModel(),
     )
 
     @get:Rule

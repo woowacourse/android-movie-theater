@@ -44,7 +44,7 @@ class ReservationActivityTest {
 
     private val intent = ReservationActivity.newIntent(
         ApplicationProvider.getApplicationContext(),
-        movie.toUiModel(R.drawable.harry_potter1_poster),
+        movie.toUiModel(),
         "강남 극장",
     )
 

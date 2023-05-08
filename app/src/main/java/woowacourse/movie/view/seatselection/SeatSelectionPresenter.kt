@@ -55,7 +55,7 @@ class SeatSelectionPresenter(
             }
         }
         price = priceSystem.getCurrentPrice(price, result)
-        view.setPrice(price.toUiModel())
+        view.setPrice(price.price)
     }
 
     override fun reserve() {
