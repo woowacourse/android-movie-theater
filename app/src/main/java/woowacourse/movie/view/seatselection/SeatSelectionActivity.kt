@@ -20,6 +20,7 @@ import woowacourse.movie.data.reservation.ReservationDbRepository
 import woowacourse.movie.data.theater.TheaterMockRepository
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.domain.system.Seat
+import woowacourse.movie.util.DECIMAL_FORMAT
 import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.view.mapper.toUiModel
 import woowacourse.movie.view.model.MovieUiModel
@@ -145,8 +146,8 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }
 
-    override fun setPrice(price: String) {
-        binding.textPrice.text = getString(R.string.reservation_fee_format, price)
+    override fun setPrice(price: Int) {
+        binding.textPrice.text = getString(R.string.reservation_fee_format, DECIMAL_FORMAT.format(price))
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

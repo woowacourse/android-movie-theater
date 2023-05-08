@@ -14,7 +14,7 @@ interface SeatSelectionContract {
         fun setDeselectionSeat(index: Int)
         fun maxSelectionToast()
         fun wrongInputToast()
-        fun setPrice(price: String)
+        fun setPrice(price: Int)
         fun onReserveClick(model: ReservationUiModel)
     }
 

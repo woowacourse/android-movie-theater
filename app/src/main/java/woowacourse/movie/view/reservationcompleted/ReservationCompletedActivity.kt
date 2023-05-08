@@ -16,13 +16,13 @@ import woowacourse.movie.R
 import woowacourse.movie.data.setting.SettingPreferencesRepository
 import woowacourse.movie.databinding.ActivityReservationCompletedBinding
 import woowacourse.movie.util.DATE_FORMATTER
+import woowacourse.movie.util.DECIMAL_FORMAT
 import woowacourse.movie.util.TIME_FORMATTER
 import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.view.AlarmController
 import woowacourse.movie.view.model.ReservationUiModel
 import woowacourse.movie.view.moviemain.MovieMainActivity
 import woowacourse.movie.view.moviemain.setting.SettingFragment
-import java.text.DecimalFormat
 
 class ReservationCompletedActivity : AppCompatActivity(), ReservationCompletedContract.View {
 
@@ -103,7 +103,6 @@ class ReservationCompletedActivity : AppCompatActivity(), ReservationCompletedCo
 
     companion object {
         private const val RESERVATION = "RESERVATION"
-        private val DECIMAL_FORMAT = DecimalFormat("#,###")
         const val REQUEST_CODE = 101
 
         fun newIntent(context: Context, reservation: ReservationUiModel): Intent {
