@@ -1,5 +1,11 @@
 package moviemain
 
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockk
+import io.mockk.runs
+import io.mockk.slot
+import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -14,9 +20,11 @@ import java.time.LocalDateTime
 
 class ReservationListPresenterTest {
     private lateinit var presenter: ReservationListContract.Presenter
+    private lateinit var view: ReservationListContract.View
 
     @Before
     fun setUp() {
+        view = mockk(relaxed = true)
         val reservationRepository = object : ReservationRepository {
             override fun add(reservation: Reservation) {
             }
@@ -34,20 +42,25 @@ class ReservationListPresenterTest {
             }
         }
 
-        presenter = ReservationListPresenter(reservationRepository)
+        presenter = ReservationListPresenter(view, reservationRepository)
     }
 
     @Test
-    fun 예매_정보를_UiModel로_가져올_수_있다() {
-        val reservationUiModel = presenter.getReservations()[0]
-        val expected = ReservationUiModel(
-            "해리 포터와 마법사의 돌",
-            LocalDateTime.of(2024, 4, 1, 12, 0),
-            1,
-            listOf("B2"),
-            10000,
-            "선릉 극장",
+    fun 예매_정보를_UiModel로_가져와_띄울_수_있다() {
+        val slot = slot<List<ReservationUiModel>>()
+        every { view.showReservations(capture(slot)) } just runs
+        presenter.fetchReservations()
+        val expected = listOf(
+            ReservationUiModel(
+                "해리 포터와 마법사의 돌",
+                LocalDateTime.of(2024, 4, 1, 12, 0),
+                1,
+                listOf("B2"),
+                10000,
+                "선릉 극장",
+            ),
         )
-        assertEquals(expected, reservationUiModel)
+        assertEquals(expected, slot.captured)
+        verify { view.showReservations(expected) }
     }
 }

@@ -1,9 +1,6 @@
 package reservationcompleted
 
-import io.mockk.every
-import io.mockk.just
 import io.mockk.mockk
-import io.mockk.runs
 import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -30,8 +27,7 @@ class ReservationCompletedPresenterTest {
 
     @Before
     fun setUp() {
-        view = mockk()
-        every { view.registerAlarm(any()) } just runs
+        view = mockk(relaxed = true)
         presenter = ReservationCompletedPresenter(view, settingManager)
     }
 

@@ -20,6 +20,7 @@ import woowacourse.movie.domain.theater.Theater
 import woowacourse.movie.view.mapper.toUiModel
 import woowacourse.movie.view.model.ReservationOptions
 import woowacourse.movie.view.model.ReservationUiModel
+import woowacourse.movie.view.model.SeatInfoUiModel
 import woowacourse.movie.view.seatselection.SeatSelectionContract
 import woowacourse.movie.view.seatselection.SeatSelectionPresenter
 import java.time.LocalDateTime
@@ -33,8 +34,8 @@ class SeatSelectionPresenterTest {
     @Before
     fun setUp() {
         view = mockk()
-        every { view.maxSelectionToast() } just runs
-        every { view.wrongInputToast() } just runs
+        every { view.showSeatMaxSelectionToast() } just runs
+        every { view.showWrongInputToast() } just runs
 
         val reservationRepository = object : ReservationRepository {
             val reservations = mutableListOf<Reservation>()
@@ -62,7 +63,8 @@ class SeatSelectionPresenterTest {
             }
 
             override fun findTheater(name: String): Theater {
-                return theaters.find { it.name == name } ?: throw java.lang.IllegalArgumentException("존재하지 않는 상영관입니다.")
+                return theaters.find { it.name == name }
+                    ?: throw java.lang.IllegalArgumentException("존재하지 않는 상영관입니다.")
             }
         }
         presenter =
@@ -70,16 +72,22 @@ class SeatSelectionPresenterTest {
     }
 
     @Test
-    fun 좌석_정보_UiModel을_생성할_수_있다() {
+    fun 좌석_정보_UiModel을_띄울_수_있다() {
         val gradeColor = mapOf(
             Grade.B to 1,
             Grade.S to 2,
             Grade.A to 3,
         )
-        val actual = presenter.getSeatInfoUiModel(gradeColor)
-        val expected = mapOf(0 to 1, 1 to 2, 2 to 3)
-        println(actual.maxRow)
-        assertEquals(expected, actual.colorOfRow)
+
+        val slot = slot<SeatInfoUiModel>()
+        every { view.createSeats(capture(slot)) } just runs
+
+        presenter.fetchSeatsData(gradeColor)
+
+        val expected = SeatInfoUiModel(3, 4, mapOf(0 to 1, 1 to 2, 2 to 3))
+
+        assertEquals(expected, slot.captured)
+        verify { view.createSeats(expected) }
     }
 
     @Test
@@ -93,7 +101,7 @@ class SeatSelectionPresenterTest {
             "선릉 극장",
         )
         every { view.onReserveClick(capture(slot)) } just runs
-        presenter.onReserveClick()
+        presenter.reserve()
         verify { view.onReserveClick(reservation.toUiModel()) }
     }
 
@@ -101,55 +109,55 @@ class SeatSelectionPresenterTest {
     fun 좌석_선택_시_좌석과_가격_뷰의_상태를_변경할_수_있다() {
         val indexSlot = slot<Int>()
         val isSelectAllSlot = slot<Boolean>()
-        val priceSlot = slot<String>()
-        every { view.setSelectionSeat(capture(indexSlot), capture(isSelectAllSlot)) } just runs
+        val priceSlot = slot<Int>()
+        every { view.onSeatSelectedByIndex(capture(indexSlot), capture(isSelectAllSlot)) } just runs
         every { view.setPrice(capture(priceSlot)) } just runs
 
-        presenter.onSeatClick(0, 0)
+        presenter.updateSeat(0, 0)
         assertEquals(0, indexSlot.captured)
         assertEquals(true, isSelectAllSlot.captured)
-        assertEquals("10,000", priceSlot.captured)
-        verify { view.setSelectionSeat(indexSlot.captured, isSelectAllSlot.captured) }
+        assertEquals(10000, priceSlot.captured)
+        verify { view.onSeatSelectedByIndex(indexSlot.captured, isSelectAllSlot.captured) }
         verify { view.setPrice(priceSlot.captured) }
     }
 
     @Test
     fun 좌석_선택_해제_시_좌석과_가격_뷰의_상태를_변경할_수_있다() {
         val indexSlot = slot<Int>()
-        val priceSlot = slot<String>()
-        every { view.setSelectionSeat(any(), any()) } just runs
-        every { view.setDeselectionSeat(capture(indexSlot)) } just runs
+        val priceSlot = slot<Int>()
+        every { view.onSeatSelectedByIndex(any(), any()) } just runs
+        every { view.onSeatDeselectedByIndex(capture(indexSlot)) } just runs
         every { view.setPrice(capture(priceSlot)) } just runs
 
-        presenter.onSeatClick(0, 0)
-        presenter.onSeatClick(0, 0)
+        presenter.updateSeat(0, 0)
+        presenter.updateSeat(0, 0)
         assertEquals(0, indexSlot.captured)
-        assertEquals("0", priceSlot.captured)
-        verify { view.setDeselectionSeat(indexSlot.captured) }
+        assertEquals(0, priceSlot.captured)
+        verify { view.onSeatDeselectedByIndex(indexSlot.captured) }
         verify { view.setPrice(priceSlot.captured) }
     }
 
     @Test
     fun 이미_선택한_좌석_수가_최대_인_경우_토스트를_띄운다() {
-        val priceSlot = slot<String>()
-        every { view.setSelectionSeat(any(), any()) } just runs
+        val priceSlot = slot<Int>()
+        every { view.onSeatSelectedByIndex(any(), any()) } just runs
         every { view.setPrice(capture(priceSlot)) } just runs
 
-        presenter.onSeatClick(0, 0)
-        presenter.onSeatClick(0, 1)
-        assertEquals("10,000", priceSlot.captured)
-        verify(exactly = 1) { view.maxSelectionToast() }
+        presenter.updateSeat(0, 0)
+        presenter.updateSeat(0, 1)
+        assertEquals(10000, priceSlot.captured)
+        verify(exactly = 1) { view.showSeatMaxSelectionToast() }
         verify { view.setPrice(priceSlot.captured) }
     }
 
     @Test
     fun 선택한_좌석이_범위_밖일_경우_토스트를_띄운다() {
-        val priceSlot = slot<String>()
+        val priceSlot = slot<Int>()
         every { view.setPrice(capture(priceSlot)) } just runs
 
-        presenter.onSeatClick(5, 5)
-        assertEquals("0", priceSlot.captured)
-        verify(exactly = 1) { view.wrongInputToast() }
+        presenter.updateSeat(5, 5)
+        assertEquals(0, priceSlot.captured)
+        verify(exactly = 1) { view.showWrongInputToast() }
         verify { view.setPrice(priceSlot.captured) }
     }
 }
