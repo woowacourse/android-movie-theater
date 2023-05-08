@@ -16,7 +16,7 @@ class SettingPresenterTest {
 
     @Before
     fun init() {
-        view = mockk()
+        view = mockk(relaxed = true)
     }
 
     @Test
@@ -34,7 +34,6 @@ class SettingPresenterTest {
     @Test
     fun 알림_스위치를_토글한다() {
         // given
-        every { view.makeSettingSwitch() } just runs
         settingPresenter = SettingPresenter(view)
 
         every {

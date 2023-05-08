@@ -26,8 +26,8 @@ class SeatSelectionPresenterTest {
 
     @Before
     fun init() {
-        view = mockk()
-        reservationRepository = mockk()
+        view = mockk(relaxed = true)
+        reservationRepository = mockk(relaxed = true)
     }
 
     @Test
@@ -52,11 +52,15 @@ class SeatSelectionPresenterTest {
     @Test
     fun 좌석을_선택하면_가격과_예매_버튼을_설정한다() {
         // given
-        every { view.makeSeatLayout(any(), any()) } just runs
-        every { view.setMovieData(any()) } just runs
+        seatSelectionPresenter = SeatSelectionPresenter(
+            view,
+            mockk(relaxed = true),
+            reservationRepository,
+            mockk(relaxed = true),
+            mockk(relaxed = true)
+        )
+
         every { view.setReservationButtonState(any(), any()) } just runs
-        every { view.setPriceText(any()) } just runs
-        seatSelectionPresenter = SeatSelectionPresenter(view, mockk(), reservationRepository, mockk(), mockk())
 
         // when
         val seats = fakeSeats().toView()
@@ -71,13 +75,17 @@ class SeatSelectionPresenterTest {
     @Test
     fun 예매_버튼을_누르면_알람을_설정하고_예매_결과_액티비티를_시작한다() {
         // given
-        every { view.makeSeatLayout(any(), any()) } just runs
-        every { view.setMovieData(any()) } just runs
-        every { view.setPriceText(any()) } just runs
+        seatSelectionPresenter = SeatSelectionPresenter(
+            view,
+            mockk(relaxed = true),
+            reservationRepository,
+            mockk(relaxed = true),
+            mockk(relaxed = true)
+        )
+
         every { view.makeReservationAlarm(any(), any()) } just runs
         every { view.startReservationResultActivity(any()) } just runs
         every { reservationRepository.postReservation(any()) } just runs
-        seatSelectionPresenter = SeatSelectionPresenter(view, mockk(), reservationRepository, mockk(), mockk())
 
         // when
         val movie = fakeMovie().toView()

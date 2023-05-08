@@ -29,12 +29,11 @@ class MovieReservationPresenterTest {
 
     @Before
     fun init() {
-        view = mockk()
-        movieSchedule = mockk()
+        view = mockk(relaxed = true)
+        movieSchedule = mockk(relaxed = true)
 
-        every { view.setMovieData(any()) } just runs
         movieReservationPresenter =
-            MovieReservationPresenter(view, Count(3), movieSchedule, mockk())
+            MovieReservationPresenter(view, Count(3), movieSchedule, mockk(relaxed = true))
     }
 
     @Test
