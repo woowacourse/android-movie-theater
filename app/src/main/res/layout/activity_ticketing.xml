@@ -8,6 +8,7 @@
         <variable
             name="presenter"
             type="woowacourse.movie.presentation.ui.ticketing.contract.TicketingContract.Presenter" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -96,6 +97,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
+                android:onItemSelected="@{(parent, view, position, id) -> presenter.changeMovieDate(position)}"
                 app:layout_constraintBottom_toTopOf="@id/minus_btn"
                 app:layout_constraintEnd_toStartOf="@id/movie_time_spinner"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -104,6 +106,7 @@
                 android:id="@+id/movie_time_spinner"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:onItemSelected="@{(parent, view, position, id) -> presenter.changeMovieTime(position)}"
                 app:layout_constraintBottom_toBottomOf="@+id/movie_date_spinner"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/movie_date_spinner" />
@@ -114,6 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
+                android:onClick="@{() -> presenter.minusCount()}"
                 android:text="@string/minus_ticket"
                 android:textSize="25sp"
                 android:textStyle="bold"
@@ -124,6 +128,7 @@
                 android:id="@+id/plus_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> presenter.plusCount()}"
                 android:text="@string/plus_ticket"
                 android:textSize="25sp"
                 android:textStyle="bold"
@@ -147,6 +152,7 @@
                 android:id="@+id/ticketing_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> presenter.doTicketing()}"
                 android:text="@string/pick_seat"
                 android:textColor="@color/white"
                 android:textSize="20sp"

@@ -4,14 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import android.widget.ArrayAdapter
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityTicketingBinding
+import woowacourse.movie.presentation.base.BaseActivity
 import woowacourse.movie.presentation.extensions.getParcelableCompat
-import woowacourse.movie.presentation.extensions.showBackButton
 import woowacourse.movie.presentation.extensions.showToast
 import woowacourse.movie.presentation.model.MovieDate
 import woowacourse.movie.presentation.model.MovieTime
@@ -20,10 +17,10 @@ import woowacourse.movie.presentation.model.movieitem.ListItem
 import woowacourse.movie.presentation.model.movieitem.Movie
 import woowacourse.movie.presentation.ui.seatpicker.SeatPickerActivity
 import woowacourse.movie.presentation.ui.ticketing.contract.TicketingContract
-import woowacourse.movie.presentation.ui.ticketing.listener.OnSpinnerItemSelectedListener
 import woowacourse.movie.presentation.ui.ticketing.presenter.TicketingPresenter
 
-class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnClickListener {
+class TicketingActivity : BaseActivity<ActivityTicketingBinding>(true), TicketingContract.View {
+    override val layoutResId: Int = R.layout.activity_ticketing
     override val presenter: TicketingContract.Presenter by lazy {
         TicketingPresenter(
             view = this,
@@ -33,7 +30,6 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnCl
             )
         )
     }
-    private lateinit var binding: ActivityTicketingBinding
 
     private val movieDateAdapter: ArrayAdapter<String> by lazy {
         ArrayAdapter(this, android.R.layout.simple_spinner_item, mutableListOf())
@@ -44,9 +40,8 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnCl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_ticketing)
         binding.presenter = presenter
-        initView()
+        initSpinnerConfig()
     }
 
     override fun onSaveInstanceState(bundle: Bundle) {
@@ -58,12 +53,6 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnCl
         super.onRestoreInstanceState(bundle)
         val ticketingState = bundle.getParcelableCompat<TicketingState>(TICKETING_STATE_KEY)
         ticketingState?.let { presenter.setState(it) }
-    }
-
-    private fun initView() {
-        showBackButton()
-        initSpinnerConfig()
-        initViewClickListener()
     }
 
     override fun showMovieIntroduce(movie: Movie) {
@@ -82,18 +71,8 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnCl
     }
 
     private fun initSpinnerConfig() {
-        initSpinnerAdapter()
-        initSpinnerListener()
-    }
-
-    private fun initSpinnerAdapter() {
         binding.movieDateSpinner.adapter = movieDateAdapter.also { it.setNotifyOnChange(true) }
         binding.movieTimeSpinner.adapter = movieTimeAdapter.also { it.setNotifyOnChange(true) }
-    }
-
-    private fun initSpinnerListener() {
-        initMovieTimeSpinnerListener()
-        initMovieDateSpinnerListener()
     }
 
     override fun updateMovieDates(movieDates: List<MovieDate>) {
@@ -101,22 +80,6 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnCl
             movieDates.map { getString(R.string.book_date, it.year, it.month, it.day) }
         movieDateAdapter.clear()
         movieDateAdapter.addAll(movieDateTexts)
-    }
-
-    private fun initViewClickListener() {
-        binding.minusBtn.setOnClickListener(this@TicketingActivity)
-        binding.plusBtn.setOnClickListener(this@TicketingActivity)
-        binding.ticketingBtn.setOnClickListener(this@TicketingActivity)
-    }
-
-    private fun initMovieTimeSpinnerListener() {
-        binding.movieTimeSpinner.onItemSelectedListener =
-            OnSpinnerItemSelectedListener { presenter.changeMovieTime(it) }
-    }
-
-    private fun initMovieDateSpinnerListener() {
-        binding.movieDateSpinner.onItemSelectedListener =
-            OnSpinnerItemSelectedListener { presenter.changeMovieDate(it) }
     }
 
     override fun showTicketingState(ticketCount: Int, movieDatePos: Int, movieTimePos: Int) {
@@ -152,14 +115,6 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnCl
 
     override fun showNotExistSelectableDates() {
         showToast(getString(R.string.not_exist_selectable_dates))
-    }
-
-    override fun onClick(view: View) {
-        when (view.id) {
-            R.id.minus_btn -> presenter.minusCount()
-            R.id.plus_btn -> presenter.plusCount()
-            R.id.ticketing_btn -> presenter.doTicketing()
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

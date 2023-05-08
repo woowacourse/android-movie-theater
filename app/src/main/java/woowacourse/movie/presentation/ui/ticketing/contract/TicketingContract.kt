@@ -1,14 +1,13 @@
 package woowacourse.movie.presentation.ui.ticketing.contract
 
+import woowacourse.movie.presentation.base.BaseContract
 import woowacourse.movie.presentation.model.MovieDate
 import woowacourse.movie.presentation.model.MovieTime
 import woowacourse.movie.presentation.model.TicketingState
 import woowacourse.movie.presentation.model.movieitem.Movie
 
 interface TicketingContract {
-    interface View {
-        val presenter: Presenter
-
+    interface View : BaseContract.View {
         fun updateCount(value: Int)
         fun showTicketingState(ticketCount: Int, movieDatePos: Int, movieTimePos: Int)
         fun showSeatPickerScreen(ticketingState: TicketingState)
@@ -20,7 +19,7 @@ interface TicketingContract {
         fun updateMovieDates(movieDates: List<MovieDate>)
     }
 
-    abstract class Presenter(protected val view: View) {
+    abstract class Presenter(view: View) : BaseContract.Presenter<View>(view) {
         abstract fun getState(): TicketingState
         abstract fun setState(ticketingState: TicketingState)
         abstract fun plusCount()
