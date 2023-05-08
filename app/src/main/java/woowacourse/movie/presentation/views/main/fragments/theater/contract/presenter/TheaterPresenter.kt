@@ -14,10 +14,6 @@ class TheaterPresenter(
 ) : TheaterContract.Presenter(view) {
     private val theaters: MutableList<DomainTheater> = mutableListOf()
 
-    init {
-        loadTheaterList()
-    }
-
     override fun loadTheaterList() {
         val newTheaters = theaterRepository.getAllByMovieId(movie.id)
         theaters.addAll(newTheaters)

@@ -39,10 +39,10 @@ class TheaterPickerDialog : BottomSheetDialogFragment(), TheaterContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupPresenter()
         _adapter = TheaterListAdapter(presenter::onTheaterClick)
         binding.theaterRv.adapter = adapter
-
-        setupPresenter()
+        presenter.loadTheaterList()
     }
 
     private fun setupPresenter() {
@@ -70,9 +70,9 @@ class TheaterPickerDialog : BottomSheetDialogFragment(), TheaterContract.View {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _adapter = null
         _binding = null
+        super.onDestroyView()
     }
 
     companion object {
