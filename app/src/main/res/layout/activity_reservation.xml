@@ -114,7 +114,7 @@
                 android:textSize="25sp"
                 app:layout_constraintStart_toStartOf="@id/reservation_layout"
                 app:layout_constraintTop_toBottomOf="@id/date_spinner"
-                android:onClick="@{() -> presenter.onMinusClick()}" />
+                android:onClick="@{() -> presenter.minusCount()}" />
 
             <Button
                 android:id="@+id/plus_button"
@@ -124,7 +124,7 @@
                 android:textSize="25sp"
                 app:layout_constraintEnd_toEndOf="@id/reservation_layout"
                 app:layout_constraintTop_toBottomOf="@id/date_spinner"
-                android:onClick="@{() -> presenter.onPlusClick()}" />
+                android:onClick="@{() -> presenter.plusCount()}" />
 
             <TextView
                 android:id="@+id/people_count"

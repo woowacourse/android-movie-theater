@@ -36,12 +36,10 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
             finish()
             return
         }
-        presenter = ReservationPresenter(this)
+        presenter = ReservationPresenter(this, movie, theaterName)
         binding.presenter = presenter
-        binding.movie = movie
-        setViewData(movie)
-        setDateSpinner(presenter.getSchedules(movie, theaterName))
-        setReserveButtonClickListener(movie, theaterName)
+        presenter.fetchViewData()
+        presenter.fetchScreeningDates()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -49,21 +47,11 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         binding.peopleCount.text = count.toString()
     }
 
-    private fun setViewData(movie: MovieUiModel) {
-        binding.apply {
-            moviePoster.setImageResource(movie.posterResourceId)
-            movieScreeningDate.text = getString(R.string.screening_date_format).format(
-                movie.startDate.format(DATE_FORMATTER),
-                movie.endDate.format(DATE_FORMATTER),
-            )
-        }
-    }
-
-    private fun setDateSpinner(screeningDateTimes: Map<LocalDate, List<LocalTime>>) {
+    override fun showScreeningDate(screeningDates: List<LocalDate>) {
         val dateSpinnerAdapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
-            screeningDateTimes.keys.toList(),
+            screeningDates,
         )
 
         binding.dateSpinner.apply {
@@ -75,7 +63,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
                     position: Int,
                     id: Long,
                 ) {
-                    presenter.onDateSpinnerChanged(position, screeningDateTimes)
+                    presenter.fetchScreeningTimes(parent?.getItemAtPosition(position) as LocalDate)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) = Unit
@@ -83,7 +71,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         }
     }
 
-    override fun setTimeSpinner(screeningTimes: List<LocalTime>) {
+    override fun showScreeningTimes(screeningTimes: List<LocalTime>) {
         val timeSpinnerAdapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
@@ -92,6 +80,18 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         binding.timeSpinner.apply {
             adapter = timeSpinnerAdapter
         }
+    }
+
+    override fun setViewData(movie: MovieUiModel, theaterName: String) {
+        binding.apply {
+            this.movie = movie
+            moviePoster.setImageResource(movie.posterResourceId)
+            movieScreeningDate.text = getString(R.string.screening_date_format).format(
+                movie.startDate.format(DATE_FORMATTER),
+                movie.endDate.format(DATE_FORMATTER),
+            )
+        }
+        setReserveButtonClickListener(movie, theaterName)
     }
 
     private fun setReserveButtonClickListener(movie: MovieUiModel, theaterName: String) {

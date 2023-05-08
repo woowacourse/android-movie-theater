@@ -8,13 +8,17 @@ interface ReservationContract {
     interface View {
         var presenter: Presenter
         fun setCount(count: Int)
-        fun setTimeSpinner(times: List<LocalTime>)
+        fun setViewData(movie: MovieUiModel, theaterName: String)
+        fun showScreeningDate(screeningDates: List<LocalDate>)
+        fun showScreeningTimes(screeningTimes: List<LocalTime>)
     }
 
     interface Presenter {
-        fun getSchedules(movie: MovieUiModel, theater: String): Map<LocalDate, List<LocalTime>>
-        fun onMinusClick()
-        fun onPlusClick()
-        fun onDateSpinnerChanged(position: Int, screeningDateTimes: Map<LocalDate, List<LocalTime>>)
+
+        fun fetchViewData()
+        fun fetchScreeningDates()
+        fun fetchScreeningTimes(date: LocalDate)
+        fun minusCount()
+        fun plusCount()
     }
 }

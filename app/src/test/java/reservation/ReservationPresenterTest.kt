@@ -38,7 +38,7 @@ class ReservationPresenterTest {
 
     @Test
     fun 모든_상영_일정을_가져올_수_있다() {
-        val schedule = presenter.getSchedules(movieUiModel, "선릉 극장")
+        val schedule = presenter.fetchScreeningDates(movieUiModel, "선릉 극장")
         val actual = schedule[LocalDate.of(2024, 4, 1)] ?: emptyList()
         assertTrue(actual.contains(LocalTime.of(13, 0)))
     }
@@ -47,8 +47,8 @@ class ReservationPresenterTest {
     fun 빼기_버튼을_클릭하면_1_감소한다() {
         val slot = slot<Int>()
         every { view.setCount(capture(slot)) } just runs
-        presenter.onPlusClick()
-        presenter.onMinusClick()
+        presenter.plusCount()
+        presenter.minusCount()
         assertEquals(1, slot.captured)
         verify { view.setCount(slot.captured) }
     }
@@ -57,19 +57,19 @@ class ReservationPresenterTest {
     fun 더하기_버튼을_클릭하면_1_증가한다() {
         val slot = slot<Int>()
         every { view.setCount(capture(slot)) } just runs
-        presenter.onPlusClick()
+        presenter.plusCount()
         assertEquals(2, slot.captured)
         verify { view.setCount(slot.captured) }
     }
 
     @Test
     fun 날짜_스피너_값이_바뀌면_해당_날짜의_시간대로_시간_스피너_값이_바뀐다() {
-        val schedule = presenter.getSchedules(movieUiModel, "선릉 극장")
+        val schedule = presenter.fetchScreeningDates(movieUiModel, "선릉 극장")
         val slot = slot<List<LocalTime>>()
-        every { view.setTimeSpinner(capture(slot)) } just runs
+        every { view.showScreeningTimes(capture(slot)) } just runs
 
-        presenter.onDateSpinnerChanged(1, schedule)
+        presenter.fetchScreeningTimes(1, schedule)
         assertEquals(listOf(LocalTime.of(13, 0)), slot.captured)
-        verify { view.setTimeSpinner(slot.captured) }
+        verify { view.showScreeningTimes(slot.captured) }
     }
 }
