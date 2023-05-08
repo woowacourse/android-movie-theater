@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import com.google.android.material.switchmaterial.SwitchMaterial
 import com.woowacourse.data.datasource.cache.local.LocalCacheDataSource
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentSettingBinding
@@ -33,8 +32,6 @@ class SettingFragment : Fragment(), SettingContract.View {
     private var _binding: FragmentSettingBinding? = null
     private val binding get() = _binding!!
 
-    private val pushSwitch: SwitchMaterial by lazy { requireView().findViewById(R.id.notification_push_switch) }
-
     private val settingScreenLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             val isPushPermissionGranted = requireContext()
@@ -53,7 +50,7 @@ class SettingFragment : Fragment(), SettingContract.View {
     }
 
     override fun changePushSwitchState(newState: Boolean) {
-        pushSwitch.isChecked = newState
+        binding.notificationPushSwitch.isChecked = newState
     }
 
     override fun checkPushPermission(): Boolean =

@@ -51,11 +51,11 @@ class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.Vie
     }
 
     override fun showMoreHistory(item: ListItem) {
-        (binding.historyRecyclerView.adapter as HistoryListAdapter).append(item)
+        binding.rvAdapter?.append(item)
     }
 
     override fun showMoreHistories(items: List<ListItem>) {
-        (binding.rvAdapter as HistoryListAdapter).appendAll(items)
+        binding.rvAdapter?.appendAll(items)
     }
 
     override fun showTicketingResultScreen(item: ListItem) {

@@ -17,10 +17,11 @@ class TheaterPresenter(
     override fun loadTheaterList() {
         val newTheaters = theaterRepository.getAllByMovieId(movie.id)
         theaters.addAll(newTheaters)
+
         view.showTheaterList(newTheaters.map { it.toPresentation() })
     }
 
-    override fun onTheaterClick(item: PresentationTheater) {
+    override fun handleItem(item: PresentationTheater) {
         view.showTicketingScreen(movie, item)
     }
 }

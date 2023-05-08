@@ -42,7 +42,7 @@ class HomeFragment : Fragment(), HomeContract.View {
     }
 
     override fun showMoreMovies(items: List<Movie>) {
-        (binding.rvAdapter as MovieListAdapter).appendAll(items)
+        binding.rvAdapter?.appendAll(items)
     }
 
     override fun showAdWebSite(item: Ad) {

@@ -1,7 +1,6 @@
 package woowacourse.movie.presentation.views.main.fragments.theater.contract
 
 import woowacourse.movie.presentation.model.movieitem.Movie
-import woowacourse.movie.presentation.model.theater.PresentationTheater
 import woowacourse.movie.presentation.model.theater.Theater
 
 interface TheaterContract {
@@ -9,11 +8,11 @@ interface TheaterContract {
         val presenter: Presenter
 
         fun showTheaterList(items: List<Theater>)
-        fun showTicketingScreen(movie: Movie, theater: PresentationTheater)
+        fun showTicketingScreen(movie: Movie, theater: Theater)
     }
 
-    abstract class Presenter(protected var view: View) {
+    abstract class Presenter(protected val view: View) {
         abstract fun loadTheaterList()
-        abstract fun onTheaterClick(item: Theater)
+        abstract fun handleItem(item: Theater)
     }
 }

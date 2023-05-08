@@ -12,20 +12,25 @@ import com.woowacourse.data.repository.theater.local.LocalTheaterRepository
 import woowacourse.movie.databinding.DialogTheaterPickerBinding
 import woowacourse.movie.presentation.extensions.getParcelableCompat
 import woowacourse.movie.presentation.model.movieitem.Movie
-import woowacourse.movie.presentation.model.theater.PresentationTheater
+import woowacourse.movie.presentation.model.theater.Theater
 import woowacourse.movie.presentation.views.main.fragments.theater.adapter.TheaterListAdapter
 import woowacourse.movie.presentation.views.main.fragments.theater.contract.TheaterContract
 import woowacourse.movie.presentation.views.main.fragments.theater.contract.presenter.TheaterPresenter
 import woowacourse.movie.presentation.views.ticketing.TicketingActivity
 
 class TheaterPickerDialog : BottomSheetDialogFragment(), TheaterContract.View {
-    override val presenter: TheaterContract.Presenter by lazy { makePresenter() }
+    override val presenter: TheaterContract.Presenter by lazy {
+        TheaterPresenter(
+            view = this,
+            movie = requireArguments().getParcelableCompat(MOVIE_KEY)!!,
+            theaterRepository = LocalTheaterRepository(
+                LocalTheaterDataSource(TheaterLocalDBDao(requireContext()))
+            )
+        )
+    }
 
     private var _binding: DialogTheaterPickerBinding? = null
     private val binding get() = _binding!!
-
-    private var _adapter: TheaterListAdapter? = null
-    private val adapter get() = _adapter!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,38 +44,20 @@ class TheaterPickerDialog : BottomSheetDialogFragment(), TheaterContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupPresenter()
-        _adapter = TheaterListAdapter(presenter::onTheaterClick)
-        binding.theaterRv.adapter = adapter
-        presenter.loadTheaterList()
-    }
-
-    private fun setupPresenter() {
         binding.presenter = presenter
+        binding.rvAdapter = TheaterListAdapter()
     }
 
-    override fun showTheaterList(items: List<PresentationTheater>) {
-        adapter.appendAll(items)
+    override fun showTheaterList(items: List<Theater>) {
+        binding.rvAdapter?.appendAll(items)
     }
 
-    override fun showTicketingScreen(movie: Movie, theater: PresentationTheater) {
+    override fun showTicketingScreen(movie: Movie, theater: Theater) {
         startActivity(TicketingActivity.getIntent(requireContext(), movie, theater))
         dismiss()
     }
 
-    private fun makePresenter(): TheaterContract.Presenter {
-        val movie: Movie = requireArguments().getParcelableCompat(MOVIE_KEY)!!
-        return TheaterPresenter(
-            view = this,
-            movie = movie,
-            theaterRepository = LocalTheaterRepository(
-                LocalTheaterDataSource(TheaterLocalDBDao(requireContext()))
-            )
-        )
-    }
-
     override fun onDestroyView() {
-        _adapter = null
         _binding = null
         super.onDestroyView()
     }

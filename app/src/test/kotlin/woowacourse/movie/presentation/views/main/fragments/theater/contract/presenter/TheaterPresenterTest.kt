@@ -52,7 +52,7 @@ internal class TheaterPresenterTest {
         presenter.attach(view)
 
         // when
-        presenter.onTheaterClick(theater)
+        presenter.handleItem(theater)
 
         // then
         verify(exactly = 1) { view.showTicketingScreen(any(), theater) }

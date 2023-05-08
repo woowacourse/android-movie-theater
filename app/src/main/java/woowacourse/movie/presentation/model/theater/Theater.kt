@@ -4,6 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import woowacourse.movie.presentation.model.MovieTime
+import woowacourse.movie.presentation.model.movieitem.ListItem
 
 typealias PresentationTheater = Theater
 
@@ -11,7 +12,9 @@ typealias PresentationTheater = Theater
 data class Theater(
     val name: String,
     val movieTimes: List<MovieTime>,
-) : Parcelable {
+) : ListItem, Parcelable {
     @IgnoredOnParcel
     val movieTimesCount: Int = movieTimes.size
+
+    override fun isAd(): Boolean = false
 }

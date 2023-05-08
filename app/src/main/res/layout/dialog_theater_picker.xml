@@ -5,9 +5,17 @@
 
     <data>
 
+        <import
+            alias="RecyclerViewAdapter"
+            type="woowacourse.movie.presentation.views.main.fragments.theater.adapter.TheaterListAdapter" />
+
         <variable
             name="presenter"
             type="woowacourse.movie.presentation.views.main.fragments.theater.contract.TheaterContract.Presenter" />
+
+        <variable
+            name="rvAdapter"
+            type="RecyclerViewAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,10 +24,16 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/theater_rv"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:adapter="@{rvAdapter}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_max="250dp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:onAdapted="@{presenter::loadTheaterList}"
             tools:itemCount="3"
             tools:listitem="@layout/item_theater" />
 
