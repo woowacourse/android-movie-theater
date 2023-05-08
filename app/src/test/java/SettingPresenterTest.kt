@@ -103,5 +103,4 @@ class SettingPresenterTest {
         verify(inverse = true) { mockView.reRequestPermission(isChecked) }
         verify(inverse = true) { mockView.disableCanPushSwitch() }
     }
-
 }

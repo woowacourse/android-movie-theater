@@ -21,7 +21,7 @@ class SettingPresenter(
         isChecked: Boolean
     ) {
         saveCanPushAlarmSwitchData(isChecked)
-        if(!isChecked) return
+        if (!isChecked) return
         if (isPermissionDenied) {
             if (isForeverDeniedPermission) {
                 view.disableCanPushSwitch()
