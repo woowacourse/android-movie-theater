@@ -57,31 +57,31 @@ class SeatPickerPresenter(
         view.showTicketingResultScreen(reservation.toPresentation())
     }
 
-    private fun isPicked(seat: Seat): Boolean = pickedSeats.isPicked(seat.toDomain())
-
-    override fun onClickSeat(seat: Seat): Unit = when {
+    override fun changeSeatState(seat: Seat): Unit = when {
         isPicked(seat) -> unpick(seat)
         !isAllPicked() -> pick(seat)
         else -> view.showSeatExceedAlertMessage()
     }
 
-    private fun pick(seat: Seat) {
-        pickedSeats = pickedSeats.add(seat.toDomain())
-        updateViewWithSeat(seat, true)
-    }
+    private fun isPicked(seat: Seat): Boolean = pickedSeats.isPicked(seat.toDomain())
 
     private fun unpick(seat: Seat) {
         pickedSeats = pickedSeats.remove(seat.toDomain())
         updateViewWithSeat(seat, false)
     }
 
+    override fun isAllPicked(): Boolean =
+        !pickedSeats.canPick(ticketingState.ticket.toDomain())
+
+    private fun pick(seat: Seat) {
+        pickedSeats = pickedSeats.add(seat.toDomain())
+        updateViewWithSeat(seat, true)
+    }
+
     private fun updateViewWithSeat(seat: Seat, isPicked: Boolean) {
         updatePriceTextAndReservationEnabled()
         view.setSeatViewPickState(seat.toIndex(seatColSize), isPicked)
     }
-
-    override fun isAllPicked(): Boolean =
-        !pickedSeats.canPick(ticketingState.ticket.toDomain())
 
     private fun calculateTotalPrice(): DomainTicketPrice = pickedSeats.calculateTotalPrice(
         MovieDayDiscountPolicy(ticketingState.movieDate?.toDomain()!!),

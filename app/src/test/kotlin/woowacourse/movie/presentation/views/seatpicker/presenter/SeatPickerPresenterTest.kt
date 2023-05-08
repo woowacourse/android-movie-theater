@@ -86,7 +86,7 @@ class SeatPickerPresenterTest {
         presenter.setState(pickedSeats.toPresentation())
 
         // when
-        presenter.onClickSeat(Seat(SeatRow('A'), SeatColumn(1)))
+        presenter.changeSeatState(Seat(SeatRow('A'), SeatColumn(1)))
 
         // then
         verify { view.updateReservationBtnEnabled(any()) }
@@ -102,7 +102,7 @@ class SeatPickerPresenterTest {
         presenter.setState(pickedSeats.toPresentation())
 
         // when
-        presenter.onClickSeat(Seat(SeatRow('A'), SeatColumn(1)))
+        presenter.changeSeatState(Seat(SeatRow('A'), SeatColumn(1)))
 
         // then
         verify { view.updateReservationBtnEnabled(any()) }

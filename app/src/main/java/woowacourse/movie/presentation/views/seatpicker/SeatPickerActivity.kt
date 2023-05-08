@@ -105,7 +105,7 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener, SeatPicker
     private fun makeSeatView(row: SeatRow, col: SeatColumn): View {
         val seat = Seat(row, col)
         return seat.makeView(this) {
-            presenter.onClickSeat(seat)
+            presenter.changeSeatState(seat)
         }
     }
 
