@@ -5,7 +5,7 @@ import woowacourse.movie.domain.discount.TicketDiscount
 import java.time.LocalDateTime
 
 data class SelectedSeats(
-    val seats: Set<Seat> = emptySet()
+    val seats: Set<Seat> = emptySet(),
 ) {
     fun getAllPrice(time: LocalDateTime): Int {
         if (seats.isEmpty()) return 0
