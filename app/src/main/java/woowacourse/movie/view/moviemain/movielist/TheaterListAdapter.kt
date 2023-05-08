@@ -5,14 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.TheaterItemBinding
-import woowacourse.movie.util.getKeyFromIndex
-import woowacourse.movie.util.getOrEmptyList
 import java.time.LocalTime
 
 class TheaterListAdapter(
-    private val schedule: Map<String, List<LocalTime>>,
+    schedule: Map<String, List<LocalTime>>,
     private val onItemClick: OnItemClick,
 ) : RecyclerView.Adapter<TheaterItemViewHolder>() {
+    private val convertSchedule = schedule.toList()
+
     fun interface OnItemClick {
         fun onClick(name: String)
     }
@@ -23,11 +23,10 @@ class TheaterListAdapter(
     }
 
     override fun getItemCount(): Int {
-        return schedule.size
+        return convertSchedule.size
     }
 
     override fun onBindViewHolder(holder: TheaterItemViewHolder, position: Int) {
-        val key = schedule.getKeyFromIndex(position)
-        holder.bind(key, schedule.getOrEmptyList(key))
+        holder.bind(convertSchedule[position].first, convertSchedule[position].second)
     }
 }
