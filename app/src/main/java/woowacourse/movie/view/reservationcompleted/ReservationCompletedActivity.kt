@@ -28,7 +28,7 @@ class ReservationCompletedActivity : AppCompatActivity(), ReservationCompletedCo
 
     private lateinit var binding: ActivityReservationCompletedBinding
     private lateinit var alarmController: AlarmController
-    override lateinit var presenter: ReservationCompletedContract.Presenter
+    private lateinit var presenter: ReservationCompletedContract.Presenter
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
         presenter.setAlarm(isGranted)
     }

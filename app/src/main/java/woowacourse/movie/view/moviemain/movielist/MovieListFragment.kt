@@ -10,8 +10,7 @@ import woowacourse.movie.data.movie.MovieMockRepository
 import woowacourse.movie.view.model.MovieUiModel
 
 class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContract.View {
-    override var presenter: MovieListContract.Presenter = MovieListPresenter(this, MovieMockRepository)
-
+    private var presenter: MovieListContract.Presenter = MovieListPresenter(this, MovieMockRepository)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.fetchMovieList()

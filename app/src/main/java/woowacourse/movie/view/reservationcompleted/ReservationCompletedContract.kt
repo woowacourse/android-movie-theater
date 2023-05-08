@@ -4,7 +4,6 @@ import woowacourse.movie.view.model.ReservationUiModel
 
 interface ReservationCompletedContract {
     interface View {
-        var presenter: Presenter
         fun registerAlarm(reservation: ReservationUiModel)
     }
     interface Presenter {

@@ -6,7 +6,6 @@ import java.time.LocalTime
 
 interface ReservationContract {
     interface View {
-        var presenter: Presenter
         fun setCount(count: Int)
         fun setViewData(movie: MovieUiModel, theaterName: String)
         fun showScreeningDate(screeningDates: List<LocalDate>)

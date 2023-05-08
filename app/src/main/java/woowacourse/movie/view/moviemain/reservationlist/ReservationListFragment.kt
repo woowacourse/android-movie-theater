@@ -13,7 +13,7 @@ import woowacourse.movie.view.reservationcompleted.ReservationCompletedActivity
 class ReservationListFragment :
     Fragment(R.layout.fragment_reservation_list),
     ReservationListContract.View {
-    override lateinit var presenter: ReservationListContract.Presenter
+    private lateinit var presenter: ReservationListContract.Presenter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

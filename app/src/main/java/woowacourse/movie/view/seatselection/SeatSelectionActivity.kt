@@ -34,7 +34,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     private lateinit var binding: ActivitySeatSelectionBinding
 
-    override lateinit var presenter: SeatSelectionContract.Presenter
+    private lateinit var presenter: SeatSelectionContract.Presenter
 
     private val seats: List<TextView> by lazy {
         binding.layoutSeats.children

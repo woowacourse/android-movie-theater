@@ -4,7 +4,6 @@ import woowacourse.movie.view.model.ReservationUiModel
 
 interface SettingContract {
     interface View {
-        var presenter: Presenter
         fun setToggle(isOn: Boolean)
         fun cancelAlarms()
         fun setAlarms(reservations: List<ReservationUiModel>)

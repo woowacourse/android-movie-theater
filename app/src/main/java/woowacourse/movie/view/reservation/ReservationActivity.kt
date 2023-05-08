@@ -23,7 +23,7 @@ import java.time.LocalTime
 class ReservationActivity : AppCompatActivity(), ReservationContract.View {
 
     private lateinit var binding: ActivityReservationBinding
-    override lateinit var presenter: ReservationContract.Presenter
+    private lateinit var presenter: ReservationContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

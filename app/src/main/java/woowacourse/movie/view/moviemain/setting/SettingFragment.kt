@@ -24,7 +24,7 @@ class SettingFragment : Fragment(), SettingContract.View {
 
     private lateinit var alarmController: AlarmController
     private lateinit var binding: FragmentSettingBinding
-    override lateinit var presenter: SettingContract.Presenter
+    private lateinit var presenter: SettingContract.Presenter
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (!isGranted) {

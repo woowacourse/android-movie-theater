@@ -7,8 +7,6 @@ import woowacourse.movie.view.model.SeatUiModel
 
 interface SeatSelectionContract {
     interface View {
-        var presenter: Presenter
-
         fun createSeat(seat: SeatUiModel)
         fun createRow(seatInfo: SeatInfoUiModel)
         fun onSeatSelectedByIndex(index: Int, isClickableButton: Boolean)
