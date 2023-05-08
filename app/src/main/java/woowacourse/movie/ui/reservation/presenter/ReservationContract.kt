@@ -8,10 +8,11 @@ interface ReservationContract {
     interface View : BaseView<Presenter> {
         var reservationAdapter: ReservationAdapter
         fun setTextOnEmptyState(isEmpty: Boolean)
+        fun setEventOnReservationItems(movieTicketModel: MovieTicketModel)
     }
 
     interface Presenter {
-        fun initAdapter(onClick: (MovieTicketModel) -> Unit)
+        fun initAdapter()
         fun isEmptyMovieReservation()
     }
 }

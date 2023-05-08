@@ -34,7 +34,7 @@ class ReservationFragment : Fragment(), ReservationContract.View {
         super.onViewCreated(view, savedInstanceState)
 
         presenter.isEmptyMovieReservation()
-        presenter.initAdapter(::setEventOnReservationItems)
+        presenter.initAdapter()
         attachAdapter()
     }
 
@@ -51,7 +51,7 @@ class ReservationFragment : Fragment(), ReservationContract.View {
         binding.reservationRecyclerview.adapter = reservationAdapter
     }
 
-    private fun setEventOnReservationItems(movieTicketModel: MovieTicketModel) {
+    override fun setEventOnReservationItems(movieTicketModel: MovieTicketModel) {
         startActivity(movieTicketModel.moveToMovieTicketActivity())
     }
 
