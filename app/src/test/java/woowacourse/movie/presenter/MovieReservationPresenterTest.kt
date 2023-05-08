@@ -4,11 +4,11 @@ import io.mockk.*
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.contract.MovieReservationContract
+import woowacourse.movie.view.moviereservation.MovieReservationContract
 import woowacourse.movie.model.TheaterUiModel
+import woowacourse.movie.view.moviereservation.MovieReservationPresenter
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 
 class MovieReservationPresenterTest {
     private lateinit var presenter: MovieReservationContract.Presenter

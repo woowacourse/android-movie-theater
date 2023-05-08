@@ -5,14 +5,11 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import woowacourse.movie.mock.MockMoviesFactory
-import woowacourse.movie.view.activity.ReservationResultActivity
+import woowacourse.movie.view.reservationresult.ReservationResultActivity
 import woowacourse.movie.getSerializableCompat
-import woowacourse.movie.model.mapper.MovieMapper.toUi
 import woowacourse.movie.model.MovieUiModel
 import woowacourse.movie.model.TicketsUiModel
 import java.time.LocalDateTime
-import java.time.LocalTime
 
 class ReservationNotificationReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, receivedIntent: Intent) {

@@ -4,13 +4,14 @@ import io.mockk.*
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.contract.SelectSeatContract
+import woowacourse.movie.view.seatselect.SelectSeatContract
 import woowacourse.movie.model.MovieUiModel
 import woowacourse.movie.model.TheatersUiModel
 import woowacourse.movie.model.TicketOfficeUiModel
 import woowacourse.movie.model.TicketsUiModel
 import woowacourse.movie.database.ReservationDbHelperInterface
-import woowacourse.movie.view.widget.SeatView
+import woowacourse.movie.view.seatselect.SeatView
+import woowacourse.movie.view.seatselect.SelectSeatPresenter
 import java.time.LocalDate
 import java.time.LocalDateTime
 

@@ -1,15 +1,15 @@
 package woowacourse.movie.presenter
 
-import domain.Theaters
 import io.mockk.*
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.contract.MoviesContract
+import woowacourse.movie.view.main.movieslist.MoviesContract
 import woowacourse.movie.model.AdvertisementUiModel
 import woowacourse.movie.model.MovieUiModel
 import woowacourse.movie.model.TheaterUiModel
 import woowacourse.movie.model.TheatersUiModel
+import woowacourse.movie.view.main.movieslist.MoviesPresenter
 
 class MoviesPresenterTest {
     private lateinit var presenter: MoviesPresenter

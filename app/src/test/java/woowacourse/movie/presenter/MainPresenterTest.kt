@@ -4,7 +4,8 @@ import io.mockk.*
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.contract.MainContract
+import woowacourse.movie.view.main.MainContract
+import woowacourse.movie.view.main.MainPresenter
 
 class MainPresenterTest {
     private lateinit var presenter: MainContract.Presenter

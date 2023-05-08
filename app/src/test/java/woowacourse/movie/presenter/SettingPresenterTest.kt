@@ -8,7 +8,8 @@ import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.database.SharedPreferenceManager
-import woowacourse.movie.contract.SettingContract
+import woowacourse.movie.view.main.setting.SettingContract
+import woowacourse.movie.view.main.setting.SettingPresenter
 
 class SettingPresenterTest {
     private lateinit var presenter: SettingPresenter

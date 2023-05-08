@@ -3,8 +3,9 @@ package woowacourse.movie.presenter
 import io.mockk.*
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.contract.ReservationResultContract
+import woowacourse.movie.view.reservationresult.ReservationResultContract
 import woowacourse.movie.model.TicketsUiModel
+import woowacourse.movie.view.reservationresult.ReservationResultPresenter
 
 class ReservationResultPresenterTest {
     private lateinit var view: ReservationResultContract.View

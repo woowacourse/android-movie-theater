@@ -4,10 +4,11 @@ import domain.Reservation
 import io.mockk.*
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.contract.ReservationListContract
+import woowacourse.movie.view.main.reservationlist.ReservationListContract
 import woowacourse.movie.model.ReservationUiModel
 import woowacourse.movie.model.mapper.ReservationMapper.toUi
 import woowacourse.movie.database.ReservationDbHelperInterface
+import woowacourse.movie.view.main.reservationlist.ReservationListPresenter
 
 class ReservationListPresenterTest {
     private lateinit var presenter: ReservationListPresenter
