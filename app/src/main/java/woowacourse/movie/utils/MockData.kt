@@ -50,12 +50,12 @@ object MockData {
         ),
         TheaterModel(
             "선릉",
-            2,
+            3,
             mapOf<LocalDate, List<LocalTime>>(
                 LocalDate.of(2023, 5, 8) to
-                    listOf(LocalTime.of(19, 0)),
+                    listOf(LocalTime.of(11, 0), LocalTime.of(17, 0)),
                 LocalDate.of(2023, 5, 9) to
-                    listOf(LocalTime.of(10, 0)),
+                    listOf(LocalTime.of(14, 0)),
             ),
         ),
     )
