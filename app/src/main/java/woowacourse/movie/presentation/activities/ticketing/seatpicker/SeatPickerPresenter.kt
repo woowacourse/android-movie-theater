@@ -3,6 +3,7 @@ package woowacourse.movie.presentation.activities.ticketing.seatpicker
 import woowacourse.movie.domain.model.discount.policy.MovieDayDiscountPolicy
 import woowacourse.movie.domain.model.discount.policy.MovieTimeDiscountPolicy
 import woowacourse.movie.domain.model.seat.DomainPickedSeats
+import woowacourse.movie.presentation.activities.main.fragments.history.HistoryDbHelper
 import woowacourse.movie.presentation.mapper.toDomain
 import woowacourse.movie.presentation.mapper.toPresentation
 import woowacourse.movie.presentation.model.MovieDate
@@ -13,9 +14,11 @@ import woowacourse.movie.presentation.model.SeatColumn
 import woowacourse.movie.presentation.model.SeatRow
 import woowacourse.movie.presentation.model.Ticket
 import woowacourse.movie.presentation.model.TicketPrice
+import woowacourse.movie.presentation.model.item.Reservation
 
 class SeatPickerPresenter(
     val view: SeatPickerContract.View,
+    val db: HistoryDbHelper,
 ) : SeatPickerContract.Presenter {
 
     private var pickedSeats = DomainPickedSeats()
@@ -69,5 +72,9 @@ class SeatPickerPresenter(
 
     override fun setPickedSeats(pickedSeats: PickedSeats) {
         this.pickedSeats = pickedSeats.toDomain()
+    }
+
+    override fun insertData(reservation: Reservation) {
+        db.insertData(reservation)
     }
 }

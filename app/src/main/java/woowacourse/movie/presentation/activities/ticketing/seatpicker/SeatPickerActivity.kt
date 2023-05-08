@@ -58,7 +58,8 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_picker)
-        presenter = SeatPickerPresenter(this)
+        val db = HistoryDbHelper(this)
+        presenter = SeatPickerPresenter(this, db)
         restoreState(savedInstanceState)
 
         initView()
@@ -167,8 +168,7 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
             ticketPrice = presenter.calculateTotalPrice(movieDate, movieTime),
         )
 
-        val db = HistoryDbHelper(this)
-        db.insertData(reservation)
+        presenter.insertData(reservation)
 
         registerPushBroadcast(reservation)
 

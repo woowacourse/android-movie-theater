@@ -10,24 +10,30 @@ import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.domain.model.seat.DomainSeat
+import woowacourse.movie.presentation.activities.main.fragments.history.HistoryDbHelper
 import woowacourse.movie.presentation.activities.ticketing.seatpicker.SeatPickerContract
 import woowacourse.movie.presentation.activities.ticketing.seatpicker.SeatPickerPresenter
 import woowacourse.movie.presentation.model.MovieDate
 import woowacourse.movie.presentation.model.MovieTime
+import woowacourse.movie.presentation.model.PickedSeats
 import woowacourse.movie.presentation.model.Seat
 import woowacourse.movie.presentation.model.SeatColumn
 import woowacourse.movie.presentation.model.SeatRow
+import woowacourse.movie.presentation.model.Ticket
 import woowacourse.movie.presentation.model.TicketPrice
+import woowacourse.movie.presentation.model.item.Reservation
 
 internal class SeatPickerPresenterTest {
     private lateinit var presenter: SeatPickerPresenter
     private lateinit var view: SeatPickerContract.View
+    private lateinit var db: HistoryDbHelper
     private lateinit var pickedSeats: DomainSeat
 
     @Before
     fun setUp() {
         view = mockk()
-        presenter = SeatPickerPresenter(view)
+        db = mockk()
+        presenter = SeatPickerPresenter(view, db)
     }
 
     @Test
@@ -116,5 +122,26 @@ internal class SeatPickerPresenterTest {
 
         // then
         assertEquals(expected, actual)
+    }
+
+    @Test
+    fun `데이터베이스에 데이터를 추가한다`() {
+        // given
+        val reservation = Reservation(
+            movieTitle = "가디언즈 오브 갤럭시",
+            movieDate = MovieDate(2023, 5, 4),
+            movieTime = MovieTime(21, 0),
+            ticket = Ticket(2),
+            seats = PickedSeats.from("A1, A2"),
+            theaterName = "선릉 극장",
+            ticketPrice = TicketPrice(20_000),
+        )
+        every { db.insertData(reservation) } just Runs
+
+        // when
+        presenter.insertData(reservation)
+
+        // then
+        verify(exactly = 1) { db.insertData(reservation) }
     }
 }
