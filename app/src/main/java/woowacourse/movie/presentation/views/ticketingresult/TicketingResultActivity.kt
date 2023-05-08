@@ -35,11 +35,10 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
         showBackButton()
     }
 
-    override fun showMainScreen(reservation: Reservation) {
-        startActivity(MainActivity.getIntent(this, reservation))
-    }
-
-    override fun close() {
+    override fun showMainScreen(reservation: Reservation, fromMainScreen: Boolean) {
+        if (!fromMainScreen) {
+            startActivity(MainActivity.getIntent(this, reservation))
+        }
         finish()
     }
 

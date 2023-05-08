@@ -10,8 +10,7 @@ class TicketingResultPresenter(
 ) : TicketingResultContract.Presenter(view) {
 
     override fun onShowMainScreen() {
-        if (!fromMainScreen) view.showMainScreen(reservation)
-        view.close()
+        view.showMainScreen(reservation, fromMainScreen)
     }
 
     override fun getReservation(): Reservation = reservation.copy()

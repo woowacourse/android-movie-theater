@@ -6,8 +6,7 @@ interface TicketingResultContract {
     interface View {
         val presenter: Presenter
 
-        fun showMainScreen(reservation: Reservation)
-        fun close()
+        fun showMainScreen(reservation: Reservation, fromMainScreen: Boolean)
     }
 
     abstract class Presenter(protected val view: View) {
