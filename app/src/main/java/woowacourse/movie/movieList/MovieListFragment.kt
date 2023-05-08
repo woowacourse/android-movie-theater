@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import woowacourse.movie.R
-import woowacourse.movie.common.database.MovieDao
 import woowacourse.movie.common.model.MovieScheduleViewData
 import woowacourse.movie.common.model.MovieViewData
 import woowacourse.movie.common.model.TheaterViewData

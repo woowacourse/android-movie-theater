@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import woowacourse.movie.R
-import woowacourse.movie.common.database.MovieDao
 import woowacourse.movie.common.system.App
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.reservationResult.ReservationResultActivity

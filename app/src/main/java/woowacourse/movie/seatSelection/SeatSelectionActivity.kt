@@ -8,7 +8,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
-import woowacourse.movie.common.database.MovieDao
 import woowacourse.movie.common.error.ActivityError.finishWithError
 import woowacourse.movie.common.error.ViewError
 import woowacourse.movie.common.model.MovieViewData
