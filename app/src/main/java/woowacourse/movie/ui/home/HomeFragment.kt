@@ -50,7 +50,6 @@ class HomeFragment : Fragment(), HomeContract.View {
 
     override fun initAdapter(mainData: List<MainData>) {
         val mainAdapter = MainAdapter(
-            context = requireContext(),
             onBooked = ::onBooked,
             onAdClicked = ::onAdClicked,
         )
