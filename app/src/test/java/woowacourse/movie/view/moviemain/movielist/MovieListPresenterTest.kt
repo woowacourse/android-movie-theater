@@ -14,7 +14,6 @@ import woowacourse.movie.domain.Screening
 import woowacourse.movie.domain.Theater
 import woowacourse.movie.domain.repository.MovieRepository
 import woowacourse.movie.domain.repository.TheaterRepository
-import woowacourse.movie.view.mapper.toMovieTheater
 import woowacourse.movie.view.mapper.toUiModel
 import woowacourse.movie.view.model.MovieListModel
 import java.time.LocalDate
@@ -27,9 +26,9 @@ class MovieListPresenterTest {
 
     @Before
     fun setUp() {
-        view = mockk()
-        movieRepository = mockk()
-        theaterRepository = mockk()
+        view = mockk(relaxed = true)
+        movieRepository = mockk(relaxed = true)
+        theaterRepository = mockk(relaxed = true)
         movieListPresenter = MovieListPresenter(view, movieRepository, theaterRepository)
     }
 
@@ -52,12 +51,6 @@ class MovieListPresenterTest {
     fun `영화가 클릭되면 극장 선택 Bottom Sheet Dialog가 열린다`() {
         val movie = fakeMovie().toUiModel()
         every { theaterRepository.findTheaterByMovieId(movie.id) } returns fakeTheaters()
-        every {
-            view.showTheaterList(
-                fakeTheaters().map { it.toMovieTheater(movie.id) },
-                movie
-            )
-        } returns Unit
 
         movieListPresenter.decideNextAction(movie)
 
@@ -67,7 +60,6 @@ class MovieListPresenterTest {
     @Test
     fun `광고가 클릭되면 광고 화면을 연다`() {
         val ad = fakeAd()
-        every { view.toAdScreen(ad) } returns Unit
 
         movieListPresenter.decideNextAction(ad)
 
