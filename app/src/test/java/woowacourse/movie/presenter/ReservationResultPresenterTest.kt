@@ -18,13 +18,12 @@ import woowacourse.movie.reservationResult.ReservationResultPresenter
 import java.time.LocalDateTime
 
 class ReservationResultPresenterTest {
-    lateinit var reservationResultPresenter: ReservationResultContract.Presenter
-    lateinit var view: ReservationResultContract.View
+    private lateinit var reservationResultPresenter: ReservationResultContract.Presenter
+    private lateinit var view: ReservationResultContract.View
 
     @Before
     fun init() {
         view = mockk()
-        reservationResultPresenter = ReservationResultPresenter(view)
     }
 
     @Test
@@ -37,7 +36,7 @@ class ReservationResultPresenterTest {
         val reservation = fakeReservation().toView()
 
         // when
-        reservationResultPresenter.initActivity(reservation)
+        reservationResultPresenter = ReservationResultPresenter(view, reservation)
 
         // then
         verify { view.setMovieData(any()) }

@@ -28,8 +28,8 @@ import woowacourse.movie.movieList.MovieAdapterPresenter
 import java.time.LocalDate
 
 class MovieAdapterPresenterTest {
-    lateinit var movieAdapterPresenter: MovieAdapterContract.Presenter
-    lateinit var view: MovieAdapterContract.View
+    private lateinit var movieAdapterPresenter: MovieAdapterContract.Presenter
+    private lateinit var view: MovieAdapterContract.View
     private lateinit var movieRepository: MovieRepository
     private lateinit var advertisementRepository: AdvertisementRepository
 
@@ -38,8 +38,6 @@ class MovieAdapterPresenterTest {
         view = mockk()
         movieRepository = mockk()
         advertisementRepository = mockk()
-        movieAdapterPresenter =
-            MovieAdapterPresenter(view, movieRepository, advertisementRepository, mockk())
     }
 
     @Test
@@ -63,7 +61,8 @@ class MovieAdapterPresenterTest {
         val expect = MovieListItemsViewData.from(
             movies, advertisements, advertisementPolicy
         )
-        movieAdapterPresenter.setMovieList()
+        movieAdapterPresenter =
+            MovieAdapterPresenter(view, mockk(), movieRepository, advertisementRepository, mockk())
 
         // then
         val actual = movieSlot.captured

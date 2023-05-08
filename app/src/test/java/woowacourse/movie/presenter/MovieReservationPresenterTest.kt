@@ -11,11 +11,11 @@ import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.common.mapper.MovieMapper.toView
 import woowacourse.movie.common.mapper.ReservationDetailMapper.toView
+import woowacourse.movie.common.model.MovieScheduleViewData
 import woowacourse.movie.common.model.ReservationDetailViewData
 import woowacourse.movie.common.system.StateContainer
 import woowacourse.movie.domain.Count
 import woowacourse.movie.domain.Movie
-import woowacourse.movie.domain.MovieSchedule
 import woowacourse.movie.domain.ReservationDetail
 import woowacourse.movie.domain.mock.MovieMock
 import woowacourse.movie.movieReservation.MovieReservationContract
@@ -25,13 +25,16 @@ import java.time.LocalDateTime
 class MovieReservationPresenterTest {
     lateinit var movieReservationPresenter: MovieReservationContract.Presenter
     lateinit var view: MovieReservationContract.View
-    lateinit var movieSchedule: MovieSchedule
+    lateinit var movieSchedule: MovieScheduleViewData
 
     @Before
     fun init() {
         view = mockk()
         movieSchedule = mockk()
-        movieReservationPresenter = MovieReservationPresenter(view, Count(3), movieSchedule)
+
+        every { view.setMovieData(any()) } just runs
+        movieReservationPresenter =
+            MovieReservationPresenter(view, Count(3), movieSchedule, mockk())
     }
 
     @Test

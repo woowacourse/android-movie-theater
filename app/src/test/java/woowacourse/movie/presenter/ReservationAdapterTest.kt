@@ -18,15 +18,16 @@ import woowacourse.movie.reservationList.ReservationAdapterPresenter
 import java.time.LocalDateTime
 
 class ReservationAdapterTest {
-    lateinit var reservationAdapterPresenter: ReservationAdapterContract.Presenter
-    lateinit var view: ReservationAdapterContract.View
+    private lateinit var reservationAdapterPresenter: ReservationAdapterContract.Presenter
+    private lateinit var view: ReservationAdapterContract.View
     private lateinit var reservationRepository: ReservationRepository
 
     @Before
     fun init() {
         view = mockk()
         reservationRepository = mockk()
-        reservationAdapterPresenter = ReservationAdapterPresenter(view, reservationRepository)
+        reservationAdapterPresenter =
+            ReservationAdapterPresenter(view, mockk(), reservationRepository)
     }
 
     @Test

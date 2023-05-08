@@ -11,13 +11,12 @@ import woowacourse.movie.setting.SettingContract
 import woowacourse.movie.setting.SettingPresenter
 
 class SettingPresenterTest {
-    lateinit var settingPresenter: SettingContract.Presenter
-    lateinit var view: SettingContract.View
+    private lateinit var settingPresenter: SettingContract.Presenter
+    private lateinit var view: SettingContract.View
 
     @Before
     fun init() {
         view = mockk()
-        settingPresenter = SettingPresenter(view)
     }
 
     @Test
@@ -26,15 +25,18 @@ class SettingPresenterTest {
         every { view.makeSettingSwitch() } just runs
 
         // when
-        settingPresenter.initFragment()
+        settingPresenter = SettingPresenter(view)
 
         // then
         verify { view.makeSettingSwitch() }
     }
 
     @Test
-    fun toggleNotificationSetting() {
+    fun 알림_스위치를_토글한다() {
         // given
+        every { view.makeSettingSwitch() } just runs
+        settingPresenter = SettingPresenter(view)
+
         every {
             view.onNotificationSwitchCheckedChangeListener(
                 any(), any()

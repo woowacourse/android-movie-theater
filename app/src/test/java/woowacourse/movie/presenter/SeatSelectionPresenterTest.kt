@@ -20,15 +20,14 @@ import woowacourse.movie.seatSelection.SeatSelectionPresenter
 import java.time.LocalDateTime
 
 class SeatSelectionPresenterTest {
-    lateinit var seatSelectionPresenter: SeatSelectionContract.Presenter
-    lateinit var view: SeatSelectionContract.View
-    lateinit var reservationRepository: ReservationRepository
+    private lateinit var seatSelectionPresenter: SeatSelectionContract.Presenter
+    private lateinit var view: SeatSelectionContract.View
+    private lateinit var reservationRepository: ReservationRepository
 
     @Before
     fun init() {
         view = mockk()
         reservationRepository = mockk()
-        seatSelectionPresenter = SeatSelectionPresenter(view)
     }
 
     @Test
@@ -41,7 +40,8 @@ class SeatSelectionPresenterTest {
         // when
         val movie = fakeMovie().toView()
         val reservationDetail = fakeReservationDetail().toView()
-        seatSelectionPresenter.initActivity(movie, reservationDetail)
+        seatSelectionPresenter =
+            SeatSelectionPresenter(view, mockk(), reservationRepository, movie, reservationDetail)
 
         // then
         verify { view.makeSeatLayout(any(), any()) }
@@ -52,8 +52,11 @@ class SeatSelectionPresenterTest {
     @Test
     fun 좌석을_선택하면_가격과_예매_버튼을_설정한다() {
         // given
+        every { view.makeSeatLayout(any(), any()) } just runs
+        every { view.setMovieData(any()) } just runs
         every { view.setReservationButtonState(any(), any()) } just runs
         every { view.setPriceText(any()) } just runs
+        seatSelectionPresenter = SeatSelectionPresenter(view, mockk(), reservationRepository, mockk(), mockk())
 
         // when
         val seats = fakeSeats().toView()
@@ -68,9 +71,14 @@ class SeatSelectionPresenterTest {
     @Test
     fun 예매_버튼을_누르면_알람을_설정하고_예매_결과_액티비티를_시작한다() {
         // given
+        every { view.makeSeatLayout(any(), any()) } just runs
+        every { view.setMovieData(any()) } just runs
+        every { view.setPriceText(any()) } just runs
         every { view.makeReservationAlarm(any(), any()) } just runs
         every { view.startReservationResultActivity(any()) } just runs
         every { reservationRepository.postReservation(any()) } just runs
+        seatSelectionPresenter = SeatSelectionPresenter(view, mockk(), reservationRepository, mockk(), mockk())
+
         // when
         val movie = fakeMovie().toView()
         val reservationDetail = fakeReservationDetail().toView()
@@ -88,7 +96,6 @@ class SeatSelectionPresenterTest {
     private fun fakeMovie(): Movie = MovieMock.createMovie()
 
     private fun fakeReservationDetail(): ReservationDetail = ReservationDetail(
-        LocalDateTime.now(),
-        1
+        LocalDateTime.now(), 1
     )
 }
