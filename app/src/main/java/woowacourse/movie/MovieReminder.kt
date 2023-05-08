@@ -7,13 +7,13 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.os.Build
 import androidx.core.app.NotificationCompat
-import woowacourse.movie.activity.BookCompleteActivity
+import woowacourse.movie.activity.bookcomplete.BookCompleteActivity
 import woowacourse.movie.movie.MovieBookingSeatInfo
 
 class MovieReminder : BroadcastReceiver() {
     lateinit var notificationManager: NotificationManager
+    lateinit var sharedPreferenceRepository: DataRepository
 
     override fun onReceive(context: Context, intent: Intent) {
         val canPush = getPushAlarmAllowed(context)
@@ -31,29 +31,25 @@ class MovieReminder : BroadcastReceiver() {
         deliverNotification(context, movieBookingSeatInfo)
     }
 
-    private fun getPushAlarmAllowed(context: Context) =
-        SharedPreferenceUtil.getBooleanValue(
-            context,
-            BundleKeys.SETTING_PUSH_ALARM_SWITCH_KEY,
-            false
-        )
+    private fun getPushAlarmAllowed(context: Context): Boolean {
+        sharedPreferenceRepository = SharedPreferenceUtil(context)
+        return sharedPreferenceRepository.getBooleanValue(false)
+    }
 
     private fun createNotificationChannel(context: Context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationChannel = NotificationChannel(
-                PRIMARY_CHANNEL_ID,
-                context.getString(R.string.notification_channel_name),
-                NotificationManager.IMPORTANCE_HIGH
-            )
-            notificationChannel.enableLights(true)
-            notificationChannel.lightColor = Color.RED
-            notificationChannel.enableVibration(true)
-            notificationChannel.description =
-                context.getString(R.string.notification_channel_description)
-            notificationManager.createNotificationChannel(
-                notificationChannel
-            )
-        }
+        val notificationChannel = NotificationChannel(
+            PRIMARY_CHANNEL_ID,
+            context.getString(R.string.notification_channel_name),
+            NotificationManager.IMPORTANCE_HIGH
+        )
+        notificationChannel.enableLights(true)
+        notificationChannel.lightColor = Color.RED
+        notificationChannel.enableVibration(true)
+        notificationChannel.description =
+            context.getString(R.string.notification_channel_description)
+        notificationManager.createNotificationChannel(
+            notificationChannel
+        )
     }
 
     private fun deliverNotification(context: Context, movieBookingSeatInfo: MovieBookingSeatInfo) {
