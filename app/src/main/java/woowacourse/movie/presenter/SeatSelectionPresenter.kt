@@ -8,6 +8,7 @@ import woowacourse.movie.data.ReservationViewData
 import woowacourse.movie.data.SeatTableViewData
 import woowacourse.movie.data.SeatsViewData
 import woowacourse.movie.data.TableSize
+import woowacourse.movie.data.database.MovieDao
 import woowacourse.movie.data.repository.ReservationRepository
 import woowacourse.movie.domain.discountPolicy.Discount
 import woowacourse.movie.domain.discountPolicy.MovieDayPolicy
@@ -21,7 +22,8 @@ import woowacourse.movie.mapper.SeatsMapper.toView
 
 class SeatSelectionPresenter(
     override val view: SeatSelectionContract.View,
-    private val reservationRepository: ReservationRepository = ReservationRepository(),
+    movieDao: MovieDao,
+    private val reservationRepository: ReservationRepository = ReservationRepository(movieDao),
     movie: MovieViewData,
     reservationDetail: ReservationDetailViewData
 ) : SeatSelectionContract.Presenter {

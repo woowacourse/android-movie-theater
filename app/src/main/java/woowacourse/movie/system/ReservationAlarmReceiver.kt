@@ -18,8 +18,8 @@ import woowacourse.movie.view.fragment.SettingFragment
 
 class ReservationAlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        SharedSetting.initWithContext(context)
-        if (intent.action == ACTION_ALARM && SharedSetting.getValue(
+        val sharedSetting = SharedSetting.from(context)
+        if (intent.action == ACTION_ALARM && sharedSetting.getValue(
                 SettingFragment.SETTING_NOTIFICATION
             )
         ) {

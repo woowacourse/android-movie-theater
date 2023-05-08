@@ -8,14 +8,16 @@ import woowacourse.movie.R
 import woowacourse.movie.contract.ReservationAdapterContract
 import woowacourse.movie.data.ReservationViewData
 import woowacourse.movie.data.ReservationsViewData
+import woowacourse.movie.data.database.MovieDao
 import woowacourse.movie.presenter.ReservationAdapterPresenter
 import woowacourse.movie.view.viewholder.ReservationViewHolder
 
 class ReservationAdapter(
+    movieDao: MovieDao,
     private val onClickItem: (ReservationViewData) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), ReservationAdapterContract.View {
     private var reservationsViewData: ReservationsViewData = ReservationsViewData(emptyList())
-    override val presenter: ReservationAdapterContract.Presenter = ReservationAdapterPresenter(this)
+    override val presenter: ReservationAdapterContract.Presenter = ReservationAdapterPresenter(this, movieDao)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ReservationViewHolder(

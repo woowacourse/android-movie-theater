@@ -10,16 +10,18 @@ import woowacourse.movie.data.MovieListItemsViewData
 import woowacourse.movie.data.MovieListViewType
 import woowacourse.movie.data.MovieViewData
 import woowacourse.movie.data.TheatersViewData
+import woowacourse.movie.data.database.MovieDao
 import woowacourse.movie.presenter.MovieAdapterPresenter
 import woowacourse.movie.view.viewholder.AdvertisementViewHolder
 import woowacourse.movie.view.viewholder.MovieInfoViewHolder
 
 class MovieAdapter(
+    movieDao: MovieDao,
     val createTheaterDialog: (MovieViewData, TheatersViewData) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), MovieAdapterContract.View {
     private var movieListItemsViewData: MovieListItemsViewData = MovieListItemsViewData(emptyList())
 
-    override val presenter: MovieAdapterContract.Presenter = MovieAdapterPresenter(this)
+    override val presenter: MovieAdapterContract.Presenter = MovieAdapterPresenter(this, movieDao)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (MovieListViewType.values()[viewType]) {

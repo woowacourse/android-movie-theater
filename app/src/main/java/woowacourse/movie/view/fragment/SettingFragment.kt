@@ -22,6 +22,7 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
     override lateinit var presenter: SettingContract.Presenter
     private lateinit var permissionResultLauncher: ActivityResultLauncher<String>
     private lateinit var binding: FragmentSettingBinding
+    private lateinit var sharedSetting: SharedSetting
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +35,7 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sharedSetting = SharedSetting.from(view.context)
         presenter = SettingPresenter(this)
     }
 
@@ -44,7 +46,7 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
         }
 
         binding.settingPushSwitch.isChecked =
-            SharedSetting.getValue(SETTING_NOTIFICATION) && isGranted(
+            sharedSetting.getValue(SETTING_NOTIFICATION) && isGranted(
             requireContext(), permission
         )
 
@@ -60,7 +62,7 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
         isGranted: Boolean
     ) {
         switch.isChecked = isGranted
-        SharedSetting.setValue(SETTING_NOTIFICATION, isGranted)
+        sharedSetting.setValue(SETTING_NOTIFICATION, isGranted)
     }
 
     override fun onNotificationSwitchCheckedChangeListener(
@@ -68,13 +70,13 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
         isChecked: Boolean
     ) {
         if (isChecked) {
-            if (isGranted(requireContext(), permission)) SharedSetting.setValue(
+            if (isGranted(requireContext(), permission)) sharedSetting.setValue(
                 SETTING_NOTIFICATION, true
             )
             else requestPermission(permission, permissionResultLauncher)
             return
         }
-        SharedSetting.setValue(SETTING_NOTIFICATION, false)
+        sharedSetting.setValue(SETTING_NOTIFICATION, false)
     }
 
     companion object {

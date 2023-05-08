@@ -2,13 +2,15 @@ package woowacourse.movie.presenter
 
 import woowacourse.movie.contract.ReservationAdapterContract
 import woowacourse.movie.data.ReservationsViewData
+import woowacourse.movie.data.database.MovieDao
 import woowacourse.movie.data.repository.ReservationRepository
 import woowacourse.movie.domain.Reservation
 import woowacourse.movie.mapper.ReservationMapper.toView
 
 class ReservationAdapterPresenter(
     override val view: ReservationAdapterContract.View,
-    private val reservationRepository: ReservationRepository = ReservationRepository()
+    movieDao: MovieDao,
+    private val reservationRepository: ReservationRepository = ReservationRepository(movieDao)
 ) : ReservationAdapterContract.Presenter {
     override fun setReservation() {
         val reservations = makeReservationListViewData(

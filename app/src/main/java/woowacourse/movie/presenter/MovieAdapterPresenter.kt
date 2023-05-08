@@ -5,6 +5,7 @@ import woowacourse.movie.data.AdvertisementItemViewData
 import woowacourse.movie.data.MovieListItemViewData
 import woowacourse.movie.data.MovieListItemsViewData
 import woowacourse.movie.data.MovieViewData
+import woowacourse.movie.data.database.MovieDao
 import woowacourse.movie.data.repository.AdvertisementRepository
 import woowacourse.movie.data.repository.MovieRepository
 import woowacourse.movie.data.repository.TheaterRepository
@@ -17,9 +18,10 @@ import woowacourse.movie.mapper.TheatersMapper.toView
 
 class MovieAdapterPresenter(
     override val view: MovieAdapterContract.View,
-    private val movieRepository: MovieRepository = MovieRepository(),
+    movieDao: MovieDao,
+    private val movieRepository: MovieRepository = MovieRepository(movieDao),
     private val advertisementRepository: AdvertisementRepository = AdvertisementRepository(),
-    private val theaterRepository: TheaterRepository = TheaterRepository()
+    private val theaterRepository: TheaterRepository = TheaterRepository(movieDao)
 ) : MovieAdapterContract.Presenter {
     init {
         val movieCount = requestAdvertisementPolicy().movieCount

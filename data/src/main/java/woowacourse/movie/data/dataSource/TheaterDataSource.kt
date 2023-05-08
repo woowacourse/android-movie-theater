@@ -58,6 +58,5 @@ class TheaterDataSource(movieDataSource: MovieDataSource) : DataSource<Theater> 
         )
     )
 
-    override fun add(t: Theater) {
-    }
+    override fun add(t: Theater) = Unit
 }

@@ -1,18 +1,17 @@
 package woowacourse.movie.data.dataSource
 
+import woowacourse.movie.data.database.MovieDao
 import woowacourse.movie.domain.Reservation
 
-class ReservationDataSource : DataSource<Reservation> {
-    private val data: MutableList<Reservation> =
-        LocalDatabase.movieDao?.selectAllReservations()?.toMutableList() ?: mutableListOf()
+class ReservationDataSource(private val movieDao: MovieDao) : DataSource<Reservation> {
+    private val data: MutableList<Reservation> = movieDao.selectAllReservations().toMutableList()
     override val value: List<Reservation>
         get() = data
 
     override fun add(t: Reservation) {
         data.add(t)
-        LocalDatabase.movieDao?.insertReservation(
-            LocalDatabase.movieDao?.writableDatabase,
-            t
+        movieDao.insertReservation(
+            movieDao.writableDatabase, t
         )
     }
 }

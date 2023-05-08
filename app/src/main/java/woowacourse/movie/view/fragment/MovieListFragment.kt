@@ -12,6 +12,7 @@ import woowacourse.movie.data.MovieScheduleViewData
 import woowacourse.movie.data.MovieViewData
 import woowacourse.movie.data.TheaterViewData
 import woowacourse.movie.data.TheatersViewData
+import woowacourse.movie.data.database.MovieDao
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.databinding.ItemTheaterBinding
 import woowacourse.movie.view.activity.MovieReservationActivity
@@ -35,7 +36,7 @@ class MovieListFragment : Fragment() {
 
     private fun makeMovieRecyclerView() {
         binding.movieListRecycler.adapter =
-            MovieAdapter(::makeTheaterDialog)
+            MovieAdapter(MovieDao(requireContext()), ::makeTheaterDialog)
     }
 
     private fun makeTheaterDialog(movieViewData: MovieViewData, theaters: TheatersViewData) {
@@ -58,10 +59,7 @@ class MovieListFragment : Fragment() {
         val movieSchedule =
             theater.movieSchedules.find { it.movie.title == movieViewData.title } ?: return null
         val item = DataBindingUtil.inflate<ItemTheaterBinding>(
-            layoutInflater,
-            R.layout.item_theater,
-            root,
-            false
+            layoutInflater, R.layout.item_theater, root, false
         )
         item.itemTheaterName.text = theater.name
         item.itemTheaterSchedule.text = getString(R.string.schedule_count, movieSchedule.times.size)

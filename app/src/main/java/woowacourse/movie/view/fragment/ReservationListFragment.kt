@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import woowacourse.movie.R
+import woowacourse.movie.data.database.MovieDao
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.view.activity.ReservationResultActivity
 import woowacourse.movie.view.adapter.ReservationAdapter
@@ -18,8 +19,9 @@ class ReservationListFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_reservation_list, container, false)
+    ): View {
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_reservation_list, container, false)
         return binding.root
     }
 
@@ -29,7 +31,7 @@ class ReservationListFragment : Fragment() {
     }
 
     private fun makeReservationRecyclerView() {
-        binding.reservationListRecycler.adapter = ReservationAdapter {
+        binding.reservationListRecycler.adapter = ReservationAdapter(MovieDao(requireContext())) {
             startActivity(ReservationResultActivity.from(binding.root.context, it))
         }.also { it.presenter.setReservation() }
         val decoration = DividerItemDecoration(binding.root.context, DividerItemDecoration.VERTICAL)
