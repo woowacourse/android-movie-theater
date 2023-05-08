@@ -7,11 +7,15 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.woowacourse.data.local.PreferenceManager
 import woowacourse.movie.R
+import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.presentation.extensions.checkPermission
 import woowacourse.movie.presentation.extensions.createAlertDialog
 import woowacourse.movie.presentation.extensions.message
@@ -19,21 +23,30 @@ import woowacourse.movie.presentation.extensions.negativeButton
 import woowacourse.movie.presentation.extensions.positiveButton
 import woowacourse.movie.presentation.extensions.title
 
-class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.View {
+class SettingFragment : Fragment(), SettingContract.View {
     override lateinit var presenter: SettingPresenter
-    lateinit var pushSwitch: SwitchMaterial
+    private lateinit var binding: FragmentSettingBinding
+    private lateinit var pushSwitch: SwitchMaterial
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter = SettingPresenter(this)
 
-        initPushSwitch(view)
+        pushSwitch = binding.notificationPushSwitch
+        initPushSwitch()
     }
 
-    private fun initPushSwitch(view: View) {
-        pushSwitch = view.findViewById(R.id.notification_push_switch)
-        val isPushAllowed =
-            presenter.getPushAllowPreference(PUSH_ALLOW_KEY, true) && isPermittedPushPermission()
+    private fun initPushSwitch() {
+        val isPushAllowed = presenter.getPushAllowPreference(PUSH_ALLOW_KEY, true) && isPermittedPushPermission()
 
         pushSwitch.isChecked = presenter.getPushAllowPreference(PUSH_ALLOW_KEY, isPushAllowed)
         pushSwitch.setOnCheckedChangeListener { _, isAllowed ->
