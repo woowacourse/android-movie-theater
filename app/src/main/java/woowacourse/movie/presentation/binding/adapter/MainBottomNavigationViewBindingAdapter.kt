@@ -4,18 +4,18 @@ import androidx.annotation.IdRes
 import androidx.databinding.BindingAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
-import woowacourse.movie.presentation.views.main.contract.MainContract
 
-@BindingAdapter("app:presenter")
-fun BottomNavigationView.setPresenter(
-    presenter: MainContract.Presenter,
+@BindingAdapter("app:onChangedHistory", "app:onChangedHome", "app:onChangedSetting")
+fun BottomNavigationView.setNavItemStateChange(
+    onChangedHistory: () -> Unit,
+    onChangedHome: () -> Unit,
+    onChangedSetting: () -> Unit,
 ) {
     setOnItemSelectedListener { menu ->
         when (menu.itemId) {
-            R.id.history -> presenter.changeHistoryState()
-            R.id.home -> presenter.changeHomeState()
-            R.id.setting -> presenter.changeSettingState()
-            else -> {}
+            R.id.history -> onChangedHistory()
+            R.id.home -> onChangedHome()
+            R.id.setting -> onChangedSetting()
         }
         return@setOnItemSelectedListener true
     }

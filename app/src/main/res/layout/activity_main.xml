@@ -30,7 +30,9 @@
             app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:menu="@menu/menu_main"
-            app:presenter="@{presenter}"
+            app:onChangedHistory="@{presenter::changeHistoryState}"
+            app:onChangedHome="@{presenter::changeHomeState}"
+            app:onChangedSetting="@{presenter::changeSettingState}"
             app:selectedMenuId="@{@id/home}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
