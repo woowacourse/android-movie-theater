@@ -1,4 +1,4 @@
-package woowacourse.movie.movie.utils
+package woowacourse.movie.movie
 
 interface BasePreference {
     fun setBoolean(key: String, value: Boolean)

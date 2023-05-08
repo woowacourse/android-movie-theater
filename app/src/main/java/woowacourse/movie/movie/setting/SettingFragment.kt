@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentSettingBinding
+import woowacourse.movie.movie.SettingPreference
 
 class SettingFragment : Fragment(), SettingContract.View {
     override lateinit var presenter: SettingContract.Presenter
     private lateinit var binding: FragmentSettingBinding
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -18,7 +21,7 @@ class SettingFragment : Fragment(), SettingContract.View {
     ): View {
         binding = FragmentSettingBinding.inflate(layoutInflater)
         val view = binding.root
-        presenter = SettingPresenter(this)
+        presenter = SettingPresenter(this, SettingPreference)
         bindSwitch()
         return view
     }

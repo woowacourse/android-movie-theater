@@ -19,7 +19,6 @@ import woowacourse.movie.movie.dto.BookingHistoryDto
 import woowacourse.movie.movie.history.HistoryFragment
 import woowacourse.movie.movie.movielist.HomeFragment
 import woowacourse.movie.movie.setting.SettingFragment
-import woowacourse.movie.movie.utils.SettingPreference
 import woowacourse.movie.movie.utils.Toaster
 
 class MainActivity : AppCompatActivity() {
