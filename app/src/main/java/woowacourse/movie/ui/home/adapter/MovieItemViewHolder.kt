@@ -18,15 +18,13 @@ class MovieItemViewHolder(
     }
 
     fun bind(movie: MovieListModel.MovieModel) {
+        binding.movie = movie
         binding.itemPoster.setImageResource(movie.poster)
-        binding.itemTitle.text = movie.title
         binding.itemDate.text = binding.root.context.getString(
             R.string.screening_date,
             movie.startDate.format(),
             movie.endDate.format(),
         )
-        binding.itemRunningTime.text =
-            binding.root.context.getString(R.string.running_time, movie.runningTime)
     }
 
     private fun LocalDate.format(): String = format(

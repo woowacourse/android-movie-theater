@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="reservation"
+            type="woowacourse.movie.uimodel.MovieTicketModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,6 +22,7 @@
             android:layout_marginTop="12dp"
             android:textColor="@color/black"
             android:textSize="12sp"
+            android:text="@{reservation.dateToString}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="2024. 3. 2" />
@@ -37,6 +44,7 @@
             android:layout_marginStart="4dp"
             android:textColor="@color/black"
             android:textSize="12sp"
+            android:text="@{reservation.timeToString}"
             app:layout_constraintBottom_toBottomOf="@+id/reservation_date"
             app:layout_constraintStart_toEndOf="@id/reservation_divider_indicator"
             app:layout_constraintTop_toTopOf="@id/reservation_date"
@@ -50,10 +58,11 @@
             android:layout_marginBottom="12dp"
             android:textColor="@color/black"
             android:textSize="16sp"
+            android:text="@{reservation.title}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/reservation_date"
             app:layout_constraintTop_toBottomOf="@+id/reservation_date"
-            tools:text="제이슨, 제임스, 레아" />
+            tools:text="TITLE" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

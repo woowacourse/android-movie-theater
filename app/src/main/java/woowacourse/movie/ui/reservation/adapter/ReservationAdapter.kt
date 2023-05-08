@@ -6,8 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemReservationBinding
 import woowacourse.movie.uimodel.MovieTicketModel
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class ReservationAdapter(
     private val reservationInfo: List<MovieTicketModel>,
@@ -39,17 +37,7 @@ class ReservationAdapter(
         }
 
         fun onBind(movieTicketModel: MovieTicketModel) {
-            binding.reservationDate.text = movieTicketModel.time.dateFormat()
-            binding.reservationTime.text = movieTicketModel.time.timeFormat()
-            binding.reservationTitle.text = movieTicketModel.title
+            binding.reservation = movieTicketModel
         }
-
-        private fun LocalDateTime.dateFormat(): String = format(
-            DateTimeFormatter.ofPattern(itemView.context.getString(R.string.date_format)),
-        )
-
-        private fun LocalDateTime.timeFormat(): String = format(
-            DateTimeFormatter.ofPattern(itemView.context.getString(R.string.time_format)),
-        )
     }
 }

@@ -65,12 +65,10 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     }
 
     private fun setMovieInfo(movie: MovieListModel.MovieModel) {
+        binding.movie = movie
         binding.detailPoster.setImageResource(movie.poster)
-        binding.detailTitle.text = movie.title
         binding.detailDate.text =
             getString(R.string.screening_date, movie.startDate.format(), movie.endDate.format())
-        binding.detailRunningTime.text = getString(R.string.running_time, movie.runningTime)
-        binding.detailDescription.text = movie.description
     }
 
     private fun LocalDate.format(): String =

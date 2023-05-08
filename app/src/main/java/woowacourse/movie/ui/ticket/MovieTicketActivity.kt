@@ -47,10 +47,8 @@ class MovieTicketActivity : AppCompatActivity() {
             intent.getSerializableExtraCompat(KEY_TICKET)
                 ?: return failLoadingData()
 
-        binding.ticketTitle.text = ticket.title
+        binding.ticket = ticket
         binding.ticketDate.text = ticket.time.format()
-        binding.ticketPeopleCount.text = getString(R.string.people_count, ticket.peopleCount.count)
-        binding.ticketSeats.text = getString(R.string.seats_with_separator, ticket.seats)
         binding.ticketPrice.text = getString(
             R.string.price_with_payment,
             DecimalFormat("#,###").format(ticket.seats.toDomain().getAllPrice(ticket.time)),
