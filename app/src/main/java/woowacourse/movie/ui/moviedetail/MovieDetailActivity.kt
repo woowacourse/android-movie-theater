@@ -105,8 +105,6 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     companion object {
         private const val KEY_DATE_POSITION = "date_position"
         private const val KEY_TIME_POSITION = "time_position"
-        const val KEY_TITLE = "title"
-        const val KEY_TIME = "time"
-        const val KEY_PEOPLE_COUNT = "count"
+        private const val KEY_PEOPLE_COUNT = "count"
     }
 }
