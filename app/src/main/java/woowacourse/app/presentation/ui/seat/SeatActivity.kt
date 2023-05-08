@@ -10,7 +10,8 @@ import woowacourse.app.data.movie.MovieDao
 import woowacourse.app.data.reservation.ReservationDao
 import woowacourse.app.data.reservation.ReservationRepositoryImpl
 import woowacourse.app.data.reservation.SeatDao
-import woowacourse.app.data.theater.TheaterDatabase
+import woowacourse.app.data.theater.MovieTimeDao
+import woowacourse.app.data.theater.TheaterDao
 import woowacourse.app.data.theater.TheaterRepositoryImpl
 import woowacourse.app.presentation.model.BookedMovieUiModel
 import woowacourse.app.presentation.model.Mapper.toBookedMovie
@@ -56,7 +57,13 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
                 ),
             ),
             bookedMovieUiModel.toBookedMovie(),
-            TheaterUseCase(TheaterRepositoryImpl(TheaterDatabase)),
+            TheaterUseCase(
+                TheaterRepositoryImpl(
+                    theaterDataSource = TheaterDao(this),
+                    movieDataSource = MovieDao(this),
+                    movieTimeDataSource = MovieTimeDao(this),
+                ),
+            ),
         )
     }
 

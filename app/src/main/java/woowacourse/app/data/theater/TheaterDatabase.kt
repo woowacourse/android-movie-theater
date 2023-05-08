@@ -1,3 +1,4 @@
+/*
 package woowacourse.app.data.theater
 
 object TheaterDatabase : TheaterDataSource {
@@ -36,3 +37,4 @@ object TheaterDatabase : TheaterDataSource {
         return theaters.find { it.id == theaterId }
     }
 }
+*/

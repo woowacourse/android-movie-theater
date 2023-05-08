@@ -1,5 +1,6 @@
 package woowacourse.app.presentation.ui.seat
 
+import woowacourse.app.presentation.model.BookedMovie
 import woowacourse.app.presentation.usecase.theater.TheaterUseCase
 import woowacourse.domain.BoxOffice
 import woowacourse.domain.SelectResult
@@ -11,7 +12,7 @@ import woowacourse.domain.ticket.Seat
 class SeatPresenter(
     private val view: SeatContract.View,
     private val boxOffice: BoxOffice,
-    private val bookedMovie: woowacourse.app.presentation.model.BookedMovie,
+    private val bookedMovie: BookedMovie,
     theaterUseCase: TheaterUseCase,
 ) : SeatContract.Presenter {
     private val selectedSeat = SelectedSeat(bookedMovie.ticketCount)
@@ -47,11 +48,11 @@ class SeatPresenter(
             view.errorControl()
             return
         }
-        view.setTableSize(theater.rowSize, theater.columnSize)
+        view.setTableSize(theater.seatStructure.rowSize, theater.seatStructure.columnSize)
         view.setTableColor(
-            sRank = theater.sRankRange,
-            aRank = theater.aRankRange,
-            bRank = theater.bRankRange,
+            sRank = theater.seatStructure.sRankRange,
+            aRank = theater.seatStructure.aRankRange,
+            bRank = theater.seatStructure.bRankRange,
         )
         view.setTableClickListener { theater.selectSeat(it) }
     }

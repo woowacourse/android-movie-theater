@@ -67,4 +67,42 @@ object CgvContract : BaseColumns {
             ");"
         const val DELETE_ADVERTISEMENT_TABLE = "DROP TABLE IF EXISTS $TABLE_NAME"
     }
+
+    object Theater : BaseColumns {
+        const val TABLE_NAME = "theater"
+        const val TABLE_COLUMN_MOVIE_IDS = "movieIds"
+        const val TABLE_COLUMN_ROW_SIZE = "rowSize"
+        const val TABLE_COLUMN_COLUMN_SIZE = "columnSize"
+        const val TABLE_COLUMN_S = "sRankRange"
+        const val TABLE_COLUMN_A = "aRankRange"
+        const val TABLE_COLUMN_B = "bRankRange"
+
+        const val CREATE_THEATER_TABLE = "CREATE TABLE $TABLE_NAME (" +
+            "  ${BaseColumns._ID} INTEGER PRIMARY KEY," +
+            "  $TABLE_COLUMN_MOVIE_IDS TEXT," +
+            "  $TABLE_COLUMN_ROW_SIZE INTEGER," +
+            "  $TABLE_COLUMN_COLUMN_SIZE INTEGER," +
+            "  $TABLE_COLUMN_S TEXT," +
+            "  $TABLE_COLUMN_A TEXT," +
+            "  $TABLE_COLUMN_B TEXT" +
+            ");"
+        const val DELETE_THEATER_TABLE = "DROP TABLE IF EXISTS $TABLE_NAME"
+    }
+
+    object MovieTime : BaseColumns {
+        const val TABLE_NAME = "movieTime"
+        const val TABLE_COLUMN_THEATER_ID = "theaterId"
+        const val TABLE_COLUMN_MOVIE_ID = "movieId"
+        const val TABLE_COLUMN_TIMES = "times"
+
+        const val CREATE_MOVIE_TIME_TABLE = "CREATE TABLE $TABLE_NAME (" +
+            "  ${BaseColumns._ID} INTEGER PRIMARY KEY," +
+            "  $TABLE_COLUMN_THEATER_ID LONG," +
+            "  $TABLE_COLUMN_MOVIE_ID LONG," +
+            "  $TABLE_COLUMN_TIMES TEXT," +
+            "  FOREIGN KEY($TABLE_COLUMN_THEATER_ID) REFERENCES ${Theater.TABLE_NAME}(${BaseColumns._ID}) ON UPDATE CASCADE ON DELETE CASCADE," +
+            "  FOREIGN KEY($TABLE_COLUMN_MOVIE_ID) REFERENCES ${Movie.TABLE_NAME}(${BaseColumns._ID}) ON UPDATE CASCADE ON DELETE CASCADE" +
+            ");"
+        const val DELETE_MOVIE_TIME_TABLE = "DROP TABLE IF EXISTS $TABLE_NAME"
+    }
 }

@@ -18,6 +18,7 @@ class MainUseCase(
     }
 
     private fun <T> mergeAdvertisement(data: List<T>, ads: List<T>): List<T> {
+        if (ads.isEmpty()) return data
         val newList = mutableListOf<T>()
         var adsIndex = 0
         data.forEachIndexed { index, it ->

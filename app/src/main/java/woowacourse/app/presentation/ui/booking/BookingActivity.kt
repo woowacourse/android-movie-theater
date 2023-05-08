@@ -92,7 +92,8 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
 
     override fun clickBookingComplete(ticketCount: Int) {
         val dateTime = binding.spinnerDateTime.selectedDateTime
-        val bookedMovieUiModel = BookedMovieUiModel(presenter.movie.toUiModel(), 0, ticketCount, dateTime)
+        val bookedMovieUiModel =
+            BookedMovieUiModel(presenter.movie.toUiModel(), 0, ticketCount, dateTime)
         startActivity(SeatActivity.getIntent(this, bookedMovieUiModel))
         finish()
     }
