@@ -5,6 +5,7 @@ import woowacourse.movie.domain.model.reservation.DomainReservation
 import woowacourse.movie.presentation.mapper.toDomain
 import woowacourse.movie.presentation.mapper.toPresentation
 import woowacourse.movie.presentation.model.Reservation
+import woowacourse.movie.presentation.model.movieitem.ListItem
 import woowacourse.movie.presentation.views.main.fragments.history.contract.HistoryContract
 
 class HistoryPresenter(
@@ -18,10 +19,14 @@ class HistoryPresenter(
         view.showMoreHistory(item)
     }
 
-    override fun loadHistories(): List<Reservation> {
+    override fun loadHistories() {
         val newHistories = historyRepository.getAll()
 
         loadedHistories.addAll(newHistories)
-        return newHistories.map { it.toPresentation() }
+        view.showMoreHistories(newHistories.map { it.toPresentation() })
+    }
+
+    override fun handleItem(item: ListItem) {
+        view.showTicketingResultScreen(item)
     }
 }

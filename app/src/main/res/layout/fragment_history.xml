@@ -4,10 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        
+        <import type="woowacourse.movie.presentation.views.main.fragments.history.recyclerview.HistoryListAdapter" />
 
         <variable
             name="presenter"
             type="woowacourse.movie.presentation.views.main.fragments.history.contract.HistoryContract.Presenter" />
+
+        <variable
+            name="rvAdapter"
+            type="HistoryListAdapter" />
     </data>
 
     <FrameLayout
@@ -19,8 +25,11 @@
             android:id="@+id/history_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:adapter="@{rvAdapter}"
+            app:hasDivider="@{true}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:presenter="@{presenter}"
+            app:onAdapted="@{presenter::loadHistories}"
+            app:onListItemClick="@{presenter::handleItem}"
             tools:itemCount="5"
             tools:listitem="@layout/item_history" />
 

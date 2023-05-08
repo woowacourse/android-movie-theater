@@ -8,10 +8,13 @@ interface HistoryContract {
         val presenter: Presenter
 
         fun showMoreHistory(item: ListItem)
+        fun showMoreHistories(items: List<ListItem>)
+        fun showTicketingResultScreen(item: ListItem)
     }
 
     abstract class Presenter(protected val view: View) {
         abstract fun addHistory(item: Reservation)
-        abstract fun loadHistories(): List<Reservation>
+        abstract fun loadHistories()
+        abstract fun handleItem(item: ListItem)
     }
 }

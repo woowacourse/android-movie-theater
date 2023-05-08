@@ -11,7 +11,7 @@ class BaseRecyclerView {
     }
 
     abstract class Adapter<T>(
-        private val onItemClick: (T) -> Unit = {},
+        internal var onItemClick: (T) -> Unit = {},
     ) : RecyclerView.Adapter<BaseViewHolder>() {
         protected val items: ArrayList<T> = arrayListOf()
         protected val onItemViewClick: (Int) -> Unit = { position -> onItemClick(items[position]) }

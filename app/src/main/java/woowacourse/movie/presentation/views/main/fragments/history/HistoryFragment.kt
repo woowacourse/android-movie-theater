@@ -16,6 +16,7 @@ import woowacourse.movie.presentation.model.movieitem.ListItem
 import woowacourse.movie.presentation.views.main.fragments.history.contract.HistoryContract
 import woowacourse.movie.presentation.views.main.fragments.history.contract.presenter.HistoryPresenter
 import woowacourse.movie.presentation.views.main.fragments.history.recyclerview.HistoryListAdapter
+import woowacourse.movie.presentation.views.ticketingresult.TicketingResultActivity
 
 class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.View {
     override val presenter: HistoryContract.Presenter by lazy {
@@ -40,12 +41,25 @@ class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.Vie
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.rvAdapter = HistoryListAdapter()
+    }
+
     fun addHistory(reservation: Reservation?) {
         reservation?.let { presenter.addHistory(it) }
     }
 
     override fun showMoreHistory(item: ListItem) {
         (binding.historyRecyclerView.adapter as HistoryListAdapter).append(item)
+    }
+
+    override fun showMoreHistories(items: List<ListItem>) {
+        (binding.rvAdapter as HistoryListAdapter).appendAll(items)
+    }
+
+    override fun showTicketingResultScreen(item: ListItem) {
+        requireContext().startActivity(TicketingResultActivity.getIntent(requireContext(), item))
     }
 
     override fun onDestroyView() {
