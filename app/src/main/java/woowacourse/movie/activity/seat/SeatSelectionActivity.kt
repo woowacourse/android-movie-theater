@@ -66,7 +66,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionActivityContract
             TheaterUIModel::class.java,
         ) ?: TheaterUIModel.theater
     }
-    private val movieAlarmManager by lazy { MovieAlarmManager(this) }
     private val alarmReceiver by lazy { AlarmReceiver() }
     private lateinit var seatSelectView: SeatSelectView
 
@@ -129,7 +128,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionActivityContract
     override fun moveTicketActivity(bookingMovie: BookingMovieUIModel) {
         val intent = Intent(this, TicketActivity::class.java)
         intent.putExtra(BOOKING_MOVIE_KEY, bookingMovie)
-        movieAlarmManager.putAlarm(bookingMovie)
+        MovieAlarmManager(this).putAlarm(bookingMovie)
         startActivity(intent)
         finish()
     }

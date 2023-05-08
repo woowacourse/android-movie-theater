@@ -9,16 +9,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import woowacourse.movie.util.permission.PermissionManager
 import woowacourse.movie.R
-import woowacourse.movie.util.preference.SettingPreference
 import woowacourse.movie.activity.main.contract.MainActivityContract
 import woowacourse.movie.activity.main.contract.presenter.MainActivityPresenter
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.fragment.history.HistoryFragment
 import woowacourse.movie.fragment.home.HomeFragment
 import woowacourse.movie.fragment.setting.SettingFragment
+import woowacourse.movie.util.permission.PermissionManager
+import woowacourse.movie.util.preference.SettingPreference
 
 class MainActivity : AppCompatActivity(), MainActivityContract.View {
 
