@@ -21,7 +21,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.Vie
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        historyRecyclerView = view.findViewById<RecyclerView>(R.id.history_recycler_view)
+        historyRecyclerView = view.findViewById(R.id.history_recycler_view)
         val db = HistoryDbHelper(requireContext())
         presenter = HistoryPresenter(this, db)
         presenter.getData()

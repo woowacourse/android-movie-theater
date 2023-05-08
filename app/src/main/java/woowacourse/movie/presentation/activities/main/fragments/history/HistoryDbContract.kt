@@ -8,4 +8,5 @@ object HistoryDbContract {
     const val TABLE_TICKET_COUNT = "ticketCount"
     const val TABLE_SEAT = "seat"
     const val TABLE_PRICE = "price"
+    const val TABLE_THEATER_NAME = "theaterName"
 }

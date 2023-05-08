@@ -22,7 +22,8 @@ class HistoryDbHelper(
             "  ${HistoryDbContract.TABLE_MOVIE_TIME} TEXT," +
             "  ${HistoryDbContract.TABLE_TICKET_COUNT} int," +
             "  ${HistoryDbContract.TABLE_SEAT} TEXT," +
-            "  ${HistoryDbContract.TABLE_PRICE} int" +
+            "  ${HistoryDbContract.TABLE_PRICE} int," +
+            "  ${HistoryDbContract.TABLE_THEATER_NAME} TEXT" +
             ");"
 
         db?.execSQL(createQuery)
@@ -42,6 +43,7 @@ class HistoryDbHelper(
             put(HistoryDbContract.TABLE_TICKET_COUNT, reservation.ticket.count)
             put(HistoryDbContract.TABLE_SEAT, reservation.seats.toString())
             put(HistoryDbContract.TABLE_PRICE, reservation.ticketPrice.amount)
+            put(HistoryDbContract.TABLE_THEATER_NAME, reservation.theaterName)
         }
         db.insert(HistoryDbContract.TABLE_NAME, null, data)
         db.close()
@@ -58,6 +60,7 @@ class HistoryDbHelper(
                 HistoryDbContract.TABLE_TICKET_COUNT,
                 HistoryDbContract.TABLE_SEAT,
                 HistoryDbContract.TABLE_PRICE,
+                HistoryDbContract.TABLE_THEATER_NAME,
             ),
             null,
             null,
@@ -73,6 +76,7 @@ class HistoryDbHelper(
             val ticketCount = cursor.getInt(cursor.getColumnIndexOrThrow(HistoryDbContract.TABLE_TICKET_COUNT))
             val seats = cursor.getString(cursor.getColumnIndexOrThrow(HistoryDbContract.TABLE_SEAT))
             val price = cursor.getInt(cursor.getColumnIndexOrThrow(HistoryDbContract.TABLE_PRICE))
+            val theaterName = cursor.getString(cursor.getColumnIndexOrThrow(HistoryDbContract.TABLE_THEATER_NAME))
 
             reservations.add(
                 Reservation(
@@ -81,6 +85,7 @@ class HistoryDbHelper(
                     movieTime = MovieTime.from(movieTime),
                     ticket = Ticket(ticketCount),
                     seats = PickedSeats.from(seats),
+                    theaterName = theaterName,
                     ticketPrice = TicketPrice(price),
                 ),
             )
