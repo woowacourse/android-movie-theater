@@ -32,8 +32,9 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         binding.movieTheater = intent.getParcelableCompat<MovieTheater>(MOVIE_THEATER)
         setContentView(binding.root)
 
-        presenter = ReservationPresenter(this, getMovie())
-        binding.presenter = presenter as ReservationPresenter
+        val reservationPresenter = ReservationPresenter(this, getMovie())
+        presenter = reservationPresenter
+        binding.presenter = reservationPresenter
 
         presenter.setUpScreeningDateTime()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
