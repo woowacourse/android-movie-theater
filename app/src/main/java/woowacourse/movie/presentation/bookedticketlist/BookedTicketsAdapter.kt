@@ -22,8 +22,7 @@ class BookedTicketsAdapter(
         }
         return BookedTicketViewHolder(
             inflater.inflate(R.layout.booked_ticket_item, null),
-            clickListener,
-            ::getItem
+            clickListener
         )
     }
 

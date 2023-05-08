@@ -6,15 +6,17 @@ import woowacourse.movie.databinding.SelectTheaterBottomSheetItemBinding
 class SelectTheaterViewHolder(
     private val binding: SelectTheaterBottomSheetItemBinding,
     clickBook: (String) -> Unit,
-    getItem: (Int) -> String
 ) :
     RecyclerView.ViewHolder(binding.root) {
 
+    private lateinit var currentItem: String
+
     init {
-        binding.root.setOnClickListener { clickBook(getItem(layoutPosition)) }
+        binding.root.setOnClickListener { clickBook(currentItem) }
     }
 
     fun bind(theaterName: String, timeTableCount: Int) {
+        currentItem = theaterName
         binding.movieTheaterName = theaterName
         binding.timeTableCount = timeTableCount
     }

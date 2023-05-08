@@ -22,7 +22,7 @@ class SelectTheaterAdapter(
             inflater = LayoutInflater.from(parent.context)
         }
         val binding = SelectTheaterBottomSheetItemBinding.inflate(inflater, parent, false)
-        return SelectTheaterViewHolder(binding, clickBook, ::getItem)
+        return SelectTheaterViewHolder(binding, clickBook)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
