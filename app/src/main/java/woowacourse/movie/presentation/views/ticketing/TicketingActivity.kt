@@ -27,6 +27,7 @@ import woowacourse.movie.presentation.views.ticketing.presenter.TicketingPresent
 class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnClickListener {
     override val presenter: TicketingContract.Presenter by lazy {
         TicketingPresenter(
+            view = this,
             state = TicketingState(
                 movie = intent.getParcelableCompat(MOVIE_KEY)!!,
                 theater = intent.getParcelableCompat(THEATER_KEY)!!
@@ -46,7 +47,6 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnCl
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_ticketing)
         binding.presenter = presenter
-        presenter.attach(this)
     }
 
     override fun onSaveInstanceState(bundle: Bundle) {
@@ -165,11 +165,6 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnCl
             android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onDestroy() {
-        presenter.detach()
-        super.onDestroy()
     }
 
     companion object {

@@ -9,7 +9,10 @@ import woowacourse.movie.presentation.model.MovieTime
 import woowacourse.movie.presentation.model.TicketingState
 import woowacourse.movie.presentation.views.ticketing.contract.TicketingContract
 
-class TicketingPresenter(private var state: TicketingState) : TicketingContract.Presenter() {
+class TicketingPresenter(
+    view: TicketingContract.View,
+    private var state: TicketingState,
+) : TicketingContract.Presenter(view) {
     private val movieDates: List<MovieDate> = DomainMovieDate.releaseDates(
         from = state.movie.startDate,
         to = state.movie.endDate
@@ -17,8 +20,7 @@ class TicketingPresenter(private var state: TicketingState) : TicketingContract.
 
     private val movieTimes = mutableListOf<MovieTime>()
 
-    override fun attach(view: TicketingContract.View) {
-        super.attach(view)
+    init {
         view.initView(state.movie, movieDates)
     }
 
@@ -31,25 +33,25 @@ class TicketingPresenter(private var state: TicketingState) : TicketingContract.
         val movieDatePos = movieDates.indexOf(ticketingState.movieDate)
         val movieTimePos = movieTimes.indexOf(ticketingState.movieTime)
 
-        requireView().showTicketingState(ticketingState.ticketCount, movieDatePos, movieTimePos)
+        view.showTicketingState(ticketingState.ticketCount, movieDatePos, movieTimePos)
     }
 
     override fun plusCount() {
         state = state.copy(ticket = (state.ticket.toDomain() + 1).toPresentation())
-        requireView().updateCount(state.ticketCount)
+        view.updateCount(state.ticketCount)
     }
 
     override fun minusCount() {
         state = state.copy(ticket = (state.ticket.toDomain() - 1).toPresentation())
-        requireView().updateCount(state.ticketCount)
+        view.updateCount(state.ticketCount)
     }
 
     override fun onClickTicketingButton() {
         if (state.isNotSelectedDateTime) {
-            requireView().showUnSelectDateTimeAlertMessage()
+            view.showUnSelectDateTimeAlertMessage()
             return
         }
-        requireView().showSeatPickerScreen(getState())
+        view.showSeatPickerScreen(getState())
     }
 
     override fun onSelectMovieDate(position: Int) {
@@ -67,7 +69,7 @@ class TicketingPresenter(private var state: TicketingState) : TicketingContract.
                 DomainMovieTime.runningTimes(isWeekend(), isToday()).map { it.toPresentation() }
             movieTimes.clear()
             movieTimes.addAll(newRunningTimes)
-            requireView().updateRunningTimes(movieTimes)
+            view.updateRunningTimes(movieTimes)
         }
     }
 }

@@ -18,20 +18,7 @@ interface TicketingContract {
         fun showUnSelectDateTimeAlertMessage()
     }
 
-    abstract class Presenter {
-        private var view: View? = null
-
-        open fun attach(view: View) {
-            this.view = view
-        }
-
-        open fun detach() {
-            this.view = null
-        }
-
-        protected fun requireView(): View =
-            view ?: throw IllegalStateException("View is not attached")
-
+    abstract class Presenter(protected val view: View) {
         abstract fun getState(): TicketingState
         abstract fun setState(ticketingState: TicketingState)
         abstract fun plusCount()
