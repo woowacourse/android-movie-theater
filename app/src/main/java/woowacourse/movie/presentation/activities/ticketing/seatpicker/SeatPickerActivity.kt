@@ -5,11 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivitySeatPickerBinding
 import woowacourse.movie.presentation.activities.main.alarm.PushAlarmManager
 import woowacourse.movie.presentation.activities.main.fragments.history.HistoryDbHelper
 import woowacourse.movie.presentation.activities.main.fragments.theaterPicker.TheaterPickerDialog
@@ -38,6 +39,7 @@ import woowacourse.movie.presentation.receiver.ReservationPushReceiver
 
 class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
     override lateinit var presenter: SeatPickerPresenter
+    private lateinit var binding: ActivitySeatPickerBinding
 
     private val seatRowSize: Int = 5
     private val seatColSize: Int = 4
@@ -54,10 +56,11 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_picker)
         presenter = SeatPickerPresenter(this)
         restoreState(savedInstanceState)
 
-        setContentView(R.layout.activity_seat_picker)
         initView()
     }
 
@@ -71,27 +74,26 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
     }
 
     override fun setMovieTitle() {
-        findViewById<TextView>(R.id.movie_title_tv).text = movie.title
+        binding.movieTitleTv.text = movie.title
     }
 
     override fun setDoneBtnEnabled(isEnabled: Boolean) {
-        findViewById<TextView>(R.id.done_btn).isEnabled = isEnabled
+        binding.doneBtn.isEnabled = isEnabled
     }
 
     override fun setTotalPriceView(ticketPrice: TicketPrice) {
-        findViewById<TextView>(R.id.total_price_tv).text =
-            getString(R.string.movie_pay_price, ticketPrice.amount)
+        binding.totalPriceTv.text = getString(R.string.movie_pay_price, ticketPrice.amount)
     }
 
     private fun initViewClickListener() {
-        findViewById<TextView>(R.id.done_btn).setOnClickListener { presenter.onConfirmButtonClick() }
+        binding.doneBtn.setOnClickListener { presenter.onConfirmButtonClick() }
     }
 
     private fun canPick(): Boolean = presenter.canPick(ticket)
 
     private fun initSeatTable(rowSize: Int, colSize: Int) {
         SeatRow.make(rowSize).forEach { seatRow ->
-            findViewById<TableLayout>(R.id.seat_table).addView(makeSeatTableRow(seatRow, colSize))
+            binding.seatTable.addView(makeSeatTableRow(seatRow, colSize))
         }
     }
 
