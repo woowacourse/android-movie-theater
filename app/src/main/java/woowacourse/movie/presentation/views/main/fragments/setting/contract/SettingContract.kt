@@ -9,19 +9,7 @@ interface SettingContract {
         fun showPushPermissionDialog()
     }
 
-    abstract class Presenter {
-        private var view: View? = null
-
-        fun attach(view: View) {
-            this.view = view
-        }
-
-        fun detach() {
-            this.view = null
-        }
-
-        fun requireView(): View = view ?: throw IllegalStateException("View is not attached")
-
+    abstract class Presenter(protected val view: View) {
         abstract fun getPushSwitchState(): Boolean
         abstract fun updatePushAllow(newState: Boolean)
         abstract fun onPushSwitchClicked(newState: Boolean)

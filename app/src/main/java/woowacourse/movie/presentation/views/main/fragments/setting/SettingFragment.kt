@@ -25,7 +25,10 @@ import woowacourse.movie.presentation.views.main.fragments.setting.contract.pres
 
 class SettingFragment : Fragment(), SettingContract.View {
     override val presenter: SettingContract.Presenter by lazy {
-        SettingPresenter(cacheDataSource = LocalCacheDataSource.getInstance(requireContext()))
+        SettingPresenter(
+            view = this,
+            cacheDataSource = LocalCacheDataSource.getInstance(requireContext())
+        )
     }
     private var _binding: FragmentSettingBinding? = null
     private val binding get() = _binding!!
@@ -44,7 +47,6 @@ class SettingFragment : Fragment(), SettingContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        presenter.attach(this)
         _binding = FragmentSettingBinding.inflate(inflater, container, false)
         binding.presenter = presenter
         return binding.root
@@ -76,7 +78,6 @@ class SettingFragment : Fragment(), SettingContract.View {
 
     override fun onDestroyView() {
         _binding = null
-        presenter.detach()
         super.onDestroyView()
     }
 
