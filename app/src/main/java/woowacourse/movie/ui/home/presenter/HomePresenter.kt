@@ -7,8 +7,8 @@ import woowacourse.movie.model.MovieListModel
 import woowacourse.movie.model.MovieListModel.AdModel
 import woowacourse.movie.model.MovieListModel.MovieModel
 import woowacourse.movie.model.data.MockData
-import woowacourse.movie.ui.home.adapter.HomeAdapter
 import woowacourse.movie.ui.home.HomeItemClickListener
+import woowacourse.movie.ui.home.adapter.HomeAdapter
 import woowacourse.movie.ui.moviedetail.MovieDetailActivity
 
 class HomePresenter(
