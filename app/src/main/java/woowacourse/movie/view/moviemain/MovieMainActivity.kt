@@ -19,15 +19,15 @@ import woowacourse.movie.view.moviemain.setting.SettingFragment
 
 class MovieMainActivity : AppCompatActivity(), MovieMainContract.View {
     lateinit var binding: ActivityMovieMainBinding
+    override lateinit var presenter: MovieMainContract.Presenter
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission(),
     ) { isGranted: Boolean ->
-        val alarmPreferences = AlarmPreference.getInstance(applicationContext)
         if (isGranted) {
-            alarmPreferences.setIsAlarmOn(true)
+            presenter.setAlarmPreference(true)
         } else {
-            alarmPreferences.setIsAlarmOn(false)
+            presenter.setAlarmPreference(false)
         }
     }
 
@@ -36,6 +36,9 @@ class MovieMainActivity : AppCompatActivity(), MovieMainContract.View {
         binding = ActivityMovieMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        presenter = MovieMainPresenter(
+            AlarmPreference.getInstance(applicationContext)
+        )
         setUpBottomNavigation()
         requestNotificationPermission()
     }
