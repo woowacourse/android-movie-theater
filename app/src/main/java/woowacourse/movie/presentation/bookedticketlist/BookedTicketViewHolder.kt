@@ -8,16 +8,20 @@ import woowacourse.movie.presentation.util.formatDotDateTimeColonSeparateBar
 
 class BookedTicketViewHolder(
     private val binding: BookedTicketItemBinding,
-    private val getMovieModel: (TicketModel) -> MovieModel,
+    getMovieModel: (TicketModel) -> MovieModel,
     clickListener: (TicketModel) -> Unit,
-    getPositionData: (Int) -> TicketModel,
 ) : ViewHolder(binding.root) {
 
+    private lateinit var ticketModel: TicketModel
+    private lateinit var getMovieModel: (TicketModel) -> MovieModel
+
     init {
-        setItemOnClickListener(clickListener, getPositionData)
+        setItemOnClickListener(clickListener)
+        initMovieModelGetter(getMovieModel)
     }
 
     fun bind(ticketModel: TicketModel) {
+        this.ticketModel = ticketModel
         binding.textBookedTicketsDateTime.text =
             ticketModel.bookedDateTime.formatDotDateTimeColonSeparateBar()
         binding.textBookedTicketsTitle.text = getMovieModel(ticketModel).title
@@ -25,10 +29,15 @@ class BookedTicketViewHolder(
 
     private fun setItemOnClickListener(
         clickListener: (TicketModel) -> Unit,
-        getPositionData: (Int) -> TicketModel,
     ) {
         binding.root.setOnClickListener {
-            clickListener(getPositionData(adapterPosition))
+            clickListener(ticketModel)
         }
+    }
+
+    private fun initMovieModelGetter(
+        getMovieModel: (TicketModel) -> MovieModel,
+    ) {
+        this.getMovieModel = getMovieModel
     }
 }
