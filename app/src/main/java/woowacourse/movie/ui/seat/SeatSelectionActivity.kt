@@ -20,7 +20,6 @@ import woowacourse.movie.model.ReservationTicketMachine
 import woowacourse.movie.model.data.AlarmSwitchState
 import woowacourse.movie.model.data.AlarmSwitchStateImpl
 import woowacourse.movie.ui.alarm.Alarm
-import woowacourse.movie.ui.moviedetail.MovieDetailActivity
 import woowacourse.movie.ui.seat.uimodel.SeatModel
 import woowacourse.movie.ui.seat.uimodel.SelectedSeatsModel
 import woowacourse.movie.ui.ticket.MovieTicketActivity
@@ -68,11 +67,11 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     private fun setBookingInfo() {
-        movieTitle = intent.getSerializableExtraCompat(MovieDetailActivity.KEY_TITLE)
+        movieTitle = intent.getSerializableExtraCompat(KEY_TITLE)
             ?: return failLoadingData()
-        movieTime = intent.getSerializableExtraCompat(MovieDetailActivity.KEY_TIME)
+        movieTime = intent.getSerializableExtraCompat(KEY_TIME)
             ?: return failLoadingData()
-        peopleCount = intent.getSerializableExtraCompat(MovieDetailActivity.KEY_PEOPLE_COUNT)
+        peopleCount = intent.getSerializableExtraCompat(KEY_PEOPLE_COUNT)
             ?: return failLoadingData()
     }
 
@@ -196,6 +195,9 @@ class SeatSelectionActivity : AppCompatActivity() {
     }
 
     companion object {
+        private const val KEY_TITLE = "title"
+        private const val KEY_TIME = "time"
+        private const val KEY_PEOPLE_COUNT = "count"
         const val ROW_SIZE = 5
         const val COLUMN_SIZE = 4
         const val KEY_TICKET = "TICKET"
