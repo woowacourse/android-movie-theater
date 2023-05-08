@@ -1,12 +1,12 @@
 package woowacourse.movie.data.dataSource
 
 import android.content.Context
-import woowacourse.movie.data.database.MovieDBHelper
+import woowacourse.movie.data.database.MovieDao
 
 object LocalDatabase {
-    var movieDBHelper: MovieDBHelper? = null
+    var movieDao: MovieDao? = null
 
     fun initWithContext(context: Context) {
-        movieDBHelper = MovieDBHelper(context)
+        movieDao = MovieDao(context)
     }
 }

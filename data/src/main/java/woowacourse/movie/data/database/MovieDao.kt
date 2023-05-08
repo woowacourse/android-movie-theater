@@ -21,7 +21,7 @@ import woowacourse.movie.domain.seat.Seats
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-class MovieDBHelper(context: Context) :
+class MovieDao(context: Context) :
     SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
     private val tables: List<SqlTable> = listOf(SqlMovie, SqlReservation, SqlSeat)
 
