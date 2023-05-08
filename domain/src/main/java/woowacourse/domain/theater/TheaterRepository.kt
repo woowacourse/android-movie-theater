@@ -5,5 +5,5 @@ interface TheaterRepository {
 
     fun getTheater(theaterId: Long): Theater?
 
-    fun addTheater(screeningMovies: List<ScreeningMovie>, seatStructure: SeatStructure)
+    fun addTheater(theaterName: String, screeningMovies: List<ScreeningMovie>, seatStructure: SeatStructure)
 }

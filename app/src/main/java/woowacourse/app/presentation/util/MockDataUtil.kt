@@ -68,6 +68,7 @@ fun initTheater(context: Context) {
     val movieRepo: MovieRepository = MovieRepositoryImpl(MovieDao(context))
 
     theaterRepo.addTheater(
+        theaterName = "선릉",
         screeningMovies = listOf(
             ScreeningMovie(
                 movieRepo.getMovie(1)!!,
@@ -84,6 +85,7 @@ fun initTheater(context: Context) {
     )
 
     theaterRepo.addTheater(
+        theaterName = "잠실",
         screeningMovies = listOf(
             ScreeningMovie(
                 movieRepo.getMovie(1)!!,
@@ -123,6 +125,7 @@ fun initTheater(context: Context) {
     )
 
     theaterRepo.addTheater(
+        theaterName = "신림",
         screeningMovies = listOf(
             ScreeningMovie(
                 movieRepo.getMovie(2)!!,

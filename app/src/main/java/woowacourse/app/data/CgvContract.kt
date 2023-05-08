@@ -70,6 +70,7 @@ object CgvContract : BaseColumns {
 
     object Theater : BaseColumns {
         const val TABLE_NAME = "theater"
+        const val TABLE_COLUMNS_THEATER_NAME = "theaterName"
         const val TABLE_COLUMN_MOVIE_IDS = "movieIds"
         const val TABLE_COLUMN_ROW_SIZE = "rowSize"
         const val TABLE_COLUMN_COLUMN_SIZE = "columnSize"
@@ -79,6 +80,7 @@ object CgvContract : BaseColumns {
 
         const val CREATE_THEATER_TABLE = "CREATE TABLE $TABLE_NAME (" +
             "  ${BaseColumns._ID} INTEGER PRIMARY KEY," +
+            "  $TABLE_COLUMNS_THEATER_NAME TEXT," +
             "  $TABLE_COLUMN_MOVIE_IDS TEXT," +
             "  $TABLE_COLUMN_ROW_SIZE INTEGER," +
             "  $TABLE_COLUMN_COLUMN_SIZE INTEGER," +

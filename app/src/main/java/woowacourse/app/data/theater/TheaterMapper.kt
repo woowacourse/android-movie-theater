@@ -9,6 +9,7 @@ object TheaterMapper {
     fun TheaterEntity.toTheater(screeningMovies: List<ScreeningMovie>): Theater {
         return Theater(
             id = this.id,
+            name = this.name,
             seatStructure = SeatStructure(
                 rowSize = this.rowSize,
                 columnSize = this.columnSize,

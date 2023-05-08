@@ -6,6 +6,7 @@ import woowacourse.domain.ticket.SeatRank
 
 data class Theater(
     val id: Long,
+    val name: String,
     val screeningMovies: List<ScreeningMovie>,
     val seatStructure: SeatStructure,
 ) {

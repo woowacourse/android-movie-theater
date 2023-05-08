@@ -2,6 +2,7 @@ package woowacourse.app.data.theater
 
 data class TheaterEntity(
     val id: Long,
+    val name: String,
     val movieIds: String,
     val rowSize: Int,
     val columnSize: Int,

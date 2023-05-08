@@ -25,9 +25,13 @@ class TheaterRepositoryImpl(
             ?.toTheater(getScreeningMovies(theaterId))
     }
 
-    override fun addTheater(screeningMovies: List<ScreeningMovie>, seatStructure: SeatStructure) {
+    override fun addTheater(
+        theaterName: String,
+        screeningMovies: List<ScreeningMovie>,
+        seatStructure: SeatStructure,
+    ) {
         val movieIds = screeningMovies.map { it.movie.id }
-        val theaterId = theaterDataSource.addTheaterEntity(movieIds, seatStructure)
+        val theaterId = theaterDataSource.addTheaterEntity(theaterName, movieIds, seatStructure)
         screeningMovies.map {
             movieTimeDataSource.addMovieTimeEntity(
                 theaterId,

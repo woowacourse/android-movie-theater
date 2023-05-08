@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.provider.BaseColumns
 import android.util.Log
+import woowacourse.app.data.CgvContract.Theater.TABLE_COLUMNS_THEATER_NAME
 import woowacourse.app.data.CgvContract.Theater.TABLE_COLUMN_A
 import woowacourse.app.data.CgvContract.Theater.TABLE_COLUMN_B
 import woowacourse.app.data.CgvContract.Theater.TABLE_COLUMN_COLUMN_SIZE
@@ -35,9 +36,14 @@ class TheaterDao(context: Context) : TheaterDataSource {
         return theater
     }
 
-    override fun addTheaterEntity(movieIds: List<Long>, seatStructure: SeatStructure): Long {
+    override fun addTheaterEntity(
+        theaterName: String,
+        movieIds: List<Long>,
+        seatStructure: SeatStructure,
+    ): Long {
         val data = ContentValues()
         data.put(TABLE_COLUMN_MOVIE_IDS, movieIds.joinToString(","))
+        data.put(TABLE_COLUMNS_THEATER_NAME, theaterName)
         data.put(TABLE_COLUMN_ROW_SIZE, seatStructure.rowSize)
         data.put(TABLE_COLUMN_COLUMN_SIZE, seatStructure.columnSize)
         data.put(TABLE_COLUMN_S, seatStructure.sRankRange.toRangeString())
@@ -67,13 +73,23 @@ class TheaterDao(context: Context) : TheaterDataSource {
     private fun readTheater(cursor: Cursor): TheaterEntity? {
         if (!cursor.moveToNext()) return null
         val id = cursor.getLong(cursor.getColumnIndexOrThrow(BaseColumns._ID))
+        val name = cursor.getString(cursor.getColumnIndexOrThrow(TABLE_COLUMNS_THEATER_NAME))
         val movieIds = cursor.getString(cursor.getColumnIndexOrThrow(TABLE_COLUMN_MOVIE_IDS))
         val rowSize = cursor.getInt(cursor.getColumnIndexOrThrow(TABLE_COLUMN_ROW_SIZE))
         val columnSize = cursor.getInt(cursor.getColumnIndexOrThrow(TABLE_COLUMN_COLUMN_SIZE))
         val sRankRange = cursor.getString(cursor.getColumnIndexOrThrow(TABLE_COLUMN_S))
         val aRankRange = cursor.getString(cursor.getColumnIndexOrThrow(TABLE_COLUMN_A))
         val bRankRange = cursor.getString(cursor.getColumnIndexOrThrow(TABLE_COLUMN_B))
-        return TheaterEntity(id, movieIds, rowSize, columnSize, sRankRange, aRankRange, bRankRange)
+        return TheaterEntity(
+            id,
+            name,
+            movieIds,
+            rowSize,
+            columnSize,
+            sRankRange,
+            aRankRange,
+            bRankRange,
+        )
     }
 
     private fun makeCursor(
@@ -85,6 +101,7 @@ class TheaterDao(context: Context) : TheaterDataSource {
             TABLE_NAME,
             arrayOf(
                 BaseColumns._ID,
+                TABLE_COLUMNS_THEATER_NAME,
                 TABLE_COLUMN_MOVIE_IDS,
                 TABLE_COLUMN_ROW_SIZE,
                 TABLE_COLUMN_COLUMN_SIZE,
