@@ -33,9 +33,7 @@ class SeatSelectionPresenterTest {
 
     @Before
     fun setUp() {
-        view = mockk()
-        every { view.showSeatMaxSelectionToast() } just runs
-        every { view.showWrongInputToast() } just runs
+        view = mockk(relaxed = true)
 
         val reservationRepository = object : ReservationRepository {
             val reservations = mutableListOf<Reservation>()
