@@ -13,7 +13,7 @@ import woowacourse.movie.data.movie.MovieRepositoryImpl
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.ui.home.adapter.ItemClickListener
 import woowacourse.movie.ui.home.adapter.MovieListAdapter
-import woowacourse.movie.ui.moviedetail.MovieDetailActivity
+import woowacourse.movie.ui.home.bottomsheet.TheaterSelectionFragment
 import woowacourse.movie.uimodel.MovieListModel
 
 class HomeFragment : Fragment(), HomeContract.View {
@@ -43,7 +43,7 @@ class HomeFragment : Fragment(), HomeContract.View {
             movies,
             object : ItemClickListener {
                 override fun onMovieItemClick(movie: MovieListModel.MovieModel) {
-                    moveToDetailActivity(movie)
+                    showTheaterBottomDialog(movie)
                 }
 
                 override fun onAdItemClick(ad: MovieListModel.AdModel) {
@@ -53,8 +53,12 @@ class HomeFragment : Fragment(), HomeContract.View {
         )
     }
 
-    private fun moveToDetailActivity(movie: MovieListModel.MovieModel) {
-        startActivity(MovieDetailActivity.getIntent(movie, requireContext()))
+    private fun showTheaterBottomDialog(movie: MovieListModel.MovieModel) {
+        val theaterSelectionBottomDialog = TheaterSelectionFragment()
+        val bundle = Bundle()
+        bundle.putParcelable("key", movie)
+        theaterSelectionBottomDialog.arguments = bundle
+        theaterSelectionBottomDialog.show(childFragmentManager, theaterSelectionBottomDialog.tag)
     }
 
     private fun moveToWebPage(ad: MovieListModel.AdModel) {
