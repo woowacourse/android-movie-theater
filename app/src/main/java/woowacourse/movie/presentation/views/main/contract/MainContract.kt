@@ -16,9 +16,9 @@ interface MainContract {
 
         abstract fun getState(): MainState
         abstract fun setState(state: MainState)
-        abstract fun onShowHistoryScreen()
-        abstract fun onShowHomeScreen()
-        abstract fun onShowSettingScreen()
+        abstract fun changeHistoryState()
+        abstract fun changeHomeState()
+        abstract fun changeSettingState()
         abstract fun wasShownHistory(): Boolean
     }
 }

@@ -68,7 +68,7 @@ internal class MainPresenterTest {
         val expected = MainState(isShownHistory = true, latestScreen = MainScreenState.History)
 
         // when
-        presenter.onShowHistoryScreen()
+        presenter.changeHistoryState()
 
         // then
         verify(exactly = 1) { view.showHistoryScreen() }
@@ -82,7 +82,7 @@ internal class MainPresenterTest {
         val expected = MainState(latestScreen = MainScreenState.Home)
 
         // when
-        presenter.onShowHomeScreen()
+        presenter.changeHomeState()
 
         // then
         verify(exactly = 1) { view.showHomeScreen() }
@@ -96,7 +96,7 @@ internal class MainPresenterTest {
         val expected = MainState(latestScreen = MainScreenState.Setting)
 
         // when
-        presenter.onShowSettingScreen()
+        presenter.changeSettingState()
 
         // then
         verify(exactly = 1) { view.showSettingScreen() }
@@ -110,7 +110,7 @@ internal class MainPresenterTest {
         val expected = true
 
         // when
-        presenter.onShowHistoryScreen()
+        presenter.changeHistoryState()
 
         // then
         val actual = presenter.wasShownHistory()

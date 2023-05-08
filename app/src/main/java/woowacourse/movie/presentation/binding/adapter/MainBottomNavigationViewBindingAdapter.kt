@@ -12,9 +12,9 @@ fun BottomNavigationView.setPresenter(
 ) {
     setOnItemSelectedListener { menu ->
         when (menu.itemId) {
-            R.id.history -> presenter.onShowHistoryScreen()
-            R.id.home -> presenter.onShowHomeScreen()
-            R.id.setting -> presenter.onShowSettingScreen()
+            R.id.history -> presenter.changeHistoryState()
+            R.id.home -> presenter.changeHomeState()
+            R.id.setting -> presenter.changeSettingState()
             else -> {}
         }
         return@setOnItemSelectedListener true

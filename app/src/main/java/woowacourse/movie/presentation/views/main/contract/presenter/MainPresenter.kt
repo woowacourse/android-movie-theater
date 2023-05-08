@@ -19,23 +19,23 @@ class MainPresenter(
         this.state = state.copy()
 
         when (state.latestScreen) {
-            MainScreenState.Home -> view.showHomeScreen()
             MainScreenState.History -> view.showHistoryScreen()
+            MainScreenState.Home -> view.showHomeScreen()
             MainScreenState.Setting -> view.showSettingScreen()
         }
     }
 
-    override fun onShowHistoryScreen() {
+    override fun changeHistoryState() {
         state = state.copy(isShownHistory = true, latestScreen = MainScreenState.History)
         view.showHistoryScreen()
     }
 
-    override fun onShowHomeScreen() {
+    override fun changeHomeState() {
         state = state.copy(latestScreen = MainScreenState.Home)
         view.showHomeScreen()
     }
 
-    override fun onShowSettingScreen() {
+    override fun changeSettingState() {
         state = state.copy(latestScreen = MainScreenState.Setting)
         view.showSettingScreen()
     }
