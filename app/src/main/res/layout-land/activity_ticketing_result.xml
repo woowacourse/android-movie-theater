@@ -3,13 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="reservation"
-            type="woowacourse.movie.presentation.model.Reservation" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -44,7 +37,6 @@
             android:layout_marginTop="15dp"
             android:gravity="center"
             android:paddingVertical="10dp"
-            android:text="@{reservation.movieTitle}"
             android:textColor="@color/black"
             android:textSize="25sp"
             android:textStyle="bold"
@@ -66,12 +58,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title_tv"
-            app:movieDate="@{reservation.movieDate}"
-            app:movieTime="@{reservation.movieTime}"
             tools:text="2024.3.1" />
 
         <TextView
-            android:id="@+id/regular_count_tv"
+            android:id="@+id/ticket_count_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
@@ -84,7 +74,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/ticket_count_and_seat_divider"
             app:layout_constraintVertical_chainStyle="packed"
-            app:ticket="@{reservation.ticket}"
             tools:text="일반 1명" />
 
         <View
@@ -94,7 +83,7 @@
             android:background="@color/black"
             app:layout_constraintBottom_toBottomOf="@+id/seats_tv"
             app:layout_constraintEnd_toStartOf="@id/seats_tv"
-            app:layout_constraintStart_toEndOf="@+id/regular_count_tv"
+            app:layout_constraintStart_toEndOf="@+id/ticket_count_tv"
             app:layout_constraintTop_toTopOf="@+id/seats_tv" />
 
         <TextView
@@ -108,10 +97,9 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/pay_result_tv"
             app:layout_constraintEnd_toStartOf="@+id/seat_and_theater_divider"
-            app:layout_constraintStart_toEndOf="@+id/regular_count_tv"
+            app:layout_constraintStart_toEndOf="@+id/ticket_count_tv"
             app:layout_constraintTop_toBottomOf="@+id/date_tv"
             app:layout_constraintVertical_chainStyle="packed"
-            app:pickedSeats="@{reservation.seats}"
             tools:text="B3, D2, D1, E2, E5, E1" />
 
         <View
@@ -120,19 +108,18 @@
             android:layout_height="0dp"
             android:background="@color/black"
             app:layout_constraintBottom_toBottomOf="@+id/seats_tv"
-            app:layout_constraintEnd_toStartOf="@+id/theater_tv"
+            app:layout_constraintEnd_toStartOf="@+id/theater_name_tv"
             app:layout_constraintStart_toEndOf="@+id/seats_tv"
             app:layout_constraintTop_toTopOf="@+id/seats_tv" />
 
         <TextView
-            android:id="@+id/theater_tv"
+            android:id="@+id/theater_name_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
             android:ellipsize="end"
             android:gravity="center|start"
             android:maxLines="1"
-            android:text="@{reservation.theaterName}"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -154,11 +141,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/regular_count_tv"
-            app:paymentType="@{@string/on_site_payment}"
-            app:ticketPrice="@{reservation.ticketPrice}"
+            app:layout_constraintTop_toBottomOf="@id/ticket_count_tv"
             tools:text="13,000원 (현장 결제)" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

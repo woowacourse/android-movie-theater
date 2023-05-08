@@ -13,7 +13,7 @@ data class Reservation(
     val movieTime: MovieTime,
     val ticket: Ticket,
     val seats: PickedSeats,
-    val ticketPrice: TicketPrice,
+    val totalPrice: TicketPrice,
 ) : ListItem, Parcelable {
     val formattedDate: String
         get() = "${movieDate.year}. ${movieDate.month}. ${movieDate.day}"

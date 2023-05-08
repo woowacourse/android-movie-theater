@@ -6,7 +6,6 @@ import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.domain.model.seat.DomainPickedSeats
-import woowacourse.movie.presentation.views.seatpicker.contract.SeatPickerContract
 import woowacourse.movie.presentation.mapper.toDomain
 import woowacourse.movie.presentation.mapper.toPresentation
 import woowacourse.movie.presentation.model.MovieDate
@@ -17,6 +16,7 @@ import woowacourse.movie.presentation.model.SeatRow
 import woowacourse.movie.presentation.model.Ticket
 import woowacourse.movie.presentation.model.TicketingState
 import woowacourse.movie.presentation.model.movieitem.Movie
+import woowacourse.movie.presentation.views.seatpicker.contract.SeatPickerContract
 import java.time.LocalDate
 
 class SeatPickerPresenterTest {
@@ -42,11 +42,10 @@ class SeatPickerPresenterTest {
 
         view = mockk(relaxUnitFun = true)
         presenter = SeatPickerPresenter(
+            view = view,
             ticketingState = ticketingState,
             historyRepository = mockk(relaxed = true),
         )
-
-        presenter.attach(view)
     }
 
     @Test
@@ -55,7 +54,7 @@ class SeatPickerPresenterTest {
         /* ... */
 
         // when
-        presenter.attach(view)
+        /* ... */
 
         // then
         verify(atLeast = 1) { view.showMovieTitle(any()) }
