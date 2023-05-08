@@ -5,10 +5,11 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.presentation.activities.main.fragments.history.HistoryFragment
 import woowacourse.movie.presentation.activities.main.fragments.home.HomeFragment
 import woowacourse.movie.presentation.activities.main.fragments.setting.SettingFragment
@@ -16,13 +17,13 @@ import woowacourse.movie.presentation.extensions.checkPermissions
 import woowacourse.movie.presentation.extensions.showToast
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission(),
     ) { isGranted: Boolean ->
         if (isGranted) showToast(getString(R.string.permission_allowed))
     }
-
-    private val bottomNavigationView by lazy { findViewById<BottomNavigationView>(R.id.bottom_navigation_view) }
 
     private lateinit var homeFragment: HomeFragment
     private lateinit var settingFragment: SettingFragment
@@ -30,8 +31,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         requestNotificationPermission()
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         homeFragment = getFragment(TAG_HOME)
         historyFragment = getFragment(TAG_HISTORY)
@@ -42,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initListener() {
-        bottomNavigationView.setOnItemSelectedListener { menu ->
+        binding.bottomNavigationView.setOnItemSelectedListener { menu ->
             when (menu.itemId) {
                 R.id.history -> {
                     changeShowFragment<HistoryFragment>()
@@ -78,7 +80,7 @@ class MainActivity : AppCompatActivity() {
             hide(historyFragment)
             hide(settingFragment)
         }
-        bottomNavigationView.selectedItemId = R.id.home
+        binding.bottomNavigationView.selectedItemId = R.id.home
     }
 
     private inline fun <reified T : Fragment> getFragment(tag: String): T {
