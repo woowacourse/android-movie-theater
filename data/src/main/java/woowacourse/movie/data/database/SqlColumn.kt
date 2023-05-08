@@ -1,7 +1,7 @@
 package woowacourse.movie.data.database
 
-data class SQLColumn(
+data class SqlColumn(
     val name: String,
-    val type: SQLType,
+    val type: SqlType,
     val constraint: String = ""
 )

@@ -1,11 +1,11 @@
 package woowacourse.movie.data.database
 
-sealed class SQLType {
-    object INTEGER : SQLType() {
+sealed class SqlType {
+    object INTEGER : SqlType() {
         override fun toString(): String = "INTEGER"
     }
 
-    object TEXT : SQLType() {
+    object TEXT : SqlType() {
         override fun toString(): String = "TEXT"
     }
 }

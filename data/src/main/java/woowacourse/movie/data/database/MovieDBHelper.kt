@@ -4,10 +4,10 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import woowacourse.movie.data.database.table.SQLMovie
-import woowacourse.movie.data.database.table.SQLReservation
-import woowacourse.movie.data.database.table.SQLSeat
-import woowacourse.movie.data.database.table.SQLTable
+import woowacourse.movie.data.database.table.SqlMovie
+import woowacourse.movie.data.database.table.SqlReservation
+import woowacourse.movie.data.database.table.SqlSeat
+import woowacourse.movie.data.database.table.SqlTable
 import woowacourse.movie.domain.DateRange
 import woowacourse.movie.domain.Image
 import woowacourse.movie.domain.Movie
@@ -23,7 +23,7 @@ import java.time.LocalDateTime
 
 class MovieDBHelper(context: Context) :
     SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
-    private val tables: List<SQLTable> = listOf(SQLMovie, SQLReservation, SQLSeat)
+    private val tables: List<SqlTable> = listOf(SqlMovie, SqlReservation, SqlSeat)
 
     override fun onCreate(db: SQLiteDatabase?) {
         tables.forEach {
@@ -48,7 +48,7 @@ class MovieDBHelper(context: Context) :
         }
     }
 
-    private fun insert(db: SQLiteDatabase?, table: SQLTable, row: Map<String, Any>): Long {
+    private fun insert(db: SQLiteDatabase?, table: SqlTable, row: Map<String, Any>): Long {
         db ?: return -1
 
         val contentValues = ContentValues()
@@ -61,28 +61,28 @@ class MovieDBHelper(context: Context) :
         return db.insert(table.name, null, contentValues)
     }
 
-    private fun ContentValues.put(column: SQLColumn, value: Any) {
+    private fun ContentValues.put(column: SqlColumn, value: Any) {
         when (column.type) {
-            is SQLType.INTEGER -> put(column.name, value as Int)
-            is SQLType.TEXT -> put(column.name, value as String)
+            is SqlType.INTEGER -> put(column.name, value as Int)
+            is SqlType.TEXT -> put(column.name, value as String)
         }
     }
 
     fun selectAllReservations(): List<Reservation> {
-        val cursor = readableDatabase.rawQuery("SELECT * FROM ${SQLReservation.name}", null)
+        val cursor = readableDatabase.rawQuery("SELECT * FROM ${SqlReservation.name}", null)
         val reservations = mutableListOf<Reservation>()
         with(cursor) {
             while (moveToNext()) {
                 reservations.add(
                     Reservation(
-                        selectMovieById(getInt(getColumnIndexOrThrow(SQLReservation.MOVIE_ID))),
+                        selectMovieById(getInt(getColumnIndexOrThrow(SqlReservation.MOVIE_ID))),
                         ReservationDetail(
-                            LocalDateTime.parse(getString(getColumnIndexOrThrow(SQLReservation.DATE))),
-                            getInt(getColumnIndexOrThrow(SQLReservation.PEOPLE_COUNT))
+                            LocalDateTime.parse(getString(getColumnIndexOrThrow(SqlReservation.DATE))),
+                            getInt(getColumnIndexOrThrow(SqlReservation.PEOPLE_COUNT))
                         ),
-                        selectSeatsByReservationId(getInt(getColumnIndexOrThrow(SQLReservation.ID))),
-                        Price(getInt(getColumnIndexOrThrow(SQLReservation.PRICE))),
-                        getString(getColumnIndexOrThrow(SQLReservation.THEATER_NAME))
+                        selectSeatsByReservationId(getInt(getColumnIndexOrThrow(SqlReservation.ID))),
+                        Price(getInt(getColumnIndexOrThrow(SqlReservation.PRICE))),
+                        getString(getColumnIndexOrThrow(SqlReservation.THEATER_NAME))
                     )
                 )
             }
@@ -93,7 +93,7 @@ class MovieDBHelper(context: Context) :
 
     private fun selectSeatsByReservationId(reservationId: Int): Seats {
         val cursor = readableDatabase.rawQuery(
-            "SELECT * FROM ${SQLSeat.name} WHERE ${SQLSeat.RESERVATION_ID} = $reservationId", null
+            "SELECT * FROM ${SqlSeat.name} WHERE ${SqlSeat.RESERVATION_ID} = $reservationId", null
         )
         val seats = mutableListOf<Seat>()
 
@@ -101,8 +101,8 @@ class MovieDBHelper(context: Context) :
             while (moveToNext()) {
                 seats.add(
                     Seat(
-                        MovieSeatRow(getInt(getColumnIndexOrThrow(SQLSeat.ROW))),
-                        getInt(getColumnIndexOrThrow(SQLSeat.COLUMN))
+                        MovieSeatRow(getInt(getColumnIndexOrThrow(SqlSeat.ROW))),
+                        getInt(getColumnIndexOrThrow(SqlSeat.COLUMN))
                     )
                 )
             }
@@ -113,19 +113,19 @@ class MovieDBHelper(context: Context) :
 
     private fun selectMovieById(id: Int): Movie {
         val cursor = readableDatabase.rawQuery(
-            "SELECT * FROM ${SQLMovie.name} WHERE ${SQLMovie.ID} = $id", null
+            "SELECT * FROM ${SqlMovie.name} WHERE ${SqlMovie.ID} = $id", null
         )
         val movie = with(cursor) {
             moveToNext()
             Movie(
-                Image(getInt(getColumnIndexOrThrow(SQLMovie.POSTER))),
-                getString(getColumnIndexOrThrow(SQLMovie.TITLE)),
+                Image(getInt(getColumnIndexOrThrow(SqlMovie.POSTER))),
+                getString(getColumnIndexOrThrow(SqlMovie.TITLE)),
                 DateRange(
-                    LocalDate.parse(getString(getColumnIndexOrThrow(SQLMovie.START_DATE))),
-                    LocalDate.parse(getString(getColumnIndexOrThrow(SQLMovie.END_DATE)))
+                    LocalDate.parse(getString(getColumnIndexOrThrow(SqlMovie.START_DATE))),
+                    LocalDate.parse(getString(getColumnIndexOrThrow(SqlMovie.END_DATE)))
                 ),
-                getInt(getColumnIndexOrThrow(SQLMovie.RUNNING_TIME)),
-                getString(getColumnIndexOrThrow(SQLMovie.DESCRIPTION))
+                getInt(getColumnIndexOrThrow(SqlMovie.RUNNING_TIME)),
+                getString(getColumnIndexOrThrow(SqlMovie.DESCRIPTION))
             )
         }
         cursor.close()
@@ -134,11 +134,11 @@ class MovieDBHelper(context: Context) :
 
     private fun selectMovieIdByTitle(title: String): Long {
         val cursor = readableDatabase.rawQuery(
-            "SELECT * FROM ${SQLMovie.name} WHERE ${SQLMovie.TITLE} = '$title'", null
+            "SELECT * FROM ${SqlMovie.name} WHERE ${SqlMovie.TITLE} = '$title'", null
         )
         val id = with(cursor) {
             moveToNext()
-            getInt(getColumnIndexOrThrow(SQLMovie.ID))
+            getInt(getColumnIndexOrThrow(SqlMovie.ID))
         }
         cursor.close()
         return id.toLong()
@@ -146,21 +146,21 @@ class MovieDBHelper(context: Context) :
 
     fun selectAllMovies(): List<Movie> {
         val cursor = readableDatabase.rawQuery(
-            "SELECT * FROM ${SQLMovie.name}", null
+            "SELECT * FROM ${SqlMovie.name}", null
         )
         val movies: MutableList<Movie> = mutableListOf()
         with(cursor) {
             while (moveToNext()) {
                 movies.add(
                     Movie(
-                        Image(getInt(getColumnIndexOrThrow(SQLMovie.POSTER))),
-                        getString(getColumnIndexOrThrow(SQLMovie.TITLE)),
+                        Image(getInt(getColumnIndexOrThrow(SqlMovie.POSTER))),
+                        getString(getColumnIndexOrThrow(SqlMovie.TITLE)),
                         DateRange(
-                            LocalDate.parse(getString(getColumnIndexOrThrow(SQLMovie.START_DATE))),
-                            LocalDate.parse(getString(getColumnIndexOrThrow(SQLMovie.END_DATE)))
+                            LocalDate.parse(getString(getColumnIndexOrThrow(SqlMovie.START_DATE))),
+                            LocalDate.parse(getString(getColumnIndexOrThrow(SqlMovie.END_DATE)))
                         ),
-                        getInt(getColumnIndexOrThrow(SQLMovie.RUNNING_TIME)),
-                        getString(getColumnIndexOrThrow(SQLMovie.DESCRIPTION))
+                        getInt(getColumnIndexOrThrow(SqlMovie.RUNNING_TIME)),
+                        getString(getColumnIndexOrThrow(SqlMovie.DESCRIPTION))
                     )
                 )
             }
@@ -172,12 +172,12 @@ class MovieDBHelper(context: Context) :
     fun insertReservation(db: SQLiteDatabase?, reservation: Reservation) {
         val movieId = selectMovieIdByTitle(reservation.movie.title)
         val contentValues: MutableMap<String, Any> = mutableMapOf()
-        contentValues[SQLReservation.DATE] = reservation.reservationDetail.date.toString()
-        contentValues[SQLReservation.PEOPLE_COUNT] = reservation.reservationDetail.peopleCount
-        contentValues[SQLReservation.MOVIE_ID] = movieId.toInt()
-        contentValues[SQLReservation.PRICE] = reservation.price.value
-        contentValues[SQLReservation.THEATER_NAME] = reservation.theaterName
-        val reservationId = insert(db, SQLReservation, contentValues)
+        contentValues[SqlReservation.DATE] = reservation.reservationDetail.date.toString()
+        contentValues[SqlReservation.PEOPLE_COUNT] = reservation.reservationDetail.peopleCount
+        contentValues[SqlReservation.MOVIE_ID] = movieId.toInt()
+        contentValues[SqlReservation.PRICE] = reservation.price.value
+        contentValues[SqlReservation.THEATER_NAME] = reservation.theaterName
+        val reservationId = insert(db, SqlReservation, contentValues)
         for (seat in reservation.seats.value) {
             insertSeat(db, seat, reservationId)
         }
@@ -185,21 +185,21 @@ class MovieDBHelper(context: Context) :
 
     fun insertMovie(db: SQLiteDatabase?, movie: Movie): Long {
         val contentValues: MutableMap<String, Any> = mutableMapOf()
-        contentValues[SQLMovie.POSTER] = movie.poster.resource
-        contentValues[SQLMovie.TITLE] = movie.title
-        contentValues[SQLMovie.START_DATE] = movie.date.startDate.toString()
-        contentValues[SQLMovie.END_DATE] = movie.date.endDate.toString()
-        contentValues[SQLMovie.RUNNING_TIME] = movie.runningTime
-        contentValues[SQLMovie.DESCRIPTION] = movie.description
-        return insert(db, SQLMovie, contentValues)
+        contentValues[SqlMovie.POSTER] = movie.poster.resource
+        contentValues[SqlMovie.TITLE] = movie.title
+        contentValues[SqlMovie.START_DATE] = movie.date.startDate.toString()
+        contentValues[SqlMovie.END_DATE] = movie.date.endDate.toString()
+        contentValues[SqlMovie.RUNNING_TIME] = movie.runningTime
+        contentValues[SqlMovie.DESCRIPTION] = movie.description
+        return insert(db, SqlMovie, contentValues)
     }
 
     private fun insertSeat(db: SQLiteDatabase?, seat: Seat, reservationId: Long) {
         val contentValues: MutableMap<String, Any> = mutableMapOf()
-        contentValues[SQLSeat.RESERVATION_ID] = reservationId.toInt()
-        contentValues[SQLSeat.ROW] = seat.row.row
-        contentValues[SQLSeat.COLUMN] = seat.column
-        insert(db, SQLSeat, contentValues)
+        contentValues[SqlSeat.RESERVATION_ID] = reservationId.toInt()
+        contentValues[SqlSeat.ROW] = seat.row.row
+        contentValues[SqlSeat.COLUMN] = seat.column
+        insert(db, SqlSeat, contentValues)
     }
 
     companion object {
