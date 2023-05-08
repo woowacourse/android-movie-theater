@@ -14,11 +14,20 @@ class MovieDetailPresenter(
 
     override fun getMovieData(intent: Intent) {
         movie = intent.getParcelableCompat(KEY_MOVIE) ?: throw IllegalArgumentException()
+        val v = view.dateTimeSpinnerView
 
         view.apply {
             setMovieInfo(movie)
-            initSpinner(movie)
             setEventOnBookingButton(::moveToSeatSelectionActivity)
+        }
+    }
+
+    override fun initSpinner() {
+        val dateTimeSpinner = view.dateTimeSpinnerView
+
+        dateTimeSpinner.apply {
+            setDateSpinner(movie)
+            setTimeSpinner()
         }
     }
 

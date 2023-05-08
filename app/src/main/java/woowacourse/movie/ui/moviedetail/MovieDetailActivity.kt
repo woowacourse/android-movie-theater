@@ -37,6 +37,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         presenter.getMovieData(intent)
+        presenter.initSpinner()
         initPeopleCountController()
         loadSavedData(savedInstanceState)
     }
@@ -91,13 +92,6 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
                 getString(R.string.screening_date, movie.startDate.format(), movie.endDate.format())
             detailRunningTime.text = getString(R.string.running_time, movie.runningTime)
             detailDescription.text = movie.description
-        }
-    }
-
-    override fun initSpinner(movie: MovieModel) {
-        dateTimeSpinnerView.apply {
-            setDateSpinner(movie)
-            setTimeSpinner()
         }
     }
 

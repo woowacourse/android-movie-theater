@@ -13,11 +13,10 @@ interface MovieDetailContract {
 
         fun setMovieInfo(movie: MovieModel)
         fun setEventOnBookingButton(movingToSeatSelectionActivity: () -> Unit)
-        fun initSpinner(movie: MovieModel)
     }
 
     interface Presenter {
-
+        fun initSpinner()
         fun getMovieData(intent: Intent)
         fun moveToSeatSelectionActivity()
     }
