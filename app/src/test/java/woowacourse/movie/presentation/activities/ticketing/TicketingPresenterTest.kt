@@ -5,11 +5,10 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.slot
+import io.mockk.verify
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.presentation.model.MovieDate
-import woowacourse.movie.presentation.model.MovieTime
 import woowacourse.movie.presentation.model.Ticket
 import woowacourse.movie.presentation.model.item.Movie
 import java.time.LocalDate
@@ -97,34 +96,9 @@ internal class TicketingPresenterTest {
     }
 
     @Test
-    fun `평일인 5월 4일의 영화 시간표 중 첫 번째는 10시다`() {
-        // given
-        val movieDate = MovieDate(2023, 5, 4)
-        val slot = slot<List<MovieTime>>()
-        every { view.setMovieTimes(capture(slot)) } just Runs
-
-        // when
-        presenter.updateMovieTimes(movieDate)
-
-        // then
-        val actual = slot.captured[0]
-        val expected = MovieTime(10, 0)
-        assertEquals(expected, actual)
-    }
-
-    @Test
-    fun `주말인 5월 6일의 영화 시간표 중 첫 번째는 9시다`() {
-        // given
-        val movieDate = MovieDate(2023, 5, 7)
-        val slot = slot<List<MovieTime>>()
-        every { view.setMovieTimes(capture(slot)) } just Runs
-
-        // when
-        presenter.updateMovieTimes(movieDate)
-
-        // then
-        val actual = slot.captured[0]
-        val expected = MovieTime(9, 0)
-        assertEquals(expected, actual)
+    fun `액티비티가 열리면 넘어온 시간표가 나온다`() {
+        every { view.setMovieTimes() } just Runs
+        presenter.updateMovieTimes()
+        verify(exactly = 1) { view.setMovieTimes() }
     }
 }
