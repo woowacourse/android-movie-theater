@@ -1,14 +1,18 @@
 package woowacourse.movie
 
+import io.mockk.Runs
 import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import woowacourse.movie.model.BookedMovie
 import woowacourse.movie.ui.booking.BookingContract
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 class BookingPresenterTest {
@@ -20,7 +24,7 @@ class BookingPresenterTest {
     fun setUp() {
         view = mockk()
         // given 극장은 선릉이다. (10시부터 두시간 간격으로 6개의 상영시간을 가진다)
-        bookingPresenter = BookingPresenter(view)
+        bookingPresenter = BookingPresenter(view = view)
     }
 
     @Test
@@ -119,5 +123,30 @@ class BookingPresenterTest {
 
         assertEquals(actual, expected)
         verify { view.setTimes(expected) }
+    }
+
+    @Test
+    fun `시간을 설정하고 티켓 개수를 정하는 것을 완료하면 view는 해당 정보를 가지고 좌석 화면으로 이동한다`() {
+        //given 기본 극장은 선릉으로 설정되어 있다
+        val slot = slot<BookedMovie>()
+        val selectedDateTime = LocalDateTime.of(
+            LocalDate.of(2022, 10, 23),
+            LocalTime.of(10, 0)
+        )
+
+        every { view.selectedDateTime } returns selectedDateTime
+        every { view.navigateToSeatView(capture(slot)) } just Runs
+
+        //when
+        bookingPresenter.onCompletedBookingMovie()
+
+        //then
+        val actual = slot.captured
+        val expected = BookedMovie(
+            bookedDateTime = selectedDateTime
+        )
+
+        assertEquals(actual, expected)
+        verify { view.navigateToSeatView(expected) }
     }
 }

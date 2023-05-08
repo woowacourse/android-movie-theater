@@ -6,7 +6,6 @@ import woowacourse.movie.model.main.MovieMapper.toUiModel
 import woowacourse.movie.movie.Movie
 import woowacourse.movie.theater.Theater
 import woowacourse.movie.ticket.TicketCount
-import java.time.LocalDateTime
 
 class BookingPresenter(
     private val view: BookingContract.View,
@@ -44,13 +43,16 @@ class BookingPresenter(
         view.setTimes(theater.screeningTimes)
     }
 
-    override fun createBookedMovie(dateTime: LocalDateTime): BookedMovie {
-
-        return BookedMovie(
+    override fun onCompletedBookingMovie() {
+        val bookedMovie = BookedMovie(
             movieId = movie.id,
             theaterId = 0,
             ticketCount = ticketCount.value,
-            bookedDateTime = dateTime
+            bookedDateTime = view.selectedDateTime
+        )
+
+        view.navigateToSeatView(
+            bookedMovie = bookedMovie
         )
     }
 }

@@ -13,10 +13,13 @@ interface BookingContract {
 
     interface View {
 
+        val selectedDateTime: LocalDateTime
+
         fun initView(movie: MovieUiModel)
         fun setTicketCountText(count: Int)
         fun setTimes(screeningTimes: List<LocalTime>)
         fun setDates(screeningDates: List<LocalDate>)
+        fun navigateToSeatView(bookedMovie: BookedMovie)
     }
 
     interface Presenter {
@@ -29,6 +32,6 @@ interface BookingContract {
         fun initDateTimes()
         fun minusTicketCount()
         fun plusTicketCount()
-        fun createBookedMovie(dateTime: LocalDateTime): BookedMovie
+        fun onCompletedBookingMovie()
     }
 }

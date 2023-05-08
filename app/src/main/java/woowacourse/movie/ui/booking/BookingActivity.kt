@@ -8,11 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingBinding
+import woowacourse.movie.model.BookedMovie
 import woowacourse.movie.model.main.MainModelHandler
 import woowacourse.movie.model.main.MovieUiModel
 import woowacourse.movie.ui.seat.SeatActivity
 import woowacourse.movie.util.formatScreenDate
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 class BookingActivity : AppCompatActivity(), BookingContract.View {
@@ -32,6 +34,8 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
             theaterId = theaterId
         )
     }
+    override val selectedDateTime: LocalDateTime
+        get() = binding.spinnerDateTime.selectedDateTime
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +45,6 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         bookingPresenter.initMovie()
         bookingPresenter.initTicketCount()
         bookingPresenter.initDateTimes()
-        initCompleteButtonClickListener()
     }
 
     override fun onRestoreInstanceState(
@@ -63,16 +66,17 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
     }
 
     override fun initView(movie: MovieUiModel) {
-        binding.imageBookingPoster.setImageResource(movie.poster)
-        binding.textBookingTitle.text = movie.title
-        binding.textBookingScreeningDate.text =
-            getString(
+        with(binding) {
+            imageBookingPoster.setImageResource(movie.poster)
+            textBookingTitle.text = movie.title
+            textBookingScreeningDate.text = getString(
                 R.string.screening_date,
                 movie.startDate.formatScreenDate(),
                 movie.endDate.formatScreenDate(),
             )
-        binding.textBookingRunningTime.text = getString(R.string.running_time, movie.runningTime)
-        binding.textBookingDescription.text = movie.description
+            textBookingRunningTime.text = getString(R.string.running_time, movie.runningTime)
+            textBookingDescription.text = movie.description
+        }
         showBackButton()
     }
 
@@ -100,14 +104,9 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun initCompleteButtonClickListener() {
-        binding.buttonBookingComplete.setOnClickListener {
-            val bookedMovie =
-                bookingPresenter.createBookedMovie(binding.spinnerDateTime.selectedDateTime)
-
-            startActivity(SeatActivity.getIntent(this, bookedMovie))
-            finish()
-        }
+    override fun navigateToSeatView(bookedMovie: BookedMovie) {
+        startActivity(SeatActivity.getIntent(this, bookedMovie))
+        finish()
     }
 
     companion object {
