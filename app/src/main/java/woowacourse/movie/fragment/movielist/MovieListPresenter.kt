@@ -27,13 +27,6 @@ class MovieListPresenter(
         view.initMovieRecyclerView(loadMovieViewDatas)
     }
 
-    override fun onItemClick(data: MovieListViewData) {
-        when (data.viewType) {
-            MovieListViewType.MOVIE -> view.onMovieClick(data)
-            MovieListViewType.ADVERTISEMENT -> Unit
-        }
-    }
-
     private fun loadMovieListData(): MovieViewDatas {
         val movies = movieRepository.getData()
         val advertisements = adRepository.getData()
@@ -52,6 +45,13 @@ class MovieListPresenter(
         index: Int,
         advertisementPolicy: AdvertisementPolicy
     ): Boolean = index > 0 && index % advertisementPolicy.movieCount == 0
+
+    override fun onItemClick(data: MovieListViewData) {
+        when (data.viewType) {
+            MovieListViewType.MOVIE -> view.onMovieClick(data)
+            MovieListViewType.ADVERTISEMENT -> Unit
+        }
+    }
 
     companion object {
         private const val MOVIE_COUNT = 3
