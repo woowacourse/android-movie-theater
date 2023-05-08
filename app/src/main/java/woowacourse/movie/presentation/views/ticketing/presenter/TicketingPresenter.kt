@@ -13,14 +13,18 @@ class TicketingPresenter(
     view: TicketingContract.View,
     private var state: TicketingState,
 ) : TicketingContract.Presenter(view) {
+    private val movieTimes = mutableListOf<MovieTime>()
     private val movieDates: List<MovieDate> = DomainMovieDate.releaseDates(
         from = state.movie.startDate,
         to = state.movie.endDate
     ).map { it.toPresentation() }
-    private val movieTimes = mutableListOf<MovieTime>()
 
     init {
-        view.initView(state.movie, movieDates)
+        view.showMovieIntroduce(state.movie)
+        view.updateMovieDates(movieDates)
+        if (movieDates.isEmpty()) {
+            view.showNotExistSelectableDates()
+        }
     }
 
     override fun getState(): TicketingState = state.copy()

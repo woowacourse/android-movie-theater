@@ -9,13 +9,15 @@ interface TicketingContract {
     interface View {
         val presenter: Presenter
 
-        fun initView(movie: Movie, movieDates: List<MovieDate>)
         fun updateCount(value: Int)
         fun showTicketingState(ticketCount: Int, movieDatePos: Int, movieTimePos: Int)
         fun showSeatPickerScreen(ticketingState: TicketingState)
         fun updateRunningTimes(runningTimes: List<MovieTime>)
         fun updateSpinnersState(movieDatePos: Int, movieTimePos: Int)
         fun showUnSelectDateTimeAlertMessage()
+        fun showNotExistSelectableDates()
+        fun showMovieIntroduce(movie: Movie)
+        fun updateMovieDates(movieDates: List<MovieDate>)
     }
 
     abstract class Presenter(protected val view: View) {

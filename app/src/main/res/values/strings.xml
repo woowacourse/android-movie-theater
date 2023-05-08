@@ -35,4 +35,5 @@
     <string name="permission_request_dialog_title">권한 요청</string>
     <string name="permission_request_dialog_desc">푸시 알림을 받으려면 권한이 필요합니다.</string>
     <string name="n_running_times">%d개의 상영 시간</string>
+    <string name="not_exist_selectable_dates">선택 가능한 날짜가 없습니다.</string>
 </resources>

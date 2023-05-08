@@ -47,6 +47,7 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnCl
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_ticketing)
         binding.presenter = presenter
+        initView()
     }
 
     override fun onSaveInstanceState(bundle: Bundle) {
@@ -60,15 +61,13 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnCl
         ticketingState?.let { presenter.setState(it) }
     }
 
-    override fun initView(movie: Movie, movieDates: List<MovieDate>) {
+    private fun initView() {
         showBackButton()
-        showMovieIntroduce(movie)
         initSpinnerConfig()
-        updateMovieDates(movieDates)
         initViewClickListener()
     }
 
-    private fun showMovieIntroduce(movie: Movie) {
+    override fun showMovieIntroduce(movie: Movie) {
         with(movie) {
             binding.posterIv.setImageResource(thumbnail)
             binding.titleTv.text = title
@@ -98,7 +97,7 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnCl
         initMovieDateSpinnerListener()
     }
 
-    private fun updateMovieDates(movieDates: List<MovieDate>) {
+    override fun updateMovieDates(movieDates: List<MovieDate>) {
         val movieDateTexts =
             movieDates.map { getString(R.string.book_date, it.year, it.month, it.day) }
         movieDateAdapter.clear()
@@ -150,6 +149,10 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View, View.OnCl
 
     override fun showUnSelectDateTimeAlertMessage() {
         showToast(getString(R.string.select_date_and_time))
+    }
+
+    override fun showNotExistSelectableDates() {
+        showToast(getString(R.string.not_exist_selectable_dates))
     }
 
     override fun onClick(view: View) {
