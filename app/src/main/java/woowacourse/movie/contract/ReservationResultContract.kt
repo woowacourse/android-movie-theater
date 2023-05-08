@@ -3,7 +3,6 @@ package woowacourse.movie.contract
 import woowacourse.movie.data.MovieViewData
 import woowacourse.movie.data.PriceViewData
 import woowacourse.movie.data.ReservationDetailViewData
-import woowacourse.movie.data.ReservationViewData
 import woowacourse.movie.data.SeatsViewData
 
 interface ReservationResultContract {
@@ -17,6 +16,5 @@ interface ReservationResultContract {
 
     interface Presenter {
         val view: View
-        fun initActivity(reservation: ReservationViewData)
     }
 }

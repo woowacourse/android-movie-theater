@@ -19,7 +19,7 @@ import woowacourse.movie.system.makePermissionResultLauncher
 import woowacourse.movie.system.requestPermission
 
 class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.View {
-    override val presenter: SettingContract.Presenter = SettingPresenter(this)
+    override lateinit var presenter: SettingContract.Presenter
     private lateinit var permissionResultLauncher: ActivityResultLauncher<String>
     private lateinit var binding: FragmentSettingBinding
 
@@ -34,7 +34,7 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.initFragment()
+        presenter = SettingPresenter(this)
     }
 
     override fun makeSettingSwitch() {

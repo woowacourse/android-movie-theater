@@ -25,7 +25,7 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 class ReservationResultActivity : AppCompatActivity(), ReservationResultContract.View {
-    override val presenter: ReservationResultContract.Presenter = ReservationResultPresenter(this)
+    override lateinit var presenter: ReservationResultContract.Presenter
     private lateinit var binding: ActivityReservationResultBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +45,7 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
             intent.extras?.getSerializableCompat<ReservationViewData>(ReservationViewData.RESERVATION_EXTRA_NAME)
                 ?: return finishWithError(ViewError.MissingExtras(ReservationViewData.RESERVATION_EXTRA_NAME))
 
-        presenter.initActivity(reservation)
+        presenter = ReservationResultPresenter(this, reservation)
     }
 
     override fun setMovieData(movie: MovieViewData) {

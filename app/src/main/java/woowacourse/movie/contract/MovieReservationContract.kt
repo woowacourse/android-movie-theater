@@ -18,7 +18,6 @@ interface MovieReservationContract {
 
     interface Presenter {
         val view: View
-        fun initActivity(movie: MovieViewData)
         fun addPeopleCount(count: Int)
         fun minusPeopleCount(count: Int)
         fun reserveMovie(date: LocalDateTime, movie: MovieViewData, theaterName: String)

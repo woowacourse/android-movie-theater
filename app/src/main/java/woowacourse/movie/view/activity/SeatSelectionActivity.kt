@@ -29,7 +29,7 @@ import java.time.LocalDateTime
 import java.util.Locale
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
-    override val presenter: SeatSelectionContract.Presenter = SeatSelectionPresenter(this)
+    override lateinit var presenter: SeatSelectionContract.Presenter
     private lateinit var binding: ActivitySeatSelectionBinding
 
     private lateinit var seatTableLayout: SeatTableLayout
@@ -58,7 +58,8 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             intent.extras?.getSerializableCompat<String>(TheaterViewData.THEATER_EXTRA_NAME)
                 ?: return finishWithError(ViewError.MissingExtras(TheaterViewData.THEATER_EXTRA_NAME))
 
-        presenter.initActivity(movie, reservationDetail)
+        presenter =
+            SeatSelectionPresenter(this, movie = movie, reservationDetail = reservationDetail)
         seatTableLayout.load(savedInstanceState)
         initReserveButton(seatTableLayout, movie, reservationDetail, theaterName)
     }

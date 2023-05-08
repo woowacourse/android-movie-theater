@@ -21,9 +21,11 @@ import woowacourse.movie.mapper.SeatsMapper.toView
 
 class SeatSelectionPresenter(
     override val view: SeatSelectionContract.View,
-    private val reservationRepository: ReservationRepository = ReservationRepository()
+    private val reservationRepository: ReservationRepository = ReservationRepository(),
+    movie: MovieViewData,
+    reservationDetail: ReservationDetailViewData
 ) : SeatSelectionContract.Presenter {
-    override fun initActivity(movie: MovieViewData, reservationDetail: ReservationDetailViewData) {
+    init {
         view.makeSeatLayout(
             reservationDetail,
             SeatTableViewData(
@@ -49,11 +51,7 @@ class SeatSelectionPresenter(
         val price = calculateDiscountedPrice(seats, reservationDetail)
 
         val reservation = ReservationViewData(
-            movie,
-            reservationDetail,
-            seats,
-            price,
-            theaterName
+            movie, reservationDetail, seats, price, theaterName
         )
 
         val domainReservation = reservation.toDomain()

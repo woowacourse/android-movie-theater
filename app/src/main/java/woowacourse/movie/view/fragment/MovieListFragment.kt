@@ -35,7 +35,7 @@ class MovieListFragment : Fragment() {
 
     private fun makeMovieRecyclerView() {
         binding.movieListRecycler.adapter =
-            MovieAdapter(::makeTheaterDialog).also { it.presenter.setMovieList() }
+            MovieAdapter(::makeTheaterDialog)
     }
 
     private fun makeTheaterDialog(movieViewData: MovieViewData, theaters: TheatersViewData) {

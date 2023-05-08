@@ -19,7 +19,6 @@ import woowacourse.movie.data.TheaterViewData
 import woowacourse.movie.databinding.ActivityMovieReservationBinding
 import woowacourse.movie.error.ActivityError.finishWithError
 import woowacourse.movie.error.ViewError
-import woowacourse.movie.mapper.MovieScheduleMapper.toDomain
 import woowacourse.movie.presenter.MovieReservationPresenter
 import woowacourse.movie.system.BundleStateContainer
 import woowacourse.movie.system.StateContainer
@@ -77,8 +76,8 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
             intent.extras?.getSerializableCompat<String>(TheaterViewData.THEATER_EXTRA_NAME)
                 ?: return finishWithError(ViewError.MissingExtras(TheaterViewData.THEATER_EXTRA_NAME))
 
-        presenter = MovieReservationPresenter(this, movieSchedule = movieSchedule.toDomain())
-        presenter.initActivity(movie)
+        presenter =
+            MovieReservationPresenter(this, movieSchedule = movieSchedule, movieViewData = movie)
         makeCounterListener()
         makeSpinners(savedInstanceState, movie)
         makeReservationButtonClickListener(movie, theaterName)

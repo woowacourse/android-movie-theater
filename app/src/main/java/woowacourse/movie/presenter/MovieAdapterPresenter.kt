@@ -21,7 +21,7 @@ class MovieAdapterPresenter(
     private val advertisementRepository: AdvertisementRepository = AdvertisementRepository(),
     private val theaterRepository: TheaterRepository = TheaterRepository()
 ) : MovieAdapterContract.Presenter {
-    override fun setMovieList() {
+    init {
         val movieCount = requestAdvertisementPolicy().movieCount
         val movies = MovieListItemsViewData.from(
             requestMovies(), requestAdvertisements(), movieCount

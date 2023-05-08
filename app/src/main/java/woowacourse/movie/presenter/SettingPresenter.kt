@@ -3,7 +3,7 @@ package woowacourse.movie.presenter
 import woowacourse.movie.contract.SettingContract
 
 class SettingPresenter(override val view: SettingContract.View) : SettingContract.Presenter {
-    override fun initFragment() {
+    init {
         view.makeSettingSwitch()
     }
 

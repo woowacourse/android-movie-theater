@@ -2,9 +2,9 @@ package woowacourse.movie.presenter
 
 import woowacourse.movie.contract.MovieReservationContract
 import woowacourse.movie.data.LocalFormattedTime
+import woowacourse.movie.data.MovieScheduleViewData
 import woowacourse.movie.data.MovieViewData
 import woowacourse.movie.domain.Count
-import woowacourse.movie.domain.MovieSchedule
 import woowacourse.movie.domain.ReservationDetail
 import woowacourse.movie.mapper.ReservationDetailMapper.toView
 import woowacourse.movie.system.StateContainer
@@ -13,10 +13,11 @@ import java.time.LocalDateTime
 class MovieReservationPresenter(
     override val view: MovieReservationContract.View,
     private var peopleCount: Count = Count(PEOPLE_DEFAULT_COUNT),
-    private val movieSchedule: MovieSchedule
+    private val movieSchedule: MovieScheduleViewData,
+    movieViewData: MovieViewData
 ) : MovieReservationContract.Presenter {
-    override fun initActivity(movie: MovieViewData) {
-        view.setMovieData(movie)
+    init {
+        view.setMovieData(movieViewData)
     }
 
     override fun addPeopleCount(count: Int) {

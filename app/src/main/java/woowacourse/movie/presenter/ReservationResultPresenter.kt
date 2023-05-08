@@ -3,12 +3,18 @@ package woowacourse.movie.presenter
 import woowacourse.movie.contract.ReservationResultContract
 import woowacourse.movie.data.ReservationViewData
 
-class ReservationResultPresenter(override val view: ReservationResultContract.View) :
-    ReservationResultContract.Presenter {
-    override fun initActivity(reservation: ReservationViewData) {
-        view.setMovieData(reservation.movie)
-        view.setReservationDetailData(reservation.reservationDetail)
-        view.setSeatData(reservation.reservationDetail, reservation.seats, reservation.theaterName)
-        view.setPriceData(reservation.price)
+class ReservationResultPresenter(
+    override val view: ReservationResultContract.View,
+    reservationViewData: ReservationViewData
+) : ReservationResultContract.Presenter {
+    init {
+        view.setMovieData(reservationViewData.movie)
+        view.setReservationDetailData(reservationViewData.reservationDetail)
+        view.setSeatData(
+            reservationViewData.reservationDetail,
+            reservationViewData.seats,
+            reservationViewData.theaterName
+        )
+        view.setPriceData(reservationViewData.price)
     }
 }

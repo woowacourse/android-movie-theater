@@ -12,7 +12,6 @@ interface SettingContract {
 
     interface Presenter {
         val view: View
-        fun initFragment()
         fun toggleNotificationSetting(
             permission: String,
             isChecked: Boolean

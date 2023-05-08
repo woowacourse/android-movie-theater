@@ -14,7 +14,6 @@ interface MovieAdapterContract {
 
     interface Presenter {
         val view: View
-        fun setMovieList()
         fun makeTheaterDialog(movie: MovieListItemViewData)
     }
 }

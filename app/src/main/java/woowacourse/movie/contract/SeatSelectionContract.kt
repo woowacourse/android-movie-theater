@@ -26,7 +26,6 @@ interface SeatSelectionContract {
 
     interface Presenter {
         val view: View
-        fun initActivity(movie: MovieViewData, reservationDetail: ReservationDetailViewData)
         fun selectSeat(seats: SeatsViewData, reservationDetail: ReservationDetailViewData)
         fun confirmSeats(
             movie: MovieViewData,
