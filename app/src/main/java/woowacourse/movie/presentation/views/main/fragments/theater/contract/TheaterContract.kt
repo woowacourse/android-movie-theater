@@ -12,20 +12,7 @@ interface TheaterContract {
         fun showTicketingScreen(movie: Movie, theater: PresentationTheater)
     }
 
-    abstract class Presenter {
-        private var view: View? = null
-
-        open fun attach(view: View) {
-            this.view = view
-        }
-
-        fun detach() {
-            this.view = null
-        }
-
-        fun requireView(): View =
-            view ?: throw IllegalStateException("View is not attached")
-
+    abstract class Presenter(protected var view: View) {
         abstract fun loadTheaterList()
         abstract fun onTheaterClick(item: Theater)
     }

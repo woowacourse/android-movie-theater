@@ -8,23 +8,23 @@ import woowacourse.movie.presentation.model.theater.PresentationTheater
 import woowacourse.movie.presentation.views.main.fragments.theater.contract.TheaterContract
 
 class TheaterPresenter(
+    view: TheaterContract.View,
     private val movie: Movie,
     private val theaterRepository: TheaterRepository,
-) : TheaterContract.Presenter() {
+) : TheaterContract.Presenter(view) {
     private val theaters: MutableList<DomainTheater> = mutableListOf()
 
-    override fun attach(view: TheaterContract.View) {
-        super.attach(view)
+    init {
         loadTheaterList()
     }
 
     override fun loadTheaterList() {
         val newTheaters = theaterRepository.getAllByMovieId(movie.id)
         theaters.addAll(newTheaters)
-        requireView().showTheaterList(newTheaters.map { it.toPresentation() })
+        view.showTheaterList(newTheaters.map { it.toPresentation() })
     }
 
     override fun onTheaterClick(item: PresentationTheater) {
-        requireView().showTicketingScreen(movie, item)
+        view.showTicketingScreen(movie, item)
     }
 }

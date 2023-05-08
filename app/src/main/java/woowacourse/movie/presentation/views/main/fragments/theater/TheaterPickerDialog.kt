@@ -46,7 +46,6 @@ class TheaterPickerDialog : BottomSheetDialogFragment(), TheaterContract.View {
     }
 
     private fun setupPresenter() {
-        presenter.attach(this)
         binding.presenter = presenter
     }
 
@@ -62,6 +61,7 @@ class TheaterPickerDialog : BottomSheetDialogFragment(), TheaterContract.View {
     private fun makePresenter(): TheaterContract.Presenter {
         val movie: Movie = requireArguments().getParcelableCompat(MOVIE_KEY)!!
         return TheaterPresenter(
+            view = this,
             movie = movie,
             theaterRepository = LocalTheaterRepository(
                 LocalTheaterDataSource(TheaterDao(requireContext()))
@@ -78,8 +78,6 @@ class TheaterPickerDialog : BottomSheetDialogFragment(), TheaterContract.View {
     companion object {
         internal const val TAG = "TheaterPickerDialog"
         private const val MOVIE_KEY = "movie_id_key"
-        internal const val REQUEST_KEY = "theater_request_key"
-        internal const val THEATER_KEY = "theater_key"
 
         fun getInstance(movie: Movie): TheaterPickerDialog = TheaterPickerDialog().apply {
             arguments = bundleOf(MOVIE_KEY to movie)
