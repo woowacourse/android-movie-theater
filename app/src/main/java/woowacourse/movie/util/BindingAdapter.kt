@@ -17,15 +17,9 @@ object BindingAdapter {
     @JvmStatic
     @BindingAdapter("setMovieTicketCount")
     fun TextView.setMovieTicketCount(ticket: TicketModel) {
-        fun TicketModel.formatSeatsCombine(): String {
-            val stringBuilder = StringBuilder()
-            this.seats.forEach { stringBuilder.append("$it ") }
-            return stringBuilder.toString()
-        }
-
         this.text = this.context.getString(R.string.normal_ticket_count_seat).format(
             ticket.count,
-            ticket.formatSeatsCombine(),
+            ticket.seats.joinToString(separator = " "),
             ticket.theater
         )
     }
