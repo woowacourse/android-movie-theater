@@ -5,14 +5,12 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.Fragment
 import com.woowacourse.data.datasource.cache.local.LocalCacheDataSource
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentSettingBinding
+import woowacourse.movie.presentation.base.BaseFragment
 import woowacourse.movie.presentation.extensions.checkPermissionTiramisu
 import woowacourse.movie.presentation.extensions.createAlertDialog
 import woowacourse.movie.presentation.extensions.message
@@ -22,15 +20,14 @@ import woowacourse.movie.presentation.extensions.title
 import woowacourse.movie.presentation.ui.main.fragments.setting.contract.SettingContract
 import woowacourse.movie.presentation.ui.main.fragments.setting.contract.presenter.SettingPresenter
 
-class SettingFragment : Fragment(), SettingContract.View {
+class SettingFragment : BaseFragment<FragmentSettingBinding>(), SettingContract.View {
+    override val layoutResId: Int = R.layout.fragment_setting
     override val presenter: SettingContract.Presenter by lazy {
         SettingPresenter(
             view = this,
             cacheDataSource = LocalCacheDataSource.getInstance(requireContext())
         )
     }
-    private var _binding: FragmentSettingBinding? = null
-    private val binding get() = _binding!!
 
     private val settingScreenLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -39,14 +36,9 @@ class SettingFragment : Fragment(), SettingContract.View {
             presenter.updatePushAllow(isPushPermissionGranted)
         }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        _binding = FragmentSettingBinding.inflate(inflater, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.presenter = presenter
-        return binding.root
     }
 
     override fun changePushSwitchState(newState: Boolean) {
@@ -71,11 +63,6 @@ class SettingFragment : Fragment(), SettingContract.View {
             Uri.parse("package:${requireContext().packageName}")
         ).addCategory(Intent.CATEGORY_DEFAULT)
         settingScreenLauncher.launch(appDetailsIntent)
-    }
-
-    override fun onDestroyView() {
-        _binding = null
-        super.onDestroyView()
     }
 
     companion object {
