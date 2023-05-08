@@ -3,7 +3,6 @@ package woowacourse.movie.ui.activity.seatpicker.view
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TableRow
@@ -16,6 +15,8 @@ import woowacourse.movie.alarm.AlarmManager
 import woowacourse.movie.broadcastreceiver.NotificationReceiver
 import woowacourse.movie.data.db.DBHelper
 import woowacourse.movie.data.entity.Seats
+import woowacourse.movie.data.reservation.ReservationLocalDataSource
+import woowacourse.movie.data.reservation.ReservationRepository
 import woowacourse.movie.databinding.ActivitySeatPickerBinding
 import woowacourse.movie.ui.activity.MovieTicketActivity
 import woowacourse.movie.ui.activity.seatpicker.SeatPickerContract
@@ -29,13 +30,12 @@ import java.time.ZonedDateTime
 
 class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
     private lateinit var binding: ActivitySeatPickerBinding
-    private val db: SQLiteDatabase by lazy { DBHelper(this).writableDatabase }
     override lateinit var presenter: SeatPickerContract.Presenter
     private val seats = Seats()
     private val seatTable = mutableMapOf<SeatModel, TextView>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = SeatPickerPresenter(db, this)
+        initPresenter()
         binding = ActivitySeatPickerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -108,6 +108,13 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
     override fun afterReservation(ticket: MovieTicketModel) {
         setAlarm(ticket)
         moveToTicketActivity(ticket)
+    }
+
+    private fun initPresenter() {
+        val db = DBHelper(this).writableDatabase
+        val dataSource = ReservationLocalDataSource(db)
+        val repository = ReservationRepository(dataSource)
+        presenter = SeatPickerPresenter(repository, this)
     }
 
     private fun createSeatViews() {

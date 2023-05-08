@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.data.db.DBHelper
 import woowacourse.movie.data.entity.Reservations
+import woowacourse.movie.data.reservation.ReservationLocalDataSource
+import woowacourse.movie.data.reservation.ReservationRepository
 import woowacourse.movie.ui.activity.MovieTicketActivity
 import woowacourse.movie.ui.fragment.reservationlist.adapter.ReservationAdapter
 import woowacourse.movie.ui.model.MovieTicketModel
@@ -46,8 +48,9 @@ class ReservationListFragment : Fragment() {
 
     private fun setUpReservations() {
         val db = DBHelper(requireContext()).readableDatabase
-        Reservations.restore(db)
-        db.close()
+        val dataSource = ReservationLocalDataSource(db)
+        val repository = ReservationRepository(dataSource)
+        Reservations.restore(repository)
     }
 
     private fun setReservationView(reservationView: RecyclerView) {

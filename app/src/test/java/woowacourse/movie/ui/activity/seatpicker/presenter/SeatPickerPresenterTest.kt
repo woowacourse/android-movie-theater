@@ -1,13 +1,12 @@
 package woowacourse.movie.ui.activity.seatpicker.presenter
 
-import android.database.sqlite.SQLiteDatabase
-import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.createMovieTicketModel
+import woowacourse.movie.data.reservation.ReservationRepository
 import woowacourse.movie.ui.activity.seatpicker.SeatPickerContract
 import woowacourse.movie.ui.model.seat.ColumnModel
 import woowacourse.movie.ui.model.seat.RankModel
@@ -15,16 +14,16 @@ import woowacourse.movie.ui.model.seat.RowModel
 import woowacourse.movie.ui.model.seat.SeatModel
 
 internal class SeatPickerPresenterTest {
-    private lateinit var database: SQLiteDatabase
     private lateinit var presenter: SeatPickerPresenter
+    private lateinit var repository: ReservationRepository
     private val ticket = createMovieTicketModel()
     private lateinit var view: SeatPickerContract.View
 
     @Before
     fun setUp() {
-        database = mockk()
+        repository = mockk()
         view = mockk()
-        presenter = SeatPickerPresenter(database, view)
+        presenter = SeatPickerPresenter(repository, view)
 
         justRun { view.applyTicketData(any()) }
         presenter.initTicket(ticket)
@@ -118,9 +117,9 @@ internal class SeatPickerPresenterTest {
     @Test
     fun addReservation() {
         // given
-        every { database.insert(any(), any(), any()) } returns -1
-        every { database.query(any(), any(), any(), any(), any(), any(), any()) } returns null
-        justRun { database.close() }
+        justRun { repository.insertReservation(any()) }
+//        every { database.query(any(), any(), any(), any(), any(), any(), any()) } returns null
+//        justRun { database.close() }
         justRun { view.afterReservation(any()) }
 
         // when
