@@ -14,7 +14,7 @@ class MovieViewHolder(
 
     fun onBind(movie: MovieModel) {
         with(binding) {
-            root.setOnClickListener { onClick(movie) }
+            itemBookingButton.setOnClickListener { onClick(movie) }
             itemPoster.setImageResource(movie.poster)
             itemTitle.text = movie.title
             itemDate.text = root.context.getString(
@@ -22,7 +22,7 @@ class MovieViewHolder(
                 movie.startDate.format(),
                 movie.endDate.format(),
             )
-            itemBookingButton.text =
+            itemRunningTime.text =
                 root.context.getString(R.string.running_time, movie.runningTime)
         }
     }
