@@ -5,11 +5,11 @@
 
     <data>
 
-        <import type="woowacourse.movie.presentation.views.main.fragments.history.recyclerview.HistoryListAdapter" />
+        <import type="woowacourse.movie.presentation.ui.main.fragments.history.recyclerview.HistoryListAdapter" />
 
         <variable
             name="presenter"
-            type="woowacourse.movie.presentation.views.main.fragments.history.contract.HistoryContract.Presenter" />
+            type="woowacourse.movie.presentation.ui.main.fragments.history.contract.HistoryContract.Presenter" />
 
         <variable
             name="rvAdapter"
@@ -19,7 +19,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.views.main.fragments.history.HistoryFragment">
+        tools:context=".presentation.ui.main.fragments.history.HistoryFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/history_recycler_view"

@@ -7,11 +7,11 @@
 
         <import
             alias="RecyclerViewAdapter"
-            type="woowacourse.movie.presentation.views.main.fragments.theater.adapter.TheaterListAdapter" />
+            type="woowacourse.movie.presentation.ui.main.fragments.theater.adapter.TheaterListAdapter" />
 
         <variable
             name="presenter"
-            type="woowacourse.movie.presentation.views.main.fragments.theater.contract.TheaterContract.Presenter" />
+            type="woowacourse.movie.presentation.ui.main.fragments.theater.contract.TheaterContract.Presenter" />
 
         <variable
             name="rvAdapter"

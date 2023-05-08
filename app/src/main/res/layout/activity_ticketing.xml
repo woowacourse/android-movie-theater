@@ -7,13 +7,13 @@
 
         <variable
             name="presenter"
-            type="woowacourse.movie.presentation.views.ticketing.contract.TicketingContract.Presenter" />
+            type="woowacourse.movie.presentation.ui.ticketing.contract.TicketingContract.Presenter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.views.ticketing.TicketingActivity">
+        tools:context=".presentation.ui.ticketing.TicketingActivity">
 
         <ScrollView
             android:id="@+id/movie_info_sv"

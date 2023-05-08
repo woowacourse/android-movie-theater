@@ -7,11 +7,11 @@
 
         <import
             alias="RecyclerViewAdapter"
-            type="woowacourse.movie.presentation.views.main.fragments.home.recyclerview.MovieListAdapter" />
+            type="woowacourse.movie.presentation.ui.main.fragments.home.recyclerview.MovieListAdapter" />
 
         <variable
             name="presenter"
-            type="woowacourse.movie.presentation.views.main.fragments.home.contract.HomeContract.Presenter" />
+            type="woowacourse.movie.presentation.ui.main.fragments.home.contract.HomeContract.Presenter" />
 
         <variable
             name="rvAdapter"
@@ -21,7 +21,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.views.main.fragments.home.HomeFragment">
+        tools:context=".presentation.ui.main.fragments.home.HomeFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/movies_rv"

@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.views.ticketingresult.TicketingResultActivity">
+        tools:context=".presentation.ui.ticketingresult.TicketingResultActivity">
 
         <View
             android:id="@+id/ticketing_header_container"

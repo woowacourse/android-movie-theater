@@ -8,9 +8,9 @@ import woowacourse.movie.R
 import woowacourse.movie.presentation.extensions.getParcelableCompat
 import woowacourse.movie.presentation.model.Reservation
 import woowacourse.movie.presentation.notification.ReservationNotification
-import woowacourse.movie.presentation.views.main.alarm.PushAlarmManager.Companion.PUSH_ACTION
-import woowacourse.movie.presentation.views.main.alarm.PushAlarmManager.Companion.PUSH_DATA_KEY
-import woowacourse.movie.presentation.views.main.fragments.setting.contract.presenter.SettingPresenter.Companion.PUSH_ALLOW_KEY
+import woowacourse.movie.presentation.ui.main.alarm.PushAlarmManager.Companion.PUSH_ACTION
+import woowacourse.movie.presentation.ui.main.alarm.PushAlarmManager.Companion.PUSH_DATA_KEY
+import woowacourse.movie.presentation.ui.main.fragments.setting.contract.presenter.SettingPresenter.Companion.PUSH_ALLOW_KEY
 
 class ReservationPushReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {

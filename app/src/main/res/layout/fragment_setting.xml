@@ -7,13 +7,13 @@
 
         <variable
             name="presenter"
-            type="woowacourse.movie.presentation.views.main.fragments.setting.contract.SettingContract.Presenter" />
+            type="woowacourse.movie.presentation.ui.main.fragments.setting.contract.SettingContract.Presenter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.views.main.fragments.setting.SettingFragment">
+        tools:context=".presentation.ui.main.fragments.setting.SettingFragment">
 
         <TextView
             android:id="@+id/notification_push_title_tv"

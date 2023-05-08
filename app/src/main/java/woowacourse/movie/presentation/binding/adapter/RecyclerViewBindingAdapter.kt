@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.presentation.base.BaseRecyclerView
 import woowacourse.movie.presentation.model.movieitem.ListItem
-import woowacourse.movie.presentation.views.main.fragments.home.recyclerview.OnEndScrollListener
+import woowacourse.movie.presentation.ui.main.fragments.home.recyclerview.OnEndScrollListener
 
 @BindingAdapter(
     "app:adapter",

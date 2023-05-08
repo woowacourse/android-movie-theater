@@ -15,16 +15,16 @@
         android:theme="@style/Theme.Movie"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.views.main.MainActivity"
+            android:name=".presentation.ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.views.ticketing.TicketingActivity" />
-        <activity android:name=".presentation.views.seatpicker.SeatPickerActivity" />
-        <activity android:name=".presentation.views.ticketingresult.TicketingResultActivity" />
+        <activity android:name=".presentation.ui.ticketing.TicketingActivity" />
+        <activity android:name=".presentation.ui.seatpicker.SeatPickerActivity" />
+        <activity android:name=".presentation.ui.ticketingresult.TicketingResultActivity" />
 
         <receiver
             android:name=".presentation.receiver.ReservationPushReceiver"

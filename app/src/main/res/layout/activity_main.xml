@@ -7,13 +7,13 @@
 
         <variable
             name="presenter"
-            type="woowacourse.movie.presentation.views.main.contract.MainContract.Presenter" />
+            type="woowacourse.movie.presentation.ui.main.contract.MainContract.Presenter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.views.main.MainActivity">
+        tools:context=".presentation.ui.main.MainActivity">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_container_view"
