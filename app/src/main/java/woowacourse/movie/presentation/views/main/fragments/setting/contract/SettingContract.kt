@@ -12,6 +12,6 @@ interface SettingContract {
     abstract class Presenter(protected val view: View) {
         abstract fun getPushSwitchState(): Boolean
         abstract fun updatePushAllow(newState: Boolean)
-        abstract fun onPushSwitchClicked(newState: Boolean)
+        abstract fun changePushState(newState: Boolean)
     }
 }

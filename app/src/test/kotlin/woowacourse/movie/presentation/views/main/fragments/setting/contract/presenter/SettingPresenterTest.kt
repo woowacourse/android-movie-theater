@@ -55,7 +55,7 @@ class SettingPresenterTest {
         every { view.checkPushPermission() } returns true
 
         // when
-        presenter.onPushSwitchClicked(true)
+        presenter.changePushState(true)
 
         // then
         verify(atLeast = 1) { view.changePushSwitchState(any()) }
@@ -67,7 +67,7 @@ class SettingPresenterTest {
         every { view.checkPushPermission() } returns false
 
         // when
-        presenter.onPushSwitchClicked(true)
+        presenter.changePushState(true)
 
         // then
         verify(atLeast = 1) { view.showPushPermissionDialog() }

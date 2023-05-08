@@ -11,7 +11,7 @@ class SettingPresenter(
     override fun getPushSwitchState(): Boolean =
         cacheDataSource.getBoolean(PUSH_ALLOW_KEY, false)
 
-    override fun onPushSwitchClicked(newState: Boolean) {
+    override fun changePushState(newState: Boolean) {
         if (view.checkPushPermission()) {
             updatePushAllow(newState)
         } else {
