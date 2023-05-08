@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.reservation.presenter
 
+import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.ui.common.BaseView
 import woowacourse.movie.ui.reservation.adapter.ReservationAdapter
 
@@ -10,7 +11,7 @@ interface ReservationContract {
     }
 
     interface Presenter {
-        fun initAdapter()
+        fun initAdapter(onClick: (MovieTicketModel) -> Unit)
         fun isEmptyMovieReservation()
     }
 }
