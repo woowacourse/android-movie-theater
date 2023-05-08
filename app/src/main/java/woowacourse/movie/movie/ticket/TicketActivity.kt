@@ -19,6 +19,7 @@ class TicketActivity : AppCompatActivity(), TicketContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTicketBinding.inflate(layoutInflater)
+        //binding = DataBindingUtil.setContentView(this, R.layout.activity_ticket)
         setContentView(binding.root)
         presenter = TicketPresenter(this)
         setToolbar()
@@ -35,8 +36,11 @@ class TicketActivity : AppCompatActivity(), TicketContract.View {
         bookingMovie?.let { presenter.initActivity(bookingMovie) }
     }
 
-    override fun showMovieInfo(title: String, date: String) {
+    override fun showMovieTitle(title: String) {
         binding.ticketTitle.text = title
+    }
+
+    override fun showMovieDate(date: String) {
         binding.ticketDate.text = date
     }
 

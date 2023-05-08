@@ -3,8 +3,12 @@ package woowacourse.movie.movie.ticket
 import woowacourse.movie.movie.dto.movie.BookingMovieEntity
 
 class TicketPresenter(private val view: TicketContract.View) : TicketContract.Presenter {
-    override fun initActivity(bookingMovieEntity: BookingMovieEntity) {
-        view.showMovieInfo(bookingMovieEntity.title, getDateInfo(bookingMovieEntity))
+    override lateinit var bookingMovieEntity: BookingMovieEntity
+
+    override fun initActivity(data: BookingMovieEntity) {
+        bookingMovieEntity = data
+        view.showMovieTitle(bookingMovieEntity.title)
+        view.showMovieDate(getDateInfo(bookingMovieEntity))
         view.showTicketInfo(getTicketInfo(bookingMovieEntity))
         view.showTicketPrice(view.formatTicketPrice(bookingMovieEntity.price))
     }
@@ -21,9 +25,4 @@ class TicketPresenter(private val view: TicketContract.View) : TicketContract.Pr
         val theater = bookingMovieEntity.theaterName
         return view.formatTicketSeat(count, seats, theater)
     }
-
-    // override fun getTicketPrice(seats: SeatsDto, date: LocalDate, time: LocalTime): String {
-    //     val totalTicketPrice = seats.mapToSeats().caculateSeatPrice(LocalDateTime.of(date, time))
-    //     return view.formatTicketPrice(totalTicketPrice)
-    // }
 }
