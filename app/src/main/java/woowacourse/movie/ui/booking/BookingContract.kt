@@ -27,9 +27,7 @@ interface BookingContract {
         var ticketCount: TicketCount
         val theater: Theater
 
-        fun initMovie()
-        fun initTicketCount()
-        fun initDateTimes()
+        fun initBookingMovie()
         fun minusTicketCount()
         fun plusTicketCount()
         fun onCompletedBookingMovie()

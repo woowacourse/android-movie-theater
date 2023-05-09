@@ -32,9 +32,12 @@ class BookingPresenterTest {
         // given
         val slot = slot<Int>()
         every { view.setTicketCountText(capture(slot)) } answers { println(slot.captured) }
+        ignoreInitView(view)
+        ignoreTimes(view)
+        ignoreDates(view)
 
         // when
-        bookingPresenter.initTicketCount()
+        bookingPresenter.initBookingMovie()
 
         // then
         val actual = slot.captured
@@ -81,9 +84,11 @@ class BookingPresenterTest {
 
         every { view.setDates(capture(slot)) } answers { println(slot.captured) }
         ignoreTimes(view)
+        ignoreInitView(view)
+        ignoreTicketCount(view)
 
         //when
-        bookingPresenter.initDateTimes()
+        bookingPresenter.initBookingMovie()
 
         //then
         val actual = slot.captured
@@ -106,9 +111,11 @@ class BookingPresenterTest {
 
         every { view.setTimes(capture(slot)) } answers { println(slot.captured) }
         ignoreDates(view)
+        ignoreInitView(view)
+        ignoreTicketCount(view)
 
         //when
-        bookingPresenter.initDateTimes()
+        bookingPresenter.initBookingMovie()
 
         //then
         val actual = slot.captured

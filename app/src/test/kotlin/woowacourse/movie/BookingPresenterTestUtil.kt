@@ -38,3 +38,11 @@ fun ignoreDates(view: BookingContract.View) {
 fun ignoreTimes(view: BookingContract.View) {
     every { view.setTimes(any()) } just Runs
 }
+
+fun ignoreTicketCount(view: BookingContract.View) {
+    every { view.setTicketCountText(any()) } just Runs
+}
+
+fun ignoreInitView(view: BookingContract.View) {
+    every { view.initView(any()) } just Runs
+}

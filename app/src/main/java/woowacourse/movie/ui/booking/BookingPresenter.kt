@@ -18,12 +18,11 @@ class BookingPresenter(
     override val theater: Theater = repository.findTheaterById(theaterId)
     override var ticketCount: TicketCount = TicketCount()
 
-    override fun initMovie() {
+    override fun initBookingMovie() {
         view.initView(movie.toUiModel())
-    }
-
-    override fun initTicketCount() {
         view.setTicketCountText(ticketCount.value)
+        view.setDates(movie.screeningDates)
+        view.setTimes(theater.screeningTimes)
     }
 
     override fun minusTicketCount() {
@@ -36,11 +35,6 @@ class BookingPresenter(
         ticketCount = ticketCount.plus()
 
         view.setTicketCountText(ticketCount.value)
-    }
-
-    override fun initDateTimes() {
-        view.setDates(movie.screeningDates)
-        view.setTimes(theater.screeningTimes)
     }
 
     override fun onCompletedBookingMovie() {

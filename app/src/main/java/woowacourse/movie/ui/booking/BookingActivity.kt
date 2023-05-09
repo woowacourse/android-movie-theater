@@ -41,10 +41,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking)
         binding.presenter = bookingPresenter
-
-        bookingPresenter.initMovie()
-        bookingPresenter.initTicketCount()
-        bookingPresenter.initDateTimes()
+        bookingPresenter.initBookingMovie()
     }
 
     override fun onRestoreInstanceState(
