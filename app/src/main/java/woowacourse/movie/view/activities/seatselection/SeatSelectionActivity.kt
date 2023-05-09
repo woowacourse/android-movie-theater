@@ -21,7 +21,6 @@ import woowacourse.movie.view.activities.reservationresult.ReservationResultActi
 import woowacourse.movie.view.broadcast.AlarmReceiver
 import woowacourse.movie.view.broadcast.AlarmReceiver.Companion.RESERVATION_ID
 import woowacourse.movie.view.utils.getPushAlarmReceptionIsWanted
-import woowacourse.movie.view.utils.showToast
 import java.time.LocalDateTime
 import java.time.ZoneId
 import kotlin.properties.Delegates
@@ -32,7 +31,8 @@ class SeatSelectionActivity : BackButtonActivity(), SeatSelectionContract.View {
 
     private var selectedSeatNames: Set<String> by Delegates.observable(setOf()) { _, _, new ->
         presenter.setSelectedSeats(new)
-        findViewById<Button>(R.id.reservation_btn).isEnabled = new.isNotEmpty()
+        findViewById<Button>(R.id.reservation_btn).isEnabled =
+            new.size == intent.getIntExtra(AUDIENCE_COUNT, 1)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,21 +57,8 @@ class SeatSelectionActivity : BackButtonActivity(), SeatSelectionContract.View {
         }
 
     private fun initReservationButtonOnClickListener() {
-        fun onReservationButtonClick() {
-            if (intent.getIntExtra(AUDIENCE_COUNT, 1) == selectedSeatNames.size) {
-                showDialogAskingIfYouWantToMakeReservation()
-            } else {
-                showToast(
-                    this,
-                    getString(R.string.number_of_seats_must_be_selected).format(
-                        intent.getIntExtra(AUDIENCE_COUNT, 1)
-                    )
-                )
-            }
-        }
-
         val reservationButton = findViewById<Button>(R.id.reservation_btn)
-        reservationButton.setOnClickListener { onReservationButtonClick() }
+        reservationButton.setOnClickListener { showDialogAskingIfYouWantToMakeReservation() }
     }
 
     private fun showDialogAskingIfYouWantToMakeReservation() {
