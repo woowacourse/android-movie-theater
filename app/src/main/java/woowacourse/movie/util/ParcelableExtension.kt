@@ -13,10 +13,10 @@ inline fun <reified T : Parcelable> Intent.getParcelableCompat(key: String): T? 
     return getParcelableExtra(key) as? T
 }
 
-inline fun <reified T : java.io.Serializable> Bundle.getSerializableCompat(key: String): T? {
+inline fun <reified T : Parcelable> Bundle.getParcelableCompat(key: String): T? {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        return getSerializable(key, T::class.java)
+        return getParcelable(key, T::class.java)
     }
     @Suppress("DEPRECATION")
-    return getSerializable(key) as? T
+    return getParcelable(key) as? T
 }

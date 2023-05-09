@@ -1,23 +1,22 @@
 package woowacourse.movie.view.mapper
 
-import woowacourse.movie.domain.Minute
-import woowacourse.movie.domain.Movie
-import woowacourse.movie.view.model.MovieListModel.MovieUiModel
+import woowacourse.movie.R
+import woowacourse.movie.domain.movie.Movie
+import woowacourse.movie.view.model.MovieUiModel
+
+val posters = mapOf(
+    "스즈메의 문단속" to R.drawable.suzume_poster,
+    "해리 포터와 마법사의 돌" to R.drawable.harry_potter1_poster,
+    "스타워즈" to R.drawable.starwars_poster,
+    "어벤져스: 엔드게임" to R.drawable.avengers_endgame_poster,
+)
 
 fun Movie.toUiModel(): MovieUiModel = MovieUiModel(
     title,
-    screeningStartDate,
-    screeningEndDate,
+    startDate,
+    endDate,
     runningTime.value,
-    posterResourceId,
-    summary
-)
-
-fun MovieUiModel.toDomainModel(): Movie = Movie(
-    title,
-    screeningStartDate,
-    screeningEndDate,
-    Minute(runningTime),
-    posterResourceId,
-    summary
+    posters[title] ?: 0,
+    summary,
+    schedule.schedule,
 )

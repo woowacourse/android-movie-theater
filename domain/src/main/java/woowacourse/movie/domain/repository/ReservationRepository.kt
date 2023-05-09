@@ -1,6 +1,6 @@
 package woowacourse.movie.domain.repository
 
-import woowacourse.movie.domain.Reservation
+import woowacourse.movie.domain.reservation.Reservation
 
 interface ReservationRepository {
 

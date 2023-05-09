@@ -1,33 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/reservation_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
-    android:padding="12dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/reservation_datetime"
-        android:layout_width="wrap_content"
+    <data>
+        <variable
+            name="reservation"
+            type="woowacourse.movie.view.model.ReservationUiModel" />
+        <variable
+            name="onItemClick"
+            type="woowacourse.movie.view.moviemain.reservationlist.ReservationListAdapter.OnItemClick" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/reservation_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textColor="@color/black"
-        tools:text="2024.3.2 | 17:00" />
+        android:background="?attr/selectableItemBackground"
+        android:onClick="@{() -> onItemClick.onClick(reservation)}"
+        android:padding="12dp">
 
-    <TextView
-        android:id="@+id/movie_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/reservation_datetime"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        tools:text="해리 포터와 마법사의 돌" />
+        <TextView
+            android:id="@+id/reservation_datetime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/black"
+            tools:text="2024.3.2 | 17:00" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/movie_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/reservation_datetime"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:text="@{reservation.title}"
+            tools:text="해리 포터와 마법사의 돌" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

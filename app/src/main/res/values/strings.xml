@@ -10,15 +10,15 @@
     <string name="poster_image_description">movie poster</string>
     <string name="movie_start_notification">영화 상영 시작 시간 15분 전까지\n 취소가 가능합니다.</string>
     <string name="general_person">일반</string>
-    <string name="reservation_people_count_format">%s %s명 | %s</string>
+    <string name="reservation_count_seats_theater">일반 %d명 | %s | %s</string>
     <string name="total_price_format">%s원 (현장 결제)</string>
     <string name="reservation_fee_format">%s원</string>
     <string name="confirm">확인</string>
     <string name="screen">SCREEN</string>
-    <string name="reservation_dialog_title">예매 확인</string>
-    <string name="reservation_dialog_message">정말 예매하시겠습니까?</string>
-    <string name="confirm_reservation">예매 완료</string>
-    <string name="cancel">취소</string>
+    <string name="reserve_dialog_title">예매 확인</string>
+    <string name="reserve_dialog_detail">정말 예매하시겠습니까?</string>
+    <string name="reserve_dialog_submit">예매 완료</string>
+    <string name="reserve_dialog_cancel">취소</string>
     <string name="empty_view">empty view</string>
     <string name="ad_banner_image">ad banner image</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -32,4 +32,6 @@
     <string name="screening_after_30_minutes">%s 30분 후에 상영</string>
     <string name="push_notification_title">푸시 알림 수신</string>
     <string name="notification_description">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+    <string name="submit">확인</string>
+    <string name="screening_times_count">%d개의 상영 시간</string>
 </resources>

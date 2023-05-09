@@ -1,69 +1,38 @@
 package woowacourse.movie.view.moviemain.movielist
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieMockRepository
-import woowacourse.movie.domain.Movie
-import woowacourse.movie.view.ReservationActivity
-import woowacourse.movie.view.mapper.toUiModel
-import woowacourse.movie.view.model.MovieListModel
+import woowacourse.movie.data.movie.MovieMockRepository
+import woowacourse.movie.view.model.MovieUiModel
 
-class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
+class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContract.View {
+    private lateinit var presenter: MovieListContract.Presenter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val movies = MovieMockRepository.findAll()
-        val dataList = generateMovieListData(movies)
-
-        val movieAdapter = MovieListAdapter(dataList, ::onClick)
-        val movieListView = view.findViewById<RecyclerView>(R.id.movie_recyclerview)
-        movieListView.adapter = movieAdapter
+        presenter = MovieListPresenter(this, MovieMockRepository)
+        presenter.fetchMovieList()
     }
 
-    private fun onClick(item: MovieListModel) {
-        when (item) {
-            is MovieListModel.MovieUiModel -> {
-                val intent = ReservationActivity.newIntent(requireContext(), item)
-                startActivity(intent)
-            }
-            is MovieListModel.MovieAdModel -> {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
-                startActivity(intent)
-            }
-        }
+    override fun showMovieList(movies: List<MovieUiModel>) {
+        val movieAdapter = MovieListAdapter(3, movies, ::onClick)
+        val movieListView = view?.findViewById<RecyclerView>(R.id.movie_recyclerview)
+        movieListView?.adapter = movieAdapter
     }
 
-    private fun generateMovieListData(movies: List<Movie>): List<MovieListModel> {
-        val ad = MovieListModel.MovieAdModel(
-            R.drawable.woowacourse_banner,
-            "https://woowacourse.github.io/",
-        )
-
-        return mixMovieAdData(movies, ad, AD_POST_INTERVAL)
-    }
-
-    private fun mixMovieAdData(
-        movies: List<Movie>,
-        ad: MovieListModel.MovieAdModel,
-        adPostInterval: Int,
-    ): List<MovieListModel> {
-        val dataList = mutableListOf<MovieListModel>()
-        movies.forEachIndexed { index, movie ->
-            if (index % adPostInterval == adPostInterval - 1) {
-                dataList.add(movie.toUiModel())
-                dataList.add(ad)
-                return@forEachIndexed
-            }
-            dataList.add(movie.toUiModel())
-        }
-        return dataList
+    private fun onClick(item: MovieUiModel) {
+        val bottomSheet = TheaterBottomSheetFragment.of(item)
+        bottomSheet.show(childFragmentManager, TheaterBottomSheetFragment.TAG_THEATER)
     }
 
     companion object {
-        private const val AD_POST_INTERVAL = 3
+        const val TAG_MOVIE_LIST = "MOVIE_LIST"
+        fun of(supportFragmentManager: FragmentManager): MovieListFragment {
+            return supportFragmentManager.findFragmentByTag(TAG_MOVIE_LIST) as? MovieListFragment
+                ?: MovieListFragment()
+        }
     }
 }

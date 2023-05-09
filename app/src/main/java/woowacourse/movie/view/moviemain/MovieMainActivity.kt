@@ -7,8 +7,11 @@ import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.view.moviemain.movielist.MovieListFragment
+import woowacourse.movie.view.moviemain.movielist.MovieListFragment.Companion.TAG_MOVIE_LIST
 import woowacourse.movie.view.moviemain.reservationlist.ReservationListFragment
+import woowacourse.movie.view.moviemain.reservationlist.ReservationListFragment.Companion.TAG_RESERVATION_LIST
 import woowacourse.movie.view.moviemain.setting.SettingFragment
+import woowacourse.movie.view.moviemain.setting.SettingFragment.Companion.TAG_SETTING
 
 class MovieMainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,18 +23,18 @@ class MovieMainActivity : AppCompatActivity() {
         navigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.action_reservation_list -> {
-                    val fragment = supportFragmentManager.findFragmentByTag(TAG_RESERVATION_LIST) as? ReservationListFragment ?: ReservationListFragment().also { addFragment(it, TAG_RESERVATION_LIST) }
-                    replaceFragment(fragment)
+                    val fragment = ReservationListFragment.of(supportFragmentManager)
+                    replaceFragment(fragment, TAG_RESERVATION_LIST)
                     return@setOnItemSelectedListener true
                 }
                 R.id.action_home -> {
-                    val fragment = supportFragmentManager.findFragmentByTag(TAG_MOVIE_LIST) as? MovieListFragment ?: MovieListFragment().also { addFragment(it, TAG_MOVIE_LIST) }
-                    replaceFragment(fragment)
+                    val fragment = MovieListFragment.of(supportFragmentManager)
+                    replaceFragment(fragment, TAG_MOVIE_LIST)
                     return@setOnItemSelectedListener true
                 }
                 R.id.action_setting -> {
-                    val fragment = supportFragmentManager.findFragmentByTag(TAG_MOVIE_LIST) as? SettingFragment ?: SettingFragment().also { addFragment(it, TAG_SETTING) }
-                    replaceFragment(fragment)
+                    val fragment = SettingFragment.of(supportFragmentManager)
+                    replaceFragment(fragment, TAG_SETTING)
                     return@setOnItemSelectedListener true
                 }
                 else -> return@setOnItemSelectedListener false
@@ -40,10 +43,10 @@ class MovieMainActivity : AppCompatActivity() {
         navigation.selectedItemId = R.id.action_home
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    private fun replaceFragment(fragment: Fragment, tag: String) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace(R.id.fragment_container_view, fragment)
+            replace(R.id.fragment_container_view, fragment, tag)
         }
     }
 
@@ -51,11 +54,5 @@ class MovieMainActivity : AppCompatActivity() {
         supportFragmentManager.commit {
             add(fragment, tag)
         }
-    }
-
-    companion object {
-        private const val TAG_RESERVATION_LIST = "RESERVATION_LIST"
-        private const val TAG_MOVIE_LIST = "MOVIE_LIST"
-        private const val TAG_SETTING = "SETTING"
     }
 }

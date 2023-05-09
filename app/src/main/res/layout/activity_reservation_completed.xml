@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="reservation"
+            type="woowacourse.movie.view.model.ReservationUiModel" />
+    </data>
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ReservationCompletedActivity">
+    tools:context=".view.reservationcompleted.ReservationCompletedActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +21,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/purple_500"
+            android:background="@color/ticket_color"
             android:gravity="center"
             android:paddingTop="64dp"
             android:paddingBottom="8dp"
@@ -30,6 +37,7 @@
             android:textColor="@color/black"
             android:textSize="25sp"
             android:textStyle="bold"
+            android:text="@{reservation.title}"
             tools:text="해리 포터와 마법사의 돌" />
 
         <TextView
@@ -37,6 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="20sp"
             tools:text="2024.3.1" />
@@ -48,7 +57,11 @@
             android:layout_marginTop="80dp"
             android:textColor="@color/black"
             android:textSize="20sp"
-            tools:text="일반 1명" />
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="일반 1명 | B2 | 아주아주아주아주아주아주긴극장이름"
+            android:layout_marginHorizontal="10dp"
+            />
 
         <TextView
             android:id="@+id/total_price"
@@ -62,3 +75,4 @@
     </LinearLayout>
 
 </ScrollView>
+</layout>
