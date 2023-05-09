@@ -20,11 +20,11 @@ import woowacourse.movie.model.PriceModel
 import woowacourse.movie.model.TheaterModel
 import woowacourse.movie.model.TicketTimeModel
 import woowacourse.movie.utils.getParcelable
+import woowacourse.movie.utils.movieDetailFormat
 import woowacourse.movie.view.seat.SeatPickerActivity
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 
 class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     private val peopleCountView: TextView by lazy { findViewById(R.id.detail_people_count) }
@@ -98,10 +98,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     }
 
     private fun MovieModel.getScreenDate(): String =
-        getString(R.string.screen_date, startDate.format(), endDate.format())
-
-    private fun LocalDate.format(): String =
-        format(DateTimeFormatter.ofPattern(getString(R.string.date_format)))
+        getString(R.string.screen_date, startDate.movieDetailFormat(), endDate.movieDetailFormat())
 
     private fun MovieModel.getRunningTime(): String = getString(R.string.running_time, runningTime)
 

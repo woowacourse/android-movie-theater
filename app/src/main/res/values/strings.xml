@@ -17,9 +17,6 @@
     <string name="price_with_payment_type">%s %s</string>
     <string name="seat">%s%d</string>
 
-    <string name="date_format">yyyy.MM.dd</string>
-    <string name="date_time_format">yyyy.MM.dd HH:mm</string>
-
     <string name="toast_message_seat_selection_done">이미 모든 좌석을 선택했습니다.</string>
     <string name="dialog_title_seat_selection_check">예매 확인</string>
     <string name="dialog_message_seat_selection_check">정말 예매하시겠습니까?</string>

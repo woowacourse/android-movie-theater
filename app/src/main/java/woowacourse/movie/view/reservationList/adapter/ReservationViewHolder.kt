@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.model.TicketTimeModel
-import java.time.format.DateTimeFormatter
+import woowacourse.movie.utils.reservationFormat
 
 class ReservationViewHolder(
     view: View,
@@ -27,5 +27,5 @@ class ReservationViewHolder(
     }
 
     private fun TicketTimeModel.format(): String =
-        dateTime.format(DateTimeFormatter.ofPattern(dateTimeView.context.getString(R.string.date_time_format)))
+        dateTime.reservationFormat()
 }

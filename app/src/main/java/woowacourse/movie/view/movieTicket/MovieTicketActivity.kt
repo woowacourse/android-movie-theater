@@ -16,8 +16,8 @@ import woowacourse.movie.model.PriceModel
 import woowacourse.movie.model.TicketTimeModel
 import woowacourse.movie.model.seat.SeatModel
 import woowacourse.movie.utils.getParcelable
+import woowacourse.movie.utils.reservationFormat
 import woowacourse.movie.view.main.MainActivity
-import java.time.format.DateTimeFormatter
 
 class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
     override lateinit var presenter: MovieTicketContract.Presenter
@@ -72,7 +72,7 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
     }
 
     override fun setTextMovieDate(ticketTime: TicketTimeModel) {
-        findViewById<TextView>(R.id.ticket_date).text = ticketTime.format()
+        findViewById<TextView>(R.id.ticket_date).text = ticketTime.dateTime.reservationFormat()
     }
 
     override fun setTextMovieSeats(seats: Set<SeatModel>, theater: String) {
@@ -90,9 +90,6 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
     override fun setTextMovieTicketPrice(price: PriceModel) {
         findViewById<TextView>(R.id.ticket_price).text = price.format()
     }
-
-    private fun TicketTimeModel.format(): String =
-        dateTime.format(DateTimeFormatter.ofPattern(getString(R.string.date_time_format)))
 
     private fun SeatModel.format(): String = getString(R.string.seat, row.letter, column.value)
 

@@ -7,8 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.model.MovieModel
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import woowacourse.movie.utils.movieDetailFormat
 
 class MovieViewHolder(view: View, private val onItemViewClick: (Int) -> Unit) :
     RecyclerView.ViewHolder(view) {
@@ -31,10 +30,11 @@ class MovieViewHolder(view: View, private val onItemViewClick: (Int) -> Unit) :
     }
 
     private fun MovieModel.getScreenDate(): String =
-        movieDate.context.getString(R.string.screen_date, startDate.format(), endDate.format())
-
-    private fun LocalDate.format(): String =
-        format(DateTimeFormatter.ofPattern(movieDate.context.getString(R.string.date_format)))
+        movieDate.context.getString(
+            R.string.screen_date,
+            startDate.movieDetailFormat(),
+            endDate.movieDetailFormat()
+        )
 
     private fun MovieModel.getRunningTime(): String =
         movieTime.context.getString(R.string.running_time, runningTime)
