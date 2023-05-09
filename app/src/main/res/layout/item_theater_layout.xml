@@ -41,7 +41,6 @@
 
             <TextView
                 android:id="@+id/theater_time_count"
-                theater_time_count_text="@{itemModel.theaterScreening}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"

@@ -7,7 +7,6 @@ import com.example.domain.model.seat.SeatPosition
 import com.example.domain.repository.TicketsRepository
 import com.example.domain.repository.dataSource.movieDataSources
 import com.example.domain.repository.dataSource.theaterDataSources
-import com.example.domain.usecase.GetAllReservationTicketsUseCase
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -28,7 +27,7 @@ internal class ReservationPresenterTest {
     fun init() {
         view = mockk()
         ticketsRepository = mockk()
-        presenter = ReservationPresenter(view, GetAllReservationTicketsUseCase(ticketsRepository))
+        presenter = ReservationPresenter(view, ticketsRepository)
     }
 
     @Test

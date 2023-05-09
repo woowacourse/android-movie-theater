@@ -20,6 +20,7 @@ import woowacourse.movie.model.MoneyState
 import woowacourse.movie.model.SeatPositionState
 import woowacourse.movie.model.SelectReservationState
 import woowacourse.movie.model.TicketsState
+import woowacourse.movie.util.DecimalFormatters
 import woowacourse.movie.util.getParcelableArrayListCompat
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
@@ -97,7 +98,10 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
     }
 
     override fun changePredictMoney(moneyState: MoneyState) {
-        binding.money = moneyState
+        binding.reservationMoney.text = getString(
+            R.string.discount_money,
+            DecimalFormatters.convertToMoneyFormat(moneyState)
+        )
     }
 
     override fun setConfirmClickable(clickable: Boolean) {

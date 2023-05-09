@@ -4,11 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <import type="woowacourse.movie.util.DateTimeFormatters" />
-
-        <import type="woowacourse.movie.util.DecimalFormatters" />
-
         <variable
             name="tickets"
             type="woowacourse.movie.model.TicketsState" />
@@ -63,7 +58,6 @@
             android:layout_height="38dp"
             android:layout_marginTop="9dp"
             android:gravity="center"
-            android:text="@{DateTimeFormatters.INSTANCE.convertToDateTime(tickets.dateTime)}"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -74,8 +68,7 @@
 
 
         <TextView
-            android:id="@+id/reservation_count_and_seat"
-            reservationCountAndSeats="@{tickets}"
+            android:id="@+id/reservation_count_seat_theater"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="69dp"
@@ -96,14 +89,13 @@
             android:layout_marginTop="19dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/reservation_count_and_seat">
+            app:layout_constraintTop_toBottomOf="@id/reservation_count_seat_theater">
 
             <TextView
                 android:id="@+id/reservation_money"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@{DecimalFormatters.INSTANCE.convertToMoneyFormat(tickets.totalDiscountedMoneyState)}"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"

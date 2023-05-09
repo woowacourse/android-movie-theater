@@ -12,7 +12,6 @@ import woowacourse.movie.R
 import woowacourse.movie.data.TheaterRepositoryImpl
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetBinding
 import woowacourse.movie.feature.common.Toaster
-import woowacourse.movie.feature.common.adapter.CommonAdapter
 import woowacourse.movie.feature.movieList.MovieListFragment
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.SelectTheaterAndMovieState
@@ -54,7 +53,7 @@ class TheaterBottomSheetFragment : BottomSheetDialogFragment(), TheaterContract.
     }
 
     override fun setTheaterAdapter(theaters: List<TheaterItemModel>) {
-        binding.rvTheater.adapter = CommonAdapter(theaters)
+        binding.rvTheater.adapter = TheaterAdapter(theaters)
     }
 
     override fun selectTheater(theater: SelectTheaterAndMovieState) {

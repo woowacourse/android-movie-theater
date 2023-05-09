@@ -38,7 +38,6 @@
 
         <TextView
             android:id="@+id/running_date"
-            movieDate="@{movie.movieState}"
             android:layout_width="0dp"
             android:layout_height="18dp"
             android:layout_marginStart="15dp"

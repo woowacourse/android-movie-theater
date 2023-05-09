@@ -5,7 +5,7 @@ import com.example.domain.repository.TicketsRepository
 import woowacourse.movie.data.sqlite.ReservationTicketsDao
 
 class TicketsRepositoryImpl(
-    val reservationTicketsDao: ReservationTicketsDao
+    private val reservationTicketsDao: ReservationTicketsDao
 ) : TicketsRepository {
     override fun allTickets(): List<Tickets> {
         return reservationTicketsDao.selectAllTickets()

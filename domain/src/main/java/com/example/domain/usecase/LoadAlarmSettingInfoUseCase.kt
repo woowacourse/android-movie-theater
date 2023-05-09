@@ -6,9 +6,8 @@ class LoadAlarmSettingInfoUseCase(
     private val settingRepository: AlarmSettingRepository
 ) {
     operator fun invoke(onSuccess: (Boolean) -> Unit, onFailure: () -> Unit) {
-        var alarmSettingInfo: Boolean = false
-        kotlin.runCatching { alarmSettingInfo = settingRepository.getEnablePushNotification() }
-            .onSuccess { onSuccess(alarmSettingInfo) }
+        kotlin.runCatching { settingRepository.getEnablePushNotification() }
+            .onSuccess { onSuccess(it) }
             .onFailure { onFailure() }
     }
 }

@@ -364,7 +364,7 @@
 
             <TextView
                 android:id="@+id/reservation_money"
-                discountedMoney="@{money}"
+                tools:text="10,000원"
                 android:layout_width="0dp"
                 android:layout_height="28dp"
                 android:singleLine="true"

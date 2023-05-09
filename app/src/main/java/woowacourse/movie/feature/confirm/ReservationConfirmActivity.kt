@@ -8,6 +8,8 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationConfirmBinding
 import woowacourse.movie.feature.common.BackKeyActionBarActivity
 import woowacourse.movie.model.TicketsState
+import woowacourse.movie.util.DateTimeFormatters
+import woowacourse.movie.util.DecimalFormatters
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
 
@@ -17,7 +19,20 @@ class ReservationConfirmActivity : BackKeyActionBarActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_reservation_confirm)
         val tickets = intent.getParcelableExtraCompat<TicketsState>(KEY_TICKETS)
             ?: return keyError(KEY_TICKETS)
+        initTicketsData(tickets)
+    }
+
+    private fun initTicketsData(tickets: TicketsState) {
         binding.tickets = tickets
+        binding.reservationCountSeatTheater.text = getString(
+            R.string.person_count_and_seat_theater,
+            tickets.tickets.size,
+            tickets.tickets.map { it.seatPositionState }.joinToString { it.toString() },
+            tickets.theater.theaterName
+        )
+        binding.reservationDate.text = DateTimeFormatters.convertToDateTime(tickets.dateTime)
+        binding.reservationMoney.text =
+            DecimalFormatters.convertToMoneyFormat(tickets.totalDiscountedMoneyState)
     }
 
     companion object {

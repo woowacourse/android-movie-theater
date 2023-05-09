@@ -1,16 +1,17 @@
 package woowacourse.movie.feature.movieList.viewHolder
 
-import woowacourse.movie.databinding.AdvItemLayoutBinding
+import androidx.databinding.ViewDataBinding
+import woowacourse.movie.databinding.ItemaAdvLayoutBinding
 import woowacourse.movie.feature.common.itemModel.CommonItemModel
 import woowacourse.movie.feature.common.viewHolder.CommonItemViewHolder
 import woowacourse.movie.feature.movieList.itemModel.AdvItemModel
 
 class AdvViewHolder(
-    binding: AdvItemLayoutBinding
+    binding: ViewDataBinding
 ) : CommonItemViewHolder(binding) {
     override fun bind(itemModel: CommonItemModel) {
-        val item = itemModel as AdvItemModel
-        val binding = binding as AdvItemLayoutBinding
-        binding.adv = item
+        itemModel as AdvItemModel
+        binding as ItemaAdvLayoutBinding
+        binding.adv = itemModel
     }
 }

@@ -11,7 +11,7 @@ class ReservationPresenter(
         getAllReservationTicketsUseCase(
             onSuccess = {
                 val ticketsItems = it.map {
-                    it.asPresentation().convertToItemModel { tickets ->
+                    it.asPresentation().toItemModel { tickets ->
                         view.navigateReservationConfirm(tickets)
                     }
                 }

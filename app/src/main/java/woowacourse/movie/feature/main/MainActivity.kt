@@ -6,9 +6,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.feature.common.OnDataUpdate
@@ -20,8 +18,6 @@ import woowacourse.movie.util.requestPermissions
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
-    private val containerView: FragmentContainerView by lazy { findViewById(R.id.container) }
-    private val bottomNavigation: BottomNavigationView by lazy { findViewById(R.id.bottom_navigation_view) }
 
     private lateinit var movieListFragment: MovieListFragment
     private lateinit var reservationListFragment: ReservationListFragment
@@ -51,17 +47,17 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     private fun initFragments() {
         supportFragmentManager.commit {
-            add(containerView.id, movieListFragment, MOVIE_LIST_TAG)
-            add(containerView.id, reservationListFragment, RESERVATION_LIST_TAG)
-            add(containerView.id, settingFragment, SETTING_TAG)
+            add(binding.container.id, movieListFragment, MOVIE_LIST_TAG)
+            add(binding.container.id, reservationListFragment, RESERVATION_LIST_TAG)
+            add(binding.container.id, settingFragment, SETTING_TAG)
             hide(reservationListFragment)
             hide(settingFragment)
         }
-        bottomNavigation.selectedItemId = R.id.movie_list_item
+        binding.bottomNavigationView.selectedItemId = R.id.movie_list_item
     }
 
     private fun initListener() {
-        bottomNavigation.setOnItemSelectedListener {
+        binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.reservation_list_item -> presenter.clickReservationTab()
                 R.id.movie_list_item -> presenter.clickMovieTab()

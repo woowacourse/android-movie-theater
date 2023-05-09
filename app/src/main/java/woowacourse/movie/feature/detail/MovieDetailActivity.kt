@@ -13,6 +13,7 @@ import woowacourse.movie.feature.seatSelect.SeatSelectActivity
 import woowacourse.movie.model.CountState
 import woowacourse.movie.model.SelectReservationState
 import woowacourse.movie.model.SelectTheaterAndMovieState
+import woowacourse.movie.util.DateTimeFormatters
 import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.getSerializableCompat
@@ -52,6 +53,12 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
                 reservationCounter.count
             )
         }
+
+        binding.detailDate.text = DateTimeFormatters.convertToDateTildeDate(
+            this,
+            theaterMovie.movie.startDate,
+            theaterMovie.movie.endDate
+        )
     }
 
     override fun navigateSeatSelect(reservationState: SelectReservationState) {

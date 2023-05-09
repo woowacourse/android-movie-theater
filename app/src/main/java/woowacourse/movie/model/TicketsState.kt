@@ -13,7 +13,7 @@ data class TicketsState(
     val totalDiscountedMoneyState: MoneyState,
     val tickets: List<TicketState>
 ) : Parcelable {
-    fun convertToItemModel(onClick: (tickets: TicketsState) -> Unit): TicketsItemModel {
+    fun toItemModel(onClick: (tickets: TicketsState) -> Unit): TicketsItemModel {
         return TicketsItemModel(this, onClick)
     }
 }

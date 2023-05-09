@@ -12,8 +12,8 @@ import woowacourse.movie.data.sqlite.ReservationTicketsDao
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.feature.common.OnDataUpdate
 import woowacourse.movie.feature.common.Toaster
-import woowacourse.movie.feature.common.adapter.CommonAdapter
 import woowacourse.movie.feature.confirm.ReservationConfirmActivity
+import woowacourse.movie.feature.reservationList.adapter.ReservationTicketsAdapter
 import woowacourse.movie.feature.reservationList.itemModel.TicketsItemModel
 import woowacourse.movie.model.TicketsState
 
@@ -25,7 +25,7 @@ class ReservationListFragment : Fragment(), ReservationListContract.View, OnData
 
     private lateinit var presenter: ReservationListContract.Presenter
 
-    private lateinit var adapter: CommonAdapter
+    private lateinit var adapter: ReservationTicketsAdapter
 
     private lateinit var reservationTicketsDao: ReservationTicketsDao
 
@@ -50,7 +50,7 @@ class ReservationListFragment : Fragment(), ReservationListContract.View, OnData
                     )
                 )
             )
-        adapter = CommonAdapter()
+        adapter = ReservationTicketsAdapter()
         binding.rvReservation.adapter = adapter
         presenter.loadTicketsItemList()
     }

@@ -13,9 +13,9 @@ import woowacourse.movie.data.MovieRepositoryImpl
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.feature.adv.AdvDetailActivity
 import woowacourse.movie.feature.common.Toaster
-import woowacourse.movie.feature.common.adapter.CommonAdapter
 import woowacourse.movie.feature.common.itemModel.CommonItemModel
 import woowacourse.movie.feature.detail.MovieDetailActivity
+import woowacourse.movie.feature.movieList.adapter.MovieAdapter
 import woowacourse.movie.feature.movieList.bottomSheet.TheaterBottomSheetFragment
 import woowacourse.movie.model.AdvState
 import woowacourse.movie.model.MovieState
@@ -24,7 +24,7 @@ import woowacourse.movie.util.getParcelableCompat
 
 class MovieListFragment : Fragment(), MovieListContract.View {
 
-    private lateinit var adapter: CommonAdapter
+    private lateinit var adapter: MovieAdapter
 
     private var _binding: FragmentMovieListBinding? = null
     private val binding: FragmentMovieListBinding
@@ -57,7 +57,7 @@ class MovieListFragment : Fragment(), MovieListContract.View {
             this,
             GetMovieAndAdvItemsUseCase(MovieRepositoryImpl(), AdvRepositoryImpl())
         )
-        adapter = CommonAdapter()
+        adapter = MovieAdapter()
         presenter.loadMovieAndAdvItemList() // 뷰가 그려질때마다 데이터 다시 불러옴. 캐싱 적용 안함
         binding.rvMovie.adapter = adapter
     }

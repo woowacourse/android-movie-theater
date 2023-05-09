@@ -363,7 +363,6 @@
 
             <TextView
                 android:id="@+id/reservation_money"
-                discountedMoney="@{money}"
                 android:layout_width="0dp"
                 android:layout_height="28dp"
                 android:singleLine="true"

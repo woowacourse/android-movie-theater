@@ -1,21 +1,15 @@
-package woowacourse.movie.feature.common.adapter
+package woowacourse.movie.feature.reservationList.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.databinding.AdvItemLayoutBinding
 import woowacourse.movie.databinding.ItemReservationLayoutBinding
-import woowacourse.movie.databinding.ItemTheaterLayoutBinding
-import woowacourse.movie.databinding.MovieItemLayoutBinding
 import woowacourse.movie.feature.common.CommonViewType
 import woowacourse.movie.feature.common.itemModel.CommonItemModel
 import woowacourse.movie.feature.common.viewHolder.CommonItemViewHolder
-import woowacourse.movie.feature.movieList.bottomSheet.TheaterViewHolder
-import woowacourse.movie.feature.movieList.viewHolder.AdvViewHolder
-import woowacourse.movie.feature.movieList.viewHolder.MovieViewHolder
 import woowacourse.movie.feature.reservationList.viewHolder.TicketsViewHolder
 
-class CommonAdapter(
+class ReservationTicketsAdapter(
     items: List<CommonItemModel> = listOf(),
 ) : RecyclerView.Adapter<CommonItemViewHolder>() {
 
@@ -29,23 +23,12 @@ class CommonAdapter(
     ): CommonItemViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return when (CommonViewType.of(viewType)) {
-            CommonViewType.MOVIE -> {
-                val itemBinding = MovieItemLayoutBinding.inflate(layoutInflater, parent, false)
-                MovieViewHolder(itemBinding)
-            }
-            CommonViewType.ADV -> {
-                val itemBinding = AdvItemLayoutBinding.inflate(layoutInflater, parent, false)
-                AdvViewHolder(itemBinding)
-            }
             CommonViewType.RESERVATION -> {
                 val itemBinding =
                     ItemReservationLayoutBinding.inflate(layoutInflater, parent, false)
                 TicketsViewHolder(itemBinding)
             }
-            CommonViewType.THEATER -> {
-                val itemBinding = ItemTheaterLayoutBinding.inflate(layoutInflater, parent, false)
-                TheaterViewHolder(itemBinding)
-            }
+            else -> throw IllegalStateException()
         }
     }
 
