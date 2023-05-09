@@ -23,30 +23,54 @@ class MainPresenterTest {
     }
 
     @Test
-    fun `홈 프래그먼트 타입으로 홈 프래그먼트를 생성한다`() {
+    fun `홈 프래그먼트 타입으로 홈 프래그먼트를 추가한다`() {
+        // given
         val type = FragmentType.HOME
+        val slot = slot<FragmentType>()
+        justRun { view.addMovieListFragment(capture(slot)) }
 
-        val actual = presenter.createFragment(type)
-        val expected = "MovieListFragment"
-        assertEquals(expected, actual::class.simpleName)
+        // when
+        presenter.createFragment(type)
+
+        // then
+        val actual = slot.captured
+        val expected = FragmentType.HOME
+        assertEquals(expected, actual)
+        verify { view.addMovieListFragment(actual) }
     }
 
     @Test
-    fun `예매 목록 프래그먼트 타입으로 예매 목록 프래그먼트를 생성한다`() {
+    fun `예매 목록 프래그먼트 타입으로 예매 목록 프래그먼트를 추가한다`() {
+        // given
         val type = FragmentType.RESERVATION_LIST
+        val slot = slot<FragmentType>()
+        justRun { view.addReservationListFragment(capture(slot)) }
 
-        val actual = presenter.createFragment(type)
-        val expected = "ReservationListFragment"
-        assertEquals(expected, actual::class.simpleName)
+        // when
+        presenter.createFragment(type)
+
+        // then
+        val actual = slot.captured
+        val expected = FragmentType.RESERVATION_LIST
+        assertEquals(expected, actual)
+        verify { view.addReservationListFragment(actual) }
     }
 
     @Test
-    fun `설정 프래그먼트 타입으로 설정 프래그먼트를 생성한다`() {
+    fun `설정 프래그먼트 타입으로 설정 프래그먼트를 추가한다`() {
+        // given
         val type = FragmentType.SETTING
+        val slot = slot<FragmentType>()
+        justRun { view.addSettingFragment(capture(slot)) }
 
-        val actual = presenter.createFragment(type)
-        val expected = "SettingsFragment"
-        assertEquals(expected, actual::class.simpleName)
+        // when
+        presenter.createFragment(type)
+
+        // then
+        val actual = slot.captured
+        val expected = FragmentType.SETTING
+        assertEquals(expected, actual)
+        verify { view.addSettingFragment(actual) }
     }
 
     @Test

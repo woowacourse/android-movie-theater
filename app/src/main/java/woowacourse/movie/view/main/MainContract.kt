@@ -1,6 +1,5 @@
 package woowacourse.movie.view.main
 
-import androidx.fragment.app.Fragment
 import woowacourse.movie.model.FragmentType
 
 interface MainContract {
@@ -8,10 +7,13 @@ interface MainContract {
         var presenter: Present
 
         fun showFragment(type: FragmentType)
+        fun addMovieListFragment(type: FragmentType)
+        fun addReservationListFragment(type: FragmentType)
+        fun addSettingFragment(type: FragmentType)
     }
 
     interface Present {
-        fun createFragment(type: FragmentType): Fragment
+        fun createFragment(type: FragmentType)
         fun setFragment(type: FragmentType)
     }
 }

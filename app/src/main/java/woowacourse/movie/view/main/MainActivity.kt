@@ -17,8 +17,11 @@ import woowacourse.movie.model.FragmentType
 import woowacourse.movie.permission.SinglePermissionRequester
 import woowacourse.movie.storage.SettingsStorage
 import woowacourse.movie.utils.showSnack
+import woowacourse.movie.view.movieList.MovieListFragment
 import woowacourse.movie.view.movieTicket.MovieTicketActivity
+import woowacourse.movie.view.reservationList.ReservationListFragment
 import woowacourse.movie.view.reservationList.ReservationListFragment.Companion.KEY_UPDATE_RESERVATION_ITEM
+import woowacourse.movie.view.setting.SettingsFragment
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private val bottomNavigationView by lazy { findViewById<BottomNavigationView>(R.id.main_bottom_navigation) }
@@ -126,7 +129,19 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             changeFragment(it, false, type)
             return
         }
-        changeFragment(presenter.createFragment(type), true, type)
+        presenter.createFragment(type)
+    }
+
+    override fun addMovieListFragment(type: FragmentType) {
+        changeFragment(MovieListFragment(), true, type)
+    }
+
+    override fun addReservationListFragment(type: FragmentType) {
+        changeFragment(ReservationListFragment(), true, type)
+    }
+
+    override fun addSettingFragment(type: FragmentType) {
+        changeFragment(SettingsFragment(), true, type)
     }
 
     private fun changeFragment(fragment: Fragment, isCreated: Boolean, type: FragmentType) {
