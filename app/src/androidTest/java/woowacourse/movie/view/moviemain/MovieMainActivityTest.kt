@@ -1,4 +1,4 @@
-package woowacourse.movie.view
+package woowacourse.movie.view.moviemain
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -11,7 +11,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.view.moviemain.MovieMainActivity
 
 @RunWith(AndroidJUnit4::class)
 class MovieMainActivityTest {

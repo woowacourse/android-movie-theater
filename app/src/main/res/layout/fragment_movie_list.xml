@@ -11,6 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/movie_item"/>
+        tools:listitem="@layout/movie_item" />
+
+    <include
+        android:id="@+id/bottom_sheet_dialog"
+        layout="@layout/bottom_sheet_theater" />
 
 </FrameLayout>

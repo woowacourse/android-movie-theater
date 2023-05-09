@@ -5,30 +5,54 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.data.ReservationMockRepository
-import woowacourse.movie.view.ReservationCompletedActivity
-import woowacourse.movie.view.mapper.toUiModel
+import woowacourse.movie.data.MovieMockRepository
+import woowacourse.movie.data.ReservationDatabase
+import woowacourse.movie.data.SeatDatabase
+import woowacourse.movie.data.dbhelper.ReservationDbHelper
+import woowacourse.movie.databinding.FragmentReservationListBinding
+import woowacourse.movie.view.model.ReservationUiModel
+import woowacourse.movie.view.reservationcompleted.ReservationCompletedActivity
 
-class ReservationListFragment : Fragment() {
+class ReservationListFragment :
+    Fragment(R.layout.fragment_reservation_list),
+    ReservationListContract.View {
+
+    private lateinit var binding: FragmentReservationListBinding
+    override lateinit var presenter: ReservationListContract.Presenter
+    override fun showReservationList(reservations: List<ReservationUiModel>) {
+        binding.recyclerview.adapter = ReservationListAdapter(
+            reservations
+        ) {
+            presenter.finishReservation(it)
+        }
+    }
+
+    override fun toReservationCompletedScreen(reservation: ReservationUiModel) {
+        val intent = ReservationCompletedActivity.newIntent(requireContext(), reservation)
+        startActivity(intent)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.fragment_reservation_list, container, false)
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentReservationListBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerview)
-        recyclerView.adapter = ReservationListAdapter(
-            ReservationMockRepository.findAll().map { it.toUiModel() }
-        ) { reservation ->
-            val intent = ReservationCompletedActivity.newIntent(requireContext(), reservation)
-            startActivity(intent)
-        }
+
+        presenter = ReservationListPresenter(
+            this,
+            ReservationDatabase(
+                ReservationDbHelper(requireContext()).writableDatabase,
+                SeatDatabase(requireContext()),
+                MovieMockRepository
+            )
+        )
+        presenter.loadReservationList()
     }
 }

@@ -15,6 +15,7 @@ sealed class MovieListModel {
 
     @Parcelize
     data class MovieUiModel(
+        val id: Int,
         val title: String,
         val screeningStartDate: LocalDate,
         val screeningEndDate: LocalDate,

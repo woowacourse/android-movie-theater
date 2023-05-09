@@ -15,60 +15,77 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.core.view.children
 import woowacourse.movie.AlarmPreference
 import woowacourse.movie.R
-import woowacourse.movie.data.ReservationMockRepository
+import woowacourse.movie.data.MovieMockRepository
+import woowacourse.movie.data.ReservationDatabase
+import woowacourse.movie.data.SeatDatabase
+import woowacourse.movie.data.dbhelper.ReservationDbHelper
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
-import woowacourse.movie.domain.ReservationAgency
-import woowacourse.movie.domain.Seat
 import woowacourse.movie.util.getParcelableCompat
-import woowacourse.movie.view.AlarmController
-import woowacourse.movie.view.ReservationCompletedActivity
-import woowacourse.movie.view.mapper.toDomainModel
-import woowacourse.movie.view.mapper.toUiModel
+import woowacourse.movie.view.alarm.ReservationAlarmManager
 import woowacourse.movie.view.model.MovieListModel.MovieUiModel
 import woowacourse.movie.view.model.ReservationOptions
+import woowacourse.movie.view.model.ReservationUiModel
 import woowacourse.movie.view.model.SeatUiModel
-import woowacourse.movie.view.moviemain.setting.SettingFragment
+import woowacourse.movie.view.moviemain.setting.SettingPresenter
+import woowacourse.movie.view.reservationcompleted.ReservationCompletedActivity
 import java.text.DecimalFormat
 
-class SeatSelectionActivity : AppCompatActivity() {
+class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     private lateinit var binding: ActivitySeatSelectionBinding
-    private val reservationOptions by lazy {
-        intent.getParcelableCompat<ReservationOptions>(RESERVATION_OPTIONS)
-    }
-    private lateinit var reservationAgency: ReservationAgency
-    private var selectedSeatCount = 0
-    private var selectedSeats: List<Seat> = emptyList()
-    private lateinit var alarmPreference: AlarmPreference
+    override lateinit var presenter: SeatSelectionContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySeatSelectionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initSeatButtons()
-        initReserveLayout()
-        initReservationAgency()
+        val reservationDb = ReservationDatabase(
+            ReservationDbHelper(this).writableDatabase,
+            SeatDatabase(this),
+            MovieMockRepository
+        )
+
+        presenter = SeatSelectionPresenter(
+            this,
+            reservationDb,
+            SeatDatabase(applicationContext)
+        )
+
+        presenter.setUp()
         initConfirmReservationButton()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        alarmPreference = AlarmPreference(this)
     }
 
-    private fun initSeatButtons() {
-        for (row in Seat.MIN_ROW..Seat.MAX_ROW) {
+    override fun getReservationOptions(): ReservationOptions? =
+        intent.getParcelableCompat(RESERVATION_OPTIONS)
+
+    override fun initReserveLayout(reservationOptions: ReservationOptions) {
+        binding.apply {
+            movieTitleTextview.text = reservationOptions.title
+            reservationFeeTextview.text = getString(R.string.reservation_fee_format).format(
+                DECIMAL_FORMAT.format(0),
+            )
+            confirmReservationButton.isEnabled = false
+        }
+    }
+
+    override fun initSeatButtons(rowRange: IntRange, colRange: IntRange) {
+        for (row in rowRange) {
             val tableRow = TableRow(this).apply {
                 layoutParams = TableLayout.LayoutParams(0, 0, 1f)
             }
-            for (col in Seat.MIN_COLUMN..Seat.MAX_COLUMN) {
-                val seat = Seat(col, row)
-                tableRow.addView(createSeat(this, seat.toUiModel()))
+            for (col in colRange) {
+                presenter.createSeat(row, col) {
+                    tableRow.addView(createSeatButton(it))
+                }
             }
             binding.seatTablelayout.addView(tableRow)
         }
     }
 
-    private fun createSeat(context: Context, seatUi: SeatUiModel): AppCompatButton =
-        AppCompatButton(context).apply {
+    private fun createSeatButton(seatUi: SeatUiModel): AppCompatButton =
+        AppCompatButton(this).apply {
             text = seatUi.name
             setTextColor(getColor(seatUi.color))
             setOnClickListener { onSeatClick(this) }
@@ -79,91 +96,44 @@ class SeatSelectionActivity : AppCompatActivity() {
 
     private fun onSeatClick(seat: Button) {
         if (seat.isSelected) {
-            deselectSeat(seat)
+            seat.isSelected = false
+            presenter.deselectSeat()
             return
         }
-        selectSeat(seat)
+        seat.isSelected = true
+        presenter.selectSeat { seat.isSelected = false }
     }
 
-    private fun deselectSeat(seat: Button) {
-        selectedSeatCount--
-        seat.isSelected = false
-        binding.confirmReservationButton.isEnabled = false
-        binding.reservationFeeTextview.text = getString(R.string.reservation_fee_format).format(
-            DECIMAL_FORMAT.format(0),
-        )
-    }
-
-    private fun selectSeat(seat: Button) {
-        reservationOptions?.let {
-            if (selectedSeatCount < it.peopleCount) {
-                seat.isSelected = true
-                selectedSeatCount++
-                if (selectedSeatCount == it.peopleCount) {
-                    onSelectionComplete()
-                    return
-                }
-            }
-        }
-    }
-
-    private fun onSelectionComplete() {
+    override fun findSelectedSeatsIndex(): List<Int> {
         val seats = binding.seatTablelayout.children
             .filterIsInstance<TableRow>()
             .flatMap { it.children }
             .filterIsInstance<Button>()
             .toList()
 
-        selectedSeats = findSelectedSeats(seats)
-        if (reservationAgency.canReserve(selectedSeats)) {
-            val reservationFee = reservationAgency.calculateReservationFee(selectedSeats)
-            setReservationFee(reservationFee.amount)
-        }
-        binding.confirmReservationButton.isEnabled = true
-    }
-
-    private fun findSelectedSeats(seats: List<Button>): List<Seat> {
-        val selectedSeats = mutableListOf<Seat>()
+        val selectedIndex = mutableListOf<Int>()
         seats.forEachIndexed { index, button ->
             if (!button.isSelected) return@forEachIndexed
-            selectedSeats.add(
-                Seat(
-                    index % Seat.MAX_COLUMN + 1,
-                    index / Seat.MAX_COLUMN + 1,
-                ),
-            )
+            selectedIndex.add(index)
         }
-        return selectedSeats
+        return selectedIndex
     }
 
-    private fun setReservationFee(fee: Int) {
+    override fun enableReservation(reservationFee: Int) {
+        binding.confirmReservationButton.isEnabled = true
         binding.reservationFeeTextview.text = getString(R.string.reservation_fee_format).format(
-            DECIMAL_FORMAT.format(fee),
+            DECIMAL_FORMAT.format(reservationFee),
         )
     }
 
-    private fun initReserveLayout() {
-        binding.apply {
-            movieTitleTextview.text = reservationOptions?.title
-            reservationFeeTextview.text = getString(R.string.reservation_fee_format).format(
-                DECIMAL_FORMAT.format(0),
-            )
-            confirmReservationButton.isEnabled = false
-        }
+    override fun disableReservation() {
+        binding.confirmReservationButton.isEnabled = false
+        binding.reservationFeeTextview.text = getString(R.string.reservation_fee_format).format(
+            DECIMAL_FORMAT.format(0),
+        )
     }
 
-    private fun initReservationAgency() {
-        val movie =
-            intent.getParcelableCompat<MovieUiModel>(MOVIE)?.toDomainModel()
-
-        if (movie != null && reservationOptions != null) {
-            reservationAgency = ReservationAgency(
-                movie,
-                reservationOptions!!.peopleCount,
-                reservationOptions!!.screeningDateTime,
-            )
-        }
-    }
+    override fun getMovie(): MovieUiModel? = intent.getParcelableCompat(MOVIE)
 
     private fun initConfirmReservationButton() {
         binding.confirmReservationButton.setOnClickListener {
@@ -171,7 +141,7 @@ class SeatSelectionActivity : AppCompatActivity() {
                 setTitle(getString(R.string.reservation_dialog_title))
                 setMessage(getString(R.string.reservation_dialog_message))
                 setPositiveButton(getString(R.string.confirm_reservation)) { _, _ ->
-                    reserveSeats()
+                    presenter.reserveSeats()
                 }
                 setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
                     dialog.dismiss()
@@ -182,19 +152,15 @@ class SeatSelectionActivity : AppCompatActivity() {
         }
     }
 
-    private fun reserveSeats() {
-        val isAlarmOn = alarmPreference.getBoolean(SettingFragment.IS_ALARM_ON, false)
+    override fun registerReservationAlarm(reservation: ReservationUiModel) {
+        val isAlarmOn = AlarmPreference.getInstance(applicationContext).isAlarmOn(false)
+        val reservationAlarmManager = ReservationAlarmManager(this)
 
-        val alarmController = AlarmController(this)
-        val reservation = reservationAgency.reserve(selectedSeats)
-        reservation?.let {
-            ReservationMockRepository.add(reservation)
-            if (isAlarmOn) alarmController.registerAlarm(
-                reservation.toUiModel(),
-                SettingFragment.ALARM_MINUTE_INTERVAL
-            )
-            startActivity(ReservationCompletedActivity.newIntent(this, reservation.toUiModel()))
-        }
+        if (isAlarmOn) reservationAlarmManager.registerAlarm(
+            reservation,
+            SettingPresenter.ALARM_MINUTE_INTERVAL
+        )
+        startActivity(ReservationCompletedActivity.newIntent(this, reservation))
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

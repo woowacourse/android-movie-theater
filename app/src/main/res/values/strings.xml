@@ -10,7 +10,7 @@
     <string name="poster_image_description">movie poster</string>
     <string name="movie_start_notification">영화 상영 시작 시간 15분 전까지\n 취소가 가능합니다.</string>
     <string name="general_person">일반</string>
-    <string name="reservation_people_count_format">%s %s명 | %s</string>
+    <string name="reservation_detail_format">%s %s명 | %s | %s</string>
     <string name="total_price_format">%s원 (현장 결제)</string>
     <string name="reservation_fee_format">%s원</string>
     <string name="confirm">확인</string>
@@ -32,4 +32,6 @@
     <string name="screening_after_30_minutes">%s 30분 후에 상영</string>
     <string name="push_notification_title">푸시 알림 수신</string>
     <string name="notification_description">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+    <string name="screening_timeslot">%s개의 상영 시간</string>
+    <string name="next_icon">next icon</string>
 </resources>

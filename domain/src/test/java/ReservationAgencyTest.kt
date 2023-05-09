@@ -11,6 +11,7 @@ class ReservationAgencyTest {
     @Test
     fun `선택한 좌석 수와 예매 인원이 일치하면 예매할 수 있다`() {
         val reservationAgency = ReservationAgency(
+            "선릉 극장",
             getAnyMovie(),
             2,
             LocalDateTime.now()
@@ -26,6 +27,7 @@ class ReservationAgencyTest {
     @Test
     fun `선택한 좌석은 2개 예매 인원은 3명이면 예매할 수 없다`() {
         val reservationAgency = ReservationAgency(
+            "선릉 극장",
             getAnyMovie(),
             3,
             LocalDateTime.now()
@@ -41,6 +43,7 @@ class ReservationAgencyTest {
     @Test
     fun `할인 조건에 해당하지 않고, B등급 2자리를 선택했다면 금액은 20000이다`() {
         val reservationAgency = ReservationAgency(
+            "선릉 극장",
             getAnyMovie(),
             2,
             LocalDateTime.of(LocalDate.of(2023, 3, 7), LocalTime.of(12, 0))
@@ -58,6 +61,7 @@ class ReservationAgencyTest {
     @Test
     fun `할인 조건에 해당하지 않고, S등급 2자리를 선택했다면 금액은 30000이다`() {
         val reservationAgency = ReservationAgency(
+            "선릉 극장",
             getAnyMovie(),
             2,
             LocalDateTime.of(LocalDate.of(2023, 3, 7), LocalTime.of(12, 0))
@@ -76,6 +80,7 @@ class ReservationAgencyTest {
     fun `무비데이이고 S등급 2자리이면 금액은 27000원이다`() {
         val selectedDate = LocalDate.of(2023, 3, 10)
         val reservationAgency = ReservationAgency(
+            "선릉 극장",
             getAnyMovie(),
             2,
             LocalDateTime.of(selectedDate, LocalTime.of(12, 0))
@@ -94,6 +99,7 @@ class ReservationAgencyTest {
     fun `조조이고 S등급 2자리이면 금액은 26000원이다`() {
         val selectedDate = LocalDate.of(2023, 3, 11)
         val reservationAgency = ReservationAgency(
+            "선릉 극장",
             getAnyMovie(),
             2,
             LocalDateTime.of(selectedDate, LocalTime.of(10, 0))
@@ -112,6 +118,7 @@ class ReservationAgencyTest {
     fun `조조이고 무비데이이고 S등급 2자리이면 금액은 23000원이다`() {
         val selectedDate = LocalDate.of(2023, 3, 10)
         val reservationAgency = ReservationAgency(
+            "선릉 극장",
             getAnyMovie(),
             2,
             LocalDateTime.of(selectedDate, LocalTime.of(10, 0))
@@ -128,6 +135,7 @@ class ReservationAgencyTest {
 
     private fun getAnyMovie(): Movie =
         Movie(
+            1,
             "아바타",
             LocalDate.of(2023, 3, 1),
             LocalDate.of(2023, 3, 31),

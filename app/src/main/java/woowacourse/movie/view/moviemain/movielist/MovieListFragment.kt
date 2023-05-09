@@ -7,74 +7,69 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieMockRepository
-import woowacourse.movie.domain.Movie
-import woowacourse.movie.view.ReservationActivity
-import woowacourse.movie.view.mapper.toUiModel
+import woowacourse.movie.data.TheaterMockRepository
+import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.view.model.MovieListModel
+import woowacourse.movie.view.model.MovieTheater
+import woowacourse.movie.view.reservation.ReservationActivity
 
-class MovieListFragment : Fragment() {
+class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContract.View {
+
+    override lateinit var presenter: MovieListContract.Presenter
+    private lateinit var binding: FragmentMovieListBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_movie_list, container, false)
+    ): View {
+        binding = FragmentMovieListBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val movies = MovieMockRepository.findAll()
-        val dataList = generateMovieListData(movies)
+        presenter = MovieListPresenter(this, MovieMockRepository, TheaterMockRepository)
+        presenter.loadMovieList()
+    }
 
+    override fun showMovieList(dataList: List<MovieListModel>) {
         val movieAdapter = MovieListAdapter(
             dataList = dataList
+        ) { item -> presenter.decideNextAction(item) }
+
+        binding.movieRecyclerview.adapter = movieAdapter
+    }
+
+    override fun toReservationScreen(
+        item: MovieListModel.MovieUiModel,
+        movieTheater: MovieTheater
+    ) {
+        val intent = ReservationActivity.newIntent(requireContext(), item, movieTheater)
+        startActivity(intent)
+    }
+
+    override fun toAdScreen(item: MovieListModel.MovieAdModel) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
+        startActivity(intent)
+    }
+
+    override fun showTheaterList(
+        theaters: List<MovieTheater>,
+        movie: MovieListModel.MovieUiModel
+    ) {
+        val movieTheaterAdapter = MovieTheaterAdapter(
+            theaters
         ) { item ->
-            when (item) {
-                is MovieListModel.MovieUiModel -> {
-                    val intent = ReservationActivity.newIntent(requireContext(), item)
-                    startActivity(intent)
-                }
-                is MovieListModel.MovieAdModel -> {
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
-                    startActivity(intent)
-                }
-            }
+            toReservationScreen(movie, item)
         }
-        val movieListView = view.findViewById<RecyclerView>(R.id.movie_recyclerview)
-        movieListView.adapter = movieAdapter
-    }
-
-    private fun generateMovieListData(movies: List<Movie>): List<MovieListModel> {
-        val ad = MovieListModel.MovieAdModel(
-            R.drawable.woowacourse_banner,
-            "https://woowacourse.github.io/"
-        )
-
-        return mixMovieAdData(movies, ad, AD_POST_INTERVAL)
-    }
-
-    private fun mixMovieAdData(
-        movies: List<Movie>,
-        ad: MovieListModel.MovieAdModel,
-        adPostInterval: Int
-    ): List<MovieListModel> {
-        val dataList = mutableListOf<MovieListModel>()
-        movies.forEachIndexed { index, movie ->
-            if (index % adPostInterval == adPostInterval - 1) {
-                dataList.add(movie.toUiModel())
-                dataList.add(ad)
-                return@forEachIndexed
-            }
-            dataList.add(movie.toUiModel())
-        }
-        return dataList
+        val movieTheaterDialog = MovieTheaterDialog(movieTheaterAdapter)
+        movieTheaterDialog.show(parentFragmentManager, MOVIE_THEATER_DIALOG_TAG)
     }
 
     companion object {
-        private const val AD_POST_INTERVAL = 3
+        private const val MOVIE_THEATER_DIALOG_TAG = "MOVIE_THEATER_DIALOG_TAG"
     }
 }

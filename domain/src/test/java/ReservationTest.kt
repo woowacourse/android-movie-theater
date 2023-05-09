@@ -13,7 +13,7 @@ class ReservationTest() {
             "[ERROR] 예매 인원은 최소 1명 이상 최대 200명 이하여야 합니다.",
             IllegalArgumentException::class.java
         ) {
-            Reservation(getAnyMovie(), listOf(), LocalDateTime.now(), Money(0))
+            Reservation(1, "선릉 극장", getAnyMovie(), listOf(), LocalDateTime.now(), Money(0))
         }
     }
 
@@ -24,6 +24,8 @@ class ReservationTest() {
             IllegalArgumentException::class.java
         ) {
             Reservation(
+                1,
+                "선릉 극장",
                 getAnyMovie(),
                 List<Seat>(21) { Seat(1, 1) },
                 LocalDateTime.now(),
@@ -35,6 +37,7 @@ class ReservationTest() {
     @Test
     fun `상영 기간이 2일부터 31일인데 범위를 벗어난 1일에 예약하면 에러가 발생한다`() {
         val movie = Movie(
+            1,
             "아바타",
             LocalDate.of(2024, 3, 2),
             LocalDate.of(2024, 3, 31),
@@ -45,6 +48,8 @@ class ReservationTest() {
 
         assertThrows(IllegalArgumentException::class.java) {
             Reservation(
+                1,
+                "선릉 극장",
                 movie,
                 listOf(Seat(1, 1)),
                 LocalDateTime.of(2024, 3, 1, 12, 0),
@@ -55,6 +60,7 @@ class ReservationTest() {
 
     private fun getAnyMovie(): Movie =
         Movie(
+            1,
             "아바타",
             LocalDate.now(),
             LocalDate.now().plusDays(1),

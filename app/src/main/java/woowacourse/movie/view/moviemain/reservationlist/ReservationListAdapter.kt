@@ -9,15 +9,15 @@ import woowacourse.movie.view.model.ReservationUiModel
 
 class ReservationListAdapter(
     private val reservations: List<ReservationUiModel>,
-    private val onItemClick: OnItemClick
+    private val onReservationClickListener: OnReservationClickListener
 ) : RecyclerView.Adapter<ReservationItemViewHolder>() {
 
-    fun interface OnItemClick {
+    fun interface OnReservationClickListener {
         fun onClick(reservation: ReservationUiModel)
     }
 
     private val onReservationViewClick: (Int) -> Unit = {
-        onItemClick.onClick(reservations[it])
+        onReservationClickListener.onClick(reservations[it])
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReservationItemViewHolder {

@@ -31,12 +31,14 @@ import java.time.LocalTime
 class SeatSelectionActivityTest {
 
     private val reservationOptions = ReservationOptions(
+        "선릉 극장",
         "해리 포터와 마법사의 돌",
         LocalDateTime.of(LocalDate.of(2024, 3, 1), LocalTime.of(13, 0)),
         2
     )
 
     private val movie = Movie(
+        1,
         "해리 포터와 마법사의 돌",
         LocalDate.of(2024, 3, 1),
         LocalDate.of(2024, 3, 31),

@@ -11,15 +11,15 @@ import woowacourse.movie.view.model.MovieListModel.MovieUiModel
 
 class MovieListAdapter(
     private val dataList: List<MovieListModel>,
-    private val onItemClick: OnItemClick
+    private val onItemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    fun interface OnItemClick {
+    fun interface OnItemClickListener {
         fun onClick(item: MovieListModel)
     }
 
     private val onItemViewClick: (Int) -> Unit = {
-        onItemClick.onClick(dataList[it])
+        onItemClickListener.onClick(dataList[it])
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

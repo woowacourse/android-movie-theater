@@ -3,6 +3,7 @@ package woowacourse.movie.domain
 import java.time.LocalDateTime
 
 class ReservationAgency(
+    private val theaterName: String,
     private val movie: Movie,
     private val peopleCount: Int,
     private val selectedDateTime: LocalDateTime
@@ -10,7 +11,7 @@ class ReservationAgency(
 
     fun reserve(seats: List<Seat>): Reservation? = if (canReserve(seats)) {
         Reservation(
-            movie, seats, selectedDateTime, calculateReservationFee(seats)
+            -1, theaterName, movie, seats, selectedDateTime, calculateReservationFee(seats)
         )
     } else null
 

@@ -3,7 +3,9 @@ package woowacourse.movie.domain
 import java.time.LocalDateTime
 
 data class Reservation(
-    private val movie: Movie,
+    val id: Int,
+    val theaterName: String,
+    val movie: Movie,
     val seats: List<Seat>,
     val screeningDateTime: LocalDateTime,
     val finalReservationFee: Money
