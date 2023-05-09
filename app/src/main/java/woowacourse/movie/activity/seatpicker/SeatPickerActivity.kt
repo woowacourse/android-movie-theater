@@ -37,8 +37,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
-    private var _binding: ActivitySeatPickerBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: ActivitySeatPickerBinding
 
     override lateinit var presenter: SeatPickerContract.Presenter
     private var seatGroup = SeatGroup()
@@ -49,7 +48,7 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_picker)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_picker)
 
         val movieBookingInfo = getMovieBookingInfo()
         presenter = SeatPickerPresenter(this, movieBookingInfo)
@@ -266,11 +265,6 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
         outState.putString(MOVIE_TITLE, binding.tvSeatPickerMovie.text.toString())
         outState.putString(TICKET_PRICE, binding.tvSeatPickerTicketPrice.text.toString())
         outState.putSerializable(PICKED_SEAT, seatGroup.toPresentation())
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 
     companion object {

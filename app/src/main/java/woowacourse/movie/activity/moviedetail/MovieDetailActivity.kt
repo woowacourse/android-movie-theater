@@ -25,14 +25,13 @@ import woowacourse.movie.movie.MovieBookingInfo
 import java.time.LocalDate
 
 class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
-    private var _binding: ActivityMovieDetailBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: ActivityMovieDetailBinding
     override lateinit var presenter: MovieDetailContract.Presenter
     private var needSpinnerInitialize = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
         presenter = MovieDetailPresenter(this, movieData = getMovieData())
         needSpinnerInitialize = true
 
@@ -182,11 +181,6 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
         outState.putString(TIME_KEY, binding.spMovieTime.selectedItemPosition.toString())
         outState.putInt(DATE_KEY, binding.spMovieDate.selectedItemPosition)
         outState.putString(TICKET_COUNT_KEY, binding.tvTicketCount.text.toString())
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 
     companion object {

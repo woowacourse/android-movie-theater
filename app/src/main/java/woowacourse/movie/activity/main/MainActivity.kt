@@ -30,8 +30,7 @@ class MainActivity :
     NavigationBarView.OnItemSelectedListener,
     MainContract.View {
 
-    private var _binding: ActivityMainBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: ActivityMainBinding
     override lateinit var presenter: MainContract.Presenter
     private val fragments = mutableMapOf<Int, Fragment>()
     private val requestPermissionLauncher =
@@ -50,7 +49,7 @@ class MainActivity :
         settingFragmentFactory = SettingFragmentFactory(requestPermissionLauncher)
         supportFragmentManager.fragmentFactory = settingFragmentFactory
         super.onCreate(savedInstanceState)
-        _binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         presenter = MainPresenter(this, sharedPreferenceRepository)
 
@@ -123,10 +122,5 @@ class MainActivity :
         supportFragmentManager.findFragmentById(R.id.fl_main)?.view?.findViewById<SwitchMaterial>(
             R.id.sw_setting_can_push
         )?.isChecked = wantChecked
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 }
