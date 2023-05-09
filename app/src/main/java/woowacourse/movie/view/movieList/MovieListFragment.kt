@@ -32,10 +32,9 @@ class MovieListFragment : Fragment(), MovieListContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter = MovieListPresenter(this)
+        presenter = MovieListPresenter(this, Movies(), Ads())
 
         moviesView = view.findViewById(R.id.rv_movie)
-        presenter.setupMovieList(Movies().getAll(), Ads().getAll())
         presenter.loadMovieList()
     }
 

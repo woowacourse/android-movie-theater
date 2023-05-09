@@ -11,7 +11,6 @@ interface MovieListContract {
     }
 
     interface Presenter {
-        fun setupMovieList(movies: List<MovieModel>, ads: List<AdModel>)
         fun loadMovieList()
     }
 }

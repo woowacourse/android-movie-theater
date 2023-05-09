@@ -1,18 +1,14 @@
 package woowacourse.movie.view.movieList
 
-import woowacourse.movie.model.AdModel
-import woowacourse.movie.model.MovieModel
+import woowacourse.movie.entity.Ads
+import woowacourse.movie.entity.Movies
 
-class MovieListPresenter(private val view: MovieListContract.View) : MovieListContract.Presenter {
-    private lateinit var movies: List<MovieModel>
-    private lateinit var ads: List<AdModel>
-
-    override fun setupMovieList(movies: List<MovieModel>, ads: List<AdModel>) {
-        this.movies = movies
-        this.ads = ads
-    }
-
+class MovieListPresenter(
+    private val view: MovieListContract.View,
+    private val movies: Movies,
+    private val ads: Ads,
+) : MovieListContract.Presenter {
     override fun loadMovieList() {
-        view.setMovieList(movies, ads)
+        view.setMovieList(movies.getAll(), ads.getAll())
     }
 }
