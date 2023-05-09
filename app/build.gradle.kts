@@ -41,6 +41,14 @@ android {
             excludes += "META-INF/LICENSE-notice.md"
         }
     }
+
+    dataBinding {
+        enable = true
+    }
+
+    viewBinding {
+        enable = true
+    }
 }
 
 dependencies {

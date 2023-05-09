@@ -1,28 +1,27 @@
 package woowacourse.movie.ui.reservation.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemReservationBinding
 import woowacourse.movie.model.MovieTicketModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class ReservationAdapter(
     private val reservationInfo: List<MovieTicketModel>,
-    private val onClick: (Int) -> Unit,
+    private val onClick: (MovieTicketModel) -> Unit,
 ) : RecyclerView.Adapter<ReservationAdapter.ReservationViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReservationViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(
-            R.layout.item_reservation,
+        val binding = ItemReservationBinding.inflate(
+            LayoutInflater.from(parent.context),
             parent,
             false,
         )
 
-        return ReservationViewHolder(view, onClick)
+        return ReservationViewHolder(binding, onClick)
     }
 
     override fun getItemCount(): Int = reservationInfo.size
@@ -32,28 +31,24 @@ class ReservationAdapter(
     }
 
     class ReservationViewHolder(
-        itemView: View,
-        onClick: (Int) -> Unit,
-    ) : RecyclerView.ViewHolder(itemView) {
-        private val dateView: TextView by lazy { itemView.findViewById(R.id.reservation_date) }
-        private val timeView: TextView by lazy { itemView.findViewById(R.id.reservation_time) }
-        private val titleView: TextView by lazy { itemView.findViewById(R.id.reservation_title) }
-
-        init {
-            itemView.setOnClickListener { onClick(adapterPosition) }
-        }
+        private val binding: ItemReservationBinding,
+        private val onClick: (MovieTicketModel) -> Unit,
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(movieTicketModel: MovieTicketModel) {
-            dateView.text = movieTicketModel.time.dateFormat()
-            timeView.text = movieTicketModel.time.timeFormat()
-            titleView.text = movieTicketModel.title
+            with(binding) {
+                root.setOnClickListener { onClick(movieTicketModel) }
+                reservationTitle.text = movieTicketModel.title
+                reservationTime.text = movieTicketModel.time.toTimeFormat()
+                reservationTime.text = movieTicketModel.time.toDateFormat()
+            }
         }
 
-        private fun LocalDateTime.dateFormat(): String = format(
+        private fun LocalDateTime.toDateFormat(): String = format(
             DateTimeFormatter.ofPattern(itemView.context.getString(R.string.date_format)),
         )
 
-        private fun LocalDateTime.timeFormat(): String = format(
+        private fun LocalDateTime.toTimeFormat(): String = format(
             DateTimeFormatter.ofPattern(itemView.context.getString(R.string.time_format)),
         )
     }
