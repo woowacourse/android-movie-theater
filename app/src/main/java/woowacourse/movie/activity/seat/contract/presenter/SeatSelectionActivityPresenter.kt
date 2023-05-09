@@ -20,12 +20,10 @@ import java.time.LocalDateTime
 
 class SeatSelectionActivityPresenter(
     val view: SeatSelectionActivityContract.View,
-    private val count: TicketCountUIModel,
-    val date: MovieDateUIModel,
-    val time: MovieTimeUIModel,
-    val movie: MovieUIModel,
-    val theater: TheaterUIModel,
     private val repository: ReservationRepository,
+    private val count: TicketCountUIModel,
+    private val date: MovieDateUIModel,
+    private val time: MovieTimeUIModel
 ) : SeatSelectionActivityContract.Presenter {
     private var seats = Seats()
 
@@ -91,8 +89,8 @@ class SeatSelectionActivityPresenter(
         view.showBookingDialog()
     }
 
-    override fun startTicketActivity() {
-        val bookingMovie = BookingMovieUIModel(movie.title, date, time, count, seats.mapToUIModel(), theater.name)
+    override fun startTicketActivity(title: String, count: TicketCountUIModel, theater: TheaterUIModel) {
+        val bookingMovie = BookingMovieUIModel(title, date, time, count, seats.mapToUIModel(), theater.name)
         repository.insertReservation(bookingMovie)
         view.moveTicketActivity(bookingMovie)
     }

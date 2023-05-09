@@ -34,47 +34,26 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionActivityContract
     override val presenter: SeatSelectionActivityContract.Presenter by lazy {
         SeatSelectionActivityPresenter(
             this,
-            ticketCount,
-            date,
-            time,
-            movie,
-            theater,
             ReservationRepository(ReservationDatabase.getDatabase(this)),
+            getIntentTicketCountData(),
+            getIntentDateData(),
+            getIntentTimeData(),
         )
     }
     private lateinit var binding: ActivitySeatSelectionBinding
-    private val date by lazy {
-        intent.intentSerializable(DATE_KEY, MovieDateUIModel::class.java)
-            ?: MovieDateUIModel.movieDate
-    }
-    private val time by lazy {
+    private fun getIntentTimeData(): MovieTimeUIModel =
         intent.intentSerializable(TIME_KEY, MovieTimeUIModel::class.java)
             ?: MovieTimeUIModel.movieTime
-    }
-    private val movie by lazy {
-        intent.intentSerializable(MOVIE_KEY, MovieUIModel::class.java) ?: MovieUIModel.movieData
-    }
-    private val ticketCount by lazy {
-        intent.intentSerializable(
-            TICKET_KEY,
-            TicketCountUIModel::class.java,
-        ) ?: TicketCountUIModel(0)
-    }
-    private val theater by lazy {
-        intent.intentSerializable(
-            THEATER_KEY,
-            TheaterUIModel::class.java,
-        ) ?: TheaterUIModel.theater
-    }
-    private val alarmReceiver by lazy { AlarmReceiver() }
-    private lateinit var seatSelectView: SeatSelectView
 
+    private val alarmReceiver by lazy { AlarmReceiver() }
+
+    private lateinit var seatSelectView: SeatSelectView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         registerReceiver(alarmReceiver, IntentFilter(AlarmReceiver.ALARM_CODE))
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_selection)
         setUpState(savedInstanceState)
-        presenter.loadMovieTitle(movie.title)
+        presenter.loadMovieTitle(getIntentMovieData().title)
     }
 
     override fun setUpSeatsView(seats: SeatsUIModel, onSeatClick: (SeatUIModel, Int, Int) -> Unit) {
@@ -111,13 +90,36 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionActivityContract
         }
     }
 
+    private fun getIntentDateData(): MovieDateUIModel =
+        intent.intentSerializable(DATE_KEY, MovieDateUIModel::class.java)
+            ?: MovieDateUIModel.movieDate
+
+    private fun getIntentMovieData(): MovieUIModel =
+        intent.intentSerializable(MOVIE_KEY, MovieUIModel::class.java) ?: MovieUIModel.movieData
+
+    private fun getIntentTicketCountData(): TicketCountUIModel =
+        intent.intentSerializable(
+            TICKET_KEY,
+            TicketCountUIModel::class.java,
+        ) ?: TicketCountUIModel(0)
+
+    private fun getIntentTheaterData(): TheaterUIModel =
+        intent.intentSerializable(
+            THEATER_KEY,
+            TheaterUIModel::class.java,
+        ) ?: TheaterUIModel.theater
+
     override fun showBookingDialog() {
         AlertDialog.Builder(this)
             .setCancelable(false)
             .setTitle(R.string.seat_dialog_title)
             .setMessage(R.string.seat_dialog_message)
             .setPositiveButton(R.string.seat_dialog_yes) { _, _ ->
-                presenter.startTicketActivity()
+                presenter.startTicketActivity(
+                    getIntentMovieData().title,
+                    getIntentTicketCountData(),
+                    getIntentTheaterData(),
+                )
             }
             .setNegativeButton(R.string.seat_dialog_no) { dialog, _ ->
                 dialog.dismiss()

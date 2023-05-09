@@ -1,8 +1,12 @@
 package woowacourse.movie.activity.seat.contract
 
 import woowacourse.movie.dto.movie.BookingMovieUIModel
+import woowacourse.movie.dto.movie.MovieDateUIModel
+import woowacourse.movie.dto.movie.MovieTimeUIModel
+import woowacourse.movie.dto.movie.TheaterUIModel
 import woowacourse.movie.dto.seat.SeatUIModel
 import woowacourse.movie.dto.seat.SeatsUIModel
+import woowacourse.movie.dto.ticket.TicketCountUIModel
 
 interface SeatSelectionActivityContract {
 
@@ -28,7 +32,7 @@ interface SeatSelectionActivityContract {
         fun updatePrice(priceCheck: Boolean)
         fun setEnterBtnClickable()
         fun showBookingDialog()
-        fun startTicketActivity()
+        fun startTicketActivity(title: String, count: TicketCountUIModel, theaterUIModel: TheaterUIModel)
         fun onSavedInstanceState(outState: MutableMap<String, Any>)
         fun onRestoreInstanceState(savedInstanceState : Map<String, Any>)
     }

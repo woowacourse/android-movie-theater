@@ -34,16 +34,6 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailActivityContract.Vie
     private lateinit var binding: ActivityMovieDetailBinding
     private var dateSpinnerPosition = 0
     private var timeSpinnerPosition = 0
-    private val movie by lazy {
-        intent.intentSerializable(MOVIE_KEY, MovieUIModel::class.java) ?: MovieUIModel.movieData
-    }
-    private val theater by lazy {
-        intent.intentSerializable(
-            THEATER_KEY,
-            TheaterUIModel::class.java,
-        ) ?: TheaterUIModel.theater
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
@@ -51,6 +41,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailActivityContract.Vie
         setToolBar()
         setUpState(savedInstanceState)
 
+        val movie = getIntentMovieData()
         selectDateSpinner(movie.startDate, movie.endDate)
         presenter.loadMovieData(movie)
         onClickDecreaseBtnListener()
@@ -107,7 +98,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailActivityContract.Vie
     ) {
         val intent = Intent(this, SeatSelectionActivity::class.java)
         intent.putExtra(TICKET_KEY, count)
-        intent.putExtra(THEATER_KEY, theater)
+        intent.putExtra(THEATER_KEY, getIntentTheaterData())
         intent.putExtra(MOVIE_KEY, data)
         intent.putExtra(DATE_KEY, date)
         intent.putExtra(TIME_KEY, time)
@@ -159,6 +150,17 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailActivityContract.Vie
         }
     }
 
+    private fun getIntentMovieData(): MovieUIModel {
+        return  intent.intentSerializable(MOVIE_KEY, MovieUIModel::class.java) ?: MovieUIModel.movieData
+    }
+
+    private fun getIntentTheaterData(): TheaterUIModel {
+        return intent.intentSerializable(
+            THEATER_KEY,
+            TheaterUIModel::class.java,
+        ) ?: TheaterUIModel.theater
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -187,7 +189,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailActivityContract.Vie
     }
 
     private fun selectTimeSpinner() {
-        presenter.loadTimeSpinnerData(movie.id, theater)
+        presenter.loadTimeSpinnerData(getIntentMovieData().id, getIntentTheaterData())
         presenter.loadTimeSpinnerPosition(timeSpinnerPosition)
 
         binding.selectTime.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
