@@ -8,7 +8,7 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.view.utils.getPushAlarmReceptionIsWanted
-import woowacourse.movie.view.utils.postNotificationPermissionIsGranted
+import woowacourse.movie.view.utils.isPostingNotificationPermissionGranted
 import woowacourse.movie.view.utils.setPushAlarmReceptionIsWanted
 import woowacourse.movie.view.utils.showDialogToGetPostNotificationPermission
 
@@ -25,18 +25,18 @@ class SettingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val switch = view.findViewById<SwitchCompat>(R.id.switch_push_alarm)
-        switch.isChecked = userWantsToReceivePushAlarm()
+        switch.isChecked = isReceivingPushNotificationWanted()
         switch.setOnCheckedChangeListener { switchView, isChecked ->
             setPushAlarmReceptionIsWanted(requireContext(), isChecked)
-            if (isChecked && postNotificationPermissionIsGranted(requireContext()).not()) {
+            if (isChecked && isPostingNotificationPermissionGranted(requireContext()).not()) {
                 showDialogToGetPostNotificationPermission(requireContext())
             }
-            switchView.isChecked = userWantsToReceivePushAlarm()
+            switchView.isChecked = isReceivingPushNotificationWanted()
         }
     }
 
-    private fun userWantsToReceivePushAlarm(): Boolean {
+    private fun isReceivingPushNotificationWanted(): Boolean {
         return getPushAlarmReceptionIsWanted(requireContext())
-                && postNotificationPermissionIsGranted(requireContext())
+                && isPostingNotificationPermissionGranted(requireContext())
     }
 }

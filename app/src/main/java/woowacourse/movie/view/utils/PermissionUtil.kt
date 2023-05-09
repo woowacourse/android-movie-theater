@@ -11,7 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import woowacourse.movie.R
 
-fun postNotificationPermissionIsGranted(context: Context): Boolean {
+fun isPostingNotificationPermissionGranted(context: Context): Boolean {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         ContextCompat.checkSelfPermission(
             context, Manifest.permission.POST_NOTIFICATIONS
