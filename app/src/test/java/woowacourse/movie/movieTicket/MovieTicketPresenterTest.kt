@@ -19,7 +19,7 @@ class MovieTicketPresenterTest {
 
     @Before
     fun setUp() {
-        view = mockk()
+        view = mockk(relaxed = true)
         presenter = MovieTicketPresenter(view)
     }
 

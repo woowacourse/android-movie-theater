@@ -19,7 +19,7 @@ class SettingPresenterTest {
 
     @Before
     fun setUp() {
-        view = mockk()
+        view = mockk(relaxed = true)
         pushNotificationRepository = mockk()
         presenter = SettingPresenter(view, pushNotificationRepository)
     }

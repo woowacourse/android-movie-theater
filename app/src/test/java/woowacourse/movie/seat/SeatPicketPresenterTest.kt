@@ -25,7 +25,7 @@ class SeatPicketPresenterTest {
 
     @Before
     fun setUp() {
-        view = mockk()
+        view = mockk(relaxed = true)
         presenter = SeatPicketPresenter(view)
 
         justRun { view.setTicketViews(dummyTicket) }

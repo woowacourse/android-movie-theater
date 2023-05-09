@@ -21,7 +21,7 @@ class ReservationListPresenterTest {
 
     @Before
     fun setUp() {
-        view = mockk()
+        view = mockk(relaxed = true)
 
         presenter = ReservationListPresenter(view)
     }

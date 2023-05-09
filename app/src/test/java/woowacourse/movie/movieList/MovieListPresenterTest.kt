@@ -26,7 +26,7 @@ class MovieListPresenterTest {
 
     @Before
     fun setUp() {
-        view = mockk()
+        view = mockk(relaxed = true)
         movies = mockk()
         ads = mockk()
         presenter = MovieListPresenter(view, movies, ads)
