@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityCompletedBinding
 import woowacourse.movie.model.ReservationUiModel
+import woowacourse.movie.model.main.MainModelHandler
 import woowacourse.movie.model.main.MovieUiModel
 import woowacourse.movie.util.formatScreenDateTime
 import woowacourse.movie.util.getParcelable
@@ -25,6 +26,7 @@ class CompletedActivity : AppCompatActivity(), CompletedContract.View {
     private val presenter: CompletedPresenter by lazy {
         CompletedPresenter(
             view = this,
+            repository = MainModelHandler,
             reservation = reservation
         )
     }

@@ -9,6 +9,7 @@ import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import woowacourse.movie.model.main.MainModelHandler
 import woowacourse.movie.model.main.MovieMapper.toUiModel
 import woowacourse.movie.model.main.MovieUiModel
 import woowacourse.movie.movie.MovieRepository
@@ -28,6 +29,7 @@ class CompletedPresenterTest {
         // given id가 1인 movie와 theater에 대한 예약정보를 받는다
         completedPresenter = CompletedPresenter(
             view = view,
+            repository = MainModelHandler,
             reservation = ReservationUiModel(
                 movieId = 1,
                 theaterId = 1
