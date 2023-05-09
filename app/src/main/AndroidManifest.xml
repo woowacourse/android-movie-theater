@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <application
+        android:name=".common.system.App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -12,11 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Movie"
         tools:targetApi="31">
-        <activity android:name=".activity.SeatSelectionActivity" />
-        <activity android:name=".activity.ReservationResultActivity" />
-        <activity android:name=".activity.MovieReservationActivity" />
+        <activity android:name=".seatSelection.SeatSelectionActivity" />
+        <activity android:name=".reservationResult.ReservationResultActivity" />
+        <activity android:name=".movieReservation.MovieReservationActivity" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".common.view.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +25,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:name=".common.system.NotificationSetReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

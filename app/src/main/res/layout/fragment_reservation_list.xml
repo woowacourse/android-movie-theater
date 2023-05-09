@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".fragment.ReservationListFragment">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/reservation_list_recycler"
+    xmlns:tools="http://schemas.android.com/tools">
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-</FrameLayout>
+        android:background="@color/white"
+        tools:context=".reservationList.ReservationListFragment">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/reservation_list_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    </FrameLayout>
+</layout>

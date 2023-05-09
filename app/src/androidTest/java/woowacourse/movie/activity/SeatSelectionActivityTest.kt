@@ -17,12 +17,13 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
+import woowacourse.movie.common.mapper.MovieMapper.toView
+import woowacourse.movie.common.mapper.ReservationDetailMapper.toView
 import woowacourse.movie.domain.DateRange
 import woowacourse.movie.domain.Image
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.ReservationDetail
-import woowacourse.movie.view.mapper.MovieMapper.toView
-import woowacourse.movie.view.mapper.ReservationDetailMapper.toView
+import woowacourse.movie.seatSelection.SeatSelectionActivity
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -46,7 +47,7 @@ class SeatSelectionActivityTest {
     @get:Rule
     val activityRule = ActivityScenarioRule<SeatSelectionActivity>(
         SeatSelectionActivity.from(
-            ApplicationProvider.getApplicationContext(), movie, reservationDetail
+            ApplicationProvider.getApplicationContext(), movie, reservationDetail, ""
         )
     )
 

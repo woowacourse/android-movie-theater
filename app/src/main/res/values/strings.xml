@@ -12,7 +12,7 @@
     <string name="movie_running_time">러닝타임: %d분</string>
     <string name="movie_date_format">yyyy-MM-dd</string>
 
-    <string name="reservation_people_count">일반 %d명 | %s</string>
+    <string name="reservation_people_count">일반 %d명 | %s | %s</string>
     <string name="reservation_price">%s원 (현장 결제)</string>
     <string name="reservation_datetime_format">yyyy-MM-dd HH:mm</string>
 
@@ -35,4 +35,6 @@
     <string name="notification_channel_description">Test Notification</string>
     <string name="setting_push_title">푸시 알림 수신</string>
     <string name="setting_push_description">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+
+    <string name="schedule_count">%d개의 상영 시간</string>
 </resources>
