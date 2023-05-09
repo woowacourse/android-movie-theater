@@ -8,11 +8,11 @@ import io.mockk.verify
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.entity.Ads
-import woowacourse.movie.entity.Movies
 import woowacourse.movie.model.AdModel
 import woowacourse.movie.model.MovieModel
 import woowacourse.movie.model.TheaterModel
+import woowacourse.movie.repository.AdRepository
+import woowacourse.movie.repository.MovieRepository
 import woowacourse.movie.view.movieList.MovieListContract
 import woowacourse.movie.view.movieList.MovieListPresenter
 import java.time.LocalDate
@@ -21,22 +21,22 @@ import java.time.LocalTime
 class MovieListPresenterTest {
     private lateinit var presenter: MovieListContract.Presenter
     private lateinit var view: MovieListContract.View
-    private lateinit var movies: Movies
-    private lateinit var ads: Ads
+    private lateinit var movieRepository: MovieRepository
+    private lateinit var adRepository: AdRepository
 
     @Before
     fun setUp() {
         view = mockk(relaxed = true)
-        movies = mockk()
-        ads = mockk()
-        presenter = MovieListPresenter(view, movies, ads)
+        movieRepository = mockk()
+        adRepository = mockk()
+        presenter = MovieListPresenter(view, movieRepository, adRepository)
     }
 
     @Test
     fun `영화 광고 정보를 어댑터에 설정한다`() {
         // given
-        every { movies.getAll() } returns listOf(dummyMovie)
-        every { ads.getAll() } returns listOf(dummyAd)
+        every { movieRepository.getAll() } returns listOf(dummyMovie)
+        every { adRepository.getAll() } returns listOf(dummyAd)
 
         val slotMovie = slot<List<MovieModel>>()
         val slotAd = slot<List<AdModel>>()

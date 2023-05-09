@@ -3,10 +3,11 @@ package woowacourse.movie.entity
 import woowacourse.movie.R
 import woowacourse.movie.model.MovieModel
 import woowacourse.movie.model.TheaterModel
+import woowacourse.movie.repository.MovieRepository
 import java.time.LocalDate
 import java.time.LocalTime
 
-class Movies {
+class Movies : MovieRepository {
     private val items: List<MovieModel> = listOf(
         MovieModel(
             R.drawable.fifty_shades_freed,
@@ -45,5 +46,5 @@ class Movies {
         ),
     )
 
-    fun getAll(): List<MovieModel> = items.toList()
+    override fun getAll(): List<MovieModel> = items.toList()
 }
