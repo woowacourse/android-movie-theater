@@ -6,7 +6,6 @@ import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.TheaterRepository
 import woowacourse.movie.domain.reservation.Reservation
 import woowacourse.movie.domain.system.PriceSystem
-import woowacourse.movie.domain.system.Seat
 import woowacourse.movie.domain.system.SeatSelectSystem
 import woowacourse.movie.domain.system.SelectResult
 import woowacourse.movie.domain.theater.Grade
@@ -22,19 +21,13 @@ class SeatSelectionPresenter(
     private var price = Price(0)
     private val theater = theaterRepository.findTheater(reserveOption.theaterName)
     private val seatSelectSystem: SeatSelectSystem =
-        SeatSelectSystem(theater.seatInfo, reserveOption.peopleCount)
+        SeatSelectSystem(theater, reserveOption.peopleCount)
     private val priceSystem: PriceSystem =
         PriceSystem(PriceCalculator(theater.discountPolicies), reserveOption.screeningDateTime)
 
     override fun fetchSeatsData(colorOfGrade: Map<Grade, Int>) {
-        val seatUiInfo = theater.seatInfo.toUiModel(colorOfGrade)
-        for (row in 0 until seatUiInfo.maxRow) {
-            view.createRow(seatUiInfo)
-            for (col in 0 until seatUiInfo.maxCol) {
-                val seat = Seat(row, col).toUiModel(seatUiInfo.colorOfRow[row] ?: 0)
-                view.createSeat(seat)
-            }
-        }
+        val theaterUiModel = theater.toUiModel(colorOfGrade)
+        view.createSeats(theaterUiModel)
     }
 
     override fun updateSeat(row: Int, col: Int) {
@@ -70,5 +63,5 @@ class SeatSelectionPresenter(
         view.onReserveClick(reservation.toUiModel())
     }
 
-    private fun rowColToIndex(row: Int, col: Int): Int = row * theater.seatInfo.size.col + col
+    private fun rowColToIndex(row: Int, col: Int): Int = row * theater.size.col + col
 }

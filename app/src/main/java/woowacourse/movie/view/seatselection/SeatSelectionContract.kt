@@ -2,13 +2,11 @@ package woowacourse.movie.view.seatselection
 
 import woowacourse.movie.domain.theater.Grade
 import woowacourse.movie.view.model.ReservationUiModel
-import woowacourse.movie.view.model.SeatInfoUiModel
-import woowacourse.movie.view.model.SeatUiModel
+import woowacourse.movie.view.model.TheaterUiModel
 
 interface SeatSelectionContract {
     interface View {
-        fun createSeat(seat: SeatUiModel)
-        fun createRow(seatInfo: SeatInfoUiModel)
+        fun createSeats(theaterUiModel: TheaterUiModel)
         fun onSeatSelectedByIndex(index: Int, isClickableButton: Boolean)
         fun onSeatDeselectedByIndex(index: Int)
         fun showSeatMaxSelectionToast()

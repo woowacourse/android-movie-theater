@@ -26,8 +26,9 @@ import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.model.ReservationOptions
 import woowacourse.movie.view.model.ReservationUiModel
-import woowacourse.movie.view.model.SeatInfoUiModel
 import woowacourse.movie.view.model.SeatUiModel
+import woowacourse.movie.view.model.TheaterUiModel
+import woowacourse.movie.view.model.row
 import woowacourse.movie.view.reservationcompleted.ReservationCompletedActivity
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
@@ -73,14 +74,19 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun createRow(seatInfo: SeatInfoUiModel) {
-        val tableRow = TableRow(this).apply {
-            layoutParams = TableLayout.LayoutParams(0, 0, 1f)
+    override fun createSeats(theaterUiModel: TheaterUiModel) {
+        for (row in 0 until theaterUiModel.maxRow) {
+            val tableRow = TableRow(this).apply {
+                layoutParams = TableLayout.LayoutParams(0, 0, 1f)
+            }
+            for (col in 0 until theaterUiModel.maxCol) {
+                tableRow.addView(createSeat(SeatUiModel(row, col, theaterUiModel.colorOfRow[row] ?: 0)))
+            }
+            binding.layoutSeats.addView(tableRow)
         }
-        binding.layoutSeats.addView(tableRow)
     }
 
-    override fun createSeat(seat: SeatUiModel) {
+    private fun createSeat(seat: SeatUiModel): TextView {
         val textView = TextView(this).apply {
             text = seat.seatId
             setTextColor(ContextCompat.getColor(context, seat.color))
@@ -93,9 +99,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 AppCompatResources.getDrawable(this@SeatSelectionActivity, R.drawable.seat_selector)
             layoutParams = TableRow.LayoutParams(0, LayoutParams.MATCH_PARENT, 1f)
         }
-        binding.layoutSeats.children.filterIsInstance<TableRow>().toList()[seat.row].addView(
-            textView,
-        )
+        return textView
     }
 
     private fun setNextButton() {

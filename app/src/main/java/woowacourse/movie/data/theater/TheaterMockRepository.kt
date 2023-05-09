@@ -5,7 +5,6 @@ import woowacourse.movie.domain.policy.MovieDayPolicy
 import woowacourse.movie.domain.policy.NightPolicy
 import woowacourse.movie.domain.repository.TheaterRepository
 import woowacourse.movie.domain.theater.Grade
-import woowacourse.movie.domain.theater.SeatInfo
 import woowacourse.movie.domain.theater.Size
 import woowacourse.movie.domain.theater.Theater
 
@@ -17,7 +16,6 @@ object TheaterMockRepository : TheaterRepository {
         3 to Grade.S,
         4 to Grade.A,
     )
-    private val seatInfo = SeatInfo(Size(5, 4), rowGrade)
     private val policies = listOf(
         MovieDayPolicy(),
         MorningPolicy(),
@@ -25,10 +23,10 @@ object TheaterMockRepository : TheaterRepository {
     )
 
     private val theaters: List<Theater> = listOf(
-        Theater("정말아주아주아주아주아주아주아주긴극장이름", seatInfo, policies),
-        Theater("선릉 극장", seatInfo, policies),
-        Theater("잠실 극장", seatInfo, policies),
-        Theater("강남 극장", seatInfo, policies),
+        Theater("정말아주아주아주아주아주아주아주긴극장이름", Size(5, 4), rowGrade, policies),
+        Theater("선릉 극장", Size(5, 4), rowGrade, policies),
+        Theater("잠실 극장", Size(5, 4), rowGrade, policies),
+        Theater("강남 극장", Size(5, 4), rowGrade, policies),
     )
 
     override fun findAll(): List<Theater> {

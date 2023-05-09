@@ -14,13 +14,12 @@ import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.TheaterRepository
 import woowacourse.movie.domain.reservation.Reservation
 import woowacourse.movie.domain.theater.Grade
-import woowacourse.movie.domain.theater.SeatInfo
 import woowacourse.movie.domain.theater.Size
 import woowacourse.movie.domain.theater.Theater
 import woowacourse.movie.view.mapper.toUiModel
 import woowacourse.movie.view.model.ReservationOptions
 import woowacourse.movie.view.model.ReservationUiModel
-import woowacourse.movie.view.model.SeatInfoUiModel
+import woowacourse.movie.view.model.TheaterUiModel
 import woowacourse.movie.view.seatselection.SeatSelectionContract
 import woowacourse.movie.view.seatselection.SeatSelectionPresenter
 import java.time.LocalDateTime
@@ -52,9 +51,8 @@ class SeatSelectionPresenterTest {
                 1 to Grade.S,
                 2 to Grade.A,
             )
-            private val seatInfo = SeatInfo(Size(3, 4), rowGrade)
 
-            val theaters: List<Theater> = listOf(Theater("선릉 극장", seatInfo, listOf()))
+            val theaters: List<Theater> = listOf(Theater("선릉 극장", Size(3, 4), rowGrade, listOf()))
 
             override fun findAll(): List<Theater> {
                 return theaters.toList()
@@ -77,15 +75,15 @@ class SeatSelectionPresenterTest {
             Grade.A to 3,
         )
 
-        val slot = slot<SeatInfoUiModel>()
-        every { view.createRow(capture(slot)) } just runs
+        val slot = slot<TheaterUiModel>()
+        every { view.createSeats(capture(slot)) } just runs
 
         presenter.fetchSeatsData(gradeColor)
 
-        val expected = SeatInfoUiModel(3, 4, mapOf(0 to 1, 1 to 2, 2 to 3))
+        val expected = TheaterUiModel("선릉 극장", 3, 4, mapOf(0 to 1, 1 to 2, 2 to 3))
 
         assertEquals(expected, slot.captured)
-        verify { view.createRow(expected) }
+        verify { view.createSeats(expected) }
     }
 
     @Test
