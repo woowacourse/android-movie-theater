@@ -20,6 +20,7 @@ import woowacourse.movie.presentation.model.ReservationModel
 import woowacourse.movie.presentation.model.SeatModel
 import woowacourse.movie.presentation.model.TicketModel
 import woowacourse.movie.presentation.util.getParcelableExtraCompat
+import woowacourse.movie.presentation.util.noIntentExceptionHandler
 
 class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
 
@@ -33,8 +34,7 @@ class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
         )
     }
     private lateinit var binding: ActivityChoiceSeatBinding
-
-    private val reservation by lazy { initReservation() }
+    private lateinit var reservation: ReservationModel
     private val confirmButton by lazy { binding.buttonChoiceConfirm }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,12 +42,14 @@ class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
         binding = ActivityChoiceSeatBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setTheaterSeat()
+        initReservation()
         initView()
     }
 
-    private fun initReservation() =
-        intent.getParcelableExtraCompat<ReservationModel>(RESERVATION)
-            ?: throw NoSuchElementException()
+    private fun initReservation() {
+        reservation = intent.getParcelableExtraCompat(RESERVATION)
+            ?: return this.noIntentExceptionHandler(NO_RESERVATION_INFO_ERROR)
+    }
 
     private fun setTheaterSeat() {
         val seatsTable = binding.tableSeats
@@ -165,6 +167,7 @@ class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
         private const val GRADE_S = "GRADE_S"
         private const val GRADE_A = "GRADE_A"
         private const val INITIAL_PAYMENT_MONEY = 0
+        private const val NO_RESERVATION_INFO_ERROR = "예약 정보가 없습니다."
 
         fun getIntent(context: Context, reservation: ReservationModel): Intent {
             return Intent(context, ChoiceSeatActivity::class.java).apply {

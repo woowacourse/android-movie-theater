@@ -14,6 +14,7 @@ import woowacourse.movie.presentation.model.MovieModel
 import woowacourse.movie.presentation.model.ReservationModel
 import woowacourse.movie.presentation.util.formatDotDate
 import woowacourse.movie.presentation.util.getParcelableExtraCompat
+import woowacourse.movie.presentation.util.noIntentExceptionHandler
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -21,17 +22,12 @@ import java.time.LocalTime
 class BookingActivity : AppCompatActivity(), BookingContract.View {
 
     override val presenter: BookingContract.Presenter by lazy {
-        BookingPresenter(
-            MockMovieData,
-            this,
-        )
+        BookingPresenter(MockMovieData, this)
     }
 
     private lateinit var binding: ActivityBookingBinding
 
-    private val cinemaModel: CinemaModel by lazy {
-        intent.getParcelableExtraCompat(CINEMA_MODEL) ?: throw NoSuchElementException()
-    }
+    private lateinit var cinemaModel: CinemaModel
 
     private val movieModel: MovieModel by lazy { presenter.requireMovieModel(cinemaModel.movieId) }
 
@@ -46,13 +42,12 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         super.onCreate(savedInstanceState)
         binding = ActivityBookingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        this.supportFragmentManager
         initAdapters()
         initView()
+        initCinemaModel()
         restoreData(savedInstanceState)
         initDateTimes()
         gatherClickListeners()
-        val aa = (1..2).toList()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -61,6 +56,11 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun initCinemaModel() {
+        cinemaModel = intent.getParcelableExtraCompat(CINEMA_MODEL)
+            ?: return this.noIntentExceptionHandler(NO_CINEMA_INFO_ERROR)
     }
 
     private fun restoreData(savedInstanceState: Bundle?) {
@@ -174,6 +174,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         private const val DATE_POSITION = "DATE_POSITION"
         private const val TIME_POSITION = "TIME_POSITION"
         private const val INITIAL_TICKET_COUNT = 1
+        private const val NO_CINEMA_INFO_ERROR = "극장 정보가 없습니다."
         fun getIntent(context: Context, cinemaModel: CinemaModel): Intent {
             return Intent(context, BookingActivity::class.java).apply {
                 putExtra(CINEMA_MODEL, cinemaModel)

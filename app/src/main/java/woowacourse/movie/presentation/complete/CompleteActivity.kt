@@ -12,6 +12,7 @@ import woowacourse.movie.presentation.main.MainActivity
 import woowacourse.movie.presentation.model.TicketModel
 import woowacourse.movie.presentation.util.formatDotDateTimeColon
 import woowacourse.movie.presentation.util.getParcelableExtraCompat
+import woowacourse.movie.presentation.util.noIntentExceptionHandler
 
 class CompleteActivity : AppCompatActivity(), CompleteContract.View {
 
@@ -24,13 +25,11 @@ class CompleteActivity : AppCompatActivity(), CompleteContract.View {
 
     private lateinit var binding: ActivityCompleteBinding
 
-    private val ticketModel by lazy {
-        initTicketModel()
-    }
+    private lateinit var ticketModel: TicketModel
 
-    private fun initTicketModel(): TicketModel {
-        return intent.getParcelableExtraCompat<TicketModel>(TICKET)
-            ?: throw NoSuchElementException()
+    private fun initTicketModel() {
+        ticketModel = intent.getParcelableExtraCompat<TicketModel>(TICKET)
+            ?: return this.noIntentExceptionHandler(NO_TICKET_INFO_ERROR)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,7 +86,8 @@ class CompleteActivity : AppCompatActivity(), CompleteContract.View {
     }
 
     companion object {
-        const val TICKET = "TICKET"
+        private const val TICKET = "TICKET"
+        private const val NO_TICKET_INFO_ERROR = "티켓 정보가 없습니다."
 
         fun getIntent(context: Context, ticketModel: TicketModel): Intent {
             return Intent(context, CompleteActivity::class.java).apply {

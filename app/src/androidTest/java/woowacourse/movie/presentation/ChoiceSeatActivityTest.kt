@@ -24,6 +24,7 @@ class ChoiceSeatActivityTest {
     private val reservation =
         ReservationModel(
             movieId = 1L,
+            "선릉",
             bookedDateTime = LocalDateTime.of(2024, 3, 1, 9, 0),
             count = 2,
         )
