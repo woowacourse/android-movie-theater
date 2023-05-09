@@ -6,8 +6,8 @@ import java.time.LocalTime
 
 interface DateTimeContract {
     interface View {
-        fun setDateSpinnerAdapter(dates: List<LocalDate>)
-        fun setTimeSpinnerAdapter(times: List<LocalTime>)
+        fun setDateSpinnerItems(dates: List<LocalDate>)
+        fun setTimeSpinnerItems(times: List<LocalTime>)
         fun setSelectDate(position: Int)
         fun setSelectTime(position: Int)
     }

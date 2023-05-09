@@ -21,60 +21,60 @@ internal class MainPresenterTest {
     @Test
     fun 영화_목록_탭을_클릭하면_영화_목록_화면으로_교체된다() {
         // 목 객체의 showMovieList() 메소드는 단순히 실행되기만 하는 메소드임을 정의
-        every { view.showMovieList() } just Runs
+        every { view.showMoviePage() } just Runs
 
         // 실행
         mainPresenter.clickMovieTab()
 
         // 검사
-        verify { view.showMovieList() } // 뷰의 해당 메소드가 실행됐는지 검사한다
+        verify { view.showMoviePage() } // 뷰의 해당 메소드가 실행됐는지 검사한다
     }
 
     @Test
     fun 예약_목록_탭을_클릭하면_영화_목록_화면으로_교체된다() {
         // 목 객체의 showMovieList() 메소드는 단순히 실행되기만 하는 메소드임을 정의
-        every { view.showReservationList() } just Runs
+        every { view.showReservationPage() } just Runs
 
         // 실행
         mainPresenter.clickReservationTab()
 
         // 검사
-        verify { view.showReservationList() } // 뷰의 해당 메소드가 실행됐는지 검사한다
+        verify { view.showReservationPage() } // 뷰의 해당 메소드가 실행됐는지 검사한다
     }
 
     @Test
     fun 설정_탭을_클릭하면_영화_목록_화면으로_교체된다() {
         // 목 객체의 showMovieList() 메소드는 단순히 실행되기만 하는 메소드임을 정의
-        every { view.showSetting() } just Runs
+        every { view.showSettingPage() } just Runs
 
         // 실행
         mainPresenter.clickSettingTab()
 
         // 검사
-        verify { view.showSetting() } // 뷰의 해당 메소드가 실행됐는지 검사한다
+        verify { view.showSettingPage() } // 뷰의 해당 메소드가 실행됐는지 검사한다
     }
 
     @Test
     fun 알림_권한이_있으면_권한있음을_나타내는_토스트를_띄운다() {
         // 목 객체의 showMovieList() 메소드는 단순히 실행되기만 하는 메소드임을 정의
-        every { view.showPermissionApproveToast() } just Runs
+        every { view.showPermissionApproveMessage() } just Runs
 
         // 실행
         mainPresenter.permissionApproveResult(true)
 
         // 검사
-        verify { view.showPermissionApproveToast() } // 뷰의 해당 메소드가 실행됐는지 검사한다
+        verify { view.showPermissionApproveMessage() } // 뷰의 해당 메소드가 실행됐는지 검사한다
     }
 
     @Test
     fun 알림_권한이_없으면_권한없음을_나타내는_토스트를_띄운다() {
         // 목 객체의 showMovieList() 메소드는 단순히 실행되기만 하는 메소드임을 정의
-        every { view.showPermissionRejectToast() } just Runs
+        every { view.showPermissionRejectMessage() } just Runs
 
         // 실행
         mainPresenter.permissionApproveResult(false)
 
         // 검사
-        verify { view.showPermissionRejectToast() } // 뷰의 해당 메소드가 실행됐는지 검사한다
+        verify { view.showPermissionRejectMessage() } // 뷰의 해당 메소드가 실행됐는지 검사한다
     }
 }

@@ -11,6 +11,6 @@ interface ReservationListContract {
     }
 
     interface Presenter {
-        fun loadTicketsItemList()
+        fun loadTicketsItems()
     }
 }

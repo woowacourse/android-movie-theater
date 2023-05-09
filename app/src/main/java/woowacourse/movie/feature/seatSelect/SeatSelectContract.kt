@@ -10,7 +10,7 @@ interface SeatSelectContract {
         fun seatToggle(index: Int)
         fun changePredictMoney(moneyState: MoneyState)
         fun setConfirmClickable(clickable: Boolean)
-        fun showDialog()
+        fun showAskScreen()
         fun navigateReservationConfirm(tickets: TicketsState)
         fun setReservationAlarm(
             tickets: TicketsState,
@@ -24,7 +24,7 @@ interface SeatSelectContract {
         val seats: List<SeatPositionState>
         fun clickSeat(index: Int)
         fun clickConfirm()
-        fun clickDialogConfirm()
+        fun clickAskPageConfirm()
         fun updateChosenSeats(chosen: List<SeatPositionState>)
     }
 }

@@ -67,13 +67,13 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
     }
 
-    override fun showMovieList() =
+    override fun showMoviePage() =
         changeShowFragment<MovieListFragment>()
 
-    override fun showReservationList() =
+    override fun showReservationPage() =
         changeShowFragment<ReservationListFragment>()
 
-    override fun showSetting() =
+    override fun showSettingPage() =
         changeShowFragment<SettingFragment>()
 
     private inline fun <reified T : Fragment> changeShowFragment() {
@@ -99,10 +99,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         presenter.permissionApproveResult(isGranted)
     }
 
-    override fun showPermissionApproveToast() =
+    override fun showPermissionApproveMessage() =
         Toaster.showToast(this, getString(R.string.alarm_notification_approve))
 
-    override fun showPermissionRejectToast() =
+    override fun showPermissionRejectMessage() =
         Toaster.showToast(this, getString(R.string.alarm_notification_reject))
 
     companion object {

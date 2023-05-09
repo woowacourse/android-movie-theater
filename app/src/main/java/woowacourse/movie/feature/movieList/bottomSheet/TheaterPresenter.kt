@@ -20,7 +20,7 @@ class TheaterPresenter(
                     return@getTheaterScreeningInfoByMovieUseCase
                 }
 
-                view.setTheaterAdapter(
+                view.setTheaterItems(
                     it.map {
                         it.asPresentation().toItemModel { clickTheater(it, movie) }
                     }

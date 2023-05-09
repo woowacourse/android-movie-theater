@@ -52,7 +52,7 @@ class ReservationListFragment : Fragment(), ReservationListContract.View, OnData
             )
         adapter = ReservationTicketsAdapter()
         binding.rvReservation.adapter = adapter
-        presenter.loadTicketsItemList()
+        presenter.loadTicketsItems()
     }
 
     override fun onDestroyView() {
@@ -74,7 +74,7 @@ class ReservationListFragment : Fragment(), ReservationListContract.View, OnData
     }
 
     override fun onUpdateData() {
-        presenter.loadTicketsItemList()
+        presenter.loadTicketsItems()
     }
 
     override fun onDestroy() {

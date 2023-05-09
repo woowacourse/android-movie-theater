@@ -24,11 +24,11 @@ class DateTimeSpinner(
         binding.timeSpinner.setClickListener({ position -> presenter.clickTime(position) })
     }
 
-    override fun setDateSpinnerAdapter(dates: List<LocalDate>) {
+    override fun setDateSpinnerItems(dates: List<LocalDate>) {
         binding.dateSpinner.setDefaultAdapter(dates)
     }
 
-    override fun setTimeSpinnerAdapter(times: List<LocalTime>) {
+    override fun setTimeSpinnerItems(times: List<LocalTime>) {
         binding.timeSpinner.setDefaultAdapter(times)
     }
 

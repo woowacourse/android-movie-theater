@@ -5,21 +5,21 @@ class MainPresenter(
 ) : MainContract.Presenter {
     override fun permissionApproveResult(isGranted: Boolean) {
         if (isGranted) {
-            view.showPermissionApproveToast()
+            view.showPermissionApproveMessage()
         } else {
-            view.showPermissionRejectToast()
+            view.showPermissionRejectMessage()
         }
     }
 
     override fun clickMovieTab() {
-        view.showMovieList()
+        view.showMoviePage()
     }
 
     override fun clickReservationTab() {
-        view.showReservationList()
+        view.showReservationPage()
     }
 
     override fun clickSettingTab() {
-        view.showSetting()
+        view.showSettingPage()
     }
 }

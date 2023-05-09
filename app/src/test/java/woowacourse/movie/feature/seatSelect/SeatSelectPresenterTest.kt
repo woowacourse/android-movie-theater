@@ -94,10 +94,10 @@ internal class SeatSelectPresenterTest {
 
     @Test
     fun 예매_확인_버튼을_클릭하면_다이얼로그가_나온다() {
-        every { view.showDialog() } just Runs
+        every { view.showAskScreen() } just Runs
 
         presenter.clickConfirm()
-        verify { view.showDialog() }
+        verify { view.showAskScreen() }
     }
 
     @Test
@@ -111,7 +111,7 @@ internal class SeatSelectPresenterTest {
         presenter.clickSeat(1)
         presenter.clickSeat(2)
         // 선택된 좌석들로 티켓을 발급받고 다음 화면으로 넘어가기 위해 다이얼로그 버튼을 클릭
-        presenter.clickDialogConfirm()
+        presenter.clickAskPageConfirm()
 
         verify { view.setReservationAlarm(any(), any(), any()) }
         verify { ticketsRepository.addTickets(any()) }

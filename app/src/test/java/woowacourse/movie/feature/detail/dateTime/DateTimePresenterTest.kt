@@ -23,8 +23,8 @@ internal class DateTimePresenterTest {
     @Before
     fun init() {
         view = mockk()
-        every { view.setDateSpinnerAdapter(any()) } just Runs
-        every { view.setTimeSpinnerAdapter(any()) } just Runs
+        every { view.setDateSpinnerItems(any()) } just Runs
+        every { view.setTimeSpinnerItems(any()) } just Runs
         presenter = DateTimePresenter(view, mockTheaterMovie)
     }
 

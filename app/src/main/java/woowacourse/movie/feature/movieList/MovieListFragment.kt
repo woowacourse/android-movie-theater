@@ -58,7 +58,7 @@ class MovieListFragment : Fragment(), MovieListContract.View {
             GetMovieAndAdvItemsUseCase(MovieRepositoryImpl(), AdvRepositoryImpl())
         )
         adapter = MovieAdapter()
-        presenter.loadMovieAndAdvItemList() // 뷰가 그려질때마다 데이터 다시 불러옴. 캐싱 적용 안함
+        presenter.loadMovieAndAdvItems() // 뷰가 그려질때마다 데이터 다시 불러옴. 캐싱 적용 안함
         binding.rvMovie.adapter = adapter
     }
 
@@ -72,7 +72,7 @@ class MovieListFragment : Fragment(), MovieListContract.View {
         startActivity(intent)
     }
 
-    override fun showBottomSheetDialog(movie: MovieState) {
+    override fun showTheaterBottomSheet(movie: MovieState) {
         val bottomSheetFragment = TheaterBottomSheetFragment.newInstance(movie)
         bottomSheetFragment.show(parentFragmentManager, THEATER_BOTTOM_SHEET_KEY)
     }

@@ -8,14 +8,14 @@ import woowacourse.movie.model.SelectTheaterAndMovieState
 interface MovieListContract {
     interface View {
         fun navigateMovieDetail(selectTheaterMovie: SelectTheaterAndMovieState)
-        fun showBottomSheetDialog(movie: MovieState)
+        fun showTheaterBottomSheet(movie: MovieState)
         fun navigateAdbDetail(adv: AdvState)
         fun updateItems(items: List<CommonItemModel>)
         fun errorLoadData()
     }
 
     interface Presenter {
-        fun loadMovieAndAdvItemList()
+        fun loadMovieAndAdvItems()
         fun receiveTheaterInfo(theaterMovie: SelectTheaterAndMovieState)
     }
 }

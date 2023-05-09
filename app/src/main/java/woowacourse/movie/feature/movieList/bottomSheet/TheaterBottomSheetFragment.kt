@@ -52,7 +52,7 @@ class TheaterBottomSheetFragment : BottomSheetDialogFragment(), TheaterContract.
         presenter.loadTheatersData(movie)
     }
 
-    override fun setTheaterAdapter(theaters: List<TheaterItemModel>) {
+    override fun setTheaterItems(theaters: List<TheaterItemModel>) {
         binding.rvTheater.adapter = TheaterAdapter(theaters)
     }
 

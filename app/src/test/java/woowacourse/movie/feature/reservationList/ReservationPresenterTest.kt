@@ -37,7 +37,7 @@ internal class ReservationPresenterTest {
         every { view.updateItems(capture(slot)) } just Runs
 
         // 실행
-        presenter.loadTicketsItemList()
+        presenter.loadTicketsItems()
 
         val actual = slot.captured.map { it.ticketsState }
         val expected = mockTickets.map { it.asPresentation() }

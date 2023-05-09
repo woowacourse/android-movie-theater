@@ -36,10 +36,10 @@ class SeatSelectPresenter(
     }
 
     override fun clickConfirm() {
-        view.showDialog()
+        view.showAskScreen()
     }
 
-    override fun clickDialogConfirm() {
+    override fun clickAskPageConfirm() {
         val tickets = getIssuedTicketsUseCase(
             reservationState.theater.asDomain(),
             reservationState.movie.asDomain(),

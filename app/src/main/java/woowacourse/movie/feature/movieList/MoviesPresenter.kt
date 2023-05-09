@@ -12,12 +12,12 @@ class MoviesPresenter(
     private val getMovieAndAdvItemsUseCase: GetMovieAndAdvItemsUseCase,
 ) : MovieListContract.Presenter {
 
-    override fun loadMovieAndAdvItemList() {
+    override fun loadMovieAndAdvItems() {
         getMovieAndAdvItemsUseCase(
             onSuccess = { movies, advs ->
                 val movieItems = movies.map {
                     it.asPresentation().toItemModel { movieState ->
-                        view.showBottomSheetDialog(movieState)
+                        view.showTheaterBottomSheet(movieState)
                     }
                 }
                 val advItems = advs.map {

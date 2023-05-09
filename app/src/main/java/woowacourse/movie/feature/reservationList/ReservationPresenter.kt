@@ -7,7 +7,7 @@ class ReservationPresenter(
     val view: ReservationListContract.View,
     private val getAllReservationTicketsUseCase: GetAllReservationTicketsUseCase
 ) : ReservationListContract.Presenter {
-    override fun loadTicketsItemList() {
+    override fun loadTicketsItems() {
         getAllReservationTicketsUseCase(
             onSuccess = {
                 val ticketsItems = it.map {

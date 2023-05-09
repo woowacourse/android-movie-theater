@@ -23,8 +23,8 @@ class DateTimePresenter(
         get() = _selectTime
 
     init {
-        view.setDateSpinnerAdapter(runningDates.toList())
-        view.setTimeSpinnerAdapter(runningTimes.toList())
+        view.setDateSpinnerItems(runningDates.toList())
+        view.setTimeSpinnerItems(runningTimes.toList())
     }
 
     override fun setDateTime(dateTime: LocalDateTime) {

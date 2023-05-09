@@ -108,14 +108,14 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
         binding.reservationConfirm.isClickable = clickable
     }
 
-    override fun showDialog() {
+    override fun showAskScreen() {
         showAskDialog(
             titleId = R.string.reservation_confirm,
             messageId = R.string.ask_really_reservation,
             negativeStringId = R.string.reservation_cancel,
             positiveStringId = R.string.reservation_complete
         ) {
-            presenter.clickDialogConfirm()
+            presenter.clickAskPageConfirm()
         }
     }
 
