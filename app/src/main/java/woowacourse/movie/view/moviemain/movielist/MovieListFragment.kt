@@ -24,8 +24,7 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContr
     }
 
     private fun onClick(item: MovieUiModel) {
-        val bottomSheet = TheaterBottomSheetFragment(item)
-        childFragmentManager.fragmentFactory = BottomSheetFragmentFactoryImpl(item)
+        val bottomSheet = TheaterBottomSheetFragment.of(item)
         bottomSheet.show(childFragmentManager, TheaterBottomSheetFragment.TAG_THEATER)
     }
 
