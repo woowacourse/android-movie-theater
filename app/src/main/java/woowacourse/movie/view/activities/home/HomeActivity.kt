@@ -5,7 +5,6 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
@@ -26,8 +25,6 @@ class HomeActivity : AppCompatActivity() {
         initNotificationPermission()
 
         initBottomNavigation()
-
-        setInitialNavigationItem(R.id.home_item)
     }
 
     private fun initNotificationPermission() {
@@ -47,11 +44,8 @@ class HomeActivity : AppCompatActivity() {
             }
             return@setOnItemSelectedListener true
         }
-    }
 
-    private fun setInitialNavigationItem(@IdRes itemId: Int) {
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        bottomNavigationView.selectedItemId = itemId
+        bottomNavigationView.selectedItemId = R.id.home_item
     }
 
     private fun changeFragment(fragment: Fragment) {
