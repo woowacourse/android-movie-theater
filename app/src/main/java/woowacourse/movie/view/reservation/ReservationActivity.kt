@@ -38,7 +38,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         }
         presenter = ReservationPresenter(this, movie, theaterName)
         binding.presenter = presenter
-        presenter.fetchViewData()
+        presenter.fetchMovieData()
         presenter.fetchScreeningDates()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -82,7 +82,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         }
     }
 
-    override fun setViewData(movie: MovieUiModel, theaterName: String) {
+    override fun setMovieData(movie: MovieUiModel, theaterName: String) {
         binding.apply {
             this.movie = movie
             moviePoster.setImageResource(movie.posterResourceId)

@@ -21,8 +21,8 @@ class ReservationPresenter(
         screeningDateTimes = ScreeningDateTimes.of(startDate, endDate, times)
     }
 
-    override fun fetchViewData() {
-        view.setViewData(movie, theater)
+    override fun fetchMovieData() {
+        view.setMovieData(movie, theater)
     }
 
     override fun fetchScreeningDates() {
