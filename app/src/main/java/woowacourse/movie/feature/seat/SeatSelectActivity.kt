@@ -15,7 +15,6 @@ import woowacourse.movie.feature.reservation.confirm.TicketsConfirmActivity
 import woowacourse.movie.feature.reservation.reserve.MovieDetailActivity.Companion.KEY_TICKETS
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.SeatPositionState
-import woowacourse.movie.model.TicketOptState
 import woowacourse.movie.model.TicketsState
 import woowacourse.movie.model.mapper.asDomain
 import woowacourse.movie.model.mapper.asPresentation

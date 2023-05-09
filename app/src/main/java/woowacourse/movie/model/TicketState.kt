@@ -5,8 +5,10 @@ import kotlinx.parcelize.Parcelize
 import java.time.LocalDateTime
 
 @Parcelize
-data class TicketOptState(
-    val movieState: MovieState,
+data class TicketState(
+    val theater: TheaterState,
+    val movie: MovieState,
     val dateTime: LocalDateTime,
-    val count: Int
+    val seatPositionState: SeatPositionState,
+    val discountedMoneyState: MoneyState
 ) : Parcelable

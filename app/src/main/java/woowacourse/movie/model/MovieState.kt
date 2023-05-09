@@ -8,8 +8,8 @@ import java.time.LocalDate
 
 @Parcelize
 data class MovieState(
-    @DrawableRes
-    val imgId: Int,
+    val id: Int,
+    @DrawableRes val imgId: Int,
     val title: String,
     val startDate: LocalDate,
     val endDate: LocalDate,

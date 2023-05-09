@@ -7,8 +7,8 @@ import woowacourse.movie.feature.common.itemModel.AdvItemModel
 
 @Parcelize
 data class AdvState(
-    @DrawableRes
-    val imgId: Int,
+    val id: Int,
+    @DrawableRes val imgId: Int,
     val advDescription: String
 ) : Parcelable {
     fun toItemModel(onClick: (position: Int) -> Unit): AdvItemModel {
