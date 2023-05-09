@@ -12,7 +12,7 @@ class BookedTicketsPresenter(
 ) :
     BookedTicketsContract.Presenter {
 
-    override fun setBookedTickets() {
+    override fun requestBookedTickets() {
         view.setBookedTickets(bookedTicketsData.getTickets())
     }
 

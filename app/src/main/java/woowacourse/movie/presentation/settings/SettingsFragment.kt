@@ -11,10 +11,11 @@ import woowacourse.movie.presentation.allowance.PreferenceKey
 
 class SettingsFragment : Fragment(), SettingsContract.View {
 
-    override lateinit var presenter: SettingsContract.Presenter
-
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
+
+    private var _presenter: SettingsContract.Presenter? = null
+    override val presenter: SettingsContract.Presenter = _presenter!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,15 +30,15 @@ class SettingsFragment : Fragment(), SettingsContract.View {
         super.onViewCreated(view, savedInstanceState)
 
         initPresenter()
+        presenter.initNotifiable()
     }
 
     private fun initPresenter() {
         val prefKey = PreferenceKey.NOTIFICATION_PREF_KEY
-        presenter = SettingsPresenter(
+        _presenter = SettingsPresenter(
             this,
             SettingsPreference.getInstance(prefKey, requireContext()),
         )
-        presenter.initNotifiable()
     }
 
     override fun initNotifiable(isNotifiable: Boolean) {
@@ -54,5 +55,6 @@ class SettingsFragment : Fragment(), SettingsContract.View {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        _presenter = null
     }
 }

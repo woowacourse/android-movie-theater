@@ -2,7 +2,7 @@ package woowacourse.movie.presentation.settings
 
 interface SettingsContract {
     interface View {
-        var presenter: Presenter
+        val presenter: Presenter
         fun initNotifiable(isNotifiable: Boolean)
     }
 

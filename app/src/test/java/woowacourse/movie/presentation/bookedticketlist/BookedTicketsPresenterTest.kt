@@ -46,7 +46,7 @@ class BookedTicketsPresenterTest {
         every { view.setBookedTickets(capture(ticketModelSlot)) } just runs
 
         // when
-        presenter.setBookedTickets()
+        presenter.requestBookedTickets()
 
         // then
         val expected = listOf(

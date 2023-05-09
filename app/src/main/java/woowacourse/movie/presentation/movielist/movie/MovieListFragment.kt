@@ -12,9 +12,10 @@ import woowacourse.movie.presentation.movielist.cinema.CinemaBottomSheetFragment
 
 class MovieListFragment : Fragment(), MovieListContract.View {
 
-    override val presenter: MovieListContract.Presenter by lazy {
-        MovieListPresenter(this, MockMovieItemData)
-    }
+    private var _presenter: MovieListContract.Presenter? = null
+    override val presenter = _presenter!!
+
+    private fun initPresenter() = MovieListPresenter(this, MockMovieItemData)
 
     private var _binding: FragmentMovieListBinding? = null
     private val binding get() = _binding!!
@@ -30,6 +31,7 @@ class MovieListFragment : Fragment(), MovieListContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initPresenter()
         presenter.setMovieItems()
     }
 
@@ -48,5 +50,6 @@ class MovieListFragment : Fragment(), MovieListContract.View {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        _presenter = null
     }
 }

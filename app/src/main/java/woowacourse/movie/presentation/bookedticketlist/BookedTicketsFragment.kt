@@ -18,19 +18,10 @@ class BookedTicketsFragment : Fragment(), BookedTicketsContract.View {
     private var _binding: FragmentBookedTicketsBinding? = null
     private val binding get() = _binding!!
 
-    override val presenter: BookedTicketsContract.Presenter by lazy {
-        BookedTicketsPresenter(
-            this,
-            TicketsDBAdapter(TicketDBHelper(requireContext())),
-            MockMovieData,
-        )
-    }
-    private val bookedTicketsAdapter by lazy {
-        BookedTicketsAdapter(
-            ::bookedTicketsItemClickListener,
-            presenter::getMovieModel,
-        )
-    }
+    private var _presenter: BookedTicketsContract.Presenter? = null
+    override val presenter get() = _presenter!!
+
+    private lateinit var bookedTicketsAdapter: BookedTicketsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,7 +35,25 @@ class BookedTicketsFragment : Fragment(), BookedTicketsContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.setBookedTickets()
+
+        initBookedTicketsPresenter()
+        initBookedTicketAdapter()
+        presenter.requestBookedTickets()
+    }
+
+    private fun initBookedTicketsPresenter() {
+        _presenter = BookedTicketsPresenter(
+            this,
+            TicketsDBAdapter(TicketDBHelper(requireContext())),
+            MockMovieData,
+        )
+    }
+
+    private fun initBookedTicketAdapter() {
+        BookedTicketsAdapter(
+            ::bookedTicketsItemClickListener,
+            presenter::getMovieModel,
+        )
     }
 
     override fun setBookedTickets(tickets: List<TicketModel>) {
@@ -65,6 +74,7 @@ class BookedTicketsFragment : Fragment(), BookedTicketsContract.View {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        _presenter = null
     }
 
     companion object {
