@@ -26,7 +26,10 @@ class TheaterPresenter(
                     }
                 )
             },
-            onFailure = { view.errorLoadTheaterData() }
+            onFailure = {
+                view.errorLoadTheaterData()
+                view.bottomSheetDismiss()
+            }
         )
     }
 
@@ -37,5 +40,6 @@ class TheaterPresenter(
             theater.screeningInfos.find { it.movie == movie }?.screeningDateTimes ?: listOf()
         )
         view.selectTheater(theaterMovie)
+        view.bottomSheetDismiss()
     }
 }

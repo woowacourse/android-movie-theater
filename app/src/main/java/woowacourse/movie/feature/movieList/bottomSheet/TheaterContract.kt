@@ -10,6 +10,7 @@ interface TheaterContract {
         fun selectTheater(theater: SelectTheaterAndMovieState)
         fun loadTheaterIsEmpty()
         fun errorLoadTheaterData()
+        fun bottomSheetDismiss()
     }
 
     interface Presenter {

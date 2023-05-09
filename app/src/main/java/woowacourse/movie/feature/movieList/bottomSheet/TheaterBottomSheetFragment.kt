@@ -61,7 +61,6 @@ class TheaterBottomSheetFragment : BottomSheetDialogFragment(), TheaterContract.
             MovieListFragment.THEATER_SELECT_KEY,
             bundleOf(MovieListFragment.THEATER_MOVIE_KEY to theater)
         )
-        dismiss()
     }
 
     override fun loadTheaterIsEmpty() {
@@ -71,6 +70,9 @@ class TheaterBottomSheetFragment : BottomSheetDialogFragment(), TheaterContract.
 
     override fun errorLoadTheaterData() {
         Toaster.showToast(requireContext(), getString(R.string.error_load_theater_data))
+    }
+
+    override fun bottomSheetDismiss() {
         dismiss()
     }
 
