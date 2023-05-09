@@ -40,7 +40,7 @@ class SettingsFragment : Fragment(), SettingsContract.View {
         presenter.initNotifiable()
     }
 
-    override fun initNotificationSwitch(isNotifiable: Boolean) {
+    override fun initNotifiable(isNotifiable: Boolean) {
         val notificationSwitch =
             binding.switchPushPermission
 

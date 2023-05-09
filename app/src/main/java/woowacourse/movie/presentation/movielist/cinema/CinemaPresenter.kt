@@ -16,7 +16,7 @@ class CinemaPresenter(
             val movieTimes = cinema.findMovieTimes(movieModel.id)
             getCinemaModels(cinema, movieModel.id, movieTimes)
         }
-        view.setCinemaItemAdapter(cinemaModels)
+        view.setCinemaModels(cinemaModels)
     }
 
     private fun getCinemaModels(

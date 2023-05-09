@@ -43,7 +43,7 @@ class BookedTicketsPresenterTest {
     fun `영화 및 광고 아이템을 세팅한다`() {
         // given
         val ticketModelSlot = slot<List<TicketModel>>()
-        every { view.setBookedTicketsAdapter(capture(ticketModelSlot)) } just runs
+        every { view.setBookedTickets(capture(ticketModelSlot)) } just runs
 
         // when
         presenter.setBookedTickets()

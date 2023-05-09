@@ -6,7 +6,7 @@ import woowacourse.movie.presentation.model.MovieModel
 interface CinemaContract {
     interface View {
         val presenter: Presenter
-        fun setCinemaItemAdapter(cinemaModels: List<CinemaModel>)
+        fun setCinemaModels(cinemaModels: List<CinemaModel>)
     }
 
     interface Presenter {

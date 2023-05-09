@@ -14,6 +14,6 @@ class SettingsPresenter(
         }
 
     override fun initNotifiable() {
-        view.initNotificationSwitch(settingsData.isAvailable)
+        view.initNotifiable(settingsData.isAvailable)
     }
 }

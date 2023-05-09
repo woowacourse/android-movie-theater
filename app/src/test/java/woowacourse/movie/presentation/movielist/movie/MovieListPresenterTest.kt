@@ -43,10 +43,10 @@ class MovieListPresenterTest {
     fun `영화 및 광고 아이템을 세팅한다`() {
         // given
         val movieItemSlot = slot<List<MovieItem>>()
-        every { view.setMoviesAdapter(capture(movieItemSlot)) } just runs
+        every { view.setMovieItems(capture(movieItemSlot)) } just runs
 
         // when
-        presenter.setMovies()
+        presenter.setMovieItems()
 
         // then
         val expected = listOf(

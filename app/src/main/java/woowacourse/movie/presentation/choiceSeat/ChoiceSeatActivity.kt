@@ -121,7 +121,7 @@ class ChoiceSeatActivity : AppCompatActivity(), ChoiceSeatContract.View {
         setConfirmButton()
     }
 
-    override fun setMovieTitleView(title: String) {
+    override fun setMovieTitle(title: String) {
         binding.textChoiceTitle.text = title
     }
 

@@ -45,7 +45,7 @@ class ChoiceSeatPresenterTest {
     fun `MovieId 가 1이면 해리 포터 영화 제목을 세팅 한다`() {
         // given
         val movieTitleSlot = slot<String>()
-        every { view.setMovieTitleView(capture(movieTitleSlot)) } just runs
+        every { view.setMovieTitle(capture(movieTitleSlot)) } just runs
 
         // when
         presenter.setMovieTitle(1L)
@@ -54,7 +54,7 @@ class ChoiceSeatPresenterTest {
         val actual = movieTitleSlot.captured
 
         TestCase.assertEquals(expected, actual)
-        verify { view.setMovieTitleView(expected) }
+        verify { view.setMovieTitle(expected) }
     }
 
     @Test

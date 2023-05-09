@@ -13,7 +13,7 @@ class BookedTicketsPresenter(
     BookedTicketsContract.Presenter {
 
     override fun setBookedTickets() {
-        view.setBookedTicketsAdapter(bookedTicketsData.getTickets())
+        view.setBookedTickets(bookedTicketsData.getTickets())
     }
 
     override fun getMovieModel(ticketModel: TicketModel) =

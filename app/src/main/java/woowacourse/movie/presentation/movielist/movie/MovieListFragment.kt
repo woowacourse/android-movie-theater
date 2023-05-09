@@ -30,10 +30,10 @@ class MovieListFragment : Fragment(), MovieListContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.setMovies()
+        presenter.setMovieItems()
     }
 
-    override fun setMoviesAdapter(movieItems: List<MovieItem>) {
+    override fun setMovieItems(movieItems: List<MovieItem>) {
         binding.recyclerMainMovie.adapter = MovieItemAdapter(movieItems) { clickBook(it) }
     }
 

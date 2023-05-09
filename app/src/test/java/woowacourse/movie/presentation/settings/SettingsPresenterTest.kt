@@ -29,7 +29,7 @@ class SettingsPresenterTest {
         // given & when
         FakeSettingsData.isAvailable = false
         val isNotifiableSlot = slot<Boolean>()
-        every { view.initNotificationSwitch(capture(isNotifiableSlot)) } just runs
+        every { view.initNotifiable(capture(isNotifiableSlot)) } just runs
 
         // when
         presenter.initNotifiable()
@@ -45,7 +45,7 @@ class SettingsPresenterTest {
         // given
         FakeSettingsData.isAvailable = true
         val isNotifiableSlot = slot<Boolean>()
-        every { view.initNotificationSwitch(capture(isNotifiableSlot)) } just runs
+        every { view.initNotifiable(capture(isNotifiableSlot)) } just runs
 
         // when
         presenter.initNotifiable()

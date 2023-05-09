@@ -47,7 +47,7 @@ class BookedTicketsFragment : Fragment(), BookedTicketsContract.View {
         presenter.setBookedTickets()
     }
 
-    override fun setBookedTicketsAdapter(tickets: List<TicketModel>) {
+    override fun setBookedTickets(tickets: List<TicketModel>) {
         binding.recyclerBookedTickets.adapter =
             bookedTicketsAdapter
         if (tickets == emptyList<TicketModel>()) {

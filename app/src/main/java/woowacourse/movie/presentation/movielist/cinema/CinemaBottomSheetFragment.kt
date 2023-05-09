@@ -36,7 +36,7 @@ class CinemaBottomSheetFragment(
         presenter.setCinemaModels(movieModel)
     }
 
-    override fun setCinemaItemAdapter(cinemaModels: List<CinemaModel>) {
+    override fun setCinemaModels(cinemaModels: List<CinemaModel>) {
         binding.recyclerCinemaItem.adapter = CinemaItemAdapter(cinemaModels) { clickArrow(it) }
     }
 

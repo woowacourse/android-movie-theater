@@ -56,7 +56,7 @@ class CinemaPresenterTest {
             1,
             1,
         )
-        every { view.setCinemaItemAdapter(capture(cinemaModelSlot)) } just runs
+        every { view.setCinemaModels(capture(cinemaModelSlot)) } just runs
 
         // when
         presenter.setCinemaModels(movieModel)

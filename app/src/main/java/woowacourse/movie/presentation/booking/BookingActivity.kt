@@ -52,6 +52,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         restoreData(savedInstanceState)
         initDateTimes()
         gatherClickListeners()
+        val aa = (1..2).toList()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

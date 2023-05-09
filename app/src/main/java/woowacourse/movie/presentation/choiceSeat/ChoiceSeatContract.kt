@@ -8,7 +8,7 @@ interface ChoiceSeatContract {
     interface View {
         val presenter: Presenter
         fun setPaymentAmount(amount: Int)
-        fun setMovieTitleView(title: String)
+        fun setMovieTitle(title: String)
         fun enableConfirm()
         fun disableConfirm()
         fun confirmBookMovie(ticketModel: TicketModel)

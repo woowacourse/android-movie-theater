@@ -94,7 +94,7 @@ class ChoiceSeatPresenter(
     }
 
     override fun setMovieTitle(movieId: Long) {
-        view.setMovieTitleView(getMovie(movieId).title)
+        view.setMovieTitle(getMovie(movieId).title)
     }
 
     override fun getSeatModel(index: Int): SeatModel = findSeat(index).toPresentation()

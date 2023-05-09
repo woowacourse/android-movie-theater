@@ -7,7 +7,7 @@ class MovieListPresenter(
     private val movieItemData: MovieItemData,
 ) : MovieListContract.Presenter {
 
-    override fun setMovies() {
-        view.setMoviesAdapter(movieItemData.getMovieItems())
+    override fun setMovieItems() {
+        view.setMovieItems(movieItemData.getMovieItems())
     }
 }
