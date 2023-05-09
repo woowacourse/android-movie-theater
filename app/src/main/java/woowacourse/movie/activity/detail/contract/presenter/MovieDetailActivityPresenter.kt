@@ -31,13 +31,13 @@ class MovieDetailActivityPresenter(private val view: MovieDetailActivityContract
         view.setTimeSpinnerPosition(timeSpinnerPosition)
     }
 
-    override fun increaseNum() {
+    override fun increaseNumber() {
         val ticketIncrease = ticketCount.mapToDomain().increase()
         ticketCount = ticketIncrease.mapToUIModel()
         view.setBookerNumber(ticketCount)
     }
 
-    override fun decreaseNum() {
+    override fun decreaseNumber() {
         val ticketDecrease = ticketCount.mapToDomain().decrease()
         ticketCount = ticketDecrease.mapToUIModel()
         view.setBookerNumber(ticketCount)

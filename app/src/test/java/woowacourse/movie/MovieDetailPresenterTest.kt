@@ -36,7 +36,7 @@ class MovieDetailPresenterTest {
         val slot = slot<TicketCountUIModel>()
         every { view.setBookerNumber(capture(slot)) } answers { println("slot = ${slot.captured}") }
 
-        presenter.increaseNum()
+        presenter.increaseNumber()
 
         assertEquals(slot.captured.numberOfPeople, 2)
         verify { view.setBookerNumber(slot.captured) }
@@ -47,10 +47,10 @@ class MovieDetailPresenterTest {
         val slot = slot<TicketCountUIModel>()
         every { view.setBookerNumber(capture(slot)) } answers { println("slot = ${slot.captured}") }
 
-        presenter.increaseNum()
-        presenter.increaseNum()
-        presenter.decreaseNum()
-        presenter.decreaseNum()
+        presenter.increaseNumber()
+        presenter.increaseNumber()
+        presenter.decreaseNumber()
+        presenter.decreaseNumber()
 
         assertEquals(slot.captured.numberOfPeople, 1)
         verify { view.setBookerNumber(slot.captured) }

@@ -8,7 +8,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import domain.movieinfo.MovieDate
 import woowacourse.movie.R
 import woowacourse.movie.activity.detail.contract.MovieDetailActivityContract
 import woowacourse.movie.activity.detail.contract.presenter.MovieDetailActivityPresenter
@@ -19,7 +18,6 @@ import woowacourse.movie.dto.movie.MovieTimeUIModel
 import woowacourse.movie.dto.movie.MovieUIModel
 import woowacourse.movie.dto.movie.TheaterUIModel
 import woowacourse.movie.dto.ticket.TicketCountUIModel
-import woowacourse.movie.mapper.movie.mapToUIModel
 import woowacourse.movie.util.Extensions.intentSerializable
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -130,13 +128,13 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailActivityContract.Vie
 
     private fun onClickDecreaseBtnListener() {
         binding.minusButton.setOnClickListener {
-            presenter.decreaseNum()
+            presenter.decreaseNumber()
         }
     }
 
     private fun onClickIncreaseBtnListener() {
         binding.plusButton.setOnClickListener {
-            presenter.increaseNum()
+            presenter.increaseNumber()
         }
     }
 

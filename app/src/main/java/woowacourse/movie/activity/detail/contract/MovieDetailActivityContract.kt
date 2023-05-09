@@ -32,8 +32,8 @@ interface MovieDetailActivityContract {
         fun loadMovieData(data: MovieUIModel)
         fun loadDateSpinnerPosition(dateSpinnerPosition: Int)
         fun loadTimeSpinnerPosition(timeSpinnerPosition: Int)
-        fun increaseNum()
-        fun decreaseNum()
+        fun increaseNumber()
+        fun decreaseNumber()
         fun onBookBtnClick(
             data: MovieUIModel,
             date: String,
