@@ -1,11 +1,12 @@
 package woowacourse.movie.presenter
 
-import io.mockk.*
+import io.mockk.* // ktlint-disable no-wildcard-imports
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.view.main.MainContract
 import woowacourse.movie.view.main.MainPresenter
+import woowacourse.movie.view.main.Screen
 
 class MainPresenterTest {
     private lateinit var presenter: MainContract.Presenter
@@ -13,34 +14,19 @@ class MainPresenterTest {
 
     @Before
     fun setUp() {
-        view = mockk()
+        view = mockk(relaxed = true)
         presenter = MainPresenter(view)
     }
 
     @Test
-    fun 바텀네비게이션_매뉴를_클릭했을때_해당ItemID의_Fragment를_보여준다() {
+    fun 화면을_전환한다() {
         // given
-        val itemId = 2
-        val slot = slot<Int>()
-        every { view.changeFragmentByItemID(capture(slot)) } just runs
+        val slot = slot<Screen>()
+        every { view.setScreen(capture(slot)) } just runs
         // when
-        presenter.onClickBottomNavigationItem(itemId)
+        presenter.changeScreen(Screen.Setting)
         // then
-        assertEquals(itemId, slot.captured)
-        verify { view.changeFragmentByItemID(itemId) }
-    }
-
-    @Test
-    fun 바텀네비게이션의_상태를_업데이트_시킨다() {
-        // given
-        val slot = slot<Int>()
-        every { view.getSavedNavigationItemId() } returns 1
-        every { view.setSelectedFragmentView(capture(slot)) } just runs
-        // when
-        presenter.updateFragmentView()
-        // then
-        val actual = 1
-        assertEquals(actual, slot.captured)
-        verify { view.setSelectedFragmentView(slot.captured) }
+        assertEquals(slot.captured, Screen.Setting)
+        verify { view.setScreen(slot.captured) }
     }
 }
