@@ -2,35 +2,42 @@ package woowacourse.movie.presentation.complete
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieData
-import woowacourse.movie.domain.model.tools.Movie
+import woowacourse.movie.data.movie.MockMovieData
+import woowacourse.movie.databinding.ActivityCompleteBinding
 import woowacourse.movie.presentation.main.MainActivity
 import woowacourse.movie.presentation.model.TicketModel
 import woowacourse.movie.presentation.util.formatDotDateTimeColon
+import woowacourse.movie.presentation.util.getParcelableExtraCompat
+import woowacourse.movie.presentation.util.noIntentExceptionHandler
 
-class CompleteActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_completed)
+class CompleteActivity : AppCompatActivity(), CompleteContract.View {
 
-        val ticket: TicketModel = getTicket()
-        initView(ticket)
+    override val presenter: CompleteContract.Presenter by lazy {
+        CompletePresenter(
+            MockMovieData,
+            this,
+        )
     }
 
-    private fun getTicket(): TicketModel {
-        val ticketModel: TicketModel = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(TICKET, TicketModel::class.java)
-                ?: throw IllegalArgumentException()
-        } else {
-            intent.getParcelableExtra(TICKET) ?: throw IllegalArgumentException()
-        }
-        return ticketModel
+    private lateinit var binding: ActivityCompleteBinding
+
+    private lateinit var ticketModel: TicketModel
+
+    private fun initTicketModel() {
+        ticketModel = intent.getParcelableExtraCompat<TicketModel>(TICKET)
+            ?: return this.noIntentExceptionHandler(NO_TICKET_INFO_ERROR)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityCompleteBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        initTicketModel()
+        initView()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -41,34 +48,34 @@ class CompleteActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun initView(ticket: TicketModel) {
-        val movie = MovieData.findMovieById(ticket.movieId)
-        setMovieTitle(movie)
-        setMovieScreeningDate(ticket)
-        setMovieTicketCount(ticket)
-        setMoviePaymentAmount(ticket)
+    private fun initView() {
+        presenter.setMovieTitle(ticketModel.movieId)
+        setMovieScreeningDate()
+        setMovieTicketCount()
+        setMoviePaymentAmount()
     }
 
-    private fun setMovieTitle(movie: Movie) {
-        findViewById<TextView>(R.id.textCompletedTitle).text = movie.title
+    override fun setMovieTitle(movieTitle: String) {
+        binding.textCompletedTitle.text = movieTitle
     }
 
-    private fun setMovieScreeningDate(ticket: TicketModel) {
-        findViewById<TextView>(R.id.textCompletedScreeningDate).text =
-            ticket.bookedDateTime.formatDotDateTimeColon()
+    private fun setMovieScreeningDate() {
+        binding.textCompletedScreeningDate.text =
+            ticketModel.bookedDateTime.formatDotDateTimeColon()
     }
 
-    private fun setMovieTicketCount(ticket: TicketModel) {
-        findViewById<TextView>(R.id.textCompletedTicketCount).text =
-            getString(R.string.normal_ticket_count_seat).format(
-                ticket.count,
-                ticket.formatSeatsCombine(),
+    private fun setMovieTicketCount() {
+        binding.textCompletedTicketCount.text =
+            getString(R.string.normal_ticket_count_seat_cinema).format(
+                ticketModel.count,
+                ticketModel.formatSeatsCombine(),
+                ticketModel.cinemaName,
             )
     }
 
-    private fun setMoviePaymentAmount(ticket: TicketModel) {
-        findViewById<TextView>(R.id.textCompletedPaymentAmount).text =
-            getString(R.string.payment_on_site_amount).format(ticket.paymentMoney)
+    private fun setMoviePaymentAmount() {
+        binding.textCompletedPaymentAmount.text =
+            getString(R.string.payment_on_site_amount).format(ticketModel.paymentMoney)
     }
 
     private fun startMainWithClearBackStack() {
@@ -80,6 +87,7 @@ class CompleteActivity : AppCompatActivity() {
 
     companion object {
         const val TICKET = "TICKET"
+        private const val NO_TICKET_INFO_ERROR = "티켓 정보가 없습니다."
 
         fun getIntent(context: Context, ticketModel: TicketModel): Intent {
             return Intent(context, CompleteActivity::class.java).apply {

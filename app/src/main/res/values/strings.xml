@@ -7,7 +7,7 @@
     <string name="plus">+</string>
     <string name="minus">-</string>
     <string name="cancel_description">영화 상영 시작 시간 15분 전까지\n취소가 가능합니다.</string>
-    <string name="normal_ticket_count_seat">일반 %d명 | %s</string>
+    <string name="normal_ticket_count_seat_cinema">일반 %d명 | %s | %s 극장</string>
     <string name="payment_amount">%,d원</string>
     <string name="payment_on_site_amount">%,d원 (현장 결제)</string>
     <string name="text_screen">SCREEN</string>
@@ -17,8 +17,6 @@
     <string name="dialog_choice_confirm_message">정말 예매하시겠습니까?</string>
     <string name="dialog_choice_positive_button">예매 완료</string>
     <string name="dialog_choice_negative_button">취소</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- bottom navigation -->
     <string name="action_booked_tickets">예매 내역</string>
@@ -38,4 +36,7 @@
     <!-- FragmentSettings  -->
     <string name="textPushPermissionTitle">푸시 알림 수신</string>
     <string name="textPushPermissionDescription">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+
+    <!-- BottomCinema -->
+    <string name="cinema_times_count">%d개의 상영 시간</string>
 </resources>

@@ -5,22 +5,24 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.BookedTicketItemBinding
+import woowacourse.movie.presentation.model.MovieModel
 import woowacourse.movie.presentation.model.TicketModel
 
-class BookedTicketsAdapter(private val clickListener: (TicketModel) -> Unit) :
+class BookedTicketsAdapter(
+    private val clickListener: (TicketModel) -> Unit,
+    private val getMovieModel: (TicketModel) -> MovieModel,
+) :
     ListAdapter<TicketModel, RecyclerView.ViewHolder>(ticketDiffUtil) {
     private lateinit var inflater: LayoutInflater
-
+    private lateinit var bookedTicketBinding: BookedTicketItemBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (!::inflater.isInitialized) {
             inflater = LayoutInflater.from(parent.context)
         }
-        return BookedTicketViewHolder(
-            inflater.inflate(R.layout.booked_ticket_item, null),
-            clickListener,
-            ::getItem
-        )
+        bookedTicketBinding = BookedTicketItemBinding.inflate(inflater)
+
+        return BookedTicketViewHolder(bookedTicketBinding, getMovieModel, clickListener)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

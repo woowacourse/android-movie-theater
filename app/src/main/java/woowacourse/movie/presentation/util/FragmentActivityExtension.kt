@@ -8,7 +8,7 @@ import androidx.fragment.app.replace
 
 inline fun <reified T : Fragment> FragmentActivity.replace(@IdRes frameId: Int) {
     this.supportFragmentManager.commit {
-        replace<T>(frameId)
         setReorderingAllowed(true)
+        replace<T>(frameId)
     }
 }

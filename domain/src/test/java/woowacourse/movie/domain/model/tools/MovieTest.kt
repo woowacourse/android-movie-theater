@@ -28,6 +28,7 @@ class MovieTest {
         val screeningDate = LocalDateTime.of(2023, 4, 12, 0, 0)
         val expected = Ticket(
             1L,
+            "잠실",
             screeningDate,
             3,
             Seats(
@@ -47,6 +48,7 @@ class MovieTest {
         )
 
         val actual = movie.reserve(
+            "잠실",
             screeningDate,
             TicketCount(3),
             Seats(
@@ -66,6 +68,7 @@ class MovieTest {
         val screeningDate = LocalDateTime.of(2023, 4, 10, 0, 0)
         val expected = Ticket(
             1L,
+            "선릉",
             screeningDate,
             3,
             Seats(
@@ -86,6 +89,7 @@ class MovieTest {
 
         assertThrows<IllegalArgumentException> {
             movie.reserve(
+                "선릉",
                 screeningDate,
                 TicketCount(3),
                 Seats(

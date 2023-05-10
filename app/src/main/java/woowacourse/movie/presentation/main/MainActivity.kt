@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.presentation.bookedticketlist.BookedTicketsFragment
-import woowacourse.movie.presentation.movielist.MovieListFragment
+import woowacourse.movie.presentation.movielist.movie.MovieListFragment
 import woowacourse.movie.presentation.settings.SettingsFragment
 import woowacourse.movie.presentation.util.checkPermissionTiramisu
 import woowacourse.movie.presentation.util.replace
@@ -23,9 +23,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setInitialFragment()
         initBottomNavigation()
         requestNotificationPermission()
+        setInitialFragment()
     }
 
     @SuppressLint("InlinedApi")
@@ -41,6 +41,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun initBottomNavigation() {
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottomNavigationMain)
+
+        bottomNavigation.selectedItemId = R.id.action_home
 
         bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
@@ -59,8 +61,6 @@ class MainActivity : AppCompatActivity() {
                 else -> throw IllegalStateException(BOTTOM_NAVIGATION_WRONG_ITEM_ID_ERROR)
             }
         }
-
-        bottomNavigation.selectedItemId = R.id.action_home
     }
 
     companion object {

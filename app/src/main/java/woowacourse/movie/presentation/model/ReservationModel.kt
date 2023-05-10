@@ -7,6 +7,7 @@ import java.time.LocalDateTime
 @Parcelize
 data class ReservationModel(
     val movieId: Long,
+    val cinemaName: String,
     val bookedDateTime: LocalDateTime,
-    val count: Int
+    val count: Int,
 ) : Parcelable

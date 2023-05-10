@@ -24,6 +24,7 @@ class TicketTest {
         // given
         val ticket = Ticket(
             1L,
+            "선릉",
             LocalDateTime.of(2024, 1, 1, 9, 0),
             3,
             Seats(

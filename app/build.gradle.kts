@@ -34,6 +34,9 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    dataBinding {
+        enable = true
+    }
 }
 
 dependencies {
@@ -52,4 +55,10 @@ dependencies {
 
     // Fragment
     implementation("androidx.fragment:fragment-ktx:1.4.0")
+
+    // mockk
+    testImplementation("io.mockk:mockk-android:1.13.5")
+
+    // gson
+    implementation("com.google.code.gson:gson:2.8.7")
 }

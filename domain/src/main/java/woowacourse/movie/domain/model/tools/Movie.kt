@@ -12,9 +12,14 @@ data class Movie(
     val runningTime: Int,
     val description: String,
 ) {
-    fun reserve(dateTime: LocalDateTime, ticketCount: TicketCount, ticketSeats: Seats): Ticket {
+    fun reserve(
+        cinemaName: String,
+        dateTime: LocalDateTime,
+        ticketCount: TicketCount,
+        ticketSeats: Seats,
+    ): Ticket {
         if (dateTime.toLocalDate() !in getScreeningDates()) throw IllegalArgumentException()
-        return Ticket(id, dateTime, ticketCount.value, ticketSeats)
+        return Ticket(id, cinemaName, dateTime, ticketCount.value, ticketSeats)
     }
 
     fun getScreeningDates(): List<LocalDate> {

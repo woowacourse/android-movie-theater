@@ -4,35 +4,57 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
-import woowacourse.movie.R
-import woowacourse.movie.data.settings.SettingsNotificationData
+import woowacourse.movie.data.settings.SettingsPreference
+import woowacourse.movie.databinding.FragmentSettingsBinding
+import woowacourse.movie.presentation.allowance.PreferenceKey
 
-class SettingsFragment : Fragment() {
+class SettingsFragment : Fragment(), SettingsContract.View {
+
+    private var _binding: FragmentSettingsBinding? = null
+    private val binding get() = _binding!!
+
+    private var _presenter: SettingsContract.Presenter? = null
+    override val presenter: SettingsContract.Presenter get() = _presenter!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false)
+    ): View {
+        _binding = FragmentSettingsBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initNotificationSwitch()
+
+        initPresenter()
+        presenter.initNotifiable()
     }
 
-    private fun initNotificationSwitch() {
-        val notificationSwitch =
-            requireActivity().findViewById<SwitchCompat>(R.id.switchPushPermission)
+    private fun initPresenter() {
+        val prefKey = PreferenceKey.NOTIFICATION_PREF_KEY
+        _presenter = SettingsPresenter(
+            this,
+            SettingsPreference.getInstance(prefKey, requireContext()),
+        )
+    }
 
-        notificationSwitch.isChecked = SettingsNotificationData.getNotification()
+    override fun initNotifiable(isNotifiable: Boolean) {
+        val notificationSwitch =
+            binding.switchPushPermission
+
+        notificationSwitch.isChecked = isNotifiable
 
         notificationSwitch.setOnCheckedChangeListener { _, isChecked ->
-            SettingsNotificationData.setNotification(isChecked)
+            presenter.isNotifiable = isChecked
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        _presenter = null
     }
 }

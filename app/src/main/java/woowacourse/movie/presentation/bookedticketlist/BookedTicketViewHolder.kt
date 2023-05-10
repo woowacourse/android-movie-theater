@@ -1,40 +1,43 @@
 package woowacourse.movie.presentation.bookedticketlist
 
-import android.view.View
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import woowacourse.movie.R
-import woowacourse.movie.data.MovieData
+import woowacourse.movie.databinding.BookedTicketItemBinding
+import woowacourse.movie.presentation.model.MovieModel
 import woowacourse.movie.presentation.model.TicketModel
 import woowacourse.movie.presentation.util.formatDotDateTimeColonSeparateBar
 
 class BookedTicketViewHolder(
-    view: View,
+    private val binding: BookedTicketItemBinding,
+    getMovieModel: (TicketModel) -> MovieModel,
     clickListener: (TicketModel) -> Unit,
-    getPositionData: (Int) -> TicketModel
-) : ViewHolder(view) {
+) : ViewHolder(binding.root) {
 
-    private val textBookedTicketsDateTime: TextView =
-        view.findViewById(R.id.textBookedTicketsDateTime)
-    private val textBookedTicketsTitle: TextView = view.findViewById(R.id.textBookedTicketsTitle)
+    private lateinit var ticketModel: TicketModel
+    private lateinit var getMovieModel: (TicketModel) -> MovieModel
 
     init {
-        setItemOnClickListener(view, clickListener, getPositionData)
+        setItemOnClickListener(clickListener)
+        initMovieModelGetter(getMovieModel)
     }
 
     fun bind(ticketModel: TicketModel) {
-        textBookedTicketsDateTime.text =
+        this.ticketModel = ticketModel
+        binding.textBookedTicketsDateTime.text =
             ticketModel.bookedDateTime.formatDotDateTimeColonSeparateBar()
-        textBookedTicketsTitle.text = MovieData.findMovieById(ticketModel.movieId).title
+        binding.textBookedTicketsTitle.text = getMovieModel(ticketModel).title
     }
 
     private fun setItemOnClickListener(
-        view: View,
         clickListener: (TicketModel) -> Unit,
-        getPositionData: (Int) -> TicketModel
     ) {
-        view.setOnClickListener {
-            clickListener(getPositionData(adapterPosition))
+        binding.root.setOnClickListener {
+            clickListener(ticketModel)
         }
+    }
+
+    private fun initMovieModelGetter(
+        getMovieModel: (TicketModel) -> MovieModel,
+    ) {
+        this.getMovieModel = getMovieModel
     }
 }
