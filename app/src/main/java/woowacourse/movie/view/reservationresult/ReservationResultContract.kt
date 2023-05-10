@@ -1,12 +1,13 @@
 package woowacourse.movie.view.reservationresult
 
+import woowacourse.movie.model.TicketsUiModel
+
 interface ReservationResultContract {
     interface Presenter {
-        fun updatePrice()
+        fun calculateTicketsPrice(ticketsUiModel: TicketsUiModel)
     }
 
     interface View {
-        val presenter: Presenter
-        fun setPriceTextView(price: Int)
+        fun setPriceText(price: Int)
     }
 }

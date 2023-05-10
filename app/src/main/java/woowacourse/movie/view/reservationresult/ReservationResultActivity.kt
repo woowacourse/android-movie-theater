@@ -10,20 +10,17 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationResultBinding
 import woowacourse.movie.getSerializableCompat
-import woowacourse.movie.view.common.MovieView
 import woowacourse.movie.model.MovieUiModel
 import woowacourse.movie.model.TicketsUiModel
+import woowacourse.movie.view.common.MovieView
 import java.text.NumberFormat
 import java.time.format.DateTimeFormatter
 import java.util.*
 
 class ReservationResultActivity() : AppCompatActivity(), ReservationResultContract.View {
 
-    override val presenter: ReservationResultContract.Presenter by lazy {
-        ReservationResultPresenter(
-            this,
-            ticketsUiModel
-        )
+    private val presenter: ReservationResultContract.Presenter by lazy {
+        ReservationResultPresenter(this)
     }
     private lateinit var binding: ActivityReservationResultBinding
 
@@ -35,7 +32,7 @@ class ReservationResultActivity() : AppCompatActivity(), ReservationResultContra
         initView()
     }
 
-    fun initView(){
+    private fun initView() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         renderMovieView()
         renderReservationDetailView()
@@ -55,7 +52,7 @@ class ReservationResultActivity() : AppCompatActivity(), ReservationResultContra
         renderPeopleCount()
         renderSeatInformation()
         renderTheaterInformation()
-        presenter.updatePrice()
+        presenter.calculateTicketsPrice(ticketsUiModel)
     }
 
     private fun renderDate() {
@@ -74,8 +71,10 @@ class ReservationResultActivity() : AppCompatActivity(), ReservationResultContra
         ticketsUiModel.list.forEachIndexed { index, ticket ->
             binding.movieReservationResultSeat.text =
                 (binding.movieReservationResultSeat.text.toString() + ticket.seat.row + ticket.seat.col)
-            if (index != ticketsUiModel.list.size - 1) binding.movieReservationResultSeat.text =
-                binding.movieReservationResultSeat.text.toString() + ", "
+            if (index != ticketsUiModel.list.size - 1) {
+                binding.movieReservationResultSeat.text =
+                    binding.movieReservationResultSeat.text.toString() + ", "
+            }
         }
     }
 
@@ -83,7 +82,7 @@ class ReservationResultActivity() : AppCompatActivity(), ReservationResultContra
         binding.movieReservationResultTheater.text = ticketsUiModel.list.first().theaterName
     }
 
-    override fun setPriceTextView(price: Int) {
+    override fun setPriceText(price: Int) {
         val formattedPrice =
             NumberFormat.getNumberInstance(Locale.US).format(price)
         binding.movieReservationResultPrice.text =
@@ -115,7 +114,7 @@ class ReservationResultActivity() : AppCompatActivity(), ReservationResultContra
         fun start(
             context: Context,
             movieUiModel: MovieUiModel,
-            ticketsUiModel: TicketsUiModel
+            ticketsUiModel: TicketsUiModel,
         ) {
             val intent = generateIntent(context, movieUiModel, ticketsUiModel)
             context.startActivity(intent)
@@ -124,7 +123,7 @@ class ReservationResultActivity() : AppCompatActivity(), ReservationResultContra
         fun generateIntent(
             context: Context,
             movieUiModel: MovieUiModel,
-            ticketsUiModel: TicketsUiModel
+            ticketsUiModel: TicketsUiModel,
         ): Intent {
             val intent = Intent(context, ReservationResultActivity::class.java)
             intent.putExtra(MOVIE_KEY_VALUE, movieUiModel)

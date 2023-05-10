@@ -1,10 +1,10 @@
 package woowacourse.movie.presenter
 
-import io.mockk.*
+import io.mockk.* // ktlint-disable no-wildcard-imports
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.view.reservationresult.ReservationResultContract
 import woowacourse.movie.model.TicketsUiModel
+import woowacourse.movie.view.reservationresult.ReservationResultContract
 import woowacourse.movie.view.reservationresult.ReservationResultPresenter
 
 class ReservationResultPresenterTest {
@@ -16,17 +16,17 @@ class ReservationResultPresenterTest {
     fun setUp() {
         view = mockk()
         ticketsUiModel = TicketsUiModel(listOf())
-        presenter = ReservationResultPresenter(view, ticketsUiModel)
+        presenter = ReservationResultPresenter(view)
     }
 
     @Test
     fun 예매_가격을_표시한다() {
         // given
         val slot = slot<Int>()
-        every { view.setPriceTextView(capture(slot)) } just runs
+        every { view.setPriceText(capture(slot)) } just runs
         // when
-        presenter.updatePrice()
+        presenter.calculateTicketsPrice(ticketsUiModel)
         // then
-        verify { view.setPriceTextView(slot.captured) }
+        verify { view.setPriceText(slot.captured) }
     }
 }
