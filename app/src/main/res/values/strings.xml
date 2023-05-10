@@ -7,7 +7,7 @@
     <string name="plus">+</string>
     <string name="minus">-</string>
     <string name="cancel_description">영화 상영 시작 시간 15분 전까지\n취소가 가능합니다.</string>
-    <string name="ticket_count_seat_info">일반 %d명 | %s</string>
+    <string name="ticket_count_seat_info">일반 %d명 | %s | %s</string>
     <string name="payment_amount">%,d원 (현장 결제)</string>
     <string name="screen">SCREEN</string>
     <string name="confirm">확인</string>
@@ -21,4 +21,14 @@
     <string name="push_alaram_denied">해제하시면 푸시 알림을 수신할 수 없습니다.</string>
     <string name="permission_allowed">권한 요청을 수락했습니다.</string>
     <string name="permission_denied">권한 요청을 거부하였습니다.</string>
+
+    <string name="reservation_check">예매 확인</string>
+    <string name="ask_reservation">정말 예매하시겠습니까?</string>
+    <string name="yes">예</string>
+    <string name="no">아니요</string>
+    <string name="number_of_screening_times">%d개의 상영시간</string>
+
+    <string name="start_column">1</string>
+    <string name="start_row">A</string>
+    <string name="purple">#8E13EF</string>
 </resources>

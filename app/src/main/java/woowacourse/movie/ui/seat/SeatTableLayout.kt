@@ -1,40 +1,26 @@
 package woowacourse.movie.ui.seat
 
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
-import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import woowacourse.movie.R
-import woowacourse.movie.ticket.Position
 
-// 좌석의 행과 열은 1부터 시작한다. 0부터 사용하지 않도록 조심하자
 class SeatTableLayout(context: Context, attrs: AttributeSet) : TableLayout(context, attrs) {
 
     init {
-        initSetting()
-    }
-
-    // 테이블 레이아웃 세팅
-    private fun initSetting() {
         this.isStretchAllColumns = true
         this.isShrinkAllColumns = true
         this.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
     }
 
-    // 테이블 사이즈 세팅 및 생성
-    fun setTable(rowSize: Int, columnSize: Int) {
-        addRow(rowSize, columnSize)
-        initText()
-    }
-
-    // 테이블 로우 생성
-    private fun addRow(rowSize: Int, columnSize: Int) {
+    fun addRow(rowSize: Int, columnSize: Int) {
         repeat(rowSize) {
-            addView(makeRow(columnSize).apply { id = R.string.seat_table_row + it })
+            addView(makeRow(columnSize))
         }
     }
 
@@ -62,39 +48,49 @@ class SeatTableLayout(context: Context, attrs: AttributeSet) : TableLayout(conte
         return seat
     }
 
-    // 자리 위치 텍스트 지정
-    private fun initText() {
-        this.loopTable { rowIdx, columnIdx, textView ->
-            // 행과 열이 1부터 시작하지만 table은 인덱스를 제공하므로 1을 더해준다
-            textView.text = SeatRow.find(rowIdx).name + (columnIdx + 1)
-        }
-    }
-
-    // 자리 등급 영역 지정
-    fun setColorRange(rangeMap: Map<List<IntRange>, Int>) {
-        rangeMap.entries.forEach {
-            initSeatColor(it.key, it.value)
-        }
-    }
-
-    private fun initSeatColor(ranges: List<IntRange>, @ColorRes color: Int) {
-        this.loopTable { rowIdx, _, textView ->
-            if (ranges.any { rowIdx in it }) {
-                val textColor = ContextCompat.getColor(context, color)
-                textView.setTextColor(textColor)
+    fun setOnSeatSelectListener(onSeatSelected: (row: Int, col: Int) -> Unit) {
+        this.loopTable { rowIdx, columnIdx, seat ->
+            seat.setOnClickListener {
+                onSeatSelected(rowIdx, columnIdx)
             }
         }
     }
 
-    fun setClickListener(action: (position: Position) -> Unit) {
-        this.loopTable { rowIdx, columnIdx, view ->
-            view.setOnClickListener {
-                action(Position(rowIdx, columnIdx))
+    fun initSeatsText() {
+        this.loopTable { rowIdx, columnIdx, seat ->
+            val seatText =
+                (context.getString(R.string.start_row).first().code + rowIdx).toChar() +
+                    (context.getString(R.string.start_column).toInt() + columnIdx).toString()
+
+            seat.text = seatText
+            setSeatTextColor(seat, rowIdx)
+        }
+    }
+
+    private fun setSeatTextColor(seat: TextView, row: Int) {
+        when (row) {
+            in MAGENTA_RANGE -> seat.setTextColor(Color.parseColor(context.getString(R.string.purple)))
+            in GREEN_RANGE -> seat.setTextColor(Color.GREEN)
+            else -> seat.setTextColor(Color.BLUE)
+        }
+    }
+
+    fun setSelected(row: Int, col: Int) {
+        this.loopTable { rowIdx, columnIdx, seat ->
+            if (rowIdx == row && columnIdx == col) {
+                with(seat) {
+                    if (isSelected) {
+                        setBackgroundColor(Color.WHITE)
+                    } else {
+                        setBackgroundColor(Color.YELLOW)
+                    }
+                    isSelected = !isSelected
+                }
+                return@loopTable
             }
         }
     }
 
-    // 테이블 레이아웃 루프 확장함수
     private fun TableLayout.loopTable(action: (Int, Int, TextView) -> Unit) {
         this.children
             .filterIsInstance<TableRow>()
@@ -112,7 +108,9 @@ class SeatTableLayout(context: Context, attrs: AttributeSet) : TableLayout(conte
             }
     }
 
-    operator fun get(index: Int): TableRow {
-        return this.children.filterIsInstance<TableRow>().toList()[index]
+    companion object {
+
+        private val MAGENTA_RANGE = 0..1
+        private val GREEN_RANGE = 2..3
     }
 }

@@ -2,15 +2,35 @@ package woowacourse.movie.model.main
 
 import woowacourse.movie.advertisement.Advertisement
 import woowacourse.movie.advertisement.AdvertisementRepository
+import woowacourse.movie.model.Mapper.toUiModel
+import woowacourse.movie.model.TheaterUiModel
 import woowacourse.movie.model.main.AdvertisementMapper.toUiAdvertisements
 import woowacourse.movie.model.main.MovieMapper.toUiMovies
+import woowacourse.movie.movie.Movie
 import woowacourse.movie.movie.MovieRepository
+import woowacourse.movie.theater.Theater
+import woowacourse.movie.theater.TheaterRepository
 
-object MainModelHandler {
-    fun getMainData(): List<MainData> {
+object MainModelHandler : MainModelRepository {
+    override fun getMainData(): List<MainData> {
         val movies = MovieRepository.getMovies().toUiMovies()
         val advertisements = AdvertisementRepository.getAdvertisements().toUiAdvertisements()
         return mergeAdvertisement(movies, advertisements)
+    }
+
+    override fun getTheaters(): List<TheaterUiModel> {
+
+        return TheaterRepository.getTheaters().map { it.toUiModel() }
+    }
+
+    override fun findMovieById(id: Long): Movie {
+
+        return MovieRepository.getMovie(id)
+    }
+
+    override fun findTheaterById(id: Long): Theater {
+
+        return TheaterRepository.getTheater(id)
     }
 
     fun <T> mergeAdvertisement(data: List<T>, ads: List<T>): List<T> {

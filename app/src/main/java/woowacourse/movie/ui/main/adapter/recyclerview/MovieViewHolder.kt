@@ -1,40 +1,54 @@
 package woowacourse.movie.ui.main.adapter.recyclerview
 
-import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import woowacourse.movie.R
+import woowacourse.movie.databinding.MovieListItemBinding
 import woowacourse.movie.model.main.MainData
 import woowacourse.movie.model.main.MovieUiModel
 import woowacourse.movie.ui.main.adapter.MainViewType
 import woowacourse.movie.util.formatScreenDate
 
-class MovieViewHolder(view: View) : MainViewHolder(view) {
-    private val thumbnail: ImageView = view.findViewById(R.id.imageItemThumbnail)
-    private val title: TextView = view.findViewById(R.id.textItemTitle)
-    private val date: TextView = view.findViewById(R.id.textBookingScreeningDate)
-    private val runningTime: TextView = view.findViewById(R.id.textBookingRunningTime)
-    private val button: Button = view.findViewById(R.id.buttonItemBook)
+class MovieViewHolder(
+    binding: MovieListItemBinding
+) : MainViewHolder<MovieListItemBinding>(binding) {
 
     override val mainViewType: MainViewType = MainViewType.CONTENT
     private lateinit var movie: MovieUiModel
 
     override fun onBind(data: MainData) {
         movie = data as MovieUiModel
-        thumbnail.setImageResource(movie.thumbnail)
-        title.text = movie.title
-        date.text = view.context.getString(
-            R.string.screening_date,
-            movie.startDate.formatScreenDate(),
-            movie.endDate.formatScreenDate(),
-        )
-        runningTime.text = view.context.getString(R.string.running_time, movie.runningTime)
+
+        with(binding) {
+            imageItemThumbnail.setImageResource(movie.thumbnail)
+            textItemTitle.text = movie.title
+            textBookingScreeningDate.text = root.context
+                .getString(
+                    R.string.screening_date,
+                    movie.startDate.formatScreenDate(),
+                    movie.endDate.formatScreenDate()
+                )
+            textBookingRunningTime.text = root.context
+                .getString(
+                    R.string.running_time,
+                    movie.runningTime
+                )
+        }
     }
 
     fun setBookingClick(clickBook: (Long) -> Unit) {
-        button.setOnClickListener {
+        binding.buttonItemBook.setOnClickListener {
             clickBook(movie.id)
+        }
+    }
+
+    companion object {
+
+        fun from(parent: ViewGroup): MovieViewHolder {
+            val layoutInflater = LayoutInflater.from(parent.context)
+            val binding = MovieListItemBinding.inflate(layoutInflater, parent, false)
+
+            return MovieViewHolder(binding)
         }
     }
 }

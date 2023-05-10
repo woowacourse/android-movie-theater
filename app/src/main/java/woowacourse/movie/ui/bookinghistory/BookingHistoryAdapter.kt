@@ -1,26 +1,22 @@
-package woowacourse.movie.ui.main
+package woowacourse.movie.ui.bookinghistory
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
 import woowacourse.movie.model.ReservationUiModel
 
 class BookingHistoryAdapter(
-    private val clickItem: (id: Long) -> Unit,
+    private val onBookingHistoryClicked: (reservation: ReservationUiModel) -> Unit,
 ) : RecyclerView.Adapter<BookingHistoryViewHolder>() {
     private val bookingHistory = mutableListOf<ReservationUiModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookingHistoryViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
 
-        val view = layoutInflater.inflate(R.layout.booking_history_item, parent, false)
-
-        return BookingHistoryViewHolder(view).apply { itemClicked(clickItem) }
+        return BookingHistoryViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: BookingHistoryViewHolder, position: Int) {
         holder.bind(bookingHistory[position])
+        holder.setOnReservationClickListener(onBookingHistoryClicked)
     }
 
     override fun getItemCount(): Int {

@@ -4,7 +4,11 @@ import woowacourse.movie.ticket.Seat
 
 class SelectedSeats(private val ticketCount: Int) {
     private val _seats = mutableSetOf<Seat>()
-    val seats get() = _seats.toSet()
+    val seats
+        get() = _seats.toSet()
+
+    val payment
+        get(): Int = _seats.sumOf { it.rank.price }
 
     val isSeatFull: Boolean
         get() = _seats.size == ticketCount
@@ -13,6 +17,7 @@ class SelectedSeats(private val ticketCount: Int) {
         if (_seats.contains(seat)) {
             return unSelectSeat(seat)
         }
+
         return selectSeat(seat)
     }
 
@@ -21,11 +26,13 @@ class SelectedSeats(private val ticketCount: Int) {
             return SelectResult.Select.Full
         }
         _seats.add(seat)
+
         return SelectResult.Select.Success
     }
 
     private fun unSelectSeat(seat: Seat): SelectResult {
         _seats.remove(seat)
+
         return SelectResult.Unselect
     }
 }

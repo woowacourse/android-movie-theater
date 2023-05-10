@@ -7,7 +7,7 @@ import woowacourse.movie.model.ReservationUiModel
 import woowacourse.movie.notification.NotificationDialogInfo
 import woowacourse.movie.notification.NotificationGenerator
 import woowacourse.movie.ui.completed.CompletedActivity
-import woowacourse.movie.util.SettingSharedPreference
+import woowacourse.movie.ui.setting.SettingSharedPreference
 import woowacourse.movie.util.getParcelable
 
 class AlarmReceiver : BroadcastReceiver() {
@@ -24,7 +24,7 @@ class AlarmReceiver : BroadcastReceiver() {
 
     private fun isAvailableReceivingAlarm(context: Context): Boolean {
         val settingSharedPreference = SettingSharedPreference(context)
-        return settingSharedPreference.receivingPushAlarm
+        return settingSharedPreference.isAvailableAlarm
     }
 
     private fun getCompletedActivityIntent(context: Context, intent: Intent): Intent {
