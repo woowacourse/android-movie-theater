@@ -13,32 +13,31 @@ class MovieReservationPresenter(
     override fun updateDateSpinner(theaterUiModel: TheaterUiModel) {
         val theater = theaterUiModel.toDomain()
         val dates = theater.getAllScreenDates()
-        view.setDateSpinner(dates)
+        view.setDates(dates)
     }
 
-    override fun onSelectDate(theaterUiModel: TheaterUiModel, date: LocalDate) {
+    override fun updateTimes(theaterUiModel: TheaterUiModel, date: LocalDate) {
         val theater = theaterUiModel.toDomain()
         val screenTimes = theater.getScreenTimesOnDate(date)
-        view.setTimeSpinner(screenTimes)
+        view.setTimes(screenTimes)
     }
 
-    override fun onPlusTicketCount() {
+    override fun plusTicketCount() {
         count += PLUS_VALUE
         view.setCounterText(count.value)
     }
 
-    override fun onMinusTicketCount() {
+    override fun minusTicketCount() {
         count -= MINUS_VALUE
         view.setCounterText(count.value)
     }
 
-    override fun onReservationButtonClick() {
-        view.startSeatSelectActivity(count.value)
+    override fun moveNextReservationStep() {
+        view.showSelectSeatScreen(count.value)
     }
 
     companion object {
         private const val PLUS_VALUE = 1
         private const val MINUS_VALUE = 1
     }
-
 }

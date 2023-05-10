@@ -7,17 +7,16 @@ import java.time.LocalTime
 interface MovieReservationContract {
     interface Presenter {
         fun updateDateSpinner(theaterUiModel: TheaterUiModel)
-        fun onSelectDate(theaterUiModel: TheaterUiModel, date: LocalDate)
-        fun onPlusTicketCount()
-        fun onMinusTicketCount()
-        fun onReservationButtonClick()
+        fun updateTimes(theaterUiModel: TheaterUiModel, date: LocalDate)
+        fun plusTicketCount()
+        fun minusTicketCount()
+        fun moveNextReservationStep()
     }
 
     interface View {
-        val presenter: Presenter
-        fun setDateSpinner(date: List<LocalDate>)
-        fun setTimeSpinner(times: List<LocalTime>)
+        fun setDates(date: List<LocalDate>)
+        fun setTimes(times: List<LocalTime>)
         fun setCounterText(count: Int)
-        fun startSeatSelectActivity(peopleCount: Int)
+        fun showSelectSeatScreen(peopleCount: Int)
     }
 }

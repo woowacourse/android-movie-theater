@@ -10,18 +10,18 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieReservationBinding
 import woowacourse.movie.getSerializableCompat
-import woowacourse.movie.model.*
-import woowacourse.movie.view.seatselect.SelectSeatActivity
+import woowacourse.movie.model.* // ktlint-disable no-wildcard-imports
 import woowacourse.movie.view.common.MovieView
 import woowacourse.movie.view.moviereservation.widget.Counter
 import woowacourse.movie.view.moviereservation.widget.DateSpinner
 import woowacourse.movie.view.moviereservation.widget.MovieDateTimePicker
 import woowacourse.movie.view.moviereservation.widget.TimeSpinner
+import woowacourse.movie.view.seatselect.SelectSeatActivity
 import java.time.LocalDate
 import java.time.LocalTime
 
 class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.View {
-    override val presenter: MovieReservationContract.Presenter by lazy {
+    private val presenter: MovieReservationContract.Presenter by lazy {
         MovieReservationPresenter(this, counter.getCount())
     }
 
@@ -33,7 +33,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
             binding.movieReservationPeopleCountMinus,
             binding.movieReservationPeopleCountPlus,
             binding.movieReservationPeopleCount,
-            COUNTER_SAVE_STATE_KEY
+            COUNTER_SAVE_STATE_KEY,
         )
     }
     private val movieDateTimePicker: MovieDateTimePicker by lazy {
@@ -41,10 +41,11 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
             DateSpinner(
                 binding.movieReservationDateSpinner,
                 DATE_SPINNER_SAVE_STATE_KEY,
-            ), TimeSpinner(
+            ),
+            TimeSpinner(
                 binding.movieReservationTimeSpinner,
                 TIME_SPINNER_SAVE_STATE_KEY,
-            )
+            ),
         )
     }
 
@@ -59,17 +60,17 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
     private fun initView(savedInstanceState: Bundle?) {
         counter.load(savedInstanceState)
         renderMovieView(movieUiModel)
-        counter.setButtonsClick(presenter::onMinusTicketCount, presenter::onPlusTicketCount)
+        counter.setButtonsClick(presenter::minusTicketCount, presenter::plusTicketCount)
         presenter.updateDateSpinner(theaterUiModel)
     }
 
     private fun setViewListener(savedInstanceState: Bundle?) {
         movieDateTimePicker.setDateSelectListener(
             theaterUiModel,
-            presenter::onSelectDate,
-            savedInstanceState
+            presenter::updateTimes,
+            savedInstanceState,
         )
-        reservationButtonClick(presenter::onReservationButtonClick)
+        reservationButtonClick(presenter::moveNextReservationStep)
     }
 
     private fun renderMovieView(movieUiModel: MovieUiModel) {
@@ -78,7 +79,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
             title = binding.movieReservationTitle,
             date = binding.movieReservationDate,
             runningTime = binding.movieReservationRunningTime,
-            description = binding.movieReservationDescription
+            description = binding.movieReservationDescription,
         ).render(movieUiModel)
     }
 
@@ -99,7 +100,6 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         return theaterUiModel as TheaterUiModel
     }
 
-
     private fun reservationButtonClick(clickEvent: () -> Unit) {
         binding.movieReservationButton.setOnClickListener {
             clickEvent()
@@ -119,11 +119,11 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         return super.onOptionsItemSelected(item)
     }
 
-    override fun setDateSpinner(date: List<LocalDate>) {
+    override fun setDates(date: List<LocalDate>) {
         movieDateTimePicker.dateSpinner.setAdapter(date)
     }
 
-    override fun setTimeSpinner(times: List<LocalTime>) {
+    override fun setTimes(times: List<LocalTime>) {
         movieDateTimePicker.timeSpinner.setAdapter(times)
     }
 
@@ -131,7 +131,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         counter.applyToView(count.toString())
     }
 
-    override fun startSeatSelectActivity(peopleCount: Int) {
+    override fun showSelectSeatScreen(peopleCount: Int) {
         val ticketOfficeUiModel = TicketOfficeUiModel(
             TicketsUiModel(listOf()),
             peopleCount,
@@ -141,7 +141,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         SelectSeatActivity.start(
             this,
             ticketOfficeUiModel,
-            movieUiModel
+            movieUiModel,
         )
     }
 

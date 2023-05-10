@@ -1,11 +1,11 @@
 package woowacourse.movie.presenter
 
-import io.mockk.*
+import io.mockk.* // ktlint-disable no-wildcard-imports
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.view.moviereservation.MovieReservationContract
 import woowacourse.movie.model.TheaterUiModel
+import woowacourse.movie.view.moviereservation.MovieReservationContract
 import woowacourse.movie.view.moviereservation.MovieReservationPresenter
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -27,11 +27,11 @@ class MovieReservationPresenterTest {
         // given
         every { theaterUiModel.name } returns "선릉"
         every { theaterUiModel.screenTimes } returns listOf(LocalDateTime.now(), LocalDateTime.MAX)
-        every { view.setDateSpinner(any()) } just runs
+        every { view.setDates(any()) } just runs
         // when
         presenter.updateDateSpinner(theaterUiModel)
         // then
-        verify { view.setDateSpinner(any()) }
+        verify { view.setDates(any()) }
     }
 
     @Test
@@ -40,11 +40,11 @@ class MovieReservationPresenterTest {
         val date = LocalDate.of(2023, 5, 6)
         every { theaterUiModel.name } returns "선릉"
         every { theaterUiModel.screenTimes } returns listOf(LocalDateTime.now(), LocalDateTime.MAX)
-        every { view.setTimeSpinner(any()) } just runs
+        every { view.setTimes(any()) } just runs
         // when
-        presenter.onSelectDate(theaterUiModel, date)
+        presenter.updateTimes(theaterUiModel, date)
         // then
-        verify { view.setTimeSpinner(any()) }
+        verify { view.setTimes(any()) }
     }
 
     @Test
@@ -53,7 +53,7 @@ class MovieReservationPresenterTest {
         val slot = slot<Int>()
         every { view.setCounterText(capture(slot)) } just runs
         // when
-        presenter.onPlusTicketCount()
+        presenter.plusTicketCount()
         // then
         val actual = 2
         assertEquals(slot.captured, actual)
@@ -66,7 +66,7 @@ class MovieReservationPresenterTest {
         val slot = slot<Int>()
         every { view.setCounterText(capture(slot)) } just runs
         // when
-        presenter.onMinusTicketCount()
+        presenter.minusTicketCount()
         // then
         val actual = 1
         assertEquals(slot.captured, actual)
@@ -77,12 +77,12 @@ class MovieReservationPresenterTest {
     fun 예매완료_버튼을_눌렀을때_좌석선택_화면으로_넘어간다() {
         // given
         val slot = slot<Int>()
-        every { view.startSeatSelectActivity(capture(slot)) } just runs
+        every { view.showSelectSeatScreen(capture(slot)) } just runs
         // when
-        presenter.onReservationButtonClick()
+        presenter.moveNextReservationStep()
         // then
         val actual = 1
         assertEquals(slot.captured, actual)
-        verify { view.startSeatSelectActivity(actual) }
+        verify { view.showSelectSeatScreen(actual) }
     }
 }
