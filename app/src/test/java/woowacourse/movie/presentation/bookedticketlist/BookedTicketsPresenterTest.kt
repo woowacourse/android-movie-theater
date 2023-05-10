@@ -5,10 +5,11 @@ import io.mockk.just
 import io.mockk.mockk
 import io.mockk.runs
 import io.mockk.slot
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.data.bookedticket.BookedTicketsData
+import woowacourse.movie.data.movie.MovieData
 import woowacourse.movie.presentation.FakeMovieData
 import woowacourse.movie.presentation.model.TicketModel
 import java.time.LocalDateTime
@@ -16,9 +17,23 @@ import java.time.LocalDateTime
 class BookedTicketsPresenterTest {
     private lateinit var view: BookedTicketsContract.View
     private lateinit var presenter: BookedTicketsContract.Presenter
+    private lateinit var bookedTicketsData: BookedTicketsData
+    private lateinit var movieData: MovieData
 
-    private object FakeBookedTicketsData : BookedTicketsData {
-        override fun getTickets(): List<TicketModel> = listOf(
+    @Before
+    fun `setUp`() {
+        view = mockk()
+        bookedTicketsData = mockk()
+        movieData = mockk()
+        presenter = BookedTicketsPresenter(view, bookedTicketsData, movieData)
+    }
+
+    @Test
+    fun `영화 및 광고 아이템을 세팅한다`() {
+        // given
+        val ticketModelSlot = slot<List<TicketModel>>()
+        every { view.setBookedTickets(capture(ticketModelSlot)) } just runs
+        every { bookedTicketsData.getTickets() } returns listOf(
             TicketModel(
                 1,
                 "선릉",
@@ -28,22 +43,8 @@ class BookedTicketsPresenterTest {
                 listOf("A1", "B1", "C1"),
             ),
         )
-
-        override fun addTickets(ticketModel: TicketModel) {}
-    }
-
-    @Before
-    fun `setUp`() {
-        view = mockk()
         // FakeMovieData 사용
-        presenter = BookedTicketsPresenter(view, FakeBookedTicketsData, FakeMovieData)
-    }
-
-    @Test
-    fun `영화 및 광고 아이템을 세팅한다`() {
-        // given
-        val ticketModelSlot = slot<List<TicketModel>>()
-        every { view.setBookedTickets(capture(ticketModelSlot)) } just runs
+        every { movieData.findMovieById(any()) } returns FakeMovieData.findMovieById(1L)
 
         // when
         presenter.requestBookedTickets()
@@ -60,6 +61,6 @@ class BookedTicketsPresenterTest {
             ),
         )
         val actual = ticketModelSlot.captured
-        Assert.assertEquals(expected, actual)
+        assertEquals(expected, actual)
     }
 }

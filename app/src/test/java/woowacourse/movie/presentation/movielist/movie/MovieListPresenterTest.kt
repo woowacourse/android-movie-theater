@@ -15,9 +15,21 @@ import java.time.LocalDate
 class MovieListPresenterTest {
     private lateinit var view: MovieListContract.View
     private lateinit var presenter: MovieListContract.Presenter
+    private lateinit var movieItemData: MovieItemData
 
-    private object FakeMovieItemData : MovieItemData {
-        override fun getMovieItems(): List<MovieItem> = listOf(
+    @Before
+    fun `setUp`() {
+        view = mockk()
+        movieItemData = mockk()
+        presenter = MovieListPresenter(view, movieItemData)
+    }
+
+    @Test
+    fun `영화 및 광고 아이템을 세팅한다`() {
+        // given
+        val movieItemSlot = slot<List<MovieItem>>()
+        every { view.setMovieItems(capture(movieItemSlot)) } just runs
+        every { movieItemData.getMovieItems() } returns listOf(
             MovieItem.Movie(
                 MovieModel(
                     1L,
@@ -31,19 +43,6 @@ class MovieListPresenterTest {
                 ),
             ),
         )
-    }
-
-    @Before
-    fun `setUp`() {
-        view = mockk()
-        presenter = MovieListPresenter(view, FakeMovieItemData)
-    }
-
-    @Test
-    fun `영화 및 광고 아이템을 세팅한다`() {
-        // given
-        val movieItemSlot = slot<List<MovieItem>>()
-        every { view.setMovieItems(capture(movieItemSlot)) } just runs
 
         // when
         presenter.setMovieItems()

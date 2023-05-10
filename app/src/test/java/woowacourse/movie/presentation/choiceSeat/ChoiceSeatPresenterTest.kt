@@ -22,17 +22,15 @@ class ChoiceSeatPresenterTest {
     private lateinit var view: ChoiceSeatContract.View
     private lateinit var presenter: ChoiceSeatContract.Presenter
     private lateinit var reservationModel: ReservationModel
-
-    private object FakeSettingsData : SettingsData {
-        override var isAvailable: Boolean = true
-    }
+    private lateinit var settingsData: SettingsData
 
     @Before
     fun setUp() {
-        view = mockk()
+        view = mockk(relaxed = true)
+        settingsData = mockk(relaxed = true)
         // FakeMovieData 사용
         presenter =
-            ChoiceSeatPresenter(view, FakeMovieData, FakeSettingsData, MockBookedTicketsData)
+            ChoiceSeatPresenter(view, FakeMovieData, settingsData, MockBookedTicketsData)
         reservationModel = ReservationModel(
             1L,
             "선릉",
@@ -61,7 +59,6 @@ class ChoiceSeatPresenterTest {
     fun `좌석을 더하면 지불 금액은 0이 아니다`() {
         val paymentAmountSlot = slot<Int>()
         every { view.setPaymentAmount(capture(paymentAmountSlot)) } just runs
-        every { view.disableConfirm() } just runs
 
         // when
         presenter.addSeat(5, reservationModel)
@@ -77,7 +74,6 @@ class ChoiceSeatPresenterTest {
     fun `같은 좌석을 더했다가 빼면 지불 금액은 0이 된다`() {
         val paymentAmountSlot = slot<Int>()
         every { view.setPaymentAmount(capture(paymentAmountSlot)) } just runs
-        every { view.disableConfirm() } just runs
 
         // when
         presenter.addSeat(5, reservationModel)
@@ -95,9 +91,6 @@ class ChoiceSeatPresenterTest {
     fun `영화 티켓을 발급한다`() {
         val ticketModelSlot = slot<TicketModel>()
         every { view.confirmBookMovie(capture(ticketModelSlot)) } just runs
-        every { view.setPaymentAmount(any()) } just runs
-        every { view.disableConfirm() } just runs
-        every { view.enableConfirm() } just runs
 
         // when
         presenter.addSeat(1, reservationModel)

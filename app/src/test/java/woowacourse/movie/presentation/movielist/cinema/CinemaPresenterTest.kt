@@ -18,28 +18,14 @@ import java.time.LocalDate
 class CinemaPresenterTest {
     private lateinit var view: CinemaContract.View
     private lateinit var presenter: CinemaContract.Presenter
-
-    private object FakeCinemaData : CinemaData {
-        override fun getCinemas(): List<Cinema> = listOf(
-            Cinema.of(
-                "선릉",
-                1L to MovieTimes.of(9, 15, 2),
-                2L to MovieTimes.of(12, 22, 1),
-                3L to MovieTimes.of(15, 23, 2),
-            ),
-            Cinema.of(
-                "잠실",
-                2L to MovieTimes.of(14, 18, 1),
-                3L to MovieTimes.of(15, 23, 2),
-            ),
-        )
-    }
+    private lateinit var cinemaData: CinemaData
 
     @Before
     fun `setUp`() {
         view = mockk()
+        cinemaData = mockk()
         // FakeMovieData 사용
-        presenter = CinemaPresenter(view, FakeCinemaData)
+        presenter = CinemaPresenter(view, cinemaData)
     }
 
     @Test
@@ -55,6 +41,19 @@ class CinemaPresenterTest {
             "TestDescription",
             1,
             1,
+        )
+        every { cinemaData.getCinemas() } returns listOf(
+            Cinema.of(
+                "선릉",
+                1L to MovieTimes.of(9, 15, 2),
+                2L to MovieTimes.of(12, 22, 1),
+                3L to MovieTimes.of(15, 23, 2),
+            ),
+            Cinema.of(
+                "잠실",
+                2L to MovieTimes.of(14, 18, 1),
+                3L to MovieTimes.of(15, 23, 2),
+            ),
         )
         every { view.setCinemaModels(capture(cinemaModelSlot)) } just runs
 

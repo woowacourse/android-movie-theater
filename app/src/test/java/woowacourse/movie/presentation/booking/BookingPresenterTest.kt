@@ -9,7 +9,7 @@ import io.mockk.verify
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.presentation.FakeMovieData
+import woowacourse.movie.data.movie.MovieData
 import woowacourse.movie.presentation.model.CinemaModel
 import woowacourse.movie.presentation.model.ReservationModel
 import java.time.LocalDateTime
@@ -18,12 +18,13 @@ import java.time.LocalTime
 class BookingPresenterTest {
     private lateinit var view: BookingContract.View
     private lateinit var presenter: BookingContract.Presenter
+    private lateinit var movieData: MovieData
 
     @Before
     fun `setUp`() {
-        view = mockk()
-        // FakeMovieData 사용
-        presenter = BookingPresenter(FakeMovieData, view)
+        view = mockk(relaxed = true)
+        movieData = mockk(relaxed = true)
+        presenter = BookingPresenter(movieData, view)
     }
 
     @Test
@@ -62,7 +63,6 @@ class BookingPresenterTest {
     fun `초기값 2에서 티켓 수를 감소시키면 1이 된다`() {
         // given
         val ticketCountSlot = slot<Int>()
-        every { presenter.setTicketCount(2) } just runs
         every { view.setTicketCount(capture(ticketCountSlot)) } just runs
 
         // when
