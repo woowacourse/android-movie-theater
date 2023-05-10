@@ -10,24 +10,24 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.ReservationAlarmManager
+import woowacourse.movie.database.ReservationDbHelper
 import woowacourse.movie.databinding.ActivitySelectSeatBinding
 import woowacourse.movie.getSerializableCompat
-import woowacourse.movie.model.*
+import woowacourse.movie.model.* // ktlint-disable no-wildcard-imports
 import woowacourse.movie.setBackgroundColorId
 import woowacourse.movie.view.common.MovieView
-import woowacourse.movie.database.ReservationDbHelper
 import woowacourse.movie.view.reservationresult.ReservationResultActivity
 import java.text.NumberFormat
 import java.util.*
 
 class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
 
-    override val presenter: SelectSeatContract.Presenter by lazy {
+    private val presenter: SelectSeatContract.Presenter by lazy {
         SelectSeatPresenter(
             view = this,
             ticketOfficeUiModel = receiveTicketOfficeUiModel(),
             movieUiModel = receiveMovieUiModel(),
-            reservationDbHelper = ReservationDbHelper(this)
+            reservationDbHelper = ReservationDbHelper(this),
         )
     }
     private lateinit var binding: ActivitySelectSeatBinding
@@ -37,7 +37,7 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
             tableLayout = binding.selectSeatTableLayout,
             rowSize = 5,
             colSize = 4,
-            presenter::onClickSeat
+            ::updateViewBySeatClick,
         )
     }
 
@@ -47,27 +47,34 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
         initView()
     }
 
-    fun initView() {
+    private fun initView() {
         seatTable.makeSeatTable()
+        presenter.updateSeatsRank(seatTable.getAllSeats())
         MovieView(title = binding.selectSeatMovieTitleTextView).render(
-            movieUiModel
+            movieUiModel,
         )
-        presenter.onPriceTextChange()
-        presenter.onCheckButtonStateChange()
-        binding.selectSeatCheckButton.setOnClickListener { presenter.onClickCheckButton() }
+        presenter.calculatePrice()
+        presenter.changeButtonState()
+        binding.selectSeatCheckButton.setOnClickListener { presenter.completeReservation() }
+    }
+
+    private fun updateViewBySeatClick(seatUiModel: SeatUiModel) {
+        presenter.updateTickets(seatUiModel)
+        presenter.calculatePrice()
+        presenter.changeButtonState()
     }
 
     private fun receiveMovieUiModel(): MovieUiModel {
         val movieUiModel = intent.extras?.getSerializableCompat<MovieUiModel>(MOVIE_KEY_VALUE)
             ?: finishActivityWithToast(
-                getString(R.string.movie_data_null_error)
+                getString(R.string.movie_data_null_error),
             )
         return movieUiModel as MovieUiModel
     }
 
     private fun receiveTicketOfficeUiModel(): TicketOfficeUiModel {
         val ticketOfficeUiModel = intent.extras?.getSerializableCompat<TicketOfficeUiModel>(
-            TICKET_OFFICE_KEY
+            TICKET_OFFICE_KEY,
         ) ?: finishActivityWithToast(getString(R.string.reservation_data_null_error))
         return ticketOfficeUiModel as TicketOfficeUiModel
     }
@@ -84,7 +91,11 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun showDialog() {
+    override fun setSeatsTextColor(seatRanks: List<SeatRankUiModel>) {
+        seatTable.initSeatsTextColor(seatRanks)
+    }
+
+    override fun askConfirmReservation() {
         val dialog = createReservationAlertDialog()
         dialog.setCanceledOnTouchOutside(false)
         dialog.show()
@@ -94,35 +105,32 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.select_seat_dialog_title)
         builder.setMessage(R.string.select_seat_dialog_message)
-        builder.setPositiveButton(R.string.select_seat_dialog_positive_button_text) { dialog, _ ->
-            presenter.onClickDialogPositiveButton()
+        builder.setPositiveButton(R.string.select_seat_dialog_positive_button_text) { _, _ ->
+            presenter.showResult()
         }
-        builder.setNegativeButton(R.string.select_seat_dialog_negative_button_text) { dialog, _ ->
-            presenter.onClickDialogCancelButton()
-        }
+        builder.setNegativeButton(R.string.select_seat_dialog_negative_button_text) { _, _ -> }
         return builder.create()
     }
 
-    override fun startReservationResultActivity(
+    override fun showResultScreen(
         movieUiModel: MovieUiModel,
-        ticketsUiModel: TicketsUiModel
+        ticketsUiModel: TicketsUiModel,
     ) {
         ReservationResultActivity.start(
             context = this,
             movieUiModel = movieUiModel,
-            ticketsUiModel = ticketsUiModel
+            ticketsUiModel = ticketsUiModel,
         )
     }
 
-    override fun registerAlarm(movieUiModel: MovieUiModel, ticketsUiModel: TicketsUiModel) {
+    override fun setAlarm(movieUiModel: MovieUiModel, ticketsUiModel: TicketsUiModel) {
         ReservationAlarmManager(this).registerAlarm(
             movieUiModel = movieUiModel,
-            ticketsUiModel = ticketsUiModel
+            ticketsUiModel = ticketsUiModel,
         )
     }
 
-    override fun cancelDialog() = Unit
-    override fun updateSeats(ticketsUiModel: TicketsUiModel) {
+    override fun setSeatsBackgroundColor(ticketsUiModel: TicketsUiModel) {
         seatTable.updateTable(ticketsUiModel)
     }
 
@@ -136,9 +144,12 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
         binding.selectSeatCheckButton.isClickable = isClickable
     }
 
-    override fun setCheckButtonColor(isSelected: Boolean) {
-        if (isSelected) binding.selectSeatCheckButton.setBackgroundColorId(R.color.select_seat_clickable_check_button_background)
-        else binding.selectSeatCheckButton.setBackgroundColorId(R.color.select_seat_non_clickable_check_button_background)
+    override fun setCheckButtonColorBy(isSelected: Boolean) {
+        if (isSelected) {
+            binding.selectSeatCheckButton.setBackgroundColorId(R.color.select_seat_clickable_check_button_background)
+        } else {
+            binding.selectSeatCheckButton.setBackgroundColorId(R.color.select_seat_non_clickable_check_button_background)
+        }
     }
 
     companion object {
@@ -147,7 +158,7 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
         fun start(
             context: Context,
             ticketOfficeUiModel: TicketOfficeUiModel,
-            movieUiModel: MovieUiModel
+            movieUiModel: MovieUiModel,
         ) {
             val intent = Intent(context, SelectSeatActivity::class.java)
             intent.putExtra(TICKET_OFFICE_KEY, ticketOfficeUiModel)

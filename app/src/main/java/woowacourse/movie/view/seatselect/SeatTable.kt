@@ -4,6 +4,7 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import woowacourse.movie.R
+import woowacourse.movie.model.SeatRankUiModel
 import woowacourse.movie.model.SeatUiModel
 import woowacourse.movie.model.TicketsUiModel
 
@@ -11,7 +12,7 @@ class SeatTable(
     private val tableLayout: TableLayout,
     val rowSize: Int = DEFAULT_ROW_SIZE,
     val colSize: Int = DEFAULT_COL_SIZE,
-    private val onClick: (SeatView) -> Unit
+    private val updateViewBySeatClick: (SeatUiModel) -> Unit,
 ) {
     private val seatViews: MutableList<SeatView> = mutableListOf()
     fun makeSeatTable() {
@@ -19,12 +20,25 @@ class SeatTable(
             val tableRow = makeTableRow()
             repeat(colSize) { col ->
                 val seatView = SeatView(
-                    TextView(tableLayout.context), SeatUiModel.toChar(row + 1), col + 1, onClick
+                    TextView(tableLayout.context),
+                    SeatUiModel.toChar(row + 1),
+                    col + 1,
+                    updateViewBySeatClick,
                 )
                 seatViews.add(seatView)
                 tableRow.addView(seatView.view)
             }
             tableLayout.addView(tableRow)
+        }
+    }
+
+    fun getAllSeats(): List<SeatUiModel> {
+        return seatViews.map { SeatUiModel(it.row, it.col) }
+    }
+
+    fun initSeatsTextColor(seatRanks: List<SeatRankUiModel>) {
+        seatRanks.forEachIndexed { index, seatRankUiModel ->
+            seatViews[index].setTextColorById(seatRankUiModel.color)
         }
     }
 
@@ -53,7 +67,7 @@ class SeatTable(
         tableRow.layoutParams = TableLayout.LayoutParams(
             TableLayout.LayoutParams.MATCH_PARENT,
             TableLayout.LayoutParams.MATCH_PARENT,
-            TABLE_WEIGHT
+            TABLE_WEIGHT,
         )
         return tableRow
     }
