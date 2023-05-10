@@ -12,7 +12,7 @@ import woowacourse.movie.presentation.util.getParcelableExtraCompat
 
 class AlarmReceiver : BroadcastReceiver() {
 
-    lateinit var notificationChannel: NotificationChannel
+    private lateinit var notificationChannel: NotificationChannel
     override fun onReceive(context: Context, intent: Intent) {
         val ticket =
             intent.getParcelableExtraCompat<TicketModel>(CompleteActivity.TICKET)

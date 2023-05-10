@@ -26,7 +26,7 @@ object BookedTicketNotification {
                 .setContentText(
                     context.getString(
                         R.string.booked_ticket_notification_content,
-                        MockMovieData.findMovieById(ticket.movieId).title,
+                        MockMovieData.findMovieById(ticket.movieId)?.title,
                     ),
                 )
                 .setPriority(NotificationCompat.PRIORITY_HIGH)

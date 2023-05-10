@@ -86,7 +86,7 @@ class CompleteActivity : AppCompatActivity(), CompleteContract.View {
     }
 
     companion object {
-        private const val TICKET = "TICKET"
+        const val TICKET = "TICKET"
         private const val NO_TICKET_INFO_ERROR = "티켓 정보가 없습니다."
 
         fun getIntent(context: Context, ticketModel: TicketModel): Intent {

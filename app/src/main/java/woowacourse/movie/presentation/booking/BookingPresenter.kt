@@ -17,12 +17,11 @@ class BookingPresenter(
 
     private fun findMovieById(movieId: Long) = movieData.findMovieById(movieId)
     override fun setMovieInfo(movieId: Long) {
-        val movie = findMovieById(movieId)
-        if (movie != null) {
-            view.setMovieInfo(movie.toPresentation())
+        val movie = findMovieById(movieId) ?: run {
+            view.setMovieInfo(DefaultMovieData.defaultMovie)
             return
         }
-        view.setMovieInfo(DefaultMovieData.defaultMovie)
+        view.setMovieInfo(movie.toPresentation())
     }
 
     override fun setTicketCount(count: Int) {

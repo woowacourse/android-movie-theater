@@ -1,10 +1,12 @@
 package woowacourse.movie.presentation.choiceSeat
 
 import woowacourse.movie.data.bookedticket.BookedTicketsData
+import woowacourse.movie.data.movie.DefaultMovieData
 import woowacourse.movie.data.movie.MovieData
 import woowacourse.movie.data.settings.SettingsData
 import woowacourse.movie.domain.model.rules.SeatsPayment
 import woowacourse.movie.domain.model.tools.Money
+import woowacourse.movie.domain.model.tools.Movie
 import woowacourse.movie.domain.model.tools.TicketCount
 import woowacourse.movie.domain.model.tools.seat.Location
 import woowacourse.movie.domain.model.tools.seat.Seat
@@ -35,10 +37,18 @@ class ChoiceSeatPresenter(
     private var paymentAmount: Money = Money(INITIAL_PAYMENT_AMOUNT)
 
     private val theater = Theater.of(rows, columns)
-    private fun getMovie(movieId: Long) = movieData.findMovieById(movieId)
+    private fun findMovieById(movieId: Long) = movieData.findMovieById(movieId)
 
-    override fun reserveTicketModel(reservationModel: ReservationModel) {
-        val movie = getMovie(reservationModel.movieId)
+    override fun reserveTicketModel(reservationModel: ReservationModel): Boolean {
+        val movie = findMovieById(reservationModel.movieId) ?: return false
+        reserveTicketNonNull(movie, reservationModel)
+        return true
+    }
+
+    private fun reserveTicketNonNull(
+        movie: Movie,
+        reservationModel: ReservationModel,
+    ) {
         val ticket =
             movie.reserve(
                 reservationModel.cinemaName,
@@ -46,9 +56,9 @@ class ChoiceSeatPresenter(
                 TicketCount(reservationModel.count),
                 seats,
             )
+
         val ticketModel = ticket.toPresentation()
         ticketsData.addTickets(ticketModel)
-
         view.confirmBookMovie(ticketModel)
     }
 
@@ -94,7 +104,11 @@ class ChoiceSeatPresenter(
     }
 
     override fun setMovieTitle(movieId: Long) {
-        view.setMovieTitle(getMovie(movieId).title)
+        val movie = findMovieById(movieId) ?: run {
+            view.setMovieTitle(DefaultMovieData.defaultMovie.title)
+            return
+        }
+        view.setMovieTitle(movie.title)
     }
 
     override fun getSeatModel(index: Int): SeatModel = findSeat(index).toPresentation()
