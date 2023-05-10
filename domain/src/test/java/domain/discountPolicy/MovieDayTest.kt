@@ -16,7 +16,8 @@ class MovieDayTest {
         val date = LocalDateTime.of(2023, 1, 10, 0, 0)
         val ticket = Ticket(
             date,
-            Seat(1,3,SeatPolicies()),
+            Seat(1,3),
+            "선릉",
             DisCountPolicies()
         )
 
@@ -34,7 +35,8 @@ class MovieDayTest {
         val date = LocalDateTime.of(2023, 1, 11, 0, 0)
         val ticket = Ticket(
             date,
-            Seat(1,3, SeatPolicies()),
+            Seat(1,3),
+            "선릉",
             DisCountPolicies()
         )
 

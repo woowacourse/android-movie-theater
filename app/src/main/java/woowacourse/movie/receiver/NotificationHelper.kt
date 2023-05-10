@@ -4,30 +4,36 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import androidx.core.app.NotificationCompat
+import woowacourse.movie.database.SettingPreferencesManager
 
-class NotificationHelper(
-    val context: Context,
-    private val channelId: String,
-    private val channelName: String
-) {
+object NotificationHelper {
+    fun notifyNotification(
+        notificationManager: NotificationManager,
+        notification: Notification,
+        notificationId: Int
+    ) {
+        if (SettingPreferencesManager.getData()) notificationManager.notify(
+            notificationId,
+            notification
+        )
+    }
 
     fun generateNotification(
+        context: Context,
+        channelId: String,
         notificationData: NotificationData,
-        notificationManager: NotificationManager
     ): Notification {
-        val notificationBuilder = generateNotificationBuilder(notificationManager)
-        bindNotification(notificationBuilder, notificationData)
+        val notificationBuilder = notificationData.generateNotificationBuilder(context, channelId)
         return notificationBuilder.build()
     }
 
-    fun generateNotificationManger(): NotificationManager {
-        return context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-    }
-
-    fun generateNotificationBuilder(
-        notificationManager: NotificationManager
-    ): NotificationCompat.Builder {
+    fun generateNotificationManger(
+        context: Context,
+        channelId: String,
+        channelName: String
+    ): NotificationManager {
+        val notificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(
             NotificationChannel(
                 channelId,
@@ -35,18 +41,6 @@ class NotificationHelper(
                 NotificationManager.IMPORTANCE_DEFAULT
             )
         )
-        return NotificationCompat.Builder(context, channelId)
+        return notificationManager
     }
-
-    fun bindNotification(
-        notificationBuilder: NotificationCompat.Builder,
-        notificationData: NotificationData
-    ) {
-        notificationBuilder.setContentTitle(notificationData.title)
-        notificationBuilder.setContentText(notificationData.contextText)
-        notificationBuilder.setSmallIcon(notificationData.smallIcon)
-        notificationBuilder.setAutoCancel(notificationData.isAutoCancel)
-        notificationBuilder.setContentIntent(notificationData.pendingIntent)
-    }
-
 }

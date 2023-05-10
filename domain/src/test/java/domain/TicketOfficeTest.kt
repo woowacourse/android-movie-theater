@@ -8,10 +8,20 @@ import java.time.LocalTime
 
 class TicketOfficeTest {
 
+    val date = LocalDate.of(2023, 4, 20)
+    val time = LocalTime.of(10, 0)
+    val dateTime = LocalDateTime.of(date, time)
+
     @Test
     internal fun `티켓을 추가할 수 있다`() {
         // given
-        val ticketOffice = TicketOffice(tickets = Tickets(listOf()), peopleCount = 3)
+        val ticketOffice =
+            TicketOffice(
+                tickets = Tickets(listOf()),
+                peopleCount = 3,
+                date = dateTime,
+                theaterName = "선릉"
+            )
         // when
         ticketOffice.addTicket(makeTestTicket(3, 3))
         ticketOffice.addTicket(makeTestTicket(3, 4))
@@ -29,7 +39,9 @@ class TicketOfficeTest {
                 listOf(
                     makeTestTicket(3, 3), makeTestTicket(3, 4)
                 ),
-            ), peopleCount = 3
+            ),
+            peopleCount = 3, date = dateTime,
+            theaterName = "선릉"
         )
         // when
         ticketOffice.deleteTicket(makeTestTicket(3, 4))
@@ -45,10 +57,11 @@ class TicketOfficeTest {
         val ticketOffice = TicketOffice(
             tickets = Tickets(
                 listOf(
-                    makeTestTicket(3, 3),
-                    makeTestTicket(3, 4)
+                    makeTestTicket(3, 3), makeTestTicket(3, 4)
                 )
-            ), peopleCount = 3
+            ),
+            peopleCount = 3, date = dateTime,
+            theaterName = "선릉"
         )
         // when
         val actual = ticketOffice.isAvailableAddTicket()
@@ -62,11 +75,11 @@ class TicketOfficeTest {
         val ticketOffice = TicketOffice(
             tickets = Tickets(
                 listOf(
-                    makeTestTicket(3, 3),
-                    makeTestTicket(3, 4),
-                    makeTestTicket(4, 4)
+                    makeTestTicket(3, 3), makeTestTicket(3, 4), makeTestTicket(4, 4)
                 )
-            ), peopleCount = 3
+            ),
+            peopleCount = 3, date = dateTime,
+            theaterName = "선릉"
         )
         // when
         val actual = ticketOffice.isAvailableAddTicket()
@@ -85,7 +98,9 @@ class TicketOfficeTest {
                     makeTestTicket(4, 4),
                     makeTestTicket(2, 4)
                 )
-            ), peopleCount = 3
+            ),
+            peopleCount = 3, date = dateTime,
+            theaterName = "선릉"
         )
         // when
         val actual = ticketOffice.isAvailableAddTicket()
@@ -94,10 +109,13 @@ class TicketOfficeTest {
     }
 
     private fun makeTestTicket(row: Int, col: Int): Ticket {
-        val ticketOffice = TicketOffice(tickets = Tickets(listOf()), peopleCount = 3)
-        val date = LocalDate.of(2023, 4, 20)
-        val time = LocalTime.of(10, 0)
-        val dateTime = LocalDateTime.of(date, time)
-        return ticketOffice.generateTicket(dateTime, row, col)
+        val ticketOffice =
+            TicketOffice(
+                tickets = Tickets(listOf()),
+                peopleCount = 3,
+                date = dateTime,
+                theaterName = "선릉"
+            )
+        return ticketOffice.generateTicket(row, col)
     }
 }

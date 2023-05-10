@@ -6,33 +6,38 @@ import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import woowacourse.movie.receiver.ReservationNotificationReceiver
-import woowacourse.movie.view.model.MovieUiModel
-import woowacourse.movie.view.model.TicketsUiModel
+import woowacourse.movie.model.MovieUiModel
+import woowacourse.movie.model.TicketsUiModel
 import java.sql.Date
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.ZoneId
 import java.util.*
 
-class ReservationAlarmManager() {
+class ReservationAlarmManager(
+    private val context: Context,
+) {
+    private val manager: AlarmManager by lazy {
+        generateAlarmManager(context)
+    }
 
     fun registerAlarm(
-        context: Context, ticketsUiModel: TicketsUiModel, movieUiModel: MovieUiModel
+        ticketsUiModel: TicketsUiModel, movieUiModel: MovieUiModel
     ) {
         val receiverIntent = ReservationNotificationReceiver.generateReceiverIntent(
             context, movieUiModel, ticketsUiModel
         )
         val pendingIntent = generatedPendingIntent(context, receiverIntent)
-        val alarmManager: AlarmManager = generateAlarmManager(context)
         val timeMillis = getTimeInMillis(ticketsUiModel.list.first().date)
-        setAlarmManagerOption(alarmManager, timeMillis, pendingIntent)
+        setAlarmManagerOption(manager, timeMillis, pendingIntent)
     }
 
     private fun generatedPendingIntent(context: Context, receiverIntent: Intent): PendingIntent {
         return PendingIntent.getBroadcast(
             context,
-            REQUEST_CODE,
+            LocalTime.now().second,
             receiverIntent,
-            PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_MUTABLE
         )
     }
 
@@ -41,9 +46,9 @@ class ReservationAlarmManager() {
     }
 
     private fun getTimeInMillis(localDateTime: LocalDateTime): Long {
-        val sqlDate = getAlarmDateTime(localDateTime, ALARM_TIME)
+        val alarmDate = getAlarmDateTime(localDateTime, ALARM_TIME)
         val calendar: Calendar = Calendar.getInstance()
-        calendar.time = sqlDate
+        calendar.time = alarmDate
         return calendar.timeInMillis
     }
 
@@ -65,7 +70,6 @@ class ReservationAlarmManager() {
     }
 
     companion object {
-        private const val REQUEST_CODE = 125
         private const val ALARM_TIME = 30L
     }
 }
