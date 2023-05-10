@@ -11,12 +11,15 @@ import woowacourse.movie.view.main.reservationlist.viewholder.ReservationViewHol
 
 class ReservationAdapter(
     private val reservations: List<ReservationUiModel>,
-    private val onClickEvent: (ReservationUiModel) -> Unit
+    private val showReservationResult: (ReservationUiModel) -> Unit,
 ) :
     RecyclerView.Adapter<ReservationViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReservationViewHolder {
         val binding = DataBindingUtil.inflate<ItemReservationBinding>(
-            LayoutInflater.from(parent.context), R.layout.item_reservation, parent, false
+            LayoutInflater.from(parent.context),
+            R.layout.item_reservation,
+            parent,
+            false,
         )
         return ReservationViewHolder(binding)
     }
@@ -26,6 +29,6 @@ class ReservationAdapter(
     }
 
     override fun onBindViewHolder(holder: ReservationViewHolder, position: Int) {
-        holder.bind(reservations[position], onClickEvent)
+        holder.bind(reservations[position], showReservationResult)
     }
 }

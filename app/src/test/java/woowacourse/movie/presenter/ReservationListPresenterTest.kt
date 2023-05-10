@@ -1,13 +1,13 @@
 package woowacourse.movie.presenter
 
 import domain.Reservation
-import io.mockk.*
+import io.mockk.* // ktlint-disable no-wildcard-imports
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.view.main.reservationlist.ReservationListContract
+import woowacourse.movie.database.ReservationDbHelperInterface
 import woowacourse.movie.model.ReservationUiModel
 import woowacourse.movie.model.mapper.ReservationMapper.toUi
-import woowacourse.movie.database.ReservationDbHelperInterface
+import woowacourse.movie.view.main.reservationlist.ReservationListContract
 import woowacourse.movie.view.main.reservationlist.ReservationListPresenter
 
 class ReservationListPresenterTest {
@@ -33,18 +33,18 @@ class ReservationListPresenterTest {
     fun 예매목록을_클릭하면_예매결과_화면으로_넘어간다() {
         // given
         every {
-            view.startReservationResultActivity(
+            view.showReservationResult(
                 reservationUiModel.movie,
-                reservationUiModel.tickets
+                reservationUiModel.tickets,
             )
         } just runs
         // when
-        presenter.reservationItemClick(reservationUiModel)
+        presenter.showReservationResult(reservationUiModel)
         // then
         verify {
-            view.startReservationResultActivity(
+            view.showReservationResult(
                 reservationUiModel.movie,
-                reservationUiModel.tickets
+                reservationUiModel.tickets,
             )
         }
     }
@@ -54,10 +54,10 @@ class ReservationListPresenterTest {
         // given
         val reservations = reservationDb.getReservations()
         val reservationUiModels = reservations.map { it.toUi() }
-        every { view.setAdapter(reservationUiModels) } just runs
+        every { view.setReservationList(reservationUiModels) } just runs
         // when
         presenter.updateReservationList()
         // then
-        verify { view.setAdapter(reservationUiModels) }
+        verify { view.setReservationList(reservationUiModels) }
     }
 }
