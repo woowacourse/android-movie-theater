@@ -8,7 +8,7 @@ import woowacourse.movie.R
 class AdvertisementItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val advertisementImageView: ImageView = view.findViewById(R.id.advertisement_iv)
 
-    fun bind(advertisementUIState: ScreeningListViewItemUIState.AdvertisementUIState) {
+    fun bind(advertisementUIState: AdvertisementUIState) {
         advertisementImageView.setImageResource(advertisementUIState.advertisementImage)
     }
 }

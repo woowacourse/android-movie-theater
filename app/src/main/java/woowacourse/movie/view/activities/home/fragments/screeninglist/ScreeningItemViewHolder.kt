@@ -18,7 +18,7 @@ class ScreeningItemViewHolder(
     private val runningTimeView: TextView = view.findViewById(R.id.running_time_tv)
     private val reserveButton: Button = view.findViewById(R.id.reserve_now_btn)
 
-    fun bind(screeningUIState: ScreeningListViewItemUIState.ScreeningUIState) {
+    fun bind(screeningUIState: ScreeningUIState) {
         posterView.setImageResource(screeningUIState.poster)
         titleView.text = screeningUIState.title
         screeningRange.text = view.resources.getString(R.string.screening_range_format)

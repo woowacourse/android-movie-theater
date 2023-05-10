@@ -19,13 +19,13 @@ class ScreeningListPresenter(private val view: ScreeningListContract.View):
 
         screenings.forEachIndexed { index, screening ->
             screeningListViewUIStates.add(
-                ScreeningListViewItemUIState.ScreeningUIState.of(
+                ScreeningUIState.of(
                     screening,
                     PosterResourceProvider.getPosterResourceId(screening)
                 )
             )
             if ((index + 1) % ADVERTISE_INTERVAL == 0)
-                screeningListViewUIStates.add(ScreeningListViewItemUIState.AdvertisementUIState(R.drawable.ad_image))
+                screeningListViewUIStates.add(AdvertisementUIState(R.drawable.ad_image))
         }
 
         return screeningListViewUIStates

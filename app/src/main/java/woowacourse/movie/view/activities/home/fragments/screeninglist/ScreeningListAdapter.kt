@@ -27,14 +27,14 @@ class ScreeningListAdapter(
 
         when (holder) {
             is ScreeningItemViewHolder ->
-                holder.bind(item as ScreeningListViewItemUIState.ScreeningUIState)
+                holder.bind(item as ScreeningUIState)
             is AdvertisementItemViewHolder ->
-                holder.bind(item as ScreeningListViewItemUIState.AdvertisementUIState)
+                holder.bind(item as AdvertisementUIState)
         }
     }
 
     override fun getItemViewType(position: Int): Int = when (screeningListViewItems[position]) {
-        is ScreeningListViewItemUIState.ScreeningUIState -> R.layout.screening_item
-        is ScreeningListViewItemUIState.AdvertisementUIState -> R.layout.advertisement_item
+        is ScreeningUIState -> R.layout.screening_item
+        is AdvertisementUIState -> R.layout.advertisement_item
     }
 }
