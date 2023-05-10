@@ -59,5 +59,7 @@ class HistoryFragment : Fragment(), HistoryContract.View {
 
     companion object {
         private const val BOOKING_MOVIE_KEY = "booking_movie"
+
+        const val TAG_HISTORY_FRAGMENT = "history_fragment"
     }
 }

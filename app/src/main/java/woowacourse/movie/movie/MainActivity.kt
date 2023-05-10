@@ -17,8 +17,11 @@ import woowacourse.movie.movie.database.DBController
 import woowacourse.movie.movie.database.TicketDataDBHelper
 import woowacourse.movie.movie.dto.BookingHistoryDto
 import woowacourse.movie.movie.history.HistoryFragment
+import woowacourse.movie.movie.history.HistoryFragment.Companion.TAG_HISTORY_FRAGMENT
 import woowacourse.movie.movie.movielist.HomeFragment
+import woowacourse.movie.movie.movielist.HomeFragment.Companion.TAG_HOME_FRAGMENT
 import woowacourse.movie.movie.setting.SettingFragment
+import woowacourse.movie.movie.setting.SettingFragment.Companion.TAG_SETTING_FRAGMENT
 import woowacourse.movie.movie.utils.Toaster
 
 class MainActivity : AppCompatActivity() {
@@ -107,10 +110,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val SETTING_PREFERENCE_KEY = "setting"
-
-        private const val TAG_HOME_FRAGMENT = "home_fragment"
-        private const val TAG_HISTORY_FRAGMENT = "history_fragment"
-        private const val TAG_SETTING_FRAGMENT = "setting_fragment"
 
         private const val DENIED_PERMISSION_MESSAGE = "알림 권한이 차단되었습니다"
         private const val PERMIT_PERMISSION_MESSAGE = "알림 권한이 허용되었습니다"
