@@ -50,7 +50,7 @@ class BookedTicketsFragment : Fragment(), BookedTicketsContract.View {
     }
 
     private fun initBookedTicketAdapter() {
-        BookedTicketsAdapter(
+        bookedTicketsAdapter = BookedTicketsAdapter(
             ::bookedTicketsItemClickListener,
             presenter::getMovieModel,
         )

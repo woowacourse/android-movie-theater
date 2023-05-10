@@ -15,7 +15,7 @@ class SettingsFragment : Fragment(), SettingsContract.View {
     private val binding get() = _binding!!
 
     private var _presenter: SettingsContract.Presenter? = null
-    override val presenter: SettingsContract.Presenter = _presenter!!
+    override val presenter: SettingsContract.Presenter get() = _presenter!!
 
     override fun onCreateView(
         inflater: LayoutInflater,

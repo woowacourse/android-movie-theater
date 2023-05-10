@@ -36,7 +36,7 @@ class CompleteActivity : AppCompatActivity(), CompleteContract.View {
         super.onCreate(savedInstanceState)
         binding = ActivityCompleteBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        initTicketModel()
         initView()
     }
 
