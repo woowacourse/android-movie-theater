@@ -4,7 +4,6 @@ import android.app.AlarmManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -146,7 +145,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun storeData(bookingMovie: BookingMovieEntity) {
-        Log.d("test", "storeData 진입")
         dBController.insertDB(bookingMovie)
     }
 
