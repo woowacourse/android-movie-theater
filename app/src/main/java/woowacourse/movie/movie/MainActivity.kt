@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         dBController.findAllDB()
         setContentView(binding.root)
         requestNotificationPermission()
-        SettingPreference.initSharedPreferences(applicationContext)
+        //SettingPreference.initSharedPreferences(applicationContext)
         setFragment(TAG_HOME_FRAGMENT, HomeFragment())
         binding.navigationBar?.let(::onNavigationBarClickListener)
     }

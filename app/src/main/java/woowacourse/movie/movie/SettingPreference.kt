@@ -1,16 +1,11 @@
 package woowacourse.movie.movie
 
 import android.content.Context
-import android.content.SharedPreferences
 import woowacourse.movie.movie.MainActivity.Companion.SETTING_PREFERENCE_KEY
 
-object SettingPreference : BasePreference {
+class SettingPreference(val context: Context) : BasePreference {
 
-    lateinit var sharedPreferences: SharedPreferences
-
-    fun initSharedPreferences(context: Context) {
-        sharedPreferences = context.getSharedPreferences(SETTING_PREFERENCE_KEY, Context.MODE_PRIVATE)
-    }
+    private val sharedPreferences = context.getSharedPreferences(SETTING_PREFERENCE_KEY, Context.MODE_PRIVATE)
 
     override fun setBoolean(key: String, value: Boolean) {
         val editor = sharedPreferences.edit()

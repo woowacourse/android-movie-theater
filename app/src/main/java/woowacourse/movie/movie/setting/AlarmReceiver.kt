@@ -10,12 +10,11 @@ import woowacourse.movie.movie.seat.SeatSelectionActivity.Companion.BOOKING_MOVI
 import woowacourse.movie.movie.SettingPreference
 import woowacourse.movie.movie.utils.getParcelableCompat
 
-class AlarmReceiver : BroadcastReceiver() {
+class AlarmReceiver(private val settingPreference: SettingPreference) : BroadcastReceiver() {
     private lateinit var bookingMovie: BookingMovieEntity
 
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == ALARM_CODE && SettingPreference.getBoolean(SETTING_PREFERENCE_KEY)) {
-            SettingPreference.initSharedPreferences(context)
+        if (intent.action == ALARM_CODE && settingPreference.getBoolean(SETTING_PREFERENCE_KEY)) {
             val notificationBuilder = NotificationBuilder(context)
             notificationBuilder.createNotificationChannel()
 

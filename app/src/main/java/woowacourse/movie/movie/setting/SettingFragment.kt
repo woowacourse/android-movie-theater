@@ -21,7 +21,7 @@ class SettingFragment : Fragment(), SettingContract.View {
     ): View {
         binding = FragmentSettingBinding.inflate(layoutInflater)
         val view = binding.root
-        presenter = SettingPresenter(this, SettingPreference)
+        presenter = SettingPresenter(this, SettingPreference(binding.root.context))
         bindSwitch()
         return view
     }
