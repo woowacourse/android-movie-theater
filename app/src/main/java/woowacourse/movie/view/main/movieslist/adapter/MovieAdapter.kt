@@ -15,7 +15,7 @@ class MovieAdapter(
     private val movieUiModels: List<MovieUiModel>,
     private val advertisementUiModel: AdvertisementUiModel,
     private val advertisementClickEvent: (AdvertisementUiModel) -> Unit,
-    private val movieListClickEvent: (MovieUiModel) -> Unit
+    private val movieListClickEvent: (MovieUiModel) -> Unit,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
@@ -29,24 +29,36 @@ class MovieAdapter(
         return when (MovieAdapterViewType.find(viewType)) {
             MovieAdapterViewType.MOVIE -> MovieItemViewHolder(
                 DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context), R.layout.item_movie, parent, false
-                )
+                    LayoutInflater.from(parent.context),
+                    R.layout.item_movie,
+                    parent,
+                    false,
+                ),
             )
             MovieAdapterViewType.ADVERTISEMENT -> AdvertisementItemViewHolder(
                 DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context), R.layout.item_advertisement, parent, false
-                )
+                    LayoutInflater.from(parent.context),
+                    R.layout.item_advertisement,
+                    parent,
+                    false,
+                ),
             )
         }
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-        if (viewHolder is AdvertisementItemViewHolder) viewHolder.bind(
-            advertisementUiModel, advertisementClickEvent
-        )
-        if (viewHolder is MovieItemViewHolder) viewHolder.bind(
-            movieUiModels[position], movieListClickEvent
-        )
+        if (viewHolder is AdvertisementItemViewHolder) {
+            viewHolder.bind(
+                advertisementUiModel,
+                advertisementClickEvent,
+            )
+        }
+        if (viewHolder is MovieItemViewHolder) {
+            viewHolder.bind(
+                movieUiModels[position],
+                movieListClickEvent,
+            )
+        }
     }
 
     override fun getItemCount(): Int {

@@ -8,27 +8,25 @@ import woowacourse.movie.model.TheaterUiModel
 import woowacourse.movie.model.mapper.MovieMapper.toUi
 
 class MoviesPresenter(val view: MoviesContract.View) : MoviesContract.Presenter {
-    private lateinit var movieUiModel: MovieUiModel
-    override fun onMovieItemClick(clickedMovie: MovieUiModel) {
-        movieUiModel = clickedMovie
-        view.showBottomSheet(movieUiModel.theaters)
+    override fun showPossibleTheatersBy(clickedMovie: MovieUiModel) {
+        view.showBottomSheet(clickedMovie, clickedMovie.theaters)
     }
 
-    override fun onTheaterItemClick(theaterUiModel: TheaterUiModel) {
-        view.startMovieReservationActivity(
+    override fun startMovieReservation(movieUiModel: MovieUiModel, theaterUiModel: TheaterUiModel) {
+        view.showMovieReservationScreen(
             movieUiModel = movieUiModel,
-            theaterUiModel = theaterUiModel
+            theaterUiModel = theaterUiModel,
         )
     }
 
-    override fun onAdvertisementItemClick(advertisementUiModel: AdvertisementUiModel) {
-        view.startAdvertisementUrl(advertisementUiModel.url)
+    override fun showAdvertisement(advertisementUiModel: AdvertisementUiModel) {
+        view.startUrl(advertisementUiModel.url)
     }
 
     override fun updateMovieList() {
         val movies = MockMoviesFactory.movies
         val movieUiModels = movies.value.map { it.toUi() }
         val advertisementUiModel = MockAdvertisementFactory.generateAdvertisement()
-        view.setAdapter(movieUiModels, advertisementUiModel)
+        view.showMovieList(movieUiModels, advertisementUiModel)
     }
 }
