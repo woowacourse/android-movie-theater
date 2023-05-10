@@ -10,17 +10,17 @@ import woowacourse.movie.R
 import woowacourse.movie.database.SettingPreferencesManager
 import woowacourse.movie.databinding.FragmentSettingBinding
 
-class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.View {
+class SettingFragment : Fragment(), SettingContract.View {
 
     private lateinit var binding: FragmentSettingBinding
-    override val presenter: SettingContract.Presenter by lazy {
+    private val presenter: SettingContract.Presenter by lazy {
         SettingPresenter(this, SettingPreferencesManager)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
         return binding.root
@@ -28,14 +28,13 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.updateSwitchState()
+        presenter.initAlarmState()
         binding.settingPushAlarmSwitch.setOnClickListener {
-            presenter.onClickSwitch()
+            presenter.changeAlarmState()
         }
     }
 
     override fun setSwitchState(isChecked: Boolean) {
         binding.settingPushAlarmSwitch.isChecked = isChecked
     }
-
 }

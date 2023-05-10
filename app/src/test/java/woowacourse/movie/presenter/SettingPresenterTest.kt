@@ -1,9 +1,6 @@
 package woowacourse.movie.presenter
 
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.slot
-import io.mockk.verify
+import io.mockk.* // ktlint-disable no-wildcard-imports
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -26,11 +23,15 @@ class SettingPresenterTest {
     @Test
     fun 스위치를_클릭하면_알람_수신_상태가_바뀐다() {
         // given
-        every { settingPreferenceManager.changeData() } returns Unit
+        every { settingPreferenceManager.getData() } returns true
+        every { settingPreferenceManager.changeData() } just runs
+        val slot = slot<Boolean>()
+        every { view.setSwitchState(capture(slot)) } just runs
         // when
-        presenter.onClickSwitch()
+        presenter.changeAlarmState()
         // then
         verify { settingPreferenceManager.changeData() }
+        verify { view.setSwitchState(true) }
     }
 
     @Test
@@ -40,7 +41,7 @@ class SettingPresenterTest {
         every { settingPreferenceManager.getData() } returns true
         every { view.setSwitchState(capture(slot)) } answers { println("slot = ${slot.captured}") }
         // when
-        presenter.updateSwitchState()
+        presenter.initAlarmState()
         // then
         val actual = slot.captured
         assertEquals(actual, true)
