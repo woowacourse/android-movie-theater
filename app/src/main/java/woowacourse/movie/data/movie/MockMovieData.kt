@@ -45,7 +45,5 @@ object MockMovieData : MovieData {
         ),
     ) + movieSamples
 
-    override fun findMovieById(movieId: Long): Movie {
-        return movies.find { it.id == movieId } ?: throw NoSuchElementException()
-    }
+    override fun findMovieById(movieId: Long): Movie? = movies.find { it.id == movieId }
 }

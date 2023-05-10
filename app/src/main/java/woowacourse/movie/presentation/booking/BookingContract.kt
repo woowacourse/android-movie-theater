@@ -11,14 +11,16 @@ interface BookingContract {
         val presenter: Presenter
         fun setTicketCount(count: Int)
         fun reservationMovie(reservationModel: ReservationModel)
+        fun setMovieInfo(movieModel: MovieModel)
+        fun setScreeningDates(localDates: List<LocalDate>)
     }
 
     interface Presenter {
         fun setTicketCount(count: Int)
-        fun requireMovieModel(movieId: Long): MovieModel
+        fun setMovieInfo(movieId: Long)
         fun addTicket()
         fun subTicket()
-        fun getScreeningDate(movieId: Long): List<LocalDate>
+        fun initMovieDates(movieId: Long)
         fun reserveMovie(cinemaModel: CinemaModel, localDateTime: LocalDateTime)
     }
 }

@@ -12,7 +12,6 @@ import woowacourse.movie.presentation.choiceSeat.ChoiceSeatActivity
 import woowacourse.movie.presentation.model.CinemaModel
 import woowacourse.movie.presentation.model.MovieModel
 import woowacourse.movie.presentation.model.ReservationModel
-import woowacourse.movie.presentation.util.formatDotDate
 import woowacourse.movie.presentation.util.getParcelableExtraCompat
 import woowacourse.movie.presentation.util.noIntentExceptionHandler
 import java.time.LocalDate
@@ -29,8 +28,6 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
 
     private lateinit var cinemaModel: CinemaModel
 
-    private val movieModel: MovieModel by lazy { presenter.requireMovieModel(cinemaModel.movieId) }
-
     private val dateSpinnerAdapter by lazy {
         SpinnerAdapter<LocalDate>(this, R.layout.screening_date_time_item, R.id.textSpinnerDateTime)
     }
@@ -43,11 +40,19 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         binding = ActivityBookingBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initAdapters()
-        initView()
+        initMovieView()
         initCinemaModel()
         restoreData(savedInstanceState)
         initDateTimes()
         gatherClickListeners()
+    }
+
+    private fun initMovieView() {
+        presenter.setMovieInfo(cinemaModel.movieId)
+    }
+
+    override fun setMovieInfo(movieModel: MovieModel) {
+        binding.movieModel = movieModel
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -95,39 +100,6 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         clickBookingComplete()
     }
 
-    private fun initView() {
-        setMoviePoster()
-        setMovieTitle()
-        setMovieScreeningDate()
-        setMovieRunningTime()
-        setMovieDescription()
-    }
-
-    private fun setMoviePoster() {
-        binding.imageBookingPoster.setImageResource(movieModel.poster)
-    }
-
-    private fun setMovieTitle() {
-        binding.textBookingTitle.text = movieModel.title
-    }
-
-    private fun setMovieScreeningDate() {
-        binding.textBookingScreeningDate.text =
-            getString(R.string.screening_date).format(
-                movieModel.screeningStartDate.formatDotDate(),
-                movieModel.screeningEndDate.formatDotDate(),
-            )
-    }
-
-    private fun setMovieRunningTime() {
-        binding.textBookingRunningTime.text =
-            getString(R.string.running_time).format(movieModel.runningTime)
-    }
-
-    private fun setMovieDescription() {
-        binding.textBookingDescription.text = movieModel.description
-    }
-
     private fun clickMinus() {
         binding.buttonBookingMinus.setOnClickListener {
             presenter.subTicket()
@@ -164,8 +136,12 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
     }
 
     private fun initDateTimes() {
-        dateSpinnerAdapter.initItems(presenter.getScreeningDate(movieModel.id))
+        presenter.initMovieDates(cinemaModel.movieId)
         timeSpinnerAdapter.initItems(cinemaModel.movieTimes)
+    }
+
+    override fun setScreeningDates(localDates: List<LocalDate>) {
+        dateSpinnerAdapter.initItems(localDates)
     }
 
     companion object {

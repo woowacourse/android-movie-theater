@@ -4,6 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
+    <data>
+
+        <import
+            alias="DateExtension"
+            type="woowacourse.movie.presentation.util.DateExtensionKt" />
+
+        <variable
+            name="movieModel"
+            type="woowacourse.movie.presentation.model.MovieModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -95,7 +106,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_editor_absoluteX="95dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -107,6 +120,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:scaleType="centerCrop"
+                    app:imageResource="@{movieModel.poster}"
                     app:layout_constraintDimensionRatio="1.05"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -120,6 +134,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="24dp"
+                    android:text="@{movieModel.title}"
                     android:textColor="@color/black"
                     android:textSize="24sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -132,6 +147,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
+                    android:text="@{@string/screening_date(DateExtension.formatDotDate(movieModel.screeningStartDate),DateExtension.formatDotDate(movieModel.screeningEndDate))}"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="@+id/textBookingTitle"
                     app:layout_constraintTop_toBottomOf="@+id/textBookingTitle"
@@ -142,6 +158,7 @@
                     style="@style/Text_RobotoBLACK_16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{@string/running_time(movieModel.runningTime)}"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="@+id/textBookingScreeningDate"
                     app:layout_constraintTop_toBottomOf="@+id/textBookingScreeningDate"
@@ -155,6 +172,7 @@
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
+                    android:text="@{movieModel.description}"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textBookingRunningTime"
