@@ -14,12 +14,15 @@ import woowacourse.movie.view.main.movieslist.viewholder.TheaterViewHolder
 class TheaterAdapter(
     val context: Context,
     private val theaters: TheatersUiModel,
-    private val onClickEvent: (TheaterUiModel) -> Unit
+    private val onClickEvent: (TheaterUiModel) -> Unit,
 ) : RecyclerView.Adapter<TheaterViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TheaterViewHolder {
         val binding = DataBindingUtil.inflate<ItemTheaterBinding>(
-            LayoutInflater.from(parent.context), R.layout.item_theater, parent, false
+            LayoutInflater.from(parent.context),
+            R.layout.item_theater,
+            parent,
+            false,
         )
         return TheaterViewHolder(binding)
     }

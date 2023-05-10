@@ -9,7 +9,7 @@ class TheaterViewHolder(private val binding: ItemTheaterBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(
         theaterUiModel: TheaterUiModel,
-        onClickEvent: (TheaterUiModel) -> Unit
+        onClickEvent: (TheaterUiModel) -> Unit,
     ) {
         itemView.setOnClickListener { onClickEvent(theaterUiModel) }
         binding.itemTheaterName.text =
