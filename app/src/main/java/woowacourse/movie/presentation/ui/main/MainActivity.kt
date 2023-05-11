@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.presenter = presenter
+        showHomeScreen()
     }
 
     override fun initView() {
