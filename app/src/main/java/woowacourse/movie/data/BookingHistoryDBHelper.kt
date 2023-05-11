@@ -8,7 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper
 import woowacourse.movie.model.BookingHistoryData
 
 class BookingHistoryDBHelper(context: Context?) :
-    SQLiteOpenHelper(context, BookHistoryContract.DATABASE_NAME, null, 1) {
+    SQLiteOpenHelper(context, BookHistoryContract.DATABASE_NAME, null, 1),
+    MovieRepository {
 
     private val db = this.writableDatabase
 
@@ -25,7 +26,7 @@ class BookingHistoryDBHelper(context: Context?) :
         )
     }
 
-    fun getData(): List<BookingHistoryData> {
+    override fun loadData(): List<BookingHistoryData> {
         val cursor = db.rawQuery("SELECT * FROM ${BookHistoryContract.TABLE_NAME}", null)
         val data = mutableListOf<BookingHistoryData>()
         if (cursor.moveToFirst()) {
@@ -56,7 +57,7 @@ class BookingHistoryDBHelper(context: Context?) :
         return BookingHistoryData(title, date, numberOfPeople, seats.split(","), price, theater)
     }
 
-    fun insertData(bookingHistoryData: BookingHistoryData) {
+    override fun addData(bookingHistoryData: BookingHistoryData) {
         val values = ContentValues().apply {
             put(BookHistoryContract.TABLE_COLUMN_TITLE, bookingHistoryData.title)
             put(BookHistoryContract.TABLE_COLUMN_DATE, bookingHistoryData.date)

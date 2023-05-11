@@ -4,23 +4,14 @@ import com.woowacourse.domain.Ad
 import com.woowacourse.domain.TheaterMovie
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieMockData
-import woowacourse.movie.fragment.movielist.adapter.MovieRecyclerViewAdapter
-import woowacourse.movie.fragment.movielist.adapter.TheaterRecyclerViewAdapter
 import woowacourse.movie.model.AdUIModel
 import woowacourse.movie.model.MovieUIModel
 import woowacourse.movie.model.toPresentation
 
 class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter {
 
-    override fun setMovieRecyclerView(onClickMovie: (Int) -> Unit, onClickAd: (AdUIModel) -> Unit) {
-
-        val movieRecyclerViewAdapter = MovieRecyclerViewAdapter(
-            getMovies(),
-            getAd(),
-            onClickMovie,
-            onClickAd,
-        )
-        view.setMovieRecyclerView(movieRecyclerViewAdapter)
+    override fun setMovieRecyclerView() {
+        view.setMovieRecyclerView(getMovies(), getAd())
     }
 
     private fun getMovies(): List<MovieUIModel> {
@@ -31,11 +22,19 @@ class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter {
         return Ad(R.drawable.ad, "https://woowacourse.github.io/").toPresentation()
     }
 
-    override fun setTheaterRecyclerView(theaterMovies: List<TheaterMovie>, onClickTheater: (Int) -> Unit) {
-        val theaterRecyclerViewAdapter = TheaterRecyclerViewAdapter(
-            theaterMovies,
-            onClickTheater
-        )
-        view.setTheaterRecyclerView(theaterRecyclerViewAdapter)
+    override fun setTheaterRecyclerView(position: Int) {
+        val theaterMovie = mutableListOf<TheaterMovie>()
+        for (theater in MovieMockData.theaterData) {
+            val hasMovie =
+                theater.schedules.filter { it.movie == MovieMockData.movies10000[position] }
+            if (hasMovie.isNotEmpty()) theaterMovie.add(
+                TheaterMovie(
+                    theater.name,
+                    hasMovie.first()
+                )
+            )
+        }
+
+        view.setTheaterRecyclerView(theaterMovie)
     }
 }

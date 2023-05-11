@@ -137,7 +137,7 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
             BookCompleteActivity.getIntent(this, movieBookingSeatInfoUIModel)
 
         AlarmSetting().setAlarm(this, movieBookingSeatInfo)
-        db.insertData(movieBookingSeatInfoUIModel.toHistoryData())
+        db.addData(movieBookingSeatInfoUIModel.toHistoryData())
 
         startActivity(intent)
         finish()

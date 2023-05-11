@@ -11,11 +11,10 @@ import androidx.fragment.app.Fragment
 import com.woowacourse.domain.TheaterMovie
 import woowacourse.movie.R
 import woowacourse.movie.activity.moviedetail.MovieDetailActivity
-import woowacourse.movie.data.MovieMockData
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.fragment.movielist.adapter.MovieRecyclerViewAdapter
-import woowacourse.movie.fragment.movielist.adapter.TheaterRecyclerViewAdapter
 import woowacourse.movie.model.AdUIModel
+import woowacourse.movie.model.MovieUIModel
 import woowacourse.movie.model.toPresentation
 
 class HomeFragment : Fragment(), HomeContract.View {
@@ -34,21 +33,30 @@ class HomeFragment : Fragment(), HomeContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.setMovieRecyclerView(onClickMovie(), onClickAd())
+        presenter.setMovieRecyclerView()
     }
 
     private fun onClickMovie() = { position: Int ->
-        val theaterMovie = mutableListOf<TheaterMovie>()
-        for (theater in MovieMockData.theaterData) {
-            val hasMovie = theater.schedules.filter { it.movie == MovieMockData.movies10000[position] }
-            if (hasMovie.isNotEmpty()) theaterMovie.add(TheaterMovie(theater.name, hasMovie.first()))
-        }
-        presenter.setTheaterRecyclerView(theaterMovie, onClickTheater(theaterMovie))
+        presenter.setTheaterRecyclerView(position)
     }
 
     private fun onClickAd() = { item: AdUIModel ->
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
         this.startActivity(intent)
+    }
+
+    override fun setMovieRecyclerView(movies: List<MovieUIModel>, ad: AdUIModel) {
+        binding.recyclerviewMovieList.adapter = MovieRecyclerViewAdapter(
+            movies,
+            ad,
+            onClickMovie(),
+            onClickAd()
+        )
+    }
+
+    override fun setTheaterRecyclerView(theaters: List<TheaterMovie>) {
+        val bottomDialogFragment = BottomSheetTheater(theaters, onClickTheater(theaters))
+        bottomDialogFragment.show(childFragmentManager, "Theater")
     }
 
     private fun onClickTheater(theaterMovies: List<TheaterMovie>) = { position: Int ->
@@ -58,14 +66,5 @@ class HomeFragment : Fragment(), HomeContract.View {
                 theaterMovies[position].toPresentation()
             )
         this.startActivity(intent)
-    }
-
-    override fun setMovieRecyclerView(recyclerViewAdapter: MovieRecyclerViewAdapter) {
-        binding.recyclerviewMovieList.adapter = recyclerViewAdapter
-    }
-
-    override fun setTheaterRecyclerView(recyclerViewAdapter: TheaterRecyclerViewAdapter) {
-        val bottomDialogFragment = BottomSheetTheater(recyclerViewAdapter)
-        bottomDialogFragment.show(childFragmentManager, "Theater")
     }
 }

@@ -19,35 +19,39 @@ import woowacourse.movie.model.BookingHistoryData
 class BookHistoryFragment : Fragment(), BookHistoryContract.View {
     override lateinit var presenter: BookHistoryContract.Presenter
     private lateinit var binding: FragmentBookHistoryBinding
-    private val db by lazy { BookingHistoryDBHelper(requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        presenter = BookHistoryPresenter(this)
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_book_history, container, false)
+        presenter = BookHistoryPresenter(this, BookingHistoryDBHelper(requireContext()))
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_book_history, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val bookingHistoryData = db.getData()
-        presenter.setMovieRecyclerView(bookingHistoryData, onClickBookHistory(bookingHistoryData))
+
+        presenter.setMovieRecyclerView()
     }
 
-    private fun onClickBookHistory(bookingHistoryData: List<BookingHistoryData>) = { position: Int ->
-        val intent = BookCompleteActivity.getIntent(
-            requireContext(),
-            bookingHistoryData[position]
-        )
-        startActivity(intent)
-    }
+    private fun onClickBookHistory(bookingHistoryData: List<BookingHistoryData>) =
+        { position: Int ->
+            val intent = BookCompleteActivity.getIntent(
+                requireContext(),
+                bookingHistoryData[position]
+            )
+            startActivity(intent)
+        }
 
-    override fun setMovieRecyclerView(bookHistoryRecyclerViewAdapter: BookHistoryRecyclerViewAdapter) {
+    override fun setMovieRecyclerView(bookingHistoryData: List<BookingHistoryData>) {
         makeDivider(binding.recyclerviewBookHistoryList)
-        binding.recyclerviewBookHistoryList.adapter = bookHistoryRecyclerViewAdapter
+        binding.recyclerviewBookHistoryList.adapter = BookHistoryRecyclerViewAdapter(
+            bookingHistoryData,
+            onClickBookHistory(bookingHistoryData)
+        )
     }
 
     private fun makeDivider(bookHistoryRecyclerView: RecyclerView) {
