@@ -9,4 +9,5 @@ fun LocalDate.movieDetailFormat(): String = format(DateTimeFormatter.ofPattern("
 fun LocalDateTime.reservationFormat(): String =
     format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"))
 
-fun String.getReservationLocalDateTime(): LocalDateTime = LocalDateTime.parse(this)
+fun String.getReservationLocalDateTime(): LocalDateTime =
+    LocalDateTime.parse(this, DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"))

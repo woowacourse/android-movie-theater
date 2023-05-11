@@ -15,7 +15,8 @@ import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.alarm.AlarmManager
 import woowacourse.movie.broadcastreceiver.NotificationReceiver
-import woowacourse.movie.entity.Reservations
+import woowacourse.movie.db.ReservationDBHelper
+import woowacourse.movie.db.ReservationDataImpl
 import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.model.PriceModel
 import woowacourse.movie.model.seat.SeatModel
@@ -38,7 +39,10 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        presenter = SeatPicketPresenter(this)
+        val reservationDB = ReservationDBHelper(this)
+        val reservationDataImpl = ReservationDataImpl(reservationDB.writableDatabase)
+
+        presenter = SeatPicketPresenter(this, reservationDataImpl)
 
         loadSavedData(savedInstanceState)
 
@@ -151,7 +155,7 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
             .setTitle(getString(R.string.dialog_title_seat_selection_check))
             .setMessage(getString(R.string.dialog_message_seat_selection_check))
             .setPositiveButton(getString(R.string.dialog_positive_button_seat_selection_check)) { _, _ ->
-                Reservations.addItem(ticketModel)
+                presenter.saveReservation(ticketModel)
                 setAlarmManager(ticketModel)
                 moveToTicketActivity(ticketModel)
             }

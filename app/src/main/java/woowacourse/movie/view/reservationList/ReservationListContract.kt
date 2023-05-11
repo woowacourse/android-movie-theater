@@ -12,7 +12,6 @@ interface ReservationListContract {
     }
 
     interface Presenter {
-        fun setupReservations(movieTickets: List<MovieTicketModel>)
 
         fun loadReservations()
 

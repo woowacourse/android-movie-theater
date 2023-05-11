@@ -1,6 +1,8 @@
 package woowacourse.movie.view.seat
 
+import woowacourse.movie.db.ReservationDataImpl
 import woowacourse.movie.domain.MovieTicket
+import woowacourse.movie.entity.Reservations
 import woowacourse.movie.model.MovieTicketModel
 import woowacourse.movie.model.mapToMovieTicket
 import woowacourse.movie.model.mapToMovieTicketModel
@@ -9,7 +11,10 @@ import woowacourse.movie.model.mapToPriceModel
 import woowacourse.movie.model.seat.SeatModel
 import woowacourse.movie.model.seat.mapToSeat
 
-class SeatPicketPresenter(private val view: SeatPickerContract.View) :
+class SeatPicketPresenter(
+    private val view: SeatPickerContract.View,
+    private val reservationDataImpl: ReservationDataImpl
+) :
     SeatPickerContract.Presenter {
     private lateinit var ticket: MovieTicket
 
@@ -43,6 +48,11 @@ class SeatPicketPresenter(private val view: SeatPickerContract.View) :
 
     override fun actionReservation() {
         view.showReservationCheckDialog(ticket.mapToMovieTicketModel())
+    }
+
+    override fun saveReservation(ticketModel: MovieTicketModel) {
+        Reservations.addItem(ticketModel)
+        reservationDataImpl.insertReservation(ticketModel)
     }
 
     override fun getTicketOriginalModel(): MovieTicketModel =

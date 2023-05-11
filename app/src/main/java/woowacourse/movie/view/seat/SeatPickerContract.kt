@@ -32,6 +32,8 @@ interface SeatPickerContract {
 
         fun actionReservation()
 
+        fun saveReservation(ticketModel: MovieTicketModel)
+
         fun getTicketOriginalModel(): MovieTicketModel
     }
 }
