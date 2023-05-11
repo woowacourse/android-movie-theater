@@ -16,6 +16,7 @@ class TheaterPresenter(
 
     override fun loadTheaterList() {
         val newTheaters = theaterRepository.getAllByMovieId(movie.id)
+        theaters.clear()
         theaters.addAll(newTheaters)
 
         view.showTheaterList(newTheaters.map { it.toPresentation() })
