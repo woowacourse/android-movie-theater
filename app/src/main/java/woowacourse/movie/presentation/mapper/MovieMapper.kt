@@ -5,10 +5,11 @@ import woowacourse.movie.domain.model.movie.DomainMovie
 import woowacourse.movie.presentation.model.movieitem.Movie
 
 fun Movie.toDomain(): DomainMovie =
-    DomainMovie(title, startDate, endDate, runningTime, introduce)
+    DomainMovie(id, title, startDate, endDate, runningTime, introduce, thumbnail)
 
 fun DomainMovie.toPresentation(@DrawableRes thumbnailResId: Int): Movie =
     Movie(
+        id = id,
         title = title,
         startDate = startDate,
         endDate = endDate,

@@ -4,6 +4,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import com.woowacourse.data.datasource.movie.LocalMovieDataSource
+import com.woowacourse.data.repository.movie.LocalMovieRepository
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.presentation.base.BaseFragment
@@ -17,7 +19,12 @@ import woowacourse.movie.presentation.ui.main.fragments.theater.TheaterPickerDia
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeContract.View {
     override val layoutResId: Int = R.layout.fragment_home
-    override val presenter: HomeContract.Presenter by lazy { HomePresenter(view = this) }
+    override val presenter: HomeContract.Presenter by lazy {
+        HomePresenter(
+            view = this,
+            movieRepository = LocalMovieRepository(LocalMovieDataSource())
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

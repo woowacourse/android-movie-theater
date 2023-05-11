@@ -23,6 +23,7 @@ import java.time.LocalDate
 @LargeTest
 internal class SeatPickerActivityTest {
     private val movie: Movie = Movie(
+        0,
         "테스트 영화",
         startDate = LocalDate.of(2023, 4, 1),
         endDate = LocalDate.of(2023, 4, 30),
