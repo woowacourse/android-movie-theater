@@ -37,7 +37,7 @@ class TheaterPickerDialog : BaseFragmentDialog<DialogTheaterPickerBinding>(), Th
     }
 
     override fun showTheaterList(items: List<ListItem>) {
-        binding.rvAdapter?.appendAll(items)
+        binding.rvAdapter?.replaceList(items)
     }
 
     override fun showTicketingScreen(movie: Movie, theater: ListItem) {

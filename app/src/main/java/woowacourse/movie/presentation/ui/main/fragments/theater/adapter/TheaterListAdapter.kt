@@ -21,8 +21,9 @@ class TheaterListAdapter(onClick: (ListItem) -> Unit = {}) :
             onItemViewClick
         )
 
-    fun appendAll(items: List<ListItem>) {
-        this.items.addAll(items)
-        notifyItemRangeInserted(this.items.size - items.size, items.size)
+    fun replaceList(newItems: List<ListItem>) {
+        items.clear()
+        items.addAll(newItems)
+        notifyItemRangeInserted(items.size - newItems.size, newItems.size)
     }
 }
