@@ -74,7 +74,7 @@ class SeatPickerPresenter(
         updateViewWithSeat(seat, false)
     }
 
-    override fun isAllPicked(): Boolean =
+    private fun isAllPicked(): Boolean =
         !pickedSeats.canPick(ticketingState.ticket.toDomain())
 
     private fun pick(seat: Seat) {

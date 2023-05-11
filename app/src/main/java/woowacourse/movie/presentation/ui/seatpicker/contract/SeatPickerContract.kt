@@ -24,7 +24,6 @@ interface SeatPickerContract {
         abstract fun setState(state: PickedSeats)
         abstract fun getState(): PickedSeats
         abstract fun reserveMovie()
-        abstract fun isAllPicked(): Boolean
         abstract fun changeSeatState(seat: Seat)
         abstract fun reserve()
     }
