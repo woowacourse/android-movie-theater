@@ -17,7 +17,6 @@ interface SeatPickerContract {
         fun fetchPickedSeatViews(pickedIndices: List<Int>)
         fun setSeatViewPickState(index: Int, isPicked: Boolean)
         fun showSeatExceedAlertMessage()
-        fun showTicketingConfirmDialog()
     }
 
     abstract class Presenter(view: View) : BaseContract.Presenter<View>(view) {
@@ -25,6 +24,5 @@ interface SeatPickerContract {
         abstract fun getState(): PickedSeats
         abstract fun reserveMovie()
         abstract fun changeSeatState(seat: Seat)
-        abstract fun reserve()
     }
 }

@@ -43,6 +43,7 @@ class SeatPickerActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         presenter = makePresenter()
+        setClickListener()
     }
 
     override fun onSaveInstanceState(bundle: Bundle) {
@@ -123,7 +124,11 @@ class SeatPickerActivity :
         finish()
     }
 
-    override fun showTicketingConfirmDialog() {
+    private fun setClickListener() {
+        binding.doneBtn.setOnClickListener { showTicketingConfirmDialog() }
+    }
+
+    private fun showTicketingConfirmDialog() {
         createAlertDialog(false) {
             title(getString(R.string.ticketing_confirm_title))
             message(getString(R.string.ticketing_confirm_message))
