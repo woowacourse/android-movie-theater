@@ -27,7 +27,6 @@ class MainPresenter(
 
     override fun changeHistoryState() {
         state = state.copy(isShownHistory = true, latestScreen = MainScreenState.History)
-        val a = this::changeHomeState
         view.showHistoryScreen()
     }
 
