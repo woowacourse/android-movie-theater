@@ -30,8 +30,8 @@
             app:adapter="@{rvAdapter}"
             app:hasDivider="@{true}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:onAdapted="@{() -> presenter.loadMoreMovies(20)}"
-            app:onEndScroll="@{() -> presenter.loadMoreMovies(20)}"
+            app:onAdapted="@{() -> presenter.loadMoreMoviesWithAds(20)}"
+            app:onEndScroll="@{() -> presenter.loadMoreMoviesWithAds(20)}"
             app:onListItemClick="@{presenter::handleItem}"
             tools:listitem="@layout/item_movie" />
 

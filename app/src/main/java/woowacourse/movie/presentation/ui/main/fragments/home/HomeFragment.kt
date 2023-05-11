@@ -29,14 +29,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.presenter = presenter
-        presenter.loadAds()
+        binding.rvAdapter = MovieListAdapter()
     }
 
-    override fun setupAdView(ads: List<ListItem>) {
-        binding.rvAdapter = MovieListAdapter(adTypes = ads)
-    }
-
-    override fun showMoreMovies(items: List<Movie>) {
+    override fun showMoreMovies(items: List<ListItem>) {
         binding.rvAdapter?.appendAll(items)
     }
 

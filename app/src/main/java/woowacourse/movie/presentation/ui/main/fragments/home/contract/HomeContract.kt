@@ -7,15 +7,13 @@ import woowacourse.movie.presentation.model.movieitem.Movie
 
 interface HomeContract {
     interface View : BaseContract.View {
-        fun setupAdView(ads: List<ListItem>)
-        fun showMoreMovies(items: List<Movie>)
+        fun showMoreMovies(items: List<ListItem>)
         fun showAdWebSite(item: Ad)
         fun showTheaterPicker(item: Movie)
     }
 
     abstract class Presenter(view: View) : BaseContract.Presenter<View>(view) {
-        abstract fun loadMoreMovies(size: Int = DEFAULT_LOAD_SIZE)
-        abstract fun loadAds()
+        abstract fun loadMoreMoviesWithAds(size: Int = DEFAULT_LOAD_SIZE)
         abstract fun handleItem(item: ListItem)
     }
 

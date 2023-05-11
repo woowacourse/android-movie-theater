@@ -10,8 +10,6 @@ import woowacourse.movie.presentation.model.movieitem.Movie
 import woowacourse.movie.presentation.ui.main.fragments.home.type.MovieViewType
 
 class MovieListAdapter(
-    private val adInterval: Int = DEFAULT_AD_INTERVAL,
-    private val adTypes: List<ListItem>,
     onItemClick: (ListItem) -> Unit = {},
 ) : BaseRecyclerView.Adapter<ListItem>(onItemClick) {
 
@@ -37,26 +35,12 @@ class MovieListAdapter(
     }
 
     fun appendAll(newItems: List<ListItem>) {
-        var newAdSize = 0
-        newItems.forEach { newMovie ->
-            newAdSize += appendAd()
-            items.add(newMovie)
-        }
-        notifyItemRangeChanged(items.size, newItems.size + newAdSize)
-    }
-
-    private fun appendAd(): Int {
-        if ((items.size + 1) % (adInterval + 1) == 0) {
-            if (items.add(adTypes.random())) return APPENDED_SIZE
-        }
-        return NO_APPENDED_SIZE
+        val positionStart = items.size - 1
+        items.addAll(newItems)
+        notifyItemRangeChanged(positionStart, newItems.size)
     }
 
     companion object {
-        private const val DEFAULT_AD_INTERVAL = 3
-        private const val APPENDED_SIZE = 1
-        private const val NO_APPENDED_SIZE = 0
-
         private const val INVALID_ITEM_TYPE = "Invalid type"
     }
 }
