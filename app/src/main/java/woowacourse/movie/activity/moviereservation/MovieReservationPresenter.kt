@@ -1,75 +1,66 @@
 package woowacourse.movie.activity.moviereservation
 
-import android.os.Bundle
 import woowacourse.movie.domain.model.Count
 import woowacourse.movie.domain.model.ReservationDetail
 import woowacourse.movie.view.data.LocalFormattedDate
 import woowacourse.movie.view.data.LocalFormattedTime
-import woowacourse.movie.view.data.ReservationDetailViewData
 import woowacourse.movie.view.data.TheaterMovieViewData
 import woowacourse.movie.view.mapper.ReservationDetailMapper.toView
 import woowacourse.movie.view.widget.Counter
-import woowacourse.movie.view.widget.SaveState
-import woowacourse.movie.view.widget.SaveStateCounter
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 
 class MovieReservationPresenter(
-    override val view: MovieReservationContract.View,
-    private val saveStateDateSpinner: SaveState,
-    private val saveStateTimeSpinner: SaveState
+    val view: MovieReservationContract.View,
+    private val theaterMovie: TheaterMovieViewData,
+    private val count: Int,
+    private val dateIndex: Int,
+    private val timeIndex: Int
 ) : MovieReservationContract.Presenter {
 
-    private val counter = Counter(Count(1))
+    private val counter = Counter(Count(count))
 
-    private val saveStateCounter = SaveStateCounter(counter, COUNTER_SAVE_STATE_KEY)
-
-    override fun saveCount(bundle: Bundle) {
-        saveStateCounter.save(bundle)
+    override fun setUpMovie(theaterMovie: TheaterMovieViewData) {
+        view.setUpMovie(theaterMovie)
     }
 
-    override fun saveDate(bundle: Bundle) {
-        saveStateDateSpinner.save(bundle)
+    override fun loadCountData() {
+        view.initCount(count)
     }
 
-    override fun saveTime(bundle: Bundle) {
-        saveStateTimeSpinner.save(bundle)
-    }
-
-    override fun initCount(bundle: Bundle?) {
-        val count = saveStateCounter.load(bundle)
-        view.initCount(count.value)
-    }
-
-    override fun initDateSpinner(
-        movie: TheaterMovieViewData,
-        bundle: Bundle?
-    ) {
-        val dateIndex = saveStateDateSpinner.load(bundle) as Int
-        val dates = movie.movie.date.toList().map { LocalFormattedDate(it) }
-        view.initDateSpinner(dateIndex, dates)
-    }
-
-    override fun initTimeSpinner(theaterMovie: TheaterMovieViewData, bundle: Bundle?) {
-        val timeIndex = saveStateTimeSpinner.load(bundle) as Int
+    override fun loadDateTimeData() {
+        view.initDateSpinner(
+            dateIndex,
+            theaterMovie.movie.date.toList().map { LocalFormattedDate(it) }
+        )
         view.initTimeSpinner(timeIndex, theaterMovie.screenTimes.map { LocalFormattedTime(it) })
     }
 
     override fun plusCount() {
-        view.setCount(counter.add())
+        view.updateCount(counter.add())
     }
 
     override fun minusCount() {
-        view.setCount(counter.minus())
+        view.updateCount(counter.minus())
     }
 
-    override fun getReservationDetailView(
-        date: LocalDateTime,
+    override fun navigateToSeatSelection(
+        date: LocalDate,
+        time: LocalTime,
         theaterName: String
-    ): ReservationDetailViewData {
-        return ReservationDetail(date, counter.count.value, theaterName).toView()
+    ) {
+        view.navigateToSeatSelection(
+            theaterMovie,
+            ReservationDetail(
+                LocalDateTime.of(date, time),
+                counter.count.value,
+                theaterName
+            ).toView()
+        )
     }
 
-    companion object {
-        private const val COUNTER_SAVE_STATE_KEY = "counter"
+    override fun getCount(): Int {
+        return counter.count.value
     }
 }

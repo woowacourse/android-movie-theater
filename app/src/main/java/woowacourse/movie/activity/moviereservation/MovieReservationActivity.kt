@@ -5,27 +5,24 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import woowacourse.movie.R
 import woowacourse.movie.activity.seatselection.SeatSelectionActivity
 import woowacourse.movie.databinding.ActivityMovieReservationBinding
 import woowacourse.movie.view.data.LocalFormattedDate
 import woowacourse.movie.view.data.LocalFormattedTime
+import woowacourse.movie.view.data.ReservationDetailViewData
 import woowacourse.movie.view.data.TheaterMovieViewData
 import woowacourse.movie.view.error.ActivityError.finishWithError
 import woowacourse.movie.view.error.ViewError
 import woowacourse.movie.view.getSerializable
 import woowacourse.movie.view.widget.DateSpinnerManager
-import woowacourse.movie.view.widget.SaveStateSpinner
 import woowacourse.movie.view.widget.TimeSpinnerManager
-import java.time.LocalDateTime
 
 class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.View {
-    override lateinit var presenter: MovieReservationContract.Presenter
+    lateinit var presenter: MovieReservationContract.Presenter
     private val binding: ActivityMovieReservationBinding by lazy {
-        ActivityMovieReservationBinding.inflate(layoutInflater)
-    }
-
-    private val saveStateDateSpinner: SaveStateSpinner by lazy {
-        SaveStateSpinner(DATE_SPINNER_SAVE_STATE_KEY, binding.movieReservationDateSpinner)
+        DataBindingUtil.setContentView(this, R.layout.activity_movie_reservation)
     }
     private val dateSpinnerManager: DateSpinnerManager by lazy {
         DateSpinnerManager(binding.movieReservationDateSpinner)
@@ -37,28 +34,28 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
-        presenter = MovieReservationPresenter(
-            this,
-            saveStateDateSpinner,
-            SaveStateSpinner(TIME_SPINNER_SAVE_STATE_KEY, binding.movieReservationTimeSpinner)
-        )
-        initMovieReservationView(savedInstanceState)
-    }
-
-    private fun initMovieReservationView(savedInstanceState: Bundle?) {
-        makeBackButton()
-        initButton()
-        val movie = getIntentMovieData() ?: return finishWithError(
+        val theaterMovie = getIntentMovieData() ?: return finishWithError(
             ViewError.MissingExtras(
                 TheaterMovieViewData.THEATER_MOVIE_EXTRA_NAME
             )
         )
-        presenter.initCount(savedInstanceState)
-        presenter.initDateSpinner(movie, savedInstanceState)
-        presenter.initTimeSpinner(movie, savedInstanceState)
-        presenter.renderMovie(movie)
-        makeReservationButtonClickListener(movie)
+        presenter = MovieReservationPresenter(
+            this,
+            theaterMovie,
+            savedInstanceState?.getInt(COUNT_SAVE_STATE_KEY) ?: 1,
+            savedInstanceState?.getInt(DATE_SPINNER_SAVE_STATE_KEY) ?: 0,
+            savedInstanceState?.getInt(TIME_SPINNER_SAVE_STATE_KEY) ?: 0
+        )
+        initMovieReservationView(theaterMovie)
+    }
+
+    private fun initMovieReservationView(theaterMovie: TheaterMovieViewData) {
+        makeBackButton()
+        initButton()
+        presenter.setUpMovie(theaterMovie)
+        presenter.loadCountData()
+        presenter.loadDateTimeData()
+        initMovieReservationButton(theaterMovie)
     }
 
     private fun getIntentMovieData(): TheaterMovieViewData? =
@@ -77,29 +74,25 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    private fun makeReservationButtonClickListener(
-        movie: TheaterMovieViewData
-    ) {
+    private fun initMovieReservationButton(theaterMovie: TheaterMovieViewData) {
         binding.movieReservationButton.setOnClickListener {
-            val reservationDetail = presenter.getReservationDetailView(
-                LocalDateTime.of(
-                    (binding.movieReservationDateSpinner.selectedItem as LocalFormattedDate).date,
-                    (binding.movieReservationTimeSpinner.selectedItem as LocalFormattedTime).time
-                ),
-                movie.theaterName
+            presenter.navigateToSeatSelection(
+                (binding.movieReservationDateSpinner.selectedItem as LocalFormattedDate).date,
+                (binding.movieReservationTimeSpinner.selectedItem as LocalFormattedTime).time,
+                theaterMovie.theaterName
             )
-            SeatSelectionActivity.from(this, movie.movie, reservationDetail).run {
-                startActivity(this)
-            }
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-
-        presenter.saveCount(outState)
-        presenter.saveDate(outState)
-        presenter.saveTime(outState)
+        outState.putInt(COUNT_SAVE_STATE_KEY, presenter.getCount())
+        outState.putInt(
+            DATE_SPINNER_SAVE_STATE_KEY, binding.movieReservationDateSpinner.selectedItemPosition
+        )
+        outState.putInt(
+            TIME_SPINNER_SAVE_STATE_KEY, binding.movieReservationTimeSpinner.selectedItemPosition
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -107,6 +100,10 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
             android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun setUpMovie(theaterMovie: TheaterMovieViewData) {
+        binding.theaterMovie = theaterMovie
     }
 
     override fun initCount(count: Int) {
@@ -123,25 +120,21 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         timeSpinnerManager.initSpinner(times, timeIndex)
     }
 
-    override fun setCount(count: Int) {
+    override fun updateCount(count: Int) {
         binding.movieReservationPeopleCount.text = count.toString()
     }
 
-    override fun renderMovie(
-        image: Int,
-        title: String,
-        date: String,
-        runningTime: String,
-        description: String
+    override fun navigateToSeatSelection(
+        theaterMovie: TheaterMovieViewData,
+        reservationDetailViewData: ReservationDetailViewData
     ) {
-        binding.movieReservationPoster.setImageResource(image)
-        binding.movieReservationTitle.text = title
-        binding.movieReservationDate.text = date
-        binding.movieReservationRunningTime.text = runningTime
-        binding.movieReservationDescription.text = description
+        SeatSelectionActivity.from(this, theaterMovie.movie, reservationDetailViewData).run {
+            startActivity(this)
+        }
     }
 
     companion object {
+        private const val COUNT_SAVE_STATE_KEY = "count"
         private const val DATE_SPINNER_SAVE_STATE_KEY = "date_spinner"
         private const val TIME_SPINNER_SAVE_STATE_KEY = "time_spinner"
         fun from(context: Context, theaterMovie: TheaterMovieViewData): Intent {
