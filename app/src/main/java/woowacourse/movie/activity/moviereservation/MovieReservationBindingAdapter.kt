@@ -6,18 +6,19 @@ import androidx.databinding.BindingAdapter
 import woowacourse.movie.view.data.DateRangeViewData
 import java.time.format.DateTimeFormatter
 
-object CustomBindingAdapter {
+object MovieReservationBindingAdapter {
     @BindingAdapter("movieDateFormat", "movieScreeningFormat", "movieDate")
     @JvmStatic
     fun formatScreeningDate(
         view: TextView,
         movieDateFormat: String,
         movieScreeningFormat: String,
-        movieDate: DateRangeViewData
+        movieDate: DateRangeViewData,
     ) {
         val dateFormat = DateTimeFormatter.ofPattern(movieDateFormat)
         val formattedText = movieScreeningFormat.format(
-            dateFormat.format(movieDate.startDate), dateFormat.format(movieDate.endDate)
+            dateFormat.format(movieDate.startDate),
+            dateFormat.format(movieDate.endDate),
         )
         view.text = formattedText
     }
@@ -27,7 +28,7 @@ object CustomBindingAdapter {
     fun formatRunningTime(
         view: TextView,
         movieRunningTimeFormat: String,
-        movieRunningTime: Int
+        movieRunningTime: Int,
     ) {
         view.text = movieRunningTimeFormat.format(movieRunningTime)
     }
@@ -36,7 +37,7 @@ object CustomBindingAdapter {
     @JvmStatic
     fun loadPoster(
         view: ImageView,
-        moviePosterRes: Int
+        moviePosterRes: Int,
     ) {
         view.setImageResource(moviePosterRes)
     }
