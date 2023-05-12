@@ -17,7 +17,7 @@ import woowacourse.movie.data.storage.SettingsStorage
 import woowacourse.movie.permission.PermissionManager
 import woowacourse.movie.ui.fragment.FragmentType
 import woowacourse.movie.ui.fragment.movielist.HomeFragment
-import woowacourse.movie.ui.fragment.reservationlist.ReservationListFragment
+import woowacourse.movie.ui.fragment.reservationlist.view.ReservationListFragment
 import woowacourse.movie.ui.fragment.settings.view.SettingsFragment
 import woowacourse.movie.ui.utils.showSnack
 
