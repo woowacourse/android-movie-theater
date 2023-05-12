@@ -9,20 +9,20 @@ import io.mockk.verify
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.fragment.setting.contract.SettingFragmentContract
-import woowacourse.movie.fragment.setting.contract.presenter.SettingFragmentPresenter
+import woowacourse.movie.fragment.setting.contract.SettingContract
+import woowacourse.movie.fragment.setting.contract.presenter.SettingPresenter
 import woowacourse.movie.util.preference.DataPreference
 
 internal class SettingFragmentPresenterTest {
 
-    private lateinit var presenter: SettingFragmentPresenter
-    private lateinit var view: SettingFragmentContract.View
+    private lateinit var presenter: SettingPresenter
+    private lateinit var view: SettingContract.View
     private val dataPreference = mockk<DataPreference>()
 
     @Before
     fun setUp() {
         view = mockk()
-        presenter = SettingFragmentPresenter(view, dataPreference)
+        presenter = SettingPresenter(view, dataPreference)
     }
 
     @Test

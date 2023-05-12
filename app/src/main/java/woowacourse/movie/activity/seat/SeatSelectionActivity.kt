@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.activity.detail.MovieDetailActivity.Companion.THEATER_KEY
-import woowacourse.movie.activity.seat.contract.SeatSelectionActivityContract
-import woowacourse.movie.activity.seat.contract.presenter.SeatSelectionActivityPresenter
+import woowacourse.movie.activity.seat.contract.SeatSelectionContract
+import woowacourse.movie.activity.seat.contract.presenter.SeatSelectionPresenter
 import woowacourse.movie.activity.ticket.TicketActivity
 import woowacourse.movie.database.ReservationDatabase
 import woowacourse.movie.database.ReservationRepository
@@ -29,10 +29,10 @@ import woowacourse.movie.util.alarm.AlarmReceiver
 import woowacourse.movie.util.alarm.MovieAlarmManager
 import woowacourse.movie.view.SeatSelectView
 
-class SeatSelectionActivity : AppCompatActivity(), SeatSelectionActivityContract.View {
+class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
-    override val presenter: SeatSelectionActivityContract.Presenter by lazy {
-        SeatSelectionActivityPresenter(
+    override val presenter: SeatSelectionContract.Presenter by lazy {
+        SeatSelectionPresenter(
             this,
             ReservationRepository(ReservationDatabase.getDatabase(this)),
             getIntentTicketCountData(),

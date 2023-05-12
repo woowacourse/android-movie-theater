@@ -8,7 +8,7 @@ import woowacourse.movie.dto.ticket.TicketCountUIModel
 import java.time.LocalDate
 import java.time.LocalTime
 
-interface TicketActivityContract {
+interface TicketContract {
 
     interface View {
         val presenter: Presenter

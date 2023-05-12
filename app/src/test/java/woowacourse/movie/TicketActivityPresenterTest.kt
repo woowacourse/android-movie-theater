@@ -10,8 +10,8 @@ import io.mockk.slot
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.activity.ticket.contract.TicketActivityContract
-import woowacourse.movie.activity.ticket.contract.presenter.TicketActivityPresenter
+import woowacourse.movie.activity.ticket.contract.TicketContract
+import woowacourse.movie.activity.ticket.contract.presenter.TicketPresenter
 import woowacourse.movie.dto.movie.BookingMovieUIModel
 import woowacourse.movie.dto.movie.MovieDateUIModel
 import woowacourse.movie.dto.movie.MovieTimeUIModel
@@ -23,13 +23,13 @@ import woowacourse.movie.dto.ticket.TicketCountUIModel
 import woowacourse.movie.mapper.movie.mapToUIModel
 
 internal class TicketActivityPresenterTest {
-    private lateinit var presenter: TicketActivityPresenter
-    private lateinit var view: TicketActivityContract.View
+    private lateinit var presenter: TicketPresenter
+    private lateinit var view: TicketContract.View
 
     @Before
     fun setUp() {
         view = mockk()
-        presenter = TicketActivityPresenter(view)
+        presenter = TicketPresenter(view)
     }
 
     @Test

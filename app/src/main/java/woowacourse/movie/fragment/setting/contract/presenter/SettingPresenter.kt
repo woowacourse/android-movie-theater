@@ -1,10 +1,10 @@
 package woowacourse.movie.fragment.setting.contract.presenter
 
 import woowacourse.movie.util.preference.DataPreference
-import woowacourse.movie.fragment.setting.contract.SettingFragmentContract
+import woowacourse.movie.fragment.setting.contract.SettingContract
 
-class SettingFragmentPresenter(val view: SettingFragmentContract.View, private val dataPreference: DataPreference) :
-    SettingFragmentContract.Presenter {
+class SettingPresenter(val view: SettingContract.View, private val dataPreference: DataPreference) :
+    SettingContract.Presenter {
 
     override fun onSaveData(data: Boolean) {
         dataPreference.saveData(data)

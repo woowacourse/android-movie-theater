@@ -2,7 +2,7 @@ package woowacourse.movie.fragment.history.contract
 
 import woowacourse.movie.dto.movie.BookingMovieUIModel
 
-interface HistoryFragmentContract {
+interface HistoryContract {
     interface View {
         val presenter: Presenter
         fun setRecyclerView()

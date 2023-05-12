@@ -15,16 +15,16 @@ import woowacourse.movie.dto.movie.AdUIModel
 import woowacourse.movie.dto.movie.MovieUIModel
 import woowacourse.movie.dto.movie.TheaterDummy
 import woowacourse.movie.dto.movie.TheaterUIModel
-import woowacourse.movie.fragment.home.contract.HomeFragmentContract
-import woowacourse.movie.fragment.home.contract.presenter.HomeFragmentPresenter
+import woowacourse.movie.fragment.home.contract.HomeContract
+import woowacourse.movie.fragment.home.contract.presenter.HomePresenter
 import woowacourse.movie.fragment.home.recyclerview.MovieRecyclerViewAdapter
 import woowacourse.movie.fragment.theater.TheaterFragment
 import woowacourse.movie.util.listener.OnClickListener
 
-class HomeFragment : Fragment(), HomeFragmentContract.View {
+class HomeFragment : Fragment(), HomeContract.View {
 
-    override val presenter: HomeFragmentContract.Presenter by lazy {
-        HomeFragmentPresenter(
+    override val presenter: HomeContract.Presenter by lazy {
+        HomePresenter(
             this,
             TheaterRepository(TheaterDummy.theaterDatas),
         )

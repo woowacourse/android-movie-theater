@@ -4,7 +4,7 @@ import woowacourse.movie.dto.movie.AdUIModel
 import woowacourse.movie.dto.movie.MovieUIModel
 import woowacourse.movie.dto.movie.TheaterUIModel
 
-interface HomeFragmentContract {
+interface HomeContract {
     interface View {
         val presenter: Presenter
         fun setRecyclerView(movies: List<MovieUIModel>, ad: AdUIModel)

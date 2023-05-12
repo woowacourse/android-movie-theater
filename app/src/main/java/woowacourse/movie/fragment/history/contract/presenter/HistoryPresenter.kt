@@ -2,13 +2,13 @@ package woowacourse.movie.fragment.history.contract.presenter
 
 import woowacourse.movie.database.ReservationRepository
 import woowacourse.movie.dto.movie.BookingMovieUIModel
-import woowacourse.movie.fragment.history.contract.HistoryFragmentContract
+import woowacourse.movie.fragment.history.contract.HistoryContract
 
-class HistoryFragmentPresenter(
-    val view: HistoryFragmentContract.View,
+class HistoryPresenter(
+    val view: HistoryContract.View,
     private val repository: ReservationRepository,
 ) :
-    HistoryFragmentContract.Presenter {
+    HistoryContract.Presenter {
     override fun init() {
         view.setRecyclerView()
     }

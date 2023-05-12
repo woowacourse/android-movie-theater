@@ -61,7 +61,7 @@ class MovieRecyclerViewAdapter(
     }
 
     override fun getItemCount(): Int {
-        return movies.size + 1
+        return movies.size.coerceAtMost(5 + 1)
     }
 
     private fun getMovieItem(position: Int): MovieUIModel =

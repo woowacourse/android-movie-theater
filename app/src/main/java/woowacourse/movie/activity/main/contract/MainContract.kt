@@ -1,6 +1,6 @@
 package woowacourse.movie.activity.main.contract
 
-interface MainActivityContract {
+interface MainContract {
     interface View {
         val presenter: Presenter
     }

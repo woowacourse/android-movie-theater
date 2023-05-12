@@ -8,14 +8,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentSettingBinding
-import woowacourse.movie.fragment.setting.contract.SettingFragmentContract
-import woowacourse.movie.fragment.setting.contract.presenter.SettingFragmentPresenter
+import woowacourse.movie.fragment.setting.contract.SettingContract
+import woowacourse.movie.fragment.setting.contract.presenter.SettingPresenter
 import woowacourse.movie.util.preference.SettingPreference
 
-class SettingFragment : Fragment(), SettingFragmentContract.View {
+class SettingFragment : Fragment(), SettingContract.View {
 
-    override val presenter: SettingFragmentContract.Presenter by lazy {
-        SettingFragmentPresenter(this, SettingPreference(requireContext()))
+    override val presenter: SettingContract.Presenter by lazy {
+        SettingPresenter(this, SettingPreference(requireContext()))
     }
     private lateinit var binding: FragmentSettingBinding
     override fun onCreateView(

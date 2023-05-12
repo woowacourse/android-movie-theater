@@ -1,6 +1,5 @@
 package woowacourse.movie
 
-import androidx.test.runner.screenshot.Screenshot.capture
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -12,18 +11,18 @@ import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.database.ReservationRepository
 import woowacourse.movie.dto.movie.BookingMovieUIModel
-import woowacourse.movie.fragment.history.contract.HistoryFragmentContract
-import woowacourse.movie.fragment.history.contract.presenter.HistoryFragmentPresenter
+import woowacourse.movie.fragment.history.contract.HistoryContract
+import woowacourse.movie.fragment.history.contract.presenter.HistoryPresenter
 
 internal class HistoryFragmentPresenterTest {
-    private lateinit var presenter: HistoryFragmentPresenter
-    private lateinit var view: HistoryFragmentContract.View
+    private lateinit var presenter: HistoryPresenter
+    private lateinit var view: HistoryContract.View
     private val repository = mockk<ReservationRepository>()
 
     @Before
     fun setUp() {
         view = mockk()
-        presenter = HistoryFragmentPresenter(view, repository)
+        presenter = HistoryPresenter(view, repository)
     }
 
     @Test

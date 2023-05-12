@@ -13,15 +13,15 @@ import woowacourse.movie.database.ReservationDatabase
 import woowacourse.movie.database.ReservationRepository
 import woowacourse.movie.databinding.FragmentHistoryBinding
 import woowacourse.movie.dto.movie.BookingMovieUIModel
-import woowacourse.movie.fragment.history.contract.HistoryFragmentContract
-import woowacourse.movie.fragment.history.contract.presenter.HistoryFragmentPresenter
+import woowacourse.movie.fragment.history.contract.HistoryContract
+import woowacourse.movie.fragment.history.contract.presenter.HistoryPresenter
 import woowacourse.movie.fragment.history.recyclerview.HistoryRecyclerViewAdapter
 import woowacourse.movie.util.listener.OnClickListener
 
-class HistoryFragment : Fragment(), HistoryFragmentContract.View {
+class HistoryFragment : Fragment(), HistoryContract.View {
 
-    override val presenter: HistoryFragmentContract.Presenter by lazy {
-        HistoryFragmentPresenter(
+    override val presenter: HistoryContract.Presenter by lazy {
+        HistoryPresenter(
             this,
             ReservationRepository(ReservationDatabase.getDatabase(requireContext())),
         )

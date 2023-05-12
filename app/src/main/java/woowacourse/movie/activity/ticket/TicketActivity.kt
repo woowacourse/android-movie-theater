@@ -2,13 +2,11 @@ package woowacourse.movie.activity.ticket
 
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
-import woowacourse.movie.activity.ticket.contract.TicketActivityContract
-import woowacourse.movie.activity.ticket.contract.presenter.TicketActivityPresenter
+import woowacourse.movie.activity.ticket.contract.TicketContract
+import woowacourse.movie.activity.ticket.contract.presenter.TicketPresenter
 import woowacourse.movie.activity.seat.SeatSelectionActivity
 import woowacourse.movie.databinding.ActivityTicketBinding
 import woowacourse.movie.dto.movie.BookingMovieUIModel
@@ -23,9 +21,9 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
-class TicketActivity : AppCompatActivity(), TicketActivityContract.View {
+class TicketActivity : AppCompatActivity(), TicketContract.View {
 
-    override val presenter: TicketActivityContract.Presenter by lazy { TicketActivityPresenter(this) }
+    override val presenter: TicketContract.Presenter by lazy { TicketPresenter(this) }
     private lateinit var binding: ActivityTicketBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

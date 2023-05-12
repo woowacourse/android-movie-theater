@@ -1,12 +1,9 @@
 package woowacourse.movie.activity.detail.contract.presenter
 
-import domain.DayOfWeek
 import domain.movieinfo.MovieDate
 import domain.movieinfo.MovieTime
 import domain.screeningschedule.ReservationDate
-import domain.screeningschedule.ReservationTime
-import woowacourse.movie.activity.detail.contract.MovieDetailActivityContract
-import woowacourse.movie.dto.movie.MovieDateUIModel
+import woowacourse.movie.activity.detail.contract.MovieDetailContract
 import woowacourse.movie.dto.movie.MovieUIModel
 import woowacourse.movie.dto.movie.TheaterUIModel
 import woowacourse.movie.dto.ticket.TicketCountUIModel
@@ -15,8 +12,8 @@ import woowacourse.movie.mapper.ticket.mapToDomain
 import woowacourse.movie.mapper.ticket.mapToUIModel
 import java.time.LocalDate
 
-class MovieDetailActivityPresenter(private val view: MovieDetailActivityContract.View) :
-    MovieDetailActivityContract.Presenter {
+class MovieDetailPresenter(private val view: MovieDetailContract.View) :
+    MovieDetailContract.Presenter {
     private var ticketCount = TicketCountUIModel()
 
     override fun loadMovieData(data: MovieUIModel) {

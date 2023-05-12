@@ -1,6 +1,6 @@
 package woowacourse.movie.fragment.setting.contract
 
-interface SettingFragmentContract {
+interface SettingContract {
     interface View {
         val presenter: Presenter
         fun setSwitchState(value: Boolean)

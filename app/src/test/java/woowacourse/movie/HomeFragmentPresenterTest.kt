@@ -14,19 +14,19 @@ import woowacourse.movie.dto.movie.AdUIModel
 import woowacourse.movie.dto.movie.MovieDummy
 import woowacourse.movie.dto.movie.MovieUIModel
 import woowacourse.movie.dto.movie.TheaterUIModel
-import woowacourse.movie.fragment.home.contract.HomeFragmentContract
-import woowacourse.movie.fragment.home.contract.presenter.HomeFragmentPresenter
+import woowacourse.movie.fragment.home.contract.HomeContract
+import woowacourse.movie.fragment.home.contract.presenter.HomePresenter
 
 internal class HomeFragmentPresenterTest {
 
-    private lateinit var presenter: HomeFragmentPresenter
-    private lateinit var view: HomeFragmentContract.View
+    private lateinit var presenter: HomePresenter
+    private lateinit var view: HomeContract.View
     private val repository = mockk<TheaterRepository>()
 
     @Before
     fun setUp() {
         view = mockk()
-        presenter = HomeFragmentPresenter(view, repository)
+        presenter = HomePresenter(view, repository)
     }
 
     @Test

@@ -4,12 +4,11 @@ import domain.Seat
 import domain.Seats
 import woowacourse.movie.R
 import woowacourse.movie.activity.seat.SeatSelectionActivity.Companion.SEATS_POSITION
-import woowacourse.movie.activity.seat.contract.SeatSelectionActivityContract
+import woowacourse.movie.activity.seat.contract.SeatSelectionContract
 import woowacourse.movie.database.ReservationRepository
 import woowacourse.movie.dto.movie.BookingMovieUIModel
 import woowacourse.movie.dto.movie.MovieDateUIModel
 import woowacourse.movie.dto.movie.MovieTimeUIModel
-import woowacourse.movie.dto.movie.MovieUIModel
 import woowacourse.movie.dto.movie.TheaterUIModel
 import woowacourse.movie.dto.seat.SeatUIModel
 import woowacourse.movie.dto.seat.SeatsUIModel
@@ -18,13 +17,13 @@ import woowacourse.movie.mapper.seat.mapToDomain
 import woowacourse.movie.mapper.seat.mapToUIModel
 import java.time.LocalDateTime
 
-class SeatSelectionActivityPresenter(
-    val view: SeatSelectionActivityContract.View,
+class SeatSelectionPresenter(
+    val view: SeatSelectionContract.View,
     private val repository: ReservationRepository,
     private val count: TicketCountUIModel,
     private val date: MovieDateUIModel,
     private val time: MovieTimeUIModel
-) : SeatSelectionActivityContract.Presenter {
+) : SeatSelectionContract.Presenter {
     private var seats = Seats()
 
     override fun loadSeats() {

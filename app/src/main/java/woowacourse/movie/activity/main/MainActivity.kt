@@ -10,8 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import woowacourse.movie.R
-import woowacourse.movie.activity.main.contract.MainActivityContract
-import woowacourse.movie.activity.main.contract.presenter.MainActivityPresenter
+import woowacourse.movie.activity.main.contract.MainContract
+import woowacourse.movie.activity.main.contract.presenter.MainPresenter
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.fragment.history.HistoryFragment
 import woowacourse.movie.fragment.home.HomeFragment
@@ -19,10 +19,10 @@ import woowacourse.movie.fragment.setting.SettingFragment
 import woowacourse.movie.util.permission.PermissionManager
 import woowacourse.movie.util.preference.SettingPreference
 
-class MainActivity : AppCompatActivity(), MainActivityContract.View {
+class MainActivity : AppCompatActivity(), MainContract.View {
 
-    override val presenter: MainActivityContract.Presenter by lazy {
-        MainActivityPresenter(
+    override val presenter: MainContract.Presenter by lazy {
+        MainPresenter(
             this,
             SettingPreference(this),
         )

@@ -11,8 +11,8 @@ import io.mockk.verify
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.activity.detail.contract.MovieDetailActivityContract
-import woowacourse.movie.activity.detail.contract.presenter.MovieDetailActivityPresenter
+import woowacourse.movie.activity.detail.contract.MovieDetailContract
+import woowacourse.movie.activity.detail.contract.presenter.MovieDetailPresenter
 import woowacourse.movie.dto.movie.MovieDateUIModel
 import woowacourse.movie.dto.movie.MovieTimeUIModel
 import woowacourse.movie.dto.movie.MovieUIModel
@@ -22,13 +22,13 @@ import woowacourse.movie.mapper.movie.mapToUIModel
 import java.time.LocalDate
 
 class MovieDetailPresenterTest {
-    private lateinit var presenter: MovieDetailActivityPresenter
-    private lateinit var view: MovieDetailActivityContract.View
+    private lateinit var presenter: MovieDetailPresenter
+    private lateinit var view: MovieDetailContract.View
 
     @Before
     fun setUp() {
         view = mockk()
-        presenter = MovieDetailActivityPresenter(view)
+        presenter = MovieDetailPresenter(view)
     }
 
     @Test

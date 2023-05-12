@@ -7,20 +7,20 @@ import io.mockk.verify
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.activity.main.contract.MainActivityContract
-import woowacourse.movie.activity.main.contract.presenter.MainActivityPresenter
+import woowacourse.movie.activity.main.contract.MainContract
+import woowacourse.movie.activity.main.contract.presenter.MainPresenter
 import woowacourse.movie.util.preference.DataPreference
 
 internal class MainActivityPresenterTest {
-    private lateinit var presenter: MainActivityPresenter
-    private lateinit var view: MainActivityContract.View
+    private lateinit var presenter: MainPresenter
+    private lateinit var view: MainContract.View
     private lateinit var dataPreference: DataPreference
 
     @Before
     fun setUp() {
         view = mockk()
         dataPreference = mockk()
-        presenter = MainActivityPresenter(view, dataPreference)
+        presenter = MainPresenter(view, dataPreference)
     }
 
     @Test

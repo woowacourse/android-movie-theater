@@ -8,7 +8,7 @@ import woowacourse.movie.dto.movie.TheaterUIModel
 import woowacourse.movie.dto.ticket.TicketCountUIModel
 import java.time.LocalDate
 
-interface MovieDetailActivityContract {
+interface MovieDetailContract {
     interface View {
         val presenter: Presenter
         fun setUpState(savedInstanceState: Bundle?)

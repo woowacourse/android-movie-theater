@@ -9,8 +9,8 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
-import woowacourse.movie.activity.detail.contract.MovieDetailActivityContract
-import woowacourse.movie.activity.detail.contract.presenter.MovieDetailActivityPresenter
+import woowacourse.movie.activity.detail.contract.MovieDetailContract
+import woowacourse.movie.activity.detail.contract.presenter.MovieDetailPresenter
 import woowacourse.movie.activity.seat.SeatSelectionActivity
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.dto.movie.MovieDateUIModel
@@ -22,10 +22,10 @@ import woowacourse.movie.util.Extensions.intentSerializable
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class MovieDetailActivity : AppCompatActivity(), MovieDetailActivityContract.View {
+class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
 
-    override val presenter: MovieDetailActivityContract.Presenter by lazy {
-        MovieDetailActivityPresenter(
+    override val presenter: MovieDetailContract.Presenter by lazy {
+        MovieDetailPresenter(
             this,
         )
     }

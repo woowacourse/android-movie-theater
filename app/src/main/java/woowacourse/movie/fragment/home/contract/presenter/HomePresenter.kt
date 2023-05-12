@@ -5,12 +5,12 @@ import woowacourse.movie.dto.movie.AdUIModel
 import woowacourse.movie.dto.movie.MovieDummy
 import woowacourse.movie.dto.movie.MovieUIModel
 import woowacourse.movie.dto.movie.TheaterUIModel
-import woowacourse.movie.fragment.home.contract.HomeFragmentContract
+import woowacourse.movie.fragment.home.contract.HomeContract
 
-class HomeFragmentPresenter(
-    val view: HomeFragmentContract.View,
+class HomePresenter(
+    val view: HomeContract.View,
     private val repository: TheaterRepository,
-) : HomeFragmentContract.Presenter {
+) : HomeContract.Presenter {
     override fun loadDatas() {
         view.setRecyclerView(MovieDummy.movieDatas, AdUIModel.getAdData())
     }
