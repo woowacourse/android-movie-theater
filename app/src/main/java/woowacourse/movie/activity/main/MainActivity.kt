@@ -64,19 +64,19 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
     }
 
-    fun showHomeFragment() {
-        setFragment<HomeFragment>(HomeFragment.TAG)
+    private fun showHomeFragment() {
+        manageFragment<HomeFragment>(HomeFragment.TAG)
     }
 
-    fun showHistoryFragment() {
-        setFragment<HistoryFragment>(HistoryFragment.TAG)
+    private fun showHistoryFragment() {
+        manageFragment<HistoryFragment>(HistoryFragment.TAG)
     }
 
-    fun showSettingFragment() {
-        setFragment<SettingFragment>(SettingFragment.TAG)
+    private fun showSettingFragment() {
+        manageFragment<SettingFragment>(SettingFragment.TAG)
     }
 
-    inline fun <reified T : Fragment> setFragment(tag: String) {
+    private inline fun <reified T : Fragment> manageFragment(tag: String) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             supportFragmentManager.fragments.forEach(::hide)
