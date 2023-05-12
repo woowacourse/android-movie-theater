@@ -9,6 +9,7 @@ data class Movie(
     val endDate: LocalDate,
     val runningTime: Int,
     val description: String,
+    val theaters: List<Theater>
 ) {
     fun getDatesBetweenTwoDates(): List<LocalDate> {
         val numberOfDates = ChronoUnit.DAYS.between(startDate, endDate) + 1

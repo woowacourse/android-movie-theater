@@ -3,6 +3,7 @@ package woowacourse.movie.domain
 import woowacourse.movie.domain.seat.Seat
 
 class MovieTicket(
+    val theater: String,
     val title: String,
     val time: TicketTime,
     val peopleCount: PeopleCount,
@@ -41,7 +42,7 @@ class MovieTicket(
         if (discountPrice == 0) return Price(discountPrice)
 
         if (time.isMovieDay()) discountPrice = (discountPrice * TICKET_MOVIE_DAY_SALE_RATE).toInt()
-        if (time.isSaleTime()) discountPrice -= TICKET_TIME_SALE_AMOUNT
+        if (time.isSaleTime()) discountPrice -= TICKET_TIME_SALE_AMOUNT * _seats.size
         return Price(discountPrice)
     }
 

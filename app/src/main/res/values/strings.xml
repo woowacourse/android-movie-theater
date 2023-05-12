@@ -11,14 +11,11 @@
 
     <string name="screen_date">상영일: %s ~ %s</string>
     <string name="running_time">러닝타임: %d분</string>
-    <string name="reserved_seat">일반 %d명 | %s</string>
+    <string name="reserved_seat">일반 %d명 | %s | %s</string>
     <string name="price">%,d원</string>
     <string name="on_site_payment">(현장 결제)</string>
     <string name="price_with_payment_type">%s %s</string>
     <string name="seat">%s%d</string>
-
-    <string name="date_format">yyyy.MM.dd</string>
-    <string name="date_time_format">yyyy.MM.dd HH:mm</string>
 
     <string name="toast_message_seat_selection_done">이미 모든 좌석을 선택했습니다.</string>
     <string name="dialog_title_seat_selection_check">예매 확인</string>
@@ -41,4 +38,7 @@
 
     <string name="notification_permission_snackbar_message">상영 30분 전 알림을 위해 알림 권한이 필요합니다. 설정으로 이동하여 권한을 허용해주세요.</string>
     <string name="notification_permission_snackbar_button">설정</string>
+
+    <string name="theater_bottom_sheet_button_next"><![CDATA[>]]></string>
+    <string name="theater_bottom_sheet_screening_time">%d개의 상영 시간</string>
 </resources>

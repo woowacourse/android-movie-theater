@@ -5,7 +5,7 @@
     android:id="@+id/fragment_reservation_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.reservationlist.ReservationListFragment">
+    tools:context=".view.reservationList.ReservationListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_reservation"
