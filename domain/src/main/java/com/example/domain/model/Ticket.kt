@@ -7,7 +7,7 @@ import com.example.domain.model.seat.SeatRow
 import java.time.LocalDateTime
 
 data class Ticket(
-    val movie: Movie,
+    val movieTitle: String,
     val dateTime: LocalDateTime,
     val position: SeatPosition
 ) {

@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
-import woowacourse.movie.ui.fragment.movieList.MovieListFragment
-import woowacourse.movie.ui.fragment.reservationList.ReservationListFragment
-import woowacourse.movie.ui.fragment.setting.SettingFragment
+import woowacourse.movie.ui.main.movieList.MovieListFragment
+import woowacourse.movie.ui.main.reservationList.ReservationListFragment
+import woowacourse.movie.ui.main.setting.SettingFragment
 import woowacourse.movie.util.requestPermissions
 
 class MainActivity : AppCompatActivity() {
@@ -31,9 +31,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        movieListFragment = getFragment(MOVIE_LIST_TAG, MovieListFragment())
-        reservationListFragment = getFragment(RESERVATION_LIST_TAG, ReservationListFragment())
-        settingFragment = getFragment(SETTING_TAG, SettingFragment())
+        movieListFragment = getFragment(TAG_MOVIE_LIST, MovieListFragment())
+        reservationListFragment = getFragment(TAG_RESERVATION_LIST, ReservationListFragment())
+        settingFragment = getFragment(TAG_SETTING, SettingFragment())
 
         if (savedInstanceState == null) { initFragments() }
         initListener()
@@ -46,9 +46,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun initFragments() {
         supportFragmentManager.beginTransaction()
-            .add(fragmentContainer.id, movieListFragment, MOVIE_LIST_TAG)
-            .add(fragmentContainer.id, reservationListFragment, RESERVATION_LIST_TAG)
-            .add(fragmentContainer.id, settingFragment, SETTING_TAG)
+            .add(fragmentContainer.id, movieListFragment, TAG_MOVIE_LIST)
+            .add(fragmentContainer.id, reservationListFragment, TAG_RESERVATION_LIST)
+            .add(fragmentContainer.id, settingFragment, TAG_SETTING)
             .hide(reservationListFragment)
             .hide(settingFragment)
             .commit()
@@ -85,9 +85,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val RESERVATION_LIST_TAG = "reservation_list_tag"
-        private const val MOVIE_LIST_TAG = "movie_list_tag"
-        private const val SETTING_TAG = "setting_tag"
+        private const val TAG_RESERVATION_LIST = "tag_reservation_list"
+        private const val TAG_MOVIE_LIST = "tag_movie_list"
+        private const val TAG_SETTING = "tag_setting"
 
         val PERMISSIONS = arrayOf(
             Manifest.permission.POST_NOTIFICATIONS

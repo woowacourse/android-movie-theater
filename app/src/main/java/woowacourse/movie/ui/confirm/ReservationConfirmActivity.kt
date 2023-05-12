@@ -4,72 +4,59 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
-import android.widget.TextView
-import com.example.domain.usecase.DiscountApplyUseCase
 import java.time.ZoneId
 import woowacourse.movie.R
-import woowacourse.movie.data.TicketsRepository
+import woowacourse.movie.databinding.ActivityReservationConfirmBinding
+import woowacourse.movie.model.MoneyState
 import woowacourse.movie.model.TicketsState
-import woowacourse.movie.model.mapper.asDomain
-import woowacourse.movie.model.mapper.asPresentation
-import woowacourse.movie.ui.BackKeyActionBarActivity
 import woowacourse.movie.ui.DateTimeFormatters
 import woowacourse.movie.ui.DecimalFormatters
+import woowacourse.movie.ui.base.BaseBackKeyActionBarActivity
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
 
-class ReservationConfirmActivity : BackKeyActionBarActivity() {
-    private val discountApplyUseCase = DiscountApplyUseCase()
-    private val titleTextView: TextView by lazy { findViewById(R.id.reservation_title) }
-    private val dateTextView: TextView by lazy { findViewById(R.id.reservation_date) }
-    private val moneyTextView: TextView by lazy { findViewById(R.id.reservation_money) }
-    private val reservationCountTextView: TextView by lazy {
-        findViewById(R.id.reservation_count_and_seat)
+class ReservationConfirmActivity : BaseBackKeyActionBarActivity(), ReservationConfirmContract.View {
+    override lateinit var presenter: ReservationConfirmContract.Presenter
+    override lateinit var binding: ActivityReservationConfirmBinding
+
+    override fun initBinding() {
+        binding = ActivityReservationConfirmBinding.inflate(layoutInflater)
     }
 
-    override fun onCreateView(savedInstanceState: Bundle?) {
-        setContentView(R.layout.activity_reservation_confirm)
-        val tickets = intent.getParcelableExtraCompat<TicketsState>(KEY_TICKETS)
-            ?: return keyError(KEY_TICKETS)
-        TicketsRepository.addTicket(tickets)
-        setInitReservationData(tickets)
-        setNotification(tickets)
+    override fun initPresenter() {
+        presenter = ReservationConfirmPresenter(
+            this,
+            intent.getParcelableExtraCompat(KEY_TICKETS) ?: return keyError(KEY_TICKETS)
+        )
     }
 
-    private fun setInitReservationData(
-        tickets: TicketsState
-    ) {
-        titleTextView.text = tickets.movieState.title
-        dateTextView.text =
-            DateTimeFormatters.convertToDateTime(tickets.dateTime)
-        reservationCountTextView.text =
-            getString(
-                R.string.person_count_and_seat,
-                tickets.positions.size,
-                tickets.positions.joinToString { it.toString() }
-            )
-        setDiscountApplyMoney(tickets)
+    override fun showTicket(ticket: TicketsState) {
+        binding.reservationTitle.text = ticket.movieName
+        binding.reservationDate.text = DateTimeFormatters.convertToDateTime(ticket.dateTime)
+        binding.reservationCountAndSeat.text = binding.root.context.getString(
+            R.string.person_count_and_seat,
+            ticket.positions.size,
+            ticket.positions.joinToString { it.toString() },
+            ticket.cinemaName
+        )
     }
 
-    private fun setDiscountApplyMoney(tickets: TicketsState) {
-        val discountApplyMoney = discountApplyUseCase(tickets.asDomain())
-        moneyTextView.text =
-            DecimalFormatters.convertToMoneyFormat(discountApplyMoney.asPresentation())
+    override fun showMoney(money: MoneyState) {
+        binding.reservationMoney.text = DecimalFormatters.convertToMoneyFormat(money)
     }
 
-    private fun setNotification(tickets: TicketsState) {
+    override fun registerNotification(ticket: TicketsState) {
         val alarmManager: AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        val alarmIntent = AlarmReceiver.getIntent(this, tickets).let { intent ->
+        val alarmIntent = AlarmReceiver.getIntent(this, ticket).let { intent ->
             PendingIntent.getBroadcast(
                 this,
-                tickets.hashCode(),
+                ticket.hashCode(),
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
             )
         }
 
-        val advanceNoticeDateTime = tickets.dateTime
+        val advanceNoticeDateTime = ticket.dateTime
             .minusMinutes(ADVANCE_NOTICE_MINUTES)
             .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
 

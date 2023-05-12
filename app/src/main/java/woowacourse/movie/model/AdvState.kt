@@ -1,12 +1,11 @@
 package woowacourse.movie.model
 
+import android.net.Uri
 import android.os.Parcelable
-import androidx.annotation.DrawableRes
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class AdvState(
-    @DrawableRes
-    val imgId: Int,
+    val imageUri: Uri,
     val advDescription: String
 ) : Parcelable

@@ -3,46 +3,80 @@ package woowacourse.movie.ui.seat
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
-import com.example.domain.usecase.DiscountApplyUseCase
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivitySeatSelectBinding
+import woowacourse.movie.dbHelper.TicketsDbHelper
+import woowacourse.movie.model.MoneyState
 import woowacourse.movie.model.SeatPositionState
 import woowacourse.movie.model.SeatSelectState
 import woowacourse.movie.model.TicketsState
-import woowacourse.movie.model.mapper.asDomain
-import woowacourse.movie.model.mapper.asPresentation
-import woowacourse.movie.ui.BackKeyActionBarActivity
 import woowacourse.movie.ui.DecimalFormatters
+import woowacourse.movie.ui.base.BaseBackKeyActionBarActivity
 import woowacourse.movie.ui.confirm.ReservationConfirmActivity
-import woowacourse.movie.ui.customView.ConfirmView
 import woowacourse.movie.util.getParcelableArrayListCompat
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
 import woowacourse.movie.util.showAskDialog
 
-class SeatSelectActivity : BackKeyActionBarActivity() {
-    private val discountApplyUseCase = DiscountApplyUseCase()
-
-    private val titleTextView: TextView by lazy { findViewById(R.id.reservation_title) }
-    private val moneyTextView: TextView by lazy { findViewById(R.id.reservation_money) }
-    private val confirmView: ConfirmView by lazy { findViewById(R.id.reservation_confirm) }
-    private lateinit var seatSelectState: SeatSelectState
+class SeatSelectActivity : BaseBackKeyActionBarActivity(), SeatSelectContract.View {
+    override lateinit var presenter: SeatSelectContract.Presenter
+    override lateinit var binding: ActivitySeatSelectBinding
 
     private lateinit var seatTable: SeatTable
 
-    override fun onCreateView(savedInstanceState: Bundle?) {
-        setContentView(R.layout.activity_seat_select)
+    override fun initBinding() {
+        binding = ActivitySeatSelectBinding.inflate(layoutInflater)
+    }
 
-        seatSelectState =
-            intent.getParcelableExtraCompat(KEY_SEAT_SELECT) ?: return keyError(KEY_SEAT_SELECT)
+    override fun initPresenter() {
+        presenter = SeatSelectPresenter(
+            this,
+            TicketsDbHelper(this),
+            intent.getParcelableExtraCompat(KEY_SEAT_SELECT) ?: return keyError(KEY_SEAT_SELECT),
+            intent.getStringExtra(KEY_CINEMA_NAME) ?: return keyError(KEY_CINEMA_NAME)
+        )
+    }
 
-        titleTextView.text = seatSelectState.movieState.title
+    override fun initSeatTable(seatSelectState: SeatSelectState) {
+        seatTable = SeatTable(binding, seatSelectState.countState) {
+            presenter.discountMoneyApply(it)
+        }
+    }
 
-        confirmView.setOnClickListener { navigateShowDialog(seatTable.chosenSeatInfo) }
-        confirmView.isClickable = false // 클릭리스너를 설정하면 clickable이 자동으로 참이 되기 때문
+    override fun showMoneyText(money: MoneyState) {
+        binding.reservationMoney.text = getString(
+            R.string.discount_money,
+            DecimalFormatters.convertToMoneyFormat(money)
+        )
+    }
 
-        seatTable = SeatTable(window.decorView.rootView, seatSelectState.countState) {
-            updateSelectSeats(it)
+    override fun showReservationTitle(seatSelectState: SeatSelectState) {
+        binding.reservationTitle.text = seatSelectState.movieState.title
+    }
+
+    override fun setConfirmClickable(clickable: Boolean) {
+        binding.reservationConfirm.isClickable = clickable
+    }
+
+    override fun setReservationConfirm(seatSelectState: SeatSelectState) {
+        binding.reservationConfirm.setOnClickListener {
+            navigateShowDialog(seatTable.chosenSeatInfo)
+        }
+        binding.reservationConfirm.isClickable = false
+    }
+
+    override fun navigateToConfirmView(tickets: TicketsState) {
+        ReservationConfirmActivity.startActivity(this, tickets)
+    }
+
+    private fun navigateShowDialog(positionStates: List<SeatPositionState>) {
+        showAskDialog(
+            titleId = R.string.reservation_confirm,
+            messageId = R.string.ask_really_reservation,
+            negativeStringId = R.string.reservation_cancel,
+            positiveStringId = R.string.reservation_complete
+        ) {
+            presenter.addTicket(positionStates)
         }
     }
 
@@ -51,9 +85,8 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
     ) {
         super.onRestoreInstanceState(savedInstanceState)
         val restoreState: ArrayList<SeatPositionState> =
-            savedInstanceState.getParcelableArrayListCompat(KEY_SEAT_RESTORE) ?: return keyError(
-                KEY_SEAT_RESTORE
-            )
+            savedInstanceState.getParcelableArrayListCompat(KEY_SEAT_RESTORE)
+                ?: return keyError(KEY_SEAT_RESTORE)
         seatTable.chosenSeatUpdate(restoreState.toList())
     }
 
@@ -65,44 +98,14 @@ class SeatSelectActivity : BackKeyActionBarActivity() {
         )
     }
 
-    private fun navigateShowDialog(seats: List<SeatPositionState>) {
-        showAskDialog(
-            titleId = R.string.reservation_confirm,
-            messageId = R.string.ask_really_reservation,
-            negativeStringId = R.string.reservation_cancel,
-            positiveStringId = R.string.reservation_complete
-        ) {
-            navigateReservationConfirmActivity(seats)
-        }
-    }
-
-    private fun navigateReservationConfirmActivity(seats: List<SeatPositionState>) {
-        val tickets = TicketsState.from(seatSelectState, seats)
-        ReservationConfirmActivity.startActivity(this, tickets)
-    }
-
-    private fun updateSelectSeats(positionStates: List<SeatPositionState>) {
-        confirmView.isClickable = (positionStates.size == seatSelectState.countState.value)
-
-        val tickets = TicketsState(
-            seatSelectState.movieState,
-            seatSelectState.dateTime,
-            positionStates.toList()
-        )
-
-        val discountApplyMoney = discountApplyUseCase(tickets.asDomain())
-        moneyTextView.text = getString(
-            R.string.discount_money,
-            DecimalFormatters.convertToMoneyFormat(discountApplyMoney.asPresentation())
-        )
-    }
-
     companion object {
         private const val KEY_SEAT_RESTORE = "key_seat_restore"
+        private const val KEY_CINEMA_NAME = "key_cinema_name"
         private const val KEY_SEAT_SELECT = "key_seat_select"
 
-        fun startActivity(context: Context, seatSelectState: SeatSelectState) {
+        fun startActivity(context: Context, cinema: String, seatSelectState: SeatSelectState) {
             val intent = Intent(context, SeatSelectActivity::class.java).apply {
+                putExtra(KEY_CINEMA_NAME, cinema)
                 putExtra(KEY_SEAT_SELECT, seatSelectState)
             }
             context.startActivity(intent)
