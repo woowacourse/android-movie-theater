@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
+    <data>
+
+        <variable
+            name="reservation"
+            type="woowacourse.movie.view.data.ReservationViewData" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -32,6 +39,7 @@
             android:textColor="@color/black"
             android:textSize="25sp"
             android:textStyle="bold"
+            android:text="@{reservation.movie.title}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -50,6 +58,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:format="@{@string/reservation_datetime_format}"
+            app:reservationDateTime="@{reservation.reservationDetail.date}"
             app:layout_constraintTop_toBottomOf="@id/movie_reservation_result_title" />
 
         <TextView
@@ -60,6 +70,9 @@
             android:gravity="center"
             android:textColor="@color/black"
             android:textSize="20sp"
+            app:reservatoin="@{reservation}"
+            app:seatsFormat="@{@string/seat_row_column}"
+            app:countFormat="@{@string/reservation_people_count}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -72,6 +85,8 @@
             android:layout_height="38dp"
             android:layout_marginTop="19dp"
             android:gravity="center"
+            app:reservationPrice="@{reservation.price.value}"
+            app:priceFormat="@{@string/reservation_price}"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"

@@ -4,13 +4,12 @@ import woowacourse.movie.view.data.ReservationViewData
 
 interface ReservationResultContract {
     interface View {
-        var presenter: Presenter
-        fun renderReservation(date: String, peopleCount: String, price: String)
+        fun setUpReservation(reservationViewData: ReservationViewData)
     }
 
     interface Presenter {
-        fun renderReservation(
-            reservationViewData: ReservationViewData
+        fun setUpReservation(
+            reservationViewData: ReservationViewData,
         )
     }
 }
