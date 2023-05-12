@@ -22,8 +22,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.dto.AdDto
-import woowacourse.movie.activity.MainActivity
+import woowacourse.movie.dto.movie.AdUIModel
+import woowacourse.movie.activity.main.MainActivity
 import woowacourse.movie.dto.movie.MovieDummy
 
 @RunWith(AndroidJUnit4::class)
@@ -107,6 +107,6 @@ class MainActivityTest {
             )
 
         intended(hasAction(Intent.ACTION_VIEW))
-        intended(hasData(Uri.parse(AdDto.getAdData().url)))
+        intended(hasData(Uri.parse(AdUIModel.getAdData().url)))
     }
 }
