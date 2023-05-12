@@ -24,20 +24,18 @@ import java.time.format.DateTimeFormatter
 
 class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
 
-    override val presenter: MovieDetailContract.Presenter by lazy {
-        MovieDetailPresenter(
-            this,
-        )
-    }
+    private lateinit var presenter: MovieDetailPresenter
     private lateinit var binding: ActivityMovieDetailBinding
-    private var dateSpinnerPosition = 0
-    private var timeSpinnerPosition = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
-
+        presenter = MovieDetailPresenter(
+            this,
+            savedInstanceState?.getInt(DATE_SPINNER_POSITION) ?: 0,
+            savedInstanceState?.getInt(TIME_SPINNER_POSITION) ?: 0,
+        )
         setToolBar()
-        setUpState(savedInstanceState)
 
         val movie = getIntentMovieData()
         selectDateSpinner(movie.startDate, movie.endDate)
@@ -47,14 +45,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         onClickBookBtnListener(movie)
     }
 
-    override fun setUpState(savedInstanceState: Bundle?) {
-        if (savedInstanceState != null) {
-            dateSpinnerPosition = savedInstanceState.getInt(DATE_SPINNER_POSITION)
-            timeSpinnerPosition = savedInstanceState.getInt(TIME_SPINNER_POSITION)
-        }
-    }
-
-    override fun setToolBar() {
+    private fun setToolBar() {
         setSupportActionBar(binding.movieDetailToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -149,7 +140,8 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     }
 
     private fun getIntentMovieData(): MovieUIModel {
-        return  intent.intentSerializable(MOVIE_KEY, MovieUIModel::class.java) ?: MovieUIModel.movieData
+        return intent.intentSerializable(MOVIE_KEY, MovieUIModel::class.java)
+            ?: MovieUIModel.movieData
     }
 
     private fun getIntentTheaterData(): TheaterUIModel {
@@ -171,7 +163,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
 
     private fun selectDateSpinner(startDate: LocalDate, endDate: LocalDate) {
         presenter.loadDateSpinnerData(startDate, endDate)
-        presenter.loadDateSpinnerPosition(dateSpinnerPosition)
+        presenter.loadDateSpinnerPosition()
         binding.selectDate.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -188,7 +180,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
 
     private fun selectTimeSpinner() {
         presenter.loadTimeSpinnerData(getIntentMovieData().id, getIntentTheaterData())
-        presenter.loadTimeSpinnerPosition(timeSpinnerPosition)
+        presenter.loadTimeSpinnerPosition()
 
         binding.selectTime.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -197,7 +189,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
                 position: Int,
                 id: Long,
             ) {
-                timeSpinnerPosition = position
+                presenter.saveTimeSpinnerPosition(position)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -205,8 +197,12 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putInt(DATE_SPINNER_POSITION, dateSpinnerPosition)
-        outState.putInt(TIME_SPINNER_POSITION, timeSpinnerPosition)
+        presenter.getDateSpinnerPosition().let {
+            outState.putInt(DATE_SPINNER_POSITION, it)
+        }
+        presenter.getTimeSpinnerPosition().let {
+            outState.putInt(TIME_SPINNER_POSITION, it)
+        }
         super.onSaveInstanceState(outState)
     }
 

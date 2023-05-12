@@ -12,7 +12,11 @@ import woowacourse.movie.mapper.ticket.mapToDomain
 import woowacourse.movie.mapper.ticket.mapToUIModel
 import java.time.LocalDate
 
-class MovieDetailPresenter(private val view: MovieDetailContract.View) :
+class MovieDetailPresenter(
+    private val view: MovieDetailContract.View,
+    private var dateSpinnerPosition: Int = 0,
+    private var timeSpinnerPosition: Int = 0,
+) :
     MovieDetailContract.Presenter {
     private var ticketCount = TicketCountUIModel()
 
@@ -20,11 +24,11 @@ class MovieDetailPresenter(private val view: MovieDetailContract.View) :
         view.setMovieData(data)
     }
 
-    override fun loadDateSpinnerPosition(dateSpinnerPosition: Int) {
+    override fun loadDateSpinnerPosition() {
         view.setDateSpinnerPosition(dateSpinnerPosition)
     }
 
-    override fun loadTimeSpinnerPosition(timeSpinnerPosition: Int) {
+    override fun loadTimeSpinnerPosition() {
         view.setTimeSpinnerPosition(timeSpinnerPosition)
     }
 
@@ -47,7 +51,12 @@ class MovieDetailPresenter(private val view: MovieDetailContract.View) :
     ) {
         val selectedDate = MovieDate.of(date)
         val selectedTime = MovieTime.of(time)
-        view.showSeatSelectPage(data, ticketCount, selectedDate.mapToUIModel(), selectedTime.mapToUIModel())
+        view.showSeatSelectPage(
+            data,
+            ticketCount,
+            selectedDate.mapToUIModel(),
+            selectedTime.mapToUIModel(),
+        )
     }
 
     override fun loadDateSpinnerData(startDate: LocalDate, endDate: LocalDate) {
@@ -58,5 +67,17 @@ class MovieDetailPresenter(private val view: MovieDetailContract.View) :
     override fun loadTimeSpinnerData(movieId: Int, theater: TheaterUIModel) {
         val data = theater.screeningTime[movieId]
         data?.let { view.setTimeSpinnerData(it) }
+    }
+
+    override fun saveTimeSpinnerPosition(position: Int) {
+        timeSpinnerPosition = position
+    }
+
+    override fun getTimeSpinnerPosition(): Int {
+        return timeSpinnerPosition
+    }
+
+    override fun getDateSpinnerPosition(): Int {
+        return dateSpinnerPosition
     }
 }
