@@ -128,7 +128,7 @@ class SeatSelectionActivity : BackButtonActivity(), SeatSelectionContract.View {
     override fun setReservation(reservationId: Long) {
         if (getPushAlarmReceptionIsWanted(this)) {
             sendNotificationAboutReservationAt(
-                getScreeningDateTimeFromIntent().minusMinutes(30),
+                selectedScreeningDateTime.minusMinutes(BEFORE_SCREENING_TIME),
                 reservationId
             )
         }
@@ -158,6 +158,7 @@ class SeatSelectionActivity : BackButtonActivity(), SeatSelectionContract.View {
         const val SCREENING_ID = "SCREENING_ID"
         const val SCREENING_DATE_TIME = "SCREENING_DATE_TIME"
         const val AUDIENCE_COUNT = "AUDIENCE_COUNT"
+        private const val BEFORE_SCREENING_TIME = 30L
 
         fun startActivity(
             context: Context,
