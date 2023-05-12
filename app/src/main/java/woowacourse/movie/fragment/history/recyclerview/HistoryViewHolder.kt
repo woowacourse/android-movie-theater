@@ -1,5 +1,7 @@
 package woowacourse.movie.fragment.history.recyclerview
 
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.HistoryItemBinding
@@ -9,9 +11,9 @@ import woowacourse.movie.dto.movie.MovieTimeUIModel
 import woowacourse.movie.util.listener.OnClickListener
 import java.time.format.DateTimeFormatter
 
-class HistoryViewHolder(
+class HistoryViewHolder private constructor(
     private val binding: HistoryItemBinding,
-    private val onItemViewClickListener: OnClickListener<Int>,
+    onItemViewClickListener: OnClickListener<Int>,
 ) :
     RecyclerView.ViewHolder(binding.root) {
     init {
@@ -32,5 +34,19 @@ class HistoryViewHolder(
             time.time.format(DateTimeFormatter.ofPattern(binding.root.context.getString(R.string.time_format)))
 
         return binding.root.context.getString(R.string.reservation_datetime, formatDate, formatTime)
+    }
+
+    companion object {
+        fun from(
+            parent: ViewGroup,
+            onItemViewClickListener: OnClickListener<Int>
+        ): HistoryViewHolder {
+            val binding = HistoryItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+            return HistoryViewHolder(binding, onItemViewClickListener)
+        }
     }
 }

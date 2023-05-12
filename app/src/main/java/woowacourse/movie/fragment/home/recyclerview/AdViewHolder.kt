@@ -1,13 +1,15 @@
 package woowacourse.movie.fragment.home.recyclerview
 
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.AdItemBinding
 import woowacourse.movie.dto.movie.AdUIModel
 import woowacourse.movie.util.listener.OnClickListener
 
-class AdViewHolder(
+class AdViewHolder private constructor(
     private val binding: AdItemBinding,
-    private val onItemClickListener: OnClickListener<Int>,
+    onItemClickListener: OnClickListener<Int>,
 ) :
     RecyclerView.ViewHolder(binding.root) {
 
@@ -19,5 +21,19 @@ class AdViewHolder(
 
     fun bind(item: AdUIModel) {
         binding.ad.setImageResource(item.adImage)
+    }
+
+    companion object {
+        fun from(
+            parent: ViewGroup,
+            onItemClickListener: OnClickListener<Int>,
+        ): AdViewHolder {
+            val binding = AdItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false,
+            )
+            return AdViewHolder(binding, onItemClickListener)
+        }
     }
 }

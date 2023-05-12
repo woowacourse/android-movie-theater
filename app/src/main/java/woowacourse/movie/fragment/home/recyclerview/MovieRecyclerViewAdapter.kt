@@ -1,11 +1,8 @@
 package woowacourse.movie.fragment.home.recyclerview
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import woowacourse.movie.databinding.AdItemBinding
-import woowacourse.movie.databinding.MovieItemBinding
 import woowacourse.movie.dto.movie.AdUIModel
 import woowacourse.movie.dto.movie.MovieUIModel
 import woowacourse.movie.util.listener.OnClickListener
@@ -17,10 +14,6 @@ class MovieRecyclerViewAdapter(
     private val onAdItemClickListener: OnClickListener<AdUIModel>,
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    private lateinit var movieBinding: MovieItemBinding
-    private lateinit var adBinding: AdItemBinding
-
     private val onMovieItemViewClickListener = object : OnClickListener<Int> {
         override fun onClick(item: Int) {
             onMovieItemClickListener.onClick(getMovieItem(item))
@@ -35,16 +28,8 @@ class MovieRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (ViewType.values()[viewType]) {
-            ViewType.MOVIE_VIEW -> {
-                movieBinding =
-                    MovieItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                MovieViewHolder(movieBinding, onMovieItemViewClickListener)
-            }
-            ViewType.AD_VIEW -> {
-                adBinding =
-                    AdItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                AdViewHolder(adBinding, onAdItemViewClickListener)
-            }
+            ViewType.MOVIE_VIEW -> MovieViewHolder.from(parent, onMovieItemViewClickListener)
+            ViewType.AD_VIEW -> AdViewHolder.from(parent, onAdItemViewClickListener)
         }
     }
 

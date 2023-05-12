@@ -1,5 +1,7 @@
 package woowacourse.movie.fragment.home.recyclerview
 
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.MovieItemBinding
@@ -7,9 +9,9 @@ import woowacourse.movie.dto.movie.MovieUIModel
 import woowacourse.movie.util.listener.OnClickListener
 import java.time.format.DateTimeFormatter
 
-class MovieViewHolder(
+class MovieViewHolder private constructor(
     private val binding: MovieItemBinding,
-    private val onItemClickListener: OnClickListener<Int>,
+    onItemClickListener: OnClickListener<Int>,
 ) :
     RecyclerView.ViewHolder(binding.root) {
 
@@ -35,5 +37,20 @@ class MovieViewHolder(
 
     fun formatMovieRunningTime(item: MovieUIModel): String {
         return binding.root.context.getString(R.string.movie_running_time).format(item.runningTime)
+    }
+
+    companion object {
+        fun from(
+            parent: ViewGroup,
+            onItemClickListener: OnClickListener<Int>,
+        ): MovieViewHolder {
+            val binding =
+                MovieItemBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            return MovieViewHolder(binding, onItemClickListener)
+        }
     }
 }

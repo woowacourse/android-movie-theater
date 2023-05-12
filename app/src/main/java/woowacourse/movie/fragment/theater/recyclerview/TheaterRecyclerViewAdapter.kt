@@ -14,7 +14,6 @@ class TheaterRecyclerViewAdapter(
     private val onItemClickListener: OnClickListener<TheaterUIModel>,
 ) : RecyclerView.Adapter<TheaterViewHolder>() {
 
-    private lateinit var binding: TheaterItemBinding
     private val itemClick = object : OnClickListener<Int> {
         override fun onClick(item: Int) {
             onItemClickListener.onClick(theaters[item])
@@ -22,8 +21,7 @@ class TheaterRecyclerViewAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TheaterViewHolder {
-        binding = TheaterItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return TheaterViewHolder(binding, itemClick)
+        return TheaterViewHolder.from(parent, itemClick)
     }
 
     override fun getItemCount(): Int {
