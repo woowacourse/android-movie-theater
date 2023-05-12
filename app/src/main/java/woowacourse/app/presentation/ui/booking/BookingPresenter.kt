@@ -42,7 +42,7 @@ class BookingPresenter(
     }
 
     override fun completeBooking() {
-        bookingView.clickBookingComplete(ticketCount.value)
+        bookingView.startSeatActivity(ticketCount.value)
     }
 
     override fun getTicketCount(): Int {

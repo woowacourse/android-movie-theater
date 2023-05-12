@@ -138,12 +138,12 @@ class BookingPresenterTest {
     @Test
     fun `예약을 완료한다`() {
         // given
-        every { view.clickBookingComplete(INIT_TICKET_COUNT) } returns Unit
+        every { view.startSeatActivity(INIT_TICKET_COUNT) } returns Unit
         // when
         presenter.completeBooking()
 
         // then
-        verify(exactly = 1) { view.clickBookingComplete(INIT_TICKET_COUNT) }
+        verify(exactly = 1) { view.startSeatActivity(INIT_TICKET_COUNT) }
     }
 
     companion object {

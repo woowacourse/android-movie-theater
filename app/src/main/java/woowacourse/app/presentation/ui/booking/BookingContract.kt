@@ -9,7 +9,7 @@ interface BookingContract {
         val presenter: Presenter
         fun initSpinnerDateTime(dates: List<LocalDate>, times: List<LocalTime>)
         fun setTicketCountText(value: Int)
-        fun clickBookingComplete(ticketCount: Int)
+        fun startSeatActivity(ticketCount: Int)
     }
 
     interface Presenter {
