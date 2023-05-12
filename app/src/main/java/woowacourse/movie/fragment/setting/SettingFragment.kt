@@ -14,7 +14,7 @@ import woowacourse.movie.BundleKeys.IS_CAN_PUSH_CHECKED
 import woowacourse.movie.BundleKeys.REQUEST_NOTIFICATION_PERMISSION
 import woowacourse.movie.PermissionManager
 import woowacourse.movie.R
-import woowacourse.movie.SharedPreferenceUtil
+import woowacourse.movie.SharedPreferenceDataRepository
 import woowacourse.movie.databinding.FragmentSettingBinding
 
 class SettingFragment(
@@ -42,7 +42,7 @@ class SettingFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter = SettingPresenter(this, SharedPreferenceUtil(requireContext()))
+        presenter = SettingPresenter(this, SharedPreferenceDataRepository(requireContext()))
         presenter.loadCanPushAlarmSwitchData(default = false)
         setCanPushSwitchOnClickListener()
     }

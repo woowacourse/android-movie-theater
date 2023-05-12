@@ -32,7 +32,7 @@ class MovieReminder : BroadcastReceiver() {
     }
 
     private fun getPushAlarmAllowed(context: Context): Boolean {
-        sharedPreferenceRepository = SharedPreferenceUtil(context)
+        sharedPreferenceRepository = SharedPreferenceDataRepository(context)
         return sharedPreferenceRepository.getBooleanValue(false)
     }
 

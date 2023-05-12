@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import woowacourse.movie.BundleKeys.SETTING_PUSH_ALARM_SWITCH_KEY
 
-class SharedPreferenceUtil(context: Context) : DataRepository {
+class SharedPreferenceDataRepository(context: Context) : DataRepository {
 
     private val sharedPreferences: SharedPreferences = context.getSharedPreferences(
         SETTING_PUSH_ALARM_SWITCH_KEY, Context.MODE_PRIVATE

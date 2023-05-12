@@ -17,7 +17,7 @@ import woowacourse.movie.BundleKeys.REQUEST_NOTIFICATION_PERMISSION
 import woowacourse.movie.DataRepository
 import woowacourse.movie.PermissionManager
 import woowacourse.movie.R
-import woowacourse.movie.SharedPreferenceUtil
+import woowacourse.movie.SharedPreferenceDataRepository
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.fragment.bookhistory.BookHistoryFragment
 import woowacourse.movie.fragment.home.HomeFragment
@@ -39,7 +39,7 @@ class MainActivity :
         )
     private val permissionManager = PermissionManager(this, requestPermissionLauncher)
     private val sharedPreferenceRepository: DataRepository by lazy {
-        SharedPreferenceUtil(this)
+        SharedPreferenceDataRepository(this)
     }
     lateinit var settingFragmentFactory: SettingFragmentFactory
 
