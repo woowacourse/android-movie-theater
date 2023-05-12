@@ -10,7 +10,8 @@ class ReservationListPresenter(
 ) : ReservationListContract.Presenter {
 
     override fun setUpReservations() {
-        Reservations.restore(repository)
+        val tickets = repository.getReservations()
+        Reservations.restore(tickets)
     }
 
     override fun setReservations() {

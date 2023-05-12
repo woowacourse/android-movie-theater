@@ -1,20 +1,18 @@
 package woowacourse.movie.data.entity
 
-import woowacourse.movie.data.reservation.ReservationRepository
 import woowacourse.movie.ui.model.MovieTicketModel
 
 object Reservations {
     private val items = mutableListOf<MovieTicketModel>()
     private var restored = false
 
-    fun restore(repository: ReservationRepository) {
-        val tickets = repository.getReservations()
+    fun restore(tickets: List<MovieTicketModel>) {
         items.addAll(tickets)
         restored = true
     }
 
-    fun addItem(item: MovieTicketModel) {
-        if (restored) items.add(item)
+    fun addItem(ticket: MovieTicketModel) {
+        if (restored) items.add(ticket)
     }
 
     fun getAll(): List<MovieTicketModel> = items
