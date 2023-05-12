@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         checkPermisson()
-        showHomeFragment()
+        showFragment<HomeFragment>(HomeFragment.TAG)
         onClickBottomNavItem()
     }
 
@@ -46,9 +46,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.navigationBar.selectedItemId = R.id.home
         binding.navigationBar.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.history -> showHistoryFragment()
-                R.id.home -> showHomeFragment()
-                R.id.setting -> showSettingFragment()
+                R.id.history -> showFragment<HistoryFragment>(HistoryFragment.TAG)
+                R.id.home -> showFragment<HomeFragment>(HomeFragment.TAG)
+                R.id.setting -> showFragment<SettingFragment>(SettingFragment.TAG)
             }
             true
         }
@@ -64,16 +64,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
     }
 
-    private fun showHomeFragment() {
-        manageFragment<HomeFragment>(HomeFragment.TAG)
-    }
-
-    private fun showHistoryFragment() {
-        manageFragment<HistoryFragment>(HistoryFragment.TAG)
-    }
-
-    private fun showSettingFragment() {
-        manageFragment<SettingFragment>(SettingFragment.TAG)
+    private inline fun <reified T : Fragment> showFragment(tag: String) {
+        manageFragment<T>(tag)
     }
 
     private inline fun <reified T : Fragment> manageFragment(tag: String) {
