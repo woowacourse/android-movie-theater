@@ -17,21 +17,21 @@ class BookingPresenter(
     }
 
     override fun initTicketCount() {
-        bookingView.setTicketCountText(ticketCount.value)
+        bookingView.showTicketCount(ticketCount.value)
     }
 
     override fun subTicket() {
         ticketCount = ticketCount.minus()
-        bookingView.setTicketCountText(ticketCount.value)
+        bookingView.showTicketCount(ticketCount.value)
     }
 
     override fun addTicket() {
         ticketCount = ticketCount.plus()
-        bookingView.setTicketCountText(ticketCount.value)
+        bookingView.showTicketCount(ticketCount.value)
     }
 
     override fun initDateTimes() {
-        bookingView.initSpinnerDateTime(
+        bookingView.initDateTime(
             movie.screeningDates,
             getScreeningTimes(movie.startDate),
         )

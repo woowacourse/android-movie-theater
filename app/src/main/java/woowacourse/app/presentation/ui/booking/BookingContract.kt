@@ -7,8 +7,8 @@ import java.time.LocalTime
 interface BookingContract {
     interface View {
         val presenter: Presenter
-        fun initSpinnerDateTime(dates: List<LocalDate>, times: List<LocalTime>)
-        fun setTicketCountText(value: Int)
+        fun initDateTime(dates: List<LocalDate>, times: List<LocalTime>)
+        fun showTicketCount(value: Int)
         fun startSeatActivity(ticketCount: Int)
     }
 

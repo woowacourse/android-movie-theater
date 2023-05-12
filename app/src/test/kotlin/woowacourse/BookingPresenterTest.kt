@@ -59,7 +59,7 @@ class BookingPresenterTest {
     fun `초기 티켓 수를 세팅한다`() {
         // given
         val slot = slot<Int>()
-        every { view.setTicketCountText(capture(slot)) } answers { println("slot: ${slot.captured}") }
+        every { view.showTicketCount(capture(slot)) } answers { println("slot: ${slot.captured}") }
 
         // when
         presenter.initTicketCount()
@@ -67,14 +67,14 @@ class BookingPresenterTest {
 
         // then
         assertEquals(INIT_TICKET_COUNT, actual)
-        verify(exactly = 1) { view.setTicketCountText(INIT_TICKET_COUNT) }
+        verify(exactly = 1) { view.showTicketCount(INIT_TICKET_COUNT) }
     }
 
     @Test
     fun `더하기를 누르면 티켓 수가 올라간다`() {
         // given
         val slot = slot<Int>()
-        every { view.setTicketCountText(capture(slot)) } answers { println("slot: ${slot.captured}") }
+        every { view.showTicketCount(capture(slot)) } answers { println("slot: ${slot.captured}") }
 
         // when
         presenter.addTicket()
@@ -82,14 +82,14 @@ class BookingPresenterTest {
 
         // then
         assertEquals(INIT_TICKET_COUNT + 1, actual)
-        verify(exactly = 1) { view.setTicketCountText(INIT_TICKET_COUNT + 1) }
+        verify(exactly = 1) { view.showTicketCount(INIT_TICKET_COUNT + 1) }
     }
 
     @Test
     fun `빼기를 누르면 티켓 수가 감소한다`() {
         // given : 초기 값인 1에선 빼도 1이므로 2를 만들어주고 테스트를 시작한다.
         val slot = slot<Int>()
-        every { view.setTicketCountText(capture(slot)) } answers { println("slot: ${slot.captured}") }
+        every { view.showTicketCount(capture(slot)) } answers { println("slot: ${slot.captured}") }
 
         // when
         presenter.subTicket()
@@ -118,7 +118,7 @@ class BookingPresenterTest {
         val datesSlot = slot<List<LocalDate>>()
         val timesSlot = slot<List<LocalTime>>()
         every {
-            view.initSpinnerDateTime(
+            view.initDateTime(
                 capture(datesSlot),
                 capture(timesSlot),
             )
@@ -132,7 +132,7 @@ class BookingPresenterTest {
         // then
         assertEquals(movie.screeningDates, actualDates)
         assertEquals(presenter.getScreeningTimes(movie.startDate), actualTimes)
-        verify(exactly = 1) { view.initSpinnerDateTime(actualDates, actualTimes) }
+        verify(exactly = 1) { view.initDateTime(actualDates, actualTimes) }
     }
 
     @Test

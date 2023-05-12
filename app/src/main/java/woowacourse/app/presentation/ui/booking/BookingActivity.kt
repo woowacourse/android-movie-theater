@@ -77,7 +77,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         binding.imageBookingPoster.setImageResource(MovieMapper.getPoster(presenter.movie.id))
     }
 
-    override fun initSpinnerDateTime(dates: List<LocalDate>, times: List<LocalTime>) {
+    override fun initDateTime(dates: List<LocalDate>, times: List<LocalTime>) {
         binding.spinnerDateTime.initDateItems(dates)
         binding.spinnerDateTime.initTimeItems(times)
     }
@@ -86,7 +86,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         binding.spinnerDateTime.initDateSelectedListener { presenter.getScreeningTimes(it) }
     }
 
-    override fun setTicketCountText(value: Int) {
+    override fun showTicketCount(value: Int) {
         binding.textBookingTicketCount.text = value.toString()
     }
 
