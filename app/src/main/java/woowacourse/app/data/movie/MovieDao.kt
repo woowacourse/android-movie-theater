@@ -14,7 +14,7 @@ import woowacourse.app.data.CgvDbHelper
 import java.time.LocalDate
 
 class MovieDao(context: Context) : MovieDataSource {
-    private val cgvDb by lazy { CgvDbHelper(context).readableDatabase }
+    private val cgvDb by lazy { CgvDbHelper.getInstance(context).readableDatabase }
 
     override fun getMovieEntities(): List<MovieEntity> {
         val orderBy = "${BaseColumns._ID} DESC"

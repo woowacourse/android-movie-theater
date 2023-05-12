@@ -9,7 +9,7 @@ import woowacourse.app.data.CgvContract.Advertisement.TABLE_NAME
 import woowacourse.app.data.CgvDbHelper
 
 class AdvertisementDao(context: Context) : AdvertisementDataSource {
-    private val cgvDb by lazy { CgvDbHelper(context).readableDatabase }
+    private val cgvDb by lazy { CgvDbHelper.getInstance(context).readableDatabase }
 
     override fun getAdvertisementEntities(): List<AdvertisementEntity> {
         val orderBy = "${BaseColumns._ID} DESC"

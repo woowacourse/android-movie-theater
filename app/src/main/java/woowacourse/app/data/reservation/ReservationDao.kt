@@ -12,7 +12,7 @@ import woowacourse.app.data.CgvDbHelper
 import java.time.LocalDateTime
 
 class ReservationDao(context: Context) : ReservationDataSource {
-    private val cgvDb by lazy { CgvDbHelper(context).readableDatabase }
+    private val cgvDb by lazy { CgvDbHelper.getInstance(context).readableDatabase }
 
     override fun getReservationEntities(): List<ReservationEntity> {
         val orderBy = "${BaseColumns._ID} DESC"

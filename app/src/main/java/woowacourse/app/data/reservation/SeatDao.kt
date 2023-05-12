@@ -12,7 +12,7 @@ import woowacourse.app.data.CgvContract.Seat.TABLE_NAME
 import woowacourse.app.data.CgvDbHelper
 
 class SeatDao(context: Context) : SeatDataSource {
-    private val cgvDb by lazy { CgvDbHelper(context).readableDatabase }
+    private val cgvDb by lazy { CgvDbHelper.getInstance(context).readableDatabase }
 
     override fun insertSeat(reservationId: Long, rank: Int, row: Int, column: Int): SeatEntity {
         val data = ContentValues()

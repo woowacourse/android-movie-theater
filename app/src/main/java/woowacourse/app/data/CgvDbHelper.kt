@@ -16,7 +16,8 @@ import woowacourse.app.data.CgvContract.Seat.DELETE_SEAT_TABLE
 import woowacourse.app.data.CgvContract.Theater.CREATE_THEATER_TABLE
 import woowacourse.app.data.CgvContract.Theater.DELETE_THEATER_TABLE
 
-class CgvDbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
+class CgvDbHelper private constructor(context: Context) :
+    SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(PERMIT_FOREIGN_KEY)
         db.execSQL(CREATE_ADVERTISEMENT_TABLE)
@@ -40,5 +41,10 @@ class CgvDbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, n
     companion object {
         private const val DATABASE_NAME = "cgv database"
         private const val PERMIT_FOREIGN_KEY = "PRAGMA foreign_keys=ON"
+
+        private var instance: CgvDbHelper? = null
+        fun getInstance(context: Context): CgvDbHelper {
+            return instance ?: CgvDbHelper(context).also { instance = it }
+        }
     }
 }

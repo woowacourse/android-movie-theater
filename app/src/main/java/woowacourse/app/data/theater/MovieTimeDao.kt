@@ -11,7 +11,7 @@ import woowacourse.app.data.CgvContract.MovieTime.TABLE_NAME
 import woowacourse.app.data.CgvDbHelper
 
 class MovieTimeDao(context: Context) : MovieTimeDataSource {
-    private val cgvDb by lazy { CgvDbHelper(context).readableDatabase }
+    private val cgvDb by lazy { CgvDbHelper.getInstance(context).readableDatabase }
 
     override fun getMovieTimeEntities(theaterId: Long): List<MovieTimeEntity> {
         val orderBy = "${BaseColumns._ID} DESC"

@@ -17,7 +17,7 @@ import woowacourse.app.data.CgvDbHelper
 import woowacourse.domain.theater.SeatStructure
 
 class TheaterDao(context: Context) : TheaterDataSource {
-    private val cgvDb by lazy { CgvDbHelper(context).readableDatabase }
+    private val cgvDb by lazy { CgvDbHelper.getInstance(context).readableDatabase }
 
     override fun getTheaterEntities(): List<TheaterEntity> {
         val orderBy = "${BaseColumns._ID} DESC"
