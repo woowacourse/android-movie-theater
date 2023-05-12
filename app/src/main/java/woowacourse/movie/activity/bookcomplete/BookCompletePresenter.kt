@@ -6,6 +6,12 @@ class BookCompletePresenter(
     private val view: BookCompleteContract.View,
 ) : BookCompleteContract.Presenter {
 
+    override fun progressIfDummyData(movieBookingSeatInfo: MovieBookingSeatInfo) {
+        if (movieBookingSeatInfo == MovieBookingSeatInfo.dummyData) {
+            view.showMessageIfDummyData()
+        }
+    }
+
     override fun initBookCompletePage(movieBookingSeatInfo: MovieBookingSeatInfo) {
         view.initMovieTitle(movieBookingSeatInfo.movieBookingInfo.title)
         view.initBookDate(movieBookingSeatInfo.movieBookingInfo.formatBookingTime())

@@ -24,7 +24,7 @@ class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
 
         val movieBookingData = getMovieBookingSeatInfo()
         presenter = BookCompletePresenter(this)
-        progressIfDummyData(movieBookingData)
+        presenter.progressIfDummyData(movieBookingData)
         presenter.initBookCompletePage(movieBookingData)
     }
 
@@ -35,16 +35,6 @@ class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
     private fun getMovieBookingSeatInfo(): MovieBookingSeatInfo {
         return intent.getSerializableCompat(MOVIE_BOOKING_SEAT_INFO_KEY)
             ?: MovieBookingSeatInfo.dummyData
-    }
-
-    override fun progressIfDummyData(movieBookingSeatInfo: MovieBookingSeatInfo) {
-        if (movieBookingSeatInfo == MovieBookingSeatInfo.dummyData) {
-            Toast.makeText(
-                this,
-                getString(R.string.cant_get_movie_booking_data),
-                Toast.LENGTH_LONG
-            ).show()
-        }
     }
 
     override fun initMovieTitle(movieTitle: String) {
@@ -68,6 +58,14 @@ class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
     override fun initBookTotalPrice(totalPrice: String) {
         binding.tvBookTotalPay.text =
             getString(R.string.book_total_pay, totalPrice)
+    }
+
+    override fun showMessageIfDummyData() {
+        Toast.makeText(
+            this,
+            getString(R.string.cant_get_movie_booking_data),
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     companion object {
