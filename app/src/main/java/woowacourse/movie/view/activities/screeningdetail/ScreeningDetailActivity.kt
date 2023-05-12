@@ -11,7 +11,6 @@ import woowacourse.movie.view.activities.seatselection.SeatSelectionActivity
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 import kotlin.properties.Delegates
 
 class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.View {
@@ -22,6 +21,7 @@ class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.Vi
         findViewById<TextView>(R.id.audience_count_tv).text = new.toString()
     }
     private var savedInstanceState: Bundle? = null
+    private val screeningDetailViewHolder by lazy { ScreeningDetailViewHolder(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,25 +62,7 @@ class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.Vi
     }
 
     override fun setScreening(screeningDetailUIState: ScreeningDetailUIState) {
-        val posterView = findViewById<ImageView>(R.id.movie_poster_iv)
-        posterView.setImageResource(screeningDetailUIState.poster)
-
-        val titleView = findViewById<TextView>(R.id.movie_title_tv)
-        titleView.text = screeningDetailUIState.title
-
-        val screeningRangeView = findViewById<TextView>(R.id.screening_range_tv)
-        screeningRangeView.text = getString(R.string.screening_range_format)
-            .format(
-                DATE_FORMATTER.format(screeningDetailUIState.screeningStartDate),
-                DATE_FORMATTER.format(screeningDetailUIState.screeningEndDate)
-            )
-
-        val runningTimeView = findViewById<TextView>(R.id.running_time_tv)
-        runningTimeView.text = getString(R.string.running_time_format)
-            .format(screeningDetailUIState.runningTime)
-
-        val summaryView = findViewById<TextView>(R.id.movie_summary_tv)
-        summaryView.text = screeningDetailUIState.summary
+        screeningDetailViewHolder.bind(screeningDetailUIState)
 
         initSpinners(screeningDetailUIState.screeningDateTimes)
 
@@ -165,7 +147,6 @@ class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.Vi
 
     companion object {
         const val SCREENING_ID = "SCREENING_ID"
-        private val DATE_FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
         private const val TIME_SPINNER_POSITION = "TIME_SPINNER_POSITION"
         private const val AUDIENCE_COUNT = "AUDIENCE_COUNT"
 
