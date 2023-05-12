@@ -24,10 +24,6 @@ class SeatSelectActivity : BaseBackKeyActionBarActivity(), SeatSelectContract.Vi
 
     private lateinit var seatTable: SeatTable
 
-    override fun onCreateView(savedInstanceState: Bundle?) {
-        presenter.setUpSeatSelectState()
-    }
-
     override fun initBinding() {
         binding = ActivitySeatSelectBinding.inflate(layoutInflater)
     }

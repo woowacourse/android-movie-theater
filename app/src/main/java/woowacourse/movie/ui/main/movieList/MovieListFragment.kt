@@ -1,8 +1,6 @@
 package woowacourse.movie.ui.main.movieList
 
 import android.content.Context
-import android.os.Bundle
-import android.view.View
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.model.AdvState
 import woowacourse.movie.model.MovieState
@@ -16,11 +14,6 @@ import woowacourse.movie.ui.main.cinemaBottomSheet.CinemaListBottomSheet
 class MovieListFragment : BaseFragment(), MovieListContract.View {
     override lateinit var presenter: MovieListContract.Presenter
     override lateinit var binding: FragmentMovieListBinding
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        presenter.setUpMovieList()
-    }
 
     override fun initBinding() {
         binding = FragmentMovieListBinding.inflate(layoutInflater)

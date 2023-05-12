@@ -4,7 +4,6 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import java.time.ZoneId
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationConfirmBinding
@@ -19,10 +18,6 @@ import woowacourse.movie.util.keyError
 class ReservationConfirmActivity : BaseBackKeyActionBarActivity(), ReservationConfirmContract.View {
     override lateinit var presenter: ReservationConfirmContract.Presenter
     override lateinit var binding: ActivityReservationConfirmBinding
-
-    override fun onCreateView(savedInstanceState: Bundle?) {
-        presenter.setUpTicket()
-    }
 
     override fun initBinding() {
         binding = ActivityReservationConfirmBinding.inflate(layoutInflater)

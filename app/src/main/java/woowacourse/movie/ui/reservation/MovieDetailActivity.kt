@@ -25,7 +25,6 @@ class MovieDetailActivity : BaseBackKeyActionBarActivity(), MovieDetailContract.
     override fun onCreateView(savedInstanceState: Bundle?) {
         initConfirmButton()
         initCountButton()
-        presenter.setUpDateTime()
     }
 
     override fun initPresenter() {

@@ -1,7 +1,6 @@
 package woowacourse.movie.ui.main.cinemaBottomSheet
 
 import android.os.Bundle
-import android.view.View
 import com.example.domain.repositoryImpl.CinemaSampleRepository
 import woowacourse.movie.databinding.FragmentCinemaBottomSheetBinding
 import woowacourse.movie.model.CinemaState
@@ -15,11 +14,6 @@ import woowacourse.movie.util.getParcelableCompat
 class CinemaListBottomSheet : BaseBottomSheetDialogFragment(), CinemaListContract.View {
     override lateinit var presenter: CinemaListContract.Presenter
     override lateinit var binding: FragmentCinemaBottomSheetBinding
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        presenter.setUpCinemaList()
-    }
 
     override fun initBinding() {
         binding = FragmentCinemaBottomSheetBinding.inflate(layoutInflater)

@@ -11,6 +11,10 @@ class ReservationConfirmPresenter(
 ) : ReservationConfirmContract.Presenter {
     private val discountApplyUseCase = DiscountApplyUseCase()
 
+    init {
+        setUpTicket()
+    }
+
     override fun setUpTicket() {
         view.showTicket(ticket)
         view.registerNotification(ticket)

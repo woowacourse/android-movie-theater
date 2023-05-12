@@ -1,8 +1,6 @@
 package woowacourse.movie.ui.main.reservationList
 
 import android.content.Context
-import android.os.Bundle
-import android.view.View
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.dbHelper.TicketsDbHelper
 import woowacourse.movie.model.TicketsState
@@ -23,11 +21,6 @@ class ReservationListFragment : BaseFragment(), ReservationListContract.View {
 
     override fun initPresenter() {
         presenter = ReservationListPresenter(this, TicketsDbHelper(requireContext()))
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        presenter.setUpReservationList()
     }
 
     override fun showTickets(tickets: List<TicketsState>) {

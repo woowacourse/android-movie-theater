@@ -6,6 +6,10 @@ class SettingPresenter(
     private val view: SettingContract.View,
     private val sharedPreferences: SharedPreference
 ) : SettingContract.Presenter {
+    init {
+        setUpSwitch(SettingFragment.NOTIFICATIONS, false)
+    }
+
     override fun setUpSwitch(notifications: String, boolean: Boolean) {
         view.setSwitchChecked(sharedPreferences.getBoolean(notifications, boolean))
     }

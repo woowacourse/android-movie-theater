@@ -13,6 +13,7 @@ class MovieDetailPresenter(
     private val getMovieRunningDateUseCase = GetMovieRunningDateUseCase()
     init {
         view.showMovie(movie)
+        setUpDateTime()
     }
 
     override var count: CountState = CountState.of(1)
