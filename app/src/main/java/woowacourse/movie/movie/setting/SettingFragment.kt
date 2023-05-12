@@ -12,8 +12,6 @@ class SettingFragment : Fragment(), SettingContract.View {
     override lateinit var presenter: SettingContract.Presenter
     private lateinit var binding: FragmentSettingBinding
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,7 +39,7 @@ class SettingFragment : Fragment(), SettingContract.View {
         }
     }
 
-    companion object{
+    companion object {
         const val TAG_SETTING_FRAGMENT = "setting_fragment"
     }
 }

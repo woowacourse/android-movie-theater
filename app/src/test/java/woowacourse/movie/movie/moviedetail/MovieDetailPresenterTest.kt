@@ -28,7 +28,7 @@ internal class MovieDetailPresenterTest {
         theaters = MovieTheatersDto(listOf(MovieTheaterDto("선릉", listOf(LocalTime.of(13, 0)))))
     )
 
-    private val fakeTheater = MovieTheaterDto("상일", listOf(LocalTime.of(13,0)))
+    private val fakeTheater = MovieTheaterDto("상일", listOf(LocalTime.of(13, 0)))
 
     @Before
     fun setUp() {
@@ -37,7 +37,7 @@ internal class MovieDetailPresenterTest {
     }
 
     @Test
-    fun `선택한 영화의 제목이 잘 보여진다`(){
+    fun `선택한 영화의 제목이 잘 보여진다`() {
         val movieTitleSlot = slot<String>()
 
         every { view.showMovieInfo(any(), capture(movieTitleSlot), any()) } answers { nothing }
@@ -50,7 +50,7 @@ internal class MovieDetailPresenterTest {
     }
 
     @Test
-    fun `선택한 영화의 설명이 잘 보여진다`(){
+    fun `선택한 영화의 설명이 잘 보여진다`() {
         val movieTitleSlot = slot<String>()
 
         every { view.showMovieInfo(any(), any(), capture(movieTitleSlot)) } answers { nothing }

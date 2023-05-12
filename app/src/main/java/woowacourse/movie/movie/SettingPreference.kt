@@ -1,7 +1,7 @@
 package woowacourse.movie.movie
 
 import android.content.Context
-import woowacourse.movie.movie.MainActivity.Companion.SETTING_PREFERENCE_KEY
+import woowacourse.movie.movie.main.MainActivity.Companion.SETTING_PREFERENCE_KEY
 
 class SettingPreference(val context: Context) : BasePreference {
 

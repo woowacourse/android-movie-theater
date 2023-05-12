@@ -8,7 +8,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.movie.BasePreference
-import woowacourse.movie.movie.MainActivity.Companion.SETTING_PREFERENCE_KEY
+import woowacourse.movie.movie.main.MainActivity.Companion.SETTING_PREFERENCE_KEY
 
 internal class SettingPresenterTest {
 
@@ -24,7 +24,7 @@ internal class SettingPresenterTest {
     }
 
     @Test
-    fun 알림_허용이_커져있다면_스위치가_켜져있다 () {
+    fun 알림_허용이_커져있다면_스위치가_켜져있다() {
         // Given
         val switchState = true
         every { mockSettingPreference.getBoolean(SETTING_PREFERENCE_KEY) } returns switchState
@@ -39,7 +39,7 @@ internal class SettingPresenterTest {
     }
 
     @Test
-    fun 알림_허용이_꺼져있다면_스위치가_꺼져있다 () {
+    fun 알림_허용이_꺼져있다면_스위치가_꺼져있다() {
         // Given
         val switchState = false
         every { mockSettingPreference.getBoolean(SETTING_PREFERENCE_KEY) } returns switchState
@@ -54,7 +54,7 @@ internal class SettingPresenterTest {
     }
 
     @Test
-    fun SharedPreference에_저장된_값에따라_스위치의_상태가_잘_나타난다 () {
+    fun SharedPreference에_저장된_값에따라_스위치의_상태가_잘_나타난다() {
         // Given
         val switchState = true
         every { mockSettingPreference.getBoolean(any()) } returns switchState
@@ -78,7 +78,6 @@ internal class SettingPresenterTest {
         // Then
         verify { mockSettingPreference.setBoolean(SETTING_PREFERENCE_KEY, isChecked) }
     }
-
 
     // private lateinit var presenter: SettingPresenter
     // private lateinit var view: SettingContract.View

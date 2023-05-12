@@ -1,4 +1,4 @@
-package woowacourse.movie.movie
+package woowacourse.movie.movie.main
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -8,8 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
@@ -17,17 +16,18 @@ import woowacourse.movie.movie.database.DBController
 import woowacourse.movie.movie.database.TicketDataDBHelper
 import woowacourse.movie.movie.dto.BookingHistoryDto
 import woowacourse.movie.movie.history.HistoryFragment
-import woowacourse.movie.movie.history.HistoryFragment.Companion.TAG_HISTORY_FRAGMENT
 import woowacourse.movie.movie.movielist.HomeFragment
-import woowacourse.movie.movie.movielist.HomeFragment.Companion.TAG_HOME_FRAGMENT
 import woowacourse.movie.movie.setting.SettingFragment
-import woowacourse.movie.movie.setting.SettingFragment.Companion.TAG_SETTING_FRAGMENT
 import woowacourse.movie.movie.utils.Toaster
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var dBController: DBController
+
+    private val homeFragment = HomeFragment()
+    private val settingFragment = SettingFragment()
+    private val historyFragment = HistoryFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,45 +36,45 @@ class MainActivity : AppCompatActivity() {
         dBController.findAllDB()
         setContentView(binding.root)
         requestNotificationPermission()
-        //SettingPreference.initSharedPreferences(applicationContext)
-        setFragment(TAG_HOME_FRAGMENT, HomeFragment())
+        // setFragment(TAG_HOME_FRAGMENT, HomeFragment())
         binding.navigationBar?.let(::onNavigationBarClickListener)
     }
 
     private fun onNavigationBarClickListener(bottomNavigationView: BottomNavigationView) {
         bottomNavigationView.selectedItemId = R.id.home
         bottomNavigationView.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.home -> setFragment(TAG_HOME_FRAGMENT, HomeFragment())
-                R.id.history -> setFragment(TAG_HISTORY_FRAGMENT, HistoryFragment())
-                R.id.setting -> setFragment(TAG_SETTING_FRAGMENT, SettingFragment())
+            val screen = when (item.itemId) {
+                R.id.home -> Screen.MovieList
+                R.id.history -> Screen.History
+                R.id.setting -> Screen.Setting
+                else -> throw IllegalArgumentException()
             }
+            setScreen(screen)
             true
         }
     }
 
-    private fun setFragment(tag: String, fragment: Fragment) {
-        val manager: FragmentManager = supportFragmentManager
-        val ft = manager.beginTransaction()
-        if (manager.findFragmentByTag(tag) == null) {
-            ft.add(R.id.fragment_container_view, fragment, tag)
+    private fun setScreen(screen: Screen) {
+        when (screen) {
+            Screen.MovieList -> {
+                replaceFragment(homeFragment)
+            }
+
+            Screen.History -> {
+                replaceFragment(historyFragment)
+            }
+
+            Screen.Setting -> {
+                replaceFragment(settingFragment)
+            }
         }
-        val home = manager.findFragmentByTag(TAG_HOME_FRAGMENT)
-        val history = manager.findFragmentByTag(TAG_HISTORY_FRAGMENT)
-        val setting = manager.findFragmentByTag(TAG_SETTING_FRAGMENT)
-
-        hideFragment(ft, home, history, setting)
-
-        if (tag == TAG_HOME_FRAGMENT) if (home != null) ft.show(home)
-        if (tag == TAG_HISTORY_FRAGMENT) if (history != null) ft.show(history)
-        if (tag == TAG_SETTING_FRAGMENT) if (setting != null) ft.show(setting)
-        ft.commitAllowingStateLoss()
     }
 
-    private fun hideFragment(ft: FragmentTransaction, home: Fragment?, history: Fragment?, setting: Fragment?) {
-        if (home != null) ft.hide(home)
-        if (history != null) ft.hide(history)
-        if (setting != null) ft.hide(setting)
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(R.id.fragment_container_view, fragment)
+        }
     }
 
     private fun requestNotificationPermission() {

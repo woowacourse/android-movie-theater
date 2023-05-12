@@ -19,7 +19,7 @@ class TicketActivity : AppCompatActivity(), TicketContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTicketBinding.inflate(layoutInflater)
-        //binding = DataBindingUtil.setContentView(this, R.layout.activity_ticket)
+        // binding = DataBindingUtil.setContentView(this, R.layout.activity_ticket)
         setContentView(binding.root)
         presenter = TicketPresenter(this)
         setToolbar()

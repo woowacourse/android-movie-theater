@@ -14,7 +14,7 @@ import woowacourse.movie.movie.dto.ticket.TicketCountDto
 import java.time.LocalDate
 import java.time.LocalTime
 
-internal class TicketPresenterTest{
+internal class TicketPresenterTest {
 
     private lateinit var view: TicketContract.View
     private lateinit var presenter: TicketContract.Presenter

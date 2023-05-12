@@ -21,7 +21,7 @@ interface TicketContract {
         fun initActivity(data: BookingMovieEntity)
         fun getDateInfo(bookingMovieEntity: BookingMovieEntity): String
         fun getTicketInfo(bookingMovieEntity: BookingMovieEntity): String
-        //fun getTicketPrice()
+        // fun getTicketPrice()
         // fun getTicketPrice(seats: SeatsDto, date: LocalDate, time: LocalTime): String
     }
 }

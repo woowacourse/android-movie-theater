@@ -15,7 +15,7 @@ import woowacourse.movie.movie.dto.ticket.TicketCountDto
 import java.time.LocalDate
 import java.time.LocalTime
 
-internal class HistoryPresenterTest{
+internal class HistoryPresenterTest {
 
     private lateinit var view: HistoryContract.View
     private lateinit var presenter: HistoryContract.Presenter
@@ -33,13 +33,13 @@ internal class HistoryPresenterTest{
     )
 
     @Before
-    fun setUp(){
+    fun setUp() {
         view = mockk(relaxed = true)
         presenter = HistoryPresenter(view)
     }
 
     @Test
-    fun `Presenter가 사용자가 그동안 예매했던 기록들을 잘 가져온다`(){
+    fun `Presenter가 사용자가 그동안 예매했던 기록들을 잘 가져온다`() {
         val slot = slot<List<BookingMovieEntity>>()
         val bookingHistoryDto = mockk<BookingHistoryDto>()
         every { bookingHistoryDto.getHistory() } returns mockHistory
