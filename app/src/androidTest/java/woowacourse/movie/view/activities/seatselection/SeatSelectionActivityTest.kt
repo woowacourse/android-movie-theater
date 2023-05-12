@@ -72,14 +72,15 @@ class SeatSelectionActivityTest {
     }
 
     private fun onTable(tableId: Int, row: Int, column: Int): Matcher<View> {
-        val withParentThatTableRow = withParent(
-            allOf(
-                withParent(withId(tableId)),
-                withClassName(`is`("android.widget.TableRow")),
-                withParentIndex(row)
+        fun withParentThatTableRow(index: Int): Matcher<View> = withParent(
+                allOf(
+                    withParent(withId(tableId)),
+                    withClassName(`is`("android.widget.TableRow")),
+                    withParentIndex(index)
+                )
             )
-        )
-        return allOf(withParentThatTableRow, withParentIndex(column))
+
+        return allOf(withParentThatTableRow(row), withParentIndex(column))
     }
 
     @Test
