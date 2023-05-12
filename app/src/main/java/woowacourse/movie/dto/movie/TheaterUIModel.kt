@@ -1,9 +1,11 @@
 package woowacourse.movie.dto.movie
 
+import java.io.Serializable
+
 data class TheaterUIModel(
     val name: String,
     val screeningTime: Map<Int, List<String>>,
-) : java.io.Serializable {
+) : Serializable {
     companion object {
         val theater = TheaterUIModel(
             name = "",

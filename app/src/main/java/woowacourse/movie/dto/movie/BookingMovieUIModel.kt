@@ -2,6 +2,7 @@ package woowacourse.movie.dto.movie
 
 import woowacourse.movie.dto.seat.SeatsUIModel
 import woowacourse.movie.dto.ticket.TicketCountUIModel
+import java.io.Serializable
 
 data class BookingMovieUIModel(
     val movieTitle: String,
@@ -10,7 +11,7 @@ data class BookingMovieUIModel(
     val ticketCount: TicketCountUIModel,
     val seats: SeatsUIModel,
     val theaterName: String,
-) : java.io.Serializable {
+) : Serializable {
     companion object {
         val bookingMovie = BookingMovieUIModel(
             movieTitle = MovieUIModel.movieData.title,
