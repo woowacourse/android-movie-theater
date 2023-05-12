@@ -62,7 +62,7 @@ class SeatSelectionActivityTest {
     }
 
     @Test
-    fun 모든_좌석들은_행은_알파벳으로_열은_숫자로_변환된_이름이_정해진다() {
+    fun 모든_좌석_버튼의_문자열은_행은_알파벳으로_열은_숫자로_변환된_문자열이다() {
         (0..4).forEach { row ->
             (0..3).forEach { column ->
                 onView(onTable(R.id.seat_table, row, column))
@@ -157,7 +157,7 @@ class SeatSelectionActivityTest {
     }
 
     @Test
-    fun 최종_예매를_확인하는_다이얼로그가_표시되면_취소되지_않는다() {
+    fun 최종_예매를_확인하는_다이얼로그가_표시되면_취소_버튼을_누르지_않는_이상_취소되지_않는다() {
         onView(onTable(R.id.seat_table, 0, 0))
             .perform(click())
         onView(withId(R.id.reservation_btn))
