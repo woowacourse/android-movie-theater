@@ -29,6 +29,15 @@ class SeatSelectionActivity : BackButtonActivity(), SeatSelectionContract.View {
 
     private lateinit var presenter: SeatSelectionContract.Presenter
 
+    private val selectedScreeningDateTime: LocalDateTime by lazy {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getSerializableExtra(SCREENING_DATE_TIME, LocalDateTime::class.java)
+                ?: throw IllegalArgumentException("이 액티비티는 인텐트에 상영 시각이 저장되어 있을 때만 실행될 수 있습니다.")
+        } else {
+            intent.getSerializableExtra(SCREENING_DATE_TIME) as LocalDateTime
+        }
+    }
+
     private var selectedSeatNames: Set<String> by Delegates.observable(setOf()) { _, _, new ->
         presenter.setSelectedSeats(new)
         findViewById<Button>(R.id.reservation_btn).isEnabled =
@@ -41,20 +50,12 @@ class SeatSelectionActivity : BackButtonActivity(), SeatSelectionContract.View {
         presenter = SeatSelectionPresenter(
             this,
             intent.getLongExtra(SCREENING_ID, -1),
-            getScreeningDateTimeFromIntent()
+            selectedScreeningDateTime
         )
 
         presenter.loadScreening()
         initReservationButtonOnClickListener()
     }
-
-    private fun getScreeningDateTimeFromIntent(): LocalDateTime =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getSerializableExtra(SCREENING_DATE_TIME, LocalDateTime::class.java)
-                ?: throw IllegalArgumentException("이 액티비티는 인텐트에 상영 시각이 저장되어 있을 때만 실행될 수 있습니다.")
-        } else {
-            intent.getSerializableExtra(SCREENING_DATE_TIME) as LocalDateTime
-        }
 
     private fun initReservationButtonOnClickListener() {
         val reservationButton = findViewById<Button>(R.id.reservation_btn)
