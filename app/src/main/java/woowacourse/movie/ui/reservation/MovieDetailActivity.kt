@@ -80,15 +80,13 @@ class MovieDetailActivity : BaseBackKeyActionBarActivity(), MovieDetailContract.
         )
     }
 
-    override fun onRestoreInstanceState(
-        savedInstanceState: Bundle
-    ) {
-        val restoreSelectDate: LocalDate =
-            savedInstanceState.getSerializableCompat(KEY_DATE) ?: return keyError(KEY_DATE)
-        val restoreSelectTime: LocalTime =
-            savedInstanceState.getSerializableCompat(KEY_TIME) ?: return keyError(KEY_TIME)
-        val restoreCount: CountState =
-            savedInstanceState.getParcelableCompat(KEY_COUNT) ?: return keyError(KEY_COUNT)
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        val restoreSelectDate: LocalDate = savedInstanceState.getSerializableCompat(KEY_DATE)
+            ?: return keyError(KEY_DATE)
+        val restoreSelectTime: LocalTime = savedInstanceState.getSerializableCompat(KEY_TIME)
+            ?: return keyError(KEY_TIME)
+        val restoreCount: CountState = savedInstanceState.getParcelableCompat(KEY_COUNT)
+            ?: return keyError(KEY_COUNT)
 
         dateTimeSpinner.updateSelectDateTime(restoreSelectDate, restoreSelectTime)
         presenter.count = restoreCount

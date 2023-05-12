@@ -41,7 +41,7 @@ class MovieListAdapter(
         parent: ViewGroup,
         viewType: Int
     ): ItemViewHolder = when (viewType) {
-        MovieItemModel.type -> {
+        ItemModel.TYPE_MOVIE -> {
             val binding = ItemMovieLayoutBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -51,7 +51,7 @@ class MovieListAdapter(
                 onClickMovie(items[position] as MovieItemModel)
             }
         }
-        AdvItemModel.type -> {
+        ItemModel.TYPE_AD -> {
             val binding = ItemAdvLayoutBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -71,8 +71,8 @@ class MovieListAdapter(
     override fun getItemCount(): Int = items.size
 
     override fun getItemViewType(position: Int): Int = when (items[position]) {
-        is MovieItemModel -> MovieItemModel.type
-        is AdvItemModel -> AdvItemModel.type
+        is MovieItemModel -> ItemModel.TYPE_MOVIE
+        is AdvItemModel -> ItemModel.TYPE_AD
         else -> throw IllegalArgumentException(ERROR_INVALID_TYPE)
     }
 

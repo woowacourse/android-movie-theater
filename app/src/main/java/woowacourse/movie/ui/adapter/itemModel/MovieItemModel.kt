@@ -1,11 +1,11 @@
 package woowacourse.movie.ui.adapter.itemModel
 
 import woowacourse.movie.model.MovieState
+import woowacourse.movie.ui.adapter.itemModel.ItemModel.Companion.TYPE_MOVIE
 
 class MovieItemModel(
     val movieState: MovieState
 ) : ItemModel {
-    companion object {
-        const val type: Int = 1
-    }
+    override val viewType: Int
+        get() = TYPE_MOVIE
 }

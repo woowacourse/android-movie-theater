@@ -19,6 +19,7 @@ class SeatSelectPresenter(
     override fun setUpSeatSelectState() {
         view.initSeatTable(seatSelectState)
         view.showReservationTitle(seatSelectState)
+        view.setReservationConfirm(seatSelectState)
     }
 
     override fun discountMoneyApply(positionStates: List<SeatPositionState>) {
