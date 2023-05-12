@@ -16,8 +16,6 @@ import com.woowacourse.domain.seat.SeatRow
 import com.woowacourse.domain.ticket.Ticket
 import com.woowacourse.domain.ticket.TicketBundle
 import woowacourse.movie.AlarmSetter
-import woowacourse.movie.BookHistories
-import woowacourse.movie.BookingHistoryRepository
 import woowacourse.movie.BundleKeys
 import woowacourse.movie.BundleKeys.MOVIE_BOOKING_SEAT_INFO_KEY
 import woowacourse.movie.MovieReminder
@@ -25,6 +23,8 @@ import woowacourse.movie.R
 import woowacourse.movie.Theater
 import woowacourse.movie.activity.BackButtonActivity
 import woowacourse.movie.activity.bookcomplete.BookCompleteActivity
+import woowacourse.movie.database.BookHistories
+import woowacourse.movie.database.BookingHistoryRepositoryImpl
 import woowacourse.movie.databinding.ActivitySeatPickerBinding
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.mapper.toDomain
@@ -42,8 +42,8 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
     override lateinit var presenter: SeatPickerContract.Presenter
     private var seatGroup = SeatGroup()
     private lateinit var ticketBundle: TicketBundle
-    private val bookHistory: BookingHistoryRepository by lazy {
-        BookingHistoryRepository(BookHistories.getDBInstance(this))
+    private val bookHistory: BookingHistoryRepositoryImpl by lazy {
+        BookingHistoryRepositoryImpl(BookHistories.getDBInstance(this))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

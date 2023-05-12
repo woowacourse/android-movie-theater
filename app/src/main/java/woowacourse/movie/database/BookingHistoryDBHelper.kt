@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.database
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
@@ -30,14 +30,14 @@ class BookingHistoryDBHelper(context: Context) : SQLiteOpenHelper(
         const val KEY_TOTAL_PRICE = "total_price"
 
         private const val CREATE_TABLE_QUERY = "CREATE TABLE $TABLE_NAME (" +
-            "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-            "$KEY_TITLE text," +
-            "$KEY_DATE text," +
-            "$KEY_TIME text," +
-            "$KEY_TICKET_COUNT INTEGER NOT NULL," +
-            "$KEY_SEATS text," +
-            "$KEY_TOTAL_PRICE text" +
-            ");"
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "$KEY_TITLE text," +
+                "$KEY_DATE text," +
+                "$KEY_TIME text," +
+                "$KEY_TICKET_COUNT INTEGER NOT NULL," +
+                "$KEY_SEATS text," +
+                "$KEY_TOTAL_PRICE text" +
+                ");"
         private const val DROP_TABLE_QUERY = "DROP TABLE IF EXISTS $TABLE_NAME"
     }
 }
