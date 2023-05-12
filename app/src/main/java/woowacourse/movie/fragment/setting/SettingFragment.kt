@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import woowacourse.movie.BundleKeys.IS_CAN_PUSH_CHECKED
 import woowacourse.movie.BundleKeys.REQUEST_NOTIFICATION_PERMISSION
-import woowacourse.movie.PermissionManagerImpl
+import woowacourse.movie.PermissionManager
 import woowacourse.movie.R
 import woowacourse.movie.SharedPreferenceUtil
 import woowacourse.movie.databinding.FragmentSettingBinding
@@ -24,7 +24,7 @@ class SettingFragment(
     private val binding get() = _binding!!
     override lateinit var presenter: SettingContract.Presenter
     private val permissionManager by lazy {
-        PermissionManagerImpl(
+        PermissionManager(
             requireActivity(),
             activityResultLauncher
         )

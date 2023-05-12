@@ -16,7 +16,6 @@ import woowacourse.movie.BundleKeys.IS_CAN_PUSH_CHECKED
 import woowacourse.movie.BundleKeys.REQUEST_NOTIFICATION_PERMISSION
 import woowacourse.movie.DataRepository
 import woowacourse.movie.PermissionManager
-import woowacourse.movie.PermissionManagerImpl
 import woowacourse.movie.R
 import woowacourse.movie.SharedPreferenceUtil
 import woowacourse.movie.databinding.ActivityMainBinding
@@ -38,8 +37,7 @@ class MainActivity :
             ActivityResultContracts.RequestPermission(),
             progressIsGrantedNotificationPermission()
         )
-    private val permissionManager: PermissionManager =
-        PermissionManagerImpl(this, requestPermissionLauncher)
+    private val permissionManager = PermissionManager(this, requestPermissionLauncher)
     private val sharedPreferenceRepository: DataRepository by lazy {
         SharedPreferenceUtil(this)
     }
