@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import
+            alias="RecyclerViewAdapter"
+            type="woowacourse.movie.presentation.ui.main.fragments.theater.adapter.TheaterListAdapter" />
+
+        <variable
+            name="presenter"
+            type="woowacourse.movie.presentation.ui.main.fragments.theater.contract.TheaterContract.Presenter" />
+
+        <variable
+            name="rvAdapter"
+            type="RecyclerViewAdapter" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/theater_rv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:adapter="@{rvAdapter}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_max="250dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:onListItemClick="@{(item) -> presenter.handleItem(item)}"
+            app:onAdapted="@{presenter::loadTheaterList}"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_theater" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

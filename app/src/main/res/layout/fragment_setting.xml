@@ -1,45 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.activities.main.fragments.setting.SettingFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/notification_push_title_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:text="@string/switch_notification_push_title" />
+    <data>
 
-    <TextView
-        android:id="@+id/notification_push_desc_tv"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/notification_push_switch"
-        app:layout_constraintTop_toBottomOf="@+id/notification_push_title_tv"
-        app:layout_constraintStart_toStartOf="@+id/notification_push_title_tv"
-        android:layout_marginTop="9dp"
-        android:layout_marginEnd="12dp"
-        android:textSize="12sp"
-        android:textColor="@color/unselected_menu_color"
-        android:text="@string/switch_notification_push_description" />
+        <variable
+            name="presenter"
+            type="woowacourse.movie.presentation.ui.main.fragments.setting.contract.SettingContract.Presenter" />
+    </data>
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/notification_push_switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:thumbTint="@color/switch_thumb_color"
-        app:trackTint="@color/switch_track_color"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/notification_push_title_tv"
-        app:layout_constraintBottom_toBottomOf="@+id/notification_push_desc_tv" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.ui.main.fragments.setting.SettingFragment">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/notification_push_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/switch_notification_push_title"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/notification_push_desc_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:layout_marginEnd="12dp"
+            android:text="@string/switch_notification_push_description"
+            android:textColor="@color/unselected_menu_color"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/notification_push_switch"
+            app:layout_constraintStart_toStartOf="@+id/notification_push_title_tv"
+            app:layout_constraintTop_toBottomOf="@+id/notification_push_title_tv" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/notification_push_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:checked="@{presenter.getPushSwitchState()}"
+            android:onCheckedChanged="@{(buttonView, isChecked) -> presenter.changePushState(isChecked)}"
+            app:layout_constraintBottom_toBottomOf="@+id/notification_push_desc_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/notification_push_title_tv"
+            app:thumbTint="@color/switch_thumb_color"
+            app:trackTint="@color/switch_track_color" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

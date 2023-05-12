@@ -1,16 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.activities.main.fragments.home.HomeFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/movies_rv"
+    <data>
+
+        <import
+            alias="RecyclerViewAdapter"
+            type="woowacourse.movie.presentation.ui.main.fragments.home.recyclerview.MovieListAdapter" />
+
+        <variable
+            name="presenter"
+            type="woowacourse.movie.presentation.ui.main.fragments.home.contract.HomeContract.Presenter" />
+
+        <variable
+            name="rvAdapter"
+            type="RecyclerViewAdapter" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_movie" />
+        tools:context=".presentation.ui.main.fragments.home.HomeFragment">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/movies_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:adapter="@{rvAdapter}"
+            app:hasDivider="@{true}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:onAdapted="@{() -> presenter.loadMoreMoviesWithAds(20)}"
+            app:onEndScroll="@{() -> presenter.loadMoreMoviesWithAds(20)}"
+            app:onListItemClick="@{presenter::handleItem}"
+            tools:listitem="@layout/item_movie" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

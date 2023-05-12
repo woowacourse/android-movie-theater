@@ -1,5 +1,7 @@
 package woowacourse.movie.presentation.model.movieitem
 
-interface ListItem {
+import android.os.Parcelable
+
+interface ListItem : Parcelable {
     fun isAd(): Boolean
 }

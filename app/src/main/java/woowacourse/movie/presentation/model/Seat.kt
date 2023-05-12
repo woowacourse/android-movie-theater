@@ -32,6 +32,9 @@ class Seat(
         setOnClickListener { onClick(this) }
     }
 
+    fun toIndex(colSize: Int): Int =
+        (row.value - 65).code * colSize + col.value - 1
+
     override fun compareTo(other: Seat): Int {
         val rowCompare = row.compareTo(other.row)
         return if (rowCompare == 0) {

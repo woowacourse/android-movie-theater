@@ -1,17 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.activities.main.fragments.history.HistoryFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/history_recycler_view"
+    <data>
+
+        <import type="woowacourse.movie.presentation.ui.main.fragments.history.recyclerview.HistoryListAdapter" />
+
+        <variable
+            name="presenter"
+            type="woowacourse.movie.presentation.ui.main.fragments.history.contract.HistoryContract.Presenter" />
+
+        <variable
+            name="rvAdapter"
+            type="HistoryListAdapter" />
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        tools:listitem="@layout/item_history"
-        tools:itemCount="5"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:context=".presentation.ui.main.fragments.history.HistoryFragment">
 
-</FrameLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/history_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:adapter="@{rvAdapter}"
+            app:hasDivider="@{true}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:onAdapted="@{presenter::loadHistories}"
+            app:onListItemClick="@{presenter::handleItem}"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_history" />
+
+    </FrameLayout>
+</layout>

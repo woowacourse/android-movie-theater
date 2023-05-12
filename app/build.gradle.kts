@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
+    id("kotlin-kapt")
 }
 
 android {
@@ -38,10 +39,24 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    packagingOptions {
+        resources {
+            excludes += "META-INF/LICENSE.md"
+            excludes += "META-INF/LICENSE-notice.md"
+        }
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
+    dataBinding {
+        enable = true
+    }
 }
 
 dependencies {
+    testImplementation("junit:junit:4.12")
     val fragmentVersion = "1.5.5"
+    val mockkVersion = "1.13.5"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.0")
@@ -59,4 +74,5 @@ dependencies {
     implementation(project(":data"))
     implementation("androidx.fragment:fragment-ktx:1.4.0")
     androidTestImplementation("androidx.fragment:fragment-testing:$fragmentVersion")
+    testImplementation("io.mockk:mockk-android:$mockkVersion")
 }
