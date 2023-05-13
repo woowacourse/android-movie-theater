@@ -1,14 +1,20 @@
 package domain
 
 data class TicketCount(
-    val numberOfPeople: Int = MIN_BOOKER_NUMBER,
+    var numberOfPeople: Int = MIN_BOOKER_NUMBER,
 ) {
     init {
         require(numberOfPeople in MIN_BOOKER_NUMBER..MAX_BOOKER_NUMBER) { RANGE_ERROR_MESSAGE }
     }
-    fun increase(): TicketCount = TicketCount((numberOfPeople + 1).coerceAtLeast(MIN_BOOKER_NUMBER))
 
-    fun decrease(): TicketCount = TicketCount((numberOfPeople - 1).coerceAtMost(MAX_BOOKER_NUMBER))
+    fun increase() {
+        numberOfPeople++
+    }
+
+
+    fun decrease(){
+        numberOfPeople--
+    }
 
     companion object {
         private const val MIN_BOOKER_NUMBER = 1
