@@ -13,6 +13,6 @@ interface TheaterContract {
     interface Presenter {
         var movie: MovieDto
 
-        fun initFragment(data: MovieDto)
+        fun initData(data: MovieDto)
     }
 }

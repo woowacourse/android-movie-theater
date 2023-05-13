@@ -12,14 +12,11 @@ import woowacourse.movie.dto.theater.MovieTheaterDto
 import woowacourse.movie.moviedetail.MovieDetailActivity
 import woowacourse.movie.moviedetail.MovieDetailActivity.Companion.MOVIE_KEY
 import woowacourse.movie.movielist.HomeFragment
-import woowacourse.movie.movielist.OnClickListener
 import woowacourse.movie.utils.getParcelableCompat
 
 class TheaterSheetFragment : BottomSheetDialogFragment(), TheaterContract.View {
     private lateinit var binding: FragmentTheaterSheetBinding
     override lateinit var presenter: TheaterContract.Presenter
-
-    private lateinit var adapter: TheaterAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,24 +34,22 @@ class TheaterSheetFragment : BottomSheetDialogFragment(), TheaterContract.View {
     }
 
     override fun initDetailData() {
-        val movie = arguments?.getParcelableCompat<MovieDto>(MOVIE_KEY) ?: throw IllegalArgumentException()
-        presenter.initFragment(movie)
+        val movie =
+            arguments?.getParcelableCompat<MovieDto>(MOVIE_KEY) ?: throw IllegalArgumentException()
+        presenter.initData(movie)
     }
 
     override fun setUpTheaterData(movie: MovieDto) {
-        val theaterAdapter = TheaterAdapter(movie.theaters.theaters)
-        adapter = theaterAdapter
-        binding.theaterRecyclerview.adapter = adapter
-
-        theaterAdapter.itemViewClick = object : OnClickListener<MovieTheaterDto> {
-            override fun onClick(item: MovieTheaterDto) {
+        binding.theaterRecyclerview.adapter = TheaterAdapter(
+            movie.theaters.theaters,
+            fun (item: MovieTheaterDto) {
                 val intent = Intent(context, MovieDetailActivity::class.java)
                 intent.putExtra(MOVIE_KEY, movie)
                 intent.putExtra(THEATER_KEY, item)
                 dismiss()
                 startActivity(intent)
             }
-        }
+        )
     }
 
     companion object {

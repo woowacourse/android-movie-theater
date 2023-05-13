@@ -5,16 +5,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.TheaterItmeBinding
 import woowacourse.movie.dto.theater.MovieTheaterDto
-import woowacourse.movie.movielist.OnClickListener
 
-class TheaterAdapter(private val theaters: List<MovieTheaterDto>) : RecyclerView.Adapter<TheaterViewHolder>() {
-    lateinit var itemViewClick: OnClickListener<MovieTheaterDto>
+class TheaterAdapter(
+    private val theaters: List<MovieTheaterDto>,
+    private val onClick: (MovieTheaterDto) -> Unit
+) : RecyclerView.Adapter<TheaterViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TheaterViewHolder {
         val binding = TheaterItmeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TheaterViewHolder(binding).apply {
             binding.rightArrow.setOnClickListener {
-                itemViewClick.onClick(theaters[bindingAdapterPosition])
+                onClick(theaters[bindingAdapterPosition])
             }
         }
     }
