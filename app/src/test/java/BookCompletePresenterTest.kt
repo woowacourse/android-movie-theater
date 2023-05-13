@@ -75,6 +75,5 @@ class BookCompletePresenterTest {
             )
         }
         verify { view.initBookTotalPrice(movieBookingSeatInfo.totalPrice) }
-
     }
 }
