@@ -27,7 +27,7 @@ class HomeFragment : Fragment(), HomeContract.View {
     ): View {
         setUpBinding()
         presenter = HomePresenter(this)
-        presenter.initFragment()
+        presenter.initData()
         return binding.root
     }
 

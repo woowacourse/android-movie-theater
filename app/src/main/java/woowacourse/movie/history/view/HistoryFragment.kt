@@ -19,8 +19,6 @@ class HistoryFragment : Fragment(), HistoryContract.View {
     private lateinit var presenter: HistoryContract.Presenter
     private lateinit var binding: FragmentHistoryBinding
 
-    private lateinit var adapter: HistoryAdapter
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -54,7 +52,7 @@ class HistoryFragment : Fragment(), HistoryContract.View {
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        adapter = HistoryAdapter(
+        binding.historyRv.adapter = HistoryAdapter(
             presenter.getHistory().map { it.mapToDomain() },
             fun (item: BookingMovie) {
                 val intent = Intent(context, TicketActivity::class.java)

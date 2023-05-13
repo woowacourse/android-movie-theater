@@ -25,7 +25,7 @@ class SeatSelectView(
 
     private val tableLayout = viewGroup.findViewById<TableLayout>(R.id.seat)
 
-    var seatsView: List<List<TextView>> = mutableListOf()
+    private var seatsView: List<List<TextView>> = mutableListOf()
 
     init {
         setSeatsView()

@@ -11,8 +11,6 @@ interface TheaterContract {
     }
 
     interface Presenter {
-        var movie: MovieDto
-
         fun initData(data: MovieDto)
     }
 }

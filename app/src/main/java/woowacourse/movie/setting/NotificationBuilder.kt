@@ -15,7 +15,6 @@ import woowacourse.movie.seat.view.SeatSelectionActivity.Companion.ALARM_TIME
 import woowacourse.movie.utils.PendingIntentBuilder
 
 class NotificationBuilder(val context: Context) {
-
     fun createNotificationChannel() {
         val name = CHANNEL_NAME
         val descriptionText = CHANNEL_TEXT
