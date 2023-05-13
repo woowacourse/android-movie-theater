@@ -28,7 +28,7 @@ class MovieDetailPresenter(private val view: MovieDetailContract.View) :
     }
 
     override fun subTicketCount() {
-        if (movieTicket.numberOfPeople >= 2){
+        if (movieTicket.numberOfPeople >= 2) {
             movieTicket.decrease()
             view.showTicketCount(movieTicket.numberOfPeople)
         } else {
@@ -41,11 +41,11 @@ class MovieDetailPresenter(private val view: MovieDetailContract.View) :
         view.showTicketCount(movieTicket.numberOfPeople)
     }
 
-    override fun setBookingButton(){
+    override fun setBookingButton() {
         view.onClickBookBtnListener(movie.mapToMovieDto(), theater.mapToMovieTheaterDto())
     }
 
-    override fun setSpinner(){
+    override fun setSpinner() {
         view.setDateSpinner(getIntervalDays())
     }
 

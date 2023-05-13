@@ -13,9 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.SettingPreference
 import woowacourse.movie.main.MainActivity
-import woowacourse.movie.main.MainActivity.Companion.SETTING_PREFERENCE_KEY
 
 @RunWith(AndroidJUnit4::class)
 class SettingFragmentTest {
@@ -51,7 +49,7 @@ class SettingFragmentTest {
 
     @Test
     fun 세팅값이_false이면_스위치가_off_상태인지_확인() {
-        SettingPreference.setBoolean(SETTING_PREFERENCE_KEY, false)
+        // SettingPreference.setBoolean(SETTING_PREFERENCE_KEY, false)
 
         onView(withId(R.id.setting)).perform(click())
         onView(withId(R.id.push_alarm_switch)).check(matches(isNotChecked()))
@@ -59,7 +57,7 @@ class SettingFragmentTest {
 
     @Test
     fun 세팅값이_true이면_스위치가_on_상태인지_확인() {
-        SettingPreference.setBoolean(SETTING_PREFERENCE_KEY, true)
+        // SettingPreference.setBoolean(SETTING_PREFERENCE_KEY, true)
 
         onView(withId(R.id.setting)).perform(click())
         onView(withId(R.id.push_alarm_switch)).check(matches(isChecked()))

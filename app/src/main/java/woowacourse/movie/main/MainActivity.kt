@@ -11,9 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
-import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.database.DBController
 import woowacourse.movie.database.TicketDataDBHelper
+import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.dto.BookingHistoryDto
 import woowacourse.movie.history.HistoryFragment
 import woowacourse.movie.movielist.HomeFragment

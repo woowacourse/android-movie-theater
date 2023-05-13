@@ -1,7 +1,6 @@
 package woowacourse.movie.ticket
 
 import woowacourse.movie.dto.movie.BookingMovieEntity
-import woowacourse.movie.ticket.TicketContract
 
 class TicketPresenter(private val view: TicketContract.View) : TicketContract.Presenter {
     override lateinit var bookingMovieEntity: BookingMovieEntity

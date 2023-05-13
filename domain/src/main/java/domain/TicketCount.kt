@@ -11,8 +11,7 @@ data class TicketCount(
         numberOfPeople++
     }
 
-
-    fun decrease(){
+    fun decrease() {
         numberOfPeople--
     }
 

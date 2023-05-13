@@ -3,7 +3,6 @@ package woowacourse.movie.database
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import woowacourse.movie.database.TicketDataContract
 
 class TicketDataDBHelper(
     context: Context?,

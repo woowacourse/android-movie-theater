@@ -9,9 +9,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import domain.Seat
 import woowacourse.movie.R
-import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.database.DBController
 import woowacourse.movie.database.TicketDataDBHelper
+import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.dto.BookingHistoryDto
 import woowacourse.movie.dto.movie.BookingMovieEntity
 import woowacourse.movie.dto.movie.SeatMovieDto

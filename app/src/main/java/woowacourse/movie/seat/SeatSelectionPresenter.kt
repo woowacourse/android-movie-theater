@@ -7,8 +7,6 @@ import woowacourse.movie.dto.movie.SeatMovieDto
 import woowacourse.movie.dto.seat.SeatsDto
 import woowacourse.movie.mapper.seat.mapToSeats
 import woowacourse.movie.mapper.seat.mapToSeatsDto
-import woowacourse.movie.seat.SeatSelectionActivity
-import woowacourse.movie.seat.SeatSelectionContract
 import java.time.LocalDateTime
 import java.time.ZoneId
 

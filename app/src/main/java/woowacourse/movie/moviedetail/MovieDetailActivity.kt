@@ -23,7 +23,6 @@ import woowacourse.movie.utils.getParcelableCompat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-
 class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     private lateinit var binding: ActivityMovieDetailBinding
     private lateinit var presenter: MovieDetailContract.Presenter
@@ -90,13 +89,13 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         binding.bookerNum.text = numberOfPeople.toString()
     }
 
-    private fun onClickPlusBtnListener(){
+    private fun onClickPlusBtnListener() {
         binding.plusButton.setOnClickListener {
             presenter.plusTicketCount()
         }
     }
 
-    private fun onClickSubBtnListener(){
+    private fun onClickSubBtnListener() {
         binding.minusButton.setOnClickListener {
             presenter.subTicketCount()
         }

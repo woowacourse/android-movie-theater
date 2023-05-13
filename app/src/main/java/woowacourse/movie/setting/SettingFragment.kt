@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.SettingPreference
+import woowacourse.movie.databinding.FragmentSettingBinding
 
 class SettingFragment : Fragment(), SettingContract.View {
     override lateinit var presenter: SettingContract.Presenter
