@@ -38,8 +38,4 @@ class SettingFragment : Fragment(), SettingContract.View {
             presenter.setSwitchState(isChecked)
         }
     }
-
-    companion object {
-        const val TAG_SETTING_FRAGMENT = "setting_fragment"
-    }
 }

@@ -34,7 +34,6 @@ class HistoryFragment : Fragment(), HistoryContract.View {
     }
 
     private fun setUpBinding() {
-        // binding = DataBindingUtil.setContentView(, R.layout.fragment_history)
         binding = FragmentHistoryBinding.inflate(layoutInflater)
     }
 
@@ -59,7 +58,5 @@ class HistoryFragment : Fragment(), HistoryContract.View {
 
     companion object {
         private const val BOOKING_MOVIE_KEY = "booking_movie"
-
-        const val TAG_HISTORY_FRAGMENT = "history_fragment"
     }
 }

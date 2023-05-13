@@ -62,7 +62,5 @@ class HomeFragment : Fragment(), HomeContract.View {
 
     companion object {
         const val MOVIE_KEY = "movie"
-
-        const val TAG_HOME_FRAGMENT = "home_fragment"
     }
 }

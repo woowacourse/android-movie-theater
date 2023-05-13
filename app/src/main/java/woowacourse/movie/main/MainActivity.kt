@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
         dBController.findAllDB()
         setContentView(binding.root)
         requestNotificationPermission()
-        // setFragment(TAG_HOME_FRAGMENT, HomeFragment())
         binding.navigationBar?.let(::onNavigationBarClickListener)
     }
 
