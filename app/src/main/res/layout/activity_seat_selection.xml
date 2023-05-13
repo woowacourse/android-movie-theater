@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/seat_layout"
     android:background="@color/seat_background"
-    tools:context=".seat.SeatSelectionActivity">
+    tools:context=".seat.view.SeatSelectionActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/seat_selection_toolbar"

@@ -3,7 +3,7 @@ package woowacourse.movie.utils
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import woowacourse.movie.seat.SeatSelectionActivity
+import woowacourse.movie.seat.view.SeatSelectionActivity
 import woowacourse.movie.setting.AlarmReceiver
 import woowacourse.movie.ticket.model.BookingMovieModel
 import woowacourse.movie.ticket.view.TicketActivity

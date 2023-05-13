@@ -1,8 +1,8 @@
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.MovieItemBinding
-import woowacourse.movie.dto.movie.MovieDto
 import woowacourse.movie.movielist.OnClickListener
+import woowacourse.movie.movielist.dto.MovieDto
 import java.time.format.DateTimeFormatter
 
 class MovieViewHolder(

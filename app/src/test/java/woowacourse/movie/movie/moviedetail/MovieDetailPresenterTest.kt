@@ -7,11 +7,11 @@ import io.mockk.verify
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.dto.movie.MovieDto
-import woowacourse.movie.dto.theater.MovieTheaterDto
-import woowacourse.movie.dto.theater.MovieTheatersDto
-import woowacourse.movie.moviedetail.MovieDetailContract
-import woowacourse.movie.moviedetail.MovieDetailPresenter
+import woowacourse.movie.moviedetail.view.contract.MovieDetailContract
+import woowacourse.movie.moviedetail.view.presenter.MovieDetailPresenter
+import woowacourse.movie.movielist.dto.MovieDto
+import woowacourse.movie.theater.dto.MovieTheaterDto
+import woowacourse.movie.theater.dto.MovieTheatersDto
 import java.time.LocalDate
 import java.time.LocalTime
 

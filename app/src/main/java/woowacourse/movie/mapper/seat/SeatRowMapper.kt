@@ -1,7 +1,7 @@
 package woowacourse.movie.mapper.seat
 
 import domain.SeatRow
-import woowacourse.movie.dto.seat.SeatRowDto
+import woowacourse.movie.seat.dto.SeatRowDto
 
 fun SeatRow.mapToUIModel(): SeatRowDto {
     return SeatRowDto.of(this.row)

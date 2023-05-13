@@ -7,9 +7,9 @@ import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.dto.movie.MovieDateDto
-import woowacourse.movie.dto.movie.MovieTimeDto
-import woowacourse.movie.dto.ticket.TicketCountDto
+import woowacourse.movie.movielist.dto.MovieDateDto
+import woowacourse.movie.movielist.dto.MovieTimeDto
+import woowacourse.movie.ticket.dto.TicketCountDto
 import woowacourse.movie.ticket.model.BookingMovieModel
 import woowacourse.movie.ticket.view.contract.TicketContract
 import woowacourse.movie.ticket.view.presenter.TicketPresenter

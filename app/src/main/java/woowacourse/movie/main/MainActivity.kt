@@ -16,8 +16,8 @@ import woowacourse.movie.database.TicketDataDBHelper
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.history.model.BookingHistoryUIModel
 import woowacourse.movie.history.view.HistoryFragment
-import woowacourse.movie.movielist.HomeFragment
-import woowacourse.movie.setting.SettingFragment
+import woowacourse.movie.movielist.view.HomeFragment
+import woowacourse.movie.setting.view.SettingFragment
 import woowacourse.movie.utils.Toaster
 
 class MainActivity : AppCompatActivity() {

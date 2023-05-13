@@ -22,9 +22,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.dto.AdDto
-import woowacourse.movie.dto.movie.MovieDummy
 import woowacourse.movie.main.MainActivity
+import woowacourse.movie.movielist.dto.AdDto
+import woowacourse.movie.movielist.dto.MovieDummy
 
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {

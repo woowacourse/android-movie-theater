@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import woowacourse.movie.databinding.AdItemBinding
 import woowacourse.movie.databinding.MovieItemBinding
-import woowacourse.movie.dto.AdDto
-import woowacourse.movie.dto.movie.MovieDto
+import woowacourse.movie.movielist.dto.AdDto
+import woowacourse.movie.movielist.dto.MovieDto
 
 class MovieAdapter(
     private val movies: List<MovieDto>,

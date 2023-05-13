@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".moviedetail.MovieDetailActivity">
+        tools:context=".moviedetail.view.MovieDetailActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/movie_detail_toolbar"

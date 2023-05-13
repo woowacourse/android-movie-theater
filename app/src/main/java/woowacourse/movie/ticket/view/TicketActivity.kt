@@ -5,7 +5,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityTicketBinding
-import woowacourse.movie.seat.SeatSelectionActivity.Companion.BOOKING_MOVIE_KEY
+import woowacourse.movie.seat.view.SeatSelectionActivity.Companion.BOOKING_MOVIE_KEY
 import woowacourse.movie.ticket.model.BookingMovieModel
 import woowacourse.movie.ticket.view.contract.TicketContract
 import woowacourse.movie.ticket.view.presenter.TicketPresenter

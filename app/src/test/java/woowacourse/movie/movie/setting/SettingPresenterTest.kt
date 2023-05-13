@@ -9,8 +9,8 @@ import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.BasePreference
 import woowacourse.movie.main.MainActivity.Companion.SETTING_PREFERENCE_KEY
-import woowacourse.movie.setting.SettingContract
-import woowacourse.movie.setting.SettingPresenter
+import woowacourse.movie.setting.view.contract.SettingContract
+import woowacourse.movie.setting.view.presenter.SettingPresenter
 
 internal class SettingPresenterTest {
 

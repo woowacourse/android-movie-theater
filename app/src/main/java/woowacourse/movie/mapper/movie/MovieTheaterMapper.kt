@@ -2,8 +2,8 @@ package woowacourse.movie.mapper.movie
 
 import domain.movieinfo.MovieTheater
 import domain.movieinfo.MovieTheaters
-import woowacourse.movie.dto.theater.MovieTheaterDto
-import woowacourse.movie.dto.theater.MovieTheatersDto
+import woowacourse.movie.theater.dto.MovieTheaterDto
+import woowacourse.movie.theater.dto.MovieTheatersDto
 
 fun MovieTheaterDto.mapToMovieTheater(): MovieTheater {
     return MovieTheater(this.place, this.time)
