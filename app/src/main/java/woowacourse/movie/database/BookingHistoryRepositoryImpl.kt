@@ -12,7 +12,8 @@ import woowacourse.movie.database.BookingHistoryDBHelper.Companion.TABLE_NAME
 import woowacourse.movie.movie.MovieBookingInfo
 import woowacourse.movie.movie.MovieBookingSeatInfo
 
-class BookingHistoryRepositoryImpl(private val database: SQLiteDatabase) : BookingHistoryRepository {
+class BookingHistoryRepositoryImpl(private val database: SQLiteDatabase) :
+    BookingHistoryRepository {
     override fun getAll(): List<MovieBookingSeatInfo> {
         val bookingInfoGroup = mutableListOf<MovieBookingSeatInfo>()
         database.rawQuery("SELECT * FROM $TABLE_NAME", null).use {
