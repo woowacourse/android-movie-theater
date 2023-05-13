@@ -12,6 +12,7 @@ import woowacourse.movie.Ad
 import woowacourse.movie.BottomSheetTheaterPicker
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHomeBinding
+import woowacourse.movie.movie.Movie
 import woowacourse.movie.movielist.MovieRecyclerViewAdapter
 
 class HomeFragment : Fragment(), HomeContract.View {
@@ -30,18 +31,7 @@ class HomeFragment : Fragment(), HomeContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter = HomePresenter(this)
-        setMovieRecyclerView()
-    }
-
-    private fun setMovieRecyclerView() {
-        val movieRecyclerViewAdapter = MovieRecyclerViewAdapter(
-            presenter.fetchMovieList(),
-            presenter.fetchAd(),
-            presenter.onMovieClicked(),
-            presenter.onAdClicked(),
-        )
-        binding.rvMovieList.adapter = movieRecyclerViewAdapter
-        movieRecyclerViewAdapter.notifyDataSetChanged()
+        presenter.initMovieList()
     }
 
     override fun showTheaterPicker(): (Int) -> Unit = {
@@ -51,6 +41,22 @@ class HomeFragment : Fragment(), HomeContract.View {
 
     override fun startAdDetailPage(): (ad: Ad) -> Unit = { ad: Ad ->
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(ad.url)))
+    }
+
+    override fun setMovieList(
+        movies: List<Movie>,
+        ad: Ad,
+        movieOnItemClicked: (Int) -> Unit,
+        adOnItemClicked: (Ad) -> Unit
+    ) {
+        val movieRecyclerViewAdapter = MovieRecyclerViewAdapter(
+            movies,
+            ad,
+            movieOnItemClicked,
+            adOnItemClicked
+        )
+        binding.rvMovieList.adapter = movieRecyclerViewAdapter
+        movieRecyclerViewAdapter.notifyDataSetChanged()
     }
 
     override fun onDestroyView() {
