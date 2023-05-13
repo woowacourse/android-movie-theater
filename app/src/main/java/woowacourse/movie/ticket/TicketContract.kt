@@ -1,6 +1,7 @@
 package woowacourse.movie.ticket
 
-import woowacourse.movie.dto.movie.BookingMovieEntity
+import domain.BookingMovie
+import woowacourse.movie.dto.movie.BookingMovieDto
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -17,11 +18,9 @@ interface TicketContract {
     }
 
     interface Presenter {
-        var bookingMovieEntity: BookingMovieEntity
-        fun initActivity(data: BookingMovieEntity)
-        fun getDateInfo(bookingMovieEntity: BookingMovieEntity): String
-        fun getTicketInfo(bookingMovieEntity: BookingMovieEntity): String
-        // fun getTicketPrice()
-        // fun getTicketPrice(seats: SeatsDto, date: LocalDate, time: LocalTime): String
+        var bookingMovie: BookingMovie
+        fun initActivity(data: BookingMovieDto)
+        fun getDateInfo(bookingMovie: BookingMovie): String
+        fun getTicketInfo(bookingMovie: BookingMovie): String
     }
 }

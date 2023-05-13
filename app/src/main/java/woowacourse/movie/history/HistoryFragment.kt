@@ -6,13 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import domain.BookingMovie
 import woowacourse.movie.databinding.FragmentHistoryBinding
-import woowacourse.movie.dto.movie.BookingMovieEntity
+import woowacourse.movie.dto.movie.BookingMovieDto
+import woowacourse.movie.mapper.movie.mapToDomain
+import woowacourse.movie.mapper.movie.mapToUIModel
 import woowacourse.movie.movielist.OnClickListener
 import woowacourse.movie.ticket.TicketActivity
 
 class HistoryFragment : Fragment(), HistoryContract.View {
-    override lateinit var presenter: HistoryContract.Presenter
+    private lateinit var presenter: HistoryContract.Presenter
     private lateinit var binding: FragmentHistoryBinding
 
     private lateinit var adapter: HistoryAdapter
@@ -24,28 +27,28 @@ class HistoryFragment : Fragment(), HistoryContract.View {
     ): View {
         setUpBinding()
         presenter = HistoryPresenter(this)
-        presenter.initFragment()
+        setUpHistoryData(presenter.getHistory())
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        presenter.initFragment()
+        presenter.getHistory()
     }
 
     private fun setUpBinding() {
         binding = FragmentHistoryBinding.inflate(layoutInflater)
     }
 
-    override fun setUpHistoryData(history: List<BookingMovieEntity>) {
-        val historyAdapter = HistoryAdapter(history)
+    override fun setUpHistoryData(history: List<BookingMovieDto>) {
+        val historyAdapter = HistoryAdapter(history.map { it.mapToDomain() })
 
         adapter = historyAdapter
         binding.historyRv.adapter = adapter
-        historyAdapter.itemViewClick = object : OnClickListener<BookingMovieEntity> {
-            override fun onClick(item: BookingMovieEntity) {
+        historyAdapter.itemViewClick = object : OnClickListener<BookingMovie> {
+            override fun onClick(item: BookingMovie) {
                 val intent = Intent(context, TicketActivity::class.java)
-                intent.putExtra(BOOKING_MOVIE_KEY, item)
+                intent.putExtra(BOOKING_MOVIE_KEY, item.mapToUIModel())
                 startActivity(intent)
             }
         }
@@ -53,7 +56,7 @@ class HistoryFragment : Fragment(), HistoryContract.View {
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        adapter = HistoryAdapter(presenter.getHistory())
+        adapter = HistoryAdapter(presenter.getHistory().map { it.mapToDomain() })
     }
 
     companion object {

@@ -7,7 +7,7 @@ import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.dto.movie.BookingMovieEntity
+import woowacourse.movie.dto.movie.BookingMovieDto
 import woowacourse.movie.dto.movie.MovieDateDto
 import woowacourse.movie.dto.movie.MovieTimeDto
 import woowacourse.movie.dto.ticket.TicketCountDto
@@ -21,7 +21,7 @@ internal class TicketPresenterTest {
     private lateinit var view: TicketContract.View
     private lateinit var presenter: TicketContract.Presenter
 
-    private val fakeData = BookingMovieEntity(
+    private val fakeData = BookingMovieDto(
         title = "Joker",
         date = MovieDateDto(LocalDate.of(2022, 5, 15)),
         time = MovieTimeDto(LocalTime.of(14, 30)),

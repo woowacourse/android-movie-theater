@@ -8,8 +8,9 @@ import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import domain.BookingMovie
 import woowacourse.movie.R
-import woowacourse.movie.dto.movie.BookingMovieEntity
+import woowacourse.movie.mapper.movie.mapToUIModel
 import woowacourse.movie.seat.SeatSelectionActivity.Companion.ALARM_TIME
 import woowacourse.movie.utils.PendingIntentBuilder
 
@@ -28,13 +29,13 @@ class NotificationBuilder(val context: Context) {
         notificationManager.createNotificationChannel(channel)
     }
 
-    fun createNotificationBuilder(bookingMovie: BookingMovieEntity) {
+    fun createNotificationBuilder(bookingMovie: BookingMovie) {
         val builder = NotificationCompat.Builder(context, CHANNEL_ID).apply {
             setSmallIcon(R.drawable.cute_android)
             setContentTitle(NOTIFICATION_TITLE)
             setContentText(NOTIFICATION_TEXT.format(bookingMovie.title))
             priority = NotificationCompat.PRIORITY_DEFAULT
-            setContentIntent(PendingIntentBuilder(context).createNotificationPendingIntent(bookingMovie))
+            setContentIntent(PendingIntentBuilder(context).createNotificationPendingIntent(bookingMovie.mapToUIModel()))
             setAutoCancel(true)
         }
 

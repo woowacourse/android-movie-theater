@@ -1,16 +1,13 @@
 package woowacourse.movie.history
 
-import woowacourse.movie.dto.movie.BookingMovieEntity
+import woowacourse.movie.dto.movie.BookingMovieDto
 
 interface HistoryContract {
     interface View {
-        val presenter: Presenter
-
-        fun setUpHistoryData(history: List<BookingMovieEntity>)
+        fun setUpHistoryData(history: List<BookingMovieDto>)
     }
 
     interface Presenter {
-        fun initFragment()
-        fun getHistory(): List<BookingMovieEntity>
+        fun getHistory(): List<BookingMovieDto>
     }
 }

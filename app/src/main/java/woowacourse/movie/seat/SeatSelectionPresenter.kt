@@ -2,7 +2,7 @@ package woowacourse.movie.seat
 
 import domain.Seat
 import domain.Seats
-import woowacourse.movie.dto.movie.BookingMovieEntity
+import woowacourse.movie.dto.movie.BookingMovieDto
 import woowacourse.movie.dto.movie.SeatMovieDto
 import woowacourse.movie.dto.seat.SeatsDto
 import woowacourse.movie.mapper.seat.mapToSeats
@@ -67,12 +67,12 @@ class SeatSelectionPresenter(private val view: SeatSelectionContract.View) :
         return seats.mapToSeatsDto()
     }
 
-    override fun getBookingMovie(): BookingMovieEntity {
+    override fun getBookingMovie(): BookingMovieDto {
         val price = seats.caculateSeatPrice(
             LocalDateTime.of(seatBaseInfo.movieDate.date, seatBaseInfo.movieTime.time)
         )
 
-        return BookingMovieEntity(
+        return BookingMovieDto(
             seatBaseInfo.movie.title,
             seatBaseInfo.movieDate,
             seatBaseInfo.movieTime,

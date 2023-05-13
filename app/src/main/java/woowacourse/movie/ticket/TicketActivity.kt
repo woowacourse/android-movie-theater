@@ -5,7 +5,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityTicketBinding
-import woowacourse.movie.dto.movie.BookingMovieEntity
+import woowacourse.movie.dto.movie.BookingMovieDto
 import woowacourse.movie.seat.SeatSelectionActivity.Companion.BOOKING_MOVIE_KEY
 import woowacourse.movie.utils.getParcelableCompat
 import java.time.LocalDate
@@ -19,7 +19,6 @@ class TicketActivity : AppCompatActivity(), TicketContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTicketBinding.inflate(layoutInflater)
-        // binding = DataBindingUtil.setContentView(this, R.layout.activity_ticket)
         setContentView(binding.root)
         presenter = TicketPresenter(this)
         setToolbar()
@@ -32,7 +31,7 @@ class TicketActivity : AppCompatActivity(), TicketContract.View {
     }
 
     private fun initTicketData() {
-        val bookingMovie = intent.getParcelableCompat<BookingMovieEntity>(BOOKING_MOVIE_KEY)
+        val bookingMovie = intent.getParcelableCompat<BookingMovieDto>(BOOKING_MOVIE_KEY)
         bookingMovie?.let { presenter.initActivity(bookingMovie) }
     }
 

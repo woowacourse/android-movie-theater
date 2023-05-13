@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 import woowacourse.movie.dto.ticket.TicketCountDto
 
 @Parcelize
-data class BookingMovieEntity(
+data class BookingMovieDto(
     val title: String,
     val date: MovieDateDto,
     val time: MovieTimeDto,

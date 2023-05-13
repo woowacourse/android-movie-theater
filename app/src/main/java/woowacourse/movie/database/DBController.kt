@@ -3,7 +3,7 @@ package woowacourse.movie.database
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
 import woowacourse.movie.dto.BookingHistoryDto
-import woowacourse.movie.dto.movie.BookingMovieEntity
+import woowacourse.movie.dto.movie.BookingMovieDto
 import woowacourse.movie.dto.movie.MovieDateDto
 import woowacourse.movie.dto.movie.MovieTimeDto
 import woowacourse.movie.dto.ticket.TicketCountDto
@@ -11,7 +11,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 class DBController(private val writableDB: SQLiteDatabase) {
-    fun insertDB(bookingMovie: BookingMovieEntity) {
+    fun insertDB(bookingMovie: BookingMovieDto) {
         val values = ContentValues()
         values.put(TicketDataContract.TABLE_COLUMN_TITLE, bookingMovie.title)
         values.put(TicketDataContract.TABLE_COLUMN_DATE, bookingMovie.date.date.toString())
@@ -41,7 +41,7 @@ class DBController(private val writableDB: SQLiteDatabase) {
             val price =
                 cursor.getInt(cursor.getColumnIndexOrThrow(TicketDataContract.TABLE_COLUMN_PRICE))
 
-            val data = BookingMovieEntity(
+            val data = BookingMovieDto(
                 title,
                 MovieDateDto(LocalDate.parse(date)),
                 MovieTimeDto(LocalTime.parse(time)),

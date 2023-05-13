@@ -13,7 +13,7 @@ import woowacourse.movie.database.DBController
 import woowacourse.movie.database.TicketDataDBHelper
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.dto.BookingHistoryDto
-import woowacourse.movie.dto.movie.BookingMovieEntity
+import woowacourse.movie.dto.movie.BookingMovieDto
 import woowacourse.movie.dto.movie.SeatMovieDto
 import woowacourse.movie.dto.seat.SeatsDto
 import woowacourse.movie.moviedetail.MovieDetailActivity.Companion.SEAT_BASE_INFORMATION_KEY
@@ -144,7 +144,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         finish()
     }
 
-    private fun storeData(bookingMovie: BookingMovieEntity) {
+    private fun storeData(bookingMovie: BookingMovieDto) {
         dBController.insertDB(bookingMovie)
     }
 
