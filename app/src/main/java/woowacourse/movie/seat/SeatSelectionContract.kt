@@ -3,7 +3,7 @@ package woowacourse.movie.seat
 import android.os.Bundle
 import domain.Seat
 import domain.Seats
-import woowacourse.movie.dto.movie.BookingMovieDto
+import woowacourse.movie.ticket.model.BookingMovieModel
 import woowacourse.movie.dto.movie.SeatMovieDto
 import woowacourse.movie.dto.seat.SeatsDto
 
@@ -33,7 +33,7 @@ interface SeatSelectionContract {
         fun selectSeat(seat: Seat)
         fun convertSeatsToDto(): SeatsDto
         fun unselectSeat(seat: Seat)
-        fun getBookingMovie(): BookingMovieDto
+        fun getBookingMovie(): BookingMovieModel
         fun setDateTime(): Long
     }
 }

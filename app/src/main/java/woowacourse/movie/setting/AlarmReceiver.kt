@@ -6,7 +6,7 @@ import android.content.Intent
 import android.util.Log
 import domain.BookingMovie
 import woowacourse.movie.SettingPreference
-import woowacourse.movie.dto.movie.BookingMovieDto
+import woowacourse.movie.ticket.model.BookingMovieModel
 import woowacourse.movie.main.MainActivity.Companion.SETTING_PREFERENCE_KEY
 import woowacourse.movie.mapper.movie.mapToDomain
 import woowacourse.movie.seat.SeatSelectionActivity.Companion.BOOKING_MOVIE_KEY
@@ -20,7 +20,7 @@ class AlarmReceiver(private val settingPreference: SettingPreference) : Broadcas
             val notificationBuilder = NotificationBuilder(context)
             notificationBuilder.createNotificationChannel()
 
-            intent.getParcelableCompat<BookingMovieDto>(BOOKING_MOVIE_KEY)?.let { bookingMovie = it.mapToDomain() }
+            intent.getParcelableCompat<BookingMovieModel>(BOOKING_MOVIE_KEY)?.let { bookingMovie = it.mapToDomain() }
             Log.d(BOOKING_MOVIE_KEY, bookingMovie.toString())
 
             notificationBuilder.createNotificationBuilder(bookingMovie)

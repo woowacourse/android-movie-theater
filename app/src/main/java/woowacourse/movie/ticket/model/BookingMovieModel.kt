@@ -1,11 +1,13 @@
-package woowacourse.movie.dto.movie
+package woowacourse.movie.ticket.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import woowacourse.movie.dto.movie.MovieDateDto
+import woowacourse.movie.dto.movie.MovieTimeDto
 import woowacourse.movie.dto.ticket.TicketCountDto
 
 @Parcelize
-data class BookingMovieDto(
+data class BookingMovieModel(
     val title: String,
     val date: MovieDateDto,
     val time: MovieTimeDto,

@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import domain.BookingMovie
 import woowacourse.movie.databinding.FragmentHistoryBinding
-import woowacourse.movie.dto.movie.BookingMovieDto
+import woowacourse.movie.ticket.model.BookingMovieModel
 import woowacourse.movie.mapper.movie.mapToDomain
 import woowacourse.movie.mapper.movie.mapToUIModel
 import woowacourse.movie.movielist.OnClickListener
-import woowacourse.movie.ticket.TicketActivity
+import woowacourse.movie.ticket.view.TicketActivity
 
 class HistoryFragment : Fragment(), HistoryContract.View {
     private lateinit var presenter: HistoryContract.Presenter
@@ -40,7 +40,7 @@ class HistoryFragment : Fragment(), HistoryContract.View {
         binding = FragmentHistoryBinding.inflate(layoutInflater)
     }
 
-    override fun setUpHistoryData(history: List<BookingMovieDto>) {
+    override fun setUpHistoryData(history: List<BookingMovieModel>) {
         val historyAdapter = HistoryAdapter(history.map { it.mapToDomain() })
 
         adapter = historyAdapter

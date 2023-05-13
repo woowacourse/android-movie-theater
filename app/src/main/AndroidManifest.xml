@@ -18,7 +18,7 @@
             android:name=".seat.SeatSelectionActivity"
             android:exported="false" />
         <activity
-            android:name=".ticket.TicketActivity"
+            android:name=".ticket.view.TicketActivity"
             android:exported="false" />
         <activity
             android:name=".moviedetail.MovieDetailActivity"

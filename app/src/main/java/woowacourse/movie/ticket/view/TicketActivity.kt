@@ -1,12 +1,14 @@
-package woowacourse.movie.ticket
+package woowacourse.movie.ticket.view
 
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityTicketBinding
-import woowacourse.movie.dto.movie.BookingMovieDto
+import woowacourse.movie.ticket.model.BookingMovieModel
 import woowacourse.movie.seat.SeatSelectionActivity.Companion.BOOKING_MOVIE_KEY
+import woowacourse.movie.ticket.view.contract.TicketContract
+import woowacourse.movie.ticket.view.presenter.TicketPresenter
 import woowacourse.movie.utils.getParcelableCompat
 import java.time.LocalDate
 import java.time.LocalTime
@@ -23,6 +25,7 @@ class TicketActivity : AppCompatActivity(), TicketContract.View {
         presenter = TicketPresenter(this)
         setToolbar()
         initTicketData()
+        presenter.updateTicketInfo()
     }
 
     private fun setToolbar() {
@@ -31,24 +34,20 @@ class TicketActivity : AppCompatActivity(), TicketContract.View {
     }
 
     private fun initTicketData() {
-        val bookingMovie = intent.getParcelableCompat<BookingMovieDto>(BOOKING_MOVIE_KEY)
-        bookingMovie?.let { presenter.initActivity(bookingMovie) }
+        val bookingMovieModel = intent.getParcelableCompat<BookingMovieModel>(BOOKING_MOVIE_KEY)
+        bookingMovieModel?.let { presenter.getData(bookingMovieModel) }
     }
 
-    override fun showMovieTitle(title: String) {
-        binding.ticketTitle.text = title
-    }
-
-    override fun showMovieDate(date: String) {
-        binding.ticketDate.text = date
-    }
-
-    override fun showTicketInfo(seatInfo: String) {
-        binding.numberOfPeople.text = seatInfo
-    }
-
-    override fun showTicketPrice(ticketPrice: String) {
-        binding.ticketPrice.text = ticketPrice
+    override fun showTicketInfo(bookingMovieModel: BookingMovieModel){
+        binding.ticketTitle.text = bookingMovieModel.title
+        binding.ticketDate.text = formatTicketDateTime(
+            bookingMovieModel.date.date,
+            bookingMovieModel.time.time)
+        binding.numberOfPeople.text = formatTicketSeat(
+            bookingMovieModel.ticketCount.numberOfPeople,
+            bookingMovieModel.seats,
+            bookingMovieModel.theaterName)
+        binding.ticketPrice.text = bookingMovieModel.price.toString()
     }
 
     override fun formatTicketDateTime(date: LocalDate, time: LocalTime): String {

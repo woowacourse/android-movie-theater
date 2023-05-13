@@ -41,7 +41,7 @@ import woowacourse.movie.seat.SeatSelectionActivity.Companion.DATE_KEY
 import woowacourse.movie.seat.SeatSelectionActivity.Companion.MOVIE_KEY
 import woowacourse.movie.seat.SeatSelectionActivity.Companion.TICKET_KEY
 import woowacourse.movie.seat.SeatSelectionActivity.Companion.TIME_KEY
-import woowacourse.movie.ticket.TicketActivity
+import woowacourse.movie.ticket.view.TicketActivity
 import java.time.LocalDate
 import java.time.LocalTime
 
