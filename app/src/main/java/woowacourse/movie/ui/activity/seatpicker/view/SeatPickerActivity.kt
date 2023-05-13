@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TableRow
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -32,7 +31,7 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
     private lateinit var binding: ActivitySeatPickerBinding
     override lateinit var presenter: SeatPickerContract.Presenter
     private val seats = Seats()
-    private val seatTable = mutableMapOf<SeatModel, TextView>()
+    private val seatTable = mutableMapOf<SeatModel, SeatView>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initPresenter()
@@ -71,16 +70,12 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
 
     override fun setSeatReserved(seat: SeatModel) {
         val view = seatTable[seat]
-        view?.let {
-            it.isSelected = true
-        }
+        view?.setTextViewSelected(true)
     }
 
     override fun setSeatCanceled(seat: SeatModel) {
         val view = seatTable[seat]
-        view?.let {
-            it.isSelected = false
-        }
+        view?.setTextViewSelected(false)
     }
 
     override fun updatePrice(price: Int) {
@@ -128,32 +123,34 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
     private fun createRowView(rowIndex: Int): TableRow {
         val tableRow = TableRow(this)
         (0 until seats.columnSize).forEach { columnIndex ->
-            val seatLayout = layoutInflater.inflate(R.layout.seat_item, null)
             val seat = seats.getSeat(rowIndex, columnIndex)
-            val view = seatLayout.findViewById<TextView>(R.id.tv_seat)
-            initSeatView(view, seat)
-            tableRow.addView(seatLayout)
+            val seatView = createSeatView(tableRow, seat)
+            tableRow.addView(seatView)
         }
         return tableRow
     }
 
-    private fun initSeatView(
-        view: TextView,
+    private fun createSeatView(
+        parent: TableRow,
         seat: SeatModel
-    ) {
-        seatTable[seat] = view
-
-        view.text = getString(R.string.seat, seat.row.letter, seat.column.value)
-        view.setTextColor(getColor(seat.rank.color))
-        view.setOnClickListener {
-            presenter.handleSeatSelection(view.isSelected, seat)
-            presenter.checkSelectionDone()
-        }
+    ): SeatView {
+        val seatView = SeatView(
+            this,
+            parent = parent,
+            seats.columnSize,
+            onClick = {
+                presenter.handleSeatSelection(it, seat)
+                presenter.checkSelectionDone()
+            }
+        )
+        seatTable[seat] = seatView
+        seatView.bind(seat)
+        return seatView
     }
 
     private fun setSeatViews(ticket: MovieTicketModel) {
         seatTable.forEach { (seat, view) ->
-            if (ticket.isSelectedSeat(seat)) view.isSelected = true
+            if (ticket.isSelectedSeat(seat)) view.setTextViewSelected(true)
         }
     }
 
