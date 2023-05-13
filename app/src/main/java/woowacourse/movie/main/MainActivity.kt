@@ -41,7 +41,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onNavigationBarClickListener(bottomNavigationView: BottomNavigationView) {
-        bottomNavigationView.selectedItemId = R.id.home
         bottomNavigationView.setOnItemSelectedListener { item ->
             val screen = when (item.itemId) {
                 R.id.home -> Screen.MovieList
@@ -52,6 +51,7 @@ class MainActivity : AppCompatActivity() {
             setScreen(screen)
             true
         }
+        bottomNavigationView.selectedItemId = R.id.home
     }
 
     private fun setScreen(screen: Screen) {
