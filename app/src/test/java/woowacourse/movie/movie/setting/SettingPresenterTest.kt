@@ -7,8 +7,10 @@ import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.movie.BasePreference
-import woowacourse.movie.movie.main.MainActivity.Companion.SETTING_PREFERENCE_KEY
+import woowacourse.movie.BasePreference
+import woowacourse.movie.main.MainActivity.Companion.SETTING_PREFERENCE_KEY
+import woowacourse.movie.setting.SettingContract
+import woowacourse.movie.setting.SettingPresenter
 
 internal class SettingPresenterTest {
 

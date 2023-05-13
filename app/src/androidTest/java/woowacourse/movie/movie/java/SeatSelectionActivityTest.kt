@@ -1,4 +1,4 @@
-package woowacourse.movie.java
+package woowacourse.movie.movie.java
 
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
@@ -30,18 +30,18 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.movie.dto.movie.MovieDateDto
-import woowacourse.movie.movie.dto.movie.MovieDto
-import woowacourse.movie.movie.dto.movie.MovieTimeDto
-import woowacourse.movie.movie.dto.theater.MovieTheaterDto
-import woowacourse.movie.movie.dto.theater.MovieTheatersDto
-import woowacourse.movie.movie.dto.ticket.TicketCountDto
-import woowacourse.movie.movie.seat.SeatSelectionActivity
-import woowacourse.movie.movie.seat.SeatSelectionActivity.Companion.DATE_KEY
-import woowacourse.movie.movie.seat.SeatSelectionActivity.Companion.MOVIE_KEY
-import woowacourse.movie.movie.seat.SeatSelectionActivity.Companion.TICKET_KEY
-import woowacourse.movie.movie.seat.SeatSelectionActivity.Companion.TIME_KEY
-import woowacourse.movie.movie.ticket.TicketActivity
+import woowacourse.movie.dto.movie.MovieDateDto
+import woowacourse.movie.dto.movie.MovieDto
+import woowacourse.movie.dto.movie.MovieTimeDto
+import woowacourse.movie.dto.theater.MovieTheaterDto
+import woowacourse.movie.dto.theater.MovieTheatersDto
+import woowacourse.movie.dto.ticket.TicketCountDto
+import woowacourse.movie.seat.SeatSelectionActivity
+import woowacourse.movie.seat.SeatSelectionActivity.Companion.DATE_KEY
+import woowacourse.movie.seat.SeatSelectionActivity.Companion.MOVIE_KEY
+import woowacourse.movie.seat.SeatSelectionActivity.Companion.TICKET_KEY
+import woowacourse.movie.seat.SeatSelectionActivity.Companion.TIME_KEY
+import woowacourse.movie.ticket.TicketActivity
 import java.time.LocalDate
 import java.time.LocalTime
 

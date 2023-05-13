@@ -15,16 +15,16 @@
         android:theme="@style/Theme.Movie"
         tools:targetApi="31">
         <activity
-            android:name=".movie.seat.SeatSelectionActivity"
+            android:name=".seat.SeatSelectionActivity"
             android:exported="false" />
         <activity
-            android:name=".movie.ticket.TicketActivity"
+            android:name=".ticket.TicketActivity"
             android:exported="false" />
         <activity
-            android:name=".movie.moviedetail.MovieDetailActivity"
+            android:name=".moviedetail.MovieDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".movie.main.MainActivity"
+            android:name=".main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,7 +32,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".movie.setting.AlarmReceiver"
+        <receiver android:name=".setting.AlarmReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
