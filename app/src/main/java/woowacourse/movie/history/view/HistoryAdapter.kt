@@ -1,20 +1,21 @@
-package woowacourse.movie.history
+package woowacourse.movie.history.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import domain.BookingMovie
 import woowacourse.movie.databinding.HistoryItemBinding
-import woowacourse.movie.movielist.OnClickListener
 
-class HistoryAdapter(private val histories: List<BookingMovie>) : RecyclerView.Adapter<HistoryViewHolder>() {
-    lateinit var itemViewClick: OnClickListener<BookingMovie>
+class HistoryAdapter(
+    private val histories: List<BookingMovie>,
+    private val onClick: (BookingMovie) -> Unit
+) : RecyclerView.Adapter<HistoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
         val binding = HistoryItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return HistoryViewHolder(binding).apply {
             itemView.setOnClickListener {
-                itemViewClick.onClick(histories[bindingAdapterPosition])
+                onClick(histories[bindingAdapterPosition])
             }
         }
     }

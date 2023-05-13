@@ -8,12 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import domain.BookingMovie
 import woowacourse.movie.databinding.FragmentHistoryBinding
-import woowacourse.movie.history.HistoryAdapter
 import woowacourse.movie.history.view.contract.HistoryContract
 import woowacourse.movie.history.view.presenter.HistoryPresenter
 import woowacourse.movie.mapper.movie.mapToDomain
 import woowacourse.movie.mapper.movie.mapToUIModel
-import woowacourse.movie.movielist.OnClickListener
 import woowacourse.movie.ticket.model.BookingMovieModel
 import woowacourse.movie.ticket.view.TicketActivity
 
@@ -44,22 +42,26 @@ class HistoryFragment : Fragment(), HistoryContract.View {
     }
 
     override fun setUpHistoryData(history: List<BookingMovieModel>) {
-        val historyAdapter = HistoryAdapter(history.map { it.mapToDomain() })
-
-        adapter = historyAdapter
-        binding.historyRv.adapter = adapter
-        historyAdapter.itemViewClick = object : OnClickListener<BookingMovie> {
-            override fun onClick(item: BookingMovie) {
+        binding.historyRv.adapter = HistoryAdapter(
+            history.map { it.mapToDomain() },
+            fun (item: BookingMovie) {
                 val intent = Intent(context, TicketActivity::class.java)
                 intent.putExtra(BOOKING_MOVIE_KEY, item.mapToUIModel())
                 startActivity(intent)
             }
-        }
+        )
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        adapter = HistoryAdapter(presenter.getHistory().map { it.mapToDomain() })
+        adapter = HistoryAdapter(
+            presenter.getHistory().map { it.mapToDomain() },
+            fun (item: BookingMovie) {
+                val intent = Intent(context, TicketActivity::class.java)
+                intent.putExtra(BOOKING_MOVIE_KEY, item.mapToUIModel())
+                startActivity(intent)
+            }
+        )
     }
 
     companion object {
