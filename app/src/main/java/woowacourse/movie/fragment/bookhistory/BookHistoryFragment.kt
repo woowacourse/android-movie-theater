@@ -48,7 +48,7 @@ class BookHistoryFragment : Fragment(), BookHistoryContract.View {
         startActivity(
             BookCompleteActivity.intent(
                 requireContext(),
-                presenter.getData()[dataPosition]
+                BookHistories.items[dataPosition]
             )
         )
     }
@@ -63,7 +63,7 @@ class BookHistoryFragment : Fragment(), BookHistoryContract.View {
         )
 
         val bookHistoryRecyclerViewAdapter = BookHistoryRecyclerViewAdapter(
-            presenter.getData(),
+            BookHistories.items,
             getBookHistoryOnClickListener()
         )
 
