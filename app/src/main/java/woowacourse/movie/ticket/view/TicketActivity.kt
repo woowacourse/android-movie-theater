@@ -5,8 +5,8 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityTicketBinding
-import woowacourse.movie.ticket.model.BookingMovieModel
 import woowacourse.movie.seat.SeatSelectionActivity.Companion.BOOKING_MOVIE_KEY
+import woowacourse.movie.ticket.model.BookingMovieModel
 import woowacourse.movie.ticket.view.contract.TicketContract
 import woowacourse.movie.ticket.view.presenter.TicketPresenter
 import woowacourse.movie.utils.getParcelableCompat
@@ -38,15 +38,17 @@ class TicketActivity : AppCompatActivity(), TicketContract.View {
         bookingMovieModel?.let { presenter.getData(bookingMovieModel) }
     }
 
-    override fun showTicketInfo(bookingMovieModel: BookingMovieModel){
+    override fun showTicketInfo(bookingMovieModel: BookingMovieModel) {
         binding.ticketTitle.text = bookingMovieModel.title
         binding.ticketDate.text = formatTicketDateTime(
             bookingMovieModel.date.date,
-            bookingMovieModel.time.time)
+            bookingMovieModel.time.time
+        )
         binding.numberOfPeople.text = formatTicketSeat(
             bookingMovieModel.ticketCount.numberOfPeople,
             bookingMovieModel.seats,
-            bookingMovieModel.theaterName)
+            bookingMovieModel.theaterName
+        )
         binding.ticketPrice.text = bookingMovieModel.price.toString()
     }
 

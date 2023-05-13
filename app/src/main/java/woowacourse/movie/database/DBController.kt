@@ -2,11 +2,11 @@ package woowacourse.movie.database
 
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
-import woowacourse.movie.history.model.BookingHistoryUIModel
-import woowacourse.movie.ticket.model.BookingMovieModel
 import woowacourse.movie.dto.movie.MovieDateDto
 import woowacourse.movie.dto.movie.MovieTimeDto
 import woowacourse.movie.dto.ticket.TicketCountDto
+import woowacourse.movie.history.model.BookingHistoryUIModel
+import woowacourse.movie.ticket.model.BookingMovieModel
 import java.time.LocalDate
 import java.time.LocalTime
 

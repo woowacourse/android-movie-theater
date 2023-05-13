@@ -3,9 +3,9 @@ package woowacourse.movie.seat
 import android.os.Bundle
 import domain.Seat
 import domain.Seats
-import woowacourse.movie.ticket.model.BookingMovieModel
 import woowacourse.movie.dto.movie.SeatMovieDto
 import woowacourse.movie.dto.seat.SeatsDto
+import woowacourse.movie.ticket.model.BookingMovieModel
 
 interface SeatSelectionContract {
     interface View {

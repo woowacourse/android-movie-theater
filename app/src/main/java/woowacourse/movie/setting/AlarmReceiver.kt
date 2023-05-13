@@ -6,10 +6,10 @@ import android.content.Intent
 import android.util.Log
 import domain.BookingMovie
 import woowacourse.movie.SettingPreference
-import woowacourse.movie.ticket.model.BookingMovieModel
 import woowacourse.movie.main.MainActivity.Companion.SETTING_PREFERENCE_KEY
 import woowacourse.movie.mapper.movie.mapToDomain
 import woowacourse.movie.seat.SeatSelectionActivity.Companion.BOOKING_MOVIE_KEY
+import woowacourse.movie.ticket.model.BookingMovieModel
 import woowacourse.movie.utils.getParcelableCompat
 
 class AlarmReceiver(private val settingPreference: SettingPreference) : BroadcastReceiver() {

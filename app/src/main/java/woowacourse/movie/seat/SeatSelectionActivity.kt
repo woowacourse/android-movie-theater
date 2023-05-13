@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -12,12 +13,12 @@ import woowacourse.movie.R
 import woowacourse.movie.database.DBController
 import woowacourse.movie.database.TicketDataDBHelper
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
-import woowacourse.movie.history.model.BookingHistoryUIModel
-import woowacourse.movie.ticket.model.BookingMovieModel
 import woowacourse.movie.dto.movie.SeatMovieDto
 import woowacourse.movie.dto.seat.SeatsDto
+import woowacourse.movie.history.model.BookingHistoryUIModel
 import woowacourse.movie.moviedetail.MovieDetailActivity.Companion.SEAT_BASE_INFORMATION_KEY
 import woowacourse.movie.setting.AlarmReceiver
+import woowacourse.movie.ticket.model.BookingMovieModel
 import woowacourse.movie.ticket.view.TicketActivity
 import woowacourse.movie.utils.PendingIntentBuilder
 import woowacourse.movie.utils.Toaster
@@ -159,6 +160,17 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 presenter.getBookingMovie()
             )
         )
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     companion object {

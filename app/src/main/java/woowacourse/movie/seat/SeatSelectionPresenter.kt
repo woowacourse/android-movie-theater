@@ -2,11 +2,11 @@ package woowacourse.movie.seat
 
 import domain.Seat
 import domain.Seats
-import woowacourse.movie.ticket.model.BookingMovieModel
 import woowacourse.movie.dto.movie.SeatMovieDto
 import woowacourse.movie.dto.seat.SeatsDto
 import woowacourse.movie.mapper.seat.mapToSeats
 import woowacourse.movie.mapper.seat.mapToSeatsDto
+import woowacourse.movie.ticket.model.BookingMovieModel
 import java.time.LocalDateTime
 import java.time.ZoneId
 

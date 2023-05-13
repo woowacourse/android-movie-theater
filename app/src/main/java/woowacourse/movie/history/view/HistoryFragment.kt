@@ -11,10 +11,10 @@ import woowacourse.movie.databinding.FragmentHistoryBinding
 import woowacourse.movie.history.HistoryAdapter
 import woowacourse.movie.history.view.contract.HistoryContract
 import woowacourse.movie.history.view.presenter.HistoryPresenter
-import woowacourse.movie.ticket.model.BookingMovieModel
 import woowacourse.movie.mapper.movie.mapToDomain
 import woowacourse.movie.mapper.movie.mapToUIModel
 import woowacourse.movie.movielist.OnClickListener
+import woowacourse.movie.ticket.model.BookingMovieModel
 import woowacourse.movie.ticket.view.TicketActivity
 
 class HistoryFragment : Fragment(), HistoryContract.View {
