@@ -9,20 +9,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.BookHistories
 import woowacourse.movie.BookHistoryRecyclerViewAdapter
-import woowacourse.movie.BookingHistoryRepository
 import woowacourse.movie.R
 import woowacourse.movie.activity.bookcomplete.BookCompleteActivity
+import woowacourse.movie.database.BookHistories
+import woowacourse.movie.database.BookingHistoryRepositoryImpl
 import woowacourse.movie.databinding.FragmentBookHistoryBinding
 
 class BookHistoryFragment : Fragment(), BookHistoryContract.View {
     private var _binding: FragmentBookHistoryBinding? = null
     private val binding get() = _binding!!
     override lateinit var presenter: BookHistoryContract.Presenter
-    private val bookHistory: BookingHistoryRepository by lazy {
-        BookingHistoryRepository(BookHistories.getDBInstance(requireContext()))
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,15 +34,14 @@ class BookHistoryFragment : Fragment(), BookHistoryContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter = BookHistoryPresenter(this)
         super.onViewCreated(view, savedInstanceState)
-        if (!bookHistory.isEmpty()) {
-            reloadBookingData()
-        }
+        presenter.reloadBookingData(
+            BookingHistoryRepositoryImpl(
+                BookHistories.getDBInstance(
+                    requireContext()
+                )
+            )
+        )
         setMovieRecyclerView(view)
-    }
-
-    private fun reloadBookingData() {
-        BookHistories.items.clear()
-        BookHistories.items.addAll(bookHistory.getAll())
     }
 
     override fun showDetailPage(dataPosition: Int) {
@@ -58,7 +54,7 @@ class BookHistoryFragment : Fragment(), BookHistoryContract.View {
     }
 
     private fun setMovieRecyclerView(view: View) {
-        val movieRecyclerView: RecyclerView = requireView().findViewById(R.id.rv_book_history_list)
+        val movieRecyclerView: RecyclerView = view.findViewById(R.id.rv_book_history_list)
         movieRecyclerView.addItemDecoration(
             DividerItemDecoration(
                 view.context,
