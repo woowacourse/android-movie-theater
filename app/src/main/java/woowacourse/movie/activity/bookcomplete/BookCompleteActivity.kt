@@ -23,9 +23,9 @@ class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_book_complete)
 
         val movieBookingData = getMovieBookingSeatInfo()
-        presenter = BookCompletePresenter(this)
-        presenter.progressIfDummyData(movieBookingData)
-        presenter.initBookCompletePage(movieBookingData)
+        presenter = BookCompletePresenter(this, movieBookingData)
+        presenter.progressIfDummyData()
+        presenter.initBookCompletePage()
     }
 
     private fun getTheaterData(): Theater {

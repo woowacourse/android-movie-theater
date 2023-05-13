@@ -1,7 +1,5 @@
 package woowacourse.movie.activity.bookcomplete
 
-import woowacourse.movie.movie.MovieBookingSeatInfo
-
 interface BookCompleteContract {
     interface View {
         var presenter: Presenter
@@ -14,7 +12,7 @@ interface BookCompleteContract {
     }
 
     interface Presenter {
-        fun initBookCompletePage(movieBookingSeatInfo: MovieBookingSeatInfo)
-        fun progressIfDummyData(movieBookingSeatInfo: MovieBookingSeatInfo)
+        fun initBookCompletePage()
+        fun progressIfDummyData()
     }
 }
