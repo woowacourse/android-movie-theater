@@ -1,8 +1,8 @@
-package woowacourse.movie.dto
+package woowacourse.movie.history.model
 
 import woowacourse.movie.ticket.model.BookingMovieModel
 
-object BookingHistoryDto : java.io.Serializable {
+object BookingHistoryUIModel : java.io.Serializable {
 
     private val bookingHistory = mutableListOf<BookingMovieModel>()
 

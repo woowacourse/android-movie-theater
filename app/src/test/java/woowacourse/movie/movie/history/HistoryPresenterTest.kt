@@ -7,13 +7,13 @@ import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.dto.BookingHistoryDto
+import woowacourse.movie.history.model.BookingHistoryUIModel
 import woowacourse.movie.ticket.model.BookingMovieModel
 import woowacourse.movie.dto.movie.MovieDateDto
 import woowacourse.movie.dto.movie.MovieTimeDto
 import woowacourse.movie.dto.ticket.TicketCountDto
-import woowacourse.movie.history.HistoryContract
-import woowacourse.movie.history.HistoryPresenter
+import woowacourse.movie.history.view.contract.HistoryContract
+import woowacourse.movie.history.view.presenter.HistoryPresenter
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -43,7 +43,7 @@ internal class HistoryPresenterTest {
     @Test
     fun `Presenter가 사용자가 그동안 예매했던 기록들을 잘 가져온다`() {
         val slot = slot<List<BookingMovieModel>>()
-        val bookingHistoryDto = mockk<BookingHistoryDto>()
+        val bookingHistoryDto = mockk<BookingHistoryUIModel>()
         every { bookingHistoryDto.getHistory() } returns mockHistory
         every { view.setUpHistoryData(capture(slot)) } answers { nothing }
 

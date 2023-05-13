@@ -12,7 +12,7 @@ import woowacourse.movie.R
 import woowacourse.movie.database.DBController
 import woowacourse.movie.database.TicketDataDBHelper
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
-import woowacourse.movie.dto.BookingHistoryDto
+import woowacourse.movie.history.model.BookingHistoryUIModel
 import woowacourse.movie.ticket.model.BookingMovieModel
 import woowacourse.movie.dto.movie.SeatMovieDto
 import woowacourse.movie.dto.seat.SeatsDto
@@ -139,7 +139,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         val intent = Intent(this, TicketActivity::class.java)
         intent.putExtra(BOOKING_MOVIE_KEY, bookingMovie)
         putAlarm()
-        BookingHistoryDto.add(bookingMovie)
+        BookingHistoryUIModel.add(bookingMovie)
         startActivity(intent)
         finish()
     }

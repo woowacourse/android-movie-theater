@@ -2,7 +2,7 @@ package woowacourse.movie.database
 
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
-import woowacourse.movie.dto.BookingHistoryDto
+import woowacourse.movie.history.model.BookingHistoryUIModel
 import woowacourse.movie.ticket.model.BookingMovieModel
 import woowacourse.movie.dto.movie.MovieDateDto
 import woowacourse.movie.dto.movie.MovieTimeDto
@@ -50,7 +50,7 @@ class DBController(private val writableDB: SQLiteDatabase) {
                 theater,
                 price
             )
-            BookingHistoryDto.add(data)
+            BookingHistoryUIModel.add(data)
         }
         cursor.close()
     }

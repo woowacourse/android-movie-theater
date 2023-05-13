@@ -14,8 +14,8 @@ import woowacourse.movie.R
 import woowacourse.movie.database.DBController
 import woowacourse.movie.database.TicketDataDBHelper
 import woowacourse.movie.databinding.ActivityMainBinding
-import woowacourse.movie.dto.BookingHistoryDto
-import woowacourse.movie.history.HistoryFragment
+import woowacourse.movie.history.model.BookingHistoryUIModel
+import woowacourse.movie.history.view.HistoryFragment
 import woowacourse.movie.movielist.HomeFragment
 import woowacourse.movie.setting.SettingFragment
 import woowacourse.movie.utils.Toaster
@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        BookingHistoryDto.deleteAll()
+        BookingHistoryUIModel.deleteAll()
         dBController.closeDB()
     }
 
