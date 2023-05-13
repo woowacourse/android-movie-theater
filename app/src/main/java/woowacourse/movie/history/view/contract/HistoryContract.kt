@@ -1,4 +1,4 @@
-package woowacourse.movie.history
+package woowacourse.movie.history.view.contract
 
 import woowacourse.movie.ticket.model.BookingMovieModel
 

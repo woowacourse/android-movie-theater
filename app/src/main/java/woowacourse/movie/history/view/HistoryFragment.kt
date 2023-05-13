@@ -1,4 +1,4 @@
-package woowacourse.movie.history
+package woowacourse.movie.history.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import domain.BookingMovie
 import woowacourse.movie.databinding.FragmentHistoryBinding
+import woowacourse.movie.history.HistoryAdapter
+import woowacourse.movie.history.view.contract.HistoryContract
+import woowacourse.movie.history.view.presenter.HistoryPresenter
 import woowacourse.movie.ticket.model.BookingMovieModel
 import woowacourse.movie.mapper.movie.mapToDomain
 import woowacourse.movie.mapper.movie.mapToUIModel
