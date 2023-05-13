@@ -3,7 +3,7 @@ package woowacourse.movie
 import woowacourse.movie.movie.Movie
 import java.io.Serializable
 
-class Theater(
+data class Theater(
     val name: String,
     val screeningMovies: List<Movie>,
     val screenTimes: Map<Movie, List<String>>
