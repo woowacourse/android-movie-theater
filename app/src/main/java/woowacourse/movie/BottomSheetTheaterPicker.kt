@@ -44,6 +44,7 @@ class BottomSheetTheaterPicker(
     private fun onTheaterClicked(): (position: Int) -> Unit = { position ->
         val intent = MovieDetailActivity.intent(requireContext())
         intent.putExtra(BundleKeys.MOVIE_DATA_KEY, MovieMockData.movies10000[pickedMoviePosition])
+        intent.putExtra(BundleKeys.THEATER_DATA_KEY, TheaterMockData.dummyTheaters[position])
         startActivity(intent)
     }
 
