@@ -34,7 +34,7 @@ internal class SettingPresenterTest {
         every { view.initSwitch(capture(slot)) } returns Unit
 
         // When
-        presenter.initFragment()
+        presenter.initState()
 
         // Then
         assertEquals(true, slot.captured)
@@ -49,7 +49,7 @@ internal class SettingPresenterTest {
         every { view.initSwitch(capture(slot)) } returns Unit
 
         // When
-        presenter.initFragment()
+        presenter.initState()
 
         // Then
         assertEquals(false, slot.captured)

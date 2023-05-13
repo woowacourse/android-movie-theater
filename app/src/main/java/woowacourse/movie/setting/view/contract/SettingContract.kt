@@ -9,7 +9,7 @@ interface SettingContract {
     }
 
     interface Presenter {
-        fun initFragment()
+        fun initState()
         fun getSwitchState(): Boolean
         fun setSwitchState(isChecked: Boolean)
     }

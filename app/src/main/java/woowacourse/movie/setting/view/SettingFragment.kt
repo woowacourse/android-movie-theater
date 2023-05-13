@@ -27,7 +27,7 @@ class SettingFragment : Fragment(), SettingContract.View {
     }
 
     override fun bindSwitch() {
-        presenter.initFragment()
+        presenter.initState()
         setSwitch()
     }
 

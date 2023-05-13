@@ -5,7 +5,7 @@ import woowacourse.movie.main.MainActivity.Companion.SETTING_PREFERENCE_KEY
 import woowacourse.movie.setting.view.contract.SettingContract
 
 class SettingPresenter(private val view: SettingContract.View, private val settingPreference: BasePreference) : SettingContract.Presenter {
-    override fun initFragment() {
+    override fun initState() {
         view.initSwitch(getSwitchState())
     }
 
