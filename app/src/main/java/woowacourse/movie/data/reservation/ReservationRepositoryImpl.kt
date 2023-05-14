@@ -9,12 +9,12 @@ import woowacourse.movie.domain.screening.Minute
 import woowacourse.movie.domain.screening.Movie
 import woowacourse.movie.domain.screening.Reservation
 import woowacourse.movie.domain.theater.Point
-import woowacourse.movie.repository.ReservationRepository1
+import woowacourse.movie.repository.ReservationRepository
 import woowacourse.movie.repository.TheaterRepository
 import java.lang.IllegalStateException
 import java.time.LocalDateTime
 
-class ReservationRepositoryImpl(private val db: SQLiteDatabase) : ReservationRepository1 {
+class ReservationRepositoryImpl(private val db: SQLiteDatabase) : ReservationRepository {
     override fun save(reservation: Reservation): Long {
         saveReservation(reservation)
         saveSeatPoints(reservation)

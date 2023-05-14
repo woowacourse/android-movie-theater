@@ -5,7 +5,7 @@ import woowacourse.movie.domain.theater.Point
 import woowacourse.movie.domain.screening.Screening
 import woowacourse.movie.domain.theater.SeatClass
 import woowacourse.movie.domain.theater.Theater
-import woowacourse.movie.repository.ReservationRepository1
+import woowacourse.movie.repository.ReservationRepository
 import woowacourse.movie.repository.ScreeningRepository
 import java.time.LocalDateTime
 
@@ -13,7 +13,7 @@ class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
     private val screeningId: Long,
     private val screeningDateTime: LocalDateTime,
-    private val reservationRepository: ReservationRepository1
+    private val reservationRepository: ReservationRepository
 ) : SeatSelectionContract.Presenter {
 
     private lateinit var screening: Screening
