@@ -11,6 +11,7 @@ import woowacourse.app.data.advertisement.AdvertisementDao
 import woowacourse.app.data.advertisement.AdvertisementRepositoryImpl
 import woowacourse.app.data.movie.MovieDao
 import woowacourse.app.data.movie.MovieRepositoryImpl
+import woowacourse.app.presentation.model.HomeData
 import woowacourse.app.presentation.model.movie.MovieUiModel
 import woowacourse.app.presentation.ui.booking.BookingActivity
 import woowacourse.app.presentation.ui.main.home.adapter.recyclerview.HomeAdapter
@@ -24,6 +25,7 @@ class HomeFragment : Fragment(), HomeContract.View {
                 AdvertisementRepositoryImpl(AdvertisementDao(requireContext())),
                 MovieRepositoryImpl(MovieDao(requireContext())),
             ),
+            this,
         )
     }
 
@@ -37,17 +39,17 @@ class HomeFragment : Fragment(), HomeContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initAdapter(view)
+        presenter.fetchHomeData()
     }
 
-    private fun initAdapter(view: View) {
+    override fun initMovies(homeData: List<HomeData>) {
         val homeAdapter = HomeAdapter(
             requireContext(),
             { clickBook(it) },
             { clickAdvertisement(it) },
         )
-        view.findViewById<RecyclerView>(R.id.listMainMovie).adapter = homeAdapter
-        homeAdapter.initMovies(presenter.getHomeData())
+        requireActivity().findViewById<RecyclerView>(R.id.listMainMovie).adapter = homeAdapter
+        homeAdapter.initMovies(homeData)
     }
 
     private fun clickBook(movie: MovieUiModel) {
