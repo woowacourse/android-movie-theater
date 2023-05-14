@@ -48,7 +48,7 @@ class SeatPresenter(
         when (result) {
             is CgvResult.Success -> setTable(result.data)
             is CgvResult.Failure -> {
-                view.errorControl()
+                view.showNoSuchTheater()
                 return
             }
         }
@@ -65,7 +65,7 @@ class SeatPresenter(
     }
 
     override fun clickConfirmButton() {
-        view.showDialog()
+        view.showBookingConfirmDialog()
     }
 
     override fun completeBooking() {

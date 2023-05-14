@@ -93,7 +93,7 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         }
     }
 
-    override fun errorControl() {
+    override fun showNoSuchTheater() {
         shortToast(R.string.error_no_such_theater)
         finish()
     }
@@ -148,7 +148,7 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         finish()
     }
 
-    override fun showDialog() {
+    override fun showBookingConfirmDialog() {
         AlertDialog.Builder(this)
             .setTitle(R.string.booking_confirm)
             .setMessage(R.string.booking_really)

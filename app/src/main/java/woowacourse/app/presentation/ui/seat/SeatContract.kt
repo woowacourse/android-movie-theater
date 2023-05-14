@@ -21,8 +21,8 @@ interface SeatContract {
         fun setPaymentText(payment: Int)
         fun setConfirmButtonEnable(isSeatFull: Boolean)
         fun completeBooking(reservation: Reservation)
-        fun errorControl()
-        fun showDialog()
+        fun showNoSuchTheater()
+        fun showBookingConfirmDialog()
     }
 
     interface Presenter {
