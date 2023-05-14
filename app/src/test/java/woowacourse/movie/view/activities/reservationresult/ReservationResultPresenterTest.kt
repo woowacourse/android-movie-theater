@@ -1,7 +1,10 @@
 package woowacourse.movie.view.activities.reservationresult
 
 import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
+import io.mockk.runs
+import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.domain.screening.Minute
@@ -14,7 +17,7 @@ import java.time.LocalDateTime
 
 class ReservationResultPresenterTest {
 
-    private lateinit var view: FakeView
+    private lateinit var view: ReservationResultContract.View
     private lateinit var reservationRepository: ReservationRepository
     private val fakeReservation: Reservation = Reservation(
         Movie("title", Minute(152), "summary"),
@@ -25,7 +28,7 @@ class ReservationResultPresenterTest {
 
     @Before
     fun setUp() {
-        view = FakeView()
+        view = mockk()
         reservationRepository = mockk()
     }
 
@@ -33,18 +36,11 @@ class ReservationResultPresenterTest {
     fun `예매를 로드하면 뷰에 예매 UI 상태를 설정한다`() {
         val reservationId = 1L
         every { reservationRepository.findById(reservationId) } returns fakeReservation
+        every { view.setReservation(any()) } just runs
         val sut = ReservationResultPresenter(view, reservationId, reservationRepository)
 
         sut.loadReservation()
 
-        assert(view.settingReservationIsDone)
-    }
-
-    class FakeView : ReservationResultContract.View {
-        var settingReservationIsDone: Boolean = false
-
-        override fun setReservation(reservationUIState: ReservationUIState) {
-            settingReservationIsDone = true
-        }
+        verify { view.setReservation(any()) }
     }
 }
