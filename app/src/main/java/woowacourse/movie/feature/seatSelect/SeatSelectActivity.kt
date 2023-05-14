@@ -32,15 +32,22 @@ import kotlin.collections.ArrayList
 class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
     private lateinit var binding: ActivitySeatSelectBinding
 
-    private lateinit var reservationState: SelectReservationState
-
     private lateinit var presenter: SeatSelectContract.Presenter
 
     private lateinit var reservationTicketsDao: ReservationTicketsDao
 
+    private val allSeats by lazy {
+        binding.seats
+            .children
+            .filterIsInstance<TableRow>()
+            .flatMap { it.children }
+            .filterIsInstance<SeatView>()
+            .toList()
+    }
+
     override fun onCreateView(savedInstanceState: Bundle?) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_select)
-        reservationState =
+        val reservationState: SelectReservationState =
             intent.getParcelableExtraCompat(KEY_SELECT_RESERVATION) ?: return keyError(
                 KEY_SELECT_RESERVATION
             )
@@ -58,17 +65,8 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
         binding.movie = reservationState.movie
     }
 
-    private fun getAllSeatView(): List<SeatView> {
-        return binding.seats
-            .children
-            .filterIsInstance<TableRow>()
-            .flatMap { it.children }
-            .filterIsInstance<SeatView>()
-            .toList()
-    }
-
     private fun initClickListener() {
-        getAllSeatView().forEachIndexed { index, seatView ->
+        allSeats.forEachIndexed { index, seatView ->
             seatView.setOnClickListener {
                 presenter.clickSeat(index)
             }
@@ -94,7 +92,7 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
     }
 
     override fun seatToggle(index: Int) {
-        getAllSeatView()[index].toggle()
+        allSeats[index].toggle()
     }
 
     override fun changePredictMoney(moneyState: MoneyState) {

@@ -9,6 +9,7 @@ import com.example.domain.usecase.LoadAlarmSettingInfoUseCase
 import com.example.domain.usecase.SetAlarmSettingUseCase
 import woowacourse.movie.R
 import woowacourse.movie.data.AlarmSettingRepositoryImpl
+import woowacourse.movie.data.preference.AlarmSettingPreference
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.feature.common.Toaster
 import woowacourse.movie.feature.main.MainActivity.Companion.PERMISSIONS
@@ -32,7 +33,7 @@ class SettingFragment : Fragment(), SettingContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val alarmSettingRepositoryImpl = AlarmSettingRepositoryImpl(requireContext())
+        val alarmSettingRepositoryImpl = AlarmSettingRepositoryImpl(AlarmSettingPreference)
         presenter = SettingPresenter(
             this,
             LoadAlarmSettingInfoUseCase(alarmSettingRepositoryImpl),

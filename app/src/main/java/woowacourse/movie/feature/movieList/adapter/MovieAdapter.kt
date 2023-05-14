@@ -12,12 +12,10 @@ import woowacourse.movie.feature.movieList.viewHolder.AdvViewHolder
 import woowacourse.movie.feature.movieList.viewHolder.MovieViewHolder
 
 class MovieAdapter(
-    items: List<CommonItemModel> = listOf(),
+    items: List<CommonItemModel> = listOf()
 ) : RecyclerView.Adapter<CommonItemViewHolder>() {
 
     private var _items: List<CommonItemModel> = items.toList()
-    val items: List<CommonItemModel>
-        get() = _items.toList()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

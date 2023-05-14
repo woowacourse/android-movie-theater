@@ -6,6 +6,7 @@ import android.content.Intent
 import com.example.domain.usecase.LoadAlarmSettingInfoUseCase
 import woowacourse.movie.R
 import woowacourse.movie.data.AlarmSettingRepositoryImpl
+import woowacourse.movie.data.preference.AlarmSettingPreference
 import woowacourse.movie.model.TicketsState
 import woowacourse.movie.util.getParcelableCompat
 import woowacourse.movie.util.sendNotification
@@ -19,7 +20,7 @@ class AlarmReceiver : BroadcastReceiver(), AlarmReceiverContract.View {
         this.context = context
         presenter = AlarmReceiverPresenter(
             this,
-            LoadAlarmSettingInfoUseCase(AlarmSettingRepositoryImpl(context))
+            LoadAlarmSettingInfoUseCase(AlarmSettingRepositoryImpl(AlarmSettingPreference))
         )
         presenter.receiveAlarmSignal(tickets)
     }
