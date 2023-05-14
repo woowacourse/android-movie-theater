@@ -9,20 +9,18 @@ interface BookingContract {
         val presenter: Presenter
         fun initDateTimes(dates: List<LocalDate>)
         fun showTicketCount(value: Int)
-        fun startSeatActivity(ticketCount: Int)
+        fun startSeatActivity(ticketCount: Int, movie: Movie)
         fun initScreeningTimes(fetchTimes: (screeningDate: LocalDate) -> List<LocalTime>)
+        fun showMovie(movie: Movie)
     }
 
     interface Presenter {
-        val movie: Movie
-
         fun getTicketCount(): Int
         fun restoreTicketCount(value: Int)
-        fun initTicketCount()
+        fun initView()
+
         fun subTicket()
         fun addTicket()
-
-        fun initDateTimes()
         fun fetchScreeningTimes()
         fun completeBooking()
     }

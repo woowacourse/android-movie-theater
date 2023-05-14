@@ -62,18 +62,21 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
     }
 
     private fun initView() {
-        presenter.initTicketCount()
-        presenter.initDateTimes()
-        setBookingPosterImage()
+        presenter.initView()
         showBackButton()
+    }
+
+    override fun showMovie(movie: Movie) {
+        binding.textBookingTitle.text = movie.title
+        binding.textBookingScreeningDate.text =
+            getString(R.string.screening_date, movie.startDate, movie.endDate)
+        binding.textBookingRunningTime.text = getString(R.string.running_time, movie.runningTime)
+        binding.textBookingDescription.text = movie.description
+        binding.imageBookingPoster.setImageResource(MovieMapper.getPoster(movie.id))
     }
 
     private fun showBackButton() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    private fun setBookingPosterImage() {
-        binding.imageBookingPoster.setImageResource(MovieMapper.getPoster(presenter.movie.id))
     }
 
     override fun initDateTimes(dates: List<LocalDate>) {
@@ -89,10 +92,10 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         binding.textBookingTicketCount.text = value.toString()
     }
 
-    override fun startSeatActivity(ticketCount: Int) {
+    override fun startSeatActivity(ticketCount: Int, movie: Movie) {
         val dateTime = binding.spinnerDateTime.selectedDateTime
         val bookedMovieUiModel =
-            BookedMovieUiModel(presenter.movie.toUiModel(), 0, ticketCount, dateTime)
+            BookedMovieUiModel(movie.toUiModel(), 1, ticketCount, dateTime)
         startActivity(SeatActivity.getIntent(this, bookedMovieUiModel))
         finish()
     }

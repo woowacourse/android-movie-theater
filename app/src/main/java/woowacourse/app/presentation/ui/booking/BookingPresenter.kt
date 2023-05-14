@@ -6,7 +6,7 @@ import woowacourse.domain.ticket.TicketCount
 
 class BookingPresenter(
     private val bookingView: BookingContract.View,
-    override val movie: Movie,
+    private val movie: Movie,
 ) : BookingContract.Presenter {
     private var ticketCount: TicketCount = TicketCount()
 
@@ -14,8 +14,10 @@ class BookingPresenter(
         ticketCount = TicketCount(value)
     }
 
-    override fun initTicketCount() {
+    override fun initView() {
         bookingView.showTicketCount(ticketCount.value)
+        bookingView.initDateTimes(movie.screeningDates)
+        bookingView.showMovie(movie)
     }
 
     override fun subTicket() {
@@ -28,16 +30,12 @@ class BookingPresenter(
         bookingView.showTicketCount(ticketCount.value)
     }
 
-    override fun initDateTimes() {
-        bookingView.initDateTimes(movie.screeningDates)
-    }
-
     override fun fetchScreeningTimes() {
         bookingView.initScreeningTimes { ScreeningDate(it).screeningTimes }
     }
 
     override fun completeBooking() {
-        bookingView.startSeatActivity(ticketCount.value)
+        bookingView.startSeatActivity(ticketCount.value, movie)
     }
 
     override fun getTicketCount(): Int {

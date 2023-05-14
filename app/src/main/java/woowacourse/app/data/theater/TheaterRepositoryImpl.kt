@@ -1,6 +1,5 @@
 package woowacourse.app.data.theater
 
-import android.util.Log
 import woowacourse.app.data.movie.MovieDataSource
 import woowacourse.app.data.movie.MovieMapper.toMovie
 import woowacourse.app.data.theater.TheaterMapper.toScreeningMovie
@@ -39,10 +38,9 @@ class TheaterRepositoryImpl(
             movieTimeDataSource.addMovieTimeEntity(
                 theaterId,
                 it.movie.id,
-                it.times.joinToString(",", it.toString()),
+                it.times.joinToString(","),
             )
         }
-        Log.d("극장", "TheaterRepositoryImpl의 addTheater 들어옴")
     }
 
     private fun getScreeningMovies(theaterId: Long): List<ScreeningMovie> {
