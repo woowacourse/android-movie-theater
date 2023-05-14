@@ -15,6 +15,7 @@ import woowacourse.movie.model.data.storage.BookedTicketStorage
 import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.model.TicketModel
 import java.io.Serializable
+import kotlinx.serialization.Serializable as kotlinxSerializable
 
 class BookedTicketPreference(private val context: Context) : BookedTicketStorage {
     private val value by lazy {
@@ -49,11 +50,11 @@ class BookedTicketPreference(private val context: Context) : BookedTicketStorage
     }
 }
 
-@kotlinx.serialization.Serializable
+@kotlinxSerializable
 private data class SerializableTicketModel(
     val ticketId: Int,
     val movieId: Long,
-    @kotlinx.serialization.Serializable(with = LocalDateTimeComponentSerializer::class)
+    @kotlinxSerializable(with = LocalDateTimeComponentSerializer::class)
     val bookedDateTime: kotlinx.datetime.LocalDateTime,
     val count: Int,
     val paymentMoney: Int,
