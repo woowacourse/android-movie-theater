@@ -1,7 +1,7 @@
 package woowacourse.app.presentation.ui.main.reservation
 
-import woowacourse.app.presentation.usecase.reservation.ReservationUseCase
 import woowacourse.domain.reservation.Reservation
+import woowacourse.domain.reservation.ReservationRepository
 
 interface ReservationHistoryContract {
     interface View {
@@ -9,7 +9,7 @@ interface ReservationHistoryContract {
     }
 
     interface Presenter {
-        val reservationUseCase: ReservationUseCase
+        val reservationRepository: ReservationRepository
         fun getReservation(id: Long): Reservation?
         fun getReservations(): List<Reservation>
     }

@@ -9,11 +9,13 @@ import woowacourse.app.data.theater.MovieTimeDao
 import woowacourse.app.data.theater.TheaterDao
 import woowacourse.app.data.theater.TheaterRepositoryImpl
 import woowacourse.domain.advertisement.AdvertisementRepository
+import woowacourse.domain.movie.Movie
 import woowacourse.domain.movie.MovieRepository
 import woowacourse.domain.movie.ScreeningPeriod
 import woowacourse.domain.theater.ScreeningMovie
 import woowacourse.domain.theater.SeatStructure
 import woowacourse.domain.theater.TheaterRepository
+import woowacourse.domain.util.CgvResult
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -71,7 +73,7 @@ fun initTheater(context: Context) {
         theaterName = "선릉",
         screeningMovies = listOf(
             ScreeningMovie(
-                movieRepo.getMovie(1)!!,
+                (movieRepo.getMovie(1) as CgvResult.Success<Movie>).data,
                 listOf(LocalTime.of(10, 0), LocalTime.of(16, 0), LocalTime.of(20, 0)),
             ),
         ),
@@ -88,7 +90,7 @@ fun initTheater(context: Context) {
         theaterName = "잠실",
         screeningMovies = listOf(
             ScreeningMovie(
-                movieRepo.getMovie(1)!!,
+                (movieRepo.getMovie(1) as CgvResult.Success<Movie>).data,
                 listOf(
                     LocalTime.of(9, 0),
                     LocalTime.of(13, 0),
@@ -97,7 +99,7 @@ fun initTheater(context: Context) {
                 ),
             ),
             ScreeningMovie(
-                movieRepo.getMovie(2)!!,
+                (movieRepo.getMovie(2) as CgvResult.Success<Movie>).data,
                 listOf(
                     LocalTime.of(9, 0),
                     LocalTime.of(13, 0),
@@ -106,7 +108,7 @@ fun initTheater(context: Context) {
                 ),
             ),
             ScreeningMovie(
-                movieRepo.getMovie(3)!!,
+                (movieRepo.getMovie(3) as CgvResult.Success<Movie>).data,
                 listOf(
                     LocalTime.of(9, 0),
                     LocalTime.of(13, 0),
@@ -128,11 +130,11 @@ fun initTheater(context: Context) {
         theaterName = "신림",
         screeningMovies = listOf(
             ScreeningMovie(
-                movieRepo.getMovie(2)!!,
+                (movieRepo.getMovie(2) as CgvResult.Success<Movie>).data,
                 listOf(LocalTime.of(12, 0), LocalTime.of(14, 0), LocalTime.of(16, 0)),
             ),
             ScreeningMovie(
-                movieRepo.getMovie(3)!!,
+                (movieRepo.getMovie(3) as CgvResult.Success<Movie>).data,
                 listOf(LocalTime.of(12, 0), LocalTime.of(14, 0), LocalTime.of(16, 0)),
             ),
         ),

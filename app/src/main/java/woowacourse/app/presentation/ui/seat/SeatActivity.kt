@@ -21,7 +21,6 @@ import woowacourse.app.presentation.model.seat.SeatMapper.toUiModel
 import woowacourse.app.presentation.model.seat.SeatRankColor
 import woowacourse.app.presentation.model.seat.SelectedSeatUiModel
 import woowacourse.app.presentation.ui.completed.CompletedActivity
-import woowacourse.app.presentation.usecase.theater.TheaterUseCase
 import woowacourse.app.presentation.util.getParcelable
 import woowacourse.app.presentation.util.getParcelableBundle
 import woowacourse.app.presentation.util.shortToast
@@ -57,12 +56,10 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
                 ),
             ),
             bookedMovieUiModel.toBookedMovie(),
-            TheaterUseCase(
-                TheaterRepositoryImpl(
-                    theaterDataSource = TheaterDao(this),
-                    movieDataSource = MovieDao(this),
-                    movieTimeDataSource = MovieTimeDao(this),
-                ),
+            TheaterRepositoryImpl(
+                theaterDataSource = TheaterDao(this),
+                movieDataSource = MovieDao(this),
+                movieTimeDataSource = MovieTimeDao(this),
             ),
         )
     }

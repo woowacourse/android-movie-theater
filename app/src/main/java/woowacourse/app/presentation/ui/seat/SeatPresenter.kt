@@ -1,22 +1,22 @@
 package woowacourse.app.presentation.ui.seat
 
 import woowacourse.app.presentation.model.BookedMovie
-import woowacourse.app.presentation.usecase.theater.TheaterUseCase
 import woowacourse.domain.BoxOffice
 import woowacourse.domain.SelectResult
 import woowacourse.domain.SelectedSeat
 import woowacourse.domain.movie.Movie
 import woowacourse.domain.theater.Theater
+import woowacourse.domain.theater.TheaterRepository
 import woowacourse.domain.ticket.Seat
+import woowacourse.domain.util.CgvResult
 
 class SeatPresenter(
     private val view: SeatContract.View,
     private val boxOffice: BoxOffice,
     private val bookedMovie: BookedMovie,
-    theaterUseCase: TheaterUseCase,
+    private val theaterRepository: TheaterRepository,
 ) : SeatContract.Presenter {
     private val selectedSeat = SelectedSeat(bookedMovie.ticketCount)
-    private val theater: Theater? = theaterUseCase.getTheater(bookedMovie.theaterId)
     override val movie: Movie get() = bookedMovie.movie
 
     override fun getSelectedSeats(): Set<Seat> {
@@ -44,10 +44,17 @@ class SeatPresenter(
     }
 
     override fun setTable() {
-        if (theater == null) {
-            view.errorControl()
-            return
+        val result: CgvResult<Theater> = theaterRepository.getTheater(bookedMovie.theaterId)
+        when (result) {
+            is CgvResult.Success -> setTable(result.data)
+            is CgvResult.Failure -> {
+                view.errorControl()
+                return
+            }
         }
+    }
+
+    private fun setTable(theater: Theater) {
         view.setTableSize(theater.seatStructure.rowSize, theater.seatStructure.columnSize)
         view.setTableColor(
             sRank = theater.seatStructure.sRankRange,

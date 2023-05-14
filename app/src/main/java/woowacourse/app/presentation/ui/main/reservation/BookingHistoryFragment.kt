@@ -13,7 +13,6 @@ import woowacourse.app.data.reservation.SeatDao
 import woowacourse.app.presentation.model.Mapper.toUiModel
 import woowacourse.app.presentation.model.Mapper.toUiReservations
 import woowacourse.app.presentation.ui.completed.CompletedActivity
-import woowacourse.app.presentation.usecase.reservation.ReservationUseCase
 import woowacourse.app.presentation.util.shortToast
 import woowacourse.movie.R
 
@@ -21,12 +20,10 @@ class BookingHistoryFragment : Fragment(), ReservationHistoryContract.View {
 
     override val presenter: ReservationHistoryContract.Presenter by lazy {
         ReservationHistoryPresenter(
-            ReservationUseCase(
-                ReservationRepositoryImpl(
-                    ReservationDao(requireContext()),
-                    SeatDao(requireContext()),
-                    MovieDao(requireContext()),
-                ),
+            ReservationRepositoryImpl(
+                ReservationDao(requireContext()),
+                SeatDao(requireContext()),
+                MovieDao(requireContext()),
             ),
         )
     }

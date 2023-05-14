@@ -9,6 +9,8 @@ import woowacourse.domain.theater.ScreeningMovie
 import woowacourse.domain.theater.SeatStructure
 import woowacourse.domain.theater.Theater
 import woowacourse.domain.theater.TheaterRepository
+import woowacourse.domain.util.CgvError.DataSourceError.DataSourceNoSuchId
+import woowacourse.domain.util.CgvResult
 
 class TheaterRepositoryImpl(
     private val theaterDataSource: TheaterDataSource,
@@ -20,9 +22,10 @@ class TheaterRepositoryImpl(
         return theaterEntities.map { it.toTheater(getScreeningMovies(it.id)) }
     }
 
-    override fun getTheater(theaterId: Long): Theater? {
-        return theaterDataSource.getTheaterEntity(theaterId)
-            ?.toTheater(getScreeningMovies(theaterId))
+    override fun getTheater(theaterId: Long): CgvResult<Theater> {
+        val theaterEntity: TheaterEntity = theaterDataSource.getTheaterEntity(theaterId)
+            ?: return CgvResult.Failure(DataSourceNoSuchId())
+        return CgvResult.Success(theaterEntity.toTheater(getScreeningMovies(theaterId)))
     }
 
     override fun addTheater(
