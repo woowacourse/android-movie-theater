@@ -13,10 +13,10 @@ import woowacourse.movie.data.MovieRepositoryImpl
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.feature.adv.AdvDetailActivity
 import woowacourse.movie.feature.common.Toaster
-import woowacourse.movie.feature.common.itemModel.CommonItemModel
 import woowacourse.movie.feature.detail.MovieDetailActivity
 import woowacourse.movie.feature.movieList.adapter.MovieAdapter
 import woowacourse.movie.feature.movieList.bottomSheet.TheaterBottomSheetFragment
+import woowacourse.movie.feature.movieList.itemModel.CommonItemModel
 import woowacourse.movie.model.AdvState
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.SelectTheaterAndMovieState

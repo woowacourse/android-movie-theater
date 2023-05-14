@@ -2,8 +2,7 @@ package woowacourse.movie.feature.movieList.viewHolder
 
 import androidx.databinding.ViewDataBinding
 import woowacourse.movie.databinding.ItemMovieLayoutBinding
-import woowacourse.movie.feature.common.itemModel.CommonItemModel
-import woowacourse.movie.feature.common.viewHolder.CommonItemViewHolder
+import woowacourse.movie.feature.movieList.itemModel.CommonItemModel
 import woowacourse.movie.feature.movieList.itemModel.MovieItemModel
 import woowacourse.movie.util.DateTimeFormatters
 

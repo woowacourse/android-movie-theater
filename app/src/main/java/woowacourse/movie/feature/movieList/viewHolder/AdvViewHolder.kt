@@ -2,9 +2,8 @@ package woowacourse.movie.feature.movieList.viewHolder
 
 import androidx.databinding.ViewDataBinding
 import woowacourse.movie.databinding.ItemaAdvLayoutBinding
-import woowacourse.movie.feature.common.itemModel.CommonItemModel
-import woowacourse.movie.feature.common.viewHolder.CommonItemViewHolder
 import woowacourse.movie.feature.movieList.itemModel.AdvItemModel
+import woowacourse.movie.feature.movieList.itemModel.CommonItemModel
 
 class AdvViewHolder(
     binding: ViewDataBinding

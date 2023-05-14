@@ -1,6 +1,6 @@
 package woowacourse.movie.feature.movieList
 
-import woowacourse.movie.feature.common.itemModel.CommonItemModel
+import woowacourse.movie.feature.movieList.itemModel.CommonItemModel
 import woowacourse.movie.model.AdvState
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.SelectTheaterAndMovieState

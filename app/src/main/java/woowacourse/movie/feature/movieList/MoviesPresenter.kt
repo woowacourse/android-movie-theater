@@ -1,8 +1,8 @@
 package woowacourse.movie.feature.movieList
 
 import com.example.domain.usecase.GetMovieAndAdvItemsUseCase
-import woowacourse.movie.feature.common.itemModel.CommonItemModel
 import woowacourse.movie.feature.movieList.itemModel.AdvItemModel
+import woowacourse.movie.feature.movieList.itemModel.CommonItemModel
 import woowacourse.movie.feature.movieList.itemModel.MovieItemModel
 import woowacourse.movie.model.SelectTheaterAndMovieState
 import woowacourse.movie.model.mapper.asPresentation

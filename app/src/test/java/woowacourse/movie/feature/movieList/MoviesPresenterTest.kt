@@ -15,8 +15,8 @@ import io.mockk.slot
 import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.feature.common.itemModel.CommonItemModel
 import woowacourse.movie.feature.movieList.itemModel.AdvItemModel
+import woowacourse.movie.feature.movieList.itemModel.CommonItemModel
 import woowacourse.movie.feature.movieList.itemModel.MovieItemModel
 import woowacourse.movie.model.SelectTheaterAndMovieState
 import woowacourse.movie.model.mapper.asPresentation

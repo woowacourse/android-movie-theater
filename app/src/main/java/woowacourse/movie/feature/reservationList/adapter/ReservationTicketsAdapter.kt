@@ -4,36 +4,27 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemReservationLayoutBinding
-import woowacourse.movie.feature.common.CommonViewType
-import woowacourse.movie.feature.common.itemModel.CommonItemModel
-import woowacourse.movie.feature.common.viewHolder.CommonItemViewHolder
+import woowacourse.movie.feature.reservationList.itemModel.TicketsItemModel
 import woowacourse.movie.feature.reservationList.viewHolder.TicketsViewHolder
 
 class ReservationTicketsAdapter(
-    items: List<CommonItemModel> = listOf(),
-) : RecyclerView.Adapter<CommonItemViewHolder>() {
+    items: List<TicketsItemModel> = listOf(),
+) : RecyclerView.Adapter<TicketsViewHolder>() {
 
-    private var _items: List<CommonItemModel> = items.toList()
-    val items: List<CommonItemModel>
-        get() = _items.toList()
+    private var _items: List<TicketsItemModel> = items.toList()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): CommonItemViewHolder {
+    ): TicketsViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return when (CommonViewType.of(viewType)) {
-            CommonViewType.RESERVATION -> {
-                val itemBinding =
-                    ItemReservationLayoutBinding.inflate(layoutInflater, parent, false)
-                TicketsViewHolder(itemBinding)
-            }
-            else -> throw IllegalStateException()
-        }
+        val itemBinding =
+            ItemReservationLayoutBinding.inflate(layoutInflater, parent, false)
+        return TicketsViewHolder(itemBinding)
     }
 
     override fun onBindViewHolder(
-        holder: CommonItemViewHolder,
+        holder: TicketsViewHolder,
         position: Int
     ) {
         holder.bind(_items[position])
@@ -41,11 +32,7 @@ class ReservationTicketsAdapter(
 
     override fun getItemCount(): Int = _items.size
 
-    override fun getItemViewType(position: Int): Int {
-        return _items[position].viewType.ordinal
-    }
-
-    fun setItems(items: List<CommonItemModel>) {
+    fun setItems(items: List<TicketsItemModel>) {
         _items = items.toList()
         notifyDataSetChanged()
     }

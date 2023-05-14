@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.feature.common.CommonViewType
-import woowacourse.movie.feature.common.itemModel.CommonItemModel
-import woowacourse.movie.feature.common.viewHolder.CommonItemViewHolder
+import woowacourse.movie.feature.movieList.CommonViewType
+import woowacourse.movie.feature.movieList.itemModel.CommonItemModel
 import woowacourse.movie.feature.movieList.viewHolder.AdvViewHolder
+import woowacourse.movie.feature.movieList.viewHolder.CommonItemViewHolder
 import woowacourse.movie.feature.movieList.viewHolder.MovieViewHolder
 
 class MovieAdapter(
@@ -31,7 +31,6 @@ class MovieAdapter(
         return when (CommonViewType.of(viewType)) {
             CommonViewType.MOVIE -> MovieViewHolder(binding)
             CommonViewType.ADV -> AdvViewHolder(binding)
-            else -> throw IllegalStateException()
         }
     }
 

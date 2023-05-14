@@ -1,19 +1,15 @@
 package woowacourse.movie.feature.reservationList.viewHolder
 
-import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemReservationLayoutBinding
-import woowacourse.movie.feature.common.itemModel.CommonItemModel
-import woowacourse.movie.feature.common.viewHolder.CommonItemViewHolder
 import woowacourse.movie.feature.reservationList.itemModel.TicketsItemModel
 import woowacourse.movie.util.DateTimeFormatters
 
-class TicketsViewHolder(binding: ViewDataBinding) :
-    CommonItemViewHolder(binding) {
+class TicketsViewHolder(private val binding: ItemReservationLayoutBinding) :
+    RecyclerView.ViewHolder(binding.root) {
 
-    override fun bind(itemModel: CommonItemModel) {
-        itemModel as TicketsItemModel
-        binding as ItemReservationLayoutBinding
+    fun bind(itemModel: TicketsItemModel) {
         binding.tickets = itemModel
         binding.screeningDateTimeTextView.text =
             binding.root.context.getString(R.string.date_time_form)
