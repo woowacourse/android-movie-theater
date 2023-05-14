@@ -36,7 +36,7 @@ class BookHistoryViewHolder(
         )
 
         date.text = spannableStringBuilder
-        title.text = movieBookingSeatInfo.movieBookingInfo.movieInfo.title
+        title.text = movieBookingSeatInfo.movieBookingInfo.title
     }
 
     private fun getSeparatorPosition(dateAndTime: String) = dateAndTime.length - TIME_LENGTH

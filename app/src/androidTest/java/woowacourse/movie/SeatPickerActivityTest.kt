@@ -26,10 +26,8 @@ import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.movie.activity.SeatPickerActivity
-import woowacourse.movie.movie.Movie
+import woowacourse.movie.activity.seatpicker.SeatPickerActivity
 import woowacourse.movie.movie.MovieBookingInfo
-import java.time.LocalDate
 
 class SeatPickerActivityTest {
 
@@ -38,14 +36,7 @@ class SeatPickerActivityTest {
             .putExtra(
                 BundleKeys.MOVIE_BOOKING_INFO_KEY,
                 MovieBookingInfo(
-                    movieInfo = Movie(
-                        R.drawable.hansan,
-                        "한산",
-                        169,
-                        "나라의 운명을 바꿀 압도적 승리의 전투가 시작된다! 1592년 4월, 조선은 임진왜란 발발 후 단 15일 만에 왜군에 한양을 빼앗기며 절체절명의 위기에 놓인다. 조선을 단숨에 점령한 왜군은 명나라로 향하는 야망을 꿈꾸며 대규모 병역을 부산포로 집결시킨다. 한편, 이순신 장군은 연이은 전쟁의 패배와 선조마저 의주로 파천하며 수세에 몰린 상황에서도 조선을 구하기 위해 전술을 고민하며 출전을 준비한다. 하지만 앞선 전투에서 손상을 입은 거북선의 출정이 어려워지고, 거북선의 도면마저 왜군의 첩보에 의해 도난 당하게 되는데… 왜군은 연승에 힘입어 그 우세로 한산도 앞바다로 향하고, 이순신 장군은 조선의 운명을 가를 전투를 위해 필사의 전략을 준비한다. 1592년 여름, 음력 7월 8일 한산도 앞바다, 압도적인 승리가 필요한 조선의 운명을 건 지상 최고의 해전이 펼쳐진다.",
-                        LocalDate.of(2023, 4, 1),
-                        LocalDate.of(2023, 4, 20),
-                    ),
+                    title = "한산",
                     date = "2023.4.11",
                     time = "10:00",
                     ticketCount = 2
