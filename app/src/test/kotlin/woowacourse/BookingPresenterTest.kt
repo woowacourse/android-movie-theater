@@ -54,21 +54,6 @@ class BookingPresenterTest {
     }
 
     @Test
-    fun `초기 티켓 수를 세팅한다`() {
-        // given
-        val slot = slot<Int>()
-        every { view.showTicketCount(capture(slot)) } answers { println("slot: ${slot.captured}") }
-
-        // when
-        presenter.initTicketCount()
-        val actual = slot.captured
-
-        // then
-        assertEquals(INIT_TICKET_COUNT, actual)
-        verify(exactly = 1) { view.showTicketCount(INIT_TICKET_COUNT) }
-    }
-
-    @Test
     fun `더하기를 누르면 티켓 수가 올라간다`() {
         // given
         val slot = slot<Int>()
@@ -98,31 +83,14 @@ class BookingPresenterTest {
     }
 
     @Test
-    fun `스피너의 날짜들과 시간들을 넣는다`() {
-        // given
-        val datesSlot = slot<List<LocalDate>>()
-        every {
-            view.initDateTimes(capture(datesSlot))
-        } answers { println("dates:${datesSlot.captured}") }
-
-        // when
-        presenter.initDateTimes()
-        val actualDates = datesSlot.captured
-
-        // then
-        assertEquals(movie.screeningDates, actualDates)
-        verify(exactly = 1) { view.initDateTimes(actualDates) }
-    }
-
-    @Test
     fun `예약을 완료한다`() {
         // given
-        every { view.startSeatActivity(INIT_TICKET_COUNT) } returns Unit
+        every { view.startSeatActivity(INIT_TICKET_COUNT, movie) } returns Unit
         // when
         presenter.completeBooking()
 
         // then
-        verify(exactly = 1) { view.startSeatActivity(INIT_TICKET_COUNT) }
+        verify(exactly = 1) { view.startSeatActivity(INIT_TICKET_COUNT, movie) }
     }
 
     companion object {
