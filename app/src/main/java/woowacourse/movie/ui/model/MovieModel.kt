@@ -3,18 +3,8 @@ package woowacourse.movie.ui.model
 import android.os.Parcelable
 import androidx.annotation.DrawableRes
 import kotlinx.parcelize.Parcelize
-import woowacourse.movie.domain.Movie
 import java.time.LocalDate
-
-fun MovieModel.mapToMovie(): Movie {
-    return Movie(
-        title,
-        startDate,
-        endDate,
-        runningTime,
-        description
-    )
-}
+import java.time.temporal.ChronoUnit
 
 @Parcelize
 data class MovieModel(
@@ -25,4 +15,12 @@ data class MovieModel(
     val endDate: LocalDate,
     val runningTime: Int,
     val description: String,
-) : Parcelable
+    val theaters: List<TheaterModel>,
+) : Parcelable {
+    fun getDatesBetweenTwoDates(): List<LocalDate> {
+        val numberOfDates = ChronoUnit.DAYS.between(startDate, endDate) + 1
+        return generateSequence(startDate) { it.plusDays(1) }
+            .take(numberOfDates.toInt())
+            .toList()
+    }
+}

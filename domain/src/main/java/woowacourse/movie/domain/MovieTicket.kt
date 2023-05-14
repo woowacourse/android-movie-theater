@@ -8,6 +8,7 @@ class MovieTicket(
     val peopleCount: PeopleCount,
     seats: Set<Seat> = setOf(),
     price: Price = Price(),
+    val theaterName: String,
 ) {
     private val _seats = seats.toMutableSet()
     val seats: List<Seat>
@@ -41,7 +42,7 @@ class MovieTicket(
         if (discountPrice == 0) return Price(discountPrice)
 
         if (time.isMovieDay()) discountPrice = (discountPrice * TICKET_MOVIE_DAY_SALE_RATE).toInt()
-        if (time.isSaleTime()) discountPrice -= TICKET_TIME_SALE_AMOUNT
+        if (time.isSaleTime()) discountPrice -= TICKET_TIME_SALE_AMOUNT * _seats.size
         return Price(discountPrice)
     }
 

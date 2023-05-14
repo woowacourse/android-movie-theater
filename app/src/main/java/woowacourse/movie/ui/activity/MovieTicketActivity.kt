@@ -7,10 +7,10 @@ import android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityMovieTicketBinding
 import woowacourse.movie.ui.model.MovieTicketModel
 import woowacourse.movie.ui.model.PriceModel
 import woowacourse.movie.ui.model.TicketTimeModel
@@ -19,9 +19,12 @@ import woowacourse.movie.ui.utils.getParcelable
 import java.time.format.DateTimeFormatter
 
 class MovieTicketActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMovieTicketBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_ticket)
+        binding = ActivityMovieTicketBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -52,24 +55,20 @@ class MovieTicketActivity : AppCompatActivity() {
     }
 
     private fun setTicketInfo() {
-        val titleView: TextView by lazy { findViewById(R.id.ticket_title) }
-        val dateView: TextView by lazy { findViewById(R.id.ticket_date) }
-        val reservedSeatsView: TextView by lazy { findViewById(R.id.ticket_reserved_seats) }
-        val priceView: TextView by lazy { findViewById(R.id.ticket_price) }
-
         intent.getParcelable<MovieTicketModel>(TICKET_EXTRA_KEY)?.let { ticketModel ->
-            titleView.text = ticketModel.title
-            dateView.text = ticketModel.time.format()
-            reservedSeatsView.text =
+            binding.ticketTitle.text = ticketModel.title
+            binding.ticketDate.text = ticketModel.time.format()
+            binding.ticketReservedSeats.text =
                 getString(
                     R.string.reserved_seat,
                     ticketModel.peopleCount.count,
                     ticketModel.seats.sortedBy { seat -> seat.format() }
                         .joinToString(", ") { seat ->
                             seat.format()
-                        }
+                        },
+                    ticketModel.theaterName
                 )
-            priceView.text = ticketModel.price.format()
+            binding.ticketPrice.text = ticketModel.price.format()
         }
     }
 

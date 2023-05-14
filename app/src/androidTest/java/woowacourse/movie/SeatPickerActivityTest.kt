@@ -15,21 +15,10 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import org.hamcrest.Matchers.not
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.movie.ui.activity.SeatPickerActivity
-import woowacourse.movie.ui.model.MovieTicketModel
-import woowacourse.movie.ui.model.PeopleCountModel
-import woowacourse.movie.ui.model.PriceModel
-import woowacourse.movie.ui.model.TicketTimeModel
-import java.time.LocalDateTime
+import woowacourse.movie.ui.activity.seatpicker.view.SeatPickerActivity
 
 class SeatPickerActivityTest {
-    private val ticket = MovieTicketModel(
-        "글로의 50가지 그림자",
-        TicketTimeModel(LocalDateTime.now()),
-        PeopleCountModel(1),
-        emptySet(),
-        PriceModel(0)
-    )
+    private val ticket = createMovieTicketModel()
     private val intent =
         SeatPickerActivity.createIntent(ApplicationProvider.getApplicationContext(), ticket)
 

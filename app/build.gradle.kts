@@ -34,6 +34,22 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    packagingOptions {
+        resources {
+            excludes += "META-INF/LICENSE.md"
+            excludes += "META-INF/LICENSE-notice.md"
+        }
+
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
+    dataBinding {
+        enable = true
+    }
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -44,9 +60,12 @@ dependencies {
     implementation("androidx.test.espresso:espresso-contrib:3.5.1")
     implementation("androidx.fragment:fragment-ktx:1.5.7")
     testImplementation("junit:junit:4.13.2")
+    testImplementation("io.mockk:mockk:1.13.5")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation("androidx.test.espresso:espresso-intents:3.1.0")
+    androidTestImplementation("io.mockk:mockk-android:1.13.5")
+    androidTestImplementation("org.assertj:assertj-core:3.22.0")
 
     implementation(project(":domain"))
 }

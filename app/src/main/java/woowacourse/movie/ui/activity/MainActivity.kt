@@ -3,7 +3,6 @@ package woowacourse.movie.ui.activity
 import android.Manifest
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import androidx.activity.result.contract.ActivityResultContracts
@@ -18,8 +17,8 @@ import woowacourse.movie.data.storage.SettingsStorage
 import woowacourse.movie.permission.PermissionManager
 import woowacourse.movie.ui.fragment.FragmentType
 import woowacourse.movie.ui.fragment.movielist.HomeFragment
-import woowacourse.movie.ui.fragment.reservationlist.ReservationListFragment
-import woowacourse.movie.ui.fragment.settings.SettingsFragment
+import woowacourse.movie.ui.fragment.reservationlist.view.ReservationListFragment
+import woowacourse.movie.ui.fragment.settings.view.SettingsFragment
 import woowacourse.movie.ui.utils.showSnack
 
 class MainActivity : AppCompatActivity() {
@@ -32,19 +31,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        PermissionManager.requestPermission(
-            activity = this,
-            permission = Manifest.permission.POST_NOTIFICATIONS,
-            showRationale = {
-                val container = findViewById<ConstraintLayout>(R.id.main_container)
-                container.showSnack(
-                    getString(R.string.notification_permission_snackbar_message),
-                    getString(R.string.notification_permission_snackbar_button),
-                    ::openAndroidSettings
-                )
-            },
-            requestPermissionLauncher
-        )
+        requestNotificationPermission()
 
         val itemId = savedInstanceState?.getInt(KEY_INSTANCE_ITEM_ID) ?: R.id.bottom_item_home
         initFragment(itemId)
@@ -69,11 +56,26 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun openAndroidSettings() {
-        val uri = Uri.fromParts("package", packageName, null)
+    private fun requestNotificationPermission() {
+        PermissionManager.requestPermission(
+            activity = this,
+            permission = Manifest.permission.POST_NOTIFICATIONS,
+            showRationale = {
+                val container = findViewById<ConstraintLayout>(R.id.main_container)
+                container.showSnack(
+                    getString(R.string.notification_permission_snackbar_message),
+                    getString(R.string.notification_permission_snackbar_button),
+                    ::openNotificationSettings
+                )
+            },
+            requestPermissionLauncher
+        )
+    }
+
+    private fun openNotificationSettings() {
         val intent = Intent().apply {
-            action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-            data = uri
+            action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
+            putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
         }
         startActivity(intent)
     }
@@ -94,18 +96,13 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
 
-            val fragment =
-                supportFragmentManager.findFragmentByTag(currentType.tag)
-                    ?: createFragment(currentType).apply {
-                        add(R.id.main_fragment_container_view, this, currentType.tag)
-                    }
-            show(fragment)
+            supportFragmentManager.fragments.forEach(::hide)
 
-            FragmentType.values()
-                .filterNot { it == currentType }
-                .forEach { type ->
-                    supportFragmentManager.findFragmentByTag(type.tag)?.let(::hide)
-                }
+            supportFragmentManager.findFragmentByTag(currentType.tag)?.let {
+                show(it)
+            } ?: createFragment(currentType).run {
+                add(R.id.main_fragment_container_view, this, currentType.tag)
+            }
         }
     }
 

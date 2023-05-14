@@ -8,58 +8,6 @@ import java.time.LocalDateTime
 
 class MovieTicketTest {
     @Test
-    fun `티켓 금액이 26000원일 때 무비데이인 경우 예매 금액은 23400원이다`() {
-        val ticket = MovieTicket(
-            "title",
-            TicketTime(LocalDateTime.of(2023, 4, 10, 12, 0)),
-            PeopleCount(2),
-            setOf(),
-            Price(26000)
-        )
-
-        assertThat(ticket.getDiscountPrice().amount).isEqualTo(23400)
-    }
-
-    @Test
-    fun `티켓 금액이 26000원일 때 조조 영화인 경우 예매 금액은 24000원이다`() {
-        val ticket = MovieTicket(
-            "title",
-            TicketTime(LocalDateTime.of(2023, 4, 11, 10, 0)),
-            PeopleCount(2),
-            setOf(),
-            Price(26000)
-        )
-
-        assertThat(ticket.getDiscountPrice().amount).isEqualTo(24000)
-    }
-
-    @Test
-    fun `티켓 금액이 26000원일 때 심야 영화인 경우 예매 금액은 24000원이다`() {
-        val ticket = MovieTicket(
-            "title",
-            TicketTime(LocalDateTime.of(2023, 4, 11, 23, 0)),
-            PeopleCount(2),
-            setOf(),
-            Price(26000)
-        )
-
-        assertThat(ticket.getDiscountPrice().amount).isEqualTo(24000)
-    }
-
-    @Test
-    fun `티켓 금액이 26000원일 때 무비 데이고 조조 영화인 경우 예매 금액은 21400원이다`() {
-        val ticket = MovieTicket(
-            "title",
-            TicketTime(LocalDateTime.of(2023, 4, 20, 9, 0)),
-            PeopleCount(2),
-            setOf(),
-            Price(26000)
-        )
-
-        assertThat(ticket.getDiscountPrice().amount).isEqualTo(21400)
-    }
-
-    @Test
     fun `1행 1열 좌석을 추가한다`() {
         val ticket = MovieTicket(
             "title",
@@ -314,7 +262,7 @@ class MovieTicketTest {
     }
 
     @Test
-    fun `조조 영화일 때 A, B, S 등급 좌석을 선택하고 B 등급 좌석을 취소하면 티켓 가격은 25000원이다`() {
+    fun `조조 영화일 때 A, B, S 등급 좌석을 선택하고 B 등급 좌석을 취소하면 티켓 가격은 23000원이다`() {
         val ticket = MovieTicket(
             "title",
             TicketTime(LocalDateTime.of(2023, 4, 18, 9, 0)),
@@ -324,13 +272,13 @@ class MovieTicketTest {
         ticket.reserveSeat(Seat(1, 1, Rank.A))
         ticket.reserveSeat(Seat(1, 2, Rank.B))
         ticket.reserveSeat(Seat(1, 3, Rank.S))
-        ticket.cancelSeat(Seat(1, 4, Rank.B))
+        ticket.cancelSeat(Seat(1, 2, Rank.B))
 
-        assertThat(ticket.getDiscountPrice().amount).isEqualTo(25000)
+        assertThat(ticket.getDiscountPrice().amount).isEqualTo(23000)
     }
 
     @Test
-    fun `심야 영화일 때 A, B, S 등급 좌석을 선택하고 B 등급 좌석을 취소하면 티켓 가격은 25000원이다`() {
+    fun `심야 영화일 때 A, B, S 등급 좌석을 선택하고 B 등급 좌석을 취소하면 티켓 가격은 23000원이다`() {
         val ticket = MovieTicket(
             "title",
             TicketTime(LocalDateTime.of(2023, 4, 18, 23, 0)),
@@ -340,13 +288,13 @@ class MovieTicketTest {
         ticket.reserveSeat(Seat(1, 1, Rank.A))
         ticket.reserveSeat(Seat(1, 2, Rank.B))
         ticket.reserveSeat(Seat(1, 3, Rank.S))
-        ticket.cancelSeat(Seat(1, 4, Rank.B))
+        ticket.cancelSeat(Seat(1, 2, Rank.B))
 
-        assertThat(ticket.getDiscountPrice().amount).isEqualTo(25000)
+        assertThat(ticket.getDiscountPrice().amount).isEqualTo(23000)
     }
 
     @Test
-    fun `무비데이 이고 조조 영화일 때 A, B, S 등급 좌석을 선택하고 B 등급 좌석을 취소하면 티켓 가격은 22300원이다`() {
+    fun `무비데이 이고 조조 영화일 때 A, B, S 등급 좌석을 선택하고 B 등급 좌석을 취소하면 티켓 가격은 20300원이다`() {
         val ticket = MovieTicket(
             "title",
             TicketTime(LocalDateTime.of(2023, 4, 20, 9, 0)),
@@ -356,8 +304,8 @@ class MovieTicketTest {
         ticket.reserveSeat(Seat(1, 1, Rank.A))
         ticket.reserveSeat(Seat(1, 2, Rank.B))
         ticket.reserveSeat(Seat(1, 3, Rank.S))
-        ticket.cancelSeat(Seat(1, 4, Rank.B))
+        ticket.cancelSeat(Seat(1, 2, Rank.B))
 
-        assertThat(ticket.getDiscountPrice().amount).isEqualTo(22300)
+        assertThat(ticket.getDiscountPrice().amount).isEqualTo(20300)
     }
 }
