@@ -5,17 +5,19 @@ import woowacourse.movie.domain.theater.Point
 import woowacourse.movie.domain.screening.Screening
 import woowacourse.movie.domain.theater.SeatClass
 import woowacourse.movie.domain.theater.Theater
-import woowacourse.movie.repository.ReservationRepository
+import woowacourse.movie.repository.ReservationRepository1
 import woowacourse.movie.repository.ScreeningRepository
 import java.time.LocalDateTime
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
     private val screeningId: Long,
-    private val screeningDateTime: LocalDateTime
+    private val screeningDateTime: LocalDateTime,
+    private val reservationRepository: ReservationRepository1
 ) : SeatSelectionContract.Presenter {
 
     private lateinit var screening: Screening
+
     override fun loadScreening() {
         screening = ScreeningRepository.findById(screeningId) ?: return
 
@@ -69,10 +71,7 @@ class SeatSelectionPresenter(
 
         val seatPoints = seatNames.map { convertSeatNameToSeatPoint(it) }
         val reservation = screening.reserve(screeningDateTime, seatPoints)
-        ReservationRepository.save(reservation)
-        view.setReservation(
-            reservation.id
-                ?: throw IllegalArgumentException("만약 예매 아이디가 널이면 ReservationRepository의 로직이 잘못된 것입니다.")
-        )
+        val reservationId = reservationRepository.save(reservation)
+        view.setReservation(reservationId)
     }
 }

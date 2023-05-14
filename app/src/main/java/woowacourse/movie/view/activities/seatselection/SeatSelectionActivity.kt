@@ -16,6 +16,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.Toolbar
 import woowacourse.movie.R
+import woowacourse.movie.data.reservation.ReservationDbHelper
+import woowacourse.movie.data.reservation.ReservationRepositoryImpl
 import woowacourse.movie.view.activities.common.BackButtonActivity
 import woowacourse.movie.view.activities.reservationresult.ReservationResultActivity
 import woowacourse.movie.view.broadcast.AlarmReceiver
@@ -27,7 +29,14 @@ import kotlin.properties.Delegates
 
 class SeatSelectionActivity : BackButtonActivity(), SeatSelectionContract.View {
 
-    private lateinit var presenter: SeatSelectionContract.Presenter
+    private val presenter: SeatSelectionContract.Presenter by lazy {
+        SeatSelectionPresenter(
+            this,
+            intent.getLongExtra(SCREENING_ID, -1),
+            selectedScreeningDateTime,
+            ReservationRepositoryImpl(ReservationDbHelper.getDbInstance(this))
+        )
+    }
 
     private val selectedScreeningDateTime: LocalDateTime by lazy {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -47,11 +56,6 @@ class SeatSelectionActivity : BackButtonActivity(), SeatSelectionContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seat_selection)
-        presenter = SeatSelectionPresenter(
-            this,
-            intent.getLongExtra(SCREENING_ID, -1),
-            selectedScreeningDateTime
-        )
 
         presenter.loadScreening()
         initReservationButtonOnClickListener()

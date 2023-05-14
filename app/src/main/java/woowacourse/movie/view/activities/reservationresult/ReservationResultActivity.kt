@@ -5,19 +5,26 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import woowacourse.movie.R
+import woowacourse.movie.data.reservation.ReservationDbHelper
+import woowacourse.movie.data.reservation.ReservationRepositoryImpl
 import woowacourse.movie.view.activities.common.BackButtonActivity
 import java.text.DecimalFormat
 import java.time.format.DateTimeFormatter
 
 class ReservationResultActivity : BackButtonActivity(), ReservationResultContract.View {
 
-    private lateinit var presenter: ReservationResultContract.Presenter
+    private val presenter: ReservationResultContract.Presenter by lazy {
+        ReservationResultPresenter(
+            this,
+            intent.getLongExtra(RESERVATION_ID, -1),
+            ReservationRepositoryImpl(ReservationDbHelper.getDbInstance(this))
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reservation_result)
 
-        presenter = ReservationResultPresenter(this, intent.getLongExtra(RESERVATION_ID, -1))
         presenter.loadReservation()
     }
 
@@ -44,7 +51,8 @@ class ReservationResultActivity : BackButtonActivity(), ReservationResultContrac
 
     companion object {
         const val RESERVATION_ID = "RESERVATION_ID"
-        private val DATE_TIME_FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm")
+        private val DATE_TIME_FORMATTER: DateTimeFormatter =
+            DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm")
         val DECIMAL_FORMAT = DecimalFormat("#,###")
 
         fun startActivity(context: Context, reservationId: Long) {

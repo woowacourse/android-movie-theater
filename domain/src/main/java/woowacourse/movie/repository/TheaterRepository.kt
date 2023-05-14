@@ -21,6 +21,10 @@ object TheaterRepository {
         theaters[theater.id!!] = theater
     }
 
+    fun findById(id: Long): Theater? {
+        return theaters[id]
+    }
+
     fun findAll(): List<Theater> {
         return theaters.values.toList()
     }

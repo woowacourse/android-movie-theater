@@ -7,11 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.data.reservation.ReservationDbHelper
+import woowacourse.movie.data.reservation.ReservationRepositoryImpl
 import woowacourse.movie.view.activities.reservationresult.ReservationResultActivity
 
 class ReservationListFragment : Fragment(), ReservationListContract.View {
 
-    private val presenter: ReservationListContract.Presenter = ReservationListPresenter(this)
+    private val presenter: ReservationListContract.Presenter by lazy {
+        ReservationListPresenter(
+            this,
+            ReservationRepositoryImpl(ReservationDbHelper.getDbInstance(requireContext()))
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,7 +34,8 @@ class ReservationListFragment : Fragment(), ReservationListContract.View {
     }
 
     override fun setReservationList(reservationListViewItemUIStates: List<ReservationListViewItemUIState>) {
-        val reservationListView = view?.findViewById<RecyclerView>(R.id.rv_reservation_list) ?: return
+        val reservationListView =
+            view?.findViewById<RecyclerView>(R.id.rv_reservation_list) ?: return
         reservationListView.adapter =
             ReservationListAdapter(reservationListViewItemUIStates) { reservationId ->
                 ReservationResultActivity.startActivity(reservationListView.context, reservationId)
