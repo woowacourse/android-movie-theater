@@ -15,16 +15,13 @@ import woowacourse.app.presentation.model.HomeData
 import woowacourse.app.presentation.model.movie.MovieUiModel
 import woowacourse.app.presentation.ui.booking.BookingActivity
 import woowacourse.app.presentation.ui.main.home.adapter.recyclerview.MoviesAdapter
-import woowacourse.app.presentation.usecase.main.MainUseCase
 import woowacourse.movie.R
 
 class HomeFragment : Fragment(), HomeContract.View {
     override val presenter: HomeContract.Presenter by lazy {
         HomePresenter(
-            MainUseCase(
-                AdvertisementRepositoryImpl(AdvertisementDao(requireContext())),
-                MovieRepositoryImpl(MovieDao(requireContext())),
-            ),
+            AdvertisementRepositoryImpl(AdvertisementDao(requireContext())),
+            MovieRepositoryImpl(MovieDao(requireContext())),
             this,
         )
     }
