@@ -12,6 +12,7 @@ import woowacourse.movie.domain.model.tools.Movie
 import woowacourse.movie.domain.model.tools.seat.Seat
 import woowacourse.movie.domain.model.tools.seat.Seats
 import woowacourse.movie.model.data.remote.DummyMovieStorage
+import woowacourse.movie.model.data.storage.BookedTicketStorage
 import woowacourse.movie.model.data.storage.MovieStorage
 import woowacourse.movie.model.data.storage.SettingStorage
 import woowacourse.movie.presentation.model.ReservationModel
@@ -25,6 +26,7 @@ class ChoiceSeatPresenterTest {
     private lateinit var settingStorage: SettingStorage
     private lateinit var movieStorage: MovieStorage
     private lateinit var reservation: ReservationModel
+    private lateinit var bookedTicketStorage: BookedTicketStorage
 
     @Before
     fun initChoiceSeatPresenter() {
@@ -43,6 +45,7 @@ class ChoiceSeatPresenterTest {
             152,
             "《해리 포터와 마법사의 돌》은 2001년 J. K. 롤링의 동명 소설을 원작으로 하여 만든, 영국과 미국 합작, 판타지 영화이다. 해리포터 시리즈 영화 8부작 중 첫 번째에 해당하는 작품이다. 크리스 콜럼버스가 감독을 맡았다."
         )
+        bookedTicketStorage = mockk(relaxed = true)
         // 영화 해리포터의 2024-03-03-09:00 티켓 3장 티켓을 구입하였다.
         reservation = ReservationModel(movie.id, LocalDateTime.of(2024, 3, 3, 9, 0), 3, "강남")
         presenter = ChoiceSeatPresenter(
@@ -50,6 +53,7 @@ class ChoiceSeatPresenterTest {
             alarmManager = alarmManager,
             settingStorage = settingStorage,
             movieStorage = movieStorage,
+            bookedTicketStorage = bookedTicketStorage,
             reservation = reservation
         )
     }
@@ -94,6 +98,7 @@ class ChoiceSeatPresenterTest {
             ),
             settingStorage = settingStorage,
             movieStorage = movieStorage,
+            bookedTicketStorage = bookedTicketStorage,
             reservation = reservation
         )
 
@@ -132,6 +137,7 @@ class ChoiceSeatPresenterTest {
             ),
             settingStorage = settingStorage,
             movieStorage = movieStorage,
+            bookedTicketStorage = bookedTicketStorage,
             reservation = reservation
         )
 
@@ -180,6 +186,7 @@ class ChoiceSeatPresenterTest {
             seats = mockk<Seats>(relaxed = true),
             settingStorage = settingStorage,
             movieStorage = movieStorage,
+            bookedTicketStorage = bookedTicketStorage,
             reservation = reservation
         )
         every { view.updateTextChoicePaymentAmount(any()) } just Runs
