@@ -47,22 +47,22 @@ class ReservationDbHelper(context: Context) :
         private const val SQL_DELETE_RESERVATION_SEATS_ENTRIES =
             "DROP TABLE IF EXISTS ${ReservationSeatsEntry.TABLE_NAME}"
 
-        private var dbHelper: ReservationDbHelper? = null
+        private lateinit var dbHelper: ReservationDbHelper
 
-        private var db: SQLiteDatabase? = null
+        private lateinit var db: SQLiteDatabase
 
         private fun getInstance(context: Context): ReservationDbHelper {
-            if (dbHelper == null) {
+            if (::dbHelper.isInitialized.not()) {
                 dbHelper = ReservationDbHelper(context)
             }
-            return dbHelper ?: ReservationDbHelper(context)
+            return dbHelper
         }
 
         fun getDbInstance(context: Context): SQLiteDatabase {
-            if (db == null) {
+            if (::db.isInitialized.not()) {
                 db = getInstance(context).writableDatabase
             }
-            return db ?: getInstance(context).writableDatabase
+            return db
         }
     }
 }
