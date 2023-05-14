@@ -36,12 +36,16 @@ android {
     }
 
     buildFeatures {
+        dataBinding = true
         viewBinding = true
     }
 }
 
 dependencies {
     val fragment_version = "1.5.5"
+
+    testImplementation("io.mockk:mockk-android:1.13.5")
+    androidTestImplementation("io.mockk:mockk-android:1.13.5")
 
     implementation(project(":domain"))
     debugImplementation("androidx.fragment:fragment-testing:$fragment_version")

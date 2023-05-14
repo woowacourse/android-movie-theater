@@ -9,10 +9,9 @@
     <string name="plus">+</string>
     <string name="select_seat">좌석 선택</string>
     <string name="ticket_message">영화 상영 시작 시간 15분 전까지\n 취소가 가능합니다.</string>
-    <string name="ticket_info">일반 %d명 | %s</string>
+    <string name="ticket_info">일반 %d명 | %s | %s 극장</string>
     <string name="ticket_price">%d원 (현장 결제)</string>
     <string name="ticket_price_seat_page">%d원</string>
-    <string name="seats_size_over_error">지정한 좌석 수를 초과합니다.</string>
     <string name="screen">SCREEN</string>
     <string name="enter">확인</string>
     <string name="seat_dialog_title">예매 확인</string>
@@ -28,4 +27,6 @@
     <string name="menuHome">홈</string>
     <string name="menuSetting">설정</string>
     <string name="landConfirm">확인</string>
+    <string name="theater">극장</string>
+    <string name="theater_time_description">개의 상영 시간</string>
 </resources>

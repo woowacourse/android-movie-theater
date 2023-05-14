@@ -9,14 +9,11 @@ import androidx.test.espresso.matcher.ViewMatchers.isNotChecked
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.movie.MainActivity
-import woowacourse.movie.movie.utils.SettingPreference
-import woowacourse.movie.movie.utils.SettingPreference.Companion.setting_preference_key
+import woowacourse.movie.main.MainActivity
 
 @RunWith(AndroidJUnit4::class)
 class SettingFragmentTest {
@@ -52,9 +49,7 @@ class SettingFragmentTest {
 
     @Test
     fun 세팅값이_false이면_스위치가_off_상태인지_확인() {
-        val settingPreference =
-            SettingPreference(InstrumentationRegistry.getInstrumentation().targetContext)
-        settingPreference.setBoolean(setting_preference_key, false)
+        // SettingPreference.setBoolean(SETTING_PREFERENCE_KEY, false)
 
         onView(withId(R.id.setting)).perform(click())
         onView(withId(R.id.push_alarm_switch)).check(matches(isNotChecked()))
@@ -62,9 +57,7 @@ class SettingFragmentTest {
 
     @Test
     fun 세팅값이_true이면_스위치가_on_상태인지_확인() {
-        val settingPreference =
-            SettingPreference(InstrumentationRegistry.getInstrumentation().targetContext)
-        settingPreference.setBoolean(setting_preference_key, true)
+        // SettingPreference.setBoolean(SETTING_PREFERENCE_KEY, true)
 
         onView(withId(R.id.setting)).perform(click())
         onView(withId(R.id.push_alarm_switch)).check(matches(isChecked()))

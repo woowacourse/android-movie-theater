@@ -12,6 +12,7 @@ class ReservationTime(private val dayOfWeek: DayOfWeek) {
 
     fun getIntervalTimes(): List<String> {
         return (getStartTime()..END_TIME step 2)
+            .asSequence()
             .map { LocalTime.of(it, 0) }
             .map { it.toString() }
             .toList()

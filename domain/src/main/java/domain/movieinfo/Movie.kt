@@ -9,4 +9,5 @@ data class Movie(
     val runningTime: Int,
     val description: String,
     val moviePoster: Int,
+    val theaters: MovieTheaters,
 )
