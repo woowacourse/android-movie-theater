@@ -14,12 +14,15 @@ import woowacourse.domain.BoxOffice
 import woowacourse.domain.movie.Movie
 import woowacourse.domain.movie.ScreeningPeriod
 import woowacourse.domain.reservation.ReservationRepository
+import woowacourse.domain.theater.ScreeningMovie
+import woowacourse.domain.theater.SeatStructure
 import woowacourse.domain.theater.Theater
 import woowacourse.domain.ticket.Position
 import woowacourse.domain.ticket.Seat
 import woowacourse.domain.ticket.SeatRank
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 
 class SeatPresenterTest {
     private lateinit var presenter: SeatContract.Presenter
@@ -58,11 +61,29 @@ class SeatPresenterTest {
         theaterUseCase = mockk()
         val theater = Theater(
             id = THEATER_ID,
-            rowSize = 5,
-            columnSize = 4,
-            sRankRange = listOf(2..3),
-            aRankRange = listOf(4..4),
-            bRankRange = listOf(0..1),
+            name = "선릉",
+            screeningMovies = listOf(
+                ScreeningMovie(
+                    movie = Movie(
+                        id = 1,
+                        title = "스즈메의 문단속",
+                        screeningPeriod = ScreeningPeriod(
+                            LocalDate.of(2024, 3, 1),
+                            LocalDate.of(2024, 3, 1),
+                        ),
+                        runningTime = 130,
+                        description = "문 잘 잠구는 공포영화",
+                    ),
+                    times = listOf(LocalTime.of(10, 0)),
+                ),
+            ),
+            seatStructure = SeatStructure(
+                rowSize = 5,
+                columnSize = 4,
+                sRankRange = listOf(2..3),
+                aRankRange = listOf(4..4),
+                bRankRange = listOf(0..1),
+            ),
         )
         every { theaterUseCase.getTheater(THEATER_ID) } returns theater
     }
