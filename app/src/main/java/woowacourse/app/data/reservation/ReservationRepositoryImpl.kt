@@ -8,6 +8,8 @@ import woowacourse.domain.movie.Movie
 import woowacourse.domain.reservation.Reservation
 import woowacourse.domain.reservation.ReservationRepository
 import woowacourse.domain.ticket.Ticket
+import woowacourse.domain.util.CgvError.DataSourceError.DataSourceNoSuchId
+import woowacourse.domain.util.CgvResult
 
 class ReservationRepositoryImpl(
     private val reservationDataSource: ReservationDataSource,
@@ -24,11 +26,13 @@ class ReservationRepositoryImpl(
         }
     }
 
-    override fun getReservation(id: Long): Reservation? {
-        val reservationEntity = reservationDataSource.getReservationEntity(id) ?: return null
+    override fun getReservation(id: Long): CgvResult<Reservation> {
+        val reservationEntity = reservationDataSource.getReservationEntity(id)
+            ?: return CgvResult.Failure(DataSourceNoSuchId())
         val seatEntities = seatDataSource.getSeatEntities(id)
         val movie: Movie = movieDataSource.getMovieEntity(reservationEntity.movieId)!!.toMovie()
-        return reservationEntity.toReservation(seatEntities, movie)
+        val reservation = reservationEntity.toReservation(seatEntities, movie)
+        return CgvResult.Success(reservation)
     }
 
     override fun makeReservation(tickets: Set<Ticket>): Reservation {

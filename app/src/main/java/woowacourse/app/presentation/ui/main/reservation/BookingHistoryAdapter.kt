@@ -27,7 +27,7 @@ class BookingHistoryAdapter(
         return bookingHistory.size
     }
 
-    fun initList(items: List<ReservationUiModel>) {
+    fun initItems(items: List<ReservationUiModel>) {
         bookingHistory.clear()
         bookingHistory.addAll(items)
         notifyDataSetChanged()

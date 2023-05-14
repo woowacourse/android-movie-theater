@@ -6,11 +6,15 @@ import woowacourse.domain.reservation.ReservationRepository
 interface ReservationHistoryContract {
     interface View {
         val presenter: Presenter
+
+        fun initAdapter(reservations: List<Reservation>)
+        fun goCompletedActivity(reservation: Reservation)
+        fun showNoReservationError()
     }
 
     interface Presenter {
         val reservationRepository: ReservationRepository
-        fun getReservation(id: Long): Reservation?
-        fun getReservations(): List<Reservation>
+        fun fetchReservation(id: Long)
+        fun fetchReservations()
     }
 }

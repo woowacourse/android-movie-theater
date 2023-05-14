@@ -14,6 +14,7 @@ import woowacourse.app.presentation.model.Mapper.toUiModel
 import woowacourse.app.presentation.model.Mapper.toUiReservations
 import woowacourse.app.presentation.ui.completed.CompletedActivity
 import woowacourse.app.presentation.util.shortToast
+import woowacourse.domain.reservation.Reservation
 import woowacourse.movie.R
 
 class BookingHistoryFragment : Fragment(), ReservationHistoryContract.View {
@@ -25,6 +26,7 @@ class BookingHistoryFragment : Fragment(), ReservationHistoryContract.View {
                 SeatDao(requireContext()),
                 MovieDao(requireContext()),
             ),
+            this,
         )
     }
 
@@ -38,19 +40,17 @@ class BookingHistoryFragment : Fragment(), ReservationHistoryContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val recyclerView = requireActivity().findViewById<RecyclerView>(R.id.recyclerBookingHistory)
-        val adapter = BookingHistoryAdapter(::itemClicked)
-        recyclerView.adapter = adapter
-        adapter.initList(presenter.getReservations().toUiReservations())
+        presenter.fetchReservations()
     }
 
-    private fun itemClicked(id: Long) {
-        val reservation = presenter.getReservation(id)
-        if (reservation == null) {
-            noSuchElement()
-            return
-        }
+    override fun initAdapter(reservations: List<Reservation>) {
+        val recyclerView = requireActivity().findViewById<RecyclerView>(R.id.recyclerBookingHistory)
+        val adapter = BookingHistoryAdapter { presenter.fetchReservation(it) }
+        recyclerView.adapter = adapter
+        adapter.initItems(reservations.toUiReservations())
+    }
+
+    override fun goCompletedActivity(reservation: Reservation) {
         val intent = CompletedActivity.getIntent(
             context = requireActivity(),
             reservation = reservation.toUiModel(),
@@ -58,7 +58,11 @@ class BookingHistoryFragment : Fragment(), ReservationHistoryContract.View {
         startActivity(intent)
     }
 
-    private fun noSuchElement() {
+    override fun showNoReservationError() {
+        noSuchReservation()
+    }
+
+    private fun noSuchReservation() {
         requireContext().shortToast(R.string.error_no_such_reservation)
     }
 }
