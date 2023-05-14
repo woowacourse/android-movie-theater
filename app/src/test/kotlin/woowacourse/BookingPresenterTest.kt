@@ -10,10 +10,8 @@ import org.junit.Test
 import woowacourse.app.presentation.ui.booking.BookingContract
 import woowacourse.app.presentation.ui.booking.BookingPresenter
 import woowacourse.domain.movie.Movie
-import woowacourse.domain.movie.ScreeningDate
 import woowacourse.domain.movie.ScreeningPeriod
 import java.time.LocalDate
-import java.time.LocalTime
 
 class BookingPresenterTest {
     private lateinit var presenter: BookingContract.Presenter
@@ -100,39 +98,20 @@ class BookingPresenterTest {
     }
 
     @Test
-    fun `날짜에 해당하는 시간대를 가져온다`() {
-        // given
-        val date = LocalDate.of(2024, 3, 1)
-        val expected = ScreeningDate(date).screeningTimes
-
-        // when
-        val actual = presenter.getScreeningTimes(date)
-
-        // then
-        assertEquals(expected, actual)
-    }
-
-    @Test
     fun `스피너의 날짜들과 시간들을 넣는다`() {
         // given
         val datesSlot = slot<List<LocalDate>>()
-        val timesSlot = slot<List<LocalTime>>()
         every {
-            view.initDateTime(
-                capture(datesSlot),
-                capture(timesSlot),
-            )
-        } answers { println("dates:${datesSlot.captured}, times:${timesSlot.captured}") }
+            view.initDateTimes(capture(datesSlot))
+        } answers { println("dates:${datesSlot.captured}") }
 
         // when
         presenter.initDateTimes()
         val actualDates = datesSlot.captured
-        val actualTimes = timesSlot.captured
 
         // then
         assertEquals(movie.screeningDates, actualDates)
-        assertEquals(presenter.getScreeningTimes(movie.startDate), actualTimes)
-        verify(exactly = 1) { view.initDateTime(actualDates, actualTimes) }
+        verify(exactly = 1) { view.initDateTimes(actualDates) }
     }
 
     @Test

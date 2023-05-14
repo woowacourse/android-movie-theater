@@ -7,9 +7,10 @@ import java.time.LocalTime
 interface BookingContract {
     interface View {
         val presenter: Presenter
-        fun initDateTime(dates: List<LocalDate>, times: List<LocalTime>)
+        fun initDateTimes(dates: List<LocalDate>)
         fun showTicketCount(value: Int)
         fun startSeatActivity(ticketCount: Int)
+        fun initScreeningTimes(fetchTimes: (screeningDate: LocalDate) -> List<LocalTime>)
     }
 
     interface Presenter {
@@ -22,7 +23,7 @@ interface BookingContract {
         fun addTicket()
 
         fun initDateTimes()
-        fun getScreeningTimes(date: LocalDate): List<LocalTime>
+        fun fetchScreeningTimes()
         fun completeBooking()
     }
 }

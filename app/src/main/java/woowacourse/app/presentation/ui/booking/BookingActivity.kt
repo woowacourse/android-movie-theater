@@ -31,7 +31,6 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         binding.presenter = presenter
         restoreData(savedInstanceState)
         initView()
-        initSpinnerListener()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -77,13 +76,13 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         binding.imageBookingPoster.setImageResource(MovieMapper.getPoster(presenter.movie.id))
     }
 
-    override fun initDateTime(dates: List<LocalDate>, times: List<LocalTime>) {
+    override fun initDateTimes(dates: List<LocalDate>) {
         binding.spinnerDateTime.initDateItems(dates)
-        binding.spinnerDateTime.initTimeItems(times)
+        presenter.fetchScreeningTimes()
     }
 
-    private fun initSpinnerListener() {
-        binding.spinnerDateTime.initDateSelectedListener { presenter.getScreeningTimes(it) }
+    override fun initScreeningTimes(fetchTimes: (screeningDate: LocalDate) -> List<LocalTime>) {
+        binding.spinnerDateTime.initDateSelectedListener { fetchTimes(it) }
     }
 
     override fun showTicketCount(value: Int) {

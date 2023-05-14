@@ -3,8 +3,6 @@ package woowacourse.app.presentation.ui.booking
 import woowacourse.domain.movie.Movie
 import woowacourse.domain.movie.ScreeningDate
 import woowacourse.domain.ticket.TicketCount
-import java.time.LocalDate
-import java.time.LocalTime
 
 class BookingPresenter(
     private val bookingView: BookingContract.View,
@@ -31,14 +29,11 @@ class BookingPresenter(
     }
 
     override fun initDateTimes() {
-        bookingView.initDateTime(
-            movie.screeningDates,
-            getScreeningTimes(movie.startDate),
-        )
+        bookingView.initDateTimes(movie.screeningDates)
     }
 
-    override fun getScreeningTimes(date: LocalDate): List<LocalTime> {
-        return ScreeningDate(date).screeningTimes
+    override fun fetchScreeningTimes() {
+        bookingView.initScreeningTimes { ScreeningDate(it).screeningTimes }
     }
 
     override fun completeBooking() {
