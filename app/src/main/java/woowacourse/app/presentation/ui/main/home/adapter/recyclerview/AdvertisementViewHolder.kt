@@ -8,7 +8,7 @@ import woowacourse.app.presentation.model.advertisement.AdvertisementUiModel
 import woowacourse.app.presentation.ui.main.home.adapter.HomeViewType
 import woowacourse.movie.R
 
-class AdvertisementViewHolder(view: View) : HomeViewHolder(view) {
+class AdvertisementViewHolder(view: View) : MovieViewHolder(view) {
     private val poster: ImageView = view.findViewById(R.id.imageAdvertisement)
 
     override val homeViewType: HomeViewType = HomeViewType.ADVERTISEMENT

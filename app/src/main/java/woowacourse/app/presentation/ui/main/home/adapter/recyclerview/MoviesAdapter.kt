@@ -10,19 +10,19 @@ import woowacourse.app.presentation.model.movie.MovieUiModel
 import woowacourse.app.presentation.ui.main.home.adapter.HomeViewType
 import woowacourse.movie.R
 
-class HomeAdapter(
+class MoviesAdapter(
     context: Context,
     private val clickBook: (MovieUiModel) -> Unit,
     private val clickAd: (Intent) -> Unit,
-) : RecyclerView.Adapter<HomeViewHolder>() {
+) : RecyclerView.Adapter<MovieViewHolder>() {
     private val movies = mutableListOf<HomeData>()
     private val layoutInflater = LayoutInflater.from(context)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val homeViewType = HomeViewType.getMainViewType(viewType)
-        val viewHolder: HomeViewHolder = when (homeViewType) {
+        val viewHolder: MovieViewHolder = when (homeViewType) {
             HomeViewType.CONTENT -> {
-                MovieViewHolder(layoutInflater.inflate(R.layout.movie_list_item, parent, false))
+                MovieItemViewHolder(layoutInflater.inflate(R.layout.movie_list_item, parent, false))
             }
             HomeViewType.ADVERTISEMENT -> {
                 AdvertisementViewHolder(
@@ -34,14 +34,14 @@ class HomeAdapter(
         return viewHolder
     }
 
-    private fun setViewHolderClick(viewHolder: HomeViewHolder) {
+    private fun setViewHolderClick(viewHolder: MovieViewHolder) {
         when (viewHolder) {
-            is MovieViewHolder -> viewHolder.setBookingClick(clickBook)
+            is MovieItemViewHolder -> viewHolder.setBookingClick(clickBook)
             is AdvertisementViewHolder -> viewHolder.setAdvertisementClick(clickAd)
         }
     }
 
-    override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.onBind(movies[position])
     }
 

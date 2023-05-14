@@ -14,7 +14,7 @@ import woowacourse.app.data.movie.MovieRepositoryImpl
 import woowacourse.app.presentation.model.HomeData
 import woowacourse.app.presentation.model.movie.MovieUiModel
 import woowacourse.app.presentation.ui.booking.BookingActivity
-import woowacourse.app.presentation.ui.main.home.adapter.recyclerview.HomeAdapter
+import woowacourse.app.presentation.ui.main.home.adapter.recyclerview.MoviesAdapter
 import woowacourse.app.presentation.usecase.main.MainUseCase
 import woowacourse.movie.R
 
@@ -43,13 +43,13 @@ class HomeFragment : Fragment(), HomeContract.View {
     }
 
     override fun initMovies(homeData: List<HomeData>) {
-        val homeAdapter = HomeAdapter(
+        val moviesAdapter = MoviesAdapter(
             requireContext(),
             { clickBook(it) },
             { clickAdvertisement(it) },
         )
-        requireActivity().findViewById<RecyclerView>(R.id.listMainMovie).adapter = homeAdapter
-        homeAdapter.initMovies(homeData)
+        requireActivity().findViewById<RecyclerView>(R.id.listMainMovie).adapter = moviesAdapter
+        moviesAdapter.initMovies(homeData)
     }
 
     private fun clickBook(movie: MovieUiModel) {
