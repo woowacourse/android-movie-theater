@@ -46,7 +46,7 @@ internal class MoviesPresenterTest {
         every { view.updateItems(capture(itemsSlot)) } just Runs
 
         // 실행
-        presenter.loadMovieAndAdvItems()
+        presenter.loadItems()
 
         // 뷰에 설정되는 메소드가 호출됐는지 검사
         verify { view.updateItems(any()) }

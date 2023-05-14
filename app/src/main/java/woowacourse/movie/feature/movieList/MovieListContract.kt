@@ -15,7 +15,7 @@ interface MovieListContract {
     }
 
     interface Presenter {
-        fun loadMovieAndAdvItems()
+        fun loadItems()
         fun receiveTheaterInfo(theaterMovie: SelectTheaterAndMovieState)
     }
 }

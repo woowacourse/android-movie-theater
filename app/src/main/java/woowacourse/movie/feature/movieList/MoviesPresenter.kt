@@ -12,7 +12,7 @@ class MoviesPresenter(
     private val getMovieAndAdvItemsUseCase: GetMovieAndAdvItemsUseCase,
 ) : MovieListContract.Presenter {
 
-    override fun loadMovieAndAdvItems() {
+    override fun loadItems() {
         getMovieAndAdvItemsUseCase(
             onSuccess = { movies, advs ->
                 val movieItems = movies.map {
