@@ -7,12 +7,12 @@ interface SeatPickerContract {
     interface View {
         fun initView(movieTitle: String)
         fun finishErrorView()
-        fun updateDefaultTotalPriceView(value: Int)
+        fun updateDefaultTotalPriceView(value: String)
         fun showTicketIsMaxCountView(ticketCount: Int)
         fun showConfirmDialog()
         fun updateNotification(reservationResult: ReservationResult, notificationTimeStamp: Long)
         fun showBookCompleteView(reservation: ReservationResult)
-        fun updateTotalPriceView(totalPrice: Int)
+        fun updateTotalPriceView(totalPrice: String)
     }
 
     interface Presenter {

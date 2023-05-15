@@ -62,8 +62,8 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
 
     }
 
-    override fun updateDefaultTotalPriceView(value: Int) {
-        binding.tvSeatPickerTotalPrice.text = value.toString()
+    override fun updateDefaultTotalPriceView(value: String) {
+        binding.tvSeatPickerTotalPrice.text = value
     }
 
     private fun setConfirmView(
@@ -166,8 +166,8 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
         }
     }
 
-    override fun updateTotalPriceView(totalPrice: Int) {
-        binding.tvSeatPickerTotalPrice.text = totalPrice.toString()
+    override fun updateTotalPriceView(totalPrice: String) {
+        binding.tvSeatPickerTotalPrice.text = totalPrice
     }
 
     companion object {

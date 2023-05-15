@@ -35,7 +35,7 @@ class SeatPickerPresenter(
     }
 
     override fun getDefaultTotalPrice() {
-        view.updateDefaultTotalPriceView(0)
+        view.updateDefaultTotalPriceView(BASE_TOTAL_MONEY)
     }
 
     override fun confirmBooking() {
@@ -82,7 +82,7 @@ class SeatPickerPresenter(
     override fun calculateTotalPrice() {
         val totalPrice =
             ticketBundle.calculateTotalPrice(movieBookingInfo!!.date, movieBookingInfo.time)
-        view.updateTotalPriceView(totalPrice)
+        view.updateTotalPriceView(totalPrice.toString())
     }
 
     override fun updateSeatStatus(isSelected: Boolean, seatIndex: Int): Boolean {
@@ -122,5 +122,6 @@ class SeatPickerPresenter(
 
     companion object {
         const val TIME_MILLS_OF_HALF_HOUR = (1000 * 60 * 30)
+        private const val BASE_TOTAL_MONEY = "0"
     }
 }
