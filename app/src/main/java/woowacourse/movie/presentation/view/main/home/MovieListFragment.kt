@@ -34,7 +34,6 @@ class MovieListFragment : Fragment(), MovieListContract.View {
             movies,
             ContextCompat.getDrawable(requireContext(), R.drawable.advertise_wooteco)!!
         ) {
-//            TheaterFragment.newInstance(it.title)
             val theaterFragment = TheaterFragment.newInstance(it)
 
             theaterFragment.show(

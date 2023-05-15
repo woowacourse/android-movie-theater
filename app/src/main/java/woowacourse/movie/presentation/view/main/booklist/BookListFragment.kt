@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import woowacourse.movie.data.database.MovieHelper
 import woowacourse.movie.databinding.FragmentBookListBinding
 import woowacourse.movie.presentation.model.ReservationResult
 import woowacourse.movie.presentation.view.main.home.bookcomplete.BookCompleteActivity
@@ -12,7 +13,7 @@ import woowacourse.movie.presentation.view.main.home.bookcomplete.BookCompleteAc
 class BookListFragment : Fragment(), BookingListContract.View {
     private lateinit var binding: FragmentBookListBinding
     private val presenter: BookingListContract.Presenter by lazy {
-        BookingListPresenter(this, requireContext())
+        BookingListPresenter(this, MovieHelper(requireContext()))
     }
 
     override fun onCreateView(

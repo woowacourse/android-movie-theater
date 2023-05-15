@@ -7,17 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
-import woowacourse.movie.R
+import woowacourse.movie.data.SharedPreferenceUtil
 import woowacourse.movie.databinding.FragmentSettingBinding
+import woowacourse.movie.presentation.permission.NotificationPermission
 
 class SettingFragment : Fragment(), SettingContract.View {
     private lateinit var binding: FragmentSettingBinding
     private val presenter: SettingPresenter by lazy {
         SettingPresenter(
             view = this,
-            context = requireContext()
+            SharedPreferenceUtil(requireContext())
         )
     }
 
@@ -38,7 +38,7 @@ class SettingFragment : Fragment(), SettingContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.getAlarmSettingInfo()
+        presenter.getAlarmSettingInfo(NotificationPermission(requireContext()).isGranted())
     }
 
     override fun updatePermissionNotGrantedView() {

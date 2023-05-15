@@ -7,9 +7,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
+import woowacourse.movie.data.SharedPreferenceUtil
 import woowacourse.movie.databinding.ActivityMainBinding
+import woowacourse.movie.presentation.permission.NotificationPermission
 import woowacourse.movie.presentation.view.main.booklist.BookListFragment
 import woowacourse.movie.presentation.view.main.home.MovieListFragment
 import woowacourse.movie.presentation.view.main.setting.SettingFragment
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     private val presenter: MainContract.Presenter by lazy {
         MainPresenter(
             view = this,
-            context = this
+            sharedPreferenceUtil = SharedPreferenceUtil(this)
         )
     }
 
@@ -44,7 +45,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     private fun requestNotificationPermission() {
-        presenter.checkNotificationPermission()
+        val isGranted = NotificationPermission(this).isGranted()
+        presenter.checkNotificationPermission(isGranted)
     }
 
     override fun updateNotificationGrantedView(isGranted: Boolean) {

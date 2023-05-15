@@ -16,6 +16,8 @@ import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.broadcast.bookingnotificaiotn.BookingAlarmReceiver
+import woowacourse.movie.data.SharedPreferenceUtil
+import woowacourse.movie.data.database.MovieHelper
 import woowacourse.movie.databinding.ActivitySeatPickerBinding
 import woowacourse.movie.presentation.extension.getParcelableCompat
 import woowacourse.movie.presentation.model.ReservationResult
@@ -28,7 +30,8 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
     private val presenter: SeatPickerContract.Presenter by lazy {
         SeatPickerPresenter(
             view = this,
-            context = this,
+            SharedPreferenceUtil(this),
+            MovieHelper(this),
             movieBookingInfo = intent.getParcelableCompat(
                 MOVIE_BOOKING_INFO_SCHEDULE_INTENT_KEY
             )

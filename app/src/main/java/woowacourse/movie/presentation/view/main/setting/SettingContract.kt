@@ -8,7 +8,7 @@ interface SettingContract {
 
     interface Presenter {
         fun setAlarmSetting(isGranted: Boolean)
-        fun getAlarmSettingInfo()
+        fun getAlarmSettingInfo(isNotificationGranted: Boolean)
         fun onChangedAlarmSetting(isChecked: Boolean)
     }
 }

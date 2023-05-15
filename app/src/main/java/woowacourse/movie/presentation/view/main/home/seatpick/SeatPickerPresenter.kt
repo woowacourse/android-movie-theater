@@ -1,10 +1,9 @@
 package woowacourse.movie.presentation.view.main.home.seatpick
 
-import android.content.Context
 import com.example.domain.Seat
 import com.example.domain.SeatGrade
 import com.example.domain.TicketBundle
-import woowacourse.movie.R
+import woowacourse.movie.data.SharedPreference
 import woowacourse.movie.data.SharedPreferenceUtil
 import woowacourse.movie.data.database.MovieHelper
 import woowacourse.movie.data.model.MovieBookingEntity
@@ -20,7 +19,8 @@ import java.time.format.DateTimeFormatter
 
 class SeatPickerPresenter(
     private val view: SeatPickerContract.View,
-    private val context: Context,
+    private val sharedPreferenceUtil: SharedPreference,
+    private val movieHelper: MovieHelper,
     private val movieBookingInfo: MovieBookingInfo?
 ) :
     SeatPickerContract.Presenter {
@@ -55,11 +55,11 @@ class SeatPickerPresenter(
             ticketBundle.getSeatNames().joinToString(", "),
             ticketBundle.calculateTotalPrice(movieBookingInfo.date, movieBookingInfo.time)
         )
-        MovieHelper(context).writeMovie(movieBookingEntity)
+        movieHelper.writeMovie(movieBookingEntity)
 
         val allowedPushNotification =
-            SharedPreferenceUtil(context).getBoolean(
-                context.getString(R.string.push_alarm_setting),
+            sharedPreferenceUtil.getBoolean(
+                SharedPreferenceUtil.ALARM_KEY,
                 false
             )
         setAlarm(movieBookingEntity, allowedPushNotification)

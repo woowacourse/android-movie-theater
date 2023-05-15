@@ -1,37 +1,31 @@
 package woowacourse.movie.presentation.view.main.setting
 
-import android.content.Context
-import woowacourse.movie.R
+import woowacourse.movie.data.SharedPreference
 import woowacourse.movie.data.SharedPreferenceUtil
-import woowacourse.movie.presentation.permission.NotificationPermission
 
 class SettingPresenter(
     private val view: SettingContract.View,
-    private val context: Context
+    private val sharedPreferenceUtil: SharedPreference
 ) : SettingContract.Presenter {
-
-    private val sharedPreferenceUtil: SharedPreferenceUtil by lazy { SharedPreferenceUtil(context) }
-    private val notificationPermission by lazy { NotificationPermission(context) }
 
     override fun setAlarmSetting(isGranted: Boolean) {
         if (!isGranted) {
             sharedPreferenceUtil.setBoolean(
-                context.getString(R.string.push_alarm_setting),
+                SharedPreferenceUtil.ALARM_KEY,
                 false
             )
             view.updatePermissionNotGrantedView()
         }
     }
 
-    override fun getAlarmSettingInfo() {
+    override fun getAlarmSettingInfo(isNotificationGranted: Boolean) {
         val isSet =
-            sharedPreferenceUtil.getBoolean(context.getString(R.string.push_alarm_setting), false)
-        val isGrantedPermission = notificationPermission.isGranted()
-        view.updateAlarmSettingView(isSet, isGrantedPermission)
+            sharedPreferenceUtil.getBoolean(SharedPreferenceUtil.ALARM_KEY, false)
+        view.updateAlarmSettingView(isSet, isNotificationGranted)
     }
 
     override fun onChangedAlarmSetting(isChecked: Boolean) {
-        sharedPreferenceUtil.setBoolean(context.getString(R.string.push_alarm_setting), isChecked)
+        sharedPreferenceUtil.setBoolean(SharedPreferenceUtil.ALARM_KEY, isChecked)
     }
 
 }

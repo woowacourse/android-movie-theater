@@ -8,7 +8,7 @@ interface MainContract {
     interface Presenter {
         fun setDefaultNotificationAlarmSetting()
         fun setNotificationAlarmSetting(isTrue: Boolean)
-        fun checkNotificationPermission()
+        fun checkNotificationPermission(isNotificationGranted: Boolean)
     }
 }
 
