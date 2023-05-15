@@ -10,30 +10,37 @@ import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.domain.screening.Minute
 import woowacourse.movie.domain.screening.Movie
-import woowacourse.movie.domain.screening.Screening
+import woowacourse.movie.domain.screening.Screening1
 import woowacourse.movie.domain.screening.ScreeningRange
+import woowacourse.movie.domain.screening.TimeTable
 import woowacourse.movie.domain.theater.Theater
 import woowacourse.movie.repository.ReservationRepository
-import woowacourse.movie.repository.ScreeningRepository
+import woowacourse.movie.repository.Screening1Repository
+import woowacourse.movie.repository.TheaterRepository
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 
 class SeatSelectionPresenterTest {
 
 
     private lateinit var view: SeatSelectionContract.View
 
-    private lateinit var screeningRepository: ScreeningRepository
+    private lateinit var screeningRepository: Screening1Repository
 
     private lateinit var reservationRepository: ReservationRepository
+
+    private lateinit var theaterRepository: TheaterRepository
+
+    private val theaterId = 1L
 
     private val fakeTheater: Theater = Theater(5, 4)
 
     private val screeningId = 1L
 
-    private val fakeScreening: Screening = Screening(
+    private val fakeScreening = Screening1(
         ScreeningRange(LocalDate.of(2024, 3, 1), LocalDate.of(2024, 3, 31)),
-        fakeTheater,
+        TimeTable(mapOf(fakeTheater to listOf(LocalTime.of(16, 0)))),
         Movie("title", Minute(152), "summary")
     )
 
@@ -42,13 +49,16 @@ class SeatSelectionPresenterTest {
     @Before
     fun setUp() {
         view = mockk(relaxed = true)
-        screeningRepository = mockk(relaxed = true)
+        screeningRepository = mockk()
+        theaterRepository = mockk()
         reservationRepository = mockk(relaxed = true)
         sut = SeatSelectionPresenter(
             view,
             screeningId,
             LocalDateTime.of(2024, 3, 1, 16, 0),
+            theaterId,
             screeningRepository,
+            theaterRepository,
             reservationRepository
         )
         every { screeningRepository.findById(screeningId) } returns fakeScreening
@@ -56,6 +66,8 @@ class SeatSelectionPresenterTest {
 
     @Test
     fun `상영을 로드하면 뷰에 좌석들 UI 상태와 영화 제목과 예매 요금 0원을 설정한다`() {
+        every { screeningRepository.findById(screeningId) } returns fakeScreening
+        every { theaterRepository.findById(theaterId) } returns fakeTheater
         val seatsUIState = SeatsUIState.from(fakeTheater)
         every { view.setSeats(SeatsUIState.from(fakeTheater)) } just runs
         every { view.setMovieTitle(fakeScreening.movie.title) } just runs
@@ -72,6 +84,8 @@ class SeatSelectionPresenterTest {
 
     @Test
     fun `좌석을 선택하면 뷰에 그에 맞게 예매 요금을 설정한다`() {
+        every { screeningRepository.findById(screeningId) } returns fakeScreening
+        every { theaterRepository.findById(theaterId) } returns fakeTheater
         val seatNames = setOf("A1, B1")
         every { view.setReservationFee(any()) } just runs
         sut.loadScreening()
@@ -83,6 +97,8 @@ class SeatSelectionPresenterTest {
 
     @Test
     fun`특정 좌석들을 선택하고 예매하면 뷰에 예매를 설정한다`() {
+        every { screeningRepository.findById(screeningId) } returns fakeScreening
+        every { theaterRepository.findById(theaterId) } returns fakeTheater
         val seatNames = setOf("A1, B1")
         every { view.setReservation(any()) } just runs
         sut.loadScreening()

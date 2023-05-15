@@ -9,26 +9,32 @@ import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.domain.screening.Minute
 import woowacourse.movie.domain.screening.Movie
-import woowacourse.movie.domain.screening.Screening
+import woowacourse.movie.domain.screening.Screening1
 import woowacourse.movie.domain.screening.ScreeningRange
+import woowacourse.movie.domain.screening.TimeTable
 import woowacourse.movie.domain.theater.Theater
-import woowacourse.movie.repository.ScreeningRepository
-import woowacourse.movie.view.PosterResourceProvider
+import woowacourse.movie.repository.Screening1Repository
+import woowacourse.movie.repository.TheaterRepository
 import java.time.LocalDate
+import java.time.LocalTime
 
 class ScreeningDetailPresenterTest {
 
     private lateinit var view: ScreeningDetailContract.View
 
-    private lateinit var screeningRepository: ScreeningRepository
+    private lateinit var screeningRepository: Screening1Repository
+
+    private lateinit var theaterRepository: TheaterRepository
 
     private val screeningId = 1L
 
-    private val fakeTheater: Theater = Theater(5, 4)
+    private val theaterId = 1L
 
-    private val fakeScreening: Screening = Screening(
+    private val fakeTheater: Theater = Theater(5, 4).apply { id = theaterId }
+
+    private val fakeScreening = Screening1(
         ScreeningRange(LocalDate.of(2024, 3, 1), LocalDate.of(2024, 3, 31)),
-        fakeTheater,
+        TimeTable(mapOf(fakeTheater to listOf(LocalTime.of(20, 0)))),
         Movie("title", Minute(152), "summary")
     ).apply { this.id = screeningId }
 
@@ -38,17 +44,18 @@ class ScreeningDetailPresenterTest {
     fun setUp() {
         view = mockk()
         screeningRepository = mockk()
-        sut = ScreeningDetailPresenter(view, screeningId, screeningRepository)
+        theaterRepository = mockk()
+        sut = ScreeningDetailPresenter(view, theaterRepository, screeningRepository)
     }
 
     @Test
     fun `상영을 로드하면 뷰에 상영 상세 UI 상태를 설정한다`() {
         every { screeningRepository.findById(screeningId) } returns fakeScreening
-        val posterResourceId = PosterResourceProvider.getPosterResourceId(fakeScreening)
-        val uiState = ScreeningDetailUIState.of(fakeScreening, posterResourceId)
+        every { theaterRepository.findById(theaterId) } returns fakeTheater
+        val uiState = ScreeningDetailUIState.of(fakeScreening, fakeTheater)
         every { view.setScreening(uiState) } just runs
 
-        sut.loadScreeningData()
+        sut.loadScreeningData(screeningId, theaterId)
 
         verify { view.setScreening(uiState) }
     }
