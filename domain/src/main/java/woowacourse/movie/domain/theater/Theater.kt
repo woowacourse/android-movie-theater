@@ -3,7 +3,7 @@ package woowacourse.movie.domain.theater
 import woowacourse.movie.domain.discount.Money
 import kotlin.properties.Delegates
 
-class Theater(seatRows: Int, seatColumns: Int) {
+class Theater(val name: String, seatRows: Int, seatColumns: Int) {
 
     var id: Long? by Delegates.vetoable(null) { _, old, new ->
         old == null && new != null
@@ -14,6 +14,8 @@ class Theater(seatRows: Int, seatColumns: Int) {
     init {
         require(seatRows.isPositive() && seatColumns.isPositive()) { SEAT_ROWS_OR_COLUMNS_NOT_POSITIVE_ERROR }
     }
+
+    constructor(seatRows: Int, seatColumns: Int) : this("", seatRows, seatColumns)
 
     private fun Int.isPositive(): Boolean = this > 0
 
