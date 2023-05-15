@@ -29,6 +29,8 @@ class SeatSelectionPresenterTest {
 
     private val fakeTheater: Theater = Theater(5, 4)
 
+    private val screeningId = 1L
+
     private val fakeScreening: Screening = Screening(
         ScreeningRange(LocalDate.of(2024, 3, 1), LocalDate.of(2024, 3, 31)),
         fakeTheater,
@@ -42,7 +44,6 @@ class SeatSelectionPresenterTest {
         view = mockk(relaxed = true)
         screeningRepository = mockk(relaxed = true)
         reservationRepository = mockk(relaxed = true)
-        val screeningId = 1L
         sut = SeatSelectionPresenter(
             view,
             screeningId,

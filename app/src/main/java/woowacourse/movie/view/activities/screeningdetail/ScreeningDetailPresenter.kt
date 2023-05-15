@@ -5,11 +5,12 @@ import woowacourse.movie.view.PosterResourceProvider
 
 class ScreeningDetailPresenter(
     private val view: ScreeningDetailContract.View,
-    private val screeningId: Long
+    private val screeningId: Long,
+    private val screeningRepository: ScreeningRepository
 ) : ScreeningDetailContract.Presenter {
 
     override fun loadScreeningData() {
-        val screening = ScreeningRepository.findById(screeningId) ?: return
+        val screening = screeningRepository.findById(screeningId) ?: return
         view.setScreening(
             ScreeningDetailUIState.of(
                 screening,

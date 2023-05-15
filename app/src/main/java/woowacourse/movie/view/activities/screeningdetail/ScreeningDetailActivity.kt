@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import woowacourse.movie.R
+import woowacourse.movie.repository.ScreeningRepository
 import woowacourse.movie.view.activities.common.BackButtonActivity
 import woowacourse.movie.view.activities.seatselection.SeatSelectionActivity
 import java.time.LocalDate
@@ -29,7 +30,7 @@ class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.Vi
         this.savedInstanceState = savedInstanceState
 
         val screeningId = intent.getLongExtra(SCREENING_ID, -1)
-        presenter = ScreeningDetailPresenter(this, screeningId)
+        presenter = ScreeningDetailPresenter(this, screeningId, ScreeningRepository)
         presenter.loadScreeningData()
         initAudienceCountTextView()
         initSeatSelectionButtonOnClickListener(screeningId)
