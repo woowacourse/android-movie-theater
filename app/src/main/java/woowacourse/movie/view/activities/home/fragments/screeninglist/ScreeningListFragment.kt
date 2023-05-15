@@ -67,7 +67,7 @@ class ScreeningListFragment : Fragment(), ScreeningListContract.View {
         val screeningTimeCount = item.findViewById<TextView>(R.id.tv_screening_time_count)
         screeningTimeCount.text = getString(R.string.screening_time_count).format(theater.screeningTimeCount)
         item.setOnClickListener {
-            ScreeningDetailActivity.startActivity(requireContext(), screeningId)
+            ScreeningDetailActivity.startActivity(requireContext(), screeningId, theater.theaterId)
         }
         return item
     }

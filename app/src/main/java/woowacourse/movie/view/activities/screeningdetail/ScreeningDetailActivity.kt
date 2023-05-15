@@ -6,7 +6,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import woowacourse.movie.R
-import woowacourse.movie.repository.ScreeningRepository
+import woowacourse.movie.repository.Screening1Repository
+import woowacourse.movie.repository.TheaterRepository
 import woowacourse.movie.view.activities.common.BackButtonActivity
 import woowacourse.movie.view.activities.seatselection.SeatSelectionActivity
 import java.time.LocalDate
@@ -16,7 +17,9 @@ import kotlin.properties.Delegates
 
 class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.View {
 
-    private lateinit var presenter: ScreeningDetailContract.Presenter
+    private val presenter: ScreeningDetailContract.Presenter by lazy {
+        ScreeningDetailPresenter(this, TheaterRepository, Screening1Repository)
+    }
     private var timeSpinnerPosition: Int = 0
     private var audienceCount: Int by Delegates.observable(1) { _, _, new ->
         findViewById<TextView>(R.id.audience_count_tv).text = new.toString()
@@ -30,8 +33,8 @@ class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.Vi
         this.savedInstanceState = savedInstanceState
 
         val screeningId = intent.getLongExtra(SCREENING_ID, -1)
-        presenter = ScreeningDetailPresenter(this, screeningId, ScreeningRepository)
-        presenter.loadScreeningData()
+        val theaterId = intent.getLongExtra(THEATER_ID, -1)
+        presenter.loadScreeningData(screeningId, theaterId)
         initAudienceCountTextView()
         initSeatSelectionButtonOnClickListener(screeningId)
     }
@@ -148,12 +151,14 @@ class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.Vi
 
     companion object {
         const val SCREENING_ID = "SCREENING_ID"
+        const val THEATER_ID = "THEATER_ID"
         private const val TIME_SPINNER_POSITION = "TIME_SPINNER_POSITION"
         private const val AUDIENCE_COUNT = "AUDIENCE_COUNT"
 
-        fun startActivity(context: Context, screeningId: Long) {
+        fun startActivity(context: Context, screeningId: Long, theaterId: Long) {
             val intent = Intent(context, ScreeningDetailActivity::class.java).apply {
                 putExtra(SCREENING_ID, screeningId)
+                putExtra(THEATER_ID, theaterId)
             }
             context.startActivity(intent)
         }

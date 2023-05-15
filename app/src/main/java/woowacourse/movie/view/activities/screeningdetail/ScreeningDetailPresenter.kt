@@ -1,22 +1,18 @@
 package woowacourse.movie.view.activities.screeningdetail
 
-import woowacourse.movie.repository.ScreeningRepository
-import woowacourse.movie.view.PosterResourceProvider
+import woowacourse.movie.repository.Screening1Repository
+import woowacourse.movie.repository.TheaterRepository
 
 class ScreeningDetailPresenter(
     private val view: ScreeningDetailContract.View,
-    private val screeningId: Long,
-    private val screeningRepository: ScreeningRepository
+    private val theaterRepository: TheaterRepository,
+    private val screeningRepository: Screening1Repository
 ) : ScreeningDetailContract.Presenter {
 
-    override fun loadScreeningData() {
+    override fun loadScreeningData(screeningId: Long, theaterId: Long) {
         val screening = screeningRepository.findById(screeningId) ?: return
-        view.setScreening(
-            ScreeningDetailUIState.of(
-                screening,
-                PosterResourceProvider.getPosterResourceId(screening)
-            )
-        )
+        val theater = theaterRepository.findById(theaterId) ?: return
+        view.setScreening(ScreeningDetailUIState.of(screening, theater))
     }
 
 }

@@ -15,6 +15,7 @@ import org.hamcrest.CoreMatchers.`is`
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.view.activities.screeningdetail.ScreeningDetailActivity.Companion.SCREENING_ID
+import woowacourse.movie.view.activities.screeningdetail.ScreeningDetailActivity.Companion.THEATER_ID
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -25,6 +26,7 @@ class ScreeningDetailActivityTest {
         ScreeningDetailActivity::class.java
     ).apply {
         putExtra(SCREENING_ID, 1L)
+        putExtra(THEATER_ID, 1L)
     }
 
     @get:Rule
