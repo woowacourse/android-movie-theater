@@ -18,7 +18,13 @@ import kotlin.properties.Delegates
 class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.View {
 
     private val presenter: ScreeningDetailContract.Presenter by lazy {
-        ScreeningDetailPresenter(this, TheaterRepository, ScreeningRepository)
+        ScreeningDetailPresenter(
+            this,
+            intent.getLongExtra(SCREENING_ID, -1),
+            intent.getLongExtra(THEATER_ID, -1),
+            TheaterRepository,
+            ScreeningRepository
+        )
     }
     private var timeSpinnerPosition: Int = 0
     private var audienceCount: Int by Delegates.observable(1) { _, _, new ->
@@ -32,9 +38,7 @@ class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.Vi
         setContentView(R.layout.activity_screening_detail)
         this.savedInstanceState = savedInstanceState
 
-        val screeningId = intent.getLongExtra(SCREENING_ID, -1)
-        val theaterId = intent.getLongExtra(THEATER_ID, -1)
-        presenter.loadScreeningData(screeningId, theaterId)
+        presenter.loadScreeningData()
         initAudienceCountTextView()
         initSeatSelectionButtonOnClickListener()
     }

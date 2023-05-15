@@ -45,7 +45,13 @@ class ScreeningDetailPresenterTest {
         view = mockk()
         screeningRepository = mockk()
         theaterRepository = mockk()
-        sut = ScreeningDetailPresenter(view, theaterRepository, screeningRepository)
+        sut = ScreeningDetailPresenter(
+            view,
+            screeningId,
+            theaterId,
+            theaterRepository,
+            screeningRepository
+        )
     }
 
     @Test
@@ -55,7 +61,7 @@ class ScreeningDetailPresenterTest {
         val uiState = ScreeningDetailUIState.of(fakeScreening, fakeTheater)
         every { view.setScreening(uiState) } just runs
 
-        sut.loadScreeningData(screeningId, theaterId)
+        sut.loadScreeningData()
 
         verify { view.setScreening(uiState) }
     }
