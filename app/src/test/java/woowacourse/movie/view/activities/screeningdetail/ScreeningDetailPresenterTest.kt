@@ -36,7 +36,7 @@ class ScreeningDetailPresenterTest {
 
     @Before
     fun setUp() {
-        view = mockk(relaxed = true)
+        view = mockk()
         screeningRepository = mockk()
         sut = ScreeningDetailPresenter(view, screeningId, screeningRepository)
     }
