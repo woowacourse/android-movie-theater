@@ -8,8 +8,6 @@ import woowacourse.movie.data.model.itemmodel.MovieItemModel
 import woowacourse.movie.data.model.uimodel.AdvertisementUiModel
 import woowacourse.movie.data.model.uimodel.MovieAdapterViewType
 import woowacourse.movie.data.model.uimodel.MovieUiModel
-import woowacourse.movie.databinding.ItemAdvertisementBinding
-import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.viewholder.AdvertisementItemViewHolder
 import woowacourse.movie.viewholder.MovieItemViewHolder
 
@@ -22,15 +20,10 @@ class MovieAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         get() = _advertisement!!
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
 
         return when (MovieAdapterViewType.find(viewType)) {
-            MovieAdapterViewType.MOVIE -> MovieItemViewHolder(
-                ItemMovieBinding.inflate(layoutInflater, parent, false)
-            )
-            MovieAdapterViewType.ADVERTISEMENT -> AdvertisementItemViewHolder(
-                ItemAdvertisementBinding.inflate(layoutInflater, parent, false)
-            )
+            MovieAdapterViewType.MOVIE -> MovieItemViewHolder(parent)
+            MovieAdapterViewType.ADVERTISEMENT -> AdvertisementItemViewHolder(parent)
         }
     }
 

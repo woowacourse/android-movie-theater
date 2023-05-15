@@ -1,11 +1,9 @@
 package woowacourse.movie.adapter
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.data.model.itemmodel.TheaterItemModel
 import woowacourse.movie.data.model.uimodel.TheaterUiModel
-import woowacourse.movie.databinding.ItemTheaterBinding
 import woowacourse.movie.viewholder.TheaterViewHolder
 
 class TheaterAdapter : RecyclerView.Adapter<TheaterViewHolder>() {
@@ -14,10 +12,8 @@ class TheaterAdapter : RecyclerView.Adapter<TheaterViewHolder>() {
         get() = _theaters.toList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TheaterViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val view = ItemTheaterBinding.inflate(layoutInflater, parent, false)
 
-        return TheaterViewHolder(view)
+        return TheaterViewHolder(parent)
     }
 
     override fun getItemCount(): Int = theaters.size
