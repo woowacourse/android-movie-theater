@@ -34,12 +34,14 @@ object Screening1Repository {
         val timeTable = TimeTable(
             mapOf(
                 (TheaterRepository.findById(1L) ?: Theater("잠실", 5, 4)) to listOf(
+                    LocalTime.of(10, 0),
                     LocalTime.of(12, 0),
                     LocalTime.of(14, 0),
                     LocalTime.of(16, 0),
                     LocalTime.of(18, 0),
                     LocalTime.of(20, 0),
                     LocalTime.of(22, 0),
+                    LocalTime.of(0, 0),
                 ),
                 (TheaterRepository.findById(2L) ?: Theater("선릉", 5, 4)) to listOf(
                     LocalTime.of(11, 0),
