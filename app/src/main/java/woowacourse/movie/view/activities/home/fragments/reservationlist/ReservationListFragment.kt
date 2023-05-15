@@ -5,13 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
 import woowacourse.movie.data.reservation.ReservationDbHelper
 import woowacourse.movie.data.reservation.ReservationRepositoryImpl
+import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.view.activities.reservationresult.ReservationResultActivity
 
 class ReservationListFragment : Fragment(), ReservationListContract.View {
+
+    private val binding: FragmentReservationListBinding by lazy {
+        FragmentReservationListBinding.inflate(layoutInflater)
+    }
 
     private val presenter: ReservationListContract.Presenter by lazy {
         ReservationListPresenter(
@@ -24,8 +27,8 @@ class ReservationListFragment : Fragment(), ReservationListContract.View {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_reservation_list, container, false)
+    ): View {
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,8 +37,7 @@ class ReservationListFragment : Fragment(), ReservationListContract.View {
     }
 
     override fun setReservationList(reservationListViewItemUIStates: List<ReservationListViewItemUIState>) {
-        val reservationListView =
-            view?.findViewById<RecyclerView>(R.id.rv_reservation_list) ?: return
+        val reservationListView = binding.rvReservationList
         reservationListView.adapter =
             ReservationListAdapter(reservationListViewItemUIStates) { reservationId ->
                 ReservationResultActivity.startActivity(reservationListView.context, reservationId)
