@@ -4,8 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-@JvmInline
-value class CountState private constructor(val value: Int) : Parcelable {
+data class CountState private constructor(val value: Int) : Parcelable {
 
     operator fun minus(other: Int): CountState = of(value - other)
     operator fun plus(other: Int): CountState = of(value + other)

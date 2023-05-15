@@ -11,27 +11,37 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import com.example.domain.repository.dataSource.movieDataSources
+import com.example.domain.repository.dataSource.theaterDataSources
+import com.example.domain.repository.dataSource.theaterMovieScreeningTimesDataSources
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.feature.detail.MovieDetailActivity
 import woowacourse.movie.feature.seatSelect.SeatSelectActivity
 import woowacourse.movie.feature.util.checkMatches
+import woowacourse.movie.model.SelectTheaterAndMovieState
+import woowacourse.movie.model.mapper.asPresentation
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class MovieDetailActivityTest {
 
+    private val theater = theaterDataSources[0]
+
     // 더 퍼스트 슬램덩크 1
-    private val movie = MovieRepository.allMovies()[1]
+    private val movie = movieDataSources[0]
 
     private val intent = MovieDetailActivity.getIntent(
         ApplicationProvider.getApplicationContext(),
-        movie
+        SelectTheaterAndMovieState(
+            theater.asPresentation(), movie.asPresentation(),
+            theaterMovieScreeningTimesDataSources[0].screeningInfos.find { it.movie == movie }?.screeningDateTimes
+                ?: listOf()
+        )
     )
 
     @get:Rule

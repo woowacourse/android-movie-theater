@@ -8,6 +8,7 @@ fun TicketsState.asDomain(): Tickets = Tickets(
 )
 
 fun Tickets.asPresentation(): TicketsState = TicketsState(
+    theater.asPresentation(),
     movie.asPresentation(),
     dateTime,
     getTotalDiscountedMoney().asPresentation(),

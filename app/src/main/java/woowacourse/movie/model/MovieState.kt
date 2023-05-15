@@ -10,13 +10,14 @@ import java.time.LocalDate
 data class MovieState(
     @DrawableRes
     val imgId: Int,
+    val movieId: Int,
     val title: String,
     val startDate: LocalDate,
     val endDate: LocalDate,
     val runningTime: Int,
     val description: String
 ) : Parcelable {
-    fun convertToItemModel(onClick: (position: Int) -> Unit): MovieItemModel {
+    fun toItemModel(onClick: (movieState: MovieState) -> Unit): MovieItemModel {
         return MovieItemModel(this, onClick)
     }
 }

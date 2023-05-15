@@ -11,6 +11,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import com.example.domain.repository.dataSource.movieDataSources
+import com.example.domain.repository.dataSource.theaterDataSources
 import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Before
@@ -18,21 +20,28 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.feature.util.checkMatches
 import woowacourse.movie.model.CountState
-import woowacourse.movie.model.ReservationState
+import woowacourse.movie.model.SelectReservationState
+import woowacourse.movie.model.mapper.asPresentation
 import java.time.LocalDateTime
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class SeatSelectActivityTest {
 
+    private val theater = theaterDataSources[0]
+
     // 더 퍼스트 슬램덩크 1
-    private val movie = MovieRepository.allMovies()[1]
-    private val dateTime = LocalDateTime.of(2023, 1, 4, 10, 0, 0)
+    private val movie = movieDataSources[0]
+    private val dateTime = LocalDateTime.of(2023, 5, 10, 10, 0, 0)
     private val reservationState =
-        ReservationState(movie, dateTime, CountState.of(2))
+        SelectReservationState(
+            theater.asPresentation(),
+            movie.asPresentation(),
+            dateTime,
+            CountState.of(2)
+        )
 
     private val intent = SeatSelectActivity.getIntent(
         ApplicationProvider.getApplicationContext(),
@@ -55,7 +64,7 @@ class SeatSelectActivityTest {
     @Test
     fun `이전_화면에서_예매한_영화_제목이_나타난다`() {
         onView(withId(R.id.reservation_title))
-            .checkMatches(withText(reservationState.movieState.title))
+            .checkMatches(withText(reservationState.movie.title))
     }
 
     // 커스텀 뷰인 SeatView의 isChosen 속성의 활성화 여부를 테스트하는 법을 아직 모르겠어서, 통합 테스트를 수행

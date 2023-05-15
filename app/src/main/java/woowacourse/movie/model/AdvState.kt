@@ -9,9 +9,10 @@ import woowacourse.movie.feature.movieList.itemModel.AdvItemModel
 data class AdvState(
     @DrawableRes
     val imgId: Int,
+    val advId: Int,
     val advDescription: String
 ) : Parcelable {
-    fun convertToItemModel(onClick: (position: Int) -> Unit): AdvItemModel {
+    fun toItemModel(onClick: (advState: AdvState) -> Unit): AdvItemModel {
         return AdvItemModel(this, onClick)
     }
 }

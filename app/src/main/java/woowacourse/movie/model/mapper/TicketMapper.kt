@@ -4,13 +4,15 @@ import com.example.domain.model.Ticket
 import woowacourse.movie.model.TicketState
 
 fun TicketState.asDomain(): Ticket = Ticket(
-    movieState.asDomain(),
+    theater.asDomain(),
+    movie.asDomain(),
     dateTime,
     seatPositionState.asDomain(),
     discountedMoneyState.asDomain()
 )
 
 fun Ticket.asPresentation(): TicketState = TicketState(
+    theater.asPresentation(),
     movie.asPresentation(),
     dateTime,
     position.asPresentation(),

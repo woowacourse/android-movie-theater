@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
+    id("kotlin-kapt")
 }
 
 android {
@@ -34,6 +35,12 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    testOptions {
+        animationsDisabled = true
+    }
+    dataBinding {
+        enable = true
+    }
 }
 
 dependencies {
@@ -52,5 +59,8 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-intents:3.1.0")
     testImplementation("org.robolectric:robolectric:4.9")
 
-    implementation("androidx.fragment:fragment-ktx:1.2.5")
+    implementation("androidx.fragment:fragment-ktx:1.5.7")
+
+    testImplementation("io.mockk:mockk-android:1.13.5")
+    testImplementation("io.mockk:mockk-agent:1.13.5")
 }

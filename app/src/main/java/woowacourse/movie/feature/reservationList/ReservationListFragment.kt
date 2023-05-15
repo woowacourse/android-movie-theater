@@ -5,51 +5,80 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
+import com.example.domain.usecase.GetAllReservationTicketsUseCase
 import woowacourse.movie.R
-import woowacourse.movie.data.TicketsRepository
+import woowacourse.movie.data.TicketsRepositoryImpl
+import woowacourse.movie.data.sqlite.ReservationTicketsDao
+import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.feature.common.OnDataUpdate
+import woowacourse.movie.feature.common.Toaster
 import woowacourse.movie.feature.confirm.ReservationConfirmActivity
-import woowacourse.movie.feature.reservationList.adapter.ReservationListAdapter
+import woowacourse.movie.feature.reservationList.adapter.ReservationTicketsAdapter
 import woowacourse.movie.feature.reservationList.itemModel.TicketsItemModel
 import woowacourse.movie.model.TicketsState
 
-class ReservationListFragment : Fragment(), OnDataUpdate {
+class ReservationListFragment : Fragment(), ReservationListContract.View, OnDataUpdate {
 
-    private lateinit var reservationRecyclerView: RecyclerView
-    private lateinit var adapter: ReservationListAdapter
+    private var _binding: FragmentReservationListBinding? = null
+    private val binding
+        get() = _binding!!
+
+    private lateinit var presenter: ReservationListContract.Presenter
+
+    private lateinit var adapter: ReservationTicketsAdapter
+
+    private lateinit var reservationTicketsDao: ReservationTicketsDao
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_reservation_list, container, false)
+    ): View {
+        _binding = FragmentReservationListBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        reservationRecyclerView = view.findViewById(R.id.reservation_rv)
-        adapter = ReservationListAdapter(emptyList())
-        reservationRecyclerView.adapter = adapter
+        reservationTicketsDao = ReservationTicketsDao(requireContext())
+        presenter =
+            ReservationPresenter(
+                this,
+                GetAllReservationTicketsUseCase(
+                    TicketsRepositoryImpl(
+                        reservationTicketsDao
+                    )
+                )
+            )
+        adapter = ReservationTicketsAdapter()
+        binding.rvReservation.adapter = adapter
+        presenter.loadTicketsItems()
     }
 
-    private fun getTicketsItemModel(): List<TicketsItemModel> {
-        return TicketsRepository.allTickets().map {
-            it.convertToItemModel { position ->
-                navigateReservationConfirm(adapter.reservations[position].ticketsState)
-            }
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
-    private fun navigateReservationConfirm(ticketsState: TicketsState) {
+    override fun navigateReservationConfirm(ticketsState: TicketsState) {
         val intent = ReservationConfirmActivity.getIntent(requireContext(), ticketsState)
         startActivity(intent)
     }
 
+    override fun updateItems(items: List<TicketsItemModel>) {
+        adapter.setItems(items)
+    }
+
+    override fun errorLoadReservationTicketsData() {
+        Toaster.showToast(requireContext(), getString(R.string.error_load_reservation_tickets_data))
+    }
+
     override fun onUpdateData() {
-        adapter.setItemChanged(getTicketsItemModel())
+        presenter.loadTicketsItems()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        reservationTicketsDao.close()
     }
 }

@@ -4,7 +4,7 @@ import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 
 data class Movie(
-    val imgId: Int,
+    val movieId: Int,
     val title: String,
     val startDate: LocalDate,
     val endDate: LocalDate,
