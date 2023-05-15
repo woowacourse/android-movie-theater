@@ -9,8 +9,9 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
+import woowacourse.movie.data.reservation.ReservationDbHelper
+import woowacourse.movie.data.reservation.ReservationRepositoryImpl
 import woowacourse.movie.domain.screening.Reservation
-import woowacourse.movie.repository.ReservationRepository
 import woowacourse.movie.view.activities.reservationresult.ReservationResultActivity
 import java.time.Duration
 import java.time.LocalDateTime
@@ -20,7 +21,9 @@ class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val reservationId = intent.getLongExtra(RESERVATION_ID, -1)
 
-        val reservation = ReservationRepository.findById(reservationId) ?: return
+        val reservationRepository =
+            ReservationRepositoryImpl(ReservationDbHelper.getDbInstance(context))
+        val reservation = reservationRepository.findById(reservationId)
 
         val reservationResultIntent = createReservationResultIntent(context, reservationId)
 

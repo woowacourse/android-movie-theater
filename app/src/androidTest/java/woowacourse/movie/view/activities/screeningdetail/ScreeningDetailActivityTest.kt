@@ -15,6 +15,7 @@ import org.hamcrest.CoreMatchers.`is`
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.view.activities.screeningdetail.ScreeningDetailActivity.Companion.SCREENING_ID
+import woowacourse.movie.view.activities.screeningdetail.ScreeningDetailActivity.Companion.THEATER_ID
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -25,6 +26,7 @@ class ScreeningDetailActivityTest {
         ScreeningDetailActivity::class.java
     ).apply {
         putExtra(SCREENING_ID, 1L)
+        putExtra(THEATER_ID, 1L)
     }
 
     @get:Rule
@@ -54,7 +56,7 @@ class ScreeningDetailActivityTest {
     }
 
     @Test
-    fun 날짜_스피너의_평일인_어떤_날을_선택하면_타임_스피너의_데이터들은_오전_10시부터_자정까지_두_시간_간격의_시간들이다() {
+    fun 날짜_스피너의_어떤_날을_선택하면_타임_스피너의_데이터들이_초기화된다() {
         onView(withId(R.id.date_spinner)).perform(click())
         val anyWeekday = LocalDate.of(2024, 3, 1)
         onData(`is`(anyWeekday))
@@ -62,19 +64,6 @@ class ScreeningDetailActivityTest {
 
         onView(withId(R.id.time_spinner)).perform(click())
         (10 until 24 step 2).forEach {
-            onData(`is`(LocalTime.of(it, 0))).check(matches(isDisplayed()))
-        }
-    }
-
-    @Test
-    fun 날짜_스피너의_주말인_어떤_날을_선택하면_타임_스피너의_데이터들은_오전_9시부터_자정까지_두_시간_간격의_시간들이다() {
-        onView(withId(R.id.date_spinner)).perform(click())
-        val anyWeekend = LocalDate.of(2024, 3, 2)
-        onData(`is`(anyWeekend))
-            .perform(click())
-
-        onView(withId(R.id.time_spinner)).perform(click())
-        (9 until 24 step 2).forEach {
             onData(`is`(LocalTime.of(it, 0))).check(matches(isDisplayed()))
         }
     }

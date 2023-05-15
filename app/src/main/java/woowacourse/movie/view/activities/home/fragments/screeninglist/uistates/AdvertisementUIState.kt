@@ -1,4 +1,4 @@
-package woowacourse.movie.view.activities.home.fragments.screeninglist
+package woowacourse.movie.view.activities.home.fragments.screeninglist.uistates
 
 import androidx.annotation.DrawableRes
 

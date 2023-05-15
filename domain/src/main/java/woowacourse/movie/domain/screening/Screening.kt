@@ -7,22 +7,31 @@ import kotlin.properties.Delegates
 
 class Screening(
     val screeningRange: ScreeningRange,
-    val theater: Theater,
+    val timeTable: TimeTable,
     val movie: Movie
 ) {
     var id: Long? by Delegates.vetoable(null) { _, old, new ->
         old == null && new != null
     }
 
-    fun reserve(screeningDateTime: LocalDateTime, seatPoints: List<Point>): Reservation {
-        require(screeningRange.screenOn(screeningDateTime)) {
-            NOT_SCREEN_ON_INPUT_DATE_TIME_ERROR.format(screeningDateTime)
+    fun reserve(
+        screeningDateTime: LocalDateTime,
+        theater: Theater,
+        seatPoints: List<Point>
+    ): Reservation {
+        require(
+            screeningDateTime in screeningRange && timeTable.screenOn(
+                theater,
+                screeningDateTime.toLocalTime()
+            )
+        ) {
+            NOT_SCREEN_ON_INPUT_ERROR.format(theater.name, screeningDateTime)
         }
 
         return Reservation(movie, screeningDateTime, theater, seatPoints)
     }
 
     companion object {
-        private const val NOT_SCREEN_ON_INPUT_DATE_TIME_ERROR = "%s에 상영하지 않습니다."
+        private const val NOT_SCREEN_ON_INPUT_ERROR = "%s 극장에서 %s에 상영하지 않습니다."
     }
 }

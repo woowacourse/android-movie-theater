@@ -1,37 +1,22 @@
 package woowacourse.movie.view.activities.home.fragments.screeninglist
 
-import woowacourse.movie.R
-import woowacourse.movie.domain.screening.Screening
 import woowacourse.movie.repository.ScreeningRepository
-import woowacourse.movie.view.PosterResourceProvider
+import woowacourse.movie.view.activities.home.fragments.screeninglist.uistates.ScreeningListUIState
+import woowacourse.movie.view.activities.home.fragments.screeninglist.uistates.TheatersUIState
 
-class ScreeningListPresenter(private val view: ScreeningListContract.View):
-    ScreeningListContract.Presenter {
+class ScreeningListPresenter(
+    private val view: ScreeningListContract.View,
+    private val screeningRepository: ScreeningRepository
+) : ScreeningListContract.Presenter {
 
     override fun loadScreenings() {
-        val screenings = ScreeningRepository.findAll()
-        val createScreeningListViewItemUIStates = createScreeningListViewItemUIStates(screenings)
-        view.setScreeningList(createScreeningListViewItemUIStates)
+        val screenings = screeningRepository.findAll()
+        view.setScreeningList(ScreeningListUIState.from(screenings))
     }
 
-    private fun createScreeningListViewItemUIStates(screenings: List<Screening>): List<ScreeningListViewItemUIState> {
-        val screeningListViewUIStates = mutableListOf<ScreeningListViewItemUIState>()
-
-        screenings.forEachIndexed { index, screening ->
-            screeningListViewUIStates.add(
-                ScreeningUIState.of(
-                    screening,
-                    PosterResourceProvider.getPosterResourceId(screening)
-                )
-            )
-            if ((index + 1) % ADVERTISE_INTERVAL == 0)
-                screeningListViewUIStates.add(AdvertisementUIState(R.drawable.ad_image))
-        }
-
-        return screeningListViewUIStates
-    }
-
-    companion object {
-        private const val ADVERTISE_INTERVAL = 3
+    override fun onReserveNow(screeningId: Long) {
+        val screening = screeningRepository.findById(screeningId)
+            ?: throw IllegalArgumentException("아이디가 ${screeningId}인 상영을 찾을 수 없습니다.")
+        view.showTheaters(TheatersUIState.from(screening))
     }
 }

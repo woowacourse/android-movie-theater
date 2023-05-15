@@ -1,22 +1,22 @@
 package woowacourse.movie.repository
 
-import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.screening.Minute
 import woowacourse.movie.domain.screening.Movie
 import woowacourse.movie.domain.screening.Screening
 import woowacourse.movie.domain.screening.ScreeningRange
+import woowacourse.movie.domain.screening.TimeTable
 import woowacourse.movie.domain.theater.Theater
 import java.time.LocalDate
 
 internal class ScreeningRepositoryTest {
-
     @Test
     fun `아이디가 없는 상영을 저장하면 자동으로 아이디가 부여된다`() {
         val screeningRange = ScreeningRange(LocalDate.of(2024, 3, 1), LocalDate.of(2024, 3, 31))
-        val theater = Theater(5, 4)
+        val timeTable = TimeTable(mapOf(Theater("잠실", 5, 4) to listOf()))
         val movie = Movie("title", Minute(152), "summary")
-        val screening = Screening(screeningRange, theater, movie)
+        val screening = Screening(screeningRange, timeTable, movie)
 
         ScreeningRepository.save(screening)
 

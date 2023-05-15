@@ -10,7 +10,7 @@ interface SeatSelectionContract {
     }
 
     interface View {
-        fun setSeats(seatUIStates: List<List<SeatUIState>>)
+        fun setSeats(seatUIStates: SeatsUIState)
 
         fun setMovieTitle(title: String)
 

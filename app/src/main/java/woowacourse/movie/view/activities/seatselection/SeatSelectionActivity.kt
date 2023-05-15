@@ -7,15 +7,18 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TableRow
-import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.Toolbar
 import woowacourse.movie.R
+import woowacourse.movie.data.reservation.ReservationDbHelper
+import woowacourse.movie.data.reservation.ReservationRepositoryImpl
+import woowacourse.movie.databinding.ActivitySeatSelectionBinding
+import woowacourse.movie.repository.ScreeningRepository
+import woowacourse.movie.repository.TheaterRepository
 import woowacourse.movie.view.activities.common.BackButtonActivity
 import woowacourse.movie.view.activities.reservationresult.ReservationResultActivity
 import woowacourse.movie.view.broadcast.AlarmReceiver
@@ -27,7 +30,21 @@ import kotlin.properties.Delegates
 
 class SeatSelectionActivity : BackButtonActivity(), SeatSelectionContract.View {
 
-    private lateinit var presenter: SeatSelectionContract.Presenter
+    private val binding: ActivitySeatSelectionBinding by lazy {
+        ActivitySeatSelectionBinding.inflate(layoutInflater)
+    }
+
+    private val presenter: SeatSelectionContract.Presenter by lazy {
+        SeatSelectionPresenter(
+            this,
+            intent.getLongExtra(SCREENING_ID, -1),
+            selectedScreeningDateTime,
+            intent.getLongExtra(THEATER_ID, -1),
+            ScreeningRepository,
+            TheaterRepository,
+            ReservationRepositoryImpl(ReservationDbHelper.getDbInstance(this))
+        )
+    }
 
     private val selectedScreeningDateTime: LocalDateTime by lazy {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -40,26 +57,20 @@ class SeatSelectionActivity : BackButtonActivity(), SeatSelectionContract.View {
 
     private var selectedSeatNames: Set<String> by Delegates.observable(setOf()) { _, _, new ->
         presenter.setSelectedSeats(new)
-        findViewById<Button>(R.id.reservation_btn).isEnabled =
+        binding.reservationBtn.isEnabled =
             new.size == intent.getIntExtra(AUDIENCE_COUNT, 1)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_seat_selection)
-        presenter = SeatSelectionPresenter(
-            this,
-            intent.getLongExtra(SCREENING_ID, -1),
-            selectedScreeningDateTime
-        )
+        setContentView(binding.root)
 
         presenter.loadScreening()
         initReservationButtonOnClickListener()
     }
 
     private fun initReservationButtonOnClickListener() {
-        val reservationButton = findViewById<Button>(R.id.reservation_btn)
-        reservationButton.setOnClickListener { showDialogAskingIfYouWantToMakeReservation() }
+        binding.reservationBtn.setOnClickListener { showDialogAskingIfYouWantToMakeReservation() }
     }
 
     private fun showDialogAskingIfYouWantToMakeReservation() {
@@ -76,16 +87,15 @@ class SeatSelectionActivity : BackButtonActivity(), SeatSelectionContract.View {
             .show()
     }
 
-    override fun setSeats(seatUIStates: List<List<SeatUIState>>) {
-        val seatsView = findViewById<TableLayout>(R.id.seat_table)
-        seatUIStates.forEach {
+    override fun setSeats(seatUIStates: SeatsUIState) {
+        seatUIStates.seats.forEach {
             val tableRow = TableRow(this).apply {
                 layoutParams = TableLayout.LayoutParams(0, 0, 1f)
             }
             it.forEach { seatUIState ->
                 tableRow.addView(createSeatUI(seatUIState.seatName, seatUIState.textColor))
             }
-            seatsView.addView(tableRow)
+            binding.seatTable.addView(tableRow)
         }
     }
 
@@ -116,13 +126,11 @@ class SeatSelectionActivity : BackButtonActivity(), SeatSelectionContract.View {
     }
 
     override fun setMovieTitle(title: String) {
-        val titleView = findViewById<TextView>(R.id.movie_title_tv)
-        titleView.text = title
+        binding.movieTitleTv.text = title
     }
 
     override fun setReservationFee(fee: Int) {
-        val reservationFeeView = findViewById<TextView>(R.id.reservation_fee_tv)
-        reservationFeeView.text = getString(R.string.fee_format).format(fee)
+        binding.reservationFeeTv.text = getString(R.string.fee_format).format(fee)
     }
 
     override fun setReservation(reservationId: Long) {
@@ -158,18 +166,21 @@ class SeatSelectionActivity : BackButtonActivity(), SeatSelectionContract.View {
         const val SCREENING_ID = "SCREENING_ID"
         const val SCREENING_DATE_TIME = "SCREENING_DATE_TIME"
         const val AUDIENCE_COUNT = "AUDIENCE_COUNT"
+        const val THEATER_ID = "THEATER_ID"
         private const val BEFORE_SCREENING_TIME = 30L
 
         fun startActivity(
             context: Context,
             screeningId: Long,
             screeningDateTime: LocalDateTime,
-            selectedAudienceCount: Int
+            selectedAudienceCount: Int,
+            theaterId: Long
         ) {
             val intent = Intent(context, SeatSelectionActivity::class.java).apply {
                 putExtra(SCREENING_ID, screeningId)
                 putExtra(SCREENING_DATE_TIME, screeningDateTime)
                 putExtra(AUDIENCE_COUNT, selectedAudienceCount)
+                putExtra(THEATER_ID, theaterId)
             }
             context.startActivity(intent)
         }

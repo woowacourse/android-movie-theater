@@ -35,6 +35,10 @@ class Reservation(
         return sum
     }
 
+    override fun equals(other: Any?): Boolean = if (other is Reservation) id == other.id else false
+
+    override fun hashCode(): Int = id.hashCode()
+
     companion object {
         private const val RESERVE_WITHOUT_SEAT_POINT_ERROR = "최소 한 개 이상의 좌석을 예매해야 합니다."
         private const val RESERVE_WITH_NOT_EXIST_SEAT_ERROR = "예매하려는 좌석이 존재하지 않습니다."

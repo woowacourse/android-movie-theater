@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemReservationListBinding
 
 class ReservationListAdapter(
     private val reservationListViewItems: List<ReservationListViewItemUIState>,
@@ -14,7 +15,7 @@ class ReservationListAdapter(
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_reservation_list, parent, false)
 
-        return ReservationItemViewHolder(view, onItemClick)
+        return ReservationItemViewHolder(ItemReservationListBinding.bind(view), onItemClick)
     }
 
     override fun getItemCount(): Int = reservationListViewItems.size

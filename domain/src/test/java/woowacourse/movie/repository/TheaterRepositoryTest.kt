@@ -8,7 +8,7 @@ class TheaterRepositoryTest {
 
     @Test
     fun `아이디가 없는 극장을 저장하면 자동으로 아이디가 부여된다`() {
-        val theater = Theater(5, 4)
+        val theater = Theater("잠실", 5, 4)
 
         TheaterRepository.save(theater)
 

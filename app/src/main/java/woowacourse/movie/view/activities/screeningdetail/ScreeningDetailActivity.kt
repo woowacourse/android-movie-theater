@@ -5,7 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.*
-import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityScreeningDetailBinding
+import woowacourse.movie.repository.ScreeningRepository
+import woowacourse.movie.repository.TheaterRepository
 import woowacourse.movie.view.activities.common.BackButtonActivity
 import woowacourse.movie.view.activities.seatselection.SeatSelectionActivity
 import java.time.LocalDate
@@ -15,49 +17,57 @@ import kotlin.properties.Delegates
 
 class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.View {
 
-    private lateinit var presenter: ScreeningDetailContract.Presenter
+    private val binding: ActivityScreeningDetailBinding by lazy {
+        ActivityScreeningDetailBinding.inflate(layoutInflater)
+    }
+
+    private val presenter: ScreeningDetailContract.Presenter by lazy {
+        ScreeningDetailPresenter(
+            this,
+            intent.getLongExtra(SCREENING_ID, -1),
+            intent.getLongExtra(THEATER_ID, -1),
+            TheaterRepository,
+            ScreeningRepository
+        )
+    }
     private var timeSpinnerPosition: Int = 0
     private var audienceCount: Int by Delegates.observable(1) { _, _, new ->
-        findViewById<TextView>(R.id.audience_count_tv).text = new.toString()
+        binding.audienceCountTv.text = new.toString()
     }
     private var savedInstanceState: Bundle? = null
-    private val screeningDetailViewHolder by lazy { ScreeningDetailViewHolder(this) }
+    private val screeningDetailViewHolder by lazy { ScreeningDetailViewHolder(binding) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_screening_detail)
+        setContentView(binding.root)
         this.savedInstanceState = savedInstanceState
 
-        val screeningId = intent.getLongExtra(SCREENING_ID, -1)
-        presenter = ScreeningDetailPresenter(this, screeningId)
         presenter.loadScreeningData()
         initAudienceCountTextView()
-        initSeatSelectionButtonOnClickListener(screeningId)
+        initSeatSelectionButtonOnClickListener()
     }
 
     private fun initAudienceCountTextView() {
-        findViewById<TextView>(R.id.audience_count_tv).text = audienceCount.toString()
+        binding.audienceCountTv.text = audienceCount.toString()
     }
 
-    private fun initSeatSelectionButtonOnClickListener(screeningId: Long) {
-        val seatSelectionButton = findViewById<Button>(R.id.seat_selection_btn)
-        seatSelectionButton.setOnClickListener { startSeatSelectionActivity(screeningId) }
+    private fun initSeatSelectionButtonOnClickListener() {
+        binding.seatSelectionBtn.setOnClickListener { startSeatSelectionActivity() }
     }
 
-    private fun startSeatSelectionActivity(screeningId: Long) {
+    private fun startSeatSelectionActivity() {
         fun getSelectedScreeningDateTime(): LocalDateTime {
-            val dateSpinner = findViewById<Spinner>(R.id.date_spinner)
-            val selectedDate = dateSpinner.selectedItem as LocalDate
-            val timeSpinner = findViewById<Spinner>(R.id.time_spinner)
-            val selectedTime = timeSpinner.selectedItem as LocalTime
+            val selectedDate = binding.dateSpinner.selectedItem as LocalDate
+            val selectedTime = binding.timeSpinner.selectedItem as LocalTime
             return LocalDateTime.of(selectedDate, selectedTime)
         }
 
         SeatSelectionActivity.startActivity(
             this,
-            screeningId,
+            intent.getLongExtra(SCREENING_ID, -1),
             getSelectedScreeningDateTime(),
-            audienceCount
+            audienceCount,
+            intent.getLongExtra(THEATER_ID, -1)
         )
     }
 
@@ -71,13 +81,12 @@ class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.Vi
 
     private fun initSpinners(screeningDateTimes: Map<LocalDate, List<LocalTime>>) {
         fun initTimeSpinner(screeningTimes: List<LocalTime>) {
-            val timeSpinner = findViewById<Spinner>(R.id.time_spinner)
-            timeSpinner.adapter = ArrayAdapter(
+            binding.timeSpinner.adapter = ArrayAdapter(
                 this,
                 android.R.layout.simple_spinner_item,
                 screeningTimes
             )
-            timeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            binding.timeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
                     view: View?,
@@ -92,13 +101,12 @@ class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.Vi
         }
 
         val screeningDates = screeningDateTimes.keys.toList()
-        val dateSpinner = findViewById<Spinner>(R.id.date_spinner)
-        dateSpinner.adapter = ArrayAdapter(
+        binding.dateSpinner.adapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
             screeningDates
         )
-        dateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.dateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -110,8 +118,7 @@ class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.Vi
                         ?: throw IllegalArgumentException("${screeningDates[position]}은 상영하지 않는 날이라서 타임 스피너를 초기화할 수 없습니다.")
                 )
                 savedInstanceState?.run {
-                    val timeSpinner = findViewById<Spinner>(R.id.time_spinner)
-                    timeSpinner.setSelection(this.getInt(TIME_SPINNER_POSITION))
+                    binding.timeSpinner.setSelection(this.getInt(TIME_SPINNER_POSITION))
                 }
             }
 
@@ -120,12 +127,10 @@ class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.Vi
     }
 
     private fun initAudienceCountAdjustButtons(maxAudienceCount: Int) {
-        val minusButton = findViewById<Button>(R.id.minus_audience_count_btn)
-        minusButton.setOnClickListener {
+        binding.minusAudienceCountBtn.setOnClickListener {
             if (audienceCount > 1) audienceCount--
         }
-        val plusButton = findViewById<Button>(R.id.plus_audience_count_btn)
-        plusButton.setOnClickListener {
+        binding.plusAudienceCountBtn.setOnClickListener {
             if (audienceCount < maxAudienceCount) audienceCount++
         }
     }
@@ -147,12 +152,14 @@ class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.Vi
 
     companion object {
         const val SCREENING_ID = "SCREENING_ID"
+        const val THEATER_ID = "THEATER_ID"
         private const val TIME_SPINNER_POSITION = "TIME_SPINNER_POSITION"
         private const val AUDIENCE_COUNT = "AUDIENCE_COUNT"
 
-        fun startActivity(context: Context, screeningId: Long) {
+        fun startActivity(context: Context, screeningId: Long, theaterId: Long) {
             val intent = Intent(context, ScreeningDetailActivity::class.java).apply {
                 putExtra(SCREENING_ID, screeningId)
+                putExtra(THEATER_ID, theaterId)
             }
             context.startActivity(intent)
         }

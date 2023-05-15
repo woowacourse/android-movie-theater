@@ -3,7 +3,7 @@ package woowacourse.movie.domain.theater
 import woowacourse.movie.domain.discount.Money
 import kotlin.properties.Delegates
 
-class Theater(seatRows: Int, seatColumns: Int) {
+class Theater(val name: String, seatRows: Int, seatColumns: Int) {
 
     var id: Long? by Delegates.vetoable(null) { _, old, new ->
         old == null && new != null
@@ -33,6 +33,10 @@ class Theater(seatRows: Int, seatColumns: Int) {
     fun hasSeatOn(point: Point): Boolean = point in seats.keys
 
     fun getFeeOf(seatPoint: Point): Money? = seats[seatPoint]?.seatFee
+
+    override fun equals(other: Any?): Boolean = if (other is Theater) this.id == other.id else false
+
+    override fun hashCode(): Int = id.hashCode()
 
     companion object {
         private const val SEAT_ROWS_OR_COLUMNS_NOT_POSITIVE_ERROR = "좌석들의 행과 열의 개수는 양수여야 합니다."

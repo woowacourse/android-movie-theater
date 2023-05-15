@@ -16,4 +16,5 @@ object PosterResourceProvider {
             "해리 포터와 죽음의 성물 - 1부" -> R.drawable.harry_porter7_poster
             else -> R.drawable.harry_porter8_poster
         }
+
 }

@@ -48,6 +48,8 @@
             android:layout_marginTop="80dp"
             android:textColor="@color/black"
             android:textSize="20sp"
+            android:maxLines="1"
+            android:ellipsize="end"
             tools:text="일반 1명 | A1, B1" />
 
         <TextView
