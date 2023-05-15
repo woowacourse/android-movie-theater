@@ -5,7 +5,6 @@ import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.TableRow
@@ -151,7 +150,7 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
         background = getDrawable(R.drawable.selector_seat_view)
         setTextSize(Dimension.SP, 22f)
 
-        val textColor = Color.parseColor(seatGrade.seatColor)
+        val textColor = getColor(seatGrade.seatColor)
         setTextColor(textColor)
     }
 

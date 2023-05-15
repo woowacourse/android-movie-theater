@@ -8,5 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="seat_grade_s_class">#19D358</color>
+    <color name="seat_grade_a_class">#1B48E9</color>
+    <color name="seat_grade_b_class">#E9B21B</color>
+
     <color name="book_complete_info_background">#9160f9</color>
 </resources>

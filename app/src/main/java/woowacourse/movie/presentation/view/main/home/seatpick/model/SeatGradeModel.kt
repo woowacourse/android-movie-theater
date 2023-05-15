@@ -1,8 +1,10 @@
 package woowacourse.movie.presentation.view.main.home.seatpick.model
 
-enum class SeatGradeModel(val seatColor: String) {
-    S_CLASS("#19D358"),
-    A_CLASS("#1B48E9"),
-    B_CLASS("#E9B21B"),
-    NONE("#FFFFFF");
+import woowacourse.movie.R
+
+enum class SeatGradeModel(val seatColor: Int) {
+    S_CLASS(R.color.seat_grade_s_class),
+    A_CLASS(R.color.seat_grade_a_class),
+    B_CLASS(R.color.seat_grade_b_class),
+    NONE(R.color.black);
 }
