@@ -34,6 +34,10 @@ class Theater(seatRows: Int, seatColumns: Int) {
 
     fun getFeeOf(seatPoint: Point): Money? = seats[seatPoint]?.seatFee
 
+    override fun equals(other: Any?): Boolean = if (other is Theater) this.id == other.id else false
+
+    override fun hashCode(): Int = id.hashCode()
+
     companion object {
         private const val SEAT_ROWS_OR_COLUMNS_NOT_POSITIVE_ERROR = "좌석들의 행과 열의 개수는 양수여야 합니다."
     }
