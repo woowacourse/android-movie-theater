@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.presentation.model.Theater
 
-class TheaterViewHolder(parent: ViewGroup, private val event: (Int) -> Unit) :
+class TheaterViewHolder(private val parent: ViewGroup, private val event: (Int) -> Unit) :
     RecyclerView.ViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.item_theater_list, parent, false)
     ) {
@@ -22,6 +22,6 @@ class TheaterViewHolder(parent: ViewGroup, private val event: (Int) -> Unit) :
     fun bind(theater: Theater, movieSchedule: List<String>) {
         itemView.findViewById<TextView>(R.id.tv_theater_name).text = theater.name
         itemView.findViewById<TextView>(R.id.tv_theater_screening_info).text =
-            "${(movieSchedule.size)}개의 상영시간"
+            parent.context.getString(R.string.theater_count_movie_time_schedule, movieSchedule.size)
     }
 }
