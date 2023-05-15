@@ -8,13 +8,11 @@ class ReservationItemViewHolder(
     private val binding: ItemReservationListBinding,
     private val onClick: (Long) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
-    private val screeningDateTimeView = binding.tvScreeningDateTime
-    private val movieTitleView = binding.tvMovieTitle
 
     fun bind(reservationListViewItemUIState: ReservationListViewItemUIState) {
-        screeningDateTimeView.text =
+        binding.tvScreeningDateTime.text =
             DATE_TIME_FORMATTER.format(reservationListViewItemUIState.screeningDateTime)
-        movieTitleView.text = reservationListViewItemUIState.movieTitle
+        binding.tvMovieTitle.text = reservationListViewItemUIState.movieTitle
         binding.root.setOnClickListener { onClick(reservationListViewItemUIState.reservationId) }
     }
 
