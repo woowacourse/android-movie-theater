@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.repository.ScreeningRepository
 import woowacourse.movie.view.activities.screeningdetail.ScreeningDetailActivity
 
 class ScreeningListFragment : Fragment(), ScreeningListContract.View {
 
-    private val presenter: ScreeningListContract.Presenter = ScreeningListPresenter(this)
+    private val presenter: ScreeningListContract.Presenter =
+        ScreeningListPresenter(this, ScreeningRepository)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,10 +28,11 @@ class ScreeningListFragment : Fragment(), ScreeningListContract.View {
         presenter.loadScreenings()
     }
 
-    override fun setScreeningList(screeningListViewItemUIStates: List<ScreeningListViewItemUIState>) {
+    override fun setScreeningList(screeningListUIState: ScreeningListUIState) {
         val screeningListView = view?.findViewById<RecyclerView>(R.id.screening_list_view) ?: return
-        screeningListView.adapter = ScreeningListAdapter(screeningListViewItemUIStates) { screeningId ->
-            ScreeningDetailActivity.startActivity(screeningListView.context, screeningId)
-        }
+        screeningListView.adapter =
+            ScreeningListAdapter(screeningListUIState.screenings) { screeningId ->
+                ScreeningDetailActivity.startActivity(screeningListView.context, screeningId)
+            }
     }
 }

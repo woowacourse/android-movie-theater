@@ -6,6 +6,6 @@ interface ScreeningListContract {
     }
 
     interface View {
-        fun setScreeningList(screeningListViewItemUIStates: List<ScreeningListViewItemUIState>)
+        fun setScreeningList(screeningListUIState: ScreeningListUIState)
     }
 }
