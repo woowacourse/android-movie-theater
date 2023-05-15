@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="woowacourse.app.ui.main.SettingFragment">
+    tools:context="woowacourse.app.presentation.ui.main.setting.SettingFragment">
 
     <TextView
         android:id="@+id/textSettingPushAlarm"

@@ -1,21 +1,11 @@
 package woowacourse.domain.advertisement
 
-import woowacourse.data.advertisement.AdvertisementDatabase
-import woowacourse.data.advertisement.AdvertisementEntity
+import woowacourse.domain.util.CgvResult
 
-object AdvertisementRepository {
-    fun getAdvertisements(): List<Advertisement> {
-        return AdvertisementDatabase.advertisements.map { it.toAdvertisement() }
-    }
+interface AdvertisementRepository {
+    fun getAdvertisements(): List<Advertisement>
 
-    fun getAdvertisement(id: Long): Advertisement {
-        return AdvertisementDatabase.selectAdvertisement(id).toAdvertisement()
-    }
+    fun getAdvertisement(id: Long): CgvResult<Advertisement>
 
-    private fun AdvertisementEntity.toAdvertisement(): Advertisement {
-        return Advertisement(
-            id = this.id,
-            link = this.link,
-        )
-    }
+    fun addAdvertisement(link: String): Advertisement
 }

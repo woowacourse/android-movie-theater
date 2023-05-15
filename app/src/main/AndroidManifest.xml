@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,21 +14,25 @@
         android:theme="@style/Theme.Movie"
         tools:targetApi="31">
         <receiver
-            android:name="woowacourse.app.ui.seat.AlarmReceiver"
+            android:name="woowacourse.app.presentation.ui.seat.AlarmReceiver"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <activity
-            android:name="woowacourse.app.ui.seat.SeatActivity"
+            android:name="woowacourse.app.presentation.ui.seat.SeatActivity"
             android:exported="false" />
         <activity
-            android:name="woowacourse.app.ui.completed.CompletedActivity"
+            android:name="woowacourse.app.presentation.ui.completed.CompletedActivity"
             android:exported="true" />
         <activity
-            android:name="woowacourse.app.ui.booking.BookingActivity"
+            android:name="woowacourse.app.presentation.ui.booking.BookingActivity"
             android:exported="false" />
         <activity
-            android:name="woowacourse.app.ui.main.MainActivity"
+            android:name="woowacourse.app.presentation.ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -15,4 +15,3 @@ dependencyResolutionManagement {
 rootProject.name = "android-movie-theater"
 include(":app")
 include(":domain")
-include(":data")

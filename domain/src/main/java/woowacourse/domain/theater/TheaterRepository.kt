@@ -1,25 +1,15 @@
 package woowacourse.domain.theater
 
-import woowacourse.data.theater.TheaterDatabase
-import woowacourse.data.theater.TheaterEntity
+import woowacourse.domain.util.CgvResult
 
-object TheaterRepository {
-    fun getTheaters(): List<Theater> {
-        return TheaterDatabase.theaters.map { it.toTheater() }
-    }
+interface TheaterRepository {
+    fun getTheaters(): List<Theater>
 
-    fun getTheater(theaterId: Long): Theater {
-        return TheaterDatabase.selectTheater(theaterId).toTheater()
-    }
+    fun getTheater(theaterId: Long): CgvResult<Theater>
 
-    private fun TheaterEntity.toTheater(): Theater {
-        return Theater(
-            id = this.id,
-            rowSize = this.rowSize,
-            columnSize = this.columnSize,
-            sRankRange = this.sRankRange,
-            aRankRange = this.aRankRange,
-            bRankRange = this.bRankRange,
-        )
-    }
+    fun addTheater(
+        theaterName: String,
+        screeningMovies: List<ScreeningMovie>,
+        seatStructure: SeatStructure,
+    )
 }

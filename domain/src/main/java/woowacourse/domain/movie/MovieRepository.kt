@@ -1,24 +1,16 @@
 package woowacourse.domain.movie
 
-import woowacourse.data.movie.MovieDatabase
-import woowacourse.data.movie.MovieEntity
+import woowacourse.domain.util.CgvResult
 
-object MovieRepository {
-    fun getMovies(): List<Movie> {
-        return MovieDatabase.movies.map { it.toMovie() }
-    }
+interface MovieRepository {
+    fun getMovies(): List<Movie>
 
-    fun getMovie(movieId: Long): Movie {
-        return MovieDatabase.selectMovie(movieId).toMovie()
-    }
+    fun getMovie(movieId: Long): CgvResult<Movie>
 
-    private fun MovieEntity.toMovie(): Movie {
-        return Movie(
-            id = this.id,
-            title = this.title,
-            screeningPeriod = ScreeningPeriod(this.startDate, this.endDate),
-            runningTime = this.runningTime,
-            description = this.description,
-        )
-    }
+    fun addMovie(
+        title: String,
+        screeningPeriod: ScreeningPeriod,
+        runningTime: Int,
+        description: String,
+    )
 }

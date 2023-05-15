@@ -6,17 +6,15 @@ import woowacourse.domain.ticket.SeatRank
 
 data class Theater(
     val id: Long,
-    val rowSize: Int,
-    val columnSize: Int,
-    val sRankRange: List<IntRange>,
-    val aRankRange: List<IntRange>,
-    val bRankRange: List<IntRange>,
+    val name: String,
+    val screeningMovies: List<ScreeningMovie>,
+    val seatStructure: SeatStructure,
 ) {
     private val rankMap: Map<SeatRank, List<IntRange>>
         get() = mapOf(
-            SeatRank.S to sRankRange,
-            SeatRank.A to aRankRange,
-            SeatRank.B to bRankRange,
+            SeatRank.S to seatStructure.sRankRange,
+            SeatRank.A to seatStructure.aRankRange,
+            SeatRank.B to seatStructure.bRankRange,
         )
 
     fun selectSeat(position: Position): Seat {
