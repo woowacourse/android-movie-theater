@@ -23,7 +23,7 @@ class ScreeningListPresenterTest {
     private lateinit var view: ScreeningListContract.View
     private lateinit var screeningRepository: ScreeningRepository
     private val screeningId = 1L
-    private val fakeTheater: Theater = Theater(5, 4).apply { id = 1L }
+    private val fakeTheater: Theater = Theater("잠실", 5, 4).apply { id = 1L }
     private val fakeScreening: Screening = Screening(
         ScreeningRange(LocalDate.of(2024, 3, 1), LocalDate.of(2024, 3, 31)),
         TimeTable(mapOf(fakeTheater to listOf(LocalTime.of(20, 0)))),

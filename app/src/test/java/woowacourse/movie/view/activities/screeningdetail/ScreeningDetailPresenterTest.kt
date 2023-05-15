@@ -30,7 +30,7 @@ class ScreeningDetailPresenterTest {
 
     private val theaterId = 1L
 
-    private val fakeTheater: Theater = Theater(5, 4).apply { id = theaterId }
+    private val fakeTheater: Theater = Theater("잠실", 5, 4).apply { id = theaterId }
 
     private val fakeScreening = Screening(
         ScreeningRange(LocalDate.of(2024, 3, 1), LocalDate.of(2024, 3, 31)),

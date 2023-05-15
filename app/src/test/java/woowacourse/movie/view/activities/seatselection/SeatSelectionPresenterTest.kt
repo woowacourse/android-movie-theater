@@ -34,7 +34,7 @@ class SeatSelectionPresenterTest {
 
     private val theaterId = 1L
 
-    private val fakeTheater: Theater = Theater(5, 4)
+    private val fakeTheater: Theater = Theater("잠실", 5, 4)
 
     private val screeningId = 1L
 

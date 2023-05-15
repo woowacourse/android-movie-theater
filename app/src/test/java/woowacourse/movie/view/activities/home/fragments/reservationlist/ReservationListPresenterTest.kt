@@ -22,7 +22,7 @@ class ReservationListPresenterTest {
     private val fakeReservation: Reservation = Reservation(
         Movie("title", Minute(152), "summary"),
         LocalDateTime.MAX,
-        Theater(5, 4),
+        Theater("잠실", 5, 4),
         listOf(Point(1, 2), Point(2, 3))
     ).apply { this.id = 1L }
     private lateinit var sut: ReservationListPresenter
