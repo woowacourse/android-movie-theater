@@ -6,13 +6,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityHomeBinding
 import woowacourse.movie.view.activities.home.fragments.reservationlist.ReservationListFragment
 import woowacourse.movie.view.activities.home.fragments.screeninglist.ScreeningListFragment
 import woowacourse.movie.view.activities.home.fragments.setting.SettingFragment
 
 class HomeActivity : AppCompatActivity() {
+
+    private val binding: ActivityHomeBinding by lazy {
+        ActivityHomeBinding.inflate(layoutInflater)
+    }
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -20,7 +24,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        setContentView(binding.root)
 
         initNotificationPermission()
 
@@ -34,7 +38,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun initBottomNavigation() {
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        val bottomNavigationView = binding.bottomNavigation
 
         bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
