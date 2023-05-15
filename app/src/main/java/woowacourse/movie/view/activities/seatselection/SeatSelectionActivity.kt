@@ -18,7 +18,8 @@ import androidx.appcompat.widget.Toolbar
 import woowacourse.movie.R
 import woowacourse.movie.data.reservation.ReservationDbHelper
 import woowacourse.movie.data.reservation.ReservationRepositoryImpl
-import woowacourse.movie.repository.ScreeningRepository
+import woowacourse.movie.repository.Screening1Repository
+import woowacourse.movie.repository.TheaterRepository
 import woowacourse.movie.view.activities.common.BackButtonActivity
 import woowacourse.movie.view.activities.reservationresult.ReservationResultActivity
 import woowacourse.movie.view.broadcast.AlarmReceiver
@@ -35,7 +36,9 @@ class SeatSelectionActivity : BackButtonActivity(), SeatSelectionContract.View {
             this,
             intent.getLongExtra(SCREENING_ID, -1),
             selectedScreeningDateTime,
-            ScreeningRepository,
+            intent.getLongExtra(THEATER_ID, -1),
+            Screening1Repository,
+            TheaterRepository,
             ReservationRepositoryImpl(ReservationDbHelper.getDbInstance(this))
         )
     }
@@ -164,18 +167,21 @@ class SeatSelectionActivity : BackButtonActivity(), SeatSelectionContract.View {
         const val SCREENING_ID = "SCREENING_ID"
         const val SCREENING_DATE_TIME = "SCREENING_DATE_TIME"
         const val AUDIENCE_COUNT = "AUDIENCE_COUNT"
+        const val THEATER_ID = "THEATER_ID"
         private const val BEFORE_SCREENING_TIME = 30L
 
         fun startActivity(
             context: Context,
             screeningId: Long,
             screeningDateTime: LocalDateTime,
-            selectedAudienceCount: Int
+            selectedAudienceCount: Int,
+            theaterId: Long
         ) {
             val intent = Intent(context, SeatSelectionActivity::class.java).apply {
                 putExtra(SCREENING_ID, screeningId)
                 putExtra(SCREENING_DATE_TIME, screeningDateTime)
                 putExtra(AUDIENCE_COUNT, selectedAudienceCount)
+                putExtra(THEATER_ID, theaterId)
             }
             context.startActivity(intent)
         }

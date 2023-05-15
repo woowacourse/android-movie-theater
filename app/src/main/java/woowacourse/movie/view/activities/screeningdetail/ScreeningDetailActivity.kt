@@ -36,19 +36,19 @@ class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.Vi
         val theaterId = intent.getLongExtra(THEATER_ID, -1)
         presenter.loadScreeningData(screeningId, theaterId)
         initAudienceCountTextView()
-        initSeatSelectionButtonOnClickListener(screeningId)
+        initSeatSelectionButtonOnClickListener()
     }
 
     private fun initAudienceCountTextView() {
         findViewById<TextView>(R.id.audience_count_tv).text = audienceCount.toString()
     }
 
-    private fun initSeatSelectionButtonOnClickListener(screeningId: Long) {
+    private fun initSeatSelectionButtonOnClickListener() {
         val seatSelectionButton = findViewById<Button>(R.id.seat_selection_btn)
-        seatSelectionButton.setOnClickListener { startSeatSelectionActivity(screeningId) }
+        seatSelectionButton.setOnClickListener { startSeatSelectionActivity() }
     }
 
-    private fun startSeatSelectionActivity(screeningId: Long) {
+    private fun startSeatSelectionActivity() {
         fun getSelectedScreeningDateTime(): LocalDateTime {
             val dateSpinner = findViewById<Spinner>(R.id.date_spinner)
             val selectedDate = dateSpinner.selectedItem as LocalDate
@@ -59,9 +59,10 @@ class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.Vi
 
         SeatSelectionActivity.startActivity(
             this,
-            screeningId,
+            intent.getLongExtra(SCREENING_ID, -1),
             getSelectedScreeningDateTime(),
-            audienceCount
+            audienceCount,
+            intent.getLongExtra(THEATER_ID, -1)
         )
     }
 
