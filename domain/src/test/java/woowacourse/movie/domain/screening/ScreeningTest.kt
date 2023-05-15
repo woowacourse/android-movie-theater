@@ -8,14 +8,14 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-internal class Screening1Test {
+internal class ScreeningTest {
 
     @Test
     fun `상영의 아이디가 설정된 상태에서 아이디를 다시 변경하면 변경되지 않는다`() {
         val theater = Theater("잠실", 5, 4).apply { id = 1L }
         val time = LocalTime.of(14, 0)
         val timeTable = TimeTable(mapOf(theater to listOf(time)))
-        val screening = Screening1(
+        val screening = Screening(
             ScreeningRange(LocalDate.of(2021, 3, 1), LocalDate.of(2021, 3, 31)),
             timeTable,
             Movie("제목", Minute(152), "요약")
@@ -32,7 +32,7 @@ internal class Screening1Test {
         val theater = Theater("잠실", 5, 4).apply { id = 1L }
         val time = LocalTime.of(14, 0)
         val timeTable = TimeTable(mapOf(theater to listOf(time)))
-        val screening = Screening1(
+        val screening = Screening(
             ScreeningRange(LocalDate.of(2021, 3, 1), LocalDate.of(2021, 3, 31)),
             timeTable,
             Movie("제목", Minute(152), "요약")

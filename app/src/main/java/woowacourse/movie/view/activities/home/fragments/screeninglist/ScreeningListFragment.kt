@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import woowacourse.movie.R
-import woowacourse.movie.repository.Screening1Repository
+import woowacourse.movie.repository.ScreeningRepository
 import woowacourse.movie.view.activities.home.fragments.screeninglist.uistates.TheaterUIState
 import woowacourse.movie.view.activities.home.fragments.screeninglist.uistates.TheatersUIState
 import woowacourse.movie.view.activities.screeningdetail.ScreeningDetailActivity
@@ -17,7 +17,7 @@ import woowacourse.movie.view.activities.screeningdetail.ScreeningDetailActivity
 class ScreeningListFragment : Fragment(), ScreeningListContract.View {
 
     private val presenter: ScreeningListContract.Presenter =
-        ScreeningListPresenter(this, Screening1Repository)
+        ScreeningListPresenter(this, ScreeningRepository)
 
     private lateinit var container: ViewGroup
 

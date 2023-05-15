@@ -1,10 +1,10 @@
 package woowacourse.movie.view.activities.seatselection
 
 import woowacourse.movie.domain.theater.Point
-import woowacourse.movie.domain.screening.Screening1
+import woowacourse.movie.domain.screening.Screening
 import woowacourse.movie.domain.theater.Theater
 import woowacourse.movie.repository.ReservationRepository
-import woowacourse.movie.repository.Screening1Repository
+import woowacourse.movie.repository.ScreeningRepository
 import woowacourse.movie.repository.TheaterRepository
 import java.time.LocalDateTime
 
@@ -13,12 +13,12 @@ class SeatSelectionPresenter(
     private val screeningId: Long,
     private val screeningDateTime: LocalDateTime,
     private val theaterId: Long,
-    private val screeningRepository: Screening1Repository,
+    private val screeningRepository: ScreeningRepository,
     private val theaterRepository: TheaterRepository,
     private val reservationRepository: ReservationRepository
 ) : SeatSelectionContract.Presenter {
 
-    private lateinit var screening: Screening1
+    private lateinit var screening: Screening
     private lateinit var theater: Theater
 
     override fun loadScreening() {

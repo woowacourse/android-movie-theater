@@ -2,17 +2,17 @@ package woowacourse.movie.repository
 
 import woowacourse.movie.domain.screening.Minute
 import woowacourse.movie.domain.screening.Movie
-import woowacourse.movie.domain.screening.Screening1
+import woowacourse.movie.domain.screening.Screening
 import woowacourse.movie.domain.screening.ScreeningRange
 import woowacourse.movie.domain.screening.TimeTable
 import woowacourse.movie.domain.theater.Theater
 import java.time.LocalDate
 import java.time.LocalTime
 
-object Screening1Repository {
+object ScreeningRepository {
 
     private var next_id: Long = 1L
-    private val screenings: MutableMap<Long, Screening1> = mutableMapOf()
+    private val screenings: MutableMap<Long, Screening> = mutableMapOf()
 
     init {
         initSampleData()
@@ -29,7 +29,7 @@ object Screening1Repository {
         save(createHarryPorter8Screening())
     }
 
-    private fun createHarryPorter1Screening(): Screening1 {
+    private fun createHarryPorter1Screening(): Screening {
         val screeningRange = ScreeningRange(LocalDate.of(2024, 3, 1), LocalDate.of(2024, 3, 31))
         val timeTable = TimeTable(
             mapOf(
@@ -65,10 +65,10 @@ object Screening1Repository {
             Minute(152),
             "오래전 사악한 마법사 볼드모트에게서 부모를 잃지만 그를 몰락시키고 살아남은 아이 해리 포터는 자신이 마법사라는 사실을 알지 못하고 친척인 더즐리 집안에서 자라게 된다. 친척들로부터 갖은 구박을 받ㅈ제임스든 나날을 보내던 도중, 11세가 되던 해에 해리에게로 마법 학교인 호그와트의 입학 통지서가 오게 된다. 이모부인 버넌 더즐리는 해리가 편지를 받지 못하게 방해하지만 해리는 우여곡절 끝에 자신이 마법사라는 사실을 알게 된다. 그리고 그를 맞이하러 온 호그와트의 숲지기 루비우스 해그리드의 안내로 호그와트에 입학하기 위한 준비를 하고, 마침내 학교로 가게 되는데..."
         )
-        return Screening1(screeningRange, timeTable, movie)
+        return Screening(screeningRange, timeTable, movie)
     }
 
-    private fun createHarryPorter2Screening(): Screening1 {
+    private fun createHarryPorter2Screening(): Screening {
         val screeningRange = ScreeningRange(LocalDate.of(2024, 4, 1), LocalDate.of(2024, 4, 28))
         val timeTable = TimeTable(
             mapOf(
@@ -118,10 +118,10 @@ object Screening1Repository {
                     "\n" +
                     "설상가상으로 지니 위즐리까지 슬리데린의 후계자에게 납치당했다는 소식이 들리자 호그와트 폐쇄론까지 제기된다. 이에 해리는 비밀의 방의 진상을 조사하기 위해 지니 위즐리가 가지고 있던 일기장을 꺼내 '비밀의 방에 대하여 알고 있나요?'라고 쓰고, 일기장에 든 톰 마볼로 리들의 영혼과 대화를 하게 된다. 그 일기장에서의 장면을 본 해리는 50년전에 톰 마볼로 리들이 루비우스 해그리드를 잡아내는 장면을 보고는 해그리드가 비밀의 방을 열었다고 생각하지만 그것이 아니라는 것은 곧 밝혀진다. 리들이 해그리드를 모함함으로써 그를 퇴학시켜 아즈카반에 보내도록 한 것이다. 사태를 알아차린 이들은 슬리데린의 후계자를 추적한 끝에 그 후계자가 볼드모트라는 것을 알아내고, 해리는 론과 함께 론의 여동생 지니를 구출하기 위해 비밀의 방에 가는데..."
         )
-        return Screening1(screeningRange, timeTable, movie)
+        return Screening(screeningRange, timeTable, movie)
     }
 
-    private fun createHarryPorter3Screening(): Screening1 {
+    private fun createHarryPorter3Screening(): Screening {
         val screeningRange = ScreeningRange(LocalDate.of(2024, 5, 1), LocalDate.of(2024, 5, 31))
         val timeTable = TimeTable(
             mapOf(
@@ -165,10 +165,10 @@ object Screening1Repository {
             Minute(141),
             "13세가 된 해리 포터는 또 한번의 여름 방학을 이모 가족인 더즐리 일가와 우울하게 보내야 했다. 물론 마법을 쓰는 건 일체 금지. 하지만, 버넌 이모부의 누나인 마지 아줌마가 더즐리 가를 방문하면서 상황은 변한다. 위압적인 마지는 해리에겐 늘 공포의 대상. 마지 아줌마의 모욕 때문에 스트레스를 받던 해리는 급기야 '실수로' 그녀를 거대한 괴물 풍선으로 만들어 하늘 높이 띄워 보내버리고 만다. 이모와 이모부에게 벌을 받을 것도 두렵고, 머글 세상에선 마법 사용이 금지되어 있는 것을 어겼기 때문에 호그와트 마법학교와 마법 정부의 징계가 걱정된 해리는 밤의 어둠 속으로 도망치지만, 순식간에 나이트 버스에 태워져 한 술집으로 인도되어 간다. 그 술집의 이름은 '구멍난 냄비'란 뜻의 리키 콜드런. 그곳엔 마법 정부 총리인 코닐리어스 퍼지가 기다리고 있었다. 총리는 해리를 벌주는 대신, 호그와트 학교로 돌아가기 전에 주점에서 하룻밤을 보낼 것을 강권한다. 아즈카반의 감옥을 탈출한 시리우스 블랙이라는 위험한 마법사가 해리를 찾고 있다는 것. 해리가 들은 사실에 의하면 시리우스 블랙은 어둠의 마왕인 볼드모트 경을 해리의 부모가 있는 곳으로 이끌어 결국 부모님 살해를 조종한 배후. 그렇다면 해리 역시 시리우스 블랙의 표적이 될 가능성도 있다는 얘기. 설상가상으로 호그와트 마법학교엔 불청객들이 머물게 된다. 디멘터는 아즈카반의 무시무시한 간수들을 일컫는 말. 블랙으로부터 학생들을 보호한다는 명분으로 호그와트에 머물게 된 그들은 상대의 영혼을 빨아들이는 힘을 갖고 있었다. 불행히도, 그들의 그런 능력은 다른 학생들보다 해리에게 더 큰 영향력을 발휘하고 그들의 존재는 아직 어린 해리를 공포에 몰아넣어 무기력하게 만든다. 하지만 새로 부임한 어둠의 마법 방어법 교수 리머스 루핀이 해리에게 디멘터들의 마법을 막아낼 수 있는 패트로누스 마법을 가르쳐주면서 상황은 반전되는데..."
         )
-        return Screening1(screeningRange, timeTable, movie)
+        return Screening(screeningRange, timeTable, movie)
     }
 
-    private fun createHarryPorter4Screening(): Screening1 {
+    private fun createHarryPorter4Screening(): Screening {
         val screeningRange = ScreeningRange(LocalDate.of(2024, 6, 1), LocalDate.of(2024, 6, 30))
         val timeTable = TimeTable(
             mapOf(
@@ -220,10 +220,10 @@ object Screening1Repository {
                     "\n" +
                     "불의 잔은 호그와트의 챔피언으로 세드릭 디고리, 덤스트랭의 챔피언으로 빅터 크룸, 보바통의 챔피언으로 플뢰르 델라쿠르를 선발한다. 그런데 불의 잔은 4번째 챔피언으로 해리 포터를 지명했다. 해리가 불의 잔에 자신이 이름을 몰래 집어넣었다고 모든 사람들이 의심하지만, 뽑힌 챔피언들에겐 마법으로 묶여서 참가해야 할 의무가 자동으로 부여되기에 덤블도어는 트라이위저드 시합을 예정대로 진행시키기로 결정하는데..."
         )
-        return Screening1(screeningRange, timeTable, movie)
+        return Screening(screeningRange, timeTable, movie)
     }
 
-    private fun createHarryPorter5Screening(): Screening1 {
+    private fun createHarryPorter5Screening(): Screening {
         val screeningRange = ScreeningRange(LocalDate.of(2024, 7, 1), LocalDate.of(2024, 7, 31))
         val timeTable = TimeTable(
             mapOf(
@@ -271,10 +271,10 @@ object Screening1Repository {
                     "\n" +
                     "마침내 지루했던 방학이 끝나고 해리는 호그와트에 복귀한다. 그러나 학교 분위기는 심상치 않다. 새로 부임한 덜로리스 엄브리지 교수는 알버스 덤블도어 교장의 반대편인 코닐리어스 퍼지 마법 정부 총리의 심복이다. 게다가 예언자 일보가 퍼뜨린 악의적인 선전으로, 해리를 보는 학생들의 시선은 곱지 않다. 살벌한 학교 분위기 속에서도 해리는 론, 헤르미온느와 더불어 덤블도어의 군대(Dumbldore's Army)라는 어둠의 마법 방어법 모임을 조직, 몰래 마법을 익힌다. 그런데 해리는 밤마다 볼드모트가 나오는 악몽에 시달리는데…"
         )
-        return Screening1(screeningRange, timeTable, movie)
+        return Screening(screeningRange, timeTable, movie)
     }
 
-    private fun createHarryPorter6Screening(): Screening1 {
+    private fun createHarryPorter6Screening(): Screening {
         val screeningRange = ScreeningRange(LocalDate.of(2024, 8, 1), LocalDate.of(2024, 8, 31))
         val timeTable = TimeTable(
             mapOf(
@@ -324,10 +324,10 @@ object Screening1Repository {
                     "\n" +
                     "그러던 어느 날 교장실로 해리를 부른 덤블도어 교장은 자기와 개인수업을 하자는데..."
         )
-        return Screening1(screeningRange, timeTable, movie)
+        return Screening(screeningRange, timeTable, movie)
     }
 
-    private fun createHarryPorter7Screening(): Screening1 {
+    private fun createHarryPorter7Screening(): Screening {
         val screeningRange = ScreeningRange(LocalDate.of(2024, 9, 1), LocalDate.of(2024, 9, 30))
         val timeTable = TimeTable(
             mapOf(
@@ -371,10 +371,10 @@ object Screening1Repository {
             Minute(157),
             "덤블도어 교장의 죽음 이후, 마법부는 죽음을 먹는 자들에게 점령당하고 호그와트는 위기에 빠진다. 이에 해리와 론, 헤르미온느는 볼드모트를 물리칠 수 있는 유일한 단서이자 그의 영혼이 담긴 ‘성물’ 호크룩스를 찾기 위한 위험한 여정에 나선다. 그러나 영혼이 연결되어 있는 볼드모트와 해리. 볼드모트를 파괴하면 해리의 목숨 또한 위태로워질지 모른다! 죽느냐 죽이느냐, 이제 그 마지막 대결은 극한을 향해 치닫는데…"
         )
-        return Screening1(screeningRange, timeTable, movie)
+        return Screening(screeningRange, timeTable, movie)
     }
 
-    private fun createHarryPorter8Screening(): Screening1 {
+    private fun createHarryPorter8Screening(): Screening {
         val screeningRange = ScreeningRange(LocalDate.of(2024, 10, 1), LocalDate.of(2024, 10, 31))
         val timeTable = TimeTable(
             mapOf(
@@ -427,19 +427,19 @@ object Screening1Repository {
                     "굿바이, 해리 포터!\n" +
                     "판타지의 위대한 역사가 마침내 끝을 맺는다"
         )
-        return Screening1(screeningRange, timeTable, movie)
+        return Screening(screeningRange, timeTable, movie)
     }
 
-    fun save(screening: Screening1) {
+    fun save(screening: Screening) {
         if (screening.id == null) screening.id = next_id++
         screenings[screening.id!!] = screening
     }
 
-    fun findById(id: Long): Screening1? {
+    fun findById(id: Long): Screening? {
         return screenings[id]
     }
 
-    fun findAll(): List<Screening1> {
+    fun findAll(): List<Screening> {
         return screenings.values.toList()
     }
 }

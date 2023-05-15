@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import woowacourse.movie.R
-import woowacourse.movie.repository.Screening1Repository
+import woowacourse.movie.repository.ScreeningRepository
 import woowacourse.movie.repository.TheaterRepository
 import woowacourse.movie.view.activities.common.BackButtonActivity
 import woowacourse.movie.view.activities.seatselection.SeatSelectionActivity
@@ -18,7 +18,7 @@ import kotlin.properties.Delegates
 class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.View {
 
     private val presenter: ScreeningDetailContract.Presenter by lazy {
-        ScreeningDetailPresenter(this, TheaterRepository, Screening1Repository)
+        ScreeningDetailPresenter(this, TheaterRepository, ScreeningRepository)
     }
     private var timeSpinnerPosition: Int = 0
     private var audienceCount: Int by Delegates.observable(1) { _, _, new ->

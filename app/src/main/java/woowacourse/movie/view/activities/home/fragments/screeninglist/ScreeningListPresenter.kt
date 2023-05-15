@@ -1,11 +1,11 @@
 package woowacourse.movie.view.activities.home.fragments.screeninglist
 
-import woowacourse.movie.repository.Screening1Repository
+import woowacourse.movie.repository.ScreeningRepository
 import woowacourse.movie.view.activities.home.fragments.screeninglist.uistates.TheatersUIState
 
 class ScreeningListPresenter(
     private val view: ScreeningListContract.View,
-    private val screeningRepository: Screening1Repository
+    private val screeningRepository: ScreeningRepository
 ) : ScreeningListContract.Presenter {
 
     override fun loadScreenings() {

@@ -5,7 +5,7 @@ import woowacourse.movie.domain.theater.Theater
 import java.time.LocalDateTime
 import kotlin.properties.Delegates
 
-class Screening1(
+class Screening(
     val screeningRange: ScreeningRange,
     val timeTable: TimeTable,
     val movie: Movie

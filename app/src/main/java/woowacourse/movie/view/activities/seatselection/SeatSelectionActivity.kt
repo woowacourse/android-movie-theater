@@ -18,7 +18,7 @@ import androidx.appcompat.widget.Toolbar
 import woowacourse.movie.R
 import woowacourse.movie.data.reservation.ReservationDbHelper
 import woowacourse.movie.data.reservation.ReservationRepositoryImpl
-import woowacourse.movie.repository.Screening1Repository
+import woowacourse.movie.repository.ScreeningRepository
 import woowacourse.movie.repository.TheaterRepository
 import woowacourse.movie.view.activities.common.BackButtonActivity
 import woowacourse.movie.view.activities.reservationresult.ReservationResultActivity
@@ -37,7 +37,7 @@ class SeatSelectionActivity : BackButtonActivity(), SeatSelectionContract.View {
             intent.getLongExtra(SCREENING_ID, -1),
             selectedScreeningDateTime,
             intent.getLongExtra(THEATER_ID, -1),
-            Screening1Repository,
+            ScreeningRepository,
             TheaterRepository,
             ReservationRepositoryImpl(ReservationDbHelper.getDbInstance(this))
         )

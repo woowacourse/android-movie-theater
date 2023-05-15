@@ -1,7 +1,7 @@
 package woowacourse.movie.view.activities.screeningdetail
 
 import androidx.annotation.DrawableRes
-import woowacourse.movie.domain.screening.Screening1
+import woowacourse.movie.domain.screening.Screening
 import woowacourse.movie.domain.screening.ScreeningRange
 import woowacourse.movie.domain.theater.Theater
 import woowacourse.movie.view.PosterResourceProvider
@@ -21,7 +21,7 @@ data class ScreeningDetailUIState(
 ) {
 
     companion object {
-        fun of(screening: Screening1, theater: Theater): ScreeningDetailUIState {
+        fun of(screening: Screening, theater: Theater): ScreeningDetailUIState {
             val movie = screening.movie
             val screeningId = screening.id
             requireNotNull(screeningId) { "상영의 아이디가 널이면 UI 상태를 생성할 수 없습니다." }

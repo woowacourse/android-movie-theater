@@ -1,11 +1,11 @@
 package woowacourse.movie.view
 
 import woowacourse.movie.R
-import woowacourse.movie.domain.screening.Screening1
+import woowacourse.movie.domain.screening.Screening
 
 object PosterResourceProvider {
 
-    fun getPosterResourceId(screening: Screening1): Int =
+    fun getPosterResourceId(screening: Screening): Int =
         when (screening.movie.title) {
             "해리 포터와 마법사의 돌", -> R.drawable.harry_porter1_poster
             "해리 포터와 비밀의 방" -> R.drawable.harry_porter2_poster

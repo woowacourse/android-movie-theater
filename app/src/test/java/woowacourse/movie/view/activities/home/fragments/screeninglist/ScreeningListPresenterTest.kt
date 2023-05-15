@@ -9,11 +9,11 @@ import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.domain.screening.Minute
 import woowacourse.movie.domain.screening.Movie
-import woowacourse.movie.domain.screening.Screening1
+import woowacourse.movie.domain.screening.Screening
 import woowacourse.movie.domain.screening.ScreeningRange
 import woowacourse.movie.domain.screening.TimeTable
 import woowacourse.movie.domain.theater.Theater
-import woowacourse.movie.repository.Screening1Repository
+import woowacourse.movie.repository.ScreeningRepository
 import woowacourse.movie.view.activities.home.fragments.screeninglist.uistates.TheatersUIState
 import java.time.LocalDate
 import java.time.LocalTime
@@ -21,10 +21,10 @@ import java.time.LocalTime
 class ScreeningListPresenterTest {
 
     private lateinit var view: ScreeningListContract.View
-    private lateinit var screeningRepository: Screening1Repository
+    private lateinit var screeningRepository: ScreeningRepository
     private val screeningId = 1L
     private val fakeTheater: Theater = Theater(5, 4).apply { id = 1L }
-    private val fakeScreening: Screening1 = Screening1(
+    private val fakeScreening: Screening = Screening(
         ScreeningRange(LocalDate.of(2024, 3, 1), LocalDate.of(2024, 3, 31)),
         TimeTable(mapOf(fakeTheater to listOf(LocalTime.of(20, 0)))),
         Movie("title", Minute(152), "summary")
