@@ -53,7 +53,7 @@
                 android:text="@string/ticket_count_minus"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/bt_book_complete"
+                app:layout_constraintBottom_toTopOf="@id/bt_book_complete"
                 app:layout_constraintDimensionRatio="H,65:44"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintWidth_percent="0.18" />
@@ -68,7 +68,7 @@
                 android:text="@string/ticket_count_plus"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/bt_book_complete"
+                app:layout_constraintBottom_toTopOf="@id/bt_book_complete"
                 app:layout_constraintDimensionRatio="H,65:44"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintWidth_percent="0.18" />
@@ -81,10 +81,10 @@
                 android:text="@string/ticket_count_default"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/bt_ticket_count_plus"
-                app:layout_constraintEnd_toStartOf="@+id/bt_ticket_count_plus"
-                app:layout_constraintStart_toEndOf="@+id/bt_ticket_count_minus"
-                app:layout_constraintTop_toTopOf="@+id/bt_ticket_count_minus" />
+                app:layout_constraintBottom_toBottomOf="@id/bt_ticket_count_plus"
+                app:layout_constraintEnd_toStartOf="@id/bt_ticket_count_plus"
+                app:layout_constraintStart_toEndOf="@id/bt_ticket_count_minus"
+                app:layout_constraintTop_toTopOf="@id/bt_ticket_count_minus" />
 
             <Button
                 android:id="@+id/bt_book_complete"

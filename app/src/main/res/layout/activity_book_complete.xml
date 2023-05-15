@@ -38,7 +38,7 @@
             android:gravity="center"
             android:textSize="25sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/tv_book_complete" />
+            app:layout_constraintTop_toBottomOf="@id/tv_book_complete" />
 
         <TextView
             android:id="@+id/tv_book_date"
@@ -48,7 +48,7 @@
             android:layout_marginTop="9dp"
             android:gravity="center"
             android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_book_movie_title" />
+            app:layout_constraintTop_toBottomOf="@id/tv_book_movie_title" />
 
         <TextView
             android:id="@+id/tv_book_person_count"
@@ -58,7 +58,7 @@
             android:layout_marginTop="69dp"
             android:gravity="center"
             android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_book_date" />
+            app:layout_constraintTop_toBottomOf="@id/tv_book_date" />
 
         <TextView
             android:id="@+id/tv_book_total_pay"
@@ -68,6 +68,6 @@
             android:layout_marginTop="19dp"
             android:gravity="center"
             android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_book_person_count" />
+            app:layout_constraintTop_toBottomOf="@id/tv_book_person_count" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
