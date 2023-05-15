@@ -11,6 +11,9 @@ data class ScreeningRange(val startDate: LocalDate, val endDate: LocalDate) {
         require(startDate <= endDate) { START_DATE_AFTER_END_DATE_ERROR }
     }
 
+    operator fun contains(dateTime: LocalDateTime): Boolean =
+        dateTime.toLocalDate() in startDate..endDate
+
     private fun createScreeningDateTimes(
         startDate: LocalDate,
         endDate: LocalDate
@@ -43,7 +46,7 @@ data class ScreeningRange(val startDate: LocalDate, val endDate: LocalDate) {
     }
 
     fun screenOn(dateTime: LocalDateTime): Boolean = dateTime in screeningDateTimes
-            .flatMap { it.value.map { time -> LocalDateTime.of(it.key, time) } }
+        .flatMap { it.value.map { time -> LocalDateTime.of(it.key, time) } }
 
 
     companion object {
