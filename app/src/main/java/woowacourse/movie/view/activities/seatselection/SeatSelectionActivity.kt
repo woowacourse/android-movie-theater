@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar
 import woowacourse.movie.R
 import woowacourse.movie.data.reservation.ReservationDbHelper
 import woowacourse.movie.data.reservation.ReservationRepositoryImpl
+import woowacourse.movie.repository.ScreeningRepository
 import woowacourse.movie.view.activities.common.BackButtonActivity
 import woowacourse.movie.view.activities.reservationresult.ReservationResultActivity
 import woowacourse.movie.view.broadcast.AlarmReceiver
@@ -34,6 +35,7 @@ class SeatSelectionActivity : BackButtonActivity(), SeatSelectionContract.View {
             this,
             intent.getLongExtra(SCREENING_ID, -1),
             selectedScreeningDateTime,
+            ScreeningRepository,
             ReservationRepositoryImpl(ReservationDbHelper.getDbInstance(this))
         )
     }
@@ -80,9 +82,9 @@ class SeatSelectionActivity : BackButtonActivity(), SeatSelectionContract.View {
             .show()
     }
 
-    override fun setSeats(seatUIStates: List<List<SeatUIState>>) {
+    override fun setSeats(seatUIStates: SeatsUIState) {
         val seatsView = findViewById<TableLayout>(R.id.seat_table)
-        seatUIStates.forEach {
+        seatUIStates.seats.forEach {
             val tableRow = TableRow(this).apply {
                 layoutParams = TableLayout.LayoutParams(0, 0, 1f)
             }
