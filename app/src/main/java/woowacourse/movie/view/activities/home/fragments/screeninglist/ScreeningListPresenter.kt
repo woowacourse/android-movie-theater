@@ -10,8 +10,8 @@ class ScreeningListPresenter(private val view: ScreeningListContract.View):
 
     override fun loadScreenings() {
         val screenings = ScreeningRepository.findAll()
-        val createScreeningListViewItemUIStates = createScreeningListViewItemUIStates(screenings)
-        view.setScreeningList(createScreeningListViewItemUIStates)
+        val screeningListViewItemUIStates = createScreeningListViewItemUIStates(screenings)
+        view.setScreeningList(screeningListViewItemUIStates)
     }
 
     private fun createScreeningListViewItemUIStates(screenings: List<Screening>): List<ScreeningListViewItemUIState> {
