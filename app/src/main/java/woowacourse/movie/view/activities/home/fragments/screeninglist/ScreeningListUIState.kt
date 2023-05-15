@@ -1,7 +1,7 @@
 package woowacourse.movie.view.activities.home.fragments.screeninglist
 
 import woowacourse.movie.R
-import woowacourse.movie.domain.screening.Screening
+import woowacourse.movie.domain.screening.Screening1
 import woowacourse.movie.view.PosterResourceProvider
 
 data class ScreeningListUIState(val screenings: List<ScreeningListViewItemUIState>) {
@@ -9,11 +9,11 @@ data class ScreeningListUIState(val screenings: List<ScreeningListViewItemUIStat
     companion object {
         private const val ADVERTISE_INTERVAL = 3
 
-        fun from(screenings: List<Screening>): ScreeningListUIState {
+        fun from(screenings: List<Screening1>): ScreeningListUIState {
             return ScreeningListUIState(createScreeningListViewItemUIStates(screenings))
         }
 
-        private fun createScreeningListViewItemUIStates(screenings: List<Screening>): List<ScreeningListViewItemUIState> {
+        private fun createScreeningListViewItemUIStates(screenings: List<Screening1>): List<ScreeningListViewItemUIState> {
             val screeningListViewUIStates = mutableListOf<ScreeningListViewItemUIState>()
 
             screenings.forEachIndexed { index, screening ->

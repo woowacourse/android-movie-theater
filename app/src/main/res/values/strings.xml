@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Movie</string>
     <string name="reserve_now">지금 예매</string>
+    <string name="screening_time_count">%d개의 상영 시간</string>
     <string name="screening_range_format">상영일: %s ~ %s</string>
     <string name="screening_range_is_empty">상영일: 상영 안함</string>
     <string name="running_time_format">러닝타임: %d분</string>
