@@ -37,11 +37,12 @@ class ReservationResultActivity : BackButtonActivity(), ReservationResultContrac
             DATE_TIME_FORMATTER.format(reservationUIState.screeningDateTime)
 
         val audienceCountSeatNamesView = findViewById<TextView>(R.id.audience_count_seat_names_tv)
-        audienceCountSeatNamesView.text = getString(R.string.reservation_people_count_format)
+        audienceCountSeatNamesView.text = getString(R.string.reservation_detail_infos)
             .format(
                 getString(R.string.general_person),
                 reservationUIState.audienceCount,
-                reservationUIState.seatNames
+                reservationUIState.seatNames,
+                reservationUIState.theaterName
             )
 
         val reservationFeeView = findViewById<TextView>(R.id.reservation_fee_tv)

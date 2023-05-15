@@ -8,6 +8,7 @@ data class ReservationUIState(
     val screeningDateTime: LocalDateTime,
     val audienceCount: Int,
     val seatNames: String,
+    val theaterName: String,
     val reservationFee: Int
 ) {
     companion object {
@@ -20,6 +21,7 @@ data class ReservationUIState(
                 reservation.seatPoints.size,
                 reservation.seatPoints.map { createSeatName(it.row, it.column) }.sorted()
                     .joinToString { it },
+                reservation.theater.name,
                 reservation.fee.amount
             )
         }
