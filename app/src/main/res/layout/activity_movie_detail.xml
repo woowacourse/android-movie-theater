@@ -10,17 +10,21 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_movie_booking"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="H,360:211"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintVertical_chainStyle="spread_inside">
 
             <View
                 android:id="@+id/space_movie_booking_top"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintDimensionRatio="H,360:29"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Spinner
@@ -88,7 +92,7 @@
 
             <Button
                 android:id="@+id/bt_book_complete"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginBottom="20dp"
@@ -105,7 +109,7 @@
 
         <ScrollView
             android:id="@+id/sv_movie_info"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/cl_movie_booking"
             app:layout_constraintEnd_toEndOf="parent"
