@@ -14,6 +14,7 @@ import woowacourse.movie.domain.screening.ScreeningRange
 import woowacourse.movie.domain.screening.TimeTable
 import woowacourse.movie.domain.theater.Theater
 import woowacourse.movie.repository.ScreeningRepository
+import woowacourse.movie.view.activities.home.fragments.screeninglist.uistates.ScreeningListUIState
 import woowacourse.movie.view.activities.home.fragments.screeninglist.uistates.TheatersUIState
 import java.time.LocalDate
 import java.time.LocalTime

@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.view.activities.home.fragments.screeninglist.uistates.ScreeningUIState
 import java.time.format.DateTimeFormatter
 
 class ScreeningItemViewHolder(

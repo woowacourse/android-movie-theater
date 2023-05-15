@@ -4,6 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.view.activities.home.fragments.screeninglist.uistates.AdvertisementUIState
+import woowacourse.movie.view.activities.home.fragments.screeninglist.uistates.ScreeningListViewItemUIState
+import woowacourse.movie.view.activities.home.fragments.screeninglist.uistates.ScreeningUIState
 
 class ScreeningListAdapter(
     private val screeningListViewItems: List<ScreeningListViewItemUIState>,

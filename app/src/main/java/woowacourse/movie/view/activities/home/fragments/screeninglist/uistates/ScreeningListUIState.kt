@@ -1,4 +1,4 @@
-package woowacourse.movie.view.activities.home.fragments.screeninglist
+package woowacourse.movie.view.activities.home.fragments.screeninglist.uistates
 
 import woowacourse.movie.R
 import woowacourse.movie.domain.screening.Screening

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import woowacourse.movie.R
 import woowacourse.movie.repository.ScreeningRepository
+import woowacourse.movie.view.activities.home.fragments.screeninglist.uistates.ScreeningListUIState
 import woowacourse.movie.view.activities.home.fragments.screeninglist.uistates.TheaterUIState
 import woowacourse.movie.view.activities.home.fragments.screeninglist.uistates.TheatersUIState
 import woowacourse.movie.view.activities.screeningdetail.ScreeningDetailActivity

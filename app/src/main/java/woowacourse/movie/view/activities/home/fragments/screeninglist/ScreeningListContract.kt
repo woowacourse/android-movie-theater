@@ -1,5 +1,6 @@
 package woowacourse.movie.view.activities.home.fragments.screeninglist
 
+import woowacourse.movie.view.activities.home.fragments.screeninglist.uistates.ScreeningListUIState
 import woowacourse.movie.view.activities.home.fragments.screeninglist.uistates.TheatersUIState
 
 interface ScreeningListContract {
