@@ -35,7 +35,7 @@ class ScreeningDetailActivity : BackButtonActivity(), ScreeningDetailContract.Vi
         binding.audienceCountTv.text = new.toString()
     }
     private var savedInstanceState: Bundle? = null
-    private val screeningDetailViewHolder by lazy { ScreeningDetailViewHolder(this) }
+    private val screeningDetailViewHolder by lazy { ScreeningDetailViewHolder(binding) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
