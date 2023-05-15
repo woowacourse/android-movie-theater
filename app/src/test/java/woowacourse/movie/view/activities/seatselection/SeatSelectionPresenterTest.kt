@@ -13,6 +13,7 @@ import woowacourse.movie.domain.screening.Movie
 import woowacourse.movie.domain.screening.Screening
 import woowacourse.movie.domain.screening.ScreeningRange
 import woowacourse.movie.domain.screening.TimeTable
+import woowacourse.movie.domain.theater.Point
 import woowacourse.movie.domain.theater.Theater
 import woowacourse.movie.repository.ReservationRepository
 import woowacourse.movie.repository.ScreeningRepository
@@ -38,6 +39,8 @@ class SeatSelectionPresenterTest {
 
     private val screeningId = 1L
 
+    private val screeningDateTime = LocalDateTime.of(2024, 3, 1, 16, 0)
+
     private val fakeScreening = Screening(
         ScreeningRange(LocalDate.of(2024, 3, 1), LocalDate.of(2024, 3, 31)),
         TimeTable(mapOf(fakeTheater to listOf(LocalTime.of(16, 0)))),
@@ -51,11 +54,11 @@ class SeatSelectionPresenterTest {
         view = mockk(relaxed = true)
         screeningRepository = mockk()
         theaterRepository = mockk()
-        reservationRepository = mockk(relaxed = true)
+        reservationRepository = mockk()
         sut = SeatSelectionPresenter(
             view,
             screeningId,
-            LocalDateTime.of(2024, 3, 1, 16, 0),
+            screeningDateTime,
             theaterId,
             screeningRepository,
             theaterRepository,
@@ -99,12 +102,14 @@ class SeatSelectionPresenterTest {
     fun`특정 좌석들을 선택하고 예매하면 뷰에 예매를 설정한다`() {
         every { screeningRepository.findById(screeningId) } returns fakeScreening
         every { theaterRepository.findById(theaterId) } returns fakeTheater
+        val reservation = fakeScreening.reserve(screeningDateTime, fakeTheater, listOf(Point(1, 1), Point(2, 1)))
+        every { reservationRepository.save(reservation) } returns 1L
         val seatNames = setOf("A1, B1")
-        every { view.setReservation(any()) } just runs
+        every { view.setReservation(1L) } just runs
         sut.loadScreening()
 
         sut.reserve(seatNames)
 
-        verify { view.setReservation(any()) }
+        verify { view.setReservation(1L) }
     }
 }
