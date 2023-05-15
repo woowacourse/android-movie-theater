@@ -18,13 +18,16 @@ class SeatSelectionPresenter(
     private val reservationRepository: ReservationRepository
 ) : SeatSelectionContract.Presenter {
 
-    private lateinit var screening: Screening
-    private lateinit var theater: Theater
+    private val screening: Screening by lazy {
+        screeningRepository.findById(screeningId)
+            ?: throw IllegalArgumentException("아이디가 부여되지 않은 상영은 보여질 수 없음")
+    }
+    private val theater: Theater by lazy {
+        theaterRepository.findById(theaterId)
+            ?: throw IllegalArgumentException("아이디가 부여되지 않은 극장은 보여질 수 없음")
+    }
 
     override fun loadScreening() {
-        screening = screeningRepository.findById(screeningId) ?: return
-        theater = theaterRepository.findById(theaterId) ?: return
-
         view.setSeats(SeatsUIState.from(theater))
         view.setMovieTitle(screening.movie.title)
         view.setReservationFee(0)
