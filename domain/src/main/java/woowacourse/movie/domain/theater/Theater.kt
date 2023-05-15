@@ -15,7 +15,7 @@ class Theater(val name: String, seatRows: Int, seatColumns: Int) {
         require(seatRows.isPositive() && seatColumns.isPositive()) { SEAT_ROWS_OR_COLUMNS_NOT_POSITIVE_ERROR }
     }
 
-    constructor(seatRows: Int, seatColumns: Int) : this("", seatRows, seatColumns)
+    constructor(seatRows: Int, seatColumns: Int) : this("기본", seatRows, seatColumns)
 
     private fun Int.isPositive(): Boolean = this > 0
 
