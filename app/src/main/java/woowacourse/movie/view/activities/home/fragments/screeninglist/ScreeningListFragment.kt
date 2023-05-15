@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import woowacourse.movie.R
+import woowacourse.movie.databinding.FragmentScreeningListBinding
+import woowacourse.movie.databinding.ItemTheaterBinding
 import woowacourse.movie.repository.ScreeningRepository
 import woowacourse.movie.view.activities.home.fragments.screeninglist.uistates.ScreeningListUIState
 import woowacourse.movie.view.activities.home.fragments.screeninglist.uistates.TheaterUIState
@@ -17,18 +17,19 @@ import woowacourse.movie.view.activities.screeningdetail.ScreeningDetailActivity
 
 class ScreeningListFragment : Fragment(), ScreeningListContract.View {
 
+    private val binding: FragmentScreeningListBinding by lazy {
+        FragmentScreeningListBinding.inflate(layoutInflater)
+    }
+
     private val presenter: ScreeningListContract.Presenter =
         ScreeningListPresenter(this, ScreeningRepository)
-
-    private lateinit var container: ViewGroup
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        this.container = container ?: throw IllegalArgumentException("상영 목록 프래그먼트의 컨테이너가 널입니다.")
-        return inflater.inflate(R.layout.fragment_screening_list, container, false)
+    ): View {
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,7 +38,7 @@ class ScreeningListFragment : Fragment(), ScreeningListContract.View {
     }
 
     override fun setScreeningList(screeningListUIState: ScreeningListUIState) {
-        val screeningListView = view?.findViewById<RecyclerView>(R.id.screening_list_view) ?: return
+        val screeningListView = binding.screeningListView
         screeningListView.adapter =
             ScreeningListAdapter(screeningListUIState.screenings) { screeningId ->
                 presenter.onReserveNow(screeningId)
@@ -47,7 +48,7 @@ class ScreeningListFragment : Fragment(), ScreeningListContract.View {
     override fun showTheaters(theaters: TheatersUIState) {
         val bottomSheetDialog = BottomSheetDialog(requireContext())
         val bottomSheetView =
-            layoutInflater.inflate(R.layout.bottom_sheet_theater, container, false)
+            layoutInflater.inflate(R.layout.bottom_sheet_theater, binding.root as ViewGroup, false)
         theaters.theaters.forEach { theater ->
             val theaterItem =
                 makeTheaterItem(theaters.screeningId, theater, bottomSheetView as ViewGroup)
@@ -61,15 +62,35 @@ class ScreeningListFragment : Fragment(), ScreeningListContract.View {
         screeningId: Long,
         theater: TheaterUIState,
         root: ViewGroup
-    ): View? {
-        val item = layoutInflater.inflate(R.layout.item_theater, root, false)
-        val theaterNameView = item.findViewById<TextView>(R.id.tv_theater_name)
-        theaterNameView.text = theater.theaterName
-        val screeningTimeCount = item.findViewById<TextView>(R.id.tv_screening_time_count)
-        screeningTimeCount.text = getString(R.string.screening_time_count).format(theater.screeningTimeCount)
-        item.setOnClickListener {
+    ): View {
+        val itemBinding = ItemTheaterBinding.inflate(layoutInflater)
+        itemBinding.tvTheaterName.text = theater.theaterName
+        itemBinding.tvScreeningTimeCount.text =
+            getString(R.string.screening_time_count).format(theater.screeningTimeCount)
+        itemBinding.root.setOnClickListener {
             ScreeningDetailActivity.startActivity(requireContext(), screeningId, theater.theaterId)
         }
-        return item
+        return itemBinding.root
     }
+
+//    바인딩을 사용하면 레이아웃이 깨집니다. 이유를 모르겠습니다.
+//    private fun makeTheaterItem(
+//        screeningId: Long,
+//        theater: TheaterUIState,
+//        root: ViewGroup
+//    ): View? {
+//        val item =
+//            layoutInflater.inflate(R.layout.item_theater, root, false)
+//        val theaterNameView =
+//            item.findViewById<TextView>(R.id.tv_theater_name)
+//        theaterNameView.text = theater.theaterName
+//        val screeningTimeCount =
+//            item.findViewById<TextView>(R.id.tv_screening_time_count)
+//        screeningTimeCount.text =
+//            getString(R.string.screening_time_count).format(theater.screeningTimeCount)
+//        item.setOnClickListener {
+//            ScreeningDetailActivity.startActivity(requireContext(), screeningId, theater.theaterId)
+//        }
+//        return item
+//    }
 }
