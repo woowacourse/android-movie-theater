@@ -10,10 +10,11 @@ class ReservationResultPresenter(
 ) :
     ReservationResultContract.Presenter {
 
-    private lateinit var reservation: Reservation
+    private val reservation: Reservation by lazy {
+        reservationRepository.findById(reservationId)
+    }
 
     override fun loadReservation() {
-        reservation = reservationRepository.findById(reservationId)
         view.setReservation(ReservationUIState.from(reservation))
     }
 }
