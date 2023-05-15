@@ -6,12 +6,16 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.presentation.model.Theater
 
 class TheaterAdapter(
-    private val theaters: List<Theater>, private val movieSchedule: List<List<String>>
+    private val theaters: List<Theater>, private val movieSchedule: List<List<String>>,
+    private val clickEvent: (Theater, List<String>) -> Unit
+
 ) :
     RecyclerView.Adapter<TheaterViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TheaterViewHolder {
-        Log.d("TheaterData",theaters.size.toString())
-        return TheaterViewHolder(parent)
+        Log.d("TheaterData", theaters.size.toString())
+        return TheaterViewHolder(parent) {
+            clickEvent(theaters[it], movieSchedule[it])
+        }
     }
 
     override fun getItemCount(): Int = theaters.size

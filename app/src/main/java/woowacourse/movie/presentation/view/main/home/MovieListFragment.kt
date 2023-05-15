@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.presentation.model.Movie
-import woowacourse.movie.presentation.view.main.home.moviedetail.MovieDetailActivity
+import woowacourse.movie.presentation.view.main.home.theater.TheaterFragment
 
 class MovieListFragment : Fragment(), MovieListContract.View {
     private val presenter by lazy { MovieListPresenter(this) }
@@ -35,17 +35,12 @@ class MovieListFragment : Fragment(), MovieListContract.View {
             ContextCompat.getDrawable(requireContext(), R.drawable.advertise_wooteco)!!
         ) {
 //            TheaterFragment.newInstance(it.title)
-//            val theaterFragment = TheaterFragment().apply {
-//                arguments = bundleOf().apply {
-//                    putString("KEY", it.title)
-//                }
-//            }
-//            theaterFragment.show(
-//                childFragmentManager, theaterFragment.tag
-//            )
-            val intent = MovieDetailActivity.getIntent(requireContext())
-            intent.putExtra(MovieDetailActivity.MOVIE_DATA_INTENT_KEY, it)
-            requireContext().startActivity(intent)
+            val theaterFragment = TheaterFragment.newInstance(it)
+
+            theaterFragment.show(
+                childFragmentManager, theaterFragment.tag
+            )
+
         }
         binding.rvMovieList.adapter = adapter
     }

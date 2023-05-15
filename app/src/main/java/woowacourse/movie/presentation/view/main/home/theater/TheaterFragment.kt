@@ -7,12 +7,19 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.databinding.FragmentTheaterBinding
+import woowacourse.movie.presentation.extension.getParcelableCompat
+import woowacourse.movie.presentation.model.Movie
 import woowacourse.movie.presentation.model.Theater
+import woowacourse.movie.presentation.view.main.home.moviedetail.MovieDetailActivity
 
 class TheaterFragment : BottomSheetDialogFragment(), TheaterContract.View {
     private lateinit var binding: FragmentTheaterBinding
     private val presenter: TheaterContract.Presenter by lazy {
-        TheaterPresenter(this)
+        TheaterPresenter(this, movie)
+    }
+
+    private val movie: Movie? by lazy {
+        requireArguments().getParcelableCompat(KEY)
     }
 
     override fun onCreateView(
@@ -25,18 +32,31 @@ class TheaterFragment : BottomSheetDialogFragment(), TheaterContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.getTheaters(requireArguments().getString(KEY)!!)
+        presenter.getTheaters()
     }
 
     override fun showTheatersView(theaters: List<Theater>, movieSchedule: List<List<String>>) {
-        binding.rvTheater.adapter = TheaterAdapter(theaters, movieSchedule)
+        binding.rvTheater.adapter = TheaterAdapter(theaters, movieSchedule) { theater, schedules ->
+            val intent = MovieDetailActivity.getIntent(requireContext())
+                .putExtra(MovieDetailActivity.THEATER_INTENT_KEY, theater)
+                .putStringArrayListExtra(
+                    MovieDetailActivity.MOVIE_SCHEDULES_KEY,
+                    ArrayList(schedules)
+                )
+                .putExtra(MovieDetailActivity.MOVIE_INTENT_KEY, movie)
+            requireContext().startActivity(intent)
+        }
+    }
+
+    override fun finishErrorView() {
+        requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
     }
 
     companion object {
         private const val KEY = "key"
-        fun newInstance(value: String) = TheaterFragment().apply {
+        fun newInstance(value: Movie) = TheaterFragment().apply {
             arguments = bundleOf().apply {
-                putString(KEY, value)
+                putParcelable(KEY, value)
             }
         }
     }

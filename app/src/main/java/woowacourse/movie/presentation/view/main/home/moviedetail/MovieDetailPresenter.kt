@@ -3,26 +3,27 @@ package woowacourse.movie.presentation.view.main.home.moviedetail
 import com.example.domain.MovieSchedule
 import woowacourse.movie.presentation.model.Movie
 import woowacourse.movie.presentation.model.MovieBookingInfo
+import woowacourse.movie.presentation.model.Theater
 
 class MovieDetailPresenter(
     private val view: MovieDetailContract.View,
-    private val movie: Movie?
+    private val movie: Movie?,
+    private val theater: Theater?
 ) :
     MovieDetailContract.Presenter {
     private val movieSchedule =
         MovieSchedule(movie!!.startDate, movie.endDate)
 
     override fun onCreate() {
-        if (movie == null) {
+        if (movie == null || theater == null) {
             view.finishErrorView()
             return
         }
         view.initView(movie)
     }
 
-    override fun getMovieSchedule() {
+    override fun getMovieSchedule(scheduleTime: List<String>) {
         val scheduleDate = movieSchedule.getScheduleDates()
-        val scheduleTime = movieSchedule.getScheduleTimes(scheduleDate[0])
         view.updateScheduleDateView(scheduleDate, scheduleTime)
     }
 
@@ -42,14 +43,10 @@ class MovieDetailPresenter(
             movie!!,
             movieDate,
             movieTime,
-            ticketCount
+            ticketCount,
+            theater!!.name
         )
         view.showInfoSelectedView(movieBookingInfo)
-    }
-
-    override fun getMovieScheduleTime(date: String) {
-        val movieScheduleTime = movieSchedule.getScheduleTimes(date)
-        view.updateScheduleTimeView(movieScheduleTime)
     }
 
     companion object {

@@ -23,7 +23,8 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
     private val presenter: MovieDetailContract.Presenter by lazy {
         MovieDetailPresenter(
             view = this,
-            movie = intent.getParcelableCompat(MOVIE_DATA_INTENT_KEY)
+            movie = intent.getParcelableCompat(MOVIE_INTENT_KEY),
+            theater = intent.getParcelableCompat(THEATER_INTENT_KEY)
         )
     }
 
@@ -32,7 +33,7 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
         restoreInstanceFlag = true
         presenter.onCreate()
-        presenter.getMovieSchedule()
+        presenter.getMovieSchedule(intent.getStringArrayListExtra(MOVIE_SCHEDULES_KEY) as List<String>)
         setClickListener()
         reloadTicketCountInstance(savedInstanceState)
     }
@@ -155,7 +156,9 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
     }
 
     companion object {
-        const val MOVIE_DATA_INTENT_KEY = "MOVIE_DATA_INTENT_KEY"
+        const val MOVIE_SCHEDULES_KEY = "MOVIE_SCHEDULES_KEY"
+        const val THEATER_INTENT_KEY = "THEATER_INTENT_KEY"
+        const val MOVIE_INTENT_KEY = "MOVIE_INTENT_KEY"
         const val MOVIE_INFO_TIME_BUNDLE_KEY = "MOVIE_INFO_TIME_BUNDLE_KEY"
         const val USER_TICKET_COUNT_BUNDLE_KEY = "USER_TICKET_COUNT_BUNDLE_KEY"
 

@@ -12,7 +12,7 @@ data class ReservationResult(
     val seatNames: String,
     val movieTitle: String,
     val date: String,
-    val time: String,
+    val time: String
 ) : Parcelable {
 
     companion object {
