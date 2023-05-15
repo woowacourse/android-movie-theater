@@ -36,11 +36,12 @@ class ReservationResultPresenterTest {
     fun `예매를 로드하면 뷰에 예매 UI 상태를 설정한다`() {
         val reservationId = 1L
         every { reservationRepository.findById(reservationId) } returns fakeReservation
-        every { view.setReservation(any()) } just runs
+        val reservationUIState = ReservationUIState.from(fakeReservation)
+        every { view.setReservation(reservationUIState) } just runs
         val sut = ReservationResultPresenter(view, reservationId, reservationRepository)
 
         sut.loadReservation()
 
-        verify { view.setReservation(any()) }
+        verify { view.setReservation(reservationUIState) }
     }
 }
