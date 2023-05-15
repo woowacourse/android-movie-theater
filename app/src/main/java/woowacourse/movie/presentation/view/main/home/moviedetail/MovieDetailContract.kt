@@ -15,7 +15,7 @@ interface MovieDetailContract {
     }
 
     interface Presenter {
-        fun onCreate()
+        fun initPresenter()
         fun getMovieSchedule(scheduleTime: List<String>)
         fun addTicket(currentTicketCount: Int)
         fun removeTicket(currentTicketCount: Int)

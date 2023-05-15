@@ -11,10 +11,11 @@ class MovieDetailPresenter(
     private val theater: Theater?
 ) :
     MovieDetailContract.Presenter {
-    private val movieSchedule =
+    private val movieSchedule by lazy {
         MovieSchedule(movie!!.startDate, movie.endDate)
+    }
 
-    override fun onCreate() {
+    override fun initPresenter() {
         if (movie == null || theater == null) {
             view.finishErrorView()
             return

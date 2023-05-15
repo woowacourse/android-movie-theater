@@ -32,7 +32,7 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
         restoreInstanceFlag = true
-        presenter.onCreate()
+        presenter.initPresenter()
         presenter.getMovieSchedule(intent.getStringArrayListExtra(MOVIE_SCHEDULES_KEY) as List<String>)
         setClickListener()
         reloadTicketCountInstance(savedInstanceState)
