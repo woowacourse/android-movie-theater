@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import com.woowacourse.domain.movie.Movie
 import com.woowacourse.domain.movie.MovieBookingInfo
 import com.woowacourse.domain.movie.MovieSchedule
 import woowacourse.movie.DateFormatter
@@ -37,7 +36,6 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = MovieDetailPresenter(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
         needSpinnerInitialize = true
 
@@ -46,8 +44,9 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
         val movieData = getMovieData()
         finishIfDummyData(movieData)
 
-        presenter.getScheduleDate(movieData.movieInfo.toDomain())
-        presenter.initView(movieData.movieInfo.movie.toDomain())
+        presenter = MovieDetailPresenter(this)
+        presenter.loadScheduleDate(movieData.movieInfo.toDomain())
+        presenter.loadMovieData(movieData.movieInfo.movie.toDomain())
         setClickListener(movieData)
 
         val scheduleDate = movieSchedule.getScheduleDates()
@@ -91,7 +90,7 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
 
     private fun clickSeatPickerBtn(movieData: TheaterMovieUIModel) {
         binding.btToSeatPicker.setOnClickListener {
-            presenter.getMovieBookingInfo(
+            presenter.loadMovieBookingInfo(
                 movieData.toDomain(),
                 LocalDate.parse(dateSpinner.selectedItem.toString()),
                 timeSpinner.selectedItem.toString(),
@@ -161,7 +160,7 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
         movieSchedule = schedule
     }
 
-    override fun initView(movieData: Movie) {
+    override fun setUpMovieDetailView(movieData: MovieUIModel) {
         binding.ivMoviePoster.setImageResource(movieData.poster)
         binding.tvMovieTitle.text = movieData.title
         binding.tvMovieScreeningPeriod.text =

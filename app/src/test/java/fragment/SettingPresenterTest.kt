@@ -30,7 +30,7 @@ class SettingPresenterTest {
         every { view.setSwitchStatus(capture(slot)) } returns Unit
 
         // when
-        presenter.initSwitchStatus(false)
+        presenter.loadSwitchStatus(false)
 
         // then
         assertEquals(false, slot.captured)
@@ -44,7 +44,7 @@ class SettingPresenterTest {
         every { view.setSwitchStatus(capture(slot)) } returns Unit
 
         // when
-        presenter.initSwitchStatus(true)
+        presenter.loadSwitchStatus(true)
 
         // then
         assertEquals(true, slot.captured)

@@ -6,19 +6,22 @@ import com.woowacourse.domain.movie.Movie
 import com.woowacourse.domain.movie.MovieBookingInfo
 import com.woowacourse.domain.movie.MovieSchedule
 import woowacourse.movie.DateFormatter
+import woowacourse.movie.model.toPresentation
 import java.time.LocalDate
 
-class MovieDetailPresenter(val view: MovieDetailContract.View) : MovieDetailContract.Presenter {
+class MovieDetailPresenter(
+    val view: MovieDetailContract.View,
+) : MovieDetailContract.Presenter {
 
     private var peopleCount = MIN_TICKET
 
-    override fun getScheduleDate(screeningSchedule: ScreeningSchedule) {
+    override fun loadScheduleDate(screeningSchedule: ScreeningSchedule) {
         val movieSchedule = MovieSchedule(screeningSchedule)
         view.setScheduleDate(movieSchedule)
     }
 
-    override fun initView(movieData: Movie) {
-        view.initView(movieData)
+    override fun loadMovieData(movieData: Movie) {
+        view.setUpMovieDetailView(movieData.toPresentation())
     }
 
     override fun addPeople() {
@@ -35,7 +38,7 @@ class MovieDetailPresenter(val view: MovieDetailContract.View) : MovieDetailCont
         }
     }
 
-    override fun getMovieBookingInfo(
+    override fun loadMovieBookingInfo(
         movieData: TheaterMovie,
         selectDate: LocalDate,
         selectTime: String,

@@ -6,12 +6,12 @@ interface BookCompleteContract {
 
     interface View {
         var presenter: Presenter
-        fun initView(ticketData: TicketData)
+        fun setUpBookCompleteView(ticketData: TicketData)
         fun displayToastIfDummyData()
     }
 
     interface Presenter {
         val data: TicketData
-        fun initView()
+        fun loadTicketData()
     }
 }

@@ -5,6 +5,7 @@ import com.woowacourse.domain.TheaterMovie
 import com.woowacourse.domain.movie.Movie
 import com.woowacourse.domain.movie.MovieBookingInfo
 import com.woowacourse.domain.movie.MovieSchedule
+import woowacourse.movie.model.MovieUIModel
 import java.time.LocalDate
 
 interface MovieDetailContract {
@@ -12,18 +13,18 @@ interface MovieDetailContract {
     interface View {
         var presenter: Presenter
         fun setScheduleDate(schedule: MovieSchedule)
-        fun initView(movieData: Movie)
+        fun setUpMovieDetailView(movieData: MovieUIModel)
         fun setCountText(count: Int)
         fun showGuideMessage(msg: String)
         fun setIntent(movieBookingInfo: MovieBookingInfo)
     }
 
     interface Presenter {
-        fun getScheduleDate(screeningSchedule: ScreeningSchedule)
-        fun initView(movieData: Movie)
+        fun loadScheduleDate(screeningSchedule: ScreeningSchedule)
+        fun loadMovieData(movieData: Movie)
         fun addPeople()
         fun subPeople()
-        fun getMovieBookingInfo(
+        fun loadMovieBookingInfo(
             movieData: TheaterMovie,
             selectDate: LocalDate,
             selectTime: String,

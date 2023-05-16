@@ -102,7 +102,7 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
                 .setPositiveButton(
                     getString(R.string.alert_dialog_book_done),
                 ) { _, _ ->
-                    presenter.getMovieBookingSeatInfo(seatPickerTicketPrice.text.toString())
+                    presenter.loadMovieBookingSeatInfo(seatPickerTicketPrice.text.toString())
                 }.setNegativeButton(
                     getString(R.string.alert_dialog_book_cancel),
                 ) { dialog, _ ->
@@ -126,7 +126,7 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
         presenter.save(outState)
     }
 
-    override fun initMovieTitle(title: String) {
+    override fun setUpMovieTitle(title: String) {
         movieTitle.text = title
     }
 

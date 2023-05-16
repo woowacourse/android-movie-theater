@@ -10,7 +10,7 @@ interface SeatPickerContract {
 
     interface View {
         var presenter: Presenter
-        fun initMovieTitle(title: String)
+        fun setUpMovieTitle(title: String)
         fun onClickDoneBtn(movieBookingSeatInfo: MovieBookingSeatInfo)
         fun setSeatGroup(seatNames: List<String>)
         fun progressRemoveSeat(
@@ -29,7 +29,7 @@ interface SeatPickerContract {
     interface Presenter {
         val isEnoughTicketNum: Boolean
         fun initMovieTitle()
-        fun getMovieBookingSeatInfo(price: String)
+        fun loadMovieBookingSeatInfo(price: String)
         fun setSeatGroup(seatGroup: SeatGroup)
         fun onClickSeat(index: Int, seat: TextView)
         fun save(outState: Bundle)

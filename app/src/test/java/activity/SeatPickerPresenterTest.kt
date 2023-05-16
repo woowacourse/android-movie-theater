@@ -39,7 +39,7 @@ class SeatPickerPresenterTest {
     fun 영화제목을_전달한다() {
         // given
         val slot = slot<String>()
-        every { view.initMovieTitle(capture(slot)) } answers { nothing }
+        every { view.setUpMovieTitle(capture(slot)) } answers { nothing }
 
         // when
         presenter.initMovieTitle()
@@ -57,7 +57,7 @@ class SeatPickerPresenterTest {
         val expect = MovieBookingSeatInfo(presenter.movieBookingInfo, listOf(), "10000")
 
         // when
-        presenter.getMovieBookingSeatInfo("10000")
+        presenter.loadMovieBookingSeatInfo("10000")
 
         // then
         val actual = slot.captured

@@ -14,6 +14,7 @@ import org.junit.Test
 import woowacourse.movie.DateFormatter
 import woowacourse.movie.activity.moviedetail.MovieDetailContract
 import woowacourse.movie.activity.moviedetail.MovieDetailPresenter
+import woowacourse.movie.model.MovieUIModel
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -38,7 +39,7 @@ class MovieDetailPresenterTest {
         every { view.setScheduleDate(capture(slot)) } answers { nothing }
 
         // when: (request Data)
-        presenter.getScheduleDate(screeningSchedule)
+        presenter.loadScheduleDate(screeningSchedule)
 
         // then: 주어진 시작 날짜와 끝 날짜에 맞는 MovieSchedule 반환
         val actual = slot.captured
@@ -51,11 +52,11 @@ class MovieDetailPresenterTest {
         // given
         val movieData =
             Movie(0, "title", 200, "synopsis", LocalDate.of(2023, 5, 1), LocalDate.of(2023, 5, 5))
-        val slot = slot<Movie>()
-        every { view.initView(capture(slot)) } answers { nothing }
+        val slot = slot<MovieUIModel>()
+        every { view.setUpMovieDetailView(capture(slot)) } answers { nothing }
 
         // when: request Data
-        presenter.initView(movieData)
+        presenter.loadMovieData(movieData)
 
         // then: movieData에 맞게 view를 초기화한다
         val actual = slot.captured
@@ -120,7 +121,7 @@ class MovieDetailPresenterTest {
         every { view.setIntent(capture(slot)) } answers { nothing }
 
         // when
-        presenter.getMovieBookingInfo(theaterMovie, selectDate, selectTime)
+        presenter.loadMovieBookingInfo(theaterMovie, selectDate, selectTime)
 
         // then
         val actual = slot.captured

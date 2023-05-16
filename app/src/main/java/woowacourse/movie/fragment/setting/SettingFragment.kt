@@ -36,7 +36,7 @@ class SettingFragment : Fragment(), SettingContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter.initSwitchStatus(notificationPermission)
+        presenter.loadSwitchStatus(notificationPermission)
         onSwitchChanged()
     }
 

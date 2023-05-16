@@ -14,7 +14,7 @@ class BookCompletePresenter(
         }
     }
 
-    override fun initView() {
-        view.initView(data)
+    override fun loadTicketData() {
+        view.setUpBookCompleteView(data)
     }
 }

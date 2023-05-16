@@ -8,7 +8,7 @@ class SettingPresenter(
     private val settingRepository: SettingRepository,
 ) : SettingContract.Presenter {
 
-    override fun initSwitchStatus(permission: Boolean) {
+    override fun loadSwitchStatus(permission: Boolean) {
         if (!permission) {
             view.setSwitchStatus(false)
         } else {

@@ -8,7 +8,7 @@ interface SettingContract {
     }
 
     interface Presenter {
-        fun initSwitchStatus(permission: Boolean)
+        fun loadSwitchStatus(permission: Boolean)
         fun updateSwitchStatus(
             permission: Boolean,
             isChecked: Boolean,

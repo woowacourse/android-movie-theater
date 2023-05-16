@@ -28,10 +28,10 @@ class SeatPickerPresenter(
         )
 
     override fun initMovieTitle() {
-        view.initMovieTitle(movieBookingInfo.theaterMovie.movieInfo.movie.title)
+        view.setUpMovieTitle(movieBookingInfo.theaterMovie.movieInfo.movie.title)
     }
 
-    override fun getMovieBookingSeatInfo(
+    override fun loadMovieBookingSeatInfo(
         price: String,
     ) {
         val movieBookingSeatInfo = MovieBookingSeatInfo(

@@ -26,7 +26,7 @@ class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
         presenter = BookCompletePresenter(this, historyData)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_book_complete)
 
-        presenter.initView()
+        presenter.loadTicketData()
     }
 
     private fun getMovieHistoryData(): BookingHistoryData {
@@ -34,7 +34,7 @@ class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
             ?: BookingHistoryData.dummyData
     }
 
-    override fun initView(ticketData: TicketData) {
+    override fun setUpBookCompleteView(ticketData: TicketData) {
         val data: BookingHistoryData =
             if (ticketData !is BookingHistoryData) {
                 (ticketData as MovieBookingSeatInfoUIModel).toHistoryData()
