@@ -4,6 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="data"
+            type="woowacourse.movie.model.BookingHistoryData" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,6 +38,7 @@
             android:layout_marginHorizontal="14dp"
             android:layout_marginTop="30dp"
             android:gravity="center"
+            android:text="@{data.title}"
             android:textColor="@color/black"
             android:textSize="25sp"
             android:textStyle="bold"
@@ -45,6 +53,7 @@
             android:layout_marginHorizontal="14dp"
             android:layout_marginTop="9dp"
             android:gravity="center"
+            android:text="@{data.date}"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -60,6 +69,7 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
+            android:text="@{data.getBookInfo()}"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -73,6 +83,7 @@
             android:layout_marginHorizontal="14dp"
             android:layout_marginTop="19dp"
             android:gravity="center"
+            android:text="@{@string/book_total_pay(data.price)}"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"

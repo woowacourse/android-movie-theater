@@ -10,6 +10,7 @@ import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
 import woowacourse.movie.activity.bookComplete.BookCompleteActivity
 import woowacourse.movie.model.MovieBookingSeatInfoUIModel
+import woowacourse.movie.model.toHistoryData
 
 class MovieNotificationManager(val context: Context) {
 
@@ -37,7 +38,7 @@ class MovieNotificationManager(val context: Context) {
         movieBookingSeatInfo: MovieBookingSeatInfoUIModel,
         id: Int,
     ) {
-        val contentIntent = BookCompleteActivity.getIntent(context, movieBookingSeatInfo)
+        val contentIntent = BookCompleteActivity.getIntent(context, movieBookingSeatInfo.toHistoryData())
         val contentPendingIntent = PendingIntent.getActivity(
             context,
             id,

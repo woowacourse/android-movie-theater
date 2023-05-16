@@ -9,4 +9,13 @@ data class BookingHistoryData(
     val seat: List<String>,
     val price: String,
     val theater: String,
-) : Serializable, TicketData
+) : Serializable, TicketData {
+
+    fun getBookInfo(): String {
+        return INFO_FORMATTER.format(numberOfPeople, seat.joinToString(","), theater)
+    }
+
+    companion object {
+        private const val INFO_FORMATTER = "일반 %d명 | %s | %s"
+    }
+}

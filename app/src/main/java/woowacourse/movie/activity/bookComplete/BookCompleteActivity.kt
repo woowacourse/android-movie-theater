@@ -21,27 +21,17 @@ class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val movieBookingSeatInfo = getMovieBookingSeatInfo()
         val historyData = getMovieHistoryData()
 
-        presenter = if (movieBookingSeatInfo.seats.isEmpty()) {
-            BookCompletePresenter(this, historyData)
-        } else {
-            BookCompletePresenter(this, movieBookingSeatInfo)
-        }
+        presenter = BookCompletePresenter(this, historyData)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_book_complete)
 
         presenter.initView()
         presenter.hasDummyData()
     }
 
-    private fun getMovieBookingSeatInfo(): MovieBookingSeatInfoUIModel {
-        return intent.getSerializableCompat(MOVIE_BOOKING_SEAT_INFO_KEY)
-            ?: MovieBookingSeatInfoUIModel.dummyData
-    }
-
     private fun getMovieHistoryData(): BookingHistoryData {
-        return intent.getSerializableCompat(MOVIE_BOOKING_HISTORY_KEY)
+        return intent.getSerializableCompat(MOVIE_BOOKING_TICKET_KEY)
             ?: BookingHistoryData("데이터를 불러올 수 없습니다.", "", 0, listOf(), "", "")
     }
 
@@ -52,19 +42,7 @@ class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
             } else {
                 ticketData
             }
-        binding.tvBookMovieTitle.text =
-            data.title
-        binding.tvBookDate.text =
-            data.date
-        binding.tvBookPersonCount.text =
-            getString(
-                R.string.book_person_count,
-                data.numberOfPeople,
-                data.seat.joinToString(", "),
-                data.theater,
-            )
-        binding.tvBookTotalPay.text =
-            getString(R.string.book_total_pay, data.price)
+        binding.data = data
     }
 
     override fun displayToastIfDummyData() {
@@ -76,17 +54,11 @@ class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
     }
 
     companion object {
-        private const val MOVIE_BOOKING_SEAT_INFO_KEY = "movieBookingSeatInfo"
-        private const val MOVIE_BOOKING_HISTORY_KEY = "movieBookingHistoryData"
-        fun getIntent(context: Context, movieBookingSeatInfo: MovieBookingSeatInfoUIModel): Intent {
-            val intent = Intent(context, BookCompleteActivity::class.java)
-            intent.putExtra(MOVIE_BOOKING_SEAT_INFO_KEY, movieBookingSeatInfo)
-            return intent
-        }
+        private const val MOVIE_BOOKING_TICKET_KEY = "movieBookingHistoryData"
 
         fun getIntent(context: Context, movieBookingData: BookingHistoryData): Intent {
             val intent = Intent(context, BookCompleteActivity::class.java)
-            intent.putExtra(MOVIE_BOOKING_HISTORY_KEY, movieBookingData)
+            intent.putExtra(MOVIE_BOOKING_TICKET_KEY, movieBookingData)
             return intent
         }
     }

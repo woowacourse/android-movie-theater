@@ -36,15 +36,6 @@ class HomeFragment : Fragment(), HomeContract.View {
         presenter.setMovieRecyclerView()
     }
 
-    private fun onClickMovie() = { position: Int ->
-        presenter.setTheaterRecyclerView(position)
-    }
-
-    private fun onClickAd() = { item: AdUIModel ->
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
-        this.startActivity(intent)
-    }
-
     override fun setMovieRecyclerView(movies: List<MovieUIModel>, ad: AdUIModel) {
         binding.recyclerviewMovieList.adapter = MovieRecyclerViewAdapter(
             movies,
@@ -52,6 +43,15 @@ class HomeFragment : Fragment(), HomeContract.View {
             onClickMovie(),
             onClickAd(),
         )
+    }
+
+    private fun onClickMovie() = { position: Int ->
+        presenter.setTheaterRecyclerView(position)
+    }
+
+    private fun onClickAd() = { item: AdUIModel ->
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
+        this.startActivity(intent)
     }
 
     override fun setTheaterRecyclerView(theaters: List<TheaterMovie>) {

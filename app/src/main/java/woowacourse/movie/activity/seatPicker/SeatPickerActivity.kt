@@ -134,7 +134,7 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
         val movieBookingSeatInfoUIModel = movieBookingSeatInfo.toPresentation()
         val db = BookingHistoryDBHelper(this)
         val intent =
-            BookCompleteActivity.getIntent(this, movieBookingSeatInfoUIModel)
+            BookCompleteActivity.getIntent(this, movieBookingSeatInfoUIModel.toHistoryData())
 
         AlarmSetting().setAlarm(this, movieBookingSeatInfo)
         db.addData(movieBookingSeatInfoUIModel.toHistoryData())
