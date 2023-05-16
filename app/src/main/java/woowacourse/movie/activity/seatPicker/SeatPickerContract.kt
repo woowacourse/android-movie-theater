@@ -25,13 +25,14 @@ interface SeatPickerContract {
         )
 
         fun setPriceText(price: Int)
+        fun setPickDoneButtonColor(isEnoughTicketNum: Boolean)
     }
 
     interface Presenter {
         val repository: MovieRepository
-        val isEnoughTicketNum: Boolean
         fun initMovieTitle()
         fun loadMovieBookingSeatInfo(price: String)
+        fun loadEnoughTicketNum()
         fun setSeatGroup(seatGroup: SeatGroup)
         fun onClickSeat(index: Int, seat: TextView)
         fun save(outState: Bundle)

@@ -146,14 +146,14 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
     }
 
     override fun setSeatGroup(seatNames: List<String>) {
-        setPickDoneButtonColor()
+        presenter.loadEnoughTicketNum()
         getSeats().forEach {
             if (seatNames.contains(it.text)) it.setBackgroundColor(getColor(R.color.picked_seat_color))
         }
     }
 
-    private fun setPickDoneButtonColor() {
-        pickDoneButton.isEnabled = presenter.isEnoughTicketNum
+    override fun setPickDoneButtonColor(isEnoughTicketNum: Boolean) {
+        pickDoneButton.isEnabled = isEnoughTicketNum
     }
 
     override fun progressRemoveSeat(
@@ -161,7 +161,7 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
         seat: TextView,
     ) {
         seat.setBackgroundColor(getColor(R.color.unpicked_seat_color))
-        setPickDoneButtonColor()
+        presenter.loadEnoughTicketNum()
     }
 
     override fun progressAddSeat(
@@ -169,7 +169,7 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
         seat: TextView,
     ) {
         seat.setBackgroundColor(getColor(R.color.picked_seat_color))
-        setPickDoneButtonColor()
+        presenter.loadEnoughTicketNum()
     }
 
     override fun setPriceText(price: Int) {

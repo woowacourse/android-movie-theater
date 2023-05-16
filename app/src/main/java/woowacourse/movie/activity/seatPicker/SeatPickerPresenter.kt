@@ -21,8 +21,6 @@ class SeatPickerPresenter(
     override val repository: MovieRepository,
 ) : SeatPickerContract.Presenter {
 
-    override val isEnoughTicketNum: Boolean
-        get() = !seatGroup.canAdd(ticketBundle.count)
     private var seatGroup = SeatGroup()
     private var ticketBundle: TicketBundle = TicketBundle(count = movieBookingInfo.ticketCount)
     private val price: Int
@@ -74,6 +72,10 @@ class SeatPickerPresenter(
             view.progressAddSeat(newSeat, seat)
         }
         view.setPriceText(price)
+    }
+
+    override fun loadEnoughTicketNum() {
+        view.setPickDoneButtonColor(!seatGroup.canAdd(ticketBundle.count))
     }
 
     override fun save(outState: Bundle) {
