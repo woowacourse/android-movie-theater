@@ -5,13 +5,14 @@ import android.widget.TextView
 import com.woowacourse.domain.movie.MovieBookingSeatInfo
 import com.woowacourse.domain.seat.Seat
 import com.woowacourse.domain.seat.SeatGroup
+import woowacourse.movie.data.MovieRepository
 
 interface SeatPickerContract {
 
     interface View {
         var presenter: Presenter
         fun setUpMovieTitle(title: String)
-        fun onClickDoneBtn(movieBookingSeatInfo: MovieBookingSeatInfo)
+        fun navigateToTicket(movieBookingSeatInfo: MovieBookingSeatInfo)
         fun setSeatGroup(seatNames: List<String>)
         fun progressRemoveSeat(
             newSeat: Seat,
@@ -27,6 +28,7 @@ interface SeatPickerContract {
     }
 
     interface Presenter {
+        val repository: MovieRepository
         val isEnoughTicketNum: Boolean
         fun initMovieTitle()
         fun loadMovieBookingSeatInfo(price: String)

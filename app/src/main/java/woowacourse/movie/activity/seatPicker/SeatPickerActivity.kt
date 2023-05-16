@@ -36,7 +36,11 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = SeatPickerPresenter(this, getMovieBookingInfo().toDomain())
+        presenter = SeatPickerPresenter(
+            this,
+            getMovieBookingInfo().toDomain(),
+            BookingHistoryDBHelper(this),
+        )
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_picker)
 
         presenter.initMovieTitle()
@@ -130,14 +134,12 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
         movieTitle.text = title
     }
 
-    override fun onClickDoneBtn(movieBookingSeatInfo: MovieBookingSeatInfo) {
+    override fun navigateToTicket(movieBookingSeatInfo: MovieBookingSeatInfo) {
         val movieBookingSeatInfoUIModel = movieBookingSeatInfo.toPresentation()
-        val db = BookingHistoryDBHelper(this)
         val intent =
             BookCompleteActivity.getIntent(this, movieBookingSeatInfoUIModel.toHistoryData())
 
         AlarmSetting().setAlarm(this, movieBookingSeatInfo)
-        db.addData(movieBookingSeatInfoUIModel.toHistoryData())
 
         startActivity(intent)
         finish()

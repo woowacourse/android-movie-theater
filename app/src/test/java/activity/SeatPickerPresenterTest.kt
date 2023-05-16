@@ -17,12 +17,14 @@ import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.activity.seatPicker.SeatPickerContract
 import woowacourse.movie.activity.seatPicker.SeatPickerPresenter
+import woowacourse.movie.data.MovieRepository
 import java.time.LocalDate
 import java.time.LocalTime
 
 class SeatPickerPresenterTest {
     private lateinit var presenter: SeatPickerPresenter
     private lateinit var view: SeatPickerContract.View
+    private lateinit var repository: MovieRepository
 
     @Before
     fun setUp() {
@@ -32,7 +34,8 @@ class SeatPickerPresenterTest {
             TheaterMovie("theater", ScreeningSchedule(movieData, listOf(LocalTime.of(9, 0))))
         val movieBookingInfo = MovieBookingInfo(theaterMovie, "2023.5.2", "09:00", 2)
         view = mockk()
-        presenter = SeatPickerPresenter(view, movieBookingInfo)
+        repository = mockk(relaxed = true)
+        presenter = SeatPickerPresenter(view, movieBookingInfo, repository)
     }
 
     @Test
@@ -53,7 +56,7 @@ class SeatPickerPresenterTest {
     fun MovieBookingSeatInfo를_전달한다() {
         // given
         val slot = slot<MovieBookingSeatInfo>()
-        every { view.onClickDoneBtn(capture(slot)) } answers { nothing }
+        every { view.navigateToTicket(capture(slot)) } answers { nothing }
         val expect = MovieBookingSeatInfo(presenter.movieBookingInfo, listOf(), "10000")
 
         // when

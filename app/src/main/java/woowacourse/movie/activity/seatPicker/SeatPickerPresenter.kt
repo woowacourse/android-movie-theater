@@ -10,11 +10,15 @@ import com.woowacourse.domain.seat.SeatGroup
 import com.woowacourse.domain.seat.SeatRow
 import com.woowacourse.domain.ticket.Ticket
 import com.woowacourse.domain.ticket.TicketBundle
+import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.mapper.toPresentation
+import woowacourse.movie.model.toHistoryData
+import woowacourse.movie.model.toPresentation
 
 class SeatPickerPresenter(
     val view: SeatPickerContract.View,
     val movieBookingInfo: MovieBookingInfo,
+    override val repository: MovieRepository,
 ) : SeatPickerContract.Presenter {
 
     override val isEnoughTicketNum: Boolean
@@ -41,7 +45,9 @@ class SeatPickerPresenter(
             },
             price,
         )
-        view.onClickDoneBtn(movieBookingSeatInfo)
+
+        repository.addData(movieBookingSeatInfo.toPresentation().toHistoryData())
+        view.navigateToTicket(movieBookingSeatInfo)
     }
 
     override fun setSeatGroup(seatGroup: SeatGroup) {
