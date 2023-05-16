@@ -15,6 +15,7 @@ import woowacourse.movie.service.NotificationPermission.checkNotificationPermiss
 import woowacourse.movie.service.SharedPreferenceUtil
 
 class SettingFragment : Fragment(), SettingContract.View {
+
     override lateinit var presenter: SettingContract.Presenter
     private lateinit var binding: FragmentSettingBinding
     private val switch: SwitchMaterial by lazy { binding.switchSettingCanPush }
@@ -42,16 +43,18 @@ class SettingFragment : Fragment(), SettingContract.View {
 
     private fun onSwitchChanged() {
         switch.setOnCheckedChangeListener { _, isChecked ->
-            presenter.updateSwitchStatus(notificationPermission, isChecked) {
-                NotificationPermission.requestNotificationPermission(
-                    permissionLauncher,
-                )
-            }
+            presenter.updateSwitchStatus(notificationPermission, isChecked)
         }
     }
 
     override fun setSwitchStatus(setting: Boolean) {
         switch.isChecked = setting
+    }
+
+    override fun requestNotificationPermission() {
+        NotificationPermission.requestNotificationPermission(
+            permissionLauncher,
+        )
     }
 
     companion object {

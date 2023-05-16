@@ -19,11 +19,10 @@ class SettingPresenter(
     override fun updateSwitchStatus(
         permission: Boolean,
         isChecked: Boolean,
-        action: () -> Unit,
     ) {
         settingRepository.setValue(SETTING_PUSH_ALARM_SWITCH_KEY, isChecked)
         if (isChecked && !permission) {
-            action()
+            view.requestNotificationPermission()
         }
     }
 }

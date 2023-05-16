@@ -5,6 +5,7 @@ interface SettingContract {
     interface View {
         var presenter: Presenter
         fun setSwitchStatus(setting: Boolean)
+        fun requestNotificationPermission()
     }
 
     interface Presenter {
@@ -12,7 +13,6 @@ interface SettingContract {
         fun updateSwitchStatus(
             permission: Boolean,
             isChecked: Boolean,
-            action: () -> Unit,
         )
     }
 }
