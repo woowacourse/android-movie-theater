@@ -17,5 +17,6 @@ data class BookingHistoryData(
 
     companion object {
         private const val INFO_FORMATTER = "일반 %d명 | %s | %s"
+        val dummyData = BookingHistoryData("데이터를 불러올 수 없습니다.", "", 0, listOf(), "", "")
     }
 }

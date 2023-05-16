@@ -17,7 +17,7 @@ class BookCompletePresenterTest {
 
     @Before
     fun setUp() {
-        view = mockk()
+        view = mockk(relaxed = true)
         val ticketData =
             BookingHistoryData("title", "2023.5.5 09:00", 1, listOf("A1"), "100000", "theater")
         presenter = BookCompletePresenter(view, ticketData)

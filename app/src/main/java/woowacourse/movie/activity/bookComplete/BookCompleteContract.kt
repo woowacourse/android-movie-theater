@@ -13,6 +13,5 @@ interface BookCompleteContract {
     interface Presenter {
         val data: TicketData
         fun initView()
-        fun hasDummyData()
     }
 }

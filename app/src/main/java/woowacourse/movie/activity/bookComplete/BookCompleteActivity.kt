@@ -27,12 +27,11 @@ class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_book_complete)
 
         presenter.initView()
-        presenter.hasDummyData()
     }
 
     private fun getMovieHistoryData(): BookingHistoryData {
         return intent.getSerializableCompat(MOVIE_BOOKING_TICKET_KEY)
-            ?: BookingHistoryData("데이터를 불러올 수 없습니다.", "", 0, listOf(), "", "")
+            ?: BookingHistoryData.dummyData
     }
 
     override fun initView(ticketData: TicketData) {
