@@ -52,7 +52,7 @@ class MovieDetailPresenterTest {
     fun 현재_인원수가_1인_경우_인원수를_더하면_인원수는_2가_된다() {
         // given
         val slot = slot<Int>()
-        every { view.setCountText(capture(slot)) } answers { nothing }
+        every { view.showCountText(capture(slot)) } answers { nothing }
 
         // when
         presenter.addPeople()
@@ -66,7 +66,7 @@ class MovieDetailPresenterTest {
     fun 현재_인원수가_2인_경우_인원수를_뻬면_인원수가_1이_된다() {
         // given
         val slot = slot<Int>()
-        every { view.setCountText(capture(slot)) } answers { nothing }
+        every { view.showCountText(capture(slot)) } answers { nothing }
         presenter.addPeople()
 
         // when
@@ -103,7 +103,7 @@ class MovieDetailPresenterTest {
         val expect = MovieBookingInfo(theaterMovie, DateFormatter.format(selectDate), selectTime, 1)
 
         val slot = slot<MovieBookingInfo>()
-        every { view.setIntent(capture(slot)) } answers { nothing }
+        every { view.navigateToSeatPicker(capture(slot)) } answers { nothing }
 
         // when
         presenter.loadMovieBookingInfo(theaterMovie, selectDate, selectTime)

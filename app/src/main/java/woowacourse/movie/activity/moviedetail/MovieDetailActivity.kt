@@ -38,7 +38,7 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
         needSpinnerInitialize = true
 
-        setCountText(1)
+        showCountText(1)
 
         val movieData = getMovieData()
         finishIfDummyData(movieData)
@@ -94,7 +94,7 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
         }
     }
 
-    override fun setUpSpinner(movieSchedule: MovieSchedule, savedInstanceState: Bundle?) {
+    override fun setUpSchedules(movieSchedule: MovieSchedule, savedInstanceState: Bundle?) {
         setSpinnerSelectedListener(movieSchedule, savedInstanceState)
         setSpinnerAdapter(movieSchedule.getScheduleDates(), movieSchedule)
     }
@@ -171,7 +171,7 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
         binding.tvMovieSynopsis.text = movieData.synopsis
     }
 
-    override fun setCountText(count: Int) {
+    override fun showCountText(count: Int) {
         personCountTextView.text = count.toString()
     }
 
@@ -179,7 +179,7 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 
-    override fun setIntent(movieBookingInfo: MovieBookingInfo) {
+    override fun navigateToSeatPicker(movieBookingInfo: MovieBookingInfo) {
         val intent = SeatPickerActivity.getIntent(this, movieBookingInfo.toPresentation())
         startActivity(intent)
         finish()

@@ -17,7 +17,7 @@ class MovieDetailPresenter(
     private var peopleCount = MIN_TICKET
 
     override fun loadScheduleDate(savedInstanceState: Bundle?) {
-        view.setUpSpinner(movieSchedule, savedInstanceState)
+        view.setUpSchedules(movieSchedule, savedInstanceState)
     }
 
     override fun loadMovieData(movieData: Movie) {
@@ -26,7 +26,7 @@ class MovieDetailPresenter(
 
     override fun addPeople() {
         peopleCount += 1
-        view.setCountText(peopleCount)
+        view.showCountText(peopleCount)
     }
 
     override fun subPeople() {
@@ -34,7 +34,7 @@ class MovieDetailPresenter(
             view.showGuideMessage(CANT_LOWER_ONE)
         } else {
             peopleCount -= 1
-            view.setCountText(peopleCount)
+            view.showCountText(peopleCount)
         }
     }
 
@@ -49,7 +49,7 @@ class MovieDetailPresenter(
             selectTime,
             peopleCount,
         )
-        view.setIntent(movieBookingInfo)
+        view.navigateToSeatPicker(movieBookingInfo)
     }
 
     companion object {

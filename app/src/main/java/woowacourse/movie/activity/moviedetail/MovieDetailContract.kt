@@ -12,11 +12,11 @@ interface MovieDetailContract {
 
     interface View {
         var presenter: Presenter
-        fun setUpSpinner(movieSchedule: MovieSchedule, savedInstanceState: Bundle?)
+        fun setUpSchedules(movieSchedule: MovieSchedule, savedInstanceState: Bundle?)
         fun setUpMovieDetailView(movieData: MovieUIModel)
-        fun setCountText(count: Int)
+        fun showCountText(count: Int)
         fun showGuideMessage(msg: String)
-        fun setIntent(movieBookingInfo: MovieBookingInfo)
+        fun navigateToSeatPicker(movieBookingInfo: MovieBookingInfo)
     }
 
     interface Presenter {
