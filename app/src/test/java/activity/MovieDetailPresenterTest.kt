@@ -15,6 +15,7 @@ import woowacourse.movie.DateFormatter
 import woowacourse.movie.activity.moviedetail.MovieDetailContract
 import woowacourse.movie.activity.moviedetail.MovieDetailPresenter
 import woowacourse.movie.model.MovieUIModel
+import woowacourse.movie.model.toPresentation
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -22,29 +23,13 @@ class MovieDetailPresenterTest {
 
     private lateinit var presenter: MovieDetailPresenter
     private lateinit var view: MovieDetailContract.View
+    private lateinit var movieSchedule: MovieSchedule
 
     @Before
     fun setUp() {
         view = mockk()
-        presenter = MovieDetailPresenter(view)
-    }
-
-    @Test
-    fun 영화상영날짜를_만든다() {
-        // given
-        val movieData =
-            Movie(0, "title", 200, "synopsis", LocalDate.of(2023, 5, 1), LocalDate.of(2023, 5, 5))
-        val screeningSchedule = ScreeningSchedule(movieData, listOf(LocalTime.of(9, 0)))
-        val slot = slot<MovieSchedule>()
-        every { view.setScheduleDate(capture(slot)) } answers { nothing }
-
-        // when: (request Data)
-        presenter.loadScheduleDate(screeningSchedule)
-
-        // then: 주어진 시작 날짜와 끝 날짜에 맞는 MovieSchedule 반환
-        val actual = slot.captured
-        val expect = MovieSchedule(screeningSchedule)
-        Assert.assertEquals(expect, actual)
+        movieSchedule = mockk(relaxed = true)
+        presenter = MovieDetailPresenter(view, movieSchedule)
     }
 
     @Test
@@ -60,7 +45,7 @@ class MovieDetailPresenterTest {
 
         // then: movieData에 맞게 view를 초기화한다
         val actual = slot.captured
-        Assert.assertEquals(movieData, actual)
+        Assert.assertEquals(movieData.toPresentation(), actual)
     }
 
     @Test

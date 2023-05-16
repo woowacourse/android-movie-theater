@@ -1,6 +1,6 @@
 package woowacourse.movie.activity.moviedetail
 
-import com.woowacourse.domain.ScreeningSchedule
+import android.os.Bundle
 import com.woowacourse.domain.TheaterMovie
 import com.woowacourse.domain.movie.Movie
 import com.woowacourse.domain.movie.MovieBookingInfo
@@ -11,13 +11,13 @@ import java.time.LocalDate
 
 class MovieDetailPresenter(
     val view: MovieDetailContract.View,
+    private val movieSchedule: MovieSchedule,
 ) : MovieDetailContract.Presenter {
 
     private var peopleCount = MIN_TICKET
 
-    override fun loadScheduleDate(screeningSchedule: ScreeningSchedule) {
-        val movieSchedule = MovieSchedule(screeningSchedule)
-        view.setScheduleDate(movieSchedule)
+    override fun loadScheduleDate(savedInstanceState: Bundle?) {
+        view.setUpSpinner(movieSchedule, savedInstanceState)
     }
 
     override fun loadMovieData(movieData: Movie) {

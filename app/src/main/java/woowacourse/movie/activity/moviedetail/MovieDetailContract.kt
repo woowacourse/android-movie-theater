@@ -1,6 +1,6 @@
 package woowacourse.movie.activity.moviedetail
 
-import com.woowacourse.domain.ScreeningSchedule
+import android.os.Bundle
 import com.woowacourse.domain.TheaterMovie
 import com.woowacourse.domain.movie.Movie
 import com.woowacourse.domain.movie.MovieBookingInfo
@@ -12,7 +12,7 @@ interface MovieDetailContract {
 
     interface View {
         var presenter: Presenter
-        fun setScheduleDate(schedule: MovieSchedule)
+        fun setUpSpinner(movieSchedule: MovieSchedule, savedInstanceState: Bundle?)
         fun setUpMovieDetailView(movieData: MovieUIModel)
         fun setCountText(count: Int)
         fun showGuideMessage(msg: String)
@@ -20,7 +20,7 @@ interface MovieDetailContract {
     }
 
     interface Presenter {
-        fun loadScheduleDate(screeningSchedule: ScreeningSchedule)
+        fun loadScheduleDate(savedInstanceState: Bundle?)
         fun loadMovieData(movieData: Movie)
         fun addPeople()
         fun subPeople()

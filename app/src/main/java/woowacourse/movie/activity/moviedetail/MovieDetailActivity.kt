@@ -32,7 +32,6 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
     private val dateSpinner: Spinner by lazy { binding.spMovieDate }
     private val timeSpinner: Spinner by lazy { binding.spMovieTime }
     private val personCountTextView by lazy { binding.tvTicketCount }
-    lateinit var movieSchedule: MovieSchedule
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,14 +43,11 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
         val movieData = getMovieData()
         finishIfDummyData(movieData)
 
-        presenter = MovieDetailPresenter(this)
-        presenter.loadScheduleDate(movieData.movieInfo.toDomain())
+        presenter = MovieDetailPresenter(this, MovieSchedule(movieData.movieInfo.toDomain()))
         presenter.loadMovieData(movieData.movieInfo.movie.toDomain())
         setClickListener(movieData)
 
-        val scheduleDate = movieSchedule.getScheduleDates()
-        setSpinnerSelectedListener(movieSchedule, savedInstanceState)
-        setSpinnerAdapter(scheduleDate, movieSchedule)
+        presenter.loadScheduleDate(savedInstanceState)
         reloadTicketCountInstance(savedInstanceState)
     }
 
@@ -96,6 +92,11 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
                 timeSpinner.selectedItem.toString(),
             )
         }
+    }
+
+    override fun setUpSpinner(movieSchedule: MovieSchedule, savedInstanceState: Bundle?) {
+        setSpinnerSelectedListener(movieSchedule, savedInstanceState)
+        setSpinnerAdapter(movieSchedule.getScheduleDates(), movieSchedule)
     }
 
     private fun setSpinnerSelectedListener(
@@ -154,10 +155,6 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
         outState.putString(TIME_KEY, timeSpinner.selectedItemPosition.toString())
         outState.putInt(DATE_KEY, dateSpinner.selectedItemPosition)
         outState.putString(TICKET_COUNT_KEY, personCountTextView.text.toString())
-    }
-
-    override fun setScheduleDate(schedule: MovieSchedule) {
-        movieSchedule = schedule
     }
 
     override fun setUpMovieDetailView(movieData: MovieUIModel) {
