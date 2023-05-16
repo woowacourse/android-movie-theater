@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-
     <data>
-
         <variable
             name="reservation"
             type="woowacourse.movie.presentation.model.ReservationResult" />
@@ -33,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:paddingBottom="13dp"
-            android:text="@{`%s|%s`.format(reservation.date.replace(`-`, `.`), reservation.time)}"
+            android:text="@{@string/booking_complete_date(reservation.date.replace(`-`, `.`), reservation.time)}"
             android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
