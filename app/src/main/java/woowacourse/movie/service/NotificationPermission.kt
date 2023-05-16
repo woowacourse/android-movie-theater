@@ -23,7 +23,7 @@ object NotificationPermission {
                 Toast.makeText(
                     fragment.context,
                     fragment.getString(R.string.if_permission_is_denied_cant_use_notification_service),
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_LONG,
                 ).show()
             }
         }
@@ -32,9 +32,12 @@ object NotificationPermission {
     fun Context.checkNotificationPermission(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             ContextCompat.checkSelfPermission(
-                this, Manifest.permission.POST_NOTIFICATIONS
+                this,
+                Manifest.permission.POST_NOTIFICATIONS,
             ) == PackageManager.PERMISSION_GRANTED
-        } else false
+        } else {
+            false
+        }
     }
 
     fun requestNotificationPermission(

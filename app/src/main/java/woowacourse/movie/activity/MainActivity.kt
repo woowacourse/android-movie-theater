@@ -25,7 +25,8 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         binding.navigationMain.setOnItemSelectedListener(this)
 
-        supportFragmentManager.beginTransaction().add(R.id.framelayout_main, bookHistoryFragment).commit()
+        supportFragmentManager.beginTransaction().add(R.id.framelayout_main, bookHistoryFragment)
+            .commit()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

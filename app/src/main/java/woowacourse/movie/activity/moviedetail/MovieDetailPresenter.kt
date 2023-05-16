@@ -38,13 +38,13 @@ class MovieDetailPresenter(val view: MovieDetailContract.View) : MovieDetailCont
     override fun getMovieBookingInfo(
         movieData: TheaterMovie,
         selectDate: LocalDate,
-        selectTime: String
+        selectTime: String,
     ) {
         val movieBookingInfo = MovieBookingInfo(
             movieData,
             DateFormatter.format(selectDate),
             selectTime,
-            peopleCount
+            peopleCount,
         )
         view.setIntent(movieBookingInfo)
     }

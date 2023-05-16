@@ -13,7 +13,7 @@ data class MovieBookingInfoUiModel(
     val theaterMovie: TheaterMovieUIModel,
     val date: String,
     val time: String,
-    val ticketCount: Int
+    val ticketCount: Int,
 ) : Serializable {
 
     fun formatBookingTime(): String {
@@ -31,12 +31,13 @@ data class MovieBookingInfoUiModel(
             TheaterMovieUIModel(
                 "",
                 ScreeningScheduleUIModel(
-                    MovieUIModel.dummyData, emptyList()
-                )
+                    MovieUIModel.dummyData,
+                    emptyList(),
+                ),
             ),
             "",
             "",
-            0
+            0,
         )
     }
 }

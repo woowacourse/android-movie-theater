@@ -24,7 +24,7 @@ class HomeFragment : Fragment(), HomeContract.View {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         presenter = HomePresenter(this)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
@@ -50,7 +50,7 @@ class HomeFragment : Fragment(), HomeContract.View {
             movies,
             ad,
             onClickMovie(),
-            onClickAd()
+            onClickAd(),
         )
     }
 
@@ -63,7 +63,7 @@ class HomeFragment : Fragment(), HomeContract.View {
         val intent =
             MovieDetailActivity.getIntent(
                 requireContext(),
-                theaterMovies[position].toPresentation()
+                theaterMovies[position].toPresentation(),
             )
         this.startActivity(intent)
     }

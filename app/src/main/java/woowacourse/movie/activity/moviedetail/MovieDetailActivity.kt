@@ -58,7 +58,10 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
 
     private fun getMovieData() = (
         intent.getSerializableCompat(MOVIE_DATA_KEY)
-            ?: TheaterMovieUIModel("", ScreeningScheduleUIModel(MovieUIModel.dummyData, emptyList()))
+            ?: TheaterMovieUIModel(
+                "",
+                ScreeningScheduleUIModel(MovieUIModel.dummyData, emptyList()),
+            )
         )
 
     private fun finishIfDummyData(movieData: TheaterMovieUIModel) {
@@ -89,8 +92,9 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
     private fun clickSeatPickerBtn(movieData: TheaterMovieUIModel) {
         binding.btToSeatPicker.setOnClickListener {
             presenter.getMovieBookingInfo(
-                movieData.toDomain(), LocalDate.parse(dateSpinner.selectedItem.toString()),
-                timeSpinner.selectedItem.toString()
+                movieData.toDomain(),
+                LocalDate.parse(dateSpinner.selectedItem.toString()),
+                timeSpinner.selectedItem.toString(),
             )
         }
     }
@@ -104,12 +108,12 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
                 adapterView: AdapterView<*>?,
                 view: View?,
                 position: Int,
-                id: Long
+                id: Long,
             ) {
                 timeSpinner.adapter = ArrayAdapter(
                     this@MovieDetailActivity,
                     android.R.layout.simple_spinner_item,
-                    movieSchedule.getScheduleTimes()
+                    movieSchedule.getScheduleTimes(),
                 )
                 if (needSpinnerInitialize && savedInstanceState != null) {
                     timeSpinner.setSelection(
@@ -117,7 +121,7 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
                             savedInstanceState.getString(TIME_KEY)
                                 ?: movieSchedule.getScheduleTimes()
                                     .first()
-                            ).toInt()
+                            ).toInt(),
                     )
                     needSpinnerInitialize = false
                 }
@@ -131,12 +135,12 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
         dateSpinner.adapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
-            scheduleDate
+            scheduleDate,
         )
         timeSpinner.adapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
-            movieSchedule.getScheduleTimes()
+            movieSchedule.getScheduleTimes(),
         )
     }
 
@@ -164,7 +168,7 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
             getString(
                 R.string.movie_screening_period,
                 DateFormatter.format(movieData.startDate),
-                DateFormatter.format(movieData.endDate)
+                DateFormatter.format(movieData.endDate),
             )
         binding.tvMovieRunningTime.text =
             getString(R.string.movie_running_time, movieData.runningTime)

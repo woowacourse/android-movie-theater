@@ -19,7 +19,7 @@ class DateFormatterTest {
         year: Int,
         month: Int,
         day: Int,
-        formattedDate: String
+        formattedDate: String,
     ) {
         // date format = "yyyy.M.d"
         val actual = DateFormatter.format(LocalDate.of(year, month, day))

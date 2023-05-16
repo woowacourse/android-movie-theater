@@ -11,7 +11,7 @@ import woowacourse.movie.model.MovieUIModel
 
 class MovieRecyclerViewHolder(
     private val binding: ItemMovieListBinding,
-    private val listener: (Int) -> Unit
+    private val listener: (Int) -> Unit,
 ) :
     RecyclerView.ViewHolder(binding.root) {
 
@@ -33,7 +33,7 @@ class MovieRecyclerViewHolder(
         screeningPeriod.text = binding.root.context.getString(
             R.string.movie_screening_period,
             DateFormatter.format(movieData.startDate),
-            DateFormatter.format(movieData.endDate)
+            DateFormatter.format(movieData.endDate),
         )
         runningTime.text =
             binding.root.context.getString(R.string.movie_running_time, movieData.runningTime)

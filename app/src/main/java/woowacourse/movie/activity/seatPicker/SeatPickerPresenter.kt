@@ -14,7 +14,7 @@ import woowacourse.movie.mapper.toPresentation
 
 class SeatPickerPresenter(
     val view: SeatPickerContract.View,
-    val movieBookingInfo: MovieBookingInfo
+    val movieBookingInfo: MovieBookingInfo,
 ) : SeatPickerContract.Presenter {
 
     override val isEnoughTicketNum: Boolean
@@ -24,7 +24,7 @@ class SeatPickerPresenter(
     private val price: Int
         get() = ticketBundle.calculateTotalPrice(
             movieBookingInfo.date,
-            movieBookingInfo.time
+            movieBookingInfo.time,
         )
 
     override fun initMovieTitle() {
@@ -39,7 +39,7 @@ class SeatPickerPresenter(
             seatGroup.sorted().seats.map {
                 SeatPickerActivity.formatSeatName(it.row.value, it.column.value)
             },
-            price
+            price,
         )
         view.onClickDoneBtn(movieBookingSeatInfo)
     }
@@ -49,7 +49,7 @@ class SeatPickerPresenter(
         val seatNames = seatGroup.seats.map {
             SeatPickerActivity.formatSeatName(
                 it.row.value,
-                it.column.value
+                it.column.value,
             )
         }
         view.setSeatGroup(seatNames)
@@ -71,7 +71,10 @@ class SeatPickerPresenter(
     }
 
     override fun save(outState: Bundle) {
-        outState.putString(SeatPickerActivity.MOVIE_TITLE, movieBookingInfo.theaterMovie.movieInfo.movie.title)
+        outState.putString(
+            SeatPickerActivity.MOVIE_TITLE,
+            movieBookingInfo.theaterMovie.movieInfo.movie.title,
+        )
         outState.putString(SeatPickerActivity.TICKET_PRICE, price.toString())
         outState.putSerializable(SeatPickerActivity.PICKED_SEAT, seatGroup.toPresentation())
     }

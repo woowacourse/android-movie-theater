@@ -33,7 +33,7 @@ class BookHistoryViewHolder(
             grayColorSpan,
             separatorPosition,
             separatorPosition + 1,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
         )
 
         date.text = spannableStringBuilder

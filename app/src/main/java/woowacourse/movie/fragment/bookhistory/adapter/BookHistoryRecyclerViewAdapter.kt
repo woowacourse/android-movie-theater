@@ -12,7 +12,8 @@ class BookHistoryRecyclerViewAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val binding = ItemBookHistoryListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemBookHistoryListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return BookHistoryViewHolder(binding, bookHistoryOnClickListener)
     }
 

@@ -8,5 +8,5 @@ fun TheaterMovieUIModel.toDomain() = TheaterMovie(name, movieInfo.toDomain())
 
 data class TheaterMovieUIModel(
     val name: String,
-    val movieInfo: ScreeningScheduleUIModel
+    val movieInfo: ScreeningScheduleUIModel,
 ) : Serializable

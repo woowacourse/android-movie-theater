@@ -23,7 +23,7 @@ class BookHistoryFragment : Fragment(), BookHistoryContract.View {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         presenter = BookHistoryPresenter(this, BookingHistoryDBHelper(requireContext()))
         binding =
@@ -41,7 +41,7 @@ class BookHistoryFragment : Fragment(), BookHistoryContract.View {
         { position: Int ->
             val intent = BookCompleteActivity.getIntent(
                 requireContext(),
-                bookingHistoryData[position]
+                bookingHistoryData[position],
             )
             startActivity(intent)
         }
@@ -50,7 +50,7 @@ class BookHistoryFragment : Fragment(), BookHistoryContract.View {
         makeDivider(binding.recyclerviewBookHistoryList)
         binding.recyclerviewBookHistoryList.adapter = BookHistoryRecyclerViewAdapter(
             bookingHistoryData,
-            onClickBookHistory(bookingHistoryData)
+            onClickBookHistory(bookingHistoryData),
         )
     }
 
@@ -58,8 +58,8 @@ class BookHistoryFragment : Fragment(), BookHistoryContract.View {
         bookHistoryRecyclerView.addItemDecoration(
             DividerItemDecoration(
                 requireContext(),
-                LinearLayout.VERTICAL
-            )
+                LinearLayout.VERTICAL,
+            ),
         )
     }
 }

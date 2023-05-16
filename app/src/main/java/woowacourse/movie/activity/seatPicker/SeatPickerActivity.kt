@@ -100,11 +100,11 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
                 .setTitle(getString(R.string.alert_dialog_book_confirm))
                 .setMessage(getString(R.string.alert_dialog_book_re_confirm))
                 .setPositiveButton(
-                    getString(R.string.alert_dialog_book_done)
+                    getString(R.string.alert_dialog_book_done),
                 ) { _, _ ->
                     presenter.getMovieBookingSeatInfo(seatPickerTicketPrice.text.toString())
                 }.setNegativeButton(
-                    getString(R.string.alert_dialog_book_cancel)
+                    getString(R.string.alert_dialog_book_cancel),
                 ) { dialog, _ ->
                     dialog.dismiss()
                 }
@@ -174,7 +174,7 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
         seatPickerTicketPrice.text =
             getString(
                 R.string.ticket_price_format,
-                price
+                price,
             )
     }
 

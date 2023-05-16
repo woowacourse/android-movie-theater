@@ -12,7 +12,7 @@ interface SettingContract {
         fun updateSwitchStatus(
             permission: Boolean,
             isChecked: Boolean,
-            action: () -> Unit
+            action: () -> Unit,
         )
     }
 }

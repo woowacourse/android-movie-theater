@@ -61,7 +61,7 @@ class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
                 R.string.book_person_count,
                 data.numberOfPeople,
                 data.seat.joinToString(", "),
-                data.theater
+                data.theater,
             )
         binding.tvBookTotalPay.text =
             getString(R.string.book_total_pay, data.price)
@@ -71,7 +71,7 @@ class BookCompleteActivity : BackButtonActivity(), BookCompleteContract.View {
         Toast.makeText(
             this,
             getString(R.string.cant_get_movie_booking_data),
-            Toast.LENGTH_LONG
+            Toast.LENGTH_LONG,
         ).show()
     }
 

@@ -6,7 +6,7 @@ data class MovieBookingInfo(
     val theaterMovie: TheaterMovie,
     val date: String,
     val time: String,
-    val ticketCount: Int
+    val ticketCount: Int,
 ) {
     fun formatAlarmDate(): String {
         val formattedDate: String = date.split(".").joinToString("-")

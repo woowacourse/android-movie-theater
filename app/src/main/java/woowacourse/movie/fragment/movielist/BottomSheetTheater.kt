@@ -13,7 +13,7 @@ import woowacourse.movie.fragment.movielist.adapter.TheaterRecyclerViewAdapter
 
 class BottomSheetTheater(
     private val theaters: List<TheaterMovie>,
-    private val onClickedItem: (position: Int) -> Unit
+    private val onClickedItem: (position: Int) -> Unit,
 ) :
     BottomSheetDialogFragment() {
 
@@ -22,13 +22,13 @@ class BottomSheetTheater(
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.bottom_sheet_theater,
             container,
-            false
+            false,
         )
         return binding.root
     }

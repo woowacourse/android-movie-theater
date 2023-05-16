@@ -27,12 +27,14 @@ class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter {
         for (theater in MovieMockData.theaterData) {
             val hasMovie =
                 theater.schedules.filter { it.movie == MovieMockData.movies10000[position] }
-            if (hasMovie.isNotEmpty()) theaterMovie.add(
-                TheaterMovie(
-                    theater.name,
-                    hasMovie.first()
+            if (hasMovie.isNotEmpty()) {
+                theaterMovie.add(
+                    TheaterMovie(
+                        theater.name,
+                        hasMovie.first(),
+                    ),
                 )
-            )
+            }
         }
 
         view.setTheaterRecyclerView(theaterMovie)

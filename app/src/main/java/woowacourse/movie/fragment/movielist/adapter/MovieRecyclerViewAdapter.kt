@@ -21,12 +21,20 @@ class MovieRecyclerViewAdapter(
         return when (ViewType.values()[viewType]) {
             ViewType.MOVIE -> {
                 val binding =
-                    ItemMovieListBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
+                    ItemMovieListBinding.inflate(
+                        LayoutInflater.from(viewGroup.context),
+                        viewGroup,
+                        false,
+                    )
                 MovieRecyclerViewHolder(binding, movieOnItemClicked)
             }
             ViewType.AD -> {
                 val binding =
-                    ItemAdListBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
+                    ItemAdListBinding.inflate(
+                        LayoutInflater.from(viewGroup.context),
+                        viewGroup,
+                        false,
+                    )
                 AdViewHolder(binding, adOnItemClicked, ad)
             }
         }

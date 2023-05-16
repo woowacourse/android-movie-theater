@@ -15,7 +15,7 @@ data class MovieUIModel(
     val runningTime: Int,
     val synopsis: String,
     val startDate: LocalDate,
-    val endDate: LocalDate
+    val endDate: LocalDate,
 ) : Serializable {
     companion object {
         val dummyData = MovieUIModel(

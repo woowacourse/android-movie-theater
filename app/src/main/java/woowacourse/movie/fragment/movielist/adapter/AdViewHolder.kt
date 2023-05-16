@@ -9,7 +9,7 @@ import woowacourse.movie.model.AdUIModel
 class AdViewHolder(
     private val binding: ItemAdListBinding,
     private val listener: (AdUIModel) -> Unit,
-    ad: AdUIModel
+    ad: AdUIModel,
 ) :
     RecyclerView.ViewHolder(binding.root) {
     private val adImage = itemView.findViewById<ImageView>(R.id.iv_ad)

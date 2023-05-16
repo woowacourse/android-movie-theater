@@ -14,14 +14,14 @@ import woowacourse.movie.model.MovieBookingSeatInfoUIModel
 class MovieNotificationManager(val context: Context) {
 
     private val notificationManager = context.getSystemService(
-        Context.NOTIFICATION_SERVICE
+        Context.NOTIFICATION_SERVICE,
     ) as NotificationManager
 
     fun createNotificationChannel() {
         val notificationChannel = NotificationChannel(
             PRIMARY_CHANNEL_ID,
             context.getString(R.string.notification_channel_name),
-            NotificationManager.IMPORTANCE_HIGH
+            NotificationManager.IMPORTANCE_HIGH,
         )
         notificationChannel.enableLights(true)
         notificationChannel.lightColor = Color.RED
@@ -29,7 +29,7 @@ class MovieNotificationManager(val context: Context) {
         notificationChannel.description =
             context.getString(R.string.notification_channel_description)
         this.notificationManager.createNotificationChannel(
-            notificationChannel
+            notificationChannel,
         )
     }
 
@@ -42,7 +42,7 @@ class MovieNotificationManager(val context: Context) {
             context,
             id,
             contentIntent,
-            PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_IMMUTABLE,
         )
         val builder = getBuilder(context, movieBookingSeatInfo, contentPendingIntent)
 
@@ -52,21 +52,21 @@ class MovieNotificationManager(val context: Context) {
     private fun getBuilder(
         context: Context,
         movieBookingSeatInfo: MovieBookingSeatInfoUIModel,
-        contentPendingIntent: PendingIntent?
+        contentPendingIntent: PendingIntent?,
     ) = NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID).apply {
         setSmallIcon(R.drawable.noti_icon_24)
         setLargeIcon(
             BitmapFactory.decodeResource(
                 context.resources,
-                movieBookingSeatInfo.movieBookingInfo.theaterMovie.movieInfo.movie.poster
-            )
+                movieBookingSeatInfo.movieBookingInfo.theaterMovie.movieInfo.movie.poster,
+            ),
         )
         setContentTitle(context.getString(R.string.notification_title))
         setContentText(
             context.getString(
                 R.string.notification_content,
-                movieBookingSeatInfo.movieBookingInfo.theaterMovie.movieInfo.movie.title
-            )
+                movieBookingSeatInfo.movieBookingInfo.theaterMovie.movieInfo.movie.title,
+            ),
         )
         setContentIntent(contentPendingIntent)
         priority = NotificationCompat.PRIORITY_HIGH

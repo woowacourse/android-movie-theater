@@ -8,5 +8,5 @@ data class Movie(
     val runningTime: Int,
     val synopsis: String,
     val startDate: LocalDate,
-    val endDate: LocalDate
+    val endDate: LocalDate,
 )

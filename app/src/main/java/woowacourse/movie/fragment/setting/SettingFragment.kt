@@ -26,7 +26,7 @@ class SettingFragment : Fragment(), SettingContract.View {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         presenter = SettingPresenter(this, settingRepository)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
@@ -44,7 +44,7 @@ class SettingFragment : Fragment(), SettingContract.View {
         switch.setOnCheckedChangeListener { _, isChecked ->
             presenter.updateSwitchStatus(notificationPermission, isChecked) {
                 NotificationPermission.requestNotificationPermission(
-                    permissionLauncher
+                    permissionLauncher,
                 )
             }
         }

@@ -20,25 +20,27 @@ class AlarmSetting {
         alarmManager.set(
             AlarmManager.RTC_WAKEUP,
             alarmTime,
-            pendingIntent
+            pendingIntent,
         )
     }
 
     private fun makeIntent(
         context: Context,
-        movieBookingSeatInfo: MovieBookingSeatInfo
+        movieBookingSeatInfo: MovieBookingSeatInfo,
     ): PendingIntent {
         val intent = Intent(context, MovieReminder::class.java)
         val notificationId = System.currentTimeMillis().toInt()
         intent.putExtra(
             MOVIE_BOOKING_SEAT_INFO_KEY,
-            movieBookingSeatInfo.toPresentation()
+            movieBookingSeatInfo.toPresentation(),
         )
         intent.putExtra(ALARM_NOTIFICATION_ID, notificationId)
 
         return PendingIntent.getBroadcast(
-            context, notificationId, intent,
-            PendingIntent.FLAG_IMMUTABLE
+            context,
+            notificationId,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE,
         )
     }
 
@@ -46,7 +48,7 @@ class AlarmSetting {
         val formatter = DateTimeFormatter.ofPattern(FORMATTER_PATTERN)
         val movieDateTime = LocalDateTime.parse(
             movieBookingSeatInfo.movieBookingInfo.formatAlarmDate(),
-            formatter
+            formatter,
         )
         val triggerTime = movieDateTime.minusMinutes(MOVIE_RUN_BEFORE_TIME)
         val zone = triggerTime.atZone(ZoneId.systemDefault())

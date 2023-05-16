@@ -13,8 +13,9 @@ fun MovieBookingSeatInfoUIModel.toHistoryData() = BookingHistoryData(
     movieBookingInfo.theaterMovie.movieInfo.movie.title,
     movieBookingInfo.formatBookHistoryDate(),
     movieBookingInfo.ticketCount,
-    seats, totalPrice,
-    movieBookingInfo.theaterMovie.name
+    seats,
+    totalPrice,
+    movieBookingInfo.theaterMovie.name,
 )
 
 data class MovieBookingSeatInfoUIModel(
@@ -26,7 +27,7 @@ data class MovieBookingSeatInfoUIModel(
         val dummyData = MovieBookingSeatInfoUIModel(
             MovieBookingInfoUiModel.dummyData,
             emptyList(),
-            ""
+            "",
         )
     }
 }

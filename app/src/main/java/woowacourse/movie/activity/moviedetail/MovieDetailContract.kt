@@ -26,7 +26,7 @@ interface MovieDetailContract {
         fun getMovieBookingInfo(
             movieData: TheaterMovie,
             selectDate: LocalDate,
-            selectTime: String
+            selectTime: String,
         )
     }
 }

@@ -22,7 +22,7 @@ class BookingHistoryDBHelper(context: Context?) :
                 " ${BookHistoryContract.TABLE_COLUMN_SEATS} varchar(100)," +
                 " ${BookHistoryContract.TABLE_COLUMN_PRICE} varchar(10)," +
                 " ${BookHistoryContract.TABLE_COLUMN_THEATER} varchar(50)" +
-                ");"
+                ");",
         )
     }
 
@@ -63,7 +63,7 @@ class BookingHistoryDBHelper(context: Context?) :
             put(BookHistoryContract.TABLE_COLUMN_DATE, bookingHistoryData.date)
             put(
                 BookHistoryContract.TABLE_COLUMN_NUMBER_OF_PEOPLE,
-                bookingHistoryData.numberOfPeople
+                bookingHistoryData.numberOfPeople,
             )
             put(BookHistoryContract.TABLE_COLUMN_SEATS, bookingHistoryData.seat.joinToString(","))
             put(BookHistoryContract.TABLE_COLUMN_PRICE, bookingHistoryData.price)

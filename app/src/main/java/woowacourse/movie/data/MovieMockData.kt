@@ -50,34 +50,49 @@ object MovieMockData {
             "인생을 건 한판 승부 | 큰거 한판에 인생은 예술이 된다! | 목숨을 걸 수 없다면, 배팅하지 마라! | 꽃들의 전쟁",
             LocalDate.of(2023, 4, 17),
             LocalDate.of(2023, 7, 28),
-        )
+        ),
     )
     val movies10000 = List(10000) { index -> movies[index % movies.size] }
 
     private val firstTheaterSchedule = listOf(
         ScreeningSchedule(movies[0], listOf(LocalTime.of(9, 0), LocalTime.of(15, 0))),
-        ScreeningSchedule(movies[1], listOf(LocalTime.of(9, 0), LocalTime.of(15, 0), LocalTime.of(21, 0))),
+        ScreeningSchedule(
+            movies[1],
+            listOf(LocalTime.of(9, 0), LocalTime.of(15, 0), LocalTime.of(21, 0)),
+        ),
         ScreeningSchedule(movies[2], listOf(LocalTime.of(11, 0), LocalTime.of(17, 0))),
     )
 
     private val secondTheaterSchedule = listOf(
-        ScreeningSchedule(movies[0], listOf(LocalTime.of(9, 0), LocalTime.of(15, 0), LocalTime.of(22, 0))),
+        ScreeningSchedule(
+            movies[0],
+            listOf(LocalTime.of(9, 0), LocalTime.of(15, 0), LocalTime.of(22, 0)),
+        ),
         ScreeningSchedule(movies[3], listOf(LocalTime.of(10, 0), LocalTime.of(19, 0))),
         ScreeningSchedule(movies[4], listOf(LocalTime.of(9, 0), LocalTime.of(18, 0))),
     )
 
     private val thirdTheaterSchedule = listOf(
-        ScreeningSchedule(movies[0], listOf(LocalTime.of(9, 0), LocalTime.of(15, 0), LocalTime.of(22, 0))),
+        ScreeningSchedule(
+            movies[0],
+            listOf(LocalTime.of(9, 0), LocalTime.of(15, 0), LocalTime.of(22, 0)),
+        ),
         ScreeningSchedule(movies[1], listOf(LocalTime.of(11, 0), LocalTime.of(13, 0))),
         ScreeningSchedule(movies[2], listOf(LocalTime.of(10, 0), LocalTime.of(15, 0))),
-        ScreeningSchedule(movies[3], listOf(LocalTime.of(12, 0), LocalTime.of(15, 0), LocalTime.of(20, 0))),
-        ScreeningSchedule(movies[4], listOf(LocalTime.of(9, 0), LocalTime.of(16, 0), LocalTime.of(21, 0))),
+        ScreeningSchedule(
+            movies[3],
+            listOf(LocalTime.of(12, 0), LocalTime.of(15, 0), LocalTime.of(20, 0)),
+        ),
+        ScreeningSchedule(
+            movies[4],
+            listOf(LocalTime.of(9, 0), LocalTime.of(16, 0), LocalTime.of(21, 0)),
+        ),
     )
 
     val theaterData = listOf(
         Theater(
             "선릉 극장",
-            firstTheaterSchedule
+            firstTheaterSchedule,
         ),
         Theater("잠실 극장", secondTheaterSchedule),
         Theater("강남 극장", thirdTheaterSchedule),

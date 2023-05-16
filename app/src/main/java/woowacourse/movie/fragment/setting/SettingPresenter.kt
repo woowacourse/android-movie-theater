@@ -5,7 +5,7 @@ import woowacourse.movie.fragment.setting.SettingFragment.Companion.SETTING_PUSH
 
 class SettingPresenter(
     private val view: SettingContract.View,
-    private val settingRepository: SettingRepository
+    private val settingRepository: SettingRepository,
 ) : SettingContract.Presenter {
 
     override fun initSwitchStatus(permission: Boolean) {
@@ -19,7 +19,7 @@ class SettingPresenter(
     override fun updateSwitchStatus(
         permission: Boolean,
         isChecked: Boolean,
-        action: () -> Unit
+        action: () -> Unit,
     ) {
         settingRepository.setValue(SETTING_PUSH_ALARM_SWITCH_KEY, isChecked)
         if (isChecked && !permission) {
