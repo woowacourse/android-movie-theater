@@ -1,7 +1,5 @@
 package woowacourse.movie.activity.seatPicker
 
-import android.os.Bundle
-import android.widget.TextView
 import com.woowacourse.domain.movie.MovieBookingInfo
 import com.woowacourse.domain.movie.MovieBookingSeatInfo
 import com.woowacourse.domain.seat.Seat
@@ -11,7 +9,6 @@ import com.woowacourse.domain.seat.SeatRow
 import com.woowacourse.domain.ticket.Ticket
 import com.woowacourse.domain.ticket.TicketBundle
 import woowacourse.movie.data.MovieRepository
-import woowacourse.movie.mapper.toPresentation
 import woowacourse.movie.model.toHistoryData
 import woowacourse.movie.model.toPresentation
 
@@ -59,35 +56,24 @@ class SeatPickerPresenter(
         view.setSeatGroup(seatNames)
     }
 
-    override fun onClickSeat(index: Int, seat: TextView) {
+    override fun onClickSeat(index: Int) {
         val newSeat =
             Seat(SeatRow(index / SEAT_ROW_INTERVAL), SeatColumn(index % SEAT_ROW_INTERVAL))
         if (seatGroup.seats.contains(newSeat)) {
             seatGroup = seatGroup.remove(newSeat)
             ticketBundle = ticketBundle.remove(Ticket(newSeat.getSeatTier().price))
-            view.progressRemoveSeat(newSeat, seat)
-        } else if (seatGroup.canAdd(ticketBundle.count) && !seatGroup.seats.contains(newSeat)) {
+        } else {
             seatGroup = seatGroup.add(newSeat)
             ticketBundle = ticketBundle.add(Ticket(newSeat.getSeatTier().price))
-            view.progressAddSeat(newSeat, seat)
         }
         view.setPriceText(price)
     }
 
     override fun loadEnoughTicketNum() {
-        view.setPickDoneButtonColor(!seatGroup.canAdd(ticketBundle.count))
-    }
-
-    override fun save(outState: Bundle) {
-        outState.putString(
-            SeatPickerActivity.MOVIE_TITLE,
-            movieBookingInfo.theaterMovie.movieInfo.movie.title,
-        )
-        outState.putString(SeatPickerActivity.TICKET_PRICE, price.toString())
-        outState.putSerializable(SeatPickerActivity.PICKED_SEAT, seatGroup.toPresentation())
+        view.setPickDoneButtonColor(seatGroup.seats.size == ticketBundle.count)
     }
 
     companion object {
-        private const val SEAT_ROW_INTERVAL = 4
+        const val SEAT_ROW_INTERVAL = 4
     }
 }

@@ -11,16 +11,20 @@ import android.widget.TextView
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import com.woowacourse.domain.movie.MovieBookingSeatInfo
-import com.woowacourse.domain.seat.Seat
 import woowacourse.movie.R
 import woowacourse.movie.activity.BackButtonActivity
 import woowacourse.movie.activity.bookComplete.BookCompleteActivity
+import woowacourse.movie.activity.seatPicker.SeatPickerPresenter.Companion.SEAT_ROW_INTERVAL
 import woowacourse.movie.data.BookingHistoryDBHelper
 import woowacourse.movie.databinding.ActivitySeatPickerBinding
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.mapper.toDomain
+import woowacourse.movie.mapper.toPresentation
 import woowacourse.movie.model.MovieBookingInfoUiModel
+import woowacourse.movie.model.SeatColumnModel
 import woowacourse.movie.model.SeatGroupModel
+import woowacourse.movie.model.SeatModel
+import woowacourse.movie.model.SeatRowModel
 import woowacourse.movie.model.toDomain
 import woowacourse.movie.model.toHistoryData
 import woowacourse.movie.model.toPresentation
@@ -120,14 +124,46 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
     private fun setSeatsOnClickListener() {
         getSeats().forEachIndexed { index, seat ->
             seat.setOnClickListener {
-                presenter.onClickSeat(index, seat)
+                presenter.onClickSeat(index)
+                changeSeatBackgroundColor(seat.isSelected, seat)
+                presenter.loadEnoughTicketNum()
             }
+        }
+    }
+
+    private fun changeSeatBackgroundColor(isSelected: Boolean, seat: TextView) {
+        if (isSelected) {
+            seat.isSelected = false
+            seat.setBackgroundColor(getColor(R.color.unpicked_seat_color))
+        } else {
+            seat.isSelected = true
+            seat.setBackgroundColor(getColor(R.color.picked_seat_color))
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        presenter.save(outState)
+        outState.putString(
+            MOVIE_TITLE,
+            binding.tvSeatPickerMovie.text.toString(),
+        )
+        outState.putString(TICKET_PRICE, binding.tvSeatPickerTicketPrice.text.toString())
+        outState.putSerializable(PICKED_SEAT, getSelectedSeats())
+    }
+
+    private fun getSelectedSeats(): SeatGroupModel {
+        val selectedSeats = mutableListOf<SeatModel>()
+        getSeats().forEachIndexed { index, seatView ->
+            if (seatView.isSelected) {
+                val seat =
+                    SeatModel(
+                        SeatRowModel(index / SEAT_ROW_INTERVAL),
+                        SeatColumnModel(index % SEAT_ROW_INTERVAL),
+                    )
+                selectedSeats.add(seat)
+            }
+        }
+        return SeatGroupModel(selectedSeats)
     }
 
     override fun setUpMovieTitle(title: String) {
@@ -154,22 +190,6 @@ class SeatPickerActivity : BackButtonActivity(), SeatPickerContract.View {
 
     override fun setPickDoneButtonColor(isEnoughTicketNum: Boolean) {
         pickDoneButton.isEnabled = isEnoughTicketNum
-    }
-
-    override fun progressRemoveSeat(
-        newSeat: Seat,
-        seat: TextView,
-    ) {
-        seat.setBackgroundColor(getColor(R.color.unpicked_seat_color))
-        presenter.loadEnoughTicketNum()
-    }
-
-    override fun progressAddSeat(
-        newSeat: Seat,
-        seat: TextView,
-    ) {
-        seat.setBackgroundColor(getColor(R.color.picked_seat_color))
-        presenter.loadEnoughTicketNum()
     }
 
     override fun setPriceText(price: Int) {
