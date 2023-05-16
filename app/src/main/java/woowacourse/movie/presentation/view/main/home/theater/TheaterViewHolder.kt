@@ -22,6 +22,6 @@ class TheaterViewHolder(private val parent: ViewGroup, private val event: (Int) 
     fun bind(theater: Theater, movieSchedule: List<String>) {
         itemView.findViewById<TextView>(R.id.tv_theater_name).text = theater.name
         itemView.findViewById<TextView>(R.id.tv_theater_screening_info).text =
-            parent.context.getString(R.string.theater_count_movie_time_schedule, movieSchedule.size)
+           itemView.context.getString(R.string.theater_count_movie_time_schedule, movieSchedule.size)
     }
 }
