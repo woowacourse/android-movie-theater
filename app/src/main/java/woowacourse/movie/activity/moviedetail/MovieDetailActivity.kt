@@ -28,7 +28,6 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
 
     override lateinit var presenter: MovieDetailContract.Presenter
     private lateinit var binding: ActivityMovieDetailBinding
-    private var needSpinnerInitialize = true
     private val dateSpinner: Spinner by lazy { binding.spMovieDate }
     private val timeSpinner: Spinner by lazy { binding.spMovieTime }
     private val personCountTextView by lazy { binding.tvTicketCount }
@@ -36,7 +35,6 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
-        needSpinnerInitialize = true
 
         showCountText(1)
 
@@ -115,16 +113,7 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
                     android.R.layout.simple_spinner_item,
                     movieSchedule.getScheduleTimes(),
                 )
-                if (needSpinnerInitialize && savedInstanceState != null) {
-                    timeSpinner.setSelection(
-                        (
-                            savedInstanceState.getString(TIME_KEY)
-                                ?: movieSchedule.getScheduleTimes()
-                                    .first()
-                            ).toInt(),
-                    )
-                    needSpinnerInitialize = false
-                }
+                savedInstanceState?.getInt(TIME_KEY)?.let { timeSpinner.setSelection(it) }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) = Unit
@@ -152,7 +141,7 @@ class MovieDetailActivity : BackButtonActivity(), MovieDetailContract.View {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(TIME_KEY, timeSpinner.selectedItemPosition.toString())
+        outState.putInt(TIME_KEY, timeSpinner.selectedItemPosition)
         outState.putInt(DATE_KEY, dateSpinner.selectedItemPosition)
         outState.putString(TICKET_COUNT_KEY, personCountTextView.text.toString())
     }
