@@ -3,52 +3,52 @@ package woowacourse.movie.presentation.view.main.home.bookcomplete
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
 import android.widget.Toast
-import com.example.domain.Reservation
-import com.example.domain.ReservationRepository
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityBookCompleteBinding
+import woowacourse.movie.presentation.extension.getParcelableCompat
+import woowacourse.movie.presentation.model.ReservationResult
 import woowacourse.movie.presentation.view.common.BackButtonActivity
 
-class BookCompleteActivity : BackButtonActivity() {
+class BookCompleteActivity : BackButtonActivity(), BookingCompleteContract.View {
+    private lateinit var binding: ActivityBookCompleteBinding
+    private val presenter: BookingCompleteContract.Presenter by lazy {
+        BookingCompletePresenter(
+            this, intent.getParcelableCompat(RESERVATION_ID_INTENT_KEY)
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_book_complete)
-
-        val bookingCompleteInfo =
-            intent.getLongExtra(RESERVATION_ID_INTENT_KEY, -1L)
-        processEmptyBookingData(bookingCompleteInfo)
-
-        val movieBookingData = ReservationRepository.findById(bookingCompleteInfo)
-        setViewData(movieBookingData!!)
-    }
-
-    private fun processEmptyBookingData(bookingCompleteInfo: Long) {
-        if (bookingCompleteInfo == -1L) {
-            Toast.makeText(this, getString(R.string.error_intent_message), Toast.LENGTH_SHORT)
-                .show()
-            this.finish()
-        }
-    }
-
-    private fun setViewData(reservation: Reservation) {
-        findViewById<TextView>(R.id.tv_book_movie_title).text = reservation.movieTitle
-        findViewById<TextView>(R.id.tv_book_date).text =
-            formatBookingTime(reservation.date, reservation.time)
-        findViewById<TextView>(R.id.tv_book_person_count).text =
-            getString(R.string.book_person_info).format(
-                reservation.ticketCount,
-                reservation.seatNames
-            )
-        findViewById<TextView>(R.id.tv_book_total_pay).text =
-            getString(R.string.book_total_pay).format(
-                reservation.totalPrice
-            )
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_book_complete)
+        presenter.onCreate()
     }
 
     private fun formatBookingTime(date: String, time: String): String {
         val formattedDate: String = date.split("-").joinToString(".")
         return "$formattedDate $time"
+    }
+
+    override fun initView(reservationResult: ReservationResult) {
+        binding.tvBookMovieTitle.text = reservationResult.movieTitle
+        binding.tvBookDate.text =
+            formatBookingTime(reservationResult.date, reservationResult.time)
+        binding.tvBookPersonCount.text =
+            getString(R.string.book_person_info).format(
+                reservationResult.ticketCount,
+                reservationResult.seatNames
+            )
+        binding.tvBookTotalPay.text =
+            getString(R.string.book_total_pay).format(
+                reservationResult.totalPrice
+            )
+    }
+
+    override fun finishErrorView() {
+        Toast.makeText(this, getString(R.string.error_intent_message), Toast.LENGTH_SHORT)
+            .show()
+        this.finish()
     }
 
     companion object {

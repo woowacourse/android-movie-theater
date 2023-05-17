@@ -1,16 +1,14 @@
-package woowacourse.movie.model
+package woowacourse.movie.data.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
 import java.time.LocalDate
 
-@Parcelize
-data class Movie(
+data class MovieEntity(
     val poster: Int,
     val title: String,
     val releaseDate: String,
     val runningTime: String,
     val synopsis: String,
     val startDate: LocalDate,
-    val endDate: LocalDate
-) : Parcelable
+    val endDate: LocalDate,
+    val movieSchedule: List<String> = emptyList(),
+)

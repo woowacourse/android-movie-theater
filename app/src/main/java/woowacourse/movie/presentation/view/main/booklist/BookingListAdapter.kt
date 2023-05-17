@@ -2,23 +2,22 @@ package woowacourse.movie.presentation.view.main.booklist
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.Reservation
-import woowacourse.movie.model.Movie
+import woowacourse.movie.presentation.model.ReservationResult
 
 class BookingListAdapter(
-    private val reservations: List<Reservation>,
-    private val clickEvent: (Reservation) -> Unit
+    private val bookings: List<ReservationResult>,
+    private val clickEvent: (ReservationResult) -> Unit
 ) :
     RecyclerView.Adapter<BookingListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookingListViewHolder {
-        return BookingListViewHolder(parent){
-            clickEvent(reservations[it])
+        return BookingListViewHolder(parent) {
+            clickEvent(bookings[it])
         }
     }
 
-    override fun getItemCount(): Int = reservations.size
+    override fun getItemCount(): Int = bookings.size
 
     override fun onBindViewHolder(holder: BookingListViewHolder, position: Int) {
-        holder.bind(reservations[position])
+        holder.bind(bookings[position])
     }
 }

@@ -4,7 +4,7 @@ import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.model.Movie
+import woowacourse.movie.presentation.model.Movie
 
 class MovieListAdapter(
     private val movies: List<Movie>,

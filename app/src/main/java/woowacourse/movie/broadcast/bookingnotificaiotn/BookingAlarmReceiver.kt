@@ -7,7 +7,7 @@ import android.content.Context
 import android.content.Intent
 import com.example.domain.Reservation
 import com.example.domain.ReservationRepository
-import woowacourse.movie.model.ReservationResult
+import woowacourse.movie.presentation.model.ReservationResult
 import woowacourse.movie.presentation.extension.getParcelableCompat
 import woowacourse.movie.presentation.view.main.home.bookcomplete.BookCompleteActivity
 

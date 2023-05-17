@@ -34,9 +34,14 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
+    dataBinding {
+        enable = true
+    }
 }
 
 dependencies {
+    testImplementation("org.testng:testng:6.9.6")
     val fragmentVersion = "1.5.5"
 
     implementation("androidx.core:core-ktx:1.10.0")
@@ -54,4 +59,7 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.5.7")
     debugImplementation("androidx.fragment:fragment-testing:1.5.7")
     debugImplementation("androidx.fragment:fragment-ktx:1.6.0-beta01")
+
+    testImplementation("io.mockk:mockk:1.13.5")
+    androidTestImplementation("io.mockk:mockk-android:1.13.5")
 }

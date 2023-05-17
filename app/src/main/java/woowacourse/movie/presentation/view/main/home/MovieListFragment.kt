@@ -1,33 +1,46 @@
 package woowacourse.movie.presentation.view.main.home
 
-import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.presentation.view.main.home.data.MovieData
-import woowacourse.movie.presentation.view.main.home.moviedetail.MovieDetailActivity
+import woowacourse.movie.databinding.FragmentMovieListBinding
+import woowacourse.movie.presentation.model.Movie
+import woowacourse.movie.presentation.view.main.home.theater.TheaterFragment
 
-class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
+class MovieListFragment : Fragment(), MovieListContract.View {
+    private val presenter by lazy { MovieListPresenter(this) }
+    private lateinit var binding: FragmentMovieListBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentMovieListBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setListView(view)
+        presenter.getMovieData()
     }
 
-    private fun setListView(view: View) {
-        val recyclerView = view.findViewById<RecyclerView>(R.id.rv_movie_list)
-        val movies = MovieData.getData()
+    override fun setRecyclerView(movies: List<Movie>) {
         val adapter = MovieListAdapter(
             movies,
             ContextCompat.getDrawable(requireContext(), R.drawable.advertise_wooteco)!!
         ) {
-            val intent = Intent(context, MovieDetailActivity::class.java)
-            intent.putExtra(MovieDetailActivity.MOVIE_DATA_INTENT_KEY, it)
-            requireContext().startActivity(intent)
+            val theaterFragment = TheaterFragment.newInstance(it)
+
+            theaterFragment.show(
+                childFragmentManager, theaterFragment.tag
+            )
+
         }
-        recyclerView.adapter = adapter
+        binding.rvMovieList.adapter = adapter
     }
 }

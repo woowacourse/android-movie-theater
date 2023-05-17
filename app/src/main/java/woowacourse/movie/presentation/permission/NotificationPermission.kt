@@ -6,9 +6,9 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.content.ContextCompat
 
-class NotificationPermission() {
+class NotificationPermission(private val context: Context) {
 
-    fun isGranted(context: Context): Boolean {
+    fun isGranted(): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             return ContextCompat.checkSelfPermission(
                 context, Manifest.permission.POST_NOTIFICATIONS
