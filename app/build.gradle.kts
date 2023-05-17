@@ -1,3 +1,5 @@
+
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -33,6 +35,10 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
+    dataBinding {
+        enable = true
+    }
 }
 
 dependencies {
@@ -48,4 +54,7 @@ dependencies {
     testImplementation("pl.pragmatists:JUnitParams:1.1.0")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.2")
+
+    testImplementation("io.mockk:mockk-android:1.13.5")
+    androidTestImplementation("io.mockk:mockk-android:1.13.5")
 }

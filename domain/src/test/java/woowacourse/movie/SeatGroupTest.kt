@@ -17,7 +17,7 @@ class SeatGroupTest {
                 Seat(SeatRow(3), SeatColumn(3)),
                 Seat(SeatRow(2), SeatColumn(2)),
                 Seat(SeatRow(1), SeatColumn(2)),
-            )
+            ),
         ).seats.sorted()
 
         val result = SeatGroup(
@@ -25,7 +25,7 @@ class SeatGroupTest {
                 Seat(SeatRow(1), SeatColumn(2)),
                 Seat(SeatRow(2), SeatColumn(2)),
                 Seat(SeatRow(3), SeatColumn(3)),
-            )
+            ),
         )
         assertThat(actual).isEqualTo(result.seats)
     }
@@ -41,8 +41,8 @@ class SeatGroupTest {
         val actual = SeatGroup(listOf(Seat(SeatRow(1), SeatColumn(1)))).remove(
             Seat(
                 SeatRow(1),
-                SeatColumn(1)
-            )
+                SeatColumn(1),
+            ),
         ).seats
         assertThat(actual).isEqualTo(emptyList<Seat>())
     }

@@ -1,46 +1,32 @@
 package woowacourse.movie.activity
 
-import android.Manifest
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
-import woowacourse.movie.NotificationPermission
 import woowacourse.movie.R
-import woowacourse.movie.SharedPreferenceUtil
-import woowacourse.movie.fragment.BookHistoryFragment
-import woowacourse.movie.fragment.HomeFragment
-import woowacourse.movie.fragment.SettingFragment
+import woowacourse.movie.databinding.ActivityMainBinding
+import woowacourse.movie.fragment.bookhistory.BookHistoryFragment
+import woowacourse.movie.fragment.movielist.HomeFragment
+import woowacourse.movie.fragment.setting.SettingFragment
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener {
-    private val sharedPreference = SharedPreferenceUtil(this)
-    val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-            if (isGranted) {
-                Toast.makeText(this, getString(R.string.notification_permission_is_granted), Toast.LENGTH_SHORT).show()
-                sharedPreference.setSettingValue(SETTING_PUSH_ALARM_SWITCH_KEY, true)
-            } else {
-                Toast.makeText(this, getString(R.string.notification_permission_is_denied), Toast.LENGTH_SHORT).show()
-                sharedPreference.setSettingValue(SETTING_PUSH_ALARM_SWITCH_KEY, false)
-            }
-        }
 
     private val bookHistoryFragment: Fragment by lazy { BookHistoryFragment() }
     private val homeFragment: Fragment by lazy { HomeFragment() }
     private val settingFragment: Fragment by lazy { SettingFragment() }
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        NotificationPermission().requestNotificationPermission(this, ::getNotificationPermission)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        findViewById<BottomNavigationView>(R.id.navigation_main).setOnItemSelectedListener(this)
+        binding.navigationMain.setOnItemSelectedListener(this)
 
-        supportFragmentManager.beginTransaction().add(R.id.framelayout_main, bookHistoryFragment).commit()
+        supportFragmentManager.beginTransaction().add(R.id.framelayout_main, bookHistoryFragment)
+            .commit()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -56,21 +42,5 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         supportFragmentManager.beginTransaction()
             .replace(R.id.framelayout_main, item).commitAllowingStateLoss()
         return true
-    }
-
-    private fun getNotificationPermission() {
-        if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-            Toast.makeText(
-                this,
-                getString(R.string.if_permission_is_denied_cant_use_notification_service),
-                Toast.LENGTH_LONG
-            ).show()
-        } else {
-            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-        }
-    }
-
-    companion object {
-        private const val SETTING_PUSH_ALARM_SWITCH_KEY = "settingPushAlarmSwitchKey"
     }
 }
