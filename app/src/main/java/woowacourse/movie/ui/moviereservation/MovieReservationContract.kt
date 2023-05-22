@@ -1,7 +1,7 @@
 package woowacourse.movie.ui.moviereservation
 
 import android.os.Bundle
-import woowacourse.movie.data.model.uimodel.MovieUiModel
+import woowacourse.movie.data.model.uimodel.MovieUIModel
 import java.time.LocalDateTime
 
 interface MovieReservationContract {
@@ -21,7 +21,7 @@ interface MovieReservationContract {
 
         fun save(outState: Bundle)
 
-        fun setPicker(movie: MovieUiModel, savedInstanceState: Bundle?)
+        fun setPicker(movie: MovieUIModel, savedInstanceState: Bundle?)
 
         fun getSelectedDateTime(): LocalDateTime
     }

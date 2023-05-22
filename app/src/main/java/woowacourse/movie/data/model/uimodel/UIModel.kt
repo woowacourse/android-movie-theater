@@ -1,3 +1,3 @@
 package woowacourse.movie.data.model.uimodel
 
-interface UiModel
+interface UIModel

@@ -6,11 +6,11 @@
     <data>
         <variable
             name="movie"
-            type="woowacourse.movie.data.model.uimodel.MovieUiModel" />
+            type="woowacourse.movie.data.model.uimodel.MovieUIModel" />
 
         <variable
             name="theater"
-            type="woowacourse.movie.data.model.uimodel.TheaterUiModel" />
+            type="woowacourse.movie.data.model.uimodel.TheaterUIModel" />
 
         <variable
             name="counter"

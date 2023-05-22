@@ -1,19 +1,19 @@
 package woowacourse.movie.data.model.mapper
 
 import domain.TicketOffice
-import woowacourse.movie.data.model.uimodel.TicketOfficeUiModel
+import woowacourse.movie.data.model.uimodel.TicketOfficeUIModel
 
-object TicketOfficeMapper : DomainViewMapper<TicketOffice, TicketOfficeUiModel> {
-    override fun toDomain(ticketOfficeUiModel: TicketOfficeUiModel): TicketOffice {
+object TicketOfficeMapper : DomainViewMapper<TicketOffice, TicketOfficeUIModel> {
+    override fun toDomain(ticketOfficeUIModel: TicketOfficeUIModel): TicketOffice {
         return TicketOffice(
-            tickets = TicketsMapper.toDomain(ticketOfficeUiModel.ticketsUiModel),
-            peopleCount = ticketOfficeUiModel.ticketCount
+            tickets = TicketsMapper.toDomain(ticketOfficeUIModel.ticketsUiModel),
+            peopleCount = ticketOfficeUIModel.ticketCount
         )
     }
 
-    override fun toUi(domainModel: TicketOffice): TicketOfficeUiModel {
-        return TicketOfficeUiModel(
-            ticketsUiModel = TicketsMapper.toUi(domainModel.tickets),
+    override fun toUI(domainModel: TicketOffice): TicketOfficeUIModel {
+        return TicketOfficeUIModel(
+            ticketsUiModel = TicketsMapper.toUI(domainModel.tickets),
             ticketCount = domainModel.peopleCount
         )
     }

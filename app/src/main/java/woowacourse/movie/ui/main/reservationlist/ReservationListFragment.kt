@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.adapter.ReservationAdapter
-import woowacourse.movie.data.model.uimodel.ReservationUiModel
+import woowacourse.movie.data.model.uimodel.ReservationUIModel
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.db.TicketDBHelper
 import woowacourse.movie.repository.ReservationListRepositoryImpl
@@ -63,7 +63,7 @@ class ReservationListFragment : Fragment(), ReservationListContract.View {
         adapter.updateReservationItems(reservations, ::setOnReservationItemClick)
     }
 
-    override fun setOnReservationItemClick(reservationUiModel: ReservationUiModel) {
+    override fun setOnReservationItemClick(reservationUiModel: ReservationUIModel) {
         val intent = ReservationResultActivity.getIntent(requireContext(), reservationUiModel.movie, reservationUiModel.tickets)
         startActivity(intent)
     }

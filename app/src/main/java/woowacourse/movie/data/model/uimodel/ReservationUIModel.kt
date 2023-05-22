@@ -3,14 +3,14 @@ package woowacourse.movie.data.model.uimodel
 import woowacourse.movie.data.model.itemmodel.ReservationItemModel
 import java.io.Serializable
 
-data class ReservationUiModel(
-    val movie: MovieUiModel,
-    val tickets: TicketsUiModel
+data class ReservationUIModel(
+    val movie: MovieUIModel,
+    val tickets: TicketsUIModel
 ) :
-    UiModel,
+    UIModel,
     Serializable {
 
-    fun toItemModel(onClick: (ReservationUiModel) -> Unit): ReservationItemModel {
+    fun toItemModel(onClick: (ReservationUIModel) -> Unit): ReservationItemModel {
         return ReservationItemModel(this, onClick)
     }
 }

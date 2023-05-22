@@ -1,20 +1,20 @@
 package woowacourse.movie.data.model.mapper
 
 import domain.Reservation
-import woowacourse.movie.data.model.uimodel.ReservationUiModel
+import woowacourse.movie.data.model.uimodel.ReservationUIModel
 
-object ReservationMapper : DomainViewMapper<Reservation, ReservationUiModel> {
-    override fun toDomain(reservationUiModel: ReservationUiModel): Reservation {
+object ReservationMapper : DomainViewMapper<Reservation, ReservationUIModel> {
+    override fun toDomain(reservationUIModel: ReservationUIModel): Reservation {
         return Reservation(
-            MovieMapper.toDomain(reservationUiModel.movie),
-            TicketsMapper.toDomain(reservationUiModel.tickets)
+            MovieMapper.toDomain(reservationUIModel.movie),
+            TicketsMapper.toDomain(reservationUIModel.tickets)
         )
     }
 
-    override fun toUi(reservation: Reservation): ReservationUiModel {
-        return ReservationUiModel(
-            MovieMapper.toUi(reservation.movie),
-            TicketsMapper.toUi(reservation.detail)
+    override fun toUI(reservation: Reservation): ReservationUIModel {
+        return ReservationUIModel(
+            MovieMapper.toUI(reservation.movie),
+            TicketsMapper.toUI(reservation.detail)
         )
     }
 }

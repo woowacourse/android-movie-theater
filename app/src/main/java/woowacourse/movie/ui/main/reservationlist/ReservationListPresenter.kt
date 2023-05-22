@@ -1,7 +1,7 @@
 package woowacourse.movie.ui.main.reservationlist
 
 import woowacourse.movie.data.model.mapper.ReservationMapper
-import woowacourse.movie.data.model.uimodel.ReservationUiModel
+import woowacourse.movie.data.model.uimodel.ReservationUIModel
 import woowacourse.movie.db.DBHelper
 import woowacourse.movie.repository.ReservationListRepository
 
@@ -11,16 +11,16 @@ class ReservationListPresenter(
     private val dbHelper: DBHelper
 ) : ReservationListContract.Presenter {
 
-    override fun getReservations(): List<ReservationUiModel> {
+    override fun getReservations(): List<ReservationUIModel> {
         repository.reservations = dbHelper.getReservations()
         return repository.reservations.map { reservation ->
-            ReservationMapper.toUi(reservation)
+            ReservationMapper.toUI(reservation)
         }
     }
 
     override fun setUpClickListener() {
         repository.reservations.forEach { reservation ->
-            ReservationMapper.toUi(reservation).toItemModel {
+            ReservationMapper.toUI(reservation).toItemModel {
                 view.setOnReservationItemClick(it)
             }
         }

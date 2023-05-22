@@ -1,8 +1,8 @@
 package woowacourse.movie.data.model.itemmodel
 
-import woowacourse.movie.data.model.uimodel.MovieUiModel
+import woowacourse.movie.data.model.uimodel.MovieUIModel
 
 data class MovieItemModel(
-    val movie: MovieUiModel,
-    val onClick: (MovieUiModel) -> Unit
+    val movie: MovieUIModel,
+    val onClick: (MovieUIModel) -> Unit
 )

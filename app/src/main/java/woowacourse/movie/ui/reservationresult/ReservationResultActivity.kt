@@ -6,8 +6,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
-import woowacourse.movie.data.model.uimodel.MovieUiModel
-import woowacourse.movie.data.model.uimodel.TicketsUiModel
+import woowacourse.movie.data.model.uimodel.MovieUIModel
+import woowacourse.movie.data.model.uimodel.TicketsUIModel
 import woowacourse.movie.databinding.ActivityReservationResultBinding
 import woowacourse.movie.getSerializableCompat
 
@@ -43,8 +43,8 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
         private const val TICKETS_KEY_VALUE = "tickets"
         fun getIntent(
             context: Context,
-            movieUiModel: MovieUiModel,
-            ticketsUiModel: TicketsUiModel
+            movieUiModel: MovieUIModel,
+            ticketsUiModel: TicketsUIModel
         ): Intent {
             val intent = Intent(context, ReservationResultActivity::class.java)
             intent.putExtra(MOVIE_KEY_VALUE, movieUiModel)

@@ -9,7 +9,7 @@ import androidx.fragment.app.setFragmentResult
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.adapter.TheaterAdapter
 import woowacourse.movie.data.mock.MockTheatersFactory
-import woowacourse.movie.data.model.uimodel.TheaterUiModel
+import woowacourse.movie.data.model.uimodel.TheaterUIModel
 import woowacourse.movie.databinding.FragmentTheaterBottomDialogBinding
 
 class TheaterBottomDialogFragment : BottomSheetDialogFragment() {
@@ -42,7 +42,7 @@ class TheaterBottomDialogFragment : BottomSheetDialogFragment() {
         adapter.updateTheaterItems(theaters, ::setOnTheaterItemClick)
     }
 
-    private fun setOnTheaterItemClick(theaterUiModel: TheaterUiModel) {
+    private fun setOnTheaterItemClick(theaterUiModel: TheaterUIModel) {
         setFragmentResult("requestKey", bundleOf("bundleKey" to theaterUiModel))
         dismiss()
     }

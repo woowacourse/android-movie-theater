@@ -6,19 +6,19 @@ import java.io.Serializable
 import java.time.LocalDate
 import java.time.Period
 
-data class MovieUiModel(
+data class MovieUIModel(
     @DrawableRes val picture: Int,
     val title: String,
     val startDate: LocalDate,
     val endDate: LocalDate,
     val runningTime: Int,
     val description: String,
-) : UiModel, Serializable {
+) : UIModel, Serializable {
     fun getDateList(): List<LocalDate> {
         return (0..Period.between(startDate, endDate).days).map { startDate.plusDays(it.toLong()) }
     }
 
-    fun toItemModel(onClick: (MovieUiModel) -> Unit): MovieItemModel {
+    fun toItemModel(onClick: (MovieUIModel) -> Unit): MovieItemModel {
         return MovieItemModel(this, onClick)
     }
 }

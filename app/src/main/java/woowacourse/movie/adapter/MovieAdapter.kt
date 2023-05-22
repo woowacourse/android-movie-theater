@@ -1,13 +1,12 @@
 package woowacourse.movie.adapter
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.data.model.itemmodel.AdvertisementItemModel
 import woowacourse.movie.data.model.itemmodel.MovieItemModel
-import woowacourse.movie.data.model.uimodel.AdvertisementUiModel
+import woowacourse.movie.data.model.uimodel.AdvertisementUIModel
 import woowacourse.movie.data.model.uimodel.MovieAdapterViewType
-import woowacourse.movie.data.model.uimodel.MovieUiModel
+import woowacourse.movie.data.model.uimodel.MovieUIModel
 import woowacourse.movie.viewholder.AdvertisementItemViewHolder
 import woowacourse.movie.viewholder.MovieItemViewHolder
 
@@ -44,8 +43,8 @@ class MovieAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun updateMovieItems(
-        movies: List<MovieUiModel>,
-        onClick: (MovieUiModel) -> Unit
+        movies: List<MovieUIModel>,
+        onClick: (MovieUIModel) -> Unit
     ) {
         _movies = movies.map { movie ->
             movie.toItemModel { onClick(movie) }
@@ -53,8 +52,8 @@ class MovieAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun updateAdvertisementItems(
-        advertisement: AdvertisementUiModel,
-        onClick: (AdvertisementUiModel) -> Unit
+        advertisement: AdvertisementUIModel,
+        onClick: (AdvertisementUIModel) -> Unit
     ) {
         _advertisement = advertisement.toItemModel { onClick(advertisement) }
     }

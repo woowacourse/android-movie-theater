@@ -5,7 +5,7 @@ import androidx.appcompat.app.AlertDialog
 import domain.Reservation
 import domain.Tickets
 import woowacourse.movie.data.model.SeatView
-import woowacourse.movie.data.model.uimodel.TheaterUiModel
+import woowacourse.movie.data.model.uimodel.TheaterUIModel
 import java.time.LocalDateTime
 
 interface SelectSeatContract {
@@ -24,7 +24,7 @@ interface SelectSeatContract {
 
         fun setSeatTable()
 
-        fun updateSeatState(seatView: SeatView, dateTime: LocalDateTime, theater: TheaterUiModel)
+        fun updateSeatState(seatView: SeatView, dateTime: LocalDateTime, theater: TheaterUIModel)
 
         fun updateButtonState(button: Button)
         fun updateReservation(reservation: Reservation)

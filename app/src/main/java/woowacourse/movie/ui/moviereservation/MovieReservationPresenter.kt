@@ -3,7 +3,7 @@ package woowacourse.movie.ui.moviereservation
 import android.os.Bundle
 import woowacourse.movie.data.model.Counter
 import woowacourse.movie.data.model.MovieDateTimePicker
-import woowacourse.movie.data.model.uimodel.MovieUiModel
+import woowacourse.movie.data.model.uimodel.MovieUIModel
 import java.time.LocalDateTime
 
 class MovieReservationPresenter(
@@ -29,7 +29,7 @@ class MovieReservationPresenter(
         view.setCounterText(counter.count)
     }
 
-    override fun setPicker(movie: MovieUiModel, savedInstanceState: Bundle?) {
+    override fun setPicker(movie: MovieUIModel, savedInstanceState: Bundle?) {
         picker.makeView(movie, savedInstanceState)
     }
 

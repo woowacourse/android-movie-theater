@@ -16,15 +16,14 @@ import woowacourse.movie.data.model.SeatTable
 import woowacourse.movie.data.model.SeatView
 import woowacourse.movie.data.model.mapper.MovieMapper
 import woowacourse.movie.data.model.mapper.TicketsMapper
-import woowacourse.movie.data.model.uimodel.MovieUiModel
-import woowacourse.movie.data.model.uimodel.TheaterUiModel
-import woowacourse.movie.data.model.uimodel.TicketDateUiModel
-import woowacourse.movie.data.model.uimodel.TicketsUiModel
+import woowacourse.movie.data.model.uimodel.MovieUIModel
+import woowacourse.movie.data.model.uimodel.TheaterUIModel
+import woowacourse.movie.data.model.uimodel.TicketDateUIModel
+import woowacourse.movie.data.model.uimodel.TicketsUIModel
 import woowacourse.movie.databinding.ActivitySelectSeatBinding
 import woowacourse.movie.db.TicketDBHelper
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.notification.ReservationNotificationReceiver
-import woowacourse.movie.setBackgroundColorId
 import woowacourse.movie.ui.reservationresult.ReservationResultActivity
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -98,7 +97,7 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
                 ReservationResultActivity.getIntent(
                     this,
                     binding.movie!!,
-                    TicketsMapper.toUi(presenter.tickets)
+                    TicketsMapper.toUI(presenter.tickets)
                 )
             )
             registerAlarm()
@@ -110,7 +109,7 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
     }
 
     private fun registerAlarm() {
-        val ticketsUiModel = TicketsMapper.toUi(presenter.tickets)
+        val ticketsUiModel = TicketsMapper.toUI(presenter.tickets)
         val receiverIntent = generateReceiverIntent(ticketsUiModel)
         val pendingIntent =
             PendingIntent.getBroadcast(this, 125, receiverIntent, PendingIntent.FLAG_IMMUTABLE)
@@ -119,7 +118,7 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
         alarmManager[AlarmManager.RTC, timeMillis] = pendingIntent
     }
 
-    private fun generateReceiverIntent(ticketsUiModel: TicketsUiModel): Intent {
+    private fun generateReceiverIntent(ticketsUiModel: TicketsUIModel): Intent {
         val receiverIntent = Intent(this, ReservationNotificationReceiver::class.java)
         receiverIntent.putExtra("movie", binding.movie)
         return receiverIntent.putExtra("tickets", ticketsUiModel)
@@ -172,9 +171,9 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
         fun getIntent(
             context: Context,
             peopleCount: Int,
-            ticketDateUiModel: TicketDateUiModel,
-            movieUiModel: MovieUiModel,
-            theaterUiModel: TheaterUiModel
+            ticketDateUiModel: TicketDateUIModel,
+            movieUiModel: MovieUIModel,
+            theaterUiModel: TheaterUIModel
         ): Intent {
             val intent = Intent(context, SelectSeatActivity::class.java)
             intent.putExtra(PEOPLE_COUNT_KEY, peopleCount)

@@ -1,18 +1,18 @@
 package woowacourse.movie.ui.main.reservationlist
 
-import woowacourse.movie.data.model.uimodel.ReservationUiModel
+import woowacourse.movie.data.model.uimodel.ReservationUIModel
 
 interface ReservationListContract {
     interface View {
         var presenter: Presenter
 
-        fun setOnReservationItemClick(reservationUiModel: ReservationUiModel)
+        fun setOnReservationItemClick(reservationUiModel: ReservationUIModel)
 
         fun updateReservations()
     }
 
     interface Presenter {
-        fun getReservations(): List<ReservationUiModel>
+        fun getReservations(): List<ReservationUIModel>
 
         fun setUpClickListener()
     }

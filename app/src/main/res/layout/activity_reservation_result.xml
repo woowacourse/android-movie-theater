@@ -9,11 +9,11 @@
 
         <variable
             name="tickets"
-            type="woowacourse.movie.data.model.uimodel.TicketsUiModel" />
+            type="woowacourse.movie.data.model.uimodel.TicketsUIModel" />
 
         <variable
             name="movie"
-            type="woowacourse.movie.data.model.uimodel.MovieUiModel" />
+            type="woowacourse.movie.data.model.uimodel.MovieUIModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

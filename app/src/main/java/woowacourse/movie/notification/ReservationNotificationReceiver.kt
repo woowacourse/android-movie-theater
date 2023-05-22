@@ -7,8 +7,8 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.data.model.uimodel.MovieUiModel
-import woowacourse.movie.data.model.uimodel.TicketsUiModel
+import woowacourse.movie.data.model.uimodel.MovieUIModel
+import woowacourse.movie.data.model.uimodel.TicketsUIModel
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.ui.reservationresult.ReservationResultActivity
 
@@ -40,13 +40,13 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
         if (isAlarmPossible(context)) notificationManager.notify(1, notification)
     }
 
-    private fun receiveTicketsUiModel(intent: Intent): TicketsUiModel {
+    private fun receiveTicketsUiModel(intent: Intent): TicketsUIModel {
         return intent.extras?.getSerializableCompat(TICKETS_KEY_VALUE) ?: throw IllegalStateException(
             UI_MODEL_NOT_FOUND
         )
     }
 
-    private fun receiveMovieViewModel(intent: Intent): MovieUiModel {
+    private fun receiveMovieViewModel(intent: Intent): MovieUIModel {
         return intent.extras?.getSerializableCompat(MOVIE_KEY_VALUE) ?: throw IllegalStateException(
             UI_MODEL_NOT_FOUND
         )

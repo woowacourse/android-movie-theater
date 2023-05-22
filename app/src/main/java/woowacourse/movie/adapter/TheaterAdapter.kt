@@ -3,7 +3,7 @@ package woowacourse.movie.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.data.model.itemmodel.TheaterItemModel
-import woowacourse.movie.data.model.uimodel.TheaterUiModel
+import woowacourse.movie.data.model.uimodel.TheaterUIModel
 import woowacourse.movie.viewholder.TheaterViewHolder
 
 class TheaterAdapter : RecyclerView.Adapter<TheaterViewHolder>() {
@@ -23,8 +23,8 @@ class TheaterAdapter : RecyclerView.Adapter<TheaterViewHolder>() {
     }
 
     fun updateTheaterItems(
-        theaters: List<TheaterUiModel>,
-        onClick: (TheaterUiModel) -> Unit
+        theaters: List<TheaterUIModel>,
+        onClick: (TheaterUIModel) -> Unit
     ) {
         _theaters = theaters.map { theater ->
             theater.toItemModel { onClick(theater) }

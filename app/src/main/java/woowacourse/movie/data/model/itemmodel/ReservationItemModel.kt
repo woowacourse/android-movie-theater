@@ -1,8 +1,8 @@
 package woowacourse.movie.data.model.itemmodel
 
-import woowacourse.movie.data.model.uimodel.ReservationUiModel
+import woowacourse.movie.data.model.uimodel.ReservationUIModel
 
 data class ReservationItemModel(
-    val reservationUiModel: ReservationUiModel,
-    val onClick: (ReservationUiModel) -> Unit
+    val reservationUiModel: ReservationUIModel,
+    val onClick: (ReservationUIModel) -> Unit
 )

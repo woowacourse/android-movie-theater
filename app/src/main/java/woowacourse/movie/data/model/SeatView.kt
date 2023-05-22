@@ -8,7 +8,7 @@ import domain.Seat
 import domain.seatPolicy.SeatPolicies
 import woowacourse.movie.R
 import woowacourse.movie.data.model.mapper.SeatRankMapper
-import woowacourse.movie.data.model.uimodel.SeatUiModel
+import woowacourse.movie.data.model.uimodel.SeatUIModel
 import woowacourse.movie.setBackgroundColorId
 
 class SeatView(val view: TextView, val row: Char, val col: Int, onClick: (SeatView) -> Unit) {
@@ -25,8 +25,8 @@ class SeatView(val view: TextView, val row: Char, val col: Int, onClick: (SeatVi
         view.setOnClickListener { onClick(this) }
     }
     private fun initTextColor() {
-        val seat = Seat(SeatUiModel.toNumber(row), col, SeatPolicies())
-        val seatRankViewModel = SeatRankMapper.toUi(seat.rank)
+        val seat = Seat(SeatUIModel.toNumber(row), col, SeatPolicies())
+        val seatRankViewModel = SeatRankMapper.toUI(seat.rank)
         view.setTextColor(
             ContextCompat.getColor(
                 view.context, seatRankViewModel.color

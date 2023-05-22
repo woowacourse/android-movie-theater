@@ -3,9 +3,9 @@ package woowacourse.movie.data.model
 import android.widget.TextView
 
 class Counter(
-    count: TextView,
+    countView: TextView,
     savedStateKey: String
-) : SaveStateTextView(count, savedStateKey) {
+) : SaveStateTextView(countView, savedStateKey) {
 
     private var _count = MINIMUM_TICKET_COUNT
     val count

@@ -13,8 +13,8 @@ import woowacourse.movie.data.model.DateSpinner
 import woowacourse.movie.data.model.MovieDateTimePicker
 import woowacourse.movie.data.model.TimeSpinner
 import woowacourse.movie.data.model.mapper.MovieMapper
-import woowacourse.movie.data.model.uimodel.TheaterUiModel
-import woowacourse.movie.data.model.uimodel.TicketDateUiModel
+import woowacourse.movie.data.model.uimodel.TheaterUIModel
+import woowacourse.movie.data.model.uimodel.TicketDateUIModel
 import woowacourse.movie.databinding.ActivityMovieReservationBinding
 import woowacourse.movie.getSerializableCompat
 import woowacourse.movie.ui.selectseat.SelectSeatActivity
@@ -81,7 +81,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
             val intent = SelectSeatActivity.getIntent(
                 context = this,
                 peopleCount = presenter.getCount(),
-                ticketDateUiModel = TicketDateUiModel(presenter.getSelectedDateTime()),
+                ticketDateUiModel = TicketDateUIModel(presenter.getSelectedDateTime()),
                 movieUiModel = binding.movie!!,
                 theaterUiModel = binding.theater!!
             )
@@ -114,9 +114,9 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         private const val TIME_SPINNER_SAVE_STATE_KEY = "time_spinner"
         private const val MOVIE_DATA_NOT_FOUND_ERROR = "영화 데이터가 찾을 수 없습니다."
 
-        fun getIntent(context: Context, movie: Movie, theaterUiModel: TheaterUiModel): Intent {
+        fun getIntent(context: Context, movie: Movie, theaterUiModel: TheaterUIModel): Intent {
             val intent = Intent(context, MovieReservationActivity::class.java)
-            val movieUiModel = MovieMapper.toUi(movie)
+            val movieUiModel = MovieMapper.toUI(movie)
             intent.putExtra(MOVIE_KEY_VALUE, movieUiModel)
             intent.putExtra(THEATER_KEY_VALUE, theaterUiModel)
             return intent

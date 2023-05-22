@@ -2,7 +2,7 @@ package woowacourse.movie.data.model.uimodel
 
 import java.io.Serializable
 
-class SeatUiModel(val row: Char, val col: Int) : UiModel, Serializable {
+class SeatUIModel(val row: Char, val col: Int) : UIModel, Serializable {
     companion object {
         fun toNumber(alphabet: Char): Int {
             return alphabet - 'A' + 1
