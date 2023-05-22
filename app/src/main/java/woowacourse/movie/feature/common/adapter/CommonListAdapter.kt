@@ -2,12 +2,15 @@ package woowacourse.movie.feature.common.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.feature.common.itemModel.ItemModel
 import woowacourse.movie.feature.common.itemModel.ViewType
 import woowacourse.movie.feature.common.viewHolder.AdvViewHolder
 import woowacourse.movie.feature.common.viewHolder.ItemViewHolder
 import woowacourse.movie.feature.common.viewHolder.MovieViewHolder
+import woowacourse.movie.feature.common.viewHolder.TheaterViewHolder
 import woowacourse.movie.feature.common.viewHolder.TicketsViewHolder
 
 class CommonListAdapter(
@@ -16,12 +19,14 @@ class CommonListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val itemType: ViewType = ViewType.of(viewType)
-        val view = LayoutInflater.from(parent.context).inflate(itemType.layoutRes, parent, false)
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding: ViewDataBinding = DataBindingUtil.inflate(layoutInflater, itemType.layoutRes, parent, false)
 
         return when (itemType) {
-            ViewType.MOVIE -> MovieViewHolder(view)
-            ViewType.ADV -> AdvViewHolder(view)
-            ViewType.TICKETS -> TicketsViewHolder(view)
+            ViewType.MOVIE -> MovieViewHolder(binding)
+            ViewType.ADV -> AdvViewHolder(binding)
+            ViewType.TICKETS -> TicketsViewHolder(binding)
+            ViewType.THEATER -> TheaterViewHolder(binding)
         }
     }
 

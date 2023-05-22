@@ -15,16 +15,16 @@ class TicketCounterPresenter(
         get() = _countNumber
 
     override fun minus() {
-        if (TicketCount.isValidate(_countNumber)) {
-            view.showMinLimit()
+        if (!TicketCount.isValidate(_countNumber)) {
+            view.showLimitMin()
             return
         }
         _countNumber -= 1
     }
 
     override fun plus() {
-        if (TicketCount.isValidate(_countNumber)) {
-            view.showMaxLimit()
+        if (!TicketCount.isValidate(_countNumber)) {
+            view.showLimitMax()
             return
         }
         _countNumber += 1

@@ -1,36 +1,26 @@
 package woowacourse.movie.feature.common.viewHolder
 
-import android.view.View
-import android.widget.LinearLayout
-import android.widget.TextView
+import androidx.databinding.ViewDataBinding
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemReservationBinding
 import woowacourse.movie.feature.DateTimeFormatters
 import woowacourse.movie.feature.common.itemModel.ItemModel
 import woowacourse.movie.feature.common.itemModel.TicketsItemModel
 
-class TicketsViewHolder(view: View) : ItemViewHolder(view) {
-
-    private val box: LinearLayout
-    private val screeningDateTimeTextView: TextView
-    private val movieNameTextView: TextView
-
-    init {
-        box = view.findViewById(R.id.reservation_item_box)
-        screeningDateTimeTextView = view.findViewById(R.id.screening_date_time_text_view)
-        movieNameTextView = view.findViewById(R.id.movie_name_text_view)
-    }
+class TicketsViewHolder(binding: ViewDataBinding) : ItemViewHolder(binding) {
 
     override fun bind(itemModel: ItemModel) {
-        val item = itemModel as TicketsItemModel
-        val context = screeningDateTimeTextView.context
+        binding as ItemReservationBinding
+        itemModel as TicketsItemModel
+        val context = binding.screeningDateTimeTextView.context
 
-        screeningDateTimeTextView.text = context.getString(R.string.date_time_form)
+        binding.screeningDateTimeTextView.text = context.getString(R.string.date_time_form)
             .format(
-                DateTimeFormatters.convertToDate(item.ticketsState.dateTime.toLocalDate()),
-                item.ticketsState.dateTime.toLocalTime().toString()
+                DateTimeFormatters.convertToDate(itemModel.ticketsState.dateTime.toLocalDate()),
+                itemModel.ticketsState.dateTime.toLocalTime().toString()
             )
-        movieNameTextView.text = item.ticketsState.movieState.title
+        binding.movieNameTextView.text = itemModel.ticketsState.movie.title
 
-        box.setOnClickListener { item.onClick(bindingAdapterPosition) }
+        binding.reservationItemBox.setOnClickListener { itemModel.onClick(itemModel.ticketsState) }
     }
 }

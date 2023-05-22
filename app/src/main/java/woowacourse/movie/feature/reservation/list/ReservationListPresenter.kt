@@ -14,7 +14,7 @@ class ReservationListPresenter(
 
     private fun getTickets(): List<ItemModel> {
         return TicketsRepository.allTickets().map { ticketState ->
-            ticketState.toItemModel { view.navigateTicketsConfirm(ticketState) }
+            ticketState.convertToItemModel { view.navigateTicketsConfirm(ticketState) }
         }
     }
 }

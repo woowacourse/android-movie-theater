@@ -2,44 +2,57 @@ package woowacourse.movie.feature.movielist
 
 import woowacourse.movie.data.AdvRepository
 import woowacourse.movie.data.MovieRepository
+import woowacourse.movie.feature.common.itemModel.AdvItemModel
 import woowacourse.movie.feature.common.itemModel.ItemModel
+import woowacourse.movie.feature.common.itemModel.MovieItemModel
+import woowacourse.movie.model.AdvState
+import woowacourse.movie.model.MovieState
+import woowacourse.movie.model.SelectTheaterAndMovieState
+import woowacourse.movie.model.mapper.asPresentation
 
 class MovieListPresenter(
-    val view: MovieListContract.View
+    val view: MovieListContract.View,
+    val movieRepo: MovieRepository,
+    val advRepo: AdvRepository
 ) : MovieListContract.Presenter {
 
-    /*
-        itemModel, movieState, advState 은 UI를 위한 모델이기 때문에 presenter가 알고 있으면 안되는 정보일까요?
-        data를 위한 모델을 따로 만든 후 presenter에서는 dataModel을 사용하고,
-        view에서 data model을 ui model로 변경해 사용하는 것이 올바른 방법일까요?
-     */
-    override fun setListItems() {
-        val itemModels: MutableList<ItemModel> = getMovies().toMutableList()
-        val advItemModels: List<ItemModel> = getAdvs()
+    override fun loadMovieAndAdvItems() {
+        val movies: List<MovieState> = movieRepo.allMovies().map { it.asPresentation() }
+        val advs: List<AdvState> = advRepo.allAdv()
 
-        var itemPosition = 0
-        var advPosition = 0
-        while (itemPosition < itemModels.size) {
-            if ((itemPosition + 1) % 4 == 0) {
-                itemModels.add(itemPosition, advItemModels[advPosition])
-                advPosition++
+        val movieItems = movies.map {
+            it.toItemModel { movieState ->
+                view.showTheaterBottomSheet(movieState)
             }
-            if (advPosition == advItemModels.size) advPosition = 0
-            itemPosition++
         }
-
-        view.setItems(itemModels)
+        val advItems = advs.map {
+            it.toItemModel { advState ->
+                view.navigateAdbDetail(advState)
+            }
+        }
+        view.updateItems(combineMovieAndAdvItems(movieItems, advItems))
     }
 
-    private fun getMovies(): List<ItemModel> {
-        return MovieRepository.allMovies().map { movieState ->
-            movieState.toItemModel { view.navigateMovieDetail(movieState) }
-        }.toList()
+    override fun receiveTheaterInfo(theaterMovie: SelectTheaterAndMovieState) {
+        view.navigateMovieDetail(theaterMovie)
     }
 
-    private fun getAdvs(): List<ItemModel> {
-        return AdvRepository.allAdv().map { advState ->
-            advState.toItemModel { view.navigateAdvDetail(advState) }
+    private fun combineMovieAndAdvItems(
+        movies: List<MovieItemModel>,
+        advs: List<AdvItemModel>
+    ): List<ItemModel> {
+        return if (advs.isEmpty()) {
+            movies.toList()
+        } else {
+            var curAdvIndex = 0
+            val advSize = advs.size
+            val allowAdvMaxCount: Int = movies.size / 3
+            mutableListOf<ItemModel>().apply {
+                addAll(movies.toList())
+                for (index in 3..(movies.size + allowAdvMaxCount) step 4) {
+                    add(index, advs[(curAdvIndex++) % advSize])
+                }
+            }
         }
     }
 }

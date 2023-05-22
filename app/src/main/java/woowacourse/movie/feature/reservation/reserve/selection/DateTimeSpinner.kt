@@ -1,7 +1,7 @@
 package woowacourse.movie.feature.reservation.reserve.selection
 
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
-import woowacourse.movie.model.MovieState
+import woowacourse.movie.model.SelectTheaterAndMovieState
 import woowacourse.movie.util.setClickListener
 import woowacourse.movie.util.setDefaultAdapter
 import java.time.LocalDate
@@ -9,57 +9,35 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 class DateTimeSpinner(
-    private val binding: ActivityMovieDetailBinding,
-    movieState: MovieState,
-    private val getDates: (MovieState) -> List<LocalDate>,
-    private val getTimes: (LocalDate) -> List<LocalTime>,
-    savedLocalDateTime: LocalDateTime? = null
-) {
+    val binding: ActivityMovieDetailBinding,
+    theaterMovieState: SelectTheaterAndMovieState,
+    initLocalDateTime: LocalDateTime? = null
+) : DateTimeSpinnerContract.View {
+
+    private val presenter: DateTimeSpinnerContract.Presenter = DateTimeSpinnerPresenter(this, theaterMovieState)
 
     val selectedDateTime: LocalDateTime
-        get() = LocalDateTime.of(selectDate, selectTime)
-
-    private var selectDate: LocalDate = LocalDate.now()
-        set(value) {
-            field = value
-            runningTimes = getTimes(field)
-            setTimeSpinnerAdapter()
-        }
-    private var selectTime: LocalTime
-
-    private val runningDates: List<LocalDate>
-    private var runningTimes: List<LocalTime> = listOf()
-        set(value) {
-            field = value
-            selectTime = field.first()
-        }
+        get() = LocalDateTime.of(presenter.selectedDate, presenter.selectedTime)
 
     init {
-        runningDates = getDates(movieState)
-        setDateSpinnerAdapter()
-        selectDate = runningDates.first()
-        setTimeSpinnerAdapter()
-        runningTimes = getTimes(selectDate)
-        selectTime = runningTimes.first()
-
-        savedLocalDateTime?.let { updateSelectDateTime(it.toLocalDate(), it.toLocalTime()) }
-
-        binding.dateSpinner.setClickListener({ position -> selectDate = runningDates[position] })
-        binding.timeSpinner.setClickListener({ position -> selectTime = runningTimes[position] })
+        initLocalDateTime?.let { presenter.setDateTime(it) }
+        binding.dateSpinner.setClickListener({ position -> presenter.clickDate(position) })
+        binding.timeSpinner.setClickListener({ position -> presenter.clickTime(position) })
     }
 
-    private fun updateSelectDateTime(selectLocalDate: LocalDate, selectLocalTime: LocalTime) {
-        selectDate = selectLocalDate
-        selectTime = selectLocalTime
-        binding.dateSpinner.setSelection(runningDates.indexOf(selectDate), false)
-        binding.timeSpinner.setSelection(runningTimes.indexOf(selectTime), false)
+    override fun setDateSpinnerAdapter(dates: List<LocalDate>) {
+        binding.dateSpinner.setDefaultAdapter(dates)
     }
 
-    private fun setDateSpinnerAdapter() {
-        binding.dateSpinner.setDefaultAdapter(runningDates.map { it.toString() })
+    override fun setTimeSpinnerAdapter(times: List<LocalTime>) {
+        binding.timeSpinner.setDefaultAdapter(times)
     }
 
-    private fun setTimeSpinnerAdapter() {
-        binding.timeSpinner.setDefaultAdapter(runningTimes.map { it.toString() })
+    override fun setSelectDate(position: Int) {
+        binding.dateSpinner.setSelection(position, false)
+    }
+
+    override fun setSelectTime(position: Int) {
+        binding.timeSpinner.setSelection(position, false)
     }
 }

@@ -4,7 +4,7 @@ import woowacourse.movie.model.TicketsState
 
 class TicketsItemModel(
     val ticketsState: TicketsState,
-    override val onClick: (position: Int) -> Unit
+    val onClick: (ticketsState: TicketsState) -> Unit
 ) : ItemModel {
     override val viewType: ViewType = ViewType.TICKETS
 }

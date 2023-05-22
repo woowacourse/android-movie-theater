@@ -4,7 +4,7 @@ import woowacourse.movie.model.AdvState
 
 class AdvItemModel(
     val advState: AdvState,
-    override val onClick: (position: Int) -> Unit
+    val onClick: (advState: AdvState) -> Unit
 ) : ItemModel {
     override val viewType = ViewType.ADV
 }

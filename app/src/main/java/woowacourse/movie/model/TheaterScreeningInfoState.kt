@@ -9,7 +9,7 @@ data class TheaterScreeningInfoState(
     val theater: TheaterState,
     val screeningInfos: List<ScreeningMovieTimesState>
 ) : Parcelable {
-    fun toItemModel(onClick: (position: Int) -> Unit): TheaterItemModel {
+    fun toItemModel(onClick: (theaterScreeningInfoState: TheaterScreeningInfoState) -> Unit): TheaterItemModel {
         return TheaterItemModel(this, onClick)
     }
 }

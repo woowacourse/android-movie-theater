@@ -11,7 +11,7 @@ data class AdvState(
     @DrawableRes val imgId: Int,
     val advDescription: String
 ) : Parcelable {
-    fun toItemModel(onClick: (position: Int) -> Unit): AdvItemModel {
+    fun toItemModel(onClick: (advState: AdvState) -> Unit): AdvItemModel {
         return AdvItemModel(this, onClick)
     }
 }

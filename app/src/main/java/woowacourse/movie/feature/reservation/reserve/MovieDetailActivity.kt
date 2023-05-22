@@ -3,16 +3,16 @@ package woowacourse.movie.feature.reservation.reserve
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.example.domain.usecase.GetMovieRunningDateUseCase
-import com.example.domain.usecase.GetMovieRunningTimeUseCase
+import androidx.databinding.DataBindingUtil
+import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.feature.BackKeyActionBarActivity
-import woowacourse.movie.feature.main.MainActivity.Companion.KEY_MOVIE
+import woowacourse.movie.feature.DateTimeFormatters
 import woowacourse.movie.feature.reservation.reserve.count.TicketCounterView
 import woowacourse.movie.feature.reservation.reserve.selection.DateTimeSpinner
 import woowacourse.movie.feature.seat.SeatSelectActivity
-import woowacourse.movie.model.MovieState
-import woowacourse.movie.model.mapper.asDomain
+import woowacourse.movie.model.SelectReservationState
+import woowacourse.movie.model.SelectTheaterAndMovieState
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.getSerializableCompat
 import woowacourse.movie.util.keyError
@@ -20,45 +20,45 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class MovieDetailActivity : BackKeyActionBarActivity() {
+class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View {
 
-    private val binding: ActivityMovieDetailBinding by lazy {
-        ActivityMovieDetailBinding.inflate(layoutInflater)
-    }
-    private val movieInformationView: MovieInformationView by lazy { MovieInformationView(binding) }
-    private val ticketCounterView: TicketCounterView by lazy { TicketCounterView(binding) }
+    private lateinit var binding: ActivityMovieDetailBinding
 
-    private val getMovieRunningDateUseCase = GetMovieRunningDateUseCase()
-    private val getMovieRunningTimeUseCase = GetMovieRunningTimeUseCase()
+    private lateinit var theaterMovie: SelectTheaterAndMovieState
 
-    private lateinit var movie: MovieState
     private lateinit var dateTimeSpinner: DateTimeSpinner
+    private lateinit var reservationCounter: TicketCounterView
 
+    private val presenter: MovieDetailContract.Presenter = MovieDetailPresenter(this)
     override fun onCreateView(savedInstanceState: Bundle?) {
-        setContentView(binding.root)
-        init(savedInstanceState)
-    }
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
+        theaterMovie = intent.getParcelableExtraCompat(KEY_SELECT_THEATER_MOVIE)
+            ?: return keyError(KEY_SELECT_THEATER_MOVIE)
+        binding.theaterMovie = theaterMovie
 
-    private fun init(savedInstanceState: Bundle?) {
-        movie = intent.getParcelableExtraCompat(KEY_MOVIE) ?: return keyError(KEY_MOVIE)
-        movieInformationView.setContents(movie)
-        ticketCounterView.set(savedInstanceState)
         if (savedInstanceState != null) {
             restoreInstanceState(savedInstanceState)
         } else {
-            dateTimeSpinner = DateTimeSpinner(
-                binding,
-                movie,
-                ::getMovieRunningDates,
-                ::getMovieRunningTimes
+            dateTimeSpinner = DateTimeSpinner(binding, theaterMovie)
+            reservationCounter = TicketCounterView(binding)
+        }
+
+        binding.counterPresenter = reservationCounter.presenter
+
+        binding.reservationConfirm.setOnClickListener {
+            presenter.clickConfirm(
+                theaterMovie,
+                dateTimeSpinner.selectedDateTime,
+                reservationCounter.count
             )
         }
-        binding.reservationConfirm.setOnClickListener { navigateSeatSelectActivity() }
+
+        binding.movieScreeningPeriod.text = DateTimeFormatters.convertToDateTildeDate(this, theaterMovie.movie.startDate, theaterMovie.movie.endDate)
     }
 
-    private fun navigateSeatSelectActivity() {
-        val dateTime = dateTimeSpinner.selectedDateTime
-        SeatSelectActivity.startActivity(this, movie, dateTime, ticketCounterView.count)
+    override fun navigateSeatSelect(reservationState: SelectReservationState) {
+        val intent = SeatSelectActivity.getIntent(this, reservationState)
+        startActivity(intent)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -66,7 +66,7 @@ class MovieDetailActivity : BackKeyActionBarActivity() {
         val dateTime = dateTimeSpinner.selectedDateTime
         outState.putSerializable(KEY_DATE, dateTime.toLocalDate())
         outState.putSerializable(KEY_TIME, dateTime.toLocalTime())
-        outState.putInt(KEY_COUNT, ticketCounterView.count)
+        outState.putInt(KEY_COUNT, reservationCounter.count)
     }
 
     private fun restoreInstanceState(savedInstanceState: Bundle) {
@@ -74,32 +74,23 @@ class MovieDetailActivity : BackKeyActionBarActivity() {
             savedInstanceState.getSerializableCompat(KEY_DATE) ?: return keyError(KEY_DATE)
         val restoreSelectTime: LocalTime =
             savedInstanceState.getSerializableCompat(KEY_TIME) ?: return keyError(KEY_TIME)
-        dateTimeSpinner = DateTimeSpinner(
-            binding,
-            movie,
-            ::getMovieRunningDates,
-            ::getMovieRunningTimes,
-            LocalDateTime.of(restoreSelectDate, restoreSelectTime)
-        )
+        val restoreCount: Int = savedInstanceState.getInt(KEY_COUNT)
+
+        val restoreDateTime = LocalDateTime.of(restoreSelectDate, restoreSelectTime)
+        dateTimeSpinner = DateTimeSpinner(binding, theaterMovie, restoreDateTime)
+        reservationCounter = TicketCounterView(binding, restoreCount)
     }
 
-    private fun getMovieRunningDates(movie: MovieState) =
-        getMovieRunningDateUseCase(movie.asDomain())
-
-    private fun getMovieRunningTimes(date: LocalDate) =
-        getMovieRunningTimeUseCase(date)
-
     companion object {
+        private const val KEY_SELECT_THEATER_MOVIE = "key_theater_movie"
         private const val KEY_COUNT = "key_reservation_count"
         private const val KEY_DATE = "key_reservation_date"
         private const val KEY_TIME = "key_reservation_time"
-        internal const val KEY_TICKETS = "key_reservation"
 
-        fun startActivity(context: Context, movie: MovieState) {
-            val intent = Intent(context, MovieDetailActivity::class.java).apply {
-                putExtra(KEY_MOVIE, movie)
-            }
-            context.startActivity(intent)
+        fun getIntent(context: Context, theaterMovie: SelectTheaterAndMovieState): Intent {
+            val intent = Intent(context, MovieDetailActivity::class.java)
+            intent.putExtra(KEY_SELECT_THEATER_MOVIE, theaterMovie)
+            return intent
         }
     }
 }

@@ -28,7 +28,7 @@ class MovieReminderReceiver : BroadcastReceiver() {
             val ticketNotificationState = TicketNotificationState(
                 contentTitle = context.getString(R.string.alarm_receiver_notification_title),
                 contentText = context.getString(R.string.alarm_receiver_notification_text).format(
-                    tickets.movieState.title
+                    tickets.movie.title
                 ),
                 cancelable = true
             )

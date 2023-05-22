@@ -7,6 +7,7 @@ object AdvRepository {
 
     private val adbs: List<AdvState> = List(3) {
         AdvState(
+            it,
             R.drawable.adv_wooteco,
             "배달의민족 운영사인 우아한형제들에서 운영하는 개발자 교육 프로그램.\n" +
                 "\n" +
