@@ -14,7 +14,6 @@ import woowacourse.movie.view.data.LocalFormattedTime
 import woowacourse.movie.view.data.ReservationDetailViewData
 import woowacourse.movie.view.data.TheaterMovieViewData
 import woowacourse.movie.view.error.ActivityError.finishWithError
-import woowacourse.movie.view.error.ViewError
 import woowacourse.movie.view.getSerializable
 import woowacourse.movie.view.widget.DateSpinnerManager
 import woowacourse.movie.view.widget.TimeSpinnerManager
@@ -34,17 +33,14 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val theaterMovie = getIntentMovieData() ?: return finishWithError(
-            ViewError.MissingExtras(
-                TheaterMovieViewData.THEATER_MOVIE_EXTRA_NAME
-            )
-        )
+        val theaterMovie = getIntentMovieData()
+            ?: return finishWithError(TheaterMovieViewData.THEATER_MOVIE_EXTRA_NAME)
         presenter = MovieReservationPresenter(
             this,
             theaterMovie,
             savedInstanceState?.getInt(COUNT_SAVE_STATE_KEY) ?: 1,
             savedInstanceState?.getInt(DATE_SPINNER_SAVE_STATE_KEY) ?: 0,
-            savedInstanceState?.getInt(TIME_SPINNER_SAVE_STATE_KEY) ?: 0
+            savedInstanceState?.getInt(TIME_SPINNER_SAVE_STATE_KEY) ?: 0,
         )
         initMovieReservationView(theaterMovie)
     }
@@ -79,7 +75,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
             presenter.navigateToSeatSelection(
                 (binding.movieReservationDateSpinner.selectedItem as LocalFormattedDate).date,
                 (binding.movieReservationTimeSpinner.selectedItem as LocalFormattedTime).time,
-                theaterMovie.theaterName
+                theaterMovie.theaterName,
             )
         }
     }
@@ -88,10 +84,12 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         super.onSaveInstanceState(outState)
         outState.putInt(COUNT_SAVE_STATE_KEY, presenter.getCount())
         outState.putInt(
-            DATE_SPINNER_SAVE_STATE_KEY, binding.movieReservationDateSpinner.selectedItemPosition
+            DATE_SPINNER_SAVE_STATE_KEY,
+            binding.movieReservationDateSpinner.selectedItemPosition,
         )
         outState.putInt(
-            TIME_SPINNER_SAVE_STATE_KEY, binding.movieReservationTimeSpinner.selectedItemPosition
+            TIME_SPINNER_SAVE_STATE_KEY,
+            binding.movieReservationTimeSpinner.selectedItemPosition,
         )
     }
 
@@ -112,7 +110,8 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
 
     override fun initDateSpinner(dateIndex: Int, dates: List<LocalFormattedDate>) {
         dateSpinnerManager.initSpinner(
-            dates, dateIndex
+            dates,
+            dateIndex,
         )
     }
 
@@ -126,7 +125,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
 
     override fun navigateToSeatSelection(
         theaterMovie: TheaterMovieViewData,
-        reservationDetailViewData: ReservationDetailViewData
+        reservationDetailViewData: ReservationDetailViewData,
     ) {
         SeatSelectionActivity.from(this, theaterMovie.movie, reservationDetailViewData).run {
             startActivity(this)

@@ -10,7 +10,6 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationResultBinding
 import woowacourse.movie.view.data.ReservationViewData
 import woowacourse.movie.view.error.ActivityError.finishWithError
-import woowacourse.movie.view.error.ViewError
 import woowacourse.movie.view.getSerializable
 
 class ReservationResultActivity : AppCompatActivity(), ReservationResultContract.View {
@@ -30,7 +29,7 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
         makeBackButton()
 
         val reservation: ReservationViewData = getIntentReservationData() ?: return finishWithError(
-            ViewError.MissingExtras(ReservationViewData.RESERVATION_EXTRA_NAME),
+            ReservationViewData.RESERVATION_EXTRA_NAME,
         )
         presenter.setUpReservation(reservation)
     }
