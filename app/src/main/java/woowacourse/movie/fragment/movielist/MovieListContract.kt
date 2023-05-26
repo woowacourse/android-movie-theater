@@ -12,7 +12,6 @@ interface MovieListContract {
     }
 
     interface Presenter {
-        fun initMovieRecyclerView()
-        fun onItemClick(data: MovieListViewData)
+        fun setUpMovieList()
     }
 }
