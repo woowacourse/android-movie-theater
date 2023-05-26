@@ -10,61 +10,75 @@ import woowacourse.movie.activity.moviereservation.MovieReservationContract
 import woowacourse.movie.activity.moviereservation.MovieReservationPresenter
 import woowacourse.movie.view.data.DateRangeViewData
 import woowacourse.movie.view.data.LocalFormattedDate
+import woowacourse.movie.view.data.MovieViewData
 import woowacourse.movie.view.data.TheaterMovieViewData
-import woowacourse.movie.view.widget.SaveState
 import java.time.LocalDate
+import java.time.LocalTime
 
 class MovieReservationPresenterTest {
-
+    private lateinit var movieViewDataMock: MovieViewData
     private lateinit var presenter: MovieReservationContract.Presenter
     private lateinit var view: MovieReservationContract.View
-    private lateinit var dateSpinnerSaveState: SaveState
-    private lateinit var timeSpinnerSaveState: SaveState
+    private lateinit var fakeTheaterMovieViewData: TheaterMovieViewData
+    private val movieDate = DateRangeViewData(LocalDate.of(2023, 5, 1), LocalDate.of(2023, 5, 5))
+    private val movieTimes = listOf(LocalTime.of(2, 0), LocalTime.of(5, 0))
 
     @Before
     fun setUp() {
-        view = mockk()
-        dateSpinnerSaveState = mockk()
-        timeSpinnerSaveState = mockk()
+        view = mockk(relaxed = true)
+        movieViewDataMock = mockk(relaxed = true)
+        every { movieViewDataMock.date } returns movieDate
 
-        presenter = MovieReservationPresenter(
-            view, dateSpinnerSaveState, timeSpinnerSaveState
-        )
+        fakeTheaterMovieViewData = TheaterMovieViewData("", movieViewDataMock, movieTimes)
+
+        presenter = MovieReservationPresenter(view, fakeTheaterMovieViewData, 2, 0, 0)
     }
 
     @Test
-    fun `시작 날짜와 종료 날짜를 받으면, 기간 내의 모든 날짜와, savedInstance에 저장된 선택된 스피너 인덱스 값을 꺼내서 view 에 넘겨준다`() {
-        val theaterMovieViewData: TheaterMovieViewData = mockk()
-        // given: 영화의 상영 시작 날짜와 종료 날짜, savedInstance 저장, 로딩 클래스를 mockking 한다
-        every {
-            theaterMovieViewData.movie.date
-        } returns DateRangeViewData(LocalDate.of(2023, 5, 1), LocalDate.of(2023, 5, 4))
-        every { dateSpinnerSaveState.load(null) } returns 2
+    fun `영화 시작 날짜와 종료 날짜 사이의 날짜들을 계산하여 스피너를 초기화한다`() {
+        // given
+        val slotDate = slot<List<LocalFormattedDate>>()
+        every { view.initDateSpinner(any(), capture(slotDate)) } answers { nothing }
 
-        // given: view 에 전달되는 매개변수를 capture 한다
-        val capturedSpinnerIndex = slot<Int>()
-        val capturedFormattedDates = slot<MutableList<LocalFormattedDate>>()
-        every {
-            view.initDateSpinner(
-                capture(capturedSpinnerIndex), capture(capturedFormattedDates)
-            )
-        } answers { nothing }
+        // when
+        presenter.loadDateTimeData()
 
-        // when: presenter 에게 DateSpinner 초기화를 요청하면
-        presenter.initDateSpinner(theaterMovieViewData, null)
+        // then
+        val expected = listOf(
+            LocalDate.of(2023, 5, 1),
+            LocalDate.of(2023, 5, 2),
+            LocalDate.of(2023, 5, 3),
+            LocalDate.of(2023, 5, 4),
+            LocalDate.of(2023, 5, 5),
+        ).map {
+            LocalFormattedDate(it)
+        }
+        assertEquals(expected, slotDate.captured)
+    }
 
-        // then: view 는 savedInstance 에 저장된 선택된 스피너 인덱스 값과, 시작 날짜 종료 날짜 사이의 모든 날짜를 받는다.
-        val actualIndex = capturedSpinnerIndex.captured
-        val actualFormattedDates = capturedFormattedDates.captured
-        assertEquals(2, actualIndex)
-        assertEquals(
-            mutableListOf(
-                LocalFormattedDate(LocalDate.of(2023, 5, 1)),
-                LocalFormattedDate(LocalDate.of(2023, 5, 2)),
-                LocalFormattedDate(LocalDate.of(2023, 5, 3)),
-                LocalFormattedDate(LocalDate.of(2023, 5, 4))
-            ),
-            actualFormattedDates
-        )
+    @Test
+    fun `인원을 증가시키면 count 가 증가된다`() {
+        // given
+        val slotCount = slot<Int>()
+        every { view.updateCount(capture(slotCount)) } answers { nothing }
+
+        // when
+        presenter.plusCount()
+
+        // then
+        assertEquals(3, slotCount.captured)
+    }
+
+    @Test
+    fun `인원을 감소시키면 count 가 증가된다`() {
+        // given
+        val slotCount = slot<Int>()
+        every { view.updateCount(capture(slotCount)) } answers { nothing }
+
+        // when
+        presenter.minusCount()
+
+        // then
+        assertEquals(1, slotCount.captured)
     }
 }

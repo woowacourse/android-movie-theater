@@ -15,8 +15,8 @@ class MovieReservationPresenter(
     val view: MovieReservationContract.View,
     private val theaterMovie: TheaterMovieViewData,
     private val count: Int,
-    private val dateIndex: Int,
-    private val timeIndex: Int
+    private val savedDateIndex: Int,
+    private val savedTimeIndex: Int,
 ) : MovieReservationContract.Presenter {
 
     private val counter = Counter(Count(count))
@@ -31,10 +31,13 @@ class MovieReservationPresenter(
 
     override fun loadDateTimeData() {
         view.initDateSpinner(
-            dateIndex,
-            theaterMovie.movie.date.toList().map { LocalFormattedDate(it) }
+            savedDateIndex,
+            theaterMovie.movie.date.toList().map { LocalFormattedDate(it) },
         )
-        view.initTimeSpinner(timeIndex, theaterMovie.screenTimes.map { LocalFormattedTime(it) })
+        view.initTimeSpinner(
+            savedTimeIndex,
+            theaterMovie.screenTimes.map { LocalFormattedTime(it) },
+        )
     }
 
     override fun plusCount() {
@@ -48,15 +51,15 @@ class MovieReservationPresenter(
     override fun navigateToSeatSelection(
         date: LocalDate,
         time: LocalTime,
-        theaterName: String
+        theaterName: String,
     ) {
         view.navigateToSeatSelection(
             theaterMovie,
             ReservationDetail(
                 LocalDateTime.of(date, time),
                 counter.count.value,
-                theaterName
-            ).toView()
+                theaterName,
+            ).toView(),
         )
     }
 
