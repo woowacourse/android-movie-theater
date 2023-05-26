@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import woowacourse.movie.activity.reservationresult.ReservationResultActivity
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.datasource.ReservationDataSource
+import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.fragment.reservationlist.adapter.ReservationAdapter
 import woowacourse.movie.view.data.ReservationViewData
 import woowacourse.movie.view.data.ReservationsViewData
@@ -22,7 +23,7 @@ class ReservationListFragment : Fragment(), ReservationListContract.View {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         return binding.root
     }
@@ -30,11 +31,14 @@ class ReservationListFragment : Fragment(), ReservationListContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter = ReservationListPresenter(this, ReservationDataSource(this.requireContext()))
-        presenter.initReservationRecyclerView()
+        presenter = ReservationListPresenter(
+            this,
+            ReservationRepository(ReservationDataSource(this.requireContext())),
+        )
+        presenter.loadReservations()
     }
 
-    override fun initReservationRecyclerView(reservationsViewData: ReservationsViewData) {
+    override fun setReservations(reservationsViewData: ReservationsViewData) {
         binding.reservationListRecycler.adapter =
             ReservationAdapter(reservationsViewData) { presenter.onItemClick(it) }
         val decoration =
@@ -45,8 +49,9 @@ class ReservationListFragment : Fragment(), ReservationListContract.View {
     override fun onItemClick(reservationViewData: ReservationViewData) {
         startActivity(
             ReservationResultActivity.from(
-                requireContext(), reservationViewData
-            )
+                requireContext(),
+                reservationViewData,
+            ),
         )
     }
 }

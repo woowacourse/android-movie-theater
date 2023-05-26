@@ -7,12 +7,12 @@ interface ReservationListContract {
 
     interface View {
         var presenter: Presenter
-        fun initReservationRecyclerView(reservationsViewData: ReservationsViewData)
+        fun setReservations(reservationsViewData: ReservationsViewData)
         fun onItemClick(reservationViewData: ReservationViewData)
     }
 
     interface Presenter {
-        fun initReservationRecyclerView()
+        fun loadReservations()
         fun onItemClick(reservationViewData: ReservationViewData)
     }
 }

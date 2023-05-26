@@ -7,17 +7,15 @@ import woowacourse.movie.view.mapper.ReservationMapper.toView
 
 class ReservationListPresenter(
     private val view: ReservationListContract.View,
-    reservationDataSource: woowacourse.movie.domain.dataSource.ReservationDataSource
+    private val reservationRepository: ReservationRepository,
 ) :
     ReservationListContract.Presenter {
 
-    private val reservationRepository = ReservationRepository(reservationDataSource)
-
-    override fun initReservationRecyclerView() {
+    override fun loadReservations() {
         val reservationsViewData =
             reservationRepository.getData().map { reservation -> reservation.toView() }
                 .let { ReservationsViewData(it) }
-        view.initReservationRecyclerView(reservationsViewData)
+        view.setReservations(reservationsViewData)
     }
 
     override fun onItemClick(reservationViewData: ReservationViewData) {
