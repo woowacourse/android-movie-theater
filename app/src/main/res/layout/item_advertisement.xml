@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/advertisement_image"
+    <data>
+
+        <variable
+            name="advertisement"
+            type="woowacourse.movie.data.model.itemmodel.AdvertisementItemModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="96dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/advertisement" />
+        android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/advertisement_image"
+            android:layout_width="match_parent"
+            android:layout_height="96dp"
+            android:contentDescription="@string/advertisement_content_description"
+            android:scaleType="centerCrop"
+            android:src="@drawable/advertisement"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:onClick="@{()->advertisement.onClick.invoke(advertisement.advertisementUiModel)}"
+            tools:src="@drawable/advertisement" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="theaters"
+            type="woowacourse.movie.data.model.itemmodel.TheaterItemModel" />
+
+        <variable
+            name="movies"
+            type="woowacourse.movie.data.model.itemmodel.MovieItemModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="?attr/selectableItemBackground"
+        android:onClick="@{()-> theaters.onClick.invoke(theaters.theaterUiModel)}"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/item_reservation_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{theaters.theaterUiModel.name}"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            tools:text="선릉 극장" />
+
+        <TextView
+            android:id="@+id/item_reservation_date_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="@{@string/theater_time_table_count_format(theaters.theaterUiModel.timeTable.size)}"
+            android:textColor="@color/black_05"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="3개의 상영시간 " />
+
+    </LinearLayout>
+
+</layout>

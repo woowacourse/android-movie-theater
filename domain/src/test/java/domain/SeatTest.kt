@@ -1,6 +1,7 @@
 package domain
 
-import domain.seatPolicy.*
+import domain.seatPolicy.SeatPolicies
+import domain.seatPolicy.SeatRank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

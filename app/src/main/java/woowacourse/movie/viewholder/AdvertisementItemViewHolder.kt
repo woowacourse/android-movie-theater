@@ -1,22 +1,18 @@
 package woowacourse.movie.viewholder
 
-import android.view.View
-import android.widget.ImageView
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.view.model.AdvertisementUiModel
+import woowacourse.movie.data.model.itemmodel.AdvertisementItemModel
+import woowacourse.movie.databinding.ItemAdvertisementBinding
 
-class AdvertisementItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    private val image: ImageView
+class AdvertisementItemViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
+    LayoutInflater.from(parent.context).inflate(R.layout.item_advertisement, parent, false)
+) {
+    private val binding = ItemAdvertisementBinding.bind(itemView)
 
-    init {
-        image = view.findViewById(R.id.advertisement_image)
-    }
-
-    fun bind(advertisementUiModel: AdvertisementUiModel, onClickEvent: (AdvertisementUiModel) -> Unit) {
-        image.setImageResource(advertisementUiModel.image)
-        image.setOnClickListener {
-            onClickEvent(advertisementUiModel)
-        }
+    fun bind(item: AdvertisementItemModel) {
+        binding.advertisement = item
     }
 }

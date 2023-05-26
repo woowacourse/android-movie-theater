@@ -1,8 +1,5 @@
 package domain
 
-import domain.discountPolicy.DisCountPolicies
-import domain.seatPolicy.SeatPolicies
-
 class Tickets(initList: List<Ticket>) {
     private val _list = initList.toMutableList()
     val list: List<Ticket>

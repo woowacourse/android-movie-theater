@@ -1,28 +1,19 @@
 package woowacourse.movie.viewholder
 
-import android.view.View
-import android.widget.TextView
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import domain.Reservation
 import woowacourse.movie.R
-import woowacourse.movie.view.mapper.MovieMapper
-import java.time.format.DateTimeFormatter
+import woowacourse.movie.data.model.itemmodel.ReservationItemModel
+import woowacourse.movie.databinding.ItemReservationBinding
 
-class ReservationViewHolder(itemView: View, val onClickEvent: (Reservation) -> Unit) :
-    RecyclerView.ViewHolder(itemView) {
-    private val dateTimeTextView: TextView
-    private val titleTextView: TextView
+class ReservationViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
+    LayoutInflater.from(parent.context).inflate(R.layout.item_reservation, parent, false)
+) {
+    private val binding = ItemReservationBinding.bind(itemView)
 
-    init {
-        dateTimeTextView = itemView.findViewById(R.id.item_reservation_date_time)
-        titleTextView = itemView.findViewById(R.id.item_reservation_title)
-    }
-
-    fun bind(reservation: Reservation) {
-        itemView.setOnClickListener { onClickEvent(reservation) }
-        val dateFormat =
-            DateTimeFormatter.ofPattern(titleTextView.context.getString(R.string.reservation_date_time_format))
-        dateTimeTextView.text = dateFormat.format(reservation.detail.list[0].date)
-        titleTextView.text = reservation.movie.title
+    fun bind(item: ReservationItemModel) {
+        binding.reservations = item
+        binding.tickets = item.reservationUiModel.tickets
     }
 }

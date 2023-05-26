@@ -29,7 +29,8 @@ class TicketOfficeTest {
                 listOf(
                     makeTestTicket(3, 3), makeTestTicket(3, 4)
                 ),
-            ), peopleCount = 3
+            ),
+            peopleCount = 3
         )
         // when
         ticketOffice.deleteTicket(makeTestTicket(3, 4))
@@ -48,7 +49,8 @@ class TicketOfficeTest {
                     makeTestTicket(3, 3),
                     makeTestTicket(3, 4)
                 )
-            ), peopleCount = 3
+            ),
+            peopleCount = 3
         )
         // when
         val actual = ticketOffice.isAvailableAddTicket()
@@ -66,7 +68,8 @@ class TicketOfficeTest {
                     makeTestTicket(3, 4),
                     makeTestTicket(4, 4)
                 )
-            ), peopleCount = 3
+            ),
+            peopleCount = 3
         )
         // when
         val actual = ticketOffice.isAvailableAddTicket()
@@ -85,7 +88,8 @@ class TicketOfficeTest {
                     makeTestTicket(4, 4),
                     makeTestTicket(2, 4)
                 )
-            ), peopleCount = 3
+            ),
+            peopleCount = 3
         )
         // when
         val actual = ticketOffice.isAvailableAddTicket()
