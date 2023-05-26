@@ -12,10 +12,8 @@ import domain.Theater
 import domain.Ticket
 import domain.Tickets
 import domain.discountPolicy.DisCountPolicies
+import domain.seatPolicy.SeatPolicies
 import woowacourse.movie.data.mock.MockMoviesFactory
-import woowacourse.movie.data.model.mapper.ReservationMapper
-import woowacourse.movie.data.model.mapper.SeatMapper
-import woowacourse.movie.data.model.uimodel.SeatUIModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -44,7 +42,7 @@ class TicketDBHelper(context: Context?) : SQLiteOpenHelper(context, "Ticket.db",
         val reservationDate = reservation.detail.list.first().date
         val formattedDateTime =
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(reservationDate)
-        val seats = ReservationMapper.toUI(reservation).tickets.list.joinToString(",") {
+        val seats = reservation.detail.list.joinToString(",") {
             it.seat.row.toString() + it.seat.col.toString()
         }.trim()
         val values = ContentValues().apply {
@@ -106,11 +104,12 @@ class TicketDBHelper(context: Context?) : SQLiteOpenHelper(context, "Ticket.db",
             cursor.getString(cursor.getColumnIndexOrThrow(TicketContract.SEATS))
         val splitStringSeats = stringSeats.trim().split(",")
         return splitStringSeats.map {
-            SeatMapper.toDomain(SeatUIModel(it.first(), it.substring(SECOND_ELEMENT_INDEX).toInt()))
+            Seat((it.first() - SEAT_ROW_CONVERT_CONVERTER), it.substring(SECOND_ELEMENT_INDEX).toInt(), SeatPolicies())
         }
     }
 
     companion object {
         private const val SECOND_ELEMENT_INDEX = 1
+        private const val SEAT_ROW_CONVERT_CONVERTER = 'A'
     }
 }
