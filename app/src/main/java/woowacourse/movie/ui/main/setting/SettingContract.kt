@@ -4,11 +4,11 @@ interface SettingContract {
     interface View {
         var presenter: Presenter
 
-        fun updateSwitch()
+        fun updateSwitch(pushAlarmState: Boolean)
     }
 
     interface Presenter {
-        fun getNotificationState(): Boolean
+        fun getNotificationState()
 
         fun setSwitchState(isChecked: Boolean)
     }

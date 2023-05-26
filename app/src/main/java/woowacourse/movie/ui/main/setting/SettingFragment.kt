@@ -23,7 +23,7 @@ class SettingFragment : Fragment(), SettingContract.View {
 
     private fun setUpPresenter() {
         SettingRepositoryImpl.init(requireContext())
-        presenter = SettingPresenter(SettingRepositoryImpl)
+        presenter = SettingPresenter(this, SettingRepositoryImpl)
     }
 
     override fun onCreateView(
@@ -40,17 +40,21 @@ class SettingFragment : Fragment(), SettingContract.View {
         super.onViewCreated(view, savedInstanceState)
 
         setUpSwitchClick()
-        updateSwitch()
-    }
-
-    override fun updateSwitch() {
-        binding.settingPushAlarmSwitch.isChecked = presenter.getNotificationState()
+        setUpSwitchState()
     }
 
     private fun setUpSwitchClick() {
         binding.settingPushAlarmSwitch.setOnClickListener {
             presenter.setSwitchState(binding.settingPushAlarmSwitch.isChecked)
         }
+    }
+
+    private fun setUpSwitchState() {
+        presenter.getNotificationState()
+    }
+
+    override fun updateSwitch(pushAlarmState: Boolean) {
+        binding.settingPushAlarmSwitch.isChecked = pushAlarmState
     }
 
     override fun onDestroyView() {
