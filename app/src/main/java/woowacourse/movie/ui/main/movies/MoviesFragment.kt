@@ -59,8 +59,8 @@ class MoviesFragment : Fragment(), MoviesContract.View {
         presenter.setUpClickListener()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
 
         _binding = null
     }

@@ -52,10 +52,11 @@ class ReservationListFragment : Fragment(), ReservationListContract.View {
         presenter.setUpClickListener()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
 
         _binding = null
+
     }
 
     override fun updateReservations() {
