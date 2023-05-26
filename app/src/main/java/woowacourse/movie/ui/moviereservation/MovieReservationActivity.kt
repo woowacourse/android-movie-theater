@@ -95,7 +95,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         presenter.save(outState)
     }
 
-    override fun setCounterText(count: Int) {
+    override fun setCounterText(count: String) {
         binding.tvReservationCount.text = count.toString()
     }
 

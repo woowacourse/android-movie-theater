@@ -13,11 +13,11 @@ class MovieReservationPresenter(
 ) : MovieReservationContract.Presenter {
 
     override fun add() {
-        view.setCounterText(counter.add())
+        view.setCounterText(counter.add().toString())
     }
 
     override fun sub() {
-        view.setCounterText(counter.sub())
+        view.setCounterText(counter.sub().toString())
     }
 
     override fun getCount(): Int {
@@ -26,7 +26,7 @@ class MovieReservationPresenter(
 
     override fun setCount(savedInstanceState: Bundle?) {
         counter.load(savedInstanceState)
-        view.setCounterText(counter.count)
+        view.setCounterText(counter.toString())
     }
 
     override fun setPicker(movie: MovieUIModel, savedInstanceState: Bundle?) {

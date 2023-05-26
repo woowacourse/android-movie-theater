@@ -8,7 +8,7 @@ interface MovieReservationContract {
     interface View {
         var presenter: Presenter
 
-        fun setCounterText(count: Int)
+        fun setCounterText(count: String)
     }
     interface Presenter {
         fun add()

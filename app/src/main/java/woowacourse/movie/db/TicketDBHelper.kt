@@ -106,7 +106,11 @@ class TicketDBHelper(context: Context?) : SQLiteOpenHelper(context, "Ticket.db",
             cursor.getString(cursor.getColumnIndexOrThrow(TicketContract.SEATS))
         val splitStringSeats = stringSeats.trim().split(",")
         return splitStringSeats.map {
-            SeatMapper.toDomain(SeatUIModel(it.first(), it.substring(1).toInt()))
+            SeatMapper.toDomain(SeatUIModel(it.first(), it.substring(SECOND_ELEMENT_INDEX).toInt()))
         }
+    }
+
+    companion object {
+        private const val SECOND_ELEMENT_INDEX = 1
     }
 }

@@ -7,7 +7,7 @@ import woowacourse.movie.repository.MoviesRepository
 
 class MoviesPresenter(
     private val view: MoviesContract.View,
-    private var repository: MoviesRepository
+    private val repository: MoviesRepository
 ) : MoviesContract.Presenter {
     override fun getMovies(): Movies = repository.movies
 
