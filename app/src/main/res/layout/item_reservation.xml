@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="tickets"
+            type="woowacourse.movie.data.model.uimodel.TicketsUIModel" />
+        
+        <variable
             name="reservations"
             type="woowacourse.movie.data.model.itemmodel.ReservationItemModel" />
     </data>
@@ -24,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:text="@{reservations.reservationUiModel.tickets.list.get(0).date.toString()}"
+            android:text="@{tickets.list.get(0).date.toString()}"
             android:textColor="@color/black"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"

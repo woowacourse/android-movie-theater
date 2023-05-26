@@ -14,5 +14,6 @@ class ReservationViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
 
     fun bind(item: ReservationItemModel) {
         binding.reservations = item
+        binding.tickets = item.reservationUiModel.tickets
     }
 }
