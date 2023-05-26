@@ -46,4 +46,6 @@
 
     <string name="theater_name">%s 극장</string>
     <string name="theater_times_count">%d개의 상영 시간</string>
+    <string name="screen_text">SCREEN</string>
+    <string name="check_text">확인</string>
 </resources>

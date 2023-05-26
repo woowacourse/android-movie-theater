@@ -6,9 +6,11 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.activity.reservationresult.ReservationResultActivity
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
+import woowacourse.movie.datasource.ReservationDataSource
 import woowacourse.movie.service.AlarmMaker
 import woowacourse.movie.view.data.MovieViewData
 import woowacourse.movie.view.data.PriceViewData
@@ -16,7 +18,6 @@ import woowacourse.movie.view.data.ReservationDetailViewData
 import woowacourse.movie.view.data.ReservationViewData
 import woowacourse.movie.view.data.SeatsViewData
 import woowacourse.movie.view.error.ActivityError.finishWithError
-import woowacourse.movie.view.error.ViewError
 import woowacourse.movie.view.getSerializable
 import woowacourse.movie.view.widget.SaveStateSeats
 import woowacourse.movie.view.widget.SeatTableLayout
@@ -24,34 +25,47 @@ import java.time.LocalDateTime
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     override lateinit var presenter: SeatSelectionContract.Presenter
+    lateinit var movie: MovieViewData
     private val binding: ActivitySeatSelectionBinding by lazy {
-        ActivitySeatSelectionBinding.inflate(layoutInflater)
+        DataBindingUtil.setContentView(this, R.layout.activity_seat_selection)
     }
 
     private val seatTableLayout: SeatTableLayout by lazy {
         SeatTableLayout.from(
-            binding.seatSelectionTable, SEAT_ROW_COUNT, SEAT_COLUMN_COUNT
+            binding.seatSelectionTable,
+            SEAT_ROW_COUNT,
+            SEAT_COLUMN_COUNT,
+        )
+    }
+    private val saveStateSeats: SaveStateSeats by lazy {
+        SaveStateSeats(
+            SEAT_TABLE_LAYOUT_STATE_KEY,
+            seatTableLayout,
         )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        presenter = SeatSelectionPresenter(
-            this, SaveStateSeats(SEAT_TABLE_LAYOUT_STATE_KEY, seatTableLayout), this
-        )
-        initSeatSelectionView(savedInstanceState)
+        val movie: MovieViewData =
+            intent.extras?.getSerializable<MovieViewData>(MovieViewData.MOVIE_EXTRA_NAME)
+                ?: return finishWithError(MovieViewData.MOVIE_EXTRA_NAME)
+        initPresenter()
+        binding.movie = movie
+        initSeatSelectionView(savedInstanceState, movie)
     }
 
-    private fun initSeatSelectionView(savedInstanceState: Bundle?) {
-        val movie = getIntentMovieData() ?: return finishWithError(
-            ViewError.MissingExtras(
-                MovieViewData.MOVIE_EXTRA_NAME
-            )
+    private fun initPresenter() {
+        presenter = SeatSelectionPresenter(
+            this,
+            ReservationDataSource(this),
         )
-        val reservationDetail = getIntentReservationData() ?: return finishWithError(
-            ViewError.MissingExtras(ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME)
-        )
+    }
+
+    private fun initSeatSelectionView(savedInstanceState: Bundle?, movie: MovieViewData) {
+        val reservationDetail =
+            intent.extras?.getSerializable<ReservationDetailViewData>(ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME)
+                ?: return finishWithError(ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME)
 
         initMovieView(movie)
         initPrice(PriceViewData())
@@ -62,16 +76,10 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         presenter.initPrice(priceViewData)
     }
 
-    private fun getIntentMovieData(): MovieViewData? =
-        intent.extras?.getSerializable<MovieViewData>(MovieViewData.MOVIE_EXTRA_NAME)
-
-    private fun getIntentReservationData(): ReservationDetailViewData? =
-        intent.extras?.getSerializable<ReservationDetailViewData>(ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME)
-
     private fun initSeatTableLayout(
         movie: MovieViewData,
         reservationDetail: ReservationDetailViewData,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         initReserveButton(seatTableLayout, movie, reservationDetail)
         makeBackButton()
@@ -83,7 +91,14 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         seatTableLayout.seatSelectCondition = { seatsSize ->
             seatsSize < reservationDetail.peopleCount
         }
-        presenter.loadSeat(savedInstanceState)
+        restoreCheckedSeats(savedInstanceState)
+    }
+
+    private fun restoreCheckedSeats(savedInstanceState: Bundle?) {
+        val seatsViewData: SeatsViewData = saveStateSeats.load(savedInstanceState)
+        seatsViewData.seats.forEach {
+            seatTableLayout.findSeatViewByRowAndColumn(it.row, it.column)?.callOnClick()
+        }
     }
 
     private fun makeBackButton() {
@@ -91,7 +106,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun onSelectSeat(seats: SeatsViewData, reservationDetail: ReservationDetailViewData) {
-        presenter.setSeatsPrice(seats, reservationDetail)
+        presenter.updateSeatsPrice(seats, reservationDetail)
         setReservationButtonState(seats.seats.size, reservationDetail.peopleCount)
     }
 
@@ -105,7 +120,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     private fun setReservationButtonState(
         seatsSize: Int,
-        peopleCount: Int
+        peopleCount: Int,
     ) {
         binding.seatSelectionReserveButton.isEnabled = seatsSize == peopleCount
     }
@@ -113,7 +128,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private fun initReserveButton(
         seatTableLayout: SeatTableLayout,
         movie: MovieViewData,
-        reservationDetail: ReservationDetailViewData
+        reservationDetail: ReservationDetailViewData,
     ) {
         binding.seatSelectionReserveButton.setOnClickListener {
             onClickReserveButton(seatTableLayout, movie, reservationDetail)
@@ -124,7 +139,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private fun onClickReserveButton(
         seatTableLayout: SeatTableLayout,
         movie: MovieViewData,
-        reservationDetail: ReservationDetailViewData
+        reservationDetail: ReservationDetailViewData,
     ) {
         AlertDialog.Builder(this).setTitle(getString(R.string.seat_selection_alert_title))
             .setMessage(getString(R.string.seat_selection_alert_message))
@@ -138,24 +153,21 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private fun reserveMovie(
         seatTableLayout: SeatTableLayout,
         movie: MovieViewData,
-        reservationDetail: ReservationDetailViewData
+        reservationDetail: ReservationDetailViewData,
     ) {
         val seats = seatTableLayout.selectedSeats()
         presenter.reserveMovie(seats, movie, reservationDetail)
     }
 
     override fun startReservationResultActivity(
-        reservation: ReservationViewData
+        reservation: ReservationViewData,
     ) {
         ReservationResultActivity.from(
-            this, reservation
+            this,
+            reservation,
         ).run {
             startActivity(this)
         }
-    }
-
-    override fun setSeatsClick(row: Int, column: Int) {
-        seatTableLayout.findSeatViewByRowAndColumn(row, column)?.callOnClick()
     }
 
     private fun initMovieView(movie: MovieViewData) {
@@ -164,7 +176,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        presenter.saveSeat(outState)
+        saveStateSeats.save(outState)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -185,13 +197,13 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         fun from(
             context: Context,
             movie: MovieViewData,
-            reservationDetailViewData: ReservationDetailViewData
+            reservationDetailViewData: ReservationDetailViewData,
         ): Intent {
             return Intent(context, SeatSelectionActivity::class.java).apply {
                 putExtra(MovieViewData.MOVIE_EXTRA_NAME, movie)
                 putExtra(
                     ReservationDetailViewData.RESERVATION_DETAIL_EXTRA_NAME,
-                    reservationDetailViewData
+                    reservationDetailViewData,
                 )
             }
         }
