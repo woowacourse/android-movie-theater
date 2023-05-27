@@ -5,8 +5,8 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.feature.common.adapter.CommonListAdapter
 import woowacourse.movie.feature.common.itemModel.ItemModel
+import woowacourse.movie.feature.movielist.MovieListAdapter
 import woowacourse.movie.feature.reservation.confirm.TicketsConfirmActivity
 import woowacourse.movie.model.TicketsState
 
@@ -14,7 +14,7 @@ class ReservationListFragment :
     Fragment(R.layout.fragment_reservation_list), ReservationListContract.View {
 
     private lateinit var reservationRecyclerView: RecyclerView
-    private lateinit var adapter: CommonListAdapter
+    private lateinit var adapter: MovieListAdapter
     private lateinit var presenter: ReservationListContract.Presenter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,7 +35,7 @@ class ReservationListFragment :
 
     private fun init(view: View) {
         reservationRecyclerView = view.findViewById(R.id.reservation_rv)
-        adapter = CommonListAdapter()
+        adapter = MovieListAdapter()
         presenter = ReservationListPresenter(this)
         reservationRecyclerView.adapter = adapter
     }

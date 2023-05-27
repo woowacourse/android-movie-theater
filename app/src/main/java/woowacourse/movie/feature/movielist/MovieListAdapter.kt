@@ -1,4 +1,4 @@
-package woowacourse.movie.feature.common.adapter
+package woowacourse.movie.feature.movielist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,7 +13,7 @@ import woowacourse.movie.feature.common.viewHolder.MovieViewHolder
 import woowacourse.movie.feature.common.viewHolder.TheaterViewHolder
 import woowacourse.movie.feature.common.viewHolder.TicketsViewHolder
 
-class CommonListAdapter(
+class MovieListAdapter(
     private var items: List<ItemModel> = listOf()
 ) : RecyclerView.Adapter<ItemViewHolder>() {
 

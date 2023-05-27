@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import woowacourse.movie.data.AdvRepository
@@ -12,7 +11,6 @@ import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.feature.adv.AdvDetailActivity
 import woowacourse.movie.feature.bottomseat.TheaterBottomSheetFragment
-import woowacourse.movie.feature.common.adapter.CommonListAdapter
 import woowacourse.movie.feature.common.itemModel.ItemModel
 import woowacourse.movie.feature.reservation.reserve.MovieDetailActivity
 import woowacourse.movie.model.AdvState
@@ -22,7 +20,7 @@ import woowacourse.movie.util.getParcelableCompat
 
 class MovieListFragment : Fragment(), MovieListContract.View {
 
-    private lateinit var adapter: CommonListAdapter
+    private lateinit var adapter: MovieListAdapter
 
     private var _binding: FragmentMovieListBinding? = null
     private val binding: FragmentMovieListBinding
@@ -56,7 +54,7 @@ class MovieListFragment : Fragment(), MovieListContract.View {
             MovieRepository,
             AdvRepository
         )
-        adapter = CommonListAdapter()
+        adapter = MovieListAdapter()
         presenter.loadMovieAndAdvItems() // 뷰가 그려질때마다 데이터 다시 불러옴. 캐싱 적용 안함
         binding.rvMain.adapter = adapter
     }
