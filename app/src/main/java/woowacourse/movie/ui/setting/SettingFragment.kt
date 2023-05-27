@@ -102,8 +102,4 @@ class SettingFragment : Fragment(), SettingContract.View {
     override fun cancelAlarms(ticket: MovieTicketModel) {
         reservationAlarmManager.cancelAlarm(ticket)
     }
-
-    companion object {
-        const val KEY_SWITCH = "switch"
-    }
 }
