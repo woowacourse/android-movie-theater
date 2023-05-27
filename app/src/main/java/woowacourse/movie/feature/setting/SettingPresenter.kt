@@ -8,22 +8,22 @@ class SettingPresenter(
 ) : SettingContract.Presenter {
 
     override fun setMovieReminderChecked(hasPermission: Boolean) {
-        view.setMovieReminderChecked(userSetting.enabled)
+        view.setMovieReminderChecked(userSetting.isEnable)
 
         if (!hasPermission) {
-            userSetting.enabled = false
+            userSetting.isEnable = false
             view.setMovieReminderChecked(false)
             view.requestPermission()
         }
     }
 
     override fun changeMovieReminderChecked(hasPermission: Boolean, switchChecked: Boolean) {
-        if (!userSetting.enabled && !hasPermission) {
+        if (!userSetting.isEnable && !hasPermission) {
             view.setMovieReminderChecked(false)
             view.requestPermission()
             return
         }
 
-        userSetting.enabled = switchChecked
+        userSetting.isEnable = switchChecked
     }
 }

@@ -24,7 +24,7 @@ class MovieReminderReceiver : BroadcastReceiver() {
         val movieReminderSetting: MovieReminderSetting = MovieReminderSetting.getInstance().init(context)
         val tickets: TicketsState = intent?.extras?.getParcelableCompat(KEY_TICKETS) ?: return
 
-        if (movieReminderSetting.enabled) {
+        if (movieReminderSetting.isEnable) {
             val ticketNotificationState = TicketNotificationState(
                 contentTitle = context.getString(R.string.alarm_receiver_notification_title),
                 contentText = context.getString(R.string.alarm_receiver_notification_text).format(

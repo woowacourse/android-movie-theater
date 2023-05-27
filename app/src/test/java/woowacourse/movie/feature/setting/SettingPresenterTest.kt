@@ -29,7 +29,7 @@ internal class SettingPresenterTest {
         // given
         val slot = slot<Boolean>()
 
-        every { alarmSetting.enabled } returns true
+        every { alarmSetting.isEnable } returns true
         every { view.setMovieReminderChecked(capture(slot)) } just Runs
 
         // when

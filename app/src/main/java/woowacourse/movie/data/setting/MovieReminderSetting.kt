@@ -14,7 +14,7 @@ class MovieReminderSetting private constructor() : AlarmSetting {
     private lateinit var context: Context
     private lateinit var prefs: SharedPreferences
 
-    override var enabled: Boolean
+    override var isEnable: Boolean
         get() = prefs.getBoolean(MOVIE_REMINDER_NOTIFICATION_KEY, false)
         set(value) = prefs.edit().putBoolean(MOVIE_REMINDER_NOTIFICATION_KEY, value).apply()
 
