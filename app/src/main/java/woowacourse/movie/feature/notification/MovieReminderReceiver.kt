@@ -13,7 +13,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
-import woowacourse.movie.data.setting.MovieReminderSetting
+import woowacourse.movie.data.setting.AlarmSetting
+import woowacourse.movie.data.setting.AlarmSetting.Companion.MOVIE_REMINDER
 import woowacourse.movie.model.TicketNotificationState
 import woowacourse.movie.model.TicketsState
 import woowacourse.movie.util.getParcelableCompat
@@ -21,7 +22,7 @@ import woowacourse.movie.util.getParcelableCompat
 class MovieReminderReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent?) {
-        val movieReminderSetting: MovieReminderSetting = MovieReminderSetting.getInstance().init(context)
+        val movieReminderSetting: AlarmSetting = AlarmSetting.getInstance(context, MOVIE_REMINDER)
         val tickets: TicketsState = intent?.extras?.getParcelableCompat(KEY_TICKETS) ?: return
 
         if (movieReminderSetting.isEnable) {
@@ -34,8 +35,6 @@ class MovieReminderReceiver : BroadcastReceiver() {
             )
             sendNotification(context, ticketNotificationState)
         }
-
-        movieReminderSetting.releaseInstance()
     }
 
     /**

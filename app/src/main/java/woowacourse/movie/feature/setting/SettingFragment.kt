@@ -7,15 +7,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.data.setting.MovieReminderSetting
+import woowacourse.movie.data.setting.AlarmSetting
+import woowacourse.movie.data.setting.AlarmSetting.Companion.MOVIE_REMINDER
 import woowacourse.movie.feature.Toaster
 import woowacourse.movie.util.hasPermission
 import woowacourse.movie.util.requestPermission
 
 class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.View {
 
-    private val movieReminderSetting by lazy {
-        MovieReminderSetting.getInstance().init(requireContext())
+    private val movieReminderSetting: AlarmSetting by lazy {
+        AlarmSetting.getInstance(requireContext(), MOVIE_REMINDER)
     }
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
@@ -37,11 +38,6 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
         super.onResume()
         val hasPermission: Boolean = hasPermission(requireActivity(), Manifest.permission.POST_NOTIFICATIONS)
         presenter.setMovieReminderChecked(hasPermission)
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        movieReminderSetting.releaseInstance()
     }
 
     private fun init(view: View) {

@@ -51,7 +51,7 @@ class MovieListFragment : Fragment(), MovieListContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = MoviesPresenter(
+        presenter = MovieListPresenter(
             this,
             MovieRepository,
             AdvRepository
