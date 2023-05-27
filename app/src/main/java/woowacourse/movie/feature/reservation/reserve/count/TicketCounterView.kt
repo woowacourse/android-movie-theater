@@ -22,16 +22,10 @@ class TicketCounterView(
     }
 
     override fun showLimitMin() {
-        Toaster.showToast(
-            binding.root.context,
-            binding.root.context.getString(R.string.error_reservation_min_count)
-        )
+        Toaster.showToast(binding.root.context, binding.root.context.getString(R.string.error_reservation_min_count))
     }
 
     override fun showLimitMax() {
-        Toaster.showToast(
-            binding.root.context,
-            binding.root.context.getString(R.string.error_reservation_max_count)
-        )
+        Toaster.showToast(binding.root.context, binding.root.context.getString(R.string.error_reservation_max_count))
     }
 }

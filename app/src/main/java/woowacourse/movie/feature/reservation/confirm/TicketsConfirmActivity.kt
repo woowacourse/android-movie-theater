@@ -13,23 +13,27 @@ import woowacourse.movie.model.TicketsState
 import woowacourse.movie.util.getParcelableExtraCompat
 import woowacourse.movie.util.keyError
 
-class TicketsConfirmActivity : BackKeyActionBarActivity() {
+class TicketsConfirmActivity : BackKeyActionBarActivity(), TicketsConfirmContract.View {
 
-    private lateinit var binding: ActivityReservationConfirmBinding
-    private lateinit var tickets: TicketsState
+    private var _binding: ActivityReservationConfirmBinding? = null
+    private val binding get() = _binding!!
+
+    private val presenter: TicketsConfirmContract.Presenter by lazy {
+        val tickets: TicketsState? = intent.getParcelableExtraCompat(KEY_TICKETS)
+        TicketConfirmPresenter(this, tickets)
+    }
 
     override fun onCreateView(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_reservation_confirm)
         init()
-        setContents()
     }
 
-    private fun init() {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_reservation_confirm)
-        tickets = intent.getParcelableExtraCompat(KEY_TICKETS) ?: return keyError(KEY_TICKETS)
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
-    private fun setContents() {
+    override fun setViewContents(tickets: TicketsState) {
         binding.tickets = tickets
         binding.reservationCountAndSeat.text = getString(
             R.string.person_count_and_seat_theater,
@@ -40,6 +44,16 @@ class TicketsConfirmActivity : BackKeyActionBarActivity() {
         binding.reservationDate.text = DateTimeFormatters.convertToDateTime(tickets.dateTime)
         binding.reservationMoney.text =
             DecimalFormatters.convertToMoneyFormat(tickets.totalDiscountedMoneyState)
+    }
+
+    override fun showContentError() {
+        keyError(KEY_TICKETS)
+        finish()
+    }
+
+    private fun init() {
+        _binding = DataBindingUtil.setContentView(this, R.layout.activity_reservation_confirm)
+        presenter.loadContents()
     }
 
     companion object {
