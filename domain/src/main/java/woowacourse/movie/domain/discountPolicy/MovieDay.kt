@@ -1,7 +1,7 @@
 package woowacourse.movie.domain.discountPolicy
 
-import woowacourse.movie.domain.Price
-import woowacourse.movie.domain.ReservationDetail
+import woowacourse.movie.domain.model.Price
+import woowacourse.movie.domain.model.ReservationDetail
 
 object MovieDay : DiscountPolicy {
     private val MOVIE_DAY = listOf(10, 20, 30)

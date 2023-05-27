@@ -1,6 +1,6 @@
 package woowacourse.movie.view.mapper
 
-import woowacourse.movie.domain.DateRange
+import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.view.data.DateRangeViewData
 
 object DateRangeMapper : Mapper<DateRange, DateRangeViewData> {

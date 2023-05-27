@@ -1,6 +1,6 @@
 package woowacourse.movie.view.mapper
 
-import woowacourse.movie.domain.Advertisement
+import woowacourse.movie.domain.model.Advertisement
 import woowacourse.movie.view.data.AdvertisementViewData
 import woowacourse.movie.view.mapper.ImageMapper.toDomain
 import woowacourse.movie.view.mapper.ImageMapper.toView

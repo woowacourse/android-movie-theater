@@ -25,9 +25,9 @@
 
         </receiver>
 
-        <activity android:name=".activity.SeatSelectionActivity" />
-        <activity android:name=".activity.ReservationResultActivity" />
-        <activity android:name=".activity.MovieReservationActivity" />
+        <activity android:name=".activity.seatselection.SeatSelectionActivity" />
+        <activity android:name=".activity.reservationresult.ReservationResultActivity" />
+        <activity android:name=".activity.moviereservation.MovieReservationActivity" />
         <activity
             android:name=".activity.MainActivity"
             android:exported="true">

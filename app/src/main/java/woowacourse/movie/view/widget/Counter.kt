@@ -1,29 +1,19 @@
 package woowacourse.movie.view.widget
 
-import android.widget.Button
-import android.widget.TextView
-import woowacourse.movie.domain.Count
+import woowacourse.movie.domain.model.Count
 
 class Counter(
-    minusButton: Button,
-    plusButton: Button,
-    private val text: TextView,
-    var count: Count
+    private var _count: Count
 ) {
-    init {
-        minusButton.setOnClickListener {
-            count -= COUNT_FACTOR
-            applyToView()
-        }
-
-        plusButton.setOnClickListener {
-            count += COUNT_FACTOR
-            applyToView()
-        }
+    val count get() = _count
+    fun add(): Int {
+        _count += COUNT_FACTOR
+        return _count.value
     }
 
-    fun applyToView() {
-        text.text = count.value.toString()
+    fun minus(): Int {
+        _count -= COUNT_FACTOR
+        return _count.value
     }
 
     companion object {

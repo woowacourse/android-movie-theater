@@ -17,9 +17,10 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.domain.DateRange
-import woowacourse.movie.domain.Image
-import woowacourse.movie.domain.Movie
+import woowacourse.movie.activity.moviereservation.MovieReservationActivity
+import woowacourse.movie.domain.model.DateRange
+import woowacourse.movie.domain.model.Image
+import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.view.data.LocalFormattedDate
 import woowacourse.movie.view.data.LocalFormattedTime
 import woowacourse.movie.view.mapper.MovieMapper.toView
@@ -85,6 +86,7 @@ class MovieReservationActivityTest {
         val count = 2
         onView(withId(R.id.movie_reservation_people_count)).check(matches(withText(count.toString())))
     }
+
     @Test
     fun 카운터의_빼기_버튼을_누르면_카운트가_1_감소한다() {
         // given
@@ -97,6 +99,7 @@ class MovieReservationActivityTest {
         val count = 1
         onView(withId(R.id.movie_reservation_people_count)).check(matches(withText(count.toString())))
     }
+
     @Test
     fun 카운터의_빼기_버튼을_눌러도_값이_1_미만으로_감소하지_않는다() {
         // given

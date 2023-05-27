@@ -5,19 +5,19 @@ import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import woowacourse.movie.activity.SeatSelectionActivity
-import woowacourse.movie.fragment.SettingFragment
+import woowacourse.movie.activity.seatselection.SeatSelectionActivity
+import woowacourse.movie.domain.setting.SettingRepository
+import woowacourse.movie.fragment.setting.SettingFragment
 import woowacourse.movie.view.data.ReservationViewData
 import woowacourse.movie.view.error.BroadcastReceiverError.returnWithError
 import woowacourse.movie.view.error.ViewError
 import woowacourse.movie.view.getSerializable
-import woowacourse.movie.view.setting.Setting
-import woowacourse.movie.view.setting.SharedSetting
+import woowacourse.movie.view.setting.SharedSettingRepository
 
 class ReservationAlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        val setting: Setting = SharedSetting(context)
-        if (intent.action == SeatSelectionActivity.ACTION_ALARM && setting.getValue(
+        val settingRepository: SettingRepository = SharedSettingRepository(context)
+        if (intent.action == SeatSelectionActivity.ACTION_ALARM && settingRepository.getValue(
                 SettingFragment.SETTING_NOTIFICATION
             )
         ) {

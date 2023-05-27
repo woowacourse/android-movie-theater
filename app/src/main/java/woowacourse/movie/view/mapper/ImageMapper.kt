@@ -1,7 +1,7 @@
 package woowacourse.movie.view.mapper
 
 import woowacourse.movie.R
-import woowacourse.movie.domain.Image
+import woowacourse.movie.domain.model.Image
 import woowacourse.movie.view.data.ImageViewData
 
 object ImageMapper : Mapper<Image, ImageViewData> {

@@ -1,7 +1,7 @@
 package woowacourse.movie.view.mapper
 
-import woowacourse.movie.domain.Price
-import woowacourse.movie.domain.Reservation
+import woowacourse.movie.domain.model.Price
+import woowacourse.movie.domain.model.Reservation
 import woowacourse.movie.view.data.PriceViewData
 import woowacourse.movie.view.data.ReservationViewData
 import woowacourse.movie.view.mapper.MovieMapper.toDomain

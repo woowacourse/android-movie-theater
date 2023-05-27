@@ -5,8 +5,8 @@ import org.junit.Test
 import org.junit.experimental.runners.Enclosed
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
-import woowacourse.movie.domain.Price
-import woowacourse.movie.domain.ReservationDetail
+import woowacourse.movie.domain.model.Price
+import woowacourse.movie.domain.model.ReservationDetail
 import java.time.LocalDateTime
 
 @RunWith(Enclosed::class)

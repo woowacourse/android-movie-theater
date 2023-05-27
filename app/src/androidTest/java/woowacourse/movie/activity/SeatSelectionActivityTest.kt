@@ -17,10 +17,11 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.domain.DateRange
-import woowacourse.movie.domain.Image
-import woowacourse.movie.domain.Movie
-import woowacourse.movie.domain.ReservationDetail
+import woowacourse.movie.activity.seatselection.SeatSelectionActivity
+import woowacourse.movie.domain.model.DateRange
+import woowacourse.movie.domain.model.Image
+import woowacourse.movie.domain.model.Movie
+import woowacourse.movie.domain.model.ReservationDetail
 import woowacourse.movie.view.mapper.MovieMapper.toView
 import woowacourse.movie.view.mapper.ReservationDetailMapper.toView
 import java.time.LocalDate

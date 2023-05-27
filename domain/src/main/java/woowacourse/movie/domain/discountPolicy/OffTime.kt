@@ -1,7 +1,7 @@
 package woowacourse.movie.domain.discountPolicy
 
-import woowacourse.movie.domain.Price
-import woowacourse.movie.domain.ReservationDetail
+import woowacourse.movie.domain.model.Price
+import woowacourse.movie.domain.model.ReservationDetail
 
 object OffTime : DiscountPolicy {
     private const val EARLY_TIME = 11
