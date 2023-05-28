@@ -12,7 +12,7 @@ class ReservationContract {
     }
 
     interface Presenter {
-        fun setAdapter()
+        fun initAdapter()
         fun clickItem(position: Int)
         fun checkDataExisting()
     }

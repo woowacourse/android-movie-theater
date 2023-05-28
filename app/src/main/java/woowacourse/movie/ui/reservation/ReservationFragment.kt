@@ -31,19 +31,10 @@ class ReservationFragment : Fragment(), ReservationContract.View {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initAdapter()
-    }
-
     override fun onResume() {
         super.onResume()
-        presenter.setAdapter()
+        presenter.initAdapter()
         presenter.checkDataExisting()
-    }
-
-    private fun initAdapter() {
-        presenter.setAdapter()
     }
 
     override fun setReservationViewAdapter(tickets: List<MovieTicketModel>) {

@@ -7,7 +7,7 @@ class ReservationPresenter(
     private val repository: ReservationRepository,
 ) : ReservationContract.Presenter {
 
-    override fun setAdapter() {
+    override fun initAdapter() {
         view.setReservationViewAdapter(repository.getData())
     }
 
