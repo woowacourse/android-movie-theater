@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.settings
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +9,11 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.model.data.local.SettingPreference
+import woowacourse.movie.model.data.storage.SettingStorage
 
-class SettingsFragment() : Fragment(), SettingsContract.View {
+class SettingsFragment(
+    private val getSettingStorage: (Context) -> SettingStorage = { SettingPreference(it) }
+) : Fragment(), SettingsContract.View {
 
     override lateinit var presenter: SettingsContract.Presenter
     private val notificationSwitch by lazy { requireActivity().findViewById<SwitchCompat>(R.id.switchPushPermission) }
@@ -29,7 +33,7 @@ class SettingsFragment() : Fragment(), SettingsContract.View {
     }
 
     private fun initPresenter() {
-        presenter = SettingsPresenter(this, SettingPreference(requireContext()))
+        presenter = SettingsPresenter(this, getSettingStorage(requireContext()))
     }
 
     private fun initNotificationSwitch() {
