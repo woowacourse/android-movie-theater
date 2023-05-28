@@ -89,7 +89,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         for (row in 1..ROW_SIZE) {
             val tableRow = TableRow(this)
             for (column in 1..COLUMN_SIZE) {
-                tableRow.addView(getSeatView(row, column))
+                presenter.addSeat(tableRow, row, column)
             }
             seatTable.addView(tableRow)
         }
@@ -105,25 +105,28 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         }
     }
 
-    private fun getSeatView(row: Int, column: Int): View {
-        val seat = SeatModel(row, column)
-        return seat.getView(
-            this,
-            presenter.isSelected(seat),
-        ) {
-            clickSeat(seat, this)
-        }
+    override fun initSeat(tableRow: TableRow, seat: SeatModel, isSelected: Boolean) {
+        tableRow.addView(
+            seat.getView(
+                this,
+                isSelected,
+            ) {
+                clickSeat(seat, this)
+            },
+        )
     }
 
     private fun clickSeat(seat: SeatModel, seatView: View) {
-        if (!canSelectMoreSeat(seatView)) {
-            showToast("이미 인원수만큼 좌석이 선택되었습니다")
-            return
-        }
+        presenter.clickSeat(seat, seatView)
+    }
 
-        seatView.isSelected = !seatView.isSelected
-        presenter.clickSeat(seat, seatView.isSelected)
-        updateBackgroundColor(seatView)
+    override fun showErrorMessage() {
+        showToast("이미 인원수만큼 좌석이 선택되었습니다")
+    }
+
+    override fun selectSeat(view: View) {
+        view.isSelected = !view.isSelected
+        updateBackgroundColor(view)
     }
 
     private fun makeDialog(): AlertDialog.Builder = AlertDialog.Builder(this)
@@ -136,8 +139,8 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 peopleCount = presenter.peopleCountModel,
                 seats = presenter.selectedSeatsModel,
             ).apply {
-                setReservationData(this)
-                makeAlarm()
+                presenter.addReservation(this)
+                presenter.makeAlarm(this)
                 moveToTicketActivity(this)
             }
         }
@@ -146,8 +149,9 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         }
         .setCancelable(false)
 
-    private fun canSelectMoreSeat(seatView: View) =
-        !(!seatView.isSelected && presenter.isSelectionDone())
+    override fun makeAlarm(ticket: MovieTicketModel) {
+        reservationAlarmManager.makeAlarm(ticket)
+    }
 
     private fun updateBackgroundColor(seatView: View) {
         when (seatView.isSelected) {
@@ -166,16 +170,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     override fun updateButtonEnablement(isSelectionDone: Boolean) {
         binding.seatConfirmButton.isEnabled = isSelectionDone
-    }
-
-    private fun setReservationData(ticket: MovieTicketModel) {
-        presenter.addReservation(ticket)
-    }
-
-    private fun MovieTicketModel.makeAlarm() {
-        if (presenter.isAlarmSwitchOn()) {
-            reservationAlarmManager.makeAlarm(this)
-        }
     }
 
     private fun moveToTicketActivity(ticket: MovieTicketModel) {

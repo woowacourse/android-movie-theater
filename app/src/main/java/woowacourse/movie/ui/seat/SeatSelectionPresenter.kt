@@ -1,5 +1,7 @@
 package woowacourse.movie.ui.seat
 
+import android.view.View
+import android.widget.TableRow
 import woowacourse.movie.data.alarm.AlarmStateRepository
 import woowacourse.movie.data.reservation.ReservationRepository
 import woowacourse.movie.domain.seat.SelectedSeats
@@ -20,7 +22,7 @@ class SeatSelectionPresenter(
     val peopleCountModel: PeopleCountModel,
 ) : SeatSelectionContract.Presenter {
     private var selectedSeats = SelectedSeats()
-    override val selectedSeatsModel: SelectedSeatsModel
+    val selectedSeatsModel: SelectedSeatsModel
         get() = selectedSeats.toModel()
 
     init {
@@ -33,12 +35,19 @@ class SeatSelectionPresenter(
         updateView(selectedSeats.getAllPrice(movieTime), isSelectionDone())
     }
 
-    override fun isAlarmSwitchOn(): Boolean {
-        return alarmStateRepository.getData()
+    override fun addSeat(tableRow: TableRow, row: Int, column: Int) {
+        val seat = SeatModel(row, column)
+        view.initSeat(tableRow, seat, selectedSeats.contains(seat.toDomain()))
     }
 
-    override fun clickSeat(seat: SeatModel, isSelected: Boolean) {
-        selectedSeats = when (isSelected) {
+    override fun clickSeat(seat: SeatModel, seatView: View) {
+        val isSelected = seatView.isSelected
+        if (!isSelected && isSelectionDone()) {
+            view.showErrorMessage()
+            return
+        }
+
+        selectedSeats = when (!isSelected) {
             true -> {
                 selectedSeats.add(seat.toDomain())
             }
@@ -47,6 +56,7 @@ class SeatSelectionPresenter(
             }
         }
 
+        view.selectSeat(seatView)
         updateView(selectedSeats.getAllPrice(movieTime), isSelectionDone())
     }
 
@@ -54,16 +64,19 @@ class SeatSelectionPresenter(
         reservationRepository.saveData(ticket)
     }
 
+    override fun makeAlarm(ticket: MovieTicketModel) {
+        val isAlarmSwitchOn = alarmStateRepository.getData()
+        if (isAlarmSwitchOn) {
+            view.makeAlarm(ticket)
+        }
+    }
+
     private fun updateView(price: Int, isSelectionDone: Boolean) {
         view.updatePriceText(price)
         view.updateButtonEnablement(isSelectionDone)
     }
 
-    override fun isSelected(seat: SeatModel): Boolean {
-        return selectedSeats.contains(seat.toDomain())
-    }
-
-    override fun isSelectionDone(): Boolean {
+    private fun isSelectionDone(): Boolean {
         return selectedSeats.isSelectionDone(peopleCountModel.count)
     }
 }

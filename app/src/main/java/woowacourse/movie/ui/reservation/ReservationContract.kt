@@ -8,11 +8,12 @@ class ReservationContract {
 
         fun setReservationViewAdapter(tickets: List<MovieTicketModel>)
         fun clickItem(ticket: MovieTicketModel)
+        fun setEmptyStateText(isEmpty: Boolean)
     }
 
     interface Presenter {
         fun setAdapter()
         fun clickItem(position: Int)
-        fun isReservationEmpty(): Boolean
+        fun checkDataExisting()
     }
 }

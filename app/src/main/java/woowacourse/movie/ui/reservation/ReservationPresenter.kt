@@ -15,7 +15,8 @@ class ReservationPresenter(
         view.clickItem(repository.getData()[position])
     }
 
-    override fun isReservationEmpty(): Boolean {
-        return repository.getData().isEmpty()
+    override fun checkDataExisting() {
+        val isDataEmpty = repository.getData().isEmpty()
+        view.setEmptyStateText(isDataEmpty)
     }
 }

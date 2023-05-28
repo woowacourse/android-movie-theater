@@ -33,14 +33,13 @@ class ReservationFragment : Fragment(), ReservationContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setTextOnEmptyState()
         initAdapter()
     }
 
     override fun onResume() {
         super.onResume()
         presenter.setAdapter()
+        presenter.checkDataExisting()
     }
 
     private fun initAdapter() {
@@ -57,10 +56,8 @@ class ReservationFragment : Fragment(), ReservationContract.View {
         moveToMovieTicketActivity(ticket)
     }
 
-    private fun setTextOnEmptyState() {
-        if (presenter.isReservationEmpty()) {
-            binding.reservationEmpty.isVisible = true
-        }
+    override fun setEmptyStateText(isEmpty: Boolean) {
+        binding.reservationEmpty.isVisible = isEmpty
     }
 
     private fun moveToMovieTicketActivity(ticket: MovieTicketModel) {
