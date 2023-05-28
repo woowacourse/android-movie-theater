@@ -10,8 +10,9 @@ import woowacourse.movie.R
 import woowacourse.movie.data.setting.AlarmSetting
 import woowacourse.movie.data.setting.AlarmSetting.Companion.MOVIE_REMINDER
 import woowacourse.movie.feature.Toaster
-import woowacourse.movie.util.hasPermission
-import woowacourse.movie.util.requestPermission
+import woowacourse.movie.util.permission.PermissionChecker
+import woowacourse.movie.util.permission.PermissionChecker.Companion.NOTIFICATION
+import woowacourse.movie.util.permission.requestPermission
 
 class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.View {
 
@@ -29,19 +30,19 @@ class SettingFragment : Fragment(R.layout.fragment_setting), SettingContract.Vie
         init(view)
 
         notificationSwitch.setOnCheckedChangeListener { _, isChecked ->
-            val hasPermission: Boolean = hasPermission(requireActivity(), Manifest.permission.POST_NOTIFICATIONS)
-            presenter.changeMovieReminderChecked(hasPermission, isChecked)
+            presenter.changeMovieReminderChecked(isChecked)
         }
     }
 
     override fun onResume() {
         super.onResume()
-        val hasPermission: Boolean = hasPermission(requireActivity(), Manifest.permission.POST_NOTIFICATIONS)
-        presenter.setMovieReminderChecked(hasPermission)
+        presenter.setMovieReminderChecked()
     }
 
     private fun init(view: View) {
-        presenter = SettingPresenter(this, movieReminderSetting)
+        val permissionChecker: PermissionChecker =
+            PermissionChecker.getInstance(requireContext(), NOTIFICATION)
+        presenter = SettingPresenter(this, movieReminderSetting, permissionChecker)
         notificationSwitch = view.findViewById(R.id.notification_switch)
     }
 

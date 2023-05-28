@@ -7,7 +7,7 @@ interface SettingContract {
     }
 
     interface Presenter {
-        fun setMovieReminderChecked(hasPermission: Boolean)
-        fun changeMovieReminderChecked(hasPermission: Boolean, switchChecked: Boolean)
+        fun setMovieReminderChecked()
+        fun changeMovieReminderChecked(switchChecked: Boolean)
     }
 }
