@@ -10,7 +10,7 @@ interface AlarmSetting {
 
         fun getInstance(context: Context, option: Int): AlarmSetting {
             return when (option) {
-                MOVIE_REMINDER -> MovieReminderSetting.getInstance(context)
+                MOVIE_REMINDER -> MovieStartReminderSetting.getInstance(context)
                 else -> throw IllegalArgumentException()
             }
         }

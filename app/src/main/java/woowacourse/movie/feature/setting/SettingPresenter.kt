@@ -9,22 +9,24 @@ class SettingPresenter(
     private val permissionChecker: PermissionChecker,
 ) : SettingContract.Presenter {
 
-    override fun setMovieReminderChecked() {
-        view.setMovieReminderChecked(alarmSetting.isEnable)
-        if (!permissionChecker.hasPermission) requestPermission()
+    override fun loadMovieStartReminderSetting() {
+        view.setMovieStartReminderSwitchChecked(alarmSetting.isEnable)
+        if (!permissionChecker.hasPermission) {
+            requestPermission()
+        }
     }
 
-    override fun changeMovieReminderChecked(switchChecked: Boolean) {
+    override fun setMovieStartReminderSettingEnable(value: Boolean) {
         if (!permissionChecker.hasPermission) {
             requestPermission()
             return
         }
-        alarmSetting.isEnable = switchChecked
+        alarmSetting.isEnable = value
     }
 
     private fun requestPermission() {
         alarmSetting.isEnable = false
-        view.setMovieReminderChecked(false)
+        view.setMovieStartReminderSwitchChecked(false)
         view.requestPermission()
     }
 }

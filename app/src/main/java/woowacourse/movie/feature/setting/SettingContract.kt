@@ -2,12 +2,12 @@ package woowacourse.movie.feature.setting
 
 interface SettingContract {
     interface View {
-        fun setMovieReminderChecked(value: Boolean)
+        fun setMovieStartReminderSwitchChecked(value: Boolean)
         fun requestPermission()
     }
 
     interface Presenter {
-        fun setMovieReminderChecked()
-        fun changeMovieReminderChecked(switchChecked: Boolean)
+        fun loadMovieStartReminderSetting()
+        fun setMovieStartReminderSettingEnable(value: Boolean)
     }
 }

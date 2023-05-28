@@ -15,7 +15,8 @@ class SettingPresenterTest {
     private val alarmSetting: AlarmSetting = mockk()
     private val permissionChecker: PermissionChecker = mockk()
 
-    private lateinit var sut: SettingContract.Presenter // System Under Test
+    // System Under Test
+    private lateinit var sut: SettingContract.Presenter
 
     @Before
     fun setUp() {
@@ -26,28 +27,28 @@ class SettingPresenterTest {
     fun `영화 시작 알림 설정이 켜져 있는 경우 설정 화면의 스위치를 on한다`() {
         // given
         every { alarmSetting.isEnable } returns true
-        every { view.setMovieReminderChecked(any()) } just runs
+        every { view.setMovieStartReminderSwitchChecked(any()) } just runs
         every { permissionChecker.hasPermission } returns true
 
         // when
-        sut.setMovieReminderChecked()
+        sut.loadMovieStartReminderSetting()
 
         // then
-        verify { view.setMovieReminderChecked(true) }
+        verify { view.setMovieStartReminderSwitchChecked(true) }
     }
 
     @Test
     fun `영화 시작 알림 설정이 꺼져 있는 경우 설정 화면의 스위치를 off한다`() {
         // given
         every { alarmSetting.isEnable } returns false
-        every { view.setMovieReminderChecked(any()) } just runs
+        every { view.setMovieStartReminderSwitchChecked(any()) } just runs
         every { permissionChecker.hasPermission } returns true
 
         // when
-        sut.setMovieReminderChecked()
+        sut.loadMovieStartReminderSetting()
 
         // then
-        verify { view.setMovieReminderChecked(false) }
+        verify { view.setMovieStartReminderSwitchChecked(false) }
     }
 
     @Test
@@ -55,12 +56,12 @@ class SettingPresenterTest {
         // given
         every { alarmSetting.isEnable } returns false
         every { permissionChecker.hasPermission } returns false
-        every { view.setMovieReminderChecked(any()) } just runs
+        every { view.setMovieStartReminderSwitchChecked(any()) } just runs
         every { alarmSetting.isEnable = any() } just runs
         every { view.requestPermission() } just runs
 
         // when
-        sut.setMovieReminderChecked()
+        sut.loadMovieStartReminderSetting()
 
         // then
         verifyRequestPermission()
@@ -73,7 +74,7 @@ class SettingPresenterTest {
         every { alarmSetting.isEnable = any() } just runs
 
         // when
-        sut.changeMovieReminderChecked(true)
+        sut.setMovieStartReminderSettingEnable(true)
 
         // then
         verify { alarmSetting.isEnable = true }
@@ -86,7 +87,7 @@ class SettingPresenterTest {
         every { alarmSetting.isEnable = any() } just runs
 
         // when
-        sut.changeMovieReminderChecked(false)
+        sut.setMovieStartReminderSettingEnable(false)
 
         // then
         verify { alarmSetting.isEnable = false }
@@ -97,11 +98,11 @@ class SettingPresenterTest {
         // given
         every { permissionChecker.hasPermission } returns false
         every { alarmSetting.isEnable = any() } just runs
-        every { view.setMovieReminderChecked(any()) } just runs
+        every { view.setMovieStartReminderSwitchChecked(any()) } just runs
         every { view.requestPermission() } just runs
 
         // when
-        sut.changeMovieReminderChecked(true)
+        sut.setMovieStartReminderSettingEnable(true)
 
         // then
         verifyRequestPermission()
@@ -109,7 +110,7 @@ class SettingPresenterTest {
 
     private fun verifyRequestPermission() {
         verify { alarmSetting.isEnable = false }
-        verify { view.setMovieReminderChecked(false) }
+        verify { view.setMovieStartReminderSwitchChecked(false) }
         verify { view.requestPermission() }
     }
 }

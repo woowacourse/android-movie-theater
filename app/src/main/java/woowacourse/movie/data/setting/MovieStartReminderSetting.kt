@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 
-class MovieReminderSetting private constructor(val context: Context) : AlarmSetting {
+class MovieStartReminderSetting private constructor(val context: Context) : AlarmSetting {
 
     override var isEnable: Boolean
         get() = prefs.getBoolean(MOVIE_REMINDER_NOTIFICATION_KEY, false)
@@ -20,7 +20,7 @@ class MovieReminderSetting private constructor(val context: Context) : AlarmSett
 
         fun getInstance(context: Context): AlarmSetting {
             return instance ?: synchronized(this) {
-                instance ?: MovieReminderSetting(context.applicationContext).also {
+                instance ?: MovieStartReminderSetting(context.applicationContext).also {
                     instance = it
                 }
             }
