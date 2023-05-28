@@ -5,12 +5,9 @@ import android.content.Context.MODE_PRIVATE
 import kotlinx.datetime.serializers.LocalDateTimeComponentSerializer
 import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.datetime.toKotlinLocalDateTime
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import woowacourse.movie.domain.model.tools.Ticket
-import woowacourse.movie.model.data.local.SerializableTicketModel.Companion.toSerializableTicketModel
-import woowacourse.movie.model.data.local.SerializableTicketModel.Companion.toTicketModel
+import woowacourse.movie.model.data.local.SerializableTicketModel.Companion.toSerializable
+import woowacourse.movie.model.data.local.SerializableTicketModel.Companion.toUiModel
 import woowacourse.movie.model.data.storage.BookedTicketStorage
 import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.model.TicketModel
@@ -23,25 +20,17 @@ class BookedTicketPreference(private val context: Context) : BookedTicketStorage
     }
 
     override fun getBookedTickets(): List<TicketModel> {
-        val json: String = value.getString(TICKETS, null) ?: return emptyList()
-        return jsonConvertToTickets(json).map { it.toTicketModel() }
+        return SerializableDAO.get<List<SerializableTicketModel>>(value, TICKETS)
+            ?.map { it.toUiModel() } ?: emptyList()
     }
 
     override fun addBookedTicket(ticket: Ticket) {
-        val json: String =
-            value.getString(TICKETS, null)
-                ?: Json.encodeToString(emptyList<SerializableTicketModel>())
-        val oldTickets: List<SerializableTicketModel> = jsonConvertToTickets(json)
-        val newTickets: List<SerializableTicketModel> =
-            oldTickets + ticket.toPresentation(context).toSerializableTicketModel()
-        value.edit().putString(TICKETS, ticketsConvertToJson(newTickets)).apply()
+        SerializableDAO.addToList<SerializableTicketModel>(
+            ticket.toPresentation(context).toSerializable(),
+            value,
+            TICKETS
+        )
     }
-
-    private fun jsonConvertToTickets(json: String): List<SerializableTicketModel> =
-        Json.decodeFromString<List<SerializableTicketModel>>(json)
-
-    private fun ticketsConvertToJson(tickets: List<SerializableTicketModel>): String =
-        Json.encodeToString(tickets)
 
     companion object {
         private const val BOOKED_TICKETS = "BookedTickets"
@@ -62,7 +51,7 @@ private data class SerializableTicketModel(
     val theater: String
 ) : Serializable {
     companion object {
-        fun TicketModel.toSerializableTicketModel(): SerializableTicketModel =
+        fun TicketModel.toSerializable(): SerializableTicketModel =
             SerializableTicketModel(
                 ticketId,
                 movieId,
@@ -73,7 +62,7 @@ private data class SerializableTicketModel(
                 theater
             )
 
-        fun SerializableTicketModel.toTicketModel(): TicketModel =
+        fun SerializableTicketModel.toUiModel(): TicketModel =
             TicketModel.fromSerializableTicketModel(
                 ticketId,
                 movieId,
