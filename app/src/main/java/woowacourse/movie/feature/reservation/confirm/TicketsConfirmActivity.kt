@@ -46,10 +46,9 @@ class TicketsConfirmActivity : BackKeyActionBarActivity(), TicketsConfirmContrac
             DecimalFormatters.convertToMoneyFormat(tickets.totalDiscountedMoneyState)
     }
 
-    override fun showContentError() {
-        keyError(KEY_TICKETS)
-        finish()
-    }
+    override fun showContentError() = keyError(KEY_TICKETS)
+
+    override fun finishActivity() = finish()
 
     private fun init() {
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_reservation_confirm)

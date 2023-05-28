@@ -5,6 +5,7 @@ import woowacourse.movie.model.TicketsState
 interface TicketsConfirmContract {
     interface View {
         fun setViewContents(tickets: TicketsState)
+        fun finishActivity()
         fun showContentError()
     }
 

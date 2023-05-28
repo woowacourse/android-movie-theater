@@ -8,6 +8,11 @@ class TicketConfirmPresenter(
 ) : TicketsConfirmContract.Presenter {
 
     override fun loadContents() {
-        if (tickets == null) view.showContentError()
+        if (tickets == null) {
+            view.showContentError()
+            view.finishActivity()
+            return
+        }
+        view.setViewContents(tickets)
     }
 }
