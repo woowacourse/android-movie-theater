@@ -13,8 +13,8 @@ import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.tools.seat.Location
 import woowacourse.movie.domain.model.tools.seat.SeatGrade
-import woowacourse.movie.model.data.local.BookedTicketPreference
-import woowacourse.movie.model.data.local.SettingPreference
+import woowacourse.movie.model.data.local.preference.SettingPreference
+import woowacourse.movie.model.data.local.preference.bookedticket.BookedTicketPreference
 import woowacourse.movie.model.data.remote.DummyMovieStorage
 import woowacourse.movie.presentation.complete.CompleteActivity
 import woowacourse.movie.presentation.mappers.toPresentation

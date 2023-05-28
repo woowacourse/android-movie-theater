@@ -16,7 +16,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.model.data.local.SettingPreference
+import woowacourse.movie.model.data.local.preference.SettingPreference
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest

@@ -1,4 +1,4 @@
-package woowacourse.movie.model.data.local
+package woowacourse.movie.model.data.local.preference
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE

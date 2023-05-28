@@ -2,7 +2,7 @@ package woowacourse.movie.presentation.fragmentfactory
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
-import woowacourse.movie.model.data.local.SettingPreference
+import woowacourse.movie.model.data.local.preference.SettingPreference
 import woowacourse.movie.presentation.settings.SettingsFragment
 
 class TheaterFragmentFactory : FragmentFactory() {

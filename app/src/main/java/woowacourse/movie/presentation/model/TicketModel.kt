@@ -3,7 +3,7 @@ package woowacourse.movie.presentation.model
 import android.content.Context
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.movie.model.data.local.TicketIssuePreference
+import woowacourse.movie.model.data.local.preference.TicketIssuePreference
 import java.time.LocalDateTime
 
 @Parcelize

@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
-import woowacourse.movie.model.data.local.SettingPreference
+import woowacourse.movie.model.data.local.preference.SettingPreference
 import woowacourse.movie.model.data.storage.SettingStorage
 import woowacourse.movie.presentation.bookedticketlist.BookedTicketsFragment
 import woowacourse.movie.presentation.movielist.MovieListFragment

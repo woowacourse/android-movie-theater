@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.model.data.local.SettingPreference
+import woowacourse.movie.model.data.local.preference.SettingPreference
 import woowacourse.movie.model.data.storage.SettingStorage
 
 class SettingsFragment(
