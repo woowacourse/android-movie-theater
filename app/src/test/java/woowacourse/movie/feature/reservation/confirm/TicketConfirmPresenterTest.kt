@@ -4,6 +4,7 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.runs
+import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.model.MoneyState
@@ -48,7 +49,7 @@ internal class TicketConfirmPresenterTest {
         sut.loadContents()
 
         // then
-        view.setViewContents(ticketsState)
+        verify { view.setViewContents(ticketsState) }
     }
 
     @Test
@@ -62,7 +63,7 @@ internal class TicketConfirmPresenterTest {
         sut.loadContents()
 
         // then
-        view.showContentError()
-        view.finishActivity()
+        verify { view.showContentError() }
+        verify { view.finishActivity() }
     }
 }
