@@ -5,31 +5,31 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.AdapterView
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieData
-import woowacourse.movie.domain.model.rules.ScreeningTimes
 import woowacourse.movie.domain.model.tools.TicketCount
+import woowacourse.movie.model.data.remote.DummyMovieStorage
+import woowacourse.movie.model.data.remote.DummyMovieTheaterStorage
 import woowacourse.movie.presentation.choiceSeat.ChoiceSeatActivity
 import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.model.MovieModel
 import woowacourse.movie.presentation.model.ReservationModel
-import woowacourse.movie.presentation.util.formatDotDate
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class BookingActivity : AppCompatActivity() {
-    private var ticketCount = TicketCount()
-    private val movie: MovieModel by lazy {
-        val movieId = intent.getLongExtra(MOVIE_ID, -1)
-        MovieData.findMovieById(movieId).toPresentation()
+class BookingActivity : AppCompatActivity(), BookingContract.View {
+
+    override lateinit var presenter: BookingContract.Presenter
+    private val movieId: Long by lazy { intent.getLongExtra(MOVIE_ID, -1) }
+    private val theater: String by lazy {
+        intent.getStringExtra(THEATER) ?: throw IllegalStateException(NULL_THEATER_ERROR)
     }
+    private lateinit var movieModel: MovieModel
+    private val textBookingTicketCount by lazy { findViewById<TextView>(R.id.textBookingTicketCount) }
     private val dateSpinner by lazy { findViewById<Spinner>(R.id.spinnerScreeningDate) }
     private val timeSpinner by lazy { findViewById<Spinner>(R.id.spinnerScreeningTime) }
     private val dateSpinnerAdapter by lazy {
@@ -42,13 +42,13 @@ class BookingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_booking)
+        initPresenter()
+        initMovieModel()
         initAdapters()
         initDateTimes()
         restoreData(savedInstanceState)
-        initView()
+        initBookingMovieInformationView()
         gatherClickListeners()
-        initDateSpinnerSelectedListener()
-        initTimeSpinnerSelectedListener()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -63,7 +63,12 @@ class BookingActivity : AppCompatActivity() {
         savedInstanceState ?: return
 
         with(savedInstanceState) {
-            ticketCount = TicketCount(getInt(TICKET_COUNT))
+            presenter = BookingPresenter(
+                this@BookingActivity,
+                TicketCount(getInt(TICKET_COUNT)),
+                DummyMovieStorage(),
+                DummyMovieTheaterStorage()
+            )
             dateSpinner.setSelection(getInt(DATE_POSITION), false)
             timeSpinner.setSelection(getInt(TIME_POSITION), false)
         }
@@ -71,11 +76,23 @@ class BookingActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.run {
-            putInt(TICKET_COUNT, ticketCount.value)
+            putInt(TICKET_COUNT, presenter.getTicketCurrentCount())
             putInt(DATE_POSITION, dateSpinner.selectedItemPosition)
             putInt(TIME_POSITION, timeSpinner.selectedItemPosition)
         }
         super.onSaveInstanceState(outState)
+    }
+
+    private fun initPresenter() {
+        presenter = BookingPresenter(
+            view = this,
+            movieStorage = DummyMovieStorage(),
+            movieTheaterStorage = DummyMovieTheaterStorage()
+        )
+    }
+
+    private fun initMovieModel() {
+        movieModel = presenter.getMovieById(movieId).toPresentation()
     }
 
     private fun gatherClickListeners() {
@@ -84,65 +101,24 @@ class BookingActivity : AppCompatActivity() {
         clickBookingComplete()
     }
 
-    private fun initView() {
-        setMoviePoster()
-        setMovieTitle()
-        setMovieScreeningDate()
-        setMovieRunningTime()
-        setMovieDescription()
-        setTicketCount(TicketCount(DEFAULT_TICKET_COUNT))
-    }
-
-    private fun setMoviePoster() {
-        movie.poster?.let { findViewById<ImageView>(R.id.imageBookingPoster).setImageResource(it) }
-    }
-
-    private fun setMovieTitle() {
-        findViewById<TextView>(R.id.textBookingTitle).text = movie.title
-    }
-
-    private fun setMovieScreeningDate() {
-        findViewById<TextView>(R.id.textBookingScreeningDate).text =
-            getString(R.string.screening_date).format(
-                movie.screeningStartDate.formatDotDate(),
-                movie.screeningEndDate.formatDotDate()
-            )
-    }
-
-    private fun setMovieRunningTime() {
-        findViewById<TextView>(R.id.textBookingRunningTime).text =
-            getString(R.string.running_time).format(movie.runningTime)
-    }
-
-    private fun setMovieDescription() {
-        findViewById<TextView>(R.id.textBookingDescription).text = movie.description
-    }
-
-    private fun setTicketCount(ticketCount: TicketCount) {
-        this.ticketCount = ticketCount
-        findViewById<TextView>(R.id.textBookingTicketCount).text = ticketCount.value.toString()
+    private fun initBookingMovieInformationView() {
+        BookingMovieInformationView(findViewById(R.id.layout_booking_movie_information), movieModel)
     }
 
     private fun clickMinus() {
         findViewById<Button>(R.id.buttonBookingMinus).setOnClickListener {
-            minusTicketCount()
+            presenter.minusTicketCount()
         }
-    }
-
-    private fun minusTicketCount() {
-        val newTicketCount = ticketCount.minus()
-        setTicketCount(newTicketCount)
     }
 
     private fun clickPlus() {
         findViewById<Button>(R.id.buttonBookingPlus).setOnClickListener {
-            plusTicketCount()
+            presenter.plusTicketCount()
         }
     }
 
-    private fun plusTicketCount() {
-        val newTicketCount = ticketCount.plus()
-        setTicketCount(newTicketCount)
+    override fun setTicketCount(ticketCount: Int) {
+        textBookingTicketCount.text = ticketCount.toString()
     }
 
     private fun clickBookingComplete() {
@@ -156,7 +132,8 @@ class BookingActivity : AppCompatActivity() {
             dateSpinnerAdapter.getItem(findViewById<Spinner>(R.id.spinnerScreeningDate).selectedItemPosition),
             timeSpinnerAdapter.getItem(findViewById<Spinner>(R.id.spinnerScreeningTime).selectedItemPosition)
         )
-        val reservation = ReservationModel(movie.id, dateTime, ticketCount.value)
+        val reservation =
+            ReservationModel(movieModel.id, dateTime, presenter.getTicketCurrentCount(), theater)
         startActivity(ChoiceSeatActivity.getIntent(this, reservation))
     }
 
@@ -165,57 +142,31 @@ class BookingActivity : AppCompatActivity() {
         timeSpinner.adapter = timeSpinnerAdapter
     }
 
+    override fun setDateSpinnerItems(items: List<LocalDate>) {
+        dateSpinnerAdapter.initItems(items)
+    }
+
+    override fun setTimeSpinnerItems(items: List<LocalTime>) {
+        timeSpinnerAdapter.initItems(items)
+    }
+
     private fun initDateTimes() {
-        val dates: List<LocalDate> = movie.getScreeningDates()
-        val times: List<LocalTime> = ScreeningTimes.getScreeningTime(dates[0])
-        dateSpinnerAdapter.initItems(dates)
-        timeSpinnerAdapter.initItems(times)
-    }
-
-    private fun initDateSpinnerSelectedListener() {
-        val dates: List<LocalDate> = movie.getScreeningDates()
-
-        dateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                convertTimeItems(position)
-            }
-
-            private fun convertTimeItems(position: Int) {
-                val times: List<LocalTime> = ScreeningTimes.getScreeningTime(dates[position])
-                timeSpinnerAdapter.initItems(times)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) = Unit
-        }
-    }
-
-    private fun initTimeSpinnerSelectedListener() {
-        timeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) = Unit
-
-            override fun onNothingSelected(parent: AdapterView<*>?) = Unit
-        }
+        presenter.getScreeningDates(movieId)
+        presenter.getScreeningTimes(movieId, theater)
     }
 
     companion object {
+        private const val THEATER = "theater"
         private const val MOVIE_ID = "MOVIE_ID"
         private const val TICKET_COUNT = "TICKET_COUNT"
         private const val DATE_POSITION = "DATE_POSITION"
         private const val TIME_POSITION = "TIME_POSITION"
-        private const val DEFAULT_TICKET_COUNT = 1
-        fun getIntent(context: Context, movieId: Long): Intent {
+        private const val NULL_THEATER_ERROR = "영화관 정보가 전달되지 않았습니다"
+
+        fun getIntent(context: Context, movieId: Long, theater: String): Intent {
             return Intent(context, BookingActivity::class.java).apply {
                 putExtra(MOVIE_ID, movieId)
+                putExtra(THEATER, theater)
             }
         }
     }

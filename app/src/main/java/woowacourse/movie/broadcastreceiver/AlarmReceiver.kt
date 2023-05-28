@@ -12,12 +12,12 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieData
+import woowacourse.movie.model.data.storage.MovieStorage
 import woowacourse.movie.presentation.complete.CompleteActivity
 import woowacourse.movie.presentation.model.TicketModel
 import woowacourse.movie.presentation.util.getParcelableExtraCompat
 
-class AlarmReceiver : BroadcastReceiver() {
+class AlarmReceiver(private val movieStorage: MovieStorage) : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         val ticket =
@@ -77,7 +77,7 @@ class AlarmReceiver : BroadcastReceiver() {
             .setContentText(
                 context.getString(
                     R.string.booked_ticket_notification_content,
-                    MovieData.findMovieById(ticket.movieId).title
+                    movieStorage.getMovieById(ticket.movieId).title
                 )
             )
             .setPriority(NotificationCompat.PRIORITY_HIGH)

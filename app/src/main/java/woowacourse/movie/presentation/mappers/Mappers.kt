@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.mappers
 
+import android.content.Context
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieDrawableData
 import woowacourse.movie.domain.model.tools.Movie
@@ -30,12 +31,14 @@ fun Movie.toPresentation() = MovieModel(
     MovieDrawableData.getMoviePoster(id) ?: R.drawable.default_poster
 )
 
-fun Ticket.toPresentation() = TicketModel(
+fun Ticket.toPresentation(context: Context) = TicketModel.of(
+    context = context,
     movieId = movieId,
     bookedDateTime = bookedDateTime,
     count = count,
     paymentMoney = getPaymentMoney().value,
-    seats = seats.value.map { it.formatLocation() }
+    seats = seats.value.map { it.formatLocation() },
+    theater = theater
 )
 
 private fun Seat.formatLocation() = "${location.row}${(location.number + 1)}"

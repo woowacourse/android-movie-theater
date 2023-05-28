@@ -5,38 +5,43 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import woowacourse.movie.broadcastreceiver.AlarmReceiver
+import woowacourse.movie.domain.model.tools.Ticket
 import woowacourse.movie.presentation.complete.CompleteActivity
+import woowacourse.movie.presentation.mappers.toPresentation
 import woowacourse.movie.presentation.model.TicketModel
+import java.time.Duration
 import java.time.LocalDateTime
-import java.util.Calendar
 
-class MovieNoticeAlarmManager(private val context: Context, private val ticketModel: TicketModel) {
+class MovieNoticeAlarmManager(private val context: Context) : ChoiceSeatContract.AlarmManager {
     private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-    private fun getTicketAlarmCalendar(reservationTime: LocalDateTime): Calendar {
-        val alarmTime = reservationTime.minusMinutes(30L)
-        return Calendar.getInstance().apply {
-            set(Calendar.YEAR, alarmTime.year)
-            set(Calendar.MONTH, alarmTime.monthValue - 1)
-            set(Calendar.DAY_OF_MONTH, alarmTime.dayOfMonth)
-            set(Calendar.HOUR_OF_DAY, alarmTime.hour)
-            set(Calendar.MINUTE, alarmTime.minute)
-        }
-    }
+    private fun getAlarmTime(reservationTime: LocalDateTime): LocalDateTime =
+        reservationTime.minusMinutes(30L)
 
-    fun setAlarm(reservationTime: LocalDateTime) {
-        val pendingIntent = getPendingIntent()
+    override fun setAlarm(ticket: Ticket) {
+        val pendingIntent = getPendingIntent(ticket.toPresentation(context))
+        val alarmTime = convertReservationTimeToMillis(ticket.bookedDateTime)
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
-            getTicketAlarmCalendar(reservationTime).timeInMillis,
+            alarmTime,
             pendingIntent
         )
     }
 
-    private fun getPendingIntent(): PendingIntent? {
+    private fun convertReservationTimeToMillis(reservationTime: LocalDateTime): Long {
+        val alarmTimeDuration = Duration.between(LocalDateTime.now(), getAlarmTime(reservationTime))
+        return (System.currentTimeMillis() + alarmTimeDuration.toMillis())
+    }
+
+    private fun getPendingIntent(ticketModel: TicketModel): PendingIntent? {
         val pendingIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
             intent.putExtra(CompleteActivity.TICKET, ticketModel)
-            PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.getBroadcast(
+                context,
+                ticketModel.ticketId,
+                intent,
+                PendingIntent.FLAG_IMMUTABLE
+            )
         }
         return pendingIntent
     }

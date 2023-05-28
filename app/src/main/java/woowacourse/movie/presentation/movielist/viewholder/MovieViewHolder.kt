@@ -9,7 +9,7 @@ import woowacourse.movie.R
 import woowacourse.movie.presentation.movielist.MovieItem
 import woowacourse.movie.presentation.util.formatDotDate
 
-class MovieViewHolder(private val view: View, clickBook: (Long) -> Unit) :
+class MovieViewHolder(private val view: View, clickMovieListItem: (Long) -> Unit) :
     RecyclerView.ViewHolder(view) {
 
     private val title: TextView = view.findViewById(R.id.textItemTitle)
@@ -19,7 +19,7 @@ class MovieViewHolder(private val view: View, clickBook: (Long) -> Unit) :
     private val thumbnail: ImageView = view.findViewById(R.id.imageItemThumbnail)
 
     init {
-        itemBook.setOnClickListener { clickBook((adapterPosition + ADDITIONAL_POSITION).toLong()) }
+        itemBook.setOnClickListener { clickMovieListItem((adapterPosition + ADDITIONAL_POSITION).toLong()) }
     }
 
     fun bind(item: MovieItem.Movie) {

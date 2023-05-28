@@ -26,6 +26,7 @@ class ChoiceSeatActivityTest {
             movieId = 1L,
             bookedDateTime = LocalDateTime.of(2024, 3, 1, 9, 0),
             count = 2,
+            theater = "강남"
         )
 
     private val intent =

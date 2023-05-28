@@ -31,6 +31,7 @@ class TicketTest {
                 Location(SeatRow.C, 1),
                 Location(SeatRow.E, 1),
             ),
+            "강남"
         )
         val expected = Money(31000)
 

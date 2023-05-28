@@ -2,35 +2,41 @@ package woowacourse.movie.presentation.complete
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieData
-import woowacourse.movie.domain.model.tools.Movie
+import woowacourse.movie.databinding.ActivityCompletedBinding
+import woowacourse.movie.model.data.remote.DummyMovieStorage
 import woowacourse.movie.presentation.main.MainActivity
 import woowacourse.movie.presentation.model.TicketModel
-import woowacourse.movie.presentation.util.formatDotDateTimeColon
+import woowacourse.movie.presentation.util.getParcelableExtraCompat
+import woowacourse.movie.util.intentDataNullProcess
 
-class CompleteActivity : AppCompatActivity() {
+class CompleteActivity : AppCompatActivity(), CompleteContract.View {
+
+    private lateinit var binding: ActivityCompletedBinding
+
+    override lateinit var presenter: CompleteContract.Presenter
+    private lateinit var ticketModel: TicketModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_completed)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_completed)
 
-        val ticket: TicketModel = getTicket()
-        initView(ticket)
+        getTicket()
+        initPresenter()
+        initBindingData(ticketModel)
     }
 
-    private fun getTicket(): TicketModel {
-        val ticketModel: TicketModel = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(TICKET, TicketModel::class.java)
-                ?: throw IllegalArgumentException()
-        } else {
-            intent.getParcelableExtra(TICKET) ?: throw IllegalArgumentException()
-        }
-        return ticketModel
+    private fun initPresenter() {
+        presenter = CompletePresenter(this, DummyMovieStorage())
+    }
+
+    private fun getTicket() {
+        ticketModel = intent.getParcelableExtraCompat<TicketModel>(TICKET)
+            ?: return this.intentDataNullProcess(TICKET)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -41,34 +47,9 @@ class CompleteActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun initView(ticket: TicketModel) {
-        val movie = MovieData.findMovieById(ticket.movieId)
-        setMovieTitle(movie)
-        setMovieScreeningDate(ticket)
-        setMovieTicketCount(ticket)
-        setMoviePaymentAmount(ticket)
-    }
-
-    private fun setMovieTitle(movie: Movie) {
-        findViewById<TextView>(R.id.textCompletedTitle).text = movie.title
-    }
-
-    private fun setMovieScreeningDate(ticket: TicketModel) {
-        findViewById<TextView>(R.id.textCompletedScreeningDate).text =
-            ticket.bookedDateTime.formatDotDateTimeColon()
-    }
-
-    private fun setMovieTicketCount(ticket: TicketModel) {
-        findViewById<TextView>(R.id.textCompletedTicketCount).text =
-            getString(R.string.normal_ticket_count_seat).format(
-                ticket.count,
-                ticket.formatSeatsCombine()
-            )
-    }
-
-    private fun setMoviePaymentAmount(ticket: TicketModel) {
-        findViewById<TextView>(R.id.textCompletedPaymentAmount).text =
-            getString(R.string.payment_on_site_amount).format(ticket.paymentMoney)
+    private fun initBindingData(ticket: TicketModel) {
+        binding.movie = presenter.getMovieById(ticket.movieId)
+        binding.ticket = ticket
     }
 
     override fun finish() {
@@ -85,12 +66,6 @@ class CompleteActivity : AppCompatActivity() {
             return Intent(context, CompleteActivity::class.java).apply {
                 putExtra(TICKET, ticketModel)
             }
-        }
-
-        private fun TicketModel.formatSeatsCombine(): String {
-            val stringBuilder = StringBuilder()
-            this.seats.forEach { stringBuilder.append("$it ") }
-            return stringBuilder.toString()
         }
     }
 }

@@ -1,9 +1,10 @@
-package woowacourse.movie.data
+package woowacourse.movie.model.data.remote
 
 import woowacourse.movie.domain.model.tools.Movie
+import woowacourse.movie.model.data.storage.MovieStorage
 import java.time.LocalDate
 
-object MovieData {
+class DummyMovieStorage : MovieStorage {
 
     private val movieSamples = List(10000) {
         Movie(
@@ -16,7 +17,7 @@ object MovieData {
         )
     }
 
-    val movies = listOf<Movie>(
+    private val movies = listOf<Movie>(
         Movie(
             1,
             "해리 포터와 마법사의 돌",
@@ -45,7 +46,8 @@ object MovieData {
         )
     ) + movieSamples
 
-    fun findMovieById(id: Long): Movie {
-        return movies.find { it.id == id } ?: throw NoSuchElementException()
-    }
+    override fun getMovieById(id: Long): Movie =
+        movies.find { it.id == id } ?: throw NoSuchElementException()
+
+    override fun getMovies(): List<Movie> = movies
 }

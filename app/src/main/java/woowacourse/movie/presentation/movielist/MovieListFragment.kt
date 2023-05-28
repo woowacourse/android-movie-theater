@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieItemData
-import woowacourse.movie.presentation.booking.BookingActivity
+import woowacourse.movie.model.data.remote.DummyMovieStorage
+import woowacourse.movie.presentation.movielist.selecttheater.SelectTheaterBottomSheet
 
-class MovieListFragment : Fragment() {
-    private val movieItemAdapter by lazy { MovieItemAdapter(MOVIE_ITEMS) { clickBook(it) } }
+class MovieListFragment : Fragment(), MovieListContract.View {
+    private val movieItemAdapter by lazy { MovieItemAdapter() { clickMovieListItem(it) } }
+    override lateinit var presenter: MovieListContract.Presenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,7 +25,17 @@ class MovieListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initMovieListPresenter()
         setMovieAdapter()
+        initMovieItemAdapterData()
+    }
+
+    private fun initMovieListPresenter() {
+        presenter = MovieListPresenter(this, DummyMovieStorage())
+    }
+
+    private fun initMovieItemAdapterData() {
+        presenter.getMovieItemsWithAds()
     }
 
     private fun setMovieAdapter() {
@@ -32,11 +43,16 @@ class MovieListFragment : Fragment() {
             movieItemAdapter
     }
 
-    private fun clickBook(movieId: Long) {
-        startActivity(BookingActivity.getIntent(requireActivity(), movieId))
+    override fun updateMovieListView(movieItems: List<MovieItem>) {
+        movieItemAdapter.updateMovieItems(movieItems)
     }
 
-    companion object {
-        private val MOVIE_ITEMS = MovieItemData.getMovieItems()
+    private fun clickMovieListItem(movieId: Long) {
+        val bottomSheet = SelectTheaterBottomSheet()
+        bottomSheet.arguments = SelectTheaterBottomSheet.getBundle(movieId)
+        bottomSheet.show(
+            requireActivity().supportFragmentManager,
+            this.javaClass.name
+        )
     }
 }
