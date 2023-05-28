@@ -2,7 +2,6 @@ package woowacourse.movie.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.movie.feature.common.itemModel.TicketsItemModel
 import java.time.LocalDateTime
 
 @Parcelize
@@ -12,8 +11,4 @@ data class TicketsState(
     val dateTime: LocalDateTime,
     val totalDiscountedMoneyState: MoneyState,
     val tickets: List<TicketState>
-) : Parcelable {
-    fun convertToItemModel(onClick: (ticketsState: TicketsState) -> Unit): TicketsItemModel {
-        return TicketsItemModel(this, onClick)
-    }
-}
+) : Parcelable

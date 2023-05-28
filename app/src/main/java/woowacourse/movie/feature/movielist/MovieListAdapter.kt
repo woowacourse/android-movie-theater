@@ -11,7 +11,6 @@ import woowacourse.movie.feature.common.viewHolder.AdvViewHolder
 import woowacourse.movie.feature.common.viewHolder.ItemViewHolder
 import woowacourse.movie.feature.common.viewHolder.MovieViewHolder
 import woowacourse.movie.feature.common.viewHolder.TheaterViewHolder
-import woowacourse.movie.feature.common.viewHolder.TicketsViewHolder
 
 class MovieListAdapter(
     private var items: List<ItemModel> = listOf()
@@ -25,7 +24,6 @@ class MovieListAdapter(
         return when (itemType) {
             ViewType.MOVIE -> MovieViewHolder(binding)
             ViewType.ADV -> AdvViewHolder(binding)
-            ViewType.TICKETS -> TicketsViewHolder(binding)
             ViewType.THEATER -> TheaterViewHolder(binding)
         }
     }

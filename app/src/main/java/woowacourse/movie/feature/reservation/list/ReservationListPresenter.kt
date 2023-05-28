@@ -1,20 +1,18 @@
 package woowacourse.movie.feature.reservation.list
 
 import woowacourse.movie.data.TicketsRepository
-import woowacourse.movie.feature.common.itemModel.ItemModel
+import woowacourse.movie.model.TicketsState
 
 class ReservationListPresenter(
-    val view: ReservationListContract.View
+    private val view: ReservationListContract.View,
+    private val ticketsRepository: TicketsRepository
 ) : ReservationListContract.Presenter {
 
-    override fun setListItems() {
-        val items: List<ItemModel> = getTickets()
-        view.setItems(items)
+    override fun loadListItems() {
+        view.setTicketList(ticketsRepository.getAllTickets())
     }
 
-    private fun getTickets(): List<ItemModel> {
-        return TicketsRepository.allTickets().map { ticketState ->
-            ticketState.convertToItemModel { view.navigateTicketsConfirm(ticketState) }
-        }
+    override fun showTicketsConfirm(tickets: TicketsState) {
+        view.showTicketsConfirm(tickets)
     }
 }
