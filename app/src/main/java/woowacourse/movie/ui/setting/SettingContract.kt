@@ -5,6 +5,7 @@ import woowacourse.movie.uimodel.MovieTicketModel
 interface SettingContract {
     interface View {
         val presenter: Presenter
+
         fun setToggleButton(isChecked: Boolean)
         fun setAlarms(ticket: MovieTicketModel)
         fun cancelAlarms(ticket: MovieTicketModel)

@@ -50,7 +50,7 @@ class SettingFragment : Fragment(), SettingContract.View {
 
         requestNotificationPermission(view)
         initToggleButton()
-        setClickEventOnToggleButton()
+        initToggleButtonListener()
     }
 
     private fun requestNotificationPermission(view: View) {
@@ -89,7 +89,7 @@ class SettingFragment : Fragment(), SettingContract.View {
         binding.settingSwitch.isChecked = isChecked
     }
 
-    private fun setClickEventOnToggleButton() {
+    private fun initToggleButtonListener() {
         binding.settingSwitch.setOnCheckedChangeListener { _, isChecked ->
             presenter.clickSwitch(isChecked)
         }

@@ -17,10 +17,12 @@ class SettingPresenter(
         checkSwitchState()
 
         val tickets = reservationRepository.getData()
-        if (isChecked) {
-            tickets.forEach { view.setAlarms(it) }
-        } else {
-            tickets.forEach { view.cancelAlarms(it) }
+        tickets.forEach {
+            if (isChecked) {
+                view.setAlarms(it)
+            } else {
+                view.cancelAlarms(it)
+            }
         }
     }
 }

@@ -48,7 +48,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         setMovieInfo(movie)
         initSpinner()
         initPeopleCountController()
-        initBookingButton(movie)
+        initBookingButtonListener(movie)
         loadSavedData(savedInstanceState)
     }
 
@@ -128,18 +128,18 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     }
 
     private fun initPeopleCountController() {
-        setMinusButton()
-        setPlusButton()
+        initMinusCountButtonListener()
+        initPlusCountButtonListener()
         setPeopleCountView(presenter.peopleCountModel.count)
     }
 
-    private fun setMinusButton() {
+    private fun initMinusCountButtonListener() {
         binding.detailMinusButton.setOnClickListener {
             presenter.minusCount()
         }
     }
 
-    private fun setPlusButton() {
+    private fun initPlusCountButtonListener() {
         binding.detailPlusButton.setOnClickListener {
             presenter.addCount()
         }
@@ -149,7 +149,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         binding.detailPeopleCount.text = "$count"
     }
 
-    private fun initBookingButton(movie: MovieListModel.MovieModel) {
+    private fun initBookingButtonListener(movie: MovieListModel.MovieModel) {
         binding.detailBookingButton.setOnClickListener {
             moveToSeatSelectionActivity(movie)
         }
