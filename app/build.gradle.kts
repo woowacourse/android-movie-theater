@@ -82,4 +82,8 @@ dependencies {
     // kotlinx serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+
+    // fragment Test
+    debugImplementation("androidx.fragment:fragment-ktx:1.6.0-beta01")
+    debugImplementation("androidx.fragment:fragment-testing:1.5.7")
 }
