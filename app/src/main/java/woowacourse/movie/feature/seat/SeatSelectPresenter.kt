@@ -1,7 +1,7 @@
 package woowacourse.movie.feature.seat
 
 import com.example.domain.model.TicketOffice
-import woowacourse.movie.data.TicketsRepository
+import com.example.domain.repository.TicketsRepository
 import woowacourse.movie.model.SeatPositionState
 import woowacourse.movie.model.SelectReservationState
 import woowacourse.movie.model.mapper.asDomain
@@ -9,7 +9,7 @@ import woowacourse.movie.model.mapper.asPresentation
 
 class SeatSelectPresenter(
     val view: SeatSelectContract.View,
-    private val reservationState: SelectReservationState,
+    reservationState: SelectReservationState?,
     private val ticketOffice: TicketOffice,
     private val ticketsRepository: TicketsRepository
 ) : SeatSelectContract.Presenter {
@@ -18,26 +18,41 @@ class SeatSelectPresenter(
     override val seats: List<SeatPositionState>
         get() = _seats.sortedWith(compareBy<SeatPositionState> { it.row }.thenBy { it.column })
 
+    private val reservationState: SelectReservationState = reservationState!!
+
+    init {
+        if (reservationState == null) {
+            view.showLoadError()
+            view.finishActivity()
+        } else {
+            loadViewContents()
+        }
+    }
+
+    override fun loadViewContents() {
+        view.setViewContents(reservationState)
+    }
+
     init {
         updateMoneyAndConfirmBtnState()
     }
 
-    override fun clickSeat(index: Int) {
-        val seatPosition = convertIndexToPosition(index)
+    override fun checkSeat(index: Int) {
+        val seatPosition = getSeatPositionByIndex(index)
         if (seatPosition !in seats && seats.size >= reservationState.selectCount) return
 
         if (seatPosition in _seats) _seats.remove(seatPosition)
         else _seats.add(seatPosition)
 
-        view.seatToggle(index)
+        view.changeSeatCheckedByIndex(index)
         updateMoneyAndConfirmBtnState()
     }
 
-    override fun clickConfirm() {
-        view.showAskScreen()
+    override fun showReservationConfirmationDialog() {
+        view.showReservationConfirmationDialog()
     }
 
-    override fun clickAskPageConfirm() {
+    override fun reserveTickets() {
         val tickets = ticketOffice.issueTickets(
             reservationState.theater.asDomain(),
             reservationState.movie.asDomain(),
@@ -45,7 +60,7 @@ class SeatSelectPresenter(
             seats.map { it.asDomain() }
         ).asPresentation()
 
-        TicketsRepository.addTicket(tickets)
+        ticketsRepository.addTicket(tickets.asDomain())
         view.setReservationAlarm(tickets)
         view.navigateReservationConfirm(tickets)
     }
@@ -53,20 +68,19 @@ class SeatSelectPresenter(
     override fun updateChosenSeats(chosen: List<SeatPositionState>) {
         clear()
         chosen.forEach {
-            clickSeat(convertPositionToIndex(it))
+            checkSeat(getIndexBySeatPosition(it))
         }
         updateMoneyAndConfirmBtnState()
     }
 
     private fun clear() {
-        val alreadyChosenIndexes = _seats.map { convertPositionToIndex(it) }
+        val alreadyChosenIndexes = _seats.map { getIndexBySeatPosition(it) }
         alreadyChosenIndexes.forEach {
-            clickSeat(it)
+            checkSeat(it)
         }
     }
 
     private fun updateMoneyAndConfirmBtnState() {
-
         val money = ticketOffice.predictMoney(
             reservationState.movie.asDomain(),
             reservationState.selectDateTime,
@@ -77,13 +91,13 @@ class SeatSelectPresenter(
         view.setConfirmClickable(seats.size == reservationState.selectCount)
     }
 
-    private fun convertIndexToPosition(index: Int): SeatPositionState {
+    private fun getSeatPositionByIndex(index: Int): SeatPositionState {
         val row = index / COLUMN_SIZE + 1
         val column = (index - (row - 1) * COLUMN_SIZE) + 1
         return SeatPositionState(row, column)
     }
 
-    private fun convertPositionToIndex(seatPositionState: SeatPositionState): Int {
+    private fun getIndexBySeatPosition(seatPositionState: SeatPositionState): Int {
         return (seatPositionState.row - 1) * COLUMN_SIZE + (seatPositionState.column - 1)
     }
 

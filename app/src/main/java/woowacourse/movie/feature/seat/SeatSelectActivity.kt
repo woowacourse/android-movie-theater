@@ -5,10 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.TableRow
 import androidx.core.view.children
-import androidx.databinding.DataBindingUtil
 import com.example.domain.model.TicketOffice
 import woowacourse.movie.R
-import woowacourse.movie.data.TicketsRepository
+import woowacourse.movie.data.TicketsRepositoryImpl
 import woowacourse.movie.databinding.ActivitySeatSelectBinding
 import woowacourse.movie.feature.BackKeyActionBarActivity
 import woowacourse.movie.feature.DecimalFormatters
@@ -26,11 +25,16 @@ import woowacourse.movie.util.showAskDialog
 import kotlin.collections.ArrayList
 
 class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
-    private lateinit var binding: ActivitySeatSelectBinding
+    private var _binding: ActivitySeatSelectBinding? = null
+    private val binding: ActivitySeatSelectBinding get() = _binding!!
 
-    private lateinit var presenter: SeatSelectContract.Presenter
+    private val presenter: SeatSelectContract.Presenter by lazy {
+        val reservationState: SelectReservationState? =
+            intent.getParcelableExtraCompat(KEY_SELECT_RESERVATION)
+        SeatSelectPresenter(this, reservationState, TicketOffice(), TicketsRepositoryImpl())
+    }
 
-    private val allSeats by lazy {
+    private val allSeats: List<SeatView> by lazy {
         binding.seats
             .children
             .filterIsInstance<TableRow>()
@@ -40,29 +44,19 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
     }
 
     override fun onCreateView(savedInstanceState: Bundle?) {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_select)
-        val reservationState: SelectReservationState =
-            intent.getParcelableExtraCompat(KEY_SELECT_RESERVATION) ?: return keyError(
-                KEY_SELECT_RESERVATION
-            )
+        _binding = ActivitySeatSelectBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        presenter.loadViewContents()
         initClickListener()
-
-        presenter = SeatSelectPresenter(
-            this,
-            reservationState,
-            TicketOffice(),
-            TicketsRepository
-        )
-        binding.movie = reservationState.movie
     }
 
     private fun initClickListener() {
         allSeats.forEachIndexed { index, seatView ->
             seatView.setOnClickListener {
-                presenter.clickSeat(index)
+                presenter.checkSeat(index)
             }
         }
-        binding.reservationConfirm.setOnClickListener { presenter.clickConfirm() }
+        binding.reservationConfirm.setOnClickListener { presenter.showReservationConfirmationDialog() }
         binding.reservationConfirm.isClickable = false
     }
 
@@ -82,14 +76,17 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
         presenter.updateChosenSeats(restoreState.toList())
     }
 
-    override fun seatToggle(index: Int) {
-        allSeats[index].toggle()
+    override fun setViewContents(selectReservationState: SelectReservationState) {
+        binding.movie = selectReservationState.movie
+    }
+
+    override fun changeSeatCheckedByIndex(index: Int) {
+        allSeats[index].changeSelected()
     }
 
     override fun changePredictMoney(moneyState: MoneyState) {
         binding.reservationMoney.text = getString(
-            R.string.discount_money,
-            DecimalFormatters.convertToMoneyFormat(moneyState)
+            R.string.discount_money, DecimalFormatters.convertToMoneyFormat(moneyState)
         )
     }
 
@@ -97,16 +94,20 @@ class SeatSelectActivity : BackKeyActionBarActivity(), SeatSelectContract.View {
         binding.reservationConfirm.isClickable = clickable
     }
 
-    override fun showAskScreen() {
+    override fun showReservationConfirmationDialog() {
         showAskDialog(
             titleId = R.string.reservation_confirm,
             messageId = R.string.ask_really_reservation,
             negativeStringId = R.string.reservation_cancel,
             positiveStringId = R.string.reservation_complete
         ) {
-            presenter.clickAskPageConfirm()
+            presenter.reserveTickets()
         }
     }
+
+    override fun showLoadError() = keyError(KEY_SELECT_RESERVATION)
+
+    override fun finishActivity() = finish()
 
     override fun navigateReservationConfirm(tickets: TicketsState) {
         TicketsConfirmActivity.startActivity(this, tickets)

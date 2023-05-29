@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.data.TicketsRepository
+import woowacourse.movie.data.TicketsRepositoryImpl
 import woowacourse.movie.feature.reservation.confirm.TicketsConfirmActivity
 import woowacourse.movie.model.TicketsState
 
@@ -19,7 +19,7 @@ class ReservationListFragment :
         TicketListAdapter(itemClickEvent = presenter::showTicketsConfirm)
     }
     private val presenter: ReservationListContract.Presenter by lazy {
-        ReservationListPresenter(this, TicketsRepository)
+        ReservationListPresenter(this, TicketsRepositoryImpl())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

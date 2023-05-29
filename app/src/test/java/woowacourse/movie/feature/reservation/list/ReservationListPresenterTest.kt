@@ -7,11 +7,12 @@ import io.mockk.runs
 import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.data.TicketsRepository
+import woowacourse.movie.data.TicketsRepositoryImpl
 import woowacourse.movie.model.MoneyState
 import woowacourse.movie.model.MovieState
 import woowacourse.movie.model.TheaterState
 import woowacourse.movie.model.TicketsState
+import woowacourse.movie.model.mapper.asPresentation
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -38,8 +39,8 @@ internal class ReservationListPresenterTest {
 
     @Before
     fun set() {
-        movieReservations = TicketsRepository.getAllTickets()
-        sut = ReservationListPresenter(view, TicketsRepository)
+        movieReservations = TicketsRepositoryImpl().getAllTickets().map { it.asPresentation() }
+        sut = ReservationListPresenter(view, TicketsRepositoryImpl())
     }
 
     @Test
