@@ -13,13 +13,7 @@ class ReservationAdapter(
 ) : RecyclerView.Adapter<ReservationAdapter.ReservationViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReservationViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(
-            R.layout.item_reservation,
-            parent,
-            false,
-        )
-
-        return ReservationViewHolder(ItemReservationBinding.bind(view), onClick)
+        return ReservationViewHolder(parent, onClick)
     }
 
     override fun getItemCount(): Int = reservationInfo.size
@@ -29,9 +23,13 @@ class ReservationAdapter(
     }
 
     class ReservationViewHolder(
-        private val binding: ItemReservationBinding,
+        parent: ViewGroup,
         onClick: (Int) -> Unit,
-    ) : RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder(
+        LayoutInflater.from(parent.context).inflate(R.layout.item_reservation, parent, false),
+    ) {
+        private val binding = ItemReservationBinding.bind(itemView)
+
         init {
             binding.root.setOnClickListener { onClick(adapterPosition) }
         }

@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.home.bottomsheet
+package woowacourse.movie.ui.home.bottomsheet.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,13 +13,7 @@ class TheaterListAdapter(
 ) : RecyclerView.Adapter<TheaterListAdapter.TheaterListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TheaterListViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(
-            R.layout.item_theater,
-            parent,
-            false,
-        )
-
-        return TheaterListViewHolder(ItemTheaterBinding.bind(view), onItemClick)
+        return TheaterListViewHolder(parent, onItemClick)
     }
 
     override fun getItemCount(): Int = modelItems.size
@@ -29,9 +23,13 @@ class TheaterListAdapter(
     }
 
     class TheaterListViewHolder(
-        private val binding: ItemTheaterBinding,
+        parent: ViewGroup,
         onClick: (Int) -> Unit,
-    ) : RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder(
+        LayoutInflater.from(parent.context).inflate(R.layout.item_theater, parent, false),
+    ) {
+        private val binding = ItemTheaterBinding.bind(itemView)
+
         init {
             binding.root.setOnClickListener { onClick(adapterPosition) }
             binding.itemTheaterButton.setOnClickListener { onClick(adapterPosition) }

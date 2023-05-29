@@ -1,5 +1,7 @@
 package woowacourse.movie.ui.home.adapter
 
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemMovieBinding
@@ -8,9 +10,12 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 class MovieItemViewHolder(
-    private val binding: ItemMovieBinding,
+    parent: ViewGroup,
     private val onItemClick: (Int) -> Unit,
-) : RecyclerView.ViewHolder(binding.root) {
+) : RecyclerView.ViewHolder(
+    LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false),
+) {
+    private val binding = ItemMovieBinding.bind(itemView)
 
     init {
         binding.root.setOnClickListener { onItemClick(adapterPosition) }

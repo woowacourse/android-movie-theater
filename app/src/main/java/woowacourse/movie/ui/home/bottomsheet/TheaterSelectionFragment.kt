@@ -9,6 +9,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.data.theater.TheaterRepositoryImpl
 import woowacourse.movie.databinding.FragmentTheaterSelectionBinding
+import woowacourse.movie.ui.home.bottomsheet.adapter.TheaterListAdapter
 import woowacourse.movie.ui.moviedetail.MovieDetailActivity
 import woowacourse.movie.uimodel.MovieListModel
 import woowacourse.movie.uimodel.TheaterModel
