@@ -116,7 +116,9 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun clickSeat(seat: SeatModel, seatView: View) {
-        presenter.clickSeat(seat, seatView)
+        val isSelected = seatView.isSelected
+        presenter.clickSeat(seatView, isSelected)
+        presenter.updateSeats(seat, isSelected)
     }
 
     override fun showErrorMessage() {

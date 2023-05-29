@@ -24,12 +24,12 @@ class SeatSelectionPresenter(
 
     init {
         view.initMovieTitleView(movieTicketInfoModel.title)
-        updateView(0, false)
+        updateView(0)
     }
 
     override fun updateSelectedSeatsModel(selectedSeatsModel: SelectedSeatsModel) {
         selectedSeats = selectedSeatsModel.toDomain()
-        updateView(selectedSeats.getAllPrice(movieTicketInfoModel.time), isSelectionDone())
+        updateView(selectedSeats.getAllPrice(movieTicketInfoModel.time))
     }
 
     override fun addSeat(tableRow: TableRow, row: Int, column: Int) {
@@ -37,8 +37,14 @@ class SeatSelectionPresenter(
         view.initSeat(tableRow, seat, selectedSeats.contains(seat.toDomain()))
     }
 
-    override fun clickSeat(seat: SeatModel, seatView: View) {
-        val isSelected = seatView.isSelected
+    override fun clickSeat(seatView: View, isSelected: Boolean) {
+        if (!isSelected && isSelectionDone()) {
+            return
+        }
+        view.selectSeat(seatView)
+    }
+
+    override fun updateSeats(seat: SeatModel, isSelected: Boolean) {
         if (!isSelected && isSelectionDone()) {
             view.showErrorMessage()
             return
@@ -53,8 +59,12 @@ class SeatSelectionPresenter(
             }
         }
 
-        view.selectSeat(seatView)
-        updateView(selectedSeats.getAllPrice(movieTicketInfoModel.time), isSelectionDone())
+        updateView(selectedSeats.getAllPrice(movieTicketInfoModel.time))
+    }
+
+    private fun updateView(price: Int) {
+        view.updatePriceText(price)
+        view.updateButtonEnablement(isSelectionDone())
     }
 
     override fun makeTicket() {
@@ -77,11 +87,6 @@ class SeatSelectionPresenter(
         if (isAlarmSwitchOn) {
             view.makeAlarm(ticket)
         }
-    }
-
-    private fun updateView(price: Int, isSelectionDone: Boolean) {
-        view.updatePriceText(price)
-        view.updateButtonEnablement(isSelectionDone)
     }
 
     private fun isSelectionDone(): Boolean {

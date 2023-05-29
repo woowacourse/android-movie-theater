@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.seat
 
+import android.view.View
 import android.widget.TableRow
 import woowacourse.movie.uimodel.MovieTicketModel
 import woowacourse.movie.uimodel.SeatModel
@@ -22,7 +23,8 @@ interface SeatSelectionContract {
     interface Presenter {
         fun updateSelectedSeatsModel(selectedSeatsModel: SelectedSeatsModel)
         fun addSeat(tableRow: TableRow, row: Int, column: Int)
-        fun clickSeat(seat: SeatModel, seatView: android.view.View)
+        fun clickSeat(seatView: android.view.View, isSelected: Boolean)
+        fun updateSeats(seat: SeatModel, isSelected: Boolean)
         fun makeTicket()
     }
 }

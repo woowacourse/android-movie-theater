@@ -23,10 +23,7 @@ internal class SeatSelectionPresenterTest {
 
     @Before
     fun setUp() {
-        view = mockk()
-        every { view.initMovieTitleView("title") } just Runs
-        every { view.updatePriceText(0) } just Runs
-        every { view.updateButtonEnablement(false) } just Runs
+        view = mockk(relaxed = true)
 
         presenter = SeatSelectionPresenter(
             view,
@@ -35,7 +32,7 @@ internal class SeatSelectionPresenterTest {
             MovieTicketInfoModel(
                 "title",
                 LocalDateTime.of(2023, 4, 30, 15, 0),
-                PeopleCountModel(2),
+                PeopleCountModel(1),
             ),
         )
     }
@@ -53,29 +50,33 @@ internal class SeatSelectionPresenterTest {
         assertEquals(9000, actual)
         verify { view.updatePriceText(actual) }
     }
-/*
+
     @Test
-    fun 좌석을_선택하면_선택된_좌석_목록에_해당_좌석이_추가된다() {
-        val seat = SeatModel(1, 1)
-        every { presenter.clickSeat(seat, any()) } just Runs
+    fun 좌석을_선택하면_좌석이_선택된다() {
+        presenter.updateSeats(SeatModel(1, 1), false)
 
-//        println(presenter.selectedSeatsModel.seats.toString())
-        presenter.clickSeat(seat, true)
-
-        assertEquals(true, presenter.isSelected(seat))
-        verify { view.updatePriceText(9000) }
+        assertEquals(1, presenter.selectedSeatsModel.seats.size)
     }
 
     @Test
-    fun 좌석을_선택하면_선택된_좌석_목록에_해당_좌석이_삭제된다() {
-        val seat = SeatModel(1, 1)
-        every { presenter.clickSeat(seat, false) } just Runs
+    fun 선택된_좌석을_선택하면_좌석이_선택_취소된다() {
+        presenter.updateSelectedSeatsModel(
+            SelectedSeatsModel(setOf(SeatModel(1, 1))),
+        )
 
-//        println(presenter.selectedSeatsModel.seats.toString())
-        presenter.clickSeat(seat, false)
+        presenter.updateSeats(SeatModel(1, 1), true)
 
-        assertEquals(false, presenter.isSelected(seat))
-        verify { view.updatePriceText(0) }
+        assertEquals(0, presenter.selectedSeatsModel.seats.size)
     }
-*/
+
+    @Test
+    fun 좌석이_모두_선택된_경우_추가로_좌석을_선택하면_오류_메시지를_보여준다() {
+        presenter.updateSelectedSeatsModel(
+            SelectedSeatsModel(setOf(SeatModel(1, 1))),
+        )
+
+        presenter.updateSeats(SeatModel(1, 2), false)
+
+        verify { view.showErrorMessage() }
+    }
 }
