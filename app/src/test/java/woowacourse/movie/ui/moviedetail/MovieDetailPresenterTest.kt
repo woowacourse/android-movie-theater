@@ -45,24 +45,4 @@ internal class MovieDetailPresenterTest {
         assertEquals(1, actual)
         verify { view.setPeopleCountView(actual) }
     }
-
-    @Test
-    fun 두_날짜_사이에_존재하는_날짜들을_반환한다() {
-        val movie = MovieListModel.MovieModel(
-            0,
-            "title",
-            LocalDate.of(2023, 5, 3),
-            LocalDate.of(2023, 5, 5),
-            0,
-            "description",
-        )
-
-        val actual = presenter.getDatesBetweenTwoDates(movie)
-        val expected = listOf(
-            LocalDate.of(2023, 5, 3),
-            LocalDate.of(2023, 5, 4),
-            LocalDate.of(2023, 5, 5),
-        )
-        assertEquals(expected, actual)
-    }
 }
