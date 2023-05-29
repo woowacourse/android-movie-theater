@@ -7,32 +7,29 @@ import woowacourse.movie.data.reservation.ReservationRepository
 import woowacourse.movie.domain.seat.SelectedSeats
 import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toModel
+import woowacourse.movie.uimodel.MovieTicketInfoModel
 import woowacourse.movie.uimodel.MovieTicketModel
-import woowacourse.movie.uimodel.PeopleCountModel
 import woowacourse.movie.uimodel.SeatModel
 import woowacourse.movie.uimodel.SelectedSeatsModel
-import java.time.LocalDateTime
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
     private val alarmStateRepository: AlarmStateRepository,
     private val reservationRepository: ReservationRepository,
-    val movieTitle: String,
-    val movieTime: LocalDateTime,
-    val peopleCountModel: PeopleCountModel,
+    private val movieTicketInfoModel: MovieTicketInfoModel,
 ) : SeatSelectionContract.Presenter {
     private var selectedSeats = SelectedSeats()
     val selectedSeatsModel: SelectedSeatsModel
         get() = selectedSeats.toModel()
 
     init {
-        view.initMovieTitleView(movieTitle)
+        view.initMovieTitleView(movieTicketInfoModel.title)
         updateView(0, false)
     }
 
     override fun updateSelectedSeatsModel(selectedSeatsModel: SelectedSeatsModel) {
         selectedSeats = selectedSeatsModel.toDomain()
-        updateView(selectedSeats.getAllPrice(movieTime), isSelectionDone())
+        updateView(selectedSeats.getAllPrice(movieTicketInfoModel.time), isSelectionDone())
     }
 
     override fun addSeat(tableRow: TableRow, row: Int, column: Int) {
@@ -57,14 +54,25 @@ class SeatSelectionPresenter(
         }
 
         view.selectSeat(seatView)
-        updateView(selectedSeats.getAllPrice(movieTime), isSelectionDone())
+        updateView(selectedSeats.getAllPrice(movieTicketInfoModel.time), isSelectionDone())
     }
 
-    override fun addReservation(ticket: MovieTicketModel) {
+    override fun makeTicket() {
+        MovieTicketModel(
+            movieTicketInfo = movieTicketInfoModel,
+            seats = selectedSeatsModel,
+        ).apply {
+            addReservation(this)
+            makeAlarm(this)
+            view.moveToTicketActivity(this)
+        }
+    }
+
+    private fun addReservation(ticket: MovieTicketModel) {
         reservationRepository.saveData(ticket)
     }
 
-    override fun makeAlarm(ticket: MovieTicketModel) {
+    private fun makeAlarm(ticket: MovieTicketModel) {
         val isAlarmSwitchOn = alarmStateRepository.getData()
         if (isAlarmSwitchOn) {
             view.makeAlarm(ticket)
@@ -77,6 +85,6 @@ class SeatSelectionPresenter(
     }
 
     private fun isSelectionDone(): Boolean {
-        return selectedSeats.isSelectionDone(peopleCountModel.count)
+        return selectedSeats.isSelectionDone(movieTicketInfoModel.peopleCount.count)
     }
 }

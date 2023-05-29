@@ -5,13 +5,19 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 data class MovieTicketModel(
-    val title: String,
-    val time: LocalDateTime,
-    val peopleCount: PeopleCountModel,
+    private val movieTicketInfo: MovieTicketInfoModel,
     val seats: SelectedSeatsModel,
 ) : Serializable {
-    fun getDateToString() = time.dateFormat()
-    fun getTimeToString() = time.timeFormat()
+    val title: String
+        get() = movieTicketInfo.title
+    val time: LocalDateTime
+        get() = movieTicketInfo.time
+    val peopleCount: PeopleCountModel
+        get() = movieTicketInfo.peopleCount
+
+    fun getDateToString() = movieTicketInfo.time.dateFormat()
+    fun getTimeToString() = movieTicketInfo.time.timeFormat()
+
     private fun LocalDateTime.dateFormat(): String = format(
         DateTimeFormatter.ofPattern("yyyy.MM.dd"),
     )

@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import woowacourse.movie.uimodel.MovieTicketInfoModel
 import woowacourse.movie.uimodel.MovieTicketModel
 import woowacourse.movie.uimodel.PeopleCountModel
 import woowacourse.movie.uimodel.SeatModel
@@ -60,9 +61,11 @@ class ReservationDBHelper(
 
             tickets.add(
                 MovieTicketModel(
-                    title,
-                    LocalDateTime.parse(time),
-                    PeopleCountModel(count),
+                    MovieTicketInfoModel(
+                        title,
+                        LocalDateTime.parse(time),
+                        PeopleCountModel(count),
+                    ),
                     SelectedSeatsModel(seats.split(",").map { SeatModel.of(it.trim()) }.toSet()),
                 ),
             )

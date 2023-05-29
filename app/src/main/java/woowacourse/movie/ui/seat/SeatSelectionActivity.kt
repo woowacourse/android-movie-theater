@@ -14,6 +14,7 @@ import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.ui.alarm.ReservationAlarmManager
 import woowacourse.movie.ui.moviedetail.MovieDetailActivity
 import woowacourse.movie.ui.ticket.MovieTicketActivity
+import woowacourse.movie.uimodel.MovieTicketInfoModel
 import woowacourse.movie.uimodel.MovieTicketModel
 import woowacourse.movie.uimodel.PeopleCountModel
 import woowacourse.movie.uimodel.SeatModel
@@ -72,9 +73,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             this,
             AlarmStateRepositoryImpl(this),
             ReservationRepositoryImpl(this),
-            movieTitle,
-            movieTime,
-            peopleCount,
+            MovieTicketInfoModel(movieTitle, movieTime, peopleCount),
         )
     }
 
@@ -133,16 +132,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         .setTitle(getString(R.string.seat_dialog_title))
         .setMessage(getString(R.string.seat_dialog_message))
         .setPositiveButton(getString(R.string.seat_dialog_submit_button)) { _, _ ->
-            MovieTicketModel(
-                title = presenter.movieTitle,
-                time = presenter.movieTime,
-                peopleCount = presenter.peopleCountModel,
-                seats = presenter.selectedSeatsModel,
-            ).apply {
-                presenter.addReservation(this)
-                presenter.makeAlarm(this)
-                moveToTicketActivity(this)
-            }
+            presenter.makeTicket()
         }
         .setNegativeButton(getString(R.string.seat_dialog_cancel_button)) { dialog, _ ->
             dialog.dismiss()
@@ -172,7 +162,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         binding.seatConfirmButton.isEnabled = isSelectionDone
     }
 
-    private fun moveToTicketActivity(ticket: MovieTicketModel) {
+    override fun moveToTicketActivity(ticket: MovieTicketModel) {
         startActivity(MovieTicketActivity.getIntent(ticket, this))
         finish()
     }

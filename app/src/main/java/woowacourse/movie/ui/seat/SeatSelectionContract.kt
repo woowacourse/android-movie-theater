@@ -16,13 +16,13 @@ interface SeatSelectionContract {
         fun showErrorMessage()
         fun initSeat(tableRow: TableRow, seat: SeatModel, isSelected: Boolean)
         fun selectSeat(view: android.view.View)
+        fun moveToTicketActivity(ticket: MovieTicketModel)
     }
 
     interface Presenter {
         fun updateSelectedSeatsModel(selectedSeatsModel: SelectedSeatsModel)
         fun addSeat(tableRow: TableRow, row: Int, column: Int)
         fun clickSeat(seat: SeatModel, seatView: android.view.View)
-        fun addReservation(ticket: MovieTicketModel)
-        fun makeAlarm(ticket: MovieTicketModel)
+        fun makeTicket()
     }
 }
