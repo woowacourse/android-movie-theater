@@ -32,6 +32,8 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     private lateinit var dateSpinnerAdapter: ArrayAdapter<LocalDate>
     private lateinit var timeSpinnerAdapter: ArrayAdapter<LocalTime>
 
+    private var peopleCountModel: PeopleCountModel = PeopleCountModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMovieDetailBinding.inflate(layoutInflater)
@@ -57,7 +59,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
 
         outState.putInt(KEY_DATE_POSITION, binding.detailDateSpinner.selectedItemPosition)
         outState.putInt(KEY_TIME_POSITION, binding.detailTimeSpinner.selectedItemPosition)
-        outState.putSerializable(KEY_PEOPLE_COUNT, presenter.peopleCountModel)
+        outState.putSerializable(KEY_PEOPLE_COUNT, peopleCountModel)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -73,7 +75,8 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     private fun setMovieInfo(movie: MovieListModel.MovieModel) {
         binding.movie = movie
         binding.detailPoster.setImageResource(movie.poster)
-        binding.detailDate.text = getString(R.string.screening_date, movie.startDate.format(), movie.endDate.format())
+        binding.detailDate.text =
+            getString(R.string.screening_date, movie.startDate.format(), movie.endDate.format())
     }
 
     private fun LocalDate.format(): String =
@@ -130,19 +133,23 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     private fun initPeopleCountController() {
         initMinusCountButtonListener()
         initPlusCountButtonListener()
-        setPeopleCountView(presenter.peopleCountModel.count)
+        setPeopleCountView(peopleCountModel.count)
     }
 
     private fun initMinusCountButtonListener() {
         binding.detailMinusButton.setOnClickListener {
-            presenter.minusCount()
+            presenter.minusCount(peopleCountModel)
         }
     }
 
     private fun initPlusCountButtonListener() {
         binding.detailPlusButton.setOnClickListener {
-            presenter.addCount()
+            presenter.addCount(peopleCountModel)
         }
+    }
+
+    override fun updatePeopleCount(count: Int) {
+        peopleCountModel = PeopleCountModel(count)
     }
 
     override fun setPeopleCountView(count: Int) {
@@ -165,7 +172,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
                     binding.detailTimeSpinner.selectedItem as LocalTime,
                 ),
             )
-            putExtra(KEY_PEOPLE_COUNT, presenter.peopleCountModel)
+            putExtra(KEY_PEOPLE_COUNT, peopleCountModel)
         }
         startActivity(intent)
         finish()
@@ -174,7 +181,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     private fun loadSavedData(savedInstanceState: Bundle?) {
         binding.detailDateSpinner.setSelection(savedInstanceState?.getInt(KEY_DATE_POSITION) ?: 0)
         binding.detailTimeSpinner.setSelection(savedInstanceState?.getInt(KEY_TIME_POSITION) ?: 0)
-        presenter.updatePeopleCount(
+        updatePeopleCount(
             savedInstanceState?.getSerializableExtraCompat<PeopleCountModel>(KEY_PEOPLE_COUNT)?.count
                 ?: 1,
         )

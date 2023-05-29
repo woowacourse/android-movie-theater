@@ -1,6 +1,6 @@
 package woowacourse.movie.ui.moviedetail
 
-import woowacourse.movie.domain.PeopleCount
+import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toModel
 import woowacourse.movie.uimodel.PeopleCountModel
 import woowacourse.movie.uimodel.TheaterModel
@@ -12,21 +12,21 @@ class MovieDetailPresenter(
     private val theater: TheaterModel,
 ) : MovieDetailContract.Presenter {
 
-    private var peopleCount = PeopleCount()
-    val peopleCountModel: PeopleCountModel
-        get() = peopleCount.toModel()
-
     private val _times = mutableListOf<LocalTime>()
     val times: List<LocalTime>
         get() = _times.toList()
 
-    override fun addCount() {
-        peopleCount = peopleCount.plusCount()
-        view.setPeopleCountView(peopleCount.count)
+    override fun addCount(peopleCount: PeopleCountModel) {
+        val newCount = peopleCount.toDomain().plusCount()
+        setPeopleCountText(newCount.toModel())
     }
 
-    override fun minusCount() {
-        peopleCount = peopleCount.minusCount()
+    override fun minusCount(peopleCount: PeopleCountModel) {
+        val newCount = peopleCount.toDomain().minusCount()
+        setPeopleCountText(newCount.toModel())
+    }
+
+    override fun setPeopleCountText(peopleCount: PeopleCountModel) {
         view.setPeopleCountView(peopleCount.count)
     }
 
@@ -37,10 +37,6 @@ class MovieDetailPresenter(
     override fun setTimeSpinner(date: LocalDate) {
         updateTimesByDate(date)
         view.setTimeSpinner()
-    }
-
-    override fun updatePeopleCount(count: Int) {
-        peopleCount = PeopleCount(count)
     }
 
     override fun updateTimesByDate(date: LocalDate) {
