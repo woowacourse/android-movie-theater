@@ -6,37 +6,45 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.model.MovieListModel
+import woowacourse.movie.data.movie.MovieRepositoryImpl
+import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.ui.home.adapter.ItemClickListener
 import woowacourse.movie.ui.home.adapter.MovieListAdapter
+import woowacourse.movie.ui.home.bottomsheet.TheaterSelectionFragment
 import woowacourse.movie.ui.moviedetail.MovieDetailActivity
-import woowacourse.movie.utils.MockData
+import woowacourse.movie.uimodel.MovieListModel
 
-class HomeFragment : Fragment() {
-    private lateinit var moviesView: RecyclerView
+class HomeFragment : Fragment(), HomeContract.View {
+
+    override val presenter by lazy {
+        HomePresenter(this, MovieRepositoryImpl())
+    }
+
+    private lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
-
-        setMovieList(view, MockData.getMoviesWithAds())
-
-        return view
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        return binding.root
     }
 
-    private fun setMovieList(view: View, movies: List<MovieListModel>) {
-        moviesView = view.findViewById(R.id.main_movie_list)
-        moviesView.adapter = MovieListAdapter(
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        presenter.setMovieList()
+    }
+
+    override fun setMovieList(movies: List<MovieListModel>) {
+        binding.mainMovieList.adapter = MovieListAdapter(
             movies,
             object : ItemClickListener {
                 override fun onMovieItemClick(movie: MovieListModel.MovieModel) {
-                    moveToDetailActivity(movie)
+                    showTheaterBottomDialog(movie)
                 }
 
                 override fun onAdItemClick(ad: MovieListModel.AdModel) {
@@ -46,8 +54,12 @@ class HomeFragment : Fragment() {
         )
     }
 
-    private fun moveToDetailActivity(movie: MovieListModel.MovieModel) {
-        startActivity(MovieDetailActivity.getIntent(movie, requireContext()))
+    private fun showTheaterBottomDialog(movie: MovieListModel.MovieModel) {
+        val theaterSelectionBottomDialog = TheaterSelectionFragment()
+        val bundle = Bundle()
+        bundle.putParcelable(MovieDetailActivity.KEY_MOVIE, movie)
+        theaterSelectionBottomDialog.arguments = bundle
+        theaterSelectionBottomDialog.show(childFragmentManager, theaterSelectionBottomDialog.tag)
     }
 
     private fun moveToWebPage(ad: MovieListModel.AdModel) {

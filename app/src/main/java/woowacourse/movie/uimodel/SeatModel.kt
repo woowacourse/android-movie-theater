@@ -1,4 +1,4 @@
-package woowacourse.movie.model
+package woowacourse.movie.uimodel
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,7 +11,6 @@ data class SeatModel(
     val row: Int,
     val column: Int,
 ) : Serializable {
-
     fun getView(
         context: Context,
         isSelected: Boolean,
@@ -45,5 +44,13 @@ data class SeatModel(
         return "${(row.convertToUpperLetter())}$column"
     }
 
-    private fun Int.convertToUpperLetter(): Char = (this + 64).toChar()
+    private fun Int.convertToUpperLetter(): Char = (this + 'A'.code - 1).toChar()
+
+    companion object {
+        fun of(seat: String): SeatModel {
+            val row: Int = seat[0].code - 'A'.code + 1
+            val col: Int = seat.substring(1).toInt()
+            return SeatModel(row, col)
+        }
+    }
 }

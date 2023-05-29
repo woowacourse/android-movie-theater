@@ -5,56 +5,48 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TableLayout
 import android.widget.TableRow
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.domain.seat.Seat
-import woowacourse.movie.domain.seat.SelectedSeats
-import woowacourse.movie.mapper.toDomain
-import woowacourse.movie.mapper.toModel
-import woowacourse.movie.model.MovieTicketModel
-import woowacourse.movie.model.PeopleCountModel
-import woowacourse.movie.model.ReservationModel
-import woowacourse.movie.model.SeatModel
-import woowacourse.movie.model.SelectedSeatsModel
+import woowacourse.movie.data.alarm.AlarmStateRepositoryImpl
+import woowacourse.movie.data.reservation.ReservationRepositoryImpl
+import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.ui.alarm.ReservationAlarmManager
 import woowacourse.movie.ui.moviedetail.MovieDetailActivity
-import woowacourse.movie.ui.setting.SettingFragment
 import woowacourse.movie.ui.ticket.MovieTicketActivity
+import woowacourse.movie.uimodel.MovieTicketInfoModel
+import woowacourse.movie.uimodel.MovieTicketModel
+import woowacourse.movie.uimodel.PeopleCountModel
+import woowacourse.movie.uimodel.SeatModel
+import woowacourse.movie.uimodel.SelectedSeatsModel
 import woowacourse.movie.utils.failLoadingData
-import woowacourse.movie.utils.getPreferences
 import woowacourse.movie.utils.getSerializableExtraCompat
 import woowacourse.movie.utils.showToast
 import java.time.LocalDateTime
 
-class SeatSelectionActivity : AppCompatActivity() {
+class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
-    private val priceTextView by lazy { findViewById<TextView>(R.id.seat_price) }
-    private val selectButton by lazy { findViewById<TextView>(R.id.seat_confirm_button) }
+    override lateinit var presenter: SeatSelectionPresenter
 
-    private var selectedSeats = SelectedSeats()
-    private lateinit var movieTitle: String
-    private lateinit var movieTime: LocalDateTime
-    private lateinit var peopleCount: PeopleCountModel
+    private lateinit var binding: ActivitySeatSelectionBinding
 
     private val reservationAlarmManager by lazy { ReservationAlarmManager(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_seat_selection)
+        binding = ActivitySeatSelectionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        setBookingInfo()
+        setPresenter()
         loadSavedData(savedInstanceState)
         initSeatTable()
-        initBottomField()
         initSelectButton()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putSerializable(KEY_SEATS, selectedSeats.toModel())
+        outState.putSerializable(KEY_SEATS, presenter.selectedSeatsModel)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -67,18 +59,27 @@ class SeatSelectionActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun setBookingInfo() {
-        movieTitle = intent.getSerializableExtraCompat(MovieDetailActivity.KEY_TITLE)
+    private fun setPresenter() {
+        val movieTitle: String = intent.getSerializableExtraCompat(MovieDetailActivity.KEY_TITLE)
             ?: return failLoadingData()
-        movieTime = intent.getSerializableExtraCompat(MovieDetailActivity.KEY_TIME)
-            ?: return failLoadingData()
-        peopleCount = intent.getSerializableExtraCompat(MovieDetailActivity.KEY_PEOPLE_COUNT)
-            ?: return failLoadingData()
+        val movieTime: LocalDateTime =
+            intent.getSerializableExtraCompat(MovieDetailActivity.KEY_TIME)
+                ?: return failLoadingData()
+        val peopleCount: PeopleCountModel =
+            intent.getSerializableExtraCompat(MovieDetailActivity.KEY_PEOPLE_COUNT)
+                ?: return failLoadingData()
+
+        presenter = SeatSelectionPresenter(
+            this,
+            AlarmStateRepositoryImpl(this),
+            ReservationRepositoryImpl(this),
+            MovieTicketInfoModel(movieTitle, movieTime, peopleCount),
+        )
     }
 
     private fun loadSavedData(savedInstanceState: Bundle?) {
         savedInstanceState?.getSerializableExtraCompat<SelectedSeatsModel>(KEY_SEATS)?.let {
-            selectedSeats = it.toDomain()
+            presenter.updateSelectedSeatsModel(it)
         }
     }
 
@@ -87,76 +88,62 @@ class SeatSelectionActivity : AppCompatActivity() {
         for (row in 1..ROW_SIZE) {
             val tableRow = TableRow(this)
             for (column in 1..COLUMN_SIZE) {
-                tableRow.addView(getSeatView(row, column))
+                presenter.addSeat(tableRow, row, column)
             }
             seatTable.addView(tableRow)
         }
     }
 
-    private fun initBottomField() {
-        findViewById<TextView>(R.id.seat_movie_title).text = movieTitle
-        updatePriceText(selectedSeats.getAllPrice(movieTime))
+    override fun initMovieTitleView(title: String) {
+        binding.seatMovieTitle.text = title
     }
 
     private fun initSelectButton() {
-        updateButtonEnablement()
-        selectButton.setOnClickListener {
+        binding.seatConfirmButton.setOnClickListener {
             makeDialog().show()
         }
     }
 
-    private fun getSeatView(row: Int, column: Int): View {
-        val seat = SeatModel(row, column)
-        return seat.getView(
-            this,
-            selectedSeats.contains(seat.toDomain()),
-        ) {
-            clickSeat(seat.toDomain(), this)
-        }
+    override fun initSeat(tableRow: TableRow, seat: SeatModel, isSelected: Boolean) {
+        tableRow.addView(
+            seat.getView(
+                this,
+                isSelected,
+            ) {
+                clickSeat(seat, this)
+            },
+        )
     }
 
-    private fun clickSeat(seat: Seat, seatView: View) {
-        if (!canSelectMoreSeat(seatView)) {
-            showToast("이미 인원수만큼 좌석이 선택되었습니다")
-            return
-        }
+    private fun clickSeat(seat: SeatModel, seatView: View) {
+        val isSelected = seatView.isSelected
+        presenter.clickSeat(seatView, isSelected)
+        presenter.updateSeats(seat, isSelected)
+    }
 
-        seatView.isSelected = !seatView.isSelected
-        selectedSeats = when (seatView.isSelected) {
-            true -> {
-                selectedSeats.add(seat)
-            }
-            false -> {
-                selectedSeats.delete(seat)
-            }
-        }
-        updateBackgroundColor(seatView)
-        updatePriceText(selectedSeats.getAllPrice(movieTime))
-        updateButtonEnablement()
+    override fun showErrorMessage() {
+        showToast("이미 인원수만큼 좌석이 선택되었습니다")
+    }
+
+    override fun selectSeat(view: View) {
+        view.isSelected = !view.isSelected
+        updateBackgroundColor(view)
     }
 
     private fun makeDialog(): AlertDialog.Builder = AlertDialog.Builder(this)
         .setTitle(getString(R.string.seat_dialog_title))
         .setMessage(getString(R.string.seat_dialog_message))
         .setPositiveButton(getString(R.string.seat_dialog_submit_button)) { _, _ ->
-            MovieTicketModel(
-                title = movieTitle,
-                time = movieTime,
-                peopleCount = peopleCount,
-                seats = selectedSeats.toModel(),
-            ).apply {
-                setReservationData(this)
-                makeAlarm()
-                moveToTicketActivity(this)
-            }
+            presenter.makeTicket()
         }
         .setNegativeButton(getString(R.string.seat_dialog_cancel_button)) { dialog, _ ->
             dialog.dismiss()
         }
         .setCancelable(false)
 
-    private fun canSelectMoreSeat(seatView: View) =
-        !(!seatView.isSelected && selectedSeats.isSelectionDone(peopleCount.count))
+    override fun makeAlarm(ticket: MovieTicketModel) {
+        reservationAlarmManager.makeAlarm(ticket)
+    }
 
     private fun updateBackgroundColor(seatView: View) {
         when (seatView.isSelected) {
@@ -169,27 +156,15 @@ class SeatSelectionActivity : AppCompatActivity() {
         }
     }
 
-    private fun updatePriceText(price: Int) {
-        priceTextView.text = getString(R.string.price_with_unit, price)
+    override fun updatePriceText(price: Int) {
+        binding.seatPrice.text = getString(R.string.price_with_unit, price)
     }
 
-    private fun updateButtonEnablement() {
-        selectButton.isEnabled = selectedSeats.isSelectionDone(peopleCount.count)
+    override fun updateButtonEnablement(isSelectionDone: Boolean) {
+        binding.seatConfirmButton.isEnabled = isSelectionDone
     }
 
-    private fun setReservationData(ticket: MovieTicketModel) {
-        ReservationModel.add(ticket)
-    }
-
-    private fun MovieTicketModel.makeAlarm() {
-        if (this@SeatSelectionActivity.getPreferences()
-                .getBoolean(SettingFragment.KEY_SWITCH, false)
-        ) {
-            reservationAlarmManager.makeAlarm(this)
-        }
-    }
-
-    private fun moveToTicketActivity(ticket: MovieTicketModel) {
+    override fun moveToTicketActivity(ticket: MovieTicketModel) {
         startActivity(MovieTicketActivity.getIntent(ticket, this))
         finish()
     }

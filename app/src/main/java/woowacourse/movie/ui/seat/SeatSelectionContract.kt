@@ -1,0 +1,30 @@
+package woowacourse.movie.ui.seat
+
+import android.view.View
+import android.widget.TableRow
+import woowacourse.movie.uimodel.MovieTicketModel
+import woowacourse.movie.uimodel.SeatModel
+import woowacourse.movie.uimodel.SelectedSeatsModel
+
+interface SeatSelectionContract {
+    interface View {
+        val presenter: Presenter
+
+        fun initMovieTitleView(title: String)
+        fun updatePriceText(price: Int)
+        fun updateButtonEnablement(isSelectionDone: Boolean)
+        fun makeAlarm(ticket: MovieTicketModel)
+        fun showErrorMessage()
+        fun initSeat(tableRow: TableRow, seat: SeatModel, isSelected: Boolean)
+        fun selectSeat(view: android.view.View)
+        fun moveToTicketActivity(ticket: MovieTicketModel)
+    }
+
+    interface Presenter {
+        fun updateSelectedSeatsModel(selectedSeatsModel: SelectedSeatsModel)
+        fun addSeat(tableRow: TableRow, row: Int, column: Int)
+        fun clickSeat(seatView: android.view.View, isSelected: Boolean)
+        fun updateSeats(seat: SeatModel, isSelected: Boolean)
+        fun makeTicket()
+    }
+}

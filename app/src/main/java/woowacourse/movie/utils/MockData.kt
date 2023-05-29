@@ -1,11 +1,13 @@
 package woowacourse.movie.utils
 
 import woowacourse.movie.R
-import woowacourse.movie.model.MovieListModel
+import woowacourse.movie.uimodel.MovieListModel
+import woowacourse.movie.uimodel.TheaterModel
 import java.time.LocalDate
+import java.time.LocalTime
 
 object MockData {
-    val movies = List(300) {
+    private val movies = List(300) {
         MovieListModel.MovieModel(
             R.drawable.about_time,
             "About Time $it",
@@ -16,7 +18,7 @@ object MockData {
         )
     }
 
-    val ad = MovieListModel.AdModel(
+    private val ad = MovieListModel.AdModel(
         R.drawable.ad,
         "https://github.com/woowacourse",
     )
@@ -34,6 +36,29 @@ object MockData {
 
         return items
     }
+
+    fun getTheaterList(): List<TheaterModel> = listOf(
+        TheaterModel(
+            "잠실",
+            3,
+            mapOf<LocalDate, List<LocalTime>>(
+                LocalDate.of(2023, 5, 8) to
+                    listOf(LocalTime.of(11, 0), LocalTime.of(17, 0)),
+                LocalDate.of(2023, 5, 9) to
+                    listOf(LocalTime.of(14, 0)),
+            ),
+        ),
+        TheaterModel(
+            "선릉",
+            3,
+            mapOf<LocalDate, List<LocalTime>>(
+                LocalDate.of(2023, 5, 8) to
+                    listOf(LocalTime.of(11, 0), LocalTime.of(17, 0)),
+                LocalDate.of(2023, 5, 9) to
+                    listOf(LocalTime.of(14, 0)),
+            ),
+        ),
+    )
 
     private fun isAdPosition(index: Int) = index % 3 == 2
 }

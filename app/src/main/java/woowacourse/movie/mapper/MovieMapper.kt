@@ -1,7 +1,7 @@
 package woowacourse.movie.mapper
 
 import woowacourse.movie.domain.Movie
-import woowacourse.movie.model.MovieListModel
+import woowacourse.movie.uimodel.MovieListModel
 
 fun MovieListModel.MovieModel.toDomain(): Movie = Movie(
     title = title,

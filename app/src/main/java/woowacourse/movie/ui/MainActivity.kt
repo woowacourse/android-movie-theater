@@ -1,30 +1,28 @@
 package woowacourse.movie.ui
 
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.ui.home.HomeFragment
 import woowacourse.movie.ui.reservation.ReservationFragment
 import woowacourse.movie.ui.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
-    private val bottomNavigationView: BottomNavigationView by lazy {
-        findViewById(R.id.main_bottom_navigation_view)
-    }
-
     private val fragments = mapOf(
         FRAGMENT_HOME to HomeFragment(),
         FRAGMENT_RESERVATION to ReservationFragment(),
         FRAGMENT_SETTING to SettingFragment(),
     )
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         initFragmentContainerView()
         setBottomNavigationView()
@@ -37,41 +35,40 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setBottomNavigationView() {
+        binding.mainBottomNavigationView.selectedItemId = R.id.menu_item_home
+        binding.mainBottomNavigationView.setOnItemSelectedListener { selectedIcon ->
+            changeFragment(getTag(selectedIcon.itemId))
+            true
+        }
+    }
+
     private fun changeFragment(tag: String) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
         }
 
-        val fragment: Fragment = fragments[tag] ?: throw IllegalArgumentException()
+        hideShowingFragment()
 
         val findFragment = supportFragmentManager.findFragmentByTag(tag)
-        supportFragmentManager.fragments.forEach { fm ->
-            supportFragmentManager.commit {
-                hide(fm)
-            }
-        }
-
-        findFragment?.let {
-            supportFragmentManager.commit {
-                show(it)
-            }
-        } ?: kotlin.run {
-            supportFragmentManager.commit {
+        supportFragmentManager.commit {
+            if (findFragment != null) {
+                show(findFragment)
+            } else {
+                val fragment: Fragment = fragments[tag] ?: throw IllegalArgumentException()
                 add(R.id.main_fragment_view, fragment, tag)
-                setReorderingAllowed(true)
             }
         }
     }
 
-    private fun setBottomNavigationView() {
-        bottomNavigationView.selectedItemId = R.id.menu_item_home
-        bottomNavigationView.setOnItemSelectedListener { selectedIcon ->
-            changeFragment(getTag(selectedIcon))
-            true
+    private fun hideShowingFragment() {
+        val currentTag = getTag(binding.mainBottomNavigationView.selectedItemId)
+        supportFragmentManager.commit {
+            supportFragmentManager.findFragmentByTag(currentTag)?.let { hide(it) }
         }
     }
 
-    private fun getTag(item: MenuItem): String = when (item.itemId) {
+    private fun getTag(itemId: Int): String = when (itemId) {
         R.id.menu_item_home -> FRAGMENT_HOME
         R.id.menu_item_reservation -> FRAGMENT_RESERVATION
         R.id.menu_item_setting -> FRAGMENT_SETTING

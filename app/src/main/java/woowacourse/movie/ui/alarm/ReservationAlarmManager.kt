@@ -4,7 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
-import woowacourse.movie.model.MovieTicketModel
+import woowacourse.movie.uimodel.MovieTicketModel
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset

@@ -1,7 +1,7 @@
 package woowacourse.movie.mapper
 
 import woowacourse.movie.domain.seat.Seat
-import woowacourse.movie.model.SeatModel
+import woowacourse.movie.uimodel.SeatModel
 
 fun Seat.toModel() = SeatModel(
     row = row,

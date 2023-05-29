@@ -7,18 +7,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.edit
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.model.MovieTicketModel
-import woowacourse.movie.model.ReservationModel
+import woowacourse.movie.data.alarm.AlarmStateRepositoryImpl
+import woowacourse.movie.data.reservation.ReservationRepositoryImpl
+import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.ui.alarm.ReservationAlarmManager
-import woowacourse.movie.utils.getPreferences
+import woowacourse.movie.uimodel.MovieTicketModel
 
-class SettingFragment : Fragment() {
-    private lateinit var toggleButton: SwitchCompat
+class SettingFragment : Fragment(), SettingContract.View {
+
+    override val presenter by lazy {
+        SettingPresenter(
+            this,
+            AlarmStateRepositoryImpl(requireContext()),
+            ReservationRepositoryImpl(requireContext()),
+        )
+    }
+
+    private lateinit var binding: FragmentSettingBinding
+
     private val reservationAlarmManager by lazy { ReservationAlarmManager(requireContext()) }
     private val requestPermissionLauncher by lazy {
         registerForActivityResult(
@@ -30,13 +40,17 @@ class SettingFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_setting, container, false)
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         requestNotificationPermission(view)
-        initToggleButton(view)
-        setClickEventOnToggleButton()
-        return view
+        initToggleButton()
+        initToggleButtonListener()
     }
 
     private fun requestNotificationPermission(view: View) {
@@ -67,33 +81,25 @@ class SettingFragment : Fragment() {
         }
     }
 
-    private fun initToggleButton(view: View) {
-        toggleButton = view.findViewById(R.id.setting_switch)
-        toggleButton.isChecked = requireContext().getPreferences().getBoolean(KEY_SWITCH, false)
+    private fun initToggleButton() {
+        presenter.checkSwitchState()
     }
 
-    private fun setClickEventOnToggleButton() {
-        toggleButton.setOnCheckedChangeListener { _, isChecked ->
-            requireContext().getPreferences().edit { putBoolean(KEY_SWITCH, isChecked) }
-            setAlarms(isChecked)
+    override fun setToggleButton(isChecked: Boolean) {
+        binding.settingSwitch.isChecked = isChecked
+    }
+
+    private fun initToggleButtonListener() {
+        binding.settingSwitch.setOnCheckedChangeListener { _, isChecked ->
+            presenter.clickSwitch(isChecked)
         }
     }
 
-    private fun setAlarms(isChecked: Boolean) {
-        if (isChecked) {
-            iterateOnTickets(reservationAlarmManager::makeAlarm)
-        } else {
-            iterateOnTickets(reservationAlarmManager::cancelAlarm)
-        }
+    override fun setAlarms(ticket: MovieTicketModel) {
+        reservationAlarmManager.makeAlarm(ticket)
     }
 
-    private fun iterateOnTickets(event: (MovieTicketModel) -> Unit) {
-        ReservationModel.tickets.forEach { ticket ->
-            event(ticket)
-        }
-    }
-
-    companion object {
-        const val KEY_SWITCH = "switch"
+    override fun cancelAlarms(ticket: MovieTicketModel) {
+        reservationAlarmManager.cancelAlarm(ticket)
     }
 }

@@ -1,6 +1,6 @@
 package woowacourse.movie.ui.home.adapter
 
-import woowacourse.movie.model.MovieListModel
+import woowacourse.movie.uimodel.MovieListModel
 
 interface ItemClickListener {
     fun onMovieItemClick(movie: MovieListModel.MovieModel)
