@@ -19,11 +19,13 @@ class MovieDetailPresenter(
     override fun addCount(peopleCount: PeopleCountModel) {
         val newCount = peopleCount.toDomain().plusCount()
         setPeopleCountText(newCount.toModel())
+        view.updatePeopleCount(newCount.count)
     }
 
     override fun minusCount(peopleCount: PeopleCountModel) {
         val newCount = peopleCount.toDomain().minusCount()
         setPeopleCountText(newCount.toModel())
+        view.updatePeopleCount(newCount.count)
     }
 
     override fun setPeopleCountText(peopleCount: PeopleCountModel) {

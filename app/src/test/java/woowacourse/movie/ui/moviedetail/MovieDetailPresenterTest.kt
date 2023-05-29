@@ -1,7 +1,10 @@
 package woowacourse.movie.ui.moviedetail
 
+import io.mockk.Runs
 import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
+import io.mockk.runs
 import io.mockk.slot
 import io.mockk.verify
 import org.junit.Assert.assertEquals
@@ -38,6 +41,7 @@ internal class MovieDetailPresenterTest {
     fun PeopleCount가_1명일_때_add하면_2명이_된다() {
         val slot = slot<Int>()
         every { view.setPeopleCountView(capture(slot)) } answers { }
+        every { view.updatePeopleCount(any()) } just Runs
 
         presenter.addCount(PeopleCountModel(1))
 
@@ -50,6 +54,7 @@ internal class MovieDetailPresenterTest {
     fun PeopleCount가_2명일_때_minus하면_1명이_된다() {
         val slot = slot<Int>()
         every { view.setPeopleCountView(capture(slot)) } answers { }
+        every { view.updatePeopleCount(any()) } just runs
 
         presenter.minusCount(PeopleCountModel(2))
 
