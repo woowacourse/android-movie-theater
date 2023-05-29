@@ -5,7 +5,7 @@ import com.example.domain.model.Movie
 import com.example.domain.model.seat.SeatPosition
 import java.time.LocalDateTime
 
-object JoJoNightPolicy : Policy() {
+object EarlyNightPolicy : Policy() {
     override fun isDiscountable(
         movie: Movie,
         dateTime: LocalDateTime,

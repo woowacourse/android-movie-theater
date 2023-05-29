@@ -1,6 +1,6 @@
 package com.example.domain.discountPolicy
 
-import com.example.domain.discountPolicy.policy.JoJoNightPolicy
+import com.example.domain.discountPolicy.policy.EarlyNightPolicy
 import com.example.domain.discountPolicy.policy.MovieDayPolicy
 import com.example.domain.discountPolicy.policy.Policy
 import com.example.domain.model.Money
@@ -10,7 +10,7 @@ import com.example.domain.model.seat.SeatRank
 import java.time.LocalDateTime
 
 class DefaultDiscountPolicy(
-    private val policies: List<Policy> = listOf(MovieDayPolicy, JoJoNightPolicy)
+    private val policies: List<Policy> = listOf(MovieDayPolicy, EarlyNightPolicy)
 ) : DiscountPolicy {
 
     override fun discount(
