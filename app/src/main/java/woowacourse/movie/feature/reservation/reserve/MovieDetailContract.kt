@@ -6,12 +6,12 @@ import java.time.LocalDateTime
 
 interface MovieDetailContract {
     interface View {
-        fun navigateSeatSelect(reservationState: SelectReservationState)
+        fun showSeatSelectActivity(reservationState: SelectReservationState)
     }
 
     interface Presenter {
-        fun clickConfirm(
-            theaterMovie: SelectTheaterAndMovieState,
+        fun navigateSeatSelectActivity(
+            theaterAndMovieState: SelectTheaterAndMovieState,
             dateTime: LocalDateTime,
             reservationCount: Int
         )

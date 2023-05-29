@@ -7,17 +7,18 @@ import java.time.LocalDateTime
 class MovieDetailPresenter(
     val view: MovieDetailContract.View
 ) : MovieDetailContract.Presenter {
-    override fun clickConfirm(
-        theaterMovie: SelectTheaterAndMovieState,
+
+    override fun navigateSeatSelectActivity(
+        theaterAndMovieState: SelectTheaterAndMovieState,
         dateTime: LocalDateTime,
         reservationCount: Int
     ) {
         val reservationState = SelectReservationState(
-            theaterMovie.theater,
-            theaterMovie.movie,
+            theaterAndMovieState.theater,
+            theaterAndMovieState.movie,
             dateTime,
             reservationCount
         )
-        view.navigateSeatSelect(reservationState)
+        view.showSeatSelectActivity(reservationState)
     }
 }

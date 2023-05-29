@@ -46,7 +46,7 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
         binding.counterPresenter = reservationCounter.presenter
 
         binding.reservationConfirm.setOnClickListener {
-            presenter.clickConfirm(
+            presenter.navigateSeatSelectActivity(
                 theaterMovie,
                 dateTimeSpinner.selectedDateTime,
                 reservationCounter.count
@@ -56,7 +56,7 @@ class MovieDetailActivity : BackKeyActionBarActivity(), MovieDetailContract.View
         binding.movieScreeningPeriod.text = DateTimeFormatters.convertToDateTildeDate(this, theaterMovie.movie.startDate, theaterMovie.movie.endDate)
     }
 
-    override fun navigateSeatSelect(reservationState: SelectReservationState) {
+    override fun showSeatSelectActivity(reservationState: SelectReservationState) {
         val intent = SeatSelectActivity.getIntent(this, reservationState)
         startActivity(intent)
     }
