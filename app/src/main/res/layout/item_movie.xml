@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="movie"
             type="woowacourse.movie.uimodel.MovieListModel.MovieModel" />
@@ -27,10 +28,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
+            android:text="@{movie.title}"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:text="@{movie.title}"
             app:layout_constraintStart_toEndOf="@id/item_poster"
             app:layout_constraintTop_toTopOf="@id/item_poster" />
 
@@ -49,9 +50,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:text="@{@string/running_time(movie.runningTime)}"
             android:textColor="@color/black"
             android:textSize="12sp"
-            android:text="@{@string/running_time(movie.runningTime)}"
             app:layout_constraintStart_toStartOf="@id/item_title"
             app:layout_constraintTop_toBottomOf="@id/item_date" />
 

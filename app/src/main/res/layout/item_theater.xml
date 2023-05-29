@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="theater"
             type="woowacourse.movie.uimodel.TheaterModel" />
@@ -12,17 +13,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:descendantFocusability="blocksDescendants"
         android:paddingHorizontal="24dp"
-        android:paddingVertical="10dp"
-        android:descendantFocusability="blocksDescendants">
+        android:paddingVertical="10dp">
 
         <TextView
             android:id="@+id/item_theater_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{theater.name}"
             android:textColor="@color/black"
             android:textSize="16sp"
-            android:text="@{theater.name}"
             app:layout_constraintBottom_toTopOf="@id/item_theater_size"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -32,8 +33,8 @@
             android:id="@+id/item_theater_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
             android:text="@{@string/item_theater_size(theater.size)}"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/item_theater_name"

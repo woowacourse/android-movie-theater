@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="reservation"
             type="woowacourse.movie.uimodel.MovieTicketModel" />
@@ -20,9 +21,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:text="@{reservation.dateToString}"
             android:textColor="@color/black"
             android:textSize="12sp"
-            android:text="@{reservation.dateToString}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="2024. 3. 2" />
@@ -42,9 +43,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
+            android:text="@{reservation.timeToString}"
             android:textColor="@color/black"
             android:textSize="12sp"
-            android:text="@{reservation.timeToString}"
             app:layout_constraintBottom_toBottomOf="@+id/reservation_date"
             app:layout_constraintStart_toEndOf="@id/reservation_divider_indicator"
             app:layout_constraintTop_toTopOf="@id/reservation_date"
@@ -56,9 +57,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="12dp"
+            android:text="@{reservation.title}"
             android:textColor="@color/black"
             android:textSize="16sp"
-            android:text="@{reservation.title}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/reservation_date"
             app:layout_constraintTop_toBottomOf="@+id/reservation_date"

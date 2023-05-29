@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="ticket"
             type="woowacourse.movie.uimodel.MovieTicketModel" />
@@ -32,11 +33,11 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="14dp"
             android:layout_marginTop="10dp"
+            android:text="@{ticket.title}"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="25sp"
             android:textStyle="bold"
-            android:text="@{ticket.title}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ticket_guide" />
@@ -58,10 +59,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
+            android:text="@{@string/people_count(ticket.peopleCount.count)}"
             android:textAlignment="textEnd"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:text="@{@string/people_count(ticket.peopleCount.count)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/ticket_seats"
             app:layout_constraintStart_toStartOf="@id/ticket_title"
@@ -72,10 +73,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
+            android:text="@{@string/seats_with_separator(ticket.seats)}"
             android:textAlignment="textStart"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:text="@{@string/seats_with_separator(ticket.seats)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/ticket_title"
             app:layout_constraintStart_toEndOf="@id/ticket_people_count"
