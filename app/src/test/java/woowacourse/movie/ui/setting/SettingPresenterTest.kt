@@ -9,7 +9,8 @@ import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.data.alarm.AlarmStateRepository
+import woowacourse.movie.repository.FakeAlarmStateRepository
+import woowacourse.movie.repository.FakeReservationRepository
 
 internal class SettingPresenterTest {
     private lateinit var presenter: SettingPresenter
@@ -18,20 +19,7 @@ internal class SettingPresenterTest {
     @Before
     fun setUp() {
         view = mockk()
-
-        val alarmStateRepository = object : AlarmStateRepository {
-            private var isAlarmOn: Boolean = false
-
-            override fun getData(): Boolean {
-                return isAlarmOn
-            }
-
-            override fun saveData(dataSource: Boolean) {
-                isAlarmOn = dataSource
-            }
-        }
-
-        presenter = SettingPresenter(view, alarmStateRepository)
+        presenter = SettingPresenter(view, FakeAlarmStateRepository, FakeReservationRepository)
     }
 
     @Test
