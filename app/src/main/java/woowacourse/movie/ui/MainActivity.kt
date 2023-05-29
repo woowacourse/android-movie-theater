@@ -1,7 +1,6 @@
 package woowacourse.movie.ui
 
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
@@ -12,8 +11,6 @@ import woowacourse.movie.ui.reservation.ReservationFragment
 import woowacourse.movie.ui.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
-    private var lastSelectedFragmentTag = ""
-
     private val fragments = mapOf(
         FRAGMENT_HOME to HomeFragment(),
         FRAGMENT_RESERVATION to ReservationFragment(),
@@ -36,7 +33,14 @@ class MainActivity : AppCompatActivity() {
             add(R.id.main_fragment_view, HomeFragment(), FRAGMENT_HOME)
             setReorderingAllowed(true)
         }
-        lastSelectedFragmentTag = FRAGMENT_HOME
+    }
+
+    private fun setBottomNavigationView() {
+        binding.mainBottomNavigationView.selectedItemId = R.id.menu_item_home
+        binding.mainBottomNavigationView.setOnItemSelectedListener { selectedIcon ->
+            changeFragment(getTag(selectedIcon.itemId))
+            true
+        }
     }
 
     private fun changeFragment(tag: String) {
@@ -44,37 +48,27 @@ class MainActivity : AppCompatActivity() {
             setReorderingAllowed(true)
         }
 
-        val fragment: Fragment = fragments[tag] ?: throw IllegalArgumentException()
+        hideShowingFragment()
 
         val findFragment = supportFragmentManager.findFragmentByTag(tag)
-
         supportFragmentManager.commit {
-            supportFragmentManager.findFragmentByTag(lastSelectedFragmentTag)?.let { hide(it) }
-        }
-
-        if (findFragment != null) {
-            supportFragmentManager.commit {
+            if (findFragment != null) {
                 show(findFragment)
-            }
-        } else {
-            supportFragmentManager.commit {
+            } else {
+                val fragment: Fragment = fragments[tag] ?: throw IllegalArgumentException()
                 add(R.id.main_fragment_view, fragment, tag)
-                setReorderingAllowed(true)
             }
         }
-
-        lastSelectedFragmentTag = tag
     }
 
-    private fun setBottomNavigationView() {
-        binding.mainBottomNavigationView.selectedItemId = R.id.menu_item_home
-        binding.mainBottomNavigationView.setOnItemSelectedListener { selectedIcon ->
-            changeFragment(getTag(selectedIcon))
-            true
+    private fun hideShowingFragment() {
+        val currentTag = getTag(binding.mainBottomNavigationView.selectedItemId)
+        supportFragmentManager.commit {
+            supportFragmentManager.findFragmentByTag(currentTag)?.let { hide(it) }
         }
     }
 
-    private fun getTag(item: MenuItem): String = when (item.itemId) {
+    private fun getTag(itemId: Int): String = when (itemId) {
         R.id.menu_item_home -> FRAGMENT_HOME
         R.id.menu_item_reservation -> FRAGMENT_RESERVATION
         R.id.menu_item_setting -> FRAGMENT_SETTING
