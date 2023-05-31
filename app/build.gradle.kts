@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
+    id("kotlin-kapt")
 }
 
 android {
@@ -34,11 +35,19 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    dataBinding {
+        enable = true
+    }
 }
 
 dependencies {
     implementation(project(":domain"))
-    implementation("androidx.fragment:fragment-ktx:1.2.5")
+    implementation("androidx.fragment:fragment-ktx:1.5.7")
+
+    testImplementation("io.mockk:mockk-android:1.13.5")
+    testImplementation("io.mockk:mockk-agent:1.13.5")
+    androidTestImplementation("io.mockk:mockk-android:1.13.5")
+    androidTestImplementation("io.mockk:mockk-agent:1.13.5")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.0")

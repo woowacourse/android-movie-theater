@@ -1,22 +1,26 @@
 package com.example.domain.discountPolicy
 
+import com.example.domain.discountPolicy.policy.EarlyNightPolicy
+import com.example.domain.discountPolicy.policy.MovieDayPolicy
 import com.example.domain.discountPolicy.policy.Policy
 import com.example.domain.model.Money
-import com.example.domain.model.Ticket
+import com.example.domain.model.Movie
+import com.example.domain.model.seat.SeatPosition
+import com.example.domain.model.seat.SeatRank
+import java.time.LocalDateTime
 
 class DefaultDiscountPolicy(
-    private val policies: List<Policy> = listOf(
-        Policy.MovieDayPolicy(),
-        Policy.JoJoNightPolicy()
-    )
+    private val policies: List<Policy> = listOf(MovieDayPolicy, EarlyNightPolicy)
 ) : DiscountPolicy {
 
-    override fun discount(ticket: Ticket): Money {
-        return policies.fold(ticket.originMoney) { money, policy ->
-            if (policy.discountCondition.isDiscountable(ticket)) {
-                return@fold policy.discount.discount(money)
-            }
-            money
+    override fun discount(
+        movie: Movie,
+        dateTime: LocalDateTime,
+        seatPosition: SeatPosition
+    ): Money {
+        val originMoney = SeatRank.from(seatPosition).money
+        return policies.fold(originMoney) { money, policy ->
+            policy.discount(money, movie, dateTime, seatPosition)
         }
     }
 }
