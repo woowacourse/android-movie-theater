@@ -27,42 +27,20 @@ internal class SeatSelectPresenterTest {
 
     private val view: SeatSelectContract.View = mockk()
     private val ticketsRepository: TicketsRepository = mockk()
-//    private val ticketOffice: TicketOffice = mockk()
 
-    private val theaterState: TheaterState = TheaterState(theaterId = 0, theaterName = "")
-    private val movieState: MovieState = MovieState(
-        id = 0, imgId = 0, title = "테스트 영화",
-        startDate = LocalDate.of(2023, 4, 1),
-        endDate = LocalDate.of(2023, 5, 31),
-        runningTime = 120, description = ""
-    )
     private val reserveDateTime: LocalDateTime = LocalDateTime.of(2023, 5, 28, 15, 32)
-    private val ticketState: TicketState = TicketState(
-        theater = theaterState, movie = movieState, dateTime = reserveDateTime,
-        seatPositionState = SeatPositionState(row = 1, column = 1),
-        discountedMoneyState = MoneyState(price = 0)
-    )
-    private val ticketsState: TicketsState = TicketsState(
-        theater = theaterState, movie = movieState, dateTime = reserveDateTime,
-        totalDiscountedMoneyState = MoneyState(price = 10_000), tickets = listOf(ticketState)
-    )
-    private val reservationState: SelectReservationState = SelectReservationState(
-        theater = theaterState, movie = movieState, selectDateTime = reserveDateTime,
-        selectCount = 1
-    )
 
     // system under test
     private lateinit var sut: SeatSelectContract.Presenter
 
     @Before
     fun set() {
-//        every { ticketOffice.predictMoney(any(), any(), any()) } just awaits
-        every { view.setViewContents(reservationState) } just runs
+        every { view.setViewContents(any()) } just runs
         every { view.changePredictMoney(any()) } just runs // saved data를 불러올 때 (init) 호출
         every { view.setConfirmClickable(any()) } just runs // saved data를 불러올 때 (init) 호출
 
         sut = SeatSelectPresenter(
-            view = view, reservationState = reservationState,
+            view = view, reservationState = createReservationState(),
             ticketOffice = TicketOffice(),
             ticketsRepository = ticketsRepository
         )
@@ -85,7 +63,7 @@ internal class SeatSelectPresenterTest {
 
         // then
         verify { view.changeSeatCheckedByIndex(0) }
-        verify { view.changePredictMoney(ticketsState.totalDiscountedMoneyState) }
+        verify { view.changePredictMoney(createTicketsState().totalDiscountedMoneyState) }
     }
 
     @Test
@@ -98,7 +76,7 @@ internal class SeatSelectPresenterTest {
 
         // then
         verify { view.changeSeatCheckedByIndex(0) }
-        verify { view.changePredictMoney(ticketsState.totalDiscountedMoneyState) }
+        verify { view.changePredictMoney(createTicketsState().totalDiscountedMoneyState) }
         verify { view.setConfirmClickable(true) }
     }
 
@@ -114,22 +92,88 @@ internal class SeatSelectPresenterTest {
         verify { view.showReservationConfirmationDialog() }
     }
 
-//    @Test
-//    fun `예약을 저장 하고, 영화 시작 전 알림을 설정하고, 예약 확인 화면을 띄운다`() {
-//        // given
-//        every { view.changeSeatCheckedByIndex(any()) } just runs
-//        sut.checkSeat(0)
-//
-//        every { ticketsRepository.addTicket(any()) } just runs
-//        every { view.setReservationAlarm(any()) } just runs
-//        every { view.navigateReservationConfirm(any()) } just runs
-//
-//        // when
-//        sut.reserveTickets()
-//
-//        // then
-//        verify { ticketsRepository.addTicket(ticketsState.asDomain()) }
-//        verify { view.setReservationAlarm(ticketsState) }
-//        verify { view.navigateReservationConfirm(ticketsState) }
-//    }
+    @Test
+    fun `예약을 저장 하고, 영화 시작 전 알림을 설정하고, 예약 확인 화면을 띄운다`() {
+        // given
+        every { view.changeSeatCheckedByIndex(any()) } just runs
+        sut.checkSeat(0)
+
+        every { ticketsRepository.addTicket(any()) } just runs
+        every { view.setReservationAlarm(any()) } just runs
+        every { view.navigateReservationConfirm(any()) } just runs
+
+        // when
+        sut.reserveTickets()
+
+        // then
+        verify { ticketsRepository.addTicket(any()) }
+        verify { view.setReservationAlarm(any()) }
+        verify { view.navigateReservationConfirm(any()) }
+    }
+
+    private fun createTicketState(
+        theater: TheaterState = createTheaterState(),
+        movie: MovieState = createMovieState(),
+        dateTime: LocalDateTime = reserveDateTime,
+        seatPositionState: SeatPositionState = SeatPositionState(row = 1, column = 1),
+        discountedMoneyState: MoneyState = MoneyState(price = 0)
+    ): TicketState {
+        return TicketState(
+            theater = theater,
+            movie = movie,
+            dateTime = dateTime,
+            seatPositionState = seatPositionState,
+            discountedMoneyState = discountedMoneyState
+        )
+    }
+
+    private fun createTicketsState(
+        theater: TheaterState = createTheaterState(),
+        movie: MovieState = createMovieState(),
+        dateTime: LocalDateTime = reserveDateTime,
+        moneyState: MoneyState = MoneyState(price = 0),
+        ticketStates: List<TicketState> = listOf(createTicketState())
+    ): TicketsState {
+        return TicketsState(
+            theater = theater,
+            movie = movie,
+            dateTime = dateTime,
+            totalDiscountedMoneyState = moneyState,
+            tickets = ticketStates
+        )
+    }
+
+    private fun createReservationState(
+        theater: TheaterState = createTheaterState(),
+        movie: MovieState = createMovieState(),
+        selectDateTime: LocalDateTime = reserveDateTime,
+        selectCount: Int = 1
+    ): SelectReservationState {
+        return SelectReservationState(
+            theater = theater,
+            movie = movie,
+            selectDateTime = selectDateTime,
+            selectCount = selectCount
+        )
+    }
+
+    private fun createMovieState(
+        id: Int = 0,
+        imgId: Int = 0,
+        title: String = "테스트 영화",
+        startDate: LocalDate = LocalDate.of(2023, 4, 1),
+        endDate: LocalDate = LocalDate.of(2023, 5, 31),
+        runningTime: Int = 120,
+        description: String = ""
+    ): MovieState {
+        return MovieState(
+            id = id, imgId = imgId, title = title,
+            startDate = startDate, endDate = endDate,
+            runningTime = runningTime, description = description
+        )
+    }
+
+    private fun createTheaterState(): TheaterState {
+        return TheaterState(theaterId = 0, theaterName = "")
+    }
 }
