@@ -5,10 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHistoryBinding
 import woowacourse.movie.presentation.activities.ticketingresult.TicketingResultActivity
 import woowacourse.movie.presentation.model.item.Ad
@@ -18,7 +16,9 @@ import woowacourse.movie.presentation.model.item.Reservation
 import woowacourse.movie.presentation.model.item.Theater
 
 class HistoryFragment : Fragment(), HistoryContract.View {
-    private lateinit var binding: FragmentHistoryBinding
+    private var _binding: FragmentHistoryBinding? = null
+    private val binding: FragmentHistoryBinding
+        get() = _binding!!
     override lateinit var presenter: HistoryContract.Presenter
 
     override fun onCreateView(
@@ -26,7 +26,7 @@ class HistoryFragment : Fragment(), HistoryContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_history, container, false)
+        _binding = FragmentHistoryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -62,5 +62,10 @@ class HistoryFragment : Fragment(), HistoryContract.View {
             is Movie -> {}
             is Theater -> {}
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

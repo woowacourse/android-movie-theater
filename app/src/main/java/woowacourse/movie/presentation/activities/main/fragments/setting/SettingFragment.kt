@@ -10,7 +10,6 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.woowacourse.data.local.PreferenceManager
@@ -24,8 +23,10 @@ import woowacourse.movie.presentation.extensions.positiveButton
 import woowacourse.movie.presentation.extensions.title
 
 class SettingFragment : Fragment(), SettingContract.View {
+    private var _binding: FragmentSettingBinding? = null
+    private val binding: FragmentSettingBinding
+        get() = _binding!!
     override lateinit var presenter: SettingPresenter
-    private lateinit var binding: FragmentSettingBinding
     private lateinit var pushSwitch: SwitchMaterial
 
     override fun onCreateView(
@@ -33,7 +34,7 @@ class SettingFragment : Fragment(), SettingContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
+        _binding = FragmentSettingBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -89,6 +90,11 @@ class SettingFragment : Fragment(), SettingContract.View {
             }
             negativeButton { pushSwitch.isChecked = false }
         }.show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

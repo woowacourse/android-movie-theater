@@ -6,11 +6,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
-import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.presentation.activities.main.fragments.theaterPicker.TheaterPickerDialog
 import woowacourse.movie.presentation.model.item.Ad
@@ -19,15 +17,18 @@ import woowacourse.movie.presentation.model.item.Reservation
 import woowacourse.movie.presentation.model.item.Theater
 
 class HomeFragment : Fragment(), HomeContract.View {
+    private var _binding: FragmentHomeBinding? = null
+    private val binding: FragmentHomeBinding
+        get() = _binding!!
+
     override lateinit var presenter: HomePresenter
-    private lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -70,6 +71,11 @@ class HomeFragment : Fragment(), HomeContract.View {
     override fun moveAdWebPage(ads: Ad) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(ads.url))
         startActivity(intent)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
