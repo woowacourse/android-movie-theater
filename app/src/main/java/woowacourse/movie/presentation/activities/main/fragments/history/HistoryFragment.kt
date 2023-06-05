@@ -35,11 +35,11 @@ class HistoryFragment : Fragment(), HistoryContract.View {
 
         val db = HistoryDbHelper(requireContext())
         presenter = HistoryPresenter(this, db)
-        presenter.setAdapterDataFromDb()
+        presenter.loadReservationData()
     }
 
-    override fun setAdapterData(items: List<Reservation>) {
-        val historyAdapter = HistoryListAdapter { presenter.onItemClicked(it) }
+    override fun showReservations(items: List<Reservation>) {
+        val historyAdapter = HistoryListAdapter { onClick(it) }
         historyAdapter.appendAll(items)
         binding.historyRecyclerView.adapter = historyAdapter
         binding.historyRecyclerView.addItemDecoration(
@@ -50,7 +50,7 @@ class HistoryFragment : Fragment(), HistoryContract.View {
         )
     }
 
-    override fun setAdapterListener(item: ListItem) {
+    private fun onClick(item: ListItem) {
         when (item) {
             is Reservation -> {
                 startActivity(

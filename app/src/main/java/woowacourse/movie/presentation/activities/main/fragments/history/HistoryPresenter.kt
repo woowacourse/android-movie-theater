@@ -1,18 +1,12 @@
 package woowacourse.movie.presentation.activities.main.fragments.history
 
-import woowacourse.movie.presentation.model.item.ListItem
-
 class HistoryPresenter(
-    val view: HistoryContract.View,
-    val db: HistoryDbHelper,
+    private val view: HistoryContract.View,
+    private val db: HistoryDbHelper,
 ) : HistoryContract.Presenter {
 
-    override fun onItemClicked(item: ListItem) {
-        view.setAdapterListener(item)
-    }
-
-    override fun setAdapterDataFromDb() {
+    override fun loadReservationData() {
         val data = db.getData()
-        view.setAdapterData(data)
+        view.showReservations(data)
     }
 }

@@ -25,35 +25,19 @@ internal class HistoryFragmentTest {
     }
 
     @Test
-    fun `예매목록 데이터베이스에서 데이터를 가져고, 영화의 제목은 가디언즈 오브 갤럭시다`() {
+    fun `예매목록 데이터베이스에서 데이터를 가져오고, 영화의 제목은 가디언즈 오브 갤럭시다`() {
         // given
         every { reservation.movieTitle } returns "가디언즈 오브 갤럭시"
         every { db.getData() } returns(listOf(reservation))
 
         val slot = slot<List<Reservation>>()
-        every { view.setAdapterData(capture(slot)) } just Runs
+        every { view.showReservations(capture(slot)) } just Runs
 
         val expected = "가디언즈 오브 갤럭시"
 
         // when
-        presenter.setAdapterDataFromDb()
+        presenter.loadReservationData()
         val actual = slot.captured[0].movieTitle
-
-        // then
-        assertEquals(expected, actual)
-    }
-
-    @Test
-    fun `예매목록을 클릭하면 해당 아이템을 가지고 다른 액티비티로 넘어간다`() {
-        // given
-        val slot = slot<Reservation>()
-        every { reservation.movieTitle } returns "가디언즈 오브 갤럭시"
-        every { view.setAdapterListener(capture(slot)) } just Runs
-        val expected = "가디언즈 오브 갤럭시"
-
-        // when
-        presenter.onItemClicked(reservation)
-        val actual = slot.captured.movieTitle
 
         // then
         assertEquals(expected, actual)
