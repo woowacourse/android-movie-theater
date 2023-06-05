@@ -12,16 +12,15 @@ import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.presentation.activities.main.fragments.theaterPicker.TheaterPickerDialog
 import woowacourse.movie.presentation.model.item.Ad
+import woowacourse.movie.presentation.model.item.ListItem
 import woowacourse.movie.presentation.model.item.Movie
-import woowacourse.movie.presentation.model.item.Reservation
-import woowacourse.movie.presentation.model.item.Theater
 
 class HomeFragment : Fragment(), HomeContract.View {
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding
         get() = _binding!!
 
-    override lateinit var presenter: HomePresenter
+    override lateinit var presenter: HomeContract.Presenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,21 +35,15 @@ class HomeFragment : Fragment(), HomeContract.View {
         super.onViewCreated(view, savedInstanceState)
 
         presenter = HomePresenter(this)
-        initMovieListAdapter()
+        presenter.loadData()
     }
 
-    private fun initMovieListAdapter() {
+    override fun showMovieList(movies: List<ListItem>) {
         val movieListAdapter = MovieListAdapter(
             adTypes = Ad.provideDummy(),
-            onItemClick = { item ->
-                when (item) {
-                    is Movie -> presenter.onMovieClicked(item)
-                    is Ad -> presenter.onAdClicked(item)
-                    is Reservation -> {}
-                    is Theater -> {}
-                }
-            },
+            onItemClick = { item -> presenter.moveNext(item) },
         ).also { it.appendAll(Movie.provideDummy()) }
+        binding.moviesRv.adapter = movieListAdapter
 
         binding.moviesRv.adapter = movieListAdapter
         binding.moviesRv.addOnScrollListener(object : OnScrollListener() {
@@ -63,7 +56,7 @@ class HomeFragment : Fragment(), HomeContract.View {
         })
     }
 
-    override fun showTheaterList(movie: Movie) {
+    override fun moveTheaterList(movie: Movie) {
         val theaterPickerDialog = TheaterPickerDialog.getInstance(movie)
         theaterPickerDialog.show(parentFragmentManager, TheaterPickerDialog.TAG)
     }
