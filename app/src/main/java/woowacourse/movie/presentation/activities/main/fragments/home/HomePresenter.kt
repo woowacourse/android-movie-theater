@@ -11,7 +11,7 @@ class HomePresenter(
 ) : HomeContract.Presenter {
 
     override fun loadData() {
-        view.showMovieList(Ad.provideDummy())
+        view.showMovieList(Movie.provideDummy())
     }
 
     override fun moveNext(item: ListItem) {

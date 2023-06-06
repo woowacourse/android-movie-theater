@@ -40,7 +40,7 @@ class HomeFragment : Fragment(), HomeContract.View {
 
     override fun showMovieList(movies: List<ListItem>) {
         val movieListAdapter = MovieListAdapter(
-            items = Movie.provideDummy().toMutableList(),
+            items = movies.toMutableList(),
             adTypes = Ad.provideDummy(),
             onItemClick = { item -> presenter.moveNext(item) },
         )
