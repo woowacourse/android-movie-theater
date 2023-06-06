@@ -2,7 +2,6 @@ package woowacourse.movie.presentation.activities.main.fragments.setting
 
 import android.Manifest
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -26,7 +25,7 @@ class SettingFragment : Fragment(), SettingContract.View {
     private var _binding: FragmentSettingBinding? = null
     private val binding: FragmentSettingBinding
         get() = _binding!!
-    override lateinit var presenter: SettingPresenter
+    override lateinit var presenter: SettingContract.Presenter
     private lateinit var pushSwitch: SwitchMaterial
 
     override fun onCreateView(
@@ -40,33 +39,35 @@ class SettingFragment : Fragment(), SettingContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = SettingPresenter(this)
 
+        initPresenter()
         pushSwitch = binding.notificationPushSwitch
         initPushSwitch()
     }
 
-    private fun initPushSwitch() {
-        val isPushAllowed = presenter.getPushAllowPreference(PUSH_ALLOW_KEY, true) && isPermittedPushPermission()
+    private fun initPresenter() {
+        val sharedPreferences = PreferenceManager.getInstance(requireContext())
+        val alarmRepository = AlarmRepository(sharedPreferences)
+        presenter = SettingPresenter(this, alarmRepository)
+    }
 
-        pushSwitch.isChecked = presenter.getPushAllowPreference(PUSH_ALLOW_KEY, isPushAllowed)
+    private fun initPushSwitch() {
+        val isPushAllowed = presenter.getPushAllow(true) && isPermittedPushPermission()
+
+        pushSwitch.isChecked = presenter.getPushAllow(isPushAllowed)
         pushSwitch.setOnCheckedChangeListener { _, isAllowed ->
             presenter.onSwitchChanged(isPermittedPushPermission(), isAllowed)
         }
-    }
-
-    override fun getSharedPreference(): SharedPreferences {
-        return PreferenceManager.getInstance(requireContext())
     }
 
     override fun onResume() {
         super.onResume()
 
         val isPushAllowed =
-            presenter.getPushAllowPreference(PUSH_ALLOW_KEY, true) && isPermittedPushPermission()
+            presenter.getPushAllow(true) && isPermittedPushPermission()
 
         pushSwitch.isChecked = isPushAllowed
-        presenter.setPushAllowPreference(PUSH_ALLOW_KEY, isPushAllowed)
+        presenter.setPushAllow(isPushAllowed)
     }
 
     private fun isPermittedPushPermission(): Boolean {
@@ -95,9 +96,5 @@ class SettingFragment : Fragment(), SettingContract.View {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        internal const val PUSH_ALLOW_KEY = "push_allow_key"
     }
 }
