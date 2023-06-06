@@ -4,7 +4,6 @@ import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
-import io.mockk.slot
 import io.mockk.verify
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
@@ -37,40 +36,39 @@ internal class SeatPickerPresenterTest {
     }
 
     @Test
-    fun `영화 제목을 업데이트한다`() {
-        every { view.setMovieTitle() } just Runs
-        presenter.updateMovieTitle()
-        verify { view.setMovieTitle() }
+    fun `영화 정보를 보여준다`() {
+        // given
+        every { view.showData() } just Runs
+
+        // when
+        presenter.updateView()
+
+        // then
+        verify { view.showData() }
     }
 
     @Test
     fun `버튼의 Enabled 속성을 true로 변경한다`() {
         // given
-        val slot = slot<Boolean>()
-        every { view.setDoneBtnEnabled(capture(slot)) } just Runs
-        val expected = true
+        every { view.setDoneBtnEnabled(true) } just Runs
 
         // when
         presenter.updateDoneBtnEnabled(true)
-        val actual = slot.captured
 
         // then
-        assertEquals(expected, actual)
+        verify { view.setDoneBtnEnabled(true) }
     }
 
     @Test
     fun `총 금액은 2000원이다`() {
         // given
-        val slot = slot<TicketPrice>()
-        every { view.setTotalPriceView(capture(slot)) } just Runs
         val expected = TicketPrice(2000)
+        every { view.setTotalPriceView(expected) } just Runs
 
         // when
         presenter.updateTotalPriceView(TicketPrice(2000))
-        val actual = slot.captured
 
         // then
-        assertEquals(expected, actual)
         verify { view.setTotalPriceView(TicketPrice(2000)) }
     }
 
