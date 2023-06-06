@@ -11,7 +11,6 @@ import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.presentation.model.Ticket
 import woowacourse.movie.presentation.model.item.Movie
-import java.time.LocalDate
 
 internal class TicketingPresenterTest {
 
@@ -76,10 +75,6 @@ internal class TicketingPresenterTest {
     fun `영화의 이름은 가디언즈 오브 갤럭시다`() {
         // given
         every { movie.title } returns "가디언즈 오브 갤럭시"
-        every { movie.startDate } returns LocalDate.of(2023, 5, 3)
-        every { movie.endDate } returns LocalDate.of(2023, 5, 4)
-        every { movie.runningTime } returns 143
-        every { movie.introduce } returns "vol 3"
 
         presenter = TicketingPresenter(view, movie)
 
@@ -97,8 +92,13 @@ internal class TicketingPresenterTest {
 
     @Test
     fun `액티비티가 열리면 넘어온 시간표가 나온다`() {
+        // given
         every { view.setMovieTimes() } just Runs
+
+        // when
         presenter.updateMovieTimes()
+
+        // then
         verify(exactly = 1) { view.setMovieTimes() }
     }
 }
