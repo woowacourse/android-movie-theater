@@ -38,8 +38,7 @@ class TheaterPickerDialog : BottomSheetDialogFragment(), TheaterPickerDialogCont
         val movie: Movie by lazy { requireArguments().getParcelableCompat(MOVIE_KEY)!! }
 
         presenter = TheaterPickerDialogPresenter(this, movie)
-        val theaterAdapter = TheaterListAdapter(presenter::moveTicketingActivity)
-        theaterAdapter.appendAll(Theater.provideDummyData())
+        val theaterAdapter = TheaterListAdapter(Theater.provideDummyData(), presenter::moveTicketingActivity)
         binding.theaterRecyclerView.adapter = theaterAdapter
     }
 

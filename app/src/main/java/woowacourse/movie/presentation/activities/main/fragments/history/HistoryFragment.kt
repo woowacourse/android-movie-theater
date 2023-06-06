@@ -39,8 +39,7 @@ class HistoryFragment : Fragment(), HistoryContract.View {
     }
 
     override fun showReservations(items: List<Reservation>) {
-        val historyAdapter = HistoryListAdapter { onClick(it) }
-        historyAdapter.appendAll(items)
+        val historyAdapter = HistoryListAdapter(items) { onClick(it) }
         binding.historyRecyclerView.adapter = historyAdapter
         binding.historyRecyclerView.addItemDecoration(
             DividerItemDecoration(

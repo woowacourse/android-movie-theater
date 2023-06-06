@@ -1,32 +1,23 @@
 package woowacourse.movie.presentation.activities.main.fragments.home.viewholder
 
-import android.view.View
-import android.widget.ImageView
+import android.view.ViewGroup
 import woowacourse.movie.R
-import woowacourse.movie.presentation.base.BaseRecyclerView
+import woowacourse.movie.databinding.ItemNativeAdBinding
+import woowacourse.movie.presentation.base.BaseViewHolder
 import woowacourse.movie.presentation.model.item.Ad
-import woowacourse.movie.presentation.model.item.Movie
-import woowacourse.movie.presentation.model.item.Reservation
-import woowacourse.movie.presentation.model.item.Theater
+import woowacourse.movie.presentation.model.item.ListItem
 
 class NativeAdViewHolder(
-    view: View,
+    parent: ViewGroup,
     onAdClick: (Int) -> Unit,
-) : BaseRecyclerView.BaseViewHolder(view) {
-    private val nativeAdsImageView: ImageView = view.findViewById(R.id.native_ad_iv)
+) : BaseViewHolder(parent, R.layout.item_native_ad) {
+    private val binding = ItemNativeAdBinding.bind(itemView)
 
     init {
-        nativeAdsImageView.setOnClickListener { onAdClick(adapterPosition) }
+        binding.nativeAdIv.setOnClickListener { onAdClick(adapterPosition) }
     }
 
-    override fun <T>bind(item: T) {
-        when (item) {
-            is Ad -> {
-                nativeAdsImageView.setImageResource(item.bannerResId)
-            }
-            is Movie -> {}
-            is Reservation -> {}
-            is Theater -> {}
-        }
+    override fun bind(item: ListItem) {
+        binding.ad = item as Ad
     }
 }

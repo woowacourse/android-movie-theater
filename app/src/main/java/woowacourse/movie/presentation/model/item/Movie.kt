@@ -16,8 +16,11 @@ data class Movie(
     val introduce: String,
     @DrawableRes val thumbnail: Int,
 ) : ListItem, Parcelable {
-    val LocalDate.formattedDate: String
-        get() = this.format(DateTimeFormatter.ofPattern(MOVIE_DATE_PATTERN))
+    val formattedStartDate: String
+        get() = startDate.format(DateTimeFormatter.ofPattern(MOVIE_DATE_PATTERN))
+
+    val formattedEndDate: String
+        get() = endDate.format(DateTimeFormatter.ofPattern(MOVIE_DATE_PATTERN))
 
     companion object {
         private const val MOVIE_DATE_PATTERN = "yyyy.MM.dd"

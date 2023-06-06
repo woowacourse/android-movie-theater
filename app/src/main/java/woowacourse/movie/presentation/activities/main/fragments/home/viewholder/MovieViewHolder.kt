@@ -1,49 +1,23 @@
 package woowacourse.movie.presentation.activities.main.fragments.home.viewholder
 
-import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.ViewGroup
 import woowacourse.movie.R
-import woowacourse.movie.presentation.base.BaseRecyclerView
-import woowacourse.movie.presentation.model.item.Ad
+import woowacourse.movie.databinding.ItemMovieBinding
+import woowacourse.movie.presentation.base.BaseViewHolder
+import woowacourse.movie.presentation.model.item.ListItem
 import woowacourse.movie.presentation.model.item.Movie
-import woowacourse.movie.presentation.model.item.Reservation
-import woowacourse.movie.presentation.model.item.Theater
 
 class MovieViewHolder(
-    view: View,
+    val parent: ViewGroup,
     onClick: (Int) -> Unit,
-) : BaseRecyclerView.BaseViewHolder(view) {
-    private val posterImageView: ImageView = view.findViewById(R.id.poster_iv)
-    private val titleTextView: TextView = view.findViewById(R.id.title_tv)
-    private val dateTextView: TextView = view.findViewById(R.id.date_tv)
-    private val runningTimeTextView: TextView = view.findViewById(R.id.running_time_tv)
-    private val bookButton: Button = view.findViewById(R.id.book_btn)
+) : BaseViewHolder(parent, R.layout.item_movie) {
+    private val binding = ItemMovieBinding.bind(itemView)
 
     init {
-        bookButton.setOnClickListener { onClick(adapterPosition) }
+        binding.bookBtn.setOnClickListener { onClick(adapterPosition) }
     }
 
-    override fun <T>bind(item: T) {
-        when (item) {
-            is Movie -> {
-                with(item) {
-                    posterImageView.setImageResource(thumbnail)
-                    titleTextView.text = title
-                    dateTextView.text = dateTextView.context.getString(
-                        R.string.movie_release_date,
-                        startDate.formattedDate,
-                        endDate.formattedDate,
-                    )
-                    runningTimeTextView.text =
-                        runningTimeTextView.context.getString(R.string.movie_running_time, runningTime)
-                }
-            }
-            is Reservation -> {}
-            is Ad -> {}
-            is Theater -> {}
-        }
-        if (item !is Movie) return
+    override fun bind(item: ListItem) {
+        binding.movie = item as Movie
     }
 }
