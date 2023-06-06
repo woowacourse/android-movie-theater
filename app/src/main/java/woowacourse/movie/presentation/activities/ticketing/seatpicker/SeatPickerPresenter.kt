@@ -23,8 +23,8 @@ class SeatPickerPresenter(
 
     private var pickedSeats = DomainPickedSeats()
 
-    override fun updateMovieTitle() {
-        view.setMovieTitle()
+    override fun updateView() {
+        view.showData()
     }
 
     override fun updateDoneBtnEnabled(isEnabled: Boolean) {

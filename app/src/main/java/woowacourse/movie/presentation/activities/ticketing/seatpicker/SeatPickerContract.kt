@@ -16,13 +16,14 @@ interface SeatPickerContract {
 
         fun showTicketingConfirmDialog()
 
-        fun setMovieTitle()
+        fun showData()
         fun setDoneBtnEnabled(isEnabled: Boolean)
         fun setTotalPriceView(ticketPrice: TicketPrice)
     }
 
     interface Presenter {
-        fun updateMovieTitle()
+        fun updateView()
+
         fun updateDoneBtnEnabled(isEnabled: Boolean)
         fun updateTotalPriceView(ticketPrice: TicketPrice)
         fun onConfirmButtonClick()

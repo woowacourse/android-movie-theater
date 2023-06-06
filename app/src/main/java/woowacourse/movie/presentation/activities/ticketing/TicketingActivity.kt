@@ -205,18 +205,7 @@ class TicketingActivity : AppCompatActivity(), View.OnClickListener, TicketingCo
     }
 
     override fun setMovieDetails(movie: Movie) {
-        with(movie) {
-            binding.posterIv.setImageResource(thumbnail)
-            binding.titleTv.text = title
-            binding.dateTv.text = getString(
-                R.string.movie_release_date,
-                formattedStartDate,
-                formattedEndDate,
-            )
-            binding.runningTimeTv.text =
-                getString(R.string.movie_running_time, runningTime)
-            binding.introduceTv.text = introduce
-        }
+        binding.movie = movie
     }
 
     companion object {

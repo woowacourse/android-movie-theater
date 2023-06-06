@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="movie"
+            type="woowacourse.movie.presentation.model.item.Movie" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -39,6 +45,7 @@
                     android:layout_marginTop="25dp"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    android:text="@{movie.title}"
                     android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold"
@@ -50,6 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="34dp"
+                    android:text="@{@string/movie_release_date(movie.formattedStartDate, movie.formattedEndDate)}"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     tools:text="상영일: 2024.3.1" />
@@ -59,6 +67,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
+                    android:text="@{@string/movie_running_time(movie.runningTime)}"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     tools:text="러닝타임: 152분" />
@@ -70,6 +79,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="20dp"
+                    android:text="@{movie.introduce}"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     tools:text="《해리 포터와 마법사의 돌》은 2001년 J. K. 롤링의 동명 소설을 원작으로 하여 만든, 영국과 미국 합작, 판타지 영화이다. 해리포터 시리즈 영화 8부작 중 첫 번째에 해당하는 작품이다. 크리스 콜럼버스가 감독을 맡았다." />

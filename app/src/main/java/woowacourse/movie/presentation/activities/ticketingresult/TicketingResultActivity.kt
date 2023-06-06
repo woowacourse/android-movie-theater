@@ -3,8 +3,6 @@ package woowacourse.movie.presentation.activities.ticketingresult
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityTicketingResultBinding
 import woowacourse.movie.presentation.extensions.getParcelableCompat
 import woowacourse.movie.presentation.extensions.showBackButton
@@ -21,42 +19,18 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_ticketing_result)
+        binding = ActivityTicketingResultBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         presenter = TicketingResultPresenter(this)
         presenter.updateMovieInformation(reservation)
-        presenter.updatePaymentPrice(reservation)
         showBackButton()
     }
 
-    override fun setMovieInformation(reservation: Reservation) {
-        val movieDate = reservation.movieDate
-        val movieTime = reservation.movieTime
-
-        binding.titleTv.text = reservation.movieTitle
-        binding.seatsTv.text = reservation.seats.sorted().toString()
-        binding.theaterNameTv.text = reservation.theaterName
-        binding.dateTv.text = getString(
-            R.string.book_date_time,
-            movieDate.year,
-            movieDate.month,
-            movieDate.day,
-            movieTime.hour,
-            movieTime.min,
-        )
-    }
-
-    override fun setPaymentPrice(reservation: Reservation) {
-        val ticket = reservation.ticket
-        val ticketPrice = reservation.ticketPrice
-
-        binding.regularCountTv.text =
-            getString(R.string.regular_count, ticket.count)
-        binding.payResultTv.text = getString(
-            R.string.movie_pay_result,
-            ticketPrice.amount,
-            getString(R.string.on_site_payment),
-        )
+    override fun showReservation(reservation: Reservation) {
+        binding.reservation = reservation
+        binding.ticket = reservation.ticket
+        binding.ticketPrice = reservation.ticketPrice
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

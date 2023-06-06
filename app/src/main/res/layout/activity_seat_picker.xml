@@ -3,6 +3,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="ticket"
+            type="woowacourse.movie.presentation.model.Ticket" />
+
+        <variable
+            name="movie"
+            type="woowacourse.movie.presentation.model.item.Movie" />
+
+        <variable
+            name="theater"
+            type="woowacourse.movie.presentation.model.item.Theater" />
+    </data>
     
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -56,6 +70,7 @@
 
             <TextView
                 android:id="@+id/movie_title_tv"
+                android:text="@{movie.title}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"

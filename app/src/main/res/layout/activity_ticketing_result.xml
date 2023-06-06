@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="reservation"
+            type="woowacourse.movie.presentation.model.item.Reservation" />
+
+        <variable
+            name="ticket"
+            type="woowacourse.movie.presentation.model.Ticket" />
+
+        <variable
+            name="ticketPrice"
+            type="woowacourse.movie.presentation.model.TicketPrice" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -37,6 +51,7 @@
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="30dp"
             android:gravity="center"
+            android:text="@{reservation.movieTitle}"
             android:textColor="@color/black"
             android:textSize="25sp"
             android:textStyle="bold"
@@ -52,6 +67,7 @@
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="12dp"
             android:gravity="center"
+            android:text="@{@string/book_date_time(reservation.movieDate.year, reservation.movieDate.month, reservation.movieDate.day, reservation.movieTime.hour, reservation.movieTime.min)}"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -66,6 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
             android:gravity="center|end"
+            android:text="@{@string/regular_count(ticket.count)}"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -92,6 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
             android:gravity="center"
+            android:text="@{String.valueOf(reservation.seats.sorted())}"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -107,27 +125,28 @@
             android:layout_width="1dp"
             android:layout_height="0dp"
             android:background="@color/black"
-            app:layout_constraintStart_toEndOf="@id/seats_tv"
-            app:layout_constraintTop_toTopOf="@id/seats_tv"
             app:layout_constraintBottom_toBottomOf="@id/seats_tv"
-            app:layout_constraintEnd_toEndOf="@id/theater_name_tv"/>
+            app:layout_constraintEnd_toEndOf="@id/theater_name_tv"
+            app:layout_constraintStart_toEndOf="@id/seats_tv"
+            app:layout_constraintTop_toTopOf="@id/seats_tv" />
 
         <TextView
             android:id="@+id/theater_name_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
+            android:ellipsize="end"
+            android:gravity="center|start"
+            android:maxLines="1"
+            android:text="@{reservation.theaterName}"
+            android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:gravity="center|start"
-            android:textColor="@color/black"
-            android:maxLines="1"
-            android:ellipsize="end"
-            app:layout_constraintStart_toEndOf="@id/seat_and_theater_divider"
-            app:layout_constraintTop_toTopOf="@id/seats_tv"
             app:layout_constraintBottom_toBottomOf="@id/seats_tv"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="선릉 극장"/>
+            app:layout_constraintStart_toEndOf="@id/seat_and_theater_divider"
+            app:layout_constraintTop_toTopOf="@id/seats_tv"
+            tools:text="선릉 극장" />
 
         <TextView
             android:id="@+id/pay_result_tv"
@@ -136,6 +155,7 @@
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="20dp"
             android:gravity="center"
+            android:text="@{@string/movie_pay_result(ticketPrice.amount)}"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -143,7 +163,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/seats_tv"
             tools:text="13,000원 (현장 결제)" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatPickerBinding
 import woowacourse.movie.presentation.activities.main.alarm.PushAlarmManager
@@ -38,7 +37,7 @@ import woowacourse.movie.presentation.model.item.Theater
 import woowacourse.movie.presentation.receiver.ReservationPushReceiver
 
 class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
-    override lateinit var presenter: SeatPickerPresenter
+    override lateinit var presenter: SeatPickerContract.Presenter
     private lateinit var binding: ActivitySeatPickerBinding
 
     private val seatRowSize: Int = 5
@@ -57,7 +56,9 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_picker)
+        binding = ActivitySeatPickerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         val db = HistoryDbHelper(this)
         presenter = SeatPickerPresenter(this, db)
         restoreState(savedInstanceState)
@@ -68,14 +69,16 @@ class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
     private fun initView() {
         showBackButton()
         initViewClickListener()
-        presenter.updateMovieTitle()
+        presenter.updateView()
         updateBottomView()
 
         initSeatTable(seatRowSize, seatColSize)
     }
 
-    override fun setMovieTitle() {
-        binding.movieTitleTv.text = movie.title
+    override fun showData() {
+        binding.ticket = ticket
+        binding.movie = movie
+        binding.theater = theater
     }
 
     override fun setDoneBtnEnabled(isEnabled: Boolean) {
