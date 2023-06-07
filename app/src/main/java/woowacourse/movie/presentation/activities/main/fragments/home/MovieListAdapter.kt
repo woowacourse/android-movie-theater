@@ -1,40 +1,49 @@
 package woowacourse.movie.presentation.activities.main.fragments.home
 
 import android.view.ViewGroup
-import woowacourse.movie.R
+import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.presentation.activities.main.fragments.home.type.MovieViewType
 import woowacourse.movie.presentation.activities.main.fragments.home.viewholder.MovieViewHolder
 import woowacourse.movie.presentation.activities.main.fragments.home.viewholder.NativeAdViewHolder
-import woowacourse.movie.presentation.base.BaseRecyclerView
+import woowacourse.movie.presentation.base.BaseViewHolder
 import woowacourse.movie.presentation.model.item.Ad
 import woowacourse.movie.presentation.model.item.ListItem
 import woowacourse.movie.presentation.model.item.Movie
 
 class MovieListAdapter(
+    private val items: MutableList<ListItem>,
     private val adInterval: Int = DEFAULT_AD_INTERVAL,
     private val adTypes: List<ListItem>,
-    onItemClick: (ListItem) -> Unit = {},
-) : BaseRecyclerView.Adapter(onItemClick) {
+    private val onItemClick: (ListItem) -> Unit = {},
+) : RecyclerView.Adapter<BaseViewHolder>() {
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int,
-    ): BaseRecyclerView.BaseViewHolder = when (MovieViewType.get(viewType)) {
-        MovieViewType.MOVIE -> {
-            val movieView = parent.inflate(R.layout.item_movie)
-            MovieViewHolder(movieView, onItemViewClick)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+        return when (MovieViewType.get(viewType)) {
+            MovieViewType.MOVIE -> {
+                MovieViewHolder(parent) { position ->
+                    onItemClick(items[position])
+                }
+            }
+            MovieViewType.AD -> {
+                NativeAdViewHolder(parent) { position ->
+                    onItemClick(items[position])
+                }
+            }
         }
+    }
 
-        MovieViewType.AD -> {
-            val adView = parent.inflate(R.layout.item_native_ad)
-            NativeAdViewHolder(adView, onItemViewClick)
-        }
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+        holder.bind(items[position])
     }
 
     override fun getItemViewType(position: Int): Int = when (items[position]) {
         is Movie -> MovieViewType.MOVIE.type
         is Ad -> MovieViewType.AD.type
         else -> throw IllegalArgumentException(INVALID_ITEM_TYPE)
+    }
+
+    override fun getItemCount(): Int {
+        return items.size
     }
 
     fun appendAll(newItems: List<ListItem>) {

@@ -9,8 +9,7 @@
     <string name="book_date_time">%04d.%02d.%02d %02d:%02d</string>
     <string name="regular_count">일반 %d명</string>
     <string name="movie_pay_price">%,d원</string>
-    <string name="movie_pay_result">%,d원 (%s)</string>
-    <string name="on_site_payment">현장 결제</string>
+    <string name="movie_pay_result">%,d원 (현장결제)</string>
     <string name="select_date_and_time">날짜와 시간을 선택해주세요!</string>
     <string name="pick_seat">좌석 선택</string>
     <string name="plus_ticket">+</string>
@@ -34,4 +33,5 @@
     <string name="notification_push_desc">%s %d분 후에 상영</string>
     <string name="permission_request_dialog_title">권한 요청</string>
     <string name="permission_request_dialog_desc">푸시 알림을 받으려면 권한이 필요합니다.</string>
+    <string name="theater_movie_time">%d개의 상영 시간</string>
 </resources>

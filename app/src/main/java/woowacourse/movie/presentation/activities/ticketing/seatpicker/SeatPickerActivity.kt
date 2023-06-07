@@ -1,21 +1,19 @@
-package woowacourse.movie.presentation.activities.ticketing
+package woowacourse.movie.presentation.activities.ticketing.seatpicker
 
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.discount.policy.MovieDayDiscountPolicy
-import woowacourse.movie.domain.model.discount.policy.MovieTimeDiscountPolicy
-import woowacourse.movie.domain.model.seat.DomainPickedSeats
-import woowacourse.movie.domain.model.seat.DomainSeat
+import woowacourse.movie.databinding.ActivitySeatPickerBinding
 import woowacourse.movie.presentation.activities.main.alarm.PushAlarmManager
-import woowacourse.movie.presentation.activities.main.fragments.home.HomeFragment
+import woowacourse.movie.presentation.activities.main.fragments.history.HistoryDbHelper
+import woowacourse.movie.presentation.activities.main.fragments.theaterPicker.TheaterPickerDialog
+import woowacourse.movie.presentation.activities.ticketing.TicketingActivity
 import woowacourse.movie.presentation.activities.ticketingresult.TicketingResultActivity
 import woowacourse.movie.presentation.extensions.createAlertDialog
 import woowacourse.movie.presentation.extensions.getParcelableCompat
@@ -25,8 +23,6 @@ import woowacourse.movie.presentation.extensions.positiveButton
 import woowacourse.movie.presentation.extensions.showBackButton
 import woowacourse.movie.presentation.extensions.showToast
 import woowacourse.movie.presentation.extensions.title
-import woowacourse.movie.presentation.mapper.toDomain
-import woowacourse.movie.presentation.mapper.toPresentation
 import woowacourse.movie.presentation.model.MovieDate
 import woowacourse.movie.presentation.model.MovieTime
 import woowacourse.movie.presentation.model.PickedSeats
@@ -37,72 +33,71 @@ import woowacourse.movie.presentation.model.Ticket
 import woowacourse.movie.presentation.model.TicketPrice
 import woowacourse.movie.presentation.model.item.Movie
 import woowacourse.movie.presentation.model.item.Reservation
+import woowacourse.movie.presentation.model.item.Theater
 import woowacourse.movie.presentation.receiver.ReservationPushReceiver
 
-class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
-    private var pickedSeats = DomainPickedSeats()
+class SeatPickerActivity : AppCompatActivity(), SeatPickerContract.View {
+    override lateinit var presenter: SeatPickerContract.Presenter
+    private lateinit var binding: ActivitySeatPickerBinding
+
     private val seatRowSize: Int = 5
     private val seatColSize: Int = 4
 
     private val movieDate by lazy {
-        intent.getParcelableCompat<MovieDate>(TicketingActivity.MOVIE_DATE_KEY)!!.toDomain()
+        intent.getParcelableCompat<MovieDate>(TicketingActivity.MOVIE_DATE_KEY)!!
     }
     private val movieTime by lazy {
-        intent.getParcelableCompat<MovieTime>(TicketingActivity.MOVIE_TIME_KEY)!!.toDomain()
+        intent.getParcelableCompat<MovieTime>(TicketingActivity.MOVIE_TIME_KEY)!!
     }
     private val ticket by lazy { intent.getParcelableCompat<Ticket>(TicketingActivity.TICKET_KEY)!! }
-    private val movie by lazy { intent.getParcelableCompat<Movie>(HomeFragment.MOVIE_KEY)!! }
+    private val movie by lazy { intent.getParcelableCompat<Movie>(TheaterPickerDialog.MOVIE_KEY)!! }
+    private val theater by lazy { intent.getParcelableCompat<Theater>(TheaterPickerDialog.THEATER_KEY)!! }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        restoreState(savedInstanceState)
-        setContentView(R.layout.activity_seat_picker)
-        initView()
-    }
 
-    private fun restoreState(instanceState: Bundle?) {
-        instanceState?.getParcelableCompat<PickedSeats>(PICKED_SEATS_KEY)?.let { restoredSeats ->
-            pickedSeats = restoredSeats.toDomain()
-        }
+        binding = ActivitySeatPickerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val db = HistoryDbHelper(this)
+        presenter = SeatPickerPresenter(this, db)
+        restoreState(savedInstanceState)
+
+        initView()
     }
 
     private fun initView() {
         showBackButton()
-        showMovieTitle()
         initViewClickListener()
-        updateDoneBtnEnabled(!canPick())
-        updateTotalPriceView(calculateTotalPrice())
+        presenter.updateView()
+        updateBottomView()
+
         initSeatTable(seatRowSize, seatColSize)
     }
 
-    private fun showMovieTitle() {
-        findViewById<TextView>(R.id.movie_title_tv).text = movie.title
+    override fun showData() {
+        binding.ticket = ticket
+        binding.movie = movie
+        binding.theater = theater
+    }
+
+    override fun setDoneBtnEnabled(isEnabled: Boolean) {
+        binding.doneBtn.isEnabled = isEnabled
+    }
+
+    override fun setTotalPriceView(ticketPrice: TicketPrice) {
+        binding.totalPriceTv.text = getString(R.string.movie_pay_price, ticketPrice.amount)
     }
 
     private fun initViewClickListener() {
-        findViewById<TextView>(R.id.done_btn).setOnClickListener(this)
+        binding.doneBtn.setOnClickListener { presenter.onConfirmButtonClick() }
     }
 
-    private fun updateDoneBtnEnabled(isEnabled: Boolean) {
-        findViewById<TextView>(R.id.done_btn).isEnabled = isEnabled
-    }
-
-    private fun canPick(): Boolean =
-        pickedSeats.canPick(ticket.toDomain())
-
-    private fun updateTotalPriceView(ticketPrice: TicketPrice) {
-        findViewById<TextView>(R.id.total_price_tv).text =
-            getString(R.string.movie_pay_price, ticketPrice.amount)
-    }
-
-    private fun calculateTotalPrice(): TicketPrice = pickedSeats.calculateTotalPrice(
-        MovieDayDiscountPolicy(movieDate),
-        MovieTimeDiscountPolicy(movieTime),
-    ).toPresentation()
+    private fun canPick(): Boolean = presenter.canPick(ticket)
 
     private fun initSeatTable(rowSize: Int, colSize: Int) {
         SeatRow.make(rowSize).forEach { seatRow ->
-            findViewById<TableLayout>(R.id.seat_table).addView(makeSeatTableRow(seatRow, colSize))
+            binding.seatTable.addView(makeSeatTableRow(seatRow, colSize))
         }
     }
 
@@ -113,8 +108,8 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun makeSeatView(row: SeatRow, col: SeatColumn): View {
-        val seat = Seat(row, col).toDomain()
-        return seat.toPresentation().makeView(this, isPicked(seat)) {
+        val seat = Seat(row, col)
+        return seat.makeView(this, isPicked(seat)) {
             when {
                 isPicked(seat) -> unpick(this, seat)
                 canPick() -> pick(this, seat)
@@ -123,27 +118,28 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun unpick(seatView: View, seat: DomainSeat) {
-        pickedSeats = pickedSeats.remove(seat)
-        updateToggledSeatResultView(seatView, false)
-    }
-
-    private fun pick(seatView: View, seat: DomainSeat) {
-        pickedSeats = pickedSeats.add(seat)
+    private fun pick(seatView: View, seat: Seat) {
+        presenter.pick(seat)
         updateToggledSeatResultView(seatView, true)
     }
 
-    private fun updateToggledSeatResultView(seatView: View, isPicked: Boolean) {
-        seatView.findViewById<TextView>(R.id.seat_number_tv).isSelected = isPicked
-        updateTotalPriceView(calculateTotalPrice())
-        updateDoneBtnEnabled(!canPick())
+    private fun unpick(seatView: View, seat: Seat) {
+        presenter.unPick(seat)
+        updateToggledSeatResultView(seatView, false)
     }
 
-    private fun isPicked(seat: DomainSeat) = pickedSeats.isPicked(seat)
+    private fun updateToggledSeatResultView(seatView: View, isPicked: Boolean) {
+        updateBottomView()
+        seatView.findViewById<TextView>(R.id.seat_number_tv).isSelected = isPicked
+    }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putParcelable(PICKED_SEATS_KEY, pickedSeats.toPresentation())
+    private fun updateBottomView() {
+        presenter.updateDoneBtnEnabled(!canPick())
+        presenter.updateTotalPriceView(presenter.calculateTotalPrice(movieDate, movieTime))
+    }
+
+    private fun isPicked(seat: Seat): Boolean {
+        return presenter.isPicked(seat)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -153,17 +149,13 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onClick(view: View) {
-        when (view.id) {
-            R.id.done_btn -> showTicketingConfirmDialog()
-        }
-    }
-
-    private fun showTicketingConfirmDialog() {
+    override fun showTicketingConfirmDialog() {
         createAlertDialog(false) {
             title(getString(R.string.ticketing_confirm_title))
             message(getString(R.string.ticketing_confirm_message))
-            positiveButton(getString(R.string.ticketing_confirm_positive_btn)) { startTicketingResultActivity() }
+            positiveButton(getString(R.string.ticketing_confirm_positive_btn)) {
+                startTicketingResultActivity()
+            }
             negativeButton(getString(R.string.ticketing_confirm_negative_btn)) { it.dismiss() }
         }.show()
     }
@@ -171,12 +163,15 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
     private fun startTicketingResultActivity() {
         val reservation = Reservation(
             movieTitle = movie.title,
-            movieDate = movieDate.toPresentation(),
-            movieTime = movieTime.toPresentation(),
+            movieDate = movieDate,
+            movieTime = movieTime,
             ticket = ticket,
-            seats = pickedSeats.toPresentation(),
-            ticketPrice = calculateTotalPrice(),
+            seats = presenter.getPickedSeats(),
+            theaterName = theater.theaterName,
+            ticketPrice = presenter.calculateTotalPrice(movieDate, movieTime),
         )
+
+        presenter.insertData(reservation)
 
         registerPushBroadcast(reservation)
 
@@ -185,6 +180,17 @@ class SeatPickerActivity : AppCompatActivity(), View.OnClickListener {
                 .putExtra(TicketingResultActivity.RESERVATION_KEY, reservation),
         )
         finish()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable(PICKED_SEATS_KEY, presenter.getPickedSeats())
+    }
+
+    private fun restoreState(instanceState: Bundle?) {
+        instanceState?.getParcelableCompat<PickedSeats>(PICKED_SEATS_KEY)?.let { restoredSeats ->
+            presenter.setPickedSeats(restoredSeats)
+        }
     }
 
     private fun registerPushBroadcast(reservation: Reservation) {

@@ -27,7 +27,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -37,6 +37,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+    }
+    dataBinding {
+        enable = true
     }
 }
 
@@ -58,5 +61,6 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))
     implementation("androidx.fragment:fragment-ktx:1.4.0")
-    androidTestImplementation("androidx.fragment:fragment-testing:$fragmentVersion")
+    testImplementation("io.mockk:mockk-android:1.13.5")
+    androidTestImplementation("io.mockk:mockk-android:1.13.5")
 }
