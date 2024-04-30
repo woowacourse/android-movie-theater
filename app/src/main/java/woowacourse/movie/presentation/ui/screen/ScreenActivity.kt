@@ -34,13 +34,19 @@ class ScreenActivity : BaseActivity(), View {
         adapter.updateScreens(screens)
     }
 
-    override fun showBottomTheater(theaterCounts: List<TheaterCount>) {
-        dialog = BottomTheatersFragment(theaterCounts, presenter)
+    override fun showBottomTheater(
+        theaterCounts: List<TheaterCount>,
+        movieId: Int,
+    ) {
+        dialog = BottomTheatersFragment(theaterCounts, presenter, movieId)
         dialog.show(this.supportFragmentManager, null)
     }
 
-    override fun navigateToDetail(id: Int) {
+    override fun navigateToDetail(
+        movieId: Int,
+        theaterId: Int,
+    ) {
         dialog.dismiss()
-        DetailActivity.startActivity(this, id)
+        DetailActivity.startActivity(this, movieId, theaterId)
     }
 }

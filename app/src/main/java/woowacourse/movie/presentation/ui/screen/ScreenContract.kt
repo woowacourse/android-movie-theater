@@ -10,9 +10,15 @@ interface ScreenContract {
     interface View : BaseView {
         fun showScreens(screens: List<ScreenView>)
 
-        fun showBottomTheater(theaterCounts: List<TheaterCount>)
+        fun showBottomTheater(
+            theaterCounts: List<TheaterCount>,
+            movieId: Int,
+        )
 
-        fun navigateToDetail(id: Int)
+        fun navigateToDetail(
+            movieId: Int,
+            theaterId: Int,
+        )
     }
 
     interface Presenter : BasePresenter, ScreenActionHandler, BottomTheaterActionHandler {

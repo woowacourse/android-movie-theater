@@ -10,6 +10,7 @@ import woowacourse.movie.domain.model.TheaterCount
 class BottomTheatersViewHolder(
     val view: View,
     private val actionHandler: BottomTheaterActionHandler,
+    val movieId: Int,
 ) : RecyclerView.ViewHolder(view) {
     private val theaterName: TextView = view.findViewById(R.id.tv_bottom_theater_name)
     private val count: TextView = view.findViewById(R.id.tv_bottom_count)
@@ -17,7 +18,7 @@ class BottomTheatersViewHolder(
 
     fun bind(theaterCount: TheaterCount) {
         initView(theaterCount)
-        initClickListener(theaterCount)
+        initClickListener(theaterCount, movieId)
     }
 
     private fun initView(theaterCount: TheaterCount) {
@@ -28,9 +29,12 @@ class BottomTheatersViewHolder(
         }
     }
 
-    private fun initClickListener(theaterCount: TheaterCount) {
+    private fun initClickListener(
+        theaterCount: TheaterCount,
+        movieId: Int,
+    ) {
         clTheater.setOnClickListener {
-            actionHandler.onTheaterClick(theaterCount.id)
+            actionHandler.onTheaterClick(movieId, theaterCount.id)
         }
     }
 }

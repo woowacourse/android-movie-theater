@@ -13,11 +13,14 @@ class ScreenPresenter(
 
     override fun onScreenClick(id: Int) {
         repository.findTheaterCount(id).onSuccess { theaterCounts ->
-            view.showBottomTheater(theaterCounts)
+            view.showBottomTheater(theaterCounts, id)
         }
     }
 
-    override fun onTheaterClick(id: Int) {
-        view.navigateToDetail(id)
+    override fun onTheaterClick(
+        movieId: Int,
+        theaterId: Int,
+    ) {
+        view.navigateToDetail(movieId, theaterId)
     }
 }

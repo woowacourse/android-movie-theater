@@ -150,14 +150,14 @@ class DummyScreens : ScreenRepository {
         )
 
     val theaters =
-        listOf(theater, theater.copy(id = 1, name = "강남"), theater.copy(id = 1, name = "잠실"))
+        listOf(theater, theater.copy(id = 1, name = "강남"), theater.copy(id = 2, name = "잠실"))
 
     override fun load(): List<ScreenView> =
         movies.flatMap { movie ->
             listOf(
-                movie.copy(id = (movie.id * 3) + 1, title = "해리 포터와 마법사의 돌"),
-                movie.copy(id = (movie.id * 3) + 2, title = "해리 포터와 비밀의 방"),
-                movie.copy(id = (movie.id * 3) + 3, title = "해리 포터와 아즈카반의 죄수"),
+                movie.copy(id = (movie.id * 3), title = "해리 포터와 마법사의 돌"),
+                movie.copy(id = (movie.id * 3) + 1, title = "해리 포터와 비밀의 방"),
+                movie.copy(id = (movie.id * 3) + 2, title = "해리 포터와 아즈카반의 죄수"),
                 Ads(R.drawable.img_ads),
             )
         }
@@ -173,7 +173,7 @@ class DummyScreens : ScreenRepository {
         movieId: Int,
     ): Result<Screen> =
         runCatching {
-            theaters.find { it.id == theaterId }?.screens?.find { screen -> screen.id == movieId }
+            theaters.find { it.id == theaterId }?.screens?.find { screen -> screen.movie.id == movieId }
                 ?: throw NoSuchElementException()
         }
 

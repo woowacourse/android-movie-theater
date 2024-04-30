@@ -40,8 +40,10 @@ class DetailActivity : BaseActivity(), View {
 
     override fun initStartView() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        val id = intent.getIntExtra(PUT_EXTRA_KEY_ID, DEFAULT_ID)
-        presenter.loadScreen(id, id)
+        val movieId = intent.getIntExtra(PUT_EXTRA_KEY_MOVIE_ID, DEFAULT_ID)
+        val theaterId = intent.getIntExtra(PUT_EXTRA_KEY_THEATER_ID, DEFAULT_ID)
+
+        presenter.loadScreen(movieId, theaterId)
         initClickListener()
         initItemSelectedListener()
     }
@@ -205,7 +207,8 @@ class DetailActivity : BaseActivity(), View {
 
     companion object {
         private const val DEFAULT_ID = -1
-        private const val PUT_EXTRA_KEY_ID = "screenId"
+        private const val PUT_EXTRA_KEY_MOVIE_ID = "movieId"
+        private const val PUT_EXTRA_KEY_THEATER_ID = "theaterId"
 
         private const val DEFAULT_TICKET_COUNT = -1
         private const val PUT_TICKET_STATE_KEY = "ticketCount"
@@ -214,10 +217,12 @@ class DetailActivity : BaseActivity(), View {
 
         fun startActivity(
             context: Context,
-            id: Int,
+            movieId: Int,
+            theaterId: Int,
         ) {
             val intent = Intent(context, DetailActivity::class.java)
-            intent.putExtra(PUT_EXTRA_KEY_ID, id)
+            intent.putExtra(PUT_EXTRA_KEY_MOVIE_ID, movieId)
+            intent.putExtra(PUT_EXTRA_KEY_THEATER_ID, theaterId)
             context.startActivity(intent)
         }
     }
