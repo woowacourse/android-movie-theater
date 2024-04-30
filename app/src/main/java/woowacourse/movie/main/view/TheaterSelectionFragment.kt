@@ -21,7 +21,7 @@ class TheaterSelectionFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         val binding: FragmentTheaterSelectionBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_theater_selection, container, false)
 
