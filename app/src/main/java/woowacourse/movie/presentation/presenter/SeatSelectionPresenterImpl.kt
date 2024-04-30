@@ -1,6 +1,6 @@
 package woowacourse.movie.presentation.presenter
 
-import woowacourse.movie.data.repository.ScreeningMovieInfoRepositoryImpl
+import woowacourse.movie.data.repository.ReservationMovieInfoRepositoryImpl
 import woowacourse.movie.data.repository.SeatRepositoryImpl
 import woowacourse.movie.domain.model.reservation.MovieTicket
 import woowacourse.movie.domain.model.reservation.ReservationInfo
@@ -15,7 +15,7 @@ class SeatSelectionPresenterImpl(
     private var view: SeatSelectionContract.View? = null
     private val reservationInfo =
         ReservationInfo(reservationCount, seatRepository.getSeatingChart())
-    private val screeningMovieInfoRepository = ScreeningMovieInfoRepositoryImpl
+    private val screeningMovieInfoRepository = ReservationMovieInfoRepositoryImpl
 
     override fun attachView(view: SeatSelectionContract.View) {
         this.view = view

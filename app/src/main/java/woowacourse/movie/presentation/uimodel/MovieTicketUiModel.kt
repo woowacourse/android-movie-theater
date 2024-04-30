@@ -52,15 +52,15 @@ data class MovieTicketUiModel(
 
     constructor(movieTicket: MovieTicket) : this(
         movieTicket.ticketId,
-        movieTicket.screeningMovieInfo.title,
-        movieTicket.screeningMovieInfo.dateTime.screeningDate.date.format(DEFAULT_DATE_FORMAT),
-        movieTicket.screeningMovieInfo.dateTime.screeningDate.screeningTime.startTime.format(
+        movieTicket.reservationMovieInfo.title,
+        movieTicket.reservationMovieInfo.dateTime.screeningDate.date.format(DEFAULT_DATE_FORMAT),
+        movieTicket.reservationMovieInfo.dateTime.screeningDate.screeningTime.startTime.format(
             DateTimeFormatter.ofPattern(DEFAULT_TIME_FORMAT),
         ),
-        movieTicket.screeningMovieInfo.dateTime.screeningDate.screeningTime.getEndTime().format(
+        movieTicket.reservationMovieInfo.dateTime.screeningDate.screeningTime.getEndTime().format(
             DateTimeFormatter.ofPattern(DEFAULT_TIME_FORMAT),
         ),
-        movieTicket.screeningMovieInfo.dateTime.screeningInfo.runningTime,
+        movieTicket.reservationMovieInfo.dateTime.screeningInfo.runningTime,
         movieTicket.reservationInfo.reservationCount,
         movieTicket.reservationInfo.selectedSeats.totalPrice(),
         movieTicket.reservationInfo.selectedSeats.seats.map { seat ->

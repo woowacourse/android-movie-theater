@@ -1,12 +1,12 @@
 package woowacourse.movie.presentation.presenter
 
 import woowacourse.movie.data.repository.MovieRepositoryImpl
-import woowacourse.movie.data.repository.ScreeningMovieInfoRepositoryImpl
+import woowacourse.movie.data.repository.ReservationMovieInfoRepositoryImpl
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.reservation.ReservationCount
-import woowacourse.movie.domain.model.reservation.ScreeningMovieInfo
+import woowacourse.movie.domain.model.reservation.ReservationMovieInfo
 import woowacourse.movie.presentation.repository.MovieRepository
-import woowacourse.movie.presentation.repository.ScreeningMovieInfoRepository
+import woowacourse.movie.presentation.repository.ReservationMovieInfoRepository
 import woowacourse.movie.presentation.contract.MovieDetailContract
 import woowacourse.movie.presentation.uimodel.MovieUiModel
 import java.time.LocalDate
@@ -19,13 +19,13 @@ class MovieDetailPresenterImpl(
 ) : MovieDetailContract.Presenter {
     private var view: MovieDetailContract.View? = null
     private val movie: Movie = movieRepository.findMovieById(movieId)
-    private val screeningMovieInfo: ScreeningMovieInfo = setScreeningMovieInfo()
+    private val reservationMovieInfo: ReservationMovieInfo = setScreeningMovieInfo()
     private val reservationCount: ReservationCount = ReservationCount()
-    private val screeningMovieInfoRepository: ScreeningMovieInfoRepository =
-        ScreeningMovieInfoRepositoryImpl
+    private val reservationMovieInfoRepository: ReservationMovieInfoRepository =
+        ReservationMovieInfoRepositoryImpl
 
-    private fun setScreeningMovieInfo(): ScreeningMovieInfo {
-        return ScreeningMovieInfo(movie.title, movie.screeningInfo)
+    private fun setScreeningMovieInfo(): ReservationMovieInfo {
+        return ReservationMovieInfo(movie.title, movie.screeningInfo)
     }
 
     override fun attachView(view: MovieDetailContract.View) {
@@ -47,7 +47,7 @@ class MovieDetailPresenterImpl(
             movieRepository.getScreeningDateInfo(movieId).map { date ->
                 date.format(DEFAULT_DATE_FORMAT)
             }
-        val times = getScreeningTimeSchedule(screeningMovieInfo.dateTime.screeningDate.isWeekend())
+        val times = getScreeningTimeSchedule(reservationMovieInfo.dateTime.screeningDate.isWeekend())
         view?.setScreeningDatesAndTimes(dates, times, DEFAULT_DATA_INDEX)
     }
 
@@ -58,17 +58,17 @@ class MovieDetailPresenterImpl(
 
     override fun selectDate(date: String) {
         val screeningDate = LocalDate.parse(date, DEFAULT_DATE_FORMAT)
-        screeningMovieInfo.changeDate(
+        reservationMovieInfo.changeDate(
             year = screeningDate.year,
             month = screeningDate.monthValue,
             day = screeningDate.dayOfMonth,
         )
-        loadScreeningTimes(screeningMovieInfo.dateTime.screeningDate.isWeekend())
+        loadScreeningTimes(reservationMovieInfo.dateTime.screeningDate.isWeekend())
     }
 
     override fun selectTime(time: String) {
         val screeningTime = LocalTime.parse(time)
-        screeningMovieInfo.changeTime(
+        reservationMovieInfo.changeTime(
             hour = screeningTime.hour,
             minute = screeningTime.minute,
         )
@@ -90,8 +90,8 @@ class MovieDetailPresenterImpl(
     }
 
     override fun onReserveButtonClicked() {
-        screeningMovieInfoRepository.saveMovieInfo(screeningMovieInfo)
-        view?.moveToSeatSelection(reservationCount.count, screeningMovieInfo.title)
+        reservationMovieInfoRepository.saveMovieInfo(reservationMovieInfo)
+        view?.moveToSeatSelection(reservationCount.count, reservationMovieInfo.title)
     }
 
     private fun getScreeningTimeSchedule(isWeekend: Boolean): List<String> {
