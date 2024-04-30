@@ -1,7 +1,7 @@
 package woowacourse.movie.data.repository
 
 import woowacourse.movie.domain.model.reservation.ScreeningMovieInfo
-import woowacourse.movie.domain.repository.ScreeningMovieInfoRepository
+import woowacourse.movie.presentation.repository.ScreeningMovieInfoRepository
 
 object ScreeningMovieInfoRepositoryImpl : ScreeningMovieInfoRepository {
     private lateinit var screeningMovieInfo: ScreeningMovieInfo

@@ -2,7 +2,7 @@ package woowacourse.movie.data.repository
 
 import woowacourse.movie.R
 import woowacourse.movie.domain.admodel.Ad
-import woowacourse.movie.domain.repository.AdRepository
+import woowacourse.movie.presentation.repository.AdRepository
 
 object AdRepositoryImpl : AdRepository {
     override fun getAds(): List<Ad> {

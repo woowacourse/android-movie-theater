@@ -4,8 +4,8 @@ import woowacourse.movie.data.repository.AdRepositoryImpl
 import woowacourse.movie.data.repository.MovieRepositoryImpl
 import woowacourse.movie.domain.admodel.Ad
 import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.domain.repository.AdRepository
-import woowacourse.movie.domain.repository.MovieRepository
+import woowacourse.movie.presentation.repository.AdRepository
+import woowacourse.movie.presentation.repository.MovieRepository
 import woowacourse.movie.presentation.contract.MainContract
 import woowacourse.movie.presentation.uimodel.MovieUiModel
 

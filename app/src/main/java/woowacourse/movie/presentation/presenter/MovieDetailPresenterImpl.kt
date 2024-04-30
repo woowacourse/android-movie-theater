@@ -5,8 +5,8 @@ import woowacourse.movie.data.repository.ScreeningMovieInfoRepositoryImpl
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.reservation.ReservationCount
 import woowacourse.movie.domain.model.reservation.ScreeningMovieInfo
-import woowacourse.movie.domain.repository.MovieRepository
-import woowacourse.movie.domain.repository.ScreeningMovieInfoRepository
+import woowacourse.movie.presentation.repository.MovieRepository
+import woowacourse.movie.presentation.repository.ScreeningMovieInfoRepository
 import woowacourse.movie.presentation.contract.MovieDetailContract
 import woowacourse.movie.presentation.uimodel.MovieUiModel
 import java.time.LocalDate

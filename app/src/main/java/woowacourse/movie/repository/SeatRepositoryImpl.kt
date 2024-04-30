@@ -1,7 +1,7 @@
 package woowacourse.movie.data.repository
 
 import woowacourse.movie.domain.model.reservation.seat.SeatingChart
-import woowacourse.movie.domain.repository.SeatRepository
+import woowacourse.movie.presentation.repository.SeatRepository
 
 object SeatRepositoryImpl : SeatRepository {
     private const val ROW_SEAT_COUNT = 5
