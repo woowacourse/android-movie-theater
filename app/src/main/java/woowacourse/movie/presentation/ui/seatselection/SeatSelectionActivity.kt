@@ -52,8 +52,8 @@ class SeatSelectionActivity : BaseActivity(), View {
 
         reservationInfo?.let { reservationInfoItem ->
             presenter.updateUiModel(reservationInfoItem)
-            presenter.loadScreen(reservationInfoItem.screenId)
-            presenter.loadSeatBoard(reservationInfoItem.screenId)
+            presenter.loadScreen(reservationInfoItem.theaterId)
+            presenter.loadSeatBoard(reservationInfoItem.theaterId)
         }
     }
 

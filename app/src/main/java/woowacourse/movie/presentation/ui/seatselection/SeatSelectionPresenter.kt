@@ -19,7 +19,7 @@ class SeatSelectionPresenter(
     override fun updateUiModel(reservationInfo: ReservationInfo) {
         _uiModel =
             uiModel.copy(
-                id = reservationInfo.screenId,
+                id = reservationInfo.theaterId,
                 dateTime = reservationInfo.dateTime,
                 ticketCount = reservationInfo.ticketCount,
             )
