@@ -80,12 +80,13 @@ class MovieAdapter(
         movieHolder.runningTime.text = movies[position].runningTime.toString()
 
         movieHolder.itemView.setOnClickListener {
-            itemClickListener.onClick(position)
+            itemClickListener.onClick(movies[position].id)
+//            onMovie(movies[position].id)
         }
     }
 
     interface OnItemClickListener {
-        fun onClick(position: Int)
+        fun onClick(movieId: Long)
     }
 
     private lateinit var itemClickListener: OnItemClickListener

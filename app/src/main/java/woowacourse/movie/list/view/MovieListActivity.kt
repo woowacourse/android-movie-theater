@@ -53,13 +53,13 @@ class MovieListActivity : AppCompatActivity(), MovieListContract.View {
     override fun setOnListViewClickListener(savedInstanceState: Bundle?) {
         movieAdapter.setItemClickListener(
             object : MovieAdapter.OnItemClickListener {
-                override fun onClick(movieId: Int) {
+                override fun onClick(movieId: Long) {
                     // if (savedInstanceState == null) {
 //                    movieIntent.putExtra(EXTRA_MOVIE_ID_KEY, position.toLong())
 //                    this@MovieListActivity.startActivity(movieIntent)
                     val theaterFragment = TheaterFragment()
                     val bundle = Bundle()
-                    bundle.putInt("key", movieId)
+                    bundle.putLong("key", movieId)
                     theaterFragment.arguments = bundle
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.fragment_container_view, theaterFragment)

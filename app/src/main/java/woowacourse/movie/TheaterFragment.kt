@@ -22,7 +22,7 @@ class TheaterFragment : Fragment() {
     ): View? {
 //        return super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentTheaterBinding.inflate(inflater, container, false)
-        val movieId = arguments?.getInt("key")?.toLong()
+        val movieId = arguments?.getLong("key")
         Log.d("얍", "$movieId")
         val recyclerView: RecyclerView = binding.movieRecyclerView
         recyclerView.adapter =

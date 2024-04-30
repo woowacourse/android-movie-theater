@@ -1,5 +1,6 @@
 package woowacourse.movie.list.presenter
 
+import android.os.Bundle
 import woowacourse.movie.common.AdvertisementDataSource
 import woowacourse.movie.common.MovieDataSource
 import woowacourse.movie.list.contract.MovieListContract
@@ -14,7 +15,7 @@ class MovieListPresenter(
         view.showMoviesInfo(movieList, advertisementList)
     }
 
-    override fun setListViewClickListenerInfo() {
-        view.setOnListViewClickListener()
+    override fun setListViewClickListenerInfo(savedInstanceState: Bundle?) {
+        view.setOnListViewClickListener(savedInstanceState)
     }
 }
