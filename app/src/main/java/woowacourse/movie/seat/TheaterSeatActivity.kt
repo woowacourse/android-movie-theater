@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.IntentCompat
 import androidx.core.view.children
 import woowacourse.movie.R
+import woowacourse.movie.databinding.SeatBinding
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.theater.Seat
 import woowacourse.movie.purchaseConfirmation.PurchaseConfirmationActivity
@@ -22,16 +23,15 @@ import woowacourse.movie.purchaseConfirmation.PurchaseConfirmationActivity
 @SuppressLint("DiscouragedApi")
 class TheaterSeatActivity : AppCompatActivity(), TheaterSeatContract.View {
     private lateinit var presenter: TheaterSeatPresenter
-    private val totalPrice: TextView by lazy { findViewById(R.id.total_price) }
-
+    private val binding: SeatBinding by lazy { SeatBinding.inflate(layoutInflater) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.seat)
+        setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         initializePresenter()
         setupSeats()
 
-        findViewById<Button>(R.id.confirm_button).setOnClickListener {
+        binding.confirmButton.setOnClickListener {
             confirmTicketPurchase()
         }
     }
@@ -74,7 +74,7 @@ class TheaterSeatActivity : AppCompatActivity(), TheaterSeatContract.View {
     }
 
     override fun updateTotalPrice(price: Int) {
-        totalPrice.text = getString(R.string.total_price, price)
+        binding.totalPrice.text = getString(R.string.total_price, price)
     }
 
     override fun navigateToNextPage(intent: Intent) {
@@ -90,6 +90,7 @@ class TheaterSeatActivity : AppCompatActivity(), TheaterSeatContract.View {
         val intent = intent
         val ticketNum = intent.getIntExtra("ticketNum", 0)
         val cinema = IntentCompat.getSerializableExtra(intent, "Cinema", Cinema::class.java)
+        binding.screenMovieName.text = cinema?.theater?.movie?.title.toString() ?: error("")
         presenter = TheaterSeatPresenter(this, ticketNum)
     }
 
