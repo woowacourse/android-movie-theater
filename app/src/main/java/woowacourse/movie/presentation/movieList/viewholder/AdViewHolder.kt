@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.movieList.adapter
+package woowacourse.movie.presentation.movieList.viewholder
 
 import android.view.View
 import android.widget.ImageView

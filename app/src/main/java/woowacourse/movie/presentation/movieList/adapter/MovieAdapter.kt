@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.model.Movie
 import woowacourse.movie.presentation.movieList.MovieListClickListener
+import woowacourse.movie.presentation.movieList.viewholder.AdViewHolder
+import woowacourse.movie.presentation.movieList.viewholder.MovieViewHolder
 
 class MovieAdapter(
     private var movies: List<Movie> = emptyList(),
