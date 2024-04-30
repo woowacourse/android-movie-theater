@@ -1,7 +1,10 @@
 package woowacourse.movie.model
 
+import woowacourse.movie.model.data.Theaters
 import woowacourse.movie.model.movie.MovieContent
+import woowacourse.movie.model.movie.Movies
 import woowacourse.movie.model.movie.Seat
+import woowacourse.movie.model.movie.Theater
 import java.time.LocalDate
 
 val movieContent =
@@ -13,6 +16,13 @@ val movieContent =
         152,
         "해리",
     )
+
+val theater =
+    Theater("선릉", Movies(listOf(movieContent)))
+
+fun makeTheater(name: String): Theater {
+    return Theater(name, Movies(listOf(movieContent)))
+}
 
 val A1_SEAT = Seat(0, 0)
 val A2_SEAT = Seat(0, 1)
