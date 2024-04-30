@@ -5,7 +5,7 @@ import woowacourse.movie.list.model.Movie
 import java.time.LocalDate
 
 object MovieDataSource {
-    private val dummyMovie =
+    val dummyMovie =
         Movie(
             "",
             0,
