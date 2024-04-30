@@ -1,6 +1,6 @@
 package woowacourse.movie.presentation.movieList
 
-import woowacourse.movie.data.MovieRepository
+import woowacourse.movie.repository.MovieRepository
 
 class MovieListPresenter(private val movieListContractView: MovieListContract.View) : MovieListContract.Presenter {
     private val movieRepository = MovieRepository()

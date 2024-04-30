@@ -1,9 +1,9 @@
 package woowacourse.movie.presentation.seatSelection
 
-import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.SeatingSystem
 import woowacourse.movie.model.Ticket
+import woowacourse.movie.repository.MovieRepository
 
 class SeatSelectionPresenter(
     private val seatSelectionContractView: SeatSelectionContract.View,
