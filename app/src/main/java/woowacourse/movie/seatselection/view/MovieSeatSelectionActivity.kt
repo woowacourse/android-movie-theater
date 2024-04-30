@@ -21,6 +21,7 @@ import woowacourse.movie.seatselection.presenter.contract.MovieSeatSelectionCont
 import woowacourse.movie.util.Formatter.formatColumn
 import woowacourse.movie.util.Formatter.formatPrice
 import woowacourse.movie.util.Formatter.formatRow
+import woowacourse.movie.util.MovieIntentConstant
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_COUNT
@@ -29,6 +30,7 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_SEATS
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_SEAT_POSITIONS
+import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
 
 class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContract.View {
     private lateinit var seatTitle: TextView
@@ -142,6 +144,7 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
             putExtra(KEY_MOVIE_TIME, intent?.getStringExtra(KEY_MOVIE_TIME))
             putExtra(KEY_MOVIE_COUNT, movieSelectedSeats.count)
             putExtra(KEY_MOVIE_SEATS, seats)
+            putExtra(KEY_SELECTED_THEATER_NAME, intent?.getStringExtra(KEY_SELECTED_THEATER_NAME))
             startActivity(this)
         }
     }

@@ -28,7 +28,7 @@ class MovieResultPresenterTest {
         every { view.displayMovieTicket(any()) } just runs
 
         // When
-        presenter.loadMovieTicket(0, "2024-04-01", "10:00", 3, "A0, A1, A2")
+        presenter.loadMovieTicket(0, "2024-04-01", "10:00", 3, "A0, A1, A2", "선릉")
 
         // Then
         verify { view.displayMovieTicket(any()) }

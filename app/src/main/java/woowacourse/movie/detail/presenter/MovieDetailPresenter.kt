@@ -25,10 +25,6 @@ class MovieDetailPresenter(
         }
     }
 
-    override fun loadTimeSpinnerItem(localDate: LocalDate) {
-        val movieTime = MovieTime(isWeekend(localDate))
-    }
-
     override fun updateTimeSpinnerPosition(position: Int) {
         timeSpinnerPosition = position
     }

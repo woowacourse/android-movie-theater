@@ -13,7 +13,9 @@ import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.main.presenter.contract.MovieMainContract
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieDate
+import woowacourse.movie.model.Theater
 import java.time.LocalDate
+import java.time.LocalTime
 
 class MovieMainPresenterTest {
     private lateinit var view: MovieMainContract.View
@@ -29,6 +31,26 @@ class MovieMainPresenterTest {
                         "진실한 사랑을 꿈꾸던 ‘로즈’ 또한 생애 처음 황홀한 감정에 휩싸이고, 둘은 운명 같은 사랑에 빠지는데… 가장 차가운 곳에서 피어난 뜨거운 사랑! 영원히 가라앉지 않는 세기의 사랑이 펼쳐진다!",
                 date = MovieDate(LocalDate.of(2024, 4, 1), LocalDate.of(2024, 4, 28)),
                 runningTime = 152,
+                theaters = listOf(
+                    Theater(
+                        "선릉선릉선릉선릉선릉선릉선릉선릉선릉선릉선릉선릉",
+                        listOf(LocalTime.of(10, 0), LocalTime.of(14, 0), LocalTime.of(18, 0)),
+                    ),
+                    Theater(
+                        "잠실",
+                        listOf(
+                            LocalTime.of(12, 30),
+                            LocalTime.of(13, 30),
+                            LocalTime.of(15, 0),
+                            LocalTime.of(17, 0),
+                            LocalTime.of(21, 0),
+                        ),
+                    ),
+                    Theater(
+                        "강남",
+                        listOf(LocalTime.of(17, 0), LocalTime.of(20, 0)),
+                    ),
+                ),
             ),
         )
 

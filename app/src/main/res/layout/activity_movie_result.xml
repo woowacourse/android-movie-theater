@@ -66,72 +66,20 @@
         app:layout_constraintTop_toBottomOf="@id/resultTitle" />
 
     <TextView
-        android:id="@+id/resultReservCountType"
-        android:layout_width="wrap_content"
+        android:id="@+id/result"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="일반 "
+        android:layout_marginTop="80dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:hint="일반 2명 | B3, D2 | 선릉 극장"
+        android:maxLines="1"
         android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/resultReservCount"
-        app:layout_constraintTop_toBottomOf="@id/resultDate"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/resultReservCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="1"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/resultReservCountType"
-        app:layout_constraintRight_toLeftOf="@id/resultReservCountFormat"
-        app:layout_constraintTop_toBottomOf="@id/resultDate"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/resultReservCountFormat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="명"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/resultReservCount"
-        app:layout_constraintRight_toLeftOf="@id/countSeatSeparator"
-        app:layout_constraintTop_toBottomOf="@id/resultDate"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/countSeatSeparator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" | "
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/resultReservCountFormat"
-        app:layout_constraintRight_toLeftOf="@id/resultSeats"
-        app:layout_constraintTop_toBottomOf="@id/resultDate"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/resultSeats"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="B3, D2"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/countSeatSeparator"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/resultDate"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/resultDate" />
 
     <TextView
         android:id="@+id/resultReservPrice"
@@ -145,7 +93,7 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/resultReservPriceFormat"
-        app:layout_constraintTop_toBottomOf="@id/resultReservCount" />
+        app:layout_constraintTop_toBottomOf="@id/result" />
 
     <TextView
         android:id="@+id/resultReservPriceFormat"

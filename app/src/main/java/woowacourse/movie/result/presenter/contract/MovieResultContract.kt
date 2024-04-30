@@ -14,6 +14,7 @@ interface MovieResultContract {
             time: String,
             count: Int,
             seats: String,
+            theaterName: String,
         )
     }
 }

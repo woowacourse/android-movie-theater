@@ -58,7 +58,7 @@ class MovieSeatSelectionPresenterTest {
         presenter.clickTableSeat(0)
 
         // Then
-        verify { view.updateSeatBackgroundColor(0, R.color.selected) }
+        verify { view.updateSeatBackgroundColor(0, false) }
         verify { view.updateSelectResult(any()) }
     }
 

@@ -18,6 +18,7 @@ class MovieResultPresenter(private val movieResultContractView: MovieResultContr
         time: String,
         count: Int,
         seats: String,
+        theaterName: String,
     ) {
         val movieData = getMovieById(id)
 
@@ -39,6 +40,7 @@ class MovieResultPresenter(private val movieResultContractView: MovieResultContr
                     LocalTime.parse(time),
                     count,
                     movieSelectedSeats,
+                    theaterName
                 )
             },
         )

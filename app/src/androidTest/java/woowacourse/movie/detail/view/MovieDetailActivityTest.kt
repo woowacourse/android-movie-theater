@@ -15,7 +15,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
+import woowacourse.movie.util.MovieIntentConstant
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
+import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
 
 @RunWith(AndroidJUnit4::class)
 class MovieDetailActivityTest {
@@ -23,7 +25,8 @@ class MovieDetailActivityTest {
         Intent(
             ApplicationProvider.getApplicationContext(),
             MovieDetailActivity::class.java,
-        ).apply { putExtra(KEY_MOVIE_ID, 0L) }
+        ).apply { putExtra(KEY_MOVIE_ID, 0L)
+        putExtra(KEY_SELECTED_THEATER_POSITION,0)}
 
     @get:Rule
     val activityRule = ActivityScenarioRule<MovieDetailActivity>(intent)

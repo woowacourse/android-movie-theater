@@ -17,6 +17,7 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_DATE
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_SEATS
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
+import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
 
 @RunWith(AndroidJUnit4::class)
 class MovieResultActivityTest {
@@ -30,6 +31,7 @@ class MovieResultActivityTest {
             putExtra(KEY_MOVIE_TIME, "12:00")
             putExtra(KEY_MOVIE_COUNT, 3)
             putExtra(KEY_MOVIE_SEATS, "A3, C2, E1")
+            putExtra(KEY_SELECTED_THEATER_NAME, "선릉")
         }
 
     @get:Rule
@@ -54,15 +56,9 @@ class MovieResultActivityTest {
     }
 
     @Test
-    fun `예매한_영화의_인원수가_표시된다`() {
-        onView(withId(R.id.resultReservCount))
-            .check(matches(withText("3")))
-    }
-
-    @Test
     fun `예매한_영화의_좌석이_표시된다`() {
-        onView(withId(R.id.resultSeats))
-            .check(matches(withText("A3, C2, E1")))
+        onView(withId(R.id.result))
+            .check(matches(withText("일반 3명 | A3, C2, E1 | 선릉 극장")))
     }
 
     @Test

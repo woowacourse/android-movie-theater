@@ -33,8 +33,6 @@ interface MovieDetailContract {
             theaterPosition: Int,
         )
 
-        fun loadTimeSpinnerItem(localDate: LocalDate)
-
         fun plusReservationCount()
 
         fun minusReservationCount()

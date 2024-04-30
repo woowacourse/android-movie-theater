@@ -18,18 +18,19 @@ import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_DATE
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_SEATS
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_TIME
+import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_NAME
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_DATE
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_SEATS
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
+import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
 
 class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
     private lateinit var resultTitle: TextView
     private lateinit var resultDate: TextView
     private lateinit var resultTime: TextView
-    private lateinit var resultCount: TextView
-    private lateinit var resultSeats: TextView
+    private lateinit var result: TextView
     private lateinit var resultPrice: TextView
 
     private lateinit var movieResultPresenter: MovieResultPresenter
@@ -48,6 +49,7 @@ class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
             intent.getStringExtra(KEY_MOVIE_TIME) ?: INVALID_VALUE_MOVIE_TIME,
             intent.getIntExtra(KEY_MOVIE_COUNT, INVALID_VALUE_MOVIE_COUNT),
             intent.getStringExtra(KEY_MOVIE_SEATS) ?: INVALID_VALUE_MOVIE_SEATS,
+            intent.getStringExtra(KEY_SELECTED_THEATER_NAME) ?: INVALID_VALUE_THEATER_NAME,
         )
     }
 
@@ -61,11 +63,17 @@ class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
             resultTitle.text = movieTicket.title
             resultDate.text = movieTicket.date.toString()
             resultTime.text = movieTicket.time.toString()
-            resultCount.text = movieTicket.seats.count.toString()
-            resultSeats.text =
+            val seats =
                 movieTicket.seats.selectedSeats.joinToString(", ") { seat ->
                     getString(R.string.seat, formatRow(seat.row), seat.column.toString())
                 }
+            result.text =
+                resources.getString(
+                    R.string.result,
+                    movieTicket.seats.count,
+                    seats,
+                    movieTicket.theaterName,
+                )
             resultPrice.text = formatPrice(movieTicket.seats.totalPrice())
         }
     }
@@ -74,8 +82,7 @@ class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
         resultTitle = findViewById(R.id.resultTitle)
         resultDate = findViewById(R.id.resultDate)
         resultTime = findViewById(R.id.resultTime)
-        resultCount = findViewById(R.id.resultReservCount)
-        resultSeats = findViewById(R.id.resultSeats)
+        result = findViewById(R.id.result)
         resultPrice = findViewById(R.id.resultReservPrice)
     }
 
