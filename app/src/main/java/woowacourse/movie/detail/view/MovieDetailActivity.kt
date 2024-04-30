@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageView
@@ -29,7 +28,6 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
-import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
@@ -49,7 +47,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
 
     private lateinit var movieDetailPresenter: MovieDetailPresenter
     private val movieId: Long by lazy { intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID) }
-    private val selectedTheaterPosition: Int by lazy { intent.getIntExtra(KEY_SELECTED_THEATER_POSITION, INVALID_VALUE_THEATER_POSITION,) }
+    private val selectedTheaterPosition: Int by lazy { intent.getIntExtra(KEY_SELECTED_THEATER_POSITION, INVALID_VALUE_THEATER_POSITION) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -144,9 +142,10 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         time: String,
         count: Int,
     ) {
-        val theaterName = getMovieById(movieId)?.let {
-            it.theaters[selectedTheaterPosition].name
-        } ?: INVALID_VALUE_THEATER_NAME
+        val theaterName =
+            getMovieById(movieId)?.let {
+                it.theaters[selectedTheaterPosition].name
+            } ?: INVALID_VALUE_THEATER_NAME
 
         Intent(this, MovieSeatSelectionActivity::class.java).apply {
             putExtra(KEY_MOVIE_ID, id)

@@ -40,7 +40,7 @@ class MovieResultPresenter(private val movieResultContractView: MovieResultContr
                     LocalTime.parse(time),
                     count,
                     movieSelectedSeats,
-                    theaterName
+                    theaterName,
                 )
             },
         )

@@ -9,5 +9,5 @@ data class MovieTicket(
     val time: LocalTime,
     val count: Int,
     val seats: MovieSelectedSeats,
-    val theaterName: String
+    val theaterName: String,
 )

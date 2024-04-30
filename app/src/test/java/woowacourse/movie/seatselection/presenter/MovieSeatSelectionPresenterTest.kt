@@ -8,7 +8,6 @@ import io.mockk.runs
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.R
 import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.seatselection.presenter.contract.MovieSeatSelectionContract
 

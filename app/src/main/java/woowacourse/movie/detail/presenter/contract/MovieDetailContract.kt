@@ -3,7 +3,6 @@ package woowacourse.movie.detail.presenter.contract
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieCount
 import woowacourse.movie.model.MovieDate
-import java.time.LocalDate
 import java.time.LocalTime
 
 interface MovieDetailContract {

@@ -21,7 +21,6 @@ import woowacourse.movie.seatselection.presenter.contract.MovieSeatSelectionCont
 import woowacourse.movie.util.Formatter.formatColumn
 import woowacourse.movie.util.Formatter.formatPrice
 import woowacourse.movie.util.Formatter.formatRow
-import woowacourse.movie.util.MovieIntentConstant
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_COUNT
