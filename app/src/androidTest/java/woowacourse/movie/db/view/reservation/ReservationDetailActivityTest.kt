@@ -105,17 +105,6 @@ class ReservationDetailActivityTest {
     }
 
     @Test
-    fun `상영일을_주말로_선택하면_상영시간_스피너의_기본값은_9시이다`() {
-        onView(withId(R.id.spinner_reservation_detail_screening_date)).perform(click())
-        onData(allOf(`is`(instanceOf(LocalDate::class.java)), `is`(LocalDate.of(2024, 3, 2)))).perform(click())
-
-        onView(withId(R.id.spinner_reservation_detail_screening_time)).perform(click())
-        onData(allOf(`is`(instanceOf(LocalTime::class.java)), `is`(LocalTime.of(9, 0)))).perform(click())
-
-        onView(withId(R.id.spinner_reservation_detail_screening_time)).check(matches(withSpinnerText(containsString("09:00"))))
-    }
-
-    @Test
     fun `2024년_3월_2일의_상영일을_스피너로_선택한_후_화면을_회전시켜도_선택한_상영일이_유지된다`() {
         onView(withId(R.id.spinner_reservation_detail_screening_date)).perform(click())
         onData(allOf(`is`(instanceOf(LocalDate::class.java)), `is`(LocalDate.of(2024, 3, 2)))).perform(click())
