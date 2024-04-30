@@ -18,11 +18,14 @@ class DetailPresenter(
     val uiModel: DetailUiModel
         get() = _uiModel
 
-    override fun loadScreen(id: Int) {
-        repository.findByScreenId(id = id).onSuccess { screen ->
+    override fun loadScreen(
+        movieId: Int,
+        theaterId: Int,
+    ) {
+        repository.findByScreenId(movieId = movieId, theaterId = theaterId).onSuccess { screen ->
             _uiModel =
                 uiModel.copy(
-                    screenId = id,
+                    screenId = movieId,
                     screen = screen,
                     selectableDates = screen.selectableDates,
                     selectedDate = screen.selectableDates.first(),

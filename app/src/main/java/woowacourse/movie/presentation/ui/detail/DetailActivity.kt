@@ -41,7 +41,7 @@ class DetailActivity : BaseActivity(), View {
     override fun initStartView() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val id = intent.getIntExtra(PUT_EXTRA_KEY_ID, DEFAULT_ID)
-        presenter.loadScreen(id)
+        presenter.loadScreen(id, id)
         initClickListener()
         initItemSelectedListener()
     }
@@ -97,7 +97,7 @@ class DetailActivity : BaseActivity(), View {
     override fun showScreen(screen: Screen) {
         with(screen) {
             title.text = movie.title
-            this@DetailActivity.date.text = getString(R.string.screening_period, movie.startDate, movie.endDate)
+            this@DetailActivity.date.text = getString(R.string.screening_period, movie.startDate.toString(), movie.endDate.toString())
             runningTime.text = movie.runningTime.toString()
             description.text = movie.description
             poster.setImageResource(movie.imageSrc)

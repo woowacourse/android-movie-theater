@@ -12,6 +12,12 @@ class ScreenPresenter(
     }
 
     override fun onScreenClick(id: Int) {
+        repository.findTheaterCount(id).onSuccess { theaterCounts ->
+            view.showBottomTheater(theaterCounts)
+        }
+    }
+
+    override fun onTheaterClick(id: Int) {
         view.navigateToDetail(id)
     }
 }

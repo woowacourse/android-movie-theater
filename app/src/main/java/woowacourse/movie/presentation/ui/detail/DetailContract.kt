@@ -24,7 +24,10 @@ interface DetailContract {
     }
 
     interface Presenter : BasePresenter {
-        fun loadScreen(id: Int)
+        fun loadScreen(
+            movieId: Int,
+            theaterId: Int,
+        )
 
         fun createDateSpinnerAdapter(screenDates: List<ScreenDate>)
 
