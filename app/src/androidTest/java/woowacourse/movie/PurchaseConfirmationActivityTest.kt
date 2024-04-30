@@ -36,7 +36,7 @@ class PurchaseConfirmationActivityTest {
             "C1" to Seat('S', 1, "B"),
             "E1" to Seat('A', 1, "B"),
         )
-    private val theater = Theater(movie, seats)
+    private val theater = Theater(movie, listOf(), seats)
     private val intent =
         Intent(
             ApplicationProvider.getApplicationContext(),
