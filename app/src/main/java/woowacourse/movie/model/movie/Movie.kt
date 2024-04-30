@@ -9,7 +9,6 @@ data class Movie(
     val posterId: Int,
     val title: String,
     val screeningPeriod: List<LocalDate>,
-    val screeningTimes: ScreeningTimes,
     val runningTime: String,
     val summary: String,
 )

@@ -14,7 +14,8 @@ object TestFixture {
 
     fun makeMockTicket(): Ticket {
         val movie = movies[FIRST_MOVIE_ITEM_POSITION]
-        val dateTime = ScreeningDateTime(movie.screeningPeriod[0].toString(), movie.screeningTimes.weekDay[0].toString())
+        // TODO : movie가 아닌 극장에서 시간정보 얻어서 넣기
+        val dateTime = ScreeningDateTime(movie.screeningPeriod[0].toString(), "10:00")
         return Ticket(2, dateTime)
     }
 

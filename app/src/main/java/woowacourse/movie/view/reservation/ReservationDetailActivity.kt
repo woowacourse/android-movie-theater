@@ -105,12 +105,13 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
         movie: Movie,
         selectedDate: String,
     ) {
-        screeningTimeSpinner.adapter =
-            ArrayAdapter(
-                this,
-                android.R.layout.simple_spinner_item,
-                movie.screeningTimes.loadScheduleByDateType(selectedDate),
-            )
+        // TODO movie가 아닌 극장에서 불러오기
+//        screeningTimeSpinner.adapter =
+//            ArrayAdapter(
+//                this,
+//                android.R.layout.simple_spinner_item,
+//                movie.screeningTimes.loadScheduleByDateType(selectedDate),
+//            )
     }
 
     override fun changeHeadCount(count: Int) {

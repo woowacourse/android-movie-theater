@@ -2,9 +2,7 @@ package woowacourse.movie.db.screening
 
 import woowacourse.movie.R
 import woowacourse.movie.model.movie.Movie
-import woowacourse.movie.model.movie.ScreeningTimes
 import java.time.LocalDate
-import java.time.LocalTime
 
 object ScreeningDatabase {
     private val period: List<LocalDate> =
@@ -28,18 +26,6 @@ object ScreeningDatabase {
                 R.drawable.img_sorcerers_stone,
                 "해리 포터와 마법사의 돌",
                 period,
-                ScreeningTimes(
-                    listOf(
-                        LocalTime.of(10, 0),
-                        LocalTime.of(12, 0),
-                        LocalTime.of(14, 0),
-                    ),
-                    listOf(
-                        LocalTime.of(10, 0),
-                        LocalTime.of(12, 0),
-                        LocalTime.of(14, 0),
-                    ),
-                ),
                 "152분",
                 """
                 해리 포터(다니엘 래드클리프 분)는 위압적인 버논 숙부(리챠드 그리피스 분)와 냉담한 이모 페투니아 
@@ -68,18 +54,6 @@ object ScreeningDatabase {
                 R.drawable.img_secret_room,
                 "해리 포터와 비밀의 방",
                 period,
-                ScreeningTimes(
-                    listOf(
-                        LocalTime.of(9, 0),
-                        LocalTime.of(11, 0),
-                        LocalTime.of(13, 0),
-                    ),
-                    listOf(
-                        LocalTime.of(10, 0),
-                        LocalTime.of(12, 0),
-                        LocalTime.of(14, 0),
-                    ),
-                ),
                 "160분",
                 """
                 해리 포터에겐 이번 여름방학이 별로 즐겁질 못했다. 마법이라면 질색을 하는 페투니아 이모(피오나 쇼 분)와 
@@ -108,18 +82,6 @@ object ScreeningDatabase {
                 R.drawable.img_prisoner_of_azkaban,
                 "해리 포터와 아즈카반의 죄수",
                 period,
-                ScreeningTimes(
-                    listOf(
-                        LocalTime.of(9, 0),
-                        LocalTime.of(11, 0),
-                        LocalTime.of(13, 0),
-                    ),
-                    listOf(
-                        LocalTime.of(10, 0),
-                        LocalTime.of(12, 0),
-                        LocalTime.of(14, 0),
-                    ),
-                ),
                 "141분",
                 """
                 13세가 된 해리 포터(다니엘 래드클리프)는 또 한번의 여름 방학을 이모 가족인 더즐리 일가와 우울하게 보내야 했다. 
@@ -154,18 +116,6 @@ object ScreeningDatabase {
                 R.drawable.img_sorcerers_stone,
                 "해리 포터와 마법사의 돌",
                 period,
-                ScreeningTimes(
-                    listOf(
-                        LocalTime.of(9, 0),
-                        LocalTime.of(11, 0),
-                        LocalTime.of(13, 0),
-                    ),
-                    listOf(
-                        LocalTime.of(10, 0),
-                        LocalTime.of(12, 0),
-                        LocalTime.of(14, 0),
-                    ),
-                ),
                 "152분",
                 """
                 해리 포터(다니엘 래드클리프 분)는 위압적인 버논 숙부(리챠드 그리피스 분)와 냉담한 이모 페투니아 
@@ -194,18 +144,6 @@ object ScreeningDatabase {
                 R.drawable.img_secret_room,
                 "해리 포터와 비밀의 방",
                 period,
-                ScreeningTimes(
-                    listOf(
-                        LocalTime.of(9, 0),
-                        LocalTime.of(11, 0),
-                        LocalTime.of(13, 0),
-                    ),
-                    listOf(
-                        LocalTime.of(10, 0),
-                        LocalTime.of(12, 0),
-                        LocalTime.of(14, 0),
-                    ),
-                ),
                 "160분",
                 """
                 해리 포터에겐 이번 여름방학이 별로 즐겁질 못했다. 마법이라면 질색을 하는 페투니아 이모(피오나 쇼 분)와 
@@ -234,18 +172,6 @@ object ScreeningDatabase {
                 R.drawable.img_prisoner_of_azkaban,
                 "해리 포터와 아즈카반의 죄수",
                 period,
-                ScreeningTimes(
-                    listOf(
-                        LocalTime.of(9, 0),
-                        LocalTime.of(11, 0),
-                        LocalTime.of(13, 0),
-                    ),
-                    listOf(
-                        LocalTime.of(10, 0),
-                        LocalTime.of(12, 0),
-                        LocalTime.of(14, 0),
-                    ),
-                ),
                 "141분",
                 """
                 13세가 된 해리 포터(다니엘 래드클리프)는 또 한번의 여름 방학을 이모 가족인 더즐리 일가와 우울하게 보내야 했다. 
@@ -280,18 +206,6 @@ object ScreeningDatabase {
                 R.drawable.img_sorcerers_stone,
                 "해리 포터와 마법사의 돌",
                 period,
-                ScreeningTimes(
-                    listOf(
-                        LocalTime.of(9, 0),
-                        LocalTime.of(11, 0),
-                        LocalTime.of(13, 0),
-                    ),
-                    listOf(
-                        LocalTime.of(10, 0),
-                        LocalTime.of(12, 0),
-                        LocalTime.of(14, 0),
-                    ),
-                ),
                 "152분",
                 """
                 해리 포터(다니엘 래드클리프 분)는 위압적인 버논 숙부(리챠드 그리피스 분)와 냉담한 이모 페투니아 
@@ -320,18 +234,6 @@ object ScreeningDatabase {
                 R.drawable.img_secret_room,
                 "해리 포터와 비밀의 방",
                 period,
-                ScreeningTimes(
-                    listOf(
-                        LocalTime.of(9, 0),
-                        LocalTime.of(11, 0),
-                        LocalTime.of(13, 0),
-                    ),
-                    listOf(
-                        LocalTime.of(10, 0),
-                        LocalTime.of(12, 0),
-                        LocalTime.of(14, 0),
-                    ),
-                ),
                 "160분",
                 """
                 해리 포터에겐 이번 여름방학이 별로 즐겁질 못했다. 마법이라면 질색을 하는 페투니아 이모(피오나 쇼 분)와 
@@ -360,18 +262,6 @@ object ScreeningDatabase {
                 R.drawable.img_prisoner_of_azkaban,
                 "해리 포터와 아즈카반의 죄수",
                 period,
-                ScreeningTimes(
-                    listOf(
-                        LocalTime.of(9, 0),
-                        LocalTime.of(11, 0),
-                        LocalTime.of(13, 0),
-                    ),
-                    listOf(
-                        LocalTime.of(10, 0),
-                        LocalTime.of(12, 0),
-                        LocalTime.of(14, 0),
-                    ),
-                ),
                 "141분",
                 """
                 13세가 된 해리 포터(다니엘 래드클리프)는 또 한번의 여름 방학을 이모 가족인 더즐리 일가와 우울하게 보내야 했다. 
