@@ -3,7 +3,6 @@ package woowacourse.movie.seat
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
@@ -113,12 +112,7 @@ class TheaterSeatActivity : AppCompatActivity(), TheaterSeatContract.View {
             message = "정말 예매하시겠습니까?",
             positiveLabel = "예매 완료",
             onPositiveButtonClicked = {
-                val cinema =
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        intent.getSerializableExtra("Cinema", Cinema::class.java)
-                    } else {
-                        TODO("VERSION.SDK_INT < TIRAMISU")
-                    }
+                val cinema = IntentCompat.getSerializableExtra(intent, "Cinema", Cinema::class.java)
                 val ticketPrice = findViewById<TextView>(R.id.total_price).text
                 if (cinema != null) {
                     val intent =
