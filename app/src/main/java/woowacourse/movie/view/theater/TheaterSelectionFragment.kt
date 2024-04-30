@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterSelectionBinding
 import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.presenter.theater.TheaterSelectionContract
 import woowacourse.movie.presenter.theater.TheaterSelectionPresenter
+import woowacourse.movie.view.home.HomeFragment.Companion.MOVIE_ID
 import woowacourse.movie.view.theater.adapter.TheaterSelectionAdapter
 
 class TheaterSelectionFragment : Fragment(), TheaterSelectionContract.View {
@@ -38,10 +40,18 @@ class TheaterSelectionFragment : Fragment(), TheaterSelectionContract.View {
         movieId: Int,
         theaterId: Int,
     ) {
-        TODO("Not yet implemented")
+        val bundle = Bundle()
+        bundle.putInt(MOVIE_ID, movieId)
+        bundle.putInt(THEATER_ID, theaterId)
+        setFragmentResult(BUNDLE_THEATER_ID, bundle)
+        // TODO 예약화면으로 이동
+//        parentFragmentManager.navigateToFragment(
+//            R.layout.fragment_theater_selection,
+//
+//        )
     }
 
-    private fun initTheaterRecyclerView()  {
+    private fun initTheaterRecyclerView() {
         val theaterSelectionAdapter =
             TheaterSelectionAdapter(
                 TheaterDao().findAll(),
@@ -52,5 +62,10 @@ class TheaterSelectionFragment : Fragment(), TheaterSelectionContract.View {
         binding.recyclerViewTheaterSelection.apply {
             adapter = theaterSelectionAdapter
         }
+    }
+
+    companion object {
+        const val THEATER_ID = "theaterId"
+        const val BUNDLE_THEATER_ID = "bundleTheaterId"
     }
 }

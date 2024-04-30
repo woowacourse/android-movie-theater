@@ -13,7 +13,9 @@ import woowacourse.movie.db.advertisement.AdvertisementDao
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.presenter.home.ReservationHomeContract
 import woowacourse.movie.presenter.home.ReservationHomePresenter
+import woowacourse.movie.utils.MovieUtils.navigateToFragment
 import woowacourse.movie.view.home.adapter.MovieCatalogAdapter
+import woowacourse.movie.view.theater.TheaterSelectionFragment
 
 class HomeFragment : Fragment(), ReservationHomeContract.View {
     private val presenter = ReservationHomePresenter(this)
@@ -39,7 +41,11 @@ class HomeFragment : Fragment(), ReservationHomeContract.View {
     override fun navigateToDetail(movieId: Int) {
         val bundle = Bundle()
         bundle.putInt(MOVIE_ID, movieId)
-        setFragmentResult(MOVIE_ID, bundle)
+        setFragmentResult(BUNDLE_MOVIE_ID, bundle)
+        parentFragmentManager.navigateToFragment(
+            R.layout.fragment_home,
+            TheaterSelectionFragment(),
+        )
     }
 
     private fun initMovieRecyclerView() {
@@ -57,5 +63,6 @@ class HomeFragment : Fragment(), ReservationHomeContract.View {
 
     companion object {
         const val MOVIE_ID = "movieId"
+        const val BUNDLE_MOVIE_ID = "bundleMovieId"
     }
 }
