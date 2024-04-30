@@ -149,6 +149,7 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
 
     companion object {
         const val EXTRA_MOVIE_ID = "movie_id"
+        const val EXTRA_THEATER_ID = "theater_id"
         const val EXTRA_DEFAULT_MOVIE_ID = -1L
         const val KEY_SAVED_COUNT = "saved_count"
         const val SAVED_DEFAULT_VALUE = -1
@@ -156,9 +157,11 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
 
         fun createIntent(
             context: Context,
+            theaterId: Long,
             movieId: Long,
         ): Intent {
             return Intent(context, TicketingActivity::class.java).apply {
+                putExtra(EXTRA_THEATER_ID, theaterId)
                 putExtra(EXTRA_MOVIE_ID, movieId)
             }
         }

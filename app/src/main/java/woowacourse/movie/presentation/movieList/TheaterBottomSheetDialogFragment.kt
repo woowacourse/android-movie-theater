@@ -10,7 +10,11 @@ import woowacourse.movie.R
 import woowacourse.movie.model.Theater
 import woowacourse.movie.presentation.movieList.adapter.TheaterAdapter
 
-class TheaterBottomSheetDialogFragment(private val theaters: List<Theater>, private val movieId: Long) : BottomSheetDialogFragment() {
+class TheaterBottomSheetDialogFragment(
+    private val theaters: List<Theater>,
+    private val movieId: Long,
+    private val listener: (Long, Long) -> Unit,
+) : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -20,7 +24,10 @@ class TheaterBottomSheetDialogFragment(private val theaters: List<Theater>, priv
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = TheaterAdapter(theaters, movieId)
+        val adapter =
+            TheaterAdapter(theaters, movieId) { theaterId, movieId ->
+                listener(theaterId, movieId)
+            }
         view.findViewById<RecyclerView>(R.id.theater_list_rv).adapter = adapter
     }
 

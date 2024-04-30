@@ -23,13 +23,15 @@ class MovieListActivity : AppCompatActivity(), MovieListContract.View, MovieList
         movieList.adapter = MovieAdapter(movies, this)
     }
 
-    override fun navigate(movieId: Long) {
-        startActivity(TicketingActivity.createIntent(this, movieId))
+    override fun navigate(
+        theaterId: Long,
+        movieId: Long,
+    ) {
+        startActivity(TicketingActivity.createIntent(this, theaterId, movieId))
     }
 
     override fun ticketingButtonClick(movieId: Long) {
-//        navigate(movieId)
-        val bottomSheet = TheaterBottomSheetDialogFragment(DummyTheaterList.find(movieId), movieId)
+        val bottomSheet = TheaterBottomSheetDialogFragment(DummyTheaterList.find(movieId), movieId, ::navigate)
         bottomSheet.show(supportFragmentManager, bottomSheet.tag)
     }
 }

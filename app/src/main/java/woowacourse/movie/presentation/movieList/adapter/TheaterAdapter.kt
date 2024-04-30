@@ -7,7 +7,11 @@ import woowacourse.movie.R
 import woowacourse.movie.model.Theater
 import woowacourse.movie.presentation.movieList.viewholder.TheaterViewHolder
 
-class TheaterAdapter(private val theaters: List<Theater>, private val movieId: Long) :
+class TheaterAdapter(
+    private val theaters: List<Theater>,
+    private val movieId: Long,
+    private val listener: (Long, Long) -> Unit,
+) :
     RecyclerView.Adapter<TheaterViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -27,6 +31,6 @@ class TheaterAdapter(private val theaters: List<Theater>, private val movieId: L
         holder: TheaterViewHolder,
         position: Int,
     ) {
-        holder.bind(theaters[position], movieId)
+        holder.bind(theaters[position], movieId, listener)
     }
 }

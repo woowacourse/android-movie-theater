@@ -6,7 +6,10 @@ interface MovieListContract {
     interface View {
         fun displayMovies(movies: List<Movie>)
 
-        fun navigate(movieId: Long)
+        fun navigate(
+            theaterId: Long,
+            movieId: Long,
+        )
     }
 
     interface Presenter {
