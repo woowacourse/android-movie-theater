@@ -12,7 +12,7 @@ class MovieAdapter(
     private val onReservationButtonClick: (Long) -> Unit,
 ) : RecyclerView.Adapter<ViewHolder>() {
     override fun getItemViewType(position: Int): Int {
-        if (position % ADVERTISEMENT_OFFSET == 0 && position != 0) return ADVERTISEMENT_VIEW_TYPE
+        if ((position + 1) % ADVERTISEMENT_PER_INDEX == 0) return ADVERTISEMENT_VIEW_TYPE
         return MOVIE_VIEW_TYPE
     }
 
@@ -51,6 +51,7 @@ class MovieAdapter(
         private const val MOVIE_VIEW_TYPE = 0
         private const val ADVERTISEMENT_VIEW_TYPE = 1
         private const val ADVERTISEMENT_OFFSET = 3
+        private const val ADVERTISEMENT_PER_INDEX = 4
         private const val ADVERTISEMENT_LINK = "https://www.woowacourse.io/"
     }
 }
