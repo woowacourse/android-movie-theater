@@ -126,6 +126,7 @@ class TheaterSeatActivity : AppCompatActivity(), TheaterSeatContract.View {
                             putExtra("ticketPrice", ticketPrice.toString())
                             putExtra("seatNumber", presenter.getSelectedSeatNumbers())
                             putExtra("Cinema", cinema)
+                            putExtra("timeDate", intent.getStringExtra("timeDate"))
                         }
                     navigateToNextPage(intent)
                 } else {

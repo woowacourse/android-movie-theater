@@ -18,6 +18,7 @@ class PurchaseConfirmationActivity : AppCompatActivity() {
         setContentView(binding.root)
         val ticketPrice = intent.getStringExtra("ticketPrice")
         val seatNumber = intent.getStringArrayExtra("seatNumber")
+        val timeDate = intent.getStringExtra("timeDate")
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val cinema =
             IntentCompat.getSerializableExtra(intent, "Cinema", Cinema::class.java) ?: error("")
@@ -27,6 +28,7 @@ class PurchaseConfirmationActivity : AppCompatActivity() {
         binding.reservedInformation.text =
             "%s | %s | %s".format(seatNumber?.size, seatNumber?.joinToString(), cinema.cinemaName)
         binding.ticketCharge.text = ticketPrice
+        binding.movieTimeDate.text = timeDate
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

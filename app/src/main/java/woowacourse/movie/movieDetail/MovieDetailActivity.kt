@@ -1,6 +1,5 @@
 package woowacourse.movie.movieDetail
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -20,6 +19,7 @@ import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.movieInfo.MovieInfo
 import woowacourse.movie.seat.TheaterSeatActivity
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     private var ticketNum = 1
@@ -86,7 +86,6 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
                 ) {
                     presenter.updateTimeSpinner(dates[position])
                 }
-
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
     }
@@ -101,7 +100,6 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         return true
     }
 
-    @SuppressLint("NewApi")
     private fun setupEventListeners(cinema: Cinema) {
         plusButton.setOnClickListener {
             presenter.onTicketPlusClicked(ticketNum)
@@ -116,6 +114,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
                 Intent(this, TheaterSeatActivity::class.java).apply {
                     putExtra("ticketNum", presenter.getTicketNum())
                     putExtra("Cinema", cinema)
+                    putExtra("timeDate", dateSpinner.selectedItem.toString() + " " + timeSpinner.selectedItem.toString())
                 }
             navigateToPurchaseConfirmation(intent)
         }

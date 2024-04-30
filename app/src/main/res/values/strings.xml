@@ -14,6 +14,7 @@
     <string name="screen">Screen</string>
     <string name="chose_seat">좌석 선택</string>
     <string name="screen_display">SCREEN</string>
+    <string name="time_date">TIME DATE</string>
     <string name="확인">확인</string>
     <string name="reserved_information">영화 정보</string>
 </resources>
