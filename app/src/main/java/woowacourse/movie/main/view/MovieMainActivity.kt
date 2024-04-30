@@ -9,6 +9,7 @@ import woowacourse.movie.main.presenter.MovieMainPresenter
 import woowacourse.movie.main.presenter.contract.MovieMainContract
 import woowacourse.movie.main.view.adapter.movie.MovieAdapter
 import woowacourse.movie.model.Movie
+import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 
 class MovieMainActivity : AppCompatActivity(), MovieMainContract.View {
     private lateinit var movieRecyclerView: RecyclerView
@@ -30,7 +31,10 @@ class MovieMainActivity : AppCompatActivity(), MovieMainContract.View {
     }
 
     override fun displayTheaterSelectionDialog(id: Long) {
-        val theaterSelection = TheaterSelectionFragment()
-        theaterSelection.show(supportFragmentManager, theaterSelection.tag)
+        val bundle = Bundle()
+        bundle.putLong(KEY_MOVIE_ID, id)
+        val theaterSelectionFragment = TheaterSelectionFragment()
+        theaterSelectionFragment.arguments = bundle
+        theaterSelectionFragment.show(supportFragmentManager, theaterSelectionFragment.tag)
     }
 }
