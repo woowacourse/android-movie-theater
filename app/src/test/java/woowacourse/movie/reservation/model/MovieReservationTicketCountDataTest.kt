@@ -17,7 +17,7 @@ class MovieReservationTicketCountDataTest {
 
     @AfterEach
     fun tearDown() {
-        movieReservationTicketCountData.initTicketCount()
+        movieReservationTicketCountData.initTicketCount(1)
     }
 
     @Test
