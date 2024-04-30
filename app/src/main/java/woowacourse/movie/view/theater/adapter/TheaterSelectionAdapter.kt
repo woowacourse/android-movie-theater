@@ -12,8 +12,10 @@ class TheaterSelectionAdapter(
     private val theaters: List<Theater>,
     private val theaterId: OnSelectTheater,
 ) : RecyclerView.Adapter<TheaterSelectionViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TheaterSelectionViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): TheaterSelectionViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = ItemTheaterBinding.inflate(inflater, parent, false)
         return TheaterSelectionViewHolder(view)
@@ -21,7 +23,10 @@ class TheaterSelectionAdapter(
 
     override fun getItemCount(): Int = theaters.size
 
-    override fun onBindViewHolder(holder: TheaterSelectionViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: TheaterSelectionViewHolder,
+        position: Int,
+    ) {
         holder.bind(theaters[position], theaterId)
     }
 }
