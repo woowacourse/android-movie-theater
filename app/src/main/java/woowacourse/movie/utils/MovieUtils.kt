@@ -64,7 +64,7 @@ object MovieUtils {
         @LayoutRes
         fragmentLayoutResource: Int,
         nextFragment: Fragment,
-    )  {
+    ) {
         commit {
             setReorderingAllowed(true)
             replace(fragmentLayoutResource, nextFragment)

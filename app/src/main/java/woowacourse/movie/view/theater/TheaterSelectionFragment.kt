@@ -7,24 +7,32 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterSelectionBinding
 import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.presenter.theater.TheaterSelectionContract
 import woowacourse.movie.presenter.theater.TheaterSelectionPresenter
+import woowacourse.movie.view.home.HomeFragment.Companion.BUNDLE_MOVIE_ID
 import woowacourse.movie.view.home.HomeFragment.Companion.MOVIE_ID
 import woowacourse.movie.view.theater.adapter.TheaterSelectionAdapter
 
 class TheaterSelectionFragment : Fragment(), TheaterSelectionContract.View {
-    private val presenter = TheaterSelectionPresenter(this)
     private lateinit var binding: FragmentTheaterSelectionBinding
+    private val presenter: TheaterSelectionPresenter by lazy {
+        TheaterSelectionPresenter(
+            view = this@TheaterSelectionFragment,
+            movieId = receiveMovieId(),
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_theater_selection, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_theater_selection, container, false)
         return binding.root
     }
 
@@ -56,12 +64,21 @@ class TheaterSelectionFragment : Fragment(), TheaterSelectionContract.View {
             TheaterSelectionAdapter(
                 TheaterDao().findAll(),
             ) { theaterId ->
-                // TODO Movie Id 넘기자
-                presenter.loadTheater(0, theaterId)
+                presenter.loadTheater(theaterId)
             }
         binding.recyclerViewTheaterSelection.apply {
             adapter = theaterSelectionAdapter
         }
+    }
+
+    // TODO defaultValue 처리하기
+    private fun receiveMovieId(): Int {
+        var movieId = -1
+        setFragmentResultListener(BUNDLE_MOVIE_ID) { _, bundle ->
+            movieId = bundle.getInt(MOVIE_ID, -1)
+        }
+        if (movieId == -1) parentFragmentManager.popBackStack()
+        return movieId
     }
 
     companion object {

@@ -2,10 +2,7 @@ package woowacourse.movie.presenter.theater
 
 interface TheaterSelectionContract {
     interface Presenter {
-        fun loadTheater(
-            movieId: Int,
-            theaterId: Int,
-        )
+        fun loadTheater(theaterId: Int)
     }
 
     interface View {

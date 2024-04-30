@@ -20,7 +20,7 @@ class TheaterSelectionPresenterTest {
 
     @BeforeEach
     fun setUp() {
-        presenter = TheaterSelectionPresenter(view)
+        presenter = TheaterSelectionPresenter(view, 0)
     }
 
     @Test
@@ -28,7 +28,6 @@ class TheaterSelectionPresenterTest {
         every { view.navigateToDetail(any(), any()) } just runs
         presenter.loadTheater(
             theaterId = 0,
-            movieId = 0,
         )
         verify { view.navigateToDetail(0, 0) }
     }
