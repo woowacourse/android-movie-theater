@@ -10,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.model.movie.Movie
-import woowacourse.movie.model.movie.ScreeningTimes
 
 @ExtendWith(MockKExtension::class)
 class ReservationHomePresenterTest {
@@ -24,7 +23,7 @@ class ReservationHomePresenterTest {
     }
 
     @Test
-    fun `영화 목록의_지금_예매_버튼을_누르면_선택된_영화의_ID를_가지고_상세_화면으로_이동한다`() {
+    fun `영화_목록의_지금_예매_버튼을_누르면_선택된_영화의_ID를_가지고_극장_선택으로_이동한다`() {
         every { view.navigateToDetail(any()) } just runs
         presenter.loadMovie(
             Movie(
