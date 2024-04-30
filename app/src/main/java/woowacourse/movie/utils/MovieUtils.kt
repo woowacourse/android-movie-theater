@@ -17,6 +17,9 @@ object MovieUtils {
         return "%s~%s".format(start, end)
     }
 
+    fun convertScreeningInfoFormat(screeningTimeCount: Int): String =
+        "${screeningTimeCount}개의 상영 시간"
+
     fun convertAmountFormat(
         context: Context,
         amount: Int,

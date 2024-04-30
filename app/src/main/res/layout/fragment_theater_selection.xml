@@ -16,5 +16,5 @@
         android:paddingHorizontal="8dp"
         android:paddingVertical="15dp"
         tools:context=".view.theater.TheaterSelectionFragment"
-        tools:listitem="@layout/theater_item" />
+        tools:listitem="@layout/item_theater" />
 </layout>
