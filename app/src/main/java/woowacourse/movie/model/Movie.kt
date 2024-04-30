@@ -7,4 +7,8 @@ data class Movie(
     val screeningDates: ScreeningDates,
     val runningTime: Int,
     val introduction: String,
-)
+) {
+    fun screenPeriodToString(): String {
+        return "${screeningDates.startDate} ~ ${screeningDates.endDate}"
+    }
+}

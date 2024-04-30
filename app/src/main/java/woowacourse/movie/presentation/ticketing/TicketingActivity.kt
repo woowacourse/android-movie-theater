@@ -44,6 +44,7 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val movieId = intent.getLongExtra(EXTRA_MOVIE_ID, EXTRA_DEFAULT_MOVIE_ID)
+        val theaterId = intent.getLongExtra(EXTRA_THEATER_ID, EXTRA_DEFAULT_THEATER_ID)
 
         ticketingPresenter = TicketingPresenter(this)
         ticketingPresenter.loadMovieData(movieId)
@@ -111,10 +112,11 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
     override fun navigate(
         movieId: Long,
         count: Int,
+        theaterId: Long,
     ) {
         val screeningDateTime = "${movieDateSpinner.selectedItem} ${movieTimeSpinner.selectedItem}"
         startActivity(
-            SeatSelectionActivity.createIntent(this, movieId, count, screeningDateTime),
+            SeatSelectionActivity.createIntent(this, movieId, count, screeningDateTime, theaterId),
         )
     }
 
@@ -151,6 +153,7 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
         const val EXTRA_MOVIE_ID = "movie_id"
         const val EXTRA_THEATER_ID = "theater_id"
         const val EXTRA_DEFAULT_MOVIE_ID = -1L
+        const val EXTRA_DEFAULT_THEATER_ID = -1L
         const val KEY_SAVED_COUNT = "saved_count"
         const val SAVED_DEFAULT_VALUE = -1
         const val KEY_SELECTED_TIME_POSITION = "selected_time_position"

@@ -24,6 +24,7 @@ interface TicketingContract {
         fun navigate(
             movieId: Long,
             count: Int,
+            theaterId: Long,
         )
 
         fun showErrorMessage(message: String?)

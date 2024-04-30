@@ -40,6 +40,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         val movieId = intent.getLongExtra(EXTRA_MOVIE_ID, EXTRA_DEFAULT_MOVIE_ID)
         val ticketCount = intent.getIntExtra(EXTRA_COUNT, EXTRA_DEFAULT_TICKET_COUNT)
         val screeningDateTime = intent.getStringExtra(EXTRA_SCREENING_DATE_TIME) ?: ""
+        val theaterId = intent.getLongExtra(EXTRA_THEATER_ID, EXTRA_DEFAULT_THEATER_ID)
 
         presenter = SeatSelectionPresenter(this, ticketCount)
         presenter.loadMovieData(movieId)
@@ -125,9 +126,11 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     companion object {
         const val EXTRA_MOVIE_ID = "movie_id"
         const val EXTRA_COUNT = "ticket_count"
+        const val EXTRA_THEATER_ID = "theater_id"
         const val EXTRA_SCREENING_DATE_TIME = "screening_date_time"
         const val EXTRA_DEFAULT_MOVIE_ID = -1L
         const val EXTRA_DEFAULT_TICKET_COUNT = -1
+        const val EXTRA_DEFAULT_THEATER_ID = -1L
         const val KEY_SELECTED_SEATS = "selected_seats"
 
         fun createIntent(
@@ -135,11 +138,13 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             movieId: Long,
             count: Int,
             screeningDateTime: String,
+            theaterId: Long,
         ): Intent {
             return Intent(context, SeatSelectionActivity::class.java).apply {
                 putExtra(EXTRA_MOVIE_ID, movieId)
                 putExtra(EXTRA_COUNT, count)
                 putExtra(EXTRA_SCREENING_DATE_TIME, screeningDateTime)
+                putExtra(EXTRA_THEATER_ID, theaterId)
             }
         }
     }

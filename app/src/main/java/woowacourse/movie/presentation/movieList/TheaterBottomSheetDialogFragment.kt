@@ -14,20 +14,14 @@ class TheaterBottomSheetDialogFragment(
     private val theaters: List<Theater>,
     private val movieId: Long,
     private val listener: (Long, Long) -> Unit,
-) : BottomSheetDialogFragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
+) : BottomSheetDialogFragment(), TheaterClickListener {
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         val adapter =
-            TheaterAdapter(theaters, movieId) { theaterId, movieId ->
-                listener(theaterId, movieId)
-            }
+            TheaterAdapter(theaters, movieId, this)
         view.findViewById<RecyclerView>(R.id.theater_list_rv).adapter = adapter
     }
 
@@ -37,5 +31,12 @@ class TheaterBottomSheetDialogFragment(
         savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.fragment_theater_bottom_sheet_dialog, container, false)
+    }
+
+    override fun onTheaterClick(
+        theaterId: Long,
+        movieId: Long,
+    ) {
+        listener(theaterId, movieId)
     }
 }

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.model.Movie
 import woowacourse.movie.presentation.movieList.MovieListClickListener
 import woowacourse.movie.presentation.movieList.viewholder.AdViewHolder
@@ -11,7 +12,7 @@ import woowacourse.movie.presentation.movieList.viewholder.MovieViewHolder
 
 class MovieAdapter(
     private var movies: List<Movie> = emptyList(),
-    private val listener: MovieListClickListener,
+    val listener: MovieListClickListener,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemViewType(position: Int): Int {
         if ((position + 1) % AD_POSITION == 0) return AD_VIEW_TYPE
@@ -25,8 +26,8 @@ class MovieAdapter(
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             MOVIE_VIEW_TYPE -> {
-                val itemView = inflater.inflate(R.layout.item_movie, parent, false)
-                MovieViewHolder(itemView, listener)
+                val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                MovieViewHolder(binding, listener)
             }
 
             else -> {
