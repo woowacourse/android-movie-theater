@@ -17,15 +17,17 @@ import woowacourse.movie.detail.presenter.contract.MovieDetailContract
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieCount
 import woowacourse.movie.model.MovieDate
-import woowacourse.movie.model.MovieTime
 import woowacourse.movie.seatselection.view.MovieSeatSelectionActivity
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
+import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_POSITION
 import woowacourse.movie.util.MovieIntentConstant.KEY_ITEM_POSITION
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_DATE
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
+import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
 import java.time.LocalDate
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
@@ -59,6 +61,10 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
                 KEY_MOVIE_ID,
                 INVALID_VALUE_MOVIE_ID,
             ),
+            intent.getIntExtra(
+                KEY_SELECTED_THEATER_POSITION,
+                INVALID_VALUE_THEATER_POSITION,
+            ),
         )
     }
 
@@ -79,7 +85,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         movieDetailPresenter.updateTimeSpinnerPosition(savedPosition)
 
         val savedCount = savedInstanceState.getInt(KEY_MOVIE_COUNT)
-        movieDetailPresenter.updateRevervationCount(savedCount)
+        movieDetailPresenter.updateReservationCount(savedCount)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -140,12 +146,9 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
             }
     }
 
-    override fun setUpTimeSpinner(
-        movieTime: MovieTime,
-        position: Int,
-    ) {
+    override fun setUpTimeSpinner(screeningTimes: List<LocalTime>) {
         val times =
-            movieTime.generateTimes().map { time ->
+            screeningTimes.map { time ->
                 time.format(DateTimeFormatter.ofPattern("kk:mm"))
             }
 
@@ -155,7 +158,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
                 times,
             )
-        runningTimeSpinner.setSelection(position)
+//        runningTimeSpinner.setSelection(position)
     }
 
     override fun navigateToSeatSelectionView(

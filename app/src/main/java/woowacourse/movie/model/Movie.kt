@@ -10,5 +10,5 @@ data class Movie(
     val description: String,
     val date: MovieDate,
     val runningTime: Int,
-    val theaters: List<Theater>
+    val theaters: List<Theater>,
 )

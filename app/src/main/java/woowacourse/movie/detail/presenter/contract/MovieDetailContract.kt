@@ -3,8 +3,8 @@ package woowacourse.movie.detail.presenter.contract
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieCount
 import woowacourse.movie.model.MovieDate
-import woowacourse.movie.model.MovieTime
 import java.time.LocalDate
+import java.time.LocalTime
 
 interface MovieDetailContract {
     interface View {
@@ -12,10 +12,7 @@ interface MovieDetailContract {
 
         fun setUpDateSpinner(movieDate: MovieDate)
 
-        fun setUpTimeSpinner(
-            movieTime: MovieTime,
-            position: Int,
-        )
+        fun setUpTimeSpinner(screeningTimes: List<LocalTime>)
 
         fun displayMovieDetail(
             movieData: Movie?,
@@ -31,7 +28,10 @@ interface MovieDetailContract {
     }
 
     interface Presenter {
-        fun loadMovieDetail(id: Long)
+        fun loadMovieDetail(
+            movieId: Long,
+            theaterPosition: Int,
+        )
 
         fun loadTimeSpinnerItem(localDate: LocalDate)
 
@@ -45,7 +45,7 @@ interface MovieDetailContract {
             time: String,
         )
 
-        fun updateRevervationCount(count: Int)
+        fun updateReservationCount(count: Int)
 
         fun updateTimeSpinnerPosition(position: Int)
     }

@@ -14,11 +14,13 @@ import woowacourse.movie.detail.view.MovieDetailActivity
 import woowacourse.movie.main.view.adapter.theater.TheaterAdapter
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
+import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
 
 class TheaterSelectionFragment : BottomSheetDialogFragment() {
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View? {
         val binding: FragmentTheaterSelectionBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_theater_selection, container, false)
@@ -27,12 +29,15 @@ class TheaterSelectionFragment : BottomSheetDialogFragment() {
 
         val theaters = getMovieById((movieId))?.theaters ?: emptyList()
 
-        binding.theaterRecyclerview.adapter = TheaterAdapter(theaters) {
-            Intent(requireActivity(), MovieDetailActivity::class.java).apply {
-                putExtra(KEY_MOVIE_ID, movieId)
-                startActivity(this)
+        binding.theaterRecyclerview.adapter =
+            TheaterAdapter(theaters) { position ->
+                Intent(requireActivity(), MovieDetailActivity::class.java).apply {
+                    putExtra(KEY_MOVIE_ID, movieId)
+                    putExtra(KEY_SELECTED_THEATER_POSITION, position)
+
+                    startActivity(this)
+                }
             }
-        }
 
         return binding.root
     }

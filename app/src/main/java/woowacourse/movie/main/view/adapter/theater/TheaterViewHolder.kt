@@ -6,11 +6,14 @@ import woowacourse.movie.model.Theater
 
 class TheaterViewHolder(private val binding: ItemTheaterBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(theater: Theater, onTheaterItemClick: () -> Unit) {
+    fun bind(
+        theater: Theater,
+        onTheaterItemClick: (Int) -> Unit,
+    ) {
         binding.theaterName.text = theater.name
         binding.screeningTimeNumber.text = theater.screeningTimes.size.toString()
         binding.root.setOnClickListener {
-            onTheaterItemClick()
+            onTheaterItemClick(bindingAdapterPosition)
         }
     }
 }

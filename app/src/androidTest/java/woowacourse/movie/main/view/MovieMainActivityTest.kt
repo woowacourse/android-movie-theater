@@ -1,6 +1,5 @@
 package woowacourse.movie.main.view
 
-import woowacourse.movie.main.view.adapter.movie.AdvertisementViewHolder
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
@@ -16,6 +15,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
+import woowacourse.movie.main.view.adapter.movie.AdvertisementViewHolder
 import woowacourse.movie.main.view.adapter.movie.MovieViewHolder
 
 @RunWith(AndroidJUnit4::class)

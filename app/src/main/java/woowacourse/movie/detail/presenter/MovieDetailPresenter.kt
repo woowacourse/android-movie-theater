@@ -13,24 +13,27 @@ class MovieDetailPresenter(
     private var movieCount: MovieCount = MovieCount()
     private var timeSpinnerPosition: Int = 0
 
-    override fun loadMovieDetail(id: Long) {
-        val movieData = getMovieById(id)
+    override fun loadMovieDetail(
+        movieId: Long,
+        theaterPosition: Int,
+    ) {
+        val movieData = getMovieById(movieId)
         movieData?.let { movie ->
             movieDetailContractView.displayMovieDetail(movie, movieCount)
             movieDetailContractView.setUpDateSpinner(movie.date)
+            movieDetailContractView.setUpTimeSpinner(movie.theaters[theaterPosition].screeningTimes)
         }
     }
 
     override fun loadTimeSpinnerItem(localDate: LocalDate) {
         val movieTime = MovieTime(isWeekend(localDate))
-        movieDetailContractView.setUpTimeSpinner(movieTime, timeSpinnerPosition)
     }
 
     override fun updateTimeSpinnerPosition(position: Int) {
         timeSpinnerPosition = position
     }
 
-    override fun updateRevervationCount(count: Int) {
+    override fun updateReservationCount(count: Int) {
         movieCount = movieCount.update(count)
         movieDetailContractView.updateCountView(movieCount.count)
     }

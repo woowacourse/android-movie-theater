@@ -28,7 +28,7 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_DATE
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_SEATS
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
-import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_POSITIONS
+import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_SEAT_POSITIONS
 
 class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContract.View {
     private lateinit var seatTitle: TextView
@@ -72,7 +72,7 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         val selectedPositions = seatSelectionPresenter.movieSelectedSeats.getSelectedPositions()
-        outState.putIntArray(KEY_SELECTED_POSITIONS, selectedPositions)
+        outState.putIntArray(KEY_SELECTED_SEAT_POSITIONS, selectedPositions)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -85,7 +85,7 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
             )
         seatSelectionPresenter.updateSelectedSeats(savedCount)
 
-        val selectedPositions = savedInstanceState.getIntArray(KEY_SELECTED_POSITIONS)
+        val selectedPositions = savedInstanceState.getIntArray(KEY_SELECTED_SEAT_POSITIONS)
         setUpSelectedSeats(selectedPositions)
     }
 
