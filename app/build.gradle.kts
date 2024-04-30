@@ -8,6 +8,10 @@ android {
     namespace = "woowacourse.movie"
     compileSdk = 34
 
+    dataBinding {
+        enable = true
+    }
+
     defaultConfig {
         applicationId = "woowacourse.movie"
         minSdk = 26
