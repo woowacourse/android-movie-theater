@@ -37,7 +37,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         setContentView(R.layout.activity_seat_selection)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val movieId = intent.getIntExtra(EXTRA_MOVIE_ID, EXTRA_DEFAULT_MOVIE_ID)
+        val movieId = intent.getLongExtra(EXTRA_MOVIE_ID, EXTRA_DEFAULT_MOVIE_ID)
         val ticketCount = intent.getIntExtra(EXTRA_COUNT, EXTRA_DEFAULT_TICKET_COUNT)
         val screeningDateTime = intent.getStringExtra(EXTRA_SCREENING_DATE_TIME) ?: ""
 
@@ -126,13 +126,13 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         const val EXTRA_MOVIE_ID = "movie_id"
         const val EXTRA_COUNT = "ticket_count"
         const val EXTRA_SCREENING_DATE_TIME = "screening_date_time"
-        const val EXTRA_DEFAULT_MOVIE_ID = -1
+        const val EXTRA_DEFAULT_MOVIE_ID = -1L
         const val EXTRA_DEFAULT_TICKET_COUNT = -1
         const val KEY_SELECTED_SEATS = "selected_seats"
 
         fun createIntent(
             context: Context,
-            movieId: Int,
+            movieId: Long,
             count: Int,
             screeningDateTime: String,
         ): Intent {

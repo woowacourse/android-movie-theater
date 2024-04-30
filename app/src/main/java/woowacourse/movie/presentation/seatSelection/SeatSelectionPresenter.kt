@@ -13,7 +13,7 @@ class SeatSelectionPresenter(
     private lateinit var selectedMovie: Movie
     val seatingSystem = SeatingSystem(ticketCount)
 
-    override fun loadMovieData(id: Int) {
+    override fun loadMovieData(id: Long) {
         movieRepository.findMovieById(id)
             .onSuccess { movie ->
                 selectedMovie = movie

@@ -7,6 +7,7 @@ import woowacourse.movie.R
 import woowacourse.movie.model.Movie
 import woowacourse.movie.presentation.movieList.adapter.MovieAdapter
 import woowacourse.movie.presentation.ticketing.TicketingActivity
+import woowacourse.movie.repository.DummyTheaterList
 
 class MovieListActivity : AppCompatActivity(), MovieListContract.View, MovieListClickListener {
     private val presenter = MovieListPresenter(this)
@@ -22,13 +23,13 @@ class MovieListActivity : AppCompatActivity(), MovieListContract.View, MovieList
         movieList.adapter = MovieAdapter(movies, this)
     }
 
-    override fun navigate(movieId: Int) {
+    override fun navigate(movieId: Long) {
         startActivity(TicketingActivity.createIntent(this, movieId))
     }
 
-    override fun ticketingButtonClick(movieId: Int) {
+    override fun ticketingButtonClick(movieId: Long) {
 //        navigate(movieId)
-        val bottomSheet = TheaterBottomSheetDialogFragment()
+        val bottomSheet = TheaterBottomSheetDialogFragment(DummyTheaterList.find(movieId), movieId)
         bottomSheet.show(supportFragmentManager, bottomSheet.tag)
     }
 }

@@ -47,7 +47,7 @@ class MovieAdapter(
         }
     }
 
-    override fun getItemId(position: Int): Long = movies[position].id.toLong()
+    override fun getItemId(position: Int): Long = movies[position].id
 
     override fun getItemCount(): Int {
         val adCount = if (movies.size >= AD_INTERVAL) movies.size / AD_INTERVAL else 0

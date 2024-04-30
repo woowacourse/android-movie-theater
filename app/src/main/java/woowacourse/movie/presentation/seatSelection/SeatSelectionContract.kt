@@ -24,7 +24,7 @@ interface SeatSelectionContract {
     }
 
     interface Presenter {
-        fun loadMovieData(id: Int)
+        fun loadMovieData(id: Long)
 
         fun loadSeats()
 

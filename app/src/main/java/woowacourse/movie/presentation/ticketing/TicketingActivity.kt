@@ -43,7 +43,7 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
         setContentView(R.layout.activity_ticketing)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val movieId = intent.getIntExtra(EXTRA_MOVIE_ID, EXTRA_DEFAULT_MOVIE_ID)
+        val movieId = intent.getLongExtra(EXTRA_MOVIE_ID, EXTRA_DEFAULT_MOVIE_ID)
 
         ticketingPresenter = TicketingPresenter(this)
         ticketingPresenter.loadMovieData(movieId)
@@ -109,7 +109,7 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
     }
 
     override fun navigate(
-        movieId: Int,
+        movieId: Long,
         count: Int,
     ) {
         val screeningDateTime = "${movieDateSpinner.selectedItem} ${movieTimeSpinner.selectedItem}"
@@ -149,14 +149,14 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
 
     companion object {
         const val EXTRA_MOVIE_ID = "movie_id"
-        const val EXTRA_DEFAULT_MOVIE_ID = -1
+        const val EXTRA_DEFAULT_MOVIE_ID = -1L
         const val KEY_SAVED_COUNT = "saved_count"
         const val SAVED_DEFAULT_VALUE = -1
         const val KEY_SELECTED_TIME_POSITION = "selected_time_position"
 
         fun createIntent(
             context: Context,
-            movieId: Int,
+            movieId: Long,
         ): Intent {
             return Intent(context, TicketingActivity::class.java).apply {
                 putExtra(EXTRA_MOVIE_ID, movieId)

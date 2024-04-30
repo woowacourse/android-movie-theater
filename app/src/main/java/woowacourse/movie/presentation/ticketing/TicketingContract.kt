@@ -22,7 +22,7 @@ interface TicketingContract {
         )
 
         fun navigate(
-            movieId: Int,
+            movieId: Long,
             count: Int,
         )
 
@@ -30,7 +30,7 @@ interface TicketingContract {
     }
 
     interface Presenter {
-        fun loadMovieData(id: Int)
+        fun loadMovieData(id: Long)
 
         fun updateCount(savedCount: Int)
 

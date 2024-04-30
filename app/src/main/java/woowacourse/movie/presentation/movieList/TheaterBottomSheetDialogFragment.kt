@@ -9,14 +9,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.model.Theater
 import woowacourse.movie.presentation.movieList.adapter.TheaterAdapter
-import woowacourse.movie.repository.DummyTheaterList
 
-class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
-    private lateinit var theaters: List<Theater>
-
+class TheaterBottomSheetDialogFragment(private val theaters: List<Theater>, private val movieId: Long) : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        theaters = DummyTheaterList.list
     }
 
     override fun onViewCreated(
@@ -24,7 +20,7 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = TheaterAdapter(theaters)
+        val adapter = TheaterAdapter(theaters, movieId)
         view.findViewById<RecyclerView>(R.id.theater_list_rv).adapter = adapter
     }
 
