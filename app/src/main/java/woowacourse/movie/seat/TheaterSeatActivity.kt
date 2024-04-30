@@ -13,10 +13,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.IntentCompat
 import androidx.core.view.children
 import woowacourse.movie.R
+import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.theater.Seat
-import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.purchaseConfirmation.PurchaseConfirmationActivity
 
 @SuppressLint("DiscouragedApi")
@@ -89,6 +90,7 @@ class TheaterSeatActivity : AppCompatActivity(), TheaterSeatContract.View {
     private fun initializePresenter() {
         val intent = intent
         val ticketNum = intent.getIntExtra("ticketNum", 0)
+        val cinema = IntentCompat.getSerializableExtra(intent, "Cinema", Cinema::class.java)
         presenter = TheaterSeatPresenter(this, ticketNum)
     }
 
@@ -111,23 +113,23 @@ class TheaterSeatActivity : AppCompatActivity(), TheaterSeatContract.View {
             message = "정말 예매하시겠습니까?",
             positiveLabel = "예매 완료",
             onPositiveButtonClicked = {
-                val theater =
+                val cinema =
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        intent.getSerializableExtra("Theater", Theater::class.java)
+                        intent.getSerializableExtra("Cinema", Cinema::class.java)
                     } else {
                         TODO("VERSION.SDK_INT < TIRAMISU")
                     }
                 val ticketPrice = findViewById<TextView>(R.id.total_price).text
-                if (theater != null) {
+                if (cinema != null) {
                     val intent =
                         Intent(this, PurchaseConfirmationActivity::class.java).apply {
                             putExtra("ticketPrice", ticketPrice.toString())
                             putExtra("seatNumber", presenter.getSelectedSeatNumbers())
-                            putExtra("Theater", theater)
+                            putExtra("Cinema", cinema)
                         }
                     navigateToNextPage(intent)
                 } else {
-                    Toast.makeText(this, "Theater data is not available.", Toast.LENGTH_SHORT)
+                    Toast.makeText(this, "Cinema data is not available.", Toast.LENGTH_SHORT)
                         .show()
                 }
             },

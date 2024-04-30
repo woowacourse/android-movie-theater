@@ -6,5 +6,5 @@ interface MovieListView {
 
     fun updateAdapter(displayData: List<MovieDisplayData>)
 
-    fun navigateToMovieDetail(theater: Theater)
+    fun showBottomSheet(theater: Theater)
 }

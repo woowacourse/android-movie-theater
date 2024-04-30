@@ -2,25 +2,31 @@ package woowacourse.movie.purchaseConfirmation
 
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import woowacourse.movie.R
+import androidx.core.content.IntentCompat
+import woowacourse.movie.databinding.PurchaseConfirmationBinding
+import woowacourse.movie.model.Cinema
 
 class PurchaseConfirmationActivity : AppCompatActivity() {
+
+    private val binding: PurchaseConfirmationBinding by lazy {
+        PurchaseConfirmationBinding.inflate(layoutInflater)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.purchase_confirmation)
+        setContentView(binding.root)
         val ticketPrice = intent.getStringExtra("ticketPrice")
-        val seatNumber = intent.getStringExtra("seatNumber")
+        val seatNumber = intent.getStringArrayExtra("seatNumber")
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        val presenter = PurchaseConfirmationActivityPresenter(intent)
-        val movie = presenter.movie
-        findViewById<TextView>(R.id.movie_title_confirmation).text = movie?.title.toString()
-        findViewById<TextView>(R.id.purchase_movie_running_time).text =
-            movie?.runningTime.toString()
-        findViewById<TextView>(R.id.reserved_seat).text = seatNumber
-        findViewById<TextView>(R.id.ticket_charge).text =
-            getString(R.string.price_format, ticketPrice)
+        val cinema =
+            IntentCompat.getSerializableExtra(intent, "Cinema", Cinema::class.java) ?: error("")
+        val movie = cinema.theater.movie
+        binding.movieTitleConfirmation.text = movie.title.toString()
+        binding.purchaseMovieRunningTime.text = movie.runningTime.toString()
+        binding.reservedInformation.text =
+            "%s | %s | %s".format(seatNumber?.size, seatNumber?.joinToString(), cinema.cinemaName)
+        binding.ticketCharge.text = ticketPrice
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

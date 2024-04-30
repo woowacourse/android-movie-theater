@@ -2,7 +2,6 @@ package woowacourse.movie.movieDetail
 
 import android.content.Intent
 import woowacourse.movie.model.movieInfo.MovieInfo
-import woowacourse.movie.model.theater.Theater
 import java.time.LocalDate
 
 interface MovieDetailContract {
@@ -29,7 +28,6 @@ interface MovieDetailContract {
 
         fun onTicketMinusClicked(currentTicketNum: Int)
 
-        fun getTheater(): Theater?
 
         fun updateTimeSpinner(date: String)
 

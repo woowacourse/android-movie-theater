@@ -2,7 +2,6 @@ package woowacourse.movie.movieDetail
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -15,7 +14,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.IntentCompat
 import woowacourse.movie.R
+import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.movieInfo.MovieInfo
 import woowacourse.movie.seat.TheaterSeatActivity
 import java.time.LocalDate
@@ -38,14 +39,16 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         dateSpinner = findViewById(R.id.movie_date_spinner)
         timeSpinner = findViewById(R.id.movie_time_spinner)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        val cinema = IntentCompat.getSerializableExtra(intent, "Cinema", Cinema::class.java)
+        val theater = cinema?.theater
         presenter =
             MovieDetailPresenter(
                 view = this@MovieDetailActivity,
-                intent = intent,
+                theater?.movie,
             )
         presenter.load()
-        setupEventListeners()
-        presenter.generateDateRange(LocalDate.of(2024, 4, 1), LocalDate.of(2024, 4, 28))
+        cinema?.let { setupEventListeners(it) }
+        presenter.generateDateRange(LocalDate.of(2024, 4, 1), LocalDate.of(2024, 4, 30))
     }
 
     override fun initializeViews(movieInfo: MovieInfo) {
@@ -99,7 +102,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     }
 
     @SuppressLint("NewApi")
-    private fun setupEventListeners() {
+    private fun setupEventListeners(cinema: Cinema) {
         plusButton.setOnClickListener {
             presenter.onTicketPlusClicked(ticketNum)
         }
@@ -109,18 +112,10 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         }
 
         seatConfirmationButton.setOnClickListener {
-            val theater = presenter.getTheater()
             val intent =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    Intent(this, TheaterSeatActivity::class.java).apply {
-                        putExtra("ticketNum", presenter.getTicketNum())
-                        putExtra("Theater", theater)
-                    }
-                } else {
-                    Intent(this, TheaterSeatActivity::class.java).apply {
-                        putExtra("ticketNum", presenter.getTicketNum())
-                        putExtra("Theater", theater)
-                    }
+                Intent(this, TheaterSeatActivity::class.java).apply {
+                    putExtra("ticketNum", presenter.getTicketNum())
+                    putExtra("Cinema", cinema)
                 }
             navigateToPurchaseConfirmation(intent)
         }

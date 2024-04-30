@@ -69,8 +69,8 @@ class TheaterSeatPresenter(
         }
     }
 
-    override fun getSelectedSeatNumbers(): String {
-        return selectedSeats.toString()
+    override fun getSelectedSeatNumbers(): Array<String> {
+        return selectedSeats.toTypedArray()
     }
 
     private fun calculateAndUpdateTotalPrice() {

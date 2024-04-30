@@ -7,7 +7,9 @@ plugins {
 android {
     namespace = "woowacourse.movie"
     compileSdk = 34
-
+    dataBinding {
+        enable = true
+    }
     defaultConfig {
         applicationId = "woowacourse.movie"
         minSdk = 26
@@ -39,6 +41,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("androidx.core:core-ktx:1.13.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")

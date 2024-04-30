@@ -1,24 +1,15 @@
 package woowacourse.movie.movieDetail
 
-import android.content.Intent
-import android.os.Build
-import woowacourse.movie.model.theater.Theater
+import woowacourse.movie.model.movieInfo.MovieInfo
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 class MovieDetailPresenter(
     private val view: MovieDetailContract.View,
-    intent: Intent,
+    private val movie: MovieInfo?,
 ) : MovieDetailContract.Presenter {
     private var ticketNum = 1
-    private val theater =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getSerializableExtra("Theater", Theater::class.java)
-        } else {
-            TODO("VERSION.SDK_INT < TIRAMISU")
-        }
-    val movie = theater?.movie
 
     override fun load() {
         movie?.let { view.initializeViews(it) }
@@ -40,10 +31,6 @@ class MovieDetailPresenter(
         } else {
             view.showToast("최소 티켓 수량입니다.")
         }
-    }
-
-    override fun getTheater(): Theater? {
-        return this.theater
     }
 
     override fun getTicketNum(): Int {

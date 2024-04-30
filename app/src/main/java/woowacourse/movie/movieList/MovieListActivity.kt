@@ -2,7 +2,6 @@ package woowacourse.movie.movieList
 
 import MovieAdapter
 import MovieListView
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.model.MovieDisplayData
 import woowacourse.movie.model.theater.Theater
-import woowacourse.movie.movieDetail.MovieDetailActivity
+import woowacourse.movie.movieList.cinemaListDialog.TheatersBottomSheetFragment
 
 class MovieListActivity : AppCompatActivity(), MovieListView {
     private lateinit var moviesRecyclerView: RecyclerView
@@ -23,6 +22,14 @@ class MovieListActivity : AppCompatActivity(), MovieListView {
         setContentView(R.layout.movie_list)
         initializeViews()
         initAdapter()
+    }
+
+    override fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun updateAdapter(displayData: List<MovieDisplayData>) {
+        adapter.updateItems(displayData)
     }
 
     private fun initializeViews() {
@@ -40,19 +47,13 @@ class MovieListActivity : AppCompatActivity(), MovieListView {
         presenter.loadMovies()
     }
 
-    override fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    override fun showBottomSheet(theater: Theater) {
+        val bottomSheet = TheatersBottomSheetFragment().apply {
+            arguments = Bundle().apply { putSerializable(THEATER_KEY, theater) }
+        }
+        bottomSheet.show(supportFragmentManager, bottomSheet.tag)
     }
 
-    override fun updateAdapter(displayData: List<MovieDisplayData>) {
-        adapter.updateItems(displayData)
-    }
-
-    override fun navigateToMovieDetail(theater: Theater) {
-        val intent =
-            Intent(this, MovieDetailActivity::class.java).apply {
-                putExtra("Theater", theater)
-            }
-        startActivity(intent)
-    }
 }
+
+val THEATER_KEY = "theaterKey"

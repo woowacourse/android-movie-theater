@@ -38,10 +38,10 @@ class MovieListActivityTest {
 
     @Test
     fun whenListViewItemIsVisible_thenDisplayMovieInfo() {
-        onView(withId(R.id.movies_list_item)).check(matches(isDisplayed()))
+        onView(withId(R.id.movies_list)).check(matches(isDisplayed()))
 
         onData(anything())
-            .inAdapterView(withId(R.id.movies_list_item))
+            .inAdapterView(withId(R.id.movies_list))
             .atPosition(0)
             .onChildView(withId(R.id.movie_title))
             .check(matches(withText(movie.title.toString())))
@@ -50,7 +50,7 @@ class MovieListActivityTest {
     @Test
     fun whenDetailsButtonClicked_inListViewItem_thenOpenNewActivity() {
         onData(anything())
-            .inAdapterView(withId(R.id.movies_list_item))
+            .inAdapterView(withId(R.id.movies_list))
             .atPosition(0)
             .onChildView(withId(R.id.movie_details_button))
             .perform(click())
@@ -62,11 +62,11 @@ class MovieListActivityTest {
     @Test
     fun 다음화면에서_뒤로가기버튼클릭_영화목록화면표시() {
         onData(anything())
-            .inAdapterView(withId(R.id.movies_list_item))
+            .inAdapterView(withId(R.id.movies_list))
             .atPosition(0)
             .onChildView(withId(R.id.movie_details_button))
             .perform(click())
         pressBack()
-        onView(withId(R.id.movies_list_item)).check(matches(isDisplayed()))
+        onView(withId(R.id.movies_list)).check(matches(isDisplayed()))
     }
 }

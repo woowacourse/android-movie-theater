@@ -42,6 +42,6 @@ interface TheaterSeatContract {
             onNegativeButtonClicked: () -> Unit,
         )
 
-        fun getSelectedSeatNumbers(): String
+        fun getSelectedSeatNumbers(): Array<String>
     }
 }

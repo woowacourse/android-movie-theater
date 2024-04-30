@@ -46,7 +46,7 @@ class MovieListPresenter(private val view: MovieListView) {
                     Synopsis("Synopsis for movie $i"),
                 )
             val seats = generateSeats()
-            Theater(movie, seats)
+            Theater(movie, listOf(), seats)
         }
     }
 
@@ -64,8 +64,9 @@ class MovieListPresenter(private val view: MovieListView) {
 
     fun onDetailButtonClicked(position: Int) {
         val theater = theaters[position]
-        view.navigateToMovieDetail(theater)
+        view.showBottomSheet(theater)
     }
+
 
     fun loadMovies() {
         val displayData = convertToDisplayData(theaters)
