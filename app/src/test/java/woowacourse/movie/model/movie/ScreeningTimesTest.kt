@@ -2,10 +2,12 @@ package woowacourse.movie.model.movie
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import woowacourse.movie.db.screening.ScreeningDatabase
+import woowacourse.movie.db.theater.TheaterDao
+import woowacourse.movie.model.Theater
 
 class ScreeningTimesTest {
-    private val screeningTimes: ScreeningTimes = ScreeningDatabase.movies[0].screeningTimes
+    private val theaters: List<Theater> = TheaterDao().findAll()
+    private val screeningTimes: ScreeningTimes = theaters[0].screeningTimes
 
     @Test
     fun `사용자가 선택한 날짜가 평일이라면 평일 상영 시간표를 반환한다`() {

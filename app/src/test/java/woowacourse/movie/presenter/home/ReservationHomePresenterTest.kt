@@ -32,7 +32,6 @@ class ReservationHomePresenterTest {
                 0,
                 "해리포터",
                 emptyList(),
-                ScreeningTimes(emptyList(), emptyList()),
                 "",
                 "",
             ),
