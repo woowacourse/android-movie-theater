@@ -1,3 +1,3 @@
 package woowacourse.movie.model
 
-class Theater(val name: String, val screens: List<Screen>)
+class Theater(val id: Long, val name: String, val screens: List<Screen>)

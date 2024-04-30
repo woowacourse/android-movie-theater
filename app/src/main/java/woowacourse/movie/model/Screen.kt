@@ -1,8 +1,9 @@
 package woowacourse.movie.model
 
-import java.time.LocalDateTime
+import java.time.LocalTime
 
 data class Screen(
     val movieId: Long,
-    val screenDateTimes: List<LocalDateTime>
+    // val screenPeriod: ScreeningDates,
+    val screenSchedule: List<LocalTime>,
 )

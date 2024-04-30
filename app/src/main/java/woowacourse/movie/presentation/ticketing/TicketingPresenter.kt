@@ -2,10 +2,10 @@ package woowacourse.movie.presentation.ticketing
 
 import android.view.View
 import android.widget.AdapterView
-import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.model.Count
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.ScreeningTimeSchedule
+import woowacourse.movie.repository.MovieRepository
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
