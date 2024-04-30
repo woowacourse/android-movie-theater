@@ -38,6 +38,7 @@
             android:maxLines="1"
             android:textColor="@color/gray"
             android:textSize="12sp"
+            android:text="@{@string/screening_times_count(theater.screeningTimes.size)}"
             app:layout_constraintEnd_toStartOf="@id/selection_arrow_image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/theater_title_text"

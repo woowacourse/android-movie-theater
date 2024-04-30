@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.home.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -13,34 +14,39 @@ class TheaterAdapter(
 ) : RecyclerView.Adapter<TheaterAdapter.TheaterViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): TheaterViewHolder {
-        val binding: ItemTheaterBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
-            R.layout.item_theater,
-            parent,
-            false
-        )
+        val binding: ItemTheaterBinding =
+            DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.item_theater,
+                parent,
+                false,
+            )
 
         return TheaterViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: TheaterViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: TheaterViewHolder,
+        position: Int,
+    ) {
         holder.bind(theaters[position])
     }
 
     override fun getItemCount(): Int = theaters.size
 
-    class TheaterViewHolder(val binding: ItemTheaterBinding) :
+    class TheaterViewHolder(private val binding: ItemTheaterBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val context = binding.root.context
-        fun bind(theater: Theater) {
-            binding.theaterTitleText.text = context.getString(R.string.theater, theater.name)
-            // TODO 상영 횟수 구하는 로직 구현
-            binding.screeningTimesCountText.text = context.getString(R.string.screening_times_count, 10)
-        }
+        private val context = binding.root.context
 
-//        private fun generateScreeningTimeCount()
+        fun bind(theater: Theater) {
+            binding.theater = theater
+        }
     }
 
+    interface TheaterItemClickListener {
+        fun onTheaterItemClick(movieContentId: Long, theaterId: Long)
+    }
 }
+

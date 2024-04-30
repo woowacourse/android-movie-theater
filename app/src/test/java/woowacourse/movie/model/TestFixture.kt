@@ -1,8 +1,6 @@
 package woowacourse.movie.model
 
-import woowacourse.movie.model.data.Theaters
 import woowacourse.movie.model.movie.MovieContent
-import woowacourse.movie.model.movie.ScreeningMovie
 import woowacourse.movie.model.movie.Seat
 import woowacourse.movie.model.movie.Theater
 import java.time.LocalDate
@@ -16,22 +14,26 @@ val movieContent =
         LocalDate.of(2024, 3, 28),
         152,
         "해리",
-    )
-
-val screeningMovie =
-    ScreeningMovie(
-        movieContent,
-        listOf(
-            LocalTime.of(10, 0),
-            LocalTime.of(12, 0),
-        )
+        listOf(Theater("강남", listOf(LocalTime.of(11, 0), LocalTime.of(13, 0)), 0)),
     )
 
 val theater =
-    Theater("선릉", listOf(screeningMovie))
+    Theater(
+        "선릉",
+        listOf(
+            LocalTime.of(10, 0),
+            LocalTime.of(12, 0),
+        ),
+    )
 
 fun makeTheater(name: String): Theater {
-    return Theater(name, listOf(screeningMovie))
+    return Theater(
+        name,
+        listOf(
+            LocalTime.of(10, 0),
+            LocalTime.of(12, 0),
+        ),
+    )
 }
 
 val A1_SEAT = Seat(0, 0)

@@ -1,7 +1,9 @@
 package woowacourse.movie.model.movie
 
+import java.time.LocalTime
+
 data class Theater(
     val name: String,
-    val movies: List<ScreeningMovie>,
+    val screeningTimes: List<LocalTime>,
     val id: Long = 0,
 )

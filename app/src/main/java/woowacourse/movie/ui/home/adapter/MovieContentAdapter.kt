@@ -51,6 +51,10 @@ class MovieContentAdapter(
         }
     }
 
+//    interface MovieItemClickListener {
+//        fun onMovieItemClick(movieContentId: Long)
+//    }
+
     companion object {
         private const val TYPE_ADS = 0
         private const val TYPE_MOVIE = 1
