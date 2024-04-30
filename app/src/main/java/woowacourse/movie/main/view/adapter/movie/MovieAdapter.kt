@@ -1,6 +1,5 @@
-package woowacourse.movie.main.view.adapter
+package woowacourse.movie.main.view.adapter.movie
 
-import AdvertisementViewHolder
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
