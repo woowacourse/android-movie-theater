@@ -10,13 +10,14 @@ object DummyReservation : ReservationRepository {
 
     override fun saveReservation(
         movie: Movie,
+        theaterId: Int,
         ticketCount: Int,
         seats: List<Seat>,
         dateTime: LocalDateTime,
     ): Result<Int> {
         return runCatching {
             val id = reservations.size + 1
-            val reservation = Reservation(id, movie, ticketCount, seats, dateTime)
+            val reservation = Reservation(id, theaterId, movie, ticketCount, seats, dateTime)
             reservations.add(reservation)
             id
         }

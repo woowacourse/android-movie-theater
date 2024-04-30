@@ -152,6 +152,11 @@ class DummyScreens : ScreenRepository {
     val theaters =
         listOf(theater, theater.copy(id = 1, name = "강남"), theater.copy(id = 2, name = "잠실"))
 
+    override fun findTheaterNameById(theaterId: Int): Result<String> =
+        runCatching {
+            theaters.find { it.id == theaterId }?.name ?: throw NoSuchElementException()
+        }
+
     override fun load(): List<ScreenView> =
         movies.flatMap { movie ->
             listOf(

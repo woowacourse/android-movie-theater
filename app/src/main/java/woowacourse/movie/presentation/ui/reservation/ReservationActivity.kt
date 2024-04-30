@@ -7,6 +7,7 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.model.Reservation
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.repository.DummyReservation
+import woowacourse.movie.domain.repository.DummyScreens
 import woowacourse.movie.presentation.base.BaseActivity
 import woowacourse.movie.presentation.ui.reservation.ReservationContract.Presenter
 import woowacourse.movie.presentation.ui.reservation.ReservationContract.View
@@ -16,7 +17,13 @@ import woowacourse.movie.presentation.utils.toScreeningDate
 class ReservationActivity : BaseActivity(), View {
     override val layoutResourceId: Int
         get() = R.layout.activity_reservation
-    override val presenter: Presenter by lazy { ReservationPresenter(this, DummyReservation) }
+    override val presenter: Presenter by lazy {
+        ReservationPresenter(
+            this,
+            DummyReservation,
+            DummyScreens(),
+        )
+    }
 
     private val title: TextView by lazy { findViewById(R.id.tv_reservation_title) }
     private val date: TextView by lazy { findViewById(R.id.tv_reservation_date) }
@@ -28,11 +35,15 @@ class ReservationActivity : BaseActivity(), View {
         presenter.loadReservation(id)
     }
 
-    override fun showReservation(reservation: Reservation) {
+    override fun showReservation(
+        reservation: Reservation,
+        theaterName: String,
+    ) {
         with(reservation) {
             title.text = movie.title
             date.text = dateTime.toScreeningDate()
-            count.text = getString(R.string.reserve_count, ticketCount, seats.toSeatString())
+            count.text =
+                getString(R.string.reserve_count, ticketCount, seats.toSeatString(), theaterName)
             amount.text = totalPrice.currency(this@ReservationActivity)
         }
     }

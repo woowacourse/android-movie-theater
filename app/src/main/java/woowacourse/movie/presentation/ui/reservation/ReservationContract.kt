@@ -6,7 +6,10 @@ import woowacourse.movie.presentation.base.BaseView
 
 interface ReservationContract {
     interface View : BaseView {
-        fun showReservation(reservation: Reservation)
+        fun showReservation(
+            reservation: Reservation,
+            theaterName: String,
+        )
 
         fun back()
     }

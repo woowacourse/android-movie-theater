@@ -8,6 +8,7 @@ import java.time.LocalDateTime
 interface ReservationRepository {
     fun saveReservation(
         movie: Movie,
+        theaterId: Int,
         ticketCount: Int,
         seats: List<Seat>,
         dateTime: LocalDateTime,
