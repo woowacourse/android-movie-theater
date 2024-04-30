@@ -2,10 +2,11 @@ package woowacourse.movie.model
 
 import woowacourse.movie.model.data.Theaters
 import woowacourse.movie.model.movie.MovieContent
-import woowacourse.movie.model.movie.Movies
+import woowacourse.movie.model.movie.ScreeningMovie
 import woowacourse.movie.model.movie.Seat
 import woowacourse.movie.model.movie.Theater
 import java.time.LocalDate
+import java.time.LocalTime
 
 val movieContent =
     MovieContent(
@@ -17,11 +18,20 @@ val movieContent =
         "해리",
     )
 
+val screeningMovie =
+    ScreeningMovie(
+        movieContent,
+        listOf(
+            LocalTime.of(10, 0),
+            LocalTime.of(12, 0),
+        )
+    )
+
 val theater =
-    Theater("선릉", Movies(listOf(movieContent)))
+    Theater("선릉", listOf(screeningMovie))
 
 fun makeTheater(name: String): Theater {
-    return Theater(name, Movies(listOf(movieContent)))
+    return Theater(name, listOf(screeningMovie))
 }
 
 val A1_SEAT = Seat(0, 0)
