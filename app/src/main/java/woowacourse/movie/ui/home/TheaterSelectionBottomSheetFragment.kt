@@ -47,10 +47,7 @@ class TheaterSelectionBottomSheetFragment :
         super.onViewCreated(view, savedInstanceState)
         setFragmentResultListener(MovieHomeKey.FRAGMENT_REQUEST_KEY) { _, bundle ->
             presenter.loadTheaters(
-                bundle.getLong(
-                    MovieHomeKey.MOVIE_CONTENT_ID,
-                    DEFAULT_MOVIE_CONTENT_ID,
-                ),
+                bundle.getLong(MovieHomeKey.MOVIE_CONTENT_ID),
             )
         }
     }
@@ -86,6 +83,6 @@ class TheaterSelectionBottomSheetFragment :
     }
 
     companion object {
-        private const val DEFAULT_MOVIE_CONTENT_ID = -1L
+        private const val DEFAULT_MOVIE_CONTENT_ID = 0L
     }
 }

@@ -4,9 +4,7 @@ import woowacourse.movie.model.movie.UserTicket
 import woowacourse.movie.ui.HandleError
 
 interface MovieReservationCompleteContract {
-    interface View : HandleError {
-        fun showTicket(userTicket: UserTicket)
-    }
+    interface View : HandleError
 
     interface Presenter {
         fun loadTicket(ticketId: Long)

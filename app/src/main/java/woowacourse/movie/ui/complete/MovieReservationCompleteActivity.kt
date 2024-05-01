@@ -1,30 +1,33 @@
 package woowacourse.movie.ui.complete
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
+import androidx.databinding.BindingAdapter
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityMovieReservationCompleteBinding
 import woowacourse.movie.model.data.UserTicketsImpl
+import woowacourse.movie.model.movie.Seat
 import woowacourse.movie.model.movie.UserTicket
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.home.MovieHomeFragment
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class MovieReservationCompleteActivity :
-    BaseActivity<MovieReservationCompleteContract.Presenter>(),
+    BaseActivity<MovieReservationCompletePresenter>(),
     MovieReservationCompleteContract.View {
-    private val titleText by lazy { findViewById<TextView>(R.id.title_text) }
-    private val screeningDateTimeText by lazy { findViewById<TextView>(R.id.screening_date_time_text) }
-    private val reservationCountText by lazy { findViewById<TextView>(R.id.reservation_count_text) }
-    private val reservationSeatText by lazy { findViewById<TextView>(R.id.reservation_seat_text) }
-    private val reservationAmountText by lazy { findViewById<TextView>(R.id.reservation_amount_text) }
+    private lateinit var binding: ActivityMovieReservationCompleteBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_reservation_complete)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_reservation_complete)
+        binding.presenter = presenter
 
         val userTicketId = userTicketId()
         if (userTicketId == USER_TICKET_ID_DEFAULT_VALUE) {
@@ -53,23 +56,28 @@ class MovieReservationCompleteActivity :
         return super.onOptionsItemSelected(item)
     }
 
-    override fun showTicket(userTicket: UserTicket) {
-        userTicket.run {
-            titleText.text = title
-            screeningDateTimeText.text =
-                screeningStartDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
-            reservationCountText.text =
-                resources.getString(R.string.reservation_count)
-                    .format(reservationDetail.selectedSeat.size)
-            reservationSeatText.text = userTicket.reservationDetail.selectedSeat.joinToString()
-            reservationAmountText.text =
-                resources.getString(R.string.reservation_amount)
-                    .format(userTicket.reservationDetail.totalSeatAmount())
-        }
-    }
-
     companion object {
         private val TAG = MovieReservationCompleteActivity::class.simpleName
         private const val USER_TICKET_ID_DEFAULT_VALUE = -1L
     }
+}
+
+@BindingAdapter("context", "count", "seats", "theaterName")
+fun setReservationResult(
+    textView: TextView,
+    context: Context,
+    count: Int,
+    seats: List<Seat>,
+    theaterName: String,
+) {
+    textView.text =
+        context.getString(R.string.reservation_result, count, seats.joinToString(), theaterName)
+}
+
+@BindingAdapter("dateTime")
+fun setReservedDateTime(
+    textView: TextView,
+    dateTime: LocalDateTime,
+) {
+    textView.text = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
 }

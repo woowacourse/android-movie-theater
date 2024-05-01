@@ -14,7 +14,7 @@ val movieContent =
         LocalDate.of(2024, 3, 28),
         152,
         "해리",
-        listOf(Theater("강남", listOf(LocalTime.of(11, 0), LocalTime.of(13, 0)), 0)),
+        listOf(0L, 1L, 2L),
     )
 
 val theater =

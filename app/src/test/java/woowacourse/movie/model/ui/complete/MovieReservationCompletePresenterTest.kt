@@ -30,17 +30,6 @@ class MovieReservationCompletePresenterTest {
     }
 
     @Test
-    fun `티켓 정보를 가져온다`() {
-        // given
-
-        // when
-        presenter.loadTicket(0L)
-
-        // then
-        verify { view.showTicket(any()) }
-    }
-
-    @Test
     fun `티켓 정보가 없을 경우 에러를 보여준다`() {
         // given
 

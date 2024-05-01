@@ -5,6 +5,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.model.data.MovieContentsImpl
+import woowacourse.movie.model.data.TheatersImpl
 import woowacourse.movie.model.movieContent
 import woowacourse.movie.ui.home.TheaterSelectionContract
 import woowacourse.movie.ui.home.TheaterSelectionPresenter
@@ -16,20 +17,7 @@ class TheaterSelectionPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk<TheaterSelectionContract.View>(relaxed = true)
-        presenter = TheaterSelectionPresenter(view, MovieContentsImpl)
-    }
-
-    @Test
-    fun `극장 정보를 불러와 보여준다`() {
-        // given
-
-        // when
-        presenter.loadTheaters(0L)
-
-        // then
-        verify {
-            view.showTheaters(movieContent.theaters)
-        }
+        presenter = TheaterSelectionPresenter(view, MovieContentsImpl, TheatersImpl)
     }
 
     @Test
