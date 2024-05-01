@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.db.screening.ScreeningDao
+import woowacourse.movie.db.theater.TheaterDao
 
 @ExtendWith(MockKExtension::class)
 class ReservationDetailPresenterTest {
@@ -19,7 +20,7 @@ class ReservationDetailPresenterTest {
 
     @BeforeEach
     fun setUp() {
-        presenter = ReservationDetailPresenter(view, ScreeningDao())
+        presenter = ReservationDetailPresenter(view, ScreeningDao(), TheaterDao())
     }
 
     @Test

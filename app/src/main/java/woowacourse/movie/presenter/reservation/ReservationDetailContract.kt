@@ -22,7 +22,6 @@ interface ReservationDetailContract {
         fun showResultToast()
 
         fun navigateToSeatSelection(
-            movieId: Int,
             dateTime: ScreeningDateTime,
             count: HeadCount,
         )
@@ -36,7 +35,7 @@ interface ReservationDetailContract {
         fun loadScreeningPeriod(movieId: Int)
 
         fun loadScreeningTimes(
-            movieId: Int,
+            theaterId: Int,
             selectedDate: String,
         )
 
@@ -44,10 +43,7 @@ interface ReservationDetailContract {
 
         fun decreaseHeadCount(count: Int)
 
-        fun initializeReservationButton(
-            movieId: Int,
-            dateTime: ScreeningDateTime,
-        )
+        fun initializeReservationButton(dateTime: ScreeningDateTime)
 
         fun handleHeadCountBounds(result: ChangeTicketCountResult)
     }

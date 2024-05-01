@@ -154,6 +154,7 @@
                 android:layout_marginTop="20dp"
                 android:paddingVertical="8dp"
                 android:text="@string/reservation_detail_select_seat"
+                android:onClick="@{() -> reservation_detail.initializeReservationButton()}"
                 android:textAppearance="@style/Bold20"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

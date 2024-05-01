@@ -47,7 +47,6 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
             loadScreeningPeriod(movieId)
         }
         updateScreeningTimes(movieId)
-        initializeReservationButton(movieId)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -117,13 +116,13 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
     override fun showErrorToast() = makeToast(this, getString(R.string.all_error))
 
     override fun navigateToSeatSelection(
-        movieId: Int,
         dateTime: ScreeningDateTime,
         count: HeadCount,
     ) {
         val intent = Intent(this, SeatSelectionActivity::class.java)
         intent.apply {
             putExtra(MOVIE_ID, movieId)
+            putExtra(THEATER_ID, theaterId)
             putExtra(SCREENING_PERIOD, dateTime)
             putExtra(HEAD_COUNT, count)
         }
@@ -156,13 +155,11 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
 
     fun initializePlusButton() = presenter.increaseHeadCount(presenter.headCount.count)
 
-    private fun initializeReservationButton(movieId: Int) {
-        binding.buttonReservationDetailFinished.setOnClickListener {
-            val date = binding.spinnerReservationDetailScreeningDate.selectedItem.toString()
-            val time = binding.spinnerReservationDetailScreeningTime.selectedItem.toString()
-            val dateTime = ScreeningDateTime(date, time)
-            presenter.initializeReservationButton(movieId, dateTime)
-        }
+    fun initializeReservationButton() {
+        val date = binding.spinnerReservationDetailScreeningDate.selectedItem.toString()
+        val time = binding.spinnerReservationDetailScreeningTime.selectedItem.toString()
+        val dateTime = ScreeningDateTime(date, time)
+        presenter.initializeReservationButton(dateTime)
     }
 
     companion object {
