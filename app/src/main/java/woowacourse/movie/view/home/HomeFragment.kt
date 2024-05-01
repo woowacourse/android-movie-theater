@@ -1,12 +1,14 @@
 package woowacourse.movie.view.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.db.advertisement.AdvertisementDao
@@ -20,7 +22,6 @@ import woowacourse.movie.view.theater.TheaterSelectionFragment
 class HomeFragment : Fragment(), ReservationHomeContract.View {
     private val presenter = ReservationHomePresenter(this)
     private lateinit var binding: FragmentHomeBinding
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
