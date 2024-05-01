@@ -3,7 +3,7 @@ package woowacourse.movie.model
 class MovieTheater(
     private val rowRate: Map<SeatRate, List<Int>>,
     private val colLength: Int,
-    val defaultPrice: Int = 0,
+    private val name: String,
 ) {
     fun seats(): List<Seat> =
         rowRate.flatMap { (seatRate, rateRows) ->
