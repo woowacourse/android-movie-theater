@@ -3,7 +3,6 @@ package woowacourse.movie.seatselection.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -11,7 +10,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityMovieSeatSelectionBinding
 import woowacourse.movie.model.MovieGrade
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
@@ -32,9 +33,10 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_SEAT_POSITIONS
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
 
 class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContract.View {
-    private lateinit var seatTitle: TextView
-    private lateinit var seatPrice: TextView
-    private lateinit var completeButton: Button
+    var seatTitle: String = ""
+    var seatPrice: String = "0"
+    var selectionComplete: Boolean = false
+
     private val tableSeats: List<TextView> by lazy {
         findViewById<TableLayout>(R.id.seatTable).children.filterIsInstance<TableRow>()
             .flatMap { tableRow ->
@@ -42,12 +44,16 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
             }.toList()
     }
 
+
+    private lateinit var binding: ActivityMovieSeatSelectionBinding
+
     private lateinit var seatSelectionPresenter: MovieSeatSelectionPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_seat_selection)
-        setUpViewById()
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_seat_selection)
+        binding.activity = this
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         seatSelectionPresenter =
@@ -66,8 +72,6 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
                 INVALID_VALUE_MOVIE_COUNT,
             ),
         )
-
-        setUpCompleteButton()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -96,7 +100,7 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
     }
 
     override fun displayMovieTitle(movieTitle: String) {
-        seatTitle.text = movieTitle
+        seatTitle = movieTitle
     }
 
     override fun setUpTableSeats(baseSeats: List<MovieSeat>) {
@@ -127,8 +131,9 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
     }
 
     override fun updateSelectResult(movieSelectedSeats: MovieSelectedSeats) {
-        seatPrice.text = formatPrice(movieSelectedSeats.totalPrice())
-        completeButton.isEnabled = movieSelectedSeats.isSelectionComplete()
+        seatPrice = formatPrice(movieSelectedSeats.totalPrice())
+        selectionComplete = movieSelectedSeats.isSelectionComplete()
+        binding.invalidateAll()
     }
 
     override fun navigateToResultView(movieSelectedSeats: MovieSelectedSeats) {
@@ -148,21 +153,9 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
         }
     }
 
-    private fun setUpViewById() {
-        seatTitle = findViewById(R.id.seatTitle)
-        seatPrice = findViewById(R.id.seatPrice)
-        completeButton = findViewById(R.id.completeBtn)
-    }
-
     private fun setUpSelectedSeats(selectedPositions: IntArray?) {
         selectedPositions?.forEach { position ->
             seatSelectionPresenter.clickTableSeat(position)
-        }
-    }
-
-    private fun setUpCompleteButton() {
-        completeButton.setOnClickListener {
-            displayDialog()
         }
     }
 
