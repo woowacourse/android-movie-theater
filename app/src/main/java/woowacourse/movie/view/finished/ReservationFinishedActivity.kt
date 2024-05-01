@@ -11,8 +11,10 @@ import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.ticket.Ticket
 import woowacourse.movie.presenter.finished.ReservationFinishedContract
 import woowacourse.movie.presenter.finished.ReservationFinishedPresenter
+import woowacourse.movie.utils.MovieUtils
 import woowacourse.movie.utils.MovieUtils.convertAmountFormat
 import woowacourse.movie.utils.MovieUtils.intentSerializable
+import woowacourse.movie.utils.MovieUtils.makeToast
 import woowacourse.movie.view.home.ReservationHomeActivity
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.TICKET
 
@@ -25,15 +27,14 @@ class ReservationFinishedActivity : AppCompatActivity(), ReservationFinishedCont
     private val screeningTime: TextView by lazy { findViewById(R.id.text_view_reservation_finished_screening_time) }
     private val numberOfTickets: TextView by lazy { findViewById(R.id.text_view_reservation_finished_number_of_tickets) }
     private val ticketPrice: TextView by lazy { findViewById(R.id.text_view_reservation_finished_ticket_price) }
+    private lateinit var ticket: Ticket
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reservation_finished)
 
         handleBackPressed()
-
-        val ticket = intent.intentSerializable(TICKET, Ticket::class.java) ?: throw NoSuchElementException()
-
+        receiveTicket()
         with(presenter) {
             loadMovie(ticket.movieId)
             loadTicket(ticket)
@@ -52,6 +53,21 @@ class ReservationFinishedActivity : AppCompatActivity(), ReservationFinishedCont
             seats.joinToString(getString(R.string.reservation_finished_seat_separator)) { "${it.row}${it.column}" }
         screeningDate.text = ticket.screeningDateTime.date
         screeningTime.text = ticket.screeningDateTime.time
+    }
+
+    override fun showErrorToast() {
+        makeToast(this, getString(R.string.all_error))
+    }
+
+    private fun receiveTicket() {
+        runCatching {
+            intent.intentSerializable(TICKET, Ticket::class.java) ?: throw NoSuchElementException()
+        }.onSuccess {
+            ticket = it
+        }.onFailure {
+            showErrorToast()
+            finish()
+        }
     }
 
     private fun handleBackPressed() {

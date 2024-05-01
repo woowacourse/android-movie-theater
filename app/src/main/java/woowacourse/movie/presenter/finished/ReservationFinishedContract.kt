@@ -8,6 +8,8 @@ interface ReservationFinishedContract {
         fun showMovieTitle(movie: Movie)
 
         fun showReservationHistory(ticket: Ticket)
+
+        fun showErrorToast()
     }
 
     interface Presenter {
