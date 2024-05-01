@@ -39,14 +39,6 @@ class TheaterFragment : DialogFragment() {
                     movieId: Long,
                     theaterId: Long,
                 ) {
-//                    val bundle = Bundle()
-//                    bundle.putLong("key", movieId)
-//                    theaterFragment.arguments = bundle
-//                    supportFragmentManager.beginTransaction()
-//                        .replace(R.id.fragment_container_view, theaterFragment)
-//                        .commit()
-//                    theaterFragmentLayout.visibility = View.VISIBLE
-// //                    darkView.visibility = View.VISIBLE
                     val intent = Intent(activity, MovieReservationActivity::class.java)
                     intent.putExtra("movie_id_key", movieId)
                     intent.putExtra("theater_id_key", theaterId)

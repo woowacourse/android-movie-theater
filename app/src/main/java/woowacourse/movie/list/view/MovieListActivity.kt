@@ -18,28 +18,17 @@ import woowacourse.movie.list.presenter.MovieListPresenter
 class MovieListActivity : AppCompatActivity(), MovieListContract.View {
     private lateinit var recyclerView: RecyclerView
     private lateinit var movieAdapter: MovieAdapter
-
-//    private lateinit var binding: ActivityMovieListBinding
-//    lateinit var darkView: TextView
     override val presenter = MovieListPresenter(this)
     lateinit var theaterFragmentLayout: FragmentContainerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_list)
-
-//        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_list)
-//        binding.movieRecyclerView
         recyclerView = findViewById(R.id.movie_recycler_view)
         theaterFragmentLayout = findViewById(R.id.fragment_container_view)
         presenter.setMoviesInfo()
         presenter.setListViewClickListenerInfo()
-//        darkView = findViewById(R.id.dark_view)
     }
-
-//    fun showDarkLayer() {
-//        binding.dark.visibility = View.VISIBLE
-//    }
 
     override fun showMoviesInfo(
         movies: List<Movie>,
@@ -63,7 +52,6 @@ class MovieListActivity : AppCompatActivity(), MovieListContract.View {
                         .replace(R.id.fragment_container_view, theaterFragment)
                         .commit()
                     theaterFragmentLayout.visibility = View.VISIBLE
-//                    darkView.visibility = View.VISIBLE
                 }
             },
         )

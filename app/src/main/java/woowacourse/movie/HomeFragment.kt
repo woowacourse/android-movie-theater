@@ -28,8 +28,6 @@ class HomeFragment : Fragment(), MovieListContract.View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
-//        binding.fragment = this
-
         presenter.setMoviesInfo()
         presenter.setListViewClickListenerInfo()
 

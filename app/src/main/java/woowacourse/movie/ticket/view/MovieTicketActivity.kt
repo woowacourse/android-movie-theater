@@ -22,7 +22,6 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
     private lateinit var price: TextView
     private lateinit var reservationInformation: TextView
 
-//    private lateinit var seats: String
     override val presenter: MovieTicketPresenter = MovieTicketPresenter(this)
     private var theaterId: Long = -1
 
@@ -43,14 +42,8 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
         presenter.storeSeats(intent.getSerializableExtra(SEATS_KEY) as List<Seat>)
         presenter.setScreeningDateInfo()
         presenter.setScreeningTimeInfo()
-//        presenter.setSeatsInfo()
         presenter.setTicketInfo()
     }
-
-//    override fun showSeats(seats: List<Seat>) {
-//        val seatsCoordinate = seats.map { it.coordinate }
-//        this.seats = seatsCoordinate.joinToString()
-//    }
 
     private fun initViewById() {
         title = findViewById(R.id.ticket_title)
