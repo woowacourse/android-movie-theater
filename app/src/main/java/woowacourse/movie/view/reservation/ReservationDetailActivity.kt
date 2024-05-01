@@ -11,9 +11,11 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationDetailBinding
 import woowacourse.movie.db.screening.ScreeningDao
+import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
+import woowacourse.movie.model.movie.ScreeningTimes
 import woowacourse.movie.presenter.reservation.ReservationDetailContract
 import woowacourse.movie.presenter.reservation.ReservationDetailPresenter
 import woowacourse.movie.utils.MovieUtils.convertPeriodFormat
@@ -28,7 +30,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
             R.layout.activity_reservation_detail,
         )
     }
-    private val presenter: ReservationDetailPresenter = ReservationDetailPresenter(this, ScreeningDao())
+    private val presenter: ReservationDetailPresenter = ReservationDetailPresenter(this, ScreeningDao(), TheaterDao())
     private var movieId: Int = 0
     private var theaterId: Int = 0
 
@@ -71,7 +73,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
             }
 
             val selectedTimeId = bundle.getInt(SCREENING_TIME, 0)
-            updateScreeningTimes(movieId, selectedTimeId)
+            updateScreeningTimes(selectedTimeId)
         }
     }
 
@@ -95,16 +97,15 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
     }
 
     override fun showScreeningTimes(
-        movie: Movie,
+        screeningTimes: ScreeningTimes,
         selectedDate: String,
     ) {
-        // TODO movie가 아닌 극장에서 불러오기
-//        screeningTimeSpinner.adapter =
-//            ArrayAdapter(
-//                this,
-//                android.R.layout.simple_spinner_item,
-//                movie.screeningTimes.loadScheduleByDateType(selectedDate),
-//            )
+        binding.spinnerReservationDetailScreeningTime.adapter =
+            ArrayAdapter(
+                this,
+                android.R.layout.simple_spinner_item,
+                screeningTimes.loadScheduleByDateType(selectedDate),
+            )
     }
 
     override fun changeHeadCount(count: Int) {
@@ -129,10 +130,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
         startActivity(intent)
     }
 
-    private fun updateScreeningTimes(
-        movieId: Int,
-        selectedTimeId: Int? = null,
-    ) {
+    private fun updateScreeningTimes(selectedTimeId: Int? = null) {
         binding.spinnerReservationDetailScreeningDate.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -142,7 +140,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
                     id: Long,
                 ) {
                     val selectedDate = binding.spinnerReservationDetailScreeningDate.selectedItem.toString()
-                    presenter.loadScreeningTimes(movieId, selectedDate)
+                    presenter.loadScreeningTimes(theaterId, selectedDate)
                     selectedTimeId?.let {
                         binding.spinnerReservationDetailScreeningTime.setSelection(it)
                     }
