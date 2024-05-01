@@ -9,11 +9,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.model.Theater
 import woowacourse.movie.presentation.movieList.adapter.TheaterAdapter
+import woowacourse.movie.presentation.ticketing.TicketingActivity
 
 class TheaterBottomSheetDialogFragment(
     private val theaters: List<Theater>,
     private val movieId: Long,
-    private val listener: (Long, Long) -> Unit,
 ) : BottomSheetDialogFragment(), TheaterClickListener {
     override fun onViewCreated(
         view: View,
@@ -37,6 +37,6 @@ class TheaterBottomSheetDialogFragment(
         theaterId: Long,
         movieId: Long,
     ) {
-        listener(theaterId, movieId)
+        startActivity(TicketingActivity.createIntent(requireActivity(), theaterId, movieId))
     }
 }

@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.model.Movie
 import woowacourse.movie.presentation.movieList.adapter.MovieAdapter
-import woowacourse.movie.presentation.ticketing.TicketingActivity
 import woowacourse.movie.repository.DummyTheaterList
 
 class MovieListActivity : AppCompatActivity(), MovieListContract.View, MovieListClickListener {
@@ -23,15 +22,8 @@ class MovieListActivity : AppCompatActivity(), MovieListContract.View, MovieList
         movieList.adapter = MovieAdapter(movies, this)
     }
 
-    override fun navigate(
-        theaterId: Long,
-        movieId: Long,
-    ) {
-        startActivity(TicketingActivity.createIntent(this, theaterId, movieId))
-    }
-
     override fun ticketingButtonClick(movieId: Long) {
-        val bottomSheet = TheaterBottomSheetDialogFragment(DummyTheaterList.find(movieId), movieId, ::navigate)
+        val bottomSheet = TheaterBottomSheetDialogFragment(DummyTheaterList.find(movieId), movieId)
         bottomSheet.show(supportFragmentManager, bottomSheet.tag)
     }
 }

@@ -31,7 +31,10 @@ interface TicketingContract {
     }
 
     interface Presenter {
-        fun loadMovieData(id: Long)
+        fun loadMovieData(
+            movieId: Long,
+            theaterId: Long,
+        )
 
         fun updateCount(savedCount: Int)
 

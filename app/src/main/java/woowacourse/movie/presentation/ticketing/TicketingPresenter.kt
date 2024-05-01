@@ -16,9 +16,14 @@ class TicketingPresenter(
     private val count = Count()
     private lateinit var selectedMovie: Movie
     private var selectedTimePosition = 0
+    private var theaterId = 0L
 
-    override fun loadMovieData(id: Long) {
-        movieRepository.findMovieById(id)
+    override fun loadMovieData(
+        movieId: Long,
+        theaterId: Long,
+    ) {
+        this.theaterId = theaterId
+        movieRepository.findMovieById(movieId)
             .onSuccess { movie ->
                 selectedMovie = movie
                 ticketingContractView.displayMovieDetail(movie)
@@ -53,7 +58,7 @@ class TicketingPresenter(
     }
 
     override fun navigate() {
-        ticketingContractView.navigate(selectedMovie.id, count.value)
+        ticketingContractView.navigate(selectedMovie.id, count.value, theaterId)
     }
 
     override fun onItemSelected(

@@ -30,6 +30,9 @@ interface SeatSelectionContract {
 
         fun updateSeatSelection(index: Int)
 
-        fun navigate(screeningDateTime: String)
+        fun navigate(
+            screeningDateTime: String,
+            theaterId: Long,
+        )
     }
 }

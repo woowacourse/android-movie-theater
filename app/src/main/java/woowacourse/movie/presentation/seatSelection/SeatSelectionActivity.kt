@@ -45,16 +45,19 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         presenter = SeatSelectionPresenter(this, ticketCount)
         presenter.loadMovieData(movieId)
         presenter.loadSeats()
-        initializeCompleteButton(screeningDateTime)
+        initializeCompleteButton(screeningDateTime, theaterId)
     }
 
-    private fun initializeCompleteButton(screeningDateTime: String) {
+    private fun initializeCompleteButton(
+        screeningDateTime: String,
+        theaterId: Long,
+    ) {
         completeButton.setOnClickListener {
             AlertDialog.Builder(this)
                 .setTitle("예매 확인")
                 .setMessage("정말 예매하시겠습니까?")
                 .setPositiveButton("예매 완료") { _, _ ->
-                    presenter.navigate(screeningDateTime)
+                    presenter.navigate(screeningDateTime, theaterId)
                 }
                 .setNegativeButton("취소") { dialog, _ -> dialog.dismiss() }
                 .setCancelable(false)

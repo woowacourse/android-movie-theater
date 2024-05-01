@@ -59,8 +59,11 @@ class SeatSelectionPresenter(
         seatSelectionContractView.updateTotalPrice(seatingSystem.getTotalPrice())
     }
 
-    override fun navigate(screeningDateTime: String) {
-        val ticket = Ticket(selectedMovie.title, screeningDateTime, seatingSystem.selectedSeats.toList())
+    override fun navigate(
+        screeningDateTime: String,
+        theaterId: Long,
+    ) {
+        val ticket = Ticket(selectedMovie.title, screeningDateTime, seatingSystem.selectedSeats.toList(), theaterId)
         seatSelectionContractView.navigate(ticket)
     }
 }

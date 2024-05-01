@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
@@ -27,6 +28,7 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
             }
         val ticketingResultPresenter = TicketingResultPresenter(this, movieTicket)
         ticketingResultPresenter.loadTicketInfo()
+        Log.d("theaterId", "$movieTicket")
     }
 
     override fun displayTicketInfo(

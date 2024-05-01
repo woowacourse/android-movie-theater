@@ -47,7 +47,7 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
         val theaterId = intent.getLongExtra(EXTRA_THEATER_ID, EXTRA_DEFAULT_THEATER_ID)
 
         ticketingPresenter = TicketingPresenter(this)
-        ticketingPresenter.loadMovieData(movieId)
+        ticketingPresenter.loadMovieData(movieId, theaterId)
         initializeButtons()
     }
 
