@@ -8,7 +8,6 @@ import woowacourse.movie.seats.model.Seat
 import woowacourse.movie.seats.view.SeatsActivity.Companion.DATE_KEY
 import woowacourse.movie.seats.view.SeatsActivity.Companion.ID_KEY
 import woowacourse.movie.seats.view.SeatsActivity.Companion.PRICE_KEY
-import woowacourse.movie.seats.view.SeatsActivity.Companion.SEATS_KEY
 import woowacourse.movie.seats.view.SeatsActivity.Companion.TIME_KEY
 import woowacourse.movie.ticket.contract.MovieTicketContract
 import woowacourse.movie.ticket.presenter.MovieTicketPresenter
@@ -19,7 +18,7 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
     private lateinit var screeningDate: TextView
     private lateinit var screeningTime: TextView
     private lateinit var price: TextView
-    private lateinit var count: TextView
+    private lateinit var reservationInformation: TextView
     private lateinit var seats: TextView
     override val presenter: MovieTicketPresenter = MovieTicketPresenter(this)
 
@@ -36,7 +35,7 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
         presenter.storeScreeningDate(intent.getStringExtra(DATE_KEY) ?: "ddd")
         presenter.storeScreeningTime(intent.getStringExtra(TIME_KEY) ?: "ddd")
         presenter.storePrice(intent.getIntExtra(PRICE_KEY, 0))
-        //presenter.storeSeats(intent.getSerializableExtra(SEATS_KEY) as List<Seat>)
+        // presenter.storeSeats(intent.getSerializableExtra(SEATS_KEY) as List<Seat>)
         presenter.setScreeningDateInfo()
         presenter.setScreeningTimeInfo()
         presenter.setSeatsInfo()
@@ -53,8 +52,7 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
         screeningDate = findViewById(R.id.ticket_screening_date)
         screeningTime = findViewById(R.id.ticket_screening_time)
         price = findViewById(R.id.ticket_price)
-        count = findViewById(R.id.ticket_number_of_people)
-        seats = findViewById(R.id.seats)
+        reservationInformation = findViewById(R.id.ticket_reservation_information)
     }
 
     override fun showTicketView(
@@ -64,7 +62,7 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
     ) {
         title.text = movieTitle
         price.text = TICKET_PRICE.format(moviePrice)
-        count.text = TICKET_COUNT.format(ticketCount)
+        reservationInformation.text = getString(R.string.ticket_information_format, ticketCount, seats, "dfafdas")
     }
 
     override fun showScreeningDate(info: String) {
