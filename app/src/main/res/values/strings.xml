@@ -12,4 +12,5 @@
     <string name="home">홈</string>
     <string name="setting">설정</string>
     <string name="ticket_information_format">일반 %1$d명 | %2$s | %3$s</string>
+    <string name="hello_blank_fragment"></string>
 </resources>
