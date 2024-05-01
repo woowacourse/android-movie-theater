@@ -3,10 +3,11 @@ package woowacourse.movie.result.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityMovieResultBinding
 import woowacourse.movie.main.view.MovieMainActivity
 import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.result.presenter.MovieResultPresenter
@@ -27,18 +28,20 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
 
 class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
-    private lateinit var resultTitle: TextView
-    private lateinit var resultDate: TextView
-    private lateinit var resultTime: TextView
-    private lateinit var result: TextView
-    private lateinit var resultPrice: TextView
+    var resultTitle: String = ""
+    var resultDate: String = ""
+    var resultTime: String = ""
+    var result: String = ""
+    var resultPrice: String = ""
 
     private lateinit var movieResultPresenter: MovieResultPresenter
 
+    private lateinit var binding: ActivityMovieResultBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_result)
-        setUpViewById()
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_result)
+        binding.activity = this
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setUpBackButton()
 
@@ -60,30 +63,22 @@ class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
 
     override fun displayMovieTicket(movieTicketData: MovieTicket?) {
         movieTicketData?.let { movieTicket ->
-            resultTitle.text = movieTicket.title
-            resultDate.text = movieTicket.date.toString()
-            resultTime.text = movieTicket.time.toString()
+            resultTitle = movieTicket.title
+            resultDate = movieTicket.date.toString()
+            resultTime = movieTicket.time.toString()
             val seats =
                 movieTicket.seats.selectedSeats.joinToString(", ") { seat ->
                     getString(R.string.seat, formatRow(seat.row), seat.column.toString())
                 }
-            result.text =
+            result =
                 resources.getString(
                     R.string.result,
                     movieTicket.seats.count,
                     seats,
                     movieTicket.theaterName,
                 )
-            resultPrice.text = formatPrice(movieTicket.seats.totalPrice())
+            resultPrice = formatPrice(movieTicket.seats.totalPrice())
         }
-    }
-
-    private fun setUpViewById() {
-        resultTitle = findViewById(R.id.resultTitle)
-        resultDate = findViewById(R.id.resultDate)
-        resultTime = findViewById(R.id.resultTime)
-        result = findViewById(R.id.result)
-        resultPrice = findViewById(R.id.resultReservPrice)
     }
 
     private fun setUpBackButton() {
