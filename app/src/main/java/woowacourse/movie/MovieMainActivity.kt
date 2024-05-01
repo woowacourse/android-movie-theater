@@ -55,7 +55,6 @@ class MovieMainActivity : AppCompatActivity() {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             replace(R.id.fragment_container_view, fragment)
-            addToBackStack(null)
         }
     }
 }
