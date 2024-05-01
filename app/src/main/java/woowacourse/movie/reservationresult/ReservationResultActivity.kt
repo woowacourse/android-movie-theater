@@ -10,7 +10,7 @@ import woowacourse.movie.R
 import woowacourse.movie.data.DummyMovies
 import woowacourse.movie.reservationresult.uimodel.ReservationResultUiModel
 
-class ReservationResultActivity : AppCompatActivity(), ReservationResultView {
+class ReservationResultActivity : AppCompatActivity(),ReservationResultContract.View {
     private lateinit var presenter: ReservationResultPresenter
     private lateinit var titleView: TextView
     private lateinit var cancelDeadLineView: TextView
@@ -57,7 +57,7 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultView {
                 getString(R.string.reservation_cancel_deadline_format, cancelDeadLine)
             runningDateView.text = dateTime
             countAndSeatView.text =
-                headCount.count + " | " + seats.joinToString { it.showPosition }
+                headCount.count + " | " + seats.joinToString { it.showPosition } + " | " + theaterName
             totalPriceView.text =
                 totalPrice.price
         }

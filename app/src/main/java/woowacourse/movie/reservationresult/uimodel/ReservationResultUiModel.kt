@@ -11,6 +11,7 @@ data class ReservationResultUiModel(
     val headCount: HeadCountUiModel,
     val seats: List<SeatUiModel>,
     val totalPrice: PriceUiModel,
+    val theaterName: String
 ) {
     constructor(
         title: String,
@@ -19,6 +20,7 @@ data class ReservationResultUiModel(
         count: Int,
         seats: List<SeatUiModel>,
         totalPrice: Int,
+        theaterName: String
     ) : this(
         title,
         cancelDeadLine.inWholeMinutes.toString(),
@@ -26,6 +28,7 @@ data class ReservationResultUiModel(
         HeadCountUiModel(count),
         seats,
         PriceUiModel(totalPrice),
+        theaterName
     )
 
     companion object {
