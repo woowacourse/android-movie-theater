@@ -1,6 +1,5 @@
 package woowacourse.movie.view.home.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -27,7 +26,6 @@ class MovieCatalogAdapter(
         viewType: Int,
     ): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        Log.d("hye", "createViewHolder")
         return if (viewType == movieViewType) {
             val view = ItemMovieCatalogBinding.inflate(inflater, parent, false)
             MovieViewHolder(view)
@@ -41,7 +39,6 @@ class MovieCatalogAdapter(
         holder: ViewHolder,
         position: Int,
     ) {
-        Log.d("hye", "onBindViewHolder")
         when (CatalogViewType.from(getItemViewType(position))) {
             CatalogViewType.MOVIE -> {
                 val item = movies[position]

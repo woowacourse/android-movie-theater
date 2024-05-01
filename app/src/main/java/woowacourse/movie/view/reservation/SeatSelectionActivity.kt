@@ -3,13 +3,13 @@ package woowacourse.movie.view.reservation
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TableLayout
 import android.widget.TableRow
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.seats.SeatsDao
 import woowacourse.movie.model.HeadCount
@@ -30,18 +30,14 @@ import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.HE
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.TICKET
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
+    private val binding: ActivitySeatSelectionBinding by lazy { DataBindingUtil.setContentView(this, R.layout.activity_seat_selection) }
     private val presenter: SeatSelectionPresenter = SeatSelectionPresenter(this, SeatsDao(), ScreeningDao())
 
-    private val seatTableLayout: TableLayout by lazy { findViewById(R.id.table_layout_seat_selection) }
-    private val title: TextView by lazy { findViewById(R.id.textview_seat_selection_title) }
-    private val price: TextView by lazy { findViewById(R.id.textview_seat_selection_price) }
-    private val confirmButton: Button by lazy { findViewById(R.id.button_seat_selection_confirm) }
     private lateinit var seatsTable: List<Button>
     private lateinit var headCount: HeadCount
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_seat_selection)
 
         val movieId = takeMovieId()
         headCount = receiveHeadCount()
@@ -126,11 +122,11 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     override fun showMovieTitle(movie: Movie) {
-        title.text = movie.title
+        binding.textviewSeatSelectionTitle.text = movie.title
     }
 
     override fun showAmount(amount: Int) {
-        price.text = convertAmountFormat(this, amount)
+        binding.textviewSeatSelectionPrice.text = convertAmountFormat(this, amount)
     }
 
     override fun navigateToFinished(seats: Seats) {
@@ -141,11 +137,11 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     override fun setConfirmButtonEnabled(count: Int) {
-        confirmButton.isEnabled = count >= headCount.count
+        binding.buttonSeatSelectionConfirm.isEnabled = count >= headCount.count
     }
 
     override fun launchReservationConfirmDialog(seats: Seats) {
-        if (confirmButton.isEnabled) {
+        if (binding.buttonSeatSelectionConfirm.isEnabled) {
             AlertDialog.Builder(this)
                 .setTitle(getString(R.string.seat_selection_reservation_confirm))
                 .setMessage(getString(R.string.seat_selection_reservation_ask_purchase_ticket))
@@ -172,13 +168,13 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         intent.intentSerializable(HEAD_COUNT, HeadCount::class.java) ?: throw NoSuchElementException()
 
     private fun collectSeatsInTableLayout(): List<Button> =
-        seatTableLayout.children.filterIsInstance<TableRow>().flatMap { it.children }
+        binding.tableLayoutSeatSelection.children.filterIsInstance<TableRow>().flatMap { it.children }
             .filterIsInstance<Button>().toList()
 
     private fun getSeatsCount(): Int = seatsTable.count { seat -> seat.isSelected }
 
     private fun initializeConfirmButton() {
-        confirmButton.setOnClickListener {
+        binding.buttonSeatSelectionConfirm.setOnClickListener {
             presenter.initializeConfirmButton()
         }
     }

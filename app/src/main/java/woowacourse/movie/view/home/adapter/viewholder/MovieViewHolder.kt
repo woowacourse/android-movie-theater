@@ -1,6 +1,5 @@
 package woowacourse.movie.view.home.adapter.viewholder
 
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemMovieCatalogBinding
 import woowacourse.movie.model.movie.Movie
@@ -18,7 +17,6 @@ class MovieViewHolder(
         movie: (Movie) -> Unit,
     ) {
         with(binding) {
-            Log.d("hye", item.toString())
             itemMovieCatalogTextViewTitle.text = item.title
             itemMovieCatalogImageViewPoster.setImageResource(item.posterId)
             itemMovieCatalogTextViewScreeningDate.text = convertPeriodFormat(item.screeningPeriod)

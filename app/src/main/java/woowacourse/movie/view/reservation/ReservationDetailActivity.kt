@@ -141,7 +141,10 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
                     val selectedDate = binding.spinnerReservationDetailScreeningDate.selectedItem.toString()
                     presenter.loadScreeningTimes(theaterId, selectedDate)
                     selectedTimeId?.let {
-                        binding.spinnerReservationDetailScreeningTime.setSelection(it)
+                        // TODO 인덱스 오류 원인 찾기
+                        if (selectedTimeId < binding.spinnerReservationDetailScreeningTime.count) {
+                            binding.spinnerReservationDetailScreeningTime.setSelection(it)
+                        }
                     }
                 }
 
