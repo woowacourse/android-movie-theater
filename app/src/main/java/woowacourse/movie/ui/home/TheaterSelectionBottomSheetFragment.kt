@@ -22,24 +22,13 @@ class TheaterSelectionBottomSheetFragment :
     TheaterAdapter.TheaterItemClickListener {
     private lateinit var binding: FragmentTheaterSelectionBottomSheetBinding
     private lateinit var adapter: TheaterAdapter
-    private var movieContentId: Long = 1L
+    private var movieContentId: Long = DEFAULT_MOVIE_CONTENT_ID
     private val presenter: TheaterSelectionPresenter by lazy {
         TheaterSelectionPresenter(
             this,
             MovieContentsImpl,
             TheatersImpl,
         )
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setFragmentResultListener(MovieHomeKey.FRAGMENT_REQUEST_KEY) { _, bundle ->
-            initializeMovieContentId(bundle)
-        }
-    }
-
-    private fun initializeMovieContentId(bundle: Bundle): Long {
-        return bundle.getLong(MovieHomeKey.MOVIE_CONTENT_ID, DEFAULT_MOVIE_CONTENT_ID)
     }
 
     override fun onCreateView(
@@ -56,7 +45,14 @@ class TheaterSelectionBottomSheetFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.loadTheaters(movieContentId)
+        setFragmentResultListener(MovieHomeKey.FRAGMENT_REQUEST_KEY) { _, bundle ->
+            presenter.loadTheaters(
+                bundle.getLong(
+                    MovieHomeKey.MOVIE_CONTENT_ID,
+                    DEFAULT_MOVIE_CONTENT_ID,
+                ),
+            )
+        }
     }
 
     override fun showTheaters(theaters: List<Theater>) {
