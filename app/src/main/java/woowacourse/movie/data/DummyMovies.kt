@@ -36,6 +36,11 @@ object DummyMovies : MovieRepository {
         )
     }
 
+    override fun screenMoviesById(movieId: Long, theaterId: Long): List<ScreeningMovie> =
+        screenMovies.filter {
+            it.movie.id == movieId && it.theater.id == theaterId
+        }
+
     override fun reserveMovie(
         screenMovieId: Long,
         dateTime: LocalDateTime,
