@@ -4,6 +4,7 @@ import java.time.LocalDateTime
 
 data class UserTicket(
     val title: String,
+    val theater: String,
     val screeningStartDateTime: LocalDateTime,
     val reservationDetail: ReservationDetail,
     val id: Long = 0,

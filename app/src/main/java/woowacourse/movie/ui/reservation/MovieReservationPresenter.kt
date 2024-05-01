@@ -65,6 +65,7 @@ class MovieReservationPresenter(
         val userTicket =
             UserTicket(
                 movieContent.title,
+                theater.name,
                 LocalDateTime.of(screeningDate.date, movieTime),
                 ReservationDetail(reservationCount.count),
             )
