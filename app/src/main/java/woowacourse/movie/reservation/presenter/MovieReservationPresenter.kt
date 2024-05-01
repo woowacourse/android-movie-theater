@@ -4,6 +4,7 @@ import woowacourse.movie.common.MovieDataSource
 import woowacourse.movie.list.model.TheaterData
 import woowacourse.movie.reservation.contract.MovieReservationContract
 import woowacourse.movie.reservation.model.MovieReservationDataResource
+import woowacourse.movie.reservation.model.MovieReservationDataResource.theaterId
 import woowacourse.movie.reservation.model.MovieReservationTicketCountData
 import java.time.LocalTime
 
@@ -13,10 +14,10 @@ class MovieReservationPresenter(
     val model = MovieReservationTicketCountData
 
     private val theater
-        get() = TheaterData.theaters.first { it.id == MovieReservationDataResource.theaterId }
+        get() = TheaterData.theaters.first { it.id == theaterId }
 
-    private var screeningTimes: List<LocalTime> =
-        theater.getScreeningTimes(MovieReservationDataResource.movieId)
+    private val screeningTimes: List<LocalTime>
+        get() = theater.getScreeningTimes(MovieReservationDataResource.movieId)
 
     private val ticketCount
         get() = model.ticketCount
@@ -53,7 +54,7 @@ class MovieReservationPresenter(
     }
 
     override fun setTicketingButtonClickInfo() {
-        view.startMovieTicketActivity(ticketCount)
+        view.startMovieTicketActivity(ticketCount, theaterId)
     }
 
     override fun setSpinnerInfo(theaterId: Long) {

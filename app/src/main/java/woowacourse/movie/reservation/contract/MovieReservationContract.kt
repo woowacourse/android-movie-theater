@@ -14,7 +14,10 @@ interface MovieReservationContract {
 
         fun setMovieView(info: Movie)
 
-        fun startMovieTicketActivity(info: Count)
+        fun startMovieTicketActivity(
+            count: Count,
+            theaterId: Long,
+        )
 
         fun showToast(message: String)
 
@@ -48,5 +51,7 @@ interface MovieReservationContract {
         fun setSpinnerTimeItemInfo()
 
         fun storeSelectedTime(selectedTime: LocalTime)
+
+        fun storeTheaterId(theaterId: Long)
     }
 }

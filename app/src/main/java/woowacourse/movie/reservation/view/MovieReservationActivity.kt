@@ -50,6 +50,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         movieId = intent.getLongExtra(EXTRA_MOVIE_ID_KEY, -1)
         theaterId = intent.getLongExtra(EXTRA_THEATER_ID_KEY, -1)
         presenter.storeMovieId(movieId)
+        presenter.storeTheaterId(theaterId)
         presenter.setMovieInfo()
         presenter.setSpinnerInfo(theaterId)
         presenter.setSpinnerDateItemInfo()
@@ -163,9 +164,12 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         }
     }
 
-    override fun startMovieTicketActivity(info: Count) {
+    override fun startMovieTicketActivity(
+        count: Count,
+        theaterId: Long,
+    ) {
         val intent = Intent(this, SeatsActivity::class.java)
-        intent.putExtra(EXTRA_COUNT_KEY, info)
+        intent.putExtra(EXTRA_COUNT_KEY, count)
         intent.putExtra(EXTRA_MOVIE_ID_KEY, movieId)
         intent.putExtra(
             EXTRA_DATE_KEY,

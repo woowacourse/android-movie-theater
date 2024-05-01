@@ -38,7 +38,6 @@ object TheaterData {
                 mapOf(
                     movieList[0] to screeningTimes1,
                     movieList[2] to screeningTimes2,
-                    //        movieList[3] to screeningTimesWeekends,
                     movieList[4] to screeningTimes1,
                     movieList[5] to screeningTimes2,
                     movieList[6] to screeningTimes1,
@@ -50,9 +49,6 @@ object TheaterData {
                 "강남 극장",
                 mapOf(
                     movieList[0] to screeningTimes2,
-                    movieList[1] to screeningTimes1,
-                    movieList[2] to screeningTimes2,
-                    movieList[4] to screeningTimes1,
                     movieList[5] to screeningTimes2,
                     movieList[6] to screeningTimes1,
                 ),
