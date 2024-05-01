@@ -13,6 +13,8 @@ import woowacourse.movie.R
 import woowacourse.movie.presentation.base.BaseActivity
 import woowacourse.movie.presentation.uimodel.MovieUiModel
 import woowacourse.movie.presentation.view.reservation.seat.SeatSelectionActivity
+import woowacourse.movie.presentation.view.screening.theater.TheaterBottomSheetDialogFragment.Companion.THEATER_ID_KEY
+import woowacourse.movie.presentation.view.screening.ScreeningActivity.Companion.MOVIE_ID_KEY
 
 class MovieDetailActivity : BaseActivity(), MovieDetailContract.View {
     private lateinit var movieDetailPresenter: MovieDetailContract.Presenter
@@ -35,9 +37,10 @@ class MovieDetailActivity : BaseActivity(), MovieDetailContract.View {
     override fun onCreateSetup(savedInstanceState: Bundle?) {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        val movieId = intent.getIntExtra(INTENT_MOVIE_ID, DEFAULT_MOVIE_ID)
+        val movieId = intent.getIntExtra(MOVIE_ID_KEY, DEFAULT_MOVIE_ID)
+        val theaterId = intent.getIntExtra(THEATER_ID_KEY, DEFAULT_THEATER_ID)
 
-        movieDetailPresenter = MovieDetailPresenterImpl(movieId)
+        movieDetailPresenter = MovieDetailPresenterImpl(movieId) // todo: theaterId 넣어줘서 극장별 상영시간 받아오기
         movieDetailPresenter.attachView(this)
 
         savedInstanceState?.let {
@@ -189,7 +192,7 @@ class MovieDetailActivity : BaseActivity(), MovieDetailContract.View {
 
     companion object {
         const val DEFAULT_MOVIE_ID = -1
-        const val INTENT_MOVIE_ID = "movieId"
+        const val DEFAULT_THEATER_ID = -1
         const val SIS_COUNT_KEY = "count"
         const val DEFAULT_SPINNER_INDEX = 0
     }

@@ -4,16 +4,13 @@ import woowacourse.movie.domain.model.Theater
 
 interface TheaterBottomSheetContract {
     interface View {
-        fun showTheaterInfo(theaterInfo: List<Pair<Theater, Int>>)
+        fun showTheaterInfo(theatersInfo: List<Pair<Theater, Int>>)
 
-        fun moveToMovieDetail(
-            movieId: Int,
-            theaterId: Int,
-        )
+        fun moveToMovieDetail(theaterId: Int)
     }
 
     interface Presenter {
-        fun loadTheaters(movieId: Int)
+        fun loadTheaters()
 
         fun onTheaterClicked(theaterId: Int)
     }

@@ -12,8 +12,6 @@ interface ScreeningContract {
         fun showMovieList()
 
         fun showTheaterBottomSheet(movieId: Int)
-
-        fun moveToMovieDetail(movieId: Int)
     }
 
     interface Presenter {

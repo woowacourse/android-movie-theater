@@ -58,12 +58,6 @@ class ScreeningActivity : BaseActivity(), ScreeningContract.View, ScreeningContr
         }
     }
 
-    override fun moveToMovieDetail(movieId: Int) {
-        val intent = Intent(this, MovieDetailActivity::class.java)
-        intent.putExtra(MovieDetailActivity.INTENT_MOVIE_ID, movieId)
-        startActivity(intent)
-    }
-
     companion object {
         const val MOVIE_ID_KEY = "movieId"
         const val DEFAULT_MOVIE_ID = -1
