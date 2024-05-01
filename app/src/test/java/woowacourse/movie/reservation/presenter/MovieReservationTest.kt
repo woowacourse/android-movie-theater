@@ -59,18 +59,18 @@ class MovieReservationTest {
 
     @Test
     fun `예매 완료 버튼을 누르면 예매 내역이 보여져야 한다`() {
-        every { view.startMovieTicketActivity(Count(1)) } just runs
+        every { view.startMovieTicketActivity(Count(1), any()) } just runs
         // when
         presenter.setTicketingButtonClickInfo()
         // then
-        verify { view.startMovieTicketActivity(Count(1)) }
+        verify { view.startMovieTicketActivity(Count(1), any()) }
     }
 
     @Test
     fun `날짜와 시간을 선택하는 스피너가 보여야 한다`() {
         every { view.showSpinner(any(), any()) } just runs
         // when
-        presenter.setSpinnerInfo()
+        presenter.setSpinnerInfo(1)
         // then
         verify { view.showSpinner(any(), any()) }
     }
