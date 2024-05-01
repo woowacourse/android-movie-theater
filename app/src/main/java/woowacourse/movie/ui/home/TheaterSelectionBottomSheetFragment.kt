@@ -1,17 +1,11 @@
 package woowacourse.movie.ui.home
 
-import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
-import androidx.fragment.app.commit
 import androidx.fragment.app.setFragmentResultListener
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterSelectionBottomSheetBinding
 import woowacourse.movie.model.data.TheatersImpl
 import woowacourse.movie.ui.home.adapter.TheaterAdapter
@@ -21,9 +15,8 @@ class TheaterSelectionBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setFragmentResultListener("key1") { requestKey, bundle ->
-            val result= bundle.getString("key")
-            Log.i("TicketFragment", "onCreate: $result")
+        setFragmentResultListener(MovieHomeKey.FRAGMENT_REQUEST_KEY) { _, bundle ->
+            val movieContentId = bundle.getLong(MovieHomeKey.ID)
         }
     }
 
@@ -37,11 +30,13 @@ class TheaterSelectionBottomSheetFragment : BottomSheetDialogFragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = TheaterAdapter(TheatersImpl.findAll())
         binding.theaterList.adapter = adapter
-
     }
 }

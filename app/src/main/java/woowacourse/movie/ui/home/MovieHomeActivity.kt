@@ -1,17 +1,12 @@
 package woowacourse.movie.ui.home
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.commit
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.model.data.MovieContentsImpl
 import woowacourse.movie.model.movie.MovieContent
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.home.adapter.MovieContentAdapter
-import woowacourse.movie.ui.home.adapter.TheaterAdapter
-import woowacourse.movie.ui.reservation.MovieReservationActivity
 
 class MovieHomeActivity : BaseActivity<MovieHomeContract.Presenter>(), MovieHomeContract.View {
     private val movieContentList: RecyclerView by lazy { findViewById(R.id.movie_content_list) }
@@ -30,11 +25,14 @@ class MovieHomeActivity : BaseActivity<MovieHomeContract.Presenter>(), MovieHome
             MovieContentAdapter(movieContents) { view, id ->
                 val fragment = TheaterSelectionBottomSheetFragment()
                 val bundle = Bundle()
-                bundle.putString("key", "value")
+                bundle.putLong(MovieHomeKey.ID, id)
                 fragment.arguments = bundle
-                fragment.show(supportFragmentManager.apply {
-                    setFragmentResult("key1", bundle)
-                }, fragment.tag)
+                fragment.show(
+                    supportFragmentManager.apply {
+                        setFragmentResult(MovieHomeKey.FRAGMENT_REQUEST_KEY, bundle)
+                    },
+                    fragment.tag,
+                )
             }
     }
 }

@@ -13,21 +13,21 @@ object TheatersImpl : Theaters {
             Theater(
                 "강남",
                 listOf(LocalTime.of(11, 0), LocalTime.of(13, 0), LocalTime.of(15, 0)),
-            )
+            ),
         )
 
         save(
             Theater(
                 "선릉",
                 listOf(LocalTime.of(14, 0), LocalTime.of(16, 0), LocalTime.of(18, 0)),
-            )
+            ),
         )
 
         save(
             Theater(
                 "잠실",
                 listOf(LocalTime.of(9, 0), LocalTime.of(11, 0)),
-            )
+            ),
         )
     }
 

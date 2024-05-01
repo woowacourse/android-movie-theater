@@ -1,6 +1,5 @@
 package woowacourse.movie.ui.home.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -46,7 +45,9 @@ class TheaterAdapter(
     }
 
     interface TheaterItemClickListener {
-        fun onTheaterItemClick(movieContentId: Long, theaterId: Long)
+        fun onTheaterItemClick(
+            movieContentId: Long,
+            theaterId: Long,
+        )
     }
 }
-
