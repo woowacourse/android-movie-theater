@@ -12,11 +12,27 @@ class TheaterAdapter(private val movieId: Long, private val theaters: List<Theat
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
             name: String,
-            screeningTimeCount: Int,
+            position: Int,
         ) {
             binding.theaterName.text = name
-            binding.screeningTimes.text = screeningTimeCount.toString()
+            binding.screeningTimes.text = theaters[position].getCount(movieId).toString()
+            binding.theaterItem.setOnClickListener {
+                itemClickListener.onClick(movieId, theaters[position].id)
+            }
         }
+    }
+
+    interface OnItemClickListener {
+        fun onClick(
+            movieId: Long,
+            theaterId: Long,
+        )
+    }
+
+    private lateinit var itemClickListener: OnItemClickListener
+
+    fun setItemClickListener(onItemClickListener: OnItemClickListener) {
+        this.itemClickListener = onItemClickListener
     }
 
     override fun onCreateViewHolder(
@@ -33,6 +49,6 @@ class TheaterAdapter(private val movieId: Long, private val theaters: List<Theat
         holder: TheaterViewHolder,
         position: Int,
     ) {
-        holder.bind(theaters[position].name, theaters[position].getCount(movieId))
+        holder.bind(theaters[position].name, position)
     }
 }

@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
+import woowacourse.movie.TheaterFragment.Companion.EXTRA_THEATER_ID_KEY
 import woowacourse.movie.list.model.Movie
 import woowacourse.movie.list.view.MovieListActivity.Companion.EXTRA_MOVIE_ID_KEY
 import woowacourse.movie.reservation.contract.MovieReservationContract
@@ -39,6 +40,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
     lateinit var selectedDate: LocalDate
     lateinit var selectedTime: LocalTime
     private var movieId: Long = -1
+    private var theaterId: Long = -1
     override val presenter = MovieReservationPresenter(this@MovieReservationActivity)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +48,8 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         setContentView(R.layout.activity_movie_reservation)
         initView()
         presenter.setCurrentResultTicketCountInfo()
-        movieId = intent.getLongExtra(EXTRA_MOVIE_ID_KEY, 0)
+        movieId = intent.getLongExtra(EXTRA_MOVIE_ID_KEY, -1)
+        theaterId = intent.getLongExtra(EXTRA_THEATER_ID_KEY, -1)
         presenter.storeMovieId(movieId)
         presenter.setMovieInfo()
         presenter.setSpinnerInfo()

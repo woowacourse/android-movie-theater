@@ -81,7 +81,6 @@ class MovieAdapter(
 
         movieHolder.itemView.setOnClickListener {
             itemClickListener.onClick(movies[position].id)
-//            onMovie(movies[position].id)
         }
     }
 
