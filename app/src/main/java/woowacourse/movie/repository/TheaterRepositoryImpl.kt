@@ -2,6 +2,7 @@ package woowacourse.movie.repository
 
 import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.presentation.repository.TheaterRepository
+import woowacourse.movie.presentation.uimodel.TheaterUiModel
 
 object TheaterRepositoryImpl : TheaterRepository {
     private val dummyTheaters: List<Theater> =
@@ -62,9 +63,9 @@ object TheaterRepositoryImpl : TheaterRepository {
         return theaterScreeningInfo[theaterId]?.get(movieId)?.values?.sumOf { it.count() } ?: 0
     }
 
-    override fun theatersInfo(movieId: Int): List<Pair<Theater, Int>> {
+    override fun theatersInfo(movieId: Int): List<TheaterUiModel> {
         return dummyTheaters.map { theater ->
-            theater to screenTimesCount(theater.id, movieId)
+            TheaterUiModel(theater.id, theater.name, screenTimesCount(theater.id, movieId))
         }
     }
 }

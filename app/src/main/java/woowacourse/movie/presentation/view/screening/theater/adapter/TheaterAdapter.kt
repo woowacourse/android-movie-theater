@@ -5,13 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.presentation.uimodel.TheaterUiModel
 
 class TheaterAdapter(
-    private val theaters: List<Pair<Theater, Int>>,
+    private val theaters: List<TheaterUiModel>,
     private val clickListener: (Int) -> Unit,
 ) : RecyclerView.Adapter<TheaterViewHolder>() {
     private fun onItemClickListener(position: Int) {
-        clickListener(theaters[position].first.id)
+        clickListener(theaters[position].theaterId)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TheaterViewHolder {

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.presentation.uimodel.TheaterUiModel
 import woowacourse.movie.presentation.view.reservation.detail.MovieDetailActivity
 import woowacourse.movie.presentation.view.screening.theater.adapter.TheaterAdapter
 import woowacourse.movie.presentation.view.screening.ScreeningActivity.Companion.MOVIE_ID_KEY
@@ -41,7 +42,7 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(),
         theaterPresenter.onTheaterClicked(theaterId)
     }
 
-    override fun showTheaterInfo(theatersInfo: List<Pair<Theater, Int>>) {
+    override fun showTheaterInfo(theatersInfo: List<TheaterUiModel>) {
         theaterAdapter = TheaterAdapter(theatersInfo, ::onTheaterClicked)
         theatersView.adapter = theaterAdapter
     }
