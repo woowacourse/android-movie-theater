@@ -2,7 +2,6 @@ package woowacourse.movie.screeningmovie
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -10,7 +9,7 @@ import woowacourse.movie.data.DummyMovies
 import woowacourse.movie.databinding.FragmentScreeningMovieBinding
 import woowacourse.movie.screeningmovie.theaters.TheaterBottomSheetDialogFragment
 
-class ScreeningMovieFragment : Fragment(), ScreeningMovieContract.View {
+class ScreeningMovieFragment : Fragment(), ScreeningMovieContract.View, AdapterClickListener {
     private lateinit var presenter: ScreenMoviePresenter
     private lateinit var binding: FragmentScreeningMovieBinding
 
@@ -32,7 +31,7 @@ class ScreeningMovieFragment : Fragment(), ScreeningMovieContract.View {
     override fun showMovies(movies: List<ScreeningItem>) {
         val listView = binding.rcvScreeningMovie
         listView.adapter =
-            MovieAdapter(movies) { presenter.startReservation(it) }
+            MovieAdapter(movies, this)
     }
 
     override fun showTheaters(screeningMovieId: Long) {
@@ -40,5 +39,9 @@ class ScreeningMovieFragment : Fragment(), ScreeningMovieContract.View {
         val bundle = TheaterBottomSheetDialogFragment.getBundle(screeningMovieId)
         fragment.arguments = bundle
         fragment.show(parentFragmentManager, "theaterBottomSheet")
+    }
+
+    override fun onClick(id: Long) {
+        presenter.startReservation(id)
     }
 }

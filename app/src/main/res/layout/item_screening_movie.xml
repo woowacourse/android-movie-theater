@@ -8,6 +8,9 @@
         <variable
             name="movie"
             type="woowacourse.movie.screeningmovie.ScreenMovieUiModel" />
+        <variable
+            name="clickListener"
+            type="woowacourse.movie.screeningmovie.AdapterClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +28,6 @@
             app:layout_constraintTop_toTopOf="parent"
             custom:imgRes="@{movie.imageRes}"
             />
-
 
         <TextView
             android:id="@+id/tv_movie_title"
@@ -78,6 +80,7 @@
             android:paddingVertical="10dp"
             android:text="@string/reservation_action_button"
             android:textSize="14sp"
+            android:onClick="@{() -> clickListener.onClick(movie.id)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

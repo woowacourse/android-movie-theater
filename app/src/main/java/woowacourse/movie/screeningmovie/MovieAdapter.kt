@@ -3,13 +3,12 @@ package woowacourse.movie.screeningmovie
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemScreeningAdvertiseBinding
 import woowacourse.movie.databinding.ItemScreeningMovieBinding
 
 class MovieAdapter(
     private val movies: List<ScreeningItem>,
-    private val onClickReservationButton: (id: Long) -> Unit = {},
+    private val adapterClickListener: AdapterClickListener
 ) : RecyclerView.Adapter<ScreeningViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
@@ -30,7 +29,7 @@ class MovieAdapter(
                     parent,
                     false
                 )
-                MovieViewHolder(binding, onClickReservationButton)
+                MovieViewHolder(binding, adapterClickListener)
             }
 
             ADVERTISE -> {

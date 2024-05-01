@@ -7,6 +7,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.screeningmovie.AdapterClickListener
 
 class TheaterAdapter(
     private val items: List<TheaterUiModel>,

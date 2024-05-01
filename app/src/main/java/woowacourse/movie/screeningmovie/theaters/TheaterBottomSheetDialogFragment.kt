@@ -9,6 +9,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.data.DummyMovies
 import woowacourse.movie.moviereservation.MovieReservationActivity
+import woowacourse.movie.screeningmovie.AdapterClickListener
 
 class TheaterBottomSheetDialogFragment :
     BottomSheetDialogFragment(),
