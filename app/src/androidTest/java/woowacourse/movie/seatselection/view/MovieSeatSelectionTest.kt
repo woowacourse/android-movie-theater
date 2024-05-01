@@ -90,17 +90,15 @@ class MovieSeatSelectionTest {
 
     @Test
     fun `선택된_좌석의_배경색이_노란색으로_변경된다`() {
-        onView(withId((R.id.A1)))
-            .perform(click())
-            .check(matches(withBackgroundColor(selectedColor)))
+        onView(withId((R.id.E3))).perform(click())
+        onView(withId((R.id.E3))).check(matches(withBackgroundColor(selectedColor)))
     }
 
     @Test
     fun `이미_선택된_좌석이라면_배경색이_노란색에서_하얀색으로_변경된다`() {
-        onView(withId((R.id.A1)))
-            .perform(click())
-            .perform(click())
-            .check(matches(withBackgroundColor(unSelectedColor)))
+        onView(withId((R.id.D2))).perform(click())
+        onView(withId((R.id.D2))).perform(click())
+        onView(withId((R.id.D2))).check(matches(withBackgroundColor(unSelectedColor)))
     }
 
     @Test
