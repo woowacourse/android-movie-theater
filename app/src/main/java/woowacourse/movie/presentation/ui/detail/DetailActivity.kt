@@ -6,11 +6,8 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Spinner
-import android.widget.TextView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityDetailBinding
 import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.ScreenDate
 import woowacourse.movie.domain.repository.DummyScreens
@@ -21,49 +18,24 @@ import woowacourse.movie.presentation.ui.seatselection.SeatSelectionActivity
 import java.time.LocalDate
 import java.time.LocalTime
 
-class DetailActivity : BaseActivity(), View {
+class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
     override val layoutResourceId: Int
         get() = R.layout.activity_detail
     override val presenter: DetailPresenter by lazy { DetailPresenter(this, DummyScreens()) }
 
-    private val title: TextView by lazy { findViewById(R.id.tv_title) }
-    private val date: TextView by lazy { findViewById(R.id.tv_screen_date) }
-    private val runningTime: TextView by lazy { findViewById(R.id.tv_screen_running_time) }
-    private val description: TextView by lazy { findViewById(R.id.tv_description) }
-    private val poster: ImageView by lazy { findViewById(R.id.iv_poster) }
-    private val ticketCount: TextView by lazy { findViewById(R.id.tv_count) }
-    private val plusBtn: Button by lazy { findViewById(R.id.btn_plus) }
-    private val minusBtn: Button by lazy { findViewById(R.id.btn_minus) }
-    private val selectSeatBtn: Button by lazy { findViewById(R.id.btn_select_seat) }
-    private val dateSpinner: Spinner by lazy { findViewById(R.id.spn_date) }
-    private val timeSpinner: Spinner by lazy { findViewById(R.id.spn_time) }
-
     override fun initStartView() {
+        binding.presenter = presenter
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val movieId = intent.getIntExtra(PUT_EXTRA_KEY_MOVIE_ID, DEFAULT_ID)
         val theaterId = intent.getIntExtra(PUT_EXTRA_KEY_THEATER_ID, DEFAULT_ID)
 
         presenter.loadScreen(movieId, theaterId)
-        initClickListener()
         initItemSelectedListener()
     }
 
-    private fun initClickListener() {
-        plusBtn.setOnClickListener {
-            presenter.plusTicket()
-        }
-
-        minusBtn.setOnClickListener {
-            presenter.minusTicket()
-        }
-
-        selectSeatBtn.setOnClickListener {
-            presenter.selectSeat()
-        }
-    }
-
     private fun initItemSelectedListener() {
-        dateSpinner.onItemSelectedListener =
+        binding.spnDate.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>,
@@ -81,7 +53,7 @@ class DetailActivity : BaseActivity(), View {
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
 
-        timeSpinner.onItemSelectedListener =
+        binding.spnTime.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>,
@@ -98,18 +70,13 @@ class DetailActivity : BaseActivity(), View {
 
     override fun showScreen(screen: Screen) {
         with(screen) {
-            title.text = movie.title
-            this@DetailActivity.date.text = getString(R.string.screening_period, movie.startDate.toString(), movie.endDate.toString())
-            runningTime.text = movie.runningTime.toString()
-            description.text = movie.description
-            poster.setImageResource(movie.imageSrc)
             presenter.createDateSpinnerAdapter(selectableDates)
             presenter.createTimeSpinnerAdapter(selectableDates.first())
         }
     }
 
     override fun showDateSpinnerAdapter(screenDates: List<ScreenDate>) {
-        dateSpinner.adapter =
+        binding.spnDate.adapter =
             ArrayAdapter(
                 this@DetailActivity,
                 android.R.layout.simple_spinner_item,
@@ -118,7 +85,7 @@ class DetailActivity : BaseActivity(), View {
     }
 
     override fun showTimeSpinnerAdapter(screenDate: ScreenDate) {
-        timeSpinner.adapter =
+        binding.spnTime.adapter =
             ArrayAdapter(
                 this@DetailActivity,
                 android.R.layout.simple_spinner_item,
@@ -127,7 +94,7 @@ class DetailActivity : BaseActivity(), View {
     }
 
     override fun showTicket(count: Int) {
-        ticketCount.text = count.toString()
+        binding.invalidateAll()
     }
 
     override fun navigateToSeatSelection(reservationInfo: ReservationInfo) {
@@ -171,7 +138,7 @@ class DetailActivity : BaseActivity(), View {
             presenter.registerDate(localDate)
             val position = findPositionForSelectedDate(localDate)
             presenter.createTimeSpinnerAdapter(ScreenDate(localDate))
-            dateSpinner.setSelection(position)
+            binding.spnDate.setSelection(position)
         }
     }
 
@@ -190,7 +157,7 @@ class DetailActivity : BaseActivity(), View {
         savedLocalTime?.let { localTime ->
             presenter.registerTime(localTime)
             val position = findPositionForSelectedTime(localTime)
-            timeSpinner.setSelection(position)
+            binding.spnTime.setSelection(position)
         }
     }
 
