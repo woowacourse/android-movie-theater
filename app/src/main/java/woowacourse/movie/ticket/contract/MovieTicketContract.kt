@@ -15,9 +15,8 @@ interface MovieTicketContract {
             movieTitle: String,
             moviePrice: Int,
             ticketCount: Int,
+            seats: List<Seat>,
         )
-
-        fun showSeats(seats: List<Seat>)
     }
 
     interface Presenter {
@@ -39,6 +38,6 @@ interface MovieTicketContract {
 
         fun storeSeats(seats: List<Seat>)
 
-        fun setSeatsInfo()
+//        fun setSeatsInfo()
     }
 }
