@@ -45,6 +45,6 @@ class MainPresenterImpl(
     }
 
     override fun onReserveButtonClicked(movieId: Int) {
-        view?.moveToMovieDetail(movieId)
+        view?.showTheaterBottomSheet(movieId)
     }
 }

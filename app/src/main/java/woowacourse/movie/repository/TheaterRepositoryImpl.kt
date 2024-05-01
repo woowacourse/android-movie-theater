@@ -34,7 +34,7 @@ object TheaterRepositoryImpl : TheaterRepository {
                 // 상영 영화
                 0 to mapOf(
                     // 날짜
-                    "24.4.2" to listOf("15:00")
+                    "24.4.2" to listOf("15:00", "18:00", "22:00")
                 ),
                 2 to mapOf(
                     // 날짜
@@ -49,15 +49,22 @@ object TheaterRepositoryImpl : TheaterRepository {
                 ),
                 2 to mapOf(
                     // 날짜
-                    "24.4.20" to listOf("15:00")
+                    "24.4.20" to listOf("15:00", "16:00"),
+                    "24.4.24" to listOf("10:00", "17:00"),
                 )
-            )
+            ),
         )
 
 
     override fun theaters(): List<Theater> = dummyTheaters
 
     override fun screenTimesCount(theaterId: Int, movieId: Int): Int {
-        return theaterScreeningInfo[theaterId]?.get(movieId)?.values?.count() ?: 0
+        return theaterScreeningInfo[theaterId]?.get(movieId)?.values?.sumOf { it.count() } ?: 0
+    }
+
+    override fun theatersInfo(movieId: Int): List<Pair<Theater, Int>> {
+        return dummyTheaters.map { theater ->
+            theater to screenTimesCount(theater.id, movieId)
+        }
     }
 }

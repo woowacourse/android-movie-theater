@@ -11,6 +11,8 @@ interface MainContract {
 
         fun showMovieList()
 
+        fun showTheaterBottomSheet(movieId: Int)
+
         fun moveToMovieDetail(movieId: Int)
     }
 

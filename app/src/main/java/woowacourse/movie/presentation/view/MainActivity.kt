@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.domain.admodel.Ad
+import woowacourse.movie.presentation.TheaterBottomSheetDialogFragment
 import woowacourse.movie.presentation.adapter.MovieListAdapter
 import woowacourse.movie.presentation.base.BaseActivity
 import woowacourse.movie.presentation.contract.MainContract
@@ -40,6 +41,14 @@ class MainActivity : BaseActivity(), MainContract.View, MainContract.ViewActions
         movieListView.adapter = adapter
     }
 
+    override fun showTheaterBottomSheet(movieId: Int) {
+        val theaterDialog = TheaterBottomSheetDialogFragment()
+        val bundle = Bundle()
+        bundle.putInt(MOVIE_ID_KEY, movieId)
+        theaterDialog.arguments = bundle
+        theaterDialog.show(supportFragmentManager, "")
+    }
+
     override fun reserveMovie(movieId: Int) {
         presenter.onReserveButtonClicked(movieId)
     }
@@ -54,5 +63,10 @@ class MainActivity : BaseActivity(), MainContract.View, MainContract.ViewActions
         val intent = Intent(this, MovieDetailActivity::class.java)
         intent.putExtra(MovieDetailActivity.INTENT_MOVIE_ID, movieId)
         startActivity(intent)
+    }
+
+    companion object {
+        const val MOVIE_ID_KEY = "movieId"
+        const val DEFAULT_MOVIE_ID = -1
     }
 }
