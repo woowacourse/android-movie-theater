@@ -5,6 +5,14 @@
 
     <data>
 
+        <variable
+            name="theater"
+            type="woowacourse.movie.screeningmovie.theaters.TheaterUiModel" />
+
+        <variable
+            name="clickListener"
+            type="woowacourse.movie.screeningmovie.AdapterClickListener" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,6 +28,7 @@
             app:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="선릉 극장"
+            android:text="@{theater.name}"
             android:layout_marginStart="24dp"
             android:textSize="16sp"
             android:layout_marginTop="8dp"
@@ -33,6 +42,7 @@
             android:layout_height="wrap_content"
             tools:text="3개의 상영 시간"
             android:textSize="12sp"
+            android:text="@{@string/time_count_format(theater.timeCount)}"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/roboto"
             app:layout_constraintTop_toBottomOf="@id/tv_theater_name"
@@ -45,6 +55,7 @@
             android:src="@drawable/ic_chevron_right"
             android:layout_height="wrap_content"
             android:layout_marginEnd="14dp"
+            android:onClick="@{() -> clickListener.onClick(theater.id)}"
             android:background="@android:color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
