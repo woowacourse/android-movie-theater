@@ -21,7 +21,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.jupiter.api.DisplayName
 import woowacourse.movie.model.ScreeningMovie
-import woowacourse.movie.model.ScreeningMovies
+import woowacourse.movie.model.Movies
 import woowacourse.movie.screeningmovie.AdvertiseViewHolder
 import woowacourse.movie.screeningmovie.MovieAdapter
 import woowacourse.movie.screeningmovie.ScreenMovieUiModel
@@ -38,7 +38,7 @@ class ScreeningMovieActivityTest {
             val listView = activity.findViewById<RecyclerView>(R.id.rcv_screening_movie)
 
             val items =
-                ScreeningMovies(
+                Movies(
                     listOf(
                         ScreeningMovie.STUB,
                         ScreeningMovie.STUB,

@@ -3,18 +3,12 @@ package woowacourse.movie.model
 import java.time.LocalDate
 import java.time.LocalTime
 
-sealed interface ScreenView
-
-data class Advertisement(
-    val imageUrl: ImageUrl = ImageUrl.none(),
-) : ScreenView
-
 data class ScreeningMovie(
     val id: Long,
     val movie: Movie,
     val theater: MovieTheater,
     val screenDateTimes: List<ScreenDateTime>,
-) : ScreenView {
+) {
     val startDate: LocalDate = screenDateTimes.first().date
 
     val endDate: LocalDate = screenDateTimes.last().date

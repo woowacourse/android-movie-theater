@@ -8,13 +8,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
+import woowacourse.movie.data.DummyMovies
 import woowacourse.movie.moviereservation.MovieReservationActivity
+import woowacourse.movie.repository.MovieRepository
 
 class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(), AdapterClickListener,
     TheaterContract.View {
 
     private lateinit var rcv: RecyclerView
     private lateinit var presenter: TheaterContract.Presenter
+    private var movieId: Long = -1L
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,20 +25,18 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(), AdapterCli
     ): View {
         val view = inflater.inflate(R.layout.bottom_sheet_theater, container, false)
         rcv = view.findViewById(R.id.rcv_theater)
-        presenter =
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        Log.d("테스트", "${this.arguments?.getLong(EXTRA_SCREENING_MOVIE_ID)}")
-
-
+        movieId = this.arguments?.getLong(EXTRA_SCREENING_MOVIE_ID) ?: error("movie id가 잘못 들어옴")
+        presenter = TheaterPresenter(DummyMovies, this)
+        presenter.loadTheaters(movieId)
     }
 
-    override fun onClick(id: Long) {
-        startActivity(MovieReservationActivity.getIntent(requireContext(), 0))
+    override fun onClick(theaterId: Long) {
+        presenter.selectTheater(movieId, theaterId)
     }
 
     override fun showTheaters(theaterUiModels: List<TheaterUiModel>) {
@@ -45,8 +46,8 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(), AdapterCli
         )
     }
 
-    override fun navigateSelectSeat() {
-
+    override fun navigateMovieReservation(screeningMovieId: Long) {
+        startActivity(MovieReservationActivity.getIntent(requireContext(), screeningMovieId))
     }
 
     companion object {

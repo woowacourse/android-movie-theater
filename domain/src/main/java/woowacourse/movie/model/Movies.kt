@@ -1,8 +1,8 @@
 package woowacourse.movie.model
 
-class ScreeningMovies(val screeningMovies: List<ScreeningMovie>) {
+class Movies(val movies: List<Movie>) {
     fun insertAdvertisements(advertiseInterval: Int): List<ScreenView> =
-        screeningMovies.chunked(advertiseInterval) { chunk ->
+        movies.chunked(advertiseInterval) { chunk ->
             if (chunk.size == advertiseInterval) {
                 chunk + Advertisement()
             } else {

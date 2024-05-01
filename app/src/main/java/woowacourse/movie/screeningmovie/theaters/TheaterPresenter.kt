@@ -1,5 +1,6 @@
 package woowacourse.movie.screeningmovie.theaters
 
+import android.util.Log
 import woowacourse.movie.repository.MovieRepository
 
 class TheaterPresenter(
@@ -10,12 +11,14 @@ class TheaterPresenter(
         val theaters = repository.theatersByMovieId(movieId)
         val uiModels = theaters.map { theater ->
             val screeningMovie = repository.screenMovieById(movieId, theater.id)
-
+            Log.d("uiModel","${movieId} ${theater.id}")
             screeningMovie.theater.toTheaterUiModel(screeningMovie.totalScreeningTimesNum())
         }
         view.showTheaters(uiModels)
     }
 
     override fun selectTheater(movieId: Long, theaterId: Long) {
+        val screeningMovie = repository.screenMovieById(movieId, theaterId)
+        view.navigateMovieReservation(screeningMovie.id)
     }
 }

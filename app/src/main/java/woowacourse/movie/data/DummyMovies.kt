@@ -1,6 +1,7 @@
 package woowacourse.movie.data
 
 import woowacourse.movie.model.HeadCount
+import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieReservation
 import woowacourse.movie.model.MovieTheater
 import woowacourse.movie.model.ReserveSeats
@@ -21,14 +22,7 @@ object DummyMovies : MovieRepository {
     private var reservations: List<MovieReservation> = emptyList()
     private var reservationId: Long = 0
 
-    override fun theaterById(theaterId: Long): MovieTheater {
-        /*return theaters.firstOrNull{ it.id == id}?: error(
-            IdError.NO_THEATER.message.format(id),
-        )*/
-        return MovieTheater.STUB_A
-    }
-
-    override fun screenMovies(): List<ScreeningMovie> = screenMovies
+    override fun movies(): List<Movie> = screenMovies.map { it.movie }.distinct()
 
     override fun screenMovieById(id: Long): ScreeningMovie {
         return screenMovies.firstOrNull { it.id == id } ?: error(

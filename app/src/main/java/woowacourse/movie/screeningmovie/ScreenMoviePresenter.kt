@@ -1,6 +1,6 @@
 package woowacourse.movie.screeningmovie
 
-import woowacourse.movie.model.ScreeningMovies
+import woowacourse.movie.model.Movies
 import woowacourse.movie.repository.MovieRepository
 
 class ScreenMoviePresenter(
@@ -13,12 +13,12 @@ class ScreenMoviePresenter(
     }
 
     override fun loadScreeningMovies() {
-        val screeningMovies = repository.screenMovies()
-        val screeningMoviesWithAds =
-            ScreeningMovies(screeningMovies).insertAdvertisements(
+        val movies = repository.movies()
+        val moviesWithAds =
+            Movies(movies).insertAdvertisements(
                 ADVERTISEMENT_INTERVAL,
             )
-        view.showMovies(screeningMoviesWithAds.toScreenItems())
+        view.showMovies(moviesWithAds.toScreenItems())
     }
 
     companion object {

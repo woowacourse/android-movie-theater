@@ -1,27 +1,26 @@
 package woowacourse.movie.screeningmovie
 
 import woowacourse.movie.model.Advertisement
+import woowacourse.movie.model.Movie
 import woowacourse.movie.model.ScreenView
-import woowacourse.movie.model.ScreeningMovie
 import java.time.format.DateTimeFormatter
 
-fun ScreeningMovie.toScreenMovieUiModel(): ScreenMovieUiModel {
+fun Movie.toScreenMovieUiModel(
+): ScreenMovieUiModel {
     val pattern = "yyyy.MM.dd"
-    val screenDate: String =
-        screenDateTimes.first().date.format(DateTimeFormatter.ofPattern(pattern))
-    val runningTime = movie.runningTime.time.inWholeMinutes
+    val formatter = DateTimeFormatter.ofPattern(pattern)
     return ScreenMovieUiModel(
         id = id,
-        title = movie.title,
-        screenDate = "러닝타임: ${runningTime}분",
-        runningTime = "상영일: $screenDate",
+        title = title,
+        screenDate = "러닝타임: ${runningTime.time.inWholeMinutes}분",
+        runningTime = "상영일: ${startDate.format(formatter)} ~ ${endDate.format(formatter)}",
     )
 }
 
 fun List<ScreenView>.toScreenItems(): List<ScreeningItem> =
-    this.map { view ->
-        when (view) {
-            is ScreeningMovie -> view.toScreenMovieUiModel()
+    this.map { screenView ->
+        when (screenView) {
+            is Movie -> screenView.toScreenMovieUiModel()
             is Advertisement -> AdvertiseUiModel()
         }
     }

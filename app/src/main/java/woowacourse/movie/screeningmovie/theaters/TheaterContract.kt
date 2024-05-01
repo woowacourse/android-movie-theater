@@ -5,7 +5,7 @@ interface TheaterContract {
     interface View {
         fun showTheaters(theaterUiModels: List<TheaterUiModel>)
 
-        fun navigateSelectSeat()
+        fun navigateMovieReservation(screeningMovieId: Long)
     }
 
     interface Presenter {
