@@ -5,7 +5,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.model.Movie
-import woowacourse.movie.presentation.movieList.MovieListClickListener
+import woowacourse.movie.presentation.movieList.listener.MovieListClickListener
 
 class MovieViewHolder(private val binding: ItemMovieBinding, val listener: MovieListClickListener) :
     RecyclerView.ViewHolder(binding.root) {

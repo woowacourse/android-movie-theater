@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemTheaterBinding
 import woowacourse.movie.model.Theater
-import woowacourse.movie.presentation.movieList.TheaterClickListener
+import woowacourse.movie.presentation.movieList.listener.TheaterClickListener
 import woowacourse.movie.presentation.movieList.viewholder.TheaterViewHolder
 
 class TheaterAdapter(

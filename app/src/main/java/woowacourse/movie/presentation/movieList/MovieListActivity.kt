@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.model.Movie
 import woowacourse.movie.presentation.movieList.adapter.MovieAdapter
+import woowacourse.movie.presentation.movieList.fragment.TheaterBottomDialogFragment
+import woowacourse.movie.presentation.movieList.listener.MovieListClickListener
 import woowacourse.movie.repository.DummyTheaterList
 
 class MovieListActivity : AppCompatActivity(), MovieListContract.View, MovieListClickListener {
@@ -23,7 +25,7 @@ class MovieListActivity : AppCompatActivity(), MovieListContract.View, MovieList
     }
 
     override fun ticketingButtonClick(movieId: Long) {
-        val bottomSheet = TheaterBottomSheetDialogFragment(DummyTheaterList.find(movieId), movieId)
+        val bottomSheet = TheaterBottomDialogFragment(DummyTheaterList.find(movieId), movieId)
         bottomSheet.show(supportFragmentManager, bottomSheet.tag)
     }
 }

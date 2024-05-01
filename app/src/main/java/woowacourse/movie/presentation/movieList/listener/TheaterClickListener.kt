@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.movieList
+package woowacourse.movie.presentation.movieList.listener
 
 interface TheaterClickListener {
     fun onTheaterClick(

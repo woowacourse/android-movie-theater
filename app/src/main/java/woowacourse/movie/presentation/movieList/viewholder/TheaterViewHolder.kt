@@ -3,7 +3,7 @@ package woowacourse.movie.presentation.movieList.viewholder
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemTheaterBinding
 import woowacourse.movie.model.Theater
-import woowacourse.movie.presentation.movieList.TheaterClickListener
+import woowacourse.movie.presentation.movieList.listener.TheaterClickListener
 
 class TheaterViewHolder(private val binding: ItemTheaterBinding) : RecyclerView.ViewHolder(binding.root) {
 //    private val name: TextView = view.findViewById(R.id.item_theater_name_tv)

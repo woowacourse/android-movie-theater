@@ -6,7 +6,7 @@
 
         <variable
             name="listener"
-            type="woowacourse.movie.presentation.movieList.MovieListClickListener" />
+            type="woowacourse.movie.presentation.movieList.listener.MovieListClickListener" />
 
         <variable
             name="movie"

@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.movieList
+package woowacourse.movie.presentation.movieList.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,9 +9,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.model.Theater
 import woowacourse.movie.presentation.movieList.adapter.TheaterAdapter
+import woowacourse.movie.presentation.movieList.listener.TheaterClickListener
 import woowacourse.movie.presentation.ticketing.TicketingActivity
 
-class TheaterBottomSheetDialogFragment(
+class TheaterBottomDialogFragment(
     private val theaters: List<Theater>,
     private val movieId: Long,
 ) : BottomSheetDialogFragment(), TheaterClickListener {
