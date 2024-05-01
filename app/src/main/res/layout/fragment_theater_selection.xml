@@ -5,7 +5,7 @@
     <FrameLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".main.view.TheaterSelectionFragment">
+        tools:context=".home.view.TheaterSelectionFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/theater_recyclerview"

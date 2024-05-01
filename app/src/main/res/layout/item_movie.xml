@@ -7,7 +7,7 @@
 
         <variable
             name="movie_view_holder"
-            type="woowacourse.movie.main.view.adapter.movie.MovieViewHolder" />
+            type="woowacourse.movie.home.view.adapter.movie.MovieViewHolder" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"

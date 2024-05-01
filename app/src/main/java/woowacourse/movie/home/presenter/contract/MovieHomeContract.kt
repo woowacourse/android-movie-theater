@@ -1,8 +1,8 @@
-package woowacourse.movie.main.presenter.contract
+package woowacourse.movie.home.presenter.contract
 
 import woowacourse.movie.model.Movie
 
-interface MovieMainContract {
+interface MovieHomeContract {
     interface View {
         fun displayMovies(movies: List<Movie>)
 

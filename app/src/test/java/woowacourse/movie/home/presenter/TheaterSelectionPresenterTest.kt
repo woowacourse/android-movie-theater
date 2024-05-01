@@ -1,4 +1,4 @@
-package woowacourse.movie.main.presenter
+package woowacourse.movie.home.presenter
 
 import io.mockk.Runs
 import io.mockk.every
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieRepository
-import woowacourse.movie.main.presenter.contract.TheaterSelectionContract
+import woowacourse.movie.home.presenter.contract.TheaterSelectionContract
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieDate
 import woowacourse.movie.model.Theater

@@ -1,4 +1,4 @@
-package woowacourse.movie.main.view
+package woowacourse.movie.home.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,12 +8,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieRepository.getMovieById
 import woowacourse.movie.databinding.FragmentTheaterSelectionBinding
 import woowacourse.movie.detail.view.MovieDetailActivity
-import woowacourse.movie.main.presenter.TheaterSelectionPresenter
-import woowacourse.movie.main.presenter.contract.TheaterSelectionContract
-import woowacourse.movie.main.view.adapter.theater.TheaterAdapter
+import woowacourse.movie.home.presenter.TheaterSelectionPresenter
+import woowacourse.movie.home.presenter.contract.TheaterSelectionContract
+import woowacourse.movie.home.view.adapter.theater.TheaterAdapter
 import woowacourse.movie.model.Theater
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID

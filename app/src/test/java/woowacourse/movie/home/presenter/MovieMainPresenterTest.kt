@@ -1,4 +1,4 @@
-package woowacourse.movie.main.presenter
+package woowacourse.movie.home.presenter
 
 import io.mockk.Runs
 import io.mockk.every
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieRepository
-import woowacourse.movie.main.presenter.contract.MovieMainContract
+import woowacourse.movie.home.presenter.contract.MovieHomeContract
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieDate
 import woowacourse.movie.model.Theater
@@ -18,8 +18,8 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 class MovieMainPresenterTest {
-    private lateinit var view: MovieMainContract.View
-    private lateinit var presenter: MovieMainPresenter
+    private lateinit var view: MovieHomeContract.View
+    private lateinit var presenter: MovieHomePresenter
     private val movies =
         listOf(
             Movie(
@@ -58,7 +58,7 @@ class MovieMainPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk()
-        presenter = MovieMainPresenter(view)
+        presenter = MovieHomePresenter(view)
         mockkObject(MovieRepository)
     }
 

@@ -1,4 +1,4 @@
-package woowacourse.movie.main.view.adapter.theater
+package woowacourse.movie.home.view.adapter.theater
 
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R

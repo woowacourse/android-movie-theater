@@ -1,4 +1,4 @@
-package woowacourse.movie.main.view.adapter.movie
+package woowacourse.movie.home.view.adapter.movie
 
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemMovieBinding

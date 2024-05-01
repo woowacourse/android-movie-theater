@@ -1,4 +1,4 @@
-package woowacourse.movie.main.view.adapter.movie
+package woowacourse.movie.home.view.adapter.movie
 
 import android.content.Intent
 import android.net.Uri
@@ -20,7 +20,7 @@ class AdvertisementViewHolder(binding: ItemAdvertisementBinding) :
         this.advertisementLink = advertisementLink
     }
 
-     fun advertisementImageClick() {
+    fun advertisementImageClick() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(advertisementLink))
         itemView.context.startActivity(intent)
     }

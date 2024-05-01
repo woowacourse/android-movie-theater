@@ -1,6 +1,5 @@
-package woowacourse.movie.main.presenter.contract
+package woowacourse.movie.home.presenter.contract
 
-import woowacourse.movie.model.Movie
 import woowacourse.movie.model.Theater
 
 interface TheaterSelectionContract {

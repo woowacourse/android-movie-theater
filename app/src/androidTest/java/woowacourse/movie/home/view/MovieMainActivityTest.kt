@@ -1,4 +1,4 @@
-package woowacourse.movie.main.view
+package woowacourse.movie.home.view
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -14,9 +14,10 @@ import org.hamcrest.TypeSafeMatcher
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import woowacourse.movie.MovieMainActivity
 import woowacourse.movie.R
-import woowacourse.movie.main.view.adapter.movie.AdvertisementViewHolder
-import woowacourse.movie.main.view.adapter.movie.MovieViewHolder
+import woowacourse.movie.home.view.adapter.movie.AdvertisementViewHolder
+import woowacourse.movie.home.view.adapter.movie.MovieViewHolder
 
 @RunWith(AndroidJUnit4::class)
 class MovieMainActivityTest {
