@@ -31,7 +31,7 @@ class SelectSeatPresenterTest {
         every { view.showSeat(any()) } just Runs
 
         // given
-        presenter.loadSeat(1)
+        presenter.loadSeat(0)
 
         // then
         verify(exactly = 1) { view.showSeat(any()) }
