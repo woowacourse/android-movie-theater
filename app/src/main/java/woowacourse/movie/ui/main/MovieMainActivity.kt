@@ -1,10 +1,7 @@
 package woowacourse.movie.ui.main
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
@@ -14,6 +11,7 @@ import woowacourse.movie.ui.home.MovieHomeFragment
 
 class MovieMainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_main)

@@ -1,12 +1,10 @@
 package woowacourse.movie.ui.selection
 
 import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
-import android.widget.ImageView
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -21,7 +19,6 @@ import woowacourse.movie.model.data.UserTicketsImpl
 import woowacourse.movie.model.movie.Seat
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.complete.MovieReservationCompleteActivity
-import woowacourse.movie.ui.utils.getImageFromId
 import woowacourse.movie.ui.utils.positionToIndex
 
 class MovieSeatSelectionActivity :
@@ -34,7 +31,7 @@ class MovieSeatSelectionActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_movie_seat_selection)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_seat_selection)
         binding.presenter = presenter
 
         presenter.loadTheaterInfo(userTicketId)
@@ -101,8 +98,7 @@ class MovieSeatSelectionActivity :
             MOVIE_CONTENT_ID_DEFAULT_VALUE,
         )
 
-    override fun initializePresenter(): MovieSeatSelectionPresenter =
-        MovieSeatSelectionPresenter(this, UserTicketsImpl, userTicketId)
+    override fun initializePresenter(): MovieSeatSelectionPresenter = MovieSeatSelectionPresenter(this, UserTicketsImpl, userTicketId)
 
     override fun showTheater(
         rowSize: Int,

@@ -1,9 +1,6 @@
 package woowacourse.movie.model.data
 
 import woowacourse.movie.model.movie.MovieContent
-import woowacourse.movie.model.movie.Theater
-import java.time.LocalDate
-import java.time.LocalTime
 
 object MovieContentsImpl : MovieContents {
     private const val EXCEPTION_INVALID_ID = "Movie not found with id: %d"

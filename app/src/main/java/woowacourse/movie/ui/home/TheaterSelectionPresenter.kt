@@ -20,9 +20,10 @@ class TheaterSelectionPresenter(
                 view.dismissDialog()
             }.getOrThrow()
 
-        val movieTheaters = movieContent.theaterIds.map { theaterId ->
-            theaters.find(theaterId)
-        }
+        val movieTheaters =
+            movieContent.theaterIds.map { theaterId ->
+                theaters.find(theaterId)
+            }
         view.showTheaters(movieTheaters)
     }
 
