@@ -103,6 +103,6 @@ object DummyTheaterList : TheaterListRepository {
     override fun findTheaterNameWithId(theaterId: Long): String {
         return list.find { theater ->
             theater.id == theaterId
-        }?.name.toString()
+        }?.name.toString() + " 극장"
     }
 }
