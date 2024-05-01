@@ -16,8 +16,23 @@ class MovieTheater(
         }
 
     companion object {
-        val STUB_A = MovieTheater(0, mapOf(SeatRate.S to listOf(1), SeatRate.A to listOf(2)), 2, "잠실")
-        val STUB_B = MovieTheater(1, mapOf(SeatRate.S to listOf(1), SeatRate.A to listOf(2)), 2, "선릉")
-        val STUB_C = MovieTheater(2, mapOf(SeatRate.S to listOf(1), SeatRate.A to listOf(2)), 2, "강남")
+        val STUB_A = MovieTheater(
+            0,
+            mapOf(SeatRate.S to listOf(3, 4), SeatRate.A to listOf(5), SeatRate.B to listOf(1, 2)),
+            4,
+            "잠실"
+        )
+        val STUB_B = MovieTheater(
+            1,
+            mapOf(SeatRate.S to listOf(3, 4), SeatRate.A to listOf(5), SeatRate.B to listOf(1, 2)),
+            4,
+            "선릉"
+        )
+        val STUB_C = MovieTheater(
+            2,
+            mapOf(SeatRate.S to listOf(3, 4), SeatRate.A to listOf(5), SeatRate.B to listOf(1, 2)),
+            4,
+            "강남"
+        )
     }
 }
