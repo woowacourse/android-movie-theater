@@ -26,20 +26,12 @@ data class ScreeningMovie(
     fun totalScreeningTimesNum(): Int = screenDateTimes.flatMap { it.times }.size
 
     companion object {
-        val STUB: ScreeningMovie =
+        val STUB_A: ScreeningMovie =
             ScreeningMovie(
-                id = 1,
+                id = 0,
                 movie = Movie.STUB,
                 theater =
-                    MovieTheater(
-                        mapOf(
-                            SeatRate.B to listOf(1, 2),
-                            SeatRate.S to listOf(3, 4),
-                            SeatRate.A to listOf(5),
-                        ),
-                        4,
-                        "잠실",
-                    ),
+                    MovieTheater.STUB_A,
                 screenDateTimes =
                     listOf(
                         ScreenDateTime(
@@ -61,6 +53,62 @@ data class ScreeningMovie(
                             ),
                         ),
                     ),
+            )
+
+        val STUB_B : ScreeningMovie =
+            ScreeningMovie(
+                id = 1,
+                movie = Movie.STUB,
+                theater =MovieTheater.STUB_B,
+                screenDateTimes =
+                listOf(
+                    ScreenDateTime(
+                        LocalDate.of(2024, 3, 1),
+                        listOf(
+                            LocalTime.of(9, 0),
+                            LocalTime.of(10, 0),
+                            LocalTime.of(11, 0),
+                            LocalTime.of(12, 0),
+                        ),
+                    ),
+                    ScreenDateTime(
+                        LocalDate.of(2024, 3, 3),
+                        listOf(
+                            LocalTime.of(9, 0),
+                            LocalTime.of(10, 0),
+                            LocalTime.of(11, 0),
+                            LocalTime.of(12, 0),
+                        ),
+                    ),
+                ),
+            )
+
+        val STUB_C : ScreeningMovie =
+            ScreeningMovie(
+                id = 2,
+                movie = Movie.STUB,
+                theater = MovieTheater.STUB_C,
+                screenDateTimes =
+                listOf(
+                    ScreenDateTime(
+                        LocalDate.of(2024, 3, 1),
+                        listOf(
+                            LocalTime.of(9, 0),
+                            LocalTime.of(10, 0),
+                            LocalTime.of(11, 0),
+                            LocalTime.of(12, 0),
+                        ),
+                    ),
+                    ScreenDateTime(
+                        LocalDate.of(2024, 3, 3),
+                        listOf(
+                            LocalTime.of(9, 0),
+                            LocalTime.of(10, 0),
+                            LocalTime.of(11, 0),
+                            LocalTime.of(12, 0),
+                        ),
+                    ),
+                ),
             )
     }
 }

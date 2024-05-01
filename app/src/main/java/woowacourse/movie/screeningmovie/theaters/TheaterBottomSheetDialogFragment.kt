@@ -1,43 +1,61 @@
 package woowacourse.movie.screeningmovie.theaters
 
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.moviereservation.MovieReservationActivity
-import woowacourse.movie.moviereservation.MovieReservationContract
 
-class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(),AdapterClickListener {
+class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(), AdapterClickListener,
+    TheaterContract.View {
 
     private lateinit var rcv: RecyclerView
+    private lateinit var presenter: TheaterContract.Presenter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.bottom_sheet_theater, container, false)
         rcv = view.findViewById(R.id.rcv_theater)
+        presenter =
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        rcv.adapter = TheaterAdapter(
-            listOf(Theater(0L,"선릉",""),Theater(0L,"선릉","")),
-            this
-        )
+        Log.d("테스트", "${this.arguments?.getLong(EXTRA_SCREENING_MOVIE_ID)}")
+
 
     }
 
     override fun onClick(id: Long) {
         startActivity(MovieReservationActivity.getIntent(requireContext(), 0))
+    }
+
+    override fun showTheaters(theaterUiModels: List<TheaterUiModel>) {
+        rcv.adapter = TheaterAdapter(
+            theaterUiModels,
+            this
+        )
+    }
+
+    override fun navigateSelectSeat() {
+
+    }
+
+    companion object {
+
+        private const val EXTRA_SCREENING_MOVIE_ID = "screeningMovieId"
+        fun getBundle(
+            movieId: Long
+        ): Bundle {
+            return Bundle().apply { this.putLong(EXTRA_SCREENING_MOVIE_ID, movieId) }
+        }
     }
 }

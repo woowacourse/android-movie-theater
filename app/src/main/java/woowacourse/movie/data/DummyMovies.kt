@@ -11,26 +11,21 @@ import java.time.LocalDateTime
 object DummyMovies : MovieRepository {
     private val screenMovies: List<ScreeningMovie> =
         listOf(
-            ScreeningMovie.STUB,
-            ScreeningMovie.STUB,
-            ScreeningMovie.STUB,
-            ScreeningMovie.STUB,
+            ScreeningMovie.STUB_A,
+            ScreeningMovie.STUB_B,
+            ScreeningMovie.STUB_C,
         )
 
-    private val theaters: Map<Long, MovieTheater> =
-        mapOf(
-            0L to MovieTheater.STUB_A,
-            1L to MovieTheater.STUB_B,
-            2L to MovieTheater.STUB_C,
-        )
-
+    private val theaters: List<MovieTheater> =
+        listOf(MovieTheater.STUB_A, MovieTheater.STUB_B, MovieTheater.STUB_C)
     private var reservations: List<MovieReservation> = emptyList()
     private var reservationId: Long = 0
 
-    override fun theaterById(id: Long): MovieTheater {
-        return theaters[id] ?: error(
+    override fun theaterById(theaterId: Long): MovieTheater {
+        /*return theaters.firstOrNull{ it.id == id}?: error(
             IdError.NO_THEATER.message.format(id),
-        )
+        )*/
+        return MovieTheater.STUB_A
     }
 
     override fun screenMovies(): List<ScreeningMovie> = screenMovies

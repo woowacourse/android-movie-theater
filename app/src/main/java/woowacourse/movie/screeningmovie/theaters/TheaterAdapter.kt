@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 
 class TheaterAdapter(
-    private val items: List<Theater>,
+    private val items: List<TheaterUiModel>,
     private val clickListener: AdapterClickListener
 ) : RecyclerView.Adapter<TheaterAdapter.TheaterViewHolder>() {
 
@@ -22,7 +22,7 @@ class TheaterAdapter(
         private val name = itemView.findViewById<TextView>(R.id.tv_theater_name)
         private val timeCount = itemView.findViewById<TextView>(R.id.tv_theater_time_count)
 
-        fun onBind(item: Theater) {
+        fun onBind(item: TheaterUiModel) {
             name.text = item.name
             timeCount.text = item.timeCount
             navigateButton.setOnClickListener {

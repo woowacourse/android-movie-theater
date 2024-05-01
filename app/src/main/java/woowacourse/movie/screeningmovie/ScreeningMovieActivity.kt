@@ -31,6 +31,10 @@ class ScreeningMovieActivity : AppCompatActivity(), ScreeningMovieContract.View 
     }
 
     override fun showTheaters(screeningMovieId: Long) {
-        TheaterBottomSheetDialogFragment().show(supportFragmentManager, "theaterBottomSheet")
+
+        val fragment = TheaterBottomSheetDialogFragment()
+        val bundle = TheaterBottomSheetDialogFragment.getBundle(screeningMovieId)
+        fragment.arguments = bundle
+        fragment.show(supportFragmentManager, "theaterBottomSheet")
     }
 }

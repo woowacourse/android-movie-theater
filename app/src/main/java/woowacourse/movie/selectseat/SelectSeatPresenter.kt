@@ -15,7 +15,7 @@ class SelectSeatPresenter(
         runCatching {
             repository.screenMovieById(movieId)
         }.onSuccess {
-            view.showSeat(it.theater.seats().toSeatsUiModel())
+            // view.showSeat(it.theaters.seats().toSeatsUiModel())
         }
     }
 
