@@ -76,8 +76,8 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
             presenter.completeReservation(bookingInfoUiModel, seats.seats)
         }
 
-        presenter.loadSeat(bookingInfoUiModel.movieId)
-        presenter.loadReservationInfo(bookingInfoUiModel.movieId)
+        presenter.loadSeat(bookingInfoUiModel.screenMovieId)
+        presenter.loadReservationInfo(bookingInfoUiModel.screenMovieId)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

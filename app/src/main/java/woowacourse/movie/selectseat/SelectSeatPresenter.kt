@@ -37,12 +37,11 @@ class SelectSeatPresenter(
         selectedSeats: List<SeatUiModel>,
     ) {
         runCatching {
-            repository.reserveMovie(
-                bookingInfoUiModel.movieId,
+            repository.reserveMovie(bookingInfoUiModel.screenMovieId,
                 bookingInfoUiModel.localDateTime(),
                 bookingInfoUiModel.count.toHeadCount(),
                 ReserveSeats(selectedSeats.toSeats()),
-                0,
+                bookingInfoUiModel.theaterId
             )
         }.onSuccess {
             view.navigateToResult(it)
