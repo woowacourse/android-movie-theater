@@ -4,12 +4,18 @@ import android.view.View
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemAdvertisementBinding
 import woowacourse.movie.model.advertisement.Advertisement
 
-class AdvertisementViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    private val banner: ImageView = view.findViewById(R.id.image_view_item_advertisement)
+class AdvertisementViewHolder(
+    private val binding: ItemAdvertisementBinding
+) : RecyclerView.ViewHolder(binding.root) {
+
+    init {
+        binding.advertisement
+    }
 
     fun bind(ads: Advertisement) {
-        banner.setImageResource(ads.banner)
+        binding.imageViewItemAdvertisement.setImageResource(ads.banner)
     }
 }

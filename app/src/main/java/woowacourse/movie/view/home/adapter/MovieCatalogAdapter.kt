@@ -1,10 +1,13 @@
 package woowacourse.movie.view.home.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemAdvertisementBinding
+import woowacourse.movie.databinding.ItemMovieCatalogBinding
 import woowacourse.movie.model.advertisement.Advertisement
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.view.home.adapter.viewholder.AdvertisementViewHolder
@@ -25,11 +28,12 @@ class MovieCatalogAdapter(
         viewType: Int,
     ): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
+        Log.d("hye", "createViewHolder")
         return if (viewType == movieViewType) {
-            val view = inflater.inflate(R.layout.item_movie_catalog, parent, false)
+            val view = ItemMovieCatalogBinding.inflate(inflater, parent, false)
             MovieViewHolder(view)
         } else {
-            val view = inflater.inflate(R.layout.item_advertisement, parent, false)
+            val view = ItemAdvertisementBinding.inflate(inflater, parent, false)
             AdvertisementViewHolder(view)
         }
     }
@@ -38,6 +42,7 @@ class MovieCatalogAdapter(
         holder: ViewHolder,
         position: Int,
     ) {
+        Log.d("hye", "onBindViewHolder")
         when (CatalogViewType.from(getItemViewType(position))) {
             CatalogViewType.MOVIE -> {
                 val item = movies[position]

@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
 
-    <ImageView
-        android:id="@+id/image_view_item_advertisement"
+        <variable
+            name="advertisement"
+            type="woowacourse.movie.view.home.adapter.viewholder.AdvertisementViewHolder" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/advertisement_message"
-        android:scaleType="centerCrop"
-        android:src="@drawable/advertisement_wooteco" />
+        android:layout_height="wrap_content">
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/image_view_item_advertisement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/advertisement_message"
+            android:scaleType="centerCrop"
+            android:src="@drawable/advertisement_wooteco" />
+    </LinearLayout>
+</layout>
