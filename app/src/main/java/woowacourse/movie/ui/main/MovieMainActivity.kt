@@ -19,20 +19,26 @@ class MovieMainActivity : AppCompatActivity() {
             setReorderingAllowed(true)
             replace(R.id.main_fragment_container, MovieHomeFragment())
         }
-        binding.mainBottomNavigation.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.menu_booking_history -> {
-                    replace(MovieHomeFragment())
+        binding.mainBottomNavigation.apply {
+            selectedItemId = R.id.menu_home
+            setOnItemSelectedListener {
+                when (it.itemId) {
+                    R.id.menu_booking_history -> {
+                        replace(MovieHomeFragment())
+                    }
+
+                    R.id.menu_home -> {
+                        replace(MovieHomeFragment())
+                    }
+
+                    R.id.menu_setting -> {
+                        replace(MovieHomeFragment())
+                    }
+
+                    else -> replace(MovieHomeFragment())
                 }
-                R.id.menu_home -> {
-                    replace(MovieHomeFragment())
-                }
-                R.id.menu_setting -> {
-                    replace(MovieHomeFragment())
-                }
-                else -> replace(MovieHomeFragment())
+                true
             }
-            true
         }
     }
 
