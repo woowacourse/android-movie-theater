@@ -20,14 +20,11 @@ class MovieReservationPresenter(
     private val userTickets: UserTickets,
 ) :
     MovieReservationContract.Presenter {
-    private lateinit var movieContent: MovieContent
-    lateinit var reservationCount: ReservationCount
-
-//    val reservationCountValue: Int
-//        get() = reservationCount.count
+    private lateinit var reservationCount: ReservationCount
     private lateinit var screeningDate: ScreeningDate
     private lateinit var movieTime: LocalTime
-    private lateinit var theater: Theater
+    lateinit var theater: Theater
+    lateinit var movieContent: MovieContent
 
     override fun updateReservationCount(count: Int) {
         reservationCount = ReservationCount(count)
@@ -36,7 +33,6 @@ class MovieReservationPresenter(
 
     override fun selectDate(date: LocalDate) {
         screeningDate = ScreeningDate(date)
-        view.showMovieTimeSelection(theater.screeningTimes)
     }
 
     override fun selectTime(time: LocalTime) {
@@ -50,8 +46,6 @@ class MovieReservationPresenter(
         try {
             movieContent = movieContents.find(movieContentId)
             theater = theaters.find(theaterId)
-            view.showMovieContent(movieContent)
-            view.showMovieDateSelection(movieContent.getDatesInRange())
         } catch (e: NoSuchElementException) {
             view.showError(e)
         }

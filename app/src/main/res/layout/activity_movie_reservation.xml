@@ -34,6 +34,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:scaleType="centerCrop"
+                    app:context = "@{context}"
+                    app:imgRes="@{presenter.movieContent.imageId}"
                     app:layout_constraintBottom_toTopOf="@+id/text_layout"
                     app:layout_constraintDimensionRatio="360:340"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -52,6 +54,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="27dp"
+                        android:text="@{presenter.movieContent.title}"
                         android:textSize="24sp"
                         android:textStyle="bold" />
 
@@ -60,6 +63,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="34dp"
+                        android:text="@{@string/screening_date(String.valueOf(presenter.movieContent.openingMovieDate), String.valueOf(presenter.movieContent.endingMoviesDate))}"
                         android:textSize="16sp" />
 
                     <TextView
@@ -67,6 +71,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="19dp"
+                        android:text="@{@string/running_time(presenter.movieContent.runningTime)}"
                         android:textSize="16sp" />
 
                     <TextView
@@ -74,6 +79,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="30dp"
+                        android:text="@{presenter.movieContent.synopsis}"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -105,7 +111,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:spinnerMode="dropdown"
-                    android:onItemSelected="@{(parent, view, position, id) -> presenter.selectDate(java.time.LocalDate.parse(String.valueOf(parent.getItemAtPosition(position))))}"/>
+                    android:onItemSelected="@{(parent, view, position, id) -> presenter.selectDate(java.time.LocalDate.parse(String.valueOf(parent.getItemAtPosition(position))))}"
+                    android:entries="@{presenter.movieContent.datesInRange}"/>
 
                 <View
                     android:layout_width="0dp"
@@ -117,7 +124,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onItemSelected="@{(parent, view, position, id) -> presenter.selectTime(java.time.LocalTime.parse(String.valueOf(parent.getItemAtPosition(position))))}"
-                    android:spinnerMode="dropdown" />
+                    android:spinnerMode="dropdown"
+                    android:entries="@{presenter.theater.screeningTimes}"/>
             </LinearLayout>
 
             <LinearLayout
