@@ -23,7 +23,7 @@ class SelectSeatPresenter(
         runCatching {
             repository.screenMovieById(movieId)
         }.onSuccess {
-            view.showMovieInfo(it.movie.title, PriceUiModel(it.theater.defaultPrice))
+            view.showMovieInfo(it.movie.title, PriceUiModel(ReserveSeats().totalPrice.price.toInt()))
         }
     }
 
@@ -42,6 +42,7 @@ class SelectSeatPresenter(
                 bookingInfoUiModel.localDateTime(),
                 bookingInfoUiModel.count.toHeadCount(),
                 ReserveSeats(selectedSeats.toSeats()),
+                0,
             )
         }.onSuccess {
             view.navigateToResult(it)

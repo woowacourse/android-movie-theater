@@ -1,6 +1,6 @@
 package woowacourse.movie.model
 
-class ReserveSeats(val seats: List<Seat>) {
+class ReserveSeats(val seats: List<Seat> = emptyList()) {
     val totalPrice = Price(seats.sumOf { it.price })
 
     init {

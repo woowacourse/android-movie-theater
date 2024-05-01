@@ -2,6 +2,7 @@ package woowacourse.movie.data
 
 import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.MovieReservation
+import woowacourse.movie.model.MovieTheater
 import woowacourse.movie.model.ReserveSeats
 import woowacourse.movie.model.ScreeningMovie
 import woowacourse.movie.repository.MovieRepository
@@ -15,8 +16,22 @@ object DummyMovies : MovieRepository {
             ScreeningMovie.STUB,
             ScreeningMovie.STUB,
         )
+
+    private val theaters: Map<Long, MovieTheater> =
+        mapOf(
+            0L to MovieTheater.STUB_A,
+            1L to MovieTheater.STUB_B,
+            2L to MovieTheater.STUB_C,
+        )
+
     private var reservations: List<MovieReservation> = emptyList()
     private var reservationId: Long = 0
+
+    override fun theaterById(id: Long): MovieTheater {
+        return theaters[id] ?: error(
+            IdError.NO_THEATER.message.format(id)
+        )
+    }
 
     override fun screenMovies(): List<ScreeningMovie> = screenMovies
 
@@ -27,18 +42,20 @@ object DummyMovies : MovieRepository {
     }
 
     override fun reserveMovie(
-        id: Long,
+        screenMovieId: Long,
         dateTime: LocalDateTime,
         count: HeadCount,
         seats: ReserveSeats,
+        theaterId: Long,
     ): Long {
         reservations +=
             MovieReservation(
                 id = ++reservationId,
-                screeningMovie = screenMovieById(id),
+                screeningMovie = screenMovieById(screenMovieId),
                 screenDateTime = dateTime,
                 headCount = count,
                 reserveSeats = seats,
+                theaterId = theaterId,
             )
         return reservationId
     }

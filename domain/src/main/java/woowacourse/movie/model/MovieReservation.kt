@@ -11,6 +11,7 @@ data class MovieReservation(
     val screenDateTime: LocalDateTime,
     val headCount: HeadCount,
     val cancelDeadLine: Duration = 15.minutes,
+    val theaterId: Long,
 ) {
     constructor(
         id: Long,
@@ -19,13 +20,15 @@ data class MovieReservation(
         reserveSeats: ReserveSeats,
         headCount: HeadCount,
         cancelDeadLine: Duration = 15.minutes,
+        theaterId: Long,
     ) : this(
         id,
         screeningMovie.movie,
         reserveSeats,
         screenDateTime,
-        headCount = headCount,
-        cancelDeadLine = cancelDeadLine,
+        headCount,
+        cancelDeadLine,
+        theaterId,
     )
 
     val totalPrice: Price get() = reserveSeats.totalPrice
