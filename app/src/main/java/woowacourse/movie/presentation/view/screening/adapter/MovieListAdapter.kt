@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.adapter
+package woowacourse.movie.presentation.view.screening.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,14 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import woowacourse.movie.R
 import woowacourse.movie.domain.admodel.Ad
-import woowacourse.movie.presentation.adapter.diffutil.MovieDiffCallback
-import woowacourse.movie.presentation.contract.MainContract
+import woowacourse.movie.presentation.view.screening.adapter.diffutil.MovieDiffCallback
+import woowacourse.movie.presentation.view.screening.ScreeningContract
 import woowacourse.movie.presentation.uimodel.MovieUiModel
 
 class MovieListAdapter(
     private var movieList: List<MovieUiModel>,
     private var adList: List<Ad>,
-    private val listener: MainContract.ViewActions,
+    private val listener: ScreeningContract.ViewActions,
 ) : RecyclerView.Adapter<ViewHolder>() {
     fun updateMovieList(newMovieList: List<MovieUiModel>) {
         val diffCallback = MovieDiffCallback(movieList, newMovieList)

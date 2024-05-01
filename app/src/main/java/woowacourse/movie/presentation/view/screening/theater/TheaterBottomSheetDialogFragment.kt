@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation
+package woowacourse.movie.presentation.view.screening.theater
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,10 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.Theater
-import woowacourse.movie.presentation.contract.TheaterBottomSheetContract
-import woowacourse.movie.presentation.presenter.TheaterBottomSheetPresenterImpl
-import woowacourse.movie.presentation.view.MainActivity.Companion.MOVIE_ID_KEY
-import woowacourse.movie.presentation.view.MainActivity.Companion.DEFAULT_MOVIE_ID
+import woowacourse.movie.presentation.view.screening.theater.adapter.TheaterAdapter
+import woowacourse.movie.presentation.view.screening.ScreeningActivity.Companion.MOVIE_ID_KEY
+import woowacourse.movie.presentation.view.screening.ScreeningActivity.Companion.DEFAULT_MOVIE_ID
 import woowacourse.movie.repository.TheaterRepositoryImpl
 
 class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(), TheaterBottomSheetContract.View {

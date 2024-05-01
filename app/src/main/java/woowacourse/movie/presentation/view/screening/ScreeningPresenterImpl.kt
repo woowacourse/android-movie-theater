@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.presenter
+package woowacourse.movie.presentation.view.screening
 
 import woowacourse.movie.data.repository.AdRepositoryImpl
 import woowacourse.movie.data.repository.MovieRepositoryImpl
@@ -6,19 +6,18 @@ import woowacourse.movie.domain.admodel.Ad
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.presentation.repository.AdRepository
 import woowacourse.movie.presentation.repository.MovieRepository
-import woowacourse.movie.presentation.contract.MainContract
 import woowacourse.movie.presentation.uimodel.MovieUiModel
 
-class MainPresenterImpl(
+class ScreeningPresenterImpl(
     private val movieRepository: MovieRepository = MovieRepositoryImpl,
     private val adRepository: AdRepository = AdRepositoryImpl,
 ) :
-    MainContract.Presenter {
-    private var view: MainContract.View? = null
+    ScreeningContract.Presenter {
+    private var view: ScreeningContract.View? = null
     private lateinit var movies: List<Movie>
     private lateinit var ads: List<Ad>
 
-    override fun attachView(view: MainContract.View) {
+    override fun attachView(view: ScreeningContract.View) {
         this.view = view
         onViewSetUp()
     }

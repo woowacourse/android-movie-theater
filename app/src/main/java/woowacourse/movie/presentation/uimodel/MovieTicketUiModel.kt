@@ -3,9 +3,9 @@ package woowacourse.movie.presentation.uimodel
 import android.os.Parcel
 import android.os.Parcelable
 import woowacourse.movie.domain.model.reservation.MovieTicket
-import woowacourse.movie.presentation.view.SeatSelectionActivity.Companion.SEAT_COL_START_VALUE
-import woowacourse.movie.presentation.view.SeatSelectionActivity.Companion.SEAT_POSITION_TEXT_FORMAT
-import woowacourse.movie.presentation.view.SeatSelectionActivity.Companion.SEAT_ROW_START_VALUE
+import woowacourse.movie.presentation.view.reservation.seat.SeatSelectionActivity.Companion.SEAT_COL_START_VALUE
+import woowacourse.movie.presentation.view.reservation.seat.SeatSelectionActivity.Companion.SEAT_POSITION_TEXT_FORMAT
+import woowacourse.movie.presentation.view.reservation.seat.SeatSelectionActivity.Companion.SEAT_ROW_START_VALUE
 import java.time.format.DateTimeFormatter
 
 data class MovieTicketUiModel(

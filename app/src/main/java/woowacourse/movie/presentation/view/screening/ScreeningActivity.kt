@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.view
+package woowacourse.movie.presentation.view.screening
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,22 +7,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.domain.admodel.Ad
-import woowacourse.movie.presentation.TheaterBottomSheetDialogFragment
-import woowacourse.movie.presentation.adapter.MovieListAdapter
+import woowacourse.movie.presentation.view.screening.adapter.MovieListAdapter
 import woowacourse.movie.presentation.base.BaseActivity
-import woowacourse.movie.presentation.contract.MainContract
-import woowacourse.movie.presentation.presenter.MainPresenterImpl
 import woowacourse.movie.presentation.uimodel.MovieUiModel
+import woowacourse.movie.presentation.view.reservation.detail.MovieDetailActivity
+import woowacourse.movie.presentation.view.screening.theater.TheaterBottomSheetDialogFragment
 
-class MainActivity : BaseActivity(), MainContract.View, MainContract.ViewActions {
+class ScreeningActivity : BaseActivity(), ScreeningContract.View, ScreeningContract.ViewActions {
     private lateinit var adapter: MovieListAdapter
-    private lateinit var presenter: MainContract.Presenter
+    private lateinit var presenter: ScreeningContract.Presenter
 
-    override fun getLayoutResId(): Int = R.layout.activity_main
+    override fun getLayoutResId(): Int = R.layout.activity_screening
 
     override fun onCreateSetup(savedInstanceState: Bundle?) {
         adapter = MovieListAdapter(emptyList(), emptyList(), this)
-        presenter = MainPresenterImpl()
+        presenter = ScreeningPresenterImpl()
         presenter.attachView(this)
         showMovieList()
     }

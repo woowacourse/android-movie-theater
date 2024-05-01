@@ -10,11 +10,12 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
+import woowacourse.movie.presentation.view.screening.ScreeningActivity
 
 @RunWith(AndroidJUnit4::class)
-class MainActivityTest {
+class ScreeningActivityTest {
     @get:Rule
-    val activityRule = ActivityScenarioRule(MainActivity::class.java)
+    val activityRule = ActivityScenarioRule(ScreeningActivity::class.java)
 
     @Test
     fun `영화_목록이_화면에_표시된다`() {

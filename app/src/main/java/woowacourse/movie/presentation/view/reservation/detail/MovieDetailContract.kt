@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.contract
+package woowacourse.movie.presentation.view.reservation.detail
 
 import woowacourse.movie.presentation.uimodel.MovieUiModel
 

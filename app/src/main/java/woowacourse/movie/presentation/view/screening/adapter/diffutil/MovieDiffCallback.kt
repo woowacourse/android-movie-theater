@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.adapter.diffutil
+package woowacourse.movie.presentation.view.screening.adapter.diffutil
 
 import androidx.recyclerview.widget.DiffUtil
 import woowacourse.movie.presentation.uimodel.MovieUiModel

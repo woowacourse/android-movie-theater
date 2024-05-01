@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.view
+package woowacourse.movie.presentation.view.reservation.seat
 
 import android.app.Dialog
 import android.content.Intent
@@ -14,9 +14,8 @@ import android.widget.TextView
 import android.widget.Toast
 import woowacourse.movie.R
 import woowacourse.movie.presentation.base.BaseActivity
-import woowacourse.movie.presentation.contract.SeatSelectionContract
-import woowacourse.movie.presentation.presenter.SeatSelectionPresenterImpl
 import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
+import woowacourse.movie.presentation.view.reservation.result.ReservationResultActivity
 
 class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View {
     private lateinit var seatSelectionPresenter: SeatSelectionContract.Presenter

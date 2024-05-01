@@ -1,11 +1,11 @@
-package woowacourse.movie.presentation.presenter
+package woowacourse.movie.presentation.view.reservation.seat
 
 import woowacourse.movie.data.repository.ReservationMovieInfoRepositoryImpl
 import woowacourse.movie.data.repository.SeatRepositoryImpl
 import woowacourse.movie.domain.model.reservation.MovieTicket
 import woowacourse.movie.domain.model.reservation.ReservationInfo
 import woowacourse.movie.presentation.repository.SeatRepository
-import woowacourse.movie.presentation.contract.SeatSelectionContract
+import woowacourse.movie.presentation.view.reservation.seat.SeatSelectionContract
 import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
 
 class SeatSelectionPresenterImpl(

@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.contract
+package woowacourse.movie.presentation.view.screening.theater
 
 import woowacourse.movie.domain.model.Theater
 

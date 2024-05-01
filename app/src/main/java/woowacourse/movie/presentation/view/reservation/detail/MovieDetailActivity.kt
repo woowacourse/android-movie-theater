@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.view
+package woowacourse.movie.presentation.view.reservation.detail
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,9 +11,8 @@ import android.widget.Spinner
 import android.widget.TextView
 import woowacourse.movie.R
 import woowacourse.movie.presentation.base.BaseActivity
-import woowacourse.movie.presentation.contract.MovieDetailContract
-import woowacourse.movie.presentation.presenter.MovieDetailPresenterImpl
 import woowacourse.movie.presentation.uimodel.MovieUiModel
+import woowacourse.movie.presentation.view.reservation.seat.SeatSelectionActivity
 
 class MovieDetailActivity : BaseActivity(), MovieDetailContract.View {
     private lateinit var movieDetailPresenter: MovieDetailContract.Presenter

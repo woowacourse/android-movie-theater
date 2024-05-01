@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.presenter
+package woowacourse.movie.presentation.view.reservation.detail
 
 import woowacourse.movie.data.repository.MovieRepositoryImpl
 import woowacourse.movie.data.repository.ReservationMovieInfoRepositoryImpl
@@ -7,7 +7,6 @@ import woowacourse.movie.domain.model.reservation.ReservationCount
 import woowacourse.movie.domain.model.reservation.ReservationMovieInfo
 import woowacourse.movie.presentation.repository.MovieRepository
 import woowacourse.movie.presentation.repository.ReservationMovieInfoRepository
-import woowacourse.movie.presentation.contract.MovieDetailContract
 import woowacourse.movie.presentation.uimodel.MovieUiModel
 import java.time.LocalDate
 import java.time.LocalTime

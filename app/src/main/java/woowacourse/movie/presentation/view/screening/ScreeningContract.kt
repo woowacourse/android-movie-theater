@@ -1,9 +1,9 @@
-package woowacourse.movie.presentation.contract
+package woowacourse.movie.presentation.view.screening
 
 import woowacourse.movie.domain.admodel.Ad
 import woowacourse.movie.presentation.uimodel.MovieUiModel
 
-interface MainContract {
+interface ScreeningContract {
     interface View {
         fun onUpdateMovies(movies: List<MovieUiModel>)
 

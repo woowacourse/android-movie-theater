@@ -1,6 +1,5 @@
-package woowacourse.movie.presentation.presenter
+package woowacourse.movie.presentation.view.screening.theater
 
-import woowacourse.movie.presentation.contract.TheaterBottomSheetContract
 import woowacourse.movie.presentation.repository.TheaterRepository
 import woowacourse.movie.repository.TheaterRepositoryImpl
 

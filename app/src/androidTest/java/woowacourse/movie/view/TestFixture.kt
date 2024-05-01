@@ -3,6 +3,8 @@ package woowacourse.movie.presentation.view
 import android.content.Context
 import android.content.Intent
 import woowacourse.movie.R
+import woowacourse.movie.presentation.view.reservation.detail.MovieDetailActivity
+import woowacourse.movie.presentation.view.reservation.result.ReservationResultActivity
 
 val posterImageId = R.drawable.harrypotter_poster
 const val TITLE = "title"
