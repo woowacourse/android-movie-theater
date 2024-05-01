@@ -4,6 +4,10 @@ import android.view.View
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.os.bundleOf
+import androidx.fragment.app.testing.FragmentScenario
+import androidx.fragment.app.testing.launchFragment
+import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -12,7 +16,6 @@ import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import org.hamcrest.Description
 import org.hamcrest.TypeSafeMatcher
 import org.hamcrest.core.IsInstanceOf.instanceOf
@@ -29,13 +32,14 @@ import woowacourse.movie.screeningmovie.ScreeningMovieFragment
 import woowacourse.movie.screeningmovie.toScreenItems
 
 class ScreeningMovieFragmentTest {
-    @get:Rule
-    val activityRule = ActivityScenarioRule(ScreeningMovieFragment::class.java)
+
+    private lateinit var fragmentScenario: FragmentScenario<ScreeningMovieFragment>
 
     @Before
     fun setUp() {
-        activityRule.scenario.onActivity { activity ->
-            val listView = activity.findViewById<RecyclerView>(R.id.rcv_screening_movie)
+        fragmentScenario = launchFragmentInContainer<ScreeningMovieFragment>()
+        fragmentScenario.onFragment() { fragment ->
+            val listView = fragment.requireView().findViewById<RecyclerView>(R.id.rcv_screening_movie)
 
             val items =
                 Movies(

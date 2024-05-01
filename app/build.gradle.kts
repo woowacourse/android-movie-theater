@@ -73,4 +73,5 @@ dependencies {
     androidTestImplementation("de.mannodermaus.junit5:android-test-core:1.3.0")
     androidTestRuntimeOnly("de.mannodermaus.junit5:android-test-runner:1.3.0")
     testImplementation("io.mockk:mockk:1.13.10")
+    debugImplementation("androidx.fragment:fragment-testing:1.6.2")
 }
