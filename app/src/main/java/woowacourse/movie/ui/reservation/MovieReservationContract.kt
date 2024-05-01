@@ -20,7 +20,10 @@ interface MovieReservationContract {
     }
 
     interface Presenter {
-        fun loadMovieContent(movieContentId: Long)
+        fun loadMovieContent(
+            movieContentId: Long,
+            theaterId: Long,
+        )
 
         fun updateReservationCount(count: Int = ReservationCount.DEFAULT_VALUE)
 
