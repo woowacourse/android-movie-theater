@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:movie="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
-            name="activity"
-            type="woowacourse.movie.result.view.MovieResultActivity" />
+            name="result_text"
+            type="String" />
+        <variable
+            name="movie_ticket"
+            type="woowacourse.movie.model.MovieTicket" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -36,7 +40,7 @@
             android:layout_marginTop="25dp"
             android:gravity="center"
             android:hint="해리포터와 마법사의 돌"
-            android:text="@{activity.resultTitle}"
+            android:text="@{movie_ticket.title}"
             android:textColor="@color/black"
             android:textSize="25dp"
             android:textStyle="bold"
@@ -51,7 +55,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginRight="10dp"
             android:hint="2024.3.1"
-            android:text="@{activity.resultDate}"
+            android:text="@{movie_ticket.date.toString()}"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold"
@@ -67,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:hint="17:00"
-            android:text="@{activity.resultTime}"
+            android:text="@{movie_ticket.time.toString()}"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold"
@@ -85,7 +89,7 @@
             android:gravity="center"
             android:hint="일반 2명 | B3, D2 | 선릉 극장"
             android:maxLines="1"
-            android:text="@{activity.result}"
+            android:text="@{result_text}"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
             android:textSize="20dp"
@@ -98,7 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="@{activity.resultPrice}"
+            movie:movieTicketPrice="@{movie_ticket}"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
             android:textSize="20dp"

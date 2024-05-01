@@ -6,13 +6,12 @@ import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import woowacourse.movie.MovieMainActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieResultBinding
-import woowacourse.movie.MovieMainActivity
 import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.result.presenter.MovieResultPresenter
 import woowacourse.movie.result.presenter.contract.MovieResultContract
-import woowacourse.movie.util.Formatter.formatPrice
 import woowacourse.movie.util.Formatter.formatRow
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_DATE
@@ -28,12 +27,6 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
 
 class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
-    var resultTitle: String = ""
-    var resultDate: String = ""
-    var resultTime: String = ""
-    var result: String = ""
-    var resultPrice: String = ""
-
     private lateinit var movieResultPresenter: MovieResultPresenter
 
     private lateinit var binding: ActivityMovieResultBinding
@@ -41,7 +34,6 @@ class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_result)
-        binding.activity = this
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setUpBackButton()
 
@@ -63,21 +55,18 @@ class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
 
     override fun displayMovieTicket(movieTicketData: MovieTicket?) {
         movieTicketData?.let { movieTicket ->
-            resultTitle = movieTicket.title
-            resultDate = movieTicket.date.toString()
-            resultTime = movieTicket.time.toString()
+            binding.movieTicket = movieTicket
             val seats =
                 movieTicket.seats.selectedSeats.joinToString(", ") { seat ->
                     getString(R.string.seat, formatRow(seat.row), seat.column.toString())
                 }
-            result =
+            binding.resultText =
                 resources.getString(
                     R.string.result,
                     movieTicket.seats.count,
                     seats,
                     movieTicket.theaterName,
                 )
-            resultPrice = formatPrice(movieTicket.seats.totalPrice())
         }
     }
 

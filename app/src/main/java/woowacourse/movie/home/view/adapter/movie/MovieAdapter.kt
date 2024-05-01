@@ -6,11 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import woowacourse.movie.databinding.ItemAdvertisementBinding
 import woowacourse.movie.databinding.ItemMovieBinding
+import woowacourse.movie.home.view.listener.ReservationButtonClickListener
 import woowacourse.movie.model.Movie
 
 class MovieAdapter(
     private val movies: List<Movie>,
-    private val onReservationButtonClick: (Long) -> Unit,
+    private val onReservationButtonClick: ReservationButtonClickListener,
 ) : RecyclerView.Adapter<ViewHolder>() {
     override fun getItemViewType(position: Int): Int {
         if ((position + 1) % ADVERTISEMENT_PER_INDEX == 0) return ADVERTISEMENT_VIEW_TYPE
