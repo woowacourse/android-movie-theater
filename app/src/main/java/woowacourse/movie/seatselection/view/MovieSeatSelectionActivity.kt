@@ -76,6 +76,9 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        val count = seatSelectionPresenter.movieSelectedSeats.count
+        outState.putInt(KEY_MOVIE_COUNT, count)
+
         val selectedPositions = seatSelectionPresenter.movieSelectedSeats.getSelectedPositions()
         outState.putIntArray(KEY_SELECTED_SEAT_POSITIONS, selectedPositions)
     }
