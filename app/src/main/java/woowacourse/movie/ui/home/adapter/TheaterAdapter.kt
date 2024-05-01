@@ -10,6 +10,7 @@ import woowacourse.movie.model.movie.Theater
 
 class TheaterAdapter(
     private val theaters: List<Theater>,
+    private val theaterItemClickListener: TheaterItemClickListener,
 ) : RecyclerView.Adapter<TheaterAdapter.TheaterViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -23,7 +24,7 @@ class TheaterAdapter(
                 false,
             )
 
-        return TheaterViewHolder(binding)
+        return TheaterViewHolder(binding, theaterItemClickListener)
     }
 
     override fun onBindViewHolder(
@@ -35,19 +36,17 @@ class TheaterAdapter(
 
     override fun getItemCount(): Int = theaters.size
 
-    class TheaterViewHolder(private val binding: ItemTheaterBinding) :
+    class TheaterViewHolder(private val binding: ItemTheaterBinding, private val theaterItemClickListener: TheaterItemClickListener) :
         RecyclerView.ViewHolder(binding.root) {
-        private val context = binding.root.context
-
         fun bind(theater: Theater) {
             binding.theater = theater
+            binding.root.setOnClickListener {
+                theaterItemClickListener.onTheaterItemClick(theater.id)
+            }
         }
     }
 
     interface TheaterItemClickListener {
-        fun onTheaterItemClick(
-            movieContentId: Long,
-            theaterId: Long,
-        )
+        fun onTheaterItemClick(theaterId: Long)
     }
 }

@@ -31,7 +31,7 @@ class MovieReservationActivityTest {
             ApplicationProvider.getApplicationContext(),
             MovieReservationActivity::class.java,
         ).run {
-            putExtra(MovieReservationKey.ID, 0L)
+            putExtra(MovieReservationKey.MOVIE_CONTENT_ID, 0L)
         }
 
     @get:Rule

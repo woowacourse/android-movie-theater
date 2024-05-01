@@ -15,7 +15,7 @@ class TheaterSelectionPresenter(
             runCatching {
                 movieContents.find(movieContentId)
             }.onFailure {
-                view.showError(it)
+                view.dismissDialog()
             }.getOrThrow()
         view.showTheaters(movieContent.theaters)
     }

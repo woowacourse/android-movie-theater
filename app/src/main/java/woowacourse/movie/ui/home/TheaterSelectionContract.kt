@@ -1,16 +1,17 @@
 package woowacourse.movie.ui.home
 
 import woowacourse.movie.model.movie.Theater
-import woowacourse.movie.ui.HandleError
 
 interface TheaterSelectionContract {
-    interface View : HandleError {
+    interface View {
         fun showTheaters(theaters: List<Theater>)
 
         fun navigateToMovieReservation(
             movieContentId: Long,
             theaterId: Long,
         )
+
+        fun dismissDialog()
     }
 
     interface Presenter {

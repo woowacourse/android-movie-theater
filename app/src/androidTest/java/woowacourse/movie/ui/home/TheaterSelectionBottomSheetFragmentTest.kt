@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.home
 
+import androidx.core.os.bundleOf
 import androidx.fragment.app.testing.launchFragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Test
@@ -10,7 +11,8 @@ import org.junit.runner.RunWith
 class TheaterSelectionBottomSheetFragmentTest {
     @Test
     fun `극장을_선택할_수_있는_다이얼로그가_표시된다`() {
-        val scenario = launchFragment<TheaterSelectionBottomSheetFragment>()
+        val fragmentArgs = bundleOf("movie_content_id" to 0L)
+        val scenario = launchFragment<TheaterSelectionBottomSheetFragment>(fragmentArgs)
         scenario.onFragment {
             assertEquals(it.dialog?.isShowing, true)
         }

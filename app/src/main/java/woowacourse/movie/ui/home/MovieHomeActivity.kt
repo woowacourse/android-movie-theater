@@ -25,7 +25,7 @@ class MovieHomeActivity : BaseActivity<MovieHomeContract.Presenter>(), MovieHome
             MovieContentAdapter(movieContents) { view, id ->
                 val fragment = TheaterSelectionBottomSheetFragment()
                 val bundle = Bundle()
-                bundle.putLong(MovieHomeKey.ID, id)
+                bundle.putLong(MovieHomeKey.MOVIE_CONTENT_ID, id)
                 fragment.arguments = bundle
                 fragment.show(
                     supportFragmentManager.apply {

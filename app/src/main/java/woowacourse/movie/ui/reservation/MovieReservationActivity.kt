@@ -42,8 +42,9 @@ class MovieReservationActivity :
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_reservation)
 
+        val theaterId = theaterId()
         val movieContentId = movieContentId()
-        if (movieContentId == DEFAULT_VALUE) {
+        if (movieContentId == DEFAULT_VALUE || theaterId == DEFAULT_VALUE) {
             presenter.handleError(NoSuchElementException())
             return
         }
@@ -110,7 +111,9 @@ class MovieReservationActivity :
 
     override fun initializePresenter() = MovieReservationPresenter(this, MovieContentsImpl, UserTicketsImpl)
 
-    private fun movieContentId() = intent.getLongExtra(MovieReservationKey.ID, DEFAULT_VALUE)
+    private fun theaterId() = intent.getLongExtra(MovieReservationKey.THEATER_ID, DEFAULT_VALUE)
+
+    private fun movieContentId() = intent.getLongExtra(MovieReservationKey.MOVIE_CONTENT_ID, DEFAULT_VALUE)
 
     override fun showError(throwable: Throwable) {
         Log.e(TAG, throwable.message.toString())
