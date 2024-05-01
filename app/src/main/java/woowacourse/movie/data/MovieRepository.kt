@@ -22,7 +22,7 @@ object MovieRepository {
                 theaters =
                     listOf(
                         Theater(
-                            "선릉선릉선릉선릉선릉선릉선릉선릉선릉선릉선릉선릉선릉선릉",
+                            "선릉",
                             listOf(LocalTime.of(10, 0), LocalTime.of(14, 0), LocalTime.of(18, 0)),
                         ),
                         Theater(
