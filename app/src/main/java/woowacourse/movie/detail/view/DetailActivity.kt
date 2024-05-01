@@ -1,4 +1,4 @@
-package woowacourse.movie.reservation.view
+package woowacourse.movie.detail.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,18 +12,18 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
+import woowacourse.movie.detail.contract.DetailContract
+import woowacourse.movie.detail.model.Count
+import woowacourse.movie.detail.presenter.DetailPresenter
 import woowacourse.movie.list.model.Movie
 import woowacourse.movie.list.view.HomeFragment.Companion.EXTRA_MOVIE_ID_KEY
 import woowacourse.movie.list.view.TheaterFragment.Companion.EXTRA_THEATER_ID_KEY
-import woowacourse.movie.reservation.contract.MovieReservationContract
-import woowacourse.movie.reservation.model.Count
-import woowacourse.movie.reservation.presenter.MovieReservationPresenter
 import woowacourse.movie.seats.view.SeatsActivity
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
-class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.View {
+class DetailActivity : AppCompatActivity(), DetailContract.View {
     private lateinit var titleView: TextView
     private lateinit var screeningDateView: TextView
     private lateinit var runningTimeView: TextView
@@ -40,7 +40,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
     lateinit var selectedTime: LocalTime
     private var movieId: Long = -1
     private var theaterId: Long = -1
-    override val presenter = MovieReservationPresenter(this@MovieReservationActivity)
+    override val presenter = DetailPresenter(this@DetailActivity)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

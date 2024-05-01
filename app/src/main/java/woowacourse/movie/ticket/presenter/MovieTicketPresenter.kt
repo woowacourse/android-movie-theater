@@ -1,7 +1,7 @@
 package woowacourse.movie.ticket.presenter
 
 import woowacourse.movie.common.MovieDataSource
-import woowacourse.movie.reservation.model.Count
+import woowacourse.movie.detail.model.Count
 import woowacourse.movie.seats.model.Seat
 import woowacourse.movie.ticket.contract.MovieTicketContract
 import woowacourse.movie.ticket.model.TicketDataResource

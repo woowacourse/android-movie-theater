@@ -1,6 +1,6 @@
-package woowacourse.movie.reservation.model
+package woowacourse.movie.detail.model
 
-object MovieReservationTicketCountData {
+object DetailTicketCountData {
     private const val MIN_TICKET_COUNT = 1
 
     var ticketCount = Count(MIN_TICKET_COUNT)

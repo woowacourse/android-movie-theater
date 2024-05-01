@@ -1,10 +1,10 @@
-package woowacourse.movie.reservation.model
+package woowacourse.movie.detail.model
 
 import woowacourse.movie.common.MovieDataSource
 import java.time.LocalDate
 import java.time.LocalTime
 
-object MovieReservationDataResource {
+object DetailDataResource {
     var movieId: Long = 0
 
     var theaterId: Long = 0

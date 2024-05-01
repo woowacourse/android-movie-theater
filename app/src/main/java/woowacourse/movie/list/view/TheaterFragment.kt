@@ -9,10 +9,10 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.FragmentTheaterBinding
+import woowacourse.movie.detail.view.DetailActivity
 import woowacourse.movie.list.adapter.TheaterAdapter
 import woowacourse.movie.list.model.TheaterData.theaters
 import woowacourse.movie.list.view.HomeFragment.Companion.EXTRA_MOVIE_ID_KEY_TO_FRAGMENT
-import woowacourse.movie.reservation.view.MovieReservationActivity
 
 class TheaterFragment : DialogFragment() {
     private lateinit var binding: FragmentTheaterBinding
@@ -39,7 +39,7 @@ class TheaterFragment : DialogFragment() {
                     movieId: Long,
                     theaterId: Long,
                 ) {
-                    val intent = Intent(activity, MovieReservationActivity::class.java)
+                    val intent = Intent(activity, DetailActivity::class.java)
                     intent.putExtra("movie_id_key", movieId)
                     intent.putExtra("theater_id_key", theaterId)
                     startActivity(intent)

@@ -13,12 +13,12 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.reservation.view.MovieReservationActivity
+import woowacourse.movie.detail.view.DetailActivity
 
 @RunWith(AndroidJUnit4::class)
 class MovieReservationTest {
     @get:Rule
-    val activityRule: ActivityScenarioRule<MovieReservationActivity> = ActivityScenarioRule(MovieReservationActivity::class.java)
+    val activityRule: ActivityScenarioRule<DetailActivity> = ActivityScenarioRule(DetailActivity::class.java)
 
     @Before
     fun setUp() {

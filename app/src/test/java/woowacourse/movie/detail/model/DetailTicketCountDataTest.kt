@@ -1,4 +1,4 @@
-package woowacourse.movie.reservation.model
+package woowacourse.movie.detail.model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.lang.IllegalArgumentException
 
-class MovieReservationTicketCountDataTest {
-    private lateinit var movieReservationTicketCountData: MovieReservationTicketCountData
+class DetailTicketCountDataTest {
+    private lateinit var movieReservationTicketCountData: DetailTicketCountData
 
     @BeforeEach
     fun setup() {
-        movieReservationTicketCountData = MovieReservationTicketCountData
+        movieReservationTicketCountData = DetailTicketCountData
     }
 
     @AfterEach

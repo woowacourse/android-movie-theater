@@ -1,6 +1,6 @@
 package woowacourse.movie.ticket.contract
 
-import woowacourse.movie.reservation.model.Count
+import woowacourse.movie.detail.model.Count
 import woowacourse.movie.seats.model.Seat
 
 interface MovieTicketContract {

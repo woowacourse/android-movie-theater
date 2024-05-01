@@ -1,14 +1,14 @@
-package woowacourse.movie.reservation.contract
+package woowacourse.movie.detail.contract
 
+import woowacourse.movie.detail.model.Count
+import woowacourse.movie.detail.presenter.DetailPresenter
 import woowacourse.movie.list.model.Movie
-import woowacourse.movie.reservation.model.Count
-import woowacourse.movie.reservation.presenter.MovieReservationPresenter
 import java.time.LocalDate
 import java.time.LocalTime
 
-interface MovieReservationContract {
+interface DetailContract {
     interface View {
-        val presenter: MovieReservationPresenter
+        val presenter: DetailPresenter
 
         fun showCurrentResultTicketCountView(info: Int)
 

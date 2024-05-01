@@ -21,7 +21,7 @@
 
         </activity>
         <activity
-            android:name=".reservation.view.MovieReservationActivity"
+            android:name=".detail.view.DetailActivity"
             android:exported="false" />
         <activity
             android:name=".ticket.view.MovieTicketActivity"

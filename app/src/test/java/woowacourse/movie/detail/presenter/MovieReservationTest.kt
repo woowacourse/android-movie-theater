@@ -1,4 +1,4 @@
-package woowacourse.movie.reservation.presenter
+package woowacourse.movie.detail.presenter
 
 import io.mockk.every
 import io.mockk.just
@@ -7,17 +7,17 @@ import io.mockk.runs
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.reservation.contract.MovieReservationContract
-import woowacourse.movie.reservation.model.Count
+import woowacourse.movie.detail.contract.DetailContract
+import woowacourse.movie.detail.model.Count
 
 class MovieReservationTest {
-    private lateinit var view: MovieReservationContract.View
-    private lateinit var presenter: MovieReservationContract.Presenter
+    private lateinit var view: DetailContract.View
+    private lateinit var presenter: DetailContract.Presenter
 
     @BeforeEach
     fun setUp() {
-        view = mockk<MovieReservationContract.View>()
-        presenter = MovieReservationPresenter(view)
+        view = mockk<DetailContract.View>()
+        presenter = DetailPresenter(view)
     }
 
     @Test
