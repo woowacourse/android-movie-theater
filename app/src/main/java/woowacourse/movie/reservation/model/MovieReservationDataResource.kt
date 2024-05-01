@@ -4,8 +4,10 @@ import woowacourse.movie.common.MovieDataSource
 import java.time.LocalDate
 import java.time.LocalTime
 
-object DataResource {
+object MovieReservationDataResource {
     var movieId: Long = 0
+
+    var theaterId: Long = 0
 
     private val firstScreeningDate
         get() = MovieDataSource.movieList[movieId.toInt()].firstScreeningDate
