@@ -5,17 +5,17 @@ import woowacourse.movie.repository.MovieRepository
 class TheaterPresenter(
     private val repository: MovieRepository,
     private val view: TheaterContract.View
-): TheaterContract.Presenter {
+) : TheaterContract.Presenter {
     override fun loadTheaters(movieId: Long) {
-        runCatching {
-            repository.screenMovieById(movieId)
-        }.onSuccess { screeningMovie ->
-            /*val theaters = screeningMovie.theaters
-            view.showTheaters(th)*/
+        val theaters = repository.theatersByMovieId(movieId)
+        val uiModels = theaters.map { theater ->
+            val screeningMovie = repository.screenMovieById(movieId, theater.id)
+
+            screeningMovie.theater.toTheaterUiModel(screeningMovie.totalScreeningTimesNum())
         }
+        view.showTheaters(uiModels)
     }
 
-    override fun selectTheater() {
-        TODO("Not yet implemented")
+    override fun selectTheater(movieId: Long, theaterId: Long) {
     }
 }

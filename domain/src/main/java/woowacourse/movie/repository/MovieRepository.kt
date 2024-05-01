@@ -12,7 +12,9 @@ interface MovieRepository {
 
     fun screenMovieById(id: Long): ScreeningMovie
 
-    fun screenMoviesById(movieId: Long, theaterId: Long): List<ScreeningMovie>
+    fun screenMovieById(movieId: Long, theaterId: Long): ScreeningMovie
+
+    fun theatersByMovieId(movieId: Long): List<MovieTheater>
 
     fun theaterById(id: Long): MovieTheater
 

@@ -12,7 +12,7 @@ interface TheaterContract {
 
         fun loadTheaters(movieId:Long)
 
-        fun selectTheater()
+        fun selectTheater(movieId: Long, theaterId: Long)
     }
 
 }
