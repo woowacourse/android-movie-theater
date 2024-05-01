@@ -22,7 +22,7 @@
             android:name=".selectseat.SelectSeatActivity"
             android:exported="false" />
         <activity
-            android:name=".screeningmovie.ScreeningMovieActivity"
+            android:name=".screeningmovie.ScreeningMovieFragment"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -22,16 +22,15 @@ import org.junit.Test
 import org.junit.jupiter.api.DisplayName
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.Movies
-import woowacourse.movie.model.ScreeningMovie
 import woowacourse.movie.screeningmovie.AdvertiseViewHolder
 import woowacourse.movie.screeningmovie.MovieAdapter
 import woowacourse.movie.screeningmovie.ScreenMovieUiModel
-import woowacourse.movie.screeningmovie.ScreeningMovieActivity
+import woowacourse.movie.screeningmovie.ScreeningMovieFragment
 import woowacourse.movie.screeningmovie.toScreenItems
 
-class ScreeningMovieActivityTest {
+class ScreeningMovieFragmentTest {
     @get:Rule
-    val activityRule = ActivityScenarioRule(ScreeningMovieActivity::class.java)
+    val activityRule = ActivityScenarioRule(ScreeningMovieFragment::class.java)
 
     @Before
     fun setUp() {
