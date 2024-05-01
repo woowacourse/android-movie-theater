@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.movieList.fragment
+package woowacourse.movie.presentation.homefragments.movieList.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.model.Theater
-import woowacourse.movie.presentation.movieList.adapter.TheaterAdapter
-import woowacourse.movie.presentation.movieList.listener.TheaterClickListener
+import woowacourse.movie.presentation.homefragments.movieList.adapter.TheaterAdapter
+import woowacourse.movie.presentation.homefragments.movieList.listener.TheaterClickListener
 import woowacourse.movie.presentation.ticketing.TicketingActivity
 import woowacourse.movie.repository.TheaterListRepository
 

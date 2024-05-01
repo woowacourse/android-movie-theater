@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.movieList
+package woowacourse.movie.presentation.homefragments.movieList
 
 import woowacourse.movie.model.Movie
 

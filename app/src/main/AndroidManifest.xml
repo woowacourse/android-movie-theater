@@ -24,7 +24,7 @@
             android:name=".presentation.ticketing.TicketingActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.movieList.MovieListActivity"
+            android:name=".presentation.home.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

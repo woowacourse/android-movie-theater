@@ -73,4 +73,5 @@ dependencies {
     testImplementation("io.mockk:mockk-agent:1.13.10")
     androidTestImplementation("io.mockk:mockk-android:1.13.10")
     androidTestImplementation("io.mockk:mockk-agent:1.13.10")
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
 }

@@ -4,7 +4,7 @@
     <data>
         <variable
             name="listener"
-            type="woowacourse.movie.presentation.movieList.listener.TheaterClickListener" />
+            type="woowacourse.movie.presentation.homefragments.movieList.listener.TheaterClickListener" />
 
         <variable
             name="theater"

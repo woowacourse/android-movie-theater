@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.movieList.fragment
+package woowacourse.movie.presentation.homefragments.movieList.fragment
 
 import woowacourse.movie.repository.TheaterListRepository
 

@@ -1,12 +1,12 @@
-package woowacourse.movie.presentation.movieList.adapter
+package woowacourse.movie.presentation.homefragments.movieList.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemTheaterBinding
 import woowacourse.movie.model.Theater
-import woowacourse.movie.presentation.movieList.listener.TheaterClickListener
-import woowacourse.movie.presentation.movieList.viewholder.TheaterViewHolder
+import woowacourse.movie.presentation.homefragments.movieList.listener.TheaterClickListener
+import woowacourse.movie.presentation.homefragments.movieList.viewholder.TheaterViewHolder
 
 class TheaterAdapter(
     private val theaters: List<Theater>,

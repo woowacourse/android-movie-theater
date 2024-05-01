@@ -9,11 +9,11 @@ import org.hamcrest.Matchers.`is`
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.model.Movie
-import woowacourse.movie.presentation.movieList.MovieListActivity
+import woowacourse.movie.presentation.home.HomeActivity
 
-class MovieListActivityTest {
+class HomeActivityTest {
     @get:Rule
-    val activityRule = ActivityScenarioRule(MovieListActivity::class.java)
+    val activityRule = ActivityScenarioRule(HomeActivity::class.java)
 
     @Test
     fun `예매_가능한_영화리스트를_보여준다`() {
