@@ -45,6 +45,10 @@ object DummyMovies : MovieRepository {
             it.movie.id == movieId
         }.map { it.theater }
 
+    override fun theaterById(theaterId: Long): MovieTheater =
+        theaters.firstOrNull { it.id == theaterId } ?: error("id에 해당하는 극장이 없습니다.")
+
+
     override fun reserveMovie(
         screenMovieId: Long,
         dateTime: LocalDateTime,

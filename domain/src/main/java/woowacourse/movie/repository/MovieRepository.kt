@@ -20,6 +20,8 @@ interface MovieRepository {
 
     fun theatersByMovieId(movieId: Long): List<MovieTheater>
 
+    fun theaterById(theaterId: Long): MovieTheater
+
     fun reserveMovie(
         screenMovieId: Long,
         dateTime: LocalDateTime,
