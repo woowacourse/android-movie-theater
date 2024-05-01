@@ -3,7 +3,7 @@ package woowacourse.movie.presentation.ui.screen.bottom
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.HolderTheaterBinding
 import woowacourse.movie.domain.model.TheaterCount
 
 class BottomTheatersAdapter(
@@ -15,11 +15,9 @@ class BottomTheatersAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): BottomTheatersViewHolder {
-        return BottomTheatersViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.holder_theater, parent, false),
-            actionHandler,
-            movieId,
-        )
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = HolderTheaterBinding.inflate(inflater, parent, false)
+        return BottomTheatersViewHolder(binding, actionHandler, movieId)
     }
 
     override fun getItemCount(): Int = theaterCounts.size
