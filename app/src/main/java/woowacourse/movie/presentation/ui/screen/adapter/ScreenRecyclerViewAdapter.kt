@@ -4,13 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import woowacourse.movie.R
+import woowacourse.movie.databinding.HolderAdsBinding
+import woowacourse.movie.databinding.HolderScreenBinding
 import woowacourse.movie.domain.model.ScreenView
 import woowacourse.movie.domain.model.ScreenView.Ads
 import woowacourse.movie.domain.model.ScreenView.Movie
 import woowacourse.movie.presentation.ui.screen.ScreenActionHandler
-import woowacourse.movie.presentation.ui.screen.adapter.ScreenRecyclerViewViewHolder.AdsViewHolder
-import woowacourse.movie.presentation.ui.screen.adapter.ScreenRecyclerViewViewHolder.ScreenViewHolder
+import woowacourse.movie.presentation.ui.screen.adapter.ScreenRecyclerViewHolder.AdsViewHolder
+import woowacourse.movie.presentation.ui.screen.adapter.ScreenRecyclerViewHolder.ScreenViewHolder
 
 class ScreenRecyclerViewAdapter(
     private val screenActionHandler: ScreenActionHandler,
@@ -28,24 +29,23 @@ class ScreenRecyclerViewAdapter(
         viewType: Int,
     ): ViewHolder {
         return when (viewType) {
-            VIEW_TYPE_SCREEN ->
-                ScreenViewHolder(
-                    LayoutInflater.from(parent.context)
-                        .inflate(R.layout.holder_screen, parent, false),
-                    screenActionHandler,
-                )
+            VIEW_TYPE_SCREEN -> {
+                val inflater = LayoutInflater.from(parent.context)
+                val binding = HolderScreenBinding.inflate(inflater, parent, false)
+                ScreenViewHolder(binding, screenActionHandler)
+            }
 
-            VIEW_TYPE_ADS ->
-                AdsViewHolder(
-                    LayoutInflater.from(parent.context)
-                        .inflate(R.layout.holder_ads, parent, false),
-                )
+            VIEW_TYPE_ADS -> {
+                val inflater = LayoutInflater.from(parent.context)
+                val binding = HolderAdsBinding.inflate(inflater, parent, false)
+                AdsViewHolder(binding)
+            }
 
-            else ->
-                AdsViewHolder(
-                    LayoutInflater.from(parent.context)
-                        .inflate(R.layout.holder_ads, parent, false),
-                )
+            else -> {
+                val inflater = LayoutInflater.from(parent.context)
+                val binding = HolderAdsBinding.inflate(inflater, parent, false)
+                AdsViewHolder(binding)
+            }
         }
     }
 
@@ -65,14 +65,6 @@ class ScreenRecyclerViewAdapter(
         screens.clear()
         screens.addAll(newScreens)
         notifyDataSetChanged()
-    }
-
-    fun updateScreen(
-        position: Int,
-        newScreen: ScreenView,
-    ) {
-        screens[position] = newScreen
-        notifyItemChanged(position)
     }
 
     companion object {
