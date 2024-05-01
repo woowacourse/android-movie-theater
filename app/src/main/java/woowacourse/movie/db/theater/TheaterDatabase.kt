@@ -61,7 +61,7 @@ object TheaterDatabase {
                 movieId = 2,
             ),
             Theater(
-                theaterId = 0,
+                theaterId = 3,
                 name = "선릉 극장",
                 screeningTimes =
                     ScreeningTimes(
@@ -80,7 +80,7 @@ object TheaterDatabase {
                 movieId = 2,
             ),
             Theater(
-                theaterId = 1,
+                theaterId = 4,
                 name = "잠실 극장",
                 screeningTimes =
                     ScreeningTimes(
@@ -96,7 +96,7 @@ object TheaterDatabase {
                 movieId = 1,
             ),
             Theater(
-                theaterId = 2,
+                theaterId = 5,
                 name = "강남 극장",
                 screeningTimes =
                     ScreeningTimes(
@@ -114,7 +114,7 @@ object TheaterDatabase {
                 movieId = 0,
             ),
             Theater(
-                theaterId = 1,
+                theaterId = 6,
                 name = "잠실 극장",
                 screeningTimes =
                     ScreeningTimes(
