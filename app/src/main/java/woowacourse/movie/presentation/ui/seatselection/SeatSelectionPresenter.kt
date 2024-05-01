@@ -28,7 +28,6 @@ class SeatSelectionPresenter(
     override fun loadScreen(id: Int) {
         repository.findByScreenId(theaterId = id, movieId = id).onSuccess { screen ->
             _uiModel = uiModel.copy(screen = screen)
-            view.showScreen(screen.movie)
         }.onFailure { e ->
             when (e) {
                 is NoSuchElementException -> {
@@ -46,8 +45,8 @@ class SeatSelectionPresenter(
 
     override fun loadSeatBoard(id: Int) {
         repository.loadSeatBoard(id).onSuccess { seatBoard ->
+            _uiModel = _uiModel.copy(seatBoard = seatBoard)
             view.showSeatBoard(seatBoard.seats)
-            view.initClickListener(seatBoard.seats)
         }.onFailure { e ->
             when (e) {
                 is NoSuchElementException -> {
@@ -70,6 +69,7 @@ class SeatSelectionPresenter(
         if (seat in uiModel.userSeat.seats) {
             _uiModel = uiModel.copy(userSeat = uiModel.userSeat.removeAt(seat))
             view.unselectSeat(column, row)
+            calculateSeat()
             return
         }
         if (uiModel.userSeat.seats.size == uiModel.ticketCount) {
@@ -77,6 +77,7 @@ class SeatSelectionPresenter(
         } else {
             view.selectSeat(column, row)
             _uiModel = _uiModel.copy(userSeat = _uiModel.userSeat + seat)
+            calculateSeat()
         }
     }
 
@@ -90,8 +91,8 @@ class SeatSelectionPresenter(
         view.showTotalPrice(uiModel.totalPrice)
     }
 
-    override fun checkAllSeatsSelected() {
-        view.buttonEnabled(uiModel.userSeat.seats.size == uiModel.ticketCount)
+    override fun showConfirmDialog() {
+        view.showReservationDialog()
     }
 
     override fun reserve() {

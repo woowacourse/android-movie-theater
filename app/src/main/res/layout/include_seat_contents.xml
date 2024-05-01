@@ -1,29 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+<layout>
 
-    <TextView
-        style="@style/Theme.AppCompat.TextView.Seat.Selection.Table.Row.Green"
-        tools:text="A1" />
+    <data>
 
-    <TextView
-        style="@style/Theme.AppCompat.TextView.Seat.Selection.Table.Row.Green"
-        tools:text="A2" />
+        <variable
+            name="presenter"
+            type="woowacourse.movie.presentation.ui.seatselection.SeatSelectionPresenter" />
 
-    <TextView
-        style="@style/Theme.AppCompat.TextView.Seat.Selection.Table.Row.Green"
-        tools:text="A3" />
+        <import type="java.util.List" />
 
-    <TextView
-        style="@style/Theme.AppCompat.TextView.Seat.Selection.Table.Row.Green"
-        tools:text="A4" />
+        <variable
+            name="list"
+            type="List&lt;woowacourse.movie.domain.model.Seat&gt;" />
 
-</TableRow>
+    </data>
 
+    <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            style="@style/Theme.AppCompat.TextView.Seat.Selection.Table.Row.Green"
+            bindShowSeat="@{list[0]}"
+            android:onClick="@{() -> presenter.clickSeat(list[0])}"
+            tools:text="A1" />
+
+        <TextView
+            style="@style/Theme.AppCompat.TextView.Seat.Selection.Table.Row.Green"
+            bindShowSeat="@{list[1]}"
+            android:onClick="@{() -> presenter.clickSeat(list[1])}"
+            tools:text="A2" />
+
+        <TextView
+            style="@style/Theme.AppCompat.TextView.Seat.Selection.Table.Row.Green"
+            android:onClick="@{() -> presenter.clickSeat(list[2])}"
+            bindShowSeat="@{list[2]}"
+            tools:text="A3" />
+
+        <TextView
+            style="@style/Theme.AppCompat.TextView.Seat.Selection.Table.Row.Green"
+            android:onClick="@{() -> presenter.clickSeat(list[3])}"
+            bindShowSeat="@{list[3]}"
+            tools:text="A4" />
+
+    </TableRow>
+
+</layout>

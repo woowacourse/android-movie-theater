@@ -6,16 +6,13 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.ScreenView
-import woowacourse.movie.domain.model.Seat
-import woowacourse.movie.domain.model.SeatRank
+import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.domain.repository.DummyReservation
 import woowacourse.movie.domain.repository.DummyScreens
 import woowacourse.movie.presentation.base.BaseActivity
@@ -23,10 +20,9 @@ import woowacourse.movie.presentation.model.ReservationInfo
 import woowacourse.movie.presentation.model.UserSeat
 import woowacourse.movie.presentation.ui.reservation.ReservationActivity
 import woowacourse.movie.presentation.ui.seatselection.SeatSelectionContract.View
-import woowacourse.movie.presentation.utils.currency
 import java.io.Serializable
 
-class SeatSelectionActivity : BaseActivity(), View {
+class SeatSelectionActivity : BaseActivity<ActivitySeatSelectionBinding>(), View {
     override val layoutResourceId: Int
         get() = R.layout.activity_seat_selection
     override val presenter: SeatSelectionPresenter by lazy {
@@ -34,11 +30,9 @@ class SeatSelectionActivity : BaseActivity(), View {
     }
 
     private val seatBoard: TableLayout by lazy { findViewById(R.id.tl_seat_board) }
-    private val title: TextView by lazy { findViewById(R.id.tv_screen_title) }
-    private val totalPrice: TextView by lazy { findViewById(R.id.tv_screen_total_price) }
-    private val btnDone: Button by lazy { findViewById(R.id.btn_done) }
 
     override fun initStartView() {
+        binding.presenter = presenter
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val reservationInfo =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -54,45 +48,6 @@ class SeatSelectionActivity : BaseActivity(), View {
             presenter.updateUiModel(reservationInfoItem)
             presenter.loadScreen(reservationInfoItem.theaterId)
             presenter.loadSeatBoard(reservationInfoItem.theaterId)
-        }
-    }
-
-    override fun showScreen(movie: ScreenView.Movie) {
-        with(movie) {
-            this@SeatSelectionActivity.title.text = movie.title
-            totalPrice.text = DEFAULT_TOTAL_PRICE.currency(this@SeatSelectionActivity)
-            btnDone.isEnabled = false
-        }
-    }
-
-    override fun showSeatBoard(seats: List<Seat>) {
-        seatBoard.children.filterIsInstance<TableRow>().flatMap { it.children }
-            .filterIsInstance<TextView>().forEachIndexed { idx, view ->
-                view.text = "${seats[idx].column}${seats[idx].row + 1}"
-                view.setTextColor(seats[idx].seatRank.toColor())
-            }
-    }
-
-    override fun initClickListener(seats: List<Seat>) {
-        seatBoard.children.filterIsInstance<TableRow>().flatMap { it.children }
-            .filterIsInstance<TextView>().forEachIndexed { idx, view ->
-                view.setOnClickListener {
-                    presenter.clickSeat(seats[idx])
-                    presenter.calculateSeat()
-                    presenter.checkAllSeatsSelected()
-                }
-            }
-
-        btnDone.setOnClickListener {
-            showReservationDialog()
-        }
-    }
-
-    private fun SeatRank.toColor(): Int {
-        return when (this) {
-            SeatRank.B -> getColor(R.color.purple)
-            SeatRank.S -> getColor(R.color.green)
-            SeatRank.A -> getColor(R.color.blue)
         }
     }
 
@@ -117,14 +72,10 @@ class SeatSelectionActivity : BaseActivity(), View {
     }
 
     override fun showTotalPrice(totalPrice: Int) {
-        this.totalPrice.text = totalPrice.currency(this)
+        binding.invalidateAll()
     }
 
-    override fun buttonEnabled(isActivate: Boolean) {
-        btnDone.isEnabled = isActivate
-    }
-
-    private fun showReservationDialog() {
+    override fun showReservationDialog() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(getString(R.string.dialog_reservation_title))
         builder.setMessage(getString(R.string.dialog_reservation_message))
@@ -166,14 +117,10 @@ class SeatSelectionActivity : BaseActivity(), View {
             userSeat.seats.forEach { seat ->
                 presenter.clickSeat(seat)
             }
-            presenter.calculateSeat()
-            presenter.checkAllSeatsSelected()
         }
     }
 
     companion object {
-        private const val DEFAULT_TOTAL_PRICE = 0
-
         private const val PUT_EXTRA_KEY_RESERVATION_INFO = "reservationInfo"
         private const val PUT_STATE_KEY_USER_SEAT = "userSeat"
 
