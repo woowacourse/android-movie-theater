@@ -13,8 +13,7 @@
     <string name="text_complete_button">확인</string>
     <string name="text_total_price">%,d원</string>
     <string name="text_divider"> | </string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="item_screen_count_tail">개의 상영 시간</string>
     <string name="item_theater_name_tail">극장</string>
+    <string name="text_ticketing_result_price_tail">원 (현장 결제)</string>
 </resources>

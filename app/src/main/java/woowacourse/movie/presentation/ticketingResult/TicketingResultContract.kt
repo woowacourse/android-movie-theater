@@ -1,21 +1,18 @@
 package woowacourse.movie.presentation.ticketingResult
 
-import woowacourse.movie.model.Seat
+import woowacourse.movie.model.Ticket
 
 interface TicketingResultContract {
     interface View {
         fun displayTicketInfo(
-            movieTitle: String,
-            movieDateTime: String,
-            ticketCount: Int,
-            selectedSeats: List<Seat>,
-            totalPrice: Int,
+            ticket: Ticket,
+            theaterName: String,
         )
 
         fun showToastMessage(message: String?)
     }
 
     interface Presenter {
-        fun loadTicketInfo()
+        fun loadTicketInfo(movieTicket: Ticket?)
     }
 }

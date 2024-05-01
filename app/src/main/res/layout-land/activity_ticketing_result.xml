@@ -66,23 +66,23 @@
                 android:id="@+id/tv_ticket_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
                 android:layout_marginTop="72dp"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:layout_marginHorizontal="4dp"
-                app:layout_constraintEnd_toStartOf="@id/tv_divider"
+                app:layout_constraintEnd_toStartOf="@id/tv_divider_1"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_movie_date"
                 tools:text="예니 1명" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_divider"
+                android:id="@+id/tv_divider_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
                 android:text="@string/text_divider"
                 android:textColor="@color/black"
-                android:layout_marginHorizontal="8dp"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_ticket_count"
                 app:layout_constraintEnd_toStartOf="@id/tv_selected_seats"
@@ -95,11 +95,36 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/tv_divider"
-                app:layout_constraintTop_toTopOf="@id/tv_ticket_count"
                 app:layout_constraintBottom_toBottomOf="@id/tv_ticket_count"
+                app:layout_constraintEnd_toStartOf="@id/tv_divider_2"
+                app:layout_constraintStart_toEndOf="@id/tv_divider_1"
+                app:layout_constraintTop_toTopOf="@id/tv_ticket_count"
                 tools:text="B2, B3" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_divider_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:text="@string/text_divider"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_ticket_count"
+                app:layout_constraintEnd_toStartOf="@id/tv_theater_name"
+                app:layout_constraintStart_toEndOf="@id/tv_selected_seats"
+                app:layout_constraintTop_toTopOf="@id/tv_ticket_count" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_theater_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_ticket_count"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_divider_2"
+                app:layout_constraintTop_toTopOf="@id/tv_ticket_count"
+                tools:text="극장 이름" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_price"
