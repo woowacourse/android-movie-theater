@@ -1,132 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="140dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:movie="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <Button
-        android:id="@+id/movieReservationBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="지금 예매"
-        android:textSize="14dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+    <data>
 
-    <ImageView
-        android:id="@+id/movieThumbnail"
-        android:layout_width="76dp"
-        android:layout_height="108dp"
-        android:layout_margin="15dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/titanic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <variable
+            name="movie_view_holder"
+            type="woowacourse.movie.main.view.adapter.movie.MovieViewHolder" />
+    </data>
 
-    <TextView
-        android:id="@+id/movieDateTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp"
-        android:text="상영일: "
-        android:textColor="@color/black"
-        android:textSize="12dp"
-        app:layout_constraintLeft_toRightOf="@id/movieThumbnail"
-        app:layout_constraintTop_toBottomOf="@id/movieTitle" />
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="140dp">
 
-    <TextView
-        android:id="@+id/movieStartDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:hint="2024.3.1"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:textSize="12dp"
-        app:layout_constraintBottom_toBottomOf="@id/movieDateTitle"
-        app:layout_constraintLeft_toRightOf="@id/movieDateTitle"
-        app:layout_constraintTop_toBottomOf="@id/movieTitle" />
+        <Button
+            android:id="@+id/movieReservationBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:onClick="@{() -> movie_view_holder.reservationButtonClick()}"
+            android:text="지금 예매"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
-    <TextView
-        android:id="@+id/dateSeparator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text=" ~ "
-        android:textColor="@color/black"
-        android:textSize="12dp"
-        app:layout_constraintBottom_toBottomOf="@id/movieDateTitle"
-        app:layout_constraintLeft_toRightOf="@id/movieStartDate"
-        app:layout_constraintTop_toBottomOf="@id/movieTitle" />
+        <ImageView
+            android:id="@+id/movieThumbnail"
+            android:layout_width="76dp"
+            android:layout_height="108dp"
+            android:layout_margin="15dp"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/titanic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            movie:imgRes="@{movie_view_holder.thumbnail}" />
 
-    <TextView
-        android:id="@+id/movieEndDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:hint="2024.3.5"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:textSize="12dp"
-        app:layout_constraintBottom_toBottomOf="@id/movieDateTitle"
-        app:layout_constraintLeft_toRightOf="@id/dateSeparator"
-        app:layout_constraintTop_toBottomOf="@id/movieTitle" />
+        <TextView
+            android:id="@+id/movieDateTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:text="상영일: "
+            android:textColor="@color/black"
+            android:textSize="12dp"
+            app:layout_constraintLeft_toRightOf="@id/movieThumbnail"
+            app:layout_constraintTop_toBottomOf="@id/movieTitle" />
 
+        <TextView
+            android:id="@+id/movieStartDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:hint="2024.3.1"
+            android:text="@{movie_view_holder.startDate}"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="@id/movieDateTitle"
+            app:layout_constraintLeft_toRightOf="@id/movieDateTitle"
+            app:layout_constraintTop_toBottomOf="@id/movieTitle" />
 
-    <TextView
-        android:id="@+id/movieRunningTimeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp"
-        android:text="러닝타임: "
-        android:textColor="@color/black"
-        android:textSize="12dp"
-        app:layout_constraintLeft_toRightOf="@id/movieThumbnail"
-        app:layout_constraintTop_toBottomOf="@id/movieDateTitle" />
+        <TextView
+            android:id="@+id/dateSeparator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text=" ~ "
+            android:textColor="@color/black"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="@id/movieDateTitle"
+            app:layout_constraintLeft_toRightOf="@id/movieStartDate"
+            app:layout_constraintTop_toBottomOf="@id/movieTitle" />
 
-    <TextView
-        android:id="@+id/movieRunningTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:hint="152"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:textSize="12dp"
-        app:layout_constraintBottom_toBottomOf="@id/movieRunningTimeTitle"
-        app:layout_constraintLeft_toRightOf="@id/movieRunningTimeTitle"
-        app:layout_constraintTop_toBottomOf="@id/movieDateTitle" />
-
-    <TextView
-        android:id="@+id/movieRunningTimeFormat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:hint="분"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:textSize="12dp"
-        app:layout_constraintBottom_toBottomOf="@id/movieRunningTimeTitle"
-        app:layout_constraintLeft_toRightOf="@id/movieRunningTime"
-        app:layout_constraintTop_toBottomOf="@id/movieDateTitle" />
+        <TextView
+            android:id="@+id/movieEndDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:hint="2024.3.5"
+            android:text="@{movie_view_holder.endDate}"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="@id/movieDateTitle"
+            app:layout_constraintLeft_toRightOf="@id/dateSeparator"
+            app:layout_constraintTop_toBottomOf="@id/movieTitle" />
 
 
-    <TextView
-        android:id="@+id/movieTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:hint="타이타닉"
-        android:textColor="@color/black"
-        android:textSize="16dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toRightOf="@id/movieThumbnail"
-        app:layout_constraintTop_toTopOf="@id/movieThumbnail" />
+        <TextView
+            android:id="@+id/movieRunningTimeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:text="러닝타임: "
+            android:textColor="@color/black"
+            android:textSize="12dp"
+            app:layout_constraintLeft_toRightOf="@id/movieThumbnail"
+            app:layout_constraintTop_toBottomOf="@id/movieDateTitle" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/movieRunningTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:hint="152"
+            android:text="@{movie_view_holder.runningTime}"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="@id/movieRunningTimeTitle"
+            app:layout_constraintLeft_toRightOf="@id/movieRunningTimeTitle"
+            app:layout_constraintTop_toBottomOf="@id/movieDateTitle" />
+
+        <TextView
+            android:id="@+id/movieRunningTimeFormat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:hint="분"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="@id/movieRunningTimeTitle"
+            app:layout_constraintLeft_toRightOf="@id/movieRunningTime"
+            app:layout_constraintTop_toBottomOf="@id/movieDateTitle" />
+
+
+        <TextView
+            android:id="@+id/movieTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:hint="타이타닉"
+            android:text="@{movie_view_holder.title}"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@id/movieThumbnail"
+            app:layout_constraintTop_toTopOf="@id/movieThumbnail" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

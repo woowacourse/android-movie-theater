@@ -2,19 +2,26 @@ package woowacourse.movie.main.view.adapter.movie
 
 import android.content.Intent
 import android.net.Uri
-import android.view.View
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemAdvertisementBinding
 
-class AdvertisementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    private val advertisementImage: ImageView = itemView.findViewById(R.id.advertisementImage)
+class AdvertisementViewHolder(binding: ItemAdvertisementBinding) :
+    RecyclerView.ViewHolder(binding.root) {
+    var advertisementImage: Int = 0
+    private var advertisementLink: String = ""
+
+    init {
+        binding.advertisementViewHolder = this
+    }
 
     fun bind(advertisementLink: String) {
-        advertisementImage.setImageResource(R.drawable.advertisement)
-        advertisementImage.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(advertisementLink))
-            itemView.context.startActivity(intent)
-        }
+        advertisementImage = R.drawable.advertisement
+        this.advertisementLink = advertisementLink
+    }
+
+     fun advertisementImageClick() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(advertisementLink))
+        itemView.context.startActivity(intent)
     }
 }
