@@ -19,7 +19,8 @@ class MovieDetailPresenterImpl(
     private var view: MovieDetailContract.View? = null
     private val movie: Movie = movieRepository.findMovieById(movieId)
     private val reservationMovieInfo: ReservationMovieInfo = setScreeningMovieInfo()
-    private val reservationCount: ReservationCount = ReservationCount()
+    val reservationCount: ReservationCount = ReservationCount()
+    val movieUiModel: MovieUiModel = MovieUiModel(movie)
     private val reservationMovieInfoRepository: ReservationMovieInfoRepository =
         ReservationMovieInfoRepositoryImpl
 
@@ -37,7 +38,6 @@ class MovieDetailPresenterImpl(
     }
 
     override fun onViewSetUp() {
-        view?.showMovieDetail(MovieUiModel(movie))
         loadScreeningDates(movieId)
     }
 
@@ -75,17 +75,14 @@ class MovieDetailPresenterImpl(
 
     override fun minusReservationCount() {
         reservationCount.minusCount()
-        view?.showReservationCount(reservationCount.count)
     }
 
     override fun plusReservationCount() {
         reservationCount.plusCount()
-        view?.showReservationCount(reservationCount.count)
     }
 
     override fun initReservationCount(count: Int) {
         reservationCount.initCount(count)
-        view?.showReservationCount(reservationCount.count)
     }
 
     override fun onReserveButtonClicked() {

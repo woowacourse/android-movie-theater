@@ -1,11 +1,8 @@
 package woowacourse.movie.presentation.view.reservation.detail
 
-import woowacourse.movie.presentation.uimodel.MovieUiModel
 
 interface MovieDetailContract {
     interface View {
-        fun showMovieDetail(movieUiModel: MovieUiModel)
-
         fun setScreeningDatesAndTimes(
             dates: List<String>,
             times: List<String>,
@@ -16,8 +13,6 @@ interface MovieDetailContract {
             times: List<String>,
             defaultDataIndex: Int,
         )
-
-        fun showReservationCount(count: Int)
 
         fun moveToSeatSelection(
             reservationCount: Int,

@@ -21,4 +21,12 @@ data class MovieUiModel(
         movie.screeningInfo.runningTime,
         movie.summary,
     )
+
+    fun joinScreeningDates(): String {
+        return "상영일 : $screeningStartDate ~ $screeningEndDate"
+    }
+
+    fun runningTimeString(): String {
+        return "러닝타임 : ${runningTime}분"
+    }
 }

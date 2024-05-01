@@ -2,16 +2,15 @@ package woowacourse.movie.presentation.view.reservation.detail
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
 import android.widget.Spinner
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.presentation.base.BaseActivity
-import woowacourse.movie.presentation.uimodel.MovieUiModel
 import woowacourse.movie.presentation.view.reservation.seat.SeatSelectionActivity
 import woowacourse.movie.presentation.view.screening.theater.TheaterBottomSheetDialogFragment.Companion.THEATER_ID_KEY
 import woowacourse.movie.presentation.view.screening.ScreeningActivity.Companion.MOVIE_ID_KEY
@@ -19,17 +18,12 @@ import woowacourse.movie.presentation.view.screening.ScreeningActivity.Companion
 class MovieDetailActivity : BaseActivity(), MovieDetailContract.View {
     private lateinit var movieDetailPresenter: MovieDetailContract.Presenter
     private lateinit var timeSpinnerAdapter: ArrayAdapter<String>
+    private lateinit var binding: ActivityMovieDetailBinding
     private val dateSpinner: Spinner by lazy {
         findViewById(R.id.dateSpinner)
     }
     private val timeSpinner: Spinner by lazy {
         findViewById(R.id.timeSpinner)
-    }
-    private val reservationCountTextView: TextView by lazy {
-        findViewById(R.id.reservationInfo)
-    }
-    private val reserveButton: Button by lazy {
-        findViewById(R.id.reserveButton)
     }
 
     override fun getLayoutResId(): Int = R.layout.activity_movie_detail
@@ -40,16 +34,20 @@ class MovieDetailActivity : BaseActivity(), MovieDetailContract.View {
         val movieId = intent.getIntExtra(MOVIE_ID_KEY, DEFAULT_MOVIE_ID)
         val theaterId = intent.getIntExtra(THEATER_ID_KEY, DEFAULT_THEATER_ID)
 
-        movieDetailPresenter = MovieDetailPresenterImpl(movieId) // todo: theaterId 넣어줘서 극장별 상영시간 받아오기
+        movieDetailPresenter =
+            MovieDetailPresenterImpl(movieId) // todo: theaterId 넣어줘서 극장별 상영시간 받아오기
         movieDetailPresenter.attachView(this)
 
-        savedInstanceState?.let {
-            val count = it.getInt(SIS_COUNT_KEY)
-            movieDetailPresenter.initReservationCount(count)
-        }
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
+        binding.view = this
+        binding.data = movieDetailPresenter as MovieDetailPresenterImpl
 
-        setupReservationCountButton()
-        setReserveButton()
+        savedInstanceState?.let { it ->
+            val count = it.getString(SIS_COUNT_KEY)?.toIntOrNull()
+            count?.let { value ->
+                movieDetailPresenter.initReservationCount(value)
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -59,22 +57,7 @@ class MovieDetailActivity : BaseActivity(), MovieDetailContract.View {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        val count = reservationCountTextView.text.toString().toInt()
-        outState.putInt(SIS_COUNT_KEY, count)
-    }
-
-    override fun showMovieDetail(movieUiModel: MovieUiModel) {
-        findViewById<ImageView>(R.id.posterImage).setImageResource(movieUiModel.posterImageId)
-        findViewById<TextView>(R.id.title).text = movieUiModel.title
-        findViewById<TextView>(R.id.screeningDate).text =
-            getString(
-                R.string.screening_date_format,
-                movieUiModel.screeningStartDate,
-                movieUiModel.screeningEndDate,
-            )
-        findViewById<TextView>(R.id.runningTime).text =
-            getString(R.string.running_time_format, movieUiModel.runningTime)
-        findViewById<TextView>(R.id.summary).text = movieUiModel.summary
+        outState.putString(SIS_COUNT_KEY, binding.reservationInfo.text.toString())
     }
 
     override fun setScreeningDatesAndTimes(
@@ -160,18 +143,18 @@ class MovieDetailActivity : BaseActivity(), MovieDetailContract.View {
             }
     }
 
-    private fun setupReservationCountButton() {
-        findViewById<TextView>(R.id.minusButton).setOnClickListener {
-            movieDetailPresenter.minusReservationCount()
-        }
-
-        findViewById<TextView>(R.id.plusButton).setOnClickListener {
-            movieDetailPresenter.plusReservationCount()
-        }
+    fun subCount() {
+        movieDetailPresenter.minusReservationCount()
+        updateBinding()
     }
 
-    override fun showReservationCount(count: Int) {
-        reservationCountTextView.text = count.toString()
+    fun addCount() {
+        movieDetailPresenter.plusReservationCount()
+        updateBinding()
+    }
+
+    private fun updateBinding() {
+        binding.invalidateAll()
     }
 
     override fun moveToSeatSelection(
@@ -182,12 +165,6 @@ class MovieDetailActivity : BaseActivity(), MovieDetailContract.View {
         intent.putExtra(SeatSelectionActivity.INTENT_TITLE, title)
         intent.putExtra(SeatSelectionActivity.INTENT_RESERVATION_COUNT, reservationCount)
         startActivity(intent)
-    }
-
-    private fun setReserveButton() {
-        reserveButton.setOnClickListener {
-            movieDetailPresenter.onReserveButtonClicked()
-        }
     }
 
     companion object {
