@@ -14,5 +14,4 @@ fun Int.currency(context: Context): String {
     }
 }
 
-fun LocalDateTime.toScreeningDate(): String =
-    this.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"))
+fun LocalDateTime.toScreeningDate(): String = this.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"))

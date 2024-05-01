@@ -8,10 +8,15 @@ class ReservationPresenter(
     private val repository: ReservationRepository,
     private val theaterRepository: ScreenRepository,
 ) : ReservationContract.Presenter {
+    private var _uiModel: ReservationUiModel = ReservationUiModel()
+    val uiModel
+        get() = _uiModel
+
     override fun loadReservation(id: Int) {
-        repository.findByReservationId(id).onSuccess { screen ->
-            theaterRepository.findTheaterNameById(screen.theaterId).onSuccess { theaterName ->
-                view.showReservation(screen, theaterName)
+        repository.findByReservationId(id).onSuccess { reservation ->
+            theaterRepository.findTheaterNameById(reservation.theaterId).onSuccess { theaterName ->
+                view.showReservation(reservation, theaterName)
+                _uiModel = uiModel.copy(theaterName = theaterName, reservation = reservation)
             }
         }.onFailure { e ->
             when (e) {

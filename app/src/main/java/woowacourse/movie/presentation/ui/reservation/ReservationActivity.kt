@@ -4,20 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.widget.TextView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityReservationBinding
 import woowacourse.movie.domain.model.Reservation
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.repository.DummyReservation
 import woowacourse.movie.domain.repository.DummyScreens
 import woowacourse.movie.presentation.base.BaseActivity
-import woowacourse.movie.presentation.ui.reservation.ReservationContract.Presenter
 import woowacourse.movie.presentation.ui.reservation.ReservationContract.View
-import woowacourse.movie.presentation.utils.currency
-import woowacourse.movie.presentation.utils.toScreeningDate
 
-class ReservationActivity : BaseActivity(), View {
+class ReservationActivity : BaseActivity<ActivityReservationBinding>(), View {
     override val layoutResourceId: Int
         get() = R.layout.activity_reservation
-    override val presenter: Presenter by lazy {
+    override val presenter: ReservationPresenter by lazy {
         ReservationPresenter(
             this,
             DummyReservation,
@@ -31,6 +29,7 @@ class ReservationActivity : BaseActivity(), View {
     private val amount: TextView by lazy { findViewById(R.id.tv_reservation_amount) }
 
     override fun initStartView() {
+        binding.presenter = presenter
         val id = intent.getIntExtra(PUT_EXTRA_KEY_RESERVATION_ID, DEFAULT_RESERVATION_ID)
         presenter.loadReservation(id)
     }
@@ -39,13 +38,6 @@ class ReservationActivity : BaseActivity(), View {
         reservation: Reservation,
         theaterName: String,
     ) {
-        with(reservation) {
-            title.text = movie.title
-            date.text = dateTime.toScreeningDate()
-            count.text =
-                getString(R.string.reserve_count, ticketCount, seats.toSeatString(), theaterName)
-            amount.text = totalPrice.currency(this@ReservationActivity)
-        }
     }
 
     override fun back() = finish()

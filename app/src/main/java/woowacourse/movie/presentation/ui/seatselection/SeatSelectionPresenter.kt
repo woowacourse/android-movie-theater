@@ -46,7 +46,6 @@ class SeatSelectionPresenter(
     override fun loadSeatBoard(id: Int) {
         repository.loadSeatBoard(id).onSuccess { seatBoard ->
             _uiModel = _uiModel.copy(seatBoard = seatBoard)
-            view.showSeatBoard(seatBoard.seats)
         }.onFailure { e ->
             when (e) {
                 is NoSuchElementException -> {
