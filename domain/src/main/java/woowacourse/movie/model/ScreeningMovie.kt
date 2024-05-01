@@ -31,36 +31,36 @@ data class ScreeningMovie(
                 id = 1,
                 movie = Movie.STUB,
                 theater =
-                MovieTheater(
-                    mapOf(
-                        SeatRate.B to listOf(1, 2),
-                        SeatRate.S to listOf(3, 4),
-                        SeatRate.A to listOf(5),
+                    MovieTheater(
+                        mapOf(
+                            SeatRate.B to listOf(1, 2),
+                            SeatRate.S to listOf(3, 4),
+                            SeatRate.A to listOf(5),
+                        ),
+                        4,
+                        "잠실",
                     ),
-                    4,
-                    "잠실"
-                ),
                 screenDateTimes =
-                listOf(
-                    ScreenDateTime(
-                        LocalDate.of(2024, 3, 1),
-                        listOf(
-                            LocalTime.of(9, 0),
-                            LocalTime.of(10, 0),
-                            LocalTime.of(11, 0),
-                            LocalTime.of(12, 0),
-                        )
+                    listOf(
+                        ScreenDateTime(
+                            LocalDate.of(2024, 3, 1),
+                            listOf(
+                                LocalTime.of(9, 0),
+                                LocalTime.of(10, 0),
+                                LocalTime.of(11, 0),
+                                LocalTime.of(12, 0),
+                            ),
+                        ),
+                        ScreenDateTime(
+                            LocalDate.of(2024, 3, 3),
+                            listOf(
+                                LocalTime.of(9, 0),
+                                LocalTime.of(10, 0),
+                                LocalTime.of(11, 0),
+                                LocalTime.of(12, 0),
+                            ),
+                        ),
                     ),
-                    ScreenDateTime(
-                        LocalDate.of(2024, 3, 3),
-                        listOf(
-                            LocalTime.of(9, 0),
-                            LocalTime.of(10, 0),
-                            LocalTime.of(11, 0),
-                            LocalTime.of(12, 0),
-                        )
-                    )
-                )
             )
     }
 }

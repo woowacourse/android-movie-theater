@@ -29,7 +29,7 @@ object DummyMovies : MovieRepository {
 
     override fun theaterById(id: Long): MovieTheater {
         return theaters[id] ?: error(
-            IdError.NO_THEATER.message.format(id)
+            IdError.NO_THEATER.message.format(id),
         )
     }
 
