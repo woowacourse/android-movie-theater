@@ -38,15 +38,15 @@ interface ReservationDetailContract {
             selectedDate: String,
         )
 
-        fun increaseTicketCount(count: Int)
+        fun increaseHeadCount(count: Int)
 
-        fun decreaseTicketCount(count: Int)
+        fun decreaseHeadCount(count: Int)
 
         fun initializeReservationButton(
             movieId: Int,
             dateTime: ScreeningDateTime,
         )
 
-        fun handleNumberOfTicketsBounds(result: ChangeTicketCountResult)
+        fun handleHeadCountBounds(result: ChangeTicketCountResult)
     }
 }

@@ -1,6 +1,7 @@
 package woowacourse.movie.presenter.reservation
 
 import woowacourse.movie.db.screening.ScreeningDao
+import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.result.ChangeTicketCountResult
 import woowacourse.movie.model.result.Failure
@@ -11,6 +12,9 @@ class ReservationDetailPresenter(
     private val view: ReservationDetailContract.View,
     private val dao: ScreeningDao,
 ) : ReservationDetailContract.Presenter {
+    var headCount = HeadCount()
+        private set
+
     var ticket = Ticket()
         private set
 
@@ -32,29 +36,29 @@ class ReservationDetailPresenter(
         view.showScreeningTimes(movie, selectedDate)
     }
 
-    override fun increaseTicketCount(count: Int) {
-        ticket = Ticket(count)
-        val result = ticket.increaseCount()
-        handleNumberOfTicketsBounds(result)
+    override fun increaseHeadCount(count: Int) {
+        headCount = HeadCount(count)
+        val result = headCount.increase()
+        handleHeadCountBounds(result)
     }
 
-    override fun decreaseTicketCount(count: Int) {
-        ticket = Ticket(count)
-        val result = ticket.decreaseCount()
-        handleNumberOfTicketsBounds(result)
+    override fun decreaseHeadCount(count: Int) {
+        headCount = HeadCount(count)
+        val result = headCount.decrease()
+        handleHeadCountBounds(result)
     }
 
     override fun initializeReservationButton(
         movieId: Int,
         dateTime: ScreeningDateTime,
     ) {
-        ticket = Ticket(ticket.count, dateTime)
+        ticket = Ticket(headCount.count, dateTime)
         view.navigateToSeatSelection(movieId, ticket)
     }
 
-    override fun handleNumberOfTicketsBounds(result: ChangeTicketCountResult) {
+    override fun handleHeadCountBounds(result: ChangeTicketCountResult) {
         when (result) {
-            is Success -> view.changeHeadCount(ticket.count)
+            is Success -> view.changeHeadCount(headCount.count)
             is Failure -> view.showResultToast()
         }
     }

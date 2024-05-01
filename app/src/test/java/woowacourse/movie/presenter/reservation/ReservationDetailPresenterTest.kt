@@ -46,28 +46,28 @@ class ReservationDetailPresenterTest {
     @Test
     fun `예약 인원이 1인 상태에서 마이너스 버튼을 누르면 토스트를 보여준다`() {
         every { view.showResultToast() } just runs
-        presenter.decreaseTicketCount(1)
+        presenter.decreaseHeadCount(1)
         verify { view.showResultToast() }
     }
 
     @Test
     fun `예약 인원이 2인 상태에 마이너스 버튼을 누르면 예약 인원은 1이 된다`() {
         every { view.changeHeadCount(any()) } just runs
-        presenter.decreaseTicketCount(2)
+        presenter.decreaseHeadCount(2)
         verify { view.changeHeadCount(1) }
     }
 
     @Test
     fun `예약 인원이 20인 상태에서 플러스 버튼을 누르면 토스트를 보여준다`() {
         every { view.showResultToast() } just runs
-        presenter.increaseTicketCount(20)
+        presenter.increaseHeadCount(20)
         verify { view.showResultToast() }
     }
 
     @Test
     fun `예약 인원이 2인 상태에서 플러스 버튼을 누르면 예약 인원은 3이 된다`() {
         every { view.changeHeadCount(any()) } just runs
-        presenter.increaseTicketCount(2)
+        presenter.increaseHeadCount(2)
         verify { view.changeHeadCount(3) }
     }
 }

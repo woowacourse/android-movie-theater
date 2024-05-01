@@ -18,7 +18,6 @@ import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.ticket.Ticket
 import woowacourse.movie.presenter.reservation.ReservationDetailContract
 import woowacourse.movie.presenter.reservation.ReservationDetailPresenter
-import woowacourse.movie.utils.MovieUtils.bundleSerializable
 import woowacourse.movie.utils.MovieUtils.convertPeriodFormat
 import woowacourse.movie.utils.MovieUtils.makeToast
 import woowacourse.movie.view.home.ReservationHomeActivity.Companion.MOVIE_ID
@@ -60,7 +59,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.apply {
-            putSerializable(TICKET, presenter.ticket)
+            putInt(HEAD_COUNT, presenter.headCount.count)
             putInt(SCREENING_PERIOD, screeningPeriodSpinner.selectedItemPosition)
             putInt(SCREENING_TIME, screeningTimeSpinner.selectedItemPosition)
         }
@@ -70,10 +69,10 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
         super.onRestoreInstanceState(savedInstanceState)
         savedInstanceState.let { bundle ->
             runCatching {
-                bundle.bundleSerializable(TICKET, Ticket::class.java) ?: throw NoSuchElementException()
-            }.onSuccess { ticket ->
-                presenter.ticket.restoreTicket(ticket.count)
-                numberOfTickets.text = presenter.ticket.count.toString()
+                bundle.getInt(HEAD_COUNT)
+            }.onSuccess { headCount ->
+                presenter.headCount.restore(headCount)
+                numberOfTickets.text = presenter.headCount.count.toString()
             }.onFailure {
                 showErrorToast()
                 finish()
@@ -161,13 +160,13 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
 
     private fun initializeMinusButton() {
         minusButton.setOnClickListener {
-            presenter.decreaseTicketCount(presenter.ticket.count)
+            presenter.decreaseHeadCount(presenter.headCount.count)
         }
     }
 
     private fun initializePlusButton() {
         plusButton.setOnClickListener {
-            presenter.increaseTicketCount(presenter.ticket.count)
+            presenter.increaseHeadCount(presenter.headCount.count)
         }
     }
 
@@ -183,6 +182,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
     companion object {
         const val DEFAULT_MOVIE_ID = 0
         const val TICKET = "ticket"
+        const val HEAD_COUNT = "headCount"
         private const val SCREENING_TIME = "screeningTime"
         private const val SCREENING_PERIOD = "screeningPeriod"
         const val SELECTED_DATE_TAG = "notSelectedDate"
