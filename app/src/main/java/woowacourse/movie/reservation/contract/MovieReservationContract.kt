@@ -41,7 +41,7 @@ interface MovieReservationContract {
 
         fun setMovieInfo()
 
-        fun setSpinnerInfo()
+        fun setSpinnerInfo(theaterId: Long)
 
         fun setSpinnerDateItemInfo()
 

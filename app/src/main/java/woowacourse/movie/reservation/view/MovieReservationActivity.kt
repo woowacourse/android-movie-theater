@@ -17,7 +17,6 @@ import woowacourse.movie.list.model.Movie
 import woowacourse.movie.list.view.MovieListActivity.Companion.EXTRA_MOVIE_ID_KEY
 import woowacourse.movie.reservation.contract.MovieReservationContract
 import woowacourse.movie.reservation.model.Count
-import woowacourse.movie.reservation.model.ScreeningTimes
 import woowacourse.movie.reservation.presenter.MovieReservationPresenter
 import woowacourse.movie.seats.view.SeatsActivity
 import java.time.LocalDate
@@ -52,7 +51,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         theaterId = intent.getLongExtra(EXTRA_THEATER_ID_KEY, -1)
         presenter.storeMovieId(movieId)
         presenter.setMovieInfo()
-        presenter.setSpinnerInfo()
+        presenter.setSpinnerInfo(theaterId)
         presenter.setSpinnerDateItemInfo()
         presenter.setSpinnerTimeItemInfo()
         setOnPlusButtonClickListener()
@@ -98,23 +97,12 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
                     id: Long,
                 ) {
                     selectedDate = screeningDates[position]
-                    updateTimeSpinner()
-                    val screeningTimes = ScreeningTimes(selectedDate).contents
-                    setOnSpinnerTimeItemSelectedListener(screeningTimes)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                     selectedDate = screeningDates[0]
                 }
             }
-    }
-
-    private fun updateTimeSpinner() {
-        val screeningTimes = ScreeningTimes(selectedDate).contents
-        val timeAdapter =
-            ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, screeningTimes)
-        timeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerTime.adapter = timeAdapter
     }
 
     override fun setOnSpinnerTimeItemSelectedListener(screeningTimes: List<LocalTime>) {

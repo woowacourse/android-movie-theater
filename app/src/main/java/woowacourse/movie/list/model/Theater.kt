@@ -14,4 +14,9 @@ data class Theater(
         Log.d("alsong", "getCount: ${localTimes?.size}")
         return localTimes?.size ?: 0
     }
+
+    fun getScreeningTimes(movieId: Long): List<LocalTime> {
+        val movie = screeningMovies.filter { it.key.id == movieId }
+        return movie.values.firstOrNull() ?: emptyList()
+    }
 }

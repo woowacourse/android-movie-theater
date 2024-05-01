@@ -1,6 +1,7 @@
 package woowacourse.movie.reservation.presenter
 
 import woowacourse.movie.common.MovieDataSource
+import woowacourse.movie.list.model.TheaterData
 import woowacourse.movie.reservation.contract.MovieReservationContract
 import woowacourse.movie.reservation.model.DataResource
 import woowacourse.movie.reservation.model.MovieReservationTicketCountData
@@ -10,6 +11,7 @@ class MovieReservationPresenter(
     private val view: MovieReservationContract.View,
 ) : MovieReservationContract.Presenter {
     val model = MovieReservationTicketCountData
+    lateinit var screeningTimes: List<LocalTime>
 
     private val ticketCount
         get() = model.ticketCount
@@ -45,8 +47,10 @@ class MovieReservationPresenter(
         view.startMovieTicketActivity(ticketCount)
     }
 
-    override fun setSpinnerInfo() {
-        view.showSpinner(DataResource.screeningDates, DataResource.screeningTimesWeekdays)
+    override fun setSpinnerInfo(theaterId: Long) {
+        val theater = TheaterData.theaters.first { it.id == theaterId }
+        screeningTimes = theater.getScreeningTimes(DataResource.movieId)
+        view.showSpinner(DataResource.screeningDates, screeningTimes)
     }
 
     override fun setSpinnerDateItemInfo() {
@@ -54,7 +58,7 @@ class MovieReservationPresenter(
     }
 
     override fun setSpinnerTimeItemInfo() {
-        view.setOnSpinnerTimeItemSelectedListener(DataResource.screeningTimesWeekdays)
+        view.setOnSpinnerTimeItemSelectedListener(screeningTimes)
     }
 
     override fun storeSelectedTime(selectedTime: LocalTime) {
