@@ -1,219 +1,291 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background"
-    tools:context=".ui.selection.MovieSeatSelectionActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ScrollView
-        android:id="@+id/info_layout"
+    <data>
+
+        <variable
+            name="presenter"
+            type="woowacourse.movie.ui.selection.MovieSeatSelectionPresenter" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:overScrollMode="never"
-        android:scrollbars="none"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        tools:context=".ui.selection.MovieSeatSelectionActivity">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
+            android:id="@+id/info_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/screen"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="34dp"
-                android:layout_marginBottom="56dp"
-                android:background="@color/screen_text_background"
-                android:gravity="center_horizontal"
-                android:text="@string/screen_text"
-                android:textColor="@color/white"
-                android:textSize="23sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="wrap_content">
 
-            <TableLayout
-                android:id="@+id/seat_table"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="34dp"
-                android:layout_marginTop="60dp"
-                android:layout_marginBottom="96dp"
-                android:background="@color/white"
-                app:layout_constraintTop_toBottomOf="@id/screen">
+                <TextView
+                    android:id="@+id/screen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="34dp"
+                    android:layout_marginBottom="56dp"
+                    android:background="@color/screen_text_background"
+                    android:gravity="center_horizontal"
+                    android:text="@string/screen_text"
+                    android:textColor="@color/white"
+                    android:textSize="23sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <TableRow>
+                <TableLayout
+                    android:id="@+id/seat_table"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="34dp"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginBottom="96dp"
+                    android:background="@color/white"
+                    app:layout_constraintTop_toBottomOf="@id/screen">
 
-                    <TextView
-                        style="@style/B_CLASS_STYLE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                    <TableRow>
 
-                    <TextView
-                        style="@style/B_CLASS_STYLE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        <TextView
+                            style="@style/B_CLASS_STYLE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:row="@{0}"
+                            app:column="@{0}"
+                            android:onClick="@{() -> presenter.selectSeat(0, 0)}" />
 
-                    <TextView
-                        style="@style/B_CLASS_STYLE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        <TextView
+                            style="@style/B_CLASS_STYLE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:row="@{0}"
+                            app:column="@{1}"
+                            android:onClick="@{() -> presenter.selectSeat(0, 1)}" />
 
-                    <TextView
-                        style="@style/B_CLASS_STYLE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        <TextView
+                            style="@style/B_CLASS_STYLE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:row="@{0}"
+                            app:column="@{2}"
+                            android:onClick="@{() -> presenter.selectSeat(0, 2)}" />
 
-                </TableRow>
+                        <TextView
+                            style="@style/B_CLASS_STYLE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:row="@{0}"
+                            app:column="@{3}"
+                            android:onClick="@{() -> presenter.selectSeat(0, 3)}" />
 
-                <TableRow>
+                    </TableRow>
 
-                    <TextView
-                        style="@style/B_CLASS_STYLE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                    <TableRow>
 
-                    <TextView
-                        style="@style/B_CLASS_STYLE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        <TextView
+                            style="@style/B_CLASS_STYLE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:row="@{1}"
+                            app:column="@{0}"
+                            android:onClick="@{() -> presenter.selectSeat(1, 0)}" />
 
-                    <TextView
-                        style="@style/B_CLASS_STYLE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        <TextView
+                            style="@style/B_CLASS_STYLE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:row="@{1}"
+                            app:column="@{1}"
+                            android:onClick="@{() -> presenter.selectSeat(1, 1)}" />
 
-                    <TextView
-                        style="@style/B_CLASS_STYLE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        <TextView
+                            style="@style/B_CLASS_STYLE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:row="@{1}"
+                            app:column="@{2}"
+                            android:onClick="@{() -> presenter.selectSeat(1, 2)}" />
 
-                </TableRow>
+                        <TextView
+                            style="@style/B_CLASS_STYLE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:row="@{1}"
+                            app:column="@{3}"
+                            android:onClick="@{() -> presenter.selectSeat(1, 3)}" />
 
-                <TableRow>
+                    </TableRow>
 
-                    <TextView
-                        style="@style/S_CLASS_STYLE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                    <TableRow>
 
-                    <TextView
-                        style="@style/S_CLASS_STYLE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        <TextView
+                            style="@style/S_CLASS_STYLE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:row="@{2}"
+                            app:column="@{0}"
+                            android:onClick="@{() -> presenter.selectSeat(2, 0)}" />
 
-                    <TextView
-                        style="@style/S_CLASS_STYLE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        <TextView
+                            style="@style/S_CLASS_STYLE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:row="@{2}"
+                            app:column="@{1}"
+                            android:onClick="@{() -> presenter.selectSeat(2, 1)}" />
 
-                    <TextView
-                        style="@style/S_CLASS_STYLE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        <TextView
+                            style="@style/S_CLASS_STYLE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:row="@{2}"
+                            app:column="@{2}"
+                            android:onClick="@{() -> presenter.selectSeat(2, 2)}"/>
 
-                </TableRow>
+                        <TextView
+                            style="@style/S_CLASS_STYLE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:row="@{2}"
+                            app:column="@{3}"
+                            android:onClick="@{() -> presenter.selectSeat(2, 3)}"/>
 
-                <TableRow>
+                    </TableRow>
 
-                    <TextView
-                        style="@style/S_CLASS_STYLE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                    <TableRow>
 
-                    <TextView
-                        style="@style/S_CLASS_STYLE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        <TextView
+                            style="@style/S_CLASS_STYLE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:row="@{3}"
+                            app:column="@{0}"
+                            android:onClick="@{() -> presenter.selectSeat(3, 0)}"/>
 
-                    <TextView
-                        style="@style/S_CLASS_STYLE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        <TextView
+                            style="@style/S_CLASS_STYLE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:row="@{3}"
+                            app:column="@{1}"
+                            android:onClick="@{() -> presenter.selectSeat(3, 1)}"/>
 
-                    <TextView
-                        style="@style/S_CLASS_STYLE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        <TextView
+                            style="@style/S_CLASS_STYLE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:row="@{3}"
+                            app:column="@{2}"
+                            android:onClick="@{() -> presenter.selectSeat(3, 2)}"/>
 
-                </TableRow>
+                        <TextView
+                            style="@style/S_CLASS_STYLE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:row="@{3}"
+                            app:column="@{3}"
+                            android:onClick="@{() -> presenter.selectSeat(3, 3)}"/>
 
-                <TableRow>
+                    </TableRow>
 
-                    <TextView
-                        style="@style/A_CLASS_STYLE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                    <TableRow>
 
-                    <TextView
-                        style="@style/A_CLASS_STYLE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        <TextView
+                            style="@style/A_CLASS_STYLE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:row="@{4}"
+                            app:column="@{0}"
+                            android:onClick="@{() -> presenter.selectSeat(4, 0)}"/>
 
-                    <TextView
-                        style="@style/A_CLASS_STYLE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        <TextView
+                            style="@style/A_CLASS_STYLE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:row="@{4}"
+                            app:column="@{1}"
+                            android:onClick="@{() -> presenter.selectSeat(4, 1)}"/>
 
-                    <TextView
-                        style="@style/A_CLASS_STYLE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        <TextView
+                            style="@style/A_CLASS_STYLE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:row="@{4}"
+                            app:column="@{2}"
+                            android:onClick="@{() -> presenter.selectSeat(4, 2)}"/>
 
-                </TableRow>
+                        <TextView
+                            style="@style/A_CLASS_STYLE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:row="@{4}"
+                            app:column="@{3}"
+                            android:onClick="@{() -> presenter.selectSeat(4, 3)}"/>
 
-            </TableLayout>
+                    </TableRow>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                </TableLayout>
 
-    </ScrollView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="78dp"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent">
+        </ScrollView>
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="78dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-            <TextView
-                android:id="@+id/movie_title_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/movie_title_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{presenter.userTicket.title}"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/total_seat_amount_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/confirm_button"
+                android:layout_width="88dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/selector_button"
+                android:clickable="false"
+                android:enabled="false"
+                android:onClick="@{() -> presenter.checkCompletion()}"
+                android:text="@string/confirm"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/total_seat_amount_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp" />
-
         </LinearLayout>
 
-        <Button
-            android:id="@+id/confirm_button"
-            android:layout_width="88dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/selector_button"
-            android:clickable="false"
-            android:enabled="false"
-            android:text="@string/confirm"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

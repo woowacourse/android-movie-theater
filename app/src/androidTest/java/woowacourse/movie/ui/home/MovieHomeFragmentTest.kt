@@ -19,11 +19,11 @@ import woowacourse.movie.model.movie.MovieContent
 import woowacourse.movie.ui.home.adapter.MovieViewHolder
 
 @RunWith(AndroidJUnit4::class)
-class MovieHomeActivityTest {
+class MovieHomeFragmentTest {
     private val movieContent: MovieContent = MovieContentsImpl.find(0L)
 
     @get:Rule
-    val activityRule = ActivityScenarioRule(MovieHomeActivity::class.java)
+    val activityRule = ActivityScenarioRule(MovieHomeFragment::class.java)
 
     @Test
     fun `화면이_띄워지면_영화_목록이_보인다`() {

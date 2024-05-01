@@ -10,7 +10,7 @@ import woowacourse.movie.R
 import woowacourse.movie.model.data.UserTicketsImpl
 import woowacourse.movie.model.movie.UserTicket
 import woowacourse.movie.ui.base.BaseActivity
-import woowacourse.movie.ui.home.MovieHomeActivity
+import woowacourse.movie.ui.home.MovieHomeFragment
 import java.time.format.DateTimeFormatter
 
 class MovieReservationCompleteActivity :
@@ -48,7 +48,7 @@ class MovieReservationCompleteActivity :
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            android.R.id.home -> startActivity(Intent(this, MovieHomeActivity::class.java))
+            android.R.id.home -> startActivity(Intent(this, MovieHomeFragment::class.java))
         }
         return super.onOptionsItemSelected(item)
     }

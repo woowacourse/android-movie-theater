@@ -22,6 +22,7 @@ class MovieReservationCompletePresenterTest {
         UserTicketsImpl.save(
             UserTicket(
                 "",
+                "강남",
                 LocalDateTime.of(2024, 3, 28, 10, 0),
                 ReservationDetail(1),
             ),

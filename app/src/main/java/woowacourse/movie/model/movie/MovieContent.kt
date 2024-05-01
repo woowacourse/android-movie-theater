@@ -10,7 +10,7 @@ data class MovieContent(
     val endingMoviesDate: LocalDate,
     val runningTime: Int,
     val synopsis: String,
-    val theaters: List<Theater>,
+    val theaterIds: List<Long>,
     val id: Long = 0,
 ) {
     fun getDatesInRange(): List<LocalDate> {

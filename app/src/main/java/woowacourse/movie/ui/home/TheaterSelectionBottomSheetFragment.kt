@@ -11,6 +11,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterSelectionBottomSheetBinding
 import woowacourse.movie.model.data.MovieContentsImpl
+import woowacourse.movie.model.data.TheatersImpl
 import woowacourse.movie.model.movie.Theater
 import woowacourse.movie.ui.home.adapter.TheaterAdapter
 import woowacourse.movie.ui.reservation.MovieReservationActivity
@@ -21,11 +22,12 @@ class TheaterSelectionBottomSheetFragment :
     TheaterAdapter.TheaterItemClickListener {
     private lateinit var binding: FragmentTheaterSelectionBottomSheetBinding
     private lateinit var adapter: TheaterAdapter
-    private var movieContentId: Long = 0L
+    private var movieContentId: Long = 1L
     private val presenter: TheaterSelectionPresenter by lazy {
         TheaterSelectionPresenter(
             this,
             MovieContentsImpl,
+            TheatersImpl,
         )
     }
 

@@ -19,10 +19,11 @@ class MovieSeatSelectionPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk<MovieSeatSelectionContract.View>(relaxed = true)
-        presenter = MovieSeatSelectionPresenter(view, UserTicketsImpl)
+        presenter = MovieSeatSelectionPresenter(view, UserTicketsImpl, 0L)
         UserTicketsImpl.save(
             UserTicket(
                 "",
+                "강남",
                 LocalDateTime.of(2024, 3, 28, 10, 0),
                 ReservationDetail(1),
             ),
@@ -32,7 +33,6 @@ class MovieSeatSelectionPresenterTest {
     @Test
     fun `영화관 좌석정보를 불러온다`() {
         // given
-        every { view.showMovieTitle(any()) }
         every { view.showReservationTotalAmount(any()) }
         every { view.showTheater(any(), any()) }
 
@@ -40,7 +40,6 @@ class MovieSeatSelectionPresenterTest {
         presenter.loadTheaterInfo(0L)
 
         // then
-        verify { view.showMovieTitle(any()) }
         verify { view.showReservationTotalAmount(any()) }
         verify { view.showTheater(any(), any()) }
     }
@@ -59,17 +58,5 @@ class MovieSeatSelectionPresenterTest {
         verify { view.showSelectedSeat(any()) }
         verify { view.updateSelectCompletion(any()) }
         verify { view.showReservationTotalAmount(any()) }
-    }
-
-    @Test
-    fun `영화 타이틀을 가져온다`() {
-        // given
-        every { view.showMovieTitle(any()) }
-
-        // when
-        presenter.loadTheaterInfo(0L)
-
-        // then
-        verify { view.showMovieTitle(any()) }
     }
 }
