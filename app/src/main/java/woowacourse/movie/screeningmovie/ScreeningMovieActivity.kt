@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.data.DummyMovies
 import woowacourse.movie.moviereservation.MovieReservationActivity
+import woowacourse.movie.screeningmovie.theaters.TheaterBottomSheetDialogFragment
 
 class ScreeningMovieActivity : AppCompatActivity(), ScreeningMovieContract.View {
     private lateinit var presenter: ScreenMoviePresenter
@@ -29,7 +30,7 @@ class ScreeningMovieActivity : AppCompatActivity(), ScreeningMovieContract.View 
             MovieAdapter(movies) { presenter.startReservation(it) }
     }
 
-    override fun onClickReservationButton(screeningMovieId: Long) {
-        startActivity(MovieReservationActivity.getIntent(this, screeningMovieId))
+    override fun showTheaters(screeningMovieId: Long) {
+        TheaterBottomSheetDialogFragment().show(supportFragmentManager, "theaterBottomSheet")
     }
 }

@@ -4,7 +4,7 @@ interface ScreeningMovieContract {
     interface View {
         fun showMovies(movies: List<ScreeningItem>)
 
-        fun onClickReservationButton(screeningMovieId: Long)
+        fun showTheaters(screeningMovieId: Long)
     }
 
     interface Presenter {
