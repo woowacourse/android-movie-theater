@@ -1,9 +1,9 @@
 package woowacourse.movie.presenter.reservation
 
+import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.result.ChangeTicketCountResult
-import woowacourse.movie.model.ticket.Ticket
 
 interface ReservationDetailContract {
     interface View {
@@ -22,7 +22,8 @@ interface ReservationDetailContract {
 
         fun navigateToSeatSelection(
             movieId: Int,
-            ticket: Ticket,
+            dateTime: ScreeningDateTime,
+            count: HeadCount,
         )
 
         fun showErrorToast()

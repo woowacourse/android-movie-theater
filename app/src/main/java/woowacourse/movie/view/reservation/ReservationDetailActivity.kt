@@ -13,9 +13,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.db.screening.ScreeningDao
+import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
-import woowacourse.movie.model.ticket.Ticket
 import woowacourse.movie.presenter.reservation.ReservationDetailContract
 import woowacourse.movie.presenter.reservation.ReservationDetailPresenter
 import woowacourse.movie.utils.MovieUtils.convertPeriodFormat
@@ -123,12 +123,14 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
 
     override fun navigateToSeatSelection(
         movieId: Int,
-        ticket: Ticket,
+        dateTime: ScreeningDateTime,
+        count: HeadCount,
     ) {
         val intent = Intent(this, SeatSelectionActivity::class.java)
         intent.apply {
             putExtra(MOVIE_ID, movieId)
-            putExtra(TICKET, ticket)
+            putExtra(SCREENING_PERIOD, dateTime)
+            putExtra(HEAD_COUNT, count)
         }
         startActivity(intent)
     }

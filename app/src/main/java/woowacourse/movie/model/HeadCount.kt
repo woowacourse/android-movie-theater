@@ -3,10 +3,11 @@ package woowacourse.movie.model
 import woowacourse.movie.model.result.ChangeTicketCountResult
 import woowacourse.movie.model.result.Failure
 import woowacourse.movie.model.result.Success
+import java.io.Serializable
 
 class HeadCount(
     count: Int = DEFAULT_TICKET_COUNT,
-) {
+) : Serializable {
     var count: Int = count
         private set
 

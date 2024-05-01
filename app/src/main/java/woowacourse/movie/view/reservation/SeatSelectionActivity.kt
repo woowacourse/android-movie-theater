@@ -12,6 +12,7 @@ import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.seats.SeatsDao
+import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.seats.Grade
 import woowacourse.movie.model.seats.Seat
@@ -25,6 +26,7 @@ import woowacourse.movie.utils.MovieUtils.intentSerializable
 import woowacourse.movie.utils.MovieUtils.makeToast
 import woowacourse.movie.view.finished.ReservationFinishedActivity
 import woowacourse.movie.view.home.ReservationHomeActivity
+import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.HEAD_COUNT
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.TICKET
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
@@ -35,14 +37,14 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private val price: TextView by lazy { findViewById(R.id.textview_seat_selection_price) }
     private val confirmButton: Button by lazy { findViewById(R.id.button_seat_selection_confirm) }
     private lateinit var seatsTable: List<Button>
-    private lateinit var ticket: Ticket
+    private lateinit var headCount: HeadCount
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seat_selection)
 
         val movieId = takeMovieId()
-        ticket = takeTicket()
+        headCount = receiveHeadCount()
         seatsTable = collectSeatsInTableLayout()
         with(presenter) {
             loadSeatNumber()
@@ -54,7 +56,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.apply {
-            putSerializable(TICKET, ticket)
+            putSerializable(HEAD_COUNT, headCount)
             putSerializable(SEATS, presenter.seats)
             putIntegerArrayList(SEATS_INDEX, ArrayList(presenter.seats.seatsIndex))
         }
@@ -99,7 +101,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         seat: Seat,
     ) {
         setOnClickListener {
-            if (getSeatsCount() < ticket.count || isSelected) {
+            if (getSeatsCount() < headCount.count || isSelected) {
                 updateSeatSelectedState(index, isSelected)
                 presenter.manageSelectedSeats(isSelected, index, seat)
                 presenter.updateTotalPrice(isSelected, seat)
@@ -133,13 +135,13 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     override fun navigateToFinished(seats: Seats) {
         val intent = Intent(this, ReservationFinishedActivity::class.java)
-        intent.putExtra(TICKET, ticket)
+        intent.putExtra(HEAD_COUNT, headCount.count)
         intent.putExtra(SEATS, seats)
         startActivity(intent)
     }
 
     override fun setConfirmButtonEnabled(count: Int) {
-        confirmButton.isEnabled = count >= ticket.count
+        confirmButton.isEnabled = count >= headCount.count
     }
 
     override fun launchReservationConfirmDialog(seats: Seats) {
@@ -166,7 +168,8 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             ReservationDetailActivity.DEFAULT_MOVIE_ID,
         )
 
-    private fun takeTicket(): Ticket = intent.intentSerializable(TICKET, Ticket::class.java) ?: Ticket()
+    private fun receiveHeadCount(): HeadCount =
+        intent.intentSerializable(HEAD_COUNT, HeadCount::class.java) ?: throw NoSuchElementException()
 
     private fun collectSeatsInTableLayout(): List<Button> =
         seatTableLayout.children.filterIsInstance<TableRow>().flatMap { it.children }
