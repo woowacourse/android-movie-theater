@@ -1,5 +1,6 @@
 package woowacourse.movie.view.home
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,6 @@ import woowacourse.movie.db.advertisement.AdvertisementDao
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.presenter.home.ReservationHomeContract
 import woowacourse.movie.presenter.home.ReservationHomePresenter
-import woowacourse.movie.utils.MovieUtils.navigateToFragment
 import woowacourse.movie.view.home.adapter.MovieCatalogAdapter
 import woowacourse.movie.view.theater.TheaterSelectionFragment
 
@@ -38,14 +38,15 @@ class HomeFragment : Fragment(), ReservationHomeContract.View {
         initMovieRecyclerView()
     }
 
+    @SuppressLint("ResourceType")
     override fun navigateToDetail(movieId: Int) {
         val bundle = Bundle()
         bundle.putInt(MOVIE_ID, movieId)
         setFragmentResult(BUNDLE_MOVIE_ID, bundle)
-        parentFragmentManager.navigateToFragment(
-            R.layout.fragment_home,
-            TheaterSelectionFragment(),
-        )
+        // TODO movieId 번들로 넘겨주기
+        val bottomSheetDialogFragment = TheaterSelectionFragment(movieId)
+        bottomSheetDialogFragment
+            .show(childFragmentManager, bottomSheetDialogFragment.tag)
     }
 
     private fun initMovieRecyclerView() {

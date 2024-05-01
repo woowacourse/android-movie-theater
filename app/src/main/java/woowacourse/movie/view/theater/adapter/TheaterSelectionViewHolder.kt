@@ -8,6 +8,10 @@ import woowacourse.movie.utils.MovieUtils.convertScreeningInfoFormat
 class TheaterSelectionViewHolder(
     private val binding: ItemTheaterBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
+    init {
+        binding.theaterViewHolder = this
+    }
+
     fun bind(
         item: Theater,
         theaterId: OnSelectTheater,

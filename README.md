@@ -12,10 +12,10 @@
 
 ## 안드로이드 기능 명세
 
-- [ ] TheaterSelectionFragment
-  - 원하는 극장을 선택할 수 있다.
-  - 극장 리스트를 보여준다.
-  - 극장을 선택하면 ReservationFragment로 이동한다.
+- [x] TheaterSelectionFragment
+  - [x] 원하는 극장을 선택할 수 있다.
+  - [x] 극장 리스트를 보여준다.
+  - [x] 극장을 선택하면 ReservationFragment로 이동한다.
 - [ ] ReservationFragment
   - [x] 상영일을 선택할 수 있다
   - [x] 상영 시간을 선택할 수 있다

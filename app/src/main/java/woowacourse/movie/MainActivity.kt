@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.databinding.ActivityMainBinding
-import woowacourse.movie.utils.MovieUtils.navigateToFragment
+import woowacourse.movie.utils.MovieUtils.navigateToBottomMenu
 import woowacourse.movie.view.ReservationHistoryFragment
 import woowacourse.movie.view.SettingFragment
 import woowacourse.movie.view.home.HomeFragment
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             )
         binding.bottomNavigationMain.setOnItemSelectedListener { item ->
             fragments[item.itemId]?.let { currentFragment ->
-                supportFragmentManager.navigateToFragment(
+                supportFragmentManager.navigateToBottomMenu(
                     R.id.fragment_container_main,
                     currentFragment,
                 )

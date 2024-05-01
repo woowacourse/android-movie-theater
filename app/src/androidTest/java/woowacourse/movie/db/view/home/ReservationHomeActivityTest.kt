@@ -17,6 +17,7 @@ import org.hamcrest.TypeSafeMatcher
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import woowacourse.movie.MainActivity
 import woowacourse.movie.R
 import woowacourse.movie.TestFixture
 import woowacourse.movie.TestFixture.movies
@@ -26,7 +27,7 @@ import woowacourse.movie.view.home.adapter.viewholder.MovieViewHolder
 @RunWith(AndroidJUnit4::class)
 class ReservationHomeActivityTest {
     @get:Rule
-    val activityRule = ActivityScenarioRule(ReservationHomeActivity::class.java)
+    val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
     fun `영화_목록을_보여준다`() {

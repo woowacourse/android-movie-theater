@@ -60,7 +60,7 @@ object MovieUtils {
     }
 
     @SuppressLint("ResourceType")
-    fun FragmentManager.navigateToFragment(
+    fun FragmentManager.navigateToBottomMenu(
         @LayoutRes
         fragmentLayoutResource: Int,
         nextFragment: Fragment,
@@ -68,6 +68,17 @@ object MovieUtils {
         commit {
             setReorderingAllowed(true)
             replace(fragmentLayoutResource, nextFragment)
+        }
+    }
+
+    @SuppressLint("ResourceType")
+    fun FragmentManager.navigateToFragment(
+        @LayoutRes
+        fragmentLayoutResource: Int,
+        nextFragment: Fragment,
+    ) {
+        commit {
+            add(fragmentLayoutResource, nextFragment)
             addToBackStack(null)
         }
     }
