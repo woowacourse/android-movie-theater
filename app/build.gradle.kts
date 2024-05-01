@@ -47,6 +47,9 @@ android {
     testOptions {
         animationsDisabled = true
     }
+    dataBinding{
+        enable = true
+    }
 }
 
 dependencies {
