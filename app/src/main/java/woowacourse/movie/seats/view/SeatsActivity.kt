@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import woowacourse.movie.R
-import woowacourse.movie.list.view.MovieListActivity.Companion.EXTRA_MOVIE_ID_KEY
+import woowacourse.movie.list.view.HomeFragment.Companion.EXTRA_MOVIE_ID_KEY
 import woowacourse.movie.reservation.view.MovieReservationActivity.Companion.EXTRA_DATE_KEY
 import woowacourse.movie.reservation.view.MovieReservationActivity.Companion.EXTRA_TIME_KEY
 import woowacourse.movie.seats.contract.SeatsContract

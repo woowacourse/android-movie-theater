@@ -7,7 +7,7 @@
 
         <variable
             name="fragment"
-            type="woowacourse.movie.HomeFragment" />
+            type="woowacourse.movie.list.view.HomeFragment" />
 
         <variable
             name="presenter"
@@ -19,7 +19,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".HomeFragment">
+        tools:context=".list.view.HomeFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/movie_recycler_view"

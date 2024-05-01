@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.list.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.FragmentTheaterBinding
 import woowacourse.movie.list.adapter.TheaterAdapter
 import woowacourse.movie.list.model.TheaterData.theaters
-import woowacourse.movie.list.view.MovieListActivity.Companion.EXTRA_MOVIE_ID_KEY_TO_FRAGMENT
+import woowacourse.movie.list.view.HomeFragment.Companion.EXTRA_MOVIE_ID_KEY_TO_FRAGMENT
 import woowacourse.movie.reservation.view.MovieReservationActivity
 
 class TheaterFragment : DialogFragment() {

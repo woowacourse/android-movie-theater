@@ -1,32 +1,37 @@
 package woowacourse.movie.list.view
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentContainerView
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.TheaterFragment
+import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.list.adapter.MovieAdapter
 import woowacourse.movie.list.contract.MovieListContract
 import woowacourse.movie.list.model.Advertisement
 import woowacourse.movie.list.model.Movie
 import woowacourse.movie.list.presenter.MovieListPresenter
 
-class MovieListActivity : AppCompatActivity(), MovieListContract.View {
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var movieAdapter: MovieAdapter
+class HomeFragment : Fragment(), MovieListContract.View {
     override val presenter = MovieListPresenter(this)
-    lateinit var theaterFragmentLayout: FragmentContainerView
+    private lateinit var binding: FragmentHomeBinding
+    private lateinit var movieAdapter: MovieAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_list)
-        recyclerView = findViewById(R.id.movie_recycler_view)
-        theaterFragmentLayout = findViewById(R.id.fragment_container_view)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+
         presenter.setMoviesInfo()
         presenter.setListViewClickListenerInfo()
+
+        return binding.root
     }
 
     override fun showMoviesInfo(
@@ -35,8 +40,8 @@ class MovieListActivity : AppCompatActivity(), MovieListContract.View {
     ) {
         movieAdapter = MovieAdapter(movies, advertisements)
 
-        recyclerView.adapter = movieAdapter
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.movieRecyclerView.adapter = movieAdapter
+        binding.movieRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
 
     override fun setOnListViewClickListener() {
@@ -47,10 +52,10 @@ class MovieListActivity : AppCompatActivity(), MovieListContract.View {
                     val bundle = Bundle()
                     bundle.putLong(EXTRA_MOVIE_ID_KEY_TO_FRAGMENT, movieId)
                     theaterFragment.arguments = bundle
-                    supportFragmentManager.beginTransaction()
+                    parentFragmentManager.beginTransaction()
                         .replace(R.id.fragment_container_view, theaterFragment)
                         .commit()
-                    theaterFragmentLayout.visibility = View.VISIBLE
+                    binding.fragmentContainerView.visibility = View.VISIBLE
                 }
             },
         )

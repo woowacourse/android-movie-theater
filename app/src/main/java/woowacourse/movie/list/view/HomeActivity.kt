@@ -1,7 +1,8 @@
-package woowacourse.movie
+package woowacourse.movie.list.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {

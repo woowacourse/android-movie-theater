@@ -12,9 +12,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.TheaterFragment.Companion.EXTRA_THEATER_ID_KEY
 import woowacourse.movie.list.model.Movie
-import woowacourse.movie.list.view.MovieListActivity.Companion.EXTRA_MOVIE_ID_KEY
+import woowacourse.movie.list.view.HomeFragment.Companion.EXTRA_MOVIE_ID_KEY
+import woowacourse.movie.list.view.TheaterFragment.Companion.EXTRA_THEATER_ID_KEY
 import woowacourse.movie.reservation.contract.MovieReservationContract
 import woowacourse.movie.reservation.model.Count
 import woowacourse.movie.reservation.presenter.MovieReservationPresenter

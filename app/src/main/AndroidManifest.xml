@@ -27,7 +27,7 @@
             android:name=".ticket.view.MovieTicketActivity"
             android:exported="false" />
 
-        <activity android:name=".HomeActivity"
+        <activity android:name=".list.view.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
