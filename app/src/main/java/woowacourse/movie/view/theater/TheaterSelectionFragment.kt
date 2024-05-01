@@ -54,8 +54,7 @@ class TheaterSelectionFragment(
     private fun initTheaterRecyclerView() {
         val theaterSelectionAdapter =
             TheaterSelectionAdapter(
-                // TODO: movieId에 맞는 데이터만 불러오기
-                TheaterDao().findAll(),
+                TheaterDao().findTheaterByMovieId(movieId),
             ) { theaterId ->
                 presenter.loadTheater(theaterId)
             }
