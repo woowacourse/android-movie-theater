@@ -3,6 +3,8 @@ package woowacourse.movie.presentation.base
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
 import woowacourse.movie.presentation.model.MessageType
@@ -11,13 +13,16 @@ import woowacourse.movie.presentation.model.MessageType.ReservationSuccessMessag
 import woowacourse.movie.presentation.model.MessageType.TicketMaxCountMessage
 import woowacourse.movie.presentation.model.MessageType.TicketMinCountMessage
 
-abstract class BaseActivity : AppCompatActivity(), BaseView {
+abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity(), BaseView {
     abstract val layoutResourceId: Int
     abstract val presenter: BasePresenter
+    private var _binding: T? = null
+    val binding
+        get() = requireNotNull(_binding)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(layoutResourceId)
+        _binding = DataBindingUtil.setContentView(this, layoutResourceId)
         initStartView()
     }
 
@@ -61,5 +66,10 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
             is NoSuchElementException -> getString(R.string.no_such_element_exception_message)
             else -> getString(R.string.unforeseen_error_message)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

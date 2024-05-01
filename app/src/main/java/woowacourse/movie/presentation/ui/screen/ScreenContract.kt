@@ -21,7 +21,5 @@ interface ScreenContract {
         )
     }
 
-    interface Presenter : BasePresenter, ScreenActionHandler, BottomTheaterActionHandler {
-        fun loadScreens()
-    }
+    interface Presenter : BasePresenter, ScreenActionHandler, BottomTheaterActionHandler
 }
