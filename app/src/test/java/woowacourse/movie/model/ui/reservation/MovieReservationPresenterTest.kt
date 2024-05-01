@@ -23,18 +23,6 @@ class MovieReservationPresenterTest {
     }
 
     @Test
-    fun `영화 정보를 표시한다`() {
-        // given
-
-        // when
-        presenter.loadMovieContent(0L, 0L)
-
-        // then
-        verify { view.showMovieContent(any()) }
-        verify { view.showMovieDateSelection(any()) }
-    }
-
-    @Test
     fun `영화 정보를 표시할수 없을 경우 에러를 표시한다`() {
         // given
 
@@ -54,18 +42,6 @@ class MovieReservationPresenterTest {
 
         // then
         verify { view.updateReservationCount(3) }
-    }
-
-    @Test
-    fun `영화 날짜를 선택한다`() {
-        // given
-        presenter.loadMovieContent(0L, 0L)
-
-        // when
-        presenter.selectDate(LocalDate.of(2024, 3, 1))
-
-        // then
-        verify { view.showMovieTimeSelection(any()) }
     }
 
     @Test

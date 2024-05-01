@@ -24,7 +24,6 @@ class MovieReservationActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_reservation)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_reservation)
         binding.presenter = presenter
