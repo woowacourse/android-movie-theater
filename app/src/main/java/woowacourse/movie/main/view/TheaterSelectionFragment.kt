@@ -11,24 +11,37 @@ import woowacourse.movie.R
 import woowacourse.movie.data.MovieRepository.getMovieById
 import woowacourse.movie.databinding.FragmentTheaterSelectionBinding
 import woowacourse.movie.detail.view.MovieDetailActivity
+import woowacourse.movie.main.presenter.TheaterSelectionPresenter
+import woowacourse.movie.main.presenter.contract.TheaterSelectionContract
 import woowacourse.movie.main.view.adapter.theater.TheaterAdapter
+import woowacourse.movie.model.Theater
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
 
-class TheaterSelectionFragment : BottomSheetDialogFragment() {
+class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionContract.View {
+    private lateinit var binding: FragmentTheaterSelectionBinding
+
+    private lateinit var theaterSelectionPresenter: TheaterSelectionPresenter
+
+    private val movieId: Long by lazy { arguments?.getLong(KEY_MOVIE_ID) ?: INVALID_VALUE_MOVIE_ID }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        val binding: FragmentTheaterSelectionBinding =
+        binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_theater_selection, container, false)
 
-        val movieId = arguments?.getLong(KEY_MOVIE_ID) ?: INVALID_VALUE_MOVIE_ID
+        theaterSelectionPresenter = TheaterSelectionPresenter(this)
 
-        val theaters = getMovieById((movieId))?.theaters ?: emptyList()
+        theaterSelectionPresenter.loadTheaters(movieId)
 
+        return binding.root
+    }
+
+    override fun setUpTheaterAdapter(theaters: List<Theater>) {
         binding.theaterRecyclerview.adapter =
             TheaterAdapter(theaters) { position ->
                 Intent(requireActivity(), MovieDetailActivity::class.java).apply {
@@ -38,7 +51,5 @@ class TheaterSelectionFragment : BottomSheetDialogFragment() {
                     startActivity(this)
                 }
             }
-
-        return binding.root
     }
 }
