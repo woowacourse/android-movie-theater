@@ -2,23 +2,24 @@ package woowacourse.movie.presentation.seatSelection
 
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.Seat
+import woowacourse.movie.model.SeatingSystem
 import woowacourse.movie.model.Ticket
 
 interface SeatSelectionContract {
     interface View {
         fun displaySeats(seats: List<Seat>)
 
-        fun displayTicketInfo(movie: Movie)
+        fun bindMovie(movie: Movie)
 
         fun updateSelectedSeatUI(index: Int)
 
         fun updateUnSelectedSeatUI(index: Int)
 
-        fun updateTotalPrice(price: Int)
+        fun bindSeatingSystem(seatingSystem: SeatingSystem)
+
+        fun updateViews()
 
         fun showToastMessage(message: String?)
-
-        fun setButtonEnabledState(isEnabled: Boolean)
 
         fun navigate(ticket: Ticket)
     }

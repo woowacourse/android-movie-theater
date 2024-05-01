@@ -1,5 +1,7 @@
 package woowacourse.movie.model
 
+import java.text.DecimalFormat
+
 class SeatingSystem(
     private var availableSeatCount: Int,
     private val rowSize: Int = 5,
@@ -35,7 +37,13 @@ class SeatingSystem(
 
     fun canSelectSeat(): Boolean = availableSeatCount > selectedSeats.size
 
-    fun getTotalPrice(): Int = selectedSeats.sumOf { it.seatGrade.price }
+    private fun calculateTotalPrice(): Int = selectedSeats.sumOf { it.seatGrade.price }
+
+    fun totalPriceToString(): String = decimal.format(calculateTotalPrice())
 
     fun getSelectedSeatsIndex(): List<Int> = selectedSeats.map { (it.row * colSize) + it.col }
+
+    companion object {
+        val decimal = DecimalFormat("#,###")
+    }
 }

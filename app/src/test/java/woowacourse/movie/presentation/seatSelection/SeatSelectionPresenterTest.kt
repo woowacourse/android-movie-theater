@@ -30,13 +30,13 @@ class SeatSelectionPresenterTest {
         every { seatingSystem.trySelectSeat(any()) } returns Result.success(seat)
         every { view.updateSelectedSeatUI(any()) } just Runs
         every { view.setButtonEnabledState(any()) } just Runs
-        every { view.updateTotalPrice(any()) } just Runs
+        every { view.updateViews(any()) } just Runs
 
         presenter.updateSeatSelection(0)
 
         verify { view.updateSelectedSeatUI(0) }
         verify { view.setButtonEnabledState(any()) }
-        verify { view.updateTotalPrice(any()) }
+        verify { view.updateViews(any()) }
     }
 
     @Test

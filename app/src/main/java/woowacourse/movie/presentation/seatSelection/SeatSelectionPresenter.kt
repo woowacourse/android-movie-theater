@@ -17,7 +17,7 @@ class SeatSelectionPresenter(
         movieRepository.findMovieById(id)
             .onSuccess { movie ->
                 selectedMovie = movie
-                seatSelectionContractView.displayTicketInfo(movie)
+                seatSelectionContractView.bindMovie(movie)
                 updateUI()
             }
             .onFailure {
@@ -27,6 +27,7 @@ class SeatSelectionPresenter(
 
     override fun loadSeats() {
         seatSelectionContractView.displaySeats(seatingSystem.seats)
+        seatSelectionContractView.bindSeatingSystem(seatingSystem)
     }
 
     override fun updateSeatSelection(index: Int) {
@@ -55,8 +56,7 @@ class SeatSelectionPresenter(
     }
 
     private fun updateUI() {
-        seatSelectionContractView.setButtonEnabledState(!seatingSystem.canSelectSeat())
-        seatSelectionContractView.updateTotalPrice(seatingSystem.getTotalPrice())
+        seatSelectionContractView.updateViews()
     }
 
     override fun navigate(

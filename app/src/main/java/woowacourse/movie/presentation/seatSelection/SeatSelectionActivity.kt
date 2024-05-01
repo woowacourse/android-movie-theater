@@ -5,37 +5,39 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.Seat
 import woowacourse.movie.model.SeatGrade
+import woowacourse.movie.model.SeatingSystem
 import woowacourse.movie.model.Ticket
 import woowacourse.movie.presentation.ticketingResult.TicketingResultActivity
 import woowacourse.movie.utils.formatSeat
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private lateinit var presenter: SeatSelectionPresenter
-    private val completeButton by lazy { findViewById<Button>(R.id.btn_complete) }
-    private val totalPriceText by lazy { findViewById<TextView>(R.id.tv_total_price) }
     private val seatItems: List<TextView> by lazy {
-        findViewById<TableLayout>(R.id.tl_seats).children.filterIsInstance<TableRow>()
+        binding.tlSeats.children.filterIsInstance<TableRow>()
             .flatMap { tableRow ->
                 tableRow.children.filterIsInstance<TextView>().toList()
             }.toList()
     }
+    private lateinit var binding: ActivitySeatSelectionBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seat_selection)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_selection)
 
         val movieId = intent.getLongExtra(EXTRA_MOVIE_ID, EXTRA_DEFAULT_MOVIE_ID)
         val ticketCount = intent.getIntExtra(EXTRA_COUNT, EXTRA_DEFAULT_TICKET_COUNT)
@@ -52,7 +54,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         screeningDateTime: String,
         theaterId: Long,
     ) {
-        completeButton.setOnClickListener {
+        binding.btnComplete.setOnClickListener {
             AlertDialog.Builder(this)
                 .setTitle("예매 확인")
                 .setMessage("정말 예매하시겠습니까?")
@@ -80,8 +82,8 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         }
     }
 
-    override fun displayTicketInfo(movie: Movie) {
-        findViewById<TextView>(R.id.tv_title).text = movie.title
+    override fun bindMovie(movie: Movie) {
+        binding.movie = movie
     }
 
     override fun updateSelectedSeatUI(index: Int) {
@@ -92,16 +94,16 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         seatItems[index].isSelected = false
     }
 
-    override fun updateTotalPrice(price: Int) {
-        totalPriceText.text = getString(R.string.text_total_price, price)
+    override fun bindSeatingSystem(seatingSystem: SeatingSystem) {
+        binding.seatingSystem = seatingSystem
+    }
+
+    override fun updateViews() {
+        binding.invalidateAll()
     }
 
     override fun showToastMessage(message: String?) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun setButtonEnabledState(isEnabled: Boolean) {
-        completeButton.isEnabled = isEnabled
     }
 
     override fun navigate(ticket: Ticket) {
