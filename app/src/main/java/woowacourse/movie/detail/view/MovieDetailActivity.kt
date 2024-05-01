@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
@@ -30,20 +29,12 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
-    var detailImage: Int = 0
-    var detailTitle: String = ""
-    var startDate: String = ""
-    var endDate: String = ""
-    var detailRunningTime: Int = 0
-    var detailDescription: String = ""
-    var reservationCount: Int = 1
-
     private lateinit var movieDetailPresenter: MovieDetailPresenter
     private val movieId: Long by lazy { intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID) }
     private val selectedTheaterPosition: Int by lazy {
         intent.getIntExtra(
             KEY_SELECTED_THEATER_POSITION,
-            INVALID_VALUE_THEATER_POSITION
+            INVALID_VALUE_THEATER_POSITION,
         )
     }
 
@@ -66,8 +57,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         val position = binding.runningTimeSpinner.selectedItemPosition
         outState.putInt(KEY_ITEM_POSITION, position)
 
-        val count = reservationCount
-        outState.putInt(KEY_MOVIE_COUNT, count)
+        outState.putInt(KEY_MOVIE_COUNT, binding.reservationCount)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -90,18 +80,13 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         movieCount: MovieCount,
     ) {
         movieData?.let { movie ->
-            detailImage = movie.thumbnail
-            detailTitle = movie.title
-            startDate = movie.date.startLocalDate.toString()
-            endDate = movie.date.endLocalDate.toString()
-            detailRunningTime = movie.runningTime
-            detailDescription = movie.description
-            reservationCount = movieCount.count
+            binding.movie = movie
+            binding.reservationCount = movieCount.count
         }
     }
 
     override fun updateCountView(count: Int) {
-        reservationCount = count
+        binding.reservationCount = count
     }
 
     override fun setUpDateSpinner(movieDate: MovieDate) {

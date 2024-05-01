@@ -7,6 +7,12 @@
         <variable
             name="activity"
             type="woowacourse.movie.detail.view.MovieDetailActivity" />
+        <variable
+            name="movie"
+            type="woowacourse.movie.model.Movie" />
+        <variable
+            name="reservation_count"
+            type="int" />
     </data>
 
     <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -37,7 +43,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    movie:imgRes="@{activity.detailImage}" />
+                    movie:imgRes="@{movie.thumbnail}" />
 
                 <TextView
                     android:id="@+id/detailTitle"
@@ -46,7 +52,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
                     android:hint="타이타닉"
-                    android:text="@{activity.detailTitle}"
+                    android:text="@{movie.title}"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
                     android:textSize="24dp"
@@ -70,7 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="2024.3.1"
-                    android:text="@{activity.startDate}"
+                    android:text="@{movie.date.startLocalDate.toString()}"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
                     android:textSize="16dp"
@@ -95,7 +101,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="2024.3.5"
-                    android:text="@{activity.endDate}"
+                    android:text="@{movie.date.endLocalDate.toString()}"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
                     android:textSize="16dp"
@@ -120,7 +126,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="152"
-                    android:text="@{String.valueOf(activity.detailRunningTime)}"
+                    android:text="@{String.valueOf(movie.runningTime)}"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
                     android:textSize="16dp"
@@ -146,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:hint="설명1\n설명2\n설명3\n설명4\n설명\n"
-                    android:text="@{activity.detailDescription}"
+                    android:text="@{movie.description}"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
                     app:layout_constraintLeft_toLeftOf="@id/detailRunningTimeName"
@@ -195,7 +201,7 @@
                 android:id="@+id/detailReservCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{String.valueOf(activity.reservationCount)}"
+                android:text="@{String.valueOf(reservation_count)}"
                 android:textColor="@color/black"
                 android:textSize="20dp"
                 android:textStyle="bold"
