@@ -25,10 +25,12 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
     private lateinit var title: TextView
     private lateinit var priceView: TextView
     private lateinit var confirmButton: Button
+    private var theaterId: Long = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seats)
+        theaterId = intent.getLongExtra("threater_id_key", -1)
         initView()
         initSeats()
         setOnSelectSeat()
@@ -147,6 +149,7 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
         intent.putExtra(TIME_KEY, time)
         intent.putExtra(SEATS_KEY, seats as Serializable)
         intent.putExtra(PRICE_KEY, price)
+        intent.putExtra("threater_id_key", theaterId)
         startActivity(intent)
     }
 

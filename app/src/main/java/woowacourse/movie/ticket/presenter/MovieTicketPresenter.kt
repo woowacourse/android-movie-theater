@@ -21,7 +21,7 @@ class MovieTicketPresenter(
     }
 
     override fun setTicketInfo() {
-        view.showTicketView(MovieDataSource.movieList[movieId.toInt()].title, price, seats.size)
+        view.showTicketView(MovieDataSource.movieList[movieId.toInt()].title, price, seats.size, seats)
     }
 
     override fun storeScreeningDate(date: String) {
@@ -44,9 +44,9 @@ class MovieTicketPresenter(
         TicketDataResource.seats = seats
     }
 
-    override fun setSeatsInfo() {
-        view.showSeats(seats)
-    }
+//    override fun setSeatsInfo() {
+//        view.showSeats(seats)
+//    }
 
     override fun setScreeningTimeInfo() {
         view.showScreeningTime(TicketDataResource.screeningTime)

@@ -184,6 +184,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
             selectedDate.format(DateTimeFormatter.ofPattern(DATE_PATTERN)),
         )
         intent.putExtra(EXTRA_TIME_KEY, selectedTime.toString())
+        intent.putExtra("threater_id_key", theaterId)
         this.startActivity(intent)
     }
 

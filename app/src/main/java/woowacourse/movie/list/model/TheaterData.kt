@@ -24,7 +24,7 @@ object TheaterData {
     val theaters =
         listOf(
             Theater(
-                "선릉",
+                "선릉 극장",
                 mapOf(
                     movieList[0] to screeningTimes1,
                     movieList[2] to screeningTimes2,
@@ -34,7 +34,7 @@ object TheaterData {
                 0,
             ),
             Theater(
-                "잠실",
+                "잠실 극장",
                 mapOf(
                     movieList[0] to screeningTimes1,
                     movieList[2] to screeningTimes2,
@@ -47,7 +47,7 @@ object TheaterData {
                 1,
             ),
             Theater(
-                "강남",
+                "강남 극장",
                 mapOf(
                     movieList[0] to screeningTimes2,
                     movieList[1] to screeningTimes1,

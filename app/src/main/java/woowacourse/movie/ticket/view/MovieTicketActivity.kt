@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
+import woowacourse.movie.list.model.TheaterData
 import woowacourse.movie.seats.model.Seat
 import woowacourse.movie.seats.view.SeatsActivity.Companion.DATE_KEY
 import woowacourse.movie.seats.view.SeatsActivity.Companion.ID_KEY
 import woowacourse.movie.seats.view.SeatsActivity.Companion.PRICE_KEY
+import woowacourse.movie.seats.view.SeatsActivity.Companion.SEATS_KEY
 import woowacourse.movie.seats.view.SeatsActivity.Companion.TIME_KEY
 import woowacourse.movie.ticket.contract.MovieTicketContract
 import woowacourse.movie.ticket.presenter.MovieTicketPresenter
@@ -19,12 +21,15 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
     private lateinit var screeningTime: TextView
     private lateinit var price: TextView
     private lateinit var reservationInformation: TextView
-    private lateinit var seats: TextView
+
+//    private lateinit var seats: String
     override val presenter: MovieTicketPresenter = MovieTicketPresenter(this)
+    private var theaterId: Long = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_ticket)
+        theaterId = intent.getLongExtra("threater_id_key", -1)
         initViewById()
         processPresenterTask()
     }
@@ -35,17 +40,17 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
         presenter.storeScreeningDate(intent.getStringExtra(DATE_KEY) ?: "ddd")
         presenter.storeScreeningTime(intent.getStringExtra(TIME_KEY) ?: "ddd")
         presenter.storePrice(intent.getIntExtra(PRICE_KEY, 0))
-        // presenter.storeSeats(intent.getSerializableExtra(SEATS_KEY) as List<Seat>)
+        presenter.storeSeats(intent.getSerializableExtra(SEATS_KEY) as List<Seat>)
         presenter.setScreeningDateInfo()
         presenter.setScreeningTimeInfo()
-        presenter.setSeatsInfo()
+//        presenter.setSeatsInfo()
         presenter.setTicketInfo()
     }
 
-    override fun showSeats(seats: List<Seat>) {
-        val seatsCoordinate = seats.map { it.coordinate }
-        this.seats.text = seatsCoordinate.joinToString()
-    }
+//    override fun showSeats(seats: List<Seat>) {
+//        val seatsCoordinate = seats.map { it.coordinate }
+//        this.seats = seatsCoordinate.joinToString()
+//    }
 
     private fun initViewById() {
         title = findViewById(R.id.ticket_title)
@@ -59,10 +64,19 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
         movieTitle: String,
         moviePrice: Int,
         ticketCount: Int,
+        seats: List<Seat>,
     ) {
+        val seatsCoordinate = seats.map { it.coordinate }
+        val seat = seatsCoordinate.joinToString()
         title.text = movieTitle
         price.text = TICKET_PRICE.format(moviePrice)
-        reservationInformation.text = getString(R.string.ticket_information_format, ticketCount, seats, "dfafdas")
+        reservationInformation.text =
+            getString(
+                R.string.ticket_information_format,
+                ticketCount,
+                seat,
+                TheaterData.theaters.first { it.id == theaterId }.name,
+            )
     }
 
     override fun showScreeningDate(info: String) {
