@@ -23,6 +23,6 @@ class TheaterPresenter(
         theaterId: Long,
     ) {
         val screeningMovie = repository.screenMovieById(movieId, theaterId)
-        view.navigateMovieReservation(screeningMovie.id)
+        view.navigateMovieReservation(screeningMovie.id, theaterId)
     }
 }

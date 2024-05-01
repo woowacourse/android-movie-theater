@@ -50,8 +50,8 @@ class TheaterBottomSheetDialogFragment :
             )
     }
 
-    override fun navigateMovieReservation(screeningMovieId: Long) {
-        startActivity(MovieReservationActivity.getIntent(requireContext(), screeningMovieId))
+    override fun navigateMovieReservation(screeningMovieId: Long, theaterId: Long) {
+        startActivity(MovieReservationActivity.getIntent(requireContext(), screeningMovieId, theaterId))
     }
 
     companion object {
