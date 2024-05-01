@@ -3,7 +3,7 @@ package woowacourse.movie.reservation.presenter
 import woowacourse.movie.common.MovieDataSource
 import woowacourse.movie.list.model.TheaterData
 import woowacourse.movie.reservation.contract.MovieReservationContract
-import woowacourse.movie.reservation.model.DataResource
+import woowacourse.movie.reservation.model.MovieReservationDataResource
 import woowacourse.movie.reservation.model.MovieReservationTicketCountData
 import java.time.LocalTime
 
@@ -11,7 +11,12 @@ class MovieReservationPresenter(
     private val view: MovieReservationContract.View,
 ) : MovieReservationContract.Presenter {
     val model = MovieReservationTicketCountData
-    lateinit var screeningTimes: List<LocalTime>
+
+    private val theater
+        get() = TheaterData.theaters.first { it.id == MovieReservationDataResource.theaterId }
+
+    private var screeningTimes: List<LocalTime> =
+        theater.getScreeningTimes(MovieReservationDataResource.movieId)
 
     private val ticketCount
         get() = model.ticketCount
@@ -21,11 +26,15 @@ class MovieReservationPresenter(
     }
 
     override fun storeMovieId(movieId: Long) {
-        DataResource.movieId = movieId
+        MovieReservationDataResource.movieId = movieId
+    }
+
+    override fun storeTheaterId(theaterId: Long) {
+        MovieReservationDataResource.theaterId = theaterId
     }
 
     override fun setMovieInfo() {
-        val movieId = DataResource.movieId.toInt()
+        val movieId = MovieReservationDataResource.movieId.toInt()
         view.setMovieView(MovieDataSource.movieList[movieId])
     }
 
@@ -48,13 +57,11 @@ class MovieReservationPresenter(
     }
 
     override fun setSpinnerInfo(theaterId: Long) {
-        val theater = TheaterData.theaters.first { it.id == theaterId }
-        screeningTimes = theater.getScreeningTimes(DataResource.movieId)
-        view.showSpinner(DataResource.screeningDates, screeningTimes)
+        view.showSpinner(MovieReservationDataResource.screeningDates, screeningTimes)
     }
 
     override fun setSpinnerDateItemInfo() {
-        view.setOnSpinnerDateItemSelectedListener(DataResource.screeningDates)
+        view.setOnSpinnerDateItemSelectedListener(MovieReservationDataResource.screeningDates)
     }
 
     override fun setSpinnerTimeItemInfo() {
@@ -62,6 +69,6 @@ class MovieReservationPresenter(
     }
 
     override fun storeSelectedTime(selectedTime: LocalTime) {
-        DataResource.selectedScreeningTime = selectedTime
+        MovieReservationDataResource.selectedScreeningTime = selectedTime
     }
 }
