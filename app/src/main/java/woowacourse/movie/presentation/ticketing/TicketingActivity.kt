@@ -6,18 +6,17 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityTicketingBinding
+import woowacourse.movie.model.Count
 import woowacourse.movie.model.Movie
 import woowacourse.movie.presentation.seatSelection.SeatSelectionActivity
 import woowacourse.movie.repository.DummyTheaterList
 import woowacourse.movie.repository.MovieRepository
-import woowacourse.movie.utils.formatMovieDate
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -25,20 +24,19 @@ import java.time.format.DateTimeFormatter
 class TicketingActivity : AppCompatActivity(), TicketingContract.View {
     private lateinit var ticketingPresenter: TicketingPresenter
     private val countText by lazy { findViewById<TextView>(R.id.tv_count) }
-    private val movieDateSpinner by lazy { findViewById<Spinner>(R.id.sp_date) }
     private val movieDateAdapter: ArrayAdapter<LocalDate> by lazy {
         ArrayAdapter(
             this,
             androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
         )
     }
-    private val movieTimeSpinner by lazy { findViewById<Spinner>(R.id.sp_time_slot) }
     private val movieTimeAdapter: ArrayAdapter<String> by lazy {
         ArrayAdapter<String>(
             this,
             androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
         )
     }
+    private lateinit var binding: ActivityTicketingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,52 +47,29 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
         val theaterId = intent.getLongExtra(EXTRA_THEATER_ID, EXTRA_DEFAULT_THEATER_ID)
 
         ticketingPresenter = TicketingPresenter(this, MovieRepository(), DummyTheaterList)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_ticketing)
+
+        binding.presenter = ticketingPresenter
+
         ticketingPresenter.loadMovieData(movieId, theaterId)
-        initializeButtons()
-    }
-
-    private fun initializeButtons() {
-        val minusButton = findViewById<Button>(R.id.btn_minus)
-        val plusButton = findViewById<Button>(R.id.btn_plus)
-        val completeButton = findViewById<Button>(R.id.btn_choose_seat)
-
-        minusButton.setOnClickListener {
-            ticketingPresenter.decreaseCount()
-        }
-
-        plusButton.setOnClickListener {
-            ticketingPresenter.increaseCount()
-        }
-
-        completeButton.setOnClickListener {
-            ticketingPresenter.navigate()
-        }
     }
 
     override fun displayMovieDetail(movie: Movie) {
-        findViewById<ImageView>(R.id.iv_thumbnail).apply { setImageResource(movie.thumbnail) }
-        findViewById<TextView>(R.id.tv_title).apply { text = movie.title }
-        findViewById<TextView>(R.id.tv_date).apply {
-            text =
-                context.getString(
-                    R.string.title_date,
-                    formatMovieDate(movie.screeningDates.startDate),
-                    formatMovieDate(movie.screeningDates.endDate),
-                )
-        }
-        findViewById<TextView>(R.id.tv_running_time).apply {
-            text = getString(R.string.title_running_time, movie.runningTime)
-        }
-        findViewById<TextView>(R.id.tv_introduction).apply { text = movie.introduction }
+        binding.movie = movie
+        binding.ivThumbnail.setImageResource(movie.thumbnail)
     }
 
-    override fun displayTicketCount(count: Int) {
-        countText.text = count.toString()
+    override fun bindTicketCount(count: Count) {
+        binding.count = count
+    }
+
+    override fun updateTicketCount() {
+        binding.invalidateAll()
     }
 
     override fun setUpDateSpinners(screeningDates: List<LocalDate>) {
         movieDateAdapter.addAll(screeningDates)
-        movieDateSpinner.adapter = movieDateAdapter
+        binding.spDate.adapter = movieDateAdapter
     }
 
     override fun setUpTimeSpinners(
@@ -103,8 +78,8 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
     ) {
         movieTimeAdapter.clear()
         movieTimeAdapter.addAll(screeningTimes.map { it.format(DateTimeFormatter.ofPattern("kk:mm")) })
-        movieTimeSpinner.adapter = movieTimeAdapter
-        savedTimePosition?.let { movieTimeSpinner.setSelection(it) }
+        binding.spTimeSlot.adapter = movieTimeAdapter
+        savedTimePosition?.let { binding.spTimeSlot.setSelection(it) }
     }
 
     override fun navigate(
@@ -112,7 +87,7 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
         count: Int,
         theaterId: Long,
     ) {
-        val screeningDateTime = "${movieDateSpinner.selectedItem} ${movieTimeSpinner.selectedItem}"
+        val screeningDateTime = "${binding.spDate.selectedItem} ${binding.spTimeSlot.selectedItem}"
         startActivity(
             SeatSelectionActivity.createIntent(this, movieId, count, screeningDateTime, theaterId),
         )
@@ -125,7 +100,7 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(KEY_SAVED_COUNT, countText.text.toString().toInt())
-        outState.putInt(KEY_SELECTED_TIME_POSITION, movieTimeSpinner.selectedItemPosition)
+        outState.putInt(KEY_SELECTED_TIME_POSITION, binding.spTimeSlot.selectedItemPosition)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {

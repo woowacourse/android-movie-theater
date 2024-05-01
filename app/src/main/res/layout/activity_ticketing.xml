@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="movie"
+            type="woowacourse.movie.model.Movie" />
+        <variable
+            name="count"
+            type="woowacourse.movie.model.Count" />
+        <variable
+            name="presenter"
+            type="woowacourse.movie.presentation.ticketing.TicketingPresenter" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -37,37 +52,75 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:text="@{movie.title}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_thumbnail" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_date_head"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/item_movie_screen_date"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/title_date"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="24dp"
+                android:text="@{movie.screenPeriodToString()}"
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_date_head"
+               app:layout_constraintBaseline_toBaselineOf="@id/tv_date_head" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_running_time_head"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:maxLines="1"
+                android:text="@string/item_movie_running_time"
+                android:textColor="@color/black"
+                android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_title" />
+                app:layout_constraintTop_toBottomOf="@id/tv_date" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_running_time"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginStart="8dp"
                 android:maxLines="1"
-                android:text="@string/title_running_time"
+                android:text="@{String.valueOf(movie.runningTime)}"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_date" />
+                app:layout_constraintStart_toEndOf="@id/tv_running_time_head"
+                app:layout_constraintBaseline_toBaselineOf="@id/tv_running_time_head"/>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_running_time_tail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:maxLines="1"
+                android:text="분"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@id/tv_running_time"
+                app:layout_constraintBaseline_toBaselineOf="@id/tv_running_time_head"/>
+
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_introduction"
@@ -77,6 +130,7 @@
                 android:layout_marginVertical="8dp"
                 android:textColor="@color/black"
                 android:textSize="12sp"
+                android:text="@{movie.introduction}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -132,6 +186,7 @@
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginTop="8dp"
+        android:onClick="@{() -> presenter.decreaseCount()}"
         app:layout_constraintStart_toStartOf="@id/gl_start"
         app:layout_constraintTop_toBottomOf="@id/sp_date" />
 
@@ -146,6 +201,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/btn_minus"
+        android:text="@{String.valueOf(count.value)}"
         tools:text="1" />
 
     <Button
@@ -155,6 +211,7 @@
         android:text="@string/text_plus_button"
         android:textSize="24sp"
         android:textStyle="bold"
+        android:onClick="@{() -> presenter.increaseCount()}"
         app:layout_constraintEnd_toEndOf="@id/gl_end"
         app:layout_constraintBottom_toBottomOf="@id/btn_minus"
         app:layout_constraintTop_toTopOf="@id/btn_minus" />
@@ -167,9 +224,11 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:paddingVertical="12dp"
+        android:onClick="@{() -> presenter.navigate()}"
         app:layout_constraintTop_toBottomOf="@id/btn_plus"
         app:layout_constraintStart_toStartOf="@id/gl_start"
         app:layout_constraintEnd_toEndOf="@id/gl_end"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

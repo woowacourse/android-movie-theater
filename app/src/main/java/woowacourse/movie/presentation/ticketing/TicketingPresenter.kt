@@ -1,6 +1,5 @@
 package woowacourse.movie.presentation.ticketing
 
-import android.view.View
 import woowacourse.movie.model.Count
 import woowacourse.movie.model.Movie
 import woowacourse.movie.repository.MovieRepository
@@ -28,7 +27,7 @@ class TicketingPresenter(
                 ticketingContractView.setUpDateSpinners(
                     movie.screeningDates.getDatesBetweenStartAndEnd(),
                 )
-                ticketingContractView.displayTicketCount(count.value)
+                ticketingContractView.bindTicketCount(count)
                 loadTimeList(theaterId)
             }
             .onFailure {
@@ -45,7 +44,7 @@ class TicketingPresenter(
 
     override fun updateCount(savedCount: Int) {
         count.update(savedCount)
-        ticketingContractView.displayTicketCount(count.value)
+        ticketingContractView.bindTicketCount(count)
     }
 
     override fun updateSelectedTimePosition(savedTimePosition: Int) {
@@ -54,12 +53,12 @@ class TicketingPresenter(
 
     override fun decreaseCount() {
         count.decrease()
-        ticketingContractView.displayTicketCount(count.value)
+        ticketingContractView.updateTicketCount()
     }
 
     override fun increaseCount() {
         count.increase()
-        ticketingContractView.displayTicketCount(count.value)
+        ticketingContractView.updateTicketCount()
     }
 
     override fun navigate() {

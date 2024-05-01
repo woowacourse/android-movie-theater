@@ -43,13 +43,13 @@ class TicketingPresenterTest {
         every { repository.findMovieById(any()) } returns Result.success(dummyMovies[0])
         every { view.displayMovieDetail(any()) } just Runs
         every { view.setUpDateSpinners(any(), any()) } just Runs
-        every { view.displayTicketCount(any()) } just Runs
+        every { view.bindTicketCount(any()) } just Runs
 
         presenter.loadMovieData(0)
 
         verify { view.displayMovieDetail(dummyMovies[0]) }
         verify { view.setUpDateSpinners(any(), any()) }
-        verify { view.displayTicketCount(1) }
+        verify { view.bindTicketCount(1) }
     }
 
     @Test
@@ -64,21 +64,21 @@ class TicketingPresenterTest {
 
     @Test
     fun `increaseCount 호출 시, view에게 변경된 티켓 개수를 전달한다`() {
-        every { view.displayTicketCount(any()) } just Runs
+        every { view.bindTicketCount(any()) } just Runs
 
         presenter.increaseCount()
 
-        verify { view.displayTicketCount(2) }
+        verify { view.bindTicketCount(2) }
     }
 
     @Test
     fun `decreaseCount 호출 시, view에게 변경된 티켓 개수를 전달한다`() {
-        every { view.displayTicketCount(any()) } just Runs
+        every { view.bindTicketCount(any()) } just Runs
 
         presenter.increaseCount()
         presenter.decreaseCount()
 
-        verify { view.displayTicketCount(1) }
+        verify { view.bindTicketCount(1) }
     }
 
     @Test
@@ -86,7 +86,7 @@ class TicketingPresenterTest {
         every { repository.findMovieById(any()) } returns Result.success(dummyMovies[0])
         every { view.displayMovieDetail(any()) } just Runs
         every { view.setUpDateSpinners(any(), any()) } just Runs
-        every { view.displayTicketCount(any()) } just Runs
+        every { view.bindTicketCount(any()) } just Runs
         every { view.navigate(any(), any()) } just Runs
 
         presenter.loadMovieData(0)

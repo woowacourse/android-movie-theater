@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.ticketing
 
+import woowacourse.movie.model.Count
 import woowacourse.movie.model.Movie
 import java.time.LocalDate
 import java.time.LocalTime
@@ -8,7 +9,9 @@ interface TicketingContract {
     interface View {
         fun displayMovieDetail(movie: Movie)
 
-        fun displayTicketCount(count: Int)
+        fun bindTicketCount(count: Count)
+
+        fun updateTicketCount()
 
         fun setUpDateSpinners(screeningDates: List<LocalDate>)
 
