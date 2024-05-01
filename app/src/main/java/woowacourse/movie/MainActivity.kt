@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
         DataBindingUtil.setContentView(
             this,
-            R.layout.activity_main
+            R.layout.activity_main,
         )
     }
 
@@ -26,16 +26,17 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("ResourceType")
     private fun setBottomNavigationView() {
-        val fragments = mapOf(
-            R.id.fragment_home to HomeFragment(),
-            R.id.fragment_list to ReservationHistoryFragment(),
-            R.id.fragment_setting to SettingFragment()
-        )
+        val fragments =
+            mapOf(
+                R.id.fragment_home to HomeFragment(),
+                R.id.fragment_list to ReservationHistoryFragment(),
+                R.id.fragment_setting to SettingFragment(),
+            )
         binding.bottomNavigationMain.setOnItemSelectedListener { item ->
             fragments[item.itemId]?.let { currentFragment ->
                 supportFragmentManager.navigateToFragment(
                     R.id.fragment_container_main,
-                    currentFragment
+                    currentFragment,
                 )
                 true
             } ?: false
