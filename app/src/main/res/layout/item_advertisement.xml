@@ -4,8 +4,14 @@
     <data>
 
         <variable
+            name="advertisement_link"
+            type="String" />
+        <variable
             name="advertisement_view_holder"
             type="woowacourse.movie.home.view.adapter.movie.AdvertisementViewHolder" />
+        <variable
+            name="advertisement_image_id"
+            type="int" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -21,8 +27,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:onClick="@{() -> advertisement_view_holder.advertisementImageClick()}"
-            movie:imgRes="@{advertisement_view_holder.advertisementImage}"
+            android:onClick="@{() -> advertisement_view_holder.advertisementImageClick(advertisement_link)}"
+            movie:imgRes="@{advertisement_image_id}"
             tools:src="@drawable/advertisement" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

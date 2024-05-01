@@ -6,8 +6,11 @@
     <data>
 
         <variable
-            name="movie_view_holder"
-            type="woowacourse.movie.home.view.adapter.movie.MovieViewHolder" />
+            name="movie"
+            type="woowacourse.movie.model.Movie" />
+        <variable
+            name="reservation_button_click_listener"
+            type="woowacourse.movie.home.view.listener.ReservationButtonClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -20,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
-            android:onClick="@{() -> movie_view_holder.reservationButtonClick()}"
+            android:onClick="@{() -> reservation_button_click_listener.onClick(movie.id)}"
             android:text="지금 예매"
             android:textSize="14dp"
             android:textStyle="bold"
@@ -37,7 +40,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            movie:imgRes="@{movie_view_holder.thumbnail}" />
+            movie:imgRes="@{movie.thumbnail}" />
 
         <TextView
             android:id="@+id/movieDateTitle"
@@ -57,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:hint="2024.3.1"
-            android:text="@{movie_view_holder.startDate}"
+            android:text="@{movie.date.startLocalDate.toString()}"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
             android:textSize="12dp"
@@ -83,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:hint="2024.3.5"
-            android:text="@{movie_view_holder.endDate}"
+            android:text="@{movie.date.endLocalDate.toString()}"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
             android:textSize="12dp"
@@ -110,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:hint="152"
-            android:text="@{movie_view_holder.runningTime}"
+            android:text="@{String.valueOf(movie.runningTime)}"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
             android:textSize="12dp"
@@ -138,7 +141,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:hint="타이타닉"
-            android:text="@{movie_view_holder.title}"
+            android:text="@{movie.title}"
             android:textColor="@color/black"
             android:textSize="16dp"
             android:textStyle="bold"

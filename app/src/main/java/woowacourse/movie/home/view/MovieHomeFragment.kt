@@ -1,7 +1,6 @@
 package woowacourse.movie.home.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import woowacourse.movie.databinding.FragmentMovieHomeBinding
 import woowacourse.movie.home.presenter.MovieHomePresenter
 import woowacourse.movie.home.presenter.contract.MovieHomeContract
 import woowacourse.movie.home.view.adapter.movie.MovieAdapter
+import woowacourse.movie.home.view.listener.ReservationButtonClickListener
 import woowacourse.movie.model.Movie
 import woowacourse.movie.util.MovieIntentConstant
 
@@ -22,7 +22,7 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_movie_home, container, false)
@@ -32,7 +32,13 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View {
     }
 
     override fun displayMovies(movies: List<Movie>) {
-        binding.movieRecyclerView.adapter = MovieAdapter(movies, ::displayTheaterSelectionDialog)
+        val reservationButtonClickListener =
+            object : ReservationButtonClickListener {
+                override fun onClick(movieId: Long) {
+                    displayTheaterSelectionDialog(movieId)
+                }
+            }
+        binding.movieRecyclerView.adapter = MovieAdapter(movies, reservationButtonClickListener)
     }
 
     override fun displayTheaterSelectionDialog(id: Long) {
