@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.AdapterView
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageView
@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.model.Movie
 import woowacourse.movie.presentation.seatSelection.SeatSelectionActivity
+import woowacourse.movie.repository.DummyTheaterList
+import woowacourse.movie.repository.MovieRepository
 import woowacourse.movie.utils.formatMovieDate
 import java.time.LocalDate
 import java.time.LocalTime
@@ -46,7 +48,7 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
         val movieId = intent.getLongExtra(EXTRA_MOVIE_ID, EXTRA_DEFAULT_MOVIE_ID)
         val theaterId = intent.getLongExtra(EXTRA_THEATER_ID, EXTRA_DEFAULT_THEATER_ID)
 
-        ticketingPresenter = TicketingPresenter(this)
+        ticketingPresenter = TicketingPresenter(this, MovieRepository(), DummyTheaterList)
         ticketingPresenter.loadMovieData(movieId, theaterId)
         initializeButtons()
     }
@@ -90,13 +92,9 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
         countText.text = count.toString()
     }
 
-    override fun setUpDateSpinners(
-        screeningDates: List<LocalDate>,
-        listener: AdapterView.OnItemSelectedListener,
-    ) {
+    override fun setUpDateSpinners(screeningDates: List<LocalDate>) {
         movieDateAdapter.addAll(screeningDates)
         movieDateSpinner.adapter = movieDateAdapter
-        movieDateSpinner.onItemSelectedListener = listener
     }
 
     override fun setUpTimeSpinners(

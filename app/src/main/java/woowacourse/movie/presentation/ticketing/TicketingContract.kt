@@ -1,6 +1,5 @@
 package woowacourse.movie.presentation.ticketing
 
-import android.widget.AdapterView.OnItemSelectedListener
 import woowacourse.movie.model.Movie
 import java.time.LocalDate
 import java.time.LocalTime
@@ -11,10 +10,7 @@ interface TicketingContract {
 
         fun displayTicketCount(count: Int)
 
-        fun setUpDateSpinners(
-            screeningDates: List<LocalDate>,
-            listener: OnItemSelectedListener,
-        )
+        fun setUpDateSpinners(screeningDates: List<LocalDate>)
 
         fun setUpTimeSpinners(
             screeningTimes: List<LocalTime>,

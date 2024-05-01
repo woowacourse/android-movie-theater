@@ -13,5 +13,5 @@ class TicketingResultPresenter(
         }
     }
 
-    private fun findTheaterName(theaterId: Long): String = theaterListRepository.findTheaterNameWithId(theaterId)
+    private fun findTheaterName(theaterId: Long): String = theaterListRepository.findTheaterOrNull(theaterId)?.name ?: ""
 }

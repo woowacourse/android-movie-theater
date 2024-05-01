@@ -92,7 +92,7 @@ object DummyTheaterList : TheaterListRepository {
             ),
         )
 
-    override fun find(movieId: Long): List<Theater> {
+    override fun findTheaterList(movieId: Long): List<Theater> {
         return list.filter { theater ->
             theater.screens.any { screen ->
                 screen.movieId == movieId
@@ -100,9 +100,9 @@ object DummyTheaterList : TheaterListRepository {
         }
     }
 
-    override fun findTheaterNameWithId(theaterId: Long): String {
+    override fun findTheaterOrNull(theaterId: Long): Theater? {
         return list.find { theater ->
             theater.id == theaterId
-        }?.name.toString() + " 극장"
+        }
     }
 }

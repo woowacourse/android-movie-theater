@@ -38,7 +38,7 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
         theaterName: String,
     ) {
         binding.ticket = ticket
-        binding.theaterName = theaterName
+        binding.theaterName = "$theaterName 극장"
     }
 
     override fun showToastMessage(message: String?) {

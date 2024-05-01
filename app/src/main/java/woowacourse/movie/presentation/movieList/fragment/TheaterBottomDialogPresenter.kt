@@ -7,7 +7,7 @@ class TheaterBottomDialogPresenter(
     private val repository: TheaterListRepository,
 ) : TheaterBottomDialogContract.Presenter {
     override fun loadTheaters(movieId: Long) {
-        val theaterList = repository.find(movieId)
+        val theaterList = repository.findTheaterList(movieId)
         view.showTheaterList(theaterList)
     }
 }

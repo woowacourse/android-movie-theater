@@ -1,18 +1,16 @@
 package woowacourse.movie.presentation.ticketing
 
 import android.view.View
-import android.widget.AdapterView
 import woowacourse.movie.model.Count
 import woowacourse.movie.model.Movie
-import woowacourse.movie.model.ScreeningTimeSchedule
 import woowacourse.movie.repository.MovieRepository
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import woowacourse.movie.repository.TheaterListRepository
 
 class TicketingPresenter(
     private val ticketingContractView: TicketingContract.View,
     private val movieRepository: MovieRepository = MovieRepository(),
-) : TicketingContract.Presenter, AdapterView.OnItemSelectedListener {
+    private val theaterListRepository: TheaterListRepository,
+) : TicketingContract.Presenter {
     private val count = Count()
     private lateinit var selectedMovie: Movie
     private var selectedTimePosition = 0
@@ -29,13 +27,20 @@ class TicketingPresenter(
                 ticketingContractView.displayMovieDetail(movie)
                 ticketingContractView.setUpDateSpinners(
                     movie.screeningDates.getDatesBetweenStartAndEnd(),
-                    this,
                 )
                 ticketingContractView.displayTicketCount(count.value)
+                loadTimeList(theaterId)
             }
             .onFailure {
                 ticketingContractView.showErrorMessage(it.message)
             }
+    }
+
+    private fun loadTimeList(theaterId: Long) {
+        theaterListRepository.findTheaterOrNull(theaterId)?.let {
+            val timeList = it.findScreenScheduleListWithMovieId(selectedMovie.id)
+            ticketingContractView.setUpTimeSpinners(timeList, selectedTimePosition)
+        }
     }
 
     override fun updateCount(savedCount: Int) {
@@ -60,21 +65,4 @@ class TicketingPresenter(
     override fun navigate() {
         ticketingContractView.navigate(selectedMovie.id, count.value, theaterId)
     }
-
-    override fun onItemSelected(
-        parent: AdapterView<*>?,
-        view: View?,
-        position: Int,
-        id: Long,
-    ) {
-        val selected = parent?.getItemAtPosition(position).toString()
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val timeSlots =
-            ScreeningTimeSchedule.generateAvailableTimeSlots(
-                LocalDate.parse(selected, formatter),
-            )
-        ticketingContractView.setUpTimeSpinners(timeSlots, selectedTimePosition)
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {}
 }
