@@ -12,13 +12,8 @@ import woowacourse.movie.presentation.movieList.viewholder.MovieViewHolder
 
 class MovieAdapter(
     private var movies: List<Movie> = emptyList(),
-    val listener: MovieListClickListener,
+    private val listener: MovieListClickListener,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    override fun getItemViewType(position: Int): Int {
-        if ((position + 1) % AD_POSITION == 0) return AD_VIEW_TYPE
-        return MOVIE_VIEW_TYPE
-    }
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -26,7 +21,8 @@ class MovieAdapter(
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             MOVIE_VIEW_TYPE -> {
-                val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val binding =
+                    ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 MovieViewHolder(binding, listener)
             }
 
@@ -46,6 +42,11 @@ class MovieAdapter(
             is MovieViewHolder -> holder.bind(item)
             is AdViewHolder -> holder.bind()
         }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        if ((position + 1) % AD_POSITION == 0) return AD_VIEW_TYPE
+        return MOVIE_VIEW_TYPE
     }
 
     override fun getItemId(position: Int): Long = movies[position].id

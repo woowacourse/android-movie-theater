@@ -18,13 +18,5 @@ class TheaterViewHolder(private val binding: ItemTheaterBinding) : RecyclerView.
         binding.theater = theater
         binding.movieId = movieId
         binding.listener = listener
-//        time.text =
-//            theater.screens
-//                .filter { screen -> screen.movieId == movieId }
-//                .flatMap { screen -> screen.screenSchedule }
-//                .size.toString()
-//        arrowButton.setOnClickListener {
-//            listener(theater.id, movieId)
-//        }
     }
 }

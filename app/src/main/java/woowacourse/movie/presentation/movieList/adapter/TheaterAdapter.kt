@@ -12,8 +12,7 @@ class TheaterAdapter(
     private val theaters: List<Theater>,
     private val movieId: Long,
     private val listener: TheaterClickListener,
-) :
-    RecyclerView.Adapter<TheaterViewHolder>() {
+) : RecyclerView.Adapter<TheaterViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -22,14 +21,14 @@ class TheaterAdapter(
         return TheaterViewHolder(binding)
     }
 
-    override fun getItemCount(): Int {
-        return theaters.size
-    }
-
     override fun onBindViewHolder(
         holder: TheaterViewHolder,
         position: Int,
     ) {
         holder.bind(theaters[position], movieId, listener)
+    }
+
+    override fun getItemCount(): Int {
+        return theaters.size
     }
 }

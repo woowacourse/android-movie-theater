@@ -64,6 +64,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/item_theater_name_tv"
             app:layout_constraintTop_toBottomOf="@id/item_theater_name_tv"
+            android:text="@{String.valueOf(theater.findScreenScheduleListWithMovieId(movieId).size())}"
             tools:text="3" />
 
         <TextView

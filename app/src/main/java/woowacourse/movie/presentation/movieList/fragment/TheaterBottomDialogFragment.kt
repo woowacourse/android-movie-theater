@@ -11,20 +11,14 @@ import woowacourse.movie.model.Theater
 import woowacourse.movie.presentation.movieList.adapter.TheaterAdapter
 import woowacourse.movie.presentation.movieList.listener.TheaterClickListener
 import woowacourse.movie.presentation.ticketing.TicketingActivity
+import woowacourse.movie.repository.TheaterListRepository
 
 class TheaterBottomDialogFragment(
-    private val theaters: List<Theater>,
+    theaterListRepository: TheaterListRepository,
     private val movieId: Long,
-) : BottomSheetDialogFragment(), TheaterClickListener {
-    override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?,
-    ) {
-        super.onViewCreated(view, savedInstanceState)
-        val adapter =
-            TheaterAdapter(theaters, movieId, this)
-        view.findViewById<RecyclerView>(R.id.theater_list_rv).adapter = adapter
-    }
+) : BottomSheetDialogFragment(), TheaterClickListener, TheaterBottomDialogContract.View {
+    private val presenter = TheaterBottomDialogPresenter(this, theaterListRepository)
+    private lateinit var theaterRv: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +26,21 @@ class TheaterBottomDialogFragment(
         savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.fragment_theater_bottom_sheet_dialog, container, false)
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+        theaterRv = view.findViewById(R.id.theater_list_rv)
+        presenter.loadTheaters(movieId)
+    }
+
+    override fun showTheaterList(theaterList: List<Theater>) {
+        val adapter =
+            TheaterAdapter(theaterList, movieId, this)
+        theaterRv.adapter = adapter
     }
 
     override fun onTheaterClick(

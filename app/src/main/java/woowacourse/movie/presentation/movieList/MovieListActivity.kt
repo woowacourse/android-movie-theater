@@ -25,7 +25,7 @@ class MovieListActivity : AppCompatActivity(), MovieListContract.View, MovieList
     }
 
     override fun ticketingButtonClick(movieId: Long) {
-        val bottomSheet = TheaterBottomDialogFragment(DummyTheaterList.find(movieId), movieId)
+        val bottomSheet = TheaterBottomDialogFragment(DummyTheaterList, movieId)
         bottomSheet.show(supportFragmentManager, bottomSheet.tag)
     }
 }
