@@ -1,39 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+
+        <variable
+            name="theater_view_holder"
+            type="woowacourse.movie.main.view.adapter.theater.TheaterViewHolder" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:onClick="@{() -> theater_view_holder.theaterItemClick()}"
         android:padding="8dp">
 
         <TextView
             android:id="@+id/theater_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="30dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{theater_view_holder.theaterName}"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:hint="선릉" />
-
-        <TextView
-            android:id="@+id/theater_name_format"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" 극장"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toRightOf="@+id/theater_name"
-            app:layout_constraintTop_toTopOf="parent" />
+            tools:hint="선릉 극장" />
 
         <TextView
             android:id="@+id/screening_time_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{String.valueOf(theater_view_holder.screeningTimeNumber)}"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@id/screening_time_number_format"
             app:layout_constraintLeft_toLeftOf="@id/theater_name"

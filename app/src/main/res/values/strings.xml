@@ -2,4 +2,5 @@
     <string name="app_name">Movie</string>
     <string name="seat">%1$s%2$s</string>
     <string name="result">일반 %d명 | %s | %s 극장</string>
+    <string name="theater">%s 극장</string>
 </resources>

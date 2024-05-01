@@ -1,19 +1,30 @@
 package woowacourse.movie.main.view.adapter.theater
 
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemTheaterBinding
 import woowacourse.movie.model.Theater
 
 class TheaterViewHolder(private val binding: ItemTheaterBinding) :
     RecyclerView.ViewHolder(binding.root) {
+    var theaterName: String = ""
+    var screeningTimeNumber: Int = 0
+    lateinit var onTheaterItemClick: (Int) -> Unit
+
+    init {
+        binding.theaterViewHolder = this
+    }
+
     fun bind(
         theater: Theater,
         onTheaterItemClick: (Int) -> Unit,
     ) {
-        binding.theaterName.text = theater.name
-        binding.screeningTimeNumber.text = theater.screeningTimes.size.toString()
-        binding.root.setOnClickListener {
-            onTheaterItemClick(bindingAdapterPosition)
-        }
+        theaterName = binding.root.resources.getString(R.string.theater, theater.name)
+        screeningTimeNumber = theater.screeningTimes.size
+        this.onTheaterItemClick = onTheaterItemClick
+    }
+
+    fun theaterItemClick() {
+        onTheaterItemClick(bindingAdapterPosition)
     }
 }
