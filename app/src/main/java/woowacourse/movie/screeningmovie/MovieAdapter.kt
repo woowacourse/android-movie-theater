@@ -4,11 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemScreeningAdvertiseBinding
+import woowacourse.movie.databinding.ItemScreeningMovieBinding
 
 class MovieAdapter(
     private val movies: List<ScreeningItem>,
     private val onClickReservationButton: (id: Long) -> Unit = {},
 ) : RecyclerView.Adapter<ScreeningViewHolder>() {
+
     override fun getItemViewType(position: Int): Int {
         return when (movies[position]) {
             is ScreenMovieUiModel -> MOVIE
@@ -22,17 +25,21 @@ class MovieAdapter(
     ): ScreeningViewHolder {
         return when (viewType) {
             MOVIE -> {
-                val view =
-                    LayoutInflater.from(parent.context)
-                        .inflate(R.layout.item_screening_movie, parent, false)
-                MovieViewHolder(view, onClickReservationButton)
+                val binding = ItemScreeningMovieBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                MovieViewHolder(binding, onClickReservationButton)
             }
 
             ADVERTISE -> {
-                val view =
-                    LayoutInflater.from(parent.context)
-                        .inflate(R.layout.item_screening_advertise, parent, false)
-                AdvertiseViewHolder(view)
+                val binding = ItemScreeningAdvertiseBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                AdvertiseViewHolder(binding)
             }
 
             else -> throw IllegalArgumentException()
@@ -45,7 +52,7 @@ class MovieAdapter(
     ) {
         when (holder) {
             is MovieViewHolder -> holder.onBind(movies[position] as ScreenMovieUiModel)
-            is AdvertiseViewHolder -> { }
+            is AdvertiseViewHolder -> {}
         }
     }
 
