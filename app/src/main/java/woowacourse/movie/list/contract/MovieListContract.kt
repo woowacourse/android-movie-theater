@@ -1,6 +1,5 @@
 package woowacourse.movie.list.contract
 
-import android.os.Bundle
 import woowacourse.movie.list.model.Advertisement
 import woowacourse.movie.list.model.Movie
 
@@ -13,7 +12,7 @@ interface MovieListContract {
             advertisements: List<Advertisement>,
         )
 
-        fun setOnListViewClickListener(savedInstanceState: Bundle?)
+        fun setOnListViewClickListener()
     }
 
     interface Presenter {
@@ -21,6 +20,6 @@ interface MovieListContract {
 
         fun setMoviesInfo()
 
-        fun setListViewClickListenerInfo(savedInstanceState: Bundle?)
+        fun setListViewClickListenerInfo()
     }
 }

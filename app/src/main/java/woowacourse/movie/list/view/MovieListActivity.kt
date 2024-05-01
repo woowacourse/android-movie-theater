@@ -33,7 +33,7 @@ class MovieListActivity : AppCompatActivity(), MovieListContract.View {
         recyclerView = findViewById(R.id.movie_recycler_view)
         theaterFragmentLayout = findViewById(R.id.fragment_container_view)
         presenter.setMoviesInfo()
-        presenter.setListViewClickListenerInfo(savedInstanceState)
+        presenter.setListViewClickListenerInfo()
 //        darkView = findViewById(R.id.dark_view)
     }
 
@@ -51,7 +51,7 @@ class MovieListActivity : AppCompatActivity(), MovieListContract.View {
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     }
 
-    override fun setOnListViewClickListener(savedInstanceState: Bundle?) {
+    override fun setOnListViewClickListener() {
         movieAdapter.setItemClickListener(
             object : MovieAdapter.OnItemClickListener {
                 override fun onClick(movieId: Long) {

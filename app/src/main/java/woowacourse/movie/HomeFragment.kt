@@ -31,7 +31,7 @@ class HomeFragment : Fragment(), MovieListContract.View {
 //        binding.fragment = this
 
         presenter.setMoviesInfo()
-        presenter.setListViewClickListenerInfo(savedInstanceState)
+        presenter.setListViewClickListenerInfo()
 
         return binding.root
     }
@@ -46,7 +46,7 @@ class HomeFragment : Fragment(), MovieListContract.View {
         binding.movieRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
 
-    override fun setOnListViewClickListener(savedInstanceState: Bundle?) {
+    override fun setOnListViewClickListener() {
         movieAdapter.setItemClickListener(
             object : MovieAdapter.OnItemClickListener {
                 override fun onClick(movieId: Long) {
