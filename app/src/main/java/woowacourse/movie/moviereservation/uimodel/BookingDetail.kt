@@ -10,8 +10,7 @@ data class BookingDetail(
     val count: HeadCountUiModel,
     val date: SelectedDateUiModel,
     val time: SelectedTimeUiModel,
-):Parcelable {
-
+) : Parcelable {
     constructor(count: Int, date: LocalDate, time: LocalTime) : this(
         HeadCountUiModel(count.toString()),
         SelectedDateUiModel(date = date),
@@ -22,18 +21,17 @@ data class BookingDetail(
 
     fun updateCount(updatedCount: Int): BookingDetail = BookingDetail(HeadCountUiModel(updatedCount), date, time)
 
-    fun updateDate(updatedDate: SelectedDateUiModel): BookingDetail = BookingDetail( count, updatedDate, time)
+    fun updateDate(updatedDate: SelectedDateUiModel): BookingDetail = BookingDetail(count, updatedDate, time)
 
     fun updateDate(
         position: Int,
         updatedDate: String,
-    ): BookingDetail = BookingDetail( count, SelectedDateUiModel(position, updatedDate), time)
+    ): BookingDetail = BookingDetail(count, SelectedDateUiModel(position, updatedDate), time)
 
-    fun updateTime(updatedTime: SelectedTimeUiModel): BookingDetail = BookingDetail( count, date, updatedTime)
+    fun updateTime(updatedTime: SelectedTimeUiModel): BookingDetail = BookingDetail(count, date, updatedTime)
 
     fun updateTime(
         position: Int,
         updatedTime: String,
     ): BookingDetail = BookingDetail(count, date, SelectedTimeUiModel(position, updatedTime))
-
 }

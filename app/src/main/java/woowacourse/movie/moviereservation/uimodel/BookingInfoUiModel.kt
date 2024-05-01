@@ -19,7 +19,7 @@ data class BookingInfoUiModel(
         theaterId: Long,
         count: Int,
         date: LocalDate,
-        time: LocalTime
+        time: LocalTime,
     ) : this(
         screenMovieId,
         theaterId,
@@ -33,11 +33,10 @@ data class BookingInfoUiModel(
         theaterId,
         bookingDetail.count,
         bookingDetail.date,
-        bookingDetail.time
+        bookingDetail.time,
     )
 
     fun localDateTime() = LocalDateTime.of(date.getLocalDate(), time.getLocalTime())
 
     fun maxSelectSize() = count.count.toInt()
-
 }

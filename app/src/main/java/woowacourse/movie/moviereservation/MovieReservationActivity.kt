@@ -152,7 +152,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
 
     override fun showBookingDetail(
         screeningDateTimesUiModel: ScreeningDateTimesUiModel,
-        bookingDetail: BookingDetail
+        bookingDetail: BookingDetail,
     ) {
         this.bookingDetail = bookingDetail
         initSpinner(screeningDateTimesUiModel)
@@ -228,7 +228,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         ): Intent {
             return Intent(context, MovieReservationActivity::class.java).apply {
                 putExtra(EXTRA_SCREEN_MOVIE_ID, screenMovieId)
-                putExtra(EXTRA_THEATER_ID,theaterId)
+                putExtra(EXTRA_THEATER_ID, theaterId)
             }
         }
     }

@@ -9,9 +9,8 @@ sealed class ScreeningViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
 
 class MovieViewHolder(
     private val binding: ItemScreeningMovieBinding,
-    private val adapterClickListener: AdapterClickListener
+    private val adapterClickListener: AdapterClickListener,
 ) : ScreeningViewHolder(binding.root) {
-
     fun onBind(item: ScreenMovieUiModel) {
         binding.movie = item
         binding.clickListener = adapterClickListener

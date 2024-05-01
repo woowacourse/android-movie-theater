@@ -13,7 +13,7 @@ fun MovieReservation.toReservationResultUiModel(theaterName: String): Reservatio
         headCount.count,
         reserveSeats.seats.toSeatUiModel(),
         totalPrice.price,
-        theaterName
+        theaterName,
     )
 }
 

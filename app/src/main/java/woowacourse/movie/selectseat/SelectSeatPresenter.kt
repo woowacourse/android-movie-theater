@@ -15,7 +15,7 @@ class SelectSeatPresenter(
         runCatching {
             repository.screenMovieById(movieId)
         }.onSuccess {
-             view.showSeat(it.theater.seats().toSeatsUiModel())
+            view.showSeat(it.theater.seats().toSeatsUiModel())
         }
     }
 
@@ -37,11 +37,12 @@ class SelectSeatPresenter(
         selectedSeats: List<SeatUiModel>,
     ) {
         runCatching {
-            repository.reserveMovie(bookingInfoUiModel.screenMovieId,
+            repository.reserveMovie(
+                bookingInfoUiModel.screenMovieId,
                 bookingInfoUiModel.localDateTime(),
                 bookingInfoUiModel.count.toHeadCount(),
                 ReserveSeats(selectedSeats.toSeats()),
-                bookingInfoUiModel.theaterId
+                bookingInfoUiModel.theaterId,
             )
         }.onSuccess {
             view.navigateToResult(it)

@@ -8,9 +8,8 @@ import woowacourse.movie.databinding.ItemScreeningMovieBinding
 
 class MovieAdapter(
     private val movies: List<ScreeningItem>,
-    private val adapterClickListener: AdapterClickListener
+    private val adapterClickListener: AdapterClickListener,
 ) : RecyclerView.Adapter<ScreeningViewHolder>() {
-
     override fun getItemViewType(position: Int): Int {
         return when (movies[position]) {
             is ScreenMovieUiModel -> MOVIE
@@ -24,20 +23,22 @@ class MovieAdapter(
     ): ScreeningViewHolder {
         return when (viewType) {
             MOVIE -> {
-                val binding = ItemScreeningMovieBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
+                val binding =
+                    ItemScreeningMovieBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false,
+                    )
                 MovieViewHolder(binding, adapterClickListener)
             }
 
             ADVERTISE -> {
-                val binding = ItemScreeningAdvertiseBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
+                val binding =
+                    ItemScreeningAdvertiseBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false,
+                    )
                 AdvertiseViewHolder(binding)
             }
 

@@ -10,7 +10,7 @@ import woowacourse.movie.R
 import woowacourse.movie.data.DummyMovies
 import woowacourse.movie.reservationresult.uimodel.ReservationResultUiModel
 
-class ReservationResultActivity : AppCompatActivity(),ReservationResultContract.View {
+class ReservationResultActivity : AppCompatActivity(), ReservationResultContract.View {
     private lateinit var presenter: ReservationResultPresenter
     private lateinit var titleView: TextView
     private lateinit var cancelDeadLineView: TextView

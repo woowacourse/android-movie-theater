@@ -16,13 +16,16 @@ class ScreeningMovieFragment : Fragment(), ScreeningMovieContract.View, AdapterC
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentScreeningMovieBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         presenter = ScreenMoviePresenter(this, DummyMovies)
         presenter.loadScreeningMovies()

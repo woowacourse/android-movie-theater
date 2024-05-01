@@ -2,7 +2,6 @@ package woowacourse.movie.moviereservation
 
 import woowacourse.movie.model.HeadCount
 import woowacourse.movie.moviereservation.uimodel.BookingDetail
-import woowacourse.movie.moviereservation.uimodel.BookingInfoUiModel
 import woowacourse.movie.moviereservation.uimodel.HeadCountUiModel
 import woowacourse.movie.repository.MovieRepository
 

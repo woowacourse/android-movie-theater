@@ -4,9 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.core.graphics.drawable.toBitmap
-import androidx.core.os.bundleOf
 import androidx.fragment.app.testing.FragmentScenario
-import androidx.fragment.app.testing.launchFragment
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
@@ -20,7 +18,6 @@ import org.hamcrest.Description
 import org.hamcrest.TypeSafeMatcher
 import org.hamcrest.core.IsInstanceOf.instanceOf
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.jupiter.api.DisplayName
 import woowacourse.movie.model.Movie
@@ -32,13 +29,12 @@ import woowacourse.movie.screeningmovie.ScreeningMovieFragment
 import woowacourse.movie.screeningmovie.toScreenItems
 
 class ScreeningMovieFragmentTest {
-
     private lateinit var fragmentScenario: FragmentScenario<ScreeningMovieFragment>
 
     @Before
     fun setUp() {
         fragmentScenario = launchFragmentInContainer<ScreeningMovieFragment>()
-        fragmentScenario.onFragment() { fragment ->
+        fragmentScenario.onFragment { fragment ->
             val listView = fragment.requireView().findViewById<RecyclerView>(R.id.rcv_screening_movie)
 
             val items =

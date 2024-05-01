@@ -9,16 +9,20 @@ import woowacourse.movie.databinding.FragmentReservationListBinding
 
 class SettingFragment : Fragment() {
     private lateinit var binding: FragmentReservationListBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentReservationListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
     }
 }

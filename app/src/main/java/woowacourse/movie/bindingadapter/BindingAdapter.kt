@@ -5,6 +5,9 @@ import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 
 @BindingAdapter("imgRes")
-fun setImageViewResource(imageView: ImageView, @DrawableRes resId: Int) {
+fun setImageViewResource(
+    imageView: ImageView,
+    @DrawableRes resId: Int,
+) {
     imageView.setImageResource(resId)
 }

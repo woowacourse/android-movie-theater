@@ -3,12 +3,9 @@ package woowacourse
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
-import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.reservationlist.ReservationListFragment
 import woowacourse.movie.reservationlist.SettingFragment
 import woowacourse.movie.screeningmovie.ScreeningMovieFragment
@@ -18,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var settingMovieFragment: SettingFragment
     private lateinit var reservationListFragment: ReservationListFragment
     private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -29,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.bnvMain.selectedItemId = R.id.menu_home
         supportFragmentManager.findFragmentById(R.id.fcv_main) ?: changeFragment(
-            screeningMovieFragment
+            screeningMovieFragment,
         )
         setNavigation()
     }
@@ -48,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                         reservationListFragment
 
                     else -> screeningMovieFragment
-                }
+                },
             )
             true
         }
@@ -62,4 +60,3 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
-
