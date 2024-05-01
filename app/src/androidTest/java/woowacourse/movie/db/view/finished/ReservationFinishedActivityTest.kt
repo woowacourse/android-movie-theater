@@ -14,7 +14,6 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.TestFixture.FIRST_MOVIE_ITEM_POSITION
-import woowacourse.movie.TestFixture.makeMockSeats
 import woowacourse.movie.TestFixture.makeMockTicket
 import woowacourse.movie.TestFixture.movies
 import woowacourse.movie.view.reservation.ReservationDetailActivity
@@ -27,9 +26,7 @@ class ReservationFinishedActivityTest {
                 ApplicationProvider.getApplicationContext(),
                 ReservationFinishedActivity::class.java,
             ).apply {
-                putExtra("movieId", FIRST_MOVIE_ITEM_POSITION)
                 putExtra("ticket", makeMockTicket())
-                putExtra("seats", makeMockSeats())
             },
         )
 

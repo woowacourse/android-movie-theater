@@ -31,4 +31,8 @@ class Seats : Serializable {
     ) {
         if (isSelected) seats.add(seat) else seats.remove(seat)
     }
+
+    fun calculateAmount(): Int {
+        return seats.sumOf { it.grade.price }
+    }
 }

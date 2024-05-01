@@ -14,13 +14,14 @@ object TestFixture {
     const val FIRST_MOVIE_ITEM_POSITION = 0
     val movies: List<Movie> = ScreeningDao().findAll()
     const val FIRST_THEATER_ITEM_POSITION = 0
-    val theaters: List<Theater> = TheaterDao().findAll()
+    val theaterDao = TheaterDao()
 
     fun makeMockTicket(): Ticket {
         val movie = movies[FIRST_MOVIE_ITEM_POSITION]
-        val theater = theaters[FIRST_THEATER_ITEM_POSITION]
-        val dateTime = ScreeningDateTime(movie.screeningPeriod[0].toString(), theater.screeningTimes.weekDay.toString())
-        return Ticket(2, dateTime)
+        val theater: Theater = theaterDao.findTheaterByMovieId(movie.id)[FIRST_THEATER_ITEM_POSITION]
+        val seats = makeMockSeats()
+        val amount = seats.calculateAmount()
+        return Ticket(movie.id, theater.theaterId, seats, ScreeningDateTime("", ""), amount)
     }
 
     fun makeMockSeats(): Seats {

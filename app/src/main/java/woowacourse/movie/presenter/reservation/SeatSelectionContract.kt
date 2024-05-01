@@ -2,9 +2,11 @@ package woowacourse.movie.presenter.reservation
 
 import android.widget.Button
 import woowacourse.movie.model.movie.Movie
+import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.seats.Grade
 import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
+import woowacourse.movie.model.ticket.Ticket
 
 interface SeatSelectionContract {
     interface Presenter {
@@ -30,6 +32,12 @@ interface SeatSelectionContract {
             isSelected: Boolean,
             index: Int,
             seat: Seat,
+        )
+
+        fun makeTicket(
+            movieId: Int,
+            theaterId: Int,
+            screeningDateTime: ScreeningDateTime,
         )
     }
 
@@ -59,9 +67,9 @@ interface SeatSelectionContract {
 
         fun showAmount(amount: Int)
 
-        fun launchReservationConfirmDialog(seats: Seats)
+        fun launchReservationConfirmDialog()
 
-        fun navigateToFinished(seats: Seats)
+        fun navigateToFinished(ticket: Ticket)
 
         fun restoreSelectedSeats(selectedSeats: List<Int>)
 

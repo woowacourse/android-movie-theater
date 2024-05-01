@@ -2,7 +2,6 @@ package woowacourse.movie.presenter.finished
 
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.model.movie.Movie
-import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.ticket.Ticket
 
 class ReservationFinishedPresenter(
@@ -11,13 +10,10 @@ class ReservationFinishedPresenter(
 ) : ReservationFinishedContract.Presenter {
     override fun loadMovie(movieId: Int) {
         val movie: Movie = dao.find(movieId)
-        view.showMovieInformation(movie)
+        view.showMovieTitle(movie)
     }
 
-    override fun loadTicket(
-        ticket: Ticket,
-        seats: Seats,
-    ) {
-        view.showReservationHistory(ticket, seats)
+    override fun loadTicket(ticket: Ticket) {
+        view.showReservationHistory(ticket)
     }
 }

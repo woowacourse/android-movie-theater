@@ -123,7 +123,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
         intent.apply {
             putExtra(MOVIE_ID, movieId)
             putExtra(THEATER_ID, theaterId)
-            putExtra(SCREENING_PERIOD, dateTime)
+            putExtra(SCREENING_DATE_TIME, dateTime)
             putExtra(HEAD_COUNT, count)
         }
         startActivity(intent)
@@ -169,6 +169,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
         const val DEFAULT_MOVIE_ID = 0
         const val TICKET = "ticket"
         const val HEAD_COUNT = "headCount"
+        const val SCREENING_DATE_TIME = "screeningDateTime"
         private const val SCREENING_TIME = "screeningTime"
         private const val SCREENING_PERIOD = "screeningPeriod"
         const val SELECTED_DATE_TAG = "notSelectedDate"

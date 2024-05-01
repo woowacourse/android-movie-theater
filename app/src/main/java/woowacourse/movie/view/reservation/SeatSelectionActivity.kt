@@ -14,6 +14,7 @@ import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.seats.SeatsDao
 import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.movie.Movie
+import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.seats.Grade
 import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
@@ -27,7 +28,9 @@ import woowacourse.movie.utils.MovieUtils.makeToast
 import woowacourse.movie.view.finished.ReservationFinishedActivity
 import woowacourse.movie.view.home.ReservationHomeActivity
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.HEAD_COUNT
+import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.SCREENING_DATE_TIME
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.TICKET
+import woowacourse.movie.view.theater.TheaterSelectionFragment.Companion.THEATER_ID
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private val binding: ActivitySeatSelectionBinding by lazy { DataBindingUtil.setContentView(this, R.layout.activity_seat_selection) }
@@ -35,12 +38,17 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     private lateinit var seatsTable: List<Button>
     private lateinit var headCount: HeadCount
+    private lateinit var screeningDateTime: ScreeningDateTime
+    private var movieId = 0
+    private var theaterId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val movieId = takeMovieId()
-        headCount = receiveHeadCount()
+        movieId = takeMovieId()
+        theaterId = receiveTheaterId()
+        receiveHeadCount()
+        receiveScreeningDateTime()
         seatsTable = collectSeatsInTableLayout()
         with(presenter) {
             loadSeatNumber()
@@ -129,10 +137,9 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         binding.textviewSeatSelectionPrice.text = convertAmountFormat(this, amount)
     }
 
-    override fun navigateToFinished(seats: Seats) {
+    override fun navigateToFinished(ticket: Ticket) {
         val intent = Intent(this, ReservationFinishedActivity::class.java)
-        intent.putExtra(HEAD_COUNT, headCount.count)
-        intent.putExtra(SEATS, seats)
+        intent.putExtra(TICKET, ticket)
         startActivity(intent)
     }
 
@@ -140,13 +147,13 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         binding.buttonSeatSelectionConfirm.isEnabled = count >= headCount.count
     }
 
-    override fun launchReservationConfirmDialog(seats: Seats) {
+    override fun launchReservationConfirmDialog() {
         if (binding.buttonSeatSelectionConfirm.isEnabled) {
             AlertDialog.Builder(this)
                 .setTitle(getString(R.string.seat_selection_reservation_confirm))
                 .setMessage(getString(R.string.seat_selection_reservation_ask_purchase_ticket))
                 .setPositiveButton(getString(R.string.seat_selection_reservation_finish)) { _, _ ->
-                    navigateToFinished(seats)
+                    presenter.makeTicket(movieId, theaterId, screeningDateTime)
                 }
                 .setNegativeButton(getString(R.string.seat_selection_cancel)) { dialog, _ ->
                     dialog.dismiss()
@@ -164,8 +171,31 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             ReservationDetailActivity.DEFAULT_MOVIE_ID,
         )
 
-    private fun receiveHeadCount(): HeadCount =
-        intent.intentSerializable(HEAD_COUNT, HeadCount::class.java) ?: throw NoSuchElementException()
+    private fun receiveHeadCount() {
+        runCatching {
+            intent.intentSerializable(HEAD_COUNT, HeadCount::class.java) ?: throw NoSuchElementException()
+        }.onSuccess {
+            headCount = it
+        }.onFailure {
+            showErrorToast()
+            finish()
+        }
+    }
+
+    private fun receiveTheaterId(): Int = intent.getIntExtra(THEATER_ID, 0)
+
+    private fun receiveScreeningDateTime() {
+        runCatching {
+            intent.intentSerializable(
+                SCREENING_DATE_TIME, ScreeningDateTime::class.java,
+            ) ?: throw NoSuchElementException()
+        }.onSuccess {
+            screeningDateTime = it
+        }.onFailure {
+            showErrorToast()
+            finish()
+        }
+    }
 
     private fun collectSeatsInTableLayout(): List<Button> =
         binding.tableLayoutSeatSelection.children.filterIsInstance<TableRow>().flatMap { it.children }
@@ -180,8 +210,8 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun restoreReservationData(bundle: Bundle) {
-        val ticket = bundle.bundleSerializable(TICKET, Ticket::class.java) ?: throw NoSuchElementException()
-        presenter.restoreReservation(ticket.count)
+        val headCount = bundle.bundleSerializable(HEAD_COUNT, HeadCount::class.java) ?: throw NoSuchElementException()
+        presenter.restoreReservation(headCount.count)
     }
 
     private fun restoreSeatsData(bundle: Bundle) {

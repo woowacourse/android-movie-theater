@@ -7,7 +7,6 @@ import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.result.ChangeTicketCountResult
 import woowacourse.movie.model.result.Failure
 import woowacourse.movie.model.result.Success
-import woowacourse.movie.model.ticket.Ticket
 
 class ReservationDetailPresenter(
     private val view: ReservationDetailContract.View,
@@ -15,9 +14,6 @@ class ReservationDetailPresenter(
     private val theaterDao: TheaterDao,
 ) : ReservationDetailContract.Presenter {
     var headCount = HeadCount()
-        private set
-
-    var ticket = Ticket()
         private set
 
     override fun loadMovie(movieId: Int) {

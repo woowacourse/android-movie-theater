@@ -2,7 +2,9 @@ package woowacourse.movie.presenter.reservation
 
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.seats.SeatsDao
+import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.movie.Movie
+import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.ticket.Ticket
@@ -12,13 +14,13 @@ class SeatSelectionPresenter(
     private val seatsDao: SeatsDao,
     private val screeningDao: ScreeningDao,
 ) : SeatSelectionContract.Presenter {
-    val ticket = Ticket()
     val seats = Seats()
+    private val headCount = HeadCount()
 
     override fun restoreReservation(count: Int) {
-        ticket.restoreTicket(count)
-        view.setConfirmButtonEnabled(ticket.count)
-        view.showAmount(ticket.calculateAmount(seats))
+        headCount.restore(count)
+        view.setConfirmButtonEnabled(headCount.count)
+        view.showAmount(seats.calculateAmount())
     }
 
     override fun restoreSeats(
@@ -53,15 +55,31 @@ class SeatSelectionPresenter(
         }
     }
 
+    override fun makeTicket(
+        movieId: Int,
+        theaterId: Int,
+        screeningDateTime: ScreeningDateTime,
+    ) {
+        val ticket =
+            Ticket(
+                movieId,
+                theaterId,
+                seats,
+                screeningDateTime,
+                seats.calculateAmount(),
+            )
+        view.navigateToFinished(ticket)
+    }
+
     override fun updateTotalPrice(
         isSelected: Boolean,
         seat: Seat,
     ) {
-        val totalPrice = ticket.calculateAmount(seats)
+        val totalPrice = seats.calculateAmount()
         view.showAmount(totalPrice)
     }
 
     override fun initializeConfirmButton() {
-        view.launchReservationConfirmDialog(seats)
+        view.launchReservationConfirmDialog()
     }
 }
