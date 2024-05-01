@@ -5,8 +5,7 @@ import woowacourse.movie.model.Movie
 import woowacourse.movie.model.ScreenView
 import java.time.format.DateTimeFormatter
 
-fun Movie.toScreenMovieUiModel(
-): ScreenMovieUiModel {
+fun Movie.toScreenMovieUiModel(): ScreenMovieUiModel {
     val pattern = "yyyy.MM.dd"
     val formatter = DateTimeFormatter.ofPattern(pattern)
     return ScreenMovieUiModel(

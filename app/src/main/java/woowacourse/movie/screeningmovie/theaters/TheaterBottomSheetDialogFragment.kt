@@ -1,7 +1,6 @@
 package woowacourse.movie.screeningmovie.theaters
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,25 +9,29 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.data.DummyMovies
 import woowacourse.movie.moviereservation.MovieReservationActivity
-import woowacourse.movie.repository.MovieRepository
 
-class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(), AdapterClickListener,
+class TheaterBottomSheetDialogFragment :
+    BottomSheetDialogFragment(),
+    AdapterClickListener,
     TheaterContract.View {
-
     private lateinit var rcv: RecyclerView
     private lateinit var presenter: TheaterContract.Presenter
     private var movieId: Long = -1L
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         val view = inflater.inflate(R.layout.bottom_sheet_theater, container, false)
         rcv = view.findViewById(R.id.rcv_theater)
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         movieId = this.arguments?.getLong(EXTRA_SCREENING_MOVIE_ID) ?: error("movie id가 잘못 들어옴")
         presenter = TheaterPresenter(DummyMovies, this)
@@ -40,10 +43,11 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(), AdapterCli
     }
 
     override fun showTheaters(theaterUiModels: List<TheaterUiModel>) {
-        rcv.adapter = TheaterAdapter(
-            theaterUiModels,
-            this
-        )
+        rcv.adapter =
+            TheaterAdapter(
+                theaterUiModels,
+                this,
+            )
     }
 
     override fun navigateMovieReservation(screeningMovieId: Long) {
@@ -51,11 +55,9 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(), AdapterCli
     }
 
     companion object {
-
         private const val EXTRA_SCREENING_MOVIE_ID = "screeningMovieId"
-        fun getBundle(
-            movieId: Long
-        ): Bundle {
+
+        fun getBundle(movieId: Long): Bundle {
             return Bundle().apply { this.putLong(EXTRA_SCREENING_MOVIE_ID, movieId) }
         }
     }

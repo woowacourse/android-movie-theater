@@ -6,5 +6,5 @@ fun MovieTheater.toTheaterUiModel(totalCount: Int): TheaterUiModel =
     TheaterUiModel(
         id,
         name,
-        totalCount.toString()
+        totalCount.toString(),
     )

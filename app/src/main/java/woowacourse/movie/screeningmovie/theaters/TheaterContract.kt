@@ -1,7 +1,6 @@
 package woowacourse.movie.screeningmovie.theaters
 
 interface TheaterContract {
-
     interface View {
         fun showTheaters(theaterUiModels: List<TheaterUiModel>)
 
@@ -9,10 +8,11 @@ interface TheaterContract {
     }
 
     interface Presenter {
+        fun loadTheaters(movieId: Long)
 
-        fun loadTheaters(movieId:Long)
-
-        fun selectTheater(movieId: Long, theaterId: Long)
+        fun selectTheater(
+            movieId: Long,
+            theaterId: Long,
+        )
     }
-
 }

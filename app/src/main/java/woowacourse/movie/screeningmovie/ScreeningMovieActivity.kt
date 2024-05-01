@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.data.DummyMovies
-import woowacourse.movie.moviereservation.MovieReservationActivity
 import woowacourse.movie.screeningmovie.theaters.TheaterBottomSheetDialogFragment
 
 class ScreeningMovieActivity : AppCompatActivity(), ScreeningMovieContract.View {
@@ -31,7 +30,6 @@ class ScreeningMovieActivity : AppCompatActivity(), ScreeningMovieContract.View 
     }
 
     override fun showTheaters(screeningMovieId: Long) {
-
         val fragment = TheaterBottomSheetDialogFragment()
         val bundle = TheaterBottomSheetDialogFragment.getBundle(screeningMovieId)
         fragment.arguments = bundle

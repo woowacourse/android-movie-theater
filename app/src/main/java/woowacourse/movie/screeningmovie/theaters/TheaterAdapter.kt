@@ -10,13 +10,10 @@ import woowacourse.movie.R
 
 class TheaterAdapter(
     private val items: List<TheaterUiModel>,
-    private val clickListener: AdapterClickListener
+    private val clickListener: AdapterClickListener,
 ) : RecyclerView.Adapter<TheaterAdapter.TheaterViewHolder>() {
-
-
     class TheaterViewHolder(itemView: View, private val clickListener: AdapterClickListener) :
         RecyclerView.ViewHolder(itemView) {
-
         private val navigateButton =
             itemView.findViewById<ImageButton>(R.id.btn_theater_navigate_next)
         private val name = itemView.findViewById<TextView>(R.id.tv_theater_name)
@@ -29,20 +26,25 @@ class TheaterAdapter(
                 clickListener.onClick(item.id)
             }
         }
-
     }
 
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TheaterViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_theater, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): TheaterViewHolder {
+        val view =
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_theater, parent, false)
 
         return TheaterViewHolder(view, clickListener)
     }
 
     override fun getItemCount(): Int = items.size
 
-    override fun onBindViewHolder(holder: TheaterViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: TheaterViewHolder,
+        position: Int,
+    ) {
         holder.onBind(items[position])
     }
 }

@@ -49,60 +49,60 @@ data class ScreeningMovie(
                     ),
             )
 
-        val STUB_B : ScreeningMovie =
+        val STUB_B: ScreeningMovie =
             ScreeningMovie(
                 id = 1,
                 movie = Movie.STUB,
-                theater =MovieTheater.STUB_B,
+                theater = MovieTheater.STUB_B,
                 screenDateTimes =
-                listOf(
-                    ScreenDateTime(
-                        LocalDate.of(2024, 3, 1),
-                        listOf(
-                            LocalTime.of(9, 0),
-                            LocalTime.of(10, 0),
-                            LocalTime.of(11, 0),
-                            LocalTime.of(12, 0),
+                    listOf(
+                        ScreenDateTime(
+                            LocalDate.of(2024, 3, 1),
+                            listOf(
+                                LocalTime.of(9, 0),
+                                LocalTime.of(10, 0),
+                                LocalTime.of(11, 0),
+                                LocalTime.of(12, 0),
+                            ),
+                        ),
+                        ScreenDateTime(
+                            LocalDate.of(2024, 3, 3),
+                            listOf(
+                                LocalTime.of(9, 0),
+                                LocalTime.of(10, 0),
+                                LocalTime.of(11, 0),
+                                LocalTime.of(12, 0),
+                            ),
                         ),
                     ),
-                    ScreenDateTime(
-                        LocalDate.of(2024, 3, 3),
-                        listOf(
-                            LocalTime.of(9, 0),
-                            LocalTime.of(10, 0),
-                            LocalTime.of(11, 0),
-                            LocalTime.of(12, 0),
-                        ),
-                    ),
-                ),
             )
 
-        val STUB_C : ScreeningMovie =
+        val STUB_C: ScreeningMovie =
             ScreeningMovie(
                 id = 2,
                 movie = Movie.STUB,
                 theater = MovieTheater.STUB_C,
                 screenDateTimes =
-                listOf(
-                    ScreenDateTime(
-                        LocalDate.of(2024, 3, 1),
-                        listOf(
-                            LocalTime.of(9, 0),
-                            LocalTime.of(10, 0),
-                            LocalTime.of(11, 0),
-                            LocalTime.of(12, 0),
+                    listOf(
+                        ScreenDateTime(
+                            LocalDate.of(2024, 3, 1),
+                            listOf(
+                                LocalTime.of(9, 0),
+                                LocalTime.of(10, 0),
+                                LocalTime.of(11, 0),
+                                LocalTime.of(12, 0),
+                            ),
+                        ),
+                        ScreenDateTime(
+                            LocalDate.of(2024, 3, 3),
+                            listOf(
+                                LocalTime.of(9, 0),
+                                LocalTime.of(10, 0),
+                                LocalTime.of(11, 0),
+                                LocalTime.of(12, 0),
+                            ),
                         ),
                     ),
-                    ScreenDateTime(
-                        LocalDate.of(2024, 3, 3),
-                        listOf(
-                            LocalTime.of(9, 0),
-                            LocalTime.of(10, 0),
-                            LocalTime.of(11, 0),
-                            LocalTime.of(12, 0),
-                        ),
-                    ),
-                ),
             )
     }
 }
