@@ -20,19 +20,19 @@ class MovieTheater(
             0,
             mapOf(SeatRate.S to listOf(3, 4), SeatRate.A to listOf(5), SeatRate.B to listOf(1, 2)),
             4,
-            "잠실"
+            "잠실 극장"
         )
         val STUB_B = MovieTheater(
             1,
             mapOf(SeatRate.S to listOf(3, 4), SeatRate.A to listOf(5), SeatRate.B to listOf(1, 2)),
             4,
-            "선릉"
+            "선릉 극장"
         )
         val STUB_C = MovieTheater(
             2,
             mapOf(SeatRate.S to listOf(3, 4), SeatRate.A to listOf(5), SeatRate.B to listOf(1, 2)),
             4,
-            "강남"
+            "강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남 "
         )
     }
 }

@@ -5,14 +5,15 @@ import woowacourse.movie.model.Seat
 import woowacourse.movie.reservationresult.uimodel.ReservationResultUiModel
 import woowacourse.movie.reservationresult.uimodel.SeatUiModel
 
-fun MovieReservation.toReservationResultUiModel(): ReservationResultUiModel {
+fun MovieReservation.toReservationResultUiModel(theaterName: String): ReservationResultUiModel {
     return ReservationResultUiModel(
         movie.title,
         cancelDeadLine,
         screenDateTime,
         headCount.count,
         reserveSeats.seats.toSeatUiModel(),
-        totalPrice.price.toInt(),
+        totalPrice.price,
+        theaterName
     )
 }
 

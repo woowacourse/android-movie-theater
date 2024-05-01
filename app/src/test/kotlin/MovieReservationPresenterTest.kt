@@ -26,7 +26,7 @@ class MovieReservationPresenterTest {
     @DisplayName("영화 정보를 불러오면 화면에 나타난다")
     fun show_movie_info_When_load_movie_data() {
         every { view.showMovieInfo(any()) } just Runs
-        every { view.showDefaultBookingInfo(any(), any()) } just Runs
+        every { view.showBookingDetail(any(), any()) } just Runs
 
         presenter.loadMovieDetail(1)
 

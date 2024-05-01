@@ -8,37 +8,36 @@ import java.time.LocalTime
 
 @Parcelize
 data class BookingInfoUiModel(
-    val movieId: Long,
+    val screenMovieId: Long,
+    val theaterId: Long,
     val count: HeadCountUiModel,
     val date: SelectedDateUiModel,
     val time: SelectedTimeUiModel,
 ) : Parcelable {
-    constructor(movieId: Long, count: Int, date: LocalDate, time: LocalTime) : this(
-        movieId,
+    constructor(
+        screenMovieId: Long,
+        theaterId: Long,
+        count: Int,
+        date: LocalDate,
+        time: LocalTime
+    ) : this(
+        screenMovieId,
+        theaterId,
         HeadCountUiModel(count.toString()),
         SelectedDateUiModel(date = date),
         SelectedTimeUiModel(time = time),
     )
 
-    fun maxSelectSize() = count.count.toInt()
+    constructor(screenMovieId: Long, theaterId: Long, bookingDetail: BookingDetail) : this(
+        screenMovieId,
+        theaterId,
+        bookingDetail.count,
+        bookingDetail.date,
+        bookingDetail.time
+    )
 
     fun localDateTime() = LocalDateTime.of(date.getLocalDate(), time.getLocalTime())
 
-    fun updateCount(updatedCount: HeadCountUiModel): BookingInfoUiModel = BookingInfoUiModel(movieId, updatedCount, date, time)
+    fun maxSelectSize() = count.count.toInt()
 
-    fun updateCount(updatedCount: Int): BookingInfoUiModel = BookingInfoUiModel(movieId, HeadCountUiModel(updatedCount), date, time)
-
-    fun updateDate(updatedDate: SelectedDateUiModel): BookingInfoUiModel = BookingInfoUiModel(movieId, count, updatedDate, time)
-
-    fun updateDate(
-        position: Int,
-        updatedDate: String,
-    ): BookingInfoUiModel = BookingInfoUiModel(movieId, count, SelectedDateUiModel(position, updatedDate), time)
-
-    fun updateTime(updatedTime: SelectedTimeUiModel): BookingInfoUiModel = BookingInfoUiModel(movieId, count, date, updatedTime)
-
-    fun updateTime(
-        position: Int,
-        updatedTime: String,
-    ): BookingInfoUiModel = BookingInfoUiModel(movieId, count, date, SelectedTimeUiModel(position, updatedTime))
 }

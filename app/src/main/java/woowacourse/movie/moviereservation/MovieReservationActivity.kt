@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.data.DummyMovies
+import woowacourse.movie.moviereservation.uimodel.BookingDetail
 import woowacourse.movie.moviereservation.uimodel.BookingInfoUiModel
 import woowacourse.movie.moviereservation.uimodel.HeadCountUiModel
 import woowacourse.movie.moviereservation.uimodel.MovieReservationUiModel
@@ -33,7 +34,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
     private lateinit var timeSpinner: Spinner
     private lateinit var timeAdapter: ArrayAdapter<String>
 
-    private lateinit var bookingInfoUiModel: BookingInfoUiModel
+    private lateinit var bookingDetail: BookingDetail
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,17 +53,26 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
     }
 
     private fun movieId(): Long {
-        val movieId = intent.getLongExtra(EXTRA_SCREEN_MOVIE_ID, INVALID_SCREEN_MOVIE_ID)
-        if (movieId == INVALID_SCREEN_MOVIE_ID) {
+        val movieId = intent.getLongExtra(EXTRA_SCREEN_MOVIE_ID, INVALID_ID)
+        val theaterId = intent.getLongExtra(EXTRA_THEATER_ID, INVALID_ID)
+        if (movieId == INVALID_ID || theaterId == INVALID_ID) {
             error("movieId에 관한 정보가 없습니다.")
         }
         return movieId
     }
 
+    private fun theaterId(): Long {
+        val theaterId = intent.getLongExtra(EXTRA_THEATER_ID, INVALID_ID)
+        if (theaterId == INVALID_ID) {
+            error("theaterId에 관한 정보가 없습니다.")
+        }
+        return theaterId
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        val bookingInfo = bookingInfoUiModel
+        val bookingInfo = bookingDetail
         outState.putParcelable(STATE_BOOKING_ID, bookingInfo)
     }
 
@@ -70,12 +80,12 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         super.onRestoreInstanceState(savedInstanceState)
 
         val storedBookingInfo =
-            savedInstanceState.bundleParcelable(STATE_BOOKING_ID, BookingInfoUiModel::class.java)
+            savedInstanceState.bundleParcelable(STATE_BOOKING_ID, BookingDetail::class.java)
         storedBookingInfo?.let {
-            bookingInfoUiModel = it
-            countView.text = bookingInfoUiModel.count.count
-            dateSpinner.setSelection(bookingInfoUiModel.date.position)
-            timeSpinner.setSelection(bookingInfoUiModel.time.position)
+            bookingDetail = it
+            countView.text = bookingDetail.count.count
+            dateSpinner.setSelection(bookingDetail.date.position)
+            timeSpinner.setSelection(bookingDetail.time.position)
         }
     }
 
@@ -89,13 +99,13 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
 
     private fun initClickListener() {
         plusButton.setOnClickListener {
-            presenter.plusCount(bookingInfoUiModel.count)
+            presenter.plusCount(bookingDetail.count)
         }
         minusButton.setOnClickListener {
-            presenter.minusCount(bookingInfoUiModel.count)
+            presenter.minusCount(bookingDetail.count)
         }
         findViewById<Button>(R.id.btn_detail_complete).setOnClickListener {
-            startActivity(SelectSeatActivity.getIntent(this, bookingInfoUiModel))
+            startActivity(SelectSeatActivity.getIntent(this, BookingInfoUiModel(movieId(), theaterId(), bookingDetail)))
         }
     }
 
@@ -120,8 +130,8 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
     }
 
     override fun updateHeadCount(updatedCount: HeadCountUiModel) {
-        bookingInfoUiModel = bookingInfoUiModel.updateCount(updatedCount)
-        countView.text = bookingInfoUiModel.count.count
+        bookingDetail = bookingDetail.updateCount(updatedCount)
+        countView.text = bookingDetail.count.count
     }
 
     override fun navigateToReservationResultView(reservationId: Long) {
@@ -140,13 +150,13 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         showErrorToastMessage(this, getString(R.string.min_count_error_message, minCount))
     }
 
-    override fun showDefaultBookingInfo(
+    override fun showBookingDetail(
         screeningDateTimesUiModel: ScreeningDateTimesUiModel,
-        bookingInfoUiModel: BookingInfoUiModel,
+        bookingDetail: BookingDetail
     ) {
-        this.bookingInfoUiModel = bookingInfoUiModel
+        this.bookingDetail = bookingDetail
         initSpinner(screeningDateTimesUiModel)
-        countView.text = bookingInfoUiModel.count.count
+        countView.text = bookingDetail.count.count
     }
 
     private fun initSpinner(screeningDateTimesUiModel: ScreeningDateTimesUiModel) {
@@ -175,8 +185,8 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
                     position: Int,
                     id: Long,
                 ) {
-                    bookingInfoUiModel =
-                        bookingInfoUiModel.updateDate(
+                    bookingDetail =
+                        bookingDetail.updateDate(
                             position, dateSpinner.selectedItem.toString(),
                         )
                     timeAdapter.clear()
@@ -194,8 +204,8 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
                     position: Int,
                     id: Long,
                 ) {
-                    bookingInfoUiModel =
-                        bookingInfoUiModel.updateTime(
+                    bookingDetail =
+                        bookingDetail.updateTime(
                             position, timeSpinner.selectedItem.toString(),
                         )
                 }
@@ -207,15 +217,18 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
 
     companion object {
         const val EXTRA_SCREEN_MOVIE_ID: String = "screenMovieId"
-        const val INVALID_SCREEN_MOVIE_ID = -1L
+        const val EXTRA_THEATER_ID: String = "theaterId"
+        const val INVALID_ID = -1L
         private const val STATE_BOOKING_ID = "booking"
 
         fun getIntent(
             context: Context,
-            reservationId: Long,
+            screenMovieId: Long,
+            theaterId: Long,
         ): Intent {
             return Intent(context, MovieReservationActivity::class.java).apply {
-                putExtra(EXTRA_SCREEN_MOVIE_ID, reservationId)
+                putExtra(EXTRA_SCREEN_MOVIE_ID, screenMovieId)
+                putExtra(EXTRA_THEATER_ID,theaterId)
             }
         }
     }
