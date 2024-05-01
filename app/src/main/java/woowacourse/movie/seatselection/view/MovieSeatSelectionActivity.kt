@@ -20,7 +20,6 @@ import woowacourse.movie.result.view.MovieResultActivity
 import woowacourse.movie.seatselection.presenter.MovieSeatSelectionPresenter
 import woowacourse.movie.seatselection.presenter.contract.MovieSeatSelectionContract
 import woowacourse.movie.util.Formatter.formatColumn
-import woowacourse.movie.util.Formatter.formatPrice
 import woowacourse.movie.util.Formatter.formatRow
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
@@ -33,17 +32,12 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_SEAT_POSITIONS
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
 
 class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContract.View {
-    var seatTitle: String = ""
-    var seatPrice: String = "0"
-    var selectionComplete: Boolean = false
-
     private val tableSeats: List<TextView> by lazy {
         findViewById<TableLayout>(R.id.seatTable).children.filterIsInstance<TableRow>()
             .flatMap { tableRow ->
                 tableRow.children.filterIsInstance<TextView>().toList()
             }.toList()
     }
-
 
     private lateinit var binding: ActivityMovieSeatSelectionBinding
 
@@ -103,7 +97,7 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
     }
 
     override fun displayMovieTitle(movieTitle: String) {
-        seatTitle = movieTitle
+        binding.seatTitleText = movieTitle
     }
 
     override fun setUpTableSeats(baseSeats: List<MovieSeat>) {
@@ -134,9 +128,7 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
     }
 
     override fun updateSelectResult(movieSelectedSeats: MovieSelectedSeats) {
-        seatPrice = formatPrice(movieSelectedSeats.totalPrice())
-        selectionComplete = movieSelectedSeats.isSelectionComplete()
-        binding.invalidateAll()
+        binding.movieSelectedSeats = movieSelectedSeats
     }
 
     override fun navigateToResultView(movieSelectedSeats: MovieSelectedSeats) {
