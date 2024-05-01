@@ -4,8 +4,6 @@ import woowacourse.movie.ui.HandleError
 
 interface MovieSeatSelectionContract {
     interface View : HandleError {
-        fun showMovieTitle(title: String)
-
         fun showTheater(
             rowSize: Int,
             colSize: Int,
@@ -18,6 +16,8 @@ interface MovieSeatSelectionContract {
         fun showReservationTotalAmount(amount: Int)
 
         fun updateSelectCompletion(isComplete: Boolean)
+
+        fun showAlertDialog()
 
         fun moveMovieReservationCompletePage(ticketId: Long)
     }
@@ -34,6 +34,8 @@ interface MovieSeatSelectionContract {
 
         fun recoverSeatSelection(index: Int)
 
-        fun reserveMovie(ticketId: Long)
+        fun checkCompletion()
+
+        fun reserveMovie()
     }
 }

@@ -8,14 +8,14 @@ import woowacourse.movie.ui.utils.positionToIndex
 class MovieSeatSelectionPresenter(
     private val view: MovieSeatSelectionContract.View,
     private val userTickets: UserTickets,
+    private val ticketId: Long,
 ) :
     MovieSeatSelectionContract.Presenter {
-    private lateinit var userTicket: UserTicket
+    lateinit var userTicket: UserTicket
 
     override fun loadTheaterInfo(ticketId: Long) {
         try {
             userTicket = userTickets.find(ticketId)
-            view.showMovieTitle(userTicket.title)
             view.showReservationTotalAmount(userTicket.reservationDetail.totalSeatAmount())
             view.showTheater(Seat.ROW_LEN, Seat.COL_LEN)
         } catch (e: NoSuchElementException) {
@@ -61,7 +61,11 @@ class MovieSeatSelectionPresenter(
         view.showUnSelectedSeat(positionToIndex(row, col))
     }
 
-    override fun reserveMovie(ticketId: Long) {
+    override fun checkCompletion() {
+        view.showAlertDialog()
+    }
+
+    override fun reserveMovie() {
         view.moveMovieReservationCompletePage(ticketId)
     }
 }

@@ -1,38 +1,41 @@
 package woowacourse.movie.ui.selection
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
-import android.widget.Button
+import android.widget.ImageView
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
+import androidx.databinding.BindingAdapter
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityMovieSeatSelectionBinding
 import woowacourse.movie.model.data.UserTicketsImpl
 import woowacourse.movie.model.movie.Seat
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.complete.MovieReservationCompleteActivity
+import woowacourse.movie.ui.utils.getImageFromId
 import woowacourse.movie.ui.utils.positionToIndex
 
 class MovieSeatSelectionActivity :
-    BaseActivity<MovieSeatSelectionContract.Presenter>(),
+    BaseActivity<MovieSeatSelectionPresenter>(),
     MovieSeatSelectionContract.View {
+    private lateinit var binding: ActivityMovieSeatSelectionBinding
     private val userTicketId by lazy { userTicketId() }
-    private val seatTable by lazy { findViewById<TableLayout>(R.id.seat_table) }
-    private val seats by lazy { seatTable.makeSeats() }
-    private val movieTitle by lazy { findViewById<TextView>(R.id.movie_title_text) }
-    private val totalSeatAmount by lazy { findViewById<TextView>(R.id.total_seat_amount_text) }
-    private val confirmButton by lazy { findViewById<Button>(R.id.confirm_button) }
     private val selectedSeatInfo = mutableListOf<Int>()
+    private val seats by lazy { binding.seatTable.makeSeats() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_seat_selection)
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_movie_seat_selection)
+        binding.presenter = presenter
 
         presenter.loadTheaterInfo(userTicketId)
         presenter.updateSelectCompletion()
@@ -73,18 +76,18 @@ class MovieSeatSelectionActivity :
     }
 
     private fun setOnConfirmButtonListener() {
-        confirmButton.setOnClickListener {
-            makeAlertDialog()
+        binding.confirmButton.setOnClickListener {
+            showAlertDialog()
         }
     }
 
-    private fun makeAlertDialog() {
+    override fun showAlertDialog() {
         AlertDialog.Builder(this)
             .setCancelable(false)
             .setTitle(R.string.reservation_confirm)
             .setMessage(R.string.reservation_confirm_comment)
             .setPositiveButton(R.string.reservation_complete) { _, _ ->
-                presenter.reserveMovie(userTicketId)
+                presenter.reserveMovie()
             }
             .setNegativeButton(R.string.cancel) { dialog, _ ->
                 dialog.dismiss()
@@ -98,11 +101,8 @@ class MovieSeatSelectionActivity :
             MOVIE_CONTENT_ID_DEFAULT_VALUE,
         )
 
-    override fun initializePresenter(): MovieSeatSelectionContract.Presenter = MovieSeatSelectionPresenter(this, UserTicketsImpl)
-
-    override fun showMovieTitle(title: String) {
-        movieTitle.text = title
-    }
+    override fun initializePresenter(): MovieSeatSelectionPresenter =
+        MovieSeatSelectionPresenter(this, UserTicketsImpl, userTicketId)
 
     override fun showTheater(
         rowSize: Int,
@@ -119,9 +119,7 @@ class MovieSeatSelectionActivity :
     ) {
         repeat(colSize) { col ->
             seats[positionToIndex(row, col)].apply {
-                text = Seat(row, col).toString()
                 setOnClickListener {
-                    presenter.selectSeat(row, col)
                     selectedSeatInfo.add(positionToIndex(row, col))
                 }
             }
@@ -143,13 +141,13 @@ class MovieSeatSelectionActivity :
     }
 
     override fun showReservationTotalAmount(amount: Int) {
-        totalSeatAmount.text =
-            resources.getString(R.string.seat_amount)
+        binding.totalSeatAmountText.text =
+            resources.getString(R.string.total_price)
                 .format(amount)
     }
 
     override fun updateSelectCompletion(isComplete: Boolean) {
-        confirmButton.apply {
+        binding.confirmButton.apply {
             isEnabled = isComplete
             isClickable = isComplete
         }
@@ -172,4 +170,13 @@ class MovieSeatSelectionActivity :
         private val TAG = MovieSeatSelectionActivity::class.simpleName
         private const val MOVIE_CONTENT_ID_DEFAULT_VALUE = -1L
     }
+}
+
+@BindingAdapter("row", "column")
+fun setPosition(
+    textView: TextView,
+    row: Int,
+    column: Int,
+) {
+    textView.text = Seat(row, column).toString()
 }
