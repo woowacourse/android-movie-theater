@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/reservation_details_fragment"
+        android:icon="@drawable/reservation_details_icon"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:title="@string/reservation_details"
+        tools:ignore="AlwaysShowAction"/>
+
+    <item
+        android:id="@+id/home_fragment"
+        android:icon="@drawable/home_icon"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:title="@string/home"
+        tools:ignore="AlwaysShowAction"/>
+
+    <item
+        android:id="@+id/setting_fragment"
+        android:icon="@drawable/setting_icon"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:title="@string/setting"
+        tools:ignore="AlwaysShowAction"/>
+
+</menu>
