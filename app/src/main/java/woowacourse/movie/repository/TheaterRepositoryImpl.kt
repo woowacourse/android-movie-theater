@@ -68,4 +68,10 @@ object TheaterRepositoryImpl : TheaterRepository {
             TheaterUiModel(theater.id, theater.name, screenTimesCount(theater.id, movieId))
         }
     }
+
+    override fun theaterName(theaterId: Int): String {
+        return dummyTheaters.find {
+            theaterId == it.id
+        }?.name ?: ""
+    }
 }

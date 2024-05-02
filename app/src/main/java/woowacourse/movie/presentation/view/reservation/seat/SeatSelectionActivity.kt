@@ -15,6 +15,8 @@ import android.widget.Toast
 import woowacourse.movie.R
 import woowacourse.movie.presentation.base.BaseActivity
 import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
+import woowacourse.movie.presentation.view.reservation.detail.MovieDetailActivity.Companion.RESERVATION_COUNT_KEY
+import woowacourse.movie.presentation.view.reservation.detail.MovieDetailActivity.Companion.TITLE_KEY
 import woowacourse.movie.presentation.view.reservation.result.ReservationResultActivity
 
 class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View {
@@ -37,8 +39,8 @@ class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View {
     override fun onCreateSetup(savedInstanceState: Bundle?) {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        movieTitle.text = intent.getStringExtra(INTENT_TITLE)
-        val reservationCount = intent.getIntExtra(INTENT_RESERVATION_COUNT, DEFAULT_COUNT)
+        movieTitle.text = intent.getStringExtra(TITLE_KEY)
+        val reservationCount = intent.getIntExtra(RESERVATION_COUNT_KEY, DEFAULT_COUNT)
 
         seatSelectionPresenter = SeatSelectionPresenterImpl(reservationCount)
         seatSelectionPresenter.attachView(this)
@@ -202,8 +204,6 @@ class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View {
     }
 
     companion object {
-        const val INTENT_TITLE = "title"
-        const val INTENT_RESERVATION_COUNT = "reservationCount"
         const val DEFAULT_COUNT = 1
         const val SEAT_POSITION_TEXT_FORMAT = "%c%d"
         const val SEAT_ROW_START_VALUE = 'A'

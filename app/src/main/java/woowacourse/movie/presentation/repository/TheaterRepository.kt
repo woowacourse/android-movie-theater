@@ -9,4 +9,6 @@ interface TheaterRepository {
     fun screenTimesCount(theaterId: Int, movieId: Int): Int
 
     fun theatersInfo(movieId: Int): List<TheaterUiModel>
+
+    fun theaterName(theaterId: Int): String
 }

@@ -5,7 +5,6 @@ import woowacourse.movie.data.repository.SeatRepositoryImpl
 import woowacourse.movie.domain.model.reservation.MovieTicket
 import woowacourse.movie.domain.model.reservation.ReservationInfo
 import woowacourse.movie.presentation.repository.SeatRepository
-import woowacourse.movie.presentation.view.reservation.seat.SeatSelectionContract
 import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
 
 class SeatSelectionPresenterImpl(
@@ -15,7 +14,7 @@ class SeatSelectionPresenterImpl(
     private var view: SeatSelectionContract.View? = null
     private val reservationInfo =
         ReservationInfo(reservationCount, seatRepository.getSeatingChart())
-    private val screeningMovieInfoRepository = ReservationMovieInfoRepositoryImpl
+    private val reservationMovieInfoRepository = ReservationMovieInfoRepositoryImpl
 
     override fun attachView(view: SeatSelectionContract.View) {
         this.view = view
@@ -57,7 +56,7 @@ class SeatSelectionPresenterImpl(
             MovieTicketUiModel(
                 MovieTicket(
                     0,
-                    screeningMovieInfoRepository.getScreeningMovieInfo()!!,
+                    reservationMovieInfoRepository.getScreeningMovieInfo()!!,
                     reservationInfo,
                 ),
             )

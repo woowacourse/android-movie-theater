@@ -18,6 +18,7 @@ data class MovieTicketUiModel(
     val reservationCount: Int,
     val totalPrice: Int,
     val selectedSeats: List<String>,
+    val theaterName: String,
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readLong(),
@@ -29,6 +30,7 @@ data class MovieTicketUiModel(
         parcel.readInt(),
         parcel.readInt(),
         parcel.createStringArrayList() ?: listOf(),
+        parcel.readString() ?: "",
     )
 
     override fun writeToParcel(
@@ -44,6 +46,7 @@ data class MovieTicketUiModel(
         parcel.writeInt(reservationCount)
         parcel.writeInt(totalPrice)
         parcel.writeStringList(selectedSeats)
+        parcel.writeString(theaterName)
     }
 
     override fun describeContents(): Int {
@@ -70,6 +73,7 @@ data class MovieTicketUiModel(
                 SEAT_COL_START_VALUE + seat.col,
             )
         },
+        movieTicket.reservationMovieInfo.theaterName,
     )
 
     companion object CREATOR : Parcelable.Creator<MovieTicketUiModel> {

@@ -35,7 +35,7 @@ class MovieDetailActivity : BaseActivity(), MovieDetailContract.View {
         val theaterId = intent.getIntExtra(THEATER_ID_KEY, DEFAULT_THEATER_ID)
 
         movieDetailPresenter =
-            MovieDetailPresenterImpl(movieId) // todo: theaterId 넣어줘서 극장별 상영시간 받아오기
+            MovieDetailPresenterImpl(movieId, theaterId) // todo: theaterId 넣어줘서 극장별 상영시간 받아오기
         movieDetailPresenter.attachView(this)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
@@ -162,8 +162,8 @@ class MovieDetailActivity : BaseActivity(), MovieDetailContract.View {
         title: String,
     ) {
         val intent = Intent(this, SeatSelectionActivity::class.java)
-        intent.putExtra(SeatSelectionActivity.INTENT_TITLE, title)
-        intent.putExtra(SeatSelectionActivity.INTENT_RESERVATION_COUNT, reservationCount)
+        intent.putExtra(TITLE_KEY, title)
+        intent.putExtra(RESERVATION_COUNT_KEY, reservationCount)
         startActivity(intent)
     }
 
@@ -172,5 +172,7 @@ class MovieDetailActivity : BaseActivity(), MovieDetailContract.View {
         const val DEFAULT_THEATER_ID = -1
         const val SIS_COUNT_KEY = "count"
         const val DEFAULT_SPINNER_INDEX = 0
+        const val TITLE_KEY = "title"
+        const val RESERVATION_COUNT_KEY = "reservationCount"
     }
 }

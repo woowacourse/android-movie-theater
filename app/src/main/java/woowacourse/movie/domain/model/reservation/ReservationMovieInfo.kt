@@ -5,6 +5,7 @@ import woowacourse.movie.domain.model.reservation.date.ScreeningDateTime
 
 class ReservationMovieInfo(
     val title: String,
+    val theaterName: String,
     screeningInfo: ScreeningInfo,
 ) {
     val dateTime = ScreeningDateTime(screeningInfo)

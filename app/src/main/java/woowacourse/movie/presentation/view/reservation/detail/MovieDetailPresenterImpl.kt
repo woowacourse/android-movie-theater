@@ -7,25 +7,32 @@ import woowacourse.movie.domain.model.reservation.ReservationCount
 import woowacourse.movie.domain.model.reservation.ReservationMovieInfo
 import woowacourse.movie.presentation.repository.MovieRepository
 import woowacourse.movie.presentation.repository.ReservationMovieInfoRepository
+import woowacourse.movie.presentation.repository.TheaterRepository
 import woowacourse.movie.presentation.uimodel.MovieUiModel
+import woowacourse.movie.repository.TheaterRepositoryImpl
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 class MovieDetailPresenterImpl(
     val movieId: Int,
+    val theaterId: Int,
     private val movieRepository: MovieRepository = MovieRepositoryImpl,
 ) : MovieDetailContract.Presenter {
     private var view: MovieDetailContract.View? = null
     private val movie: Movie = movieRepository.findMovieById(movieId)
-    private val reservationMovieInfo: ReservationMovieInfo = setScreeningMovieInfo()
+    private val reservationMovieInfo: ReservationMovieInfo by lazy {
+        setScreeningMovieInfo()
+    }
     val reservationCount: ReservationCount = ReservationCount()
     val movieUiModel: MovieUiModel = MovieUiModel(movie)
     private val reservationMovieInfoRepository: ReservationMovieInfoRepository =
         ReservationMovieInfoRepositoryImpl
-
+    private val theaterRepository: TheaterRepository = TheaterRepositoryImpl
+    
     private fun setScreeningMovieInfo(): ReservationMovieInfo {
-        return ReservationMovieInfo(movie.title, movie.screeningInfo)
+        val theaterName = theaterRepository.theaterName(theaterId)
+        return ReservationMovieInfo(movie.title, theaterName, movie.screeningInfo)
     }
 
     override fun attachView(view: MovieDetailContract.View) {
