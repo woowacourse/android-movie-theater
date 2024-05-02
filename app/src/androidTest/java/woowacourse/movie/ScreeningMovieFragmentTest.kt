@@ -1,6 +1,7 @@
 package woowacourse.movie
 
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
@@ -69,24 +70,6 @@ class ScreeningMovieFragmentTest {
         onView(withId(R.id.screening_movie)).check(matches(isDisplayed()))
     }
 
-    /*
-    TODO: 터지는 테스트!
-    @Test
-    @DisplayName("title이 `해리 포터와 마법사의 돌`인 item 중 첫 번째 뷰의 상영 시간은 `러닝타임: 181분` 이다. ")
-    fun `itemValues_are_placed_in_textView_when_listView_is_created`() {
-        onView(withId(R.id.rcv_screening_movie)).perform(
-            RecyclerViewActions.scrollTo<RecyclerView.ViewHolder>(
-                hasDescendant(
-                    withText(
-                        screenMovieUiModel3.title,
-                    ),
-                ),
-            ).atPosition(0),
-        )
-        onView(withText(screenMovieUiModel3.runningTime)).check(matches(isDisplayed()))
-    }
-     */
-
     @Test
     fun `영화_리스트의_첫_번째_영화의_제목은_해리_포터와_마법사의_돌이다`() {
         onView(withId(R.id.rcv_screening_movie))
@@ -96,19 +79,13 @@ class ScreeningMovieFragmentTest {
             .perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, checkChildViewWithId(R.id.tv_movie_title, "해리 포터와 마법사의 돌")))
     }
 
-    private fun checkChildViewWithId(id: Int, expectedText: String) = object : ViewAction {
-        override fun getConstraints(): Matcher<View> {
-            return allOf(isDisplayed(), isAssignableFrom(View::class.java))
-        }
+    @Test
+    fun `영화_리스트의_다섯_번째_영화의_제목은_해리포터와_아즈카반의_죄수이다`() {
+        onView(withId(R.id.rcv_screening_movie))
+            .check(matches(isDisplayed()))
 
-        override fun getDescription(): String {
-            return "Check on a child view with specified id."
-        }
-
-        override fun perform(uiController: UiController, view: View) {
-            val textView = view.findViewById<TextView>(id)
-            assertThat(textView.text).isEqualTo(expectedText)
-        }
+        onView(withId(R.id.rcv_screening_movie))
+            .perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(4, checkChildViewWithId(R.id.tv_movie_title, "해리 포터와 아즈카반의 죄수")))
     }
 
     @Test
@@ -133,6 +110,21 @@ class ScreeningMovieFragmentTest {
             val context = view.context
             val expectedBitmap = context.getDrawable(id)?.toBitmap()
             return view is ImageView && view.drawable.toBitmap().sameAs(expectedBitmap)
+        }
+    }
+
+    private fun checkChildViewWithId(id: Int, expectedText: String) = object : ViewAction {
+        override fun getConstraints(): Matcher<View> {
+            return allOf(isDisplayed(), isAssignableFrom(View::class.java))
+        }
+
+        override fun getDescription(): String {
+            return "Check on a child view with specified id."
+        }
+
+        override fun perform(uiController: UiController, view: View) {
+            val textView = view.findViewById<TextView>(id)
+            assertThat(textView.text).isEqualTo(expectedText)
         }
     }
 
