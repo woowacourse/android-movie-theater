@@ -55,6 +55,7 @@ dependencies {
     testImplementation("io.mockk:mockk:1.13.8")
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.activity:activity-ktx:1.8.2")
+    implementation("androidx.test.espresso:espresso-contrib:3.5.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
