@@ -19,7 +19,8 @@ import woowacourse.movie.view.reservation.ReservationDetailActivity
 import woowacourse.movie.view.theater.adapter.TheaterSelectionAdapter
 
 class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionContract.View {
-    private lateinit var binding: FragmentTheaterSelectionBinding
+    private var _binding: FragmentTheaterSelectionBinding? = null
+    private val binding get() = _binding!!
     private lateinit var presenter: TheaterSelectionPresenter
     private var movieId: Int = 0
 
@@ -28,7 +29,7 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding =
+        _binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_theater_selection, container, false)
         movieId = receiveMovieId()
         presenter =
@@ -49,6 +50,11 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
         intent.putExtra(MOVIE_ID, movieId)
         intent.putExtra(THEATER_ID, theaterId)
         startActivity(intent)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun receiveMovieId(): Int {

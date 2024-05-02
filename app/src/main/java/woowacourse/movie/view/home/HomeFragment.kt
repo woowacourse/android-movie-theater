@@ -17,15 +17,16 @@ import woowacourse.movie.view.home.adapter.MovieCatalogAdapter
 import woowacourse.movie.view.theater.TheaterSelectionFragment
 
 class HomeFragment : Fragment(), ReservationHomeContract.View {
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
     private val presenter = ReservationHomePresenter(this)
-    private lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         return binding.root
     }
 
@@ -45,6 +46,11 @@ class HomeFragment : Fragment(), ReservationHomeContract.View {
         bottomSheetDialogFragment.arguments = bundle
         bottomSheetDialogFragment
             .show(childFragmentManager, bottomSheetDialogFragment.tag)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun initMovieRecyclerView() {
