@@ -34,8 +34,6 @@ class SeatsPresenter(val view: SeatsContract.View) : SeatsContract.Presenter {
         colIndex: Int,
     ) {
         seat = Seat.of(rowIndex, colIndex)
-        if (!seat.selected) selectedSeats.add(seat)
-        if (seat.selected) selectedSeats.remove(seat)
     }
 
     override fun startNextActivity() {
@@ -86,5 +84,10 @@ class SeatsPresenter(val view: SeatsContract.View) : SeatsContract.Presenter {
         } else {
             view.setOffConfirmButtonClickListener()
         }
+    }
+
+    override fun clearSelectedSeats() {
+        seatTotalPrice = 0
+        Seat.seats.clear()
     }
 }

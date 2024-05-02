@@ -49,9 +49,10 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
     }
 
     private fun initSeats() {
-        binding.seatsTable.children.filterIsInstance<TableRow>().forEachIndexed { rowIndex, tableRow ->
-            initRowOfSeats(tableRow, rowIndex)
-        }
+        binding.seatsTable.children.filterIsInstance<TableRow>()
+            .forEachIndexed { rowIndex, tableRow ->
+                initRowOfSeats(tableRow, rowIndex)
+            }
     }
 
     private fun initRowOfSeats(
@@ -73,9 +74,10 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
     }
 
     override fun setOnSelectSeat() {
-        binding.seatsTable.children.filterIsInstance<TableRow>().forEachIndexed { rowIndex, tableRow ->
-            setOnSelectRow(tableRow, rowIndex)
-        }
+        binding.seatsTable.children.filterIsInstance<TableRow>()
+            .forEachIndexed { rowIndex, tableRow ->
+                setOnSelectRow(tableRow, rowIndex)
+            }
     }
 
     private fun setOnSelectRow(
@@ -160,6 +162,11 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
         val row = binding.seatsTable.getChildAt(info.rowIndex) as TableRow
         val cell = row.getChildAt(info.colIndex)
         cell.setBackgroundColor(info.cellBackgroundColor)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.clearSelectedSeats()
     }
 
     companion object {

@@ -52,7 +52,7 @@ class Seat private constructor(val rowIndex: Int, val colIndex: Int) : Serializa
     }
 
     companion object {
-        private val seats = mutableListOf<Seat>()
+        val seats = mutableListOf<Seat>()
 
         fun of(
             rowIndex: Int,

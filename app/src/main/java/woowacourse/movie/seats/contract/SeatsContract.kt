@@ -65,5 +65,6 @@ interface SeatsContract {
         fun initCell(cell: TextView)
         fun storeTicketCount(ticketCount: Int)
         fun setConfirmButtonClickListener()
+        fun clearSelectedSeats()
     }
 }
