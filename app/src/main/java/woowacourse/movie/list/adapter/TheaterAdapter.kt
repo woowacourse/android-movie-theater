@@ -3,6 +3,7 @@ package woowacourse.movie.list.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.movie.R
 import woowacourse.movie.databinding.TheaterItemBinding
 import woowacourse.movie.list.model.Theater
 
@@ -15,7 +16,11 @@ class TheaterAdapter(private val movieId: Long, private val theaters: List<Theat
             position: Int,
         ) {
             binding.theaterName.text = name
-            binding.screeningTimes.text = theaters[position].getCount(movieId).toString()
+            val count = theaters[position].getCount(movieId)
+            binding.screeningTimes.text = String.format(
+                binding.root.context.resources.getString(R.string.screening_time_count_format),
+                count,
+            )
             binding.theaterItem.setOnClickListener {
                 itemClickListener.onClick(movieId, theaters[position].id)
             }
