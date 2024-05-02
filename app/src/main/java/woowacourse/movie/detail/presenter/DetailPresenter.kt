@@ -3,6 +3,7 @@ package woowacourse.movie.detail.presenter
 import woowacourse.movie.common.MovieDataSource
 import woowacourse.movie.detail.contract.DetailContract
 import woowacourse.movie.detail.model.DetailDataResource
+import woowacourse.movie.detail.model.DetailDataResource.movieId
 import woowacourse.movie.detail.model.DetailDataResource.theaterId
 import woowacourse.movie.detail.model.DetailTicketCountData
 import woowacourse.movie.list.model.TheaterData
@@ -54,10 +55,10 @@ class DetailPresenter(
     }
 
     override fun setTicketingButtonClickInfo() {
-        view.startMovieTicketActivity(ticketCount, theaterId)
+        view.startMovieTicketActivity(ticketCount, theaterId, movieId)
     }
 
-    override fun setSpinnerInfo(theaterId: Long) {
+    override fun setSpinnerInfo() {
         view.showSpinner(DetailDataResource.screeningDates, screeningTimes)
     }
 

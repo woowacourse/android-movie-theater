@@ -17,6 +17,7 @@ interface DetailContract {
         fun startMovieTicketActivity(
             count: Count,
             theaterId: Long,
+            movieId: Long,
         )
 
         fun showToast(message: String)
@@ -44,7 +45,7 @@ interface DetailContract {
 
         fun setMovieInfo()
 
-        fun setSpinnerInfo(theaterId: Long)
+        fun setSpinnerInfo()
 
         fun setSpinnerDateItemInfo()
 

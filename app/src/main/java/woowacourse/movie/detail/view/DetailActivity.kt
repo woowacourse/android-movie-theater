@@ -26,16 +26,12 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
     private var toast: Toast? = null
     lateinit var selectedDate: LocalDate
     lateinit var selectedTime: LocalTime
-    private var movieId: Long = -1
-    private var theaterId: Long = -1
     override val presenter = DetailPresenter(this@DetailActivity)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
         binding.detail = this
-        movieId = intent.getLongExtra(EXTRA_MOVIE_ID_KEY, 0)
-        theaterId = intent.getLongExtra(EXTRA_THEATER_ID_KEY, 0)
         executePresenterTasks()
         setOnPlusButtonClickListener()
         setOnMinusButtonClickListener()
@@ -44,10 +40,10 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
 
     private fun executePresenterTasks() {
         presenter.setCurrentResultTicketCountInfo()
-        presenter.storeMovieId(movieId)
-        presenter.storeTheaterId(theaterId)
+        presenter.storeMovieId(intent.getLongExtra(EXTRA_MOVIE_ID_KEY, 0))
+        presenter.storeTheaterId(intent.getLongExtra(EXTRA_THEATER_ID_KEY, 0))
         presenter.setMovieInfo()
-        presenter.setSpinnerInfo(theaterId)
+        presenter.setSpinnerInfo()
         presenter.setSpinnerDateItemInfo()
         presenter.setSpinnerTimeItemInfo()
     }
@@ -145,6 +141,7 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
     override fun startMovieTicketActivity(
         count: Count,
         theaterId: Long,
+        movieId: Long,
     ) {
         val intent = Intent(this, SeatsActivity::class.java)
         intent.putExtra(EXTRA_COUNT_KEY, count.number)
