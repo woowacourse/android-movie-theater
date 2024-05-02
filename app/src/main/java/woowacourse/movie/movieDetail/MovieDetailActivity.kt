@@ -29,7 +29,6 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     private lateinit var presenter: MovieDetailContract.Presenter
     private lateinit var dateAdapter: ArrayAdapter<String>
     private lateinit var timeAdapter: ArrayAdapter<String>
-    private val seatConfirmationButton: Button by lazy { findViewById(R.id.seat_confirmation_button) }
     private lateinit var times: List<LocalTime>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,7 +88,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
 
     private fun setupEventListeners(cinema: Cinema) {
 
-        seatConfirmationButton.setOnClickListener {
+        binding.seatConfirmationButton.setOnClickListener {
             val intent = Intent(this, TheaterSeatActivity::class.java).apply {
                 putExtra("ticketNum", presenter.getTickets().toString())
                 putExtra("Cinema", cinema)
