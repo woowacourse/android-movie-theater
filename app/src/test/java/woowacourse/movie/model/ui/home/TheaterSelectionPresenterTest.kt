@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.model.data.MovieContentsImpl
 import woowacourse.movie.model.data.TheatersImpl
-import woowacourse.movie.model.movieContent
 import woowacourse.movie.ui.home.TheaterSelectionContract
 import woowacourse.movie.ui.home.TheaterSelectionPresenter
 

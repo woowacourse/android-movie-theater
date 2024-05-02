@@ -13,7 +13,6 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieReservationCompleteBinding
 import woowacourse.movie.model.data.UserTicketsImpl
 import woowacourse.movie.model.movie.Seat
-import woowacourse.movie.model.movie.UserTicket
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.home.MovieHomeFragment
 import java.time.LocalDateTime
