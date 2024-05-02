@@ -32,8 +32,6 @@ interface TheaterSeatContract {
 
         fun updateSeatBackground(seatId: String)
 
-        fun calculateTotalPrice(): Int
-
         fun showConfirmationDialog(
             title: String,
             message: String,
@@ -42,11 +40,5 @@ interface TheaterSeatContract {
             negativeLabel: String,
             onNegativeButtonClicked: () -> Unit,
         )
-
-        fun getSelectedSeatNumbers(): Array<String>
-
-        fun getTotalPrice(): Int
-
-        fun getCinema(): Cinema
     }
 }

@@ -6,21 +6,13 @@ import woowacourse.movie.model.theater.Seat
 class TheaterSeatPresenter(
     private val view: TheaterSeatContract.View,
     private val ticketLimit: Int,
-    private val cinema: Cinema,
+    val cinema: Cinema,
 ) :
     TheaterSeatContract.Presenter {
     private val seats: MutableMap<String, Seat> = mutableMapOf()
     var selectedSeats = mutableListOf<String>()
         private set
-    private var totalPrice = 0
-
-    override fun getTotalPrice(): Int {
-        return totalPrice
-    }
-
-    override fun getCinema(): Cinema {
-        return cinema
-    }
+    var totalPrice = 0
 
     init {
         val rows = mapOf(1 to "B", 2 to "B", 3 to "S", 4 to "S", 5 to "A")
@@ -57,10 +49,6 @@ class TheaterSeatPresenter(
         }
     }
 
-    override fun calculateTotalPrice(): Int {
-        return seats.values.filter { it.chosen }.sumOf { it.price }
-    }
-
     override fun showConfirmationDialog(
         title: String,
         message: String,
@@ -79,10 +67,6 @@ class TheaterSeatPresenter(
                 onNegativeButtonClicked,
             )
         }
-    }
-
-    override fun getSelectedSeatNumbers(): Array<String> {
-        return selectedSeats.toTypedArray()
     }
 
     private fun calculateAndUpdateTotalPrice() {

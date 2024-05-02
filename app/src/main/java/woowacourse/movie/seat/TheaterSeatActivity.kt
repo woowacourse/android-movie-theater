@@ -125,7 +125,7 @@ class TheaterSeatActivity : AppCompatActivity(), TheaterSeatContract.View {
                     val intent =
                         Intent(this, PurchaseConfirmationActivity::class.java).apply {
                             putExtra("ticketPrice", ticketPrice.toString())
-                            putExtra("seatNumber", presenter.getSelectedSeatNumbers())
+                            putExtra("seatNumber", presenter.selectedSeats.toTypedArray())
                             putExtra("Cinema", cinema)
                             putExtra("timeDate", intent.getStringExtra("timeDate"))
                         }
