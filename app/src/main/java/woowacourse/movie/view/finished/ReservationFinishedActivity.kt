@@ -11,7 +11,6 @@ import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.ticket.Ticket
 import woowacourse.movie.presenter.finished.ReservationFinishedContract
 import woowacourse.movie.presenter.finished.ReservationFinishedPresenter
-import woowacourse.movie.utils.MovieUtils
 import woowacourse.movie.utils.MovieUtils.convertAmountFormat
 import woowacourse.movie.utils.MovieUtils.intentSerializable
 import woowacourse.movie.utils.MovieUtils.makeToast
