@@ -21,7 +21,6 @@ import woowacourse.movie.seat.TheaterSeatActivity
 import java.time.LocalDate
 
 class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
-    private var ticketNum = 1
     private lateinit var presenter: MovieDetailContract.Presenter
     private lateinit var dateSpinner: Spinner
     private lateinit var timeSpinner: Spinner
@@ -40,11 +39,10 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val cinema = IntentCompat.getSerializableExtra(intent, "Cinema", Cinema::class.java)
         val theater = cinema?.theater
-        presenter =
-            MovieDetailPresenter(
-                view = this@MovieDetailActivity,
-                theater?.movie,
-            )
+        presenter = MovieDetailPresenter(
+            view = this@MovieDetailActivity,
+            theater?.movie,
+        )
         presenter.load()
         cinema?.let { setupEventListeners(it) }
         presenter.generateDateRange(LocalDate.of(2024, 4, 1), LocalDate.of(2024, 4, 30))
@@ -56,8 +54,12 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
             movieInfo.releaseDate.toString()
         findViewById<TextView>(R.id.movie_running_time).text = movieInfo.runningTime.toString()
         findViewById<TextView>(R.id.movie_synopsis).text = movieInfo.synopsis.toString()
-        findViewById<ImageView>(R.id.movie_thumbnail)
-            .setImageDrawable(ContextCompat.getDrawable(this, R.drawable.movie_making_poster))
+        findViewById<ImageView>(R.id.movie_thumbnail).setImageDrawable(
+            ContextCompat.getDrawable(
+                this,
+                R.drawable.movie_making_poster
+            )
+        )
     }
 
     override fun navigateToPurchaseConfirmation(intent: Intent) {
@@ -75,19 +77,18 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     override fun updateDateAdapter(dates: List<String>) {
         dateAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, dates)
         dateSpinner.adapter = dateAdapter
-        dateSpinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View,
-                    position: Int,
-                    id: Long,
-                ) {
-                    presenter.updateTimeSpinner(dates[position])
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>) {}
+        dateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long,
+            ) {
+                presenter.updateTimeSpinner(dates[position])
             }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
     }
 
     override fun updateTimeAdapter(times: List<String>) {
@@ -102,25 +103,22 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
 
     private fun setupEventListeners(cinema: Cinema) {
         plusButton.setOnClickListener {
-            presenter.onTicketPlusClicked(ticketNum)
-            ticketNum++
+            presenter.onTicketPlusClicked()
         }
 
         minusButton.setOnClickListener {
-            presenter.onTicketMinusClicked(ticketNum)
-            ticketNum--
+            presenter.onTicketMinusClicked()
         }
 
         seatConfirmationButton.setOnClickListener {
-            val intent =
-                Intent(this, TheaterSeatActivity::class.java).apply {
-                    putExtra("ticketNum", presenter.getTicketNum())
-                    putExtra("Cinema", cinema)
-                    putExtra(
-                        "timeDate",
-                        dateSpinner.selectedItem.toString() + " " + timeSpinner.selectedItem.toString()
-                    )
-                }
+            val intent = Intent(this, TheaterSeatActivity::class.java).apply {
+                putExtra("ticketNum", presenter.getTicketNum())
+                putExtra("Cinema", cinema)
+                putExtra(
+                    "timeDate",
+                    dateSpinner.selectedItem.toString() + " " + timeSpinner.selectedItem.toString()
+                )
+            }
             navigateToPurchaseConfirmation(intent)
         }
     }

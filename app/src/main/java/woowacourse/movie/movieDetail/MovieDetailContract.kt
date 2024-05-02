@@ -24,9 +24,9 @@ interface MovieDetailContract {
 
         fun getTicketNum(): Int
 
-        fun onTicketPlusClicked(currentTicketNum: Int)
+        fun onTicketPlusClicked()
 
-        fun onTicketMinusClicked(currentTicketNum: Int)
+        fun onTicketMinusClicked()
 
 
         fun updateTimeSpinner(date: String)
