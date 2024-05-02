@@ -7,51 +7,54 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.FragmentTheaterBinding
 import woowacourse.movie.detail.view.DetailActivity
 import woowacourse.movie.list.adapter.TheaterAdapter
 import woowacourse.movie.list.model.TheaterData.theaters
 import woowacourse.movie.list.view.HomeFragment.Companion.EXTRA_MOVIE_ID_KEY_TO_FRAGMENT
 
-class TheaterFragment : DialogFragment() {
+class TheaterFragment : DialogFragment(), TheaterFragmentContract.View {
     private lateinit var binding: FragmentTheaterBinding
-
+    private lateinit var presenter: TheaterPresenter
+    
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         binding = FragmentTheaterBinding.inflate(inflater, container, false)
+        presenter = TheaterPresenter(this)
+        
         val movieId = arguments?.getLong(EXTRA_MOVIE_ID_KEY_TO_FRAGMENT)
-        val recyclerView: RecyclerView = binding.theaterRecyclerView
-
-        val theaterAdapter =
-            TheaterAdapter(
-                movieId = movieId ?: -99,
-                theaters,
-            )
-        recyclerView.adapter = theaterAdapter
-
-        theaterAdapter.setItemClickListener(
-            object : TheaterAdapter.OnItemClickListener {
-                override fun onClick(
-                    movieId: Long,
-                    theaterId: Long,
-                ) {
-                    val intent = Intent(activity, DetailActivity::class.java)
-                    intent.putExtra("movie_id_key", movieId)
-                    intent.putExtra("theater_id_key", theaterId)
-                    startActivity(intent)
-                }
-            },
-        )
-
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        setupRecyclerView(movieId ?: INVALID_MOVIE_ID)
+        
         return binding.root
     }
-
+    
+    private fun setupRecyclerView(movieId: Long) {
+        binding.theaterRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = TheaterAdapter(movieId, theaters).also {
+                it.setItemClickListener(object : TheaterAdapter.OnItemClickListener {
+                    override fun onClick(movieId: Long, theaterId: Long) {
+                        presenter.itemClicked(movieId, theaterId)
+                    }
+                })
+            }
+        }
+    }
+    
+    override fun navigateToDetailActivity(movieId: Long, theaterId: Long) {
+        Intent(activity, DetailActivity::class.java).apply {
+            putExtra(EXTRA_MOVIE_ID_KEY, movieId)
+            putExtra(EXTRA_THEATER_ID_KEY, theaterId)
+            startActivity(this)
+        }
+    }
+    
     companion object {
+        const val INVALID_MOVIE_ID = -99L
+        const val EXTRA_MOVIE_ID_KEY = "movie_id_key"
         const val EXTRA_THEATER_ID_KEY = "theater_id_key"
     }
 }
+
