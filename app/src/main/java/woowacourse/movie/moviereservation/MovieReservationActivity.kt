@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.data.DummyMovies
+import woowacourse.movie.databinding.ActivityMovieReservationBinding
 import woowacourse.movie.moviereservation.uimodel.BookingDetail
 import woowacourse.movie.moviereservation.uimodel.BookingInfoUiModel
 import woowacourse.movie.moviereservation.uimodel.HeadCountUiModel
@@ -26,19 +27,16 @@ import woowacourse.movie.util.showErrorToastMessage
 
 class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.View {
     private lateinit var presenter: MovieReservationContract.Presenter
-    private lateinit var countView: TextView
-    private lateinit var plusButton: Button
-    private lateinit var minusButton: Button
-    private lateinit var dateSpinner: Spinner
     private lateinit var dateAdapter: ArrayAdapter<String>
-    private lateinit var timeSpinner: Spinner
     private lateinit var timeAdapter: ArrayAdapter<String>
+    private lateinit var binding: ActivityMovieReservationBinding
 
     private lateinit var bookingDetail: BookingDetail
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_reservation)
+        binding = ActivityMovieReservationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val id = movieId()
         initView()
@@ -83,28 +81,24 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
             savedInstanceState.bundleParcelable(STATE_BOOKING_ID, BookingDetail::class.java)
         storedBookingInfo?.let {
             bookingDetail = it
-            countView.text = bookingDetail.count.count
-            dateSpinner.setSelection(bookingDetail.date.position)
-            timeSpinner.setSelection(bookingDetail.time.position)
+            binding.tvDetailCount.text = bookingDetail.count.count
+            binding.spinnerDetailDate.setSelection(bookingDetail.date.position)
+            binding.spinnerDetailTime.setSelection(bookingDetail.time.position)
         }
     }
 
     private fun initView() {
-        countView = findViewById(R.id.tv_detail_count)
-        plusButton = findViewById(R.id.btn_detail_plus)
-        minusButton = findViewById(R.id.btn_detail_minus)
-        dateSpinner = findViewById(R.id.spinner_detail_date)
-        timeSpinner = findViewById(R.id.spinner_detail_time)
+        binding
     }
 
     private fun initClickListener() {
-        plusButton.setOnClickListener {
+        binding.btnDetailPlus.setOnClickListener {
             presenter.plusCount(bookingDetail.count)
         }
-        minusButton.setOnClickListener {
+        binding.btnDetailMinus.setOnClickListener {
             presenter.minusCount(bookingDetail.count)
         }
-        findViewById<Button>(R.id.btn_detail_complete).setOnClickListener {
+        binding.btnDetailComplete.setOnClickListener {
             startActivity(SelectSeatActivity.getIntent(this, BookingInfoUiModel(movieId(), theaterId(), bookingDetail)))
         }
     }
@@ -122,16 +116,17 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
 
     override fun showMovieInfo(reservation: MovieReservationUiModel) {
         val (id, title, imageRes, screenDate, description, runningTime) = reservation
-        findViewById<ImageView>(R.id.iv_detail_poster).setImageResource(imageRes)
-        findViewById<TextView>(R.id.tv_detail_title).text = title
-        findViewById<TextView>(R.id.tv_detail_movie_desc).text = description
-        findViewById<TextView>(R.id.tv_detail_running_date).text = screenDate
-        findViewById<TextView>(R.id.tv_detail_running_time).text = runningTime
+        with(binding){
+            tvDetailTitle.text = title
+            tvDetailMovieDesc.text = description
+            tvDetailRunningDate.text= screenDate
+            tvDetailRunningTime.text = runningTime
+        }
     }
 
     override fun updateHeadCount(updatedCount: HeadCountUiModel) {
         bookingDetail = bookingDetail.updateCount(updatedCount)
-        countView.text = bookingDetail.count.count
+        binding.tvDetailCount.text = bookingDetail.count.count
     }
 
     override fun navigateToReservationResultView(reservationId: Long) {
@@ -156,7 +151,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
     ) {
         this.bookingDetail = bookingDetail
         initSpinner(screeningDateTimesUiModel)
-        countView.text = bookingDetail.count.count
+        binding.tvDetailCount.text = bookingDetail.count.count
     }
 
     private fun initSpinner(screeningDateTimesUiModel: ScreeningDateTimesUiModel) {
@@ -170,14 +165,14 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         timeAdapter =
             ArrayAdapter(this, R.layout.item_spinner, screeningDateTimesUiModel.defaultTimes())
 
-        dateSpinner.adapter = dateAdapter
-        timeSpinner.adapter = timeAdapter
+        binding.spinnerDetailDate.adapter = dateAdapter
+        binding.spinnerDetailTime.adapter = timeAdapter
 
         setSpinnerClickListener(screeningDateTimesUiModel)
     }
 
     private fun setSpinnerClickListener(screeningDateTimesUiModel: ScreeningDateTimesUiModel) {
-        dateSpinner.onItemSelectedListener =
+        binding.spinnerDetailDate.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
@@ -187,7 +182,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
                 ) {
                     bookingDetail =
                         bookingDetail.updateDate(
-                            position, dateSpinner.selectedItem.toString(),
+                            position, binding.spinnerDetailDate.selectedItem.toString(),
                         )
                     timeAdapter.clear()
                     timeAdapter.addAll(screeningDateTimesUiModel.screeningTimeOfDate(position))
@@ -196,7 +191,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
                 override fun onNothingSelected(p0: AdapterView<*>?) {}
             }
 
-        timeSpinner.onItemSelectedListener =
+        binding.spinnerDetailTime.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
@@ -206,7 +201,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
                 ) {
                     bookingDetail =
                         bookingDetail.updateTime(
-                            position, timeSpinner.selectedItem.toString(),
+                            position, binding.spinnerDetailTime.selectedItem.toString(),
                         )
                 }
 
