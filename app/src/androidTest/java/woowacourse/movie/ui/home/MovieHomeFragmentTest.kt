@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.home
 
+import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
@@ -7,10 +8,9 @@ import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.hamcrest.Matchers.allOf
-import org.junit.Rule
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
@@ -22,8 +22,10 @@ import woowacourse.movie.ui.home.adapter.MovieViewHolder
 class MovieHomeFragmentTest {
     private val movieContent: MovieContent = MovieContentsImpl.find(0L)
 
-    @get:Rule
-    val activityRule = ActivityScenarioRule(MovieHomeFragment::class.java)
+    @Before
+    fun setUp() {
+        launchFragmentInContainer<MovieHomeFragment>()
+    }
 
     @Test
     fun `화면이_띄워지면_영화_목록이_보인다`() {

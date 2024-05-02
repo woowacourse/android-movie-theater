@@ -43,31 +43,17 @@ class MovieReservationCompleteActivityTest {
     }
 
     @Test
-    fun `화면이_띄워지면_상영일이_보인다`() {
-        onView(withId(R.id.screening_date_text))
+    fun `화면이_띄워지면_상영일시가_보인다`() {
+        onView(withId(R.id.screening_date_time_text))
             .check(matches(isDisplayed()))
-            .check(matches(withText("2024-03-28")))
+            .check(matches(withText("2024.3.28 21:00")))
     }
 
     @Test
-    fun `화면이_띄워지면_상영시간이_보인다`() {
-        onView(withId(R.id.screening_time_text))
+    fun `화면이_띄워지면_인원수_좌석번호_극장명이_보인다`() {
+        onView(withId(R.id.selection_result_text))
             .check(matches(isDisplayed()))
-            .check(matches(withText("21:00")))
-    }
-
-    @Test
-    fun `화면이_띄워지면_예매_인원이_1인_경우_예매_인원의_수가_보인다`() {
-        onView(withId(R.id.reservation_count_text))
-            .check(matches(isDisplayed()))
-            .check(matches(withText("일반 ${RESERVATION_COUNT}명")))
-    }
-
-    @Test
-    fun `화면이_띄워지면_예매한_좌석번호가_보인다`() {
-        onView(withId(R.id.reservation_seat_text))
-            .check(matches(isDisplayed()))
-            .check(matches(withText("A1")))
+            .check(matches(withText("일반 1명 | A1 | 선릉 극장")))
     }
 
     @Test
@@ -92,6 +78,7 @@ class MovieReservationCompleteActivityTest {
             UserTicketsImpl.save(
                 UserTicket(
                     title = "해리",
+                    theater = "선릉",
                     screeningStartDateTime = LocalDateTime.of(2024, 3, 28, 21, 0),
                     reservationDetail = reservationDetail,
                 ),

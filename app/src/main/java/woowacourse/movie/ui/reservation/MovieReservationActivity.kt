@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
@@ -16,6 +17,8 @@ import woowacourse.movie.model.data.UserTicketsImpl
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.selection.MovieSeatSelectionActivity
 import woowacourse.movie.ui.utils.getImageFromId
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class MovieReservationActivity :
     BaseActivity<MovieReservationPresenter>(),
@@ -100,4 +103,19 @@ fun setImageViewResource(
     imageName: String,
 ) {
     imageView.setImageResource(imageName.getImageFromId(context))
+}
+
+@BindingAdapter("context", "openingDate", "endingDate")
+fun setScreeningDate(
+    textView: TextView,
+    context: Context,
+    openingDate: LocalDate,
+    endingDate: LocalDate,
+) {
+    val formattedOpeningDate =
+        openingDate.format(DateTimeFormatter.ofPattern(context.getString(R.string.reservation_screening_date_format)))
+    val formattedEndingDate =
+        endingDate.format(DateTimeFormatter.ofPattern(context.getString(R.string.reservation_screening_date_format)))
+    textView.text =
+        context.getString(R.string.screening_date, formattedOpeningDate, formattedEndingDate)
 }

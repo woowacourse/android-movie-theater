@@ -90,10 +90,11 @@ class MovieSeatSelectionActivityTest {
         fun setUp() {
             UserTicketsImpl.save(
                 UserTicket(
-                    "해리포터와 마법사의 돌0",
-                    LocalDateTime.of(2024, 3, 28, 10, 0),
-                    ReservationDetail(2),
-                    0L,
+                    title = "해리포터와 마법사의 돌0",
+                    theater = "선릉",
+                    screeningStartDateTime = LocalDateTime.of(2024, 3, 28, 10, 0),
+                    reservationDetail = ReservationDetail(2),
+                    id = 0L,
                 ),
             )
         }

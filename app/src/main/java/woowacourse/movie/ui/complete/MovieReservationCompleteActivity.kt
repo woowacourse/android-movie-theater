@@ -78,5 +78,5 @@ fun setReservedDateTime(
     textView: TextView,
     dateTime: LocalDateTime,
 ) {
-    textView.text = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+    textView.text = dateTime.format(DateTimeFormatter.ofPattern("yyyy.M.d HH:mm"))
 }

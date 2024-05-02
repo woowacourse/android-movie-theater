@@ -18,9 +18,7 @@ import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.model.data.MovieContentsImpl
 import woowacourse.movie.model.movie.MovieContent
-import woowacourse.movie.model.movie.Theater
 import java.time.LocalDate
-import java.time.LocalTime
 
 @RunWith(AndroidJUnit4::class)
 class MovieReservationActivityTest {
@@ -32,6 +30,7 @@ class MovieReservationActivityTest {
             MovieReservationActivity::class.java,
         ).run {
             putExtra(MovieReservationKey.MOVIE_CONTENT_ID, 0L)
+            putExtra(MovieReservationKey.THEATER_ID, 0L)
         }
 
     @get:Rule
@@ -48,7 +47,7 @@ class MovieReservationActivityTest {
     fun `화면이_띄워지면_상영일이_보인다`() {
         onView(withId(R.id.screening_date_text))
             .check(matches(isDisplayed()))
-            .check(matches(withText("상영일: 2024.03.01 ~ 2024.03.28")))
+            .check(matches(withText("상영일: 2024.3.1 ~ 2024.3.28")))
     }
 
     @Test
@@ -148,7 +147,7 @@ class MovieReservationActivityTest {
                     152,
                     "《해리 포터와 마법사의 돌》은 2001년 J. K. 롤링의 동명 소설을 원작으로 하여 만든, 영국과 미국 합작, " +
                         "판타지 영화이다. 해리포터 시리즈 영화 8부작 중 첫 번째에 해당하는 작품이다. 크리스 콜럼버스가 감독을 맡았다. ",
-                    listOf(Theater("강남", listOf(LocalTime.of(11, 0), LocalTime.of(13, 0)), 0)),
+                    listOf(0L, 1L, 2L),
                 ),
             )
         }
