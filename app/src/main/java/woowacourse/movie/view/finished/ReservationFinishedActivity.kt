@@ -2,11 +2,13 @@ package woowacourse.movie.view.finished
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityReservationFinishedBinding
 import woowacourse.movie.db.screening.ScreeningDao
+import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.ticket.Ticket
 import woowacourse.movie.presenter.finished.ReservationFinishedContract
@@ -18,20 +20,16 @@ import woowacourse.movie.view.home.ReservationHomeActivity
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.TICKET
 
 class ReservationFinishedActivity : AppCompatActivity(), ReservationFinishedContract.View {
-    private val presenter: ReservationFinishedPresenter = ReservationFinishedPresenter(this, ScreeningDao())
+    private val binding: ActivityReservationFinishedBinding by lazy {
+        DataBindingUtil.setContentView(this, R.layout.activity_reservation_finished)
+    }
+    private val presenter: ReservationFinishedPresenter = ReservationFinishedPresenter(this, ScreeningDao(), TheaterDao())
 
-    private val title: TextView by lazy { findViewById(R.id.text_view_reservation_finished_title) }
-    private val seatsNumber: TextView by lazy { findViewById(R.id.text_view_reservation_finished_seats) }
-    private val screeningDate: TextView by lazy { findViewById(R.id.text_view_reservation_finished_screening_date) }
-    private val screeningTime: TextView by lazy { findViewById(R.id.text_view_reservation_finished_screening_time) }
-    private val numberOfTickets: TextView by lazy { findViewById(R.id.text_view_reservation_finished_number_of_tickets) }
-    private val ticketPrice: TextView by lazy { findViewById(R.id.text_view_reservation_finished_ticket_price) }
     private lateinit var ticket: Ticket
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_reservation_finished)
-
+        binding.reservationFinished = this
         handleBackPressed()
         receiveTicket()
         with(presenter) {
@@ -41,21 +39,26 @@ class ReservationFinishedActivity : AppCompatActivity(), ReservationFinishedCont
     }
 
     override fun showMovieTitle(movie: Movie) {
-        title.text = movie.title
+        binding.textViewReservationFinishedTitle.text = movie.title
     }
 
     override fun showReservationHistory(ticket: Ticket) {
         val seats = ticket.seats.seats
-        numberOfTickets.text = seats.size.toString()
-        ticketPrice.text = convertAmountFormat(this, ticket.amount)
-        seatsNumber.text =
+        binding.textViewReservationFinishedNumberOfTickets.text = seats.size.toString()
+        binding.textViewReservationFinishedTicketPrice.text = convertAmountFormat(this, ticket.amount)
+        binding.textViewReservationFinishedSeats.text =
             seats.joinToString(getString(R.string.reservation_finished_seat_separator)) { "${it.row}${it.column}" }
-        screeningDate.text = ticket.screeningDateTime.date
-        screeningTime.text = ticket.screeningDateTime.time
+        presenter.loadTheater(ticket.theaterId)
+        binding.textViewReservationFinishedScreeningDate.text = ticket.screeningDateTime.date
+        binding.textViewReservationFinishedScreeningTime.text = ticket.screeningDateTime.time
     }
 
     override fun showErrorToast() {
         makeToast(this, getString(R.string.all_error))
+    }
+
+    override fun showTheaterName(theaterName: String) {
+        binding.textViewReservationFinishedTheaterName.text = getString(R.string.reservation_finished_theater, theaterName)
     }
 
     private fun receiveTicket() {
