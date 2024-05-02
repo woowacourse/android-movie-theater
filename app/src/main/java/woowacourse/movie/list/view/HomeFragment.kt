@@ -52,10 +52,8 @@ class HomeFragment : Fragment(), MovieListContract.View {
                     val bundle = Bundle()
                     bundle.putLong(EXTRA_MOVIE_ID_KEY_TO_FRAGMENT, movieId)
                     theaterFragment.arguments = bundle
-                    parentFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container_view, theaterFragment)
-                        .commit()
                     binding.fragmentContainerView.visibility = View.VISIBLE
+                    theaterFragment.show(parentFragmentManager, "dailog")
                 }
             },
         )

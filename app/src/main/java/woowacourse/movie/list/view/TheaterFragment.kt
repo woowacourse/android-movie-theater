@@ -5,15 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.databinding.FragmentTheaterBinding
 import woowacourse.movie.detail.view.DetailActivity
 import woowacourse.movie.list.adapter.TheaterAdapter
 import woowacourse.movie.list.model.TheaterData.theaters
 import woowacourse.movie.list.view.HomeFragment.Companion.EXTRA_MOVIE_ID_KEY_TO_FRAGMENT
 
-class TheaterFragment : DialogFragment(), TheaterFragmentContract.View {
+class TheaterFragment : BottomSheetDialogFragment(), TheaterFragmentContract.View {
     private lateinit var binding: FragmentTheaterBinding
     private lateinit var presenter: TheaterPresenter
 
