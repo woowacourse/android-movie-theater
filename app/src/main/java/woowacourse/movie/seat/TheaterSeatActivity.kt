@@ -31,8 +31,8 @@ class TheaterSeatActivity : AppCompatActivity(), TheaterSeatContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setContentView(binding.root)
         initializePresenter()
         setupSeats()
 
@@ -79,7 +79,7 @@ class TheaterSeatActivity : AppCompatActivity(), TheaterSeatContract.View {
     }
 
     override fun updateTotalPrice(price: Int) {
-        binding.totalPrice.text = getString(R.string.total_price, price)
+        binding.invalidateAll()
     }
 
     override fun navigateToNextPage(intent: Intent) {
@@ -93,15 +93,16 @@ class TheaterSeatActivity : AppCompatActivity(), TheaterSeatContract.View {
 
     private fun initializePresenter() {
         val intent = intent
-        val ticketNum = intent.getIntExtra("ticketNum", 0)
-        val cinema = IntentCompat.getSerializableExtra(intent, "Cinema", Cinema::class.java)
-        binding.screenMovieName.text = cinema?.theater?.movie?.title.toString() ?: error("")
-        presenter = TheaterSeatPresenter(this, ticketNum)
+        val ticketNum = intent.getStringExtra("ticketNum")?.toInt() ?: 0
+        IntentCompat.getSerializableExtra(intent, "Cinema", Cinema::class.java)?.let {cinema ->
+            presenter = TheaterSeatPresenter(this, ticketNum, cinema).also {presenter->
+                binding.presenter = presenter
+            }
+        }
     }
 
     private fun setupSeats() {
-        val tableLayout = findViewById<TableLayout>(R.id.seatTable)
-        tableLayout.children.filterIsInstance<TableRow>()
+        binding.seatTable.children.filterIsInstance<TableRow>()
             .forEach { row ->
                 row.children.filterIsInstance<Button>()
                     .forEach { button ->

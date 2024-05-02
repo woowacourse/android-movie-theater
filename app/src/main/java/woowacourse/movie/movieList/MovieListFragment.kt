@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.movieList
 
 import MovieAdapter
 import MovieListView
@@ -9,11 +9,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import woowacourse.movie.R
 import woowacourse.movie.common.ui.withArgs
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.model.MovieDisplayData
 import woowacourse.movie.model.theater.Theater
-import woowacourse.movie.movieList.MovieListPresenter
 import woowacourse.movie.movieList.cinemaListDialog.TheatersBottomSheetFragment
 
 class MovieListFragment : Fragment(), MovieListView {

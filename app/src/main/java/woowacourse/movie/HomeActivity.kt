@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.common.ui.replaceTo
 import woowacourse.movie.databinding.ActivityHomeBinding
+import woowacourse.movie.movieList.MovieListFragment
 import woowacourse.movie.reservation.ReservationFragment
 import woowacourse.movie.setting.SettingFragment
 
