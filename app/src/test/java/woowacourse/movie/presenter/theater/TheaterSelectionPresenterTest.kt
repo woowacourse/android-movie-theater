@@ -1,4 +1,4 @@
-package woowacourse.movie.presenter
+package woowacourse.movie.presenter.theater
 
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -9,8 +9,6 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import woowacourse.movie.presenter.theater.TheaterSelectionContract
-import woowacourse.movie.presenter.theater.TheaterSelectionPresenter
 
 @ExtendWith(MockKExtension::class)
 class TheaterSelectionPresenterTest {
