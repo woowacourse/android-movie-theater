@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHomeBinding
-import woowacourse.movie.domain.model.ScreenView
 import woowacourse.movie.domain.model.TheaterCount
 import woowacourse.movie.domain.repository.DummyScreens
 import woowacourse.movie.presentation.model.MessageType
@@ -44,10 +43,6 @@ class HomeFragment : Fragment(), HomeContract.View {
 
     private fun initAdapter() {
         binding.rvScreen?.adapter = adapter
-    }
-
-    override fun showScreens(screens: List<ScreenView>) {
-        adapter.updateScreens(screens)
     }
 
     override fun showBottomTheater(

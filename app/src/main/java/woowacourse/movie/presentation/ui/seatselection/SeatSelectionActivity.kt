@@ -24,8 +24,6 @@ class SeatSelectionActivity : BaseActivity<ActivitySeatSelectionBinding>(), View
         SeatSelectionPresenter(this, DummyScreens(), DummyReservation)
     }
 
-//    private val seatBoard: TableLayout by lazy { findViewById(R.id.tl_seat_board) }
-
     override fun initStartView() {
         binding.presenter = presenter
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
