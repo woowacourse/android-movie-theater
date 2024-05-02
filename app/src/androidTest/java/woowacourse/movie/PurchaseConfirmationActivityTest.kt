@@ -11,6 +11,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.movieInfo.MovieDate
 import woowacourse.movie.model.movieInfo.MovieInfo
 import woowacourse.movie.model.movieInfo.RunningTime
@@ -20,6 +21,7 @@ import woowacourse.movie.model.theater.Seat
 import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.purchaseConfirmation.PurchaseConfirmationActivity
 import java.time.LocalDate
+import java.time.LocalTime
 
 @RunWith(AndroidJUnit4::class)
 class PurchaseConfirmationActivityTest {
@@ -36,14 +38,32 @@ class PurchaseConfirmationActivityTest {
             "C1" to Seat('S', 1, "B"),
             "E1" to Seat('A', 1, "B"),
         )
-    private val theater = Theater(movie, listOf(), seats)
+    private val cinema = Cinema(
+        "CGV",
+        Theater(
+            MovieInfo(
+                Title("차람과 하디의 진지한 여행기"),
+                MovieDate(LocalDate.of(2024, 2, 25)),
+                RunningTime(230),
+                Synopsis("wow!"),
+            ),
+            times = listOf(
+                LocalTime.of(10, 0),
+                LocalTime.of(14, 0),
+                LocalTime.of(18, 0)
+            ),
+            seats = mapOf()
+        )
+    )
     private val intent =
         Intent(
             ApplicationProvider.getApplicationContext(),
             PurchaseConfirmationActivity::class.java,
         ).also {
-            it.putExtra("Theater", theater)
-            it.putExtra("ticketPrice", "Total Price: 30000")
+            it.putExtra("timeDate", "2024.04.25")
+            it.putExtra("ticketPrice", "30000")
+            it.putExtra("seatNumber", listOf("B1", "C1").toTypedArray())
+            it.putExtra("Cinema", cinema)
         }
 
     @get:Rule
@@ -64,6 +84,6 @@ class PurchaseConfirmationActivityTest {
     @Test
     fun `티켓_가격_표시되는지검증`() {
         Espresso.onView(withId(R.id.ticket_charge))
-            .check(matches(ViewMatchers.withText("Total Price: 30000")))
+            .check(matches(ViewMatchers.withText("30000")))
     }
 }
