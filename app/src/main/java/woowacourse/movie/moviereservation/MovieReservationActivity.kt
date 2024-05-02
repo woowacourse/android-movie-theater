@@ -36,10 +36,8 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMovieReservationBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         val id = movieId()
-        initView()
         initClickListener()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         presenter =
@@ -87,10 +85,6 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         }
     }
 
-    private fun initView() {
-        binding
-    }
-
     private fun initClickListener() {
         binding.btnDetailPlus.setOnClickListener {
             presenter.plusCount(bookingDetail.count)
@@ -115,13 +109,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
     }
 
     override fun showMovieInfo(reservation: MovieReservationUiModel) {
-        val (id, title, imageRes, screenDate, description, runningTime) = reservation
-        with(binding){
-            tvDetailTitle.text = title
-            tvDetailMovieDesc.text = description
-            tvDetailRunningDate.text= screenDate
-            tvDetailRunningTime.text = runningTime
-        }
+        binding.movieReservationUiModel = reservation
     }
 
     override fun updateHeadCount(updatedCount: HeadCountUiModel) {
