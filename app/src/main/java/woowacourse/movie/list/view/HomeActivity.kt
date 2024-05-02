@@ -2,50 +2,33 @@ package woowacourse.movie.list.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityHomeBinding
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
     private lateinit var binding: ActivityHomeBinding
-
+    private lateinit var presenter: HomePresenter
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityHomeBinding.inflate(layoutInflater)
-
-        initBottomNavigation()
-
+        presenter = HomePresenter(this)
         setContentView(binding.root)
+        initBottomNavigation()
     }
-
+    
     private fun initBottomNavigation() {
-        binding.bottomNav.selectedItemId = R.id.home_fragment_item
-        replaceFragment(HomeFragment())
-
         binding.bottomNav.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.home_fragment_item -> {
-                    replaceFragment(HomeFragment())
-                    return@setOnItemSelectedListener true
-                }
-
-                R.id.reservation_details_fragment_item -> {
-                    replaceFragment(ReservationHistoryFragment())
-                    return@setOnItemSelectedListener true
-                }
-
-                R.id.setting_fragment_item -> {
-                    replaceFragment(SettingFragment())
-                    return@setOnItemSelectedListener true
-                }
-            }
-            false
+            presenter.onBottomNavItemSelected(item.itemId)
+            true
         }
     }
-
-    private fun replaceFragment(fragment: androidx.fragment.app.Fragment) {
+    
+    override fun showFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment, fragment)
+            .replace(R.id.fragment_container, fragment)
             .commitAllowingStateLoss()
     }
 }
+
