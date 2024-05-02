@@ -86,7 +86,7 @@ object MovieRepositoryImpl : MovieRepository {
     }
 
     private fun createDummyMovies(): List<Movie> {
-        return List(size = 3) { idx ->
+        return List(size = 10) { idx ->
             dummyMovie.copy(
                 movieId = idx,
                 title = dummyMovie.title + " $idx",
