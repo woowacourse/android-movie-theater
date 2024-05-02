@@ -1,12 +1,12 @@
-package woowacourse.movie.home.view
+package woowacourse.movie
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieMainBinding
+import woowacourse.movie.home.view.MovieHomeFragment
 import woowacourse.movie.reservationlist.view.ReservationListFragment
 import woowacourse.movie.setting.view.SettingFragment
 

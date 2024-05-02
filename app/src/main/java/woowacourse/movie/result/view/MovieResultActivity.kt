@@ -6,9 +6,9 @@ import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import woowacourse.movie.MovieMainActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieResultBinding
-import woowacourse.movie.home.view.MovieMainActivity
 import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.result.presenter.MovieResultPresenter
 import woowacourse.movie.result.presenter.contract.MovieResultContract
