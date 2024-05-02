@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.db.screening.ScreeningDao
+import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.ticket.Ticket
@@ -22,7 +23,7 @@ class ReservationFinishedPresenterTest {
 
     @BeforeEach
     fun setUp() {
-        presenter = ReservationFinishedPresenter(view, ScreeningDao())
+        presenter = ReservationFinishedPresenter(view, ScreeningDao(), TheaterDao())
     }
 
     @Test
@@ -37,5 +38,12 @@ class ReservationFinishedPresenterTest {
         every { view.showReservationHistory(any()) } just runs
         presenter.loadTicket(Ticket(0, 0, Seats(), ScreeningDateTime("", ""), 0))
         verify { view.showReservationHistory(any()) }
+    }
+
+    @Test
+    fun `극장 이름을 보여준다`()  {
+        every { view.showTheaterName(any()) } just runs
+        presenter.loadTheater(0)
+        verify { view.showTheaterName(any()) }
     }
 }
