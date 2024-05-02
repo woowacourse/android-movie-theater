@@ -2,16 +2,13 @@ package woowacourse.movie.detail.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Spinner
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityDetailBinding
 import woowacourse.movie.detail.contract.DetailContract
 import woowacourse.movie.detail.model.Count
 import woowacourse.movie.detail.presenter.DetailPresenter
@@ -24,17 +21,7 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 class DetailActivity : AppCompatActivity(), DetailContract.View {
-    private lateinit var titleView: TextView
-    private lateinit var screeningDateView: TextView
-    private lateinit var runningTimeView: TextView
-    private lateinit var ticketCountView: TextView
-    private lateinit var posterView: ImageView
-    private lateinit var descriptionView: TextView
-    private lateinit var minusNumberButton: Button
-    private lateinit var plusNumberButton: Button
-    private lateinit var ticketingButton: Button
-    private lateinit var spinnerDate: Spinner
-    private lateinit var spinnerTime: Spinner
+    private lateinit var binding: ActivityDetailBinding
     private var toast: Toast? = null
     lateinit var selectedDate: LocalDate
     lateinit var selectedTime: LocalTime
@@ -44,8 +31,8 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_reservation)
-        initView()
+        binding = ActivityDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         presenter.setCurrentResultTicketCountInfo()
         movieId = intent.getLongExtra(EXTRA_MOVIE_ID_KEY, -1)
         theaterId = intent.getLongExtra(EXTRA_THEATER_ID_KEY, -1)
@@ -60,20 +47,6 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
         setOnTicketingButtonListener()
     }
 
-    private fun initView() {
-        titleView = findViewById(R.id.movie_detail_title)
-        screeningDateView = findViewById(R.id.movie_detail_screening_date)
-        runningTimeView = findViewById(R.id.movie_detail_running_time)
-        descriptionView = findViewById(R.id.movie_detail_description)
-        ticketCountView = findViewById(R.id.ticket_count)
-        posterView = findViewById(R.id.movie_detail_poster)
-        minusNumberButton = findViewById(R.id.minus_button)
-        plusNumberButton = findViewById(R.id.plus_button)
-        ticketingButton = findViewById(R.id.ticketing_button)
-        spinnerDate = findViewById(R.id.spinner_date)
-        spinnerTime = findViewById(R.id.spinner_time)
-    }
-
     override fun showSpinner(
         screeningDates: List<LocalDate>,
         screeningTimes: List<LocalTime>,
@@ -84,12 +57,12 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
         val timeAdapter =
             ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, screeningTimes)
         timeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerDate.adapter = dateAdapter
-        spinnerTime.adapter = timeAdapter
+        binding.spinnerDate.adapter = dateAdapter
+        binding.spinnerTime.adapter = timeAdapter
     }
 
     override fun setOnSpinnerDateItemSelectedListener(screeningDates: List<LocalDate>) {
-        spinnerDate.onItemSelectedListener =
+        binding.spinnerDate.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
@@ -107,7 +80,7 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
     }
 
     override fun setOnSpinnerTimeItemSelectedListener(screeningTimes: List<LocalTime>) {
-        spinnerTime.onItemSelectedListener =
+        binding.spinnerTime.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
@@ -128,12 +101,12 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
     override fun setMovieView(info: Movie) {
         val formattedScreeningDate =
             info.firstScreeningDate.format(DateTimeFormatter.ofPattern(DATE_PATTERN))
-
-        titleView.text = info.title
-        screeningDateView.text = formattedScreeningDate
-        runningTimeView.text = info.runningTime.toString()
-        descriptionView.text = info.description
-        posterView.setImageResource(info.posterResourceId)
+        
+        binding.movieDetailTitle.text = info.title
+        binding.movieDetailScreeningDate.text = formattedScreeningDate
+        binding.movieDetailRunningTime.text = info.runningTime.toString()
+        binding.movieDetailDescription.text = info.description
+        binding.movieDetailPoster.setImageResource(info.posterResourceId)
     }
 
     override fun showToast(message: String) {
@@ -143,23 +116,23 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
     }
 
     override fun showCurrentResultTicketCountView(info: Int) {
-        ticketCountView.text = info.toString()
+        binding.ticketCount.text = info.toString()
     }
 
     private fun setOnPlusButtonClickListener() {
-        plusNumberButton.setOnClickListener {
+        binding.plusButton.setOnClickListener {
             presenter.setPlusButtonClickInfo()
         }
     }
 
     private fun setOnMinusButtonClickListener() {
-        minusNumberButton.setOnClickListener {
+        binding.minusButton.setOnClickListener {
             presenter.setMinusButtonClickInfo()
         }
     }
 
     private fun setOnTicketingButtonListener() {
-        ticketingButton.setOnClickListener {
+        binding.ticketingButton.setOnClickListener {
             presenter.setTicketingButtonClickInfo()
         }
     }
