@@ -4,15 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Button
 import android.widget.CheckBox
-import android.widget.TableLayout
 import android.widget.TableRow
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.data.DummyMovies
+import woowacourse.movie.databinding.ActivitySelectSeatBinding
 import woowacourse.movie.moviereservation.uimodel.BookingInfoUiModel
 import woowacourse.movie.reservationresult.ReservationResultActivity
 import woowacourse.movie.selectseat.uimodel.PriceUiModel
@@ -24,17 +22,17 @@ import woowacourse.movie.util.intentParcelable
 import woowacourse.movie.util.showAlertDialog
 
 class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
-    private lateinit var seatTable: TableLayout
-    private lateinit var title: TextView
-    private lateinit var price: TextView
-    private lateinit var reserveBtn: Button
     private lateinit var presenter: SelectSeatContract.Presenter
     private lateinit var seats: SeatsUiModel
     private lateinit var bookingInfoUiModel: BookingInfoUiModel
 
+    private lateinit var binding: ActivitySelectSeatBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_select_seat)
+        binding = ActivitySelectSeatBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         bookingInfoUiModel =
             intent.intentParcelable(EXTRA_BOOKING_ID, BookingInfoUiModel::class.java)
@@ -64,15 +62,11 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
             }
             presenter.calculatePrice(seats.selectedSeats())
         }
-        reserveBtn.isEnabled = seats.selectedSeats().isNotEmpty()
+        binding.btnSelectSeatReserve.isEnabled = seats.selectedSeats().isNotEmpty()
     }
 
     private fun initView() {
-        seatTable = findViewById<TableLayout>(R.id.tl_select_seat)
-        title = findViewById(R.id.tv_select_seat_title)
-        price = findViewById(R.id.tv_select_seat_price)
-        reserveBtn = findViewById(R.id.btn_select_seat_reserve)
-        reserveBtn.setOnClickListener {
+        binding.btnSelectSeatReserve.setOnClickListener {
             presenter.completeReservation(bookingInfoUiModel, seats.seats)
         }
 
@@ -102,19 +96,19 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
     private fun updateDate(seatUiModel: SeatUiModel) {
         seats = seats.changeState(seatUiModel)
         presenter.calculatePrice(seats.selectedSeats())
-        reserveBtn.isEnabled = seats.selectedSeats().isNotEmpty()
+        binding.btnSelectSeatReserve.isEnabled = seats.selectedSeats().isNotEmpty()
     }
 
     override fun showMovieInfo(
         title: String,
         priceUiModel: PriceUiModel,
     ) {
-        this.title.text = title
-        this.price.text = priceUiModel.price
+        binding.tvSelectSeatTitle.text = title
+        binding.tvSelectSeatPrice.text = priceUiModel.price
     }
 
     override fun updatePrice(updatedPrice: PriceUiModel) {
-        price.text = updatedPrice.price
+        binding.tvSelectSeatPrice.text = updatedPrice.price
     }
 
     override fun navigateToResult(reservationId: Long) {
@@ -125,12 +119,12 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
         row: Int,
         col: Int,
     ): CheckBox {
-        val tableRow = seatTable.getChildAt(row) as TableRow
+        val tableRow = binding.tlSelectSeat.getChildAt(row) as TableRow
         return tableRow.getChildAt(col) as CheckBox
     }
 
     private fun clickReserveButton() {
-        reserveBtn.setOnClickListener {
+        binding.btnSelectSeatReserve.setOnClickListener {
             showClickResult()
         }
     }
