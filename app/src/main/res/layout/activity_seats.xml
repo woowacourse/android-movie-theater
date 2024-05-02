@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="seats"
+            type="woowacourse.movie.seats.view.SeatsActivity" />
     </data>
 
     <LinearLayout
@@ -42,7 +44,7 @@
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/seats">
+                android:id="@+id/seats_table">
 
                 <TableRow android:layout_weight="1">
 

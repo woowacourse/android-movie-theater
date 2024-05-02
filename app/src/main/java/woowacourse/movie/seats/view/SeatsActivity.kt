@@ -7,6 +7,8 @@ import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
+import androidx.databinding.DataBindingUtil
+import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatsBinding
 import woowacourse.movie.detail.view.DetailActivity
 import woowacourse.movie.detail.view.DetailActivity.Companion.EXTRA_DATE_KEY
@@ -25,7 +27,8 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySeatsBinding.inflate(layoutInflater)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_seats)
+        binding.seats = this
         setContentView(binding.root)
         theaterId = intent.getLongExtra(DetailActivity.EXTRA_THEATER_ID_KEY, -1)
         initSeats()
@@ -44,7 +47,7 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
     }
 
     private fun initSeats() {
-        binding.seats.children.filterIsInstance<TableRow>().forEachIndexed { rowIndex, tableRow ->
+        binding.seatsTable.children.filterIsInstance<TableRow>().forEachIndexed { rowIndex, tableRow ->
             initRowOfSeats(tableRow, rowIndex)
         }
     }
@@ -68,7 +71,7 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
     }
 
     override fun setOnSelectSeat() {
-        binding.seats.children.filterIsInstance<TableRow>().forEachIndexed { rowIndex, tableRow ->
+        binding.seatsTable.children.filterIsInstance<TableRow>().forEachIndexed { rowIndex, tableRow ->
             setOnSelectRow(tableRow, rowIndex)
         }
     }
@@ -94,7 +97,7 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
     }
 
     override fun setSeatsText(info: Seat) {
-        val row = binding.seats.getChildAt(info.rowIndex) as TableRow
+        val row = binding.seatsTable.getChildAt(info.rowIndex) as TableRow
         val cell: TextView = row.getChildAt(info.colIndex) as TextView
         cell.text = info.coordinate
     }
@@ -143,7 +146,7 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
     }
 
     override fun setSeatCellBackgroundColor(info: Seat) {
-        val row = binding.seats.getChildAt(info.rowIndex) as TableRow
+        val row = binding.seatsTable.getChildAt(info.rowIndex) as TableRow
         val cell = row.getChildAt(info.colIndex)
         cell.setBackgroundColor(info.cellBackgroundColor)
     }
