@@ -90,6 +90,22 @@ object DummyTheaterList : TheaterListRepository {
                         ),
                     ),
             ),
+            Theater(
+                id = 4,
+                name = "아주아주아주아주아주긴 극장 이름인데 아주 나이스 빰빠밤바밤 밤밤 빠라바라밤 바밤",
+                screens =
+                    listOf(
+                        Screen(
+                            4,
+                            listOf(
+                                LocalTime.of(13, 0),
+                                LocalTime.of(15, 0),
+                                LocalTime.of(17, 0),
+                                LocalTime.of(19, 0),
+                            ),
+                        ),
+                    ),
+            ),
         )
 
     override fun findTheaterList(movieId: Long): List<Theater> {

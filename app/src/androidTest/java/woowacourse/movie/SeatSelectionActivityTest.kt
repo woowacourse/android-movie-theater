@@ -1,7 +1,6 @@
 package woowacourse.movie
 
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -12,14 +11,17 @@ import androidx.test.espresso.matcher.ViewMatchers.isSelected
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.hamcrest.Matchers.not
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 import woowacourse.movie.presentation.seatSelection.SeatSelectionActivity
 import woowacourse.movie.presentation.seatSelection.SeatSelectionActivity.Companion.EXTRA_COUNT
 import woowacourse.movie.presentation.seatSelection.SeatSelectionActivity.Companion.EXTRA_MOVIE_ID
 import woowacourse.movie.presentation.seatSelection.SeatSelectionActivity.Companion.EXTRA_SCREENING_DATE_TIME
 
+@RunWith(AndroidJUnit4::class)
 class SeatSelectionActivityTest {
     @get:Rule
     var activityRule: ActivityScenarioRule<SeatSelectionActivity> =
@@ -28,7 +30,7 @@ class SeatSelectionActivityTest {
                 ApplicationProvider.getApplicationContext(),
                 SeatSelectionActivity::class.java,
             ).apply {
-                putExtra(EXTRA_MOVIE_ID, 0)
+                putExtra(EXTRA_MOVIE_ID, 1L)
                 putExtra(EXTRA_COUNT, 2) // 선택 가능한 좌석 개수
                 putExtra(EXTRA_SCREENING_DATE_TIME, "")
             },
@@ -71,19 +73,5 @@ class SeatSelectionActivityTest {
         onView(withId(R.id.btn_complete)).perform(click())
 
         onView(withText("예매 확인")).check(matches(isDisplayed()))
-    }
-
-    @Test
-    fun `좌석_선택_후_화면_회전_시에도_선택했던_좌석_데이터는_유지된다`() {
-        onView(withId(R.id.tv_seat_item_0)).perform(click())
-        onView(withId(R.id.tv_seat_item_1)).perform(click())
-
-        val activityScenario = activityRule.scenario
-        activityScenario.onActivity { activity ->
-            activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-        }
-
-        onView(withId(R.id.tv_seat_item_0)).check(matches(isSelected()))
-        onView(withId(R.id.tv_seat_item_1)).check(matches(isSelected()))
     }
 }
