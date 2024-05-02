@@ -7,7 +7,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieMainBinding
+import woowacourse.movie.ui.booking.MovieBookingHistoryFragment
 import woowacourse.movie.ui.home.MovieHomeFragment
+import woowacourse.movie.ui.setting.MovieSettingFragment
 
 class MovieMainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieMainBinding
@@ -15,27 +17,20 @@ class MovieMainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_main)
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            replace(R.id.main_fragment_container, MovieHomeFragment())
-        }
+
+        initializeBottomNavigation()
+    }
+
+    private fun initializeBottomNavigation() {
+        replace(MovieHomeFragment())
         binding.mainBottomNavigation.apply {
             selectedItemId = R.id.menu_home
             setOnItemSelectedListener {
                 when (it.itemId) {
-                    R.id.menu_booking_history -> {
-                        replace(MovieHomeFragment())
-                    }
-
-                    R.id.menu_home -> {
-                        replace(MovieHomeFragment())
-                    }
-
-                    R.id.menu_setting -> {
-                        replace(MovieHomeFragment())
-                    }
-
-                    else -> replace(MovieHomeFragment())
+                    R.id.menu_booking_history -> replace(MovieBookingHistoryFragment())
+                    R.id.menu_home -> replace(MovieHomeFragment())
+                    R.id.menu_setting -> replace(MovieSettingFragment())
+                    else -> return@setOnItemSelectedListener false
                 }
                 true
             }
