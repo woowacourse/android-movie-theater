@@ -19,6 +19,7 @@ import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.movieInfo.MovieInfo
 import woowacourse.movie.seat.TheaterSeatActivity
 import java.time.LocalDate
+import java.time.LocalTime
 
 class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     private lateinit var presenter: MovieDetailContract.Presenter
@@ -30,15 +31,17 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     private val minusButton: Button by lazy { findViewById(R.id.minus_button) }
     private val seatConfirmationButton: Button by lazy { findViewById(R.id.seat_confirmation_button) }
     private val quantityText: TextView by lazy { findViewById(R.id.quantity_text_view) }
-
+    private lateinit var times: List<LocalTime>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
         dateSpinner = findViewById(R.id.movie_date_spinner)
         timeSpinner = findViewById(R.id.movie_time_spinner)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        val cinema = IntentCompat.getSerializableExtra(intent, "Cinema", Cinema::class.java)
-        val theater = cinema?.theater
+        val cinema =
+            IntentCompat.getSerializableExtra(intent, "Cinema", Cinema::class.java) ?: error(" ")
+        val theater = cinema.theater
+        times = theater.times
         presenter = MovieDetailPresenter(
             view = this@MovieDetailActivity,
             theater?.movie,
@@ -84,7 +87,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
                 position: Int,
                 id: Long,
             ) {
-                presenter.updateTimeSpinner(dates[position])
+                presenter.updateTimeSpinner(times.map { it.toString() })
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}

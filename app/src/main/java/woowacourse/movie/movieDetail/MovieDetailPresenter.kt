@@ -37,14 +37,7 @@ class MovieDetailPresenter(
         return ticketNum
     }
 
-    override fun updateTimeSpinner(date: String) {
-        val times = mutableListOf<String>()
-        val startHour = if (isWeekend(date)) 9 else 10
-        var time = startHour
-        while (time <= 24) {
-            times.add("$time:00")
-            time += 2
-        }
+    override fun updateTimeSpinner(times: List<String>) {
         view.updateTimeAdapter(times)
     }
 
@@ -59,11 +52,5 @@ class MovieDetailPresenter(
             date = date.plusDays(1)
         }
         view.updateDateAdapter(dates)
-    }
-
-    private fun isWeekend(date: String): Boolean {
-        val formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
-        val parsedDate = LocalDate.parse(date, formatter)
-        return parsedDate.dayOfWeek == DayOfWeek.SATURDAY || parsedDate.dayOfWeek == DayOfWeek.SUNDAY
     }
 }

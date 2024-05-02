@@ -29,7 +29,7 @@ interface MovieDetailContract {
         fun onTicketMinusClicked()
 
 
-        fun updateTimeSpinner(date: String)
+        fun updateTimeSpinner(times: List<String>)
 
         fun generateDateRange(
             startDate: LocalDate,
