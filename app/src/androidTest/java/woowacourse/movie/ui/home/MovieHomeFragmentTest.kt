@@ -45,7 +45,7 @@ class MovieHomeFragmentTest {
             .perform(RecyclerViewActions.scrollToPosition<MovieViewHolder>(0))
             .check(
                 matches(
-                    hasDescendant(allOf(withText("상영일: 2024.03.01 ~ 2024.03.28"), isDisplayed())),
+                    hasDescendant(allOf(withText("상영일: 2024.3.1 ~ 2024.3.28"), isDisplayed())),
                 ),
             )
     }

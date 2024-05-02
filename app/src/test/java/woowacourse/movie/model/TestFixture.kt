@@ -8,7 +8,7 @@ import java.time.LocalTime
 
 val movieContent =
     MovieContent(
-        "movie_poster",
+        "thumbnail_movie1",
         "해리 포터와 마법사의 돌",
         LocalDate.of(2024, 3, 1),
         LocalDate.of(2024, 3, 28),
