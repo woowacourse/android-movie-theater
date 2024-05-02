@@ -3,7 +3,7 @@ package woowacourse.movie.model.data
 import woowacourse.movie.model.movie.Theater
 import java.time.LocalTime
 
-object TheatersImpl : Theaters {
+object TheatersImpl : MovieDataSource<Theater> {
     private const val EXCEPTION_INVALID_ID = "Movie not found with id: %d"
     private var id: Long = 0
     private val theaters = mutableMapOf<Long, Theater>()
@@ -97,8 +97,8 @@ object TheatersImpl : Theaters {
         )
     }
 
-    override fun save(theater: Theater): Long {
-        theaters[id] = theater.copy(id = id)
+    override fun save(data: Theater): Long {
+        theaters[id] = data.copy(id = id)
         return id++
     }
 

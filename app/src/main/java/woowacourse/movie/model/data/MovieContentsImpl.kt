@@ -2,7 +2,7 @@ package woowacourse.movie.model.data
 
 import woowacourse.movie.model.movie.MovieContent
 
-object MovieContentsImpl : MovieContents {
+object MovieContentsImpl : MovieDataSource<MovieContent> {
     private const val EXCEPTION_INVALID_ID = "Movie not found with id: %d"
     private var id: Long = 0
     private val movieContents = mutableMapOf<Long, MovieContent>()
@@ -14,8 +14,8 @@ object MovieContentsImpl : MovieContents {
         save(HARRY_PORTER_FIRE_GLASS)
     }
 
-    override fun save(movieContent: MovieContent): Long {
-        movieContents[id] = movieContent.copy(id = id)
+    override fun save(data: MovieContent): Long {
+        movieContents[id] = data.copy(id = id)
         return id++
     }
 

@@ -1,13 +1,13 @@
 package woowacourse.movie.ui.selection
 
-import woowacourse.movie.model.data.UserTickets
+import woowacourse.movie.model.data.MovieDataSource
 import woowacourse.movie.model.movie.Seat
 import woowacourse.movie.model.movie.UserTicket
 import woowacourse.movie.ui.utils.positionToIndex
 
 class MovieSeatSelectionPresenter(
     private val view: MovieSeatSelectionContract.View,
-    private val userTickets: UserTickets,
+    private val userTickets: MovieDataSource<UserTicket>,
 ) :
     MovieSeatSelectionContract.Presenter {
     lateinit var userTicket: UserTicket
