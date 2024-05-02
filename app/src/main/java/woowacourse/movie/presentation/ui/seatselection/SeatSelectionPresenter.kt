@@ -1,11 +1,13 @@
 package woowacourse.movie.presentation.ui.seatselection
 
 import woowacourse.movie.domain.model.Seat
+import woowacourse.movie.domain.model.SeatModel
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.ScreenRepository
 import woowacourse.movie.presentation.model.MessageType
 import woowacourse.movie.presentation.model.MessageType.ReservationSuccessMessage
 import woowacourse.movie.presentation.model.ReservationInfo
+import woowacourse.movie.presentation.model.UserSeat
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
@@ -45,7 +47,19 @@ class SeatSelectionPresenter(
 
     override fun loadSeatBoard(id: Int) {
         repository.loadSeatBoard(id).onSuccess { seatBoard ->
-            _uiModel = _uiModel.copy(seatBoard = seatBoard)
+            _uiModel =
+                _uiModel.copy(
+                    userSeat =
+                        UserSeat(
+                            seatBoard.seats.map {
+                                SeatModel(
+                                    it.column,
+                                    it.row,
+                                    it.seatRank,
+                                )
+                            },
+                        ),
+                )
         }.onFailure { e ->
             when (e) {
                 is NoSuchElementException -> {
@@ -61,31 +75,25 @@ class SeatSelectionPresenter(
         }
     }
 
-    override fun clickSeat(seat: Seat) {
-        val column = seat.column.toColumnIndex()
-        val row = seat.row
-
-        if (seat in uiModel.userSeat.seats) {
-            _uiModel = uiModel.copy(userSeat = uiModel.userSeat.removeAt(seat))
-            view.unselectSeat(column, row)
+    override fun clickSeat(seatModel: SeatModel) {
+        if (seatModel.isSelected) {
+            seatModel.isSelected = false
             calculateSeat()
             return
         }
-        if (uiModel.userSeat.seats.size == uiModel.ticketCount) {
+        if (uiModel.userSeat.seatModels.count { it.isSelected } == uiModel.ticketCount) {
             view.showSnackBar(MessageType.AllSeatsSelectedMessage(uiModel.ticketCount))
         } else {
-            view.selectSeat(column, row)
-            _uiModel = _uiModel.copy(userSeat = _uiModel.userSeat + seat)
+            seatModel.isSelected = true
             calculateSeat()
         }
     }
 
     override fun calculateSeat() {
-        var newPrice = 0
-        uiModel.userSeat.seats.forEach { seat ->
-            newPrice += seat.seatRank.price
-        }
-
+        val newPrice =
+            uiModel.userSeat.seatModels.filter { it.isSelected }.sumOf {
+                it.seatRank.price
+            }
         _uiModel = uiModel.copy(totalPrice = newPrice)
         view.showTotalPrice(uiModel.totalPrice)
     }
@@ -101,7 +109,8 @@ class SeatSelectionPresenter(
                     screen.movie,
                     uiModel.id,
                     uiModel.ticketCount,
-                    uiModel.userSeat.seats,
+                    uiModel.userSeat.seatModels.filter { it.isSelected }
+                        .map { Seat(it.column, it.row, it.seatRank) },
                     dateTime,
                 ).onSuccess { id ->
                     view.showToastMessage(ReservationSuccessMessage)
@@ -113,6 +122,4 @@ class SeatSelectionPresenter(
             }
         }
     }
-
-    private fun String.toColumnIndex(): Int = this[0].code - 'A'.code
 }

@@ -6,11 +6,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TableLayout
-import android.widget.TableRow
-import android.widget.TextView
-import androidx.core.content.ContextCompat
-import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.domain.repository.DummyReservation
@@ -29,7 +24,7 @@ class SeatSelectionActivity : BaseActivity<ActivitySeatSelectionBinding>(), View
         SeatSelectionPresenter(this, DummyScreens(), DummyReservation)
     }
 
-    private val seatBoard: TableLayout by lazy { findViewById(R.id.tl_seat_board) }
+//    private val seatBoard: TableLayout by lazy { findViewById(R.id.tl_seat_board) }
 
     override fun initStartView() {
         binding.presenter = presenter
@@ -49,26 +44,6 @@ class SeatSelectionActivity : BaseActivity<ActivitySeatSelectionBinding>(), View
             presenter.loadScreen(reservationInfoItem.theaterId)
             presenter.loadSeatBoard(reservationInfoItem.theaterId)
         }
-    }
-
-    override fun selectSeat(
-        column: Int,
-        row: Int,
-    ) {
-        seatBoard.children.filterIsInstance<TableRow>().flatMap { it.children }
-            .filterIsInstance<TextView>().toList()[column * 4 + row].setBackgroundColor(
-            ContextCompat.getColor(this, R.color.yellow),
-        )
-    }
-
-    override fun unselectSeat(
-        column: Int,
-        row: Int,
-    ) {
-        seatBoard.children.filterIsInstance<TableRow>().flatMap { it.children }
-            .filterIsInstance<TextView>().toList()[column * 4 + row].setBackgroundColor(
-            ContextCompat.getColor(this, R.color.white),
-        )
     }
 
     override fun showTotalPrice(totalPrice: Int) {
@@ -114,7 +89,7 @@ class SeatSelectionActivity : BaseActivity<ActivitySeatSelectionBinding>(), View
 
         val savedUserSeat = savedInstanceState.getSerializable(PUT_STATE_KEY_USER_SEAT) as UserSeat?
         savedUserSeat?.let { userSeat ->
-            userSeat.seats.forEach { seat ->
+            userSeat.seatModels.forEach { seat ->
                 presenter.clickSeat(seat)
             }
         }

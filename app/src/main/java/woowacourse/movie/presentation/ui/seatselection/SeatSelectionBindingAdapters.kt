@@ -5,7 +5,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.Seat
+import woowacourse.movie.domain.model.SeatModel
 import woowacourse.movie.domain.model.SeatRank
 import woowacourse.movie.presentation.utils.currency
 import java.time.LocalDate
@@ -31,13 +31,13 @@ fun TextView.formatPrice(price: Int) {
 
 @BindingAdapter("bindChangeEnabled")
 fun Button.changeEnabled(uiModel: SeatSelectionUiModel) {
-    this.isEnabled = uiModel.userSeat.seats.size == uiModel.ticketCount
+    this.isEnabled = uiModel.userSeat.seatModels.filter { it.isSelected }.size == uiModel.ticketCount
 }
 
 @BindingAdapter("bindShowSeat")
-fun TextView.showSeat(seat: Seat) {
-    this.text = "${seat.column}${seat.row + 1}"
-    this.setTextColor(seat.seatRank.toColor(this.context))
+fun TextView.showSeat(seatModel: SeatModel) {
+    this.text = "${seatModel.column}${seatModel.row + 1}"
+    this.setTextColor(seatModel.seatRank.toColor(this.context))
 }
 
 fun SeatRank.toColor(context: Context): Int {
@@ -46,4 +46,9 @@ fun SeatRank.toColor(context: Context): Int {
         SeatRank.S -> context.getColor(R.color.green)
         SeatRank.A -> context.getColor(R.color.blue)
     }
+}
+
+@BindingAdapter("bindChangeColor")
+fun TextView.changeColor(seatModel: SeatModel) {
+    this.isSelected = seatModel.isSelected
 }

@@ -53,31 +53,31 @@
                     <include
                         android:id="@+id/first_row"
                         layout="@layout/include_seat_contents"
-                        app:list="@{presenter.uiModel.seatBoard.seats.subList(0, 4)}"
+                        app:list="@{presenter.uiModel.userSeat.seatModels.subList(0, 4)}"
                         app:presenter="@{presenter}" />
 
                     <include
                         android:id="@+id/second_row"
                         layout="@layout/include_seat_contents"
-                        app:list="@{presenter.uiModel.seatBoard.seats.subList(4, 8)}"
+                        app:list="@{presenter.uiModel.userSeat.seatModels.subList(4, 8)}"
                         app:presenter="@{presenter}" />
 
                     <include
                         android:id="@+id/third_row"
                         layout="@layout/include_seat_contents"
-                        app:list="@{presenter.uiModel.seatBoard.seats.subList(8, 12)}"
+                        app:list="@{presenter.uiModel.userSeat.seatModels.subList(8, 12)}"
                         app:presenter="@{presenter}" />
 
                     <include
                         android:id="@+id/fourth_row"
                         layout="@layout/include_seat_contents"
-                        app:list="@{presenter.uiModel.seatBoard.seats.subList(12, 16)}"
+                        app:list="@{presenter.uiModel.userSeat.seatModels.subList(12, 16)}"
                         app:presenter="@{presenter}" />
 
                     <include
                         android:id="@+id/fifth_row"
                         layout="@layout/include_seat_contents"
-                        app:list="@{presenter.uiModel.seatBoard.seats.subList(16, 20)}"
+                        app:list="@{presenter.uiModel.userSeat.seatModels.subList(16, 20)}"
                         app:presenter="@{presenter}" />
 
                 </TableLayout>
