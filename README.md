@@ -16,6 +16,6 @@
 
 ## 할 일
 
-- [ ]: dataBinding 적용
-- [ ]: test 코드 작성
-- [ ]: 화면 회전 대응
+- [x]: dataBinding 적용
+- [x]: test 코드 작성
+- [x]: 화면 회전 대응
