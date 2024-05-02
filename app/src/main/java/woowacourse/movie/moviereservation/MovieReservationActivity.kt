@@ -7,10 +7,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Spinner
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.data.DummyMovies
@@ -36,7 +32,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMovieReservationBinding.inflate(layoutInflater)
-
+        setContentView(binding.root)
         val id = movieId()
         initClickListener()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -44,8 +40,9 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
             MovieReservationPresenter(
                 this, DummyMovies,
             )
-
-        showInitView(id)
+        presenter.loadMovieDetail(id)
+        binding.bookingDetail = bookingDetail
+        binding.presenter = presenter
     }
 
     private fun movieId(): Long {
@@ -86,19 +83,9 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
     }
 
     private fun initClickListener() {
-        binding.btnDetailPlus.setOnClickListener {
-            presenter.plusCount(bookingDetail.count)
-        }
-        binding.btnDetailMinus.setOnClickListener {
-            presenter.minusCount(bookingDetail.count)
-        }
         binding.btnDetailComplete.setOnClickListener {
             startActivity(SelectSeatActivity.getIntent(this, BookingInfoUiModel(movieId(), theaterId(), bookingDetail)))
         }
-    }
-
-    private fun showInitView(id: Long) {
-        presenter.loadMovieDetail(id)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -114,7 +101,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
 
     override fun updateHeadCount(updatedCount: HeadCountUiModel) {
         bookingDetail = bookingDetail.updateCount(updatedCount)
-        binding.tvDetailCount.text = bookingDetail.count.count
+        binding.bookingDetail = bookingDetail
     }
 
     override fun navigateToReservationResultView(reservationId: Long) {
@@ -139,7 +126,6 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
     ) {
         this.bookingDetail = bookingDetail
         initSpinner(screeningDateTimesUiModel)
-        binding.tvDetailCount.text = bookingDetail.count.count
     }
 
     private fun initSpinner(screeningDateTimesUiModel: ScreeningDateTimesUiModel) {
