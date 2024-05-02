@@ -7,9 +7,11 @@
         <variable
             name="activity"
             type="woowacourse.movie.detail.view.MovieDetailActivity" />
+
         <variable
             name="movie"
             type="woowacourse.movie.model.Movie" />
+
         <variable
             name="reservation_count"
             type="int" />
@@ -229,10 +231,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
+                android:onClick="@{()->activity.onSeatSelectionButtonClick()}"
                 android:padding="10dp"
                 android:text="좌석 선택"
                 android:textSize="20dp"
-                android:onClick="@{()->activity.onSeatSelectionButtonClick()}"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"

@@ -7,6 +7,7 @@
         <variable
             name="result_text"
             type="String" />
+
         <variable
             name="movie_ticket"
             type="woowacourse.movie.model.MovieTicket" />
@@ -102,7 +103,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            movie:movieTicketPrice="@{movie_ticket}"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
             android:textSize="20dp"
@@ -110,6 +110,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/resultReservPriceFormat"
             app:layout_constraintTop_toBottomOf="@id/result"
+            movie:movieTicketPrice="@{movie_ticket}"
             tools:hint="13,000" />
 
         <TextView
