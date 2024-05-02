@@ -35,8 +35,8 @@ class DetailPresenter(
     }
 
     override fun setMovieInfo() {
-        val movieId = DetailDataResource.movieId.toInt()
-        view.setMovieView(MovieDataSource.movieList[movieId])
+        val movieId = DetailDataResource.movieId
+        view.setMovieView(MovieDataSource.movieList.first { it.id == movieId })
     }
 
     override fun setPlusButtonClickInfo() {

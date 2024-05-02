@@ -56,7 +56,7 @@ object MovieDataSource {
                 """
                 해리포터와 불의 잔이다.
                 """.trimIndent(),
-                4,
+                3,
             ),
             Movie(
                 "해리 포터와 불사조 기사단",
@@ -66,7 +66,7 @@ object MovieDataSource {
                 """
                 해리포터와 불사조 기사단이다.
                 """.trimIndent(),
-                5,
+                4,
             ),
             Movie(
                 "해리 포터와 혼혈 왕자",
@@ -76,7 +76,7 @@ object MovieDataSource {
                 """
                 해리포터와 혼혈왕자다.
                 """.trimIndent(),
-                6,
+                5,
             ),
             defaultMovie,
             Movie(
@@ -87,7 +87,7 @@ object MovieDataSource {
                 """
                 해리포터와 죽음의 성물
                 """.trimIndent(),
-                8,
+                6,
             ),
         )
 }
