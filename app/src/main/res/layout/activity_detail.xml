@@ -5,10 +5,13 @@
 
     <data>
 
+        <variable
+            name="detail"
+            type="woowacourse.movie.detail.view.DetailActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main"
+        android:id="@+id/activity_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".detail.view.DetailActivity">

@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieTicketBinding
+import woowacourse.movie.detail.view.DetailActivity
 import woowacourse.movie.list.model.TheaterData
 import woowacourse.movie.seats.model.Seat
 import woowacourse.movie.seats.view.SeatsActivity.Companion.DATE_KEY
@@ -24,7 +25,7 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
         super.onCreate(savedInstanceState)
         binding = ActivityMovieTicketBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        theaterId = intent.getLongExtra("threater_id_key", -1)
+        theaterId = intent.getLongExtra(DetailActivity.EXTRA_THEATER_ID_KEY, -1)
         processPresenterTask()
     }
 

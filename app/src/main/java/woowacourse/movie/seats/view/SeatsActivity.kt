@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import woowacourse.movie.databinding.ActivitySeatsBinding
+import woowacourse.movie.detail.view.DetailActivity
 import woowacourse.movie.detail.view.DetailActivity.Companion.EXTRA_DATE_KEY
 import woowacourse.movie.detail.view.DetailActivity.Companion.EXTRA_TIME_KEY
 import woowacourse.movie.list.view.HomeFragment.Companion.EXTRA_MOVIE_ID_KEY
@@ -26,7 +27,7 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
         super.onCreate(savedInstanceState)
         binding = ActivitySeatsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        theaterId = intent.getLongExtra("threater_id_key", -1)
+        theaterId = intent.getLongExtra(DetailActivity.EXTRA_THEATER_ID_KEY, -1)
         initSeats()
         setOnSelectSeat()
         setOnConfirmButtonClickListener()
@@ -137,7 +138,7 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
         intent.putExtra(TIME_KEY, time)
         intent.putExtra(SEATS_KEY, seats as Serializable)
         intent.putExtra(PRICE_KEY, price)
-        intent.putExtra("threater_id_key", theaterId)
+        intent.putExtra(DetailActivity.EXTRA_THEATER_ID_KEY, theaterId)
         startActivity(intent)
     }
 

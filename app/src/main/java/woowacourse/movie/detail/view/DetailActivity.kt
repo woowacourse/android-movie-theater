@@ -7,6 +7,8 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityDetailBinding
 import woowacourse.movie.detail.contract.DetailContract
 import woowacourse.movie.detail.model.Count
@@ -30,8 +32,8 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
+        binding.detail = this
         movieId = intent.getLongExtra(EXTRA_MOVIE_ID_KEY, 0)
         theaterId = intent.getLongExtra(EXTRA_THEATER_ID_KEY, 0)
         executePresenterTasks()
@@ -152,7 +154,7 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
             selectedDate.format(DateTimeFormatter.ofPattern(DATE_PATTERN)),
         )
         intent.putExtra(EXTRA_TIME_KEY, selectedTime.toString())
-        intent.putExtra("threater_id_key", theaterId)
+        intent.putExtra(EXTRA_THEATER_ID_KEY, theaterId)
         this.startActivity(intent)
     }
 
@@ -160,6 +162,7 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
         const val EXTRA_COUNT_KEY = "count_key"
         const val EXTRA_DATE_KEY = "selected_date_key"
         const val EXTRA_TIME_KEY = "selected_time_key"
+        const val EXTRA_THEATER_ID_KEY = "threater_id_key"
         private const val DATE_PATTERN = "yyyy.MM.dd"
     }
 }
