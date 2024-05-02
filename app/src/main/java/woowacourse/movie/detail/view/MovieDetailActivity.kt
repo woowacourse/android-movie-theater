@@ -29,7 +29,9 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
+    private lateinit var binding: ActivityMovieDetailBinding
     private lateinit var movieDetailPresenter: MovieDetailPresenter
+
     private val movieId: Long by lazy { intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID) }
     private val selectedTheaterPosition: Int by lazy {
         intent.getIntExtra(
@@ -38,14 +40,12 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         )
     }
 
-    private lateinit var binding: ActivityMovieDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
         binding.activity = this
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         movieDetailPresenter = MovieDetailPresenter(this)
         movieDetailPresenter.loadMovieDetail(movieId, selectedTheaterPosition)
@@ -57,7 +57,8 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         val position = binding.runningTimeSpinner.selectedItemPosition
         outState.putInt(KEY_ITEM_POSITION, position)
 
-        outState.putInt(KEY_MOVIE_COUNT, binding.reservationCount)
+        val count = binding.reservationCount
+        outState.putInt(KEY_MOVIE_COUNT, count)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {

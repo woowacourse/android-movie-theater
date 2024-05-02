@@ -20,7 +20,6 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
 
 class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionContract.View {
     private lateinit var binding: FragmentTheaterSelectionBinding
-
     private lateinit var theaterSelectionPresenter: TheaterSelectionPresenter
 
     private val movieId: Long by lazy { arguments?.getLong(KEY_MOVIE_ID) ?: INVALID_VALUE_MOVIE_ID }
@@ -34,9 +33,7 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
             DataBindingUtil.inflate(inflater, R.layout.fragment_theater_selection, container, false)
 
         theaterSelectionPresenter = TheaterSelectionPresenter(this)
-
         theaterSelectionPresenter.loadTheaters(movieId)
-
         return binding.root
     }
 
@@ -46,7 +43,6 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
                 Intent(requireActivity(), MovieDetailActivity::class.java).apply {
                     putExtra(KEY_MOVIE_ID, movieId)
                     putExtra(KEY_SELECTED_THEATER_POSITION, position)
-
                     startActivity(this)
                 }
             }

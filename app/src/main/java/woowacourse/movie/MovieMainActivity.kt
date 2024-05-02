@@ -28,17 +28,14 @@ class MovieMainActivity : AppCompatActivity() {
                     replaceFragment(ReservationListFragment())
                     true
                 }
-
                 R.id.home_item -> {
                     replaceFragment(MovieHomeFragment())
                     true
                 }
-
                 R.id.setting_item -> {
                     replaceFragment(SettingFragment())
                     true
                 }
-
                 else -> false
             }
         }

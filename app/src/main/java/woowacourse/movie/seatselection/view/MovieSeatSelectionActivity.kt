@@ -32,6 +32,9 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_SEAT_POSITIONS
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
 
 class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContract.View {
+    private lateinit var binding: ActivityMovieSeatSelectionBinding
+    private lateinit var seatSelectionPresenter: MovieSeatSelectionPresenter
+
     private val tableSeats: List<TextView> by lazy {
         findViewById<TableLayout>(R.id.seatTable).children.filterIsInstance<TableRow>()
             .flatMap { tableRow ->
@@ -39,27 +42,21 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
             }.toList()
     }
 
-    private lateinit var binding: ActivityMovieSeatSelectionBinding
-
-    private lateinit var seatSelectionPresenter: MovieSeatSelectionPresenter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_seat_selection)
         binding.activity = this
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         seatSelectionPresenter =
             MovieSeatSelectionPresenter(this)
-
         seatSelectionPresenter.loadMovieTitle(
             intent.getLongExtra(
                 KEY_MOVIE_ID,
                 INVALID_VALUE_MOVIE_ID,
             ),
         )
-
         seatSelectionPresenter.loadTableSeats(
             intent.getIntExtra(
                 KEY_MOVIE_COUNT,
@@ -70,6 +67,7 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+
         val count = seatSelectionPresenter.movieSelectedSeats.count
         outState.putInt(KEY_MOVIE_COUNT, count)
 
@@ -104,9 +102,7 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
         tableSeats.forEachIndexed { index, view ->
             val seat = baseSeats[index]
             view.text = getString(R.string.seat, formatRow(seat.row), formatColumn(seat.column))
-
             view.setTextColor(ContextCompat.getColor(this, seat.grade.getSeatColor()))
-
             view.setOnClickListener {
                 seatSelectionPresenter.clickTableSeat(index)
             }

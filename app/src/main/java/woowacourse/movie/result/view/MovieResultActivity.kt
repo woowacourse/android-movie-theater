@@ -27,15 +27,15 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
 
 class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
-    private lateinit var movieResultPresenter: MovieResultPresenter
-
     private lateinit var binding: ActivityMovieResultBinding
+    private lateinit var movieResultPresenter: MovieResultPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_result)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        setUpBackButton()
+        setUpBackButtonAction()
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_result)
 
         movieResultPresenter = MovieResultPresenter(this)
         movieResultPresenter.loadMovieTicket(
@@ -70,7 +70,7 @@ class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
         }
     }
 
-    private fun setUpBackButton() {
+    private fun setUpBackButtonAction() {
         val onBackPressedDispatcher = onBackPressedDispatcher
         onBackPressedDispatcher.addCallback(
             this,

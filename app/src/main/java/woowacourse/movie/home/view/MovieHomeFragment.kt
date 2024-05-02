@@ -16,8 +16,8 @@ import woowacourse.movie.model.Movie
 import woowacourse.movie.util.MovieIntentConstant
 
 class MovieHomeFragment : Fragment(), MovieHomeContract.View {
-    private lateinit var movieHomePresenter: MovieHomePresenter
     private lateinit var binding: FragmentMovieHomeBinding
+    private lateinit var movieHomePresenter: MovieHomePresenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,6 +26,7 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View {
     ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_movie_home, container, false)
+
         movieHomePresenter = MovieHomePresenter(this)
         movieHomePresenter.loadMovies()
         return binding.root
