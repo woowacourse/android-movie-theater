@@ -12,5 +12,6 @@ class BottomTheatersViewHolder(
     fun bind(theaterCount: TheaterCount) {
         binding.theaterCount = theaterCount
         binding.handler = actionHandler
+        binding.movieId = movieId
     }
 }
