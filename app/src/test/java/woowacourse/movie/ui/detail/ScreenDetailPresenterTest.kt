@@ -13,7 +13,7 @@ import woowacourse.movie.domain.repository.FakeMovieRepository
 import woowacourse.movie.domain.repository.FakeReservationRepository
 import woowacourse.movie.domain.repository.FakeScreenRepository
 import woowacourse.movie.ui.MovieDetailUI
-import woowacourse.movie.ui.ScreenDetailUI
+import woowacourse.movie.ui.ScreenDetailUi
 import java.time.LocalDate
 
 class ScreenDetailPresenterTest {
@@ -33,7 +33,7 @@ class ScreenDetailPresenterTest {
     }
 
     private val fakeScreenDetailUI =
-        ScreenDetailUI(
+        ScreenDetailUi(
             id = 1,
             movieDetailUI =
                 MovieDetailUI(
@@ -45,16 +45,18 @@ class ScreenDetailPresenterTest {
             dateRange = DateRange(LocalDate.of(2024, 3, 1), LocalDate.of(2024, 3, 3)),
         )
 
-    @Test // todo: modify test
+    @Test
     fun `영화 정보를 표시`() {
         // given
         every { mockView.showScreen(fakeScreenDetailUI) } just runs
+        every { mockView.showDateTimePicker(any(), any(), any(), any()) } just runs
 
         // when
         presenter.loadScreen(1)
 
         // then
         verify(exactly = 1) { mockView.showScreen(fakeScreenDetailUI) }
+        verify(exactly = 1) { mockView.showDateTimePicker(any(), any(), any(), any()) }
     }
 
     @Test
@@ -112,12 +114,12 @@ class ScreenDetailPresenterTest {
     @Test
     fun `reserve with date, time and ticket count`() {
         // given
-        every { mockView.navigateToSeatsReservation(2) } just runs
+        every { mockView.navigateToSeatsReservation(2, any()) } just runs
 
         // when
-        presenter.reserve(1)
+        presenter.reserve(1, 1)
 
         // then
-        verify(exactly = 1) { mockView.navigateToSeatsReservation(2) }
+        verify(exactly = 1) { mockView.navigateToSeatsReservation(2, any()) }
     }
 }

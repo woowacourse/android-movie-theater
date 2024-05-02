@@ -7,10 +7,6 @@ import io.mockk.runs
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.Grade
-import woowacourse.movie.domain.model.Position
-import woowacourse.movie.domain.model.Seat
-import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.repository.FakeReservationRepository
 import woowacourse.movie.domain.repository.FakeScreenRepository
 
@@ -32,18 +28,14 @@ class SeatReservationPresenterTest {
     @Test
     fun showSeats() {
         // given
-        val fakeSeats =
-            Seats(
-                Seat(Position(0, 0), Grade.S),
-                Seat(Position(1, 1), Grade.A),
-                Seat(Position(2, 2), Grade.B),
-            )
-        every { mockView.showSeats(fakeSeats) } just runs
+        every { mockView.showAllSeats(any()) } just runs
+        every { mockView.initBinding(any(), any()) } just runs
+        every { mockView.updateTotalPrice(any()) } just runs
 
         // when
-        presenter.loadSeats(1)
+        presenter.loadData(0)
 
         // then
-        verify(exactly = 1) { mockView.showSeats(fakeSeats) }
+        verify(exactly = 1) { mockView.showAllSeats(any()) }
     }
 }

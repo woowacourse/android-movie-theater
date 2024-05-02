@@ -2,46 +2,41 @@ package woowacourse.movie.ui.detail.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.Button
-import android.widget.TextView
+import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.HolderScreenDetailTicketBinding
 
 class ScreenDetailTicketView(
     context: Context,
     attrs: AttributeSet? = null,
 ) : TicketView, ConstraintLayout(context, attrs) {
-    private val ticketCount: TextView by lazy { findViewById(R.id.tv_count) }
-    private val plusBtn: Button by lazy { findViewById(R.id.btn_plus) }
-    private val minusBtn: Button by lazy { findViewById(R.id.btn_minus) }
-    private val reserveBtn: Button by lazy { findViewById(R.id.btn_reserve_done) }
-
-    init {
-        inflate(context, R.layout.holder_screen_detail_ticket, this)
-    }
+    private val binding: HolderScreenDetailTicketBinding =
+        DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.holder_screen_detail_ticket, this, true)
 
     override fun initClickListener(
         screenId: Int,
         ticketReserveListener: TicketReserveListener<Int>,
     ) {
-        plusBtn.setOnClickListener {
+        binding.btnPlus.setOnClickListener {
             ticketReserveListener.increaseTicket()
         }
-        minusBtn.setOnClickListener {
+        binding.btnMinus.setOnClickListener {
             ticketReserveListener.decreaseTicket()
         }
-        reserveBtn.setOnClickListener {
+        binding.btnReserveDone.setOnClickListener {
             ticketReserveListener.reserve(screenId = screenId)
         }
     }
 
     override fun updateTicketCount(count: Int) {
-        ticketCount.text = count.toString()
+        binding.ticketCount = count
     }
 
-    override fun ticketCount(): Int = ticketCount.text.toString().toInt()
+    override fun ticketCount(): Int = binding.ticketCount
 
     override fun restoreTicketCount(count: Int) {
-        ticketCount.text = count.toString()
+        binding.ticketCount = count
     }
 }

@@ -4,7 +4,10 @@ import woowacourse.movie.domain.model.Reservation
 
 interface ReservationContract {
     interface View {
-        fun showReservation(reservation: Reservation)
+        fun showReservation(
+            reservation: Reservation,
+            theaterName: String,
+        )
 
         fun showToastMessage(message: String)
 
@@ -16,6 +19,9 @@ interface ReservationContract {
     }
 
     interface Presenter {
-        fun loadReservation(reservationId: Int)
+        fun loadReservation(
+            reservationId: Int,
+            theaterId: Int,
+        )
     }
 }

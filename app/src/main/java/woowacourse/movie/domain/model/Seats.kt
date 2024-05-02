@@ -5,6 +5,10 @@ data class Seats(
 ) {
     constructor(vararg seat: Seat) : this(seat.toList())
 
+    fun add(seat: Seat): Seats = Seats(seats + seat)
+
+    fun remove(seat: Seat): Seats = Seats(seats.filter { it != seat })
+
     fun totalPrice(): Int = seats.sumOf { it.price() }
 
     fun count(): Int = seats.size

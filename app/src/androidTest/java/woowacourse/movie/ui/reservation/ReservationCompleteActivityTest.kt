@@ -29,32 +29,33 @@ class ReservationCompleteActivityTest {
         ActivityScenarioRule<ReservationCompleteActivity>(
             Intent(ApplicationProvider.getApplicationContext(), ReservationCompleteActivity::class.java).apply {
                 putExtra("reservationId", testFixtureReservationId())
+                putExtra("theaterId", 1)
             },
         )
 
     @Test
-    fun 예약한_영화의_제목을_표시한다() {
+    fun `예약한_영화의_제목을_표시한다`() {
         onView(withId(R.id.tv_reservation_title)).check(matches(withText("")))
     }
 
     @Test
-    fun 예약한_영화의_러닝타임을_표시한다() {
+    fun `예약한_영화의_러닝타임을_표시한다`() {
         onView(withId(R.id.tv_reservation_date)).check(matches(withText("2024-03-01")))
     }
 
     @Test
-    fun 상영_영화_예매_수를_표시한다() {
+    fun `상영_영화_예매_수를_표시한다`() {
         onView(withId(R.id.tv_reservation_count)).check(matches(withText("일반 2명 |")))
     }
 
     @Test
-    fun 상영_영화_예매_가격을_표시한다() {
-        onView(withId(R.id.tv_reservation_amount)).check(matches(withText("27,000원 (현장 결제)")))
+    fun `상영_영화_예매_가격을_표시한다`() {
+        onView(withId(R.id.tv_reservation_amount)).check(matches(withText("27,000원(현장 결제)")))
     }
 
     @Test
     fun showTheReservedSeats() {
-        onView(withId(R.id.tv_reserved_seats)).check(matches(withText("A1,B2")))
+        onView(withId(R.id.tv_reservation_seats)).check(matches(withText("A1,B2 |")))
     }
 
     @Test

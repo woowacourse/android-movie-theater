@@ -7,18 +7,18 @@ import java.util.Locale
 
 class Currency private constructor() {
     companion object {
-        private val KOREA_CURRENCY_FORMAT = DecimalFormat("#,###원")
+        private val koreaCurrencyFormat = DecimalFormat("#,###원")
 
-        private var MU_FORMAT: MutableMap<String, NumberFormat> =
+        private var muFormat: MutableMap<String, NumberFormat> =
             mutableMapOf(
-                Locale.KOREA.country to KOREA_CURRENCY_FORMAT,
+                Locale.KOREA.country to koreaCurrencyFormat,
             )
 
         fun of(country: String): NumberFormat {
-            if (MU_FORMAT[country] == null) {
-                MU_FORMAT[country] = NumberFormat.getCurrencyInstance(Locale.getDefault())
+            if (muFormat[country] == null) {
+                muFormat[country] = NumberFormat.getCurrencyInstance(Locale.getDefault())
             }
-            return MU_FORMAT[country] ?: throw IllegalStateException("Not found country")
+            return muFormat[country] ?: throw IllegalStateException("Not found country")
         }
     }
 }

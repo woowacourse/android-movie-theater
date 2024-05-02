@@ -9,13 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.DateRange
-import woowacourse.movie.domain.model.ScreenTimePolicy
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.WeeklyScreenTimePolicy
 import woowacourse.movie.domain.repository.DummyMovies
 import woowacourse.movie.domain.repository.DummyReservation
 import woowacourse.movie.domain.repository.DummyScreens
-import woowacourse.movie.ui.ScreenDetailUI
+import woowacourse.movie.ui.ScreenDetailUi
 import woowacourse.movie.ui.detail.view.DateTimeSpinnerView
 import woowacourse.movie.ui.detail.view.ScreenDetailScreenView
 import woowacourse.movie.ui.detail.view.ScreenDetailTicketView
@@ -47,16 +46,20 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
 
     private fun initView() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        val id = intent.getIntExtra(PUT_EXTRA_KEY_ID, DEFAULT_ID)
-        initClickListener(id)
+        val screenId = intent.getIntExtra(PUT_EXTRA_KEY_ID, DEFAULT_SCREEN_ID)
+        val theaterId = intent.getIntExtra(PUT_EXTRA_THEATER_ID_KEY, DEFAULT_THEATER_ID)
+        initClickListener(screenId, theaterId)
 
-        presenter.loadScreen(id)
+        presenter.loadScreen(screenId)
         presenter.loadTicket()
 
         dateTimeSpinnerView.selectedDatePosition()
     }
 
-    private fun initClickListener(screenId: Int) {
+    private fun initClickListener(
+        screenId: Int,
+        theaterId: Int,
+    ) {
         ticketView.initClickListener(
             screenId = screenId,
             object : TicketReserveListener<Int> {
@@ -69,7 +72,7 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
                 }
 
                 override fun reserve(screenId: Int) {
-                    presenter.reserve(screenId)
+                    presenter.reserve(screenId, theaterId)
                 }
             },
         )
@@ -102,7 +105,7 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
         }
     }
 
-    override fun showScreen(screen: ScreenDetailUI) {
+    override fun showScreen(screen: ScreenDetailUi) {
         screenDetailView.show(screen)
     }
 
@@ -112,15 +115,18 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
 
     override fun showDateTimePicker(
         dateRange: DateRange,
-        screenTimePolicy: ScreenTimePolicy,
+        screenTimePolicy: WeeklyScreenTimePolicy,
         selectDateListener: SelectDateListener,
         selectTimeListener: SelectTimeListener,
     ) {
         dateTimeSpinnerView.show(dateRange, screenTimePolicy, selectDateListener, selectTimeListener)
     }
 
-    override fun navigateToSeatsReservation(timeReservationId: Int) {
-        SeatReservationActivity.startActivity(context = this, timeReservationId = timeReservationId)
+    override fun navigateToSeatsReservation(
+        timeReservationId: Int,
+        theaterId: Int,
+    ) {
+        SeatReservationActivity.startActivity(context = this, timeReservationId = timeReservationId, theaterId = theaterId)
     }
 
     override fun goToBack(e: Throwable) {
@@ -175,18 +181,22 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
     }
 
     companion object {
-        private const val DEFAULT_ID = -1
+        private const val DEFAULT_SCREEN_ID = -1
+        private const val DEFAULT_THEATER_ID = -1
         private const val PUT_EXTRA_KEY_ID = "screenId"
+        private const val PUT_EXTRA_THEATER_ID_KEY = "theaterId"
         private const val PUT_TICKET_STATE_KEY = "ticketCount"
         private const val PUT_DATE_POSITION_KEY = "datePosition"
         private const val PUT_TIME_POSITION_KEY = "timePosition"
 
         fun startActivity(
             context: Context,
-            id: Int,
+            screenId: Int,
+            theaterId: Int,
         ) {
             val intent = Intent(context, ScreenDetailActivity::class.java)
-            intent.putExtra(PUT_EXTRA_KEY_ID, id)
+            intent.putExtra(PUT_EXTRA_KEY_ID, screenId)
+            intent.putExtra(PUT_EXTRA_THEATER_ID_KEY, theaterId)
             context.startActivity(intent)
         }
     }

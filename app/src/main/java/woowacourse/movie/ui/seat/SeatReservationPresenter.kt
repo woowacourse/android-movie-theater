@@ -1,60 +1,50 @@
 package woowacourse.movie.ui.seat
 
-import android.util.Log
 import android.view.View
 import woowacourse.movie.domain.model.Position
 import woowacourse.movie.domain.model.Screen
-import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.ScreenRepository
-import java.lang.IllegalStateException
 
 class SeatReservationPresenter(
     private val view: SeatReservationContract.View,
     private val screenRepository: ScreenRepository,
     private val reservationRepository: ReservationRepository,
 ) : SeatReservationContract.Presenter {
-    private val selectedSeats = mutableListOf<Seat>()
-    private var ticketCount = 0 // 받아오기
-    private var seats: Seats = Seats()
+    private var selectedSeats = Seats()
+    private var ticketCount = 0
+    private var loadedAllSeats: Seats = Seats()
 
-    override fun loadSeats(screenId: Int) {
-        val seats = screenRepository.seats(screenId)
-        this.seats = seats
-        view.showSeats(seats)
-    }
-
-    override fun loadTimeReservations(timeReservationId: Int) {
+    override fun loadData(timeReservationId: Int) {
         val timeReservation = reservationRepository.loadTimeReservation(timeReservationId)
+        val seats = screenRepository.seats(timeReservation.screen.id)
+        this.loadedAllSeats = seats
         ticketCount = timeReservation.ticket.count
 
-        view.showTimeReservations(
-            reservationRepository.loadTimeReservation(timeReservationId),
-        )
+        view.showAllSeats(seats)
+        view.initBinding(selectedSeats.totalPrice(), timeReservation)
+        view.updateTotalPrice(selectedSeats.totalPrice())
     }
 
     override fun selectSeat(
         position: Position,
         seatView: View,
     ) {
-        val seat = seats.findSeat(position)
-        Log.d("selectedSeats", "before add or remove $selectedSeats")
-
-        if (selectedSeats.contains(seat)) {
-            seatView.isSelected = !seatView.isSelected // 선택 상태 토글
-            selectedSeats.remove(seat)
+        val seat = loadedAllSeats.findSeat(position)
+        if (selectedSeats.seats.contains(seat)) {
+            seatView.isSelected = !seatView.isSelected
+            selectedSeats = selectedSeats.remove(seat)
         } else {
-            if (selectedSeats.size >= ticketCount) {
+            if (selectedSeats.seats.size >= ticketCount) {
                 view.showToast(IllegalArgumentException("exceed ticket count that can be reserved."))
             } else {
-                seatView.isSelected = !seatView.isSelected // 선택 상태 토글
-                selectedSeats.add(seat)
+                seatView.isSelected = !seatView.isSelected
+                selectedSeats = selectedSeats.add(seat)
             }
         }
-        Log.d("selectedSeats", "after add or remove $selectedSeats")
 
-        view.showTotalPrice(Seats(selectedSeats))
+        view.updateTotalPrice(selectedSeats.totalPrice())
         if (selectedSeats.count() == ticketCount) {
             view.activateReservation(true)
         } else {
@@ -71,17 +61,27 @@ class SeatReservationPresenter(
         throw IllegalStateException("예기치 못한 오류")
     }
 
-    override fun reserve(screenId: Int) {
+    override fun attemptReservation(
+        screenId: Int,
+        theaterId: Int,
+    ) {
+        view.showDialog(screenId, theaterId)
+    }
+
+    override fun completeReservation(
+        screenId: Int,
+        theaterId: Int,
+    ) {
         val timeReservation = reservationRepository.loadTimeReservation(screenId)
 
         reservationRepository.save(
             screen(screenId),
-            Seats(selectedSeats),
+            selectedSeats,
             timeReservation.dateTime,
         ).onSuccess { id ->
-            view.navigateToCompleteReservation(id)
+            view.navigateToCompleteReservation(id, theaterId)
         }.onFailure { e ->
-            view.showToast(e)
+            view.showSeatReservationFail(e)
         }
     }
 }

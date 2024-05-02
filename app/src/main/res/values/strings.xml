@@ -6,6 +6,8 @@
     <string name="screen_running_time_date">러닝타임:" "</string>
     <string name="reserve_now">지금 예매</string>
     <string name="movie_poster">영화 포스터</string>
+    <string name="running_time">%d 분</string>
+    <string name="number_of_screening_times">개의 상영 시간</string>
 
     <!--   영화 예매 화면 -->
     <string name="reserve_done">예매 완료</string>
@@ -22,5 +24,10 @@
     <string name="screen">SCREEN</string>
     <string name="ok">확인</string>
 
+    <!-- 예매 확인 다이얼로그-->
+    <string name="check_reservation_title">예매 확인</string>
+    <string name="check_reservation_content">정말 예매하시겠습니까?</string>
+    <string name="check_reservation_complete">예매 완료</string>
+    <string name="check_reservation_cancel">취소</string>
 
 </resources>

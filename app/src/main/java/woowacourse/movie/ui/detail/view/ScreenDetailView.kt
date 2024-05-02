@@ -1,7 +1,7 @@
 package woowacourse.movie.ui.detail.view
 
-import woowacourse.movie.ui.ScreenDetailUI
+import woowacourse.movie.ui.ScreenDetailUi
 
 interface ScreenDetailView {
-    fun show(screen: ScreenDetailUI)
+    fun show(screen: ScreenDetailUi)
 }

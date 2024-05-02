@@ -48,7 +48,7 @@ class ScreenAdapter(
 
             ScreenType.ADVERTISEMENT -> {
                 val view = LayoutInflater.from(parent.context).inflate(R.layout.holder_advertisement, parent, false)
-                AdViewHolder(view, onItemClick)
+                AdvertisementViewHolder(view, onItemClick)
             }
         }
     }
@@ -61,7 +61,7 @@ class ScreenAdapter(
 
         if (item is ScreenAd.ScreenPreviewUi && holder is ScreenViewHolder) {
             holder.bind(item)
-        } else if (item is ScreenAd.Advertisement && holder is AdViewHolder) {
+        } else if (item is ScreenAd.Advertisement && holder is AdvertisementViewHolder) {
             holder.bind(item)
         }
     }

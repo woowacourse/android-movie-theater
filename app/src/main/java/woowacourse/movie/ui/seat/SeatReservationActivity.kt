@@ -7,8 +7,11 @@ import android.view.Gravity
 import android.widget.GridLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivitySeatReservationBinding
 import woowacourse.movie.domain.model.Position
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.TimeReservation
@@ -21,31 +24,45 @@ import java.util.Locale
 
 class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.View {
     private val presenter = SeatReservationPresenter(this, DummyScreens(DummySeats()), DummyReservation)
-    private val seatsGridLayout: GridLayout by lazy { findViewById(R.id.gl_seat_reservation_seats) }
-
-    private val movieTitle: TextView by lazy { findViewById(R.id.tv_seat_reservation_movie_title) }
-    private val totalPrice: TextView by lazy { findViewById(R.id.tv_seat_reservation_total_price) }
-    private val reserveCompleteBtn: TextView by lazy { findViewById(R.id.btn_seat_reservation_complete) }
+    private val binding: ActivitySeatReservationBinding by lazy {
+        DataBindingUtil.setContentView(
+            this,
+            R.layout.activity_seat_reservation,
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seat_reservation)
 
-        val id = intent.getIntExtra(TIME_RESERVATION_ID, DEFAULT_ID)
-        presenter.loadSeats(id)
-        presenter.loadTimeReservations(id)
-        totalPrice.text = "0원"
+        val timeReservationId = intent.getIntExtra(TIME_RESERVATION_ID, DEFAULT_TIME_RESERVATION_ID)
+        val theaterId = intent.getIntExtra(PUT_EXTRA_THEATER_ID_KEY, DEFAULT_THEATER_ID)
 
-        reserveCompleteBtn.setOnClickListener {
-            presenter.reserve(id)
-        }
+        binding.presenter = presenter
+        binding.theaterId = theaterId
+
+        presenter.loadData(timeReservationId)
     }
 
-    override fun showSeats(seats: Seats) {
+    override fun initBinding(
+        totalPrice: Int,
+        timeReservation: TimeReservation,
+    ) {
+        binding.totalPrice = totalPrice
+        binding.timeReservation = timeReservation
+    }
+
+    override fun updateTotalPrice(totalPrice: Int) {
+        binding.tvSeatReservationTotalPrice.text = Currency.of(Locale.getDefault().country).format(totalPrice)
+    }
+
+    override fun showAllSeats(seats: Seats) {
+        val gl = binding.glSeatReservationSeats
         val maxRow = seats.maxRow()
         val maxColumn = seats.maxColumn()
-        seatsGridLayout.columnCount = maxColumn
-        seatsGridLayout.rowCount = maxRow
+
+        gl.columnCount = maxColumn
+        gl.rowCount = maxRow
 
         for (row in 0 until maxRow) {
             for (column in 0 until maxColumn) {
@@ -65,53 +82,74 @@ class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.Vie
                         gravity = Gravity.CENTER
                         text = "${'A' + row} ${column + 1}"
                     }
-                seatsGridLayout.addView(textView)
+                gl.addView(textView)
             }
         }
     }
 
-    override fun showTimeReservations(timeReservation: TimeReservation) {
-        val screen = timeReservation.screen
-        movieTitle.text = screen.movie.title
-    }
-
-    override fun showTotalPrice(seats: Seats) {
-        totalPrice.text = Currency.of(Locale.getDefault().country).format(seats.totalPrice())
-    }
-
     override fun activateReservation(boolean: Boolean) {
-        if (boolean) {
-            reserveCompleteBtn.isEnabled = true
-            reserveCompleteBtn.setBackgroundColor(getColor(R.color.complete_activated))
-        } else {
-            reserveCompleteBtn.isEnabled = false
-            reserveCompleteBtn.setBackgroundColor(getColor(R.color.complete_deactivated))
+        with(binding.btnSeatReservationComplete) {
+            if (boolean) {
+                isEnabled = true
+                setBackgroundColor(getColor(R.color.complete_activated))
+            } else {
+                isEnabled = false
+                setBackgroundColor(getColor(R.color.complete_deactivated))
+            }
         }
+    }
+
+    override fun showSeatReservationFail(throwable: Throwable) {
+        showToast(throwable)
+    }
+
+    override fun showDialog(
+        reservationId: Int,
+        theaterId: Int,
+    ) {
+        val alertDialog =
+            AlertDialog.Builder(this)
+                .setTitle(R.string.check_reservation_title)
+                .setMessage(R.string.check_reservation_content)
+                .setPositiveButton(R.string.check_reservation_complete) { _, _ ->
+                    presenter.completeReservation(reservationId, theaterId)
+                }
+                .setNegativeButton(R.string.check_reservation_cancel) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .setCancelable(false)
+                .create()
+
+        alertDialog.show()
     }
 
     override fun showToast(e: Throwable) {
         Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun navigateToCompleteReservation(reservationId: Int) {
-        ReservationCompleteActivity.startActivity(this, reservationId)
-    }
-
-    override fun showSeatReservationFail(throwable: Throwable) {
-        TODO("Not yet implemented")
+    override fun navigateToCompleteReservation(
+        reservationId: Int,
+        theaterId: Int,
+    ) {
+        ReservationCompleteActivity.startActivity(this, reservationId, theaterId)
     }
 
     companion object {
         private const val TIME_RESERVATION_ID = "timeReservationId"
-        private const val DEFAULT_ID = -1
+        private const val PUT_EXTRA_THEATER_ID_KEY = "theaterId"
+
+        private const val DEFAULT_TIME_RESERVATION_ID = -1
+        private const val DEFAULT_THEATER_ID = -1
 
         fun startActivity(
             context: Context,
             timeReservationId: Int,
+            theaterId: Int,
         ) {
             val intent =
                 Intent(context, SeatReservationActivity::class.java).apply {
                     putExtra(TIME_RESERVATION_ID, timeReservationId)
+                    putExtra(PUT_EXTRA_THEATER_ID_KEY, theaterId)
                 }
             context.startActivity(intent)
         }

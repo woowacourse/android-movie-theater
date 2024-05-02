@@ -1,15 +1,22 @@
 package woowacourse.movie.ui.reservation
 
 import woowacourse.movie.domain.repository.ReservationRepository
+import woowacourse.movie.domain.repository.TheaterRepository
 
 class ReservationPresenter(
     private val view: ReservationContract.View,
     private val repository: ReservationRepository,
+    private val theaterRepository: TheaterRepository,
 ) : ReservationContract.Presenter {
-    override fun loadReservation(reservationId: Int) {
+    override fun loadReservation(
+        reservationId: Int,
+        theaterId: Int,
+    ) {
         repository.findById(reservationId)
             .onSuccess {
-                view.showReservation(it)
+                val theaterName = theaterRepository.findById(theaterId).name
+
+                view.showReservation(it, theaterName)
             }
             .onFailure { e ->
                 when (e) {
