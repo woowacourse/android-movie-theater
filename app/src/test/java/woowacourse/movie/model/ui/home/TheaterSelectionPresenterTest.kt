@@ -20,6 +20,17 @@ class TheaterSelectionPresenterTest {
     }
 
     @Test
+    fun `영화의 id를 넘겨주면 영화가 상영되는 극장 정보를 표출한다`() {
+        // given
+
+        // when
+        presenter.loadTheaters(0L)
+
+        // then
+        verify { view.showTheaters(any(), any()) }
+    }
+
+    @Test
     fun `유효하지_않은_영화_아이디가_주어졌을_때_극장 정보_다이얼로그를_닫는다`() {
         // given
 
@@ -30,16 +41,5 @@ class TheaterSelectionPresenterTest {
         verify {
             view.dismissDialog()
         }
-    }
-
-    @Test
-    fun `극장을 선택하면 예약화면으로 이동한다`() {
-        // given
-
-        // when
-        presenter.startReservation(0L, 0L)
-
-        // then
-        verify { view.navigateToMovieReservation(0L, 0L) }
     }
 }

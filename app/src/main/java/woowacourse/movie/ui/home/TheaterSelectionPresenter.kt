@@ -13,17 +13,15 @@ class TheaterSelectionPresenter(
     private lateinit var movieContent: MovieContent
 
     override fun loadTheaters(movieContentId: Long) {
-        movieContent =
-            runCatching {
-                movieContents.find(movieContentId)
-            }.onFailure {
-                view.dismissDialog()
-            }.getOrThrow()
-
-        val movieTheaters =
-            movieContent.theaterIds.map { theaterId ->
-                theaters.find(theaterId)
-            }
-        view.showTheaters(movieContentId, movieTheaters)
+        runCatching {
+            movieContent = movieContents.find(movieContentId)
+            val movieTheaters =
+                movieContent.theaterIds.map { theaterId ->
+                    theaters.find(theaterId)
+                }
+            view.showTheaters(movieContentId, movieTheaters)
+        }.onFailure {
+            view.dismissDialog()
+        }
     }
 }

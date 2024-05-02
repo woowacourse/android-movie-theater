@@ -1,6 +1,5 @@
 package woowacourse.movie.model.ui.selection
 
-import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
@@ -19,7 +18,7 @@ class MovieSeatSelectionPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk<MovieSeatSelectionContract.View>(relaxed = true)
-        presenter = MovieSeatSelectionPresenter(view, UserTicketsImpl, 0L)
+        presenter = MovieSeatSelectionPresenter(view, UserTicketsImpl)
         UserTicketsImpl.save(
             UserTicket(
                 "",
@@ -33,8 +32,6 @@ class MovieSeatSelectionPresenterTest {
     @Test
     fun `영화관 좌석정보를 불러온다`() {
         // given
-        every { view.showReservationTotalAmount(any()) }
-        every { view.showTheater(any(), any()) }
 
         // when
         presenter.loadTheaterInfo(0L)
@@ -47,9 +44,7 @@ class MovieSeatSelectionPresenterTest {
     @Test
     fun `좌석을 선택한다`() {
         // given
-        every { view.showSelectedSeat(any()) }
-        every { view.updateSelectCompletion(any()) }
-        every { view.showReservationTotalAmount(any()) }
+        presenter.loadTheaterInfo(0L)
 
         // when
         presenter.selectSeat(1, 1)
