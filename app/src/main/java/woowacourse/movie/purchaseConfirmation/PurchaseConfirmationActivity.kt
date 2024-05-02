@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.IntentCompat
-import woowacourse.movie.databinding.PurchaseConfirmationBinding
+import woowacourse.movie.databinding.ActivityPurchaseConfirmationBinding
 import woowacourse.movie.model.Cinema
 
 class PurchaseConfirmationActivity : AppCompatActivity() {
 
-    private val binding: PurchaseConfirmationBinding by lazy {
-        PurchaseConfirmationBinding.inflate(layoutInflater)
+    private val binding: ActivityPurchaseConfirmationBinding by lazy {
+        ActivityPurchaseConfirmationBinding.inflate(layoutInflater)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

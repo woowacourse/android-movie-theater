@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import woowacourse.movie.databinding.BottomSheetTheatersItemBinding
+import woowacourse.movie.databinding.ItemBottomSheetTheatersBinding
 import woowacourse.movie.model.Cinema
 
 class CinemaAdapter(private val onTheaterClicked: (Cinema) -> Unit) :
@@ -13,7 +13,7 @@ class CinemaAdapter(private val onTheaterClicked: (Cinema) -> Unit) :
     private lateinit var inflater: LayoutInflater
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TheaterViewHolder {
         if (::inflater.isInitialized.not()) inflater = LayoutInflater.from(parent.context)
-        val binding = BottomSheetTheatersItemBinding.inflate(inflater, parent, false)
+        val binding = ItemBottomSheetTheatersBinding.inflate(inflater, parent, false)
 
         return TheaterViewHolder(binding, onTheaterClicked)
     }

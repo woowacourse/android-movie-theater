@@ -25,12 +25,12 @@ class MovieAdapter(
         val layoutInflater = LayoutInflater.from(context)
         return when (viewType) {
             ITEM_VIEW_TYPE_MOVIE -> {
-                val view = layoutInflater.inflate(R.layout.movie_list_item, parent, false)
+                val view = layoutInflater.inflate(R.layout.item_movie_list, parent, false)
                 MovieViewHolder(view, onClick)
             }
 
             ITEM_VIEW_TYPE_AD -> {
-                val view = layoutInflater.inflate(R.layout.ad_layout, parent, false)
+                val view = layoutInflater.inflate(R.layout.item_ad, parent, false)
                 AdViewHolder(view)
             }
 

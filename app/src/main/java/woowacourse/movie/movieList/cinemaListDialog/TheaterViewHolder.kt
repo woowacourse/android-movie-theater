@@ -1,11 +1,11 @@
 package woowacourse.movie.movieList.cinemaListDialog
 
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.databinding.BottomSheetTheatersItemBinding
+import woowacourse.movie.databinding.ItemBottomSheetTheatersBinding
 import woowacourse.movie.model.Cinema
 
 class TheaterViewHolder(
-    private val binding: BottomSheetTheatersItemBinding,
+    private val binding: ItemBottomSheetTheatersBinding,
     private val onCinemaClicked: (Cinema) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(item: Cinema) {

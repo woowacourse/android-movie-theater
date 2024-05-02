@@ -33,7 +33,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.movie_detail)
+        setContentView(R.layout.activity_movie_detail)
         dateSpinner = findViewById(R.id.movie_date_spinner)
         timeSpinner = findViewById(R.id.movie_time_spinner)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

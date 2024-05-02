@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/bottom_sheet_theaters_item" />
+            tools:listitem="@layout/item_bottom_sheet_theaters" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
