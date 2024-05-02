@@ -9,8 +9,6 @@ interface ScreeningContract {
 
         fun onUpdateAds(ads: List<Ad>)
 
-        fun showMovieList()
-
         fun showTheaterBottomSheet(movieId: Int)
     }
 

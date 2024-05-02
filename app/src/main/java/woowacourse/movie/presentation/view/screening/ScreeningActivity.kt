@@ -21,7 +21,6 @@ class ScreeningActivity : BaseActivity(), ScreeningContract.View, ScreeningContr
         adapter = MovieListAdapter(emptyList(), emptyList(), this)
         presenter = ScreeningPresenterImpl()
         presenter.attachView(this)
-        showMovieList()
     }
 
     override fun onUpdateMovies(movies: List<MovieUiModel>) {
@@ -30,12 +29,6 @@ class ScreeningActivity : BaseActivity(), ScreeningContract.View, ScreeningContr
 
     override fun onUpdateAds(ads: List<Ad>) {
         adapter.updateAdsList(ads)
-    }
-
-    override fun showMovieList() {
-        val movieListView = findViewById<RecyclerView>(R.id.movieList)
-        movieListView.layoutManager = LinearLayoutManager(this)
-        movieListView.adapter = adapter
     }
 
     override fun showTheaterBottomSheet(movieId: Int) {
@@ -58,6 +51,5 @@ class ScreeningActivity : BaseActivity(), ScreeningContract.View, ScreeningContr
 
     companion object {
         const val MOVIE_ID_KEY = "movieId"
-        const val DEFAULT_MOVIE_ID = -1
     }
 }

@@ -50,10 +50,6 @@ class Home : Fragment(), ScreeningContract.View, ScreeningContract.ViewActions {
         adapter.updateAdsList(ads)
     }
 
-    override fun showMovieList() {
-
-    }
-
     override fun showTheaterBottomSheet(movieId: Int) {
         val theaterDialog = TheaterBottomSheetDialogFragment()
         val bundle = Bundle()
