@@ -10,8 +10,8 @@
             type="String" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/cl_ticketing_result_activity"
         android:layout_width="match_parent"
@@ -39,13 +39,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="44dp"
             android:gravity="center"
+            android:text="@{ticket.movieTitle}"
             android:textColor="@color/black"
             android:textSize="26sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_guide"
-            android:text="@{ticket.movieTitle}"
             tools:text="영화이름" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -54,13 +54,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center"
+            android:text="@{ticket.screeningDateTime}"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_movie_title"
-            android:text="@{ticket.screeningDateTime}"
             tools:text="2024.1.1" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -80,12 +80,12 @@
             android:id="@+id/tv_ticket_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{String.valueOf(ticket.totalCount)}"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintBaseline_toBaselineOf="@id/tv_ticket_count_head"
             app:layout_constraintEnd_toStartOf="@id/tv_ticket_count_tail"
             app:layout_constraintStart_toEndOf="@id/tv_ticket_count_head"
-            android:text="@{String.valueOf(ticket.totalCount)}"
             tools:text="1" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -117,14 +117,14 @@
             android:id="@+id/tv_selected_seats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxWidth="130dp"
+            android:text="@{ticket.selectedSeatsToString()}"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:maxWidth="130dp"
             app:layout_constraintBottom_toBottomOf="@id/tv_ticket_count"
             app:layout_constraintEnd_toStartOf="@id/tv_divider_2"
             app:layout_constraintStart_toEndOf="@id/tv_divider_1"
             app:layout_constraintTop_toTopOf="@id/tv_ticket_count"
-            android:text="@{ticket.selectedSeatsToString()}"
             tools:text="B2, B3" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -144,16 +144,16 @@
             android:id="@+id/tv_theater_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxWidth="130dp"
+            android:maxLines="1"
+            android:text="@{theaterName}"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:maxWidth="130dp"
             app:layout_constraintBottom_toBottomOf="@id/tv_ticket_count"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_divider_2"
             app:layout_constraintTop_toTopOf="@id/tv_ticket_count"
-            android:text="@{theaterName}"
-            android:maxLines="1"
-            android:ellipsize="end"
             tools:text="강남" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -162,13 +162,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:gravity="center"
+            android:text="@{ticket.totalPriceToString()}"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintEnd_toStartOf="@id/tv_price_tail"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_ticket_count"
-            android:text="@{ticket.totalPriceToString()}"
             tools:text="13,000" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -184,5 +184,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_price"
             tools:text="원 (현장 결제)" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

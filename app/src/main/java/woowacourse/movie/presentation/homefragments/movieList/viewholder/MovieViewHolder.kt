@@ -1,7 +1,5 @@
 package woowacourse.movie.presentation.homefragments.movieList.viewholder
 
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.model.Movie
@@ -13,12 +11,4 @@ class MovieViewHolder(private val binding: ItemMovieBinding, val listener: Movie
         binding.movie = movie
         binding.listener = listener
     }
-}
-
-@BindingAdapter("imgRes")
-fun bindImage(
-    imageView: ImageView,
-    resId: Int,
-) {
-    imageView.setImageResource(resId)
 }

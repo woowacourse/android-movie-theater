@@ -54,7 +54,6 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
 
     override fun displayMovieDetail(movie: Movie) {
         binding.movie = movie
-        binding.ivThumbnail.setImageResource(movie.thumbnail)
     }
 
     override fun bindTicketCount(count: Count) {
