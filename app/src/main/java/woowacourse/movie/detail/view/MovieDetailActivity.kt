@@ -40,7 +40,6 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         )
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
