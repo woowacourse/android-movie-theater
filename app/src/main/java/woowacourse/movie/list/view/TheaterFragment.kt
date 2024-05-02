@@ -16,20 +16,21 @@ import woowacourse.movie.list.view.HomeFragment.Companion.EXTRA_MOVIE_ID_KEY_TO_
 class TheaterFragment : DialogFragment(), TheaterFragmentContract.View {
     private lateinit var binding: FragmentTheaterBinding
     private lateinit var presenter: TheaterPresenter
-    
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentTheaterBinding.inflate(inflater, container, false)
         presenter = TheaterPresenter(this)
-        
+
         val movieId = arguments?.getLong(EXTRA_MOVIE_ID_KEY_TO_FRAGMENT)
         setupRecyclerView(movieId ?: INVALID_MOVIE_ID)
-        
+
         return binding.root
     }
-    
+
     private fun setupRecyclerView(movieId: Long) {
         binding.theaterRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -42,7 +43,7 @@ class TheaterFragment : DialogFragment(), TheaterFragmentContract.View {
             }
         }
     }
-    
+
     override fun navigateToDetailActivity(movieId: Long, theaterId: Long) {
         Intent(activity, DetailActivity::class.java).apply {
             putExtra(EXTRA_MOVIE_ID_KEY, movieId)
@@ -50,11 +51,10 @@ class TheaterFragment : DialogFragment(), TheaterFragmentContract.View {
             startActivity(this)
         }
     }
-    
+
     companion object {
         const val INVALID_MOVIE_ID = -99L
         const val EXTRA_MOVIE_ID_KEY = "movie_id_key"
         const val EXTRA_THEATER_ID_KEY = "theater_id_key"
     }
 }
-
