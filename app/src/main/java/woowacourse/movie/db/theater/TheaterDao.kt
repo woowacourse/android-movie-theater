@@ -1,7 +1,7 @@
 package woowacourse.movie.db.theater
 
-import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.model.movie.ScreeningTimes
+import woowacourse.movie.model.theater.Theater
 
 class TheaterDao {
     private val theaters: List<Theater> = TheaterDatabase.theaters

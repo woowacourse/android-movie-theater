@@ -12,10 +12,10 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationDetailBinding
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.theater.TheaterDao
-import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.movie.ScreeningTimes
+import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.presenter.reservation.ReservationDetailContract
 import woowacourse.movie.presenter.reservation.ReservationDetailPresenter
 import woowacourse.movie.utils.MovieUtils.convertPeriodFormat
@@ -169,9 +169,9 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
         const val TICKET = "ticket"
         const val HEAD_COUNT = "headCount"
         const val SCREENING_DATE_TIME = "screeningDateTime"
-        private const val SCREENING_TIME = "screeningTime"
-        private const val SCREENING_PERIOD = "screeningPeriod"
         const val SELECTED_DATE_TAG = "notSelectedDate"
         const val NOTHING_SELECTED_MESSAGE = "nothingSelected"
+        private const val SCREENING_TIME = "screeningTime"
+        private const val SCREENING_PERIOD = "screeningPeriod"
     }
 }

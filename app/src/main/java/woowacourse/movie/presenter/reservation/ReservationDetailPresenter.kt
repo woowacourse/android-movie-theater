@@ -2,11 +2,11 @@ package woowacourse.movie.presenter.reservation
 
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.theater.TheaterDao
-import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.result.ChangeTicketCountResult
 import woowacourse.movie.model.result.Failure
 import woowacourse.movie.model.result.Success
+import woowacourse.movie.model.ticket.HeadCount
 
 class ReservationDetailPresenter(
     private val view: ReservationDetailContract.View,

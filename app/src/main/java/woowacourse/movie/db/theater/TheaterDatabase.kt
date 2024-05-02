@@ -1,7 +1,7 @@
 package woowacourse.movie.db.theater
 
-import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.model.movie.ScreeningTimes
+import woowacourse.movie.model.theater.Theater
 import java.time.LocalTime
 
 object TheaterDatabase {

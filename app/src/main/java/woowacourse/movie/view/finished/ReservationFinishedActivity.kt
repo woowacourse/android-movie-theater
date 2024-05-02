@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import woowacourse.movie.view.MainActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationFinishedBinding
 import woowacourse.movie.db.screening.ScreeningDao
@@ -17,6 +16,7 @@ import woowacourse.movie.presenter.finished.ReservationFinishedPresenter
 import woowacourse.movie.utils.MovieUtils.convertAmountFormat
 import woowacourse.movie.utils.MovieUtils.intentSerializable
 import woowacourse.movie.utils.MovieUtils.makeToast
+import woowacourse.movie.view.MainActivity
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.TICKET
 
 class ReservationFinishedActivity : AppCompatActivity(), ReservationFinishedContract.View {

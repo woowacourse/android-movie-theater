@@ -62,6 +62,5 @@ class HomeFragment : Fragment(), ReservationHomeContract.View {
 
     companion object {
         const val MOVIE_ID = "movieId"
-        const val BUNDLE_MOVIE_ID = "bundleMovieId"
     }
 }
