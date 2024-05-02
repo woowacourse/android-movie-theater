@@ -23,11 +23,11 @@
         </activity>
         <activity
             android:name=".view.finished.ReservationFinishedActivity"
-            android:parentActivityName=".view.home.ReservationHomeActivity"
+            android:parentActivityName=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".view.reservation.ReservationDetailActivity"
-            android:parentActivityName=".view.home.ReservationHomeActivity"
+            android:parentActivityName=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".view.reservation.SeatSelectionActivity"
