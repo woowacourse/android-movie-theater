@@ -24,6 +24,7 @@ class MovieReservationActivityTest {
                 MovieReservationActivity::class.java,
             ).apply {
                 putExtra(MovieReservationActivity.EXTRA_SCREEN_MOVIE_ID, 1L)
+                putExtra(MovieReservationActivity.EXTRA_THEATER_ID, 0L)
             },
         )
 

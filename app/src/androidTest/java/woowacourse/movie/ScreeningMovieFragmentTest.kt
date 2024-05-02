@@ -22,6 +22,7 @@ import org.junit.Test
 import org.junit.jupiter.api.DisplayName
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.Movies
+import woowacourse.movie.screeningmovie.AdapterClickListener
 import woowacourse.movie.screeningmovie.AdvertiseViewHolder
 import woowacourse.movie.screeningmovie.MovieAdapter
 import woowacourse.movie.screeningmovie.ScreenMovieUiModel
@@ -46,7 +47,11 @@ class ScreeningMovieFragmentTest {
                     ),
                 ).insertAdvertisements(3).toScreenItems() + screenMovieUiModel3
 
-            listView.adapter = MovieAdapter(items)
+            listView.adapter = MovieAdapter(items,object: AdapterClickListener{
+                override fun onClick(id: Long) {
+                }
+            }
+            )
         }
     }
 
