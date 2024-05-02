@@ -22,7 +22,6 @@ class MovieDetailActivityTest {
     fun `초기값은1_마이너스버튼클릭_티켓수량0표시`() {
         Espresso.onView(withId(R.id.minus_button))
             .check(matches(isDisplayed()))
-
         Espresso.onView(withId(R.id.minus_button))
             .perform(click())
         Espresso.onView(withId(R.id.quantity_text_view)).check(matches(withText("0")))
