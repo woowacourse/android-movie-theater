@@ -41,7 +41,8 @@ class MovieCatalogAdapter(
     ) {
         when (CatalogViewType.from(getItemViewType(position))) {
             CatalogViewType.MOVIE -> {
-                val item = movies[position]
+                val moviePosition = position - (position / (CatalogViewType.ADVERTISEMENT.interval))
+                val item = movies[moviePosition]
                 (holder as MovieViewHolder).bind(item, movie)
             }
             CatalogViewType.ADVERTISEMENT -> {
@@ -51,7 +52,14 @@ class MovieCatalogAdapter(
         }
     }
 
-    override fun getItemCount() = movies.size
+    override fun getItemCount(): Int {
+        val advertisementInterval = CatalogViewType.ADVERTISEMENT.interval
+        if (movies.size >= advertisementInterval) {
+            val advertisementCount = movies.size / advertisementInterval
+            return movies.size + advertisementCount
+        }
+        return movies.size
+    }
 
     override fun getItemViewType(position: Int): Int {
         return if (position % CatalogViewType.ADVERTISEMENT.interval == CatalogViewType.ADVERTISEMENT.position) {
