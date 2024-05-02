@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.view.bottom_navigation_bar
+package woowacourse.movie.presentation.view.bottomNavigationBar
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

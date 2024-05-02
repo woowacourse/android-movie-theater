@@ -9,6 +9,7 @@ import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
 
 class ReservationResultActivity : BaseActivity() {
     override fun getLayoutResId(): Int = R.layout.activity_reservation_result
+
     private lateinit var binding: ActivityReservationResultBinding
 
     override fun onCreateSetup(savedInstanceState: Bundle?) {

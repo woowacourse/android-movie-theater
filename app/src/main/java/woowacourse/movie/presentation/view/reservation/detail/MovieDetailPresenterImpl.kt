@@ -29,7 +29,7 @@ class MovieDetailPresenterImpl(
     private val reservationMovieInfoRepository: ReservationMovieInfoRepository =
         ReservationMovieInfoRepositoryImpl
     private val theaterRepository: TheaterRepository = TheaterRepositoryImpl
-    
+
     private fun setScreeningMovieInfo(): ReservationMovieInfo {
         val theaterName = theaterRepository.theaterName(theaterId)
         return ReservationMovieInfo(movie.title, theaterName, movie.screeningInfo)

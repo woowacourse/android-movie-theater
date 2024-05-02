@@ -9,13 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.presentation.uimodel.TheaterUiModel
+import woowacourse.movie.presentation.view.bottomNavigationBar.Home.Companion.DEFAULT_MOVIE_ID
+import woowacourse.movie.presentation.view.bottomNavigationBar.Home.Companion.MOVIE_ID_KEY
 import woowacourse.movie.presentation.view.reservation.detail.MovieDetailActivity
 import woowacourse.movie.presentation.view.screening.theater.adapter.TheaterAdapter
-import woowacourse.movie.presentation.view.bottom_navigation_bar.Home.Companion.MOVIE_ID_KEY
-import woowacourse.movie.presentation.view.bottom_navigation_bar.Home.Companion.DEFAULT_MOVIE_ID
 
-class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(),
-    TheaterBottomSheetContract.View, TheaterBottomSheetContract.ItemListener {
+class TheaterBottomSheetDialogFragment :
+    BottomSheetDialogFragment(),
+    TheaterBottomSheetContract.View,
+    TheaterBottomSheetContract.ItemListener {
     private val theaterPresenter: TheaterBottomSheetContract.Presenter by lazy {
         TheaterBottomSheetPresenterImpl(this, movieId)
     }
@@ -24,13 +26,17 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(),
     private lateinit var theaterAdapter: TheaterAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.theater_bottom_sheet, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         movieId = arguments?.getInt(MOVIE_ID_KEY, DEFAULT_MOVIE_ID) ?: DEFAULT_MOVIE_ID
         theatersView = view.findViewById(R.id.theater_recycler_view)

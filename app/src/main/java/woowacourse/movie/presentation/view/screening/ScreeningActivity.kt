@@ -2,13 +2,11 @@ package woowacourse.movie.presentation.view.screening
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.domain.admodel.Ad
-import woowacourse.movie.presentation.view.screening.adapter.MovieListAdapter
 import woowacourse.movie.presentation.base.BaseActivity
 import woowacourse.movie.presentation.uimodel.MovieUiModel
+import woowacourse.movie.presentation.view.screening.adapter.MovieListAdapter
 import woowacourse.movie.presentation.view.screening.theater.TheaterBottomSheetDialogFragment
 
 class ScreeningActivity : BaseActivity(), ScreeningContract.View, ScreeningContract.ViewActions {

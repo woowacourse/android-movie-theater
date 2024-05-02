@@ -1,6 +1,5 @@
 package woowacourse.movie.presentation.view.reservation.detail
 
-
 interface MovieDetailContract {
     interface View {
         fun setScreeningDatesAndTimes(
