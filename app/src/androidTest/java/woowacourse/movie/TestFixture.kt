@@ -24,6 +24,11 @@ object TestFixture {
         return Ticket(movie.id, theater.theaterId, seats, ScreeningDateTime("", ""), amount)
     }
 
+    fun makeTheater(): List<Theater> {
+        val movieId = 0
+        return theaterDao.findTheaterByMovieId(movieId)
+    }
+
     fun makeMockSeats(): Seats {
         val seats = Seats()
         seats.manageSelected(true, Seat('A', 2, Grade.B))
