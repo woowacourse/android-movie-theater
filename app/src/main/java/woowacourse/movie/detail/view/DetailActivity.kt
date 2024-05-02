@@ -2,7 +2,6 @@ package woowacourse.movie.detail.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -34,8 +33,8 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         presenter.setCurrentResultTicketCountInfo()
-        movieId = intent.getLongExtra(EXTRA_MOVIE_ID_KEY, -1)
-        theaterId = intent.getLongExtra(EXTRA_THEATER_ID_KEY, -1)
+        movieId = intent.getLongExtra(EXTRA_MOVIE_ID_KEY, 0)
+        theaterId = intent.getLongExtra(EXTRA_THEATER_ID_KEY, 0)
         presenter.storeMovieId(movieId)
         presenter.storeTheaterId(theaterId)
         presenter.setMovieInfo()
@@ -101,7 +100,7 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
     override fun setMovieView(info: Movie) {
         val formattedScreeningDate =
             info.firstScreeningDate.format(DateTimeFormatter.ofPattern(DATE_PATTERN))
-        
+
         binding.movieDetailTitle.text = info.title
         binding.movieDetailScreeningDate.text = formattedScreeningDate
         binding.movieDetailRunningTime.text = info.runningTime.toString()

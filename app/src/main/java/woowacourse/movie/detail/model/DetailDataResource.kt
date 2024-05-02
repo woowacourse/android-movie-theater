@@ -10,7 +10,7 @@ object DetailDataResource {
     var theaterId: Long = 0
 
     private val firstScreeningDate
-        get() = MovieDataSource.movieList[movieId.toInt()].firstScreeningDate
+        get() = MovieDataSource.movieList.first { it.id == movieId }.firstScreeningDate
 
     val screeningDates
         get() =

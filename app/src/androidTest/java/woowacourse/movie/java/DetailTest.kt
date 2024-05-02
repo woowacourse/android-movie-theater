@@ -16,13 +16,15 @@ import woowacourse.movie.R
 import woowacourse.movie.detail.view.DetailActivity
 
 @RunWith(AndroidJUnit4::class)
-class MovieReservationTest {
+class DetailTest {
     @get:Rule
     val activityRule: ActivityScenarioRule<DetailActivity> = ActivityScenarioRule(DetailActivity::class.java)
 
     @Before
     fun setUp() {
         activityRule.scenario.onActivity {
+            it.presenter.storeMovieId(0)
+            it.presenter.storeTheaterId(0)
             it.presenter.model.initTicketCount(1)
         }
     }
