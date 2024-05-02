@@ -21,6 +21,7 @@ import org.junit.jupiter.api.DisplayName
 import woowacourse.movie.fixtures.context
 import woowacourse.movie.model.ScreeningMovie
 import woowacourse.movie.moviereservation.MovieReservationActivity
+import woowacourse.movie.reservationresult.uimodel.ReservationResultUiModel
 import java.time.format.DateTimeFormatter
 
 class MovieReservationActivityTest {
@@ -82,7 +83,6 @@ class MovieReservationActivityTest {
 
     @Test
     fun `date_spinner의_특정_데이터를_클릭하면_뷰에_나타난다`() {
-        val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         val expected = ScreeningMovie.STUB_A.screenDateTimes[3].date.format(dateFormatter)
         onView(withId(R.id.spinner_detail_date)).perform(click())
 
@@ -91,5 +91,28 @@ class MovieReservationActivityTest {
         ).perform(click())
 
         onView(withId(R.id.spinner_detail_date)).check(matches(withSpinnerText(containsString(expected))))
+    }
+
+    @Test
+    fun `time_spinner의_특정_데이터를_클릭하면_뷰에_나타난다`() {
+        val dateString = ScreeningMovie.STUB_A.screenDateTimes[3].date.format(dateFormatter)
+        val expected = ScreeningMovie.STUB_A.screenDateTimes[3].times[3].format(timeFormatter)
+        onView(withId(R.id.spinner_detail_date)).perform(click())
+
+        onData(
+            allOf(`is`(instanceOf(String::class.java)), `is`(dateString)),
+        ).perform(click())
+
+
+        onView(withId(R.id.spinner_detail_time)).perform(click())
+        onData(
+            allOf(`is`(instanceOf(String::class.java)), `is`(expected)),
+        ).perform(click())
+
+        onView(withId(R.id.spinner_detail_time)).check(matches(withSpinnerText(containsString(expected))))
+    }
+    companion object{
+        private val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
     }
 }
