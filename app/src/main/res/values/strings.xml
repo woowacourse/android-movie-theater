@@ -22,7 +22,7 @@
     <string name="reservation_confirm_comment">정말 예매하시겠습니까?</string>
     <string name="menu_booking_history">예매 내역</string>
     <string name="reservation_result">일반 %d명 | %s | %s 극장</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="reservation_screening_date_format">yyyy.M.d</string>
+    <string name="reservation_screening_date_time_format">yyyy.M.d HH:mm</string>
 </resources>

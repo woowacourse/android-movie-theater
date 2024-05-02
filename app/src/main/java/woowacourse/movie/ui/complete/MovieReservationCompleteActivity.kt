@@ -14,7 +14,7 @@ import woowacourse.movie.databinding.ActivityMovieReservationCompleteBinding
 import woowacourse.movie.model.data.UserTicketsImpl
 import woowacourse.movie.model.movie.Seat
 import woowacourse.movie.ui.base.BaseActivity
-import woowacourse.movie.ui.home.MovieHomeFragment
+import woowacourse.movie.ui.main.MovieMainActivity
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -50,7 +50,7 @@ class MovieReservationCompleteActivity :
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            android.R.id.home -> startActivity(Intent(this, MovieHomeFragment::class.java))
+            android.R.id.home -> startActivity(Intent(this, MovieMainActivity::class.java))
         }
         return super.onOptionsItemSelected(item)
     }
@@ -73,10 +73,12 @@ fun setReservationResult(
         context.getString(R.string.reservation_result, count, seats.joinToString(), theaterName)
 }
 
-@BindingAdapter("dateTime")
+@BindingAdapter("context", "dateTime")
 fun setReservedDateTime(
     textView: TextView,
+    context: Context,
     dateTime: LocalDateTime,
 ) {
-    textView.text = dateTime.format(DateTimeFormatter.ofPattern("yyyy.M.d HH:mm"))
+    textView.text =
+        dateTime.format(DateTimeFormatter.ofPattern(context.getString(R.string.reservation_screening_date_time_format)))
 }

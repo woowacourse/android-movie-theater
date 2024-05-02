@@ -53,6 +53,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                movie:context="@{context}"
                 movie:dateTime="@{presenter.userTicket.screeningStartDateTime}"/>
         </LinearLayout>
 
