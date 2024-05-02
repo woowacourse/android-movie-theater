@@ -33,6 +33,7 @@ class MovieSeatSelectionActivity :
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_seat_selection)
         binding.presenter = presenter
+        binding.activity = this
 
         presenter.loadTheaterInfo(userTicketId)
         presenter.updateSelectCompletion()
@@ -40,10 +41,6 @@ class MovieSeatSelectionActivity :
 
         setOnConfirmButtonListener()
     }
-
-    private fun TableLayout.makeSeats(): List<TextView> =
-        children.filterIsInstance<TableRow>().flatMap { it.children }
-            .filterIsInstance<TextView>().toList()
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -65,26 +62,13 @@ class MovieSeatSelectionActivity :
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> finish()
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    private fun setOnConfirmButtonListener() {
-        binding.confirmButton.setOnClickListener {
-            showAlertDialog()
-        }
-    }
-
-    override fun showAlertDialog() {
+    fun showAlertDialog() {
         AlertDialog.Builder(this)
             .setCancelable(false)
             .setTitle(R.string.reservation_confirm)
             .setMessage(R.string.reservation_confirm_comment)
             .setPositiveButton(R.string.reservation_complete) { _, _ ->
-                presenter.reserveMovie()
+                moveMovieReservationCompletePage(userTicketId)
             }
             .setNegativeButton(R.string.cancel) { dialog, _ ->
                 dialog.dismiss()
@@ -92,13 +76,14 @@ class MovieSeatSelectionActivity :
             .show()
     }
 
-    private fun userTicketId() =
-        intent.getLongExtra(
-            MovieSeatSelectionKey.TICKET_ID,
-            MOVIE_CONTENT_ID_DEFAULT_VALUE,
-        )
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
-    override fun initializePresenter(): MovieSeatSelectionPresenter = MovieSeatSelectionPresenter(this, UserTicketsImpl, userTicketId)
+    override fun initializePresenter(): MovieSeatSelectionPresenter = MovieSeatSelectionPresenter(this, UserTicketsImpl)
 
     override fun showTheater(
         rowSize: Int,
@@ -106,19 +91,6 @@ class MovieSeatSelectionActivity :
     ) {
         repeat(rowSize) { row ->
             makeSeats(colSize, row)
-        }
-    }
-
-    private fun makeSeats(
-        colSize: Int,
-        row: Int,
-    ) {
-        repeat(colSize) { col ->
-            seats[positionToIndex(row, col)].apply {
-                setOnClickListener {
-                    selectedSeatInfo.add(positionToIndex(row, col))
-                }
-            }
         }
     }
 
@@ -149,17 +121,46 @@ class MovieSeatSelectionActivity :
         }
     }
 
-    override fun moveMovieReservationCompletePage(ticketId: Long) {
+    override fun showError(throwable: Throwable) {
+        Log.e(TAG, throwable.message.toString())
+        Toast.makeText(this, resources.getString(R.string.invalid_key), Toast.LENGTH_LONG).show()
+        finish()
+    }
+
+    private fun TableLayout.makeSeats(): List<TextView> =
+        children.filterIsInstance<TableRow>().flatMap { it.children }
+            .filterIsInstance<TextView>().toList()
+
+    private fun makeSeats(
+        colSize: Int,
+        row: Int,
+    ) {
+        repeat(colSize) { col ->
+            seats[positionToIndex(row, col)].apply {
+                setOnClickListener {
+                    selectedSeatInfo.add(positionToIndex(row, col))
+                }
+            }
+        }
+    }
+
+    private fun moveMovieReservationCompletePage(ticketId: Long) {
         Intent(this, MovieReservationCompleteActivity::class.java).run {
             putExtra(MovieSeatSelectionKey.TICKET_ID, ticketId)
             startActivity(this)
         }
     }
 
-    override fun showError(throwable: Throwable) {
-        Log.e(TAG, throwable.message.toString())
-        Toast.makeText(this, resources.getString(R.string.invalid_key), Toast.LENGTH_LONG).show()
-        finish()
+    private fun userTicketId() =
+        intent.getLongExtra(
+            MovieSeatSelectionKey.TICKET_ID,
+            MOVIE_CONTENT_ID_DEFAULT_VALUE,
+        )
+
+    private fun setOnConfirmButtonListener() {
+        binding.confirmButton.setOnClickListener {
+            showAlertDialog()
+        }
     }
 
     companion object {

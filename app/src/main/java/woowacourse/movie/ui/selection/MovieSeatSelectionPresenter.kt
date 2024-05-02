@@ -8,7 +8,6 @@ import woowacourse.movie.ui.utils.positionToIndex
 class MovieSeatSelectionPresenter(
     private val view: MovieSeatSelectionContract.View,
     private val userTickets: UserTickets,
-    private val ticketId: Long,
 ) :
     MovieSeatSelectionContract.Presenter {
     lateinit var userTicket: UserTicket
@@ -59,13 +58,5 @@ class MovieSeatSelectionPresenter(
     ) {
         userTicket.reservationDetail.removeSeat(row, col)
         view.showUnSelectedSeat(positionToIndex(row, col))
-    }
-
-    override fun checkCompletion() {
-        view.showAlertDialog()
-    }
-
-    override fun reserveMovie() {
-        view.moveMovieReservationCompletePage(ticketId)
     }
 }

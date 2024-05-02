@@ -16,10 +16,6 @@ interface MovieSeatSelectionContract {
         fun showReservationTotalAmount(amount: Int)
 
         fun updateSelectCompletion(isComplete: Boolean)
-
-        fun showAlertDialog()
-
-        fun moveMovieReservationCompletePage(ticketId: Long)
     }
 
     interface Presenter {
@@ -33,9 +29,5 @@ interface MovieSeatSelectionContract {
         )
 
         fun recoverSeatSelection(index: Int)
-
-        fun checkCompletion()
-
-        fun reserveMovie()
     }
 }

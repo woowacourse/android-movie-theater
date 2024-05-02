@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="activity"
+            type="woowacourse.movie.ui.selection.MovieSeatSelectionActivity" />
 
         <variable
             name="presenter"
@@ -279,7 +282,7 @@
                 android:background="@drawable/selector_button"
                 android:clickable="false"
                 android:enabled="false"
-                android:onClick="@{() -> presenter.checkCompletion()}"
+                android:onClick="@{() -> activity.showAlertDialog()}"
                 android:text="@string/confirm"
                 android:textSize="18sp"
                 android:textStyle="bold" />
