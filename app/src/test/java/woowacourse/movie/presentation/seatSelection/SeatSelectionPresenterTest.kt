@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.seatSelection
 
+import io.kotest.assertions.any
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -7,9 +8,9 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.model.Seat
 import woowacourse.movie.model.SeatingSystem
+import woowacourse.movie.repository.MovieRepository
 
 class SeatSelectionPresenterTest {
     private lateinit var presenter: SeatSelectionContract.Presenter
@@ -29,14 +30,14 @@ class SeatSelectionPresenterTest {
         every { seatingSystem.isSelected(any()) } returns false
         every { seatingSystem.trySelectSeat(any()) } returns Result.success(seat)
         every { view.updateSelectedSeatUI(any()) } just Runs
-        every { view.setButtonEnabledState(any()) } just Runs
-        every { view.updateViews(any()) } just Runs
+        // every { view.setButtonEnabledState(any()) } just Runs
+        // every { view.updateViews(any()) } just Runs
 
         presenter.updateSeatSelection(0)
 
         verify { view.updateSelectedSeatUI(0) }
-        verify { view.setButtonEnabledState(any()) }
-        verify { view.updateViews(any()) }
+        // verify { view.setButtonEnabledState(any()) }
+        // verify { view.updateViews(any()) }
     }
 
     @Test

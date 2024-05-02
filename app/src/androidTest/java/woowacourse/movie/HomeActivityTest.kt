@@ -1,44 +1,51 @@
 package woowacourse.movie
 
-import androidx.test.espresso.Espresso.onData
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import org.hamcrest.Matchers.allOf
-import org.hamcrest.Matchers.hasProperty
-import org.hamcrest.Matchers.instanceOf
-import org.hamcrest.Matchers.`is`
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.movie.model.Movie
+import org.junit.runner.RunWith
 import woowacourse.movie.presentation.home.HomeActivity
 
+@RunWith(AndroidJUnit4::class)
 class HomeActivityTest {
     @get:Rule
     val activityRule = ActivityScenarioRule(HomeActivity::class.java)
 
+    // Initial displays
     @Test
-    fun `예매_가능한_영화리스트를_보여준다`() {
-        onData(
-            allOf(
-                `is`(instanceOf(Movie::class.java)),
-                hasProperty(
-                    "title",
-                    `is`("해리 포터와 마법사의 돌"),
-                ),
-                hasProperty(
-                    "thumbnail",
-                    `is`("https://github.com/kmkim2689/codetree-TILs/assets/101035437/c57f8b0c-5b15-418c-88db-15f2ada4cdcf"),
-                ),
-                hasProperty("date", `is`("2024.3.1")),
-                hasProperty("runningTime", `is`(152)),
-                hasProperty(
-                    "introduction",
-                    `is`(
-                        """
-                        《해리 포터와 마법사의 돌》은 2001년 J. K. 롤링의 동명 소설을 원작으로 하여 만든, 영국과 미국 합작, 판타지 영화이다. 해리포터 시리즈 영화 8부작 중 첫 번째에 해당하는 작품이다. 크리스 콜럼버스가 감독을 맡았다.
-                        """.trimIndent(),
-                    ),
-                ),
-            ),
-        )
+    fun when_app_starts_movie_lists_showed() {
+        onView(withId(R.id.rv_movies))
+            .check(matches(isDisplayed()))
+    }
+
+    // Initial displays
+    @Test
+    fun when_app_starts_bottom_navigation_view_showed() {
+        onView(withId(R.id.bottom_navigation_view))
+            .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun when_click_reservation_menu_reservation_fragment_showed() {
+        onView(withId(R.id.action_reservation_list))
+            .perform(click())
+
+        onView(withId(R.id.reservation_fragment_tv))
+            .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun when_click_settings_menu_settings_fragment_showed() {
+        onView(withId(R.id.action_settings))
+            .perform(click())
+
+        onView(withId(R.id.settings_fragment_layout))
+            .check(matches(isDisplayed()))
     }
 }

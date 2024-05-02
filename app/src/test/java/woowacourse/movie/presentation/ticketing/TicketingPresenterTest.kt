@@ -8,9 +8,11 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieRepository
+import woowacourse.movie.model.Count
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.ScreeningDates
+import woowacourse.movie.repository.DummyTheaterList
+import woowacourse.movie.repository.MovieRepository
 import java.time.LocalDate
 
 private val dummyMovies =
@@ -35,21 +37,21 @@ class TicketingPresenterTest {
 
     @BeforeEach
     fun setUp() {
-        presenter = TicketingPresenter(view, repository)
+        presenter = TicketingPresenter(view, repository, DummyTheaterList)
     }
 
     @Test
     fun `유효한_movieId를_전달받았을_경우_초기_화면_세팅을_진행한다`() {
         every { repository.findMovieById(any()) } returns Result.success(dummyMovies[0])
         every { view.displayMovieDetail(any()) } just Runs
-        every { view.setUpDateSpinners(any(), any()) } just Runs
+        every { view.setUpDateSpinners(any()) } just Runs
         every { view.bindTicketCount(any()) } just Runs
 
-        presenter.loadMovieData(0)
+        presenter.loadMovieData(1, 1)
 
         verify { view.displayMovieDetail(dummyMovies[0]) }
-        verify { view.setUpDateSpinners(any(), any()) }
-        verify { view.bindTicketCount(1) }
+        verify { view.setUpDateSpinners(any()) }
+        verify { view.bindTicketCount(Count(1)) }
     }
 
     @Test
@@ -57,7 +59,7 @@ class TicketingPresenterTest {
         every { repository.findMovieById(any()) } returns Result.failure(Exception())
         every { view.showErrorMessage(any()) } just Runs
 
-        presenter.loadMovieData(-1)
+        presenter.loadMovieData(-1, -1)
 
         verify { view.showErrorMessage(any()) }
     }
@@ -68,7 +70,7 @@ class TicketingPresenterTest {
 
         presenter.increaseCount()
 
-        verify { view.bindTicketCount(2) }
+        verify { view.bindTicketCount(Count(2)) }
     }
 
     @Test
@@ -78,20 +80,20 @@ class TicketingPresenterTest {
         presenter.increaseCount()
         presenter.decreaseCount()
 
-        verify { view.bindTicketCount(1) }
+        verify { view.bindTicketCount(Count(1)) }
     }
 
     @Test
     fun `navigate 호출 시, view에게 다음 화면으로 이동하라고 명령한다`() {
         every { repository.findMovieById(any()) } returns Result.success(dummyMovies[0])
         every { view.displayMovieDetail(any()) } just Runs
-        every { view.setUpDateSpinners(any(), any()) } just Runs
+        every { view.setUpDateSpinners(any()) } just Runs
         every { view.bindTicketCount(any()) } just Runs
-        every { view.navigate(any(), any()) } just Runs
+        every { view.navigate(any(), any(), any()) } just Runs
 
-        presenter.loadMovieData(0)
+        presenter.loadMovieData(1, 1)
         presenter.navigate()
 
-        verify { view.navigate(any(), any()) }
+        verify { view.navigate(any(), any(), any()) }
     }
 }
