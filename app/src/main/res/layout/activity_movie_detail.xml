@@ -71,13 +71,14 @@
         </ScrollView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/chose"
+            android:id="@+id/quantity_selector"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            app:layout_constraintBottom_toTopOf="@id/quantity_selector"
+            app:layout_constraintBottom_toTopOf="@id/seat_confirmation_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
+
 
             <Spinner
                 android:id="@+id/movie_time_spinner"
@@ -92,19 +93,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:entries="@array/movie_times"
+                app:layout_constraintBottom_toTopOf="@id/minus_button"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="MissingConstraints" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/quantity_selector"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            app:layout_constraintBottom_toTopOf="@id/seat_confirmation_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
 
             <Button
                 android:id="@+id/minus_button"
@@ -114,8 +105,7 @@
                 android:text="-"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/quantity_text_view"
@@ -125,8 +115,7 @@
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/plus_button"
-                app:layout_constraintStart_toEndOf="@id/minus_button"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toEndOf="@id/minus_button" />
 
             <Button
                 android:id="@+id/plus_button"
@@ -136,8 +125,7 @@
                 android:text="+"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

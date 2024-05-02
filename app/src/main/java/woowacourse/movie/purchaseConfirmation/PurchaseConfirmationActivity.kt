@@ -26,7 +26,7 @@ class PurchaseConfirmationActivity : AppCompatActivity() {
         binding.movieTitleConfirmation.text = movie.title.toString()
         binding.purchaseMovieRunningTime.text = movie.runningTime.toString()
         binding.reservedInformation.text =
-            "%s | %s | %s".format(seatNumber?.size, seatNumber?.joinToString(), cinema.cinemaName)
+            "일반 %s명 | %s | %s".format(seatNumber?.size, seatNumber?.joinToString(), cinema.cinemaName)
         binding.ticketCharge.text = ticketPrice
         binding.movieTimeDate.text = timeDate
     }
