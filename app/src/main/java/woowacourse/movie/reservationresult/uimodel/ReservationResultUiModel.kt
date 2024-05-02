@@ -23,7 +23,7 @@ data class ReservationResultUiModel(
         title,
         "영화 상영 시작 시간 ${cancelDeadLine.inWholeMinutes}분 전\n까지 취소가 가능합니다",
         dateTime.format(dateFormatter) + " " + dateTime.format(timeFormatter),
-        count.toString() + "명"+ " | " + seats.joinToString { it.showPosition } + " | " + theaterName,
+        count.toString() + "명" + " | " + seats.joinToString { it.showPosition } + " | " + theaterName,
         PriceUiModel(totalPrice),
     )
 

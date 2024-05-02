@@ -10,10 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.hamcrest.Description
 import org.hamcrest.TypeSafeMatcher
 import org.hamcrest.core.IsInstanceOf.instanceOf
@@ -47,11 +45,14 @@ class ScreeningMovieFragmentTest {
                     ),
                 ).insertAdvertisements(3).toScreenItems() + screenMovieUiModel3
 
-            listView.adapter = MovieAdapter(items,object: AdapterClickListener{
-                override fun onClick(id: Long) {
-                }
-            }
-            )
+            listView.adapter =
+                MovieAdapter(
+                    items,
+                    object : AdapterClickListener {
+                        override fun onClick(id: Long) {
+                        }
+                    },
+                )
         }
     }
 
