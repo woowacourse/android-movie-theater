@@ -23,8 +23,8 @@ class DummyScreens : ScreenRepository {
             description =
                 "《해리 포터와 마법사의 돌》은 2001년 J. K. 롤링의 동명 소설을 원작으로 하여 만든, 영국과 미국 합작, 판타지 영화이다. " +
                     "해리포터 시리즈 영화 8부작 중 첫 번째에 해당하는 작품이다. 크리스 콜럼버스가 감독을 맡았다.",
-            startDate = LocalDate.of(2024, 4, 1),
-            endDate = LocalDate.of(2024, 4, 30),
+            startDate = LocalDate.of(2024, 3, 1),
+            endDate = LocalDate.of(2024, 3, 31),
         )
 
     val bang =
@@ -37,7 +37,7 @@ class DummyScreens : ScreenRepository {
                 "《해리 포터와 마법사의 돌》은 2001년 J. K. 롤링의 동명 소설을 원작으로 하여 만든, 영국과 미국 합작, 판타지 영화이다. " +
                     "해리포터 시리즈 영화 8부작 중 첫 번째에 해당하는 작품이다. 크리스 콜럼버스가 감독을 맡았다.",
             startDate = LocalDate.of(2024, 4, 1),
-            endDate = LocalDate.of(2024, 4, 30),
+            endDate = LocalDate.of(2024, 4, 28),
         )
 
     val zoesu =
@@ -49,8 +49,8 @@ class DummyScreens : ScreenRepository {
             description =
                 "《해리 포터와 마법사의 돌》은 2001년 J. K. 롤링의 동명 소설을 원작으로 하여 만든, 영국과 미국 합작, 판타지 영화이다. " +
                     "해리포터 시리즈 영화 8부작 중 첫 번째에 해당하는 작품이다. 크리스 콜럼버스가 감독을 맡았다.",
-            startDate = LocalDate.of(2024, 4, 1),
-            endDate = LocalDate.of(2024, 4, 30),
+            startDate = LocalDate.of(2024, 5, 1),
+            endDate = LocalDate.of(2024, 5, 31),
         )
 
     val piro =
@@ -62,8 +62,8 @@ class DummyScreens : ScreenRepository {
             description =
                 "《해리 포터와 마법사의 돌》은 2001년 J. K. 롤링의 동명 소설을 원작으로 하여 만든, 영국과 미국 합작, 판타지 영화이다. " +
                     "해리포터 시리즈 영화 8부작 중 첫 번째에 해당하는 작품이다. 크리스 콜럼버스가 감독을 맡았다.",
-            startDate = LocalDate.of(2024, 4, 1),
-            endDate = LocalDate.of(2024, 4, 30),
+            startDate = LocalDate.of(2024, 6, 1),
+            endDate = LocalDate.of(2024, 6, 30),
         )
 
     private val movies =
@@ -90,61 +90,33 @@ class DummyScreens : ScreenRepository {
                     Screen(
                         0,
                         wizardStone,
-                        listOf(
-                            ScreenDate(LocalDate.of(2024, 4, 1)),
-                            ScreenDate(LocalDate.of(2024, 4, 2)),
-                            ScreenDate(LocalDate.of(2024, 4, 3)),
-                            ScreenDate(LocalDate.of(2024, 4, 4)),
-                            ScreenDate(LocalDate.of(2024, 4, 5)),
-                            ScreenDate(LocalDate.of(2024, 4, 6)),
-                            ScreenDate(LocalDate.of(2024, 4, 7)),
-                            ScreenDate(LocalDate.of(2024, 4, 8)),
-                            ScreenDate(LocalDate.of(2024, 4, 9)),
+                        createScreenDateList(
+                            wizardStone.startDate,
+                            wizardStone.endDate,
                         ),
                     ),
                     Screen(
                         1,
                         bang,
-                        listOf(
-                            ScreenDate(LocalDate.of(2024, 4, 1)),
-                            ScreenDate(LocalDate.of(2024, 4, 2)),
-                            ScreenDate(LocalDate.of(2024, 4, 3)),
-                            ScreenDate(LocalDate.of(2024, 4, 4)),
-                            ScreenDate(LocalDate.of(2024, 4, 5)),
-                            ScreenDate(LocalDate.of(2024, 4, 6)),
-                            ScreenDate(LocalDate.of(2024, 4, 7)),
-                            ScreenDate(LocalDate.of(2024, 4, 8)),
-                            ScreenDate(LocalDate.of(2024, 4, 9)),
+                        createScreenDateList(
+                            bang.startDate,
+                            bang.endDate,
                         ),
                     ),
                     Screen(
                         2,
                         zoesu,
-                        listOf(
-                            ScreenDate(LocalDate.of(2024, 4, 1)),
-                            ScreenDate(LocalDate.of(2024, 4, 2)),
-                            ScreenDate(LocalDate.of(2024, 4, 3)),
-                            ScreenDate(LocalDate.of(2024, 4, 4)),
-                            ScreenDate(LocalDate.of(2024, 4, 5)),
-                            ScreenDate(LocalDate.of(2024, 4, 6)),
-                            ScreenDate(LocalDate.of(2024, 4, 7)),
-                            ScreenDate(LocalDate.of(2024, 4, 8)),
-                            ScreenDate(LocalDate.of(2024, 4, 9)),
+                        createScreenDateList(
+                            zoesu.startDate,
+                            zoesu.endDate,
                         ),
                     ),
                     Screen(
                         3,
                         piro,
-                        listOf(
-                            ScreenDate(LocalDate.of(2024, 4, 1)),
-                            ScreenDate(LocalDate.of(2024, 4, 2)),
-                            ScreenDate(LocalDate.of(2024, 4, 3)),
-                            ScreenDate(LocalDate.of(2024, 4, 4)),
-                            ScreenDate(LocalDate.of(2024, 4, 5)),
-                            ScreenDate(LocalDate.of(2024, 4, 6)),
-                            ScreenDate(LocalDate.of(2024, 4, 7)),
-                            ScreenDate(LocalDate.of(2024, 4, 8)),
-                            ScreenDate(LocalDate.of(2024, 4, 9)),
+                        createScreenDateList(
+                            piro.startDate,
+                            piro.endDate,
                         ),
                     ),
                 ),
@@ -188,7 +160,7 @@ class DummyScreens : ScreenRepository {
         runCatching {
             val tmpList: MutableList<TheaterCount> = mutableListOf()
             theaters.forEach { theater ->
-                val size = theater.findScreenSize(id)
+                val size = theater.findScreenTimeCount(id)
                 if (size != 0) {
                     tmpList.add(
                         TheaterCount(
@@ -201,4 +173,14 @@ class DummyScreens : ScreenRepository {
             }
             tmpList
         }
+
+    private fun createScreenDateList(
+        startDate: LocalDate,
+        endDate: LocalDate,
+    ): List<ScreenDate> {
+        return generateSequence(startDate) { it.plusDays(1) }
+            .takeWhile { !it.isAfter(endDate) }
+            .map { ScreenDate(it) }
+            .toList()
+    }
 }
