@@ -9,6 +9,6 @@ enum class SeatRank(val price: Int, val rowRange: IntRange, val textColor: Int) 
     ;
 
     companion object {
-        fun of(rowIndex: Int): SeatRank = entries.first { rowIndex in it.rowRange }
+        fun of(rowIndex: Int): SeatRank = values().first { rowIndex in it.rowRange }
     }
 }
