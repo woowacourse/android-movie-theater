@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="ticket"
+            type="woowacourse.movie.ticket.view.MovieTicketActivity" />
     </data>
 
     <LinearLayout

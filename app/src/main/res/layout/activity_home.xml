@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="homeFragment"
-            type="woowacourse.movie.list.view.HomeFragment" />
+            name="home"
+            type="woowacourse.movie.list.view.HomeActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

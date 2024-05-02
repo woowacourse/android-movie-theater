@@ -2,6 +2,7 @@ package woowacourse.movie.ticket.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieTicketBinding
 import woowacourse.movie.detail.view.DetailActivity
@@ -23,7 +24,8 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMovieTicketBinding.inflate(layoutInflater)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_ticket)
+        binding.ticket = this
         setContentView(binding.root)
         theaterId = intent.getLongExtra(DetailActivity.EXTRA_THEATER_ID_KEY, -1)
         processPresenterTask()
