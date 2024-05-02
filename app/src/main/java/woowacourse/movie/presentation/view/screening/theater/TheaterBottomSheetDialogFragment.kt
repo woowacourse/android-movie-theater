@@ -11,8 +11,8 @@ import woowacourse.movie.R
 import woowacourse.movie.presentation.uimodel.TheaterUiModel
 import woowacourse.movie.presentation.view.reservation.detail.MovieDetailActivity
 import woowacourse.movie.presentation.view.screening.theater.adapter.TheaterAdapter
-import woowacourse.movie.presentation.view.screening.ScreeningActivity.Companion.MOVIE_ID_KEY
-import woowacourse.movie.presentation.view.screening.ScreeningActivity.Companion.DEFAULT_MOVIE_ID
+import woowacourse.movie.presentation.view.bottom_navigation_bar.Home.Companion.MOVIE_ID_KEY
+import woowacourse.movie.presentation.view.bottom_navigation_bar.Home.Companion.DEFAULT_MOVIE_ID
 
 class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(),
     TheaterBottomSheetContract.View, TheaterBottomSheetContract.ItemListener {
