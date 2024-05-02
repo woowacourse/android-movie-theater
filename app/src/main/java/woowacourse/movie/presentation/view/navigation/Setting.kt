@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.view.bottomNavigationBar
+package woowacourse.movie.presentation.view.navigation
 
 import android.os.Bundle
 import android.view.LayoutInflater
