@@ -1,7 +1,6 @@
 package woowacourse.movie
 
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
@@ -76,7 +75,12 @@ class ScreeningMovieFragmentTest {
             .check(matches(isDisplayed()))
 
         onView(withId(R.id.rcv_screening_movie))
-            .perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, checkChildViewWithId(R.id.tv_movie_title, "해리 포터와 마법사의 돌")))
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                    0,
+                    checkChildViewWithId(R.id.tv_movie_title, "해리 포터와 마법사의 돌"),
+                ),
+            )
     }
 
     @Test
@@ -85,7 +89,12 @@ class ScreeningMovieFragmentTest {
             .check(matches(isDisplayed()))
 
         onView(withId(R.id.rcv_screening_movie))
-            .perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(4, checkChildViewWithId(R.id.tv_movie_title, "해리 포터와 아즈카반의 죄수")))
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                    4,
+                    checkChildViewWithId(R.id.tv_movie_title, "해리 포터와 아즈카반의 죄수"),
+                ),
+            )
     }
 
     @Test
@@ -113,7 +122,10 @@ class ScreeningMovieFragmentTest {
         }
     }
 
-    private fun checkChildViewWithId(id: Int, expectedText: String) = object : ViewAction {
+    private fun checkChildViewWithId(
+        id: Int,
+        expectedText: String,
+    ) = object : ViewAction {
         override fun getConstraints(): Matcher<View> {
             return allOf(isDisplayed(), isAssignableFrom(View::class.java))
         }
@@ -122,7 +134,10 @@ class ScreeningMovieFragmentTest {
             return "Check on a child view with specified id."
         }
 
-        override fun perform(uiController: UiController, view: View) {
+        override fun perform(
+            uiController: UiController,
+            view: View,
+        ) {
             val textView = view.findViewById<TextView>(id)
             assertThat(textView.text).isEqualTo(expectedText)
         }

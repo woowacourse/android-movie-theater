@@ -2,18 +2,26 @@ package woowacourse.movie
 
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withSpinnerText
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.containsString
+import org.hamcrest.Matchers.instanceOf
+import org.hamcrest.Matchers.`is`
 import org.junit.Rule
 import org.junit.Test
 import org.junit.jupiter.api.DisplayName
 import woowacourse.movie.fixtures.context
+import woowacourse.movie.model.ScreeningMovie
 import woowacourse.movie.moviereservation.MovieReservationActivity
+import java.time.format.DateTimeFormatter
 
 class MovieReservationActivityTest {
     @get:Rule
@@ -23,7 +31,7 @@ class MovieReservationActivityTest {
                 context,
                 MovieReservationActivity::class.java,
             ).apply {
-                putExtra(MovieReservationActivity.EXTRA_SCREEN_MOVIE_ID, 1L)
+                putExtra(MovieReservationActivity.EXTRA_SCREEN_MOVIE_ID, 0L)
                 putExtra(MovieReservationActivity.EXTRA_THEATER_ID, 0L)
             },
         )
@@ -70,5 +78,18 @@ class MovieReservationActivityTest {
         }
 
         onView(withId(R.id.tv_detail_count)).check(matches(withText("2")))
+    }
+
+    @Test
+    fun `date_spinner의_특정_데이터를_클릭하면_뷰에_나타난다`() {
+        val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val expected = ScreeningMovie.STUB_A.screenDateTimes[3].date.format(dateFormatter)
+        onView(withId(R.id.spinner_detail_date)).perform(click())
+
+        onData(
+            allOf(`is`(instanceOf(String::class.java)), `is`(expected)),
+        ).perform(click())
+
+        onView(withId(R.id.spinner_detail_date)).check(matches(withSpinnerText(containsString(expected))))
     }
 }
