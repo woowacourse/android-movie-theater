@@ -76,7 +76,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
             savedInstanceState.bundleParcelable(STATE_BOOKING_ID, BookingDetail::class.java)
         storedBookingInfo?.let {
             bookingDetail = it
-            binding.tvDetailCount.text = bookingDetail.count.count
+            binding.bookingDetail = it
             binding.spinnerDetailDate.setSelection(bookingDetail.date.position)
             binding.spinnerDetailTime.setSelection(bookingDetail.time.position)
         }
