@@ -14,7 +14,6 @@ import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.model.MovieDisplayData
 import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.movieList.MovieListPresenter
-import woowacourse.movie.movieList.THEATER_KEY
 import woowacourse.movie.movieList.cinemaListDialog.TheatersBottomSheetFragment
 
 class MovieListFragment : Fragment(), MovieListView {
@@ -73,5 +72,9 @@ class MovieListFragment : Fragment(), MovieListView {
     private fun initPresenter() {
         _presenter = MovieListPresenter(this)
         presenter.loadMovies()
+    }
+
+    companion object {
+        const val THEATER_KEY = "THEATER_KEY"
     }
 }

@@ -3,11 +3,13 @@ package woowacourse.movie
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.common.ui.replaceTo
-import woowacourse.movie.databinding.ActivityMainBinding
+import woowacourse.movie.databinding.ActivityHomeBinding
+import woowacourse.movie.reservation.ReservationFragment
+import woowacourse.movie.setting.SettingFragment
 
 class HomeActivity : AppCompatActivity() {
-    private val binding: ActivityMainBinding by lazy {
-        ActivityMainBinding.inflate(layoutInflater)
+    private val binding: ActivityHomeBinding by lazy {
+        ActivityHomeBinding.inflate(layoutInflater)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.BundleCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import woowacourse.movie.MovieListFragment.Companion.THEATER_KEY
 import woowacourse.movie.databinding.FragmentBottomSheetTheatersBinding
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.movieDetail.MovieDetailActivity
-import woowacourse.movie.movieList.THEATER_KEY
 import java.time.LocalTime
 
 class TheatersBottomSheetFragment : BottomSheetDialogFragment() {

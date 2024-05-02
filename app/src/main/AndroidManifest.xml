@@ -12,10 +12,6 @@
         android:theme="@style/Theme.Movie"
         tools:targetApi="31">
         <activity
-            android:name=".movieList.MovieListActivity"
-            android:exported="false">
-        </activity>
-        <activity
             android:name=".movieDetail.MovieDetailActivity"
             android:exported="false" />
         <activity

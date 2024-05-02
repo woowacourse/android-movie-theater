@@ -5,10 +5,10 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ReservationFragment">
+        tools:context=".reservation.ReservationFragment">
 
-        <!-- TODO: Update blank fragment layout -->
         <TextView
+            android:id="@+id/tv_hello"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Reservation" />
