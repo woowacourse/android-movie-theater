@@ -75,7 +75,7 @@ class SeatPresenterTest {
                 any(),
                 any(),
                 any(),
-                any()
+                any(),
             )
         } just runs
 

@@ -67,7 +67,6 @@ class MovieListPresenter(private val view: MovieListView) {
         view.showBottomSheet(theater)
     }
 
-
     fun loadMovies() {
         val displayData = convertToDisplayData(theaters)
         view.updateAdapter(displayData)

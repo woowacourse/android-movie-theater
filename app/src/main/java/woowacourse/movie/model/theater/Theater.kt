@@ -7,5 +7,5 @@ import java.time.LocalTime
 data class Theater(
     val movie: MovieInfo,
     val times: List<LocalTime>,
-    private val seats: Map<String, Seat>
+    private val seats: Map<String, Seat>,
 ) : Serializable

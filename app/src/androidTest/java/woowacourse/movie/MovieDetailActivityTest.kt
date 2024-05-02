@@ -27,26 +27,35 @@ import java.time.LocalTime
 @RunWith(AndroidJUnit4::class)
 class MovieDetailActivityTest {
     private val cinema
-        get() = Cinema(
-            "CGV", Theater(
-                MovieInfo(
-                    Title("차람과 하디의 진지한 여행기 1"),
-                    MovieDate(LocalDate.of(2024, 2, 25)),
-                    RunningTime(230),
-                    Synopsis("wow!"),
-                ), times = listOf(
-                    LocalTime.of(10, 0), LocalTime.of(14, 0), LocalTime.of(18, 0)
-                ), seats = mapOf()
+        get() =
+            Cinema(
+                "CGV",
+                Theater(
+                    MovieInfo(
+                        Title("차람과 하디의 진지한 여행기 1"),
+                        MovieDate(LocalDate.of(2024, 2, 25)),
+                        RunningTime(230),
+                        Synopsis("wow!"),
+                    ),
+                    times =
+                        listOf(
+                            LocalTime.of(10, 0),
+                            LocalTime.of(14, 0),
+                            LocalTime.of(18, 0),
+                        ),
+                    seats = mapOf(),
+                ),
             )
-        )
-    private val intent = Intent(
-        ApplicationProvider.getApplicationContext(),
-        MovieDetailActivity::class.java,
-    ).apply {
-        putExtra(
-            "Cinema", cinema
-        )
-    }
+    private val intent =
+        Intent(
+            ApplicationProvider.getApplicationContext(),
+            MovieDetailActivity::class.java,
+        ).apply {
+            putExtra(
+                "Cinema",
+                cinema,
+            )
+        }
 
     @get:Rule
     val activityScenarioRule = ActivityScenarioRule<MovieDetailActivity>(intent)

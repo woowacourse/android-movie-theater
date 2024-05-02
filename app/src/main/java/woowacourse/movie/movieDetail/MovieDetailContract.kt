@@ -5,7 +5,6 @@ import woowacourse.movie.model.movieInfo.MovieInfo
 
 interface MovieDetailContract {
     interface View {
-
         fun navigateToPurchaseConfirmation(intent: Intent)
 
         fun onTicketCountChanged()
@@ -18,7 +17,6 @@ interface MovieDetailContract {
     }
 
     interface Presenter {
-
         fun getTickets(): Int
 
         fun getMovie(): MovieInfo
@@ -28,7 +26,6 @@ interface MovieDetailContract {
         fun onTicketPlusClicked()
 
         fun onTicketMinusClicked()
-
 
         fun updateTimeSpinner(times: List<String>)
 

@@ -24,14 +24,18 @@ class MovieListFragment : Fragment(), MovieListView {
     private lateinit var adapter: MovieAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentMovieListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         initPresenter()
@@ -52,11 +56,14 @@ class MovieListFragment : Fragment(), MovieListView {
 
     override fun showBottomSheet(theater: Theater) {
         val fragment =
-            (childFragmentManager.findFragmentByTag(TheatersBottomSheetFragment.TAG)
-                    as? TheatersBottomSheetFragment) ?: TheatersBottomSheetFragment()
-        val bottomSheet = fragment.withArgs {
-            putSerializable(THEATER_KEY, theater)
-        }
+            (
+                childFragmentManager.findFragmentByTag(TheatersBottomSheetFragment.TAG)
+                    as? TheatersBottomSheetFragment
+            ) ?: TheatersBottomSheetFragment()
+        val bottomSheet =
+            fragment.withArgs {
+                putSerializable(THEATER_KEY, theater)
+            }
         bottomSheet.show(childFragmentManager, TheatersBottomSheetFragment.TAG)
     }
 

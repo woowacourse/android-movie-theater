@@ -11,7 +11,7 @@ inline fun <reified T : Fragment> FragmentActivity.replaceTo(
     @IdRes fragmentContainerId: Int,
     tag: String? = T::class.java.canonicalName,
     args: Bundle? = null,
-    action: () -> Unit = {}
+    action: () -> Unit = {},
 ) {
     supportFragmentManager.commit {
         replace<T>(fragmentContainerId, tag, args)

@@ -8,7 +8,6 @@ import woowacourse.movie.databinding.ActivityPurchaseConfirmationBinding
 import woowacourse.movie.model.Cinema
 
 class PurchaseConfirmationActivity : AppCompatActivity() {
-
     private val binding: ActivityPurchaseConfirmationBinding by lazy {
         ActivityPurchaseConfirmationBinding.inflate(layoutInflater)
     }

@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
-import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
@@ -25,7 +24,7 @@ class TheaterSeatActivity : AppCompatActivity(), TheaterSeatContract.View {
     private lateinit var presenter: TheaterSeatPresenter
     private val binding: ActivityTheaterSeatBinding by lazy {
         ActivityTheaterSeatBinding.inflate(
-            layoutInflater
+            layoutInflater,
         )
     }
 
@@ -94,10 +93,11 @@ class TheaterSeatActivity : AppCompatActivity(), TheaterSeatContract.View {
     private fun initializePresenter() {
         val intent = intent
         val ticketNum = intent.getStringExtra("ticketNum")?.toInt() ?: 0
-        IntentCompat.getSerializableExtra(intent, "Cinema", Cinema::class.java)?.let {cinema ->
-            presenter = TheaterSeatPresenter(this, ticketNum, cinema).also {presenter->
-                binding.presenter = presenter
-            }
+        IntentCompat.getSerializableExtra(intent, "Cinema", Cinema::class.java)?.let { cinema ->
+            presenter =
+                TheaterSeatPresenter(this, ticketNum, cinema).also { presenter ->
+                    binding.presenter = presenter
+                }
         }
     }
 

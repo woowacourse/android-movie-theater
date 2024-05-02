@@ -6,30 +6,26 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.content.IntentCompat
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.model.Cinema
-import woowacourse.movie.model.movieInfo.MovieInfo
 import woowacourse.movie.seat.TheaterSeatActivity
 import java.time.LocalTime
 
 class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     private val binding: ActivityMovieDetailBinding by lazy {
         ActivityMovieDetailBinding.inflate(
-            layoutInflater
+            layoutInflater,
         )
     }
     private lateinit var presenter: MovieDetailContract.Presenter
     private lateinit var dateAdapter: ArrayAdapter<String>
     private lateinit var timeAdapter: ArrayAdapter<String>
     private lateinit var times: List<LocalTime>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -38,9 +34,10 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
             IntentCompat.getSerializableExtra(intent, "Cinema", Cinema::class.java) ?: error(" ")
         val theater = cinema.theater
         times = theater.times
-        presenter = MovieDetailPresenter(
-            view = this@MovieDetailActivity,
-        ).also { binding.presenter = it }
+        presenter =
+            MovieDetailPresenter(
+                view = this@MovieDetailActivity,
+            ).also { binding.presenter = it }
         presenter.load(theater.movie)
         cinema.let { setupEventListeners(it) }
         presenter.generateDateRange()
@@ -87,16 +84,16 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     }
 
     private fun setupEventListeners(cinema: Cinema) {
-
         binding.seatConfirmationButton.setOnClickListener {
-            val intent = Intent(this, TheaterSeatActivity::class.java).apply {
-                putExtra("ticketNum", presenter.getTickets().toString())
-                putExtra("Cinema", cinema)
-                putExtra(
-                    "timeDate",
-                    binding.movieDateSpinner.selectedItem.toString() + " " + binding.movieTimeSpinner.selectedItem.toString()
-                )
-            }
+            val intent =
+                Intent(this, TheaterSeatActivity::class.java).apply {
+                    putExtra("ticketNum", presenter.getTickets().toString())
+                    putExtra("Cinema", cinema)
+                    putExtra(
+                        "timeDate",
+                        binding.movieDateSpinner.selectedItem.toString() + " " + binding.movieTimeSpinner.selectedItem.toString(),
+                    )
+                }
             navigateToPurchaseConfirmation(intent)
         }
     }
