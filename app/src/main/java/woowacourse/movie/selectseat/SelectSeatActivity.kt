@@ -83,10 +83,9 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
 
     override fun showSeat(theaterSeats: List<SeatUiModel>) {
         seats = SeatsUiModel(theaterSeats)
+        binding.seats = seats
         theaterSeats.forEach { seatUiModel ->
             val seatView: CheckBox = tableChildView(seatUiModel.row, seatUiModel.col)
-            seatView.text = seatUiModel.showPosition
-            seatView.setTextColor(getColor(seatUiModel.rateColor.color))
             seatView.setOnClickListener {
                 updateDate(seatUiModel)
             }
@@ -95,6 +94,7 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
 
     private fun updateDate(seatUiModel: SeatUiModel) {
         seats = seats.changeState(seatUiModel)
+        binding.seats = seats
         presenter.calculatePrice(seats.selectedSeats())
         binding.btnSelectSeatReserve.isEnabled = seats.selectedSeats().isNotEmpty()
     }
