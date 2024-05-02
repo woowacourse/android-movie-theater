@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
@@ -34,6 +35,8 @@ class MovieReservationCompleteActivity :
             return
         }
 
+        initializeOnBackPressedCallback()
+
         presenter.loadTicket(userTicketId)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -50,9 +53,24 @@ class MovieReservationCompleteActivity :
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            android.R.id.home -> startActivity(Intent(this, MovieMainActivity::class.java))
+            android.R.id.home -> navigateBackToMainScreen()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun initializeOnBackPressedCallback() {
+        val onBackPressedCallBack =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() = navigateBackToMainScreen()
+            }
+        onBackPressedDispatcher.addCallback(onBackPressedCallBack)
+    }
+
+    private fun navigateBackToMainScreen() {
+        Intent(this, MovieMainActivity::class.java).also {
+            it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(it)
+        }
     }
 
     companion object {
