@@ -21,7 +21,6 @@ import org.junit.jupiter.api.DisplayName
 import woowacourse.movie.fixtures.context
 import woowacourse.movie.model.ScreeningMovie
 import woowacourse.movie.moviereservation.MovieReservationActivity
-import woowacourse.movie.reservationresult.uimodel.ReservationResultUiModel
 import java.time.format.DateTimeFormatter
 
 class MovieReservationActivityTest {
@@ -103,7 +102,6 @@ class MovieReservationActivityTest {
             allOf(`is`(instanceOf(String::class.java)), `is`(dateString)),
         ).perform(click())
 
-
         onView(withId(R.id.spinner_detail_time)).perform(click())
         onData(
             allOf(`is`(instanceOf(String::class.java)), `is`(expected)),
@@ -111,7 +109,8 @@ class MovieReservationActivityTest {
 
         onView(withId(R.id.spinner_detail_time)).check(matches(withSpinnerText(containsString(expected))))
     }
-    companion object{
+
+    companion object {
         private val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
     }
