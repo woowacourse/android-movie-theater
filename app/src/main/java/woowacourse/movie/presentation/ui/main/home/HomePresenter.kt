@@ -1,12 +1,12 @@
-package woowacourse.movie.presentation.ui.screen
+package woowacourse.movie.presentation.ui.main.home
 
 import woowacourse.movie.domain.model.ScreenView
 import woowacourse.movie.domain.repository.ScreenRepository
 
-class ScreenPresenter(
-    private val view: ScreenContract.View,
+class HomePresenter(
+    private val view: HomeContract.View,
     private val repository: ScreenRepository,
-) : ScreenContract.Presenter {
+) : HomeContract.Presenter {
     val screens: List<ScreenView> = repository.load()
 
     override fun onScreenClick(id: Int) {

@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.ui.screen.bottom
+package woowacourse.movie.presentation.ui.main.home.bottom
 
 interface BottomTheaterActionHandler {
     fun onTheaterClick(

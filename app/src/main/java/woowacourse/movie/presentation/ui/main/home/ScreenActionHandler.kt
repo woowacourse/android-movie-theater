@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.ui.screen
+package woowacourse.movie.presentation.ui.main.home
 
 interface ScreenActionHandler {
     fun onScreenClick(id: Int)

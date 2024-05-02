@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.ui.screen.bottom
+package woowacourse.movie.presentation.ui.main.home.bottom
 
 import android.os.Bundle
 import android.view.LayoutInflater

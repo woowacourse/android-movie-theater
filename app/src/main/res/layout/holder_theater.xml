@@ -13,7 +13,7 @@
 
         <variable
             name="handler"
-            type="woowacourse.movie.presentation.ui.screen.bottom.BottomTheaterActionHandler" />
+            type="woowacourse.movie.presentation.ui.main.home.bottom.BottomTheaterActionHandler" />
 
     </data>
 

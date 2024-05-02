@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.ui.screen.adapter
+package woowacourse.movie.presentation.ui.main.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,9 +9,9 @@ import woowacourse.movie.databinding.HolderScreenBinding
 import woowacourse.movie.domain.model.ScreenView
 import woowacourse.movie.domain.model.ScreenView.Ads
 import woowacourse.movie.domain.model.ScreenView.Movie
-import woowacourse.movie.presentation.ui.screen.ScreenActionHandler
-import woowacourse.movie.presentation.ui.screen.adapter.ScreenRecyclerViewHolder.AdsViewHolder
-import woowacourse.movie.presentation.ui.screen.adapter.ScreenRecyclerViewHolder.ScreenViewHolder
+import woowacourse.movie.presentation.ui.main.home.ScreenActionHandler
+import woowacourse.movie.presentation.ui.main.home.adapter.ScreenRecyclerViewHolder.AdsViewHolder
+import woowacourse.movie.presentation.ui.main.home.adapter.ScreenRecyclerViewHolder.ScreenViewHolder
 
 class ScreenRecyclerViewAdapter(
     private val screenActionHandler: ScreenActionHandler,

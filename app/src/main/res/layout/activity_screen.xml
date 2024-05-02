@@ -5,7 +5,7 @@
 
         <variable
             name="presenter"
-            type="woowacourse.movie.presentation.ui.screen.ScreenPresenter" />
+            type="woowacourse.movie.presentation.ui.main.home.HomePresenter" />
 
     </data>
 

@@ -1,11 +1,11 @@
-package woowacourse.movie.presentation.ui.screen
+package woowacourse.movie.presentation.ui.main.home
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.ScreenView
-import woowacourse.movie.presentation.ui.screen.adapter.ScreenRecyclerViewAdapter
+import woowacourse.movie.presentation.ui.main.home.adapter.ScreenRecyclerViewAdapter
 
 @BindingAdapter("bindUpdateScreensRecyclerView")
 fun RecyclerView.updateScreensRecyclerView(screens: List<ScreenView>) {

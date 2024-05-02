@@ -1,12 +1,12 @@
-package woowacourse.movie.presentation.ui.screen
+package woowacourse.movie.presentation.ui.main.home
 
 import woowacourse.movie.domain.model.ScreenView
 import woowacourse.movie.domain.model.TheaterCount
 import woowacourse.movie.presentation.base.BasePresenter
 import woowacourse.movie.presentation.base.BaseView
-import woowacourse.movie.presentation.ui.screen.bottom.BottomTheaterActionHandler
+import woowacourse.movie.presentation.ui.main.home.bottom.BottomTheaterActionHandler
 
-interface ScreenContract {
+interface HomeContract {
     interface View : BaseView {
         fun showScreens(screens: List<ScreenView>)
 

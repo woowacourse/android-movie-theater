@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.ui.screen.adapter
+package woowacourse.movie.presentation.ui.main.home.adapter
 
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
@@ -6,7 +6,7 @@ import woowacourse.movie.databinding.HolderAdsBinding
 import woowacourse.movie.databinding.HolderScreenBinding
 import woowacourse.movie.domain.model.ScreenView
 import woowacourse.movie.domain.model.ScreenView.Movie
-import woowacourse.movie.presentation.ui.screen.ScreenActionHandler
+import woowacourse.movie.presentation.ui.main.home.ScreenActionHandler
 
 sealed class ScreenRecyclerViewHolder(binding: ViewDataBinding) :
     RecyclerView.ViewHolder(binding.root) {
