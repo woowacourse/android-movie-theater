@@ -3,7 +3,6 @@ package woowacourse.movie.detail.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
@@ -31,6 +30,9 @@ import java.time.format.DateTimeFormatter
 class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     private lateinit var binding: ActivityMovieDetailBinding
     private lateinit var movieDetailPresenter: MovieDetailPresenter
+
+    lateinit var dates: List<String>
+    lateinit var times: List<String>
 
     private val movieId: Long by lazy { intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID) }
     private val selectedTheaterPosition: Int by lazy {
@@ -90,26 +92,17 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     }
 
     override fun setUpDateSpinner(movieDate: MovieDate) {
-        binding.dateSpinner.adapter =
-            ArrayAdapter(
-                this,
-                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                movieDate.generateDates(),
-            )
+        dates =
+            movieDate.generateDates().map { date ->
+                date.toString()
+            }
     }
 
     override fun setUpTimeSpinner(screeningTimes: List<LocalTime>) {
-        val times =
+        times =
             screeningTimes.map { time ->
                 time.format(DateTimeFormatter.ofPattern("kk:mm"))
             }
-
-        binding.runningTimeSpinner.adapter =
-            ArrayAdapter(
-                this,
-                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                times,
-            )
     }
 
     override fun navigateToSeatSelectionView(

@@ -14,7 +14,6 @@ import org.hamcrest.TypeSafeMatcher
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import woowacourse.movie.MovieMainActivity
 import woowacourse.movie.R
 import woowacourse.movie.home.view.adapter.movie.AdvertisementViewHolder
 import woowacourse.movie.home.view.adapter.movie.MovieViewHolder

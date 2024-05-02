@@ -173,6 +173,7 @@
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_margin="10dp"
+                android:entries="@{activity.dates}"
                 app:layout_constraintEnd_toStartOf="@+id/runningTimeSpinner"
                 app:layout_constraintStart_toStartOf="@id/detailMinusBtn"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -182,6 +183,7 @@
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_margin="10dp"
+                android:entries="@{activity.times}"
                 app:layout_constraintEnd_toEndOf="@id/detailPlusBtn"
                 app:layout_constraintStart_toEndOf="@+id/dateSpinner"
                 app:layout_constraintTop_toTopOf="parent" />

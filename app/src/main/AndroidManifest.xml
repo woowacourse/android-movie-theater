@@ -18,12 +18,12 @@
         <activity
             android:name=".result.view.MovieResultActivity"
             android:exported="false"
-            android:parentActivityName=".MovieMainActivity" />
+            android:parentActivityName=".home.view.MovieMainActivity" />
         <activity
             android:name=".detail.view.MovieDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".MovieMainActivity"
+            android:name=".home.view.MovieMainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
