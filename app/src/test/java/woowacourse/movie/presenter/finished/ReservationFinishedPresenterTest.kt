@@ -41,7 +41,7 @@ class ReservationFinishedPresenterTest {
     }
 
     @Test
-    fun `극장 이름을 보여준다`()  {
+    fun `극장 이름을 보여준다`() {
         every { view.showTheaterName(any()) } just runs
         presenter.loadTheater(0)
         verify { view.showTheaterName(any()) }

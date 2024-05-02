@@ -55,7 +55,7 @@ class HomeFragment : Fragment(), ReservationHomeContract.View {
             ) { movie ->
                 presenter.loadMovie(movie)
             }
-        binding.recyclerViewReservationHome.apply {
+        binding.recyclerViewHome.apply {
             adapter = movieCatalogAdapter
         }
     }

@@ -20,7 +20,7 @@ import woowacourse.movie.presenter.reservation.ReservationDetailContract
 import woowacourse.movie.presenter.reservation.ReservationDetailPresenter
 import woowacourse.movie.utils.MovieUtils.convertPeriodFormat
 import woowacourse.movie.utils.MovieUtils.makeToast
-import woowacourse.movie.view.home.ReservationHomeActivity.Companion.MOVIE_ID
+import woowacourse.movie.view.home.HomeFragment.Companion.MOVIE_ID
 import woowacourse.movie.view.theater.TheaterSelectionFragment.Companion.THEATER_ID
 
 class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract.View {
