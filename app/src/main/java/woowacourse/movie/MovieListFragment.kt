@@ -52,10 +52,13 @@ class MovieListFragment : Fragment(), MovieListView {
     }
 
     override fun showBottomSheet(theater: Theater) {
-        val bottomSheet = TheatersBottomSheetFragment().withArgs {
+        val fragment =
+            (childFragmentManager.findFragmentByTag(TheatersBottomSheetFragment.TAG)
+                    as? TheatersBottomSheetFragment) ?: TheatersBottomSheetFragment()
+        val bottomSheet = fragment.withArgs {
             putSerializable(THEATER_KEY, theater)
         }
-        bottomSheet.show(childFragmentManager, bottomSheet.tag)
+        bottomSheet.show(childFragmentManager, TheatersBottomSheetFragment.TAG)
     }
 
     private fun initViews() {

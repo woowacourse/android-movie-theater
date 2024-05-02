@@ -81,4 +81,8 @@ class TheatersBottomSheetFragment : BottomSheetDialogFragment() {
             startActivity(intent)
         }
     }
+
+    companion object {
+        val TAG = this::class.java.canonicalName
+    }
 }
