@@ -3,13 +3,11 @@ package woowacourse.movie.seats.view
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
-import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivitySeatsBinding
 import woowacourse.movie.detail.view.DetailActivity.Companion.EXTRA_DATE_KEY
 import woowacourse.movie.detail.view.DetailActivity.Companion.EXTRA_TIME_KEY
 import woowacourse.movie.list.view.HomeFragment.Companion.EXTRA_MOVIE_ID_KEY
@@ -21,17 +19,14 @@ import java.io.Serializable
 
 class SeatsActivity : AppCompatActivity(), SeatsContract.View {
     override val presenter: SeatsContract.Presenter = SeatsPresenter(this)
-    private lateinit var seats: TableLayout
-    private lateinit var title: TextView
-    private lateinit var priceView: TextView
-    private lateinit var confirmButton: Button
+    private lateinit var binding: ActivitySeatsBinding
     private var theaterId: Long = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_seats)
+        binding = ActivitySeatsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         theaterId = intent.getLongExtra("threater_id_key", -1)
-        initView()
         initSeats()
         setOnSelectSeat()
         setOnConfirmButtonClickListener()
@@ -47,15 +42,8 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
         presenter.setSeatsTextInfo()
     }
 
-    private fun initView() {
-        title = findViewById(R.id.seats_movie_title)
-        priceView = findViewById(R.id.seats_totla_price)
-        confirmButton = findViewById(R.id.confirm_button)
-        seats = findViewById(R.id.seats)
-    }
-
     private fun initSeats() {
-        seats.children.filterIsInstance<TableRow>().forEachIndexed { rowIndex, tableRow ->
+        binding.seats.children.filterIsInstance<TableRow>().forEachIndexed { rowIndex, tableRow ->
             initRowOfSeats(tableRow, rowIndex)
         }
     }
@@ -79,7 +67,7 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
     }
 
     override fun setOnSelectSeat() {
-        seats.children.filterIsInstance<TableRow>().forEachIndexed { rowIndex, tableRow ->
+        binding.seats.children.filterIsInstance<TableRow>().forEachIndexed { rowIndex, tableRow ->
             setOnSelectRow(tableRow, rowIndex)
         }
     }
@@ -105,21 +93,21 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
     }
 
     override fun setSeatsText(info: Seat) {
-        val row = seats.getChildAt(info.rowIndex) as TableRow
+        val row = binding.seats.getChildAt(info.rowIndex) as TableRow
         val cell: TextView = row.getChildAt(info.colIndex) as TextView
         cell.text = info.coordinate
     }
 
     override fun setMovieTitle(info: String) {
-        title.text = info
+        binding.seatsMovieTitle.text = info
     }
 
     override fun setTotalPrice(info: Int) {
-        priceView.text = TOTAL_PRICE.format(info)
+        binding.seatsTotalPrice.text = TOTAL_PRICE.format(info)
     }
 
     private fun setOnConfirmButtonClickListener() {
-        confirmButton.setOnClickListener {
+        binding.confirmButton.setOnClickListener {
             showDialog()
         }
     }
@@ -154,7 +142,7 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
     }
 
     override fun setSeatCellBackgroundColor(info: Seat) {
-        val row = seats.getChildAt(info.rowIndex) as TableRow
+        val row = binding.seats.getChildAt(info.rowIndex) as TableRow
         val cell = row.getChildAt(info.colIndex)
         cell.setBackgroundColor(info.cellBackgroundColor)
     }
