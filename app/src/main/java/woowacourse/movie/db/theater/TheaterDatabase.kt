@@ -129,5 +129,111 @@ object TheaterDatabase {
                     ),
                 movieId = 0,
             ),
+            Theater(
+                theaterId = 0,
+                name = "선릉 극장",
+                screeningTimes =
+                    ScreeningTimes(
+                        weekDay =
+                            listOf(
+                                LocalTime.of(9, 0),
+                                LocalTime.of(11, 0),
+                                LocalTime.of(13, 0),
+                            ),
+                        weekEnd =
+                            listOf(
+                                LocalTime.of(14, 0),
+                                LocalTime.of(16, 0),
+                            ),
+                    ),
+                movieId = 3,
+            ),
+            Theater(
+                theaterId = 1,
+                name = "잠실 극장",
+                screeningTimes =
+                    ScreeningTimes(
+                        weekDay =
+                            listOf(
+                                LocalTime.of(9, 0),
+                            ),
+                        weekEnd =
+                            listOf(
+                                LocalTime.of(14, 0),
+                            ),
+                    ),
+                movieId = 4,
+            ),
+            Theater(
+                theaterId = 2,
+                name = "강남 극장",
+                screeningTimes =
+                    ScreeningTimes(
+                        weekDay =
+                            listOf(
+                                LocalTime.of(11, 0),
+                                LocalTime.of(13, 0),
+                            ),
+                        weekEnd =
+                            listOf(
+                                LocalTime.of(14, 0),
+                                LocalTime.of(16, 0),
+                            ),
+                    ),
+                movieId = 5,
+            ),
+            Theater(
+                theaterId = 3,
+                name = "선릉 극장",
+                screeningTimes =
+                    ScreeningTimes(
+                        weekDay =
+                            listOf(
+                                LocalTime.of(9, 0),
+                                LocalTime.of(11, 0),
+                                LocalTime.of(13, 0),
+                            ),
+                        weekEnd =
+                            listOf(
+                                LocalTime.of(14, 0),
+                                LocalTime.of(16, 0),
+                            ),
+                    ),
+                movieId = 6,
+            ),
+            Theater(
+                theaterId = 4,
+                name = "잠실 극장",
+                screeningTimes =
+                    ScreeningTimes(
+                        weekDay =
+                            listOf(
+                                LocalTime.of(9, 0),
+                            ),
+                        weekEnd =
+                            listOf(
+                                LocalTime.of(14, 0),
+                            ),
+                    ),
+                movieId = 7,
+            ),
+            Theater(
+                theaterId = 5,
+                name = "강남 극장",
+                screeningTimes =
+                    ScreeningTimes(
+                        weekDay =
+                            listOf(
+                                LocalTime.of(11, 0),
+                                LocalTime.of(13, 0),
+                            ),
+                        weekEnd =
+                            listOf(
+                                LocalTime.of(14, 0),
+                                LocalTime.of(16, 0),
+                            ),
+                    ),
+                movieId = 8,
+            ),
         )
 }
