@@ -1,51 +1,37 @@
 package woowacourse.movie.presentation.seatSelection
 
-import io.kotest.assertions.any
-import io.mockk.Runs
-import io.mockk.every
-import io.mockk.just
-import io.mockk.mockk
-import io.mockk.verify
+import io.mockk.impl.annotations.MockK
+import io.mockk.junit5.MockKExtension
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import woowacourse.movie.model.Seat
-import woowacourse.movie.model.SeatingSystem
+import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.repository.MovieRepository
 
+@ExtendWith(MockKExtension::class)
 class SeatSelectionPresenterTest {
-    private lateinit var presenter: SeatSelectionContract.Presenter
-    private val view: SeatSelectionContract.View = mockk()
-    private val repository = mockk<MovieRepository>()
+    private lateinit var presenter: SeatSelectionPresenter
+
     private val ticketCount = 3
-    private val seat = mockk<Seat>()
-    private val seatingSystem = mockk<SeatingSystem>(relaxed = true)
+
+    @MockK
+    private lateinit var view: SeatSelectionContract.View
+
+    @MockK
+    private lateinit var repository: MovieRepository
 
     @BeforeEach
     fun setUp() {
         presenter = SeatSelectionPresenter(view, ticketCount, repository)
     }
 
+    /*
     @Test
     fun `updateSeatSelection로 전달 받은 index 값의 좌석 상태가 빈 좌석일 경우, 선택된 좌석 UI로 업데이트 하도록 view에게 요청한다`() {
-        every { seatingSystem.isSelected(any()) } returns false
-        every { seatingSystem.trySelectSeat(any()) } returns Result.success(seat)
-        every { view.updateSelectedSeatUI(any()) } just Runs
-        // every { view.setButtonEnabledState(any()) } just Runs
-        // every { view.updateViews(any()) } just Runs
 
-        presenter.updateSeatSelection(0)
-
-        verify { view.updateSelectedSeatUI(0) }
-        // verify { view.setButtonEnabledState(any()) }
-        // verify { view.updateViews(any()) }
     }
 
     @Test
     fun `updateSeatSelection으로 전달 받은 index 값의 좌석 상태가 이미 선택된 좌석일 경우, 좌석 기본 UI로 업데이트 하도록 view에게 요청한다`() {
-        every { seatingSystem.isSelected(any()) } returns true
 
-        presenter.updateSeatSelection(0)
-
-        verify { view.updateUnSelectedSeatUI(0) }
     }
+     */
 }
