@@ -24,13 +24,6 @@ class TheaterSelectionPresenter(
             movieContent.theaterIds.map { theaterId ->
                 theaters.find(theaterId)
             }
-        view.showTheaters(movieTheaters)
-    }
-
-    override fun startReservation(
-        movieContentId: Long,
-        theaterId: Long,
-    ) {
-        view.navigateToMovieReservation(movieContentId, theaterId)
+        view.showTheaters(movieContentId, movieTheaters)
     }
 }

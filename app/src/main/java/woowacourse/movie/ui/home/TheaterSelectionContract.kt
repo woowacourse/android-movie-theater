@@ -4,7 +4,10 @@ import woowacourse.movie.model.movie.Theater
 
 interface TheaterSelectionContract {
     interface View {
-        fun showTheaters(theaters: List<Theater>)
+        fun showTheaters(
+            movieContentId: Long,
+            theaters: List<Theater>,
+        )
 
         fun navigateToMovieReservation(
             movieContentId: Long,
@@ -16,10 +19,5 @@ interface TheaterSelectionContract {
 
     interface Presenter {
         fun loadTheaters(movieContentId: Long)
-
-        fun startReservation(
-            movieContentId: Long,
-            theaterId: Long,
-        )
     }
 }

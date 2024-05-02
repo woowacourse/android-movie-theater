@@ -18,11 +18,9 @@ import woowacourse.movie.ui.reservation.MovieReservationActivity
 
 class TheaterSelectionBottomSheetFragment :
     BottomSheetDialogFragment(),
-    TheaterSelectionContract.View,
-    TheaterAdapter.TheaterItemClickListener {
+    TheaterSelectionContract.View {
     private lateinit var binding: FragmentTheaterSelectionBottomSheetBinding
     private lateinit var adapter: TheaterAdapter
-    private var movieContentId: Long = DEFAULT_MOVIE_CONTENT_ID
     private val presenter: TheaterSelectionPresenter by lazy {
         TheaterSelectionPresenter(
             this,
@@ -52,8 +50,11 @@ class TheaterSelectionBottomSheetFragment :
         }
     }
 
-    override fun showTheaters(theaters: List<Theater>) {
-        adapter = TheaterAdapter(theaters, this)
+    override fun showTheaters(
+        movieContentId: Long,
+        theaters: List<Theater>,
+    ) {
+        adapter = TheaterAdapter(theaters, movieContentId)
         binding.theaterList.adapter = adapter
     }
 
@@ -76,13 +77,5 @@ class TheaterSelectionBottomSheetFragment :
             Toast.LENGTH_SHORT,
         ).show()
         dismiss()
-    }
-
-    override fun onTheaterItemClick(theaterId: Long) {
-        presenter.startReservation(movieContentId, theaterId)
-    }
-
-    companion object {
-        private const val DEFAULT_MOVIE_CONTENT_ID = 0L
     }
 }
