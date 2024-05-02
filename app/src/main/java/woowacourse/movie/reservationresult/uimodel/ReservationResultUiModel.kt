@@ -8,10 +8,8 @@ data class ReservationResultUiModel(
     val title: String,
     val cancelDeadLine: String,
     val dateTime: String,
-    val headCount: HeadCountUiModel,
-    val seats: List<SeatUiModel>,
+    val bookingDetail: String,
     val totalPrice: PriceUiModel,
-    val theaterName: String,
 ) {
     constructor(
         title: String,
@@ -23,12 +21,10 @@ data class ReservationResultUiModel(
         theaterName: String,
     ) : this(
         title,
-        cancelDeadLine.inWholeMinutes.toString(),
+        "영화 상영 시작 시간 ${cancelDeadLine.inWholeMinutes}분 전\n까지 취소가 가능합니다",
         dateTime.format(dateFormatter) + " " + dateTime.format(timeFormatter),
-        HeadCountUiModel(count),
-        seats,
+        count.toString() + "명"+ " | " + seats.joinToString { it.showPosition } + " | " + theaterName,
         PriceUiModel(totalPrice),
-        theaterName,
     )
 
     companion object {
