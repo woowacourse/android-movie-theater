@@ -1,14 +1,7 @@
 package woowacourse.movie.ui.home.adapter
 
-import android.view.View
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemAdvertisementBinding
 
-class AdvertisementViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    private val advertisementPoster: ImageView = view.findViewById(R.id.ad_image)
-
-    fun bind() {
-        advertisementPoster.setImageResource(R.drawable.advertisement_poster)
-    }
-}
+class AdvertisementViewHolder(binding: ItemAdvertisementBinding) :
+    RecyclerView.ViewHolder(binding.root)

@@ -10,6 +10,8 @@ object MovieContentsImpl : MovieContents {
     init {
         save(HARRY_PORTER_WIZARD)
         save(HARRY_PORTER_SECRET)
+        save(HARRY_PORTER_PRISONER)
+        save(HARRY_PORTER_FIRE_GLASS)
     }
 
     override fun save(movieContent: MovieContent): Long {
