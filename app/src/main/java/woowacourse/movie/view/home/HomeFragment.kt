@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.db.advertisement.AdvertisementDao
@@ -42,9 +41,8 @@ class HomeFragment : Fragment(), ReservationHomeContract.View {
     override fun navigateToDetail(movieId: Int) {
         val bundle = Bundle()
         bundle.putInt(MOVIE_ID, movieId)
-        setFragmentResult(BUNDLE_MOVIE_ID, bundle)
-        // TODO movieId 번들로 넘겨주기
-        val bottomSheetDialogFragment = TheaterSelectionFragment(movieId)
+        val bottomSheetDialogFragment = TheaterSelectionFragment()
+        bottomSheetDialogFragment.arguments = bundle
         bottomSheetDialogFragment
             .show(childFragmentManager, bottomSheetDialogFragment.tag)
     }
