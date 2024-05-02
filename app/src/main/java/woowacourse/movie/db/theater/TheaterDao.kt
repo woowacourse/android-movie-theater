@@ -1,6 +1,6 @@
 package woowacourse.movie.db.theater
 
-import woowacourse.movie.model.Theater
+import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.model.movie.ScreeningTimes
 
 class TheaterDao {

@@ -2,7 +2,6 @@ package woowacourse.movie.model.ticket
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.result.Failure
 
 class HeadCountTest {

@@ -3,7 +3,7 @@ package woowacourse.movie.model.movie
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import woowacourse.movie.db.theater.TheaterDao
-import woowacourse.movie.model.Theater
+import woowacourse.movie.model.theater.Theater
 
 class ScreeningTimesTest {
     private val theaters: List<Theater> = TheaterDao().findAll()

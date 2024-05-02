@@ -2,7 +2,7 @@ package woowacourse.movie.presenter.reservation
 
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.seats.SeatsDao
-import woowacourse.movie.model.HeadCount
+import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.seats.Seat

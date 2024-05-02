@@ -15,7 +15,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import woowacourse.movie.MainActivity
+import woowacourse.movie.view.MainActivity
 import woowacourse.movie.R
 import woowacourse.movie.TestFixture.FIRST_MOVIE_ITEM_POSITION
 import woowacourse.movie.TestFixture.makeTheater

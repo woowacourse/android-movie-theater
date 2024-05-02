@@ -1,14 +1,15 @@
-package woowacourse.movie
+package woowacourse.movie.view
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.utils.MovieUtils.navigateToBottomMenu
-import woowacourse.movie.view.ReservationHistoryFragment
-import woowacourse.movie.view.SettingFragment
+import woowacourse.movie.view.history.ReservationHistoryFragment
 import woowacourse.movie.view.home.HomeFragment
+import woowacourse.movie.view.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {

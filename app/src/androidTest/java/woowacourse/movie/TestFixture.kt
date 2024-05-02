@@ -2,7 +2,7 @@ package woowacourse.movie
 
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.theater.TheaterDao
-import woowacourse.movie.model.Theater
+import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.seats.Grade

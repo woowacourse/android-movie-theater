@@ -6,7 +6,7 @@ import org.assertj.core.api.Assertions
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.TestFixture.FIRST_THEATER_ITEM_POSITION
-import woowacourse.movie.model.Theater
+import woowacourse.movie.model.theater.Theater
 
 @RunWith(AndroidJUnit4::class)
 class TheaterDaoTest {

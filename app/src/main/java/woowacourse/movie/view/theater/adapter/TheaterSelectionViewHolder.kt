@@ -2,7 +2,7 @@ package woowacourse.movie.view.theater.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemTheaterBinding
-import woowacourse.movie.model.Theater
+import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.utils.MovieUtils.convertScreeningInfoFormat
 
 class TheaterSelectionViewHolder(

@@ -1,4 +1,4 @@
-package woowacourse.movie.model
+package woowacourse.movie.model.ticket
 
 import woowacourse.movie.model.result.ChangeTicketCountResult
 import woowacourse.movie.model.result.Failure

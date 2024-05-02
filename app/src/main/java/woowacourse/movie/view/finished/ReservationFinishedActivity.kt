@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import woowacourse.movie.MainActivity
+import woowacourse.movie.view.MainActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationFinishedBinding
 import woowacourse.movie.db.screening.ScreeningDao

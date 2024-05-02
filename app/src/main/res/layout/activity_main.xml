@@ -5,14 +5,14 @@
 
         <variable
             name="main"
-            type="woowacourse.movie.MainActivity" />
+            type="woowacourse.movie.view.MainActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".view.MainActivity">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_container_main"
