@@ -76,6 +76,18 @@ data class MovieTicketUiModel(
         movieTicket.reservationMovieInfo.theaterName,
     )
 
+    fun screeningTime(): String = "$startTime ~ $endTime"
+
+    fun runningTime(): String = "(${runningTime}분)"
+
+    fun reservationInfo(): String {
+        return "일반 ${reservationCount}명 | ${joinReservedSeat()} | $theaterName 극장"
+    }
+
+    private fun joinReservedSeat(): String = selectedSeats.joinToString(", ")
+
+    fun totalPrice(): String = "${String.format("%,d", totalPrice)}원 (현장 결제)"
+
     companion object CREATOR : Parcelable.Creator<MovieTicketUiModel> {
         val DEFAULT_DATE_FORMAT: DateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE
         const val DEFAULT_TIME_FORMAT = "HH:mm"

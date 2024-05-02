@@ -1,38 +1,25 @@
 package woowacourse.movie.presentation.view.reservation.result
 
 import android.os.Bundle
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityReservationResultBinding
 import woowacourse.movie.presentation.base.BaseActivity
 import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
 
 class ReservationResultActivity : BaseActivity() {
     override fun getLayoutResId(): Int = R.layout.activity_reservation_result
+    private lateinit var binding: ActivityReservationResultBinding
 
     override fun onCreateSetup(savedInstanceState: Bundle?) {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_reservation_result)
         setUpFromIntent()
     }
 
     private fun setUpFromIntent() {
         val ticket = intent.getParcelableExtra<MovieTicketUiModel>(INTENT_TICKET)
-        val seatsPositions = ticket?.selectedSeats?.joinToString(", ")
-
-        findViewById<TextView>(R.id.title).text = ticket?.title
-        findViewById<TextView>(R.id.screeningDate).text = ticket?.screeningDate
-        findViewById<TextView>(R.id.screeningTime).text =
-            this.getString(R.string.screening_time_format, ticket?.startTime, ticket?.endTime)
-        findViewById<TextView>(R.id.runningTime).text =
-            this.getString(R.string.running_time, ticket?.runningTime)
-        findViewById<TextView>(R.id.reservationInfo).text =
-            this.getString(
-                R.string.reservation_info_format,
-                ticket?.reservationCount,
-                seatsPositions,
-                ticket?.theaterName,
-            )
-        findViewById<TextView>(R.id.totalPrice).text =
-            this.getString(R.string.reservation_total_price_format, ticket?.totalPrice)
+        binding.data = ticket
     }
 
     companion object {
