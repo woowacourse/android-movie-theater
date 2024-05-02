@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatsBinding
 import woowacourse.movie.detail.view.DetailActivity
+import woowacourse.movie.detail.view.DetailActivity.Companion.EXTRA_COUNT_KEY
 import woowacourse.movie.detail.view.DetailActivity.Companion.EXTRA_DATE_KEY
 import woowacourse.movie.detail.view.DetailActivity.Companion.EXTRA_TIME_KEY
 import woowacourse.movie.list.view.HomeFragment.Companion.EXTRA_MOVIE_ID_KEY
@@ -31,9 +32,10 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
         binding.seats = this
         setContentView(binding.root)
         theaterId = intent.getLongExtra(DetailActivity.EXTRA_THEATER_ID_KEY, -1)
+        val ticketCount = intent.getIntExtra(EXTRA_COUNT_KEY, -1)
+        presenter.storeTicketCount(ticketCount)
         initSeats()
         setOnSelectSeat()
-        setOnConfirmButtonClickListener()
         processPresenterTask()
     }
 
@@ -93,6 +95,7 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
         cell.setOnClickListener {
             presenter.selectSeat(rowIndex, colIndex)
             presenter.setSeatsCellsBackgroundColorInfo()
+            presenter.setConfirmButtonClickListener()
         }
     }
 
@@ -110,10 +113,18 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
         binding.seatsTotalPrice.text = TOTAL_PRICE.format(info)
     }
 
-    private fun setOnConfirmButtonClickListener() {
-        binding.confirmButton.setOnClickListener {
+    override fun setOnConfirmButtonClickListener() {
+        val confirmButton = binding.confirmButton
+        confirmButton.setBackgroundColor(getColor(R.color.purple_500))
+        confirmButton.setOnClickListener {
             showDialog()
         }
+    }
+
+    override fun setOffConfirmButtonClickListener() {
+        val confirmButton = binding.confirmButton
+        confirmButton.setBackgroundColor(getColor(R.color.gray))
+        confirmButton.isClickable = false
     }
 
     private fun showDialog() {

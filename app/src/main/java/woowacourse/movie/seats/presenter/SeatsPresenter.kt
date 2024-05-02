@@ -10,6 +10,7 @@ import woowacourse.movie.seats.model.SeatsDataSource.movieId
 import woowacourse.movie.seats.model.SeatsDataSource.seat
 import woowacourse.movie.seats.model.SeatsDataSource.seatTotalPrice
 import woowacourse.movie.seats.model.SeatsDataSource.selectedSeats
+import woowacourse.movie.seats.model.SeatsDataSource.ticketCount
 import woowacourse.movie.seats.model.SeatsDataSource.time
 
 class SeatsPresenter(val view: SeatsContract.View) : SeatsContract.Presenter {
@@ -22,6 +23,10 @@ class SeatsPresenter(val view: SeatsContract.View) : SeatsContract.Presenter {
         colIndex: Int,
     ) {
         seat = Seat.of(rowIndex, colIndex)
+    }
+
+    override fun storeTicketCount(ticketCount: Int) {
+        SeatsDataSource.ticketCount = ticketCount
     }
 
     override fun selectSeat(
@@ -73,5 +78,13 @@ class SeatsPresenter(val view: SeatsContract.View) : SeatsContract.Presenter {
 
     override fun setSeatsTextInfo() {
         view.setSeatsText(seat)
+    }
+
+    override fun setConfirmButtonClickListener() {
+        if (ticketCount == selectedSeats.size) {
+            view.setOnConfirmButtonClickListener()
+        } else {
+            view.setOffConfirmButtonClickListener()
+        }
     }
 }

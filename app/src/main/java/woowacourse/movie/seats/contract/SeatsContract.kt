@@ -30,6 +30,9 @@ interface SeatsContract {
             cell: TextView,
             seat: Seat,
         )
+
+        fun setOnConfirmButtonClickListener()
+        fun setOffConfirmButtonClickListener()
     }
 
     interface Presenter {
@@ -60,5 +63,7 @@ interface SeatsContract {
         )
 
         fun initCell(cell: TextView)
+        fun storeTicketCount(ticketCount: Int)
+        fun setConfirmButtonClickListener()
     }
 }

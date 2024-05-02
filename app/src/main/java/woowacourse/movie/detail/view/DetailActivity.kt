@@ -147,7 +147,7 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
         theaterId: Long,
     ) {
         val intent = Intent(this, SeatsActivity::class.java)
-        intent.putExtra(EXTRA_COUNT_KEY, count)
+        intent.putExtra(EXTRA_COUNT_KEY, count.number)
         intent.putExtra(EXTRA_MOVIE_ID_KEY, movieId)
         intent.putExtra(
             EXTRA_DATE_KEY,
