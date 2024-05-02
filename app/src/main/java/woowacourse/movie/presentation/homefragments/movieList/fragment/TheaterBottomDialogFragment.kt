@@ -4,9 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
+import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
 import woowacourse.movie.model.Theater
 import woowacourse.movie.presentation.homefragments.movieList.adapter.TheaterAdapter
 import woowacourse.movie.presentation.homefragments.movieList.listener.TheaterClickListener
@@ -18,14 +19,21 @@ class TheaterBottomDialogFragment(
     private val movieId: Long,
 ) : BottomSheetDialogFragment(), TheaterClickListener, TheaterBottomDialogContract.View {
     private val presenter = TheaterBottomDialogPresenter(this, theaterListRepository)
-    private lateinit var theaterRv: RecyclerView
+    private lateinit var binding: FragmentTheaterBottomSheetDialogBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.fragment_theater_bottom_sheet_dialog, container, false)
+    ): View {
+        binding =
+            DataBindingUtil.inflate(
+                inflater,
+                R.layout.fragment_theater_bottom_sheet_dialog,
+                container,
+                false,
+            )
+        return binding.root
     }
 
     override fun onViewCreated(
@@ -33,14 +41,13 @@ class TheaterBottomDialogFragment(
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        theaterRv = view.findViewById(R.id.theater_list_rv)
         presenter.loadTheaters(movieId)
     }
 
     override fun showTheaterList(theaterList: List<Theater>) {
         val adapter =
             TheaterAdapter(theaterList, movieId, this)
-        theaterRv.adapter = adapter
+        binding.theaterListRv.adapter = adapter
     }
 
     override fun onTheaterClick(

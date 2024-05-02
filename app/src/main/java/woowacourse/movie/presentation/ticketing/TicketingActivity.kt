@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -23,7 +22,6 @@ import java.time.format.DateTimeFormatter
 
 class TicketingActivity : AppCompatActivity(), TicketingContract.View {
     private lateinit var ticketingPresenter: TicketingPresenter
-    private val countText by lazy { findViewById<TextView>(R.id.tv_count) }
     private val movieDateAdapter: ArrayAdapter<LocalDate> by lazy {
         ArrayAdapter(
             this,
@@ -99,7 +97,7 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(KEY_SAVED_COUNT, countText.text.toString().toInt())
+        outState.putInt(KEY_SAVED_COUNT, binding.tvCount.text.toString().toInt())
         outState.putInt(KEY_SELECTED_TIME_POSITION, binding.spTimeSlot.selectedItemPosition)
     }
 

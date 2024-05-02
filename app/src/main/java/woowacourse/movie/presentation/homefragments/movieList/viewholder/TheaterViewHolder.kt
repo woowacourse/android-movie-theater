@@ -6,10 +6,6 @@ import woowacourse.movie.model.Theater
 import woowacourse.movie.presentation.homefragments.movieList.listener.TheaterClickListener
 
 class TheaterViewHolder(private val binding: ItemTheaterBinding) : RecyclerView.ViewHolder(binding.root) {
-//    private val name: TextView = view.findViewById(R.id.item_theater_name_tv)
-//    private val time: TextView = view.findViewById(R.id.item_theater_time_tv)
-//    private val arrowButton: ImageButton = view.findViewById(R.id.item_theater_arrow_btn)
-
     fun bind(
         theater: Theater,
         movieId: Long,

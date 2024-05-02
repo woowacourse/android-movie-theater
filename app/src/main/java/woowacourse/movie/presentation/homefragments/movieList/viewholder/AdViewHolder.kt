@@ -1,14 +1,11 @@
 package woowacourse.movie.presentation.homefragments.movieList.viewholder
 
-import android.view.View
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemAdBinding
 
-class AdViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    private val ad = view.findViewById<ImageView>(R.id.iv_ad_content)
-
+class AdViewHolder(private val binding: ItemAdBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind() {
-        ad.setImageResource(R.drawable.ad1)
+        binding.ivAdContent.setImageResource(R.drawable.ad1)
     }
 }

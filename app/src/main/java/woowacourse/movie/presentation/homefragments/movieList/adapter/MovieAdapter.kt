@@ -3,7 +3,7 @@ package woowacourse.movie.presentation.homefragments.movieList.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemAdBinding
 import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.model.Movie
 import woowacourse.movie.presentation.homefragments.movieList.listener.MovieListClickListener
@@ -27,8 +27,9 @@ class MovieAdapter(
             }
 
             else -> {
-                val itemView = inflater.inflate(R.layout.item_ad, parent, false)
-                AdViewHolder(itemView)
+                val binding =
+                    ItemAdBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                AdViewHolder(binding)
             }
         }
     }

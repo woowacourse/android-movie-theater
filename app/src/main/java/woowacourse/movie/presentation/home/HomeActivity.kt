@@ -3,18 +3,22 @@ package woowacourse.movie.presentation.home
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityHomeBinding
 import woowacourse.movie.presentation.homefragments.movieList.MovieListFragment
 import woowacourse.movie.presentation.homefragments.reservation.ReservationFragment
 import woowacourse.movie.presentation.homefragments.setting.SettingFragment
 
 class HomeActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityHomeBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
 
         if (savedInstanceState == null) {
             setupBottomNavigationView()
@@ -23,10 +27,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setupBottomNavigationView() {
-        val bottomNavigationView: BottomNavigationView =
-            findViewById(R.id.bottom_navigation_view)
         setupInitialFragment()
-        bottomNavigationView.setOnItemSelectedListener { menu ->
+        binding.bottomNavigationView.setOnItemSelectedListener { menu ->
             val selectedMenu = matchedFragment(menu)
             replaceFragment(selectedMenu)
             true
@@ -40,9 +42,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun selectDefaultMenuItem() {
-        val bottomNavigationView: BottomNavigationView =
-            findViewById(R.id.bottom_navigation_view)
-        bottomNavigationView.selectedItemId = R.id.action_home
+        binding.bottomNavigationView.selectedItemId = R.id.action_home
     }
 
     private fun replaceFragment(fragment: Fragment) {
