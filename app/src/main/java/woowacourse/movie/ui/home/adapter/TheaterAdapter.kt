@@ -1,19 +1,18 @@
 package woowacourse.movie.ui.home.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemTheaterBinding
 import woowacourse.movie.model.movie.Theater
-import woowacourse.movie.ui.home.MovieHomeKey
-import woowacourse.movie.ui.reservation.MovieReservationActivity
 
 class TheaterAdapter(
     private val theaters: List<Theater>,
-    private val movieContentId: Long,
+    private val theaterClickListener: TheaterClickListener,
 ) : RecyclerView.Adapter<TheaterAdapter.TheaterViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -27,7 +26,13 @@ class TheaterAdapter(
                 false,
             )
 
-        return TheaterViewHolder(binding, movieContentId)
+        binding.onClickListener = theaterClickListener
+
+        return TheaterViewHolder(binding).apply {
+            itemView.setOnClickListener {
+                theaterClickListener.onClick(theaters[bindingAdapterPosition].id)
+            }
+        }
     }
 
     override fun onBindViewHolder(
@@ -41,19 +46,25 @@ class TheaterAdapter(
 
     class TheaterViewHolder(
         private val binding: ItemTheaterBinding,
-        private val movieContentId: Long,
     ) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(theater: Theater) {
             binding.theater = theater
-            binding.root.setOnClickListener {
-                val context = binding.root.context
-                Intent(context, MovieReservationActivity::class.java).apply {
-                    putExtra(MovieHomeKey.MOVIE_CONTENT_ID, movieContentId)
-                    putExtra(MovieHomeKey.THEATER_ID, theater.id)
-                    context.startActivity(this)
-                }
-            }
         }
+    }
+
+    fun interface TheaterClickListener {
+        fun onClick(theaterId: Long)
+    }
+}
+
+@BindingAdapter("theaterClickListener", "theaterId")
+fun onClickTheater(
+    constraintLayout: ConstraintLayout,
+    theaterClickListener: TheaterAdapter.TheaterClickListener,
+    theaterId: Long,
+) {
+    constraintLayout.setOnClickListener {
+        theaterClickListener.onClick(theaterId)
     }
 }

@@ -2,6 +2,8 @@ package woowacourse.movie.ui.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
@@ -29,7 +31,9 @@ class MovieContentAdapter(
                         parent,
                         false,
                     )
-                MovieViewHolder(binding, reservationButtonClickListener)
+                MovieViewHolder(binding).apply {
+                    binding.onClickListener = reservationButtonClickListener
+                }
             }
 
             else -> {
@@ -69,5 +73,16 @@ class MovieContentAdapter(
         private const val TYPE_MOVIE = 1
         private const val INTERVAL_ADVERTISEMENT = 3
         private const val DIVIDER_ADVERTISEMENT = INTERVAL_ADVERTISEMENT + 1
+    }
+}
+
+@BindingAdapter("clickListener", "movieContentId")
+fun onClickReservationButton(
+    button: Button,
+    clickListener: ReservationButtonClickListener,
+    movieContentId: Long,
+) {
+    button.setOnClickListener {
+        clickListener.onClick(movieContentId)
     }
 }

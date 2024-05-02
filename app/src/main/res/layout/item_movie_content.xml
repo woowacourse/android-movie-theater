@@ -7,6 +7,10 @@
         <variable
             name="movieContent"
             type="woowacourse.movie.model.movie.MovieContent" />
+
+        <variable
+            name="onClickListener"
+            type="woowacourse.movie.ui.ReservationButtonClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -76,6 +80,8 @@
             android:text="@string/now_reservation"
             android:textSize="14sp"
             android:textStyle="bold"
+            movie:clickListener="@{onClickListener}"
+            movie:movieContentId="@{movieContent.id}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/info_layout" />
