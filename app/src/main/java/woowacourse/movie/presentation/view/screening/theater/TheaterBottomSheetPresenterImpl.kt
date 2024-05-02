@@ -13,8 +13,4 @@ class TheaterBottomSheetPresenterImpl(
         val theatersInfo = theaterRepository.theatersInfo(movieId)
         view.showTheaterInfo(theatersInfo)
     }
-
-    override fun onTheaterClicked(theaterId: Int) {
-        view.moveToMovieDetail(theaterId)
-    }
 }
