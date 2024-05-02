@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.movieList
 
 import MovieAdapter
 import android.view.View
@@ -18,12 +18,12 @@ import org.hamcrest.Matcher
 import org.junit.Test
 import org.junit.jupiter.api.DisplayName
 import org.junit.runner.RunWith
+import woowacourse.movie.R
 import woowacourse.movie.model.movieInfo.MovieDate
 import woowacourse.movie.model.movieInfo.MovieInfo
 import woowacourse.movie.model.movieInfo.RunningTime
 import woowacourse.movie.model.movieInfo.Synopsis
 import woowacourse.movie.model.movieInfo.Title
-import woowacourse.movie.movieList.MovieListFragment
 import java.time.LocalDate
 
 @RunWith(AndroidJUnit4::class)

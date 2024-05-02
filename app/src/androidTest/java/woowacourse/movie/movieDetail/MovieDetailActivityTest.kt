@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.movieDetail
 
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
@@ -13,6 +13,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import woowacourse.movie.R
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.movieInfo.MovieDate
 import woowacourse.movie.model.movieInfo.MovieInfo
@@ -20,7 +21,6 @@ import woowacourse.movie.model.movieInfo.RunningTime
 import woowacourse.movie.model.movieInfo.Synopsis
 import woowacourse.movie.model.movieInfo.Title
 import woowacourse.movie.model.theater.Theater
-import woowacourse.movie.movieDetail.MovieDetailActivity
 import java.time.LocalDate
 import java.time.LocalTime
 

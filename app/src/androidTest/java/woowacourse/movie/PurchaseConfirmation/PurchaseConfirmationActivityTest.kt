@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.PurchaseConfirmation
 
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
@@ -11,6 +11,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import woowacourse.movie.R
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.movieInfo.MovieDate
 import woowacourse.movie.model.movieInfo.MovieInfo
