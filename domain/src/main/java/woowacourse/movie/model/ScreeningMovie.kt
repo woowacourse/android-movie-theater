@@ -46,6 +46,24 @@ data class ScreeningMovie(
                                 LocalTime.of(12, 0),
                             ),
                         ),
+                        ScreenDateTime(
+                            LocalDate.of(2024, 3, 4),
+                            listOf(
+                                LocalTime.of(9, 0),
+                                LocalTime.of(10, 0),
+                                LocalTime.of(11, 0),
+                                LocalTime.of(12, 0),
+                            ),
+                        ),
+                        ScreenDateTime(
+                            LocalDate.of(2024, 3, 5),
+                            listOf(
+                                LocalTime.of(9, 0),
+                                LocalTime.of(10, 0),
+                                LocalTime.of(11, 0),
+                                LocalTime.of(12, 0),
+                            ),
+                        ),
                     ),
             )
 
