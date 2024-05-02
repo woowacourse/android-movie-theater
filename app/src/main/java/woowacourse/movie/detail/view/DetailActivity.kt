@@ -32,18 +32,22 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        presenter.setCurrentResultTicketCountInfo()
         movieId = intent.getLongExtra(EXTRA_MOVIE_ID_KEY, 0)
         theaterId = intent.getLongExtra(EXTRA_THEATER_ID_KEY, 0)
+        executePresenterTasks()
+        setOnPlusButtonClickListener()
+        setOnMinusButtonClickListener()
+        setOnTicketingButtonListener()
+    }
+
+    private fun executePresenterTasks() {
+        presenter.setCurrentResultTicketCountInfo()
         presenter.storeMovieId(movieId)
         presenter.storeTheaterId(theaterId)
         presenter.setMovieInfo()
         presenter.setSpinnerInfo(theaterId)
         presenter.setSpinnerDateItemInfo()
         presenter.setSpinnerTimeItemInfo()
-        setOnPlusButtonClickListener()
-        setOnMinusButtonClickListener()
-        setOnTicketingButtonListener()
     }
 
     override fun showSpinner(
