@@ -2,17 +2,24 @@ package woowacourse.movie
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import org.assertj.core.api.Assertions.assertThat
 import org.hamcrest.Description
+import org.hamcrest.Matcher
+import org.hamcrest.Matchers.allOf
 import org.hamcrest.TypeSafeMatcher
 import org.hamcrest.core.IsInstanceOf.instanceOf
 import org.junit.Before
@@ -78,8 +85,31 @@ class ScreeningMovieFragmentTest {
         )
         onView(withText(screenMovieUiModel3.runningTime)).check(matches(isDisplayed()))
     }
-
      */
+
+    @Test
+    fun `영화_리스트의_첫_번째_영화의_제목은_해리_포터와_마법사의_돌이다`() {
+        onView(withId(R.id.rcv_screening_movie))
+            .check(matches(isDisplayed()))
+
+        onView(withId(R.id.rcv_screening_movie))
+            .perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, checkChildViewWithId(R.id.tv_movie_title, "해리 포터와 마법사의 돌")))
+    }
+
+    private fun checkChildViewWithId(id: Int, expectedText: String) = object : ViewAction {
+        override fun getConstraints(): Matcher<View> {
+            return allOf(isDisplayed(), isAssignableFrom(View::class.java))
+        }
+
+        override fun getDescription(): String {
+            return "Check on a child view with specified id."
+        }
+
+        override fun perform(uiController: UiController, view: View) {
+            val textView = view.findViewById<TextView>(id)
+            assertThat(textView.text).isEqualTo(expectedText)
+        }
+    }
 
     @Test
     @DisplayName("리스트의 길이가 3 이상이면 광고가 나타난다.")
