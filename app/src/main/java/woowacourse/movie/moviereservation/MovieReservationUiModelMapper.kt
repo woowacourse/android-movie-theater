@@ -1,13 +1,13 @@
 package woowacourse.movie.moviereservation
 
 import woowacourse.movie.model.HeadCount
-import woowacourse.movie.model.ScreeningMovie
+import woowacourse.movie.model.Screening
 import woowacourse.movie.moviereservation.uimodel.HeadCountUiModel
 import woowacourse.movie.moviereservation.uimodel.MovieReservationUiModel
 import woowacourse.movie.moviereservation.uimodel.ScreeningDateTimeUiModel
 import woowacourse.movie.moviereservation.uimodel.ScreeningDateTimesUiModel
 
-fun ScreeningMovie.toMovieReservationUiModel(): MovieReservationUiModel =
+fun Screening.toMovieReservationUiModel(): MovieReservationUiModel =
     MovieReservationUiModel(
         id,
         movie.title,
@@ -21,9 +21,9 @@ fun HeadCount.toHeadCountUiModel(): HeadCountUiModel = HeadCountUiModel(count)
 
 fun HeadCountUiModel.toHeadCount(): HeadCount = HeadCount(count.toInt())
 
-fun ScreeningMovie.toScreeningDateTimeUiModel(): ScreeningDateTimesUiModel =
+fun Screening.toScreeningDateTimeUiModel(): ScreeningDateTimesUiModel =
     ScreeningDateTimesUiModel(
-        screenDateTimes.map {
+        screeningDateTimes.map {
             ScreeningDateTimeUiModel(
                 it.date,
                 it.times,

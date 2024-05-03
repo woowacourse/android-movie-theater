@@ -12,7 +12,7 @@ class MovieReservationPresenter(
 
     override fun loadMovieDetail(screenMovieId: Long) {
         runCatching {
-            repository.screenMovieById(screenMovieId)
+            repository.screeningById(screenMovieId)
         }.onSuccess { screeningMovie ->
             view.showMovieInfo(screeningMovie.toMovieReservationUiModel())
             view.showBookingDetail(
@@ -20,7 +20,7 @@ class MovieReservationPresenter(
                 BookingDetailUiModel(
                     HeadCount.MIN_COUNT,
                     screeningMovie.startDate,
-                    screeningMovie.screenDateTimes.first().times.first(),
+                    screeningMovie.screeningDateTimes.first().times.first(),
                 ),
             )
         }.onFailure {

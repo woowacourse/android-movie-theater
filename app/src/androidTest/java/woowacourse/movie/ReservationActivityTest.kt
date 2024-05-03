@@ -19,11 +19,11 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.jupiter.api.DisplayName
 import woowacourse.movie.fixtures.context
-import woowacourse.movie.model.ScreeningMovie
+import woowacourse.movie.model.Screening
 import woowacourse.movie.moviereservation.MovieReservationActivity
 import java.time.format.DateTimeFormatter
 
-class MovieReservationActivityTest {
+class ReservationActivityTest {
     @get:Rule
     val activityRule =
         ActivityScenarioRule<MovieReservationActivity>(
@@ -82,7 +82,7 @@ class MovieReservationActivityTest {
 
     @Test
     fun `date_spinner의_특정_데이터를_클릭하면_뷰에_나타난다`() {
-        val expected = ScreeningMovie.STUB_A.screenDateTimes[3].date.format(dateFormatter)
+        val expected = Screening.STUB_A.screeningDateTimes[3].date.format(dateFormatter)
         onView(withId(R.id.spinner_detail_date)).perform(click())
 
         onData(
@@ -94,8 +94,8 @@ class MovieReservationActivityTest {
 
     @Test
     fun `time_spinner의_특정_데이터를_클릭하면_뷰에_나타난다`() {
-        val dateString = ScreeningMovie.STUB_A.screenDateTimes[3].date.format(dateFormatter)
-        val expected = ScreeningMovie.STUB_A.screenDateTimes[3].times[3].format(timeFormatter)
+        val dateString = Screening.STUB_A.screeningDateTimes[3].date.format(dateFormatter)
+        val expected = Screening.STUB_A.screeningDateTimes[3].times[3].format(timeFormatter)
         onView(withId(R.id.spinner_detail_date)).perform(click())
 
         onData(

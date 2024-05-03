@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
-data class MovieReservation(
+data class Reservation(
     val id: Long,
     val movie: Movie,
     val reserveSeats: ReserveSeats,
@@ -15,7 +15,7 @@ data class MovieReservation(
 ) {
     constructor(
         id: Long,
-        screeningMovie: ScreeningMovie,
+        screening: Screening,
         screenDateTime: LocalDateTime,
         reserveSeats: ReserveSeats,
         headCount: HeadCount,
@@ -23,7 +23,7 @@ data class MovieReservation(
         theaterId: Long,
     ) : this(
         id,
-        screeningMovie.movie,
+        screening.movie,
         reserveSeats,
         screenDateTime,
         headCount,

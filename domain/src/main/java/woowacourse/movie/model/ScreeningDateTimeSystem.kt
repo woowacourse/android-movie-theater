@@ -12,8 +12,8 @@ class ScreeningDateTimeSystem(
     fun generate(
         startDate: LocalDate,
         endDate: LocalDate,
-    ): List<ScreenDateTime> {
-        val resultList = mutableListOf<ScreenDateTime>()
+    ): List<ScreeningDateTime> {
+        val resultList = mutableListOf<ScreeningDateTime>()
 
         var currentDate = startDate
         while (currentDate <= endDate) {
@@ -23,10 +23,10 @@ class ScreeningDateTimeSystem(
         return resultList
     }
 
-    private fun createScreenDateTimeFor(date: LocalDate): ScreenDateTime {
+    private fun createScreenDateTimeFor(date: LocalDate): ScreeningDateTime {
         val startTime = determineStartTimeFor(date)
         val timeSlots = generateTimeSlotsFrom(startTime)
-        return ScreenDateTime(date, timeSlots)
+        return ScreeningDateTime(date, timeSlots)
     }
 
     private fun determineStartTimeFor(date: LocalDate): Int {

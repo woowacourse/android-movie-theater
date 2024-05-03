@@ -34,7 +34,7 @@ import woowacourse.movie.screeningmovie.ScreeningMovieFragment
 import woowacourse.movie.screeningmovie.toScreenItems
 import woowacourse.movie.screeningmovie.uimodel.ScreenMovieUiModel
 
-class ScreeningMovieFragmentTest {
+class ScreeningFragmentTest {
     private lateinit var fragmentScenario: FragmentScenario<ScreeningMovieFragment>
 
     @Before

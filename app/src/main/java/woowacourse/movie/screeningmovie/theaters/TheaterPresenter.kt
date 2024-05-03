@@ -11,7 +11,7 @@ class TheaterPresenter(
         val theaters = repository.theatersByMovieId(movieId)
         val uiModels =
             theaters.map { theater ->
-                val screeningMovie = repository.screenMovieById(movieId, theater.id)
+                val screeningMovie = repository.screeningByMovieIdAndTheaterId(movieId, theater.id)
                 Log.d("uiModel", "$movieId ${theater.id}")
                 screeningMovie.theater.toTheaterUiModel(screeningMovie.totalScreeningTimesNum())
             }
@@ -22,7 +22,7 @@ class TheaterPresenter(
         movieId: Long,
         theaterId: Long,
     ) {
-        val screeningMovie = repository.screenMovieById(movieId, theaterId)
+        val screeningMovie = repository.screeningByMovieIdAndTheaterId(movieId, theaterId)
         view.navigateMovieReservation(screeningMovie.id, theaterId)
     }
 }

@@ -11,7 +11,7 @@ import woowacourse.movie.moviereservation.MovieReservationContract
 import woowacourse.movie.moviereservation.MovieReservationPresenter
 import woowacourse.movie.moviereservation.uimodel.HeadCountUiModel
 
-class MovieReservationPresenterTest {
+class ReservationPresenterTest {
     private lateinit var view: MovieReservationContract.View
 
     private lateinit var presenter: MovieReservationContract.Presenter

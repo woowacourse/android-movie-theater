@@ -3,10 +3,10 @@ package woowacourse.movie.repository
 import woowacourse.movie.model.Advertisement
 import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.Movie
-import woowacourse.movie.model.MovieReservation
 import woowacourse.movie.model.MovieTheater
+import woowacourse.movie.model.Reservation
 import woowacourse.movie.model.ReserveSeats
-import woowacourse.movie.model.ScreeningMovie
+import woowacourse.movie.model.Screening
 import java.time.LocalDateTime
 
 interface MovieRepository {
@@ -14,18 +14,18 @@ interface MovieRepository {
 
     fun advertisements(): List<Advertisement>
 
-    fun screenMovieById(id: Long): ScreeningMovie
+    fun screeningById(id: Long): Screening
 
-    fun screenMovieById(
+    fun screeningByMovieIdAndTheaterId(
         movieId: Long,
         theaterId: Long,
-    ): ScreeningMovie
+    ): Screening
 
     fun theatersByMovieId(movieId: Long): List<MovieTheater>
 
     fun theaterById(theaterId: Long): MovieTheater
 
-    fun reserveMovie(
+    fun makeReservation(
         screenMovieId: Long,
         dateTime: LocalDateTime,
         count: HeadCount,
@@ -33,5 +33,5 @@ interface MovieRepository {
         theaterId: Long,
     ): Long
 
-    fun movieReservationById(id: Long): MovieReservation
+    fun reservationById(id: Long): Reservation
 }

@@ -13,7 +13,7 @@ class SelectSeatPresenter(
 ) : SelectSeatContract.Presenter {
     override fun loadSeat(movieId: Long) {
         runCatching {
-            repository.screenMovieById(movieId)
+            repository.screeningById(movieId)
         }.onSuccess {
             view.showSeat(it.theater.seats().toSeatsUiModel())
         }
@@ -21,7 +21,7 @@ class SelectSeatPresenter(
 
     override fun loadReservationInfo(movieId: Long) {
         runCatching {
-            repository.screenMovieById(movieId)
+            repository.screeningById(movieId)
         }.onSuccess {
             view.showMovieInfo(it.movie.title, PriceUiModel(ReserveSeats().totalPrice.price.toInt()))
         }
@@ -37,7 +37,7 @@ class SelectSeatPresenter(
         selectedSeats: List<SeatUiModel>,
     ) {
         runCatching {
-            repository.reserveMovie(
+            repository.makeReservation(
                 bookingInfoUiModel.screenMovieId,
                 bookingInfoUiModel.localDateTime(),
                 bookingInfoUiModel.count.toHeadCount(),

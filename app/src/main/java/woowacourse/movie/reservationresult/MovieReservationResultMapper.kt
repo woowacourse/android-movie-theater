@@ -1,11 +1,11 @@
 package woowacourse.movie.reservationresult
 
-import woowacourse.movie.model.MovieReservation
+import woowacourse.movie.model.Reservation
 import woowacourse.movie.model.Seat
 import woowacourse.movie.reservationresult.uimodel.ReservationResultUiModel
 import woowacourse.movie.reservationresult.uimodel.SeatUiModel
 
-fun MovieReservation.toReservationResultUiModel(theaterName: String): ReservationResultUiModel {
+fun Reservation.toReservationResultUiModel(theaterName: String): ReservationResultUiModel {
     return ReservationResultUiModel(
         movie.title,
         cancelDeadLine,
