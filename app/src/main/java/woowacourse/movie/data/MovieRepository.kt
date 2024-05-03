@@ -1,6 +1,7 @@
 package woowacourse.movie.data
 
 import woowacourse.movie.R
+import woowacourse.movie.model.Advertisement
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieDate
 import woowacourse.movie.model.Theater
@@ -43,11 +44,23 @@ object MovieRepository {
             )
         }
 
+    private val advertisements =
+        List(100) {
+            Advertisement(
+                banner = R.drawable.advertisement,
+                link = "https://www.woowacourse.io/",
+            )
+        }
+
     fun getAllMovies(): List<Movie> {
         return movies
     }
 
     fun getMovieById(id: Long): Movie? {
         return movies.firstOrNull { it.id == id }
+    }
+
+    fun getAllAdvertisements(): List<Advertisement> {
+        return advertisements
     }
 }

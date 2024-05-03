@@ -7,12 +7,14 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import woowacourse.movie.databinding.ItemAdvertisementBinding
 import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.home.view.listener.MovieHomeClickListener
+import woowacourse.movie.model.Advertisement
 import woowacourse.movie.model.Movie
 
 class MovieAdapter(
     private val onReservationButtonClick: MovieHomeClickListener,
 ) : RecyclerView.Adapter<ViewHolder>() {
     private var movies: List<Movie> = emptyList()
+    private var advertisements: List<Advertisement> = emptyList()
 
     override fun getItemViewType(position: Int): Int {
         if ((position + 1) % ADVERTISEMENT_PER_INDEX == 0) return ADVERTISEMENT_VIEW_TYPE
@@ -36,17 +38,16 @@ class MovieAdapter(
         holder: ViewHolder,
         position: Int,
     ) {
-        val movie = movies[position - (position + 1) / ADVERTISEMENT_PER_INDEX]
+        val movie = movies[position - getAdvertisementCount(position)]
+        val advertisement = advertisements[getAdvertisementCount(position)]
         when (holder) {
             is MovieViewHolder -> holder.bind(movie, onReservationButtonClick)
-            is AdvertisementViewHolder -> holder.bind(ADVERTISEMENT_LINK)
+            is AdvertisementViewHolder -> holder.bind(advertisement)
         }
     }
 
-    override fun getItemId(position: Int): Long = movies[position].id
-
     override fun getItemCount(): Int {
-        return movies.size + movies.size / ADVERTISEMENT_OFFSET
+        return movies.size + movies.size / 3
     }
 
     fun updateMovies(movies: List<Movie>) {
@@ -54,11 +55,18 @@ class MovieAdapter(
         notifyDataSetChanged()
     }
 
+    fun updateAdvertisements(advertisements: List<Advertisement>) {
+        this.advertisements = advertisements
+        notifyDataSetChanged()
+    }
+
+    private fun getAdvertisementCount(position: Int): Int {
+        return (position + 1) / ADVERTISEMENT_PER_INDEX
+    }
+
     companion object {
         private const val MOVIE_VIEW_TYPE = 0
         private const val ADVERTISEMENT_VIEW_TYPE = 1
-        private const val ADVERTISEMENT_OFFSET = 3
         private const val ADVERTISEMENT_PER_INDEX = 4
-        private const val ADVERTISEMENT_LINK = "https://www.woowacourse.io/"
     }
 }

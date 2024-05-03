@@ -12,6 +12,7 @@ import woowacourse.movie.home.presenter.MovieHomePresenter
 import woowacourse.movie.home.presenter.contract.MovieHomeContract
 import woowacourse.movie.home.view.adapter.movie.MovieAdapter
 import woowacourse.movie.home.view.listener.MovieHomeClickListener
+import woowacourse.movie.model.Advertisement
 import woowacourse.movie.model.Movie
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 
@@ -43,8 +44,12 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, MovieHomeClickList
         movieHomePresenter.loadMovies()
     }
 
-    override fun displayMovies(movies: List<Movie>) {
+    override fun displayMovies(
+        movies: List<Movie>,
+        advertisements: List<Advertisement>,
+    ) {
         movieAdapter.updateMovies(movies)
+        movieAdapter.updateAdvertisements(advertisements)
     }
 
     override fun displayTheaterSelectionDialog(id: Long) {
