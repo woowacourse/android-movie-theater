@@ -3,6 +3,7 @@ package woowacourse.movie.seats.view
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -164,9 +165,11 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
         cell.setBackgroundColor(info.cellBackgroundColor)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.clearSelectedSeats()
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            presenter.clearSelectedSeats()
+        }
+        return super.onKeyDown(keyCode, event)
     }
 
     companion object {
