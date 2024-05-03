@@ -28,7 +28,7 @@ class TheaterSelectionFragmentTest {
     fun setUp() {
         activityRule.scenario.onActivity {
             it.supportFragmentManager.beginTransaction().replace(
-                R.id.fragment_container_view,
+                R.id.fragmentContainerView,
                 MovieHomeFragment(),
             ).commit()
             val bundle = Bundle()
@@ -42,13 +42,13 @@ class TheaterSelectionFragmentTest {
     @Test
     fun `극장_목록을_보여준다`() {
         Thread.sleep(1000)
-        onView(withId(R.id.theater_recyclerview)).check(matches(isDisplayed()))
+        onView(withId(R.id.theaterRecyclerview)).check(matches(isDisplayed()))
     }
 
     @Test
     fun `두_번째의_극장_이름을_보여준다`() {
         Thread.sleep(1000)
-        onView(withId(R.id.theater_recyclerview)).perform(
+        onView(withId(R.id.theaterRecyclerview)).perform(
             RecyclerViewActions.scrollToHolder(
                 instanceOf(TheaterViewHolder::class.java),
             ).atPosition(1),
@@ -61,7 +61,7 @@ class TheaterSelectionFragmentTest {
     @Test
     fun `두_번째의_극장의_상영_시간_개수를_보여준다`() {
         Thread.sleep(1000)
-        onView(withId(R.id.theater_recyclerview)).perform(
+        onView(withId(R.id.theaterRecyclerview)).perform(
             RecyclerViewActions.scrollToHolder(
                 instanceOf(TheaterViewHolder::class.java),
             ).atPosition(1),

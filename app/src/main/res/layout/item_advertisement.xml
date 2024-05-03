@@ -4,15 +4,15 @@
     <data>
 
         <variable
-            name="advertisement_link"
+            name="advertisementLink"
             type="String" />
 
         <variable
-            name="advertisement_view_holder"
+            name="advertisementViewHolder"
             type="woowacourse.movie.home.view.adapter.movie.AdvertisementViewHolder" />
 
         <variable
-            name="advertisement_image_id"
+            name="advertisementImageId"
             type="int" />
     </data>
 
@@ -25,12 +25,12 @@
             android:id="@+id/advertisementImage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> advertisement_view_holder.advertisementImageClick(advertisement_link)}"
+            android:onClick="@{() -> advertisementViewHolder.advertisementImageClick(advertisementLink)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            movie:imgRes="@{advertisement_image_id}"
+            movie:imgRes="@{advertisementImageId}"
             tools:src="@drawable/advertisement" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

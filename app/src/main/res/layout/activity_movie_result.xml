@@ -5,11 +5,11 @@
     <data>
 
         <variable
-            name="result_text"
+            name="resultText"
             type="String" />
 
         <variable
-            name="movie_ticket"
+            name="movieTicket"
             type="woowacourse.movie.model.MovieTicket" />
     </data>
 
@@ -41,7 +41,7 @@
             android:layout_marginTop="25dp"
             android:gravity="center"
             android:hint="해리포터와 마법사의 돌"
-            android:text="@{movie_ticket.title}"
+            android:text="@{movieTicket.title}"
             android:textColor="@color/black"
             android:textSize="25dp"
             android:textStyle="bold"
@@ -56,7 +56,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginRight="10dp"
             android:hint="2024.3.1"
-            android:text="@{movie_ticket.date.toString()}"
+            android:text="@{movieTicket.date.toString()}"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold"
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:hint="17:00"
-            android:text="@{movie_ticket.time.toString()}"
+            android:text="@{movieTicket.time.toString()}"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold"
@@ -90,7 +90,7 @@
             android:gravity="center"
             android:hint="일반 2명 | B3, D2 | 선릉 극장"
             android:maxLines="1"
-            android:text="@{result_text}"
+            android:text="@{resultText}"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
             android:textSize="20dp"
@@ -110,7 +110,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/resultReservPriceFormat"
             app:layout_constraintTop_toBottomOf="@id/result"
-            movie:movieTicketPrice="@{movie_ticket}"
+            movie:movieTicketPrice="@{movieTicket}"
             tools:hint="13,000" />
 
         <TextView

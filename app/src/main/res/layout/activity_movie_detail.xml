@@ -13,7 +13,7 @@
             type="woowacourse.movie.model.Movie" />
 
         <variable
-            name="reservation_count"
+            name="reservationCount"
             type="int" />
     </data>
 
@@ -205,7 +205,7 @@
                 android:id="@+id/detailReservCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{String.valueOf(reservation_count)}"
+                android:text="@{String.valueOf(reservationCount)}"
                 android:textColor="@color/black"
                 android:textSize="20dp"
                 android:textStyle="bold"

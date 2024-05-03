@@ -5,13 +5,15 @@
     <data>
 
         <variable
-            name="seat_title_text"
+            name="seatTitleText"
             type="String" />
+
         <variable
             name="activity"
             type="woowacourse.movie.seatselection.view.MovieSeatSelectionActivity" />
+
         <variable
-            name="movie_selected_seats"
+            name="movieSelectedSeats"
             type="woowacourse.movie.model.MovieSelectedSeats" />
     </data>
 
@@ -327,10 +329,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:hint="해리 포터와 마법사의 돌"
+                android:text="@{seatTitleText}"
                 android:textColor="@color/black"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:text="@{seat_title_text}"
                 app:layout_constraintBottom_toTopOf="@id/seatPrice"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -342,14 +344,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                tools:hint="0"
-                movie:movieSelectedSeatsPrice="@{movie_selected_seats}"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/seatTitle" />
+                app:layout_constraintTop_toBottomOf="@id/seatTitle"
+                movie:movieSelectedSeatsPrice="@{movieSelectedSeats}"
+                tools:hint="0" />
 
             <TextView
                 android:id="@+id/seatPriceWon"
@@ -367,11 +369,11 @@
                 android:layout_width="90dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/rectangle_button"
-                android:enabled="@{movie_selected_seats.selectionComplete}"
+                android:enabled="@{movieSelectedSeats.selectionComplete}"
+                android:onClick="@{() -> activity.displayDialog()}"
                 android:text="확인"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:onClick="@{() -> activity.displayDialog()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

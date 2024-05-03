@@ -29,7 +29,7 @@ class MovieHomeFragmentTest {
     fun setUp() {
         activityRule.scenario.onActivity {
             it.supportFragmentManager.beginTransaction().replace(
-                R.id.fragment_container_view,
+                R.id.fragmentContainerView,
                 MovieHomeFragment(),
             ).commit()
         }

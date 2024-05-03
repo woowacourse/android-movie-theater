@@ -4,7 +4,7 @@
     <data>
 
         <variable
-            name="theater_view_holder"
+            name="theaterViewHolder"
             type="woowacourse.movie.home.view.adapter.theater.TheaterViewHolder" />
     </data>
 
@@ -12,18 +12,18 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:onClick="@{() -> theater_view_holder.theaterItemClick()}"
+        android:onClick="@{() -> theaterViewHolder.theaterItemClick()}"
         android:padding="8dp">
 
         <TextView
-            android:id="@+id/theater_name"
+            android:id="@+id/theaterName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="30dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{theater_view_holder.theaterName}"
+            android:text="@{theaterViewHolder.theaterName}"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -32,24 +32,24 @@
             tools:hint="선릉 극장" />
 
         <TextView
-            android:id="@+id/screening_time_number"
+            android:id="@+id/screeningTimeNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{String.valueOf(theater_view_holder.screeningTimeNumber)}"
+            android:text="@{String.valueOf(theaterViewHolder.screeningTimeNumber)}"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@id/screening_time_number_format"
-            app:layout_constraintLeft_toLeftOf="@id/theater_name"
-            app:layout_constraintTop_toBottomOf="@id/theater_name"
+            app:layout_constraintBottom_toBottomOf="@id/screeningTimeNumberFormat"
+            app:layout_constraintLeft_toLeftOf="@id/theaterName"
+            app:layout_constraintTop_toBottomOf="@id/theaterName"
             tools:hint="3" />
 
         <TextView
-            android:id="@+id/screening_time_number_format"
+            android:id="@+id/screeningTimeNumberFormat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="개의 상영 시간"
             android:textSize="12sp"
-            app:layout_constraintLeft_toRightOf="@id/screening_time_number"
-            app:layout_constraintTop_toBottomOf="@id/theater_name" />
+            app:layout_constraintLeft_toRightOf="@id/screeningTimeNumber"
+            app:layout_constraintTop_toBottomOf="@id/theaterName" />
 
         <ImageView
             android:layout_width="24dp"
