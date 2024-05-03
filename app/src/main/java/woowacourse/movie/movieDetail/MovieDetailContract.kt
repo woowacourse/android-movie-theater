@@ -1,7 +1,6 @@
 package woowacourse.movie.movieDetail
 
 import android.content.Intent
-import woowacourse.movie.model.movieInfo.MovieInfo
 
 interface MovieDetailContract {
     interface View {
@@ -17,13 +16,11 @@ interface MovieDetailContract {
     }
 
     interface Presenter {
-        fun load(movie: MovieInfo)
-
         fun onTicketPlusClicked()
 
         fun onTicketMinusClicked()
 
-        fun updateTimeSpinner(times: List<String>)
+        fun updateTimes()
 
         fun generateDateRange()
     }

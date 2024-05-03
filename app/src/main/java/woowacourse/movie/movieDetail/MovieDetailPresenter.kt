@@ -1,19 +1,17 @@
 package woowacourse.movie.movieDetail
 
+import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.movieInfo.MovieInfo
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 class MovieDetailPresenter(
     private val view: MovieDetailContract.View,
+    private val cinema: Cinema
 ) : MovieDetailContract.Presenter {
     var ticketNum = 1
 
     lateinit var movie: MovieInfo
-
-    override fun load(movie: MovieInfo) {
-        this.movie = movie
-    }
 
     override fun onTicketPlusClicked() {
         if (ticketNum < 10) {
@@ -33,8 +31,8 @@ class MovieDetailPresenter(
         }
     }
 
-    override fun updateTimeSpinner(times: List<String>) {
-        view.updateTimeAdapter(times)
+    override fun updateTimes() {
+        view.updateTimeAdapter(cinema.theater.times.map { it.toString() })
     }
 
     override fun generateDateRange() {

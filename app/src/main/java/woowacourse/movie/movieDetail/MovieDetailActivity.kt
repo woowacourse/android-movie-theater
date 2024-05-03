@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.IntentCompat
 import woowacourse.movie.R
 import woowacourse.movie.common.BindingActivity
@@ -15,13 +14,13 @@ import woowacourse.movie.common.ui.redirectToErrorActivity
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.seat.TheaterSeatActivity
-import java.time.LocalTime
 
-class MovieDetailActivity : BindingActivity<ActivityMovieDetailBinding>(R.layout.activity_movie_detail), MovieDetailContract.View {
+class MovieDetailActivity :
+    BindingActivity<ActivityMovieDetailBinding>(R.layout.activity_movie_detail),
+    MovieDetailContract.View {
     private lateinit var presenter: MovieDetailContract.Presenter
     private lateinit var dateAdapter: ArrayAdapter<String>
     private lateinit var timeAdapter: ArrayAdapter<String>
-    private lateinit var times: List<LocalTime>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,13 +31,11 @@ class MovieDetailActivity : BindingActivity<ActivityMovieDetailBinding>(R.layout
             redirectToErrorActivity()
             return
         }
-        val theater = cinema.theater
-        times = theater.times
         presenter =
             MovieDetailPresenter(
                 view = this@MovieDetailActivity,
+                cinema
             ).also { binding.presenter = it }
-        presenter.load(theater.movie)
         setupEventListeners(cinema)
         presenter.generateDateRange()
     }
@@ -66,7 +63,7 @@ class MovieDetailActivity : BindingActivity<ActivityMovieDetailBinding>(R.layout
                     position: Int,
                     id: Long,
                 ) {
-                    presenter.updateTimeSpinner(times.map { it.toString() })
+                    presenter.updateTimes()
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}
