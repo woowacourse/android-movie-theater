@@ -15,7 +15,12 @@ import woowacourse.movie.ui.home.adapter.MovieContentAdapter
 
 class MovieHomeFragment : Fragment(), MovieHomeContract.View {
     private lateinit var binding: FragmentMovieHomeBinding
-    private val presenter: MovieHomePresenter by lazy { MovieHomePresenter(this, MovieContentsImpl) }
+    private val presenter: MovieHomePresenter by lazy {
+        MovieHomePresenter(
+            this,
+            MovieContentsImpl,
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,7 +35,7 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View {
 
     override fun showMovieContents(movieContents: List<MovieContent>) {
         binding.movieContentList.adapter =
-            MovieContentAdapter(movieContents) { view, id ->
+            MovieContentAdapter(movieContents) { id ->
                 val fragment = TheaterSelectionBottomSheetFragment()
                 val bundle = Bundle()
                 bundle.putLong(MovieHomeKey.MOVIE_CONTENT_ID, id)

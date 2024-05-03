@@ -8,11 +8,10 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemAdvertisementBinding
 import woowacourse.movie.databinding.ItemMovieContentBinding
 import woowacourse.movie.model.movie.MovieContent
-import woowacourse.movie.ui.ReservationButtonClickListener
 
 class MovieContentAdapter(
     private val movieContents: List<MovieContent>,
-    private val reservationButtonClickListener: ReservationButtonClickListener,
+    private val reservationButtonClickListener: (Long) -> Unit,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
