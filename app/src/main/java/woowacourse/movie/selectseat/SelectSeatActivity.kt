@@ -11,8 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.data.DummyMovieRepository
 import woowacourse.movie.databinding.ActivitySelectSeatBinding
-import woowacourse.movie.moviereservation.uimodel.BookingInfoUiModel
-import woowacourse.movie.reservationresult.ReservationResultActivity
+import woowacourse.movie.moviedetail.uimodel.BookingInfoUiModel
+import woowacourse.movie.purchaseconfirmation.PurchaseConfirmationActivity
 import woowacourse.movie.selectseat.uimodel.PriceUiModel
 import woowacourse.movie.selectseat.uimodel.SeatUiModel
 import woowacourse.movie.selectseat.uimodel.SeatsUiModel
@@ -112,7 +112,7 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
     }
 
     override fun navigateToResult(reservationId: Long) {
-        startActivity(ReservationResultActivity.getIntent(this, reservationId))
+        startActivity(PurchaseConfirmationActivity.getIntent(this, reservationId))
     }
 
     private fun tableChildView(

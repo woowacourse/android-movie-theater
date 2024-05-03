@@ -13,10 +13,10 @@
         android:theme="@style/Theme.Movie"
         tools:targetApi="31">
         <activity
-            android:name=".moviereservation.MovieReservationActivity"
+            android:name=".moviedetail.MovieDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".reservationresult.ReservationResultActivity"
+            android:name=".purchaseconfirmation.PurchaseConfirmationActivity"
             android:exported="false" />
         <activity
             android:name=".selectseat.SelectSeatActivity"

@@ -26,31 +26,28 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.jupiter.api.DisplayName
 import woowacourse.movie.model.Movie
-import woowacourse.movie.model.Movies
-import woowacourse.movie.screeningmovie.AdapterClickListener
-import woowacourse.movie.screeningmovie.AdvertiseViewHolder
-import woowacourse.movie.screeningmovie.MovieAdapter
-import woowacourse.movie.screeningmovie.ScreeningMovieFragment
-import woowacourse.movie.screeningmovie.toScreenItems
-import woowacourse.movie.screeningmovie.uimodel.ScreenMovieUiModel
+import woowacourse.movie.movielist.AdapterClickListener
+import woowacourse.movie.movielist.AdvertiseViewHolder
+import woowacourse.movie.movielist.MovieAdapter
+import woowacourse.movie.movielist.MovieListFragment
+import woowacourse.movie.movielist.uimodel.ScreenMovieUiModel
+import woowacourse.movie.movielist.uimodel.toScreenMovieUiModel
 
 class ScreeningFragmentTest {
-    private lateinit var fragmentScenario: FragmentScenario<ScreeningMovieFragment>
+    private lateinit var fragmentScenario: FragmentScenario<MovieListFragment>
 
     @Before
     fun setUp() {
-        fragmentScenario = launchFragmentInContainer<ScreeningMovieFragment>()
+        fragmentScenario = launchFragmentInContainer<MovieListFragment>()
         fragmentScenario.onFragment { fragment ->
             val recyclerView = fragment.requireView().findViewById<RecyclerView>(R.id.rcv_screening_movie)
 
             val items =
-                Movies(
-                    listOf(
-                        Movie.STUB,
-                        Movie.STUB,
-                        Movie.STUB,
-                    ),
-                ).insertAdvertisements(3).toScreenItems() + screenMovieUiModel3
+                listOf(
+                    Movie.STUB,
+                    Movie.STUB,
+                    Movie.STUB,
+                ).map { it.toScreenMovieUiModel() }
 
             recyclerView.adapter =
                 MovieAdapter(

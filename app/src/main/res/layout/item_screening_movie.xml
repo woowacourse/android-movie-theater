@@ -7,17 +7,17 @@
     <data>
         <variable
             name="movie"
-            type="woowacourse.movie.screeningmovie.uimodel.ScreenMovieUiModel" />
+            type="woowacourse.movie.movielist.uimodel.ScreenMovieUiModel" />
         <variable
             name="clickListener"
-            type="woowacourse.movie.screeningmovie.AdapterClickListener" />
+            type="woowacourse.movie.movielist.AdapterClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="12dp"
-        tools:context=".screeningmovie.ScreeningMovieFragment">
+        tools:context=".movielist.MovieListFragment">
 
         <ImageView
             android:id="@+id/iv_movie_post"

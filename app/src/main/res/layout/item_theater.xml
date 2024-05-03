@@ -7,11 +7,11 @@
 
         <variable
             name="theater"
-            type="woowacourse.movie.screeningmovie.theaters.TheaterUiModel" />
+            type="woowacourse.movie.movielist.theaters.TheaterUiModel" />
 
         <variable
             name="clickListener"
-            type="woowacourse.movie.screeningmovie.AdapterClickListener" />
+            type="woowacourse.movie.movielist.AdapterClickListener" />
 
     </data>
 

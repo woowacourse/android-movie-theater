@@ -6,12 +6,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
+import woowacourse.movie.movielist.MovieListFragment
 import woowacourse.movie.reservationlist.ReservationListFragment
 import woowacourse.movie.reservationlist.SettingFragment
-import woowacourse.movie.screeningmovie.ScreeningMovieFragment
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var screeningMovieFragment: ScreeningMovieFragment
+    private lateinit var movieListFragment: MovieListFragment
     private lateinit var settingMovieFragment: SettingFragment
     private lateinit var reservationListFragment: ReservationListFragment
     private lateinit var binding: ActivityMainBinding
@@ -21,13 +21,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        screeningMovieFragment = ScreeningMovieFragment()
+        movieListFragment = MovieListFragment()
         settingMovieFragment = SettingFragment()
         reservationListFragment = ReservationListFragment()
 
         binding.bnvMain.selectedItemId = R.id.menu_home
         supportFragmentManager.findFragmentById(R.id.fcv_main) ?: changeFragment(
-            screeningMovieFragment,
+            movieListFragment,
         )
         setNavigation()
     }
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             changeFragment(
                 when (item.itemId) {
                     R.id.menu_home ->
-                        screeningMovieFragment
+                        movieListFragment
 
                     R.id.menu_setting ->
                         settingMovieFragment
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.menu_reservation_list ->
                         reservationListFragment
 
-                    else -> screeningMovieFragment
+                    else -> movieListFragment
                 },
             )
             true

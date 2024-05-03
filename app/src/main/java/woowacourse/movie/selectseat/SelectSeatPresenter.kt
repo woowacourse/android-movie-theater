@@ -1,11 +1,13 @@
 package woowacourse.movie.selectseat
 
 import woowacourse.movie.model.ReserveSeats
-import woowacourse.movie.moviereservation.toHeadCount
-import woowacourse.movie.moviereservation.uimodel.BookingInfoUiModel
+import woowacourse.movie.moviedetail.uimodel.BookingInfoUiModel
+import woowacourse.movie.moviedetail.uimodel.toHeadCount
 import woowacourse.movie.repository.MovieRepository
 import woowacourse.movie.selectseat.uimodel.PriceUiModel
 import woowacourse.movie.selectseat.uimodel.SeatUiModel
+import woowacourse.movie.selectseat.uimodel.toSeats
+import woowacourse.movie.selectseat.uimodel.toSeatsUiModel
 
 class SelectSeatPresenter(
     private val view: SelectSeatContract.View,

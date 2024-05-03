@@ -1,6 +1,6 @@
 package woowacourse.movie.selectseat
 
-import woowacourse.movie.moviereservation.uimodel.BookingInfoUiModel
+import woowacourse.movie.moviedetail.uimodel.BookingInfoUiModel
 import woowacourse.movie.selectseat.uimodel.PriceUiModel
 import woowacourse.movie.selectseat.uimodel.SeatUiModel
 

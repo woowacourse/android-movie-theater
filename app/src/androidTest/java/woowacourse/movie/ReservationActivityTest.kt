@@ -20,19 +20,19 @@ import org.junit.Test
 import org.junit.jupiter.api.DisplayName
 import woowacourse.movie.fixtures.context
 import woowacourse.movie.model.Screening
-import woowacourse.movie.moviereservation.MovieReservationActivity
+import woowacourse.movie.moviedetail.MovieDetailActivity
 import java.time.format.DateTimeFormatter
 
 class ReservationActivityTest {
     @get:Rule
     val activityRule =
-        ActivityScenarioRule<MovieReservationActivity>(
+        ActivityScenarioRule<MovieDetailActivity>(
             Intent(
                 context,
-                MovieReservationActivity::class.java,
+                MovieDetailActivity::class.java,
             ).apply {
-                putExtra(MovieReservationActivity.EXTRA_SCREEN_MOVIE_ID, 0L)
-                putExtra(MovieReservationActivity.EXTRA_THEATER_ID, 0L)
+                putExtra(MovieDetailActivity.EXTRA_SCREEN_MOVIE_ID, 0L)
+                putExtra(MovieDetailActivity.EXTRA_THEATER_ID, 0L)
             },
         )
 
