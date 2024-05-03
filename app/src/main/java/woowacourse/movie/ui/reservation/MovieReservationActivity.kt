@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -18,6 +20,7 @@ import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.selection.MovieSeatSelectionActivity
 import woowacourse.movie.ui.utils.getImageFromId
 import java.time.LocalDate
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 class MovieReservationActivity :
@@ -40,6 +43,9 @@ class MovieReservationActivity :
 
         presenter.loadMovieContent(movieContentId, theaterId)
         presenter.updateReservationCount()
+        setOnClickMovieTimeSpinnerListener()
+        setOnClickMovieDateSpinnerListener()
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -59,6 +65,42 @@ class MovieReservationActivity :
             val count = it.getInt(RESERVATION_COUNT_STATE_KEY)
             presenter.updateReservationCount(count)
         }
+    }
+
+    private fun setOnClickMovieTimeSpinnerListener() {
+        binding.screeningTimeSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long,
+                ) {
+                    val value = binding.screeningTimeSpinner.getItemAtPosition(position)
+                    presenter.selectTime(value as LocalTime)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
+            }
+    }
+
+    private fun setOnClickMovieDateSpinnerListener() {
+        binding.screeningDateSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long,
+                ) {
+                    val movieDate = binding.screeningDateSpinner.getItemAtPosition(position)
+                    presenter.selectDate(movieDate as LocalDate)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
+            }
     }
 
     override fun initializePresenter() = MovieReservationPresenter(this, MovieContentsImpl, TheatersImpl, UserTicketsImpl)

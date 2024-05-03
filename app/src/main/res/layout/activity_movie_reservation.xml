@@ -114,7 +114,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:spinnerMode="dropdown"
-                    android:onItemSelected="@{(parent, view, position, id) -> presenter.selectDate(java.time.LocalDate.parse(String.valueOf(parent.getItemAtPosition(position))))}"
                     android:entries="@{presenter.movieContent.datesInRange}"/>
 
                 <View
@@ -126,7 +125,6 @@
                     android:id="@+id/screeningTime_spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onItemSelected="@{(parent, view, position, id) -> presenter.selectTime(java.time.LocalTime.parse(String.valueOf(parent.getItemAtPosition(position))))}"
                     android:spinnerMode="dropdown"
                     android:entries="@{presenter.theater.screeningTimes}"/>
             </LinearLayout>
