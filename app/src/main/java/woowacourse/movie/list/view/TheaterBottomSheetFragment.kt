@@ -13,7 +13,7 @@ import woowacourse.movie.list.adapter.TheaterAdapter
 import woowacourse.movie.list.model.TheaterData.theaters
 import woowacourse.movie.list.view.HomeFragment.Companion.EXTRA_MOVIE_ID_KEY_TO_FRAGMENT
 
-class TheaterFragment : BottomSheetDialogFragment(), TheaterFragmentContract.View {
+class TheaterBottomSheetFragment : BottomSheetDialogFragment(), TheaterFragmentContract.View {
     private lateinit var binding: FragmentTheaterBinding
     private lateinit var presenter: TheaterPresenter
 

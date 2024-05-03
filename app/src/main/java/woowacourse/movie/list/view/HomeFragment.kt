@@ -48,12 +48,12 @@ class HomeFragment : Fragment(), MovieListContract.View {
         movieAdapter.setItemClickListener(
             object : MovieAdapter.OnItemClickListener {
                 override fun onClick(movieId: Long) {
-                    val theaterFragment = TheaterFragment()
+                    val theaterBottomSheetFragment = TheaterBottomSheetFragment()
                     val bundle = Bundle()
                     bundle.putLong(EXTRA_MOVIE_ID_KEY_TO_FRAGMENT, movieId)
-                    theaterFragment.arguments = bundle
+                    theaterBottomSheetFragment.arguments = bundle
                     binding.fragmentContainerView.visibility = View.VISIBLE
-                    theaterFragment.show(parentFragmentManager, "dailog")
+                    theaterBottomSheetFragment.show(parentFragmentManager, "dailog")
                 }
             },
         )
