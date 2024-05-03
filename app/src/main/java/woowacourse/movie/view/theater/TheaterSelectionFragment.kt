@@ -22,6 +22,7 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
     private val binding: FragmentTheaterSelectionBinding get() = _binding!!
     private var movieId: Int = 0
     private lateinit var presenter: TheaterSelectionPresenter
+    private lateinit var theaterSelectionAdapter: TheaterSelectionAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,9 +32,9 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
         _binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_theater_selection, container, false)
         binding.theaterSelection = this
-        initTheaterRecyclerView()
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,6 +44,8 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
                 view = this@TheaterSelectionFragment,
                 movieId = movieId,
             )
+        initTheaterRecyclerView()
+        loadTheaters()
     }
 
     override fun onDestroyView() {
@@ -74,15 +77,17 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
     }
 
     private fun initTheaterRecyclerView() {
-        val theaterSelectionAdapter =
-            TheaterSelectionAdapter(
-                TheaterDao().findTheaterByMovieId(movieId),
-            ) { theaterId ->
+        theaterSelectionAdapter =
+            TheaterSelectionAdapter { theaterId ->
                 presenter.loadTheater(theaterId)
             }
         binding.recyclerViewTheaterSelection.apply {
             adapter = theaterSelectionAdapter
         }
+    }
+
+    private fun loadTheaters() {
+        theaterSelectionAdapter.updateTheaters(TheaterDao().findTheaterByMovieId(movieId))
     }
 
     companion object {
