@@ -73,10 +73,10 @@ class TicketingActivityTest {
 
     @Test
     fun spinners_exist_on_display() {
-        onView(withId(R.id.sp_date))
+        onView(withId(R.id.spinner_date))
             .check(matches(isDisplayed()))
 
-        onView(withId(R.id.sp_time_slot))
+        onView(withId(R.id.spinner_time_slot))
             .check(matches(isDisplayed()))
     }
 }

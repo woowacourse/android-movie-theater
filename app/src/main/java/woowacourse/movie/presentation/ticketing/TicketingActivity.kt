@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -66,7 +65,7 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
 
     override fun setUpDateSpinners(screeningDates: List<LocalDate>) {
         movieDateAdapter.addAll(screeningDates)
-        binding.spDate.adapter = movieDateAdapter
+        binding.spinnerDate.adapter = movieDateAdapter
     }
 
     override fun setUpTimeSpinners(
@@ -75,8 +74,8 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
     ) {
         movieTimeAdapter.clear()
         movieTimeAdapter.addAll(screeningTimes.map { it.format(DateTimeFormatter.ofPattern("kk:mm")) })
-        binding.spTimeSlot.adapter = movieTimeAdapter
-        savedTimePosition?.let { binding.spTimeSlot.setSelection(it) }
+        binding.spinnerTimeSlot.adapter = movieTimeAdapter
+        savedTimePosition?.let { binding.spinnerTimeSlot.setSelection(it) }
     }
 
     override fun navigate(
@@ -84,7 +83,8 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
         count: Int,
         theaterId: Long,
     ) {
-        val screeningDateTime = "${binding.spDate.selectedItem} ${binding.spTimeSlot.selectedItem}"
+        val screeningDateTime =
+            "${binding.spinnerDate.selectedItem} ${binding.spinnerTimeSlot.selectedItem}"
         startActivity(
             SeatSelectionActivity.createIntent(this, movieId, count, screeningDateTime, theaterId),
         )
@@ -97,7 +97,7 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(KEY_SAVED_COUNT, binding.tvCount.text.toString().toInt())
-        outState.putInt(KEY_SELECTED_TIME_POSITION, binding.spTimeSlot.selectedItemPosition)
+        outState.putInt(KEY_SELECTED_TIME_POSITION, binding.spinnerTimeSlot.selectedItemPosition)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
