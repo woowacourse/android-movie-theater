@@ -4,6 +4,10 @@
     <data>
 
         <variable
+            name="theater"
+            type="woowacourse.movie.model.theater.Theater" />
+
+        <variable
             name="theater_view_holder"
             type="woowacourse.movie.view.theater.adapter.TheaterSelectionViewHolder" />
     </data>
@@ -16,6 +20,7 @@
         android:layout_marginVertical="5dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
+        android:onClick="@{() -> theater_view_holder.onClickTheater(theater.theaterId)}"
         android:paddingVertical="6dp">
 
         <TextView
@@ -25,12 +30,13 @@
             android:paddingEnd="24dp"
             android:textColor="@color/black"
             android:textSize="16sp"
+            android:text="@{theater.name}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="잠실 극장" />
 
         <TextView
-            android:id="@+id/screening_info"
+            android:text="@{theater_view_holder.screeningTimesFormatText}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingEnd="24dp"

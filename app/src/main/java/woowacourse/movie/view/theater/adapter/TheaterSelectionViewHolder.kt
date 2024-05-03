@@ -7,27 +7,24 @@ import woowacourse.movie.utils.MovieUtils.convertScreeningInfoFormat
 
 class TheaterSelectionViewHolder(
     private val binding: ItemTheaterBinding,
+    private val onSelectTheater: OnSelectTheater,
 ) : RecyclerView.ViewHolder(binding.root) {
+    var screeningTimesFormatText = ""
 
     init {
         binding.theaterViewHolder = this
     }
 
-    fun bind(
-        item: Theater,
-        theaterId: OnSelectTheater,
-    ) {
-        with(binding) {
-            name.text = item.name
-            val screeningTimeCount =
-                item.screeningTimes.weekDay.size + item.screeningTimes.weekEnd.size
-            screeningInfo.text = convertScreeningInfoFormat(
-                screeningTimeCount,
-                root.context,
-            )
-            constraintLayoutItemTheater.setOnClickListener {
-                theaterId(item.theaterId)
-            }
-        }
+    fun bind(item: Theater) {
+        binding.theater = item
+
+        val screeningTimeCount =
+            item.screeningTimes.weekDay.size + item.screeningTimes.weekEnd.size
+        screeningTimesFormatText = convertScreeningInfoFormat(
+            screeningTimeCount,
+            binding.root.context,
+        )
     }
+
+    fun onClickTheater(theaterId: Int) = onSelectTheater(theaterId)
 }
