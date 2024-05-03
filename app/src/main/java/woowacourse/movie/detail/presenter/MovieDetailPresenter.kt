@@ -5,40 +5,29 @@ import woowacourse.movie.detail.presenter.contract.MovieDetailContract
 import woowacourse.movie.model.MovieCount
 
 class MovieDetailPresenter(
-    private val movieDetailContractView: MovieDetailContract.View,
+    private val view: MovieDetailContract.View,
 ) : MovieDetailContract.Presenter {
     private var movieCount: MovieCount = MovieCount()
-    private var timeSpinnerPosition: Int = 0
 
-    override fun loadMovieDetail(
-        movieId: Long,
-        theaterPosition: Int,
-    ) {
-        val movieData = getMovieById(movieId)
-        movieData?.let { movie ->
-            movieDetailContractView.displayMovieDetail(movie, movieCount)
-            movieDetailContractView.setUpDateSpinner(movie.date)
-            movieDetailContractView.setUpTimeSpinner(movie.theaters[theaterPosition].screeningTimes)
-        }
-    }
-
-    override fun updateTimeSpinnerPosition(position: Int) {
-        timeSpinnerPosition = position
+    override fun loadMovieDetail(movieId: Long) {
+        val movie = getMovieById(movieId) ?: return
+        view.displayMovieDetail(movie)
+        view.updateCountView(movieCount.count)
     }
 
     override fun updateReservationCount(count: Int) {
         movieCount = movieCount.update(count)
-        movieDetailContractView.updateCountView(movieCount.count)
+        view.updateCountView(movieCount.count)
     }
 
     override fun plusReservationCount() {
-        movieCount = movieCount.inc()
-        movieDetailContractView.updateCountView(movieCount.count)
+        movieCount = ++movieCount
+        view.updateCountView(movieCount.count)
     }
 
     override fun minusReservationCount() {
-        movieCount = movieCount.dec()
-        movieDetailContractView.updateCountView(movieCount.count)
+        movieCount = --movieCount
+        view.updateCountView(movieCount.count)
     }
 
     override fun reserveMovie(
@@ -46,11 +35,6 @@ class MovieDetailPresenter(
         date: String,
         time: String,
     ) {
-        movieDetailContractView.navigateToSeatSelectionView(
-            id,
-            date,
-            time,
-            movieCount.count,
-        )
+        view.navigateToSeatSelectionView(id, date, time, movieCount.count)
     }
 }

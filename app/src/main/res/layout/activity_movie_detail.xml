@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:movie="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -10,23 +9,21 @@
 
         <variable
             name="movie"
-            type="woowacourse.movie.model.Movie" />
+            type="woowacourse.movie.detail.ui.MovieDetailUiModel" />
 
         <variable
-            name="reservation_count"
+            name="movie_count"
             type="int" />
     </data>
 
     <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/detailActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".detail.view.MovieDetailActivity">
 
         <ScrollView
-            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
@@ -36,129 +33,64 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/detailImage"
+                    android:id="@+id/iv_poster"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/titanic"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
+                    app:imgRes="@{movie.thumbnail}"
                     app:layout_constraintTop_toTopOf="parent"
-                    movie:imgRes="@{movie.thumbnail}" />
+                    tools:src="@drawable/titanic" />
 
                 <TextView
-                    android:id="@+id/detailTitle"
+                    android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="15dp"
-                    android:hint="타이타닉"
+                    android:layout_margin="15dp"
                     android:text="@{movie.title}"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
-                    android:textSize="24dp"
+                    android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/detailImage" />
+                    app:layout_constraintTop_toBottomOf="@+id/iv_poster"
+                    tools:text="타이타닉" />
 
                 <TextView
-                    android:id="@+id/detailDateName"
+                    android:id="@+id/tv_screening_date_range"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:text="상영일: "
+                    android:text="@{@string/screening_date_range(movie.screeningStartDate, movie.screeningEndDate)}"
                     android:textColor="@color/black"
-                    android:textSize="16dp"
-                    app:layout_constraintLeft_toLeftOf="@id/detailTitle"
-                    app:layout_constraintTop_toBottomOf="@id/detailTitle" />
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toLeftOf="@+id/tv_title"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                    tools:text="상영일: 2024.3.1 ~ 2024.3.20" />
 
                 <TextView
-                    android:id="@+id/startDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="2024.3.1"
-                    android:text="@{movie.date.startLocalDate.toString()}"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black"
-                    android:textSize="16dp"
-                    app:layout_constraintBottom_toBottomOf="@id/detailDateName"
-                    app:layout_constraintLeft_toRightOf="@id/detailDateName"
-                    app:layout_constraintTop_toTopOf="@id/detailDateName" />
-
-                <TextView
-                    android:id="@+id/dateSeparator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" ~ "
-                    android:textColor="@color/black"
-                    android:textSize="16dp"
-                    app:layout_constraintBottom_toBottomOf="@id/detailDateName"
-                    app:layout_constraintLeft_toRightOf="@id/startDate"
-                    app:layout_constraintTop_toTopOf="@id/detailDateName" />
-
-
-                <TextView
-                    android:id="@+id/endDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="2024.3.5"
-                    android:text="@{movie.date.endLocalDate.toString()}"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black"
-                    android:textSize="16dp"
-                    app:layout_constraintBottom_toBottomOf="@id/detailDateName"
-                    app:layout_constraintLeft_toRightOf="@id/dateSeparator"
-                    app:layout_constraintTop_toTopOf="@id/detailDateName" />
-
-
-                <TextView
-                    android:id="@+id/detailRunningTimeName"
+                    android:id="@+id/tv_running_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="러닝타임: "
+                    android:text="@{@string/running_time(movie.runningTime)}"
                     android:textColor="@color/black"
-                    android:textSize="16dp"
-                    app:layout_constraintLeft_toLeftOf="@id/detailTitle"
-                    app:layout_constraintTop_toBottomOf="@id/detailDateName" />
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toLeftOf="@+id/tv_title"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_screening_date_range"
+                    tools:text="러닝타임: 152분" />
 
                 <TextView
-                    android:id="@+id/detailRunningTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="152"
-                    android:text="@{String.valueOf(movie.runningTime)}"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black"
-                    android:textSize="16dp"
-                    app:layout_constraintBottom_toBottomOf="@id/detailRunningTimeName"
-                    app:layout_constraintLeft_toRightOf="@id/detailRunningTimeName"
-                    app:layout_constraintTop_toTopOf="@id/detailRunningTimeName" />
-
-                <TextView
-                    android:id="@+id/detailRunningTimeFormat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="분"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black"
-                    android:textSize="16dp"
-                    app:layout_constraintBottom_toBottomOf="@id/detailRunningTime"
-                    app:layout_constraintLeft_toRightOf="@id/detailRunningTime"
-                    app:layout_constraintTop_toTopOf="@id/detailRunningTimeName" />
-
-                <TextView
-                    android:id="@+id/detailDescription"
+                    android:id="@+id/tv_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:hint="설명1\n설명2\n설명3\n설명4\n설명\n"
                     android:text="@{movie.description}"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/black"
-                    app:layout_constraintLeft_toLeftOf="@id/detailRunningTimeName"
-                    app:layout_constraintTop_toBottomOf="@id/detailRunningTime" />
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toLeftOf="@+id/tv_running_time"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_running_time"
+                    tools:text="설명1\n설명2\n설명3\n설명4\n설명\n" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -169,74 +101,74 @@
             android:layout_height="wrap_content">
 
             <Spinner
-                android:id="@+id/dateSpinner"
+                android:id="@+id/sp_screening_date"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_margin="10dp"
-                android:entries="@{activity.dates}"
-                app:layout_constraintEnd_toStartOf="@+id/runningTimeSpinner"
-                app:layout_constraintStart_toStartOf="@id/detailMinusBtn"
+                android:entries="@{movie.screeningDates}"
+                app:layout_constraintEnd_toStartOf="@+id/sp_screening_time"
+                app:layout_constraintStart_toStartOf="@+id/btn_minus"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Spinner
-                android:id="@+id/runningTimeSpinner"
+                android:id="@+id/sp_screening_time"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_margin="10dp"
-                android:entries="@{activity.times}"
-                app:layout_constraintEnd_toEndOf="@id/detailPlusBtn"
-                app:layout_constraintStart_toEndOf="@+id/dateSpinner"
+                android:entries="@{movie.screeningTimes}"
+                app:layout_constraintEnd_toEndOf="@+id/btn_plus"
+                app:layout_constraintStart_toEndOf="@+id/sp_screening_date"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/detailMinusBtn"
+                android:id="@+id/btn_minus"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:onClick="@{() -> activity.onMinusButtonClick()}"
-                android:text="-"
-                android:textSize="25dp"
+                android:text="@string/minus_button"
+                android:textSize="25sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@id/seatSelectionBtn"
+                app:layout_constraintBottom_toTopOf="@+id/btn_seat_selection"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/dateSpinner" />
+                app:layout_constraintTop_toBottomOf="@+id/sp_screening_date" />
 
             <TextView
-                android:id="@+id/detailReservCount"
+                android:id="@+id/tv_reservation_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{String.valueOf(reservation_count)}"
+                android:text="@{String.valueOf(movie_count)}"
                 android:textColor="@color/black"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@id/seatSelectionBtn"
-                app:layout_constraintEnd_toStartOf="@+id/detailPlusBtn"
-                app:layout_constraintStart_toEndOf="@+id/detailMinusBtn"
-                app:layout_constraintTop_toBottomOf="@id/dateSpinner"
-                tools:hint="1" />
+                app:layout_constraintBottom_toTopOf="@+id/btn_seat_selection"
+                app:layout_constraintEnd_toStartOf="@+id/btn_plus"
+                app:layout_constraintStart_toEndOf="@+id/btn_minus"
+                app:layout_constraintTop_toBottomOf="@+id/sp_screening_date"
+                tools:text="1" />
 
             <Button
-                android:id="@+id/detailPlusBtn"
+                android:id="@+id/btn_plus"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="15dp"
                 android:onClick="@{() -> activity.onPlusButtonClick()}"
-                android:text="+"
-                android:textSize="25dp"
+                android:text="@string/plus_button"
+                android:textSize="25sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@id/seatSelectionBtn"
+                app:layout_constraintBottom_toTopOf="@+id/btn_seat_selection"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/runningTimeSpinner" />
+                app:layout_constraintTop_toBottomOf="@+id/sp_screening_time" />
 
             <Button
-                android:id="@+id/seatSelectionBtn"
+                android:id="@+id/btn_seat_selection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:onClick="@{()->activity.onSeatSelectionButtonClick()}"
                 android:padding="10dp"
-                android:text="좌석 선택"
-                android:textSize="20dp"
+                android:text="@string/seat_selection_button"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"

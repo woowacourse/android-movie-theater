@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Movie</string>
+    <string name="screening_date_range">상영일: %s ~ %s</string>
+    <string name="running_time">러닝타임: %d분</string>
+    <string name="plus_button">+</string>
+    <string name="minus_button">-</string>
+    <string name="seat_selection_button">좌석 선택</string>
     <string name="seat">%1$s%2$s</string>
     <string name="result">일반 %d명 | %s | %s 극장</string>
     <string name="theater">%s 극장</string>

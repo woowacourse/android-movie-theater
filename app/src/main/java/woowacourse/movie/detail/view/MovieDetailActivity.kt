@@ -10,29 +10,22 @@ import woowacourse.movie.data.MovieRepository.getMovieById
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.detail.presenter.MovieDetailPresenter
 import woowacourse.movie.detail.presenter.contract.MovieDetailContract
+import woowacourse.movie.detail.ui.MovieDetailUiModel
 import woowacourse.movie.model.Movie
-import woowacourse.movie.model.MovieCount
-import woowacourse.movie.model.MovieDate
 import woowacourse.movie.seatselection.view.MovieSeatSelectionActivity
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_NAME
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_POSITION
-import woowacourse.movie.util.MovieIntentConstant.KEY_ITEM_POSITION
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_DATE
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 
 class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     private lateinit var binding: ActivityMovieDetailBinding
     private lateinit var movieDetailPresenter: MovieDetailPresenter
-
-    lateinit var dates: List<String>
-    lateinit var times: List<String>
 
     private val movieId: Long by lazy { intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID) }
     private val selectedTheaterPosition: Int by lazy {
@@ -49,27 +42,22 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         binding.activity = this
 
         movieDetailPresenter = MovieDetailPresenter(this)
-        movieDetailPresenter.loadMovieDetail(movieId, selectedTheaterPosition)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-
-        val position = binding.runningTimeSpinner.selectedItemPosition
-        outState.putInt(KEY_ITEM_POSITION, position)
-
-        val count = binding.reservationCount
-        outState.putInt(KEY_MOVIE_COUNT, count)
+        movieDetailPresenter.loadMovieDetail(movieId)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 
-        val savedPosition = savedInstanceState.getInt(KEY_ITEM_POSITION)
-        movieDetailPresenter.updateTimeSpinnerPosition(savedPosition)
+        val screeningDateSpinnerPosition =
+            savedInstanceState.getInt(SCREENING_DATE_SPINNER_POSITION_KEY)
+        binding.spScreeningDate.setSelection(screeningDateSpinnerPosition)
 
-        val savedCount = savedInstanceState.getInt(KEY_MOVIE_COUNT)
-        movieDetailPresenter.updateReservationCount(savedCount)
+        val screeningTimeSpinnerPosition =
+            savedInstanceState.getInt(SCREENING_TIME_SPINNER_POSITION_KEY)
+        binding.spScreeningTime.setSelection(screeningTimeSpinnerPosition)
+
+        val movieCount = savedInstanceState.getInt(MOVIE_COUNT_KEY)
+        movieDetailPresenter.updateReservationCount(movieCount)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -77,32 +65,12 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun displayMovieDetail(
-        movieData: Movie?,
-        movieCount: MovieCount,
-    ) {
-        movieData?.let { movie ->
-            binding.movie = movie
-            binding.reservationCount = movieCount.count
-        }
+    override fun displayMovieDetail(movie: Movie) {
+        binding.movie = MovieDetailUiModel.of(movie, selectedTheaterPosition)
     }
 
     override fun updateCountView(count: Int) {
-        binding.reservationCount = count
-    }
-
-    override fun setUpDateSpinner(movieDate: MovieDate) {
-        dates =
-            movieDate.generateDates().map { date ->
-                date.toString()
-            }
-    }
-
-    override fun setUpTimeSpinner(screeningTimes: List<LocalTime>) {
-        times =
-            screeningTimes.map { time ->
-                time.format(DateTimeFormatter.ofPattern("kk:mm"))
-            }
+        binding.movieCount = count
     }
 
     override fun navigateToSeatSelectionView(
@@ -128,19 +96,37 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
 
     fun onMinusButtonClick() {
         movieDetailPresenter.minusReservationCount()
-        binding.invalidateAll()
     }
 
     fun onPlusButtonClick() {
         movieDetailPresenter.plusReservationCount()
-        binding.invalidateAll()
     }
 
     fun onSeatSelectionButtonClick() {
         movieDetailPresenter.reserveMovie(
             movieId,
-            binding.dateSpinner.selectedItem.toString(),
-            binding.runningTimeSpinner.selectedItem.toString(),
+            binding.spScreeningDate.selectedItem.toString(),
+            binding.spScreeningTime.selectedItem.toString(),
         )
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+
+        val screeningDateSpinnerPosition = binding.spScreeningDate.selectedItemPosition
+        outState.putInt(SCREENING_DATE_SPINNER_POSITION_KEY, screeningDateSpinnerPosition)
+
+        val screeningTimeSpinnerPosition = binding.spScreeningTime.selectedItemPosition
+        outState.putInt(SCREENING_TIME_SPINNER_POSITION_KEY, screeningTimeSpinnerPosition)
+
+        val movieCount = binding.movieCount
+        outState.putInt(MOVIE_COUNT_KEY, movieCount)
+
+        super.onSaveInstanceState(outState)
+    }
+
+    companion object {
+        private const val SCREENING_DATE_SPINNER_POSITION_KEY = "screeningDateSpinnerPosition"
+        private const val SCREENING_TIME_SPINNER_POSITION_KEY = "screeningTimeSpinnerPosition"
+        private const val MOVIE_COUNT_KEY = "movieCount"
     }
 }

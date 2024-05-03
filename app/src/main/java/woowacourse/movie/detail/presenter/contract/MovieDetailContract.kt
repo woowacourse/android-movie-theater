@@ -7,16 +7,9 @@ import java.time.LocalTime
 
 interface MovieDetailContract {
     interface View {
+        fun displayMovieDetail(movie: Movie)
+
         fun updateCountView(count: Int)
-
-        fun setUpDateSpinner(movieDate: MovieDate)
-
-        fun setUpTimeSpinner(screeningTimes: List<LocalTime>)
-
-        fun displayMovieDetail(
-            movieData: Movie?,
-            movieCount: MovieCount,
-        )
 
         fun navigateToSeatSelectionView(
             id: Long,
@@ -27,10 +20,7 @@ interface MovieDetailContract {
     }
 
     interface Presenter {
-        fun loadMovieDetail(
-            movieId: Long,
-            theaterPosition: Int,
-        )
+        fun loadMovieDetail(movieId: Long)
 
         fun plusReservationCount()
 
@@ -43,7 +33,5 @@ interface MovieDetailContract {
         )
 
         fun updateReservationCount(count: Int)
-
-        fun updateTimeSpinnerPosition(position: Int)
     }
 }
