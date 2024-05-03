@@ -30,9 +30,6 @@
         <activity
             android:name=".presentation.ui.detail.DetailActivity"
             android:exported="false" />
-        <activity
-            android:name=".presentation.ui.screen.ScreenActivity"
-            android:exported="true"></activity>
     </application>
 
 </manifest>
