@@ -43,11 +43,13 @@ class MovieReservationCompleteActivity :
 
     override fun initializePresenter() = MovieReservationCompletePresenter(this, UserTicketsImpl)
 
-    private fun userTicketId() = intent.getLongExtra(MovieReservationCompleteKey.TICKET_ID, USER_TICKET_ID_DEFAULT_VALUE)
+    private fun userTicketId() =
+        intent.getLongExtra(MovieReservationCompleteKey.TICKET_ID, USER_TICKET_ID_DEFAULT_VALUE)
 
     override fun showError(throwable: Throwable) {
         Log.e(TAG, throwable.message.toString())
-        Toast.makeText(this, resources.getString(R.string.toast_invalid_key), Toast.LENGTH_LONG).show()
+        Toast.makeText(this, resources.getString(R.string.toast_invalid_key), Toast.LENGTH_LONG)
+            .show()
         finish()
     }
 
@@ -79,24 +81,27 @@ class MovieReservationCompleteActivity :
     }
 }
 
-@BindingAdapter("context", "count", "seats", "theaterName")
+@BindingAdapter("count", "seats", "theaterName")
 fun setReservationResult(
     textView: TextView,
-    context: Context,
     count: Int,
     seats: List<Seat>,
     theaterName: String,
 ) {
     textView.text =
-        context.getString(R.string.complete_reservation_result, count, seats.joinToString(), theaterName)
+        textView.context.getString(
+            R.string.complete_reservation_result,
+            count,
+            seats.joinToString(),
+            theaterName
+        )
 }
 
-@BindingAdapter("context", "dateTime")
+@BindingAdapter("dateTime")
 fun setReservedDateTime(
     textView: TextView,
-    context: Context,
     dateTime: LocalDateTime,
 ) {
     textView.text =
-        dateTime.format(DateTimeFormatter.ofPattern(context.getString(R.string.reservation_screening_date_time_format)))
+        dateTime.format(DateTimeFormatter.ofPattern(textView.context.getString(R.string.reservation_screening_date_time_format)))
 }

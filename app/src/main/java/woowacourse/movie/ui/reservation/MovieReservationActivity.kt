@@ -96,22 +96,21 @@ class MovieReservationActivity :
     }
 }
 
-@BindingAdapter("context", "imgRes")
+@BindingAdapter("imgRes")
 fun setImageViewResource(
     imageView: ImageView,
-    context: Context,
     imageName: String,
 ) {
-    imageView.setImageResource(imageName.getImageFromId(context))
+    imageView.setImageResource(imageName.getImageFromId(imageView.context))
 }
 
-@BindingAdapter("context", "openingDate", "endingDate")
+@BindingAdapter("openingDate", "endingDate")
 fun setScreeningDate(
     textView: TextView,
-    context: Context,
     openingDate: LocalDate,
     endingDate: LocalDate,
 ) {
+    val context = textView.context
     val formattedOpeningDate =
         openingDate.format(DateTimeFormatter.ofPattern(context.getString(R.string.reservation_screening_date_format)))
     val formattedEndingDate =

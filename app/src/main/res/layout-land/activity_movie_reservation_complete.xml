@@ -53,7 +53,6 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                movie:context="@{context}"
                 movie:dateTime="@{presenter.userTicket.screeningStartDateTime}" />
         </LinearLayout>
 
@@ -70,7 +69,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
-                movie:context="@{context}"
                 movie:count="@{presenter.userTicket.reservationDetail.reservationCount}"
                 movie:seats="@{presenter.userTicket.reservationDetail.selectedSeat}"
                 movie:theaterName="@{presenter.userTicket.theater}" />

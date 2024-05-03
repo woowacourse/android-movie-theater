@@ -22,7 +22,7 @@
         movie:theaterClickListener="@{onClickListener}"
         movie:theaterId="@{theater.id}">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/theater_title_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="선릉 극장" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/screening_times_count_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -51,14 +51,15 @@
             app:layout_constraintTop_toBottomOf="@id/theater_title_text"
             tools:text="3개의 상영시간" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/selection_arrow_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_forward_arrow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/image_description_arrow_image" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

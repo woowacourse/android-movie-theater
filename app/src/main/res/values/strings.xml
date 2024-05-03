@@ -33,4 +33,5 @@
     <string name="toast_invalid_key">잘못된 접근입니다.</string>
 
     <string name="split">|</string>
+    <string name="image_description_arrow_image">arrow_image</string>
 </resources>

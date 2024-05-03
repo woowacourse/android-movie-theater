@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="presenter"
             type="woowacourse.movie.ui.reservation.MovieReservationPresenter" />
@@ -35,7 +34,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:scaleType="centerCrop"
-                    app:context = "@{context}"
                     app:imgRes="@{presenter.movieContent.imageId}"
                     app:layout_constraintBottom_toTopOf="@+id/text_layout"
                     app:layout_constraintDimensionRatio="360:340"
@@ -64,7 +62,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="34dp"
-                        movie:context="@{context}"
                         movie:openingDate="@{presenter.movieContent.openingMovieDate}"
                         movie:endingDate="@{presenter.movieContent.endingMoviesDate}"
                         android:textSize="16sp" />
