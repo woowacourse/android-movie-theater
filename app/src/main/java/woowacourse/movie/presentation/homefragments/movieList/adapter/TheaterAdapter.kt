@@ -9,10 +9,11 @@ import woowacourse.movie.presentation.homefragments.movieList.listener.TheaterCl
 import woowacourse.movie.presentation.homefragments.movieList.viewholder.TheaterViewHolder
 
 class TheaterAdapter(
-    private val theaters: List<Theater>,
-    private val movieId: Long,
     private val listener: TheaterClickListener,
 ) : RecyclerView.Adapter<TheaterViewHolder>() {
+    private lateinit var theaters: List<Theater>
+    private var movieId: Long = 0L
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -30,5 +31,13 @@ class TheaterAdapter(
 
     override fun getItemCount(): Int {
         return theaters.size
+    }
+
+    fun updateMovieIdAndTheaters(
+        newMovieId: Long,
+        newTheaters: List<Theater>,
+    ) {
+        movieId = newMovieId
+        theaters = newTheaters
     }
 }

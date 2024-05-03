@@ -11,9 +11,10 @@ import woowacourse.movie.presentation.homefragments.movieList.viewholder.AdViewH
 import woowacourse.movie.presentation.homefragments.movieList.viewholder.MovieViewHolder
 
 class MovieAdapter(
-    private var movies: List<Movie> = emptyList(),
     private val listener: MovieListClickListener,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var movies: List<Movie> = emptyList()
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -38,7 +39,7 @@ class MovieAdapter(
         holder: RecyclerView.ViewHolder,
         position: Int,
     ) {
-        val item = movies[(position - position / AD_POSITION)]
+        val item = movies[(position - (position + 1) / AD_POSITION)]
         when (holder) {
             is MovieViewHolder -> holder.bind(item)
             is AdViewHolder -> holder.bind()
@@ -55,6 +56,11 @@ class MovieAdapter(
     override fun getItemCount(): Int {
         val adCount = if (movies.size >= AD_INTERVAL) movies.size / AD_INTERVAL else 0
         return movies.size + adCount
+    }
+
+    fun updateMovies(newMovies: List<Movie>) {
+        movies = newMovies
+        notifyDataSetChanged()
     }
 
     companion object {

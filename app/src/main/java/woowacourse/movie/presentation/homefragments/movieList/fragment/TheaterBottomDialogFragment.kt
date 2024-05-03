@@ -20,6 +20,7 @@ class TheaterBottomDialogFragment(
 ) : BottomSheetDialogFragment(), TheaterClickListener, TheaterBottomDialogContract.View {
     private val presenter = TheaterBottomDialogPresenter(this, theaterListRepository)
     private lateinit var binding: FragmentTheaterBottomSheetDialogBinding
+    private val theaterAdapter: TheaterAdapter by lazy { TheaterAdapter(this) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,13 +42,12 @@ class TheaterBottomDialogFragment(
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        binding.theaterListRv.adapter = theaterAdapter
         presenter.loadTheaters(movieId)
     }
 
     override fun showTheaterList(theaterList: List<Theater>) {
-        val adapter =
-            TheaterAdapter(theaterList, movieId, this)
-        binding.theaterListRv.adapter = adapter
+        theaterAdapter.updateMovieIdAndTheaters(movieId, theaterList)
     }
 
     override fun onTheaterClick(

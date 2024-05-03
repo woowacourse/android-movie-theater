@@ -17,6 +17,7 @@ import woowacourse.movie.repository.DummyTheaterList
 class MovieListFragment : Fragment(), MovieListContract.View, MovieListClickListener {
     private val presenter = MovieListPresenter(this)
     private lateinit var binding: FragmentMovieListBinding
+    private val movieAdapter: MovieAdapter by lazy { MovieAdapter(this) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,11 +33,12 @@ class MovieListFragment : Fragment(), MovieListContract.View, MovieListClickList
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        binding.rvMovies.adapter = movieAdapter
         presenter.loadMovies()
     }
 
     override fun displayMovies(movies: List<Movie>) {
-        binding.rvMovies.adapter = MovieAdapter(movies, this)
+        movieAdapter.updateMovies(movies)
     }
 
     override fun ticketingButtonClick(movieId: Long) {
