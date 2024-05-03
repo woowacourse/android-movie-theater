@@ -6,7 +6,7 @@
             name="movie"
             type="woowacourse.movie.model.Movie" />
         <variable
-            name="seating_system"
+            name="seatingSystem"
             type="woowacourse.movie.model.SeatingSystem" />
     </data>
 
@@ -71,7 +71,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TableLayout
-        android:id="@+id/tl_seats"
+        android:id="@+id/tablelayout_seats"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"

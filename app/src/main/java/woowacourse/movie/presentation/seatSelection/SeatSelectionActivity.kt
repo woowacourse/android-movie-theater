@@ -25,7 +25,7 @@ import woowacourse.movie.utils.formatSeat
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private lateinit var presenter: SeatSelectionPresenter
     private val seatItems: List<TextView> by lazy {
-        binding.tlSeats.children.filterIsInstance<TableRow>()
+        binding.tablelayoutSeats.children.filterIsInstance<TableRow>()
             .flatMap { tableRow ->
                 tableRow.children.filterIsInstance<TextView>().toList()
             }.toList()
