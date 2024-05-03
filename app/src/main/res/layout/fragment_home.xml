@@ -3,9 +3,11 @@
 
     <data>
 
+        <import type="java.util.List" />
+
         <variable
-            name="presenter"
-            type="woowacourse.movie.presentation.ui.main.home.HomePresenter" />
+            name="screens"
+            type="List&lt;woowacourse.movie.domain.model.ScreenView&gt;" />
 
     </data>
 
@@ -16,7 +18,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_screen"
-            bindUpdateScreensRecyclerView="@{presenter.screens}"
+            bindUpdateScreensRecyclerView="@{screens}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

@@ -1,15 +1,16 @@
-package woowacourse.movie.presentation.ui.main.home.bottom
+package woowacourse.movie.presentation.ui.main.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.HolderTheaterBinding
 import woowacourse.movie.domain.model.TheaterCount
+import woowacourse.movie.presentation.ui.main.home.bottom.BottomTheaterActionHandler
 
 class BottomTheatersAdapter(
     private val actionHandler: BottomTheaterActionHandler,
     private val theaterCounts: List<TheaterCount> = mutableListOf(),
-    val movieId: Int,
+    private val movieId: Int,
 ) : RecyclerView.Adapter<BottomTheatersViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,

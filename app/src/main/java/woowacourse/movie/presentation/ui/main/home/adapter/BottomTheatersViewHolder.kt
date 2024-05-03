@@ -1,8 +1,9 @@
-package woowacourse.movie.presentation.ui.main.home.bottom
+package woowacourse.movie.presentation.ui.main.home.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.HolderTheaterBinding
 import woowacourse.movie.domain.model.TheaterCount
+import woowacourse.movie.presentation.ui.main.home.bottom.BottomTheaterActionHandler
 
 class BottomTheatersViewHolder(
     val binding: HolderTheaterBinding,
