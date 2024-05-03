@@ -14,12 +14,12 @@ class SeatSelectionPresenter(
     private val repository: ScreenRepository,
     private val reservationRepository: ReservationRepository,
 ) : SeatSelectionContract.Presenter {
-    private var _uiModel: SeatSelectionUiModel = SeatSelectionUiModel()
-    val uiModel: SeatSelectionUiModel
-        get() = _uiModel
+    private var uiModel: SeatSelectionUiModel = SeatSelectionUiModel()
+    val userSeat: UserSeat
+        get() = UserSeat(uiModel.userSeat.seatModels.filter { it.isSelected })
 
     override fun updateUiModel(reservationInfo: ReservationInfo) {
-        _uiModel =
+        uiModel =
             uiModel.copy(
                 id = reservationInfo.theaterId,
                 dateTime = reservationInfo.dateTime,
@@ -29,7 +29,8 @@ class SeatSelectionPresenter(
 
     override fun loadScreen(id: Int) {
         repository.findByScreenId(theaterId = id, movieId = id).onSuccess { screen ->
-            _uiModel = uiModel.copy(screen = screen)
+            uiModel = uiModel.copy(screen = screen)
+            view.showScreen(screen, uiModel.totalPrice, uiModel.ticketCount)
         }.onFailure { e ->
             when (e) {
                 is NoSuchElementException -> {
@@ -47,19 +48,9 @@ class SeatSelectionPresenter(
 
     override fun loadSeatBoard(id: Int) {
         repository.loadSeatBoard(id).onSuccess { seatBoard ->
-            _uiModel =
-                _uiModel.copy(
-                    userSeat =
-                        UserSeat(
-                            seatBoard.seats.map {
-                                SeatModel(
-                                    it.column,
-                                    it.row,
-                                    it.seatRank,
-                                )
-                            },
-                        ),
-                )
+            val seats = seatBoard.seats.map { SeatModel(it.column, it.row, it.seatRank) }
+            uiModel = uiModel.copy(userSeat = UserSeat(seats))
+            view.showSeatBoard(uiModel.userSeat)
         }.onFailure { e ->
             when (e) {
                 is NoSuchElementException -> {
@@ -76,25 +67,33 @@ class SeatSelectionPresenter(
     }
 
     override fun clickSeat(seatModel: SeatModel) {
+        val updatedSeatModels =
+            uiModel.userSeat.seatModels.map { seatModelItem ->
+                if (seatModel == seatModelItem) {
+                    seatModelItem.copy(isSelected = !seatModelItem.isSelected)
+                } else {
+                    seatModelItem
+                }
+            }
+
         if (seatModel.isSelected) {
-            seatModel.isSelected = false
-            calculateSeat()
+            uiModel = uiModel.copy(userSeat = uiModel.userSeat.copy(seatModels = updatedSeatModels))
+            view.unselectSeat(uiModel.userSeat)
             return
         }
+
         if (uiModel.userSeat.seatModels.count { it.isSelected } == uiModel.ticketCount) {
             view.showSnackBar(MessageType.AllSeatsSelectedMessage(uiModel.ticketCount))
         } else {
-            seatModel.isSelected = true
-            calculateSeat()
+            uiModel = uiModel.copy(userSeat = uiModel.userSeat.copy(seatModels = updatedSeatModels))
+            view.selectSeat(uiModel.userSeat)
         }
     }
 
     override fun calculateSeat() {
         val newPrice =
-            uiModel.userSeat.seatModels.filter { it.isSelected }.sumOf {
-                it.seatRank.price
-            }
-        _uiModel = uiModel.copy(totalPrice = newPrice)
+            uiModel.userSeat.seatModels.filter { it.isSelected }.sumOf { it.seatRank.price }
+        uiModel = uiModel.copy(totalPrice = newPrice)
         view.showTotalPrice(uiModel.totalPrice)
     }
 

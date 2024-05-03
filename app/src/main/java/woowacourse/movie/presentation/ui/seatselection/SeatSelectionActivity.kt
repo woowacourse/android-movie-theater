@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
+import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.repository.DummyReservation
 import woowacourse.movie.domain.repository.DummyScreens
 import woowacourse.movie.presentation.base.BaseActivity
@@ -44,8 +45,32 @@ class SeatSelectionActivity : BaseActivity<ActivitySeatSelectionBinding>(), View
         }
     }
 
+    override fun showScreen(
+        screen: Screen,
+        totalPrice: Int,
+        ticketCount: Int,
+    ) {
+        binding.screen = screen
+        binding.totalPrice = totalPrice
+        binding.ticketCount = ticketCount
+    }
+
+    override fun showSeatBoard(userSeat: UserSeat) {
+        binding.userSeat = userSeat
+    }
+
+    override fun selectSeat(userSeat: UserSeat) {
+        binding.userSeat = userSeat
+        presenter.calculateSeat()
+    }
+
+    override fun unselectSeat(userSeat: UserSeat) {
+        binding.userSeat = userSeat
+        presenter.calculateSeat()
+    }
+
     override fun showTotalPrice(totalPrice: Int) {
-        binding.invalidateAll()
+        binding.totalPrice = totalPrice
     }
 
     override fun showReservationDialog() {
@@ -79,7 +104,7 @@ class SeatSelectionActivity : BaseActivity<ActivitySeatSelectionBinding>(), View
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putSerializable(PUT_STATE_KEY_USER_SEAT, presenter.uiModel.userSeat)
+        outState.putSerializable(PUT_STATE_KEY_USER_SEAT, presenter.userSeat)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -88,7 +113,8 @@ class SeatSelectionActivity : BaseActivity<ActivitySeatSelectionBinding>(), View
         val savedUserSeat = savedInstanceState.getSerializable(PUT_STATE_KEY_USER_SEAT) as UserSeat?
         savedUserSeat?.let { userSeat ->
             userSeat.seatModels.forEach { seat ->
-                presenter.clickSeat(seat)
+                val n = seat.copy(isSelected = false)
+                presenter.clickSeat(n)
             }
         }
     }

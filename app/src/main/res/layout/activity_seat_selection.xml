@@ -4,6 +4,22 @@
     <data>
 
         <variable
+            name="userSeat"
+            type="woowacourse.movie.presentation.model.UserSeat" />
+
+        <variable
+            name="screen"
+            type="woowacourse.movie.domain.model.Screen" />
+
+        <variable
+            name="ticketCount"
+            type="int" />
+
+        <variable
+            name="totalPrice"
+            type="int" />
+
+        <variable
             name="presenter"
             type="woowacourse.movie.presentation.ui.seatselection.SeatSelectionPresenter" />
     </data>
@@ -53,31 +69,31 @@
                     <include
                         android:id="@+id/first_row"
                         layout="@layout/include_seat_contents"
-                        app:list="@{presenter.uiModel.userSeat.seatModels.subList(0, 4)}"
+                        app:list="@{userSeat.seatModels.subList(0, 4)}"
                         app:presenter="@{presenter}" />
 
                     <include
                         android:id="@+id/second_row"
                         layout="@layout/include_seat_contents"
-                        app:list="@{presenter.uiModel.userSeat.seatModels.subList(4, 8)}"
+                        app:list="@{userSeat.seatModels.subList(4, 8)}"
                         app:presenter="@{presenter}" />
 
                     <include
                         android:id="@+id/third_row"
                         layout="@layout/include_seat_contents"
-                        app:list="@{presenter.uiModel.userSeat.seatModels.subList(8, 12)}"
+                        app:list="@{userSeat.seatModels.subList(8, 12)}"
                         app:presenter="@{presenter}" />
 
                     <include
                         android:id="@+id/fourth_row"
                         layout="@layout/include_seat_contents"
-                        app:list="@{presenter.uiModel.userSeat.seatModels.subList(12, 16)}"
+                        app:list="@{userSeat.seatModels.subList(12, 16)}"
                         app:presenter="@{presenter}" />
 
                     <include
                         android:id="@+id/fifth_row"
                         layout="@layout/include_seat_contents"
-                        app:list="@{presenter.uiModel.userSeat.seatModels.subList(16, 20)}"
+                        app:list="@{userSeat.seatModels.subList(16, 20)}"
                         app:presenter="@{presenter}" />
 
                 </TableLayout>
@@ -105,7 +121,7 @@
                 android:id="@+id/tv_screen_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{presenter.uiModel.screen.movie.title}"
+                android:text="@{screen.movie.title}"
                 android:textSize="18dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -116,7 +132,7 @@
 
             <TextView
                 android:id="@+id/tv_screen_total_price"
-                bindFormatPrice="@{presenter.uiModel.totalPrice}"
+                bindFormatPrice="@{totalPrice}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18dp"
@@ -131,13 +147,14 @@
 
         <Button
             android:id="@+id/btn_done"
+            ticketCount="@{ticketCount}"
+            userSeat="@{userSeat}"
             android:layout_width="88dp"
             android:layout_height="78dp"
             android:background="@color/purple"
             android:gravity="center"
             android:onClick="@{() -> presenter.showConfirmDialog()}"
             android:text="@string/done"
-            bindChangeEnabled="@{presenter.uiModel}"
             android:textColor="@color/white"
             android:textSize="18dp"
             android:textStyle="bold"

@@ -7,6 +7,7 @@ import androidx.databinding.BindingAdapter
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.SeatModel
 import woowacourse.movie.domain.model.SeatRank
+import woowacourse.movie.presentation.model.UserSeat
 import woowacourse.movie.presentation.utils.currency
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -29,9 +30,12 @@ fun TextView.formatPrice(price: Int) {
     this.text = price.currency(this.context)
 }
 
-@BindingAdapter("bindChangeEnabled")
-fun Button.changeEnabled(uiModel: SeatSelectionUiModel) {
-    this.isEnabled = uiModel.userSeat.seatModels.filter { it.isSelected }.size == uiModel.ticketCount
+@BindingAdapter("userSeat", "ticketCount")
+fun Button.changeEnabled(
+    userSeat: UserSeat,
+    ticketCount: Int,
+) {
+    this.isEnabled = userSeat.seatModels.filter { it.isSelected }.size == ticketCount
 }
 
 @BindingAdapter("bindShowSeat")
