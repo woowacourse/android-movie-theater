@@ -6,7 +6,7 @@
             name="movie"
             type="woowacourse.movie.model.Movie" />
         <variable
-            name="seating_system"
+            name="seatingSystem"
             type="woowacourse.movie.model.SeatingSystem" />
     </data>
 
@@ -244,7 +244,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:textSize="18sp"
-        android:text="@{seating_system.totalPriceToString()}"
+        android:text="@{seatingSystem.totalPriceToString()}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/tv_title"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
@@ -259,7 +259,7 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_total_price"
         app:layout_constraintStart_toEndOf="@id/tv_total_price"
         app:layout_constraintEnd_toStartOf="@id/gl_btn"
-        android:text="원" />
+        android:text="@string/text_price_won" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_complete"
@@ -272,7 +272,7 @@
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:enabled="@{!seating_system.canSelectSeat()}"
+        android:enabled="@{!seatingSystem.canSelectSeat()}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/gl_btn"
