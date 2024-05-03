@@ -41,7 +41,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    imgRes="@{movie.thumbnail}"
+                    imageResourceId="@{movie.thumbnail}"
                     tools:src="@drawable/ic_launcher_background"
                     android:scaleType="centerCrop"/>
 

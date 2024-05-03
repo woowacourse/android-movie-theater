@@ -22,13 +22,13 @@ class MovieAdapter(
         return when (viewType) {
             MOVIE_VIEW_TYPE -> {
                 val binding =
-                    ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                    ItemMovieBinding.inflate(inflater, parent, false)
                 MovieViewHolder(binding, listener)
             }
 
             else -> {
                 val binding =
-                    ItemAdBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                    ItemAdBinding.inflate(inflater, parent, false)
                 AdViewHolder(binding)
             }
         }
