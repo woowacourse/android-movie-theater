@@ -17,6 +17,10 @@ class MovieMainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_main)
 
+        setupBottomNavigation(savedInstanceState)
+    }
+
+    private fun setupBottomNavigation(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             binding.bottomNavigation.selectedItemId = R.id.home_item
             addFragment(MovieHomeFragment())
