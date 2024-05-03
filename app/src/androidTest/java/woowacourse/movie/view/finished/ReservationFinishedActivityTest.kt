@@ -16,7 +16,10 @@ import woowacourse.movie.R
 import woowacourse.movie.TestFixture.FIRST_MOVIE_ITEM_POSITION
 import woowacourse.movie.TestFixture.makeMockTicket
 import woowacourse.movie.TestFixture.movies
+import woowacourse.movie.view.home.HomeFragment
 import woowacourse.movie.view.reservation.ReservationDetailActivity
+import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.TICKET
+import woowacourse.movie.view.theater.TheaterSelectionFragment
 
 class ReservationFinishedActivityTest {
     @get:Rule
@@ -26,7 +29,7 @@ class ReservationFinishedActivityTest {
                 ApplicationProvider.getApplicationContext(),
                 ReservationFinishedActivity::class.java,
             ).apply {
-                putExtra("ticket", makeMockTicket())
+                putExtra(TICKET, makeMockTicket())
             },
         )
 
@@ -66,7 +69,13 @@ class ReservationFinishedActivityTest {
 
     @Test
     fun `영화_예매_완료_화면은_영화_상세_화면의_예매_완료_버튼을_누르면_보여진다`() {
-        ActivityScenario.launch(ReservationDetailActivity::class.java)
+        val intent = Intent(ApplicationProvider.getApplicationContext(), ReservationDetailActivity::class.java).apply {
+            putExtra(HomeFragment.MOVIE_ID,0)
+            putExtra(TheaterSelectionFragment.THEATER_ID,0)
+        }
+
+        ActivityScenario.launch<ReservationDetailActivity>(intent)
+
         onView(withId(R.id.button_reservation_detail_finished)).perform(ViewActions.click())
         onView(withId(R.id.constraint_layout_seat_selection)).check(matches(ViewMatchers.isDisplayed()))
     }

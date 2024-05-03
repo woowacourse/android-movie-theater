@@ -1,6 +1,8 @@
 package woowacourse.movie.view.reservation
 
+import android.content.Intent
 import android.content.pm.ActivityInfo
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -20,13 +22,24 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
+import woowacourse.movie.view.home.HomeFragment.Companion.MOVIE_ID
+import woowacourse.movie.view.theater.TheaterSelectionFragment.Companion.THEATER_ID
 import java.time.LocalDate
 import java.time.LocalTime
 
 @RunWith(AndroidJUnit4::class)
 class ReservationDetailActivityTest {
     @get:Rule
-    var activityRule = ActivityScenarioRule(ReservationDetailActivity::class.java)
+    var activityRule =
+        ActivityScenarioRule<ReservationDetailActivity>(
+            Intent(
+                ApplicationProvider.getApplicationContext(),
+                ReservationDetailActivity::class.java
+            ).apply {
+                putExtra(MOVIE_ID, 0)
+                putExtra(THEATER_ID, 0)
+            }
+        )
 
     @Before
     fun setUp() {
@@ -100,9 +113,8 @@ class ReservationDetailActivityTest {
     @Test
     fun `9시의_상영시간을_스피너로_선택하면_상영시간_스피너에_선택한_상영_시간이_보여진다`() {
         onView(withId(R.id.spinner_reservation_detail_screening_time)).perform(click())
-        onData(allOf(`is`(instanceOf(LocalTime::class.java)), `is`(LocalTime.of(9, 0)))).perform(
-            click(),
-        )
+        onData(allOf(`is`(instanceOf(LocalTime::class.java)), `is`(LocalTime.of(9, 0))))
+            .perform(click())
         onView(withId(R.id.spinner_reservation_detail_screening_time)).check(
             matches(
                 withSpinnerText(
