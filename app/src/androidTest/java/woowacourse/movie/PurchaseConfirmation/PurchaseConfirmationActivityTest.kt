@@ -1,3 +1,5 @@
+package woowacourse.movie.PurchaseConfirmation
+
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
