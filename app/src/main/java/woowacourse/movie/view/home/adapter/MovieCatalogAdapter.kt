@@ -1,5 +1,6 @@
 package woowacourse.movie.view.home.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -14,10 +15,11 @@ import woowacourse.movie.view.home.adapter.viewholder.MovieViewHolder
 typealias OnClickReservationButton = (Movie) -> Unit
 
 class MovieCatalogAdapter(
-    private val movies: List<Movie>,
-    private val advertisements: List<Advertisement>,
     private val onClickReservationButton: OnClickReservationButton,
 ) : RecyclerView.Adapter<ViewHolder>() {
+    private var movies: List<Movie> = emptyList()
+    private var advertisements: List<Advertisement> = emptyList()
+
     private val movieViewType = CatalogViewType.MOVIE.viewType
     private val advertisementViewType = CatalogViewType.ADVERTISEMENT.viewType
 
@@ -68,4 +70,17 @@ class MovieCatalogAdapter(
             movieViewType
         }
     }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateMovies(movies: List<Movie>){
+        this.movies = movies
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateAds(advertisements: List<Advertisement>){
+        this.advertisements = advertisements
+        notifyDataSetChanged()
+    }
+
 }
