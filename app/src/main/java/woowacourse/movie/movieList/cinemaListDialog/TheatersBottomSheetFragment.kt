@@ -61,6 +61,7 @@ class TheatersBottomSheetFragment : BottomSheetDialogFragment(), TheatersBottomS
             startActivity(intent)
         }
     }
+
     override fun showCinemas(cinemas: List<Cinema>) {
         binding.rvCinema.adapter = adapter
         adapter.submitList(cinemas)

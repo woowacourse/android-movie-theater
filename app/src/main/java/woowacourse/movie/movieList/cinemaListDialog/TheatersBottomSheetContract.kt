@@ -4,13 +4,13 @@ import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.theater.Theater
 
 interface TheatersBottomSheetContract {
-    interface View{
+    interface View {
         fun showCinemas(cinemas: List<Cinema>)
 
         fun navigateToMovieDetail(cinema: Cinema)
     }
 
-    interface Presenter{
+    interface Presenter {
         fun loadCinema(theater: Theater)
 
         fun selectCinema(cinema: Cinema)

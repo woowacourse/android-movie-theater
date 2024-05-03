@@ -15,6 +15,7 @@ class MovieListPresenter(private val view: MovieListView) {
     init {
         loadMovies()
     }
+
     private fun generateSeats(): Map<String, Seat> {
         val seats = mutableMapOf<String, Seat>()
         val rows = 5

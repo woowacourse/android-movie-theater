@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter
 
 class MovieDetailPresenter(
     private val view: MovieDetailContract.View,
-    private val cinema: Cinema
+    private val cinema: Cinema,
 ) : MovieDetailContract.Presenter {
     var ticketNum = 1
 

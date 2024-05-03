@@ -11,7 +11,6 @@ import woowacourse.movie.model.Cinema
 
 class PurchaseConfirmationActivity :
     BindingActivity<ActivityPurchaseConfirmationBinding>(R.layout.activity_purchase_confirmation) {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val ticketPrice = intent.getStringExtra("ticketPrice")
@@ -29,7 +28,7 @@ class PurchaseConfirmationActivity :
             "일반 %s명 | %s | %s".format(
                 seatNumber?.size,
                 seatNumber?.joinToString(),
-                cinema.cinemaName
+                cinema.cinemaName,
             )
         binding.ticketCharge.text = ticketPrice
         binding.movieTimeDate.text = timeDate

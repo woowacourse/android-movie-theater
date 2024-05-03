@@ -9,7 +9,6 @@ import woowacourse.movie.reservation.ReservationFragment
 import woowacourse.movie.setting.SettingFragment
 
 class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home) {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)

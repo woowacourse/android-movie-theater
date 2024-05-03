@@ -14,9 +14,9 @@ import woowacourse.movie.model.MovieDisplayData
 import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.movieList.cinemaListDialog.TheatersBottomSheetFragment
 
-class MovieListFragment : BindingFragment<FragmentMovieListBinding>(R.layout.fragment_movie_list),
+class MovieListFragment :
+    BindingFragment<FragmentMovieListBinding>(R.layout.fragment_movie_list),
     MovieListView {
-
     private var _presenter: MovieListPresenter? = null
     private val presenter get() = _presenter ?: error(getString(R.string.null_point_error))
     private lateinit var adapter: MovieAdapter
@@ -41,9 +41,9 @@ class MovieListFragment : BindingFragment<FragmentMovieListBinding>(R.layout.fra
     override fun navigateToCinemaView(theater: Theater) {
         val fragment =
             (
-                    childFragmentManager.findFragmentByTag(TheatersBottomSheetFragment.TAG)
-                            as? TheatersBottomSheetFragment
-                    ) ?: TheatersBottomSheetFragment()
+                childFragmentManager.findFragmentByTag(TheatersBottomSheetFragment.TAG)
+                    as? TheatersBottomSheetFragment
+            ) ?: TheatersBottomSheetFragment()
         val bottomSheet =
             fragment.withArgs {
                 putSerializable(THEATER_KEY, theater)

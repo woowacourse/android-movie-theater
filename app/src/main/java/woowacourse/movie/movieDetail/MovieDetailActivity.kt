@@ -34,7 +34,7 @@ class MovieDetailActivity :
         presenter =
             MovieDetailPresenter(
                 view = this@MovieDetailActivity,
-                cinema
+                cinema,
             ).also { binding.presenter = it }
         setupEventListeners(cinema)
         presenter.loadDateRange()

@@ -16,14 +16,13 @@ import org.junit.jupiter.api.DisplayName
 import woowacourse.movie.movieList.MovieListFragment
 
 class IntegrationTest {
-
     @Test
     fun `좌석선택버튼클릭_좌석선택표시`() {
         Espresso.onView(ViewMatchers.withId(R.id.seat_confirmation_button)).perform(ViewActions.click())
         Espresso.onView(ViewMatchers.withId(R.id.seatTable)).check(
             ViewAssertions.matches(
-                ViewMatchers.isDisplayed()
-            )
+                ViewMatchers.isDisplayed(),
+            ),
         )
     }
 
@@ -33,10 +32,11 @@ class IntegrationTest {
         Espresso.pressBack()
         Espresso.onView(ViewMatchers.withId(R.id.scroll_view)).check(
             ViewAssertions.matches(
-                ViewMatchers.isDisplayed()
-            )
+                ViewMatchers.isDisplayed(),
+            ),
         )
     }
+
     @Test
     @DisplayName("영화 버튼 누르면 Dialog 보이는지 테스트")
     fun test2() {
