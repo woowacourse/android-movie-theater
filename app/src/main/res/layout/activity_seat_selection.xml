@@ -5,7 +5,7 @@
 
         <variable
             name="seat_selection"
-            type="woowacourse.movie.view.reservation.SeatSelectionActivity" />
+            type="woowacourse.movie.feature.seatselection.SeatSelectionActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/light_gray"
-        tools:context=".view.reservation.SeatSelectionActivity">
+        tools:context=".feature.seatselection.SeatSelectionActivity">
 
         <ScrollView
             android:layout_width="0dp"

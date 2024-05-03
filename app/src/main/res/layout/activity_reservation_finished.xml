@@ -7,14 +7,14 @@
 
         <variable
             name="reservation_finished"
-            type="woowacourse.movie.view.finished.ReservationFinishedActivity" />
+            type="woowacourse.movie.feature.finished.ReservationFinishedActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_layout_reservation_finished"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.finished.ReservationFinishedActivity">
+        tools:context=".feature.finished.ReservationFinishedActivity">
 
         <View
             android:id="@+id/view_reservation_finished"

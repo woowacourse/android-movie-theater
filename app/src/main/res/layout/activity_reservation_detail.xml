@@ -7,14 +7,14 @@
 
         <variable
             name="reservation_detail"
-            type="woowacourse.movie.view.reservation.ReservationDetailActivity" />
+            type="woowacourse.movie.feature.reservation.ReservationDetailActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_layout_reservation_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.reservation.ReservationDetailActivity">
+        tools:context=".feature.reservation.ReservationDetailActivity">
 
         <ScrollView
             android:layout_width="0dp"

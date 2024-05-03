@@ -5,7 +5,7 @@
 
         <variable
             name="movieCatalog"
-            type="woowacourse.movie.view.home.adapter.viewholder.MovieViewHolder" />
+            type="woowacourse.movie.feature.home.adapter.viewholder.MovieViewHolder" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout

@@ -4,7 +4,7 @@
 
         <variable
             name="advertisement"
-            type="woowacourse.movie.view.home.adapter.viewholder.AdvertisementViewHolder" />
+            type="woowacourse.movie.feature.home.adapter.viewholder.AdvertisementViewHolder" />
     </data>
 
     <LinearLayout

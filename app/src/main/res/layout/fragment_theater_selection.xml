@@ -6,7 +6,7 @@
 
         <variable
             name="theaterSelection"
-            type="woowacourse.movie.view.theater.TheaterSelectionFragment" />
+            type="woowacourse.movie.feature.theater.TheaterSelectionFragment" />
     </data>
 
     <androidx.recyclerview.widget.RecyclerView xmlns:tools="http://schemas.android.com/tools"
@@ -19,6 +19,6 @@
         android:layout_gravity="bottom"
         android:paddingHorizontal="8dp"
         android:paddingVertical="15dp"
-        tools:context=".view.theater.TheaterSelectionFragment"
+        tools:context=".feature.theater.TheaterSelectionFragment"
         tools:listitem="@layout/item_theater" />
 </layout>
