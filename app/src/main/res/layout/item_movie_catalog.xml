@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
+        <variable
+            name="movie"
+            type="woowacourse.movie.model.movie.Movie" />
         <variable
             name="movieCatalog"
             type="woowacourse.movie.view.home.adapter.viewholder.MovieViewHolder" />
@@ -20,7 +22,7 @@
         android:layout_width="76dp"
         android:layout_height="0dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher_background"
+        app:imageResource="@{movie.posterId}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,6 +34,7 @@
         android:layout_marginStart="15dp"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:text="@{movie.title}"
         app:layout_constraintStart_toEndOf="@id/item_movie_catalog_image_view_poster"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="해리 포터와 마법사의 돌" />
@@ -40,11 +43,11 @@
         android:id="@+id/item_movie_catalog_text_view_screening_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@{movieCatalog.screeningFormatText}"
         android:layout_marginTop="10dp"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@id/item_movie_catalog_text_view_title"
-        app:layout_constraintTop_toBottomOf="@id/item_movie_catalog_text_view_title"
-        tools:text="상영일: 2024.3.1" />
+        app:layout_constraintTop_toBottomOf="@id/item_movie_catalog_text_view_title" />
 
     <TextView
         android:id="@+id/item_movie_catalog_text_view_running_time"
@@ -52,9 +55,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:textSize="12sp"
+        android:text="@{movie.runningTime}"
         app:layout_constraintStart_toStartOf="@id/item_movie_catalog_text_view_title"
-        app:layout_constraintTop_toBottomOf="@id/item_movie_catalog_text_view_screening_date"
-        tools:text="러닝타임: 152분" />
+        app:layout_constraintTop_toBottomOf="@id/item_movie_catalog_text_view_screening_date" />
 
     <Button
         android:id="@+id/item_movie_catalog_button_reservation"
