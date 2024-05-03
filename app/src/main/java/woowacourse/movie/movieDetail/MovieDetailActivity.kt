@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.IntentCompat
-import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.seat.TheaterSeatActivity
@@ -39,7 +38,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
                 view = this@MovieDetailActivity,
             ).also { binding.presenter = it }
         presenter.load(theater.movie)
-        cinema.let { setupEventListeners(it) }
+        setupEventListeners(cinema)
         presenter.generateDateRange()
     }
 
@@ -87,7 +86,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         binding.seatConfirmationButton.setOnClickListener {
             val intent =
                 Intent(this, TheaterSeatActivity::class.java).apply {
-                    putExtra("ticketNum", presenter.getTickets().toString())
+                    putExtra("ticketNum", binding.quantityTextView.text.toString())
                     putExtra("Cinema", cinema)
                     putExtra(
                         "timeDate",

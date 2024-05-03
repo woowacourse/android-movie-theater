@@ -4,7 +4,7 @@
 
         <variable
             name="presenter"
-            type="woowacourse.movie.movieDetail.MovieDetailContract.Presenter" />
+            type="woowacourse.movie.movieDetail.MovieDetailPresenter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="16dp"
-                    android:text="@{presenter.getMovie().title.toString()}"
+                    android:text="@{presenter.movie.title.toString()}"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="8dp"
-                    android:text="@{presenter.getMovie().releaseDate.toString()}" />
+                    android:text="@{presenter.movie.releaseDate.toString()}" />
 
                 <TextView
                     android:id="@+id/movie_running_time"
@@ -58,14 +58,14 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="8dp"
-                    android:text="@{presenter.getMovie().runningTime.toString()}" />
+                    android:text="@{presenter.movie.runningTime.toString()}" />
 
                 <TextView
                     android:id="@+id/movie_synopsis"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="@{presenter.getMovie().synopsis.toString()}" />
+                    android:text="@{presenter.movie.synopsis.toString()}" />
             </LinearLayout>
         </ScrollView>
 
@@ -110,7 +110,7 @@
                 android:id="@+id/quantity_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{String.valueOf(presenter.getTickets())}"
+                android:text="@{String.valueOf(presenter.ticketNum)}"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/plus_button"

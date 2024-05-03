@@ -17,9 +17,6 @@ interface MovieDetailContract {
     }
 
     interface Presenter {
-        fun getTickets(): Int
-
-        fun getMovie(): MovieInfo
 
         fun load(movie: MovieInfo)
 

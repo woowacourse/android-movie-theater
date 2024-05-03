@@ -7,13 +7,9 @@ import java.time.format.DateTimeFormatter
 class MovieDetailPresenter(
     private val view: MovieDetailContract.View,
 ) : MovieDetailContract.Presenter {
-    private var ticketNum = 1
+    var ticketNum = 1
 
-    private lateinit var movie: MovieInfo
-
-    override fun getTickets(): Int = ticketNum
-
-    override fun getMovie(): MovieInfo = movie
+    lateinit var movie: MovieInfo
 
     override fun load(movie: MovieInfo) {
         this.movie = movie
