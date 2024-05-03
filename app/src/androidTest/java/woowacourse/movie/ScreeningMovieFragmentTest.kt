@@ -41,7 +41,7 @@ class ScreeningMovieFragmentTest {
     fun setUp() {
         fragmentScenario = launchFragmentInContainer<ScreeningMovieFragment>()
         fragmentScenario.onFragment { fragment ->
-            val listView = fragment.requireView().findViewById<RecyclerView>(R.id.rcv_screening_movie)
+            val recyclerView = fragment.requireView().findViewById<RecyclerView>(R.id.rcv_screening_movie)
 
             val items =
                 Movies(
@@ -52,7 +52,7 @@ class ScreeningMovieFragmentTest {
                     ),
                 ).insertAdvertisements(3).toScreenItems() + screenMovieUiModel3
 
-            listView.adapter =
+            recyclerView.adapter =
                 MovieAdapter(
                     items,
                     object : AdapterClickListener {
