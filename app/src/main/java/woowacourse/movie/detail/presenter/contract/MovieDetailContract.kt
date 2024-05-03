@@ -1,8 +1,8 @@
 package woowacourse.movie.detail.presenter.contract
 
 import woowacourse.movie.model.Movie
-import woowacourse.movie.model.MovieCount
 import woowacourse.movie.model.MovieDate
+import woowacourse.movie.model.MovieReservationCount
 import java.time.LocalTime
 
 interface MovieDetailContract {
@@ -15,7 +15,7 @@ interface MovieDetailContract {
 
         fun displayMovieDetail(
             movieData: Movie?,
-            movieCount: MovieCount,
+            movieReservationCount: MovieReservationCount,
         )
 
         fun navigateToSeatSelectionView(

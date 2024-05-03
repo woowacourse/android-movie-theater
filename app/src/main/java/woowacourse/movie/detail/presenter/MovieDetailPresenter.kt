@@ -2,12 +2,12 @@ package woowacourse.movie.detail.presenter
 
 import woowacourse.movie.data.MovieRepository.getMovieById
 import woowacourse.movie.detail.presenter.contract.MovieDetailContract
-import woowacourse.movie.model.MovieCount
+import woowacourse.movie.model.MovieReservationCount
 
 class MovieDetailPresenter(
     private val movieDetailContractView: MovieDetailContract.View,
 ) : MovieDetailContract.Presenter {
-    private var movieCount: MovieCount = MovieCount()
+    private var movieReservationCount: MovieReservationCount = MovieReservationCount()
     private var timeSpinnerPosition: Int = 0
 
     override fun loadMovieDetail(
@@ -16,7 +16,7 @@ class MovieDetailPresenter(
     ) {
         val movieData = getMovieById(movieId)
         movieData?.let { movie ->
-            movieDetailContractView.displayMovieDetail(movie, movieCount)
+            movieDetailContractView.displayMovieDetail(movie, movieReservationCount)
             movieDetailContractView.setUpDateSpinner(movie.date)
             movieDetailContractView.setUpTimeSpinner(movie.theaters[theaterPosition].screeningTimes)
         }
@@ -27,18 +27,18 @@ class MovieDetailPresenter(
     }
 
     override fun updateReservationCount(count: Int) {
-        movieCount = movieCount.update(count)
-        movieDetailContractView.updateCountView(movieCount.count)
+        movieReservationCount = movieReservationCount.update(count)
+        movieDetailContractView.updateCountView(movieReservationCount.count)
     }
 
     override fun plusReservationCount() {
-        movieCount = movieCount.inc()
-        movieDetailContractView.updateCountView(movieCount.count)
+        movieReservationCount = movieReservationCount.inc()
+        movieDetailContractView.updateCountView(movieReservationCount.count)
     }
 
     override fun minusReservationCount() {
-        movieCount = movieCount.dec()
-        movieDetailContractView.updateCountView(movieCount.count)
+        movieReservationCount = movieReservationCount.dec()
+        movieDetailContractView.updateCountView(movieReservationCount.count)
     }
 
     override fun reserveMovie(
@@ -50,7 +50,7 @@ class MovieDetailPresenter(
             id,
             date,
             time,
-            movieCount.count,
+            movieReservationCount.count,
         )
     }
 }

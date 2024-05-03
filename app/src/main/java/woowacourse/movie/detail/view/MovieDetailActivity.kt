@@ -11,8 +11,8 @@ import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.detail.presenter.MovieDetailPresenter
 import woowacourse.movie.detail.presenter.contract.MovieDetailContract
 import woowacourse.movie.model.Movie
-import woowacourse.movie.model.MovieCount
 import woowacourse.movie.model.MovieDate
+import woowacourse.movie.model.MovieReservationCount
 import woowacourse.movie.seatselection.view.MovieSeatSelectionActivity
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_NAME
@@ -79,11 +79,11 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
 
     override fun displayMovieDetail(
         movieData: Movie?,
-        movieCount: MovieCount,
+        movieReservationCount: MovieReservationCount,
     ) {
         movieData?.let { movie ->
             binding.movie = movie
-            binding.reservationCount = movieCount.count
+            binding.reservationCount = movieReservationCount.count
         }
     }
 
