@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.DummyMovieRepository
-import woowacourse.movie.model.SeatRate
+import woowacourse.movie.model.Tier
 import woowacourse.movie.selectseat.SelectSeatContract
 import woowacourse.movie.selectseat.SelectSeatPresenter
 import woowacourse.movie.selectseat.uimodel.PriceUiModel
@@ -44,7 +44,7 @@ class SelectSeatPresenterTest {
         every { view.updatePrice(PriceUiModel(15_000)) } just Runs
 
         // given
-        presenter.calculatePrice(listOf(SeatUiModel(1, 1, SeatRate.S)))
+        presenter.calculatePrice(listOf(SeatUiModel(1, 1, Tier.S)))
 
         // then
         verify { view.updatePrice(PriceUiModel(15_000)) }

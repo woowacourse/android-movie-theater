@@ -23,7 +23,7 @@ class MovieDetailPresenter(
                 BookingDetailUiModel(
                     HeadCount.MIN_COUNT,
                     screeningMovie.startDate,
-                    screeningMovie.screeningDateTimes.first().times.first(),
+                    screeningMovie.schedules.first().times.first(),
                 ),
             )
         }.onFailure {

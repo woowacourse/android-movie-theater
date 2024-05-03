@@ -9,7 +9,7 @@ fun Reservation.toReservationResultUiModel(theaterName: String): PurchaseConfirm
         cancelDeadLine,
         screenDateTime,
         headCount.count,
-        reserveSeats.seats.toSeatUiModel(),
+        seats.seats.toSeatUiModel(),
         totalPrice.price,
         theaterName,
     )

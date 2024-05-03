@@ -82,7 +82,7 @@ class ReservationActivityTest {
 
     @Test
     fun `date_spinner의_특정_데이터를_클릭하면_뷰에_나타난다`() {
-        val expected = Screening.STUB_A.screeningDateTimes[3].date.format(dateFormatter)
+        val expected = Screening.STUB_A.schedules[3].date.format(dateFormatter)
         onView(withId(R.id.spinner_detail_date)).perform(click())
 
         onData(
@@ -94,8 +94,8 @@ class ReservationActivityTest {
 
     @Test
     fun `time_spinner의_특정_데이터를_클릭하면_뷰에_나타난다`() {
-        val dateString = Screening.STUB_A.screeningDateTimes[3].date.format(dateFormatter)
-        val expected = Screening.STUB_A.screeningDateTimes[3].times[3].format(timeFormatter)
+        val dateString = Screening.STUB_A.schedules[3].date.format(dateFormatter)
+        val expected = Screening.STUB_A.schedules[3].times[3].format(timeFormatter)
         onView(withId(R.id.spinner_detail_date)).perform(click())
 
         onData(

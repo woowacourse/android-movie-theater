@@ -1,8 +1,8 @@
 package woowacourse.movie.movielist.theaters
 
-import woowacourse.movie.model.MovieTheater
+import woowacourse.movie.model.Theater
 
-fun MovieTheater.toTheaterUiModel(totalCount: Int): TheaterUiModel =
+fun Theater.toTheaterUiModel(totalCount: Int): TheaterUiModel =
     TheaterUiModel(
         id,
         name,

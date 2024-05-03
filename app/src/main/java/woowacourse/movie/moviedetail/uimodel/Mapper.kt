@@ -19,7 +19,7 @@ fun HeadCountUiModel.toHeadCount(): HeadCount = HeadCount(count.toInt())
 
 fun Screening.toScreeningDateTimeUiModel(): ScreeningDateTimesUiModel =
     ScreeningDateTimesUiModel(
-        screeningDateTimes.map {
+        schedules.map {
             ScreeningDateTimeUiModel(
                 it.date,
                 it.times,

@@ -2,7 +2,7 @@ package woowacourse.movie.selectseat.uimodel
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.movie.model.SeatRate
+import woowacourse.movie.model.Tier
 
 @Parcelize
 data class SeatUiModel(
@@ -12,9 +12,9 @@ data class SeatUiModel(
     val col: Int,
     val state: SeatState = SeatState.NONE,
 ) : Parcelable {
-    constructor(row: Int, col: Int, seatRate: SeatRate) : this(
+    constructor(row: Int, col: Int, tier: Tier) : this(
         positionFormat(row, col),
-        color(seatRate),
+        color(tier),
         row,
         col,
     )
@@ -30,11 +30,11 @@ data class SeatUiModel(
             return "$rowLetter${col + 1}"
         }
 
-        private fun color(rate: SeatRate): RateColor =
+        private fun color(rate: Tier): RateColor =
             when (rate) {
-                SeatRate.S -> RateColor.GREEN
-                SeatRate.A -> RateColor.BLUE
-                SeatRate.B -> RateColor.PURPLE
+                Tier.S -> RateColor.GREEN
+                Tier.A -> RateColor.BLUE
+                Tier.B -> RateColor.PURPLE
             }
     }
 }

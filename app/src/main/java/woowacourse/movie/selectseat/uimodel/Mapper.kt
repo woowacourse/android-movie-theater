@@ -1,7 +1,7 @@
 package woowacourse.movie.selectseat.uimodel
 
 import woowacourse.movie.model.Seat
-import woowacourse.movie.model.SeatRate
+import woowacourse.movie.model.Tier
 
 fun List<Seat>.toSeatsUiModel() = this.map { SeatUiModel(it.row, it.col, it.rate) }
 
@@ -16,7 +16,7 @@ fun List<SeatUiModel>.toSeats() =
 
 private fun RateColor.toRate() =
     when (this) {
-        RateColor.GREEN -> SeatRate.S
-        RateColor.BLUE -> SeatRate.A
-        RateColor.PURPLE -> SeatRate.B
+        RateColor.GREEN -> Tier.S
+        RateColor.BLUE -> Tier.A
+        RateColor.PURPLE -> Tier.B
     }

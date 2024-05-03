@@ -1,8 +1,8 @@
 package woowacourse.movie.model
 
-class MovieTheater(
+class Theater(
     val id: Long,
-    private val rowRate: Map<SeatRate, List<Int>>,
+    private val rowRate: Map<Tier, List<Int>>,
     private val colLength: Int,
     val name: String,
 ) {
@@ -17,23 +17,23 @@ class MovieTheater(
 
     companion object {
         val STUB_A =
-            MovieTheater(
+            Theater(
                 0,
-                mapOf(SeatRate.S to listOf(3, 4), SeatRate.A to listOf(5), SeatRate.B to listOf(1, 2)),
+                mapOf(Tier.S to listOf(3, 4), Tier.A to listOf(5), Tier.B to listOf(1, 2)),
                 4,
                 "잠실 극장",
             )
         val STUB_B =
-            MovieTheater(
+            Theater(
                 1,
-                mapOf(SeatRate.S to listOf(3, 4), SeatRate.A to listOf(5), SeatRate.B to listOf(1, 2)),
+                mapOf(Tier.S to listOf(3, 4), Tier.A to listOf(5), Tier.B to listOf(1, 2)),
                 4,
                 "선릉 극장",
             )
         val STUB_C =
-            MovieTheater(
+            Theater(
                 2,
-                mapOf(SeatRate.S to listOf(3, 4), SeatRate.A to listOf(5), SeatRate.B to listOf(1, 2)),
+                mapOf(Tier.S to listOf(3, 4), Tier.A to listOf(5), Tier.B to listOf(1, 2)),
                 4,
                 "강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남 ",
             )

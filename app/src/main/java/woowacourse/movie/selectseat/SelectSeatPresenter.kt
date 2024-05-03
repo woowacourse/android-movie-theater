@@ -1,6 +1,6 @@
 package woowacourse.movie.selectseat
 
-import woowacourse.movie.model.ReserveSeats
+import woowacourse.movie.model.Seats
 import woowacourse.movie.moviedetail.uimodel.BookingInfoUiModel
 import woowacourse.movie.moviedetail.uimodel.toHeadCount
 import woowacourse.movie.repository.MovieRepository
@@ -25,12 +25,12 @@ class SelectSeatPresenter(
         runCatching {
             repository.screeningById(movieId)
         }.onSuccess {
-            view.showMovieInfo(it.movie.title, PriceUiModel(ReserveSeats().totalPrice.price.toInt()))
+            view.showMovieInfo(it.movie.title, PriceUiModel(Seats().totalPrice.price.toInt()))
         }
     }
 
     override fun calculatePrice(selectedSeats: List<SeatUiModel>) {
-        val updatedPrice = ReserveSeats(selectedSeats.toSeats()).totalPrice
+        val updatedPrice = Seats(selectedSeats.toSeats()).totalPrice
         view.updatePrice(PriceUiModel(updatedPrice.price.toInt()))
     }
 
@@ -43,7 +43,7 @@ class SelectSeatPresenter(
                 bookingInfoUiModel.screenMovieId,
                 bookingInfoUiModel.localDateTime(),
                 bookingInfoUiModel.count.toHeadCount(),
-                ReserveSeats(selectedSeats.toSeats()),
+                Seats(selectedSeats.toSeats()),
                 bookingInfoUiModel.theaterId,
             )
         }.onSuccess {

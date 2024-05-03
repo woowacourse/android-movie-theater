@@ -3,10 +3,10 @@ package woowacourse.movie.data
 import woowacourse.movie.model.Advertisement
 import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.Movie
-import woowacourse.movie.model.MovieTheater
 import woowacourse.movie.model.Reservation
-import woowacourse.movie.model.ReserveSeats
 import woowacourse.movie.model.Screening
+import woowacourse.movie.model.Seats
+import woowacourse.movie.model.Theater
 import woowacourse.movie.repository.MovieRepository
 import java.time.LocalDateTime
 
@@ -18,8 +18,8 @@ object DummyMovieRepository : MovieRepository {
             Screening.STUB_C,
         )
 
-    private val theaters: List<MovieTheater> =
-        listOf(MovieTheater.STUB_A, MovieTheater.STUB_B, MovieTheater.STUB_C)
+    private val theaters: List<Theater> =
+        listOf(Theater.STUB_A, Theater.STUB_B, Theater.STUB_C)
     private var reservations: List<Reservation> = emptyList()
     private var reservationId: Long = 0
 
@@ -43,18 +43,18 @@ object DummyMovieRepository : MovieRepository {
             "mola",
         )
 
-    override fun theatersByMovieId(movieId: Long): List<MovieTheater> =
+    override fun theatersByMovieId(movieId: Long): List<Theater> =
         screenings.filter {
             it.movie.id == movieId
         }.map { it.theater }
 
-    override fun theaterById(theaterId: Long): MovieTheater = theaters.firstOrNull { it.id == theaterId } ?: error("id에 해당하는 극장이 없습니다.")
+    override fun theaterById(theaterId: Long): Theater = theaters.firstOrNull { it.id == theaterId } ?: error("id에 해당하는 극장이 없습니다.")
 
     override fun makeReservation(
         screenMovieId: Long,
         dateTime: LocalDateTime,
         count: HeadCount,
-        seats: ReserveSeats,
+        seats: Seats,
         theaterId: Long,
     ): Long {
         reservations +=
@@ -63,7 +63,7 @@ object DummyMovieRepository : MovieRepository {
                 screening = screeningById(screenMovieId),
                 screenDateTime = dateTime,
                 headCount = count,
-                reserveSeats = seats,
+                seats = seats,
                 theaterId = theaterId,
             )
         return reservationId
