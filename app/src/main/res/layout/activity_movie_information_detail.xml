@@ -7,14 +7,14 @@
 
         <variable
             name="detail"
-            type="woowacourse.movie.detail.view.DetailActivity" />
+            type="woowacourse.movie.detail.view.MovieInformationDetailActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/activity_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".detail.view.DetailActivity">
+        tools:context=".detail.view.MovieInformationDetailActivity">
 
         <ScrollView
             android:layout_width="match_parent"

@@ -9,28 +9,27 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
-import woowacourse.movie.databinding.ActivityDetailBinding
-import woowacourse.movie.detail.contract.DetailContract
+import woowacourse.movie.databinding.ActivityMovieInformationDetailBinding
+import woowacourse.movie.detail.contract.MovieInformationDetailContract
 import woowacourse.movie.detail.model.Count
-import woowacourse.movie.detail.presenter.DetailPresenter
+import woowacourse.movie.detail.presenter.MovieInformationDetailPresenter
 import woowacourse.movie.list.model.Movie
 import woowacourse.movie.list.view.HomeFragment.Companion.EXTRA_MOVIE_ID_KEY
-import woowacourse.movie.list.view.TheaterFragment.Companion.EXTRA_THEATER_ID_KEY
 import woowacourse.movie.seats.view.SeatsActivity
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
-class DetailActivity : AppCompatActivity(), DetailContract.View {
-    private lateinit var binding: ActivityDetailBinding
+class MovieInformationDetailActivity : AppCompatActivity(), MovieInformationDetailContract.View {
+    private lateinit var binding: ActivityMovieInformationDetailBinding
     private var toast: Toast? = null
     lateinit var selectedDate: LocalDate
     lateinit var selectedTime: LocalTime
-    override val presenter = DetailPresenter(this@DetailActivity)
+    override val presenter = MovieInformationDetailPresenter(this@MovieInformationDetailActivity)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_information_detail)
         binding.detail = this
         executePresenterTasks()
         setOnPlusButtonClickListener()

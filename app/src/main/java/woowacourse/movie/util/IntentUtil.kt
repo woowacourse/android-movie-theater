@@ -3,7 +3,7 @@ package woowacourse.movie.util
 import android.content.Intent
 import android.os.Build
 import woowacourse.movie.detail.model.Count
-import woowacourse.movie.detail.view.DetailActivity.Companion.EXTRA_COUNT_KEY
+import woowacourse.movie.detail.view.MovieInformationDetailActivity.Companion.EXTRA_COUNT_KEY
 
 object IntentUtil {
     fun getSerializableCountData(intent: Intent): Count {

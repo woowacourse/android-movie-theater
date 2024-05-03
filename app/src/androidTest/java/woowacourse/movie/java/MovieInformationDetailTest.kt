@@ -13,12 +13,13 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.detail.view.DetailActivity
+import woowacourse.movie.detail.view.MovieInformationDetailActivity
 
 @RunWith(AndroidJUnit4::class)
-class DetailTest {
+class MovieInformationDetailTest {
     @get:Rule
-    val activityRule: ActivityScenarioRule<DetailActivity> = ActivityScenarioRule(DetailActivity::class.java)
+    val activityRule: ActivityScenarioRule<MovieInformationDetailActivity> =
+        ActivityScenarioRule(MovieInformationDetailActivity::class.java)
 
     @Before
     fun setUp() {
@@ -31,22 +32,16 @@ class DetailTest {
 
     @Test
     fun `플러스_버튼을_누르면_개수가_늘어나야_한다`() {
-        onView(withId(R.id.plus_button))
-            .perform(click())
-        onView(withId(R.id.ticket_count))
-            .check(matches(withText("2")))
+        onView(withId(R.id.plus_button)).perform(click())
+        onView(withId(R.id.ticket_count)).check(matches(withText("2")))
     }
 
     @Test
     fun `마이너스_버튼을_누르면_개수가_감소해야_한다`() {
-        onView(withId(R.id.plus_button))
-            .perform(click())
-        onView(withId(R.id.plus_button))
-            .perform(click())
-        onView(withId(R.id.minus_button))
-            .perform(click())
-        onView(withId(R.id.ticket_count))
-            .check(matches(withText("2")))
+        onView(withId(R.id.plus_button)).perform(click())
+        onView(withId(R.id.plus_button)).perform(click())
+        onView(withId(R.id.minus_button)).perform(click())
+        onView(withId(R.id.ticket_count)).check(matches(withText("2")))
     }
 
     @Test

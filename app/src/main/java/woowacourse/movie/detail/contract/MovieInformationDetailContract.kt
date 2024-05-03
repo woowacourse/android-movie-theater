@@ -1,14 +1,14 @@
 package woowacourse.movie.detail.contract
 
 import woowacourse.movie.detail.model.Count
-import woowacourse.movie.detail.presenter.DetailPresenter
+import woowacourse.movie.detail.presenter.MovieInformationDetailPresenter
 import woowacourse.movie.list.model.Movie
 import java.time.LocalDate
 import java.time.LocalTime
 
-interface DetailContract {
+interface MovieInformationDetailContract {
     interface View {
-        val presenter: DetailPresenter
+        val presenter: MovieInformationDetailPresenter
 
         fun showCurrentResultTicketCountView(info: Int)
 

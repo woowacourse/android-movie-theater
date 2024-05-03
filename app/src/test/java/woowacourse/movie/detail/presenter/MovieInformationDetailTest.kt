@@ -7,17 +7,17 @@ import io.mockk.runs
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.detail.contract.DetailContract
+import woowacourse.movie.detail.contract.MovieInformationDetailContract
 import woowacourse.movie.detail.model.Count
 
-class MovieReservationTest {
-    private lateinit var view: DetailContract.View
-    private lateinit var presenter: DetailContract.Presenter
+class MovieInformationDetailTest {
+    private lateinit var view: MovieInformationDetailContract.View
+    private lateinit var presenter: MovieInformationDetailContract.Presenter
 
     @BeforeEach
     fun setUp() {
-        view = mockk<DetailContract.View>()
-        presenter = DetailPresenter(view)
+        view = mockk<MovieInformationDetailContract.View>()
+        presenter = MovieInformationDetailPresenter(view)
     }
 
     @Test

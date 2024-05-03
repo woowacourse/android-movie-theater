@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.databinding.FragmentTheaterBinding
-import woowacourse.movie.detail.view.DetailActivity
+import woowacourse.movie.detail.view.MovieInformationDetailActivity
 import woowacourse.movie.list.adapter.TheaterAdapter
 import woowacourse.movie.list.model.TheaterData.theaters
 import woowacourse.movie.list.view.HomeFragment.Companion.EXTRA_MOVIE_ID_KEY_TO_FRAGMENT
@@ -45,7 +45,7 @@ class TheaterFragment : BottomSheetDialogFragment(), TheaterFragmentContract.Vie
     }
 
     override fun navigateToDetailActivity(movieId: Long, theaterId: Long) {
-        Intent(activity, DetailActivity::class.java).apply {
+        Intent(activity, MovieInformationDetailActivity::class.java).apply {
             putExtra(EXTRA_MOVIE_ID_KEY, movieId)
             putExtra(EXTRA_THEATER_ID_KEY, theaterId)
             startActivity(this)

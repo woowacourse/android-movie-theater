@@ -1,7 +1,7 @@
 package woowacourse.movie.detail.presenter
 
 import woowacourse.movie.common.MovieDataSource
-import woowacourse.movie.detail.contract.DetailContract
+import woowacourse.movie.detail.contract.MovieInformationDetailContract
 import woowacourse.movie.detail.model.DetailDataResource
 import woowacourse.movie.detail.model.DetailDataResource.movieId
 import woowacourse.movie.detail.model.DetailDataResource.theaterId
@@ -9,9 +9,9 @@ import woowacourse.movie.detail.model.DetailTicketCountData
 import woowacourse.movie.list.model.TheaterData
 import java.time.LocalTime
 
-class DetailPresenter(
-    private val view: DetailContract.View,
-) : DetailContract.Presenter {
+class MovieInformationDetailPresenter(
+    private val view: MovieInformationDetailContract.View,
+) : MovieInformationDetailContract.Presenter {
     val model = DetailTicketCountData
 
     private val theater
