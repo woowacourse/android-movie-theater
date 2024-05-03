@@ -18,7 +18,6 @@ import woowacourse.movie.TestFixture.FIRST_MOVIE_ITEM_POSITION
 import woowacourse.movie.TestFixture.makeTheater
 import woowacourse.movie.feature.home.HomeFragment
 import woowacourse.movie.feature.theater.adapter.TheaterSelectionViewHolder
-import woowacourse.movie.utils.MovieUtils.convertScreeningInfoFormat
 
 @RunWith(AndroidJUnit4::class)
 class TheaterSelectionFragmentTest {
@@ -54,7 +53,7 @@ class TheaterSelectionFragmentTest {
         val screeningTimeCount =
             makeTheater()[FIRST_ITEM_POSITION].screeningTimes.weekDay.size + makeTheater()[FIRST_ITEM_POSITION].screeningTimes.weekEnd.size
         println(screeningTimeCount)
-        onView(withText(convertScreeningInfoFormat(screeningTimeCount))).check(matches(isDisplayed()))
+        onView(withText("${screeningTimeCount}개의 상영 시간")).check(matches(isDisplayed()))
     }
 
     companion object {

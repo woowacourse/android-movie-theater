@@ -1,9 +1,9 @@
 package woowacourse.movie.feature.theater.adapter
 
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemTheaterBinding
 import woowacourse.movie.model.theater.Theater
-import woowacourse.movie.utils.MovieUtils.convertScreeningInfoFormat
 
 class TheaterSelectionViewHolder(
     private val binding: ItemTheaterBinding,
@@ -20,7 +20,7 @@ class TheaterSelectionViewHolder(
             name.text = item.name
             val screeningTimeCount =
                 item.screeningTimes.weekDay.size + item.screeningTimes.weekEnd.size
-            screeningInfo.text = convertScreeningInfoFormat(screeningTimeCount)
+            screeningInfo.text = itemView.context.getString(R.string.theater_screening_time_count, screeningTimeCount)
             constraintLayoutItemTheater.setOnClickListener {
                 theaterId(item.theaterId)
             }
