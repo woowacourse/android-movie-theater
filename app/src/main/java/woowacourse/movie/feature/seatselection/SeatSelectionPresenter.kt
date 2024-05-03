@@ -15,10 +15,9 @@ class SeatSelectionPresenter(
     private val screeningDao: ScreeningDao,
 ) : SeatSelectionContract.Presenter {
     val seats = Seats()
-    private val headCount = HeadCount()
 
     override fun restoreReservation(count: Int) {
-        headCount.restore(count)
+        val headCount = HeadCount(count)
         view.setConfirmButtonEnabled(headCount.count)
         view.showAmount(seats.calculateAmount())
     }
