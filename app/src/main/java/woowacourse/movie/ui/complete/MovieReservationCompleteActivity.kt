@@ -1,6 +1,5 @@
 package woowacourse.movie.ui.complete
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -43,8 +42,7 @@ class MovieReservationCompleteActivity :
 
     override fun initializePresenter() = MovieReservationCompletePresenter(this, UserTicketsImpl)
 
-    private fun userTicketId() =
-        intent.getLongExtra(MovieReservationCompleteKey.TICKET_ID, USER_TICKET_ID_DEFAULT_VALUE)
+    private fun userTicketId() = intent.getLongExtra(MovieReservationCompleteKey.TICKET_ID, USER_TICKET_ID_DEFAULT_VALUE)
 
     override fun showError(throwable: Throwable) {
         Log.e(TAG, throwable.message.toString())
@@ -93,7 +91,7 @@ fun setReservationResult(
             R.string.complete_reservation_result,
             count,
             seats.joinToString(),
-            theaterName
+            theaterName,
         )
 }
 

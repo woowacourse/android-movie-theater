@@ -54,13 +54,14 @@ class TheaterSelectionBottomSheetFragment :
         movieContentId: Long,
         theaters: List<Theater>,
     ) {
-        adapter = TheaterAdapter(theaters) { theaterId ->
-            Intent(requireContext(), MovieReservationActivity::class.java).apply {
-                putExtra(MovieHomeKey.MOVIE_CONTENT_ID, movieContentId)
-                putExtra(MovieHomeKey.THEATER_ID, theaterId)
-                startActivity(this)
+        adapter =
+            TheaterAdapter(theaters) { theaterId ->
+                Intent(requireContext(), MovieReservationActivity::class.java).apply {
+                    putExtra(MovieHomeKey.MOVIE_CONTENT_ID, movieContentId)
+                    putExtra(MovieHomeKey.THEATER_ID, theaterId)
+                    startActivity(this)
+                }
             }
-        }
         binding.theaterList.adapter = adapter
     }
 

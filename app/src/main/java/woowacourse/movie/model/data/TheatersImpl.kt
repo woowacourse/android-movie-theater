@@ -11,88 +11,96 @@ object TheatersImpl : MovieDataSource<Theater> {
     init {
         save(
             Theater(
-                "강남",
-                listOf(LocalTime.of(11, 0), LocalTime.of(13, 0), LocalTime.of(15, 0)),
+                name = "강남",
+                screeningTimes = listOf(LocalTime.of(11, 0), LocalTime.of(13, 0), LocalTime.of(15, 0)),
             ),
         )
 
         save(
             Theater(
-                "선릉",
-                listOf(LocalTime.of(14, 0), LocalTime.of(16, 0)),
+                name = "선릉",
+                screeningTimes = listOf(LocalTime.of(14, 0), LocalTime.of(16, 0)),
             ),
         )
 
         save(
             Theater(
-                "잠실",
-                listOf(
-                    LocalTime.of(9, 0),
-                    LocalTime.of(11, 0),
-                    LocalTime.of(13, 0),
-                    LocalTime.of(15, 0),
-                ),
+                name = "잠실",
+                screeningTimes =
+                    listOf(
+                        LocalTime.of(9, 0),
+                        LocalTime.of(11, 0),
+                        LocalTime.of(13, 0),
+                        LocalTime.of(15, 0),
+                    ),
             ),
         )
         save(
             Theater(
-                "강남",
-                listOf(LocalTime.of(11, 0)),
-            ),
-        )
-
-        save(
-            Theater(
-                "선릉",
-                listOf(LocalTime.of(20, 0), LocalTime.of(22, 0)),
+                name = "강남",
+                screeningTimes = listOf(LocalTime.of(11, 0)),
             ),
         )
 
         save(
             Theater(
-                "잠실",
-                listOf(LocalTime.of(9, 0), LocalTime.of(11, 0)),
-            ),
-        )
-        save(
-            Theater(
-                "강남",
-                listOf(LocalTime.of(5, 0), LocalTime.of(7, 0)),
+                name = "선릉",
+                screeningTimes = listOf(LocalTime.of(20, 0), LocalTime.of(22, 0)),
             ),
         )
 
         save(
             Theater(
-                "선릉",
-                listOf(LocalTime.of(20, 0)),
+                name = "잠실",
+                screeningTimes = listOf(LocalTime.of(9, 0), LocalTime.of(11, 0)),
+            ),
+        )
+        save(
+            Theater(
+                name = "강남",
+                screeningTimes = listOf(LocalTime.of(5, 0), LocalTime.of(7, 0)),
             ),
         )
 
         save(
             Theater(
-                "잠실",
-                listOf(LocalTime.of(19, 0), LocalTime.of(21, 0), LocalTime.of(23, 0)),
+                name = "선릉",
+                screeningTimes = listOf(LocalTime.of(20, 0)),
             ),
         )
 
         save(
             Theater(
-                "강남",
-                listOf(LocalTime.of(11, 0), LocalTime.of(13, 0), LocalTime.of(15, 0), LocalTime.of(17, 0), LocalTime.of(19, 0)),
+                name = "잠실",
+                screeningTimes = listOf(LocalTime.of(19, 0), LocalTime.of(21, 0), LocalTime.of(23, 0)),
             ),
         )
 
         save(
             Theater(
-                "선릉",
-                listOf(LocalTime.of(2, 0), LocalTime.of(4, 0), LocalTime.of(6, 0)),
+                name = "강남",
+                screeningTimes =
+                    listOf(
+                        LocalTime.of(11, 0),
+                        LocalTime.of(13, 0),
+                        LocalTime.of(15, 0),
+                        LocalTime.of(17, 0),
+                        LocalTime.of(19, 0),
+                    ),
             ),
         )
 
         save(
             Theater(
-                "잠실",
-                listOf(LocalTime.of(22, 0)),
+                name = "선릉",
+                screeningTimes = listOf(LocalTime.of(2, 0), LocalTime.of(4, 0), LocalTime.of(6, 0)),
+            ),
+        )
+
+        save(
+            Theater(
+                name = "잠실",
+                screeningTimes = listOf(LocalTime.of(22, 0)),
             ),
         )
     }

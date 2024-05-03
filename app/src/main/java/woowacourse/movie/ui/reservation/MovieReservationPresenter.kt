@@ -62,10 +62,10 @@ class MovieReservationPresenter(
     override fun reserveSeat() {
         val userTicket =
             UserTicket(
-                movieContent.title,
-                theater.name,
-                LocalDateTime.of(screeningDate.date, movieTime),
-                ReservationDetail(reservationCount.count),
+                title = movieContent.title,
+                theater = theater.name,
+                screeningStartDateTime = LocalDateTime.of(screeningDate.date, movieTime),
+                reservationDetail = ReservationDetail(reservationCount.count),
             )
         val ticketId = userTickets.save(userTicket)
         view.moveMovieSeatSelectionPage(ticketId)

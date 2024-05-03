@@ -19,20 +19,22 @@ val movieContent =
 
 val theater =
     Theater(
-        "선릉",
-        listOf(
-            LocalTime.of(10, 0),
-            LocalTime.of(12, 0),
-        ),
+        name = "선릉",
+        screeningTimes =
+            listOf(
+                LocalTime.of(10, 0),
+                LocalTime.of(12, 0),
+            ),
     )
 
 fun makeTheater(name: String): Theater {
     return Theater(
-        name,
-        listOf(
-            LocalTime.of(10, 0),
-            LocalTime.of(12, 0),
-        ),
+        name = name,
+        screeningTimes =
+            listOf(
+                LocalTime.of(10, 0),
+                LocalTime.of(12, 0),
+            ),
     )
 }
 
