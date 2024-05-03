@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/iv_screen"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_screen"
@@ -55,7 +55,7 @@
 
 
                 <TableLayout
-                    android:id="@+id/tl_seat_board"
+                    android:id="@+id/table_layout_seat_board"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="34dp"
@@ -64,7 +64,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView">
+                    app:layout_constraintTop_toBottomOf="@+id/iv_screen">
 
                     <include
                         android:id="@+id/first_row"

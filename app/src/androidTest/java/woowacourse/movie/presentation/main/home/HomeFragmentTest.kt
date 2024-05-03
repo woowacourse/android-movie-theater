@@ -28,7 +28,7 @@ class HomeFragmentTest {
     fun setUp() {
         activityRule.scenario.onActivity {
             it.supportFragmentManager.navigateToBottomMenu(
-                R.id.fc_main,
+                R.id.fragment_container_view_main,
                 HomeFragment(),
             )
         }

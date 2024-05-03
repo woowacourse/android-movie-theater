@@ -35,7 +35,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
     }
 
     private fun initItemSelectedListener() {
-        binding.spnDate.onItemSelectedListener =
+        binding.spinnerDate.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>,
@@ -53,7 +53,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
 
-        binding.spnTime.onItemSelectedListener =
+        binding.spinnerTime.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>,
@@ -76,7 +76,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
     }
 
     override fun showDateSpinnerAdapter(screenDates: List<ScreenDate>) {
-        binding.spnDate.adapter =
+        binding.spinnerDate.adapter =
             ArrayAdapter(
                 this@DetailActivity,
                 android.R.layout.simple_spinner_item,
@@ -85,7 +85,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
     }
 
     override fun showTimeSpinnerAdapter(screenDate: ScreenDate) {
-        binding.spnTime.adapter =
+        binding.spinnerTime.adapter =
             ArrayAdapter(
                 this@DetailActivity,
                 android.R.layout.simple_spinner_item,
@@ -138,7 +138,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
             presenter.registerDate(localDate)
             val position = findPositionForSelectedDate(localDate)
             presenter.createTimeSpinnerAdapter(ScreenDate(localDate))
-            binding.spnDate.setSelection(position)
+            binding.spinnerDate.setSelection(position)
         }
     }
 
@@ -157,7 +157,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
         savedLocalTime?.let { localTime ->
             presenter.registerTime(localTime)
             val position = findPositionForSelectedTime(localTime)
-            binding.spnTime.setSelection(position)
+            binding.spinnerTime.setSelection(position)
         }
     }
 

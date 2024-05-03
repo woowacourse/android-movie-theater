@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="40dp"
-            app:layout_constraintBottom_toTopOf="@+id/spn_date"
+            app:layout_constraintBottom_toTopOf="@+id/spinner_date"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -129,7 +129,7 @@
         </ScrollView>
 
         <Spinner
-            android:id="@+id/spn_date"
+            android:id="@+id/spinner_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="29dp"
@@ -138,13 +138,13 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Spinner
-            android:id="@+id/spn_time"
+            android:id="@+id/spinner_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:forceHasOverlappingRendering="false"
             app:layout_constraintBottom_toTopOf="@+id/btn_minus"
-            app:layout_constraintStart_toEndOf="@+id/spn_date" />
+            app:layout_constraintStart_toEndOf="@+id/spinner_date" />
 
         <Button
             android:id="@+id/btn_minus"
