@@ -14,16 +14,19 @@ class DetailPresenter(
     private val view: DetailContract.View,
     private val repository: ScreenRepository,
 ) : DetailContract.Presenter {
-    private var _uiModel = DetailUiModel()
-    val uiModel: DetailUiModel
-        get() = _uiModel
+    private var uiModel = DetailUiModel()
+    val count: Int get() = uiModel.ticket.count
+    val selectableDates: List<ScreenDate> get() = uiModel.selectableDates
+    val selectedDate: ScreenDate? get() = uiModel.selectedDate
+    val date: LocalDate? get() = uiModel.selectedDate?.date
+    val selectedTime: LocalTime? get() = uiModel.selectedTime
 
     override fun loadScreen(
         movieId: Int,
         theaterId: Int,
     ) {
         repository.findByScreenId(movieId = movieId, theaterId = theaterId).onSuccess { screen ->
-            _uiModel =
+            uiModel =
                 uiModel.copy(
                     screenId = screen.id,
                     theaterId = theaterId,
@@ -58,15 +61,15 @@ class DetailPresenter(
     }
 
     override fun registerDate(date: LocalDate) {
-        _uiModel = uiModel.copy(selectedDate = ScreenDate(date))
+        uiModel = uiModel.copy(selectedDate = ScreenDate(date))
     }
 
     override fun registerTime(time: LocalTime) {
-        _uiModel = uiModel.copy(selectedTime = time)
+        uiModel = uiModel.copy(selectedTime = time)
     }
 
     override fun updateTicket(count: Int) {
-        _uiModel = uiModel.copy(ticket = Ticket(count))
+        uiModel = uiModel.copy(ticket = Ticket(count))
         view.showTicket(count)
     }
 
@@ -77,7 +80,7 @@ class DetailPresenter(
             view.showSnackBar(MessageType.TicketMaxCountMessage(MAX_TICKET_COUNT))
             return
         }
-        _uiModel = uiModel.copy(ticket = nextTicket)
+        uiModel = uiModel.copy(ticket = nextTicket)
         view.showTicket(uiModel.ticket.count)
     }
 
@@ -88,7 +91,7 @@ class DetailPresenter(
             view.showSnackBar(MessageType.TicketMinCountMessage(MIN_TICKET_COUNT))
             return
         }
-        _uiModel = uiModel.copy(ticket = nextTicket)
+        uiModel = uiModel.copy(ticket = nextTicket)
         view.showTicket(uiModel.ticket.count)
     }
 

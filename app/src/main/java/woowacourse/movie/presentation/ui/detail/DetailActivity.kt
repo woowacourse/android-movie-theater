@@ -44,7 +44,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
                     id: Long,
                 ) {
                     val localDate = parent.getItemAtPosition(position) as LocalDate
-                    if (presenter.uiModel.selectedDate?.date != localDate) {
+                    if (presenter.date != localDate) {
                         presenter.registerDate(localDate)
                         presenter.createTimeSpinnerAdapter(ScreenDate(localDate))
                     }
@@ -69,10 +69,10 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
     }
 
     override fun showScreen(screen: Screen) {
-        with(screen) {
-            presenter.createDateSpinnerAdapter(selectableDates)
-            presenter.createTimeSpinnerAdapter(selectableDates.first())
-        }
+        binding.screen = screen
+        binding.count = presenter.count
+        presenter.createDateSpinnerAdapter(screen.selectableDates)
+        presenter.createTimeSpinnerAdapter(screen.selectableDates.first())
     }
 
     override fun showDateSpinnerAdapter(screenDates: List<ScreenDate>) {
@@ -94,7 +94,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
     }
 
     override fun showTicket(count: Int) {
-        binding.invalidateAll()
+        binding.count = count
     }
 
     override fun navigateToSeatSelection(reservationInfo: ReservationInfo) {
@@ -111,9 +111,9 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(PUT_TICKET_STATE_KEY, presenter.uiModel.ticket.count)
-        outState.putSerializable(PUT_STATE_KEY_SELECTED_DATE, presenter.uiModel.selectedDate?.date)
-        outState.putSerializable(PUT_STATE_KEY_SELECTED_TIME, presenter.uiModel.selectedTime)
+        outState.putInt(PUT_TICKET_STATE_KEY, presenter.count)
+        outState.putSerializable(PUT_STATE_KEY_SELECTED_DATE, presenter.date)
+        outState.putSerializable(PUT_STATE_KEY_SELECTED_TIME, presenter.selectedTime)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -143,7 +143,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
     }
 
     private fun findPositionForSelectedDate(selectedDate: LocalDate): Int {
-        presenter.uiModel.selectableDates.forEachIndexed { index, screenDate ->
+        presenter.selectableDates.forEachIndexed { index, screenDate ->
             if (screenDate.date == selectedDate) {
                 return index
             }
@@ -162,7 +162,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
     }
 
     private fun findPositionForSelectedTime(selectedTime: LocalTime): Int {
-        presenter.uiModel.selectedDate?.let { screenDate ->
+        presenter.selectedDate?.let { screenDate ->
             screenDate.getSelectableTimes().forEachIndexed { index, screenTime ->
                 if (screenTime == selectedTime) {
                     return index
