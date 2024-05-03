@@ -12,6 +12,9 @@ import woowacourse.movie.setting.view.SettingFragment
 
 class MovieMainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieMainBinding
+    private val reservationListFragment: ReservationListFragment by lazy { ReservationListFragment() }
+    private val movieHomeFragment: MovieHomeFragment by lazy { MovieHomeFragment() }
+    private val settingFragment: SettingFragment by lazy { SettingFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,23 +26,23 @@ class MovieMainActivity : AppCompatActivity() {
     private fun setupBottomNavigation(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             binding.bottomNavigation.selectedItemId = R.id.home_item
-            addFragment(MovieHomeFragment())
+            addFragment(movieHomeFragment)
         }
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.reservation_list_item -> {
-                    replaceFragment(ReservationListFragment())
+                    replaceFragment(reservationListFragment)
                     true
                 }
 
                 R.id.home_item -> {
-                    replaceFragment(MovieHomeFragment())
+                    replaceFragment(movieHomeFragment)
                     true
                 }
 
                 R.id.setting_item -> {
-                    replaceFragment(SettingFragment())
+                    replaceFragment(settingFragment)
                     true
                 }
 
