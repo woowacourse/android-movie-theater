@@ -6,13 +6,14 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import woowacourse.movie.databinding.ItemAdvertisementBinding
 import woowacourse.movie.databinding.ItemMovieBinding
-import woowacourse.movie.home.view.listener.ReservationButtonClickListener
+import woowacourse.movie.home.view.listener.MovieHomeClickListener
 import woowacourse.movie.model.Movie
 
 class MovieAdapter(
-    private val movies: List<Movie>,
-    private val onReservationButtonClick: ReservationButtonClickListener,
+    private val onReservationButtonClick: MovieHomeClickListener,
 ) : RecyclerView.Adapter<ViewHolder>() {
+    private var movies: List<Movie> = emptyList()
+
     override fun getItemViewType(position: Int): Int {
         if ((position + 1) % ADVERTISEMENT_PER_INDEX == 0) return ADVERTISEMENT_VIEW_TYPE
         return MOVIE_VIEW_TYPE
@@ -35,7 +36,7 @@ class MovieAdapter(
         holder: ViewHolder,
         position: Int,
     ) {
-        val movie = movies[position]
+        val movie = movies[position - (position + 1) / ADVERTISEMENT_PER_INDEX]
         when (holder) {
             is MovieViewHolder -> holder.bind(movie, onReservationButtonClick)
             is AdvertisementViewHolder -> holder.bind(ADVERTISEMENT_LINK)
@@ -46,6 +47,11 @@ class MovieAdapter(
 
     override fun getItemCount(): Int {
         return movies.size + movies.size / ADVERTISEMENT_OFFSET
+    }
+
+    fun updateMovies(movies: List<Movie>) {
+        this.movies = movies
+        notifyDataSetChanged()
     }
 
     companion object {

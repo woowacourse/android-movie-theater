@@ -10,8 +10,8 @@
             type="woowacourse.movie.model.Movie" />
 
         <variable
-            name="reservation_button_click_listener"
-            type="woowacourse.movie.home.view.listener.ReservationButtonClickListener" />
+            name="clickListener"
+            type="woowacourse.movie.home.view.listener.MovieHomeClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
-            android:onClick="@{() -> reservation_button_click_listener.onClick(movie.id)}"
+            android:onClick="@{() -> clickListener.onReservationButtonClick(movie.id)}"
             android:text="지금 예매"
             android:textSize="14dp"
             android:textStyle="bold"
