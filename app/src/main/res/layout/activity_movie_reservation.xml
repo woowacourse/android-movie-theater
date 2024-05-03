@@ -9,8 +9,8 @@
             name="movieReservationUiModel"
             type="woowacourse.movie.moviereservation.uimodel.MovieReservationUiModel" />
         <variable
-            name="presenter"
-            type="woowacourse.movie.moviereservation.MovieReservationContract.Presenter" />
+            name="view"
+            type="woowacourse.movie.moviereservation.MovieReservationContract.View" />
         <variable
             name="bookingDetail"
             type="woowacourse.movie.moviereservation.uimodel.BookingDetailUiModel" />
@@ -141,7 +141,7 @@
                 android:layout_marginBottom="16dp"
                 android:fontFamily="@font/roboto_bold"
                 android:text="-"
-                android:onClick="@{()->presenter.minusCount(bookingDetail.count)}"
+                android:onClick="@{()->view.intendToMinusCount()}"
                 app:layout_constraintBottom_toTopOf="@id/btn_detail_complete"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -165,7 +165,7 @@
                 android:layout_height="41dp"
                 android:layout_marginBottom="16dp"
                 android:text="+"
-                android:onClick="@{()->presenter.plusCount(bookingDetail.count)}"
+                android:onClick="@{()->view.intendToPlusCount()}"
                 app:layout_constraintBottom_toTopOf="@id/btn_detail_complete"
                 app:layout_constraintEnd_toEndOf="parent" />
 

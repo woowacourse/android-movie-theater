@@ -42,7 +42,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
             )
         presenter.loadMovieDetail(id)
         binding.bookingDetail = bookingDetailUiModel
-        binding.presenter = presenter
+        binding.view = this
     }
 
     private fun movieId(): Long {
@@ -93,6 +93,14 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
             finish()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun intendToPlusCount() {
+        presenter.plusCount()
+    }
+
+    override fun intendToMinusCount() {
+        presenter.minusCount()
     }
 
     override fun showMovieInfo(reservation: MovieReservationUiModel) {

@@ -9,6 +9,7 @@ class MovieReservationPresenter(
     private val view: MovieReservationContract.View,
     private val repository: MovieRepository,
 ) : MovieReservationContract.Presenter {
+    private var count = HeadCount(1)
     override fun loadMovieDetail(screenMovieId: Long) {
         runCatching {
             repository.screenMovieById(screenMovieId)
@@ -27,19 +28,16 @@ class MovieReservationPresenter(
         }
     }
 
-    override fun plusCount(currentCount: HeadCountUiModel) {
-        val count = currentCount.toHeadCount()
-        view.updateHeadCount(count.increase().toHeadCountUiModel())
+    override fun plusCount() {
+        count = count.increase()
+        view.updateHeadCount(count.toHeadCountUiModel())
     }
 
-    override fun minusCount(currentCount: HeadCountUiModel) {
-        val count = currentCount.toHeadCount()
+    override fun minusCount() {
         runCatching {
-            count.decrease().toHeadCountUiModel()
-        }.onSuccess { updatedCount ->
-            view.updateHeadCount(updatedCount)
-        }.onFailure {
-            view.showCantDecreaseError(HeadCount.MIN_COUNT)
+            count = count.decrease()
+        }.onSuccess {
+            view.updateHeadCount(count.toHeadCountUiModel())
         }
     }
 }

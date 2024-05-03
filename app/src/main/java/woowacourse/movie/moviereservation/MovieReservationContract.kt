@@ -7,6 +7,10 @@ import woowacourse.movie.moviereservation.uimodel.ScreeningDateTimesUiModel
 
 interface MovieReservationContract {
     interface View {
+        fun intendToPlusCount()
+
+        fun intendToMinusCount()
+
         fun showMovieInfo(reservation: MovieReservationUiModel)
 
         fun showCantDecreaseError(minCount: Int)
@@ -28,8 +32,8 @@ interface MovieReservationContract {
     interface Presenter {
         fun loadMovieDetail(screenMovieId: Long)
 
-        fun plusCount(currentCount: HeadCountUiModel)
+        fun plusCount()
 
-        fun minusCount(currentCount: HeadCountUiModel)
+        fun minusCount()
     }
 }
