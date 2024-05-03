@@ -14,7 +14,7 @@ import woowacourse.movie.R
 import woowacourse.movie.list.view.HomeActivity
 
 @RunWith(AndroidJUnit4::class)
-class MovieListTest {
+class HomeActivityTest {
     @get:Rule
     val activityRule = ActivityScenarioRule(HomeActivity::class.java)
 
