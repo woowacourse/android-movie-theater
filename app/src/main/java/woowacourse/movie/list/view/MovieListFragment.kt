@@ -49,7 +49,7 @@ class MovieListFragment : Fragment(), MovieListContract.View {
             object : MovieListAdapter.OnItemClickListener {
                 override fun onClick(movieId: Long) {
                     val theaterBottomSheetFragment = newFragmentInstance(movieId)
-                    theaterBottomSheetFragment.show(parentFragmentManager, "dialog")
+                    theaterBottomSheetFragment.show(parentFragmentManager, theaterBottomSheetFragment::class.java.simpleName)
                 }
             },
         )
