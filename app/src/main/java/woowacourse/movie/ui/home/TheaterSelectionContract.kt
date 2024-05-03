@@ -14,7 +14,9 @@ interface TheaterSelectionContract {
             theaterId: Long,
         )
 
-        fun dismissDialog()
+        fun showError()
+
+        fun handleDialogError()
     }
 
     interface Presenter {

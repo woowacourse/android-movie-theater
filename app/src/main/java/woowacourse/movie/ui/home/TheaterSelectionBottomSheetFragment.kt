@@ -69,13 +69,16 @@ class TheaterSelectionBottomSheetFragment :
         }
     }
 
-    override fun dismissDialog() {
+    override fun showError() {
         val context = requireContext()
         Toast.makeText(
             context,
             context.getString(R.string.invalid_key),
             Toast.LENGTH_SHORT,
         ).show()
+    }
+
+    override fun handleDialogError() {
         dismiss()
     }
 }
