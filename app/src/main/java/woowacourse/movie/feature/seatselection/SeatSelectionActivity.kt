@@ -33,25 +33,24 @@ import woowacourse.movie.utils.MovieUtils.makeToast
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private val binding: ActivitySeatSelectionBinding by lazy { DataBindingUtil.setContentView(this, R.layout.activity_seat_selection) }
-    private val presenter: SeatSelectionPresenter = SeatSelectionPresenter(this, SeatsDao(), ScreeningDao())
+    private lateinit var presenter: SeatSelectionPresenter
 
     private lateinit var seatsTable: List<Button>
     private lateinit var headCount: HeadCount
     private lateinit var screeningDateTime: ScreeningDateTime
-    private var movieId = 0
     private var theaterId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        movieId = takeMovieId()
         theaterId = receiveTheaterId()
+        initPresenter()
         receiveHeadCount()
         receiveScreeningDateTime()
         seatsTable = collectSeatsInTableLayout()
         with(presenter) {
             loadSeatNumber()
-            loadMovie(movieId)
+            loadMovie()
         }
         initializeConfirmButton()
     }
@@ -152,7 +151,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 .setTitle(getString(R.string.seat_selection_reservation_confirm))
                 .setMessage(getString(R.string.seat_selection_reservation_ask_purchase_ticket))
                 .setPositiveButton(getString(R.string.seat_selection_reservation_finish)) { _, _ ->
-                    presenter.makeTicket(movieId, theaterId, screeningDateTime)
+                    presenter.makeTicket(theaterId, screeningDateTime)
                 }
                 .setNegativeButton(getString(R.string.seat_selection_cancel)) { dialog, _ ->
                     dialog.dismiss()
@@ -163,6 +162,10 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     override fun showErrorToast() = makeToast(this, getString(R.string.all_error))
+
+    private fun initPresenter() {
+        presenter = SeatSelectionPresenter(this, SeatsDao(), ScreeningDao(), takeMovieId())
+    }
 
     private fun takeMovieId() =
         intent.getIntExtra(

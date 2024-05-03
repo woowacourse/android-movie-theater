@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.seats.SeatsDao
+import woowacourse.movie.feature.reservation.ReservationDetailActivity.Companion.DEFAULT_MOVIE_ID
 import woowacourse.movie.model.seats.Grade
 import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
@@ -23,7 +24,7 @@ class SeatSelectionPresenterTest {
 
     @BeforeEach
     fun setUp() {
-        presenter = SeatSelectionPresenter(view, SeatsDao(), ScreeningDao())
+        presenter = SeatSelectionPresenter(view, SeatsDao(), ScreeningDao(), DEFAULT_MOVIE_ID)
         with(presenter) {
             manageSelectedSeats(true, 0, Seat('A', 1, Grade.B))
             manageSelectedSeats(true, 0, Seat('C', 1, Grade.S))
@@ -41,7 +42,7 @@ class SeatSelectionPresenterTest {
     @Test
     fun `영화 제목을 보여준다`() {
         every { view.showMovieTitle(any()) } just runs
-        presenter.loadMovie(0)
+        presenter.loadMovie()
         verify { view.showMovieTitle(any()) }
     }
 

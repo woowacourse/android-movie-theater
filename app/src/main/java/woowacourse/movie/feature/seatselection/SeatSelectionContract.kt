@@ -12,7 +12,7 @@ interface SeatSelectionContract {
     interface Presenter {
         fun loadSeatNumber()
 
-        fun loadMovie(movieId: Int)
+        fun loadMovie()
 
         fun updateTotalPrice(
             isSelected: Boolean,
@@ -35,7 +35,6 @@ interface SeatSelectionContract {
         )
 
         fun makeTicket(
-            movieId: Int,
             theaterId: Int,
             screeningDateTime: ScreeningDateTime,
         )

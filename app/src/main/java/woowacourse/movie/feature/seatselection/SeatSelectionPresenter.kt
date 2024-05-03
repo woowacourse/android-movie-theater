@@ -13,6 +13,7 @@ class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
     private val seatsDao: SeatsDao,
     private val screeningDao: ScreeningDao,
+    private val movieId: Int,
 ) : SeatSelectionContract.Presenter {
     val seats = Seats()
 
@@ -38,7 +39,7 @@ class SeatSelectionPresenter(
         }
     }
 
-    override fun loadMovie(movieId: Int) {
+    override fun loadMovie() {
         val movie: Movie = screeningDao.find(movieId)
         view.showMovieTitle(movie)
     }
@@ -55,7 +56,6 @@ class SeatSelectionPresenter(
     }
 
     override fun makeTicket(
-        movieId: Int,
         theaterId: Int,
         screeningDateTime: ScreeningDateTime,
     ) {
