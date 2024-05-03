@@ -73,8 +73,9 @@ class TheaterSelectionFragmentTest {
         )
         val screeningTimeCount =
             makeTheater()[FIRST_ITEM_POSITION].screeningTimes.weekDay.size + makeTheater()[FIRST_ITEM_POSITION].screeningTimes.weekEnd.size
-        println(screeningTimeCount)
-        onView(withText(convertScreeningInfoFormat(screeningTimeCount))).check(matches(isDisplayed()))
+        val text = "${screeningTimeCount}개의 상영 시간"
+        println(text)
+        onView(withText(text)).check(matches(isDisplayed()))
     }
 
     companion object {
