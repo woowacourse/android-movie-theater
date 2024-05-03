@@ -7,8 +7,16 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.TheaterItemBinding
 import woowacourse.movie.list.model.Theater
 
-class TheaterAdapter(private val movieId: Long, private val theaters: List<Theater>) :
-    RecyclerView.Adapter<TheaterAdapter.TheaterViewHolder>() {
+class TheaterAdapter : RecyclerView.Adapter<TheaterAdapter.TheaterViewHolder>() {
+    private var movieId: Long = -1
+    private var theaters: List<Theater> = emptyList()
+    private lateinit var itemClickListener: OnItemClickListener
+
+    fun initTheatersInfo(movieId: Long, theaters: List<Theater>) {
+        this.movieId = movieId
+        this.theaters = theaters
+    }
+
     inner class TheaterViewHolder(private val binding: TheaterItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
@@ -33,8 +41,6 @@ class TheaterAdapter(private val movieId: Long, private val theaters: List<Theat
             theaterId: Long,
         )
     }
-
-    private lateinit var itemClickListener: OnItemClickListener
 
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {
         this.itemClickListener = onItemClickListener

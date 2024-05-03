@@ -34,7 +34,8 @@ class TheaterFragment : BottomSheetDialogFragment(), TheaterFragmentContract.Vie
     private fun setupRecyclerView(movieId: Long) {
         binding.theaterRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = TheaterAdapter(movieId, theaters).also {
+            adapter = TheaterAdapter().also {
+                it.initTheatersInfo(movieId, theaters)
                 it.setItemClickListener(object : TheaterAdapter.OnItemClickListener {
                     override fun onClick(movieId: Long, theaterId: Long) {
                         presenter.itemClicked(movieId, theaterId)
