@@ -15,7 +15,7 @@ class TheaterTest {
             )
 
         val screen = FakeScreenRepository.fakeScreen1
-        val actual = theater.isScreening(screen)
+        val actual = theater.hasScreen(screen)
 
         assertThat(actual).isTrue()
     }
