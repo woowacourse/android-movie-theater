@@ -30,9 +30,9 @@ import woowacourse.movie.model.Movies
 import woowacourse.movie.screeningmovie.AdapterClickListener
 import woowacourse.movie.screeningmovie.AdvertiseViewHolder
 import woowacourse.movie.screeningmovie.MovieAdapter
-import woowacourse.movie.screeningmovie.ScreenMovieUiModel
 import woowacourse.movie.screeningmovie.ScreeningMovieFragment
 import woowacourse.movie.screeningmovie.toScreenItems
+import woowacourse.movie.screeningmovie.uimodel.ScreenMovieUiModel
 
 class ScreeningMovieFragmentTest {
     private lateinit var fragmentScenario: FragmentScenario<ScreeningMovieFragment>

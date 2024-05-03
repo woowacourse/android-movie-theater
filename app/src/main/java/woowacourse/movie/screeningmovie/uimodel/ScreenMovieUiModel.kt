@@ -1,4 +1,4 @@
-package woowacourse.movie.screeningmovie
+package woowacourse.movie.screeningmovie.uimodel
 
 import androidx.annotation.DrawableRes
 import woowacourse.movie.R
@@ -9,4 +9,4 @@ data class ScreenMovieUiModel(
     @DrawableRes val imageRes: Int = R.drawable.img_movie_poster,
     val screenDate: String,
     val runningTime: String,
-) : ScreeningItem
+) : ListItemUiModel

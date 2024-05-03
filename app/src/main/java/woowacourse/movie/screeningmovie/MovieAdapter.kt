@@ -5,15 +5,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemScreeningAdvertiseBinding
 import woowacourse.movie.databinding.ItemScreeningMovieBinding
+import woowacourse.movie.screeningmovie.uimodel.AdvertisementUiModel
+import woowacourse.movie.screeningmovie.uimodel.ListItemUiModel
+import woowacourse.movie.screeningmovie.uimodel.ScreenMovieUiModel
 
 class MovieAdapter(
-    private val movies: List<ScreeningItem>,
+    private val movies: List<ListItemUiModel>,
     private val adapterClickListener: AdapterClickListener,
 ) : RecyclerView.Adapter<ScreeningViewHolder>() {
     override fun getItemViewType(position: Int): Int {
         return when (movies[position]) {
             is ScreenMovieUiModel -> MOVIE
-            is AdvertiseUiModel -> ADVERTISE
+            is AdvertisementUiModel -> ADVERTISE
         }
     }
 

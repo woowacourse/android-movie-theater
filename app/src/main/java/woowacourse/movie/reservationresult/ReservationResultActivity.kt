@@ -5,8 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import woowacourse.movie.R
-import woowacourse.movie.data.DummyMovies
+import woowacourse.movie.data.DummyMovieRepository
 import woowacourse.movie.databinding.ActivityReservationResultBinding
 import woowacourse.movie.reservationresult.uimodel.ReservationResultUiModel
 
@@ -23,7 +22,7 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
 
         presenter =
             ReservationResultPresenter(
-                repository = DummyMovies,
+                repository = DummyMovieRepository,
                 view = this,
             )
         presenter.loadReservationResult(reservationId)

@@ -2,7 +2,6 @@ package woowacourse.movie.moviereservation
 
 import woowacourse.movie.model.HeadCount
 import woowacourse.movie.moviereservation.uimodel.BookingDetailUiModel
-import woowacourse.movie.moviereservation.uimodel.HeadCountUiModel
 import woowacourse.movie.repository.MovieRepository
 
 class MovieReservationPresenter(
@@ -10,6 +9,7 @@ class MovieReservationPresenter(
     private val repository: MovieRepository,
 ) : MovieReservationContract.Presenter {
     private var count = HeadCount(1)
+
     override fun loadMovieDetail(screenMovieId: Long) {
         runCatching {
             repository.screenMovieById(screenMovieId)

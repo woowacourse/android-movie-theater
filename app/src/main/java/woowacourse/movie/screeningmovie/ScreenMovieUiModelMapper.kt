@@ -2,7 +2,8 @@ package woowacourse.movie.screeningmovie
 
 import woowacourse.movie.model.Advertisement
 import woowacourse.movie.model.Movie
-import woowacourse.movie.model.ScreenView
+import woowacourse.movie.screeningmovie.uimodel.AdvertisementUiModel
+import woowacourse.movie.screeningmovie.uimodel.ScreenMovieUiModel
 import java.time.format.DateTimeFormatter
 
 fun Movie.toScreenMovieUiModel(): ScreenMovieUiModel {
@@ -16,10 +17,6 @@ fun Movie.toScreenMovieUiModel(): ScreenMovieUiModel {
     )
 }
 
-fun List<ScreenView>.toScreenItems(): List<ScreeningItem> =
-    this.map { screenView ->
-        when (screenView) {
-            is Movie -> screenView.toScreenMovieUiModel()
-            is Advertisement -> AdvertiseUiModel()
-        }
-    }
+fun Advertisement.toAdvertisementUiModel(): AdvertisementUiModel {
+    return AdvertisementUiModel()
+}

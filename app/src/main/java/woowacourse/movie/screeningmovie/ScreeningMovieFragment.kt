@@ -5,9 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import woowacourse.movie.data.DummyMovies
+import woowacourse.movie.data.DummyMovieRepository
 import woowacourse.movie.databinding.FragmentScreeningMovieBinding
 import woowacourse.movie.screeningmovie.theaters.TheaterBottomSheetDialogFragment
+import woowacourse.movie.screeningmovie.uimodel.ListItemUiModel
 
 class ScreeningMovieFragment : Fragment(), ScreeningMovieContract.View, AdapterClickListener {
     private lateinit var presenter: ScreenMoviePresenter
@@ -27,11 +28,11 @@ class ScreeningMovieFragment : Fragment(), ScreeningMovieContract.View, AdapterC
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = ScreenMoviePresenter(this, DummyMovies)
+        presenter = ScreenMoviePresenter(this, DummyMovieRepository)
         presenter.loadScreeningMovies()
     }
 
-    override fun showMovies(movies: List<ScreeningItem>) {
+    override fun showMovies(movies: List<ListItemUiModel>) {
         val listView = binding.rcvScreeningMovie
         listView.adapter =
             MovieAdapter(movies, this)

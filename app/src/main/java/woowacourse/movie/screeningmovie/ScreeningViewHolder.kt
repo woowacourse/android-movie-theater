@@ -4,6 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemScreeningAdvertiseBinding
 import woowacourse.movie.databinding.ItemScreeningMovieBinding
+import woowacourse.movie.screeningmovie.uimodel.ScreenMovieUiModel
 
 sealed class ScreeningViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 

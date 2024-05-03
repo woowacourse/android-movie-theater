@@ -1,7 +1,9 @@
 package woowacourse.movie.screeningmovie
 
-import woowacourse.movie.model.Movies
 import woowacourse.movie.repository.MovieRepository
+import woowacourse.movie.screeningmovie.uimodel.AdvertisementUiModel
+import woowacourse.movie.screeningmovie.uimodel.ListItemUiModel
+import woowacourse.movie.screeningmovie.uimodel.ScreenMovieUiModel
 
 class ScreenMoviePresenter(
     private val view: ScreeningMovieContract.View,
@@ -13,12 +15,26 @@ class ScreenMoviePresenter(
     }
 
     override fun loadScreeningMovies() {
-        val movies = repository.movies()
-        val moviesWithAds =
-            Movies(movies).insertAdvertisements(
-                ADVERTISEMENT_INTERVAL,
-            )
-        view.showMovies(moviesWithAds.toScreenItems())
+        val movieUiModels = repository.movies().map { it.toScreenMovieUiModel() }
+        val advertisementUiModels = repository.advertisements().map { it.toAdvertisementUiModel() }
+        val mixedList = makeMixedList(movieUiModels, advertisementUiModels)
+        view.showMovies(mixedList)
+    }
+
+    private fun makeMixedList(
+        movieUiModels: List<ScreenMovieUiModel>,
+        advertisementUiModels: List<AdvertisementUiModel>,
+        interval: Int = ADVERTISEMENT_INTERVAL,
+    ): List<ListItemUiModel> {
+        val advertisementDeque = ArrayDeque(advertisementUiModels)
+
+        return movieUiModels.chunked(interval) { chunk ->
+            if (chunk.size == interval && advertisementDeque.isNotEmpty()) {
+                chunk + advertisementDeque.removeFirst()
+            } else {
+                chunk
+            }
+        }.flatten()
     }
 
     companion object {

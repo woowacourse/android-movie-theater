@@ -3,8 +3,6 @@ package woowacourse.movie.model
 import java.time.LocalDate
 import kotlin.time.Duration.Companion.minutes
 
-sealed interface ScreenView
-
 data class Movie(
     val id: Long,
     val title: String,
@@ -13,7 +11,7 @@ data class Movie(
     val startDate: LocalDate,
     val endDate: LocalDate,
     val runningTime: RunningTime,
-) : ScreenView {
+) {
     companion object {
         val STUB =
             Movie(
@@ -29,7 +27,3 @@ data class Movie(
             )
     }
 }
-
-data class Advertisement(
-    val imageUrl: ImageUrl = ImageUrl.none(),
-) : ScreenView

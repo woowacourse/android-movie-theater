@@ -1,5 +1,6 @@
 package woowacourse.movie.data
 
+import woowacourse.movie.model.Advertisement
 import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieReservation
@@ -9,7 +10,7 @@ import woowacourse.movie.model.ScreeningMovie
 import woowacourse.movie.repository.MovieRepository
 import java.time.LocalDateTime
 
-object DummyMovies : MovieRepository {
+object DummyMovieRepository : MovieRepository {
     private val screenMovies: List<ScreeningMovie> =
         listOf(
             ScreeningMovie.STUB_A,
@@ -23,6 +24,8 @@ object DummyMovies : MovieRepository {
     private var reservationId: Long = 0
 
     override fun movies(): List<Movie> = screenMovies.map { it.movie }.distinct()
+
+    override fun advertisements(): List<Advertisement> = List(10) { Advertisement() }
 
     override fun screenMovieById(id: Long): ScreeningMovie {
         return screenMovies.firstOrNull { it.id == id } ?: error(

@@ -1,5 +1,6 @@
 package woowacourse.movie.repository
 
+import woowacourse.movie.model.Advertisement
 import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieReservation
@@ -10,6 +11,8 @@ import java.time.LocalDateTime
 
 interface MovieRepository {
     fun movies(): List<Movie>
+
+    fun advertisements(): List<Advertisement>
 
     fun screenMovieById(id: Long): ScreeningMovie
 

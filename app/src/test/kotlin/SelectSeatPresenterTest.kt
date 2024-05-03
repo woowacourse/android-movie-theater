@@ -6,7 +6,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.DummyMovies
+import woowacourse.movie.data.DummyMovieRepository
 import woowacourse.movie.model.SeatRate
 import woowacourse.movie.selectseat.SelectSeatContract
 import woowacourse.movie.selectseat.SelectSeatPresenter
@@ -21,7 +21,7 @@ class SelectSeatPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk<SelectSeatContract.View>()
-        presenter = SelectSeatPresenter(view, DummyMovies)
+        presenter = SelectSeatPresenter(view, DummyMovieRepository)
     }
 
     @Test

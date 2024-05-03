@@ -1,8 +1,10 @@
 package woowacourse.movie.screeningmovie
 
+import woowacourse.movie.screeningmovie.uimodel.ListItemUiModel
+
 interface ScreeningMovieContract {
     interface View {
-        fun showMovies(movies: List<ScreeningItem>)
+        fun showMovies(movies: List<ListItemUiModel>)
 
         fun showTheaters(screeningMovieId: Long)
     }
