@@ -8,36 +8,47 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import woowacourse.movie.view.MainActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterSelectionBinding
 import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.presenter.theater.TheaterSelectionContract
 import woowacourse.movie.presenter.theater.TheaterSelectionPresenter
-import woowacourse.movie.view.MainActivity
 import woowacourse.movie.view.home.HomeFragment.Companion.MOVIE_ID
 import woowacourse.movie.view.reservation.ReservationDetailActivity
 import woowacourse.movie.view.theater.adapter.TheaterSelectionAdapter
 
 class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionContract.View {
-    private lateinit var binding: FragmentTheaterSelectionBinding
-    private lateinit var presenter: TheaterSelectionPresenter
+    private var _binding: FragmentTheaterSelectionBinding? = null
+    private val binding: FragmentTheaterSelectionBinding get() = _binding!!
     private var movieId: Int = 0
+    private lateinit var presenter: TheaterSelectionPresenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding =
+        _binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_theater_selection, container, false)
+        binding.theaterSelection = this
+        initTheaterRecyclerView()
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         movieId = receiveMovieId()
         presenter =
             TheaterSelectionPresenter(
                 view = this@TheaterSelectionFragment,
                 movieId = movieId,
             )
-        initTheaterRecyclerView()
-        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     @SuppressLint("ResourceType")
@@ -55,7 +66,7 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
         return when (val id = arguments?.getInt(MOVIE_ID)) {
             null -> {
                 dismissNow()
-                DEFAULT_MOVIE_ID
+                -1
             }
             else -> id
         }
@@ -75,6 +86,5 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
 
     companion object {
         const val THEATER_ID = "theaterId"
-        private const val DEFAULT_MOVIE_ID = -1
     }
 }
