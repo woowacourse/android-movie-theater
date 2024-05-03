@@ -56,7 +56,7 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
         movieId: Int,
         theaterId: Int,
     ) {
-        val intent = Intent(context as MainActivity, ReservationDetailActivity::class.java)
+        val intent = Intent(context, ReservationDetailActivity::class.java)
         intent.putExtra(MOVIE_ID, movieId)
         intent.putExtra(THEATER_ID, theaterId)
         startActivity(intent)
