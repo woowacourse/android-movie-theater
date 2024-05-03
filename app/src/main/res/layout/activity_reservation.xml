@@ -4,8 +4,13 @@
     <data>
 
         <variable
-            name="presenter"
-            type="woowacourse.movie.presentation.ui.reservation.ReservationPresenter" />
+            name="reservation"
+            type="woowacourse.movie.domain.model.Reservation" />
+
+        <variable
+            name="theaterName"
+            type="String" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -37,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:text="@{presenter.uiModel.reservation.movie.title}"
+            android:text="@{reservation.movie.title}"
             android:textColor="@color/black"
             android:textSize="25dp"
             android:textStyle="bold"
@@ -49,10 +54,10 @@
 
         <TextView
             android:id="@+id/tv_reservation_date"
+            bindShowReservationDate="@{reservation.dateTime}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            bindShowReservationDate="@{presenter.uiModel.reservation.dateTime}"
             android:textColor="@color/black"
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -62,16 +67,16 @@
 
         <TextView
             android:id="@+id/tv_reservation_count"
-            count="@{presenter.uiModel.reservation.ticketCount}"
-            seats="@{presenter.uiModel.reservation.seats}"
-            theaterName="@{presenter.uiModel.theaterName}"
+            count="@{reservation.ticketCount}"
+            seats="@{reservation.seats}"
+            theaterName="@{theaterName}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
-            android:textColor="@color/black"
-            android:textSize="20dp"
             android:ellipsize="end"
             android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_reservation_date"
@@ -80,7 +85,7 @@
 
         <TextView
             android:id="@+id/tv_reservation_amount"
-            bindShowTotalPrice="@{presenter.uiModel.reservation.totalPrice}"
+            bindShowTotalPrice="@{reservation.totalPrice}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
