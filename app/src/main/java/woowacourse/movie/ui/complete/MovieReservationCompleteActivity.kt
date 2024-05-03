@@ -47,7 +47,7 @@ class MovieReservationCompleteActivity :
 
     override fun showError(throwable: Throwable) {
         Log.e(TAG, throwable.message.toString())
-        Toast.makeText(this, resources.getString(R.string.invalid_key), Toast.LENGTH_LONG).show()
+        Toast.makeText(this, resources.getString(R.string.toast_invalid_key), Toast.LENGTH_LONG).show()
         finish()
     }
 
@@ -88,7 +88,7 @@ fun setReservationResult(
     theaterName: String,
 ) {
     textView.text =
-        context.getString(R.string.reservation_result, count, seats.joinToString(), theaterName)
+        context.getString(R.string.complete_reservation_result, count, seats.joinToString(), theaterName)
 }
 
 @BindingAdapter("context", "dateTime")

@@ -41,7 +41,7 @@
                     android:layout_marginBottom="56dp"
                     android:background="@color/screen_text_background"
                     android:gravity="center_horizontal"
-                    android:text="@string/screen_text"
+                    android:text="@string/selection_screen_text"
                     android:textColor="@color/white"
                     android:textSize="23sp"
                     android:textStyle="bold"
@@ -283,7 +283,7 @@
                 android:clickable="false"
                 android:enabled="false"
                 android:onClick="@{() -> activity.showAlertDialog()}"
-                android:text="@string/confirm"
+                android:text="@string/selection_btn_confirm"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 

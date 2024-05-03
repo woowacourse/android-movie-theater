@@ -79,7 +79,7 @@ class TheaterSelectionBottomSheetFragment :
         val context = requireContext()
         Toast.makeText(
             context,
-            context.getString(R.string.invalid_key),
+            context.getString(R.string.toast_invalid_key),
             Toast.LENGTH_SHORT,
         ).show()
         dismiss()

@@ -65,12 +65,12 @@ class MovieSeatSelectionActivity :
     fun showAlertDialog() {
         AlertDialog.Builder(this)
             .setCancelable(false)
-            .setTitle(R.string.reservation_confirm)
-            .setMessage(R.string.reservation_confirm_comment)
-            .setPositiveButton(R.string.reservation_complete) { _, _ ->
+            .setTitle(R.string.selection_dialog_title)
+            .setMessage(R.string.selection_dialog_content)
+            .setPositiveButton(R.string.selection_dialog_btn_complete) { _, _ ->
                 moveMovieReservationCompletePage(userTicketId)
             }
-            .setNegativeButton(R.string.cancel) { dialog, _ ->
+            .setNegativeButton(R.string.selection_dialog_btn_cancel) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
@@ -110,7 +110,7 @@ class MovieSeatSelectionActivity :
 
     override fun showReservationTotalAmount(amount: Int) {
         binding.totalSeatAmountText.text =
-            resources.getString(R.string.total_price)
+            resources.getString(R.string.selection_total_price)
                 .format(amount)
     }
 
@@ -123,7 +123,7 @@ class MovieSeatSelectionActivity :
 
     override fun showError(throwable: Throwable) {
         Log.e(TAG, throwable.message.toString())
-        Toast.makeText(this, resources.getString(R.string.invalid_key), Toast.LENGTH_LONG).show()
+        Toast.makeText(this, resources.getString(R.string.toast_invalid_key), Toast.LENGTH_LONG).show()
         finish()
     }
 

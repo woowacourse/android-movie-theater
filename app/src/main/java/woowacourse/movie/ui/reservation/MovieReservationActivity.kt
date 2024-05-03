@@ -68,7 +68,7 @@ class MovieReservationActivity :
     private fun movieContentId() = intent.getLongExtra(MovieReservationKey.MOVIE_CONTENT_ID, DEFAULT_VALUE)
 
     override fun showError(throwable: Throwable) {
-        Toast.makeText(this, resources.getString(R.string.invalid_key), Toast.LENGTH_LONG).show()
+        Toast.makeText(this, resources.getString(R.string.toast_invalid_key), Toast.LENGTH_LONG).show()
         finish()
     }
 
@@ -117,5 +117,5 @@ fun setScreeningDate(
     val formattedEndingDate =
         endingDate.format(DateTimeFormatter.ofPattern(context.getString(R.string.reservation_screening_date_format)))
     textView.text =
-        context.getString(R.string.screening_date, formattedOpeningDate, formattedEndingDate)
+        context.getString(R.string.home_screening_date, formattedOpeningDate, formattedEndingDate)
 }

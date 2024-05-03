@@ -74,7 +74,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="19dp"
-                        android:text="@{@string/running_time(presenter.movieContent.runningTime)}"
+                        android:text="@{@string/home_running_time(presenter.movieContent.runningTime)}"
                         android:textSize="16sp" />
 
                     <TextView
@@ -142,7 +142,7 @@
                     android:layout_width="65dp"
                     android:layout_height="match_parent"
                     android:onClick="@{() -> presenter.decreaseCount()}"
-                    android:text="@string/minus" />
+                    android:text="@string/reservation_btn_minus" />
 
                 <TextView
                     android:id="@+id/reservation_count_text"
@@ -158,7 +158,7 @@
                     android:layout_width="65dp"
                     android:layout_height="match_parent"
                     android:onClick="@{() -> presenter.increaseCount()}"
-                    android:text="@string/plus" />
+                    android:text="@string/reservation_btn_plus" />
 
             </LinearLayout>
 
@@ -167,7 +167,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="8dp"
-                android:text="@string/select_seat"
+                android:text="@string/reservation_btn_select_seat"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:onClick="@{() -> presenter.reserveSeat()}"/>
