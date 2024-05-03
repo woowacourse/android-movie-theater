@@ -14,7 +14,7 @@ import woowacourse.movie.databinding.ActivitySeatsBinding
 import woowacourse.movie.detail.view.MovieInformationDetailActivity.Companion.EXTRA_COUNT_KEY
 import woowacourse.movie.detail.view.MovieInformationDetailActivity.Companion.EXTRA_DATE_KEY
 import woowacourse.movie.detail.view.MovieInformationDetailActivity.Companion.EXTRA_TIME_KEY
-import woowacourse.movie.list.view.HomeFragment.Companion.EXTRA_MOVIE_ID_KEY
+import woowacourse.movie.list.view.MovieListFragment.Companion.EXTRA_MOVIE_ID_KEY
 import woowacourse.movie.list.view.TheaterBottomSheetFragment.Companion.EXTRA_THEATER_ID_KEY
 import woowacourse.movie.seats.contract.SeatsContract
 import woowacourse.movie.seats.model.Seat

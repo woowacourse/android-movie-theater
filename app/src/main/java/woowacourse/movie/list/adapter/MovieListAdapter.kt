@@ -11,7 +11,7 @@ import woowacourse.movie.list.model.Advertisement
 import woowacourse.movie.list.model.Movie
 import java.time.format.DateTimeFormatter
 
-class MovieAdapter(
+class MovieListAdapter(
     private val movies: List<Movie>,
     private val advertisements: List<Advertisement>,
 ) :

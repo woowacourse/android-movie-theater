@@ -22,7 +22,7 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
 
     private fun initBottomNavigation() {
         binding.bottomNav.selectedItemId = R.id.home_fragment_item
-        showFragment(HomeFragment())
+        showFragment(MovieListFragment())
         binding.bottomNav.setOnItemSelectedListener { item ->
             presenter.onBottomNavItemSelected(item.itemId)
             true
