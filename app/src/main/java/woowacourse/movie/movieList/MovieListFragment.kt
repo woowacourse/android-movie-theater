@@ -3,11 +3,8 @@ package woowacourse.movie.movieList
 import MovieAdapter
 import MovieListView
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
 import woowacourse.movie.common.BindingFragment
@@ -17,7 +14,8 @@ import woowacourse.movie.model.MovieDisplayData
 import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.movieList.cinemaListDialog.TheatersBottomSheetFragment
 
-class MovieListFragment : BindingFragment<FragmentMovieListBinding>(R.layout.fragment_movie_list), MovieListView {
+class MovieListFragment : BindingFragment<FragmentMovieListBinding>(R.layout.fragment_movie_list),
+    MovieListView {
 
     private var _presenter: MovieListPresenter? = null
     private val presenter get() = _presenter ?: error(getString(R.string.null_point_error))
@@ -43,9 +41,9 @@ class MovieListFragment : BindingFragment<FragmentMovieListBinding>(R.layout.fra
     override fun showBottomSheet(theater: Theater) {
         val fragment =
             (
-                childFragmentManager.findFragmentByTag(TheatersBottomSheetFragment.TAG)
-                    as? TheatersBottomSheetFragment
-            ) ?: TheatersBottomSheetFragment()
+                    childFragmentManager.findFragmentByTag(TheatersBottomSheetFragment.TAG)
+                            as? TheatersBottomSheetFragment
+                    ) ?: TheatersBottomSheetFragment()
         val bottomSheet =
             fragment.withArgs {
                 putSerializable(THEATER_KEY, theater)
@@ -64,7 +62,6 @@ class MovieListFragment : BindingFragment<FragmentMovieListBinding>(R.layout.fra
 
     private fun initPresenter() {
         _presenter = MovieListPresenter(this)
-        presenter.loadMovies()
     }
 
     companion object {

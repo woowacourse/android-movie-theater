@@ -12,6 +12,9 @@ import woowacourse.movie.model.theater.Theater
 import java.time.LocalDate
 
 class MovieListPresenter(private val view: MovieListView) {
+    init {
+        loadMovies()
+    }
     private fun generateSeats(): Map<String, Seat> {
         val seats = mutableMapOf<String, Seat>()
         val rows = 5
@@ -67,7 +70,7 @@ class MovieListPresenter(private val view: MovieListView) {
         view.showBottomSheet(theater)
     }
 
-    fun loadMovies() {
+    private fun loadMovies() {
         val displayData = convertToDisplayData(theaters)
         view.updateAdapter(displayData)
     }
