@@ -13,7 +13,7 @@
             type="woowacourse.movie.moviereservation.MovieReservationContract.Presenter" />
         <variable
             name="bookingDetail"
-            type="woowacourse.movie.moviereservation.uimodel.BookingDetail" />
+            type="woowacourse.movie.moviereservation.uimodel.BookingDetailUiModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.data.DummyMovies
 import woowacourse.movie.databinding.ActivityMovieReservationBinding
-import woowacourse.movie.moviereservation.uimodel.BookingDetail
+import woowacourse.movie.moviereservation.uimodel.BookingDetailUiModel
 import woowacourse.movie.moviereservation.uimodel.BookingInfoUiModel
 import woowacourse.movie.moviereservation.uimodel.HeadCountUiModel
 import woowacourse.movie.moviereservation.uimodel.MovieReservationUiModel
@@ -27,7 +27,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
     private lateinit var timeAdapter: ArrayAdapter<String>
     private lateinit var binding: ActivityMovieReservationBinding
 
-    private lateinit var bookingDetail: BookingDetail
+    private lateinit var bookingDetailUiModel: BookingDetailUiModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +41,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
                 this, DummyMovies,
             )
         presenter.loadMovieDetail(id)
-        binding.bookingDetail = bookingDetail
+        binding.bookingDetail = bookingDetailUiModel
         binding.presenter = presenter
     }
 
@@ -65,7 +65,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        val bookingInfo = bookingDetail
+        val bookingInfo = bookingDetailUiModel
         outState.putParcelable(STATE_BOOKING_ID, bookingInfo)
     }
 
@@ -73,18 +73,18 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         super.onRestoreInstanceState(savedInstanceState)
 
         val storedBookingInfo =
-            savedInstanceState.bundleParcelable(STATE_BOOKING_ID, BookingDetail::class.java)
+            savedInstanceState.bundleParcelable(STATE_BOOKING_ID, BookingDetailUiModel::class.java)
         storedBookingInfo?.let {
-            bookingDetail = it
+            bookingDetailUiModel = it
             binding.bookingDetail = it
-            binding.spinnerDetailDate.setSelection(bookingDetail.date.position)
-            binding.spinnerDetailTime.setSelection(bookingDetail.time.position)
+            binding.spinnerDetailDate.setSelection(bookingDetailUiModel.date.position)
+            binding.spinnerDetailTime.setSelection(bookingDetailUiModel.time.position)
         }
     }
 
     private fun initClickListener() {
         binding.btnDetailComplete.setOnClickListener {
-            startActivity(SelectSeatActivity.getIntent(this, BookingInfoUiModel(movieId(), theaterId(), bookingDetail)))
+            startActivity(SelectSeatActivity.getIntent(this, BookingInfoUiModel(movieId(), theaterId(), bookingDetailUiModel)))
         }
     }
 
@@ -100,8 +100,8 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
     }
 
     override fun updateHeadCount(updatedCount: HeadCountUiModel) {
-        bookingDetail = bookingDetail.updateCount(updatedCount)
-        binding.bookingDetail = bookingDetail
+        bookingDetailUiModel = bookingDetailUiModel.updateCount(updatedCount)
+        binding.bookingDetail = bookingDetailUiModel
     }
 
     override fun navigateToReservationResultView(reservationId: Long) {
@@ -122,9 +122,9 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
 
     override fun showBookingDetail(
         screeningDateTimesUiModel: ScreeningDateTimesUiModel,
-        bookingDetail: BookingDetail,
+        bookingDetailUiModel: BookingDetailUiModel,
     ) {
-        this.bookingDetail = bookingDetail
+        this.bookingDetailUiModel = bookingDetailUiModel
         initSpinner(screeningDateTimesUiModel)
     }
 
@@ -154,8 +154,8 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
                     position: Int,
                     id: Long,
                 ) {
-                    bookingDetail =
-                        bookingDetail.updateDate(
+                    bookingDetailUiModel =
+                        bookingDetailUiModel.updateDate(
                             position, binding.spinnerDetailDate.selectedItem.toString(),
                         )
                     timeAdapter.clear()
@@ -173,8 +173,8 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
                     position: Int,
                     id: Long,
                 ) {
-                    bookingDetail =
-                        bookingDetail.updateTime(
+                    bookingDetailUiModel =
+                        bookingDetailUiModel.updateTime(
                             position, binding.spinnerDetailTime.selectedItem.toString(),
                         )
                 }

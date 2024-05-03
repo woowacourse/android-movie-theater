@@ -1,7 +1,7 @@
 package woowacourse.movie.moviereservation
 
 import woowacourse.movie.model.HeadCount
-import woowacourse.movie.moviereservation.uimodel.BookingDetail
+import woowacourse.movie.moviereservation.uimodel.BookingDetailUiModel
 import woowacourse.movie.moviereservation.uimodel.HeadCountUiModel
 import woowacourse.movie.repository.MovieRepository
 
@@ -16,7 +16,7 @@ class MovieReservationPresenter(
             view.showMovieInfo(screeningMovie.toMovieReservationUiModel())
             view.showBookingDetail(
                 screeningMovie.toScreeningDateTimeUiModel(),
-                BookingDetail(
+                BookingDetailUiModel(
                     HeadCount.MIN_COUNT,
                     screeningMovie.startDate,
                     screeningMovie.screenDateTimes.first().times.first(),

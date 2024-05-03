@@ -28,12 +28,12 @@ data class BookingInfoUiModel(
         SelectedTimeUiModel(time = time),
     )
 
-    constructor(screenMovieId: Long, theaterId: Long, bookingDetail: BookingDetail) : this(
+    constructor(screenMovieId: Long, theaterId: Long, bookingDetailUiModel: BookingDetailUiModel) : this(
         screenMovieId,
         theaterId,
-        bookingDetail.count,
-        bookingDetail.date,
-        bookingDetail.time,
+        bookingDetailUiModel.count,
+        bookingDetailUiModel.date,
+        bookingDetailUiModel.time,
     )
 
     fun localDateTime() = LocalDateTime.of(date.getLocalDate(), time.getLocalTime())

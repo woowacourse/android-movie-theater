@@ -1,6 +1,6 @@
 package woowacourse.movie.moviereservation
 
-import woowacourse.movie.moviereservation.uimodel.BookingDetail
+import woowacourse.movie.moviereservation.uimodel.BookingDetailUiModel
 import woowacourse.movie.moviereservation.uimodel.HeadCountUiModel
 import woowacourse.movie.moviereservation.uimodel.MovieReservationUiModel
 import woowacourse.movie.moviereservation.uimodel.ScreeningDateTimesUiModel
@@ -13,7 +13,7 @@ interface MovieReservationContract {
 
         fun showBookingDetail(
             screeningDateTimeUiModels: ScreeningDateTimesUiModel,
-            bookingDetail: BookingDetail,
+            bookingDetailUiModel: BookingDetailUiModel,
         )
 
         fun updateHeadCount(updatedCount: HeadCountUiModel)
