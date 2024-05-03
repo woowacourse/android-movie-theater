@@ -13,7 +13,7 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_home)/*ActivityHomeBinding.inflate(layoutInflater)*/
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         binding.home = this
         presenter = HomePresenter(this)
         setContentView(binding.root)
