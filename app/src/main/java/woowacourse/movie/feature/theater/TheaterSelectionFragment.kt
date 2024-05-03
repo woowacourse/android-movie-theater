@@ -29,12 +29,7 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
     ): View {
         _binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_theater_selection, container, false)
-        movieId = receiveMovieId()
-        presenter =
-            TheaterSelectionPresenter(
-                view = this@TheaterSelectionFragment,
-                movieId = movieId,
-            )
+        initPresenter()
         initTheaterRecyclerView()
         return binding.root
     }
@@ -63,6 +58,14 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
             }
             else -> id
         }
+    }
+
+    private fun initPresenter() {
+        presenter =
+            TheaterSelectionPresenter(
+                view = this@TheaterSelectionFragment,
+                movieId = receiveMovieId(),
+            )
     }
 
     private fun initTheaterRecyclerView() {
