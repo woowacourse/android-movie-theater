@@ -70,16 +70,4 @@ object MovieUtils {
             replace(fragmentLayoutResource, nextFragment)
         }
     }
-
-    @SuppressLint("ResourceType")
-    fun FragmentManager.navigateToFragment(
-        @LayoutRes
-        fragmentLayoutResource: Int,
-        nextFragment: Fragment,
-    ) {
-        commit {
-            add(fragmentLayoutResource, nextFragment)
-            addToBackStack(null)
-        }
-    }
 }
