@@ -14,17 +14,17 @@ class DetailPresenter(
     private val view: DetailContract.View,
     private val repository: ScreenRepository,
 ) : DetailContract.Presenter {
-    private var _uiModel = DetailUiModel()
-    val uiModel: DetailUiModel
-        get() = _uiModel
+    private var _detailModel = DetailUiModel()
+    val detailModel: DetailUiModel
+        get() = _detailModel
 
     override fun loadScreen(
         movieId: Int,
         theaterId: Int,
     ) {
         repository.findByScreenId(movieId = movieId, theaterId = theaterId).onSuccess { screen ->
-            _uiModel =
-                uiModel.copy(
+            _detailModel =
+                detailModel.copy(
                     screenId = screen.id,
                     theaterId = theaterId,
                     screen = screen,
@@ -33,7 +33,7 @@ class DetailPresenter(
                     selectedTime = screen.selectableDates.first().getSelectableTimes().first(),
                 )
             view.showScreen(screen)
-            view.showTicket(uiModel.ticket.count)
+            view.showTicket(detailModel.ticket.count)
         }.onFailure { e ->
             when (e) {
                 is NoSuchElementException -> {
@@ -58,47 +58,47 @@ class DetailPresenter(
     }
 
     override fun registerDate(date: LocalDate) {
-        _uiModel = uiModel.copy(selectedDate = ScreenDate(date))
+        _detailModel = detailModel.copy(selectedDate = ScreenDate(date))
     }
 
     override fun registerTime(time: LocalTime) {
-        _uiModel = uiModel.copy(selectedTime = time)
+        _detailModel = detailModel.copy(selectedTime = time)
     }
 
     override fun updateTicket(count: Int) {
-        _uiModel = uiModel.copy(ticket = Ticket(count))
+        _detailModel = detailModel.copy(ticket = Ticket(count))
         view.showTicket(count)
     }
 
     override fun plusTicket() {
-        val nextTicket = uiModel.ticket.increase(1)
+        val nextTicket = detailModel.ticket.increase(1)
 
         if (nextTicket.isInvalidCount()) {
             view.showSnackBar(MessageType.TicketMaxCountMessage(MAX_TICKET_COUNT))
             return
         }
-        _uiModel = uiModel.copy(ticket = nextTicket)
-        view.showTicket(uiModel.ticket.count)
+        _detailModel = detailModel.copy(ticket = nextTicket)
+        view.showTicket(detailModel.ticket.count)
     }
 
     override fun minusTicket() {
-        val nextTicket = uiModel.ticket.decrease(1)
+        val nextTicket = detailModel.ticket.decrease(1)
 
         if (nextTicket.isInvalidCount()) {
             view.showSnackBar(MessageType.TicketMinCountMessage(MIN_TICKET_COUNT))
             return
         }
-        _uiModel = uiModel.copy(ticket = nextTicket)
-        view.showTicket(uiModel.ticket.count)
+        _detailModel = detailModel.copy(ticket = nextTicket)
+        view.showTicket(detailModel.ticket.count)
     }
 
     override fun selectSeat() {
-        uiModel.selectedDate?.let { selectedDate ->
+        detailModel.selectedDate?.let { selectedDate ->
             val reservationInfo =
                 ReservationInfo(
-                    theaterId = uiModel.theaterId,
-                    dateTime = selectedDate.getLocalDateTime(uiModel.selectedTime),
-                    ticketCount = uiModel.ticket.count,
+                    theaterId = detailModel.theaterId,
+                    dateTime = selectedDate.getLocalDateTime(detailModel.selectedTime),
+                    ticketCount = detailModel.ticket.count,
                 )
             view.navigateToSeatSelection(reservationInfo)
         }

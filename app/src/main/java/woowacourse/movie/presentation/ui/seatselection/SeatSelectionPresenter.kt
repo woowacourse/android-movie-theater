@@ -14,13 +14,13 @@ class SeatSelectionPresenter(
     private val repository: ScreenRepository,
     private val reservationRepository: ReservationRepository,
 ) : SeatSelectionContract.Presenter {
-    private var _uiModel: SeatSelectionUiModel = SeatSelectionUiModel()
-    val uiModel: SeatSelectionUiModel
-        get() = _uiModel
+    private var _seatSelectionModel: SeatSelectionUiModel = SeatSelectionUiModel()
+    val seatSelectionModel: SeatSelectionUiModel
+        get() = _seatSelectionModel
 
     override fun updateUiModel(reservationInfo: ReservationInfo) {
-        _uiModel =
-            uiModel.copy(
+        _seatSelectionModel =
+            seatSelectionModel.copy(
                 id = reservationInfo.theaterId,
                 dateTime = reservationInfo.dateTime,
                 ticketCount = reservationInfo.ticketCount,
@@ -29,7 +29,7 @@ class SeatSelectionPresenter(
 
     override fun loadScreen(id: Int) {
         repository.findByScreenId(theaterId = id, movieId = id).onSuccess { screen ->
-            _uiModel = uiModel.copy(screen = screen)
+            _seatSelectionModel = seatSelectionModel.copy(screen = screen)
         }.onFailure { e ->
             when (e) {
                 is NoSuchElementException -> {
@@ -47,8 +47,8 @@ class SeatSelectionPresenter(
 
     override fun loadSeatBoard(id: Int) {
         repository.loadSeatBoard(id).onSuccess { seatBoard ->
-            _uiModel =
-                _uiModel.copy(
+            _seatSelectionModel =
+                _seatSelectionModel.copy(
                     userSeat =
                         UserSeat(
                             seatBoard.seats.map {
@@ -81,8 +81,8 @@ class SeatSelectionPresenter(
             calculateSeat()
             return
         }
-        if (uiModel.userSeat.seatModels.count { it.isSelected } == uiModel.ticketCount) {
-            view.showSnackBar(MessageType.AllSeatsSelectedMessage(uiModel.ticketCount))
+        if (seatSelectionModel.userSeat.seatModels.count { it.isSelected } == seatSelectionModel.ticketCount) {
+            view.showSnackBar(MessageType.AllSeatsSelectedMessage(seatSelectionModel.ticketCount))
         } else {
             seatModel.isSelected = true
             calculateSeat()
@@ -91,11 +91,11 @@ class SeatSelectionPresenter(
 
     override fun calculateSeat() {
         val newPrice =
-            uiModel.userSeat.seatModels.filter { it.isSelected }.sumOf {
+            seatSelectionModel.userSeat.seatModels.filter { it.isSelected }.sumOf {
                 it.seatRank.price
             }
-        _uiModel = uiModel.copy(totalPrice = newPrice)
-        view.showTotalPrice(uiModel.totalPrice)
+        _seatSelectionModel = seatSelectionModel.copy(totalPrice = newPrice)
+        view.showTotalPrice(seatSelectionModel.totalPrice)
     }
 
     override fun showConfirmDialog() {
@@ -103,13 +103,13 @@ class SeatSelectionPresenter(
     }
 
     override fun reserve() {
-        uiModel.screen?.let { screen ->
-            uiModel.dateTime?.let { dateTime ->
+        seatSelectionModel.screen?.let { screen ->
+            seatSelectionModel.dateTime?.let { dateTime ->
                 reservationRepository.saveReservation(
                     screen.movie,
-                    uiModel.id,
-                    uiModel.ticketCount,
-                    uiModel.userSeat.seatModels.filter { it.isSelected }
+                    seatSelectionModel.id,
+                    seatSelectionModel.ticketCount,
+                    seatSelectionModel.userSeat.seatModels.filter { it.isSelected }
                         .map { Seat(it.column, it.row, it.seatRank) },
                     dateTime,
                 ).onSuccess { id ->

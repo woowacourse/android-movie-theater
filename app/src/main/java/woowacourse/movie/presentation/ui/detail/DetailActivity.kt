@@ -44,7 +44,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
                     id: Long,
                 ) {
                     val localDate = parent.getItemAtPosition(position) as LocalDate
-                    if (presenter.uiModel.selectedDate?.date != localDate) {
+                    if (presenter.detailModel.selectedDate?.date != localDate) {
                         presenter.registerDate(localDate)
                         presenter.createTimeSpinnerAdapter(ScreenDate(localDate))
                     }
@@ -111,9 +111,9 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(PUT_TICKET_STATE_KEY, presenter.uiModel.ticket.count)
-        outState.putSerializable(PUT_STATE_KEY_SELECTED_DATE, presenter.uiModel.selectedDate?.date)
-        outState.putSerializable(PUT_STATE_KEY_SELECTED_TIME, presenter.uiModel.selectedTime)
+        outState.putInt(PUT_TICKET_STATE_KEY, presenter.detailModel.ticket.count)
+        outState.putSerializable(PUT_STATE_KEY_SELECTED_DATE, presenter.detailModel.selectedDate?.date)
+        outState.putSerializable(PUT_STATE_KEY_SELECTED_TIME, presenter.detailModel.selectedTime)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -143,7 +143,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
     }
 
     private fun findPositionForSelectedDate(selectedDate: LocalDate): Int {
-        presenter.uiModel.selectableDates.forEachIndexed { index, screenDate ->
+        presenter.detailModel.selectableDates.forEachIndexed { index, screenDate ->
             if (screenDate.date == selectedDate) {
                 return index
             }
@@ -162,7 +162,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
     }
 
     private fun findPositionForSelectedTime(selectedTime: LocalTime): Int {
-        presenter.uiModel.selectedDate?.let { screenDate ->
+        presenter.detailModel.selectedDate?.let { screenDate ->
             screenDate.getSelectableTimes().forEachIndexed { index, screenTime ->
                 if (screenTime == selectedTime) {
                     return index

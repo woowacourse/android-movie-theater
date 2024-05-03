@@ -79,7 +79,7 @@ class SeatSelectionActivity : BaseActivity<ActivitySeatSelectionBinding>(), View
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putSerializable(PUT_STATE_KEY_USER_SEAT, presenter.uiModel.userSeat)
+        outState.putSerializable(PUT_STATE_KEY_USER_SEAT, presenter.seatSelectionModel.userSeat)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
