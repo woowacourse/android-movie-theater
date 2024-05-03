@@ -63,7 +63,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
             runCatching {
                 bundle.getInt(HEAD_COUNT)
             }.onSuccess { headCount ->
-                presenter.headCount.restore(headCount)
+                presenter.restoreHeadCount(headCount)
                 binding.textViewReservationDetailNumberOfTickets.text = presenter.headCount.count.toString()
             }.onFailure {
                 showErrorToast()

@@ -11,11 +11,6 @@ class HeadCount(
     var count: Int = count
         private set
 
-    fun restore(count: Int): HeadCount {
-        restoreCount(count)
-        return this
-    }
-
     fun increase(): ChangeTicketCountResult {
         if (count >= MAX_TICKET_COUNT) return Failure
         count++
@@ -26,10 +21,6 @@ class HeadCount(
         if (count <= MIN_TICKET_COUNT) return Failure
         count--
         return Success
-    }
-
-    private fun restoreCount(recordOfCount: Int) {
-        count = recordOfCount
     }
 
     companion object {

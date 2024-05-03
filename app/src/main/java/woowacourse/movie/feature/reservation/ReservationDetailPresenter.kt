@@ -56,4 +56,8 @@ class ReservationDetailPresenter(
             is Failure -> view.showResultToast()
         }
     }
+
+    override fun restoreHeadCount(count: Int) {
+        headCount = HeadCount(count)
+    }
 }
