@@ -12,6 +12,9 @@ import woowacourse.movie.model.theater.Theater
 import java.time.LocalDate
 
 class MovieListPresenter(private val view: MovieListView) {
+
+    private val theaters: List<Theater> = generateTheaters(GENERATE_DUMMY_DATA_NUM)
+
     init {
         loadMovies()
     }
@@ -53,8 +56,6 @@ class MovieListPresenter(private val view: MovieListView) {
             Theater(movie, listOf(), seats)
         }
     }
-
-    private val theaters: List<Theater> = generateTheaters(GENERATE_DUMMY_DATA_NUM)
 
     private fun convertToDisplayData(theaters: List<Theater>): List<MovieDisplayData> {
         return theaters.map { theater ->

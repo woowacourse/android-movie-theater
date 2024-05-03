@@ -43,7 +43,7 @@ class MovieAdapter(
         position: Int,
     ) {
         when (holder) {
-            is MovieViewHolder -> holder.bind(items[position] as MovieDisplayData)
+            is MovieViewHolder -> holder.bind(items[position])
             is AdViewHolder -> holder.bind()
         }
     }
