@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.theater.TheaterDao
+import woowacourse.movie.feature.reservation.ReservationDetailActivity.Companion.DEFAULT_MOVIE_ID
 
 @ExtendWith(MockKExtension::class)
 class ReservationDetailPresenterTest {
@@ -20,20 +21,20 @@ class ReservationDetailPresenterTest {
 
     @BeforeEach
     fun setUp() {
-        presenter = ReservationDetailPresenter(view, ScreeningDao(), TheaterDao())
+        presenter = ReservationDetailPresenter(view, ScreeningDao(), TheaterDao(), DEFAULT_MOVIE_ID)
     }
 
     @Test
     fun `영화 정보를 보여준다`() {
         every { view.showMovieInformation(any()) } just runs
-        presenter.loadMovie(0)
+        presenter.loadMovie()
         verify { view.showMovieInformation(any()) }
     }
 
     @Test
     fun `상영 기간을 보여준다`() {
         every { view.showScreeningPeriod(any()) } just runs
-        presenter.loadScreeningPeriod(0)
+        presenter.loadScreeningPeriod()
         verify { view.showScreeningPeriod(any()) }
     }
 

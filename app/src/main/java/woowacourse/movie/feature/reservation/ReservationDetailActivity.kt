@@ -29,7 +29,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
             R.layout.activity_reservation_detail,
         )
     }
-    private val presenter: ReservationDetailPresenter = ReservationDetailPresenter(this, ScreeningDao(), TheaterDao())
+    private lateinit var presenter: ReservationDetailPresenter
     private var movieId: Int = 0
     private var theaterId: Int = 0
 
@@ -38,14 +38,15 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.reservationDetail = this
 
-        movieId = intent.getIntExtra(MOVIE_ID, DEFAULT_MOVIE_ID)
+        movieId = receiveMovieId()
         theaterId = intent.getIntExtra(THEATER_ID, 0)
 
+        initPresenter()
         with(presenter) {
-            loadMovie(movieId)
-            loadScreeningPeriod(movieId)
+            loadMovie()
+            loadScreeningPeriod()
         }
-        updateScreeningTimes(movieId)
+        updateScreeningTimes(DEFAULT_TIME_ID)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -128,6 +129,18 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
         startActivity(intent)
     }
 
+    private fun initPresenter() {
+        presenter =
+            ReservationDetailPresenter(
+                view = this,
+                ScreeningDao(),
+                TheaterDao(),
+                movieId,
+            )
+    }
+
+    private fun receiveMovieId() = intent.getIntExtra(MOVIE_ID, DEFAULT_MOVIE_ID)
+
     private fun updateScreeningTimes(selectedTimeId: Int? = null) {
         binding.spinnerReservationDetailScreeningDate.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -170,6 +183,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
         const val SCREENING_DATE_TIME = "screeningDateTime"
         const val SELECTED_DATE_TAG = "notSelectedDate"
         const val NOTHING_SELECTED_MESSAGE = "nothingSelected"
+        private const val DEFAULT_TIME_ID = 0
         private const val SCREENING_TIME = "screeningTime"
         private const val SCREENING_PERIOD = "screeningPeriod"
     }

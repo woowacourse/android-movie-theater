@@ -30,9 +30,9 @@ interface ReservationDetailContract {
     }
 
     interface Presenter {
-        fun loadMovie(movieId: Int)
+        fun loadMovie()
 
-        fun loadScreeningPeriod(movieId: Int)
+        fun loadScreeningPeriod()
 
         fun loadScreeningTimes(
             theaterId: Int,
