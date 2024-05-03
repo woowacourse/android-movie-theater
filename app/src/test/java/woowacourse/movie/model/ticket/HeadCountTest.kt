@@ -6,7 +6,7 @@ import woowacourse.movie.model.result.Failure
 
 class HeadCountTest {
     @Test
-    fun `플러스 버튼을 누르면 티켓 매수가 1장 증가한다 `() {
+    fun `플러스 버튼을 누르면 인원 수가 1 증가한다 `() {
         val headCount = HeadCount()
 
         headCount.increase()
@@ -15,7 +15,7 @@ class HeadCountTest {
     }
 
     @Test
-    fun `마이너스 버튼을 누르면 티켓 매수가 1장 감소한다 `() {
+    fun `마이너스 버튼을 누르면 인원 수가 1 감소한다 `() {
         val headCount = HeadCount()
 
         headCount.increase()
@@ -25,7 +25,7 @@ class HeadCountTest {
     }
 
     @Test
-    fun `티켓이 1장일 때 마이너스 버튼을 누르면 Failure가 반환된다`() {
+    fun `인원 수가 1일 때 마이너스 버튼을 누르면 Failure가 반환된다`() {
         val headCount = HeadCount()
 
         val actual = headCount.decrease()
@@ -34,10 +34,10 @@ class HeadCountTest {
     }
 
     @Test
-    fun `티켓이 100장일 때 플러스 버튼을 누르면 Failure가 반환된다`() {
+    fun `인원 수가 20일 때 플러스 버튼을 누르면 Failure가 반환된다`() {
         val headCount = HeadCount()
 
-        repeat(99) {
+        repeat(19) {
             headCount.increase()
         }
 
