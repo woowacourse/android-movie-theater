@@ -10,11 +10,9 @@ class TheaterSelectionPresenter(
     private val theaters: MovieDataSource<Theater>,
 ) :
     TheaterSelectionContract.Presenter {
-    private lateinit var movieContent: MovieContent
-
     override fun loadTheaters(movieContentId: Long) {
         runCatching {
-            movieContent = movieContents.find(movieContentId)
+            val movieContent = movieContents.find(movieContentId)
             val movieTheaters =
                 movieContent.theaterIds.map { theaterId ->
                     theaters.find(theaterId)
