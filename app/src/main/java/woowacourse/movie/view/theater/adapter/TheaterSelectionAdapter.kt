@@ -18,6 +18,7 @@ class TheaterSelectionAdapter(
     ): TheaterSelectionViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = ItemTheaterBinding.inflate(inflater, parent, false)
+
         return TheaterSelectionViewHolder(view)
     }
 

@@ -36,6 +36,10 @@
     <string name="reservation_finished_theater">| %s</string>
     <string name="reservation_finished_price_unit">원 (현장 결제)</string>
 
+    <!--Movie utils -->
+    <string name="screening_time_format">"${%d}개의 상영 시간"</string>
+    <string name="period_date">"%s~%s"</string>
+
     <!-- item_movie_catalog -->
     <string name="movie_catalog_reservation_now">지금 예매</string>
     <string name="advertisement_message">우아한테크코스 광고</string>

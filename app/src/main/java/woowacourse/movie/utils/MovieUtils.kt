@@ -16,13 +16,19 @@ import java.text.DecimalFormat
 import java.time.LocalDate
 
 object MovieUtils {
-    fun convertPeriodFormat(period: List<LocalDate>): String {
+    fun convertPeriodFormat(
+        period: List<LocalDate>,
+        context: Context,
+    ): String {
         val start = period.first().toString()
         val end = period.last().toString()
-        return "%s~%s".format(start, end)
+        return context.getString(R.string.period_date).format(start, end)
     }
 
-    fun convertScreeningInfoFormat(screeningTimeCount: Int): String = "${screeningTimeCount}개의 상영 시간"
+    fun convertScreeningInfoFormat(
+        screeningTimeCount: Int,
+        context: Context,
+    ): String = context.getString(R.string.screening_time_format).format(screeningTimeCount)
 
     fun convertAmountFormat(
         context: Context,

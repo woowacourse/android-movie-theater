@@ -80,7 +80,10 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
         with(binding) {
             imageViewReservationDetailPoster.setImageResource(movie.posterId)
             textViewReservationDetailTitle.text = movie.title
-            textViewReservationScreeningDate.text = convertPeriodFormat(movie.screeningPeriod)
+            textViewReservationScreeningDate.text = convertPeriodFormat(
+                movie.screeningPeriod,
+                binding.root.context,
+            )
             textViewReservationRunningTime.text = movie.runningTime
             textViewReservationSummary.text = movie.summary
         }

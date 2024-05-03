@@ -8,6 +8,7 @@ import woowacourse.movie.utils.MovieUtils.convertScreeningInfoFormat
 class TheaterSelectionViewHolder(
     private val binding: ItemTheaterBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
+
     init {
         binding.theaterViewHolder = this
     }
@@ -20,7 +21,10 @@ class TheaterSelectionViewHolder(
             name.text = item.name
             val screeningTimeCount =
                 item.screeningTimes.weekDay.size + item.screeningTimes.weekEnd.size
-            screeningInfo.text = convertScreeningInfoFormat(screeningTimeCount)
+            screeningInfo.text = convertScreeningInfoFormat(
+                screeningTimeCount,
+                root.context,
+            )
             constraintLayoutItemTheater.setOnClickListener {
                 theaterId(item.theaterId)
             }
