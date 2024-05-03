@@ -40,19 +40,16 @@ class MovieListFragment : Fragment(), MovieListContract.View {
     ) {
         movieListAdapter = MovieListAdapter(movies, advertisements)
         binding.movieRecyclerView.adapter = movieListAdapter
-        binding.movieRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.movieRecyclerView.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
 
     override fun setOnListViewClickListener() {
         movieListAdapter.setItemClickListener(
             object : MovieListAdapter.OnItemClickListener {
                 override fun onClick(movieId: Long) {
-                    val theaterBottomSheetFragment = TheaterBottomSheetFragment()
-                    val bundle = Bundle()
-                    bundle.putLong(EXTRA_MOVIE_ID_KEY_TO_FRAGMENT, movieId)
-                    theaterBottomSheetFragment.arguments = bundle
-                    binding.fragmentContainerView.visibility = View.VISIBLE
-                    theaterBottomSheetFragment.show(parentFragmentManager, "dailog")
+                    val theaterBottomSheetFragment = newFragmentInstance(movieId)
+                    theaterBottomSheetFragment.show(parentFragmentManager, "dialog")
                 }
             },
         )
@@ -61,5 +58,13 @@ class MovieListFragment : Fragment(), MovieListContract.View {
     companion object {
         const val EXTRA_MOVIE_ID_KEY = "movie_id_key"
         const val EXTRA_MOVIE_ID_KEY_TO_FRAGMENT = "movie_id_key_to_fragment"
+
+        fun newFragmentInstance(movieId: Long): TheaterBottomSheetFragment {
+            return TheaterBottomSheetFragment().apply {
+                arguments = Bundle().apply {
+                    putLong(EXTRA_MOVIE_ID_KEY_TO_FRAGMENT, movieId)
+                }
+            }
+        }
     }
 }
