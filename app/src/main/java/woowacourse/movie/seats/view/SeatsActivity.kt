@@ -11,11 +11,11 @@ import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatsBinding
-import woowacourse.movie.detail.view.MovieInformationDetailActivity
 import woowacourse.movie.detail.view.MovieInformationDetailActivity.Companion.EXTRA_COUNT_KEY
 import woowacourse.movie.detail.view.MovieInformationDetailActivity.Companion.EXTRA_DATE_KEY
 import woowacourse.movie.detail.view.MovieInformationDetailActivity.Companion.EXTRA_TIME_KEY
 import woowacourse.movie.list.view.HomeFragment.Companion.EXTRA_MOVIE_ID_KEY
+import woowacourse.movie.list.view.TheaterBottomSheetFragment.Companion.EXTRA_THEATER_ID_KEY
 import woowacourse.movie.seats.contract.SeatsContract
 import woowacourse.movie.seats.model.Seat
 import woowacourse.movie.seats.presenter.SeatsPresenter
@@ -32,7 +32,7 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seats)
         binding.seats = this
         setContentView(binding.root)
-        theaterId = intent.getLongExtra(MovieInformationDetailActivity.EXTRA_THEATER_ID_KEY, -1)
+        theaterId = intent.getLongExtra(EXTRA_THEATER_ID_KEY, -1)
         val ticketCount = intent.getIntExtra(EXTRA_COUNT_KEY, -1)
         presenter.storeTicketCount(ticketCount)
         initSeats()
@@ -155,7 +155,7 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
         intent.putExtra(TIME_KEY, time)
         intent.putExtra(SEATS_KEY, seats as Serializable)
         intent.putExtra(PRICE_KEY, price)
-        intent.putExtra(MovieInformationDetailActivity.EXTRA_THEATER_ID_KEY, theaterId)
+        intent.putExtra(EXTRA_THEATER_ID_KEY, theaterId)
         startActivity(intent)
     }
 

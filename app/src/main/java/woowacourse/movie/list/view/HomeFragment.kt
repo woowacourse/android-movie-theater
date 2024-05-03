@@ -39,7 +39,6 @@ class HomeFragment : Fragment(), MovieListContract.View {
         advertisements: List<Advertisement>,
     ) {
         movieAdapter = MovieAdapter(movies, advertisements)
-
         binding.movieRecyclerView.adapter = movieAdapter
         binding.movieRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }

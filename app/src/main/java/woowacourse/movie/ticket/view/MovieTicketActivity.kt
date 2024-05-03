@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieTicketBinding
-import woowacourse.movie.detail.view.MovieInformationDetailActivity
 import woowacourse.movie.list.model.TheaterData
+import woowacourse.movie.list.view.TheaterBottomSheetFragment.Companion.EXTRA_THEATER_ID_KEY
 import woowacourse.movie.seats.model.Seat
 import woowacourse.movie.seats.view.SeatsActivity.Companion.DATE_KEY
 import woowacourse.movie.seats.view.SeatsActivity.Companion.ID_KEY
@@ -27,7 +27,7 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_ticket)
         binding.ticket = this
         setContentView(binding.root)
-        theaterId = intent.getLongExtra(MovieInformationDetailActivity.EXTRA_THEATER_ID_KEY, -1)
+        theaterId = intent.getLongExtra(EXTRA_THEATER_ID_KEY, -1)
         processPresenterTask()
     }
 
