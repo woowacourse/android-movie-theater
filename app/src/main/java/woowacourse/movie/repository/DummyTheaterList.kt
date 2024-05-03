@@ -1,6 +1,6 @@
 package woowacourse.movie.repository
 
-import woowacourse.movie.model.Screen
+import woowacourse.movie.model.ScreeningMovie
 import woowacourse.movie.model.Theater
 import java.time.LocalTime
 
@@ -10,9 +10,9 @@ object DummyTheaterList : TheaterListRepository {
             Theater(
                 id = 1,
                 name = "선릉",
-                screens =
+                screeningMovies =
                     listOf(
-                        Screen(
+                        ScreeningMovie(
                             1,
                             listOf(
                                 LocalTime.of(10, 0),
@@ -20,14 +20,14 @@ object DummyTheaterList : TheaterListRepository {
                                 LocalTime.of(14, 0),
                             ),
                         ),
-                        Screen(
+                        ScreeningMovie(
                             2,
                             listOf(
                                 LocalTime.of(11, 0),
                                 LocalTime.of(13, 0),
                             ),
                         ),
-                        Screen(
+                        ScreeningMovie(
                             3,
                             listOf(
                                 LocalTime.of(9, 0),
@@ -38,9 +38,9 @@ object DummyTheaterList : TheaterListRepository {
             Theater(
                 id = 2,
                 name = "잠실",
-                screens =
+                screeningMovies =
                     listOf(
-                        Screen(
+                        ScreeningMovie(
                             1,
                             listOf(
                                 LocalTime.of(9, 0),
@@ -48,7 +48,7 @@ object DummyTheaterList : TheaterListRepository {
                                 LocalTime.of(15, 0),
                             ),
                         ),
-                        Screen(
+                        ScreeningMovie(
                             2,
                             listOf(
                                 LocalTime.of(13, 0),
@@ -62,9 +62,9 @@ object DummyTheaterList : TheaterListRepository {
             Theater(
                 id = 3,
                 name = "강남",
-                screens =
+                screeningMovies =
                     listOf(
-                        Screen(
+                        ScreeningMovie(
                             1,
                             listOf(
                                 LocalTime.of(11, 0),
@@ -72,14 +72,14 @@ object DummyTheaterList : TheaterListRepository {
                                 LocalTime.of(19, 0),
                             ),
                         ),
-                        Screen(
+                        ScreeningMovie(
                             2,
                             listOf(
                                 LocalTime.of(7, 0),
                                 LocalTime.of(9, 0),
                             ),
                         ),
-                        Screen(
+                        ScreeningMovie(
                             3,
                             listOf(
                                 LocalTime.of(13, 0),
@@ -93,9 +93,9 @@ object DummyTheaterList : TheaterListRepository {
             Theater(
                 id = 4,
                 name = "아주아주아주아주아주긴 극장 이름인데 아주 나이스 빰빠밤바밤 밤밤 빠라바라밤 바밤",
-                screens =
+                screeningMovies =
                     listOf(
-                        Screen(
+                        ScreeningMovie(
                             4,
                             listOf(
                                 LocalTime.of(13, 0),
@@ -110,7 +110,7 @@ object DummyTheaterList : TheaterListRepository {
 
     override fun findTheaterList(movieId: Long): List<Theater> {
         return list.filter { theater ->
-            theater.screens.any { screen ->
+            theater.screeningMovies.any { screen ->
                 screen.movieId == movieId
             }
         }
