@@ -8,7 +8,7 @@ class AdvertisementViewHolder(
     private val binding: ItemAdvertisementBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
     init {
-        binding.advertisement
+        binding.advertisement = this
     }
 
     fun bind(ads: Advertisement) {
