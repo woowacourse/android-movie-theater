@@ -18,7 +18,7 @@ import woowacourse.movie.presentation.ui.seatselection.SeatSelectionActivity
 import java.time.LocalDate
 import java.time.LocalTime
 
-class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
+class MovieDetailActivity : BaseActivity<ActivityDetailBinding>(), View {
     override val layoutResourceId: Int
         get() = R.layout.activity_detail
     override val presenter: DetailPresenter by lazy { DetailPresenter(this, DummyScreens()) }
@@ -78,7 +78,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
     override fun showDateSpinnerAdapter(screenDates: List<ScreenDate>) {
         binding.spnDate.adapter =
             ArrayAdapter(
-                this@DetailActivity,
+                this@MovieDetailActivity,
                 android.R.layout.simple_spinner_item,
                 screenDates.map { it.date },
             )
@@ -87,7 +87,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
     override fun showTimeSpinnerAdapter(screenDate: ScreenDate) {
         binding.spnTime.adapter =
             ArrayAdapter(
-                this@DetailActivity,
+                this@MovieDetailActivity,
                 android.R.layout.simple_spinner_item,
                 screenDate.getSelectableTimes().map { it },
             )
@@ -187,7 +187,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
             movieId: Int,
             theaterId: Int,
         ) {
-            val intent = Intent(context, DetailActivity::class.java)
+            val intent = Intent(context, MovieDetailActivity::class.java)
             intent.putExtra(PUT_EXTRA_KEY_MOVIE_ID, movieId)
             intent.putExtra(PUT_EXTRA_KEY_THEATER_ID, theaterId)
             context.startActivity(intent)

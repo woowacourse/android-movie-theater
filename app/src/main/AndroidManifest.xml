@@ -28,7 +28,7 @@
             android:name=".presentation.ui.reservation.ReservationActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.ui.detail.DetailActivity"
+            android:name=".presentation.ui.detail.MovieDetailActivity"
             android:exported="false" />
     </application>
 

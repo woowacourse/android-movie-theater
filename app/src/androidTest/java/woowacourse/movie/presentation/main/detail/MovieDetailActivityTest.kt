@@ -15,14 +15,14 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.presentation.main.util.repeatClick
-import woowacourse.movie.presentation.ui.detail.DetailActivity
+import woowacourse.movie.presentation.ui.detail.MovieDetailActivity
 
 @RunWith(AndroidJUnit4::class)
-class DetailActivityTest {
+class MovieDetailActivityTest {
     @get:Rule
-    val activityRule: ActivityScenarioRule<DetailActivity> =
-        ActivityScenarioRule<DetailActivity>(
-            Intent(ApplicationProvider.getApplicationContext(), DetailActivity::class.java).apply {
+    val activityRule: ActivityScenarioRule<MovieDetailActivity> =
+        ActivityScenarioRule<MovieDetailActivity>(
+            Intent(ApplicationProvider.getApplicationContext(), MovieDetailActivity::class.java).apply {
                 putExtra("movieId", 1)
                 putExtra("theaterId", 1)
             },

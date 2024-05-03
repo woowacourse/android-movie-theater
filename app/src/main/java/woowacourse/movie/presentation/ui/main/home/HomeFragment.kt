@@ -13,7 +13,7 @@ import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.domain.model.TheaterCount
 import woowacourse.movie.domain.repository.DummyScreens
 import woowacourse.movie.presentation.model.MessageType
-import woowacourse.movie.presentation.ui.detail.DetailActivity
+import woowacourse.movie.presentation.ui.detail.MovieDetailActivity
 import woowacourse.movie.presentation.ui.main.home.adapter.ScreenRecyclerViewAdapter
 import woowacourse.movie.presentation.ui.main.home.bottom.BottomTheatersFragment
 
@@ -58,7 +58,7 @@ class HomeFragment : Fragment(), HomeContract.View {
         theaterId: Int,
     ) {
         dialog.dismiss()
-        DetailActivity.startActivity(requireActivity(), movieId, theaterId)
+        MovieDetailActivity.startActivity(requireActivity(), movieId, theaterId)
     }
 
     override fun showToastMessage(messageType: MessageType) {
