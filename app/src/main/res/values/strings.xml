@@ -30,4 +30,7 @@
     <string name="check_reservation_complete">예매 완료</string>
     <string name="check_reservation_cancel">취소</string>
 
+    <!-- 금액    -->
+    <string name="currency_format">%s(현장 결제)</string>
+
 </resources>

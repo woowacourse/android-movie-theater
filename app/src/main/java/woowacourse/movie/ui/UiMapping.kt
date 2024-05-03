@@ -3,6 +3,7 @@ package woowacourse.movie.ui
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import woowacourse.movie.R
 import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.Image
 import woowacourse.movie.domain.model.Movie
@@ -57,7 +58,7 @@ fun currency(
     textView: TextView,
     price: Int,
 ) {
-    textView.text = String.format("%s(현장 결제)", Currency.of(Locale.getDefault().country).format(price))
+    textView.text = textView.context.getString(R.string.currency_format, Currency.of(Locale.getDefault().country).format(price))
 }
 
 @BindingAdapter("app:srcScreenAdvertisement")
