@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityTicketingResultBinding
 import woowacourse.movie.model.Ticket
@@ -22,7 +21,7 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
         setContentView(R.layout.activity_ticketing_result)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_ticketing_result)
+        binding = ActivityTicketingResultBinding.inflate(layoutInflater)
 
         val movieTicket =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

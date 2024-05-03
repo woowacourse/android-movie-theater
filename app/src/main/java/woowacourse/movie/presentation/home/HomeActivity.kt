@@ -3,7 +3,6 @@ package woowacourse.movie.presentation.home
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
@@ -22,7 +21,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
 
         if (savedInstanceState == null) {
             setupBottomNavigationView()

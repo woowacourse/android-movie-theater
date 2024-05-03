@@ -7,7 +7,6 @@ import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityTicketingBinding
 import woowacourse.movie.model.Count
@@ -44,7 +43,7 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
         val theaterId = intent.getLongExtra(EXTRA_THEATER_ID, EXTRA_DEFAULT_THEATER_ID)
 
         ticketingPresenter = TicketingPresenter(this, MovieRepository(), DummyTheaterList)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_ticketing)
+        binding = ActivityTicketingBinding.inflate(layoutInflater)
 
         binding.presenter = ticketingPresenter
 
