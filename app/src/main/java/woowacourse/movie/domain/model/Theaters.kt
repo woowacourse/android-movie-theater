@@ -9,4 +9,15 @@ data class Theaters(val theaters: List<Theater>) {
                 theater.screens.any { it.id == screen.id }
             },
         )
+
+    fun screeningTheater(movie: Movie): Theaters =
+        Theaters(
+            theaters.asSequence()
+                .filter { theater ->
+                    theater.screens.any { screen ->
+                        screen.movie.id == movie.id
+                    }
+                }
+                .toList(),
+        )
 }
