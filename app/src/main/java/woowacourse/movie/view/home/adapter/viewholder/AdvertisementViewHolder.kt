@@ -7,11 +7,8 @@ import woowacourse.movie.model.advertisement.Advertisement
 class AdvertisementViewHolder(
     private val binding: ItemAdvertisementBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
-    init {
-        binding.advertisement = this
-    }
 
     fun bind(ads: Advertisement) {
-        binding.imageViewItemAdvertisement.setImageResource(ads.banner)
+        binding.advertisement = ads
     }
 }
