@@ -17,7 +17,6 @@ interface MovieDetailContract {
     }
 
     interface Presenter {
-
         fun load(movie: MovieInfo)
 
         fun onTicketPlusClicked()

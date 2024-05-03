@@ -46,7 +46,6 @@ class TheatersBottomSheetFragment : BottomSheetDialogFragment() {
         )
     }
 
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -63,41 +62,43 @@ class TheatersBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun makeCinema(theater: Theater) = listOf(
-        Cinema(
-            "CGV",
-            theater.copy(
-                times = listOf(
-                    LocalTime.of(9, 0),
-                    LocalTime.of(11, 0),
-                    LocalTime.of(15, 0)
+    private fun makeCinema(theater: Theater) =
+        listOf(
+            Cinema(
+                "CGV",
+                theater.copy(
+                    times =
+                        listOf(
+                            LocalTime.of(9, 0),
+                            LocalTime.of(11, 0),
+                            LocalTime.of(15, 0),
+                        ),
                 ),
             ),
-        ),
-        Cinema(
-            "롯데시네마",
-            theater.copy(
-                times =
-                listOf(
-                    LocalTime.of(13, 0),
-                    LocalTime.of(15, 0),
-                    LocalTime.of(17, 0),
-                    LocalTime.of(19, 0),
+            Cinema(
+                "롯데시네마",
+                theater.copy(
+                    times =
+                        listOf(
+                            LocalTime.of(13, 0),
+                            LocalTime.of(15, 0),
+                            LocalTime.of(17, 0),
+                            LocalTime.of(19, 0),
+                        ),
                 ),
             ),
-        ),
-        Cinema(
-            "메가 박스",
-            theater.copy(
-                times =
-                listOf(
-                    LocalTime.of(20, 0),
-                    LocalTime.of(22, 0),
-                    LocalTime.of(23, 30),
+            Cinema(
+                "메가 박스",
+                theater.copy(
+                    times =
+                        listOf(
+                            LocalTime.of(20, 0),
+                            LocalTime.of(22, 0),
+                            LocalTime.of(23, 30),
+                        ),
                 ),
             ),
-        ),
-    )
+        )
 
     companion object {
         val TAG = this::class.java.canonicalName

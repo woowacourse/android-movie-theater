@@ -1,7 +1,6 @@
 package woowacourse.movie.seat
 
 import android.content.Intent
-import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.theater.Seat
 
 interface TheaterSeatContract {
