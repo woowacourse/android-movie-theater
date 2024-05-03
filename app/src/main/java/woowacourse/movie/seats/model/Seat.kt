@@ -4,7 +4,7 @@ import android.graphics.Color
 import woowacourse.movie.seats.model.SeatsDataSource.seatTotalPrice
 import java.io.Serializable
 
-class Seat private constructor(val rowIndex: Int, val colIndex: Int) : Serializable {
+data class Seat private constructor(val rowIndex: Int, val colIndex: Int) : Serializable {
     var selected = false
         private set
 
@@ -31,26 +31,6 @@ class Seat private constructor(val rowIndex: Int, val colIndex: Int) : Serializa
         }
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Seat
-
-        if (rowIndex != other.rowIndex) return false
-        if (colIndex != other.colIndex) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = rowIndex
-        result = 31 * result + colIndex
-        result = 31 * result + selected.hashCode()
-        result = 31 * result + cellBackgroundColor.hashCode()
-        return result
-    }
-
     companion object {
         val seats = mutableListOf<Seat>()
 
@@ -59,12 +39,8 @@ class Seat private constructor(val rowIndex: Int, val colIndex: Int) : Serializa
             colIndex: Int,
         ): Seat {
             val seat = Seat(rowIndex, colIndex)
-            return if (seat in seats) {
-                return seats.first { it == seat }
-            } else {
-                seats.add(seat)
-                seat
-            }
+            if (seat !in seats) seats.add(seat)
+            return seats.first { it == seat }
         }
     }
 }
