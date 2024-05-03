@@ -8,14 +8,15 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentSettingBinding
 
 class ReservationListFragment : Fragment() {
-    private lateinit var binding: FragmentSettingBinding
+    private var _binding: FragmentSettingBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentSettingBinding.inflate(inflater, container, false)
+        _binding = FragmentSettingBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -24,5 +25,10 @@ class ReservationListFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
