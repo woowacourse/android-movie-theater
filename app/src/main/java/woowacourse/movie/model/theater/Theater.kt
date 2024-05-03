@@ -4,7 +4,7 @@ import woowacourse.movie.model.movie.ScreeningTimes
 
 class Theater(
     val theaterId: Int,
-    val name: String,
+    val theaterName: String,
     val screeningTimes: ScreeningTimes,
     val movieId: Int,
 )

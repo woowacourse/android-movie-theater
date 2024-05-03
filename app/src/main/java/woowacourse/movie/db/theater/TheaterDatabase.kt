@@ -9,7 +9,7 @@ object TheaterDatabase {
         listOf(
             Theater(
                 theaterId = 0,
-                name = "선릉 극장",
+                theaterName = "선릉 극장",
                 screeningTimes =
                     ScreeningTimes(
                         weekDay =
@@ -28,7 +28,7 @@ object TheaterDatabase {
             ),
             Theater(
                 theaterId = 1,
-                name = "잠실 극장",
+                theaterName = "잠실 극장",
                 screeningTimes =
                     ScreeningTimes(
                         weekDay =
@@ -44,7 +44,7 @@ object TheaterDatabase {
             ),
             Theater(
                 theaterId = 2,
-                name = "강남 극장",
+                theaterName = "강남 극장",
                 screeningTimes =
                     ScreeningTimes(
                         weekDay =
@@ -62,7 +62,7 @@ object TheaterDatabase {
             ),
             Theater(
                 theaterId = 3,
-                name = "선릉 극장",
+                theaterName = "선릉 극장",
                 screeningTimes =
                     ScreeningTimes(
                         weekDay =
@@ -81,7 +81,7 @@ object TheaterDatabase {
             ),
             Theater(
                 theaterId = 4,
-                name = "잠실 극장",
+                theaterName = "잠실 극장",
                 screeningTimes =
                     ScreeningTimes(
                         weekDay =
@@ -97,7 +97,7 @@ object TheaterDatabase {
             ),
             Theater(
                 theaterId = 5,
-                name = "강남 극장",
+                theaterName = "강남 극장",
                 screeningTimes =
                     ScreeningTimes(
                         weekDay =
@@ -115,7 +115,7 @@ object TheaterDatabase {
             ),
             Theater(
                 theaterId = 6,
-                name = "잠실 극장",
+                theaterName = "잠실 극장",
                 screeningTimes =
                     ScreeningTimes(
                         weekDay =
@@ -131,7 +131,7 @@ object TheaterDatabase {
             ),
             Theater(
                 theaterId = 0,
-                name = "선릉 극장",
+                theaterName = "선릉 극장",
                 screeningTimes =
                     ScreeningTimes(
                         weekDay =
@@ -150,7 +150,7 @@ object TheaterDatabase {
             ),
             Theater(
                 theaterId = 1,
-                name = "잠실 극장",
+                theaterName = "잠실 극장",
                 screeningTimes =
                     ScreeningTimes(
                         weekDay =
@@ -166,7 +166,7 @@ object TheaterDatabase {
             ),
             Theater(
                 theaterId = 2,
-                name = "강남 극장",
+                theaterName = "강남 극장",
                 screeningTimes =
                     ScreeningTimes(
                         weekDay =
@@ -184,7 +184,7 @@ object TheaterDatabase {
             ),
             Theater(
                 theaterId = 3,
-                name = "선릉 극장",
+                theaterName = "선릉 극장",
                 screeningTimes =
                     ScreeningTimes(
                         weekDay =
@@ -203,7 +203,7 @@ object TheaterDatabase {
             ),
             Theater(
                 theaterId = 4,
-                name = "잠실 극장",
+                theaterName = "잠실 극장",
                 screeningTimes =
                     ScreeningTimes(
                         weekDay =
@@ -219,7 +219,7 @@ object TheaterDatabase {
             ),
             Theater(
                 theaterId = 5,
-                name = "강남 극장",
+                theaterName = "강남 극장",
                 screeningTimes =
                     ScreeningTimes(
                         weekDay =

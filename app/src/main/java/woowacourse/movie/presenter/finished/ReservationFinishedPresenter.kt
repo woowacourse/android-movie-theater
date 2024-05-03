@@ -21,6 +21,6 @@ class ReservationFinishedPresenter(
 
     override fun loadTheater(theaterId: Int) {
         val theater = theaterDao.find(theaterId)
-        view.showTheaterName(theater.name)
+        view.showTheaterName(theater.theaterName)
     }
 }

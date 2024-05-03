@@ -30,7 +30,7 @@
             android:paddingEnd="24dp"
             android:textColor="@color/black"
             android:textSize="16sp"
-            android:text="@{theater.name}"
+            android:text="@{theater.theaterName}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="잠실 극장" />

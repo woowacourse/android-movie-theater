@@ -60,7 +60,7 @@ class TheaterSelectionFragmentTest {
             ).atPosition(FIRST_ITEM_POSITION),
         )
 
-        onView(withText(makeTheater()[FIRST_MOVIE_ITEM_POSITION].name)).check(matches(isDisplayed()))
+        onView(withText(makeTheater()[FIRST_MOVIE_ITEM_POSITION].theaterName)).check(matches(isDisplayed()))
     }
 
     @Test
