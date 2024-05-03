@@ -42,9 +42,7 @@ class ScreenRecyclerViewAdapter(
             }
 
             else -> {
-                val inflater = LayoutInflater.from(parent.context)
-                val binding = HolderAdsBinding.inflate(inflater, parent, false)
-                AdsViewHolder(binding)
+                throw IllegalArgumentException("잘못된 viewType입니다.")
             }
         }
     }
