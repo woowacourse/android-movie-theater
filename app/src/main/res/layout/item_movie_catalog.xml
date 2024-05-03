@@ -65,6 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:text="@string/movie_catalog_reservation_now"
+        android:onClick="@{() -> movieCatalog.onClickMovie(movie)}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/item_movie_catalog_text_view_running_time" />

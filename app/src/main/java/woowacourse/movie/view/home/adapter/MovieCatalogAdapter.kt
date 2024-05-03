@@ -16,7 +16,7 @@ typealias OnClickReservationButton = (Movie) -> Unit
 class MovieCatalogAdapter(
     private val movies: List<Movie>,
     private val advertisements: List<Advertisement>,
-    private val movie: OnClickReservationButton,
+    private val onClickReservationButton: OnClickReservationButton,
 ) : RecyclerView.Adapter<ViewHolder>() {
     private val movieViewType = CatalogViewType.MOVIE.viewType
     private val advertisementViewType = CatalogViewType.ADVERTISEMENT.viewType
@@ -28,7 +28,7 @@ class MovieCatalogAdapter(
         val inflater = LayoutInflater.from(parent.context)
         return if (viewType == movieViewType) {
             val view = ItemMovieCatalogBinding.inflate(inflater, parent, false)
-            MovieViewHolder(view)
+            MovieViewHolder(view,onClickReservationButton)
         } else {
             val view = ItemAdvertisementBinding.inflate(inflater, parent, false)
             AdvertisementViewHolder(view)
@@ -43,7 +43,7 @@ class MovieCatalogAdapter(
             CatalogViewType.MOVIE -> {
                 val moviePosition = position - (position / (CatalogViewType.ADVERTISEMENT.interval))
                 val item = movies[moviePosition]
-                (holder as MovieViewHolder).bind(item, movie)
+                (holder as MovieViewHolder).bind(item)
             }
             CatalogViewType.ADVERTISEMENT -> {
                 val item = advertisements[position - CatalogViewType.ADVERTISEMENT.position]
