@@ -22,6 +22,6 @@ interface MovieDetailContract {
 
         fun updateTimes()
 
-        fun generateDateRange()
+        fun loadDateRange()
     }
 }

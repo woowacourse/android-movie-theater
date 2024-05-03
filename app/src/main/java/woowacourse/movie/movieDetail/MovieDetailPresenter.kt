@@ -35,7 +35,7 @@ class MovieDetailPresenter(
         view.updateTimeAdapter(cinema.theater.times.map { it.toString() })
     }
 
-    override fun generateDateRange() {
+    override fun loadDateRange() {
         val startDate = LocalDate.of(2024, 4, 1)
         val endDate = LocalDate.of(2024, 4, 30)
         val dates = mutableListOf<String>()

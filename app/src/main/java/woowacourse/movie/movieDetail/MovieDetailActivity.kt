@@ -37,7 +37,7 @@ class MovieDetailActivity :
                 cinema
             ).also { binding.presenter = it }
         setupEventListeners(cinema)
-        presenter.generateDateRange()
+        presenter.loadDateRange()
     }
 
     override fun navigateToPurchaseConfirmation(intent: Intent) {
