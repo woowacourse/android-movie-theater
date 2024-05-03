@@ -39,14 +39,10 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.reservationDetail = this
 
-        movieId = intent.getIntExtra(MOVIE_ID, DEFAULT_MOVIE_ID)
-        theaterId = intent.getIntExtra(THEATER_ID, 0)
+        movieId = intent.getIntExtra(MOVIE_ID, DEFAULT_ID)
+        theaterId = intent.getIntExtra(THEATER_ID, DEFAULT_ID)
 
-        with(presenter) {
-            loadMovie(movieId)
-            loadScreeningPeriod(movieId)
-        }
-        updateScreeningTimes(movieId)
+        presenter.checkIdValidation(movieId,theaterId)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -117,6 +113,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
     override fun showResultToast() = makeToast(this, getString(R.string.invalid_number_of_tickets))
 
     override fun showErrorToast() = makeToast(this, getString(R.string.all_error))
+    override fun showIdErrorToast() = makeToast(this, getString(R.string.load_error))
 
     override fun navigateToSeatSelection(
         dateTime: ScreeningDateTime,
@@ -132,7 +129,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
         startActivity(intent)
     }
 
-    private fun updateScreeningTimes(selectedTimeId: Int? = null) {
+    override fun updateScreeningTimes(selectedTimeId: Int?) {
         binding.spinnerReservationDetailScreeningDate.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -168,7 +165,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
     }
 
     companion object {
-        const val DEFAULT_MOVIE_ID = 0
+        const val DEFAULT_ID = -1
         const val TICKET = "ticket"
         const val HEAD_COUNT = "headCount"
         const val SCREENING_DATE_TIME = "screeningDateTime"

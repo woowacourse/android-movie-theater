@@ -168,7 +168,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private fun takeMovieId() =
         intent.getIntExtra(
             MOVIE_ID,
-            ReservationDetailActivity.DEFAULT_MOVIE_ID,
+            ReservationDetailActivity.DEFAULT_ID,
         )
 
     private fun receiveHeadCount() {

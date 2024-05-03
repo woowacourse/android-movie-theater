@@ -2,11 +2,12 @@ package woowacourse.movie.presenter.reservation
 
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.theater.TheaterDao
+import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.result.ChangeTicketCountResult
 import woowacourse.movie.model.result.Failure
 import woowacourse.movie.model.result.Success
-import woowacourse.movie.model.ticket.HeadCount
+import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.DEFAULT_ID
 
 class ReservationDetailPresenter(
     private val view: ReservationDetailContract.View,
@@ -32,6 +33,16 @@ class ReservationDetailPresenter(
     ) {
         val theaterTimes = theaterDao.findScreeningTimes(theaterId)
         view.showScreeningTimes(theaterTimes, selectedDate)
+    }
+
+    override fun checkIdValidation(movieId: Int, theaterId: Int) {
+        if (movieId == DEFAULT_ID || theaterId == DEFAULT_ID){
+            view.showIdErrorToast()
+        }else{
+            loadMovie(movieId)
+            loadScreeningPeriod(movieId)
+            view.updateScreeningTimes(movieId)
+        }
     }
 
     override fun increaseHeadCount(count: Int) {

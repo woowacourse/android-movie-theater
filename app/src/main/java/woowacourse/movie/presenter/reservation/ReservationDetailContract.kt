@@ -27,6 +27,10 @@ interface ReservationDetailContract {
         )
 
         fun showErrorToast()
+
+        fun showIdErrorToast()
+
+        fun updateScreeningTimes(selectedTimeId: Int? = null)
     }
 
     interface Presenter {
@@ -37,6 +41,11 @@ interface ReservationDetailContract {
         fun loadScreeningTimes(
             theaterId: Int,
             selectedDate: String,
+        )
+
+        fun checkIdValidation(
+            movieId: Int,
+            theaterId: Int,
         )
 
         fun increaseHeadCount(count: Int)
