@@ -18,7 +18,9 @@ import woowacourse.movie.ui.home.adapter.TheaterAdapter
 
 class HomeFragment : Fragment(), HomeContract.View {
     private lateinit var adapter: ScreenAdapter
-    private lateinit var binding: FragmentHomeBinding
+
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     private val homePresenter: HomeContract.Presenter by lazy {
         HomePresenter(
@@ -33,9 +35,10 @@ class HomeFragment : Fragment(), HomeContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentHomeBinding.inflate(inflater)
+        _binding = FragmentHomeBinding.inflate(inflater)
         initAdapter()
         homePresenter.loadScreen()
+
         return binding.root
     }
 
@@ -65,5 +68,10 @@ class HomeFragment : Fragment(), HomeContract.View {
 
         theaterAdapter.submitList(theaters.theaters)
         theaterBottomSheet.show(parentFragmentManager, "theaterBottomSheet")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
