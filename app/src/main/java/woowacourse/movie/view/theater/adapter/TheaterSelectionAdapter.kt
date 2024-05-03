@@ -13,6 +13,7 @@ class TheaterSelectionAdapter(
     private val onSelectTheater: OnSelectTheater,
 ) : RecyclerView.Adapter<TheaterSelectionViewHolder>() {
     private var theaters: List<Theater> = emptyList()
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -33,7 +34,7 @@ class TheaterSelectionAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateTheaters(theaters: List<Theater>){
+    fun updateTheaters(theaters: List<Theater>)  {
         this.theaters = theaters
         notifyDataSetChanged()
     }

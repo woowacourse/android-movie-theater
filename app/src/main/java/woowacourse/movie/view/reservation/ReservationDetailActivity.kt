@@ -42,7 +42,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
         movieId = intent.getIntExtra(MOVIE_ID, DEFAULT_ID)
         theaterId = intent.getIntExtra(THEATER_ID, DEFAULT_ID)
 
-        presenter.checkIdValidation(movieId,theaterId)
+        presenter.checkIdValidation(movieId, theaterId)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -76,10 +76,11 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
         with(binding) {
             imageViewReservationDetailPoster.setImageResource(movie.posterId)
             textViewReservationDetailTitle.text = movie.title
-            textViewReservationScreeningDate.text = convertPeriodFormat(
-                movie.screeningPeriod,
-                binding.root.context,
-            )
+            textViewReservationScreeningDate.text =
+                convertPeriodFormat(
+                    movie.screeningPeriod,
+                    binding.root.context,
+                )
             textViewReservationRunningTime.text = movie.runningTime
             textViewReservationSummary.text = movie.summary
         }
@@ -113,6 +114,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
     override fun showResultToast() = makeToast(this, getString(R.string.invalid_number_of_tickets))
 
     override fun showErrorToast() = makeToast(this, getString(R.string.all_error))
+
     override fun showIdErrorToast() = makeToast(this, getString(R.string.load_error))
 
     override fun navigateToSeatSelection(

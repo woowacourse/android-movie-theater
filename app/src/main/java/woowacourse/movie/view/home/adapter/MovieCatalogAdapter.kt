@@ -30,7 +30,7 @@ class MovieCatalogAdapter(
         val inflater = LayoutInflater.from(parent.context)
         return if (viewType == movieViewType) {
             val view = ItemMovieCatalogBinding.inflate(inflater, parent, false)
-            MovieViewHolder(view,onClickReservationButton)
+            MovieViewHolder(view, onClickReservationButton)
         } else {
             val view = ItemAdvertisementBinding.inflate(inflater, parent, false)
             AdvertisementViewHolder(view)
@@ -72,15 +72,14 @@ class MovieCatalogAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateMovies(movies: List<Movie>){
+    fun updateMovies(movies: List<Movie>)  {
         this.movies = movies
         notifyDataSetChanged()
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateAds(advertisements: List<Advertisement>){
+    fun updateAds(advertisements: List<Advertisement>)  {
         this.advertisements = advertisements
         notifyDataSetChanged()
     }
-
 }

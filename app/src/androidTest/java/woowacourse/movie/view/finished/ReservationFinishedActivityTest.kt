@@ -69,10 +69,11 @@ class ReservationFinishedActivityTest {
 
     @Test
     fun `영화_예매_완료_화면은_영화_상세_화면의_예매_완료_버튼을_누르면_보여진다`() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), ReservationDetailActivity::class.java).apply {
-            putExtra(HomeFragment.MOVIE_ID,0)
-            putExtra(TheaterSelectionFragment.THEATER_ID,0)
-        }
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), ReservationDetailActivity::class.java).apply {
+                putExtra(HomeFragment.MOVIE_ID, 0)
+                putExtra(TheaterSelectionFragment.THEATER_ID, 0)
+            }
 
         ActivityScenario.launch<ReservationDetailActivity>(intent)
 

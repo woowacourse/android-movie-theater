@@ -20,10 +20,11 @@ class TheaterSelectionViewHolder(
 
         val screeningTimeCount =
             item.screeningTimes.weekDay.size + item.screeningTimes.weekEnd.size
-        screeningTimesFormatText = convertScreeningInfoFormat(
-            screeningTimeCount,
-            binding.root.context,
-        )
+        screeningTimesFormatText =
+            convertScreeningInfoFormat(
+                screeningTimeCount,
+                binding.root.context,
+            )
     }
 
     fun onClickTheater(theaterId: Int) = onSelectTheater(theaterId)

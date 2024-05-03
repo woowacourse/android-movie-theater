@@ -34,11 +34,11 @@ class ReservationDetailActivityTest {
         ActivityScenarioRule<ReservationDetailActivity>(
             Intent(
                 ApplicationProvider.getApplicationContext(),
-                ReservationDetailActivity::class.java
+                ReservationDetailActivity::class.java,
             ).apply {
                 putExtra(MOVIE_ID, 0)
                 putExtra(THEATER_ID, 0)
-            }
+            },
         )
 
     @Before

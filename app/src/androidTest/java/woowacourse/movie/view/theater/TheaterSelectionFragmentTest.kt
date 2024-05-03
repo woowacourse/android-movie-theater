@@ -18,7 +18,6 @@ import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.TestFixture.FIRST_MOVIE_ITEM_POSITION
 import woowacourse.movie.TestFixture.makeTheater
-import woowacourse.movie.utils.MovieUtils.convertScreeningInfoFormat
 import woowacourse.movie.utils.MovieUtils.navigateToBottomMenu
 import woowacourse.movie.view.MainActivity
 import woowacourse.movie.view.home.HomeFragment

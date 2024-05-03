@@ -51,8 +51,7 @@ class HomeFragment : Fragment(), ReservationHomeContract.View {
 
     private fun initMovieRecyclerView() {
         movieCatalogAdapter =
-            MovieCatalogAdapter(
-            ) { movie ->
+            MovieCatalogAdapter { movie ->
                 presenter.loadMovie(movie)
             }
         binding.recyclerViewHome.apply {
@@ -60,7 +59,7 @@ class HomeFragment : Fragment(), ReservationHomeContract.View {
         }
     }
 
-    private fun loadMovieData(){
+    private fun loadMovieData()  {
         movieCatalogAdapter.updateMovies(ScreeningDao().findAll())
         movieCatalogAdapter.updateAds(AdvertisementDao().findAll())
     }
