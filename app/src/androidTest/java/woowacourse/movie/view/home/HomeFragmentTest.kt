@@ -1,41 +1,30 @@
 package woowacourse.movie.view.home
 
 import android.view.View
+import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.utils.MovieUtils.navigateToBottomMenu
-import woowacourse.movie.view.MainActivity
 import woowacourse.movie.view.home.adapter.viewholder.AdvertisementViewHolder
 import woowacourse.movie.view.home.adapter.viewholder.MovieViewHolder
 
 @RunWith(AndroidJUnit4::class)
 class HomeFragmentTest {
-    @get:Rule
-    val activityRule = ActivityScenarioRule(MainActivity::class.java)
-
     @Before
     fun setUp() {
-        activityRule.scenario.onActivity {
-            it.supportFragmentManager.navigateToBottomMenu(
-                R.id.fragment_container_main,
-                HomeFragment(),
-            )
-        }
+        launchFragmentInContainer<HomeFragment>()
     }
 
     @Test
