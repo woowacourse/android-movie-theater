@@ -152,9 +152,9 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
             }
     }
 
-    fun initializeMinusButton() = presenter.decreaseHeadCount(presenter.headCount.count)
+    fun initializeMinusButton() = presenter.decreaseHeadCount()
 
-    fun initializePlusButton() = presenter.increaseHeadCount(presenter.headCount.count)
+    fun initializePlusButton() = presenter.increaseHeadCount()
 
     fun initializeReservationButton() {
         val date = binding.spinnerReservationDetailScreeningDate.selectedItem.toString()

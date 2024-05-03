@@ -34,14 +34,12 @@ class ReservationDetailPresenter(
         view.showScreeningTimes(theaterTimes, selectedDate)
     }
 
-    override fun increaseHeadCount(count: Int) {
-        headCount = HeadCount(count)
+    override fun increaseHeadCount() {
         val result = headCount.increase()
         handleHeadCountBounds(result)
     }
 
-    override fun decreaseHeadCount(count: Int) {
-        headCount = HeadCount(count)
+    override fun decreaseHeadCount() {
         val result = headCount.decrease()
         handleHeadCountBounds(result)
     }

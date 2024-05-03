@@ -39,9 +39,9 @@ interface ReservationDetailContract {
             selectedDate: String,
         )
 
-        fun increaseHeadCount(count: Int)
+        fun increaseHeadCount()
 
-        fun decreaseHeadCount(count: Int)
+        fun decreaseHeadCount()
 
         fun initializeReservationButton(dateTime: ScreeningDateTime)
 
