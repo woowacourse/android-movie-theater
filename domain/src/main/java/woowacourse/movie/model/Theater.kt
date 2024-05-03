@@ -2,18 +2,20 @@ package woowacourse.movie.model
 
 class Theater(
     val id: Long,
-    private val rowRate: Map<Tier, List<Int>>,
+    rowRate: Map<Tier, List<Int>>,
     private val colLength: Int,
     val name: String,
 ) {
-    fun seats(): List<Seat> =
-        rowRate.flatMap { (seatRate, rateRows) ->
-            rateRows.flatMap { row ->
-                (0 until colLength).map { col ->
-                    Seat(seatRate, row - 1, col)
+    val seats =
+        Seats(
+            rowRate.flatMap { (tier, rateRows) ->
+                rateRows.flatMap { row ->
+                    (0 until colLength).map { col ->
+                        Seat(tier, row - 1, col)
+                    }
                 }
-            }
-        }
+            },
+        )
 
     companion object {
         val STUB_A =

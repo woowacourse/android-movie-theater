@@ -13,20 +13,19 @@ class MovieDetailPresenter(
 ) : MovieDetailContract.Presenter {
     private var count = HeadCount(1)
 
-    override fun loadMovieDetail(screenMovieId: Long) {
-        runCatching {
-            repository.screeningById(screenMovieId)
-        }.onSuccess { screeningMovie ->
-            view.showMovieInfo(screeningMovie.toMovieReservationUiModel())
+    override fun loadMovieDetail(screeningId: Long) {
+        val screening = repository.screeningById(screeningId)
+        if (screening != null) {
+            view.showMovieInfo(screening.toMovieReservationUiModel())
             view.showBookingDetail(
-                screeningMovie.toScreeningDateTimeUiModel(),
+                screening.toScreeningDateTimeUiModel(),
                 BookingDetailUiModel(
                     HeadCount.MIN_COUNT,
-                    screeningMovie.startDate,
-                    screeningMovie.schedules.first().times.first(),
+                    screening.startDate,
+                    screening.schedules.first().times.first(),
                 ),
             )
-        }.onFailure {
+        } else {
             view.showScreeningMovieError()
         }
     }
@@ -37,10 +36,7 @@ class MovieDetailPresenter(
     }
 
     override fun minusCount() {
-        runCatching {
-            count = count.decrease()
-        }.onSuccess {
-            view.updateHeadCount(count.toHeadCountUiModel())
-        }
+        count = count.decrease()
+        view.updateHeadCount(count.toHeadCountUiModel())
     }
 }

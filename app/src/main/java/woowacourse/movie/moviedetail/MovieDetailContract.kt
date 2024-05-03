@@ -30,7 +30,7 @@ interface MovieDetailContract {
     }
 
     interface Presenter {
-        fun loadMovieDetail(screenMovieId: Long)
+        fun loadMovieDetail(screeningId: Long)
 
         fun plusCount()
 

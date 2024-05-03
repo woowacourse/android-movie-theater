@@ -1,9 +1,10 @@
 package woowacourse.movie.selectseat.uimodel
 
 import woowacourse.movie.model.Seat
+import woowacourse.movie.model.Seats
 import woowacourse.movie.model.Tier
 
-fun List<Seat>.toSeatsUiModel() = this.map { SeatUiModel(it.row, it.col, it.rate) }
+fun Seats.toSeatsUiModel() = seats.map { SeatUiModel(it.row, it.col, it.rate) }
 
 fun List<SeatUiModel>.toSeats() =
     this.map {

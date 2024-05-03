@@ -1,6 +1,5 @@
 package woowacourse.movie.movielist.theaters
 
-import android.util.Log
 import woowacourse.movie.repository.MovieRepository
 
 class TheaterPresenter(
@@ -9,20 +8,24 @@ class TheaterPresenter(
 ) : TheaterContract.Presenter {
     override fun loadTheaters(movieId: Long) {
         val theaters = repository.theatersByMovieId(movieId)
-        val uiModels =
+        runCatching {
             theaters.map { theater ->
-                val screeningMovie = repository.screeningByMovieIdAndTheaterId(movieId, theater.id)
-                Log.d("uiModel", "$movieId ${theater.id}")
-                screeningMovie.theater.toTheaterUiModel(screeningMovie.totalScreeningTimesNum())
+                val screening = repository.screeningByMovieIdAndTheaterId(movieId, theater.id) ?: error("선택한 상영이 존재하지 않습니다")
+                screening.theater.toTheaterUiModel(screening.totalScreeningTimesNum())
             }
-        view.showTheaters(uiModels)
+        }.onSuccess {
+            view.showTheaters(it)
+        }
     }
 
     override fun selectTheater(
         movieId: Long,
         theaterId: Long,
     ) {
-        val screeningMovie = repository.screeningByMovieIdAndTheaterId(movieId, theaterId)
-        view.navigateMovieReservation(screeningMovie.id, theaterId)
+        runCatching {
+            repository.screeningByMovieIdAndTheaterId(movieId, theaterId) ?: error("선택한 상영이 존재하지 않습니다")
+        }.onSuccess {
+            view.navigateMovieReservation(it.id, theaterId)
+        }
     }
 }

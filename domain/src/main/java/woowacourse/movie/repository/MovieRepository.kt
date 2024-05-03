@@ -14,24 +14,24 @@ interface MovieRepository {
 
     fun advertisements(): List<Advertisement>
 
-    fun screeningById(id: Long): Screening
+    fun screeningById(id: Long): Screening?
 
     fun screeningByMovieIdAndTheaterId(
         movieId: Long,
         theaterId: Long,
-    ): Screening
+    ): Screening?
 
     fun theatersByMovieId(movieId: Long): List<Theater>
 
-    fun theaterById(theaterId: Long): Theater
+    fun theaterById(theaterId: Long): Theater?
 
     fun makeReservation(
-        screenMovieId: Long,
+        screening: Screening,
         dateTime: LocalDateTime,
         count: HeadCount,
         seats: Seats,
         theaterId: Long,
     ): Long
 
-    fun reservationById(id: Long): Reservation
+    fun reservationById(id: Long): Reservation?
 }

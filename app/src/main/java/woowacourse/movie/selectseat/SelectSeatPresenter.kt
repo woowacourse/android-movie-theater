@@ -15,15 +15,15 @@ class SelectSeatPresenter(
 ) : SelectSeatContract.Presenter {
     override fun loadSeat(movieId: Long) {
         runCatching {
-            repository.screeningById(movieId)
+            repository.screeningById(movieId) ?: error(SCREENING_NOT_EXISTS_ERROR)
         }.onSuccess {
-            view.showSeat(it.theater.seats().toSeatsUiModel())
+            view.showSeat(it.theater.seats.toSeatsUiModel())
         }
     }
 
     override fun loadReservationInfo(movieId: Long) {
         runCatching {
-            repository.screeningById(movieId)
+            repository.screeningById(movieId) ?: error(SCREENING_NOT_EXISTS_ERROR)
         }.onSuccess {
             view.showMovieInfo(it.movie.title, PriceUiModel(Seats().totalPrice.price.toInt()))
         }
@@ -39,8 +39,12 @@ class SelectSeatPresenter(
         selectedSeats: List<SeatUiModel>,
     ) {
         runCatching {
+            val screening =
+                repository.screeningById(bookingInfoUiModel.screenMovieId) ?: error(
+                    SCREENING_NOT_EXISTS_ERROR,
+                )
             repository.makeReservation(
-                bookingInfoUiModel.screenMovieId,
+                screening,
                 bookingInfoUiModel.localDateTime(),
                 bookingInfoUiModel.count.toHeadCount(),
                 Seats(selectedSeats.toSeats()),
@@ -49,5 +53,9 @@ class SelectSeatPresenter(
         }.onSuccess {
             view.navigateToResult(it)
         }
+    }
+
+    companion object {
+        private const val SCREENING_NOT_EXISTS_ERROR = "상영 정보를 찾을 수 없었습니다"
     }
 }

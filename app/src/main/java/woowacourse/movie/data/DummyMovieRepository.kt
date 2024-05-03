@@ -27,31 +27,25 @@ object DummyMovieRepository : MovieRepository {
 
     override fun advertisements(): List<Advertisement> = List(10) { Advertisement() }
 
-    override fun screeningById(id: Long): Screening {
-        return screenings.firstOrNull { it.id == id } ?: error(
-            IdError.NO_MOVIE.message.format(id),
-        )
-    }
+    override fun screeningById(id: Long): Screening? = screenings.firstOrNull { it.id == id }
 
     override fun screeningByMovieIdAndTheaterId(
         movieId: Long,
         theaterId: Long,
-    ): Screening =
+    ): Screening? =
         screenings.firstOrNull {
             it.movie.id == movieId && it.theater.id == theaterId
-        } ?: error(
-            "mola",
-        )
+        }
 
     override fun theatersByMovieId(movieId: Long): List<Theater> =
         screenings.filter {
             it.movie.id == movieId
         }.map { it.theater }
 
-    override fun theaterById(theaterId: Long): Theater = theaters.firstOrNull { it.id == theaterId } ?: error("id에 해당하는 극장이 없습니다.")
+    override fun theaterById(theaterId: Long): Theater? = theaters.firstOrNull { it.id == theaterId }
 
     override fun makeReservation(
-        screenMovieId: Long,
+        screening: Screening,
         dateTime: LocalDateTime,
         count: HeadCount,
         seats: Seats,
@@ -60,7 +54,7 @@ object DummyMovieRepository : MovieRepository {
         reservations +=
             Reservation(
                 id = ++reservationId,
-                screening = screeningById(screenMovieId),
+                screening = screening,
                 screenDateTime = dateTime,
                 headCount = count,
                 seats = seats,
@@ -69,9 +63,5 @@ object DummyMovieRepository : MovieRepository {
         return reservationId
     }
 
-    override fun reservationById(id: Long): Reservation {
-        return reservations.find { it.id == id } ?: error(
-            IdError.NO_RESERVATION.message.format(id),
-        )
-    }
+    override fun reservationById(id: Long): Reservation? = reservations.find { it.id == id }
 }

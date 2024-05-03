@@ -11,11 +11,6 @@ class MovieListPresenter(
     private val view: MovieListContract.View,
     private val repository: MovieRepository,
 ) : MovieListContract.Presenter {
-    override fun startReservation(screeningMovieId: Long) {
-        val screenMovie = repository.screeningById(screeningMovieId)
-        view.showTheaters(screenMovie.id)
-    }
-
     override fun loadScreeningMovies() {
         val movieUiModels = repository.movies().map { it.toScreenMovieUiModel() }
         val advertisementUiModels = repository.advertisements().map { it.toAdvertisementUiModel() }
@@ -37,6 +32,10 @@ class MovieListPresenter(
                 chunk
             }
         }.flatten()
+    }
+
+    override fun startReservation(screeningMovieId: Long) {
+        view.showTheaters(screeningMovieId)
     }
 
     companion object {
