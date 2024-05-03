@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.IntentCompat
 import androidx.core.view.children
 import woowacourse.movie.R
+import woowacourse.movie.common.ui.redirectToErrorActivity
 import woowacourse.movie.databinding.ActivityTheaterSeatBinding
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.theater.Seat
@@ -92,13 +93,13 @@ class TheaterSeatActivity : AppCompatActivity(), TheaterSeatContract.View {
 
     private fun initializePresenter() {
         val intent = intent
-        val ticketNum = intent.getStringExtra("ticketNum")?.toInt() ?: 0
+        val ticketNum = intent.getStringExtra("ticketNum") ?: return redirectToErrorActivity()
         IntentCompat.getSerializableExtra(intent, "Cinema", Cinema::class.java)?.let { cinema ->
             presenter =
-                TheaterSeatPresenter(this, ticketNum, cinema).also { presenter ->
+                TheaterSeatPresenter(this, ticketNum.toInt(), cinema).also { presenter ->
                     binding.presenter = presenter
                 }
-        }
+        } ?: redirectToErrorActivity()
     }
 
     private fun setupSeats() {

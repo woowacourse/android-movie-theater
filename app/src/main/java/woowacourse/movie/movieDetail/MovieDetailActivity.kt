@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.IntentCompat
+import woowacourse.movie.common.ui.redirectToErrorActivity
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.seat.TheaterSeatActivity
@@ -30,7 +31,11 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val cinema =
-            IntentCompat.getSerializableExtra(intent, "Cinema", Cinema::class.java) ?: error(" ")
+            IntentCompat.getSerializableExtra(intent, "Cinema", Cinema::class.java)
+        if (cinema == null) {
+            redirectToErrorActivity()
+            return
+        }
         val theater = cinema.theater
         times = theater.times
         presenter =
