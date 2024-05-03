@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.IntentCompat
 import androidx.core.view.children
 import woowacourse.movie.R
+import woowacourse.movie.common.BindingActivity
 import woowacourse.movie.common.ui.redirectToErrorActivity
 import woowacourse.movie.databinding.ActivityTheaterSeatBinding
 import woowacourse.movie.model.Cinema
@@ -21,13 +22,8 @@ import woowacourse.movie.model.theater.Seat
 import woowacourse.movie.purchaseConfirmation.PurchaseConfirmationActivity
 
 @SuppressLint("DiscouragedApi")
-class TheaterSeatActivity : AppCompatActivity(), TheaterSeatContract.View {
+class TheaterSeatActivity : BindingActivity<ActivityTheaterSeatBinding>(R.layout.activity_theater_seat), TheaterSeatContract.View {
     private lateinit var presenter: TheaterSeatPresenter
-    private val binding: ActivityTheaterSeatBinding by lazy {
-        ActivityTheaterSeatBinding.inflate(
-            layoutInflater,
-        )
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

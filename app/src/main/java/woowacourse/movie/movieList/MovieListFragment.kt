@@ -10,27 +10,18 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
+import woowacourse.movie.common.BindingFragment
 import woowacourse.movie.common.ui.withArgs
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.model.MovieDisplayData
 import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.movieList.cinemaListDialog.TheatersBottomSheetFragment
 
-class MovieListFragment : Fragment(), MovieListView {
-    private var _binding: FragmentMovieListBinding? = null
-    private val binding get() = _binding ?: error(getString(R.string.null_point_error))
+class MovieListFragment : BindingFragment<FragmentMovieListBinding>(R.layout.fragment_movie_list), MovieListView {
+
     private var _presenter: MovieListPresenter? = null
     private val presenter get() = _presenter ?: error(getString(R.string.null_point_error))
     private lateinit var adapter: MovieAdapter
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        _binding = FragmentMovieListBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(
         view: View,
@@ -39,11 +30,6 @@ class MovieListFragment : Fragment(), MovieListView {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         initPresenter()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override fun showToast(message: String) {

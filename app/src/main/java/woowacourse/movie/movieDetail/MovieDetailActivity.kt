@@ -9,18 +9,15 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.IntentCompat
+import woowacourse.movie.R
+import woowacourse.movie.common.BindingActivity
 import woowacourse.movie.common.ui.redirectToErrorActivity
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.seat.TheaterSeatActivity
 import java.time.LocalTime
 
-class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
-    private val binding: ActivityMovieDetailBinding by lazy {
-        ActivityMovieDetailBinding.inflate(
-            layoutInflater,
-        )
-    }
+class MovieDetailActivity : BindingActivity<ActivityMovieDetailBinding>(R.layout.activity_movie_detail), MovieDetailContract.View {
     private lateinit var presenter: MovieDetailContract.Presenter
     private lateinit var dateAdapter: ArrayAdapter<String>
     private lateinit var timeAdapter: ArrayAdapter<String>
@@ -28,7 +25,6 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val cinema =
             IntentCompat.getSerializableExtra(intent, "Cinema", Cinema::class.java)

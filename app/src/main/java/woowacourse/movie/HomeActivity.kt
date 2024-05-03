@@ -1,17 +1,14 @@
 package woowacourse.movie
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import woowacourse.movie.common.BindingActivity
 import woowacourse.movie.common.ui.replaceTo
 import woowacourse.movie.databinding.ActivityHomeBinding
 import woowacourse.movie.movieList.MovieListFragment
 import woowacourse.movie.reservation.ReservationFragment
 import woowacourse.movie.setting.SettingFragment
 
-class HomeActivity : AppCompatActivity() {
-    private val binding: ActivityHomeBinding by lazy {
-        ActivityHomeBinding.inflate(layoutInflater)
-    }
+class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
