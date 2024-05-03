@@ -18,7 +18,6 @@ class MovieAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): RecyclerView.ViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             MOVIE_VIEW_TYPE -> {
                 val binding =
