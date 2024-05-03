@@ -13,21 +13,21 @@ class MovieDetailPresenter(
 
     lateinit var movie: MovieInfo
 
-    override fun onTicketPlusClicked() {
+    override fun onTicketPlus() {
         if (ticketNum < 10) {
             ticketNum++
             view.onTicketCountChanged()
         } else {
-            view.showToast("최대 티켓 수량에 도달했습니다.")
+            view.showTicketMessage("최대 티켓 수량에 도달했습니다.")
         }
     }
 
-    override fun onTicketMinusClicked() {
+    override fun onTicketMinus() {
         if (ticketNum > 1) {
             ticketNum--
             view.onTicketCountChanged()
         } else {
-            view.showToast("최소 티켓 수량입니다.")
+            view.showTicketMessage("최소 티켓 수량입니다.")
         }
     }
 

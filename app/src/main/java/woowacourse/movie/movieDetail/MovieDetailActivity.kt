@@ -48,7 +48,7 @@ class MovieDetailActivity :
         binding.invalidateAll()
     }
 
-    override fun showToast(message: String) {
+    override fun showTicketMessage(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 

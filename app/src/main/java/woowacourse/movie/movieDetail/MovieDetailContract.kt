@@ -8,7 +8,7 @@ interface MovieDetailContract {
 
         fun onTicketCountChanged()
 
-        fun showToast(message: String)
+        fun showTicketMessage(message: String)
 
         fun updateDateAdapter(dates: List<String>)
 
@@ -16,9 +16,9 @@ interface MovieDetailContract {
     }
 
     interface Presenter {
-        fun onTicketPlusClicked()
+        fun onTicketPlus()
 
-        fun onTicketMinusClicked()
+        fun onTicketMinus()
 
         fun updateTimes()
 
