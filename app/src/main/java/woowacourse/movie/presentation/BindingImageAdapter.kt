@@ -3,10 +3,10 @@ package woowacourse.movie.presentation
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 
-@BindingAdapter("imgRes")
+@BindingAdapter("imgResource")
 fun bindImage(
     imageView: ImageView,
-    resId: Int,
+    resourceId: Int,
 ) {
-    imageView.setImageResource(resId)
+    imageView.setImageResource(resourceId)
 }
