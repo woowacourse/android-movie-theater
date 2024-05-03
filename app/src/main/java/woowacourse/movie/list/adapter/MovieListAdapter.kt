@@ -9,13 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.list.model.Advertisement
 import woowacourse.movie.list.model.Movie
+import woowacourse.movie.list.model.MovieListItem
+import woowacourse.movie.list.model.MovieListItemType
 import java.time.format.DateTimeFormatter
 
 class MovieListAdapter(
     private val movies: List<Movie>,
     private val advertisements: List<Advertisement>,
-) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.movie_title)
         val poster: ImageView = itemView.findViewById(R.id.movie_poster)
@@ -28,18 +29,15 @@ class MovieListAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if ((position + 1) % 4 != 0) {
-            0
-        } else {
-            1
-        }
+        val item = MovieListItem(position)
+        return item.type.separator
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): RecyclerView.ViewHolder {
-        return if (viewType == MovieListViewType.MOVIE.separator) {
+        return if (viewType == MovieListItemType.MOVIE.separator) {
             val itemView =
                 LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
             MovieViewHolder(itemView)
@@ -54,7 +52,7 @@ class MovieListAdapter(
         holder: RecyclerView.ViewHolder,
         position: Int,
     ) {
-        if (getItemViewType(position) == 0) {
+        if (getItemViewType(position) == MovieListItemType.MOVIE.separator) {
             bindMovies(holder, position)
         } else {
             bindAdvertisements(holder)
