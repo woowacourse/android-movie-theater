@@ -11,7 +11,7 @@ class MovieDetailPresenter(
 ) : MovieDetailContract.Presenter {
     var ticketNum = 1
 
-    lateinit var movie: MovieInfo
+    val movie: MovieInfo = cinema.theater.movie
 
     override fun onTicketPlus() {
         if (ticketNum < 10) {

@@ -7,16 +7,31 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.BundleCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import woowacourse.movie.common.ui.redirectToErrorActivity
 import woowacourse.movie.databinding.FragmentBottomSheetTheatersBinding
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.movieDetail.MovieDetailActivity
 import woowacourse.movie.movieList.MovieListFragment.Companion.THEATER_KEY
-import java.time.LocalTime
 
-class TheatersBottomSheetFragment : BottomSheetDialogFragment() {
+class TheatersBottomSheetFragment : BottomSheetDialogFragment(), TheatersBottomSheetContract.View {
     private var _binding: FragmentBottomSheetTheatersBinding? = null
     private val binding get() = _binding ?: error("error")
+    private lateinit var adapter: CinemaAdapter
+
+    private val presenter: TheatersBottomSheetContract.Presenter by lazy {
+        TheatersBottomSheetPresenter(this)
+    }
+    private lateinit var theater: Theater
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            BundleCompat.getSerializable(it, THEATER_KEY, Theater::class.java)
+        }?.let {
+            theater = it
+        } ?: redirectToErrorActivity()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,26 +47,11 @@ class TheatersBottomSheetFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val theater =
-            arguments?.let {
-                BundleCompat.getSerializable(it, THEATER_KEY, Theater::class.java)
-            } ?: error("")
-        val adapter =
-            CinemaAdapter {
-                navigateToMovieDetail(it)
-            }
-        binding.rvCinema.adapter = adapter
-        adapter.submitList(
-            makeCinema(theater),
-        )
+        adapter = CinemaAdapter { presenter.selectCinema(it) }
+        presenter.loadCinema(theater)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun navigateToMovieDetail(cinema: Cinema) {
+    override fun navigateToMovieDetail(cinema: Cinema) {
         requireActivity().apply {
             val intent =
                 Intent(this, MovieDetailActivity::class.java).apply {
@@ -61,46 +61,12 @@ class TheatersBottomSheetFragment : BottomSheetDialogFragment() {
             startActivity(intent)
         }
     }
-
-    private fun makeCinema(theater: Theater) =
-        listOf(
-            Cinema(
-                "CGV",
-                theater.copy(
-                    times =
-                        listOf(
-                            LocalTime.of(9, 0),
-                            LocalTime.of(11, 0),
-                            LocalTime.of(15, 0),
-                        ),
-                ),
-            ),
-            Cinema(
-                "롯데시네마",
-                theater.copy(
-                    times =
-                        listOf(
-                            LocalTime.of(13, 0),
-                            LocalTime.of(15, 0),
-                            LocalTime.of(17, 0),
-                            LocalTime.of(19, 0),
-                        ),
-                ),
-            ),
-            Cinema(
-                "메가 박스",
-                theater.copy(
-                    times =
-                        listOf(
-                            LocalTime.of(20, 0),
-                            LocalTime.of(22, 0),
-                            LocalTime.of(23, 30),
-                        ),
-                ),
-            ),
-        )
+    override fun showCinemas(cinemas: List<Cinema>) {
+        binding.rvCinema.adapter = adapter
+        adapter.submitList(cinemas)
+    }
 
     companion object {
-        val TAG = this::class.java.canonicalName
+        val TAG: String? = this::class.java.canonicalName
     }
 }
