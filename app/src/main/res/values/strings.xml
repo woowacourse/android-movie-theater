@@ -18,13 +18,11 @@
     <string name="확인">확인</string>
     <string name="reserved_information">영화 정보</string>
 
-    <!--    error message-->
     <string name="null_point_error">NullPoint Exception</string>
-    <!--    bottom navigation menu-->
     <string name="title_reserve">예매 정보</string>
     <string name="title_home">홈</string>
     <string name="title_setting">설정</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="movie_count_for_cinema_format">%s개의 상영 시간</string>
+    <string name="binding_error">Binding_ERROR</string>
 </resources>
