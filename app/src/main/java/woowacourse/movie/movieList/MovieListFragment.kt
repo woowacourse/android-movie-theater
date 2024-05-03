@@ -38,7 +38,7 @@ class MovieListFragment : BindingFragment<FragmentMovieListBinding>(R.layout.fra
         adapter.updateItems(displayData)
     }
 
-    override fun showBottomSheet(theater: Theater) {
+    override fun navigateToCinemaView(theater: Theater) {
         val fragment =
             (
                     childFragmentManager.findFragmentByTag(TheatersBottomSheetFragment.TAG)

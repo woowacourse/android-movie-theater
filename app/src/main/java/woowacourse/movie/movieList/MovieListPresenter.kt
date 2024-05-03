@@ -67,7 +67,7 @@ class MovieListPresenter(private val view: MovieListView) {
 
     fun onDetailButtonClicked(position: Int) {
         val theater = theaters[position]
-        view.showBottomSheet(theater)
+        view.navigateToCinemaView(theater)
     }
 
     private fun loadMovies() {
