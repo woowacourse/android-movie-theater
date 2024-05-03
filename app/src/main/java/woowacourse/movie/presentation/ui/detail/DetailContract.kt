@@ -2,7 +2,6 @@ package woowacourse.movie.presentation.ui.detail
 
 import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.ScreenDate
-import woowacourse.movie.presentation.base.BasePresenter
 import woowacourse.movie.presentation.base.BaseView
 import woowacourse.movie.presentation.model.ReservationInfo
 import java.time.LocalDate
@@ -23,7 +22,7 @@ interface DetailContract {
         fun back()
     }
 
-    interface Presenter : BasePresenter {
+    interface Presenter {
         fun loadScreen(
             movieId: Int,
             theaterId: Int,

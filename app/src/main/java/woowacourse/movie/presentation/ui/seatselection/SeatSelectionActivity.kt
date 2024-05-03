@@ -20,7 +20,7 @@ import java.io.Serializable
 class SeatSelectionActivity : BaseActivity<ActivitySeatSelectionBinding>(), View {
     override val layoutResourceId: Int
         get() = R.layout.activity_seat_selection
-    override val presenter: SeatSelectionPresenter by lazy {
+    val presenter: SeatSelectionPresenter by lazy {
         SeatSelectionPresenter(this, DummyScreens(), DummyReservation)
     }
 

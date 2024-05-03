@@ -1,7 +1,6 @@
 package woowacourse.movie.presentation.ui.reservation
 
 import woowacourse.movie.domain.model.Reservation
-import woowacourse.movie.presentation.base.BasePresenter
 import woowacourse.movie.presentation.base.BaseView
 
 interface ReservationContract {
@@ -14,7 +13,7 @@ interface ReservationContract {
         fun back()
     }
 
-    interface Presenter : BasePresenter {
+    interface Presenter {
         fun loadReservation(id: Int)
     }
 }

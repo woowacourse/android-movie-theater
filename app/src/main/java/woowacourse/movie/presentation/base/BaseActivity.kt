@@ -15,7 +15,6 @@ import woowacourse.movie.presentation.model.MessageType.TicketMinCountMessage
 
 abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity(), BaseView {
     abstract val layoutResourceId: Int
-    abstract val presenter: BasePresenter
     private var _binding: T? = null
     val binding
         get() = requireNotNull(_binding)

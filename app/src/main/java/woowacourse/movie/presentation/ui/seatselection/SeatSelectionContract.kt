@@ -1,7 +1,6 @@
 package woowacourse.movie.presentation.ui.seatselection
 
 import woowacourse.movie.domain.model.SeatModel
-import woowacourse.movie.presentation.base.BasePresenter
 import woowacourse.movie.presentation.base.BaseView
 import woowacourse.movie.presentation.model.ReservationInfo
 
@@ -16,7 +15,7 @@ interface SeatSelectionContract {
         fun back()
     }
 
-    interface Presenter : BasePresenter {
+    interface Presenter {
         fun updateUiModel(reservationInfo: ReservationInfo)
 
         fun loadScreen(id: Int)

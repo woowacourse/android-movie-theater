@@ -21,7 +21,7 @@ import java.time.LocalTime
 class MovieDetailActivity : BaseActivity<ActivityDetailBinding>(), View {
     override val layoutResourceId: Int
         get() = R.layout.activity_detail
-    override val presenter: DetailPresenter by lazy { DetailPresenter(this, DummyScreens()) }
+    val presenter: DetailPresenter by lazy { DetailPresenter(this, DummyScreens()) }
 
     override fun initStartView() {
         binding.presenter = presenter

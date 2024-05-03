@@ -15,7 +15,7 @@ import woowacourse.movie.presentation.ui.reservation.ReservationContract.View
 class ReservationActivity : BaseActivity<ActivityReservationBinding>(), View {
     override val layoutResourceId: Int
         get() = R.layout.activity_reservation
-    override val presenter: ReservationPresenter by lazy {
+    val presenter: ReservationPresenter by lazy {
         ReservationPresenter(
             this,
             DummyReservation,
