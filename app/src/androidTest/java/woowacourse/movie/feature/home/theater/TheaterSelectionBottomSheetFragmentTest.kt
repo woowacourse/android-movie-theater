@@ -14,8 +14,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import woowacourse.movie.MovieMainActivity
 import woowacourse.movie.R
+import woowacourse.movie.feature.MovieMainActivity
 import woowacourse.movie.feature.firstMovieId
 import woowacourse.movie.feature.home.movie.MovieHomeFragment
 import woowacourse.movie.feature.home.theater.adapter.TheaterViewHolder

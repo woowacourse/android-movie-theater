@@ -9,9 +9,9 @@ import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import woowacourse.movie.MovieMainActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieResultBinding
+import woowacourse.movie.feature.MovieMainActivity
 import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_DATE

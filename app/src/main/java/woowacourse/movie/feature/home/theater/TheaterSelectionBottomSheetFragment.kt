@@ -61,8 +61,7 @@ class TheaterSelectionBottomSheetFragment :
     private fun showToast(
         @StringRes stringResId: Int,
     ) {
-        Toast.makeText(requireContext(), resources.getString(stringResId), Toast.LENGTH_SHORT)
-            .show()
+        Toast.makeText(requireContext(), resources.getString(stringResId), Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {

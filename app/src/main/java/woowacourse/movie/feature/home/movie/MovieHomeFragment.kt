@@ -46,7 +46,10 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View {
         bundle.putLong(KEY_MOVIE_ID, id)
         val theaterSelectionBottomSheetFragment = TheaterSelectionBottomSheetFragment()
         theaterSelectionBottomSheetFragment.arguments = bundle
-        theaterSelectionBottomSheetFragment.show(parentFragmentManager, theaterSelectionBottomSheetFragment.tag)
+        theaterSelectionBottomSheetFragment.show(
+            parentFragmentManager,
+            theaterSelectionBottomSheetFragment.tag
+        )
     }
 
     override fun onDestroyView() {
