@@ -1,12 +1,9 @@
 package woowacourse.movie.feature.home
 
-import woowacourse.movie.model.movie.Movie
-
 class ReservationHomePresenter(
     private val view: ReservationHomeContract.View,
 ) : ReservationHomeContract.Presenter {
-    override fun loadMovie(movie: Movie) {
-        val movieId = movie.id
+    override fun loadMovie(movieId: Int) {
         view.navigateToDetail(movieId)
     }
 }

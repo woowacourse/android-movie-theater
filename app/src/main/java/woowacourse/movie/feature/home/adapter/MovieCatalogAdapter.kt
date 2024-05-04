@@ -11,12 +11,12 @@ import woowacourse.movie.feature.home.adapter.viewholder.MovieViewHolder
 import woowacourse.movie.model.advertisement.Advertisement
 import woowacourse.movie.model.movie.Movie
 
-typealias OnClickReservationButton = (Movie) -> Unit
+typealias OnMovieSelected = (movieId: Int) -> Unit
 
 class MovieCatalogAdapter(
     private val movies: List<Movie>,
     private val advertisements: List<Advertisement>,
-    private val movie: OnClickReservationButton,
+    private val onMovieSelected: OnMovieSelected,
 ) : RecyclerView.Adapter<ViewHolder>() {
     private val movieViewType = CatalogViewType.MOVIE.viewType
     private val advertisementViewType = CatalogViewType.ADVERTISEMENT.viewType
@@ -43,7 +43,7 @@ class MovieCatalogAdapter(
             CatalogViewType.MOVIE -> {
                 val moviePosition = position - (position / (CatalogViewType.ADVERTISEMENT.interval))
                 val item = movies[moviePosition]
-                (holder as MovieViewHolder).bind(item, movie)
+                (holder as MovieViewHolder).bind(item, onMovieSelected)
             }
             CatalogViewType.ADVERTISEMENT -> {
                 val item = advertisements[position - CatalogViewType.ADVERTISEMENT.position]
