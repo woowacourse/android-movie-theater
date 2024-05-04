@@ -19,23 +19,23 @@ class MovieMainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             binding.bottomNavigation.selectedItemId = R.id.home_item
-            addFragment(MovieHomeFragment())
+            addFragment(MovieHomeFragment(), MOVIE_HOME_FRAGMENT_TAG)
         }
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.reservation_list_item -> {
-                    replaceFragment(ReservationListFragment())
+                    replaceFragment(ReservationListFragment(), RESERVATION_LIST_FRAGMENT_TAG)
                     true
                 }
 
                 R.id.home_item -> {
-                    replaceFragment(MovieHomeFragment())
+                    replaceFragment(MovieHomeFragment(), MOVIE_HOME_FRAGMENT_TAG)
                     true
                 }
 
                 R.id.setting_item -> {
-                    replaceFragment(SettingFragment())
+                    replaceFragment(SettingFragment(), SETTING_FRAGMENT_TAG)
                     true
                 }
 
@@ -44,17 +44,29 @@ class MovieMainActivity : AppCompatActivity() {
         }
     }
 
-    private fun addFragment(fragment: Fragment) {
+    private fun addFragment(
+        fragment: Fragment,
+        tag: String,
+    ) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            add(R.id.fragment_container_view, fragment)
+            add(R.id.fragment_container_view, fragment, tag)
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    private fun replaceFragment(
+        fragment: Fragment,
+        tag: String,
+    ) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace(R.id.fragment_container_view, fragment)
+            replace(R.id.fragment_container_view, fragment, tag)
         }
+    }
+
+    companion object {
+        private const val RESERVATION_LIST_FRAGMENT_TAG = "reservationListFragment"
+        private const val MOVIE_HOME_FRAGMENT_TAG = "movieHomeFragment"
+        private const val SETTING_FRAGMENT_TAG = "settingFragment"
     }
 }
