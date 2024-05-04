@@ -4,15 +4,15 @@
     <data>
 
         <variable
-            name="theater_view_holder"
-            type="woowacourse.movie.home.view.adapter.theater.TheaterViewHolder" />
+            name="theater"
+            type="woowacourse.movie.home.view.adapter.theater.TheaterUiModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:onClick="@{() -> theater_view_holder.theaterItemClick()}"
+        android:onClick="@{() -> theater.onTheaterItemClick()}"
         android:padding="8dp">
 
         <TextView
@@ -23,7 +23,7 @@
             android:layout_marginEnd="30dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{theater_view_holder.theaterName}"
+            android:text="@{@string/theater(theater.theaterName)}"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -35,7 +35,7 @@
             android:id="@+id/screening_time_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{String.valueOf(theater_view_holder.screeningTimeNumber)}"
+            android:text="@{String.valueOf(theater.screeningTimeCount)}"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@id/screening_time_number_format"
             app:layout_constraintLeft_toLeftOf="@id/theater_name"
