@@ -2,13 +2,16 @@ package woowacourse.movie
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.commit
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.feature.history.ReservationHistoryFragment
 import woowacourse.movie.feature.home.HomeFragment
 import woowacourse.movie.feature.setting.SettingFragment
-import woowacourse.movie.utils.MovieUtils.navigateToBottomMenu
 
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
@@ -42,5 +45,17 @@ class MainActivity : AppCompatActivity() {
             } ?: false
         }
         binding.bottomNavigationMain.selectedItemId = R.id.fragment_home
+    }
+
+    @SuppressLint("ResourceType")
+    private fun FragmentManager.navigateToBottomMenu(
+        @LayoutRes
+        fragmentLayoutResource: Int,
+        nextFragment: Fragment,
+    ) {
+        commit {
+            setReorderingAllowed(true)
+            replace(fragmentLayoutResource, nextFragment)
+        }
     }
 }

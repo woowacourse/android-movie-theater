@@ -1,15 +1,10 @@
 package woowacourse.movie.utils
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
-import androidx.annotation.LayoutRes
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.commit
 import woowacourse.movie.R
 import java.io.Serializable
 import java.text.DecimalFormat
@@ -54,18 +49,6 @@ object MovieUtils {
             this.getSerializableExtra(key, clazz)
         } else {
             this.getSerializableExtra(key) as T?
-        }
-    }
-
-    @SuppressLint("ResourceType")
-    fun FragmentManager.navigateToBottomMenu(
-        @LayoutRes
-        fragmentLayoutResource: Int,
-        nextFragment: Fragment,
-    ) {
-        commit {
-            setReorderingAllowed(true)
-            replace(fragmentLayoutResource, nextFragment)
         }
     }
 }
