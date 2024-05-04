@@ -53,7 +53,7 @@ class MovieSeatSelectionTest {
     @Test
     fun `예매할_영화의_제목이_표시된다`() {
         onView(withId(R.id.tv_seat_title))
-            .check(matches(withText("타이타닉 0")))
+            .check(matches(withText("타이타닉 1")))
     }
 
     @Test

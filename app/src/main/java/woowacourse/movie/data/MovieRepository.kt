@@ -12,7 +12,7 @@ object MovieRepository {
     private val movies =
         List(100) {
             Movie(
-                id = (it + 1).toLong(),
+                id = it.toLong(),
                 image = R.drawable.titanic,
                 title = "타이타닉 ${it + 1}",
                 description =
