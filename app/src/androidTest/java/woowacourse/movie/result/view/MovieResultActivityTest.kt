@@ -7,7 +7,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import androidx.test.runner.AndroidJUnit4
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -39,31 +39,25 @@ class MovieResultActivityTest {
 
     @Test
     fun `예매한_영화의_제목이_표시된다`() {
-        onView(withId(R.id.resultTitle))
+        onView(withId(R.id.tv_movie_title))
             .check(matches(withText("타이타닉 0")))
     }
 
     @Test
-    fun `예매한_영화의_상영일이_표시된다`() {
-        onView(withId(R.id.resultDate))
-            .check(matches(withText("2024-04-01")))
-    }
-
-    @Test
-    fun `예매한_영화의_상영시간이_표시된다`() {
-        onView(withId(R.id.resultTime))
-            .check(matches(withText("12:00")))
+    fun `예매한_영화의_상영일과_상영_시간이_표시된다`() {
+        onView(withId(R.id.tv_screening_date_time))
+            .check(matches(withText("2024-04-01 12:00")))
     }
 
     @Test
     fun `예매한_영화의_좌석이_표시된다`() {
-        onView(withId(R.id.result))
+        onView(withId(R.id.tv_reservation_info))
             .check(matches(withText("일반 3명 | A3, C2, E1 | 선릉 극장")))
     }
 
     @Test
     fun `예매한_영화의_가격이_표시된다`() {
-        onView(withId(R.id.resultReservPrice))
-            .check(matches(withText("37,000")))
+        onView(withId(R.id.tv_reservation_price))
+            .check(matches(withText("37,000원 (현장 결제)")))
     }
 }
