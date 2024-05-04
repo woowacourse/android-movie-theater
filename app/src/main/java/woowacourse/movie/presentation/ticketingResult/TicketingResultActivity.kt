@@ -18,10 +18,9 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_ticketing_result)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         binding = ActivityTicketingResultBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val movieTicket =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

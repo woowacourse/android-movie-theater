@@ -20,12 +20,12 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
         binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         if (savedInstanceState == null) {
-            setupBottomNavigationView()
             selectDefaultMenuItem()
+            setupBottomNavigationView()
         }
     }
 
@@ -50,7 +50,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.commit {
-            setReorderingAllowed(true)
+//            setReorderingAllowed(true)
             replace(R.id.fragment_container, fragment)
         }
     }

@@ -36,15 +36,14 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_ticketing)
+        binding = ActivityTicketingBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val movieId = intent.getLongExtra(EXTRA_MOVIE_ID, EXTRA_DEFAULT_MOVIE_ID)
         val theaterId = intent.getLongExtra(EXTRA_THEATER_ID, EXTRA_DEFAULT_THEATER_ID)
 
         ticketingPresenter = TicketingPresenter(this, MovieRepository(), DummyTheaterList)
-        binding = ActivityTicketingBinding.inflate(layoutInflater)
-
         binding.presenter = ticketingPresenter
 
         ticketingPresenter.loadMovieData(movieId, theaterId)
