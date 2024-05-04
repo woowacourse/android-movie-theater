@@ -15,7 +15,8 @@ import woowacourse.movie.model.Movie
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 
 class MovieHomeFragment : Fragment(), MovieHomeContract.View {
-    private lateinit var binding: FragmentMovieHomeBinding
+    private var _binding: FragmentMovieHomeBinding? = null
+    private val binding get() = _binding!!
     private lateinit var movieHomePresenter: MovieHomePresenter
 
     override fun onCreateView(
@@ -23,8 +24,7 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_movie_home, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_home, container, false)
 
         movieHomePresenter = MovieHomePresenter(this)
         movieHomePresenter.loadMovies()
@@ -47,5 +47,10 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View {
         val theaterSelectionBottomSheetFragment = TheaterSelectionBottomSheetFragment()
         theaterSelectionBottomSheetFragment.arguments = bundle
         theaterSelectionBottomSheetFragment.show(parentFragmentManager, theaterSelectionBottomSheetFragment.tag)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

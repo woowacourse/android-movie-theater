@@ -22,7 +22,8 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
 class TheaterSelectionBottomSheetFragment :
     BottomSheetDialogFragment(),
     TheaterSelectionContract.View {
-    private lateinit var binding: FragmentTheaterSelectionBinding
+    private var _binding: FragmentTheaterSelectionBinding? = null
+    private val binding get() = _binding!!
     private lateinit var theaterSelectionPresenter: TheaterSelectionPresenter
 
     private val movieId: Long by lazy { arguments?.getLong(KEY_MOVIE_ID) ?: INVALID_VALUE_MOVIE_ID }
@@ -32,8 +33,7 @@ class TheaterSelectionBottomSheetFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_theater_selection, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_theater_selection, container, false)
 
         theaterSelectionPresenter = TheaterSelectionPresenter(this)
         theaterSelectionPresenter.loadTheaters(movieId)
@@ -61,7 +61,13 @@ class TheaterSelectionBottomSheetFragment :
     private fun showToast(
         @StringRes stringResId: Int,
     ) {
-        Toast.makeText(requireContext(), resources.getString(stringResId), Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), resources.getString(stringResId), Toast.LENGTH_SHORT)
+            .show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
