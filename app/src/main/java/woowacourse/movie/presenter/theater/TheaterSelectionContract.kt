@@ -1,7 +1,10 @@
 package woowacourse.movie.presenter.theater
 
+import woowacourse.movie.model.theater.Theater
+
 interface TheaterSelectionContract {
     interface Presenter {
+        fun loadTheaters(movieId: Int)
         fun loadTheater(theaterId: Int)
     }
 
@@ -10,5 +13,7 @@ interface TheaterSelectionContract {
             movieId: Int,
             theaterId: Int,
         )
+
+        fun showTheaters(theaters: List<Theater>)
     }
 }

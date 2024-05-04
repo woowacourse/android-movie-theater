@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterSelectionBinding
-import woowacourse.movie.db.theater.TheaterDao
+import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.presenter.theater.TheaterSelectionContract
 import woowacourse.movie.presenter.theater.TheaterSelectionPresenter
 import woowacourse.movie.view.home.HomeFragment.Companion.MOVIE_ID
@@ -47,7 +47,7 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
                 movieId = movieId,
             )
         initTheaterRecyclerView()
-        loadTheaters()
+        presenter.loadTheaters(movieId)
     }
 
     override fun onDestroyView() {
@@ -88,8 +88,8 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
         }
     }
 
-    private fun loadTheaters() {
-        theaterSelectionAdapter.updateTheaters(TheaterDao().findTheaterByMovieId(movieId))
+    override fun showTheaters(theaters: List<Theater>) {
+        theaterSelectionAdapter.updateTheaters(theaters)
     }
 
     companion object {
