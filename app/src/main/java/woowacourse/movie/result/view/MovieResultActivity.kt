@@ -71,16 +71,15 @@ class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
     }
 
     private fun setUpBackButtonAction() {
-        val onBackPressedDispatcher = onBackPressedDispatcher
-        onBackPressedDispatcher.addCallback(
-            this,
+        val onBackPressedCallback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     val intent = Intent(this@MovieResultActivity, MovieMainActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }
-            },
-        )
+            }
+
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
 }
