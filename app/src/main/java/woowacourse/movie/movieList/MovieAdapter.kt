@@ -1,4 +1,5 @@
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,12 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.model.MovieDisplayData
 
-@Suppress("DEPRECATION")
 class MovieAdapter(
     private val context: Context,
-    private val items: MutableList<MovieDisplayData>,
     private val onClick: (Int) -> Unit,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var items: List<MovieDisplayData> = emptyList()
+
     override fun getItemViewType(position: Int): Int {
         return if ((position + 1) % 4 == 0) ITEM_VIEW_TYPE_AD else ITEM_VIEW_TYPE_MOVIE
     }
@@ -54,8 +55,7 @@ class MovieAdapter(
     }
 
     fun updateItems(displayData: List<MovieDisplayData>) {
-        items.clear()
-        items.addAll(displayData)
+        items = displayData
     }
 
     companion object {
@@ -75,7 +75,7 @@ class MovieAdapter(
             releaseDateTextView.text = movie.releaseDate
             durationTextView.text = movie.runningTime
             detailButton.setOnClickListener {
-                onClick(adapterPosition)
+                onClick(absoluteAdapterPosition)
             }
         }
     }

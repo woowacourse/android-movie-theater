@@ -52,9 +52,8 @@ class MovieListFragment :
     }
 
     private fun initViews() {
-        binding.rvMovies.layoutManager = LinearLayoutManager(requireContext())
         adapter =
-            MovieAdapter(requireContext(), mutableListOf()) { position ->
+            MovieAdapter(requireContext()) { position ->
                 presenter.onDetailButtonClicked(position)
             }
         binding.rvMovies.adapter = adapter
