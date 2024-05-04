@@ -32,6 +32,7 @@ class MovieDetailActivity :
             redirectToErrorActivity()
             return
         }
+        initView()
         presenter =
             MovieDetailPresenter(
                 view = this@MovieDetailActivity,
@@ -54,7 +55,26 @@ class MovieDetailActivity :
     }
 
     override fun updateDateAdapter(dates: List<String>) {
-        dateAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, dates)
+        dateAdapter.clear()
+        dateAdapter.addAll(dates)
+    }
+
+    override fun updateTimeAdapter(times: List<String>) {
+        timeAdapter.clear()
+        timeAdapter.addAll(times)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        finish()
+        return true
+    }
+
+    private fun initView() {
+        dateAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_dropdown_item,
+            listOf()
+        )
         binding.movieDateSpinner.adapter = dateAdapter
         binding.movieDateSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -69,16 +89,12 @@ class MovieDetailActivity :
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
-    }
-
-    override fun updateTimeAdapter(times: List<String>) {
-        timeAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, times)
+        timeAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_dropdown_item,
+            listOf()
+        )
         binding.movieTimeSpinner.adapter = timeAdapter
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        finish()
-        return true
     }
 
     private fun setupEventListeners(cinema: Cinema) {
