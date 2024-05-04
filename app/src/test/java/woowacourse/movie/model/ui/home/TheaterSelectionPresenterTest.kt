@@ -39,7 +39,7 @@ class TheaterSelectionPresenterTest {
 
         // then
         verify {
-            view.dismissDialog()
+            view.dismissTheaterSelection()
         }
     }
 }

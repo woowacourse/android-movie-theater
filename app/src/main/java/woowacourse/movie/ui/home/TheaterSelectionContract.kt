@@ -14,7 +14,7 @@ interface TheaterSelectionContract {
             theaterId: Long,
         )
 
-        fun dismissDialog()
+        fun dismissTheaterSelection()
     }
 
     interface Presenter {
