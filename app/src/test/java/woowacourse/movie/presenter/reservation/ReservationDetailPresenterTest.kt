@@ -24,7 +24,7 @@ class ReservationDetailPresenterTest {
     }
 
     @Test
-    fun `영화 정보를 보여준다`() {
+    fun `현재 영화 정보를 보여준다`() {
         every { view.showMovieInformation(any()) } just runs
         presenter.loadMovie(0)
         verify { view.showMovieInformation(any()) }
