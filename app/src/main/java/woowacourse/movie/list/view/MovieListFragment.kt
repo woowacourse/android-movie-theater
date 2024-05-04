@@ -18,7 +18,7 @@ import woowacourse.movie.list.presenter.MovieListPresenter
 class MovieListFragment : Fragment(), MovieListContract.View {
     override val presenter = MovieListPresenter(this)
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var movieListAdapter: MovieListAdapter
+    private var movieListAdapter: MovieListAdapter = MovieListAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,9 +38,9 @@ class MovieListFragment : Fragment(), MovieListContract.View {
         movies: List<Movie>,
         advertisements: List<Advertisement>,
     ) {
-        movieListAdapter = MovieListAdapter()
         movieListAdapter.initMovieListInfo(movies, advertisements)
         binding.movieRecyclerView.adapter = movieListAdapter
+        movieListAdapter.notifyDataSetChanged()
         binding.movieRecyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
