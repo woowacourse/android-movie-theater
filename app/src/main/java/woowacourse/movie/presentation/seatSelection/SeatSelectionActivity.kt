@@ -20,7 +20,6 @@ import woowacourse.movie.model.SeatGrade
 import woowacourse.movie.model.SeatingSystem
 import woowacourse.movie.model.Ticket
 import woowacourse.movie.presentation.ticketingResult.TicketingResultActivity
-import woowacourse.movie.utils.formatSeat
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private lateinit var presenter: SeatSelectionPresenter
@@ -70,7 +69,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     override fun displaySeats(seats: List<Seat>) {
         seatItems.forEachIndexed { index, textView ->
             val seat = seats[index]
-            textView.text = formatSeat(seat)
+            textView.text = seat.toString()
             val colorCode =
                 when (seat.seatGrade) {
                     SeatGrade.B_CLASS -> "#8E13EF"
