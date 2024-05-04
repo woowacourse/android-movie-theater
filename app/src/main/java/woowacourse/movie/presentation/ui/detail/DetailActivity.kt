@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityDetailBinding
 import woowacourse.movie.domain.model.Screen
@@ -14,6 +12,8 @@ import woowacourse.movie.domain.repository.DummyScreens
 import woowacourse.movie.presentation.base.BaseActivity
 import woowacourse.movie.presentation.model.ReservationInfo
 import woowacourse.movie.presentation.ui.detail.DetailContract.View
+import woowacourse.movie.presentation.ui.detail.adapter.SpinnerDateAdapter
+import woowacourse.movie.presentation.ui.detail.adapter.SpinnerTimeAdapter
 import woowacourse.movie.presentation.ui.seatselection.SeatSelectionActivity
 import java.time.LocalDate
 import java.time.LocalTime
@@ -23,49 +23,30 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
         get() = R.layout.activity_detail
     override val presenter: DetailPresenter by lazy { DetailPresenter(this, DummyScreens()) }
 
+    private val spinnerDateAdapter: SpinnerDateAdapter by lazy {
+        SpinnerDateAdapter(this, presenter)
+    }
+    private val spinnerTimeAdapter: SpinnerTimeAdapter by lazy {
+        SpinnerTimeAdapter(this, presenter)
+    }
+
     override fun initStartView() {
         binding.presenter = presenter
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val movieId = intent.getIntExtra(PUT_EXTRA_KEY_MOVIE_ID, DEFAULT_ID)
         val theaterId = intent.getIntExtra(PUT_EXTRA_KEY_THEATER_ID, DEFAULT_ID)
-
+        initAdapter()
         presenter.loadScreen(movieId, theaterId)
-        initItemSelectedListener()
     }
 
-    private fun initItemSelectedListener() {
+    private fun initAdapter() {
+        binding.spinnerDate.adapter = spinnerDateAdapter
         binding.spinnerDate.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: android.view.View?,
-                    position: Int,
-                    id: Long,
-                ) {
-                    val localDate = parent.getItemAtPosition(position) as LocalDate
-                    if (presenter.date != localDate) {
-                        presenter.registerDate(localDate)
-                        presenter.createTimeSpinnerAdapter(ScreenDate(localDate))
-                    }
-                }
+            spinnerDateAdapter.initClickListener(presenter.date)
 
-                override fun onNothingSelected(parent: AdapterView<*>) {}
-            }
-
-        binding.spinnerTime.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: android.view.View?,
-                    position: Int,
-                    id: Long,
-                ) {
-                    presenter.registerTime(parent.getItemAtPosition(position) as LocalTime)
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>) {}
-            }
+        binding.spinnerTime.adapter = spinnerTimeAdapter
+        binding.spinnerTime.onItemSelectedListener = spinnerTimeAdapter.initClickListener()
     }
 
     override fun showScreen(screen: Screen) {
@@ -76,21 +57,13 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
     }
 
     override fun showDateSpinnerAdapter(screenDates: List<ScreenDate>) {
-        binding.spinnerDate.adapter =
-            ArrayAdapter(
-                this@DetailActivity,
-                android.R.layout.simple_spinner_item,
-                screenDates.map { it.date },
-            )
+        binding.spinnerDate.setSelection(0)
+        spinnerDateAdapter.updateDate(screenDates.map { it.date })
     }
 
     override fun showTimeSpinnerAdapter(screenDate: ScreenDate) {
-        binding.spinnerTime.adapter =
-            ArrayAdapter(
-                this@DetailActivity,
-                android.R.layout.simple_spinner_item,
-                screenDate.getSelectableTimes().map { it },
-            )
+        binding.spinnerTime.setSelection(0)
+        spinnerTimeAdapter.updateTime(screenDate.getSelectableTimes().map { it })
     }
 
     override fun showTicket(count: Int) {
@@ -137,8 +110,10 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
         savedLocalDate?.let { localDate ->
             presenter.registerDate(localDate)
             val position = findPositionForSelectedDate(localDate)
-            presenter.createTimeSpinnerAdapter(ScreenDate(localDate))
+            binding.spinnerDate.onItemSelectedListener =
+                spinnerDateAdapter.initClickListener(localDate)
             binding.spinnerDate.setSelection(position)
+            presenter.createTimeSpinnerAdapter(ScreenDate(localDate))
         }
     }
 
