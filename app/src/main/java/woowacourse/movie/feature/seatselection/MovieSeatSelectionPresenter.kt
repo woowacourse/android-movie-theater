@@ -1,23 +1,28 @@
 package woowacourse.movie.feature.seatselection
 
-import woowacourse.movie.data.MovieRepository.getMovieById
+import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.model.MovieSelectedSeats
 
 class MovieSeatSelectionPresenter(
-    private val movieSeatSelectionContractView: MovieSeatSelectionContract.View,
+    private val view: MovieSeatSelectionContract.View,
 ) : MovieSeatSelectionContract.Presenter {
     lateinit var movieSelectedSeats: MovieSelectedSeats
 
-    override fun loadMovieTitle(id: Long) {
-        val movieData = getMovieById(id)
-        movieData?.let { movie ->
-            movieSeatSelectionContractView.displayMovieTitle(movie.title)
-        }
+    override fun loadMovieTitle(movieId: Long) {
+        val movie =
+            runCatching {
+                MovieRepository.getMovieById(movieId)
+            }.getOrElse {
+                view.handleInvalidMovieIdError(it)
+                return
+            }
+
+        view.displayMovieTitle(movie.title)
     }
 
     override fun loadTableSeats(count: Int) {
         movieSelectedSeats = MovieSelectedSeats(count)
-        movieSeatSelectionContractView.setUpTableSeats(movieSelectedSeats.getBaseSeats())
+        view.setUpTableSeats(movieSelectedSeats.getBaseSeats())
     }
 
     override fun updateSelectedSeats(count: Int) {
@@ -27,18 +32,18 @@ class MovieSeatSelectionPresenter(
     override fun clickTableSeat(index: Int) {
         val seat = movieSelectedSeats.getBaseSeats()[index]
         if (movieSelectedSeats.isSelected(index)) {
-            movieSeatSelectionContractView.updateSeatBackgroundColor(index, true)
+            view.updateSeatBackgroundColor(index, true)
             movieSelectedSeats.unSelectSeat(seat)
         } else {
             if (!movieSelectedSeats.isSelectionComplete()) {
-                movieSeatSelectionContractView.updateSeatBackgroundColor(index, false)
+                view.updateSeatBackgroundColor(index, false)
                 movieSelectedSeats.selectSeat(seat)
             }
         }
-        movieSeatSelectionContractView.updateSelectResult(movieSelectedSeats)
+        view.updateSelectResult(movieSelectedSeats)
     }
 
     override fun clickPositiveButton() {
-        movieSeatSelectionContractView.navigateToResultView(movieSelectedSeats)
+        view.navigateToResultView(movieSelectedSeats)
     }
 }

@@ -4,14 +4,15 @@ import woowacourse.movie.R
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieDate
 import woowacourse.movie.model.Theater
+import java.lang.IllegalArgumentException
 import java.time.LocalDate
 import java.time.LocalTime
 
 object MovieRepository {
-    private val movies =
-        List(100) {
+    private val movies: Map<Long, Movie> =
+        (1L..100L).associateWith {
             Movie(
-                id = it.toLong(),
+                id = it,
                 thumbnail = R.drawable.titanic,
                 title = "타이타닉 $it",
                 description =
@@ -42,12 +43,13 @@ object MovieRepository {
                     ),
             )
         }
+    private const val NOT_EXIST_ID_MOVIE_MESSAGE = "해당하는 아이디의 영화가 존재하지 않습니다."
 
     fun getAllMovies(): List<Movie> {
-        return movies
+        return movies.map { it.value }
     }
 
-    fun getMovieById(id: Long): Movie? {
-        return movies.firstOrNull { it.id == id }
+    fun getMovieById(id: Long): Movie {
+        return movies[id] ?: throw IllegalArgumentException(NOT_EXIST_ID_MOVIE_MESSAGE)
     }
 }

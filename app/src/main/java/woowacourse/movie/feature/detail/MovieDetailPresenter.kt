@@ -1,7 +1,6 @@
 package woowacourse.movie.feature.detail
 
-import woowacourse.movie.data.MovieRepository.getMovieById
-import woowacourse.movie.feature.detail.MovieDetailContract
+import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.model.MovieCount
 
 class MovieDetailPresenter(
@@ -10,7 +9,14 @@ class MovieDetailPresenter(
     private var movieCount: MovieCount = MovieCount()
 
     override fun loadMovieDetail(movieId: Long) {
-        val movie = getMovieById(movieId) ?: return
+        val movie =
+            runCatching {
+                MovieRepository.getMovieById(movieId)
+            }.getOrElse {
+                view.handleInvalidMovieIdError(it)
+                return
+            }
+
         view.displayMovieDetail(movie)
         view.updateCountView(movieCount.count)
     }

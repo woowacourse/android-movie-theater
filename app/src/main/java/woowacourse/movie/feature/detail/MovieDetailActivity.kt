@@ -2,17 +2,19 @@ package woowacourse.movie.feature.detail
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieRepository.getMovieById
+import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.feature.detail.ui.MovieDetailUiModel
-import woowacourse.movie.model.Movie
 import woowacourse.movie.feature.seatselection.MovieSeatSelectionActivity
+import woowacourse.movie.model.Movie
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_NAME
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_POSITION
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_DATE
@@ -77,10 +79,8 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         time: String,
         count: Int,
     ) {
-        val theaterName =
-            getMovieById(movieId)?.let {
-                it.theaters[selectedTheaterPosition].name
-            } ?: INVALID_VALUE_THEATER_NAME
+        val movie = MovieRepository.getMovieById(movieId)
+        val theaterName = movie.theaters[selectedTheaterPosition].name
 
         Intent(this, MovieSeatSelectionActivity::class.java).apply {
             putExtra(KEY_MOVIE_ID, id)
@@ -90,6 +90,18 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
             putExtra(KEY_SELECTED_THEATER_NAME, theaterName)
             startActivity(this)
         }
+    }
+
+    override fun handleInvalidMovieIdError(throwable: Throwable) {
+        Log.e(TAG, "invalid movie id - ${throwable.message}")
+        showToast(R.string.invalid_movie_id)
+        finish()
+    }
+
+    private fun showToast(
+        @StringRes stringResId: Int,
+    ) {
+        Toast.makeText(this, resources.getString(stringResId), Toast.LENGTH_SHORT).show()
     }
 
     fun onMinusButtonClick() {
@@ -122,6 +134,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     }
 
     companion object {
+        private val TAG = MovieDetailActivity::class.simpleName
         private const val SCREENING_DATE_SPINNER_POSITION_KEY = "screeningDateSpinnerPosition"
         private const val SCREENING_TIME_SPINNER_POSITION_KEY = "screeningTimeSpinnerPosition"
         private const val MOVIE_COUNT_KEY = "movieCount"

@@ -2,8 +2,11 @@ package woowacourse.movie.feature.result
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.MovieMainActivity
@@ -69,6 +72,18 @@ class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
         }
     }
 
+    override fun handleInvalidMovieIdError(throwable: Throwable) {
+        Log.e(TAG, "invalid movie id - ${throwable.message}")
+        showToast(R.string.invalid_movie_id)
+        finish()
+    }
+
+    private fun showToast(
+        @StringRes stringResId: Int,
+    ) {
+        Toast.makeText(this, resources.getString(stringResId), Toast.LENGTH_SHORT).show()
+    }
+
     private fun setUpBackButtonAction() {
         val onBackPressedCallback =
             object : OnBackPressedCallback(true) {
@@ -80,5 +95,9 @@ class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
             }
 
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+    }
+
+    companion object {
+        private val TAG = MovieResultActivity::class.simpleName
     }
 }

@@ -14,4 +14,5 @@
     <string name="result">일반 %d명 | %s | %s 극장</string>
     <string name="screening_date_time">%s %s</string>
     <string name="theater">%s 극장</string>
+    <string name="invalid_movie_id">영화 정보를 불러오지 못했습니다.</string>
 </resources>

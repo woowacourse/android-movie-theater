@@ -8,9 +8,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieHomeBinding
-import woowacourse.movie.feature.home.theater.TheaterSelectionBottomSheetFragment
 import woowacourse.movie.feature.home.movie.adapter.MovieAdapter
 import woowacourse.movie.feature.home.movie.listener.ReservationButtonClickListener
+import woowacourse.movie.feature.home.theater.TheaterSelectionBottomSheetFragment
 import woowacourse.movie.model.Movie
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 

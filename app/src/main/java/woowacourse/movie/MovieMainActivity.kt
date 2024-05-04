@@ -40,7 +40,10 @@ class MovieMainActivity : AppCompatActivity() {
         hideOtherFragments(fragmentType.tag)
     }
 
-    private fun addFragment(fragment: Fragment, tag: String) {
+    private fun addFragment(
+        fragment: Fragment,
+        tag: String,
+    ) {
         supportFragmentManager.commit {
             add(R.id.fragment_container_view, fragment, tag)
         }

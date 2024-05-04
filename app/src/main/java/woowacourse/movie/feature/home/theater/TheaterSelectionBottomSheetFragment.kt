@@ -2,9 +2,12 @@ package woowacourse.movie.feature.home.theater
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
@@ -47,5 +50,21 @@ class TheaterSelectionBottomSheetFragment :
                     dismiss()
                 }
             }
+    }
+
+    override fun handleInvalidMovieIdError(throwable: Throwable) {
+        Log.e(TAG, "invalid movie id - ${throwable.message}")
+        showToast(R.string.invalid_movie_id)
+        dismiss()
+    }
+
+    private fun showToast(
+        @StringRes stringResId: Int,
+    ) {
+        Toast.makeText(requireContext(), resources.getString(stringResId), Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        private val TAG = TheaterSelectionBottomSheetFragment::class.simpleName
     }
 }

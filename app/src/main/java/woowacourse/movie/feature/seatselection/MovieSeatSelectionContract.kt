@@ -2,9 +2,10 @@ package woowacourse.movie.feature.seatselection
 
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
+import woowacourse.movie.util.InvalidMovieIdErrorListener
 
 interface MovieSeatSelectionContract {
-    interface View {
+    interface View : InvalidMovieIdErrorListener {
         fun displayMovieTitle(movieTitle: String)
 
         fun setUpTableSeats(baseSeats: List<MovieSeat>)
@@ -22,7 +23,7 @@ interface MovieSeatSelectionContract {
     }
 
     interface Presenter {
-        fun loadMovieTitle(id: Long)
+        fun loadMovieTitle(movieId: Long)
 
         fun loadTableSeats(count: Int)
 

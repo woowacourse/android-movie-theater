@@ -3,25 +3,22 @@ package woowacourse.movie.feature.seatselection
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
-import io.mockk.mockkObject
 import io.mockk.runs
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.MovieRepository
-import woowacourse.movie.feature.seatselection.MovieSeatSelectionPresenter
-import woowacourse.movie.feature.seatselection.MovieSeatSelectionContract
 
 class MovieSeatSelectionPresenterTest {
     private lateinit var view: MovieSeatSelectionContract.View
     private lateinit var presenter: MovieSeatSelectionPresenter
+    private val movie = MovieRepository.getMovieById(1L)
 
     @BeforeEach
     fun setUp() {
         view = mockk()
         presenter = MovieSeatSelectionPresenter(view)
         presenter.updateSelectedSeats(3)
-        mockkObject(MovieRepository)
     }
 
     @Test
@@ -30,10 +27,22 @@ class MovieSeatSelectionPresenterTest {
         every { view.displayMovieTitle(any()) } just runs
 
         // When
-        presenter.loadMovieTitle(0)
+        presenter.loadMovieTitle(1L)
 
         // Then
-        verify { view.displayMovieTitle("타이타닉 0") }
+        verify { view.displayMovieTitle(movie.title) }
+    }
+
+    @Test
+    fun `영화 데이터가 없는 경우 loadMovieTitle을 호출하면 에러 메시지를 보여준다`() {
+        // Given
+        every { view.handleInvalidMovieIdError(any()) } just runs
+
+        // When
+        presenter.loadMovieTitle(-1L)
+
+        // Then
+        verify { view.handleInvalidMovieIdError(any()) }
     }
 
     @Test
@@ -68,7 +77,6 @@ class MovieSeatSelectionPresenterTest {
         every { view.navigateToResultView(any()) } just runs
 
         // When
-
         presenter.clickPositiveButton()
 
         // Then

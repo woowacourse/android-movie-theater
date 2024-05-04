@@ -2,10 +2,13 @@ package woowacourse.movie.feature.seatselection
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
+import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -13,10 +16,10 @@ import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieSeatSelectionBinding
+import woowacourse.movie.feature.result.MovieResultActivity
 import woowacourse.movie.model.MovieGrade
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
-import woowacourse.movie.feature.result.MovieResultActivity
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_COUNT
@@ -144,6 +147,18 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
         }
     }
 
+    override fun handleInvalidMovieIdError(throwable: Throwable) {
+        Log.e(TAG, "invalid movie id - ${throwable.message}")
+        showToast(R.string.invalid_movie_id)
+        finish()
+    }
+
+    private fun showToast(
+        @StringRes stringResId: Int,
+    ) {
+        Toast.makeText(this, resources.getString(stringResId), Toast.LENGTH_SHORT).show()
+    }
+
     private fun setUpSelectedSeats(selectedPositions: IntArray?) {
         selectedPositions?.forEach { position ->
             seatSelectionPresenter.clickTableSeat(position)
@@ -156,5 +171,9 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
             MovieGrade.S_GRADE -> R.color.s_grade
             MovieGrade.A_GRADE -> R.color.a_grade
         }
+    }
+
+    companion object {
+        private val TAG = MovieSeatSelectionActivity::class.simpleName
     }
 }
