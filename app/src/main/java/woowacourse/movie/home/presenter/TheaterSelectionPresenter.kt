@@ -6,7 +6,10 @@ import woowacourse.movie.home.presenter.contract.TheaterSelectionContract
 class TheaterSelectionPresenter(private val theaterSelectionView: TheaterSelectionContract.View) :
     TheaterSelectionContract.Presenter {
     override fun loadTheaters(movieId: Long) {
-        val theaters = MovieRepository.getMovieById(movieId)?.theaters ?: emptyList()
-        theaterSelectionView.setUpTheaterAdapter(theaters)
+        val movieData = MovieRepository.getMovieById(movieId)
+        movieData?.let { movie ->
+            val theaters = movie.theaters
+            theaterSelectionView.setUpTheaterAdapter(theaters)
+        }
     }
 }
