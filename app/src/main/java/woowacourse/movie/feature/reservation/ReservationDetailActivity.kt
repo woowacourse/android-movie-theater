@@ -39,7 +39,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
         binding.reservationDetail = this
 
         movieId = receiveMovieId()
-        theaterId = intent.getIntExtra(THEATER_ID, 0)
+        theaterId = receiveTheaterId()
 
         initPresenter()
         with(presenter) {
@@ -136,10 +136,13 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
                 ScreeningDao(),
                 TheaterDao(),
                 movieId,
+                theaterId,
             )
     }
 
     private fun receiveMovieId() = intent.getIntExtra(MOVIE_ID, DEFAULT_MOVIE_ID)
+
+    private fun receiveTheaterId() = intent.getIntExtra(THEATER_ID, DEFAULT_THEATER_ID)
 
     private fun updateScreeningTimes(selectedTimeId: Int? = null) {
         binding.spinnerReservationDetailScreeningDate.onItemSelectedListener =
@@ -151,7 +154,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
                     id: Long,
                 ) {
                     val selectedDate = binding.spinnerReservationDetailScreeningDate.selectedItem.toString()
-                    presenter.loadScreeningTimes(theaterId, selectedDate)
+                    presenter.loadScreeningTimes(selectedDate)
                     selectedTimeId?.let {
                         if (selectedTimeId < binding.spinnerReservationDetailScreeningTime.count) {
                             binding.spinnerReservationDetailScreeningTime.setSelection(it)
@@ -178,6 +181,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
 
     companion object {
         const val DEFAULT_MOVIE_ID = 0
+        const val DEFAULT_THEATER_ID = 0
         const val TICKET = "ticket"
         const val HEAD_COUNT = "headCount"
         const val SCREENING_DATE_TIME = "screeningDateTime"

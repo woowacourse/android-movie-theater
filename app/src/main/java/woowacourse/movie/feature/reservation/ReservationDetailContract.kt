@@ -34,10 +34,7 @@ interface ReservationDetailContract {
 
         fun loadScreeningPeriod()
 
-        fun loadScreeningTimes(
-            theaterId: Int,
-            selectedDate: String,
-        )
+        fun loadScreeningTimes(selectedDate: String)
 
         fun increaseHeadCount()
 

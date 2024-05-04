@@ -13,6 +13,7 @@ class ReservationDetailPresenter(
     private val screeningDao: ScreeningDao,
     private val theaterDao: TheaterDao,
     private val movieId: Int,
+    private val theaterId: Int,
 ) : ReservationDetailContract.Presenter {
     var headCount = HeadCount()
         private set
@@ -27,10 +28,7 @@ class ReservationDetailPresenter(
         view.showScreeningPeriod(movie)
     }
 
-    override fun loadScreeningTimes(
-        theaterId: Int,
-        selectedDate: String,
-    ) {
+    override fun loadScreeningTimes(selectedDate: String) {
         val theaterTimes = theaterDao.findScreeningTimes(theaterId)
         view.showScreeningTimes(theaterTimes, selectedDate)
     }
