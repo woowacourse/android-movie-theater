@@ -11,7 +11,7 @@ import woowacourse.movie.model.Advertisement
 import woowacourse.movie.model.Movie
 
 class MovieAdapter(
-    private val onReservationButtonClick: MovieHomeClickListener,
+    private val clickListener: MovieHomeClickListener,
 ) : RecyclerView.Adapter<ViewHolder>() {
     private var movies: List<Movie> = emptyList()
     private var advertisements: List<Advertisement> = emptyList()
@@ -41,8 +41,8 @@ class MovieAdapter(
         val movie = movies[position - getAdvertisementCount(position)]
         val advertisement = advertisements[getAdvertisementCount(position)]
         when (holder) {
-            is MovieViewHolder -> holder.bind(movie, onReservationButtonClick)
-            is AdvertisementViewHolder -> holder.bind(advertisement)
+            is MovieViewHolder -> holder.bind(movie, clickListener)
+            is AdvertisementViewHolder -> holder.bind(advertisement, clickListener)
         }
     }
 

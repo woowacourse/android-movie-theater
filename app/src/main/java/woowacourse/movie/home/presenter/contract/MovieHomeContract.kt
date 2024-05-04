@@ -9,8 +9,6 @@ interface MovieHomeContract {
             movies: List<Movie>,
             advertisements: List<Advertisement>,
         )
-
-        fun displayTheaterSelectionDialog(id: Long)
     }
 
     interface Presenter {

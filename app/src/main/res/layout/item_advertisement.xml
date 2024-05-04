@@ -4,16 +4,12 @@
     <data>
 
         <variable
-            name="advertisementLink"
-            type="String" />
+            name="clickListener"
+            type="woowacourse.movie.home.view.listener.MovieHomeClickListener" />
 
         <variable
-            name="advertisementViewHolder"
-            type="woowacourse.movie.home.view.adapter.movie.AdvertisementViewHolder" />
-
-        <variable
-            name="advertisementImageId"
-            type="int" />
+            name="advertisement"
+            type="woowacourse.movie.model.Advertisement" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -25,12 +21,12 @@
             android:id="@+id/advertisementImage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> advertisementViewHolder.advertisementImageClick(advertisementLink)}"
+            android:onClick="@{() -> clickListener.onAdvertisementClick(advertisement)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            movie:imgRes="@{advertisementImageId}"
+            movie:imgRes="@{advertisement.banner}"
             tools:src="@drawable/advertisement" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

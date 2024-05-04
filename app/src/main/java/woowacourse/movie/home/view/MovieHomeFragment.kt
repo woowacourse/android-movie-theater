@@ -1,5 +1,7 @@
 package woowacourse.movie.home.view
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -52,15 +54,16 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, MovieHomeClickList
         movieAdapter.updateAdvertisements(advertisements)
     }
 
-    override fun displayTheaterSelectionDialog(id: Long) {
+    override fun onReservationButtonClick(movieId: Long) {
         val bundle = Bundle()
-        bundle.putLong(KEY_MOVIE_ID, id)
+        bundle.putLong(KEY_MOVIE_ID, movieId)
         val theaterSelectionFragment = TheaterSelectionFragment()
         theaterSelectionFragment.arguments = bundle
         theaterSelectionFragment.show(parentFragmentManager, theaterSelectionFragment.tag)
     }
 
-    override fun onReservationButtonClick(movieId: Long) {
-        displayTheaterSelectionDialog(movieId)
+    override fun onAdvertisementClick(advertisement: Advertisement) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(advertisement.link))
+        startActivity(intent)
     }
 }
