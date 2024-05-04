@@ -19,4 +19,8 @@ class ReservationHistoryFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_reservation_history, container, false)
     }
+
+    companion object {
+        const val TAG = "RESERVATION_HISTORY_FRAGMENT"
+    }
 }

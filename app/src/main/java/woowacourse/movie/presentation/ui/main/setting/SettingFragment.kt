@@ -19,4 +19,8 @@ class SettingFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_setting, container, false)
     }
+
+    companion object {
+        const val TAG = "SETTING_FRAGMENT"
+    }
 }

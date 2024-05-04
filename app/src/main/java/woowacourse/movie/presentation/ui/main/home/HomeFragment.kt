@@ -128,4 +128,8 @@ class HomeFragment : Fragment(), HomeContract.View {
         super.onDestroyView()
         _binding = null
     }
+
+    companion object {
+        val TAG = "HOME_FRAGMENT"
+    }
 }
