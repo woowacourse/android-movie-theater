@@ -21,7 +21,7 @@ object TestFixture {
         val theater: Theater = theaterDao.findTheaterByMovieId(movie.id)[FIRST_THEATER_ITEM_POSITION]
         val seats = makeMockSeats()
         val amount = seats.calculateAmount()
-        return Ticket(movie.id, theater.theaterId, seats, ScreeningDateTime("", ""), amount)
+        return Ticket(movie.id, theater.name, seats, ScreeningDateTime("", ""), amount)
     }
 
     fun makeTheater(): List<Theater> {

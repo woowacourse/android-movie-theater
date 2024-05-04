@@ -46,7 +46,7 @@ class ReservationFinishedActivity : AppCompatActivity(), ReservationFinishedCont
         binding.textViewReservationFinishedTicketPrice.text = convertAmountFormat(this, ticket.amount)
         binding.textViewReservationFinishedSeats.text =
             seats.joinToString(getString(R.string.reservation_finished_seat_separator)) { "${it.row}${it.column}" }
-        presenter.loadTheater(ticket.theaterId)
+        binding.textViewReservationFinishedTheaterName.text = getString(R.string.reservation_finished_theater, ticket.theaterName)
         binding.textViewReservationFinishedScreeningDate.text = ticket.screeningDateTime.date
         binding.textViewReservationFinishedScreeningTime.text = ticket.screeningDateTime.time
     }

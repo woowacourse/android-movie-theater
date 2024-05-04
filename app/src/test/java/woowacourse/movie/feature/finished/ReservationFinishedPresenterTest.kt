@@ -36,7 +36,7 @@ class ReservationFinishedPresenterTest {
     @Test
     fun `예매 내역을 보여준다`() {
         every { view.showReservationHistory(any()) } just runs
-        presenter.loadTicket(Ticket(0, 0, Seats(), ScreeningDateTime("", ""), 0))
+        presenter.loadTicket(Ticket(0, "", Seats(), ScreeningDateTime("", ""), 0))
         verify { view.showReservationHistory(any()) }
     }
 

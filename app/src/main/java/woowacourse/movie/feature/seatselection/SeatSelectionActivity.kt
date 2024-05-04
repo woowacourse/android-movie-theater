@@ -12,6 +12,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.seats.SeatsDao
+import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.feature.finished.ReservationFinishedActivity
 import woowacourse.movie.feature.home.HomeFragment.Companion.MOVIE_ID
 import woowacourse.movie.feature.reservation.ReservationDetailActivity
@@ -167,6 +168,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 this,
                 SeatsDao(),
                 ScreeningDao(),
+                TheaterDao(),
                 takeMovieId(),
                 receiveTheaterId(),
             )

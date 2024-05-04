@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.seats.SeatsDao
+import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.feature.reservation.ReservationDetailActivity.Companion.DEFAULT_MOVIE_ID
 import woowacourse.movie.feature.reservation.ReservationDetailActivity.Companion.DEFAULT_THEATER_ID
 import woowacourse.movie.model.seats.Grade
@@ -25,7 +26,7 @@ class SeatSelectionPresenterTest {
 
     @BeforeEach
     fun setUp() {
-        presenter = SeatSelectionPresenter(view, SeatsDao(), ScreeningDao(), DEFAULT_MOVIE_ID, DEFAULT_THEATER_ID)
+        presenter = SeatSelectionPresenter(view, SeatsDao(), ScreeningDao(), TheaterDao(), DEFAULT_MOVIE_ID, DEFAULT_THEATER_ID)
         with(presenter) {
             manageSelectedSeats(true, 0, Seat('A', 1, Grade.B))
             manageSelectedSeats(true, 0, Seat('C', 1, Grade.S))

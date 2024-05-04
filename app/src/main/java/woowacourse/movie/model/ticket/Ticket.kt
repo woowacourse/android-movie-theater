@@ -6,7 +6,7 @@ import java.io.Serializable
 
 data class Ticket(
     val movieId: Int,
-    val theaterId: Int,
+    val theaterName: String,
     val seats: Seats,
     val screeningDateTime: ScreeningDateTime,
     val amount: Int,

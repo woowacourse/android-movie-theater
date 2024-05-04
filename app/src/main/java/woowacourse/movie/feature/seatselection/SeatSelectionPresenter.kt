@@ -2,6 +2,7 @@ package woowacourse.movie.feature.seatselection
 
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.seats.SeatsDao
+import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.seats.Seat
@@ -13,6 +14,7 @@ class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
     private val seatsDao: SeatsDao,
     private val screeningDao: ScreeningDao,
+    private val theaterDao: TheaterDao,
     private val movieId: Int,
     private val theaterId: Int,
 ) : SeatSelectionContract.Presenter {
@@ -57,10 +59,11 @@ class SeatSelectionPresenter(
     }
 
     override fun makeTicket(screeningDateTime: ScreeningDateTime) {
+        val theaterName = theaterDao.find(theaterId).name
         val ticket =
             Ticket(
                 movieId,
-                theaterId,
+                theaterName,
                 seats,
                 screeningDateTime,
                 seats.calculateAmount(),
