@@ -35,7 +35,7 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonC
         binding.movieContentList.adapter = adapter
     }
 
-    override fun onClick(movieContentId: Long) {
+    override fun onReservationButtonClick(movieContentId: Long) {
         val fragment = TheaterSelectionBottomSheetFragment()
         val bundle = Bundle()
         bundle.putLong(MovieHomeKey.MOVIE_CONTENT_ID, movieContentId)

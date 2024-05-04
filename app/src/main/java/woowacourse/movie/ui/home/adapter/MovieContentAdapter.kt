@@ -1,6 +1,5 @@
 package woowacourse.movie.ui.home.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
@@ -84,6 +83,6 @@ fun onClickReservationButton(
     movieContentId: Long,
 ) {
     button.setOnClickListener {
-        clickListener.onClick(movieContentId)
+        clickListener.onReservationButtonClick(movieContentId)
     }
 }
