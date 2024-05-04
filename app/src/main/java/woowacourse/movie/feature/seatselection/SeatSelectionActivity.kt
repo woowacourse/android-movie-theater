@@ -15,10 +15,10 @@ import woowacourse.movie.db.seats.SeatsDao
 import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.feature.finished.ReservationFinishedActivity
 import woowacourse.movie.feature.home.HomeFragment.Companion.MOVIE_ID
-import woowacourse.movie.feature.reservation.ReservationDetailActivity
-import woowacourse.movie.feature.reservation.ReservationDetailActivity.Companion.HEAD_COUNT
-import woowacourse.movie.feature.reservation.ReservationDetailActivity.Companion.SCREENING_DATE_TIME
-import woowacourse.movie.feature.reservation.ReservationDetailActivity.Companion.TICKET
+import woowacourse.movie.feature.reservation.ReservationActivity
+import woowacourse.movie.feature.reservation.ReservationActivity.Companion.HEAD_COUNT
+import woowacourse.movie.feature.reservation.ReservationActivity.Companion.SCREENING_DATE_TIME
+import woowacourse.movie.feature.reservation.ReservationActivity.Companion.TICKET
 import woowacourse.movie.feature.theater.TheaterSelectionFragment.Companion.THEATER_ID
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
@@ -177,7 +177,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private fun takeMovieId() =
         intent.getIntExtra(
             MOVIE_ID,
-            ReservationDetailActivity.DEFAULT_MOVIE_ID,
+            ReservationActivity.DEFAULT_MOVIE_ID,
         )
 
     private fun receiveHeadCount() {

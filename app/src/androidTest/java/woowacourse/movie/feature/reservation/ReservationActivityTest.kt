@@ -24,9 +24,9 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 @RunWith(AndroidJUnit4::class)
-class ReservationDetailActivityTest {
+class ReservationActivityTest {
     @get:Rule
-    var activityRule = ActivityScenarioRule(ReservationDetailActivity::class.java)
+    var activityRule = ActivityScenarioRule(ReservationActivity::class.java)
 
     @Before
     fun setUp() {
@@ -40,33 +40,33 @@ class ReservationDetailActivityTest {
 
     @Test
     fun `티켓의_기본_수량은_1장이다`() {
-        onView(withId(R.id.text_view_reservation_detail_number_of_tickets))
+        onView(withId(R.id.tv_reservation_head_count))
             .check(matches(withText("1")))
     }
 
     @Test
     fun `빼기_버튼을_누르면_티켓_수량이_1장_감소한다`() {
         // given
-        onView(withId(R.id.button_reservation_detail_plus)).perform(click())
+        onView(withId(R.id.button_reservation_plus)).perform(click())
 
         // when
-        onView(withId(R.id.button_reservation_detail_minus)).perform(click())
+        onView(withId(R.id.button_reservation_minus)).perform(click())
 
         // then
-        onView(withId(R.id.text_view_reservation_detail_number_of_tickets)).check(matches(withText("1")))
+        onView(withId(R.id.tv_reservation_head_count)).check(matches(withText("1")))
     }
 
     @Test
     fun `더하기_버튼을_누르면_티켓_수량이_1장_증가한다`() {
-        onView(withId(R.id.button_reservation_detail_plus)).perform(click())
+        onView(withId(R.id.button_reservation_plus)).perform(click())
 
-        onView(withId(R.id.text_view_reservation_detail_number_of_tickets)).check(matches(withText("2")))
+        onView(withId(R.id.tv_reservation_head_count)).check(matches(withText("2")))
     }
 
     @Test
     fun `티켓_수를_2로_중가시킨_후_화면_회전_시_티켓_수가_그대로_유지_된다`() {
         // given
-        onView(withId(R.id.button_reservation_detail_plus)).perform(click())
+        onView(withId(R.id.button_reservation_plus)).perform(click())
 
         // when
         activityRule.scenario.onActivity { activity ->
@@ -74,13 +74,13 @@ class ReservationDetailActivityTest {
         }
 
         // then
-        onView(withId(R.id.text_view_reservation_detail_number_of_tickets)).check(matches(withText("2")))
+        onView(withId(R.id.tv_reservation_head_count)).check(matches(withText("2")))
     }
 
     @Test
     fun `2024년_3월_4일의_상영일을_스피너로_선택하면_상영일_스피너에_2024-03-04_보여진다`() {
         // given
-        onView(withId(R.id.spinner_reservation_detail_screening_date)).perform(click())
+        onView(withId(R.id.spinner_reservation_screening_date)).perform(click())
         onData(
             allOf(
                 `is`(instanceOf(LocalDate::class.java)),
@@ -88,7 +88,7 @@ class ReservationDetailActivityTest {
             ),
         ).perform(click())
         // then
-        onView(withId(R.id.spinner_reservation_detail_screening_date)).check(
+        onView(withId(R.id.spinner_reservation_screening_date)).check(
             matches(
                 withSpinnerText(
                     containsString("2024-03-04"),
@@ -99,11 +99,11 @@ class ReservationDetailActivityTest {
 
     @Test
     fun `9시의_상영시간을_스피너로_선택하면_상영시간_스피너에_선택한_상영_시간이_보여진다`() {
-        onView(withId(R.id.spinner_reservation_detail_screening_time)).perform(click())
+        onView(withId(R.id.spinner_reservation_screening_time)).perform(click())
         onData(allOf(`is`(instanceOf(LocalTime::class.java)), `is`(LocalTime.of(9, 0)))).perform(
             click(),
         )
-        onView(withId(R.id.spinner_reservation_detail_screening_time)).check(
+        onView(withId(R.id.spinner_reservation_screening_time)).check(
             matches(
                 withSpinnerText(
                     containsString("09:00"),
@@ -114,7 +114,7 @@ class ReservationDetailActivityTest {
 
     @Test
     fun `2024년_3월_2일의_상영일을_스피너로_선택한_후_화면을_회전시켜도_선택한_상영일이_유지된다`() {
-        onView(withId(R.id.spinner_reservation_detail_screening_date)).perform(click())
+        onView(withId(R.id.spinner_reservation_screening_date)).perform(click())
         onData(
             allOf(
                 `is`(instanceOf(LocalDate::class.java)),
@@ -126,7 +126,7 @@ class ReservationDetailActivityTest {
             activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         }
 
-        onView(withId(R.id.spinner_reservation_detail_screening_date)).check(
+        onView(withId(R.id.spinner_reservation_screening_date)).check(
             matches(
                 withSpinnerText(
                     containsString("2024-03-02"),
@@ -137,7 +137,7 @@ class ReservationDetailActivityTest {
 
     @Test
     fun `9시의_상영시간을_스피너로_선택한_후_화면을_회전시켜도_선택한_상영시간이_유지된다`() {
-        onView(withId(R.id.spinner_reservation_detail_screening_time)).perform(click())
+        onView(withId(R.id.spinner_reservation_screening_time)).perform(click())
         onData(allOf(`is`(instanceOf(LocalTime::class.java)), `is`(LocalTime.of(9, 0)))).perform(
             click(),
         )
@@ -146,7 +146,7 @@ class ReservationDetailActivityTest {
             activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         }
 
-        onView(withId(R.id.spinner_reservation_detail_screening_time)).check(
+        onView(withId(R.id.spinner_reservation_screening_time)).check(
             matches(
                 withSpinnerText(
                     containsString("09:00"),

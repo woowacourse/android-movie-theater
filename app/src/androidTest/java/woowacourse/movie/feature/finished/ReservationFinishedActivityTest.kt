@@ -16,7 +16,7 @@ import woowacourse.movie.R
 import woowacourse.movie.TestFixture.FIRST_MOVIE_ITEM_POSITION
 import woowacourse.movie.TestFixture.makeMockTicket
 import woowacourse.movie.TestFixture.movies
-import woowacourse.movie.feature.reservation.ReservationDetailActivity
+import woowacourse.movie.feature.reservation.ReservationActivity
 
 class ReservationFinishedActivityTest {
     @get:Rule
@@ -66,8 +66,8 @@ class ReservationFinishedActivityTest {
 
     @Test
     fun `영화_예매_완료_화면은_영화_상세_화면의_예매_완료_버튼을_누르면_보여진다`() {
-        ActivityScenario.launch(ReservationDetailActivity::class.java)
-        onView(withId(R.id.button_reservation_detail_finished)).perform(ViewActions.click())
+        ActivityScenario.launch(ReservationActivity::class.java)
+        onView(withId(R.id.button_reservation_navigate_to_seat_selection)).perform(ViewActions.click())
         onView(withId(R.id.constraint_layout_seat_selection)).check(matches(ViewMatchers.isDisplayed()))
     }
 }

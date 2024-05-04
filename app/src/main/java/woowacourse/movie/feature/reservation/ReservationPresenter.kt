@@ -8,13 +8,13 @@ import woowacourse.movie.model.result.Failure
 import woowacourse.movie.model.result.Success
 import woowacourse.movie.model.ticket.HeadCount
 
-class ReservationDetailPresenter(
-    private val view: ReservationDetailContract.View,
+class ReservationPresenter(
+    private val view: ReservationContract.View,
     private val screeningDao: ScreeningDao,
     private val theaterDao: TheaterDao,
     private val movieId: Int,
     private val theaterId: Int,
-) : ReservationDetailContract.Presenter {
+) : ReservationContract.Presenter {
     var headCount = HeadCount()
         private set
 

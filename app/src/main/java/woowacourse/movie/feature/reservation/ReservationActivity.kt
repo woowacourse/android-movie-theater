@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
-import woowacourse.movie.databinding.ActivityReservationDetailBinding
+import woowacourse.movie.databinding.ActivityReservationBinding
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.feature.home.HomeFragment.Companion.MOVIE_ID
@@ -22,21 +22,21 @@ import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.utils.MovieUtils.convertPeriodFormat
 import woowacourse.movie.utils.MovieUtils.makeToast
 
-class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract.View {
-    private val binding: ActivityReservationDetailBinding by lazy {
+class ReservationActivity : AppCompatActivity(), ReservationContract.View {
+    private val binding: ActivityReservationBinding by lazy {
         DataBindingUtil.setContentView(
             this,
-            R.layout.activity_reservation_detail,
+            R.layout.activity_reservation,
         )
     }
-    private lateinit var presenter: ReservationDetailPresenter
+    private lateinit var presenter: ReservationPresenter
     private var movieId: Int = 0
     private var theaterId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.reservationDetail = this
+        binding.reservation = this
 
         movieId = receiveMovieId()
         theaterId = receiveTheaterId()
@@ -53,8 +53,8 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
         super.onSaveInstanceState(outState)
         outState.apply {
             putInt(HEAD_COUNT, presenter.headCount.count)
-            putInt(SCREENING_PERIOD, binding.spinnerReservationDetailScreeningDate.selectedItemPosition)
-            putInt(SCREENING_TIME, binding.spinnerReservationDetailScreeningTime.selectedItemPosition)
+            putInt(SCREENING_PERIOD, binding.spinnerReservationScreeningDate.selectedItemPosition)
+            putInt(SCREENING_TIME, binding.spinnerReservationScreeningTime.selectedItemPosition)
         }
     }
 
@@ -65,7 +65,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
                 bundle.getInt(HEAD_COUNT)
             }.onSuccess { headCount ->
                 presenter.restoreHeadCount(headCount)
-                binding.textViewReservationDetailNumberOfTickets.text = presenter.headCount.count.toString()
+                binding.tvReservationHeadCount.text = presenter.headCount.count.toString()
             }.onFailure {
                 showErrorToast()
                 finish()
@@ -78,16 +78,16 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
 
     override fun showMovieInformation(movie: Movie) {
         with(binding) {
-            imageViewReservationDetailPoster.setImageResource(movie.posterId)
-            textViewReservationDetailTitle.text = movie.title
-            textViewReservationScreeningDate.text = convertPeriodFormat(movie.screeningPeriod)
-            textViewReservationRunningTime.text = movie.runningTime
-            textViewReservationSummary.text = movie.summary
+            ivReservationPoster.setImageResource(movie.posterId)
+            tvReservationTitle.text = movie.title
+            tvReservationScreeningDate.text = convertPeriodFormat(movie.screeningPeriod)
+            tvReservationRunningTime.text = movie.runningTime
+            tvReservationSummary.text = movie.summary
         }
     }
 
     override fun showScreeningPeriod(movie: Movie) {
-        binding.spinnerReservationDetailScreeningDate.adapter =
+        binding.spinnerReservationScreeningDate.adapter =
             ArrayAdapter(
                 this,
                 android.R.layout.simple_spinner_item,
@@ -99,7 +99,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
         screeningTimes: ScreeningTimes,
         selectedDate: String,
     ) {
-        binding.spinnerReservationDetailScreeningTime.adapter =
+        binding.spinnerReservationScreeningTime.adapter =
             ArrayAdapter(
                 this,
                 android.R.layout.simple_spinner_item,
@@ -108,7 +108,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
     }
 
     override fun changeHeadCount(count: Int) {
-        binding.textViewReservationDetailNumberOfTickets.text = count.toString()
+        binding.tvReservationHeadCount.text = count.toString()
     }
 
     override fun showResultToast() = makeToast(this, getString(R.string.invalid_number_of_tickets))
@@ -131,7 +131,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
 
     private fun initPresenter() {
         presenter =
-            ReservationDetailPresenter(
+            ReservationPresenter(
                 view = this,
                 ScreeningDao(),
                 TheaterDao(),
@@ -145,7 +145,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
     private fun receiveTheaterId() = intent.getIntExtra(THEATER_ID, DEFAULT_THEATER_ID)
 
     private fun updateScreeningTimes(selectedTimeId: Int? = null) {
-        binding.spinnerReservationDetailScreeningDate.onItemSelectedListener =
+        binding.spinnerReservationScreeningDate.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
@@ -153,11 +153,11 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
                     position: Int,
                     id: Long,
                 ) {
-                    val selectedDate = binding.spinnerReservationDetailScreeningDate.selectedItem.toString()
+                    val selectedDate = binding.spinnerReservationScreeningDate.selectedItem.toString()
                     presenter.loadScreeningTimes(selectedDate)
                     selectedTimeId?.let {
-                        if (selectedTimeId < binding.spinnerReservationDetailScreeningTime.count) {
-                            binding.spinnerReservationDetailScreeningTime.setSelection(it)
+                        if (selectedTimeId < binding.spinnerReservationScreeningTime.count) {
+                            binding.spinnerReservationScreeningTime.setSelection(it)
                         }
                     }
                 }
@@ -173,8 +173,8 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
     fun initializePlusButton() = presenter.increaseHeadCount()
 
     fun initializeReservationButton() {
-        val date = binding.spinnerReservationDetailScreeningDate.selectedItem.toString()
-        val time = binding.spinnerReservationDetailScreeningTime.selectedItem.toString()
+        val date = binding.spinnerReservationScreeningDate.selectedItem.toString()
+        val time = binding.spinnerReservationScreeningTime.selectedItem.toString()
         val dateTime = ScreeningDateTime(date, time)
         presenter.sendTicketToSeatSelection(dateTime)
     }

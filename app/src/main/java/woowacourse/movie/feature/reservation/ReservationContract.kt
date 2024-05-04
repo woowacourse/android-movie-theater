@@ -6,7 +6,7 @@ import woowacourse.movie.model.movie.ScreeningTimes
 import woowacourse.movie.model.result.ChangeTicketCountResult
 import woowacourse.movie.model.ticket.HeadCount
 
-interface ReservationDetailContract {
+interface ReservationContract {
     interface View {
         fun showMovieInformation(movie: Movie)
 

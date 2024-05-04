@@ -26,12 +26,12 @@
             android:parentActivityName=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".feature.reservation.ReservationDetailActivity"
+            android:name=".feature.reservation.ReservationActivity"
             android:parentActivityName=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".feature.seatselection.SeatSelectionActivity"
-            android:parentActivityName=".feature.reservation.ReservationDetailActivity"
+            android:parentActivityName=".feature.reservation.ReservationActivity"
             android:exported="false" />
     </application>
 

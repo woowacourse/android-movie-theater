@@ -10,7 +10,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationFinishedBinding
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.theater.TheaterDao
-import woowacourse.movie.feature.reservation.ReservationDetailActivity.Companion.TICKET
+import woowacourse.movie.feature.reservation.ReservationActivity.Companion.TICKET
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.ticket.Ticket
 import woowacourse.movie.utils.MovieUtils.convertAmountFormat

@@ -13,7 +13,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterSelectionBinding
 import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.feature.home.HomeFragment.Companion.MOVIE_ID
-import woowacourse.movie.feature.reservation.ReservationDetailActivity
+import woowacourse.movie.feature.reservation.ReservationActivity
 import woowacourse.movie.feature.theater.adapter.TheaterSelectionAdapter
 
 class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionContract.View {
@@ -40,7 +40,7 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
         movieId: Int,
         theaterId: Int,
     ) {
-        val intent = Intent(context as MainActivity, ReservationDetailActivity::class.java)
+        val intent = Intent(context as MainActivity, ReservationActivity::class.java)
         intent.putExtra(MOVIE_ID, movieId)
         intent.putExtra(THEATER_ID, theaterId)
         startActivity(intent)
