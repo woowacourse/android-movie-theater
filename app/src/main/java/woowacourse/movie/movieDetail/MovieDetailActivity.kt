@@ -70,11 +70,12 @@ class MovieDetailActivity :
     }
 
     private fun initView() {
-        dateAdapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_dropdown_item,
-            listOf()
-        )
+        dateAdapter =
+            ArrayAdapter(
+                this,
+                android.R.layout.simple_spinner_dropdown_item,
+                listOf(),
+            )
         binding.movieDateSpinner.adapter = dateAdapter
         binding.movieDateSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -89,38 +90,42 @@ class MovieDetailActivity :
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
-        timeAdapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_dropdown_item,
-            listOf()
-        )
+        timeAdapter =
+            ArrayAdapter(
+                this,
+                android.R.layout.simple_spinner_dropdown_item,
+                listOf(),
+            )
         binding.movieTimeSpinner.adapter = timeAdapter
     }
 
     private fun setupEventListeners(cinema: Cinema) {
         binding.seatConfirmationButton.setOnClickListener {
-            val intent = TheaterSeatActivity.newIntent(
-                this,
-                binding.quantityTextView.text.toString(),
-                cinema,
-                timeDate()
-            )
+            val intent =
+                TheaterSeatActivity.newIntent(
+                    this,
+                    binding.quantityTextView.text.toString(),
+                    cinema,
+                    timeDate(),
+                )
             navigateToPurchaseConfirmation(intent)
         }
     }
 
-    private fun timeDate() = buildString {
-        append(binding.movieDateSpinner.selectedItem.toString())
-        append(DELIMITER)
-        append(binding.movieTimeSpinner.selectedItem.toString())
-    }
+    private fun timeDate() =
+        buildString {
+            append(binding.movieDateSpinner.selectedItem.toString())
+            append(DELIMITER)
+            append(binding.movieTimeSpinner.selectedItem.toString())
+        }
 
     companion object {
         const val DELIMITER = " "
         const val EXTRA_CINEMA = "cinema"
+
         fun newIntent(
             context: Context,
-            cinema: Cinema
+            cinema: Cinema,
         ): Intent {
             return Intent(context, MovieDetailActivity::class.java).apply {
                 putExtra(EXTRA_CINEMA, cinema)

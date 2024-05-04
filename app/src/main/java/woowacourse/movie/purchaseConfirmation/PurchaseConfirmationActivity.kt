@@ -46,7 +46,14 @@ class PurchaseConfirmationActivity :
         const val EXTRA_SEAT_NUMBER = "seatNumber"
         const val EXTRA_CINEMA = "cinema"
         const val EXTRA_TIME_DATE = "timeDate"
-        fun newIntent(context: Context, ticketPrice: String, seatNumber: Array<String>, cinema: Cinema, timeDate: String): Intent {
+
+        fun newIntent(
+            context: Context,
+            ticketPrice: String,
+            seatNumber: Array<String>,
+            cinema: Cinema,
+            timeDate: String,
+        ): Intent {
             return Intent(context, PurchaseConfirmationActivity::class.java).apply {
                 putExtra(EXTRA_TICKET_PRICE, ticketPrice)
                 putExtra(EXTRA_SEAT_NUMBER, seatNumber)

@@ -1,7 +1,6 @@
 package woowacourse.movie.movieList.cinemaListDialog
 
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemBottomSheetTheatersBinding
 import woowacourse.movie.model.Cinema
 

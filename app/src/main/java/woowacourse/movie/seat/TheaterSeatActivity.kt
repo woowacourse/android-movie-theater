@@ -119,7 +119,13 @@ class TheaterSeatActivity : BindingActivity<ActivityTheaterSeatBinding>(R.layout
                 val cinema = IntentCompat.getSerializableExtra(intent, EXTRA_CINEMA, Cinema::class.java)
                 val ticketPrice = findViewById<TextView>(R.id.total_price).text
                 if (cinema != null) {
-                    PurchaseConfirmationActivity.newIntent(this, ticketPrice.toString(), presenter.selectedSeats.toTypedArray(), cinema, intent.getStringExtra(EXTRA_TIME_DATE)!!).apply {
+                    PurchaseConfirmationActivity.newIntent(
+                        this,
+                        ticketPrice.toString(),
+                        presenter.selectedSeats.toTypedArray(),
+                        cinema,
+                        intent.getStringExtra(EXTRA_TIME_DATE)!!,
+                    ).apply {
                         navigateToNextPage(this)
                     }
                 } else {
@@ -136,9 +142,17 @@ class TheaterSeatActivity : BindingActivity<ActivityTheaterSeatBinding>(R.layout
         const val EXTRA_TIME_DATE = "timeDate"
         const val EXTRA_TICKET_NUM = "ticketNum"
         const val EXTRA_CINEMA = "cinema"
-        fun newIntent(context: Context, ticketNum: String, cinema: Cinema, timeDate: String): Intent {
+
+        fun newIntent(
+            context: Context,
+            ticketNum: String,
+            cinema: Cinema,
+            timeDate: String,
+        ): Intent {
             return Intent(
-                context, TheaterSeatActivity::class.java).apply {
+                context,
+                TheaterSeatActivity::class.java,
+            ).apply {
                 putExtra(EXTRA_TICKET_NUM, ticketNum)
                 putExtra(EXTRA_CINEMA, cinema)
                 putExtra(EXTRA_TIME_DATE, timeDate)

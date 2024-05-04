@@ -5,7 +5,6 @@ import MovieListView
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
 import woowacourse.movie.common.BindingFragment
 import woowacourse.movie.common.ui.withArgs

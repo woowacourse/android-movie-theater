@@ -1,4 +1,4 @@
-package woowacourse.movie.PurchaseConfirmation
+package woowacourse.movie.purchaseConfirmation
 
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
@@ -20,7 +20,6 @@ import woowacourse.movie.model.movieInfo.Synopsis
 import woowacourse.movie.model.movieInfo.Title
 import woowacourse.movie.model.theater.Seat
 import woowacourse.movie.model.theater.Theater
-import woowacourse.movie.purchaseConfirmation.PurchaseConfirmationActivity
 import java.time.LocalDate
 import java.time.LocalTime
 
