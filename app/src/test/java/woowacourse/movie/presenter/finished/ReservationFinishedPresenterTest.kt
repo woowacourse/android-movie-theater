@@ -27,21 +27,21 @@ class ReservationFinishedPresenterTest {
     }
 
     @Test
-    fun `예매한 영화의 제목을 보여준다`() {
+    fun `예매한 영화의 제목을 불러온다`() {
         every { view.showMovieTitle(any()) } just runs
         presenter.loadMovie(0)
         verify { view.showMovieTitle(any()) }
     }
 
     @Test
-    fun `예매 내역을 보여준다`() {
+    fun `예매 내역을 불러온다`() {
         every { view.showReservationHistory(any()) } just runs
         presenter.loadTicket(Ticket(0, 0, Seats(), ScreeningDateTime("", ""), 0))
         verify { view.showReservationHistory(any()) }
     }
 
     @Test
-    fun `극장 이름을 보여준다`() {
+    fun `선택한 극장 이름을 불러온다`() {
         every { view.showTheaterName(any()) } just runs
         presenter.loadTheater(0)
         verify { view.showTheaterName(any()) }
