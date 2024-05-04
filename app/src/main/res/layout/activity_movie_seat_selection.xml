@@ -8,7 +8,7 @@
             type="String" />
 
         <variable
-            name="clickListener"
+            name="seatClickListener"
             type="woowacourse.movie.seatselection.view.listener.MovieSeatSelectionClickListener" />
 
         <variable
@@ -18,16 +18,17 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/seatSelectionActivity"
+        android:id="@+id/activity_seat_selection"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".seatselection.view.MovieSeatSelectionActivity">
 
         <ScrollView
+            android:id="@+id/scroll_view_seat"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="#EAEAEA"
-            app:layout_constraintBottom_toTopOf="@id/bottomLayout"
+            app:layout_constraintBottom_toTopOf="@id/constraint_layout_bottom"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -38,7 +39,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/screenBar"
+                    android:id="@+id/tv_seat_screen"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_marginLeft="34dp"
@@ -54,7 +55,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TableLayout
-                    android:id="@+id/seatTable"
+                    android:id="@+id/table_layout_seat"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
                     android:layout_marginHorizontal="34dp"
@@ -64,14 +65,14 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/screenBar">
+                    app:layout_constraintTop_toBottomOf="@id/tv_seat_screen">
 
                     <TableRow
-                        android:id="@+id/rowA"
+                        android:id="@+id/table_row_seat_a"
                         android:layout_weight="1">
 
                         <TextView
-                            android:id="@+id/A1"
+                            android:id="@+id/tv_seat_a1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -82,7 +83,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/A2"
+                            android:id="@+id/tv_seat_a2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -93,7 +94,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/A3"
+                            android:id="@+id/tv_seat_a3"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -104,7 +105,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/A4"
+                            android:id="@+id/tv_seat_a4"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -116,11 +117,11 @@
                     </TableRow>
 
                     <TableRow
-                        android:id="@+id/rowB"
+                        android:id="@+id/table_row_seat_b"
                         android:layout_weight="1">
 
                         <TextView
-                            android:id="@+id/B1"
+                            android:id="@+id/tv_seat_b1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -131,7 +132,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/B2"
+                            android:id="@+id/tv_seat_b2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -142,7 +143,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/B3"
+                            android:id="@+id/tv_seat_b3"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -153,7 +154,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/B4"
+                            android:id="@+id/tv_seat_b4"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -165,11 +166,11 @@
                     </TableRow>
 
                     <TableRow
-                        android:id="@+id/rowC"
+                        android:id="@+id/table_row_seat_c"
                         android:layout_weight="1">
 
                         <TextView
-                            android:id="@+id/C1"
+                            android:id="@+id/tv_seat_c1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -180,7 +181,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/C2"
+                            android:id="@+id/tv_seat_c2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -191,7 +192,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/C3"
+                            android:id="@+id/tv_seat_c3"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -202,7 +203,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/C4"
+                            android:id="@+id/tv_seat_c4"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -214,11 +215,11 @@
                     </TableRow>
 
                     <TableRow
-                        android:id="@+id/rowD"
+                        android:id="@+id/table_row_seat_d"
                         android:layout_weight="1">
 
                         <TextView
-                            android:id="@+id/D1"
+                            android:id="@+id/tv_seat_d1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -229,7 +230,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/D2"
+                            android:id="@+id/tv_seat_d2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -240,7 +241,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/D3"
+                            android:id="@+id/tv_seat_d3"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -251,7 +252,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/D4"
+                            android:id="@+id/tv_seat_d4"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -263,11 +264,11 @@
                     </TableRow>
 
                     <TableRow
-                        android:id="@+id/rowE"
+                        android:id="@+id/table_row_seat_e"
                         android:layout_weight="1">
 
                         <TextView
-                            android:id="@+id/E1"
+                            android:id="@+id/tv_seat_e1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -278,7 +279,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/E2"
+                            android:id="@+id/tv_seat_e2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -289,7 +290,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/E3"
+                            android:id="@+id/tv_seat_e3"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -300,7 +301,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/E4"
+                            android:id="@+id/tv_seat_e4"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -315,7 +316,7 @@
         </ScrollView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/bottomLayout"
+            android:id="@+id/constraint_layout_bottom"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -323,7 +324,7 @@
             app:layout_constraintRight_toRightOf="parent">
 
             <TextView
-                android:id="@+id/seatTitle"
+                android:id="@+id/tv_seat_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -332,14 +333,14 @@
                 android:textColor="@color/black"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@id/seatPrice"
+                app:layout_constraintBottom_toTopOf="@id/tv_seat_price"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
 
                 app:layout_constraintVertical_chainStyle="packed" />
 
             <TextView
-                android:id="@+id/seatPrice"
+                android:id="@+id/tv_seat_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -350,27 +351,27 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/seatTitle"
+                app:layout_constraintTop_toBottomOf="@id/tv_seat_title"
                 tools:hint="0" />
 
             <TextView
-                android:id="@+id/seatPriceWon"
+                android:id="@+id/tv_seat_price_won"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="원"
                 android:textSize="20dp"
-                app:layout_constraintBottom_toBottomOf="@id/seatPrice"
+                app:layout_constraintBottom_toBottomOf="@id/tv_seat_price"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintLeft_toRightOf="@id/seatPrice"
-                app:layout_constraintTop_toTopOf="@id/seatPrice" />
+                app:layout_constraintLeft_toRightOf="@id/tv_seat_price"
+                app:layout_constraintTop_toTopOf="@id/tv_seat_price" />
 
             <Button
-                android:id="@+id/completeBtn"
+                android:id="@+id/btn_seat_complete"
                 android:layout_width="90dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/rectangle_button"
                 android:enabled="@{movieSelectedSeats.selectionComplete}"
-                android:onClick="@{() -> clickListener.onCompleteButtonClick()}"
+                android:onClick="@{() -> seatClickListener.onCompleteButtonClick()}"
                 android:text="확인"
                 android:textSize="20dp"
                 android:textStyle="bold"

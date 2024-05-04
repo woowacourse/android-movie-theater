@@ -34,31 +34,31 @@ class MovieDetailActivityTest {
 
     @Test
     fun `선택된_영화의_제목이_표시된다`() {
-        onView(withId(R.id.detailTitle))
+        onView(withId(R.id.tv_detail_title))
             .check(matches(withText("타이타닉 0")))
     }
 
     @Test
     fun `선택된_영화의_상영시작일이_표시된다`() {
-        onView(withId(R.id.startDate))
+        onView(withId(R.id.tv_detail_start_date))
             .check(matches(withText("2024-04-01")))
     }
 
     @Test
     fun `선택된_영화의_상영종료일이_표시된다`() {
-        onView(withId(R.id.endDate))
+        onView(withId(R.id.tv_detail_end_date))
             .check(matches(withText("2024-04-28")))
     }
 
     @Test
     fun `선택된_영화의_러닝타임이_표시된다`() {
-        onView(withId(R.id.detailRunningTime))
+        onView(withId(R.id.tv_detail_running_time))
             .check(matches(withText("152")))
     }
 
     @Test
     fun `선택된_영화의_설명이_표시된다`() {
-        onView(withId(R.id.detailDescription))
+        onView(withId(R.id.tv_detail_description))
             .check(
                 matches(
                     withText(
@@ -71,25 +71,25 @@ class MovieDetailActivityTest {
 
     @Test
     fun `선택된_영화의_예매_인원수의_초기값이_표시된다`() {
-        onView(withId(R.id.detailReservCount))
+        onView(withId(R.id.tv_detail_reservation_count))
             .check(matches(withText("1")))
     }
 
     @Test
     fun `화면이_가로로_회전되어도_예매_인원수의_값이_유지된다`() {
-        onView(withId(R.id.detailPlusBtn)).perform(click())
+        onView(withId(R.id.btn_detail_plus)).perform(click())
 
         val activityScenario = activityRule.scenario
         activityScenario.onActivity { activity ->
             activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         }
 
-        onView(withId(R.id.detailReservCount)).check(matches(withText("2")))
+        onView(withId(R.id.tv_detail_reservation_count)).check(matches(withText("2")))
     }
 
     @Test
     fun `예매_예매_버튼을_클릭하면_영화_상세_페이지로_이동한다`() {
-        onView(withId((R.id.seatSelectionBtn))).perform(click())
-        onView(withId(R.id.seatSelectionActivity)).check(matches(ViewMatchers.isDisplayed()))
+        onView(withId((R.id.btn_detail_seat_selection))).perform(click())
+        onView(withId(R.id.activity_seat_selection)).check(matches(ViewMatchers.isDisplayed()))
     }
 }

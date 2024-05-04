@@ -11,12 +11,13 @@ import woowacourse.movie.detail.view.MovieDetailActivity
 import woowacourse.movie.home.presenter.TheaterSelectionPresenter
 import woowacourse.movie.home.presenter.contract.TheaterSelectionContract
 import woowacourse.movie.home.view.adapter.theater.TheaterAdapter
+import woowacourse.movie.home.view.adapter.theater.listener.TheaterClickListener
 import woowacourse.movie.model.Theater
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
 
-class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionContract.View {
+class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionContract.View, TheaterClickListener {
     private lateinit var binding: FragmentTheaterSelectionBinding
     private lateinit var theaterSelectionPresenter: TheaterSelectionPresenter
 
@@ -36,14 +37,16 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
     }
 
     override fun setUpTheaterAdapter(theaters: List<Theater>) {
-        binding.theaterRecyclerview.adapter =
-            TheaterAdapter(theaters) { position ->
-                Intent(requireActivity(), MovieDetailActivity::class.java).apply {
-                    putExtra(KEY_MOVIE_ID, movieId)
-                    putExtra(KEY_SELECTED_THEATER_POSITION, position)
-                    startActivity(this)
-                }
-                dialog?.dismiss()
-            }
+        binding.recyclerViewTheater.adapter =
+            TheaterAdapter(theaters, this)
+    }
+
+    override fun onTheaterClick(position: Int) {
+        Intent(requireActivity(), MovieDetailActivity::class.java).apply {
+            putExtra(KEY_MOVIE_ID, movieId)
+            putExtra(KEY_SELECTED_THEATER_POSITION, position)
+            startActivity(this)
+        }
+        dialog?.dismiss()
     }
 }

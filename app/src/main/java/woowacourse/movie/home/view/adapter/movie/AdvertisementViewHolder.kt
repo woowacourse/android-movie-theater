@@ -12,6 +12,6 @@ class AdvertisementViewHolder(private val binding: ItemAdvertisementBinding) :
         clickListener: MovieHomeClickListener,
     ) {
         binding.advertisement = advertisement
-        binding.clickListener = clickListener
+        binding.advertisementClickListener = clickListener
     }
 }

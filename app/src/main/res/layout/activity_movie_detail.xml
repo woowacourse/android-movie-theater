@@ -3,10 +3,11 @@
     xmlns:movie="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <import type="java.util.List" />
 
         <variable
-            name="clickListener"
+            name="detailClickListener"
             type="woowacourse.movie.detail.view.listener.MovieDetailClickListener" />
 
         <variable
@@ -28,14 +29,14 @@
 
     <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/detailActivity"
+        android:id="@+id/activity_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".detail.view.MovieDetailActivity">
 
         <ScrollView
-            android:id="@+id/scrollView"
+            android:id="@+id/scroll_view_detail"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
@@ -45,7 +46,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/detailImage"
+                    android:id="@+id/iv_detail_image"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
                     android:adjustViewBounds="true"
@@ -54,10 +55,10 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    movie:imgRes="@{movie.thumbnail}" />
+                    movie:imgRes="@{movie.image}" />
 
                 <TextView
-                    android:id="@+id/detailTitle"
+                    android:id="@+id/tv_detail_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
@@ -69,21 +70,21 @@
                     android:textSize="24dp"
                     android:textStyle="bold"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/detailImage" />
+                    app:layout_constraintTop_toBottomOf="@id/iv_detail_image" />
 
                 <TextView
-                    android:id="@+id/detailDateName"
+                    android:id="@+id/tv_detail_date_prefix"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:text="상영일: "
                     android:textColor="@color/black"
                     android:textSize="16dp"
-                    app:layout_constraintLeft_toLeftOf="@id/detailTitle"
-                    app:layout_constraintTop_toBottomOf="@id/detailTitle" />
+                    app:layout_constraintLeft_toLeftOf="@id/tv_detail_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_detail_title" />
 
                 <TextView
-                    android:id="@+id/startDate"
+                    android:id="@+id/tv_detail_start_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="2024.3.1"
@@ -91,24 +92,24 @@
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
                     android:textSize="16dp"
-                    app:layout_constraintBottom_toBottomOf="@id/detailDateName"
-                    app:layout_constraintLeft_toRightOf="@id/detailDateName"
-                    app:layout_constraintTop_toTopOf="@id/detailDateName" />
+                    app:layout_constraintBottom_toBottomOf="@id/tv_detail_date_prefix"
+                    app:layout_constraintLeft_toRightOf="@id/tv_detail_date_prefix"
+                    app:layout_constraintTop_toTopOf="@id/tv_detail_date_prefix" />
 
                 <TextView
-                    android:id="@+id/dateSeparator"
+                    android:id="@+id/tv_detail_date_separator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" ~ "
                     android:textColor="@color/black"
                     android:textSize="16dp"
-                    app:layout_constraintBottom_toBottomOf="@id/detailDateName"
-                    app:layout_constraintLeft_toRightOf="@id/startDate"
-                    app:layout_constraintTop_toTopOf="@id/detailDateName" />
+                    app:layout_constraintBottom_toBottomOf="@id/tv_detail_date_prefix"
+                    app:layout_constraintLeft_toRightOf="@id/tv_detail_start_date"
+                    app:layout_constraintTop_toTopOf="@id/tv_detail_date_prefix" />
 
 
                 <TextView
-                    android:id="@+id/endDate"
+                    android:id="@+id/tv_detail_end_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="2024.3.5"
@@ -116,24 +117,24 @@
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
                     android:textSize="16dp"
-                    app:layout_constraintBottom_toBottomOf="@id/detailDateName"
-                    app:layout_constraintLeft_toRightOf="@id/dateSeparator"
-                    app:layout_constraintTop_toTopOf="@id/detailDateName" />
+                    app:layout_constraintBottom_toBottomOf="@id/tv_detail_date_prefix"
+                    app:layout_constraintLeft_toRightOf="@id/tv_detail_date_separator"
+                    app:layout_constraintTop_toTopOf="@id/tv_detail_date_prefix" />
 
 
                 <TextView
-                    android:id="@+id/detailRunningTimeName"
+                    android:id="@+id/tv_detail_running_time_prefix"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="러닝타임: "
                     android:textColor="@color/black"
                     android:textSize="16dp"
-                    app:layout_constraintLeft_toLeftOf="@id/detailTitle"
-                    app:layout_constraintTop_toBottomOf="@id/detailDateName" />
+                    app:layout_constraintLeft_toLeftOf="@id/tv_detail_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_detail_date_prefix" />
 
                 <TextView
-                    android:id="@+id/detailRunningTime"
+                    android:id="@+id/tv_detail_running_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="152"
@@ -141,24 +142,24 @@
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
                     android:textSize="16dp"
-                    app:layout_constraintBottom_toBottomOf="@id/detailRunningTimeName"
-                    app:layout_constraintLeft_toRightOf="@id/detailRunningTimeName"
-                    app:layout_constraintTop_toTopOf="@id/detailRunningTimeName" />
+                    app:layout_constraintBottom_toBottomOf="@id/tv_detail_running_time_prefix"
+                    app:layout_constraintLeft_toRightOf="@id/tv_detail_running_time_prefix"
+                    app:layout_constraintTop_toTopOf="@id/tv_detail_running_time_prefix" />
 
                 <TextView
-                    android:id="@+id/detailRunningTimeFormat"
+                    android:id="@+id/tv_detail_running_time_postfix"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="분"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
                     android:textSize="16dp"
-                    app:layout_constraintBottom_toBottomOf="@id/detailRunningTime"
-                    app:layout_constraintLeft_toRightOf="@id/detailRunningTime"
-                    app:layout_constraintTop_toTopOf="@id/detailRunningTimeName" />
+                    app:layout_constraintBottom_toBottomOf="@id/tv_detail_running_time"
+                    app:layout_constraintLeft_toRightOf="@id/tv_detail_running_time"
+                    app:layout_constraintTop_toTopOf="@id/tv_detail_running_time_prefix" />
 
                 <TextView
-                    android:id="@+id/detailDescription"
+                    android:id="@+id/tv_detail_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
@@ -166,8 +167,8 @@
                     android:text="@{movie.description}"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
-                    app:layout_constraintLeft_toLeftOf="@id/detailRunningTimeName"
-                    app:layout_constraintTop_toBottomOf="@id/detailRunningTime" />
+                    app:layout_constraintLeft_toLeftOf="@id/tv_detail_running_time_prefix"
+                    app:layout_constraintTop_toBottomOf="@id/tv_detail_running_time" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -178,71 +179,71 @@
             android:layout_height="wrap_content">
 
             <Spinner
-                android:id="@+id/dateSpinner"
+                android:id="@+id/spinner_detail_date"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_margin="10dp"
                 android:entries="@{dates}"
-                app:layout_constraintEnd_toStartOf="@+id/runningTimeSpinner"
-                app:layout_constraintStart_toStartOf="@id/detailMinusBtn"
+                app:layout_constraintEnd_toStartOf="@+id/spinner_detail_running_time"
+                app:layout_constraintStart_toStartOf="@id/btn_detail_minus"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Spinner
-                android:id="@+id/runningTimeSpinner"
+                android:id="@+id/spinner_detail_running_time"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_margin="10dp"
                 android:entries="@{times}"
-                app:layout_constraintEnd_toEndOf="@id/detailPlusBtn"
-                app:layout_constraintStart_toEndOf="@+id/dateSpinner"
+                app:layout_constraintEnd_toEndOf="@id/btn_detail_plus"
+                app:layout_constraintStart_toEndOf="@+id/spinner_detail_date"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/detailMinusBtn"
+                android:id="@+id/btn_detail_minus"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:onClick="@{() -> clickListener.onMinusButtonClick()}"
+                android:onClick="@{() -> detailClickListener.onMinusButtonClick()}"
                 android:text="-"
                 android:textSize="25dp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@id/seatSelectionBtn"
+                app:layout_constraintBottom_toTopOf="@id/btn_detail_seat_selection"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/dateSpinner" />
+                app:layout_constraintTop_toBottomOf="@id/spinner_detail_date" />
 
             <TextView
-                android:id="@+id/detailReservCount"
+                android:id="@+id/tv_detail_reservation_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{String.valueOf(reservationCount)}"
                 android:textColor="@color/black"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@id/seatSelectionBtn"
-                app:layout_constraintEnd_toStartOf="@+id/detailPlusBtn"
-                app:layout_constraintStart_toEndOf="@+id/detailMinusBtn"
-                app:layout_constraintTop_toBottomOf="@id/dateSpinner"
+                app:layout_constraintBottom_toTopOf="@id/btn_detail_seat_selection"
+                app:layout_constraintEnd_toStartOf="@+id/btn_detail_plus"
+                app:layout_constraintStart_toEndOf="@+id/btn_detail_minus"
+                app:layout_constraintTop_toBottomOf="@id/spinner_detail_date"
                 tools:hint="1" />
 
             <Button
-                android:id="@+id/detailPlusBtn"
+                android:id="@+id/btn_detail_plus"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="15dp"
-                android:onClick="@{() -> clickListener.onPlusButtonClick()}"
+                android:onClick="@{() -> detailClickListener.onPlusButtonClick()}"
                 android:text="+"
                 android:textSize="25dp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@id/seatSelectionBtn"
+                app:layout_constraintBottom_toTopOf="@id/btn_detail_seat_selection"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/runningTimeSpinner" />
+                app:layout_constraintTop_toBottomOf="@id/spinner_detail_running_time" />
 
             <Button
-                android:id="@+id/seatSelectionBtn"
+                android:id="@+id/btn_detail_seat_selection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:onClick="@{()->clickListener.onSeatSelectionButtonClick()}"
+                android:onClick="@{()-> detailClickListener.onSeatSelectionButtonClick()}"
                 android:padding="10dp"
                 android:text="좌석 선택"
                 android:textSize="20dp"

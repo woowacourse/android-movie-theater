@@ -5,12 +5,12 @@
     <FrameLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/container"
+        android:id="@+id/frame_layout_theater_container"
         tools:context=".home.view.TheaterSelectionFragment">
 
         <androidx.recyclerview.widget.RecyclerView
 
-            android:id="@+id/theaterRecyclerview"
+            android:id="@+id/recycler_view_theater"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

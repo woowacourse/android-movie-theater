@@ -60,7 +60,7 @@ class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
                 movieTicket.seats.selectedSeats.joinToString(", ") { seat ->
                     getString(R.string.seat, seat.row.formatRow(), seat.column.toString())
                 }
-            binding.resultText =
+            binding.resultInformation =
                 resources.getString(
                     R.string.result,
                     movieTicket.seats.count,

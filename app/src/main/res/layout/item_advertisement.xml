@@ -4,7 +4,7 @@
     <data>
 
         <variable
-            name="clickListener"
+            name="advertisementClickListener"
             type="woowacourse.movie.home.view.listener.MovieHomeClickListener" />
 
         <variable
@@ -18,10 +18,10 @@
         android:layout_height="140dp">
 
         <ImageView
-            android:id="@+id/advertisementImage"
+            android:id="@+id/iv_advertisement"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> clickListener.onAdvertisementClick(advertisement)}"
+            android:onClick="@{() -> advertisementClickListener.onAdvertisementClick(advertisement)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

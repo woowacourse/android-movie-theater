@@ -4,7 +4,7 @@
     <data>
 
         <variable
-            name="resultText"
+            name="resultInformation"
             type="String" />
 
         <variable
@@ -14,13 +14,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/resultActivity"
+        android:id="@+id/activity_result"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".result.view.MovieResultActivity">
 
         <TextView
-            android:id="@+id/resultNotice"
+            android:id="@+id/tv_result_notice"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:background="#9160f9"
@@ -34,7 +34,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/resultTitle"
+            android:id="@+id/tv_result_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
@@ -46,10 +46,10 @@
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/resultNotice" />
+            app:layout_constraintTop_toBottomOf="@id/tv_result_notice" />
 
         <TextView
-            android:id="@+id/resultDate"
+            android:id="@+id/tv_result_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -59,14 +59,14 @@
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/resultTime"
+            app:layout_constraintEnd_toStartOf="@+id/tv_result_time"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/resultTitle" />
+            app:layout_constraintTop_toBottomOf="@id/tv_result_title" />
 
         <TextView
-            android:id="@+id/resultTime"
+            android:id="@+id/tv_result_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -77,11 +77,11 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/resultDate"
-            app:layout_constraintTop_toBottomOf="@id/resultTitle" />
+            app:layout_constraintStart_toEndOf="@+id/tv_result_date"
+            app:layout_constraintTop_toBottomOf="@id/tv_result_title" />
 
         <TextView
-            android:id="@+id/result"
+            android:id="@+id/tv_result_information"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
@@ -89,16 +89,16 @@
             android:gravity="center"
             android:hint="일반 2명 | B3, D2 | 선릉 극장"
             android:maxLines="1"
-            android:text="@{resultText}"
+            android:text="@{resultInformation}"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
             android:textSize="20dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/resultDate" />
+            app:layout_constraintTop_toBottomOf="@id/tv_result_date" />
 
         <TextView
-            android:id="@+id/resultReservPrice"
+            android:id="@+id/tv_result_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -108,32 +108,32 @@
             android:textSize="20dp"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/resultReservPriceFormat"
-            app:layout_constraintTop_toBottomOf="@id/result"
+            app:layout_constraintRight_toLeftOf="@id/tv_result_price_won"
+            app:layout_constraintTop_toBottomOf="@id/tv_result_information"
             tools:hint="13,000" />
 
         <TextView
-            android:id="@+id/resultReservPriceFormat"
+            android:id="@+id/tv_result_price_won"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="원"
             android:textColor="@color/black"
             android:textSize="20dp"
-            app:layout_constraintBottom_toBottomOf="@+id/resultReservPrice"
-            app:layout_constraintLeft_toRightOf="@id/resultReservPrice"
-            app:layout_constraintRight_toLeftOf="@id/resultReservType"
-            app:layout_constraintTop_toTopOf="@+id/resultReservPrice" />
+            app:layout_constraintBottom_toBottomOf="@+id/tv_result_price"
+            app:layout_constraintLeft_toRightOf="@id/tv_result_price"
+            app:layout_constraintRight_toLeftOf="@id/tv_result_price_postfix"
+            app:layout_constraintTop_toTopOf="@+id/tv_result_price" />
 
         <TextView
-            android:id="@+id/resultReservType"
+            android:id="@+id/tv_result_price_postfix"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" (현장 결제)"
             android:textColor="@color/black"
             android:textSize="20dp"
-            app:layout_constraintBottom_toBottomOf="@+id/resultReservPriceFormat"
-            app:layout_constraintLeft_toRightOf="@id/resultReservPriceFormat"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_result_price_won"
+            app:layout_constraintLeft_toRightOf="@id/tv_result_price_won"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/resultReservPriceFormat" />
+            app:layout_constraintTop_toTopOf="@+id/tv_result_price_won" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

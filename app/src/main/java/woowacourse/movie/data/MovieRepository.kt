@@ -13,7 +13,7 @@ object MovieRepository {
         List(100) {
             Movie(
                 id = (it + 1).toLong(),
-                thumbnail = R.drawable.titanic,
+                image = R.drawable.titanic,
                 title = "타이타닉 ${it + 1}",
                 description =
                     "우연한 기회로 티켓을 구해 타이타닉호에 올라탄 자유로운 영혼을 가진 화가 ‘잭’(레오나르도 디카프리오)은 막강한 재력의 약혼자와 함께 1등실에 승선한 ‘로즈’(케이트 윈슬렛)에게 한눈에 반한다. " +

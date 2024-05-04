@@ -34,7 +34,7 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, MovieHomeClickList
 
     private fun initializeHomeFragment() {
         movieAdapter = MovieAdapter(this)
-        binding.movieRecyclerView.adapter = movieAdapter
+        binding.recyclerViewHome.adapter = movieAdapter
 
         movieHomePresenter = MovieHomePresenter(this)
         movieHomePresenter.loadMovies()

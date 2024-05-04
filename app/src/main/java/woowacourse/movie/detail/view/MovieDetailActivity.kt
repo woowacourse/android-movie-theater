@@ -45,7 +45,7 @@ class MovieDetailActivity :
 
         binding = ActivityMovieDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.clickListener = this
+        binding.detailClickListener = this
 
         movieDetailPresenter = MovieDetailPresenter(this)
         movieDetailPresenter.loadMovieDetail(movieId, selectedTheaterPosition)
@@ -54,7 +54,7 @@ class MovieDetailActivity :
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        val position = binding.runningTimeSpinner.selectedItemPosition
+        val position = binding.spinnerDetailDate.selectedItemPosition
         outState.putInt(KEY_ITEM_POSITION, position)
 
         val count = binding.reservationCount
@@ -105,7 +105,7 @@ class MovieDetailActivity :
     }
 
     override fun setUpTimeSpinnerPosition(position: Int) {
-        binding.runningTimeSpinner.setSelection(position)
+        binding.spinnerDetailRunningTime.setSelection(position)
     }
 
     override fun navigateToSeatSelectionView(
@@ -142,8 +142,8 @@ class MovieDetailActivity :
     override fun onSeatSelectionButtonClick() {
         movieDetailPresenter.reserveMovie(
             movieId,
-            binding.dateSpinner.selectedItem.toString(),
-            binding.runningTimeSpinner.selectedItem.toString(),
+            binding.spinnerDetailDate.selectedItem.toString(),
+            binding.spinnerDetailRunningTime.selectedItem.toString(),
         )
     }
 }

@@ -12,6 +12,6 @@ class MovieViewHolder(private val binding: ItemMovieBinding) :
         clickListener: MovieHomeClickListener,
     ) {
         binding.movie = movie
-        binding.clickListener = clickListener
+        binding.movieClickListener = clickListener
     }
 }

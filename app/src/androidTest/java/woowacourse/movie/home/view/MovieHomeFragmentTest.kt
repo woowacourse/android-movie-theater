@@ -29,7 +29,7 @@ class MovieHomeFragmentTest {
     fun setUp() {
         activityRule.scenario.onActivity {
             it.supportFragmentManager.beginTransaction().replace(
-                R.id.fragmentContainerView,
+                R.id.fragment_main_container,
                 MovieHomeFragment(),
             ).commit()
         }
@@ -37,13 +37,13 @@ class MovieHomeFragmentTest {
 
     @Test
     fun `영화_목록이_화면에_표시된다`() {
-        onView(withId(R.id.movieRecyclerView))
+        onView(withId(R.id.recycler_view_home))
             .check(matches(ViewMatchers.isDisplayed()))
     }
 
     @Test
     fun `영화_목록의_3번째_아이템은_영화가_보여진다`() {
-        onView(withId(R.id.movieRecyclerView)).check(
+        onView(withId(R.id.recycler_view_home)).check(
             matches(
                 matchViewHolderAtPosition(2, MovieViewHolder::class.java),
             ),
@@ -52,7 +52,7 @@ class MovieHomeFragmentTest {
 
     @Test
     fun `영화_목록의_4번째_아이템은_광고가_보여진다`() {
-        onView(withId(R.id.movieRecyclerView)).check(
+        onView(withId(R.id.recycler_view_home)).check(
             matches(
                 matchViewHolderAtPosition(3, AdvertisementViewHolder::class.java),
             ),

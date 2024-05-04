@@ -6,12 +6,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.databinding.ActivityMovieMainBinding
 import woowacourse.movie.home.view.MovieHomeFragment
-import woowacourse.movie.reservationlist.view.ReservationListFragment
+import woowacourse.movie.reservationhistory.view.ReservationHistoryFragment
 import woowacourse.movie.setting.view.SettingFragment
 
 class MovieMainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieMainBinding
-    private val reservationListFragment: ReservationListFragment by lazy { ReservationListFragment() }
+    private val reservationHistoryFragment: ReservationHistoryFragment by lazy { ReservationHistoryFragment() }
     private val movieHomeFragment: MovieHomeFragment by lazy { MovieHomeFragment() }
     private val settingFragment: SettingFragment by lazy { SettingFragment() }
 
@@ -26,23 +26,23 @@ class MovieMainActivity : AppCompatActivity() {
 
     private fun setupBottomNavigation(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-            binding.bottomNavigation.selectedItemId = R.id.home_item
+            binding.bottomNavigationMain.selectedItemId = R.id.item_home
             addFragment(movieHomeFragment)
         }
 
-        binding.bottomNavigation.setOnItemSelectedListener { item ->
+        binding.bottomNavigationMain.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.reservation_list_item -> {
-                    replaceFragment(reservationListFragment)
+                R.id.item_reservation_history -> {
+                    replaceFragment(reservationHistoryFragment)
                     true
                 }
 
-                R.id.home_item -> {
+                R.id.item_home -> {
                     replaceFragment(movieHomeFragment)
                     true
                 }
 
-                R.id.setting_item -> {
+                R.id.item_setting -> {
                     replaceFragment(settingFragment)
                     true
                 }
@@ -55,14 +55,14 @@ class MovieMainActivity : AppCompatActivity() {
     private fun addFragment(fragment: Fragment) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            add(R.id.fragmentContainerView, fragment)
+            add(R.id.fragment_main_container, fragment)
         }
     }
 
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace(R.id.fragmentContainerView, fragment)
+            replace(R.id.fragment_main_container, fragment)
         }
     }
 }

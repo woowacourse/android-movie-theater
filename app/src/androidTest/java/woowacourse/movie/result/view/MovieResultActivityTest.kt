@@ -39,31 +39,31 @@ class MovieResultActivityTest {
 
     @Test
     fun `예매한_영화의_제목이_표시된다`() {
-        onView(withId(R.id.resultTitle))
+        onView(withId(R.id.tv_result_title))
             .check(matches(withText("타이타닉 0")))
     }
 
     @Test
     fun `예매한_영화의_상영일이_표시된다`() {
-        onView(withId(R.id.resultDate))
+        onView(withId(R.id.tv_result_date))
             .check(matches(withText("2024-04-01")))
     }
 
     @Test
     fun `예매한_영화의_상영시간이_표시된다`() {
-        onView(withId(R.id.resultTime))
+        onView(withId(R.id.tv_result_time))
             .check(matches(withText("12:00")))
     }
 
     @Test
     fun `예매한_영화의_좌석이_표시된다`() {
-        onView(withId(R.id.result))
+        onView(withId(R.id.tv_result_information))
             .check(matches(withText("일반 3명 | A3, C2, E1 | 선릉 극장")))
     }
 
     @Test
     fun `예매한_영화의_가격이_표시된다`() {
-        onView(withId(R.id.resultReservPrice))
+        onView(withId(R.id.tv_result_price))
             .check(matches(withText("37,000")))
     }
 }
