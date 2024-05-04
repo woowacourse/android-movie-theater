@@ -43,6 +43,7 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
                     putExtra(KEY_SELECTED_THEATER_POSITION, position)
                     startActivity(this)
                 }
+                dialog?.dismiss()
             }
     }
 }
