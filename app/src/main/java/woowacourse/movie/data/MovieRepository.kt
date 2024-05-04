@@ -10,7 +10,7 @@ import java.time.LocalTime
 
 object MovieRepository {
     private val movies: Map<Long, Movie> =
-        (1L..100L).associateWith {
+        (0L..100L).associateWith {
             Movie(
                 id = it,
                 thumbnail = R.drawable.titanic,

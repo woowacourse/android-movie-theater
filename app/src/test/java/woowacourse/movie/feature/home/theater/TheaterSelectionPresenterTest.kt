@@ -8,11 +8,14 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.MovieRepository
+import woowacourse.movie.feature.firstMovie
+import woowacourse.movie.feature.firstMovieId
+import woowacourse.movie.feature.invalidMovieId
 
 class TheaterSelectionPresenterTest {
     private lateinit var view: TheaterSelectionContract.View
     private lateinit var presenter: TheaterSelectionPresenter
-    private val movie = MovieRepository.getMovieById(1L)
+    private val movie = firstMovie
 
     @BeforeEach
     fun setUp() {
@@ -26,7 +29,7 @@ class TheaterSelectionPresenterTest {
         every { view.setUpTheaterAdapter(any()) } just Runs
 
         // When
-        presenter.loadTheaters(1L)
+        presenter.loadTheaters(firstMovieId)
 
         // Then
         verify { view.setUpTheaterAdapter(movie.theaters) }
@@ -38,7 +41,7 @@ class TheaterSelectionPresenterTest {
         every { view.handleInvalidMovieIdError(any()) } just Runs
 
         // When
-        presenter.loadTheaters(-1L)
+        presenter.loadTheaters(invalidMovieId)
 
         // Then
         verify { view.handleInvalidMovieIdError(any()) }

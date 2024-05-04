@@ -7,6 +7,8 @@ import io.mockk.runs
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.feature.firstMovieId
+import woowacourse.movie.feature.invalidMovieId
 
 class MovieResultPresenterTest {
     private lateinit var view: MovieResultContract.View
@@ -24,7 +26,7 @@ class MovieResultPresenterTest {
         every { view.displayMovieTicket(any()) } just runs
 
         // When
-        presenter.loadMovieTicket(1L, "2024-04-01", "10:00", 3, "A0, A1, A2", "선릉")
+        presenter.loadMovieTicket(firstMovieId, "2024-04-01", "10:00", 3, "A0, A1, A2", "선릉")
 
         // Then
         verify { view.displayMovieTicket(any()) }
@@ -36,7 +38,7 @@ class MovieResultPresenterTest {
         every { view.handleInvalidMovieIdError(any()) } just runs
 
         // When
-        presenter.loadMovieTicket(-1L, "2024-04-01", "10:00", 3, "A0, A1, A2", "선릉")
+        presenter.loadMovieTicket(invalidMovieId, "2024-04-01", "10:00", 3, "A0, A1, A2", "선릉")
 
         // Then
         verify { view.handleInvalidMovieIdError(any()) }

@@ -8,11 +8,14 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.MovieRepository
+import woowacourse.movie.feature.firstMovie
+import woowacourse.movie.feature.firstMovieId
+import woowacourse.movie.feature.invalidMovieId
 
 class MovieDetailPresenterTest {
     private lateinit var view: MovieDetailContract.View
     private lateinit var presenter: MovieDetailPresenter
-    private val movie = MovieRepository.getMovieById(1L)
+    private val movie = firstMovie
 
     @BeforeEach
     fun setUp() {
@@ -27,7 +30,7 @@ class MovieDetailPresenterTest {
         every { view.updateCountView(any()) } just runs
 
         // When
-        presenter.loadMovieDetail(1L)
+        presenter.loadMovieDetail(firstMovieId)
 
         // Then
         verify { view.displayMovieDetail(movie) }
@@ -40,7 +43,7 @@ class MovieDetailPresenterTest {
         every { view.handleInvalidMovieIdError(any()) } just runs
 
         // When
-        presenter.loadMovieDetail(-1L)
+        presenter.loadMovieDetail(invalidMovieId)
 
         // Then
         every { view.handleInvalidMovieIdError(any()) } just runs

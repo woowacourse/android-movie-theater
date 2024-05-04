@@ -16,6 +16,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.MovieMainActivity
 import woowacourse.movie.R
+import woowacourse.movie.feature.firstMovieId
 import woowacourse.movie.feature.home.movie.MovieHomeFragment
 import woowacourse.movie.feature.home.theater.adapter.TheaterViewHolder
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
@@ -33,7 +34,7 @@ class TheaterSelectionBottomSheetFragmentTest {
                 MovieHomeFragment(),
             ).commit()
             val bundle = Bundle()
-            bundle.putLong(KEY_MOVIE_ID, 0L)
+            bundle.putLong(KEY_MOVIE_ID, firstMovieId)
             val theaterSelectionBottomSheetFragment = TheaterSelectionBottomSheetFragment()
             theaterSelectionBottomSheetFragment.arguments = bundle
             theaterSelectionBottomSheetFragment.show(it.supportFragmentManager, theaterSelectionBottomSheetFragment.tag)
