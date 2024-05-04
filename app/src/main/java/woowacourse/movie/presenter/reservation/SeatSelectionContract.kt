@@ -10,7 +10,7 @@ import woowacourse.movie.model.ticket.Ticket
 
 interface SeatSelectionContract {
     interface Presenter {
-        fun loadSeatNumber()
+        fun initSeatNumbers()
 
         fun loadMovie(movieId: Int)
 

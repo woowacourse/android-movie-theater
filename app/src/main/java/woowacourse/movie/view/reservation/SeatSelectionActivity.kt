@@ -51,7 +51,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         receiveScreeningDateTime()
         seatsTable = collectSeatsInTableLayout()
         with(presenter) {
-            loadSeatNumber()
+            initSeatNumbers()
             loadMovie(movieId)
         }
         initializeConfirmButton()

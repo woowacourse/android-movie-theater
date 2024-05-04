@@ -32,21 +32,21 @@ class SeatSelectionPresenterTest {
     }
 
     @Test
-    fun `좌석별 번호를 보여준다`() {
+    fun `좌석별 번호를 초기값으로 업데이트 한다`() {
         every { view.initializeSeatsTable(any(), any()) } just runs
-        presenter.loadSeatNumber()
+        presenter.initSeatNumbers()
         verify(exactly = 20) { view.initializeSeatsTable(any(), any()) }
     }
 
     @Test
-    fun `영화 제목을 보여준다`() {
+    fun `현재 영화 정보를 불러온다`() {
         every { view.showMovieTitle(any()) } just runs
         presenter.loadMovie(0)
         verify { view.showMovieTitle(any()) }
     }
 
     @Test
-    fun `총 결제 금액을 보여준다`() {
+    fun `총 결제 금액을 업데이트 한다`() {
         every { view.showAmount(any()) } just runs
         presenter.updateTotalPrice(true, Seat('E', 1, Grade.A))
         verify { view.showAmount(37_000) }
