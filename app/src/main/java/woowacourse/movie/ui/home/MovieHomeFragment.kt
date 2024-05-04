@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
@@ -13,13 +14,14 @@ import woowacourse.movie.model.data.MovieContentsImpl
 import woowacourse.movie.model.movie.MovieContent
 import woowacourse.movie.ui.ReservationButtonClickListener
 import woowacourse.movie.ui.home.adapter.MovieContentAdapter
+import java.lang.IllegalStateException
 
 class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonClickListener {
     private lateinit var binding: FragmentMovieHomeBinding
     private lateinit var movieContents: List<MovieContent>
-    private val presenter: MovieHomePresenter by lazy { MovieHomePresenter(this, MovieContentsImpl) }
-    private val adapter: MovieContentAdapter by lazy { MovieContentAdapter(movieContents, this) }
-
+    private val presenter: MovieHomePresenter by lazy { generatePresenter() }
+    private val adapter: MovieContentAdapter by lazy { generateMovieContentAdapter() }
+    
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,8 +33,12 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonC
     }
 
     override fun showMovieContents(movieContents: List<MovieContent>) {
-        this.movieContents = movieContents
-        binding.movieContentList.adapter = adapter
+        runCatching {
+            this.movieContents = movieContents
+            binding.movieContentList.adapter = adapter
+        }.onFailure {
+            presenter.handleError(it)
+        }
     }
 
     override fun onReservationButtonClick(movieContentId: Long) {
@@ -50,4 +56,17 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonC
             fragment.tag,
         )
     }
+
+    override fun showError(throwable: Throwable) {
+        Toast.makeText(
+            requireContext(),
+            resources.getString(R.string.toast_invalid_key),
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    private fun generateMovieContentAdapter(): MovieContentAdapter =
+        MovieContentAdapter(movieContents, this)
+
+    private fun generatePresenter() = MovieHomePresenter(this, MovieContentsImpl)
 }

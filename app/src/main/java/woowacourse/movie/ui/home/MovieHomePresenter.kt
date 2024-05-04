@@ -10,4 +10,8 @@ class MovieHomePresenter(
     override fun loadMovieContents() {
         view.showMovieContents(movieContentDataSource.findAll())
     }
+
+    override fun handleError(throwable: Throwable) {
+        view.showError(throwable)
+    }
 }

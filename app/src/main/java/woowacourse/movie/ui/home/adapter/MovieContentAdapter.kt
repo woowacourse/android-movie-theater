@@ -36,7 +36,7 @@ class MovieContentAdapter(
                 }
             }
 
-            else -> {
+            TYPE_ADS -> {
                 val binding: ItemAdvertisementBinding =
                     DataBindingUtil.inflate(
                         layoutInflater,
@@ -46,6 +46,8 @@ class MovieContentAdapter(
                     )
                 AdvertisementViewHolder(binding)
             }
+
+            else -> throw IllegalStateException(EXCEPTION_VIEW_TYPE)
         }
     }
 
@@ -73,6 +75,7 @@ class MovieContentAdapter(
         private const val TYPE_MOVIE = 1
         private const val INTERVAL_ADVERTISEMENT = 3
         private const val DIVIDER_ADVERTISEMENT = INTERVAL_ADVERTISEMENT + 1
+        private const val EXCEPTION_VIEW_TYPE = "잘못된 형태의 뷰 타입입니다."
     }
 }
 
