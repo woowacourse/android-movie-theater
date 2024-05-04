@@ -26,8 +26,8 @@ class MovieResultPresenter(private val movieResultContractView: MovieResultContr
         seats.split(", ").forEach { seat ->
             movieSelectedSeats.selectSeat(
                 MovieSeat(
-                    unFormatRow(seat),
-                    unFormatColumn(seat),
+                    seat.unFormatRow(),
+                    seat.unFormatColumn(),
                 ),
             )
         }
