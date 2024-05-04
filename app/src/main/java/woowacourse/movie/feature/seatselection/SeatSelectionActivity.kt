@@ -42,8 +42,9 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        binding.activity = this
         initPresenter()
+        initAmount()
         receiveHeadCount()
         receiveScreeningDateTime()
         seatsTable = collectSeatsInTableLayout()
@@ -51,7 +52,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             loadSeatNumber()
             loadMovie()
         }
-        initializeConfirmButton()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -127,11 +127,11 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     override fun showMovieTitle(movie: Movie) {
-        binding.textviewSeatSelectionTitle.text = movie.title
+        binding.movieTitle = movie.title
     }
 
     override fun showAmount(amount: Int) {
-        binding.textviewSeatSelectionPrice.text = convertAmountFormat(this, amount)
+        binding.amount = convertAmountFormat(this, amount)
     }
 
     override fun navigateToFinished(ticket: Ticket) {
@@ -172,6 +172,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 takeMovieId(),
                 receiveTheaterId(),
             )
+        binding.presenter = presenter
     }
 
     private fun takeMovieId() =
@@ -212,12 +213,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     private fun getSeatsCount(): Int = seatsTable.count { seat -> seat.isSelected }
 
-    private fun initializeConfirmButton() {
-        binding.buttonSeatSelectionConfirm.setOnClickListener {
-            presenter.initializeConfirmButton()
-        }
-    }
-
     private fun restoreReservationData(bundle: Bundle) {
         val headCount = bundle.bundleSerializable(HEAD_COUNT, HeadCount::class.java) ?: throw NoSuchElementException()
         presenter.restoreReservation(headCount.count)
@@ -227,6 +222,10 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         val seats = bundle.bundleSerializable(SEATS, Seats::class.java) ?: throw NoSuchElementException()
         val index = bundle.getIntegerArrayList(SEATS_INDEX) ?: throw NoSuchElementException()
         presenter.restoreSeats(seats, index.toList())
+    }
+
+    private fun initAmount() {
+        binding.amount = getString(R.string.select_seat_default_price)
     }
 
     companion object {

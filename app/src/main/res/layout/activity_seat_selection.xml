@@ -4,8 +4,20 @@
     <data>
 
         <variable
-            name="seat_selection"
+            name="activity"
             type="woowacourse.movie.feature.seatselection.SeatSelectionActivity" />
+
+        <variable
+            name="presenter"
+            type="woowacourse.movie.feature.seatselection.SeatSelectionPresenter" />
+
+        <variable
+            name="movie_title"
+            type="String" />
+
+        <variable
+            name="amount"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -95,6 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="20dp"
+                android:text="@{String.valueOf(movie_title)}"
                 android:textAppearance="@style/Bold18"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toStartOf="@id/button_seat_selection_confirm"
@@ -104,9 +117,10 @@
 
             <TextView
                 android:id="@+id/textview_seat_selection_price"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:text="@{String.valueOf(amount)}"
                 android:textColor="@color/medium_gray"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -131,6 +145,7 @@
                 android:layout_height="0dp"
                 android:background="@drawable/selector_confirm"
                 android:enabled="false"
+                android:onClick="@{() -> presenter.initializeConfirmButton()}"
                 android:text="@string/select_seat_confirm"
                 android:textAppearance="@style/Bold18"
                 android:textColor="@color/white"

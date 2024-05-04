@@ -24,6 +24,7 @@
 
     <!-- activity_select_seat -->
     <string name="select_seat_screen">SCREEN</string>
+    <string name="select_seat_default_price">0</string>
     <string name="select_seat_price_unit">원</string>
     <string name="select_seat_confirm">확인</string>
     <string name="select_seat_number">%c%d</string>
