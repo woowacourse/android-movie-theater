@@ -44,6 +44,6 @@ interface ReservationContract {
 
         fun handleHeadCountBounds(result: ChangeTicketCountResult)
 
-        fun restoreHeadCount(count: Int)
+        fun restoreHeadCount()
     }
 }

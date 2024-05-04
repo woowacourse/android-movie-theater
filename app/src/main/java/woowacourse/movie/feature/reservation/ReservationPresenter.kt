@@ -7,6 +7,7 @@ import woowacourse.movie.model.result.ChangeTicketCountResult
 import woowacourse.movie.model.result.Failure
 import woowacourse.movie.model.result.Success
 import woowacourse.movie.model.ticket.HeadCount
+import woowacourse.movie.model.ticket.HeadCount.Companion.DEFAULT_HEAD_COUNT
 
 class ReservationPresenter(
     private val view: ReservationContract.View,
@@ -14,9 +15,9 @@ class ReservationPresenter(
     private val theaterDao: TheaterDao,
     private val movieId: Int,
     private val theaterId: Int,
+    savedHeadCount: Int = DEFAULT_HEAD_COUNT,
 ) : ReservationContract.Presenter {
-    var headCount = HeadCount()
-        private set
+    private val headCount = HeadCount(savedHeadCount)
 
     override fun loadMovie() {
         val movie = screeningDao.find(movieId)
@@ -54,7 +55,7 @@ class ReservationPresenter(
         }
     }
 
-    override fun restoreHeadCount(count: Int) {
-        headCount = HeadCount(count)
+    override fun restoreHeadCount() {
+        view.changeHeadCount(headCount.count)
     }
 }

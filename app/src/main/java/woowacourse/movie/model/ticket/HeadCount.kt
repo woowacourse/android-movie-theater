@@ -6,26 +6,26 @@ import woowacourse.movie.model.result.Success
 import java.io.Serializable
 
 class HeadCount(
-    count: Int = DEFAULT_TICKET_COUNT,
+    count: Int = DEFAULT_HEAD_COUNT,
 ) : Serializable {
     var count: Int = count
         private set
 
     fun increase(): ChangeTicketCountResult {
-        if (count >= MAX_TICKET_COUNT) return Failure
+        if (count >= MAX_HEAD_COUNT) return Failure
         count++
         return Success
     }
 
     fun decrease(): ChangeTicketCountResult {
-        if (count <= MIN_TICKET_COUNT) return Failure
+        if (count <= MIN_HEAD_COUNT) return Failure
         count--
         return Success
     }
 
     companion object {
-        private const val DEFAULT_TICKET_COUNT = 1
-        private const val MAX_TICKET_COUNT = 20
-        private const val MIN_TICKET_COUNT = 1
+        const val DEFAULT_HEAD_COUNT = 1
+        private const val MAX_HEAD_COUNT = 20
+        private const val MIN_HEAD_COUNT = 1
     }
 }

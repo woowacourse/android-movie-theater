@@ -19,6 +19,7 @@ import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.movie.ScreeningTimes
 import woowacourse.movie.model.ticket.HeadCount
+import woowacourse.movie.model.ticket.HeadCount.Companion.DEFAULT_HEAD_COUNT
 import woowacourse.movie.utils.MovieUtils.convertPeriodFormat
 import woowacourse.movie.utils.MovieUtils.makeToast
 
@@ -40,8 +41,9 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
 
         movieId = receiveMovieId()
         theaterId = receiveTheaterId()
+        val savedHeadCount = bringSavedHeadCount(savedInstanceState)
 
-        initPresenter()
+        initPresenter(savedHeadCount)
         with(presenter) {
             loadMovie()
             loadScreeningPeriod()
@@ -52,7 +54,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.apply {
-            putInt(HEAD_COUNT, presenter.headCount.count)
+            putInt(HEAD_COUNT, binding.tvReservationHeadCount.text.toString().toInt())
             putInt(SCREENING_PERIOD, binding.spinnerReservationScreeningDate.selectedItemPosition)
             putInt(SCREENING_TIME, binding.spinnerReservationScreeningTime.selectedItemPosition)
         }
@@ -60,20 +62,9 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        savedInstanceState.let { bundle ->
-            runCatching {
-                bundle.getInt(HEAD_COUNT)
-            }.onSuccess { headCount ->
-                presenter.restoreHeadCount(headCount)
-                binding.tvReservationHeadCount.text = presenter.headCount.count.toString()
-            }.onFailure {
-                showErrorToast()
-                finish()
-            }
-
-            val selectedTimeId = bundle.getInt(SCREENING_TIME, 0)
-            updateScreeningTimes(selectedTimeId)
-        }
+        presenter.restoreHeadCount()
+        val selectedTimeId = savedInstanceState.getInt(SCREENING_TIME, 0)
+        updateScreeningTimes(selectedTimeId)
     }
 
     override fun showMovieInformation(movie: Movie) {
@@ -129,7 +120,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         startActivity(intent)
     }
 
-    private fun initPresenter() {
+    private fun initPresenter(savedHeadCount: Int) {
         presenter =
             ReservationPresenter(
                 view = this,
@@ -137,12 +128,15 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
                 TheaterDao(),
                 movieId,
                 theaterId,
+                savedHeadCount,
             )
     }
 
     private fun receiveMovieId() = intent.getIntExtra(MOVIE_ID, DEFAULT_MOVIE_ID)
 
     private fun receiveTheaterId() = intent.getIntExtra(THEATER_ID, DEFAULT_THEATER_ID)
+
+    private fun bringSavedHeadCount(savedInstanceState: Bundle?) = savedInstanceState?.getInt(HEAD_COUNT) ?: DEFAULT_HEAD_COUNT
 
     private fun updateScreeningTimes(selectedTimeId: Int? = null) {
         binding.spinnerReservationScreeningDate.onItemSelectedListener =
