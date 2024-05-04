@@ -4,6 +4,7 @@ import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 
 data class MovieContent(
+    val id: Long = 0,
     val imageId: String,
     val title: String,
     val openingMovieDate: LocalDate,
@@ -11,7 +12,6 @@ data class MovieContent(
     val runningTime: Int,
     val synopsis: String,
     val theaterIds: List<Long>,
-    val id: Long = 0,
 ) {
     fun getDatesInRange(): List<LocalDate> {
         val numberOfDays = ChronoUnit.DAYS.between(openingMovieDate, endingMoviesDate) + OFFSET
