@@ -10,7 +10,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
-import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieSeatSelectionBinding
 import woowacourse.movie.model.MovieGrade
@@ -46,7 +45,8 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_seat_selection)
+        binding = ActivityMovieSeatSelectionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         binding.activity = this
 
         seatSelectionPresenter =
@@ -101,7 +101,7 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
     override fun setUpTableSeats(baseSeats: List<MovieSeat>) {
         tableSeats.forEachIndexed { index, view ->
             val seat = baseSeats[index]
-            view.text = getString(R.string.seat, formatRow(seat.row), formatColumn(seat.column))
+            view.text = getString(R.string.seat, seat.row.formatRow(), seat.column.formatColumn())
             view.setTextColor(ContextCompat.getColor(this, seat.grade.getSeatColor()))
             view.setOnClickListener {
                 seatSelectionPresenter.clickTableSeat(index)
@@ -130,7 +130,7 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
     override fun navigateToResultView(movieSelectedSeats: MovieSelectedSeats) {
         val seats =
             movieSelectedSeats.selectedSeats.map { seat ->
-                (formatRow(seat.row) + (formatColumn(seat.column)))
+                (seat.row.formatRow() + seat.column.formatColumn())
             }.joinToString(", ")
 
         Intent(this, MovieResultActivity::class.java).apply {

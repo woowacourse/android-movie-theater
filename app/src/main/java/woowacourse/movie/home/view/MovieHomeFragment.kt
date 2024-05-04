@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieHomeBinding
 import woowacourse.movie.home.presenter.MovieHomePresenter
 import woowacourse.movie.home.presenter.contract.MovieHomeContract
@@ -28,17 +26,13 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, MovieHomeClickList
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        initializeHomeFragment(inflater, container)
+        binding =
+            FragmentMovieHomeBinding.inflate(inflater, container, false)
+        initializeHomeFragment()
         return binding.root
     }
 
-    private fun initializeHomeFragment(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-    ) {
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_movie_home, container, false)
-
+    private fun initializeHomeFragment() {
         movieAdapter = MovieAdapter(this)
         binding.movieRecyclerView.adapter = movieAdapter
 

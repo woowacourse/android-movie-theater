@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationListBinding
 
 class ReservationListFragment : Fragment() {
@@ -18,7 +16,7 @@ class ReservationListFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_reservation_list, container, false)
+            FragmentReservationListBinding.inflate(inflater, container, false)
         return binding.root
     }
 }

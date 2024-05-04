@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieRepository.getMovieById
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
@@ -45,7 +44,9 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
+
+        binding = ActivityMovieDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         binding.activity = this
 
         movieDetailPresenter = MovieDetailPresenter(this)

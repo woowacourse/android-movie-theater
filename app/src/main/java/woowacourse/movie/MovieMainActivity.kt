@@ -2,7 +2,6 @@ package woowacourse.movie
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.databinding.ActivityMovieMainBinding
@@ -18,7 +17,9 @@ class MovieMainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_main)
+
+        binding = ActivityMovieMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setupBottomNavigation(savedInstanceState)
     }

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import woowacourse.movie.MovieMainActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieResultBinding
@@ -35,7 +34,8 @@ class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setUpBackButtonAction()
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_result)
+        binding = ActivityMovieResultBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         movieResultPresenter = MovieResultPresenter(this)
         movieResultPresenter.loadMovieTicket(
@@ -58,7 +58,7 @@ class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
             binding.movieTicket = movieTicket
             val seats =
                 movieTicket.seats.selectedSeats.joinToString(", ") { seat ->
-                    getString(R.string.seat, formatRow(seat.row), seat.column.toString())
+                    getString(R.string.seat, seat.row.formatRow(), seat.column.toString())
                 }
             binding.resultText =
                 resources.getString(

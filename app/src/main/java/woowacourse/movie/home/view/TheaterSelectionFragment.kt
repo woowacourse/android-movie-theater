@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterSelectionBinding
 import woowacourse.movie.detail.view.MovieDetailActivity
 import woowacourse.movie.home.presenter.TheaterSelectionPresenter
@@ -30,7 +28,7 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
         savedInstanceState: Bundle?,
     ): View {
         binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_theater_selection, container, false)
+            FragmentTheaterSelectionBinding.inflate(inflater, container, false)
 
         theaterSelectionPresenter = TheaterSelectionPresenter(this)
         theaterSelectionPresenter.loadTheaters(movieId)
