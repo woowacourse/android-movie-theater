@@ -50,7 +50,9 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, MovieHomeClickList
 
     override fun onReservationButtonClick(movieId: Long) {
         val bundle = Bundle()
-        bundle.putLong(KEY_MOVIE_ID, movieId)
+        bundle.apply {
+            putLong(KEY_MOVIE_ID, movieId)
+        }
         val theaterSelectionFragment = TheaterSelectionFragment()
         theaterSelectionFragment.arguments = bundle
         theaterSelectionFragment.show(parentFragmentManager, theaterSelectionFragment.tag)
