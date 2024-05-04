@@ -27,7 +27,7 @@ class MovieSeatSelectionActivity :
     private lateinit var binding: ActivityMovieSeatSelectionBinding
     private val userTicketId by lazy { userTicketId() }
     private val selectedSeatInfo = mutableListOf<Int>()
-    private val seats by lazy { binding.seatTable.makeSeats() }
+    private val seats by lazy { binding.tlSeats.makeSeats() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,13 +109,13 @@ class MovieSeatSelectionActivity :
     }
 
     override fun showReservationTotalAmount(amount: Int) {
-        binding.totalSeatAmountText.text =
+        binding.tvTotalSeatAmount.text =
             resources.getString(R.string.total_price)
                 .format(amount)
     }
 
     override fun updateSelectCompletion(isComplete: Boolean) {
-        binding.confirmButton.apply {
+        binding.btnConfirm.apply {
             isEnabled = isComplete
             isClickable = isComplete
         }
@@ -158,7 +158,7 @@ class MovieSeatSelectionActivity :
         )
 
     private fun setOnConfirmButtonListener() {
-        binding.confirmButton.setOnClickListener {
+        binding.btnConfirm.setOnClickListener {
             showAlertDialog()
         }
     }

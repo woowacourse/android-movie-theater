@@ -18,7 +18,7 @@
         tools:context=".ui.reservation.MovieReservationActivity">
 
         <ScrollView
-            android:id="@+id/info_layout"
+            android:id="@+id/sv_information_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:overScrollMode="never"
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/poster_image"
+                    android:id="@+id/iv_poster"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:scaleType="centerCrop"
@@ -48,10 +48,10 @@
                     android:layout_marginHorizontal="20dp"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/poster_image">
+                    app:layout_constraintTop_toBottomOf="@+id/iv_poster">
 
                     <TextView
-                        android:id="@+id/title_text"
+                        android:id="@+id/tv_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="27dp"
@@ -60,7 +60,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/screening_date_text"
+                        android:id="@+id/tv_screening_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="34dp"
@@ -70,7 +70,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/running_time_text"
+                        android:id="@+id/tv_running_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="19dp"
@@ -78,7 +78,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/synopsis_text"
+                        android:id="@+id/tv_synopsis"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="30dp"
@@ -100,7 +100,7 @@
             android:layout_marginBottom="20dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/info_layout">
+            app:layout_constraintTop_toBottomOf="@+id/sv_information_layout">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -110,7 +110,7 @@
                 android:orientation="horizontal">
 
                 <Spinner
-                    android:id="@+id/screeningDate_spinner"
+                    android:id="@+id/sp_screening_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:spinnerMode="dropdown"
@@ -122,7 +122,7 @@
                     android:layout_weight="1" />
 
                 <Spinner
-                    android:id="@+id/screeningTime_spinner"
+                    android:id="@+id/sp_screening_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:spinnerMode="dropdown"
@@ -136,14 +136,14 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/minus_button"
+                    android:id="@+id/btn_minus"
                     android:layout_width="65dp"
                     android:layout_height="match_parent"
                     android:onClick="@{() -> presenter.decreaseCount()}"
                     android:text="@string/minus" />
 
                 <TextView
-                    android:id="@+id/reservation_count_text"
+                    android:id="@+id/tv_reservation_count"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -152,7 +152,7 @@
                     android:textStyle="bold" />
 
                 <Button
-                    android:id="@+id/plus_button"
+                    android:id="@+id/btn_plus"
                     android:layout_width="65dp"
                     android:layout_height="match_parent"
                     android:onClick="@{() -> presenter.increaseCount()}"
@@ -161,7 +161,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/reservation_button"
+                android:id="@+id/btn_reservation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="8dp"

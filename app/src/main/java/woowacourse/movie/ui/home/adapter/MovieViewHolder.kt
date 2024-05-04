@@ -10,7 +10,7 @@ class MovieViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(movieContent: MovieContent) {
         binding.movieContent = movieContent
-        binding.reservationButton.setOnClickListener {
+        binding.btnReservation.setOnClickListener {
             reservationButtonClickListener(movieContent.id)
         }
     }

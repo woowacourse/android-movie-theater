@@ -38,37 +38,37 @@ class MovieReservationActivityTest {
 
     @Test
     fun `화면이_띄워지면_영화_제목이_보인다`() {
-        onView(withId(R.id.title_text))
+        onView(withId(R.id.tv_title))
             .check(matches(isDisplayed()))
             .check(matches(withText(movieContent.title)))
     }
 
     @Test
     fun `화면이_띄워지면_상영일이_보인다`() {
-        onView(withId(R.id.screening_date_text))
+        onView(withId(R.id.tv_screening_date))
             .check(matches(isDisplayed()))
             .check(matches(withText("상영일: 2024.3.1 ~ 2024.3.28")))
     }
 
     @Test
     fun `화면이_띄워지면_러닝타임이_보인다`() {
-        onView(withId(R.id.running_time_text))
+        onView(withId(R.id.tv_running_time))
             .check(matches(isDisplayed()))
             .check(matches(withText("러닝타임: ${movieContent.runningTime}분")))
     }
 
     @Test
     fun `초기_예매_인원은_1이다`() {
-        onView(withId(R.id.reservation_count_text))
+        onView(withId(R.id.tv_reservation_count))
             .check(matches(withText("1")))
     }
 
     @Test
     fun `증가_버튼을_누르면_예매_인원_수가_증가한다`() {
-        onView(withId(R.id.plus_button))
+        onView(withId(R.id.btn_plus))
             .perform(click())
 
-        onView(withId(R.id.reservation_count_text))
+        onView(withId(R.id.tv_reservation_count))
             .check(matches(withText("2")))
     }
 
@@ -76,42 +76,42 @@ class MovieReservationActivityTest {
     fun `예매_인원이_최대인_경우_증가_버튼을_누르면_예매_인원_수가_증가하지_않는다`() {
         // given
         repeat(50) {
-            onView(withId(R.id.plus_button))
+            onView(withId(R.id.btn_plus))
                 .perform(click())
         }
 
         // when
-        onView(withId(R.id.plus_button))
+        onView(withId(R.id.btn_plus))
             .perform(click())
 
         // then
-        onView(withId(R.id.reservation_count_text))
+        onView(withId(R.id.tv_reservation_count))
             .check(matches(withText("50")))
     }
 
     @Test
     fun `감소_버튼을_누르면_예매_인원_수가_감소한다`() {
         // given
-        onView(withId(R.id.plus_button))
+        onView(withId(R.id.btn_plus))
             .perform(click())
-        onView(withId(R.id.plus_button))
+        onView(withId(R.id.btn_plus))
             .perform(click())
 
         // when
-        onView(withId(R.id.minus_button))
+        onView(withId(R.id.btn_minus))
             .perform(click())
 
         // then
-        onView(withId(R.id.reservation_count_text))
+        onView(withId(R.id.tv_reservation_count))
             .check(matches(withText("2")))
     }
 
     @Test
     fun `예매_인원이_최소인_경우_감소_버튼을_누르면_예매_인원_수가_감소하지_않는다`() {
-        onView(withId(R.id.minus_button))
+        onView(withId(R.id.btn_minus))
             .perform(click())
 
-        onView(withId(R.id.reservation_count_text))
+        onView(withId(R.id.tv_reservation_count))
             .check(matches(withText("1")))
     }
 
@@ -119,9 +119,9 @@ class MovieReservationActivityTest {
     fun `화면이_회전되어도_예매_인원의_값은_유지된다`() {
         // given
         val activityScenario = activityRule.scenario
-        onView(withId(R.id.plus_button))
+        onView(withId(R.id.btn_plus))
             .perform(click())
-        onView(withId(R.id.plus_button))
+        onView(withId(R.id.btn_plus))
             .perform(click())
 
         // when
@@ -130,7 +130,7 @@ class MovieReservationActivityTest {
         }
 
         // then
-        onView(withId(R.id.reservation_count_text))
+        onView(withId(R.id.tv_reservation_count))
             .check(matches(withText("3")))
     }
 

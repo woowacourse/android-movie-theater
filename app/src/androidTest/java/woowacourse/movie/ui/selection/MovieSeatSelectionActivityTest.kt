@@ -37,14 +37,14 @@ class MovieSeatSelectionActivityTest {
 
     @Test
     fun `화면이_띄워지면_영화_제목이_보인다`() {
-        onView(withId(R.id.movie_title_text))
+        onView(withId(R.id.tv_movie_title))
             .check(matches(isDisplayed()))
             .check(matches(withText(userTicket.title)))
     }
 
     @Test
     fun `화면이_띄워질_때_초기_좌석_선택_가격의_합은_0원이다`() {
-        onView(withId(R.id.total_seat_amount_text))
+        onView(withId(R.id.tv_total_seat_amount))
             .check(matches(isDisplayed()))
             .check(matches(withText("0원")))
     }
@@ -55,7 +55,7 @@ class MovieSeatSelectionActivityTest {
             .check(matches(isDisplayed()))
             .perform(click())
 
-        onView(withId(R.id.total_seat_amount_text))
+        onView(withId(R.id.tv_total_seat_amount))
             .check(matches(isDisplayed()))
             .check(matches(withText("10,000원")))
     }
@@ -66,7 +66,7 @@ class MovieSeatSelectionActivityTest {
             .check(matches(isDisplayed()))
             .perform(click())
 
-        onView(withId(R.id.confirm_button))
+        onView(withId(R.id.btn_confirm))
             .check(matches(not(isEnabled())))
     }
 
@@ -80,7 +80,7 @@ class MovieSeatSelectionActivityTest {
             .check(matches(isDisplayed()))
             .perform(click())
 
-        onView(withId(R.id.confirm_button))
+        onView(withId(R.id.btn_confirm))
             .check(matches(isEnabled()))
     }
 

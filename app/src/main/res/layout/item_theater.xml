@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="theater"
             type="woowacourse.movie.model.movie.Theater" />
@@ -15,8 +16,8 @@
         android:paddingHorizontal="24dp"
         android:paddingVertical="8dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/theater_title_text"
+        <TextView
+            android:id="@+id/tv_theater_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -25,27 +26,27 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/selection_arrow_image"
+            app:layout_constraintEnd_toStartOf="@id/iv_selection_arrow"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="선릉 극장" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/screening_times_count_text"
+        <TextView
+            android:id="@+id/tv_screening_times_count"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
+            android:text="@{@string/screening_times_count(theater.screeningTimes.size)}"
             android:textColor="@color/gray"
             android:textSize="12sp"
-            android:text="@{@string/screening_times_count(theater.screeningTimes.size)}"
-            app:layout_constraintEnd_toStartOf="@id/selection_arrow_image"
+            app:layout_constraintEnd_toStartOf="@id/iv_selection_arrow"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/theater_title_text"
+            app:layout_constraintTop_toBottomOf="@id/tv_theater_title"
             tools:text="3개의 상영시간" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/selection_arrow_image"
+        <ImageView
+            android:id="@+id/iv_selection_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_forward_arrow"

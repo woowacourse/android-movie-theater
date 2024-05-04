@@ -54,7 +54,7 @@ class MovieReservationActivity :
 
         outState.putInt(
             RESERVATION_COUNT_STATE_KEY,
-            binding.reservationCountText.text.toString().toInt(),
+            binding.tvReservationCount.text.toString().toInt(),
         )
     }
 
@@ -68,7 +68,7 @@ class MovieReservationActivity :
     }
 
     private fun setOnClickMovieTimeSpinnerListener() {
-        binding.screeningTimeSpinner.onItemSelectedListener =
+        binding.spScreeningTime.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
@@ -76,7 +76,7 @@ class MovieReservationActivity :
                     position: Int,
                     id: Long,
                 ) {
-                    val value = binding.screeningTimeSpinner.getItemAtPosition(position)
+                    val value = binding.spScreeningTime.getItemAtPosition(position)
                     presenter.selectTime(value as LocalTime)
                 }
 
@@ -86,7 +86,7 @@ class MovieReservationActivity :
     }
 
     private fun setOnClickMovieDateSpinnerListener() {
-        binding.screeningDateSpinner.onItemSelectedListener =
+        binding.spScreeningDate.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
@@ -94,7 +94,7 @@ class MovieReservationActivity :
                     position: Int,
                     id: Long,
                 ) {
-                    val movieDate = binding.screeningDateSpinner.getItemAtPosition(position)
+                    val movieDate = binding.spScreeningDate.getItemAtPosition(position)
                     presenter.selectDate(movieDate as LocalDate)
                 }
 
@@ -122,7 +122,7 @@ class MovieReservationActivity :
     }
 
     override fun updateReservationCount(reservationCount: Int) {
-        binding.reservationCountText.text = reservationCount.toString()
+        binding.tvReservationCount.text = reservationCount.toString()
     }
 
     override fun moveMovieSeatSelectionPage(userTicketId: Long) {
