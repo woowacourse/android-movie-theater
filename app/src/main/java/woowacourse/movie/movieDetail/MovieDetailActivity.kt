@@ -74,7 +74,7 @@ class MovieDetailActivity :
             ArrayAdapter(
                 this,
                 android.R.layout.simple_spinner_dropdown_item,
-                listOf(),
+                mutableListOf(),
             )
         binding.movieDateSpinner.adapter = dateAdapter
         binding.movieDateSpinner.onItemSelectedListener =
@@ -94,7 +94,7 @@ class MovieDetailActivity :
             ArrayAdapter(
                 this,
                 android.R.layout.simple_spinner_dropdown_item,
-                listOf(),
+                mutableListOf(),
             )
         binding.movieTimeSpinner.adapter = timeAdapter
     }

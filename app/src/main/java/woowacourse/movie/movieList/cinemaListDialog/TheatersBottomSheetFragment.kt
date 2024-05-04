@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.BundleCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import woowacourse.movie.common.ui.redirectToErrorActivity
+import woowacourse.movie.ErrorActivity
 import woowacourse.movie.databinding.FragmentBottomSheetTheatersBinding
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.theater.Theater
@@ -29,7 +29,7 @@ class TheatersBottomSheetFragment : BottomSheetDialogFragment(), TheatersBottomS
             BundleCompat.getSerializable(it, THEATER_KEY, Theater::class.java)
         }?.let {
             theater = it
-        } ?: redirectToErrorActivity()
+        } ?: ErrorActivity.start(requireActivity())
     }
 
     override fun onCreateView(
