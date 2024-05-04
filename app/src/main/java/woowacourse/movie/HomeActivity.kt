@@ -1,7 +1,7 @@
 package woowacourse.movie
 
 import android.os.Bundle
-import woowacourse.movie.common.BindingActivity
+import woowacourse.movie.base.BindingActivity
 import woowacourse.movie.common.ui.replaceTo
 import woowacourse.movie.databinding.ActivityHomeBinding
 import woowacourse.movie.movieList.MovieListFragment

@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import woowacourse.movie.R
-import woowacourse.movie.common.BindingFragment
+import woowacourse.movie.base.BindingFragment
 import woowacourse.movie.common.ui.withArgs
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.model.MovieDisplayData

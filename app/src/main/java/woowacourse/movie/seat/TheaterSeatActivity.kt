@@ -14,7 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.IntentCompat
 import androidx.core.view.children
 import woowacourse.movie.R
-import woowacourse.movie.common.BindingActivity
+import woowacourse.movie.base.BindingActivity
 import woowacourse.movie.common.ui.redirectToErrorActivity
 import woowacourse.movie.databinding.ActivityTheaterSeatBinding
 import woowacourse.movie.model.Cinema
