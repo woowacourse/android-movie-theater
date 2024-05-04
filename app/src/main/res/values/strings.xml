@@ -4,6 +4,8 @@
     <!-- common -->
     <string name="all_price">#,###</string>
     <string name="all_error">"예기치 못한 오류가 발생했습니다."</string>
+    <string name="all_screening_period">상영일:&#160;%s~%s</string>
+    <string name="all_running_time">러닝타임:&#160;%s분</string>
 
     <!-- ReservationDetailActivity -->
     <string name="invalid_number_of_tickets">"범위를 벗어난 티켓 갯수입니다."</string>

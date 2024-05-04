@@ -20,7 +20,6 @@ import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.movie.ScreeningTimes
 import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.ticket.HeadCount.Companion.DEFAULT_HEAD_COUNT
-import woowacourse.movie.utils.MovieUtils.convertPeriodFormat
 import woowacourse.movie.utils.MovieUtils.makeToast
 
 class ReservationActivity : AppCompatActivity(), ReservationContract.View {
@@ -66,11 +65,9 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
 
     override fun showMovieInformation(movie: Movie) {
         with(binding) {
-            ivReservationPoster.setImageResource(movie.posterId)
-            tvReservationTitle.text = movie.title
-            tvReservationScreeningDate.text = convertPeriodFormat(movie.screeningPeriod)
-            tvReservationRunningTime.text = movie.runningTime
-            tvReservationSummary.text = movie.summary
+            this.movie = movie
+            screeningStartDate = movie.screeningPeriod.first()
+            screeningEndDate = movie.screeningPeriod.last()
         }
     }
 

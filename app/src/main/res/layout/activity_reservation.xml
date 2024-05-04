@@ -20,6 +20,18 @@
         <variable
             name="date_time"
             type="woowacourse.movie.model.movie.ScreeningDateTime" />
+
+        <variable
+            name="movie"
+            type="woowacourse.movie.model.movie.Movie" />
+
+        <variable
+            name="screening_start_date"
+            type="java.time.LocalDate" />
+
+        <variable
+            name="screening_end_date"
+            type="java.time.LocalDate" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,7 +57,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/ic_launcher_background"
+                    app:imageResource="@{movie.posterId}"
                     app:layout_constraintBottom_toTopOf="@id/tv_reservation_title"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -57,6 +69,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="21dp"
                     android:layout_marginTop="27dp"
+                    android:text="@{String.valueOf(movie.title)}"
                     android:textAppearance="@style/Bold24"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/iv_reservation_poster"
@@ -67,15 +80,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="34dp"
+                    android:text="@{@string/all_screening_period(screening_start_date, screening_end_date)}"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="@id/tv_reservation_title"
                     app:layout_constraintTop_toBottomOf="@id/tv_reservation_title"
-                    tools:text="상영일: 2024.3.1" />
+                    tools:text="상영일: 2024.3.1~2024.03.10" />
 
                 <TextView
                     android:id="@+id/tv_reservation_running_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{@string/all_running_time(movie.runningTime)}"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="@id/tv_reservation_screening_date"
                     app:layout_constraintTop_toBottomOf="@id/tv_reservation_screening_date"
@@ -87,6 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="21dp"
+                    android:text="@{movie.summary}"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/tv_reservation_running_time"
