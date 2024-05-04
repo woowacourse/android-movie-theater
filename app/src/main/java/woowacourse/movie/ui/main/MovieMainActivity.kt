@@ -39,7 +39,6 @@ class MovieMainActivity : AppCompatActivity() {
 
     private fun replace(fragment: Fragment) {
         supportFragmentManager.commit {
-            setReorderingAllowed(true)
             replace(R.id.main_fragment_container, fragment, fragment.tag)
         }
     }
