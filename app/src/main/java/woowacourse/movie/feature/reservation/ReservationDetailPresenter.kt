@@ -43,7 +43,7 @@ class ReservationDetailPresenter(
         handleHeadCountBounds(result)
     }
 
-    override fun initializeReservationButton(dateTime: ScreeningDateTime) {
+    override fun sendTicketToSeatSelection(dateTime: ScreeningDateTime) {
         view.navigateToSeatSelection(dateTime, headCount)
     }
 

@@ -40,7 +40,7 @@ interface ReservationDetailContract {
 
         fun decreaseHeadCount()
 
-        fun initializeReservationButton(dateTime: ScreeningDateTime)
+        fun sendTicketToSeatSelection(dateTime: ScreeningDateTime)
 
         fun handleHeadCountBounds(result: ChangeTicketCountResult)
 

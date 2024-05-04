@@ -176,7 +176,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
         val date = binding.spinnerReservationDetailScreeningDate.selectedItem.toString()
         val time = binding.spinnerReservationDetailScreeningTime.selectedItem.toString()
         val dateTime = ScreeningDateTime(date, time)
-        presenter.initializeReservationButton(dateTime)
+        presenter.sendTicketToSeatSelection(dateTime)
     }
 
     companion object {
