@@ -1,19 +1,10 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:movie="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
         <variable
-            name="advertisement_link"
-            type="String" />
-
-        <variable
-            name="advertisement_view_holder"
-            type="woowacourse.movie.feature.home.movie.adapter.AdvertisementViewHolder" />
-
-        <variable
-            name="advertisement_image_id"
-            type="int" />
+            name="advertisement"
+            type="woowacourse.movie.feature.home.movie.ui.AdvertisementUiModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -25,12 +16,12 @@
             android:id="@+id/advertisementImage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> advertisement_view_holder.advertisementImageClick(advertisement_link)}"
+            android:onClick="@{() -> advertisement.advertisementClick.invoke(advertisement.advertisementLink)}"
+            app:imgRes="@{advertisement.advertisementImageId}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            movie:imgRes="@{advertisement_image_id}"
             tools:src="@drawable/advertisement" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

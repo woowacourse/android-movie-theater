@@ -6,12 +6,8 @@ class TheaterUiModel(
     val theaterName: String,
     val screeningTimeCount: Int,
     val theaterItemClick: (Int) -> Unit,
-    private val theaterItemPosition: Int,
+    val theaterItemPosition: Int,
 ) {
-    fun onTheaterItemClick() {
-        theaterItemClick(theaterItemPosition)
-    }
-
     companion object {
         fun of(
             theater: Theater,

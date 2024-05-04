@@ -12,7 +12,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:onClick="@{() -> theater.onTheaterItemClick()}"
+        android:onClick="@{() -> theater.theaterItemClick.invoke(theater.theaterItemPosition)}"
         android:padding="8dp">
 
         <TextView
