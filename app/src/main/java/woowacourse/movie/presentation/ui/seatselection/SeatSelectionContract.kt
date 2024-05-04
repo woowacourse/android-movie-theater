@@ -27,7 +27,7 @@ interface SeatSelectionContract {
 
         fun showReservationDialog()
 
-        fun back()
+        fun navigateBackToPrevious()
     }
 
     interface Presenter : BasePresenter {

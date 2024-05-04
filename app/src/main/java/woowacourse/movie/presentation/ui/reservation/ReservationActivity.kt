@@ -34,7 +34,7 @@ class ReservationActivity : BaseActivity<ActivityReservationBinding>(), View {
         binding.theaterName = theaterName
     }
 
-    override fun back() = finish()
+    override fun navigateBackToPrevious() = finish()
 
     companion object {
         private const val PUT_EXTRA_KEY_RESERVATION_ID = "reservationId"

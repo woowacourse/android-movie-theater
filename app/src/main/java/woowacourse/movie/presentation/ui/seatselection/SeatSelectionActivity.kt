@@ -92,13 +92,13 @@ class SeatSelectionActivity : BaseActivity<ActivitySeatSelectionBinding>(), View
 
     override fun navigateToReservation(id: Int) {
         ReservationActivity.startActivity(this, id)
-        back()
+        navigateBackToPrevious()
     }
 
-    override fun back() = finish()
+    override fun navigateBackToPrevious() = finish()
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        back()
+        navigateBackToPrevious()
         return true
     }
 

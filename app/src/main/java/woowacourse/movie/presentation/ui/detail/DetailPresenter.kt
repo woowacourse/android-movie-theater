@@ -41,12 +41,12 @@ class DetailPresenter(
             when (e) {
                 is NoSuchElementException -> {
                     view.showToastMessage(e)
-                    view.back()
+                    view.navigateBackToPrevious()
                 }
 
                 else -> {
                     view.showToastMessage(e)
-                    view.back()
+                    view.navigateBackToPrevious()
                 }
             }
         }

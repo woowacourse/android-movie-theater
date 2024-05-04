@@ -53,14 +53,14 @@ class ReservationPresenterTest {
                 NoSuchElementException(),
             )
         every { view.showToastMessage(e = any()) } just runs
-        every { view.back() } just runs
+        every { view.navigateBackToPrevious() } just runs
 
         // when
         presenter.loadReservation(1)
 
         // then
         verify { view.showToastMessage(e = any()) }
-        verify { view.back() }
+        verify { view.navigateBackToPrevious() }
     }
 
     @Test
@@ -68,13 +68,13 @@ class ReservationPresenterTest {
         // given
         every { repository.findByReservationId(any()) } returns Result.failure(Exception())
         every { view.showToastMessage(e = any()) } just runs
-        every { view.back() } just runs
+        every { view.navigateBackToPrevious() } just runs
 
         // when
         presenter.loadReservation(1)
 
         // then
         verify { view.showToastMessage(e = any()) }
-        verify { view.back() }
+        verify { view.navigateBackToPrevious() }
     }
 }

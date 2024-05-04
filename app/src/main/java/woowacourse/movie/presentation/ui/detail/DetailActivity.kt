@@ -72,13 +72,13 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
 
     override fun navigateToSeatSelection(reservationInfo: ReservationInfo) {
         SeatSelectionActivity.startActivity(this, reservationInfo)
-        back()
+        navigateBackToPrevious()
     }
 
-    override fun back() = finish()
+    override fun navigateBackToPrevious() = finish()
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        back()
+        navigateBackToPrevious()
         return true
     }
 

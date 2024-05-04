@@ -11,7 +11,7 @@ interface ReservationContract {
             theaterName: String,
         )
 
-        fun back()
+        fun navigateBackToPrevious()
     }
 
     interface Presenter : BasePresenter {

@@ -35,12 +35,12 @@ class SeatSelectionPresenter(
             when (e) {
                 is NoSuchElementException -> {
                     view.showToastMessage(e)
-                    view.back()
+                    view.navigateBackToPrevious()
                 }
 
                 else -> {
                     view.showToastMessage(e)
-                    view.back()
+                    view.navigateBackToPrevious()
                 }
             }
         }
@@ -55,12 +55,12 @@ class SeatSelectionPresenter(
             when (e) {
                 is NoSuchElementException -> {
                     view.showToastMessage(e)
-                    view.back()
+                    view.navigateBackToPrevious()
                 }
 
                 else -> {
                     view.showToastMessage(e)
-                    view.back()
+                    view.navigateBackToPrevious()
                 }
             }
         }
@@ -116,7 +116,7 @@ class SeatSelectionPresenter(
                     view.navigateToReservation(id)
                 }.onFailure { e ->
                     view.showSnackBar(e)
-                    view.back()
+                    view.navigateBackToPrevious()
                 }
             }
         }

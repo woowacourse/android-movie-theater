@@ -44,14 +44,14 @@ class SeatSelectionPresenterTest {
                 NoSuchElementException(),
             )
         every { view.showToastMessage(e = any()) } just runs
-        every { view.back() } just runs
+        every { view.navigateBackToPrevious() } just runs
 
         // when
         presenter.loadScreen(1)
 
         // then
         verify { view.showToastMessage(e = any()) }
-        verify { view.back() }
+        verify { view.navigateBackToPrevious() }
     }
 
     @Test
@@ -62,14 +62,14 @@ class SeatSelectionPresenterTest {
                 NoSuchElementException(),
             )
         every { view.showToastMessage(e = any()) } just runs
-        every { view.back() } just runs
+        every { view.navigateBackToPrevious() } just runs
 
         // when
         presenter.loadSeatBoard(1)
 
         // then
         verify { view.showToastMessage(e = any()) }
-        verify { view.back() }
+        verify { view.navigateBackToPrevious() }
     }
 
     @Test
@@ -77,14 +77,14 @@ class SeatSelectionPresenterTest {
         // given
         every { screenRepository.loadSeatBoard(any()) } returns Result.failure(Exception())
         every { view.showToastMessage(e = any()) } just runs
-        every { view.back() } just runs
+        every { view.navigateBackToPrevious() } just runs
 
         // when
         presenter.loadSeatBoard(1)
 
         // then
         verify { view.showToastMessage(e = any()) }
-        verify { view.back() }
+        verify { view.navigateBackToPrevious() }
     }
 
     @Test
@@ -144,7 +144,7 @@ class SeatSelectionPresenterTest {
             )
         } returns Result.failure(exception)
         every { view.showSnackBar(e = any()) } just runs
-        every { view.back() } just runs
+        every { view.navigateBackToPrevious() } just runs
 
         // when
         presenter.loadScreen(1)
@@ -153,6 +153,6 @@ class SeatSelectionPresenterTest {
 
         // then
         verify { view.showSnackBar(e = exception) }
-        verify { view.back() }
+        verify { view.navigateBackToPrevious() }
     }
 }

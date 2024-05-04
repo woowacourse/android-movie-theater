@@ -19,7 +19,7 @@ interface DetailContract {
 
         fun navigateToSeatSelection(reservationInfo: ReservationInfo)
 
-        fun back()
+        fun navigateBackToPrevious()
     }
 
     interface Presenter : BasePresenter, SpinnerActionHandler {
