@@ -5,12 +5,12 @@
     <data>
 
         <variable
-            name="seatTitleText"
+            name="movieTitle"
             type="String" />
 
         <variable
-            name="activity"
-            type="woowacourse.movie.seatselection.view.MovieSeatSelectionActivity" />
+            name="clickListener"
+            type="woowacourse.movie.seatselection.view.listener.MovieSeatSelectionClickListener" />
 
         <variable
             name="movieSelectedSeats"
@@ -329,13 +329,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:hint="해리 포터와 마법사의 돌"
-                android:text="@{seatTitleText}"
+                android:text="@{movieTitle}"
                 android:textColor="@color/black"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/seatPrice"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+
                 app:layout_constraintVertical_chainStyle="packed" />
 
             <TextView
@@ -370,7 +371,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/rectangle_button"
                 android:enabled="@{movieSelectedSeats.selectionComplete}"
-                android:onClick="@{() -> activity.displayDialog()}"
+                android:onClick="@{() -> clickListener.onCompleteButtonClick()}"
                 android:text="확인"
                 android:textSize="20dp"
                 android:textStyle="bold"

@@ -14,8 +14,6 @@ interface MovieSeatSelectionContract {
             isSelected: Boolean,
         )
 
-        fun displayDialog()
-
         fun updateSelectResult(movieSelectedSeats: MovieSelectedSeats)
 
         fun navigateToResultView(movieSelectedSeats: MovieSelectedSeats)

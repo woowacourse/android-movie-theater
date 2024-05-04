@@ -18,6 +18,7 @@ import woowacourse.movie.model.MovieSelectedSeats
 import woowacourse.movie.result.view.MovieResultActivity
 import woowacourse.movie.seatselection.presenter.MovieSeatSelectionPresenter
 import woowacourse.movie.seatselection.presenter.contract.MovieSeatSelectionContract
+import woowacourse.movie.seatselection.view.listener.MovieSeatSelectionClickListener
 import woowacourse.movie.util.Formatter.formatColumn
 import woowacourse.movie.util.Formatter.formatRow
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_COUNT
@@ -30,7 +31,10 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_SEAT_POSITIONS
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
 
-class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContract.View {
+class MovieSeatSelectionActivity :
+    AppCompatActivity(),
+    MovieSeatSelectionContract.View,
+    MovieSeatSelectionClickListener {
     private lateinit var binding: ActivityMovieSeatSelectionBinding
     private lateinit var seatSelectionPresenter: MovieSeatSelectionPresenter
 
@@ -46,8 +50,8 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         binding = ActivityMovieSeatSelectionBinding.inflate(layoutInflater)
+        binding.clickListener = this
         setContentView(binding.root)
-        binding.activity = this
 
         seatSelectionPresenter =
             MovieSeatSelectionPresenter(this)
@@ -95,7 +99,7 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
     }
 
     override fun displayMovieTitle(movieTitle: String) {
-        binding.seatTitleText = movieTitle
+        binding.movieTitle = movieTitle
     }
 
     override fun setUpTableSeats(baseSeats: List<MovieSeat>) {
@@ -115,12 +119,6 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
     ) {
         val backGroundColor = if (isSelected) R.color.white else R.color.selected
         tableSeats[index].setBackgroundColor(ContextCompat.getColor(this, backGroundColor))
-    }
-
-    override fun displayDialog() {
-        AlertDialog.Builder(this).setTitle("예매 확인").setMessage("정말 예매하시겠습니까?")
-            .setPositiveButton("예매 완료") { _, _ -> seatSelectionPresenter.clickPositiveButton() }
-            .setNegativeButton("취소") { dialog, _ -> dialog.dismiss() }.setCancelable(false).show()
     }
 
     override fun updateSelectResult(movieSelectedSeats: MovieSelectedSeats) {
@@ -156,5 +154,11 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
             MovieGrade.S_GRADE -> R.color.s_grade
             MovieGrade.A_GRADE -> R.color.a_grade
         }
+    }
+
+    override fun onCompleteButtonClick() {
+        AlertDialog.Builder(this).setTitle("예매 확인").setMessage("정말 예매하시겠습니까?")
+            .setPositiveButton("예매 완료") { _, _ -> seatSelectionPresenter.clickPositiveButton() }
+            .setNegativeButton("취소") { dialog, _ -> dialog.dismiss() }.setCancelable(false).show()
     }
 }
