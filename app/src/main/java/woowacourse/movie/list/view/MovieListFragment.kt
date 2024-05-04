@@ -39,7 +39,7 @@ class MovieListFragment : Fragment(), MovieListContract.View {
         advertisements: List<Advertisement>,
     ) {
         movieListAdapter = MovieListAdapter()
-        movieListAdapter.initTheatersInfo(movies, advertisements)
+        movieListAdapter.initMovieListInfo(movies, advertisements)
         binding.movieRecyclerView.adapter = movieListAdapter
         binding.movieRecyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

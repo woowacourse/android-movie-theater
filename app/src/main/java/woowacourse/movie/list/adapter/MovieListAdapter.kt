@@ -17,7 +17,7 @@ class MovieListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var movies: List<Movie> = emptyList()
     private var advertisements: List<Advertisement> = emptyList()
 
-    fun initTheatersInfo(movies: List<Movie>, advertisements: List<Advertisement>) {
+    fun initMovieListInfo(movies: List<Movie>, advertisements: List<Advertisement>) {
         this.movies = movies
         this.advertisements = advertisements
     }
