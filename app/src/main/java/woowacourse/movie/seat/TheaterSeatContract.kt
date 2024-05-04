@@ -29,8 +29,6 @@ interface TheaterSeatContract {
     interface Presenter {
         fun toggleSeatSelection(seatId: String)
 
-        fun updateSeatBackground(seatId: String)
-
         fun showConfirmationDialog(
             title: String,
             message: String,

@@ -31,16 +31,15 @@ class TheaterSeatPresenter(
             seat.chosen = false
             selectedSeats.remove(seatId)
         } else {
-            if (selectedSeats.size < ticketLimit) {
-                seat.chosen = true
-                selectedSeats.add(seatId)
-            }
+            if (selectedSeats.size >= ticketLimit) return
+            seat.chosen = true
+            selectedSeats.add(seatId)
         }
         updateSeatBackground(seatId)
         calculateAndUpdateTotalPrice()
     }
 
-    override fun updateSeatBackground(seatId: String) {
+    private fun updateSeatBackground(seatId: String) {
         val seat = seats[seatId] ?: return
         if (seat.chosen) {
             view.setSeatBackground(seatId, "#FF0000")
