@@ -9,7 +9,6 @@ import woowacourse.movie.MainActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationFinishedBinding
 import woowacourse.movie.db.screening.ScreeningDao
-import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.feature.reservation.ReservationActivity.Companion.TICKET
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.ticket.Ticket
@@ -21,13 +20,13 @@ class ReservationFinishedActivity : AppCompatActivity(), ReservationFinishedCont
     private val binding: ActivityReservationFinishedBinding by lazy {
         DataBindingUtil.setContentView(this, R.layout.activity_reservation_finished)
     }
-    private val presenter: ReservationFinishedPresenter = ReservationFinishedPresenter(this, ScreeningDao(), TheaterDao())
+    private val presenter: ReservationFinishedPresenter = ReservationFinishedPresenter(this, ScreeningDao())
 
     private lateinit var ticket: Ticket
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.reservationFinished = this
+        binding.activitiy = this
         handleBackPressed()
         receiveTicket()
         with(presenter) {
@@ -37,26 +36,21 @@ class ReservationFinishedActivity : AppCompatActivity(), ReservationFinishedCont
     }
 
     override fun showMovieTitle(movie: Movie) {
-        binding.textViewReservationFinishedTitle.text = movie.title
+        binding.movieTitle = movie.title
     }
 
     override fun showReservationHistory(ticket: Ticket) {
-        val seats = ticket.seats.seats
-        binding.textViewReservationFinishedNumberOfTickets.text = seats.size.toString()
-        binding.textViewReservationFinishedTicketPrice.text = convertAmountFormat(this, ticket.amount)
-        binding.textViewReservationFinishedSeats.text =
-            seats.joinToString(getString(R.string.reservation_finished_seat_separator)) { "${it.row}${it.column}" }
-        binding.textViewReservationFinishedTheaterName.text = getString(R.string.reservation_finished_theater, ticket.theaterName)
-        binding.textViewReservationFinishedScreeningDate.text = ticket.screeningDateTime.date
-        binding.textViewReservationFinishedScreeningTime.text = ticket.screeningDateTime.time
+        with(binding) {
+            this.ticket = ticket
+            val seats = ticket.seats.seats
+            headCount = seats.size
+            amount = convertAmountFormat(this@ReservationFinishedActivity, ticket.amount)
+            this.seats = seats.joinToString(getString(R.string.reservation_finished_seat_separator)) { "${it.row}${it.column}" }
+        }
     }
 
     override fun showErrorToast() {
         makeToast(this, getString(R.string.all_error))
-    }
-
-    override fun showTheaterName(theaterName: String) {
-        binding.textViewReservationFinishedTheaterName.text = getString(R.string.reservation_finished_theater, theaterName)
     }
 
     private fun receiveTicket() {

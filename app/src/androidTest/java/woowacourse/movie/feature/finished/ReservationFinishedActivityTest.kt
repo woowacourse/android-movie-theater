@@ -47,7 +47,7 @@ class ReservationFinishedActivityTest {
         onView(withId(R.id.text_view_reservation_finished_number_of_tickets)).check(
             matches(
                 withText(
-                    "2",
+                    "2명 |",
                 ),
             ),
         )
