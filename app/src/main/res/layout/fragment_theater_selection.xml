@@ -3,13 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <FrameLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/theater_selection_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/theater_selection_fragment"
-        tools:context=".home.view.TheaterSelectionFragment">
+        tools:context=".home.view.TheaterSelectionBottomSheetFragment">
 
         <androidx.recyclerview.widget.RecyclerView
-
             android:id="@+id/theater_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

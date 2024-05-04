@@ -45,8 +45,8 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View {
     override fun displayTheaterSelectionDialog(id: Long) {
         val bundle = Bundle()
         bundle.putLong(KEY_MOVIE_ID, id)
-        val theaterSelectionFragment = TheaterSelectionFragment()
-        theaterSelectionFragment.arguments = bundle
-        theaterSelectionFragment.show(parentFragmentManager, theaterSelectionFragment.tag)
+        val theaterSelectionBottomSheetFragment = TheaterSelectionBottomSheetFragment()
+        theaterSelectionBottomSheetFragment.arguments = bundle
+        theaterSelectionBottomSheetFragment.show(parentFragmentManager, theaterSelectionBottomSheetFragment.tag)
     }
 }

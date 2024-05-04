@@ -20,7 +20,7 @@ import woowacourse.movie.home.view.adapter.theater.TheaterViewHolder
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 
 @RunWith(AndroidJUnit4::class)
-class TheaterSelectionFragmentTest {
+class TheaterSelectionBottomSheetFragmentTest {
     @get:Rule
     val activityRule = ActivityScenarioRule(MovieMainActivity::class.java)
 
@@ -33,9 +33,9 @@ class TheaterSelectionFragmentTest {
             ).commit()
             val bundle = Bundle()
             bundle.putLong(KEY_MOVIE_ID, 0L)
-            val theaterSelectionFragment = TheaterSelectionFragment()
-            theaterSelectionFragment.arguments = bundle
-            theaterSelectionFragment.show(it.supportFragmentManager, theaterSelectionFragment.tag)
+            val theaterSelectionBottomSheetFragment = TheaterSelectionBottomSheetFragment()
+            theaterSelectionBottomSheetFragment.arguments = bundle
+            theaterSelectionBottomSheetFragment.show(it.supportFragmentManager, theaterSelectionBottomSheetFragment.tag)
         }
     }
 
