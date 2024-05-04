@@ -55,7 +55,7 @@ class MovieSeatSelectionActivity :
 
         seatSelectionPresenter =
             MovieSeatSelectionPresenter(this)
-        seatSelectionPresenter.loadMovieTitle(
+        seatSelectionPresenter.loadDetailMovie(
             intent.getLongExtra(
                 KEY_MOVIE_ID,
                 INVALID_VALUE_MOVIE_ID,
@@ -121,7 +121,7 @@ class MovieSeatSelectionActivity :
         tableSeats[index].setBackgroundColor(ContextCompat.getColor(this, backGroundColor))
     }
 
-    override fun updateSelectResult(movieSelectedSeats: MovieSelectedSeats) {
+    override fun updateSelectedSeats(movieSelectedSeats: MovieSelectedSeats) {
         binding.movieSelectedSeats = movieSelectedSeats
     }
 

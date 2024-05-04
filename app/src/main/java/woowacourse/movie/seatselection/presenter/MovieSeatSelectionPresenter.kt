@@ -9,11 +9,13 @@ class MovieSeatSelectionPresenter(
 ) : MovieSeatSelectionContract.Presenter {
     lateinit var movieSelectedSeats: MovieSelectedSeats
 
-    override fun loadMovieTitle(id: Long) {
+    override fun loadDetailMovie(id: Long) {
         val movieData = getMovieById(id)
         movieData?.let { movie ->
             movieSeatSelectionContractView.displayMovieTitle(movie.title)
         }
+        movieSelectedSeats = MovieSelectedSeats()
+        movieSeatSelectionContractView.updateSelectedSeats(movieSelectedSeats)
     }
 
     override fun loadTableSeats(count: Int) {
@@ -36,7 +38,7 @@ class MovieSeatSelectionPresenter(
                 movieSelectedSeats.selectSeat(seat)
             }
         }
-        movieSeatSelectionContractView.updateSelectResult(movieSelectedSeats)
+        movieSeatSelectionContractView.updateSelectedSeats(movieSelectedSeats)
     }
 
     override fun clickPositiveButton() {

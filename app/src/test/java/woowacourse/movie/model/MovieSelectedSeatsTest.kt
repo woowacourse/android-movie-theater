@@ -53,7 +53,7 @@ class MovieSelectedSeatsTest {
         movieSelectedSeats.selectSeat(seat2)
         movieSelectedSeats.selectSeat(seat3)
 
-        assertThat(movieSelectedSeats.totalPrice()).isEqualTo(37000)
+        assertThat(movieSelectedSeats.totalPriceToString()).isEqualTo("37,000")
     }
 
     @Test

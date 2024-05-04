@@ -14,13 +14,13 @@ interface MovieSeatSelectionContract {
             isSelected: Boolean,
         )
 
-        fun updateSelectResult(movieSelectedSeats: MovieSelectedSeats)
+        fun updateSelectedSeats(movieSelectedSeats: MovieSelectedSeats)
 
         fun navigateToResultView(movieSelectedSeats: MovieSelectedSeats)
     }
 
     interface Presenter {
-        fun loadMovieTitle(id: Long)
+        fun loadDetailMovie(id: Long)
 
         fun loadTableSeats(count: Int)
 

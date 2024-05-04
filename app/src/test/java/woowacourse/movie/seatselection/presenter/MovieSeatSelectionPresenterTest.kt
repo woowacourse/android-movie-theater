@@ -29,7 +29,7 @@ class MovieSeatSelectionPresenterTest {
         every { view.displayMovieTitle(any()) } just runs
 
         // When
-        presenter.loadMovieTitle(0)
+        presenter.loadDetailMovie(0)
 
         // Then
         verify { view.displayMovieTitle("타이타닉 0") }
@@ -51,14 +51,14 @@ class MovieSeatSelectionPresenterTest {
     fun `clickTableSeat를 호출하면 좌석의 배경색이 바뀌고 선택 결과가 화면에 보여진다`() {
         // Given
         every { view.updateSeatBackgroundColor(any(), any()) } just runs
-        every { view.updateSelectResult(any()) } just runs
+        every { view.updateSelectedSeats(any()) } just runs
 
         // When
         presenter.clickTableSeat(0)
 
         // Then
         verify { view.updateSeatBackgroundColor(0, false) }
-        verify { view.updateSelectResult(any()) }
+        verify { view.updateSelectedSeats(any()) }
     }
 
     @Test

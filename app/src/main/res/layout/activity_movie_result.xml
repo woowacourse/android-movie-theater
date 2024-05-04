@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:movie="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -103,6 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:text="@{movieTicket.seats.totalPriceToString()}"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
             android:textSize="20dp"
@@ -110,7 +110,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/resultReservPriceFormat"
             app:layout_constraintTop_toBottomOf="@id/result"
-            movie:movieTicketPrice="@{movieTicket}"
             tools:hint="13,000" />
 
         <TextView
