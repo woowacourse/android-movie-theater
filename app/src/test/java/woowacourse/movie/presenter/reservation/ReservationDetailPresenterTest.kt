@@ -75,14 +75,14 @@ class ReservationDetailPresenterTest {
     @Test
     fun `영화 정보가 존재하지 않는다면 토스트를 띄어서 유저에게 알린다`() {
         every { view.showIdErrorToast() } just runs
-        presenter.checkIdValidation(-1,0)
+        presenter.checkIdValidation(-1, 0)
         verify { view.showIdErrorToast() }
     }
 
     @Test
     fun `극장 정보가 존재하지 않는다면 토스트를 띄어서 유저에게 알린다`() {
         every { view.showIdErrorToast() } just runs
-        presenter.checkIdValidation(0,-1)
+        presenter.checkIdValidation(0, -1)
         verify { view.showIdErrorToast() }
     }
 }

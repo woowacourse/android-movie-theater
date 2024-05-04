@@ -15,6 +15,7 @@ interface ReservationHomeContract {
 
     interface Presenter {
         fun loadMovies()
+
         fun loadMovie(movie: Movie)
     }
 }

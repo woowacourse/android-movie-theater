@@ -72,13 +72,13 @@ class MovieCatalogAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateMovies(movies: List<Movie>)  {
+    fun updateMovies(movies: List<Movie>) {
         this.movies = movies
         notifyDataSetChanged()
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateAds(advertisements: List<Advertisement>)  {
+    fun updateAds(advertisements: List<Advertisement>) {
         this.advertisements = advertisements
         notifyDataSetChanged()
     }

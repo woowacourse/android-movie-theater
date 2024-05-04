@@ -10,7 +10,7 @@ class ReservationHomePresenter(
     override fun loadMovies() {
         view.showMovieData(
             ScreeningDao().findAll(),
-            AdvertisementDao().findAll()
+            AdvertisementDao().findAll(),
         )
     }
 

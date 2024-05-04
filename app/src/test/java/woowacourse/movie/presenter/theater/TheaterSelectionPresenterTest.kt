@@ -23,7 +23,7 @@ class TheaterSelectionPresenterTest {
 
     @Test
     fun `상영 영화에 해당하는 극장 목록을 불러온다`() {
-        every { view.showTheaters(any())} just runs
+        every { view.showTheaters(any()) } just runs
         presenter.loadTheaters(0)
         verify { view.showTheaters(any()) }
     }

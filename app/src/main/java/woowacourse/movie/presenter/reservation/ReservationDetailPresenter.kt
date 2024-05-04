@@ -39,15 +39,13 @@ class ReservationDetailPresenter(
         movieId: Int,
         theaterId: Int,
     ) {
-        if (movieId == DEFAULT_ID || theaterId == DEFAULT_ID)
-            {
-                view.showIdErrorToast()
-            } else
-            {
-                loadMovie(movieId)
-                loadScreeningPeriod(movieId)
-                view.updateScreeningTimes(movieId)
-            }
+        if (movieId == DEFAULT_ID || theaterId == DEFAULT_ID) {
+            view.showIdErrorToast()
+        } else {
+            loadMovie(movieId)
+            loadScreeningPeriod(movieId)
+            view.updateScreeningTimes(movieId)
+        }
     }
 
     override fun increaseHeadCount(count: Int) {

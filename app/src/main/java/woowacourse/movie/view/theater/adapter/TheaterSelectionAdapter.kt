@@ -34,7 +34,7 @@ class TheaterSelectionAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateTheaters(theaters: List<Theater>)  {
+    fun updateTheaters(theaters: List<Theater>) {
         this.theaters = theaters
         notifyDataSetChanged()
     }
