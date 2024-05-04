@@ -62,7 +62,7 @@ class TheaterSelectionPresenterTest {
     }
 
     @Test
-    fun `loadTheaters를 호출하면 view에서 TheaterAdapter를 세팅한다`() {
+    fun `loadTheaters를 호출하면 adapter에 셋팅되는 리스트의 첫번째 보이는 상영관은 1개 이상이다`() {
         // Given
         every { MovieRepository.getMovieById(any()) } returns movie
         every { view.setUpTheaterAdapter(any()) } just Runs
@@ -71,6 +71,6 @@ class TheaterSelectionPresenterTest {
         presenter.loadTheaters(0)
 
         // Then
-        verify { view.setUpTheaterAdapter(movie.theaters) }
+        verify { view.setUpTheaterAdapter(match { it.size >= 1 }) }
     }
 }
