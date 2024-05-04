@@ -53,12 +53,8 @@ class TheatersBottomSheetFragment : BottomSheetDialogFragment(), TheatersBottomS
 
     override fun navigateToMovieDetail(cinema: Cinema) {
         requireActivity().apply {
-            val intent =
-                Intent(this, MovieDetailActivity::class.java).apply {
-                    putExtra("Cinema", cinema)
-                }
+            startActivity(MovieDetailActivity.newIntent(this, cinema))
             dismiss()
-            startActivity(intent)
         }
     }
 

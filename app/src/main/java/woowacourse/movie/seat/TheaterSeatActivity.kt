@@ -1,6 +1,7 @@
 package woowacourse.movie.seat
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -88,8 +89,8 @@ class TheaterSeatActivity : BindingActivity<ActivityTheaterSeatBinding>(R.layout
 
     private fun initializePresenter() {
         val intent = intent
-        val ticketNum = intent.getStringExtra("ticketNum") ?: return redirectToErrorActivity()
-        IntentCompat.getSerializableExtra(intent, "Cinema", Cinema::class.java)?.let { cinema ->
+        val ticketNum = intent.getStringExtra(EXTRA_TICKET_NUM) ?: return redirectToErrorActivity()
+        IntentCompat.getSerializableExtra(intent, EXTRA_CINEMA, Cinema::class.java)?.let { cinema ->
             presenter =
                 TheaterSeatPresenter(this, ticketNum.toInt(), cinema).also { presenter ->
                     binding.presenter = presenter
@@ -115,17 +116,12 @@ class TheaterSeatActivity : BindingActivity<ActivityTheaterSeatBinding>(R.layout
             message = "정말 예매하시겠습니까?",
             positiveLabel = "예매 완료",
             onPositiveButtonClicked = {
-                val cinema = IntentCompat.getSerializableExtra(intent, "Cinema", Cinema::class.java)
+                val cinema = IntentCompat.getSerializableExtra(intent, EXTRA_CINEMA, Cinema::class.java)
                 val ticketPrice = findViewById<TextView>(R.id.total_price).text
                 if (cinema != null) {
-                    val intent =
-                        Intent(this, PurchaseConfirmationActivity::class.java).apply {
-                            putExtra("ticketPrice", ticketPrice.toString())
-                            putExtra("seatNumber", presenter.selectedSeats.toTypedArray())
-                            putExtra("Cinema", cinema)
-                            putExtra("timeDate", intent.getStringExtra("timeDate"))
-                        }
-                    navigateToNextPage(intent)
+                    PurchaseConfirmationActivity.newIntent(this, ticketPrice.toString(), presenter.selectedSeats.toTypedArray(), cinema, intent.getStringExtra(EXTRA_TIME_DATE)!!).apply {
+                        navigateToNextPage(this)
+                    }
                 } else {
                     Toast.makeText(this, "Cinema data is not available.", Toast.LENGTH_SHORT)
                         .show()
@@ -134,5 +130,19 @@ class TheaterSeatActivity : BindingActivity<ActivityTheaterSeatBinding>(R.layout
             negativeLabel = "취소",
             onNegativeButtonClicked = {},
         )
+    }
+
+    companion object {
+        const val EXTRA_TIME_DATE = "timeDate"
+        const val EXTRA_TICKET_NUM = "ticketNum"
+        const val EXTRA_CINEMA = "cinema"
+        fun newIntent(context: Context, ticketNum: String, cinema: Cinema, timeDate: String): Intent {
+            return Intent(
+                context, TheaterSeatActivity::class.java).apply {
+                putExtra(EXTRA_TICKET_NUM, ticketNum)
+                putExtra(EXTRA_CINEMA, cinema)
+                putExtra(EXTRA_TIME_DATE, timeDate)
+            }
+        }
     }
 }

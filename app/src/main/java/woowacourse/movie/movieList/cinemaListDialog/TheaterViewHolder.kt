@@ -12,11 +12,7 @@ class TheaterViewHolder(
     fun bind(item: Cinema) {
         val (title, theater) = item
         binding.title = title
-        binding.description =
-            binding.root.context.getString(
-                R.string.movie_count_for_cinema_format,
-                theater.times.size.toString(),
-            )
+        binding.description = theater.times.size.toString()
         binding.root.setOnClickListener {
             onCinemaClicked(item)
         }

@@ -17,8 +17,7 @@ import woowacourse.movie.movieList.cinemaListDialog.TheatersBottomSheetFragment
 class MovieListFragment :
     BindingFragment<FragmentMovieListBinding>(R.layout.fragment_movie_list),
     MovieListView {
-    private var _presenter: MovieListPresenter? = null
-    private val presenter get() = _presenter ?: error(getString(R.string.null_point_error))
+    private lateinit var presenter: MovieListPresenter
     private lateinit var adapter: MovieAdapter
 
     override fun onViewCreated(
@@ -60,7 +59,7 @@ class MovieListFragment :
     }
 
     private fun initPresenter() {
-        _presenter = MovieListPresenter(this)
+        presenter = MovieListPresenter(this)
     }
 
     companion object {

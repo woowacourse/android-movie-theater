@@ -1,5 +1,6 @@
 package woowacourse.movie.movieDetail
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -26,7 +27,7 @@ class MovieDetailActivity :
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val cinema =
-            IntentCompat.getSerializableExtra(intent, "Cinema", Cinema::class.java)
+            IntentCompat.getSerializableExtra(intent, EXTRA_CINEMA, Cinema::class.java)
         if (cinema == null) {
             redirectToErrorActivity()
             return
@@ -82,16 +83,22 @@ class MovieDetailActivity :
 
     private fun setupEventListeners(cinema: Cinema) {
         binding.seatConfirmationButton.setOnClickListener {
-            val intent =
-                Intent(this, TheaterSeatActivity::class.java).apply {
-                    putExtra("ticketNum", binding.quantityTextView.text.toString())
-                    putExtra("Cinema", cinema)
-                    putExtra(
-                        "timeDate",
-                        binding.movieDateSpinner.selectedItem.toString() + " " + binding.movieTimeSpinner.selectedItem.toString(),
-                    )
-                }
-            navigateToPurchaseConfirmation(intent)
+            TheaterSeatActivity.newIntent(this, binding.quantityTextView.text.toString(),
+                cinema, binding.movieDateSpinner.selectedItem.toString() + " " + binding.movieTimeSpinner.selectedItem.toString()).apply {
+                navigateToPurchaseConfirmation(this)
+            }
+        }
+    }
+
+    companion object {
+        const val EXTRA_CINEMA = "cinema"
+        fun newIntent(
+            context: Context,
+            cinema: Cinema
+        ): Intent {
+            return Intent(context, MovieDetailActivity::class.java).apply {
+                putExtra(EXTRA_CINEMA, cinema)
+            }
         }
     }
 }
