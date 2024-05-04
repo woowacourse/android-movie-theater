@@ -6,9 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.databinding.ActivityMovieMainBinding
-import woowacourse.movie.feature.home.movie.MovieHomeFragment
-import woowacourse.movie.feature.reservationlist.ReservationListFragment
-import woowacourse.movie.feature.setting.SettingFragment
+import woowacourse.movie.feature.NavigationFragmentType
 
 class MovieMainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieMainBinding
@@ -19,54 +17,41 @@ class MovieMainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             binding.bottomNavigation.selectedItemId = R.id.home_item
-            addFragment(MovieHomeFragment(), MOVIE_HOME_FRAGMENT_TAG)
+            replaceFragment(NavigationFragmentType.MOVIE_HOME)
         }
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.reservation_list_item -> {
-                    replaceFragment(ReservationListFragment(), RESERVATION_LIST_FRAGMENT_TAG)
-                    true
-                }
-
-                R.id.home_item -> {
-                    replaceFragment(MovieHomeFragment(), MOVIE_HOME_FRAGMENT_TAG)
-                    true
-                }
-
-                R.id.setting_item -> {
-                    replaceFragment(SettingFragment(), SETTING_FRAGMENT_TAG)
-                    true
-                }
-
-                else -> false
-            }
+            val fragmentType = NavigationFragmentType.from(item.itemId)
+            replaceFragment(fragmentType)
+            true
         }
     }
 
-    private fun addFragment(
-        fragment: Fragment,
-        tag: String,
-    ) {
+    private fun replaceFragment(fragmentType: NavigationFragmentType) {
+        val targetFragment =
+            supportFragmentManager.findFragmentByTag(fragmentType.tag) ?: fragmentType.newInstance()
+                .also { addFragment(it, fragmentType.tag) }
+
         supportFragmentManager.commit {
             setReorderingAllowed(true)
+            show(targetFragment)
+        }
+
+        hideOtherFragments(fragmentType.tag)
+    }
+
+    private fun addFragment(fragment: Fragment, tag: String) {
+        supportFragmentManager.commit {
             add(R.id.fragment_container_view, fragment, tag)
         }
     }
 
-    private fun replaceFragment(
-        fragment: Fragment,
-        tag: String,
-    ) {
+    private fun hideOtherFragments(targetFragmentTag: String) {
         supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            replace(R.id.fragment_container_view, fragment, tag)
+            NavigationFragmentType.entries
+                .filterNot { it.tag == targetFragmentTag }
+                .mapNotNull { supportFragmentManager.findFragmentByTag(it.tag) }
+                .forEach { hide(it) }
         }
-    }
-
-    companion object {
-        private const val RESERVATION_LIST_FRAGMENT_TAG = "reservationListFragment"
-        private const val MOVIE_HOME_FRAGMENT_TAG = "movieHomeFragment"
-        private const val SETTING_FRAGMENT_TAG = "settingFragment"
     }
 }
