@@ -3,7 +3,6 @@ package woowacourse.movie.presentation.home
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
@@ -14,11 +13,14 @@ import woowacourse.movie.presentation.homefragments.setting.SettingFragment
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
+    private val movieListFragment by lazy { MovieListFragment() }
+    private val reservationFragment by lazy { ReservationFragment() }
+    private val settingFragment by lazy { SettingFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         if (savedInstanceState == null) {
             setupBottomNavigationView()
@@ -36,9 +38,9 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setupInitialFragment() {
-        supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, MovieListFragment())
-            .commit()
+        supportFragmentManager.commit {
+            add(R.id.fragment_container, movieListFragment)
+        }
     }
 
     private fun selectDefaultMenuItem() {
@@ -55,10 +57,10 @@ class HomeActivity : AppCompatActivity() {
 
     private fun matchedFragment(menu: MenuItem): Fragment {
         return when (menu.itemId) {
-            R.id.action_home -> MovieListFragment()
-            R.id.action_reservation_list -> ReservationFragment()
-            R.id.action_settings -> SettingFragment()
-            else -> MovieListFragment()
+            R.id.action_home -> movieListFragment
+            R.id.action_reservation_list -> reservationFragment
+            R.id.action_settings -> settingFragment
+            else -> movieListFragment
         }
     }
 }
