@@ -29,6 +29,7 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
     ): View {
         _binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_theater_selection, container, false)
+        movieId = receiveMovieId()
         initPresenter()
         initTheaterRecyclerView()
         return binding.root
@@ -64,14 +65,14 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
         presenter =
             TheaterSelectionPresenter(
                 view = this@TheaterSelectionFragment,
-                movieId = receiveMovieId(),
+                movieId,
             )
     }
 
     private fun initTheaterRecyclerView() {
         val theaterSelectionAdapter =
             TheaterSelectionAdapter(
-                TheaterDao().findTheaterByMovieId(movieId),
+                TheaterDao().findTheaterByMovieId(receiveMovieId()),
             ) { theaterId ->
                 presenter.loadTheater(theaterId)
             }
