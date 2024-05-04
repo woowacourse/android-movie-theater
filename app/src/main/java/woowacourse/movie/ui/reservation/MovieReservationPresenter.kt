@@ -1,6 +1,6 @@
 package woowacourse.movie.ui.reservation
 
-import woowacourse.movie.model.data.MovieDataSource
+import woowacourse.movie.model.data.DefaultMovieDataSource
 import woowacourse.movie.model.movie.MovieContent
 import woowacourse.movie.model.movie.ReservationCount
 import woowacourse.movie.model.movie.ReservationDetail
@@ -13,9 +13,9 @@ import java.time.LocalTime
 
 class MovieReservationPresenter(
     private val view: MovieReservationContract.View,
-    private val movieContents: MovieDataSource<MovieContent>,
-    private val theaters: MovieDataSource<Theater>,
-    private val userTickets: MovieDataSource<UserTicket>,
+    private val movieContents: DefaultMovieDataSource<Long, MovieContent>,
+    private val theaters: DefaultMovieDataSource<Long, Theater>,
+    private val userTickets: DefaultMovieDataSource<Long, UserTicket>,
 ) :
     MovieReservationContract.Presenter {
     private lateinit var reservationCount: ReservationCount

@@ -1,9 +1,9 @@
 package woowacourse.movie.model.data
 
-interface MovieDataSource<T> {
-    fun save(data: T): Long
+interface DefaultMovieDataSource<K, T> {
+    fun save(data: T): K
 
-    fun find(id: Long): T
+    fun find(id: K): T
 
     fun findAll(): List<T>
 
