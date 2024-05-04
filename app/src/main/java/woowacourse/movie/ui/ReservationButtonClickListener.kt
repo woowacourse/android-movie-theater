@@ -1,5 +1,5 @@
 package woowacourse.movie.ui
 
-fun interface ReservationButtonClickListener {
+interface ReservationButtonClickListener {
     fun onClick(movieContentId: Long)
 }
