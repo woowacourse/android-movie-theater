@@ -31,16 +31,12 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         )
     }
     private lateinit var presenter: ReservationPresenter
-    private var movieId: Int = 0
-    private var theaterId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.reservation = this
 
-        movieId = receiveMovieId()
-        theaterId = receiveTheaterId()
         val savedHeadCount = bringSavedHeadCount(savedInstanceState)
 
         initPresenter(savedHeadCount)
@@ -108,6 +104,8 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
 
     override fun navigateToSeatSelection(
         dateTime: ScreeningDateTime,
+        movieId: Int,
+        theaterId: Int,
         count: HeadCount,
     ) {
         val intent = Intent(this, SeatSelectionActivity::class.java)
@@ -121,6 +119,8 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     }
 
     private fun initPresenter(savedHeadCount: Int) {
+        val movieId = receiveMovieId()
+        val theaterId = receiveTheaterId()
         presenter =
             ReservationPresenter(
                 view = this,

@@ -45,7 +45,7 @@ class ReservationPresenter(
     }
 
     override fun sendTicketToSeatSelection(dateTime: ScreeningDateTime) {
-        view.navigateToSeatSelection(dateTime, headCount)
+        view.navigateToSeatSelection(dateTime, movieId, theaterId, headCount)
     }
 
     override fun handleHeadCountBounds(result: ChangeTicketCountResult) {

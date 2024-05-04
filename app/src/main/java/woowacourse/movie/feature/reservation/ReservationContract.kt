@@ -23,6 +23,8 @@ interface ReservationContract {
 
         fun navigateToSeatSelection(
             dateTime: ScreeningDateTime,
+            movieId: Int,
+            theaterId: Int,
             count: HeadCount,
         )
 
