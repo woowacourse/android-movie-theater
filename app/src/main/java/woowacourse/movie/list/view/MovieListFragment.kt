@@ -47,13 +47,18 @@ class MovieListFragment : Fragment(), MovieListContract.View {
 
     override fun setOnListViewClickListener() {
         movieListAdapter.setItemClickListener(
-            object : MovieListAdapter.OnItemClickListener {
-                override fun onClick(movieId: Long) {
-                    val theaterBottomSheetFragment = newFragmentInstance(movieId)
-                    theaterBottomSheetFragment.show(parentFragmentManager, theaterBottomSheetFragment::class.java.simpleName)
-                }
-            },
+            onItemClickListener()
         )
+    }
+
+    private fun onItemClickListener() = object : MovieListAdapter.OnItemClickListener {
+        override fun onClick(movieId: Long) {
+            val theaterBottomSheetFragment = newFragmentInstance(movieId)
+            theaterBottomSheetFragment.show(
+                parentFragmentManager,
+                theaterBottomSheetFragment::class.java.simpleName
+            )
+        }
     }
 
     companion object {
