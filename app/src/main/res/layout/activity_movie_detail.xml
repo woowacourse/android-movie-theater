@@ -3,10 +3,11 @@
     xmlns:movie="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="java.util.List" />
 
         <variable
-            name="activity"
-            type="woowacourse.movie.detail.view.MovieDetailActivity" />
+            name="clickListener"
+            type="woowacourse.movie.detail.view.listener.MovieDetailClickListener" />
 
         <variable
             name="movie"
@@ -15,6 +16,14 @@
         <variable
             name="reservationCount"
             type="int" />
+
+        <variable
+            name="dates"
+            type="List&lt;String>" />
+
+        <variable
+            name="times"
+            type="List&lt;String>" />
     </data>
 
     <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -173,7 +182,7 @@
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_margin="10dp"
-                android:entries="@{activity.dates}"
+                android:entries="@{dates}"
                 app:layout_constraintEnd_toStartOf="@+id/runningTimeSpinner"
                 app:layout_constraintStart_toStartOf="@id/detailMinusBtn"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -183,7 +192,7 @@
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_margin="10dp"
-                android:entries="@{activity.times}"
+                android:entries="@{times}"
                 app:layout_constraintEnd_toEndOf="@id/detailPlusBtn"
                 app:layout_constraintStart_toEndOf="@+id/dateSpinner"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -193,7 +202,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:onClick="@{() -> activity.onMinusButtonClick()}"
+                android:onClick="@{() -> clickListener.onMinusButtonClick()}"
                 android:text="-"
                 android:textSize="25dp"
                 android:textStyle="bold"
@@ -220,7 +229,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="15dp"
-                android:onClick="@{() -> activity.onPlusButtonClick()}"
+                android:onClick="@{() -> clickListener.onPlusButtonClick()}"
                 android:text="+"
                 android:textSize="25dp"
                 android:textStyle="bold"
@@ -233,7 +242,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:onClick="@{()->activity.onSeatSelectionButtonClick()}"
+                android:onClick="@{()->clickListener.onSeatSelectionButtonClick()}"
                 android:padding="10dp"
                 android:text="좌석 선택"
                 android:textSize="20dp"

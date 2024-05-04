@@ -32,6 +32,6 @@ object MovieDataBindingAdapter {
         textView: TextView,
         movieSelectedSeats: MovieSelectedSeats?,
     ) {
-        textView.text = if (movieSelectedSeats != null) movieSelectedSeats.totalPrice().formatPrice() else "0"
+        textView.text = movieSelectedSeats?.totalPrice()?.formatPrice() ?: "0"
     }
 }

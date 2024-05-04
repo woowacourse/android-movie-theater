@@ -8,6 +8,7 @@ import woowacourse.movie.data.MovieRepository.getMovieById
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.detail.presenter.MovieDetailPresenter
 import woowacourse.movie.detail.presenter.contract.MovieDetailContract
+import woowacourse.movie.detail.view.listener.MovieDetailClickListener
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieDate
 import woowacourse.movie.model.MovieReservationCount
@@ -25,12 +26,10 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
-class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
+class MovieDetailActivity :
+    AppCompatActivity(), MovieDetailContract.View, MovieDetailClickListener {
     private lateinit var binding: ActivityMovieDetailBinding
     private lateinit var movieDetailPresenter: MovieDetailPresenter
-
-    lateinit var dates: List<String>
-    lateinit var times: List<String>
 
     private val movieId: Long by lazy { intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID) }
     private val selectedTheaterPosition: Int by lazy {
@@ -46,7 +45,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
 
         binding = ActivityMovieDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.activity = this
+        binding.clickListener = this
 
         movieDetailPresenter = MovieDetailPresenter(this)
         movieDetailPresenter.loadMovieDetail(movieId, selectedTheaterPosition)
@@ -92,14 +91,14 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     }
 
     override fun setUpDateSpinner(movieDate: MovieDate) {
-        dates =
+        binding.dates =
             movieDate.generateDates().map { date ->
                 date.toString()
             }
     }
 
     override fun setUpTimeSpinner(screeningTimes: List<LocalTime>) {
-        times =
+        binding.times =
             screeningTimes.map { time ->
                 time.format(DateTimeFormatter.ofPattern("kk:mm"))
             }
@@ -130,17 +129,17 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         }
     }
 
-    fun onMinusButtonClick() {
+    override fun onMinusButtonClick() {
         movieDetailPresenter.minusReservationCount()
         binding.invalidateAll()
     }
 
-    fun onPlusButtonClick() {
+    override fun onPlusButtonClick() {
         movieDetailPresenter.plusReservationCount()
         binding.invalidateAll()
     }
 
-    fun onSeatSelectionButtonClick() {
+    override fun onSeatSelectionButtonClick() {
         movieDetailPresenter.reserveMovie(
             movieId,
             binding.dateSpinner.selectedItem.toString(),
