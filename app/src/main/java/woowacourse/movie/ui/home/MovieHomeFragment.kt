@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieHomeBinding
 import woowacourse.movie.model.data.MovieContentsImpl
@@ -40,15 +39,7 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View {
                 val bundle = Bundle()
                 bundle.putLong(MovieHomeKey.MOVIE_CONTENT_ID, id)
                 fragment.arguments = bundle
-                fragment.show(
-                    parentFragmentManager.apply {
-                        setFragmentResult(MovieHomeKey.FRAGMENT_REQUEST_KEY, bundle)
-                        commit {
-                            addToBackStack(null)
-                        }
-                    },
-                    fragment.tag,
-                )
+                fragment.show(parentFragmentManager, fragment.tag)
             }
     }
 }

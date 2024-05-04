@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.setFragmentResultListener
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterSelectionBottomSheetBinding
@@ -21,6 +20,9 @@ class TheaterSelectionBottomSheetFragment :
     TheaterSelectionContract.View {
     private lateinit var binding: FragmentTheaterSelectionBottomSheetBinding
     private lateinit var adapter: TheaterAdapter
+    private val movieId: Long by lazy {
+        arguments?.getLong(MovieHomeKey.MOVIE_CONTENT_ID) ?: DEFAULT_VALUE
+    }
     private val presenter: TheaterSelectionPresenter by lazy {
         TheaterSelectionPresenter(
             this,
@@ -43,11 +45,7 @@ class TheaterSelectionBottomSheetFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        setFragmentResultListener(MovieHomeKey.FRAGMENT_REQUEST_KEY) { _, bundle ->
-            presenter.loadTheaters(
-                bundle.getLong(MovieHomeKey.MOVIE_CONTENT_ID),
-            )
-        }
+        presenter.loadTheaters(movieId)
     }
 
     override fun showTheaters(
@@ -80,5 +78,9 @@ class TheaterSelectionBottomSheetFragment :
 
     override fun handleDialogError() {
         dismiss()
+    }
+
+    companion object {
+        private const val DEFAULT_VALUE = -1L
     }
 }
