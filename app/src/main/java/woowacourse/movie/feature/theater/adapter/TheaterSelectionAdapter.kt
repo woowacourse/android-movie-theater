@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemTheaterBinding
 import woowacourse.movie.model.theater.Theater
 
-typealias OnSelectTheater = (theaterId: Int) -> Unit
+typealias OnTheaterSelected = (theaterId: Int) -> Unit
 
 class TheaterSelectionAdapter(
     private val theaters: List<Theater>,
-    private val theaterId: OnSelectTheater,
+    private val onTheaterSelected: OnTheaterSelected,
 ) : RecyclerView.Adapter<TheaterSelectionViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -27,6 +27,6 @@ class TheaterSelectionAdapter(
         holder: TheaterSelectionViewHolder,
         position: Int,
     ) {
-        holder.bind(theaters[position], theaterId)
+        holder.bind(theaters[position], onTheaterSelected)
     }
 }

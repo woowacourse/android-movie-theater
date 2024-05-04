@@ -14,7 +14,7 @@ class TheaterSelectionViewHolder(
 
     fun bind(
         item: Theater,
-        theaterId: OnSelectTheater,
+        onTheaterSelected: OnTheaterSelected,
     ) {
         with(binding) {
             name.text = item.name
@@ -22,7 +22,7 @@ class TheaterSelectionViewHolder(
                 item.screeningTimes.weekDay.size + item.screeningTimes.weekEnd.size
             screeningInfo.text = itemView.context.getString(R.string.theater_screening_time_count, screeningTimeCount)
             constraintLayoutItemTheater.setOnClickListener {
-                theaterId(item.theaterId)
+                onTheaterSelected(item.theaterId)
             }
         }
     }
