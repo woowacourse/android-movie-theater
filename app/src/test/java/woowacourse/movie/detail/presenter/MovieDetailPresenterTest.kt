@@ -62,7 +62,7 @@ class MovieDetailPresenterTest {
     }
 
     @Test
-    fun `loadMovieDetail를 호출하면 view에서 영화 리스트를 보여주고 dateSpinner가 세팅된다`() {
+    fun `loadMovieDetail를 호출하면 view에서 영화 정보를 보여주고 spinner의 정보가 세팅된다`() {
         // Given
         every { MovieRepository.getMovieById(any()) } returns movie
         every { view.displayMovieDetail(any(), any()) } just Runs
