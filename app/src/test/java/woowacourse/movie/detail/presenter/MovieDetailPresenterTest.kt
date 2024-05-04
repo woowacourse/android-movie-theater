@@ -1,11 +1,13 @@
 package woowacourse.movie.detail.presenter
 
+import io.mockk.CapturingSlot
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.runs
+import io.mockk.slot
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -64,18 +66,26 @@ class MovieDetailPresenterTest {
     @Test
     fun `loadMovieDetail를 호출하면 view에서 영화 정보를 보여주고 spinner의 정보가 세팅된다`() {
         // Given
+        val movieSlot = slot<Movie>()
+        val dateSlot = slot<MovieDate>()
+        val timeSlot = CapturingSlot<List<LocalTime>>()
+
         every { MovieRepository.getMovieById(any()) } returns movie
-        every { view.displayMovieDetail(any(), any()) } just Runs
-        every { view.setUpDateSpinner(any()) } just Runs
-        every { view.setUpTimeSpinner(any()) } just Runs
+        every { view.displayMovieDetail(capture(movieSlot), any()) } just Runs
+        every { view.setUpDateSpinner(capture(dateSlot)) } just Runs
+        every { view.setUpTimeSpinner(capture(timeSlot)) } just Runs
 
         // When
-        presenter.loadMovieDetail(0, 0)
+        presenter.loadMovieDetail(0L, 0)
 
         // Then
         verify { view.displayMovieDetail(movie, any()) }
         verify { view.setUpDateSpinner(movie.date) }
         verify { view.setUpTimeSpinner(any()) }
+
+        assert(movieSlot.captured == movie)
+        assert(dateSlot.captured == movie.date)
+        assert(timeSlot.captured == movie.theaters[0].screeningTimes)
     }
 
     @Test
