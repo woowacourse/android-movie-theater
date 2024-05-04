@@ -13,16 +13,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.IntentCompat
 import androidx.core.view.children
+import woowacourse.movie.ErrorActivity
 import woowacourse.movie.R
 import woowacourse.movie.base.BindingActivity
-import woowacourse.movie.common.ui.redirectToErrorActivity
 import woowacourse.movie.databinding.ActivityTheaterSeatBinding
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.theater.Seat
 import woowacourse.movie.purchaseConfirmation.PurchaseConfirmationActivity
 
 @SuppressLint("DiscouragedApi")
-class TheaterSeatActivity : BindingActivity<ActivityTheaterSeatBinding>(R.layout.activity_theater_seat), TheaterSeatContract.View {
+class TheaterSeatActivity :
+    BindingActivity<ActivityTheaterSeatBinding>(R.layout.activity_theater_seat),
+    TheaterSeatContract.View {
     private lateinit var presenter: TheaterSeatPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,13 +91,13 @@ class TheaterSeatActivity : BindingActivity<ActivityTheaterSeatBinding>(R.layout
 
     private fun initializePresenter() {
         val intent = intent
-        val ticketNum = intent.getStringExtra(EXTRA_TICKET_NUM) ?: return redirectToErrorActivity()
+        val ticketNum = intent.getStringExtra(EXTRA_TICKET_NUM) ?: return ErrorActivity.start(this)
         IntentCompat.getSerializableExtra(intent, EXTRA_CINEMA, Cinema::class.java)?.let { cinema ->
             presenter =
                 TheaterSeatPresenter(this, ticketNum.toInt(), cinema).also { presenter ->
                     binding.presenter = presenter
                 }
-        } ?: redirectToErrorActivity()
+        } ?: ErrorActivity.start(this)
     }
 
     private fun setupSeats() {
@@ -116,7 +118,8 @@ class TheaterSeatActivity : BindingActivity<ActivityTheaterSeatBinding>(R.layout
             message = "정말 예매하시겠습니까?",
             positiveLabel = "예매 완료",
             onPositiveButtonClicked = {
-                val cinema = IntentCompat.getSerializableExtra(intent, EXTRA_CINEMA, Cinema::class.java)
+                val cinema =
+                    IntentCompat.getSerializableExtra(intent, EXTRA_CINEMA, Cinema::class.java)
                 val ticketPrice = findViewById<TextView>(R.id.total_price).text
                 if (cinema != null) {
                     PurchaseConfirmationActivity.newIntent(

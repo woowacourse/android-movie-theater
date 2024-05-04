@@ -5,9 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.core.content.IntentCompat
+import woowacourse.movie.ErrorActivity
 import woowacourse.movie.R
 import woowacourse.movie.base.BindingActivity
-import woowacourse.movie.common.ui.redirectToErrorActivity
 import woowacourse.movie.databinding.ActivityPurchaseConfirmationBinding
 import woowacourse.movie.model.Cinema
 
@@ -22,7 +22,7 @@ class PurchaseConfirmationActivity :
 
         val cinema =
             IntentCompat.getSerializableExtra(intent, EXTRA_CINEMA, Cinema::class.java)
-                ?: return redirectToErrorActivity()
+                ?: return ErrorActivity.start(this)
         val movie = cinema.theater.movie
         binding.movieTitleConfirmation.text = movie.title.toString()
         binding.purchaseMovieRunningTime.text = movie.runningTime.toString()

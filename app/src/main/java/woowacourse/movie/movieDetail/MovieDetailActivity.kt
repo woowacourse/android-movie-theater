@@ -9,9 +9,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.IntentCompat
+import woowacourse.movie.ErrorActivity
 import woowacourse.movie.R
 import woowacourse.movie.base.BindingActivity
-import woowacourse.movie.common.ui.redirectToErrorActivity
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.seat.TheaterSeatActivity
@@ -29,7 +29,7 @@ class MovieDetailActivity :
         val cinema =
             IntentCompat.getSerializableExtra(intent, EXTRA_CINEMA, Cinema::class.java)
         if (cinema == null) {
-            redirectToErrorActivity()
+            ErrorActivity.start(this)
             return
         }
         initView()
