@@ -110,9 +110,9 @@ object DummyTheaterList : TheaterListRepository {
 
     override fun findTheaterList(movieId: Long): List<Theater> {
         return list.filter { theater ->
-            theater.screeningMovies.any { screen ->
-                screen.movieId == movieId
-            }
+            /*theater.screeningMovies.any { screen ->
+                screen.movieId == movieId*/
+            theater.findScreenScheduleListWithMovieId(movieId).isNotEmpty()
         }
     }
 

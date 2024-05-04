@@ -2,7 +2,7 @@ package woowacourse.movie.model
 
 import java.time.LocalTime
 
-class Theater(val id: Long, val name: String, val screeningMovies: List<ScreeningMovie>) {
+class Theater(val id: Long, val name: String, private val screeningMovies: List<ScreeningMovie>) {
     fun findScreenScheduleListWithMovieId(movieId: Long): List<LocalTime> {
         return findScreenListWithMovieId(movieId)
             .flatMap { it.screenSchedule }
