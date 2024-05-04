@@ -14,6 +14,7 @@ class SeatSelectionPresenter(
     private val seatsDao: SeatsDao,
     private val screeningDao: ScreeningDao,
     private val movieId: Int,
+    private val theaterId: Int,
 ) : SeatSelectionContract.Presenter {
     val seats = Seats()
 
@@ -55,10 +56,7 @@ class SeatSelectionPresenter(
         }
     }
 
-    override fun makeTicket(
-        theaterId: Int,
-        screeningDateTime: ScreeningDateTime,
-    ) {
+    override fun makeTicket(screeningDateTime: ScreeningDateTime) {
         val ticket =
             Ticket(
                 movieId,
