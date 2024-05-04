@@ -37,4 +37,11 @@ class ReservationHomePresenterTest {
         )
         verify { view.navigateToDetail(0) }
     }
+
+    @Test
+    fun `현재 영화 목록과 광고를 불러온다`() {
+        every { view.showMovieData(any(),any()) } just runs
+        presenter.loadMovies()
+        verify { view.showMovieData(any(),any()) }
+    }
 }
