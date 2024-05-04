@@ -2,24 +2,22 @@ package woowacourse.movie.util
 
 import java.text.DecimalFormat
 
-object Formatter {
-    fun formatPrice(price: Int): String {
-        return DecimalFormat("#,###").format(price)
-    }
+fun Int.formatPrice(): String {
+    return DecimalFormat("#,###").format(this)
+}
 
-    fun formatRow(row: Int): Char {
-        return (row + 'A'.code).toChar()
-    }
+fun Int.formatSeatRow(): Char {
+    return (this + 'A'.code).toChar()
+}
 
-    fun unFormatRow(seat: String): Int {
-        return seat.first() - 'A'
-    }
+fun String.unFormatSeatRow(): Int {
+    return this.first() - 'A'
+}
 
-    fun formatColumn(column: Int): String {
-        return (column + 1).toString()
-    }
+fun Int.formatSeatColumn(): String {
+    return (this + 1).toString()
+}
 
-    fun unFormatColumn(seat: String): Int {
-        return seat.substring(1).toInt()
-    }
+fun String.unFormatSeatColumn(): Int {
+    return substring(1).toInt()
 }

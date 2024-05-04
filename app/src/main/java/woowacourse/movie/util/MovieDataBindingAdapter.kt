@@ -5,7 +5,6 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import woowacourse.movie.model.MovieSelectedSeats
 import woowacourse.movie.model.MovieTicket
-import woowacourse.movie.util.Formatter.formatPrice
 
 object MovieDataBindingAdapter {
     @BindingAdapter("imgRes")
@@ -23,7 +22,7 @@ object MovieDataBindingAdapter {
         textView: TextView,
         movieTicket: MovieTicket,
     ) {
-        textView.text = formatPrice(movieTicket.seats.totalPrice())
+        textView.text = movieTicket.seats.totalPrice().formatPrice()
     }
 
     @BindingAdapter("movieSelectedSeatsPrice")
@@ -32,6 +31,6 @@ object MovieDataBindingAdapter {
         textView: TextView,
         movieSelectedSeats: MovieSelectedSeats?,
     ) {
-        textView.text = if (movieSelectedSeats != null) formatPrice(movieSelectedSeats.totalPrice()) else "0"
+        textView.text = movieSelectedSeats?.totalPrice()?.formatPrice() ?: "0"
     }
 }

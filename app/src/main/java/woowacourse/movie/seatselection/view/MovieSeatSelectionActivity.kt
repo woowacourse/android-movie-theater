@@ -19,8 +19,6 @@ import woowacourse.movie.model.MovieSelectedSeats
 import woowacourse.movie.result.view.MovieResultActivity
 import woowacourse.movie.seatselection.presenter.MovieSeatSelectionPresenter
 import woowacourse.movie.seatselection.presenter.contract.MovieSeatSelectionContract
-import woowacourse.movie.util.Formatter.formatColumn
-import woowacourse.movie.util.Formatter.formatRow
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_COUNT
@@ -30,6 +28,8 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_SEATS
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_SEAT_POSITIONS
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
+import woowacourse.movie.util.formatSeatColumn
+import woowacourse.movie.util.formatSeatRow
 
 class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContract.View {
     private lateinit var binding: ActivityMovieSeatSelectionBinding
@@ -101,7 +101,8 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
     override fun setUpTableSeats(baseSeats: List<MovieSeat>) {
         tableSeats.forEachIndexed { index, view ->
             val seat = baseSeats[index]
-            view.text = getString(R.string.seat, formatRow(seat.row), formatColumn(seat.column))
+            view.text =
+                getString(R.string.seat, seat.row.formatSeatRow(), seat.column.formatSeatColumn())
             view.setTextColor(ContextCompat.getColor(this, seat.grade.getSeatColor()))
             view.setOnClickListener {
                 seatSelectionPresenter.clickTableSeat(index)
@@ -129,9 +130,9 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
 
     override fun navigateToResultView(movieSelectedSeats: MovieSelectedSeats) {
         val seats =
-            movieSelectedSeats.selectedSeats.map { seat ->
-                (formatRow(seat.row) + (formatColumn(seat.column)))
-            }.joinToString(", ")
+            movieSelectedSeats.selectedSeats.joinToString(", ") { seat ->
+                seat.row.formatSeatRow() + seat.column.formatSeatColumn()
+            }
 
         Intent(this, MovieResultActivity::class.java).apply {
             putExtra(KEY_MOVIE_ID, intent?.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID))
