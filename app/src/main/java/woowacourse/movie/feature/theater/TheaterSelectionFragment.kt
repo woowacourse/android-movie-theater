@@ -74,7 +74,7 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
             TheaterSelectionAdapter(
                 TheaterDao().findTheaterByMovieId(receiveMovieId()),
             ) { theaterId ->
-                presenter.loadTheater(theaterId)
+                presenter.sendTheaterInfoToDetail(theaterId)
             }
         binding.recyclerViewTheaterSelection.apply {
             adapter = theaterSelectionAdapter

@@ -24,7 +24,7 @@ class TheaterSelectionPresenterTest {
     @Test
     fun `극장_목록에서_극장을_선택하면_선택된_극장_ID와_영화_ID를_가지고_예매_화면으로_이동한다`() {
         every { view.navigateToDetail(any(), any()) } just runs
-        presenter.loadTheater(
+        presenter.sendTheaterInfoToDetail(
             theaterId = 0,
         )
         verify { view.navigateToDetail(0, 0) }
