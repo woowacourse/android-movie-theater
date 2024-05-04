@@ -31,9 +31,7 @@ class MovieContentAdapter(
                         parent,
                         false,
                     )
-                MovieViewHolder(binding).apply {
-                    binding.onClickListener = reservationButtonClickListener
-                }
+                MovieViewHolder(binding, reservationButtonClickListener)
             }
 
             TYPE_ADS -> {
