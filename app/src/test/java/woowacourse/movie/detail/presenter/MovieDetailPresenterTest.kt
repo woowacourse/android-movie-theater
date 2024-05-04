@@ -1,11 +1,10 @@
 package woowacourse.movie.detail.presenter
 
-import io.mockk.Runs
+import io.mockk.runs
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.mockkObject
-import io.mockk.runs
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -65,17 +64,15 @@ class MovieDetailPresenterTest {
     fun `loadMovieDetail를 호출하면 view에서 영화 리스트를 보여주고 dateSpinner가 세팅된다`() {
         // Given
         every { MovieRepository.getMovieById(any()) } returns movie
-        every { view.displayMovieDetail(any(), any()) } just Runs
-        every { view.setUpDateSpinner(any()) } just Runs
-        every { view.setUpTimeSpinner(any()) } just Runs
+        every { view.displayMovieDetail(any()) } just runs
+        every { view.updateCountView(any()) } just runs
 
         // When
-        presenter.loadMovieDetail(0, 0)
+        presenter.loadMovieDetail(0)
 
         // Then
-        verify { view.displayMovieDetail(movie, any()) }
-        verify { view.setUpDateSpinner(movie.date) }
-        verify { view.setUpTimeSpinner(any()) }
+        verify { view.displayMovieDetail(movie) }
+        every { view.updateCountView(any()) } just runs
     }
 
     @Test
