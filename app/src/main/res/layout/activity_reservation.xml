@@ -6,8 +6,20 @@
     <data>
 
         <variable
-            name="reservation"
+            name="activity"
             type="woowacourse.movie.feature.reservation.ReservationActivity" />
+
+        <variable
+            name="presenter"
+            type="woowacourse.movie.feature.reservation.ReservationPresenter" />
+
+        <variable
+            name="head_count"
+            type="int" />
+
+        <variable
+            name="date_time"
+            type="woowacourse.movie.model.movie.ScreeningDateTime" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -121,7 +133,7 @@
                 android:layout_width="65dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:onClick="@{() -> reservation.initializeMinusButton()}"
+                android:onClick="@{() -> presenter.decreaseHeadCount()}"
                 android:text="@string/reservation_detail_minus"
                 android:textAppearance="@style/Bold20"
                 app:layout_constraintStart_toStartOf="parent"
@@ -131,7 +143,7 @@
                 android:id="@+id/tv_reservation_head_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/reservation_detail_default_ticket_count"
+                android:text="@{String.valueOf(head_count)}"
                 android:textAppearance="@style/Bold20"
                 app:layout_constraintBottom_toBottomOf="@id/button_reservation_minus"
                 app:layout_constraintEnd_toStartOf="@id/button_reservation_plus"
@@ -143,7 +155,7 @@
                 android:layout_width="65dp"
                 android:layout_height="wrap_content"
                 android:text="@string/reservation_detail_plus"
-                android:onClick="@{() -> reservation.initializePlusButton()}"
+                android:onClick="@{() -> presenter.increaseHeadCount()}"
                 android:textAppearance="@style/Bold20"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/button_reservation_minus" />
@@ -155,7 +167,7 @@
                 android:layout_marginTop="20dp"
                 android:paddingVertical="8dp"
                 android:text="@string/reservation_detail_select_seat"
-                android:onClick="@{() -> reservation.initializeReservationButton()}"
+                android:onClick="@{() -> presenter.sendTicketToSeatSelection()}"
                 android:textAppearance="@style/Bold20"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

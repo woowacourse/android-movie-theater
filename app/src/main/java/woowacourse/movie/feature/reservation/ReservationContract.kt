@@ -29,6 +29,12 @@ interface ReservationContract {
         )
 
         fun showErrorToast()
+
+        fun getScreeningDate(): String
+
+        fun getScreeningTime(): String
+
+        fun bindDateTime(dateTime: ScreeningDateTime)
     }
 
     interface Presenter {
@@ -42,7 +48,7 @@ interface ReservationContract {
 
         fun decreaseHeadCount()
 
-        fun sendTicketToSeatSelection(dateTime: ScreeningDateTime)
+        fun sendTicketToSeatSelection()
 
         fun handleHeadCountBounds(result: ChangeTicketCountResult)
 

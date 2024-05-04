@@ -35,15 +35,16 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.reservation = this
+        binding.activity = this
 
         val savedHeadCount = bringSavedHeadCount(savedInstanceState)
-
         initPresenter(savedHeadCount)
+
         with(presenter) {
             loadMovie()
             loadScreeningPeriod()
         }
+        changeHeadCount(savedHeadCount)
         updateScreeningTimes(DEFAULT_TIME_ID)
     }
 
@@ -95,7 +96,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     }
 
     override fun changeHeadCount(count: Int) {
-        binding.tvReservationHeadCount.text = count.toString()
+        binding.headCount = count
     }
 
     override fun showResultToast() = makeToast(this, getString(R.string.invalid_number_of_tickets))
@@ -130,6 +131,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
                 theaterId,
                 savedHeadCount,
             )
+        binding.presenter = presenter
     }
 
     private fun receiveMovieId() = intent.getIntExtra(MOVIE_ID, DEFAULT_MOVIE_ID)
@@ -162,15 +164,12 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
             }
     }
 
-    fun initializeMinusButton() = presenter.decreaseHeadCount()
+    override fun getScreeningDate(): String = binding.spinnerReservationScreeningDate.selectedItem.toString()
 
-    fun initializePlusButton() = presenter.increaseHeadCount()
+    override fun getScreeningTime(): String = binding.spinnerReservationScreeningTime.selectedItem.toString()
 
-    fun initializeReservationButton() {
-        val date = binding.spinnerReservationScreeningDate.selectedItem.toString()
-        val time = binding.spinnerReservationScreeningTime.selectedItem.toString()
-        val dateTime = ScreeningDateTime(date, time)
-        presenter.sendTicketToSeatSelection(dateTime)
+    override fun bindDateTime(dateTime: ScreeningDateTime) {
+        binding.dateTime = dateTime
     }
 
     companion object {
