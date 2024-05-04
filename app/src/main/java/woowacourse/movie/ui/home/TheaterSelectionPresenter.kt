@@ -21,7 +21,7 @@ class TheaterSelectionPresenter(
                 }
             view.showTheaters(movieContentId, movieTheaters)
         }.onFailure {
-            view.dismissTheaterSelection()
+            view.showError(it)
         }
     }
 }

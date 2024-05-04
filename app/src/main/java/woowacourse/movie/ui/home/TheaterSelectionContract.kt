@@ -1,9 +1,10 @@
 package woowacourse.movie.ui.home
 
 import woowacourse.movie.model.movie.Theater
+import woowacourse.movie.ui.HandleError
 
 interface TheaterSelectionContract {
-    interface View {
+    interface View : HandleError {
         fun showTheaters(
             movieContentId: Long,
             theaters: List<Theater>,
@@ -13,8 +14,6 @@ interface TheaterSelectionContract {
             movieContentId: Long,
             theaterId: Long,
         )
-
-        fun dismissTheaterSelection()
     }
 
     interface Presenter {

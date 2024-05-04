@@ -12,6 +12,7 @@ import woowacourse.movie.model.movie.Theater
 
 class TheaterAdapter(
     private val theaters: List<Theater>,
+    private val movieContentId: Long,
     private val theaterClickListener: TheaterClickListener,
 ) : RecyclerView.Adapter<TheaterAdapter.TheaterViewHolder>() {
     override fun onCreateViewHolder(
@@ -26,13 +27,7 @@ class TheaterAdapter(
                 false,
             )
 
-        binding.onClickListener = theaterClickListener
-
-        return TheaterViewHolder(binding).apply {
-            itemView.setOnClickListener {
-                theaterClickListener.onClick(theaters[bindingAdapterPosition].id)
-            }
-        }
+        return TheaterViewHolder(binding, movieContentId, theaterClickListener)
     }
 
     override fun onBindViewHolder(
@@ -46,25 +41,33 @@ class TheaterAdapter(
 
     class TheaterViewHolder(
         private val binding: ItemTheaterBinding,
+        movieContentId: Long,
+        theaterClickListener: TheaterClickListener,
     ) :
         RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.movieContentId = movieContentId
+            binding.onClickListener = theaterClickListener
+        }
+
         fun bind(theater: Theater) {
             binding.theater = theater
         }
     }
 
-    fun interface TheaterClickListener {
-        fun onClick(theaterId: Long)
+    interface TheaterClickListener {
+        fun onTheaterClick(movieContentId: Long, theaterId: Long)
     }
 }
 
-@BindingAdapter("theaterClickListener", "theaterId")
+@BindingAdapter("theaterClickListener", "movieContentId", "theaterId")
 fun onClickTheater(
     constraintLayout: ConstraintLayout,
     theaterClickListener: TheaterAdapter.TheaterClickListener,
+    movieContentId: Long,
     theaterId: Long,
 ) {
     constraintLayout.setOnClickListener {
-        theaterClickListener.onClick(theaterId)
+        theaterClickListener.onTheaterClick(movieContentId, theaterId)
     }
 }

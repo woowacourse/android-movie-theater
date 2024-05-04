@@ -18,16 +18,13 @@ import woowacourse.movie.ui.reservation.MovieReservationActivity
 
 class TheaterSelectionBottomSheetFragment :
     BottomSheetDialogFragment(),
-    TheaterSelectionContract.View {
+    TheaterSelectionContract.View,
+    TheaterAdapter.TheaterClickListener {
+    private var movieContentId: Long = DEFAULT_MOVIE_CONTENT_ID
     private lateinit var binding: FragmentTheaterSelectionBottomSheetBinding
-    private lateinit var adapter: TheaterAdapter
-    private val presenter: TheaterSelectionPresenter by lazy {
-        TheaterSelectionPresenter(
-            this,
-            MovieContentsImpl,
-            TheatersImpl,
-        )
-    }
+    private lateinit var theaters: List<Theater>
+    private val adapter: TheaterAdapter by lazy { generateTheaterAdapter() }
+    private val presenter: TheaterSelectionPresenter by lazy { generatePresenter() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,14 +51,8 @@ class TheaterSelectionBottomSheetFragment :
         movieContentId: Long,
         theaters: List<Theater>,
     ) {
-        adapter =
-            TheaterAdapter(theaters) { theaterId ->
-                Intent(requireContext(), MovieReservationActivity::class.java).apply {
-                    putExtra(MovieHomeKey.MOVIE_CONTENT_ID, movieContentId)
-                    putExtra(MovieHomeKey.THEATER_ID, theaterId)
-                    startActivity(this)
-                }
-            }
+        this.theaters = theaters
+        this.movieContentId = movieContentId
         binding.theaterList.adapter = adapter
     }
 
@@ -76,13 +67,29 @@ class TheaterSelectionBottomSheetFragment :
         }
     }
 
-    override fun dismissTheaterSelection() {
-        val context = requireContext()
+    override fun showError(throwable: Throwable) {
         Toast.makeText(
-            context,
-            context.getString(R.string.toast_invalid_key),
-            Toast.LENGTH_SHORT,
+            requireContext(),
+            resources.getString(R.string.toast_invalid_key),
+            Toast.LENGTH_LONG
         ).show()
-        dismissTheaterSelection()
+    }
+
+    override fun onTheaterClick(movieContentId: Long, theaterId: Long) {
+        Intent(requireContext(), MovieReservationActivity::class.java).apply {
+            putExtra(MovieHomeKey.MOVIE_CONTENT_ID, movieContentId)
+            putExtra(MovieHomeKey.THEATER_ID, theaterId)
+            startActivity(this)
+        }
+    }
+
+    private fun generateTheaterAdapter() =
+        TheaterAdapter(theaters, movieContentId, this)
+
+    private fun generatePresenter() =
+        TheaterSelectionPresenter(this, MovieContentsImpl, TheatersImpl)
+
+    companion object {
+        private const val DEFAULT_MOVIE_CONTENT_ID: Long = -1L
     }
 }

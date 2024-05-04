@@ -6,6 +6,10 @@
 
     <data>
         <variable
+            name="movieContentId"
+            type="long" />
+
+        <variable
             name="theater"
             type="woowacourse.movie.model.movie.Theater" />
 
@@ -20,7 +24,8 @@
         android:paddingHorizontal="24dp"
         android:paddingVertical="8dp"
         movie:theaterClickListener="@{onClickListener}"
-        movie:theaterId="@{theater.id}">
+        movie:theaterId="@{theater.id}"
+        movie:movieContentId="@{movieContentId}">
 
         <TextView
             android:id="@+id/theater_title_text"
