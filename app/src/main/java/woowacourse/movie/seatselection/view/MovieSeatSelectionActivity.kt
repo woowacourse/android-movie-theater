@@ -36,7 +36,7 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
     private lateinit var seatSelectionPresenter: MovieSeatSelectionPresenter
 
     private val tableSeats: List<TextView> by lazy {
-        findViewById<TableLayout>(R.id.seatTable).children.filterIsInstance<TableRow>()
+        findViewById<TableLayout>(R.id.table_seat).children.filterIsInstance<TableRow>()
             .flatMap { tableRow ->
                 tableRow.children.filterIsInstance<TextView>().toList()
             }.toList()

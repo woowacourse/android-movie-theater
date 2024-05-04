@@ -17,8 +17,8 @@ import androidx.test.espresso.matcher.ViewMatchers.isEnabled
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.runner.AndroidJUnit4
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.not
@@ -52,96 +52,96 @@ class MovieSeatSelectionTest {
 
     @Test
     fun `예매할_영화의_제목이_표시된다`() {
-        onView(withId(R.id.seatTitle))
+        onView(withId(R.id.tv_movie_title))
             .check(matches(withText("타이타닉 0")))
     }
 
     @Test
     fun `선택한_좌석들의_총_가격이_표시된다`() {
-        onView(withId((R.id.A1))).perform(click())
-        onView(withId((R.id.C1))).perform(click())
-        onView(withId((R.id.E1))).perform(click())
+        onView(withText("A1")).perform(click())
+        onView(withText("C1")).perform(click())
+        onView(withText("E1")).perform(click())
 
-        onView(withId(R.id.seatPrice))
-            .check(matches(withText("37,000")))
+        onView(withId(R.id.tv_price))
+            .check(matches(withText("37,000원")))
     }
 
     @Test
     fun `1열과_2열의_좌석_색상은_보라색이다`() {
-        onView(withId((R.id.rowA)))
+        onView(withId(R.id.row_A))
             .check(matches(withTextColorForRow(bGradeColor)))
-        onView(withId((R.id.rowB)))
+        onView(withId(R.id.row_B))
             .check(matches(withTextColorForRow(bGradeColor)))
     }
 
     @Test
     fun `3열과_4열의_좌석_색상은_초록색이다`() {
-        onView(withId((R.id.rowC)))
+        onView(withId(R.id.row_C))
             .check(matches(withTextColorForRow(sGradeColor)))
-        onView(withId((R.id.rowD)))
+        onView(withId(R.id.row_D))
             .check(matches(withTextColorForRow(sGradeColor)))
     }
 
     @Test
     fun `5열의_좌석_색상은_파란색이다`() {
-        onView(withId((R.id.rowE)))
+        onView(withId(R.id.row_E))
             .check(matches(withTextColorForRow(aGradeColor)))
     }
 
     @Test
     fun `선택된_좌석의_배경색이_노란색으로_변경된다`() {
-        onView(withId((R.id.E3))).perform(click())
-        onView(withId((R.id.E3))).check(matches(withBackgroundColor(selectedColor)))
+        onView(withText("E3")).perform(click())
+        onView(withText("E3")).check(matches(withBackgroundColor(selectedColor)))
     }
 
     @Test
     fun `이미_선택된_좌석이라면_배경색이_노란색에서_하얀색으로_변경된다`() {
-        onView(withId((R.id.D2))).perform(click())
-        onView(withId((R.id.D2))).perform(click())
-        onView(withId((R.id.D2))).check(matches(withBackgroundColor(unSelectedColor)))
+        onView(withText("D2")).perform(click())
+        onView(withText("D2")).perform(click())
+        onView(withText("D2")).check(matches(withBackgroundColor(unSelectedColor)))
     }
 
     @Test
-    fun `선택_가능한_좌석_개수만큼_좌석이_선택되었을_경우에는_확인_버튼이_클릭이_가능하다`() {
-        onView(withId((R.id.A1))).perform(click())
-        onView(withId((R.id.C1))).perform(click())
-        onView(withId((R.id.E1))).perform(click())
+    fun `선택_가능한_좌석_개수만큼_좌석이_선택되었을_경우에는_확인_버튼이_활성화_된다`() {
+        onView(withText("A1")).perform(click())
+        onView(withText("C1")).perform(click())
+        onView(withText("E1")).perform(click())
 
-        onView(withId(R.id.completeBtn)).check(matches(isEnabled()))
+        onView(withId(R.id.btn_complete)).check(matches(isEnabled()))
     }
 
     @Test
-    fun `선택_가능한_좌석_개수만큼_좌석이_선택되지_않았을_경우에는_확인_버튼이_클릭이_불가능하다`() {
-        onView(withId((R.id.A1))).perform(click())
-        onView(withId((R.id.C1))).perform(click())
+    fun `선택_가능한_좌석_개수만큼_좌석이_선택되지_않았을_경우에는_확인_버튼이_비활성화_된다`() {
+        onView(withText("A1")).perform(click())
+        onView(withText("C1")).perform(click())
 
-        onView(withId(R.id.completeBtn)).check(matches(not(isEnabled())))
+        onView(withId(R.id.btn_complete)).check(matches(not(isEnabled())))
     }
 
     @Test
     fun `확인_버튼을_클릭하면_다이얼로그_화면이_나타난다`() {
-        onView(withId((R.id.A1))).perform(click())
-        onView(withId((R.id.C1))).perform(click())
-        onView(withId((R.id.E1))).perform(click())
-        onView(withId(R.id.completeBtn)).perform(click())
+        onView(withText("A1")).perform(click())
+        onView(withText("C1")).perform(click())
+        onView(withText("E1")).perform(click())
+        onView(withId(R.id.btn_complete)).perform(click())
 
         onView(withText("예매 확인")).check(matches(isDisplayed()))
     }
 
     @Test
     fun `좌석_선택_후_화면_회전_시에도_선택했던_좌석_데이터는_유지된다`() {
-        onView(withId((R.id.A1))).perform(click())
-        onView(withId((R.id.C1))).perform(click())
-        onView(withId((R.id.E1))).perform(click())
+        onView(withText("A1")).perform(click())
+        onView(withText("C1")).perform(click())
+        onView(withText("E1")).perform(click())
 
         val activityScenario = activityRule.scenario
         activityScenario.onActivity { activity ->
             activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         }
 
-        onView(withId(R.id.A1)).check(matches(withBackgroundColor(selectedColor)))
-        onView(withId(R.id.C1)).check(matches(withBackgroundColor(selectedColor)))
-        onView(withId(R.id.E1)).check(matches(withBackgroundColor(selectedColor)))
+        onView(withText("A1")).check(matches(withBackgroundColor(selectedColor)))
+        onView(withText("C1")).check(matches(withBackgroundColor(selectedColor)))
+        onView(withText("E1")).check(matches(withBackgroundColor(selectedColor)))
     }
 
     private fun withTextColorForRow(expectedColor: Int): Matcher<View> {
