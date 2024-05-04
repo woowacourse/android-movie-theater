@@ -39,5 +39,6 @@ class TheaterAdapter(
     ) {
         movieId = newMovieId
         theaters = newTheaters
+        notifyDataSetChanged()
     }
 }
