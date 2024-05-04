@@ -13,10 +13,15 @@ import woowacourse.movie.list.model.MovieListItem
 import woowacourse.movie.list.model.MovieListItemType
 import java.time.format.DateTimeFormatter
 
-class MovieListAdapter(
-    private val movies: List<Movie>,
-    private val advertisements: List<Advertisement>,
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MovieListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var movies: List<Movie> = emptyList()
+    private var advertisements: List<Advertisement> = emptyList()
+
+    fun initTheatersInfo(movies: List<Movie>, advertisements: List<Advertisement>) {
+        this.movies = movies
+        this.advertisements = advertisements
+    }
+
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.movie_title)
         val poster: ImageView = itemView.findViewById(R.id.movie_poster)
