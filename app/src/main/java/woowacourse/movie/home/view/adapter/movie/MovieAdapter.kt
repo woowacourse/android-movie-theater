@@ -38,8 +38,8 @@ class MovieAdapter(
         holder: ViewHolder,
         position: Int,
     ) {
-        val movie = movies[position - getAdvertisementCount(position)]
-        val advertisement = advertisements[getAdvertisementCount(position)]
+        val movie = movies[position - getAdvertisementPosition(position)]
+        val advertisement = advertisements[getAdvertisementPosition(position)]
         when (holder) {
             is MovieViewHolder -> holder.bind(movie, clickListener)
             is AdvertisementViewHolder -> holder.bind(advertisement, clickListener)
@@ -60,7 +60,7 @@ class MovieAdapter(
         notifyDataSetChanged()
     }
 
-    private fun getAdvertisementCount(position: Int): Int {
+    private fun getAdvertisementPosition(position: Int): Int {
         return (position + 1) / ADVERTISEMENT_PER_INDEX
     }
 
