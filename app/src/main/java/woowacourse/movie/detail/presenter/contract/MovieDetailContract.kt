@@ -24,6 +24,8 @@ interface MovieDetailContract {
             time: String,
             count: Int,
         )
+
+        fun setUpTimeSpinnerPosition(position: Int)
     }
 
     interface Presenter {

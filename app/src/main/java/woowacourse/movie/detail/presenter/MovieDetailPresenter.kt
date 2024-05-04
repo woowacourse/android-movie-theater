@@ -8,7 +8,6 @@ class MovieDetailPresenter(
     private val movieDetailContractView: MovieDetailContract.View,
 ) : MovieDetailContract.Presenter {
     private var movieReservationCount: MovieReservationCount = MovieReservationCount()
-    private var timeSpinnerPosition: Int = 0
 
     override fun loadMovieDetail(
         movieId: Long,
@@ -23,7 +22,7 @@ class MovieDetailPresenter(
     }
 
     override fun updateTimeSpinnerPosition(position: Int) {
-        timeSpinnerPosition = position
+        movieDetailContractView.setUpTimeSpinnerPosition(position)
     }
 
     override fun updateReservationCount(count: Int) {

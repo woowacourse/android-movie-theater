@@ -105,6 +105,10 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
             }
     }
 
+    override fun setUpTimeSpinnerPosition(position: Int) {
+        binding.runningTimeSpinner.setSelection(position)
+    }
+
     override fun navigateToSeatSelectionView(
         id: Long,
         date: String,
