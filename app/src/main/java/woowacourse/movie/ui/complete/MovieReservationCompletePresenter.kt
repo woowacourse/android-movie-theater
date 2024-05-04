@@ -5,7 +5,7 @@ import woowacourse.movie.model.movie.UserTicket
 
 class MovieReservationCompletePresenter(
     private val view: MovieReservationCompleteContract.View,
-    private val userTickets: DefaultMovieDataSource<Long, UserTicket>,
+    private val userTicketDataSource: DefaultMovieDataSource<Long, UserTicket>,
 ) :
     MovieReservationCompleteContract.Presenter {
     lateinit var userTicket: UserTicket
@@ -13,7 +13,7 @@ class MovieReservationCompletePresenter(
 
     override fun loadTicket(ticketId: Long) {
         try {
-            userTicket = userTickets.find(ticketId)
+            userTicket = userTicketDataSource.find(ticketId)
         } catch (e: NoSuchElementException) {
             view.showError(e)
         }

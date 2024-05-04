@@ -7,14 +7,14 @@ import woowacourse.movie.ui.utils.positionToIndex
 
 class MovieSeatSelectionPresenter(
     private val view: MovieSeatSelectionContract.View,
-    private val userTickets: DefaultMovieDataSource<Long, UserTicket>,
+    private val userTicketDataSource: DefaultMovieDataSource<Long, UserTicket>,
 ) :
     MovieSeatSelectionContract.Presenter {
     lateinit var userTicket: UserTicket
 
     override fun loadTheaterInfo(ticketId: Long) {
         try {
-            userTicket = userTickets.find(ticketId)
+            userTicket = userTicketDataSource.find(ticketId)
             view.showReservationTotalAmount(userTicket.reservationDetail.totalSeatAmount())
             view.showTheater(Seat.ROW_LEN, Seat.COL_LEN)
         } catch (e: NoSuchElementException) {

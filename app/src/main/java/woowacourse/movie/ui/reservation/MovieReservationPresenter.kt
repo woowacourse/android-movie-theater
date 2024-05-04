@@ -13,9 +13,9 @@ import java.time.LocalTime
 
 class MovieReservationPresenter(
     private val view: MovieReservationContract.View,
-    private val movieContents: DefaultMovieDataSource<Long, MovieContent>,
-    private val theaters: DefaultMovieDataSource<Long, Theater>,
-    private val userTickets: DefaultMovieDataSource<Long, UserTicket>,
+    private val movieContentDataSource: DefaultMovieDataSource<Long, MovieContent>,
+    private val theaterDataSource: DefaultMovieDataSource<Long, Theater>,
+    private val userTicketDataSource: DefaultMovieDataSource<Long, UserTicket>,
 ) :
     MovieReservationContract.Presenter {
     private lateinit var reservationCount: ReservationCount
@@ -42,8 +42,8 @@ class MovieReservationPresenter(
         theaterId: Long,
     ) {
         try {
-            movieContent = movieContents.find(movieContentId)
-            theater = theaters.find(theaterId)
+            movieContent = movieContentDataSource.find(movieContentId)
+            theater = theaterDataSource.find(theaterId)
         } catch (e: NoSuchElementException) {
             view.showError(e)
         }
@@ -67,7 +67,7 @@ class MovieReservationPresenter(
                 screeningStartDateTime = LocalDateTime.of(screeningDate.date, movieTime),
                 reservationDetail = ReservationDetail(reservationCount.count),
             )
-        val ticketId = userTickets.save(userTicket)
+        val ticketId = userTicketDataSource.save(userTicket)
         view.moveMovieSeatSelectionPage(ticketId)
     }
 
