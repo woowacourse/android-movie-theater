@@ -83,14 +83,24 @@ class MovieDetailActivity :
 
     private fun setupEventListeners(cinema: Cinema) {
         binding.seatConfirmationButton.setOnClickListener {
-            TheaterSeatActivity.newIntent(this, binding.quantityTextView.text.toString(),
-                cinema, binding.movieDateSpinner.selectedItem.toString() + " " + binding.movieTimeSpinner.selectedItem.toString()).apply {
-                navigateToPurchaseConfirmation(this)
-            }
+            val intent = TheaterSeatActivity.newIntent(
+                this,
+                binding.quantityTextView.text.toString(),
+                cinema,
+                timeDate()
+            )
+            navigateToPurchaseConfirmation(intent)
         }
     }
 
+    private fun timeDate() = buildString {
+        append(binding.movieDateSpinner.selectedItem.toString())
+        append(DELIMITER)
+        append(binding.movieTimeSpinner.selectedItem.toString())
+    }
+
     companion object {
+        const val DELIMITER = " "
         const val EXTRA_CINEMA = "cinema"
         fun newIntent(
             context: Context,
