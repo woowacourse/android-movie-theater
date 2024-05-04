@@ -5,7 +5,7 @@
 
         <variable
             name="theater"
-            type="woowacourse.movie.home.view.adapter.theater.TheaterUiModel" />
+            type="woowacourse.movie.feature.home.theater.ui.TheaterUiModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"

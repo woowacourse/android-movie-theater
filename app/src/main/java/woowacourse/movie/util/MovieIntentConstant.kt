@@ -6,7 +6,6 @@ object MovieIntentConstant {
     const val KEY_MOVIE_TIME = "movieTime"
     const val KEY_MOVIE_COUNT = "movieCount"
     const val KEY_MOVIE_SEATS = "movieSeats"
-    const val KEY_ITEM_POSITION = "itemPosition"
     const val KEY_SELECTED_SEAT_POSITIONS = "selectedSeatPositions"
     const val KEY_SELECTED_THEATER_POSITION = "selectedTheaterPosition"
     const val KEY_SELECTED_THEATER_NAME = "selectedTheaterName"

@@ -11,7 +11,7 @@
 
         <variable
             name="reservation_button_click_listener"
-            type="woowacourse.movie.home.view.listener.ReservationButtonClickListener" />
+            type="woowacourse.movie.feature.home.movie.listener.ReservationButtonClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"

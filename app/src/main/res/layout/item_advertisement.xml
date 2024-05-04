@@ -9,7 +9,7 @@
 
         <variable
             name="advertisement_view_holder"
-            type="woowacourse.movie.home.view.adapter.movie.AdvertisementViewHolder" />
+            type="woowacourse.movie.feature.home.movie.adapter.AdvertisementViewHolder" />
 
         <variable
             name="advertisement_image_id"

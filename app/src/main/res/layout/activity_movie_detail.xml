@@ -5,11 +5,11 @@
 
         <variable
             name="activity"
-            type="woowacourse.movie.detail.view.MovieDetailActivity" />
+            type="woowacourse.movie.feature.detail.MovieDetailActivity" />
 
         <variable
             name="movie"
-            type="woowacourse.movie.detail.ui.MovieDetailUiModel" />
+            type="woowacourse.movie.feature.detail.ui.MovieDetailUiModel" />
 
         <variable
             name="movie_count"
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".detail.view.MovieDetailActivity">
+        tools:context=".feature.detail.MovieDetailActivity">
 
         <ScrollView
             android:layout_width="match_parent"

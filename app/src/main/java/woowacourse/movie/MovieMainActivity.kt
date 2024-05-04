@@ -6,9 +6,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.databinding.ActivityMovieMainBinding
-import woowacourse.movie.home.view.MovieHomeFragment
-import woowacourse.movie.reservationlist.view.ReservationListFragment
-import woowacourse.movie.setting.view.SettingFragment
+import woowacourse.movie.feature.home.movie.MovieHomeFragment
+import woowacourse.movie.feature.reservationlist.ReservationListFragment
+import woowacourse.movie.feature.setting.SettingFragment
 
 class MovieMainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieMainBinding
