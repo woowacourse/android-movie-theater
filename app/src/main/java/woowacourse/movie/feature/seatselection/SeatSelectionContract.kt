@@ -19,7 +19,7 @@ interface SeatSelectionContract {
             seat: Seat,
         )
 
-        fun initializeConfirmButton()
+        fun requestReservationConfirm()
 
         fun restoreReservation(count: Int)
 

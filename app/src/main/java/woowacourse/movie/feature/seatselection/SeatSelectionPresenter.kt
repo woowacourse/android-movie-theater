@@ -79,7 +79,7 @@ class SeatSelectionPresenter(
         view.showAmount(totalPrice)
     }
 
-    override fun initializeConfirmButton() {
+    override fun requestReservationConfirm() {
         view.launchReservationConfirmDialog()
     }
 }

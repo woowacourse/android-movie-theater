@@ -145,7 +145,7 @@
                 android:layout_height="0dp"
                 android:background="@drawable/selector_confirm"
                 android:enabled="false"
-                android:onClick="@{() -> presenter.initializeConfirmButton()}"
+                android:onClick="@{() -> presenter.requestReservationConfirm()}"
                 android:text="@string/select_seat_confirm"
                 android:textAppearance="@style/Bold18"
                 android:textColor="@color/white"
