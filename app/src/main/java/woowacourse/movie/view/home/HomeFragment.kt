@@ -11,6 +11,8 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.db.advertisement.AdvertisementDao
 import woowacourse.movie.db.screening.ScreeningDao
+import woowacourse.movie.model.advertisement.Advertisement
+import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.presenter.home.ReservationHomeContract
 import woowacourse.movie.presenter.home.ReservationHomePresenter
 import woowacourse.movie.view.home.adapter.MovieCatalogAdapter
@@ -36,7 +38,7 @@ class HomeFragment : Fragment(), ReservationHomeContract.View {
     ) {
         super.onViewCreated(view, savedInstanceState)
         initMovieRecyclerView()
-        loadMovieData()
+        presenter.loadMovies()
     }
 
     @SuppressLint("ResourceType")
@@ -59,7 +61,10 @@ class HomeFragment : Fragment(), ReservationHomeContract.View {
         }
     }
 
-    private fun loadMovieData()  {
+    override fun showMovieData(
+        movies: List<Movie>,
+        ads: List<Advertisement>,
+    ) {
         movieCatalogAdapter.updateMovies(ScreeningDao().findAll())
         movieCatalogAdapter.updateAds(AdvertisementDao().findAll())
     }
