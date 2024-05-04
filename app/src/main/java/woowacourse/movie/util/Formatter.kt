@@ -1,11 +1,5 @@
 package woowacourse.movie.util
 
-import java.text.DecimalFormat
-
-fun Int.formatPrice(): String {
-    return DecimalFormat("#,###").format(this)
-}
-
 fun Int.formatSeatRow(): Char {
     return (this + 'A'.code).toChar()
 }

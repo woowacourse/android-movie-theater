@@ -126,6 +126,7 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
 
     override fun updateSelectResult(movieSelectedSeats: MovieSelectedSeats) {
         binding.movieSelectedSeats = movieSelectedSeats
+        binding.totalPrice = movieSelectedSeats.totalPrice()
     }
 
     override fun navigateToResultView(movieSelectedSeats: MovieSelectedSeats) {

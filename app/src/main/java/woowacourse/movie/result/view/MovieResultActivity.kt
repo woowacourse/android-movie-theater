@@ -56,6 +56,7 @@ class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
     override fun displayMovieTicket(movieTicketData: MovieTicket?) {
         movieTicketData?.let { movieTicket ->
             binding.movieTicket = movieTicket
+            binding.totalPrice = movieTicket.seats.totalPrice()
             val seats =
                 movieTicket.seats.selectedSeats.joinToString(", ") { seat ->
                     getString(R.string.seat, seat.row.formatSeatRow(), seat.column.toString())

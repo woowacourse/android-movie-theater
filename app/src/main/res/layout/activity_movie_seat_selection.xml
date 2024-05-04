@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:movie="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -15,6 +14,11 @@
         <variable
             name="movie_selected_seats"
             type="woowacourse.movie.model.MovieSelectedSeats" />
+
+        <variable
+            name="total_price"
+            type="int" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -157,25 +161,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:textSize="20dp"
+                android:text="@{@string/price(total_price)}"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/seatTitle"
-                movie:movieSelectedSeatsPrice="@{movie_selected_seats}"
-                tools:hint="0" />
-
-            <TextView
-                android:id="@+id/seatPriceWon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="원"
-                android:textSize="20dp"
-                app:layout_constraintBottom_toBottomOf="@id/seatPrice"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintLeft_toRightOf="@id/seatPrice"
-                app:layout_constraintTop_toTopOf="@id/seatPrice" />
+                tools:hint="0원" />
 
             <Button
                 android:id="@+id/completeBtn"
