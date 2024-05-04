@@ -18,7 +18,8 @@ import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
 
-class TheaterSelectionBottomSheetFragment : BottomSheetDialogFragment(),
+class TheaterSelectionBottomSheetFragment :
+    BottomSheetDialogFragment(),
     TheaterSelectionContract.View {
     private lateinit var binding: FragmentTheaterSelectionBinding
     private lateinit var theaterSelectionPresenter: TheaterSelectionPresenter

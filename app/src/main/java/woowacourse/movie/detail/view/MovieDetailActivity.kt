@@ -111,7 +111,6 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-
         val screeningDateSpinnerPosition = binding.spScreeningDate.selectedItemPosition
         outState.putInt(SCREENING_DATE_SPINNER_POSITION_KEY, screeningDateSpinnerPosition)
 
