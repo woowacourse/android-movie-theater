@@ -14,7 +14,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         setContentView(binding.root)
         if (savedInstanceState == null) {
             binding.botNavMain.selectedItemId = R.id.movieListFragment
-            replaceTo<MovieListFragment>(R.id.fc_main)
+            replaceTo<MovieListFragment>(R.id.fragment_container_home)
         }
         initClickListener()
     }
@@ -27,9 +27,9 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
     private fun onNavigationItemSelected(itemId: Int): Boolean {
         when (itemId) {
-            R.id.reserveFragment -> replaceTo<ReservationFragment>(R.id.fc_main)
-            R.id.movieListFragment -> replaceTo<MovieListFragment>(R.id.fc_main)
-            R.id.settingFragment -> replaceTo<SettingFragment>(R.id.fc_main)
+            R.id.reserveFragment -> replaceTo<ReservationFragment>(R.id.fragment_container_home)
+            R.id.movieListFragment -> replaceTo<MovieListFragment>(R.id.fragment_container_home)
+            R.id.settingFragment -> replaceTo<SettingFragment>(R.id.fragment_container_home)
             else -> error("Invalid itemId: $itemId")
         }
         return true
