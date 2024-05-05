@@ -1,6 +1,10 @@
-package woowacourse.movie.list.view
+package woowacourse.movie.list.presenter
 
 import woowacourse.movie.R
+import woowacourse.movie.list.view.HomeActivityContract
+import woowacourse.movie.list.view.MovieListFragment
+import woowacourse.movie.list.view.ReservationHistoryFragment
+import woowacourse.movie.list.view.SettingFragment
 
 class HomePresenter(private val view: HomeActivityContract.View) : HomeActivityContract.Presenter {
     override fun onBottomNavItemSelected(itemId: Int) {

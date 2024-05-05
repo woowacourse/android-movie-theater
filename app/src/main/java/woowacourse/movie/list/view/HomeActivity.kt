@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityHomeBinding
+import woowacourse.movie.list.presenter.HomePresenter
 
 class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
     private lateinit var binding: ActivityHomeBinding
