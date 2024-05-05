@@ -36,7 +36,7 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
     }
 
     @SuppressLint("ResourceType")
-    override fun navigateToDetail(
+    override fun navigateToReservation(
         movieId: Int,
         theaterId: Int,
     ) {
@@ -75,7 +75,7 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
                 TheaterDao().findTheaterByMovieId(receiveMovieId()),
                 receiveMovieId(),
             ) { theaterId ->
-                presenter.sendTheaterInfoToDetail(theaterId)
+                presenter.sendTheaterInfoToReservation(theaterId)
             }
         binding.recyclerViewTheaterSelection.apply {
             adapter = theaterSelectionAdapter

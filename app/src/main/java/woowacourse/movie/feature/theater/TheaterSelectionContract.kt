@@ -2,11 +2,11 @@ package woowacourse.movie.feature.theater
 
 interface TheaterSelectionContract {
     interface Presenter {
-        fun sendTheaterInfoToDetail(theaterId: Int)
+        fun sendTheaterInfoToReservation(theaterId: Int)
     }
 
     interface View {
-        fun navigateToDetail(
+        fun navigateToReservation(
             movieId: Int,
             theaterId: Int,
         )
