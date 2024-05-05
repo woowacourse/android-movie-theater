@@ -39,13 +39,13 @@ class MovieDetailPresenterTest {
     @Test
     fun `영화 데이터가 없는 경우 loadMovieDetail를 호출하면 에러 메시지를 보여준다`() {
         // Given
-        every { view.handleInvalidMovieIdError(any()) } just runs
+        every { view.showToastInvalidMovieIdError(any()) } just runs
 
         // When
         presenter.loadMovieDetail(invalidMovieId)
 
         // Then
-        every { view.handleInvalidMovieIdError(any()) } just runs
+        every { view.showToastInvalidMovieIdError(any()) } just runs
     }
 
     @Test

@@ -23,7 +23,7 @@ class MovieResultPresenter(private val view: MovieResultContract.View) :
             runCatching {
                 MovieRepository.getMovieById(movieId)
             }.getOrElse {
-                view.handleInvalidMovieIdError(it)
+                view.showToastInvalidMovieIdError(it)
                 return
             }
 

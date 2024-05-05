@@ -1,10 +1,9 @@
 package woowacourse.movie.feature.detail
 
 import woowacourse.movie.model.Movie
-import woowacourse.movie.util.InvalidMovieIdErrorListener
 
 interface MovieDetailContract {
-    interface View : InvalidMovieIdErrorListener {
+    interface View {
         fun displayMovieDetail(movie: Movie)
 
         fun updateCountView(count: Int)
@@ -15,6 +14,8 @@ interface MovieDetailContract {
             time: String,
             count: Int,
         )
+
+        fun showToastInvalidMovieIdError(throwable: Throwable)
     }
 
     interface Presenter {

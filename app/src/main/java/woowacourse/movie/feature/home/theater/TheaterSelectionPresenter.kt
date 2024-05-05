@@ -9,7 +9,7 @@ class TheaterSelectionPresenter(private val view: TheaterSelectionContract.View)
             runCatching {
                 MovieRepository.getMovieById(movieId)
             }.getOrElse {
-                view.handleInvalidMovieIdError(it)
+                view.showToastInvalidMovieIdError(it)
                 return
             }
 

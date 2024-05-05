@@ -1,11 +1,12 @@
 package woowacourse.movie.feature.result
 
 import woowacourse.movie.model.MovieTicket
-import woowacourse.movie.util.InvalidMovieIdErrorListener
 
 interface MovieResultContract {
-    interface View : InvalidMovieIdErrorListener {
+    interface View {
         fun displayMovieTicket(movieTicketData: MovieTicket?)
+
+        fun showToastInvalidMovieIdError(throwable: Throwable)
     }
 
     interface Presenter {

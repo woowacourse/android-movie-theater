@@ -38,13 +38,13 @@ class MovieSeatSelectionPresenterTest {
     @Test
     fun `영화 데이터가 없는 경우 loadMovieTitle을 호출하면 에러 메시지를 보여준다`() {
         // Given
-        every { view.handleInvalidMovieIdError(any()) } just runs
+        every { view.showToastInvalidMovieIdError(any()) } just runs
 
         // When
         presenter.loadMovieTitle(invalidMovieId)
 
         // Then
-        verify { view.handleInvalidMovieIdError(any()) }
+        verify { view.showToastInvalidMovieIdError(any()) }
     }
 
     @Test

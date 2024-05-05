@@ -13,7 +13,7 @@ class MovieDetailPresenter(
             runCatching {
                 MovieRepository.getMovieById(movieId)
             }.getOrElse {
-                view.handleInvalidMovieIdError(it)
+                view.showToastInvalidMovieIdError(it)
                 return
             }
 

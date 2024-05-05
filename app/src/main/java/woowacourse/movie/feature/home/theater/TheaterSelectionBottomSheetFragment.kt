@@ -52,7 +52,7 @@ class TheaterSelectionBottomSheetFragment :
             }
     }
 
-    override fun handleInvalidMovieIdError(throwable: Throwable) {
+    override fun showToastInvalidMovieIdError(throwable: Throwable) {
         Log.e(TAG, "invalid movie id - ${throwable.message}")
         showToast(R.string.invalid_movie_id)
         dismiss()

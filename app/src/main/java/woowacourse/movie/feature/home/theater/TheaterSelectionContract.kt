@@ -1,11 +1,12 @@
 package woowacourse.movie.feature.home.theater
 
 import woowacourse.movie.model.Theater
-import woowacourse.movie.util.InvalidMovieIdErrorListener
 
 interface TheaterSelectionContract {
-    interface View : InvalidMovieIdErrorListener {
+    interface View {
         fun setUpTheaterAdapter(theaters: List<Theater>)
+
+        fun showToastInvalidMovieIdError(throwable: Throwable)
     }
 
     interface Presenter {

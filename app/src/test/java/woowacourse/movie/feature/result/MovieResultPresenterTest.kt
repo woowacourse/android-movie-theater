@@ -35,12 +35,12 @@ class MovieResultPresenterTest {
     @Test
     fun `영화 데이터가 없는 경우 loadMovieTicket를 호출하면 에러 메시지를 보여준다`() {
         // Given
-        every { view.handleInvalidMovieIdError(any()) } just runs
+        every { view.showToastInvalidMovieIdError(any()) } just runs
 
         // When
         presenter.loadMovieTicket(invalidMovieId, "2024-04-01", "10:00", 3, "A0, A1, A2", "선릉")
 
         // Then
-        verify { view.handleInvalidMovieIdError(any()) }
+        verify { view.showToastInvalidMovieIdError(any()) }
     }
 }
