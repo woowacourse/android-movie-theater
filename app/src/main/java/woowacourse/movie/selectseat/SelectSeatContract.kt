@@ -1,33 +1,46 @@
 package woowacourse.movie.selectseat
 
+import woowacourse.movie.model.HeadCount
 import woowacourse.movie.moviedetail.uimodel.BookingInfoUiModel
+import woowacourse.movie.selectseat.uimodel.Position
 import woowacourse.movie.selectseat.uimodel.PriceUiModel
 import woowacourse.movie.selectseat.uimodel.SeatUiModel
 
 interface SelectSeatContract {
     interface View {
-        fun showSeat(theaterSeats: List<SeatUiModel>)
+        fun initSeats(seatUiModels: Map<Position, SeatUiModel>)
 
         fun showMovieInfo(
             title: String,
             priceUiModel: PriceUiModel,
         )
 
-        fun updatePrice(updatedPrice: PriceUiModel)
+        fun activatePurchase()
+
+        fun deActivatePurchase()
+
+        fun showSeats(seatUiModels: Map<Position, SeatUiModel>)
+
+        fun showPrice(updatedPrice: PriceUiModel)
+
+        fun onSaveSeats(seatUiModels: Map<Position, SeatUiModel>)
 
         fun navigateToResult(reservationId: Long)
     }
 
     interface Presenter {
-        fun loadSeat(movieId: Long)
+        fun initSeats(screeningId: Long)
+
+        fun initMaxCount(headCount: HeadCount)
+
+        fun selectSeat(position: Position)
 
         fun loadReservationInfo(movieId: Long)
 
-        fun calculatePrice(selectedSeats: List<SeatUiModel>)
+        fun saveSeats()
 
-        fun completeReservation(
-            bookingInfoUiModel: BookingInfoUiModel,
-            selectedSeats: List<SeatUiModel>,
-        )
+        fun loadSeats(seats: Map<Position, SeatUiModel>)
+
+        fun completeReservation(bookingInfoUiModel: BookingInfoUiModel)
     }
 }

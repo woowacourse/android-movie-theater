@@ -5,9 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="java.util.Map"/>
         <variable
             name="seats"
-            type="woowacourse.movie.selectseat.uimodel.SeatsUiModel" />
+            type="Map&lt;woowacourse.movie.selectseat.uimodel.Position, woowacourse.movie.selectseat.uimodel.SeatUiModel>" />
 
         <variable
             name="presenter"
@@ -50,61 +51,61 @@
 
             <TableRow android:gravity="center">
 
-                <androidx.appcompat.widget.AppCompatCheckBox style="@style/SelectSeatStyle" />
+                <androidx.appcompat.widget.AppCompatTextView style="@style/SelectSeatStyle" />
 
-                <androidx.appcompat.widget.AppCompatCheckBox style="@style/SelectSeatStyle" />
+                <androidx.appcompat.widget.AppCompatTextView style="@style/SelectSeatStyle" />
 
-                <androidx.appcompat.widget.AppCompatCheckBox style="@style/SelectSeatStyle" />
+                <androidx.appcompat.widget.AppCompatTextView style="@style/SelectSeatStyle" />
 
-                <androidx.appcompat.widget.AppCompatCheckBox style="@style/SelectSeatStyle" />
-
-            </TableRow>
-
-            <TableRow android:gravity="center">
-
-                <androidx.appcompat.widget.AppCompatCheckBox style="@style/SelectSeatStyle" />
-
-                <androidx.appcompat.widget.AppCompatCheckBox style="@style/SelectSeatStyle" />
-
-                <androidx.appcompat.widget.AppCompatCheckBox style="@style/SelectSeatStyle" />
-
-                <androidx.appcompat.widget.AppCompatCheckBox style="@style/SelectSeatStyle" />
+                <androidx.appcompat.widget.AppCompatTextView style="@style/SelectSeatStyle" />
 
             </TableRow>
 
             <TableRow android:gravity="center">
 
-                <androidx.appcompat.widget.AppCompatCheckBox style="@style/SelectSeatStyle" />
+                <androidx.appcompat.widget.AppCompatTextView style="@style/SelectSeatStyle" />
 
-                <androidx.appcompat.widget.AppCompatCheckBox style="@style/SelectSeatStyle" />
+                <androidx.appcompat.widget.AppCompatTextView style="@style/SelectSeatStyle" />
 
-                <androidx.appcompat.widget.AppCompatCheckBox style="@style/SelectSeatStyle" />
+                <androidx.appcompat.widget.AppCompatTextView style="@style/SelectSeatStyle" />
 
-                <androidx.appcompat.widget.AppCompatCheckBox style="@style/SelectSeatStyle" />
-
-            </TableRow>
-
-            <TableRow android:gravity="center">
-
-                <androidx.appcompat.widget.AppCompatCheckBox style="@style/SelectSeatStyle" />
-
-                <androidx.appcompat.widget.AppCompatCheckBox style="@style/SelectSeatStyle" />
-
-                <androidx.appcompat.widget.AppCompatCheckBox style="@style/SelectSeatStyle" />
-
-                <androidx.appcompat.widget.AppCompatCheckBox style="@style/SelectSeatStyle" />
+                <androidx.appcompat.widget.AppCompatTextView style="@style/SelectSeatStyle" />
 
             </TableRow>
 
             <TableRow android:gravity="center">
 
-                <androidx.appcompat.widget.AppCompatCheckBox style="@style/SelectSeatStyle" />
+                <androidx.appcompat.widget.AppCompatTextView style="@style/SelectSeatStyle" />
 
-                <androidx.appcompat.widget.AppCompatCheckBox style="@style/SelectSeatStyle" />
+                <androidx.appcompat.widget.AppCompatTextView style="@style/SelectSeatStyle" />
 
-                <androidx.appcompat.widget.AppCompatCheckBox style="@style/SelectSeatStyle" />
+                <androidx.appcompat.widget.AppCompatTextView style="@style/SelectSeatStyle" />
 
-                <androidx.appcompat.widget.AppCompatCheckBox style="@style/SelectSeatStyle" />
+                <androidx.appcompat.widget.AppCompatTextView style="@style/SelectSeatStyle" />
+
+            </TableRow>
+
+            <TableRow android:gravity="center">
+
+                <androidx.appcompat.widget.AppCompatTextView style="@style/SelectSeatStyle" />
+
+                <androidx.appcompat.widget.AppCompatTextView style="@style/SelectSeatStyle" />
+
+                <androidx.appcompat.widget.AppCompatTextView style="@style/SelectSeatStyle" />
+
+                <androidx.appcompat.widget.AppCompatTextView style="@style/SelectSeatStyle" />
+
+            </TableRow>
+
+            <TableRow android:gravity="center">
+
+                <androidx.appcompat.widget.AppCompatTextView style="@style/SelectSeatStyle" />
+
+                <androidx.appcompat.widget.AppCompatTextView style="@style/SelectSeatStyle" />
+
+                <androidx.appcompat.widget.AppCompatTextView style="@style/SelectSeatStyle" />
+
+                <androidx.appcompat.widget.AppCompatTextView style="@style/SelectSeatStyle" />
 
             </TableRow>
 

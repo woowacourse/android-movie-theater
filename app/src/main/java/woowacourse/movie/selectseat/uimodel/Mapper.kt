@@ -3,8 +3,23 @@ package woowacourse.movie.selectseat.uimodel
 import woowacourse.movie.model.Seat
 import woowacourse.movie.model.Seats
 import woowacourse.movie.model.Tier
+import woowacourse.movie.selectseat.parcelable.ParcelablePosition
+import woowacourse.movie.selectseat.parcelable.ParcelableSeatUiModel
 
-fun Seats.toSeatsUiModel() = seats.map { SeatUiModel(it.row, it.col, it.rate) }
+fun Seats.toSeatUiModelMap() =
+    seats.associate {
+        Position(it.row, it.col) to SeatUiModel(it.row, it.col, it.rate)
+    }
+
+fun Map<Position, SeatUiModel>.toParcelable() =
+    map { (position, seatUiModel) ->
+        ParcelablePosition(position) to ParcelableSeatUiModel(seatUiModel)
+    }.toMap()
+
+fun Map<ParcelablePosition, ParcelableSeatUiModel>.toUiModel() =
+    map { (position, seatUiModel) ->
+        position.toUiModel() to seatUiModel.toUiModel()
+    }.toMap()
 
 fun List<SeatUiModel>.toSeats() =
     this.map {

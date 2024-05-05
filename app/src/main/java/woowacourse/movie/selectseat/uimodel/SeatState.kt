@@ -4,7 +4,7 @@ enum class SeatState {
     SELECTED,
     NONE, ;
 
-    fun reserveState(): SeatState =
+    fun toggle(): SeatState =
         when (this) {
             SELECTED -> NONE
             NONE -> SELECTED

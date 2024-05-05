@@ -14,7 +14,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="SelectSeatStyle" parent="Widget.AppCompat.CompoundButton.CheckBox">
+    <style name="SelectSeatStyle" parent="Widget.AppCompat.TextView">
         <item name="android:layout_height">90dp</item>
         <item name="android:background">@drawable/sel_seat_chb</item>
         <item name="android:button">@null</item>
