@@ -3,6 +3,7 @@ package woowacourse.movie.presentation.home
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
@@ -18,6 +19,7 @@ class HomeActivity : AppCompatActivity() {
     private val settingFragment by lazy { SettingFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -50,8 +52,7 @@ class HomeActivity : AppCompatActivity() {
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace(R.id.fragment_container, fragment)
-            addToBackStack(null)
+            replace(R.id.fragment_container, fragment, TAG_REPLACE_FRAGMENT)
         }
     }
 
@@ -62,5 +63,9 @@ class HomeActivity : AppCompatActivity() {
             R.id.action_settings -> settingFragment
             else -> movieListFragment
         }
+    }
+
+    companion object {
+        private const val TAG_REPLACE_FRAGMENT = "changedFragment"
     }
 }
