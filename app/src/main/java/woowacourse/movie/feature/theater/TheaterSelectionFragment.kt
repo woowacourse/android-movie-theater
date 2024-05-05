@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import woowacourse.movie.MainActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterSelectionBinding
 import woowacourse.movie.db.theater.TheaterDao
@@ -51,7 +50,7 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
         movieId: Int,
         theaterId: Int,
     ) {
-        val intent = Intent(context as MainActivity, ReservationActivity::class.java)
+        val intent = Intent(context, ReservationActivity::class.java)
         intent.putExtra(MOVIE_ID, movieId)
         intent.putExtra(THEATER_ID, theaterId)
         startActivity(intent)
