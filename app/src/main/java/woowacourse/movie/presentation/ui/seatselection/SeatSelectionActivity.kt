@@ -11,14 +11,14 @@ import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.domain.dummy.DummyReservation
 import woowacourse.movie.domain.dummy.DummyScreens
 import woowacourse.movie.domain.model.Screen
-import woowacourse.movie.presentation.base.BaseActivity
+import woowacourse.movie.presentation.base.BaseMvpBindingActivity
 import woowacourse.movie.presentation.model.ReservationInfo
 import woowacourse.movie.presentation.model.UserSeat
 import woowacourse.movie.presentation.ui.reservation.ReservationActivity
 import woowacourse.movie.presentation.ui.seatselection.SeatSelectionContract.View
 import java.io.Serializable
 
-class SeatSelectionActivity : BaseActivity<ActivitySeatSelectionBinding>(), View {
+class SeatSelectionActivity : BaseMvpBindingActivity<ActivitySeatSelectionBinding>(), View {
     override val layoutResourceId: Int
         get() = R.layout.activity_seat_selection
     override val presenter: SeatSelectionPresenter by lazy {

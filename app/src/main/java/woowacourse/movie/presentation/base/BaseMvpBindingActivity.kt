@@ -13,7 +13,7 @@ import woowacourse.movie.presentation.model.MessageType.ReservationSuccessMessag
 import woowacourse.movie.presentation.model.MessageType.TicketMaxCountMessage
 import woowacourse.movie.presentation.model.MessageType.TicketMinCountMessage
 
-abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity(), BaseView {
+abstract class BaseMvpBindingActivity<T : ViewDataBinding> : AppCompatActivity(), BaseView {
     abstract val layoutResourceId: Int
     abstract val presenter: BasePresenter
     private var _binding: T? = null

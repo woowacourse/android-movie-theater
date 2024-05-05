@@ -9,7 +9,7 @@ import woowacourse.movie.databinding.ActivityDetailBinding
 import woowacourse.movie.domain.dummy.DummyScreens
 import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.ScreenDate
-import woowacourse.movie.presentation.base.BaseActivity
+import woowacourse.movie.presentation.base.BaseMvpBindingActivity
 import woowacourse.movie.presentation.model.ReservationInfo
 import woowacourse.movie.presentation.ui.detail.DetailContract.View
 import woowacourse.movie.presentation.ui.detail.adapter.SpinnerDateAdapter
@@ -18,7 +18,7 @@ import woowacourse.movie.presentation.ui.seatselection.SeatSelectionActivity
 import java.time.LocalDate
 import java.time.LocalTime
 
-class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
+class DetailActivity : BaseMvpBindingActivity<ActivityDetailBinding>(), View {
     override val layoutResourceId: Int
         get() = R.layout.activity_detail
     override val presenter: DetailPresenter by lazy { DetailPresenter(this, DummyScreens) }
