@@ -8,12 +8,10 @@ class MovieReservationCompletePresenter(
     private val userTickets: MovieDataSource<UserTicket>,
 ) :
     MovieReservationCompleteContract.Presenter {
-    lateinit var userTicket: UserTicket
-        private set
-
     override fun loadTicket(ticketId: Long) {
         try {
-            userTicket = userTickets.find(ticketId)
+            val userTicket = userTickets.find(ticketId)
+            view.showTicket(userTicket)
         } catch (e: NoSuchElementException) {
             view.showError(e)
         }
