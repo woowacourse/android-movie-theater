@@ -17,10 +17,10 @@ import woowacourse.movie.domain.repository.DummyReservation
 import woowacourse.movie.domain.repository.DummyScreens
 import woowacourse.movie.ui.ScreenDetailUi
 import woowacourse.movie.ui.detail.view.DateTimeSpinnerView
-import woowacourse.movie.ui.detail.view.DefaultScreenDetailInformationView
 import woowacourse.movie.ui.detail.view.OnItemSelectedListener
-import woowacourse.movie.ui.detail.view.ScreenDetailTicketView
+import woowacourse.movie.ui.detail.view.ScreenDetailInformationView
 import woowacourse.movie.ui.detail.view.TicketReserveListener
+import woowacourse.movie.ui.detail.view.TicketView
 import woowacourse.movie.ui.seat.SeatReservationActivity
 
 class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
@@ -34,8 +34,8 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
         )
     }
 
-    private val screenDetailView: DefaultScreenDetailInformationView by lazy { findViewById(R.id.screen_detail_screen_view) }
-    private val ticketView: ScreenDetailTicketView by lazy { findViewById(R.id.screen_detail_ticket_view) }
+    private val screenDetailView: ScreenDetailInformationView by lazy { findViewById(R.id.screen_detail_screen_view) }
+    private val ticketView: TicketView by lazy { findViewById(R.id.screen_detail_ticket_view) }
     private val dateTimeSpinnerView: DateTimeSpinnerView by lazy { findViewById(R.id.screen_detail_date_time_spinner_view) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
