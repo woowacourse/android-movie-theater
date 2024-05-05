@@ -5,6 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="java.time.LocalTime" />
+        <import type="java.time.LocalDate" />
         <variable
             name="presenter"
             type="woowacourse.movie.ui.reservation.MovieReservationPresenter" />
@@ -117,7 +119,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:spinnerMode="dropdown"
-                    android:onItemSelected="@{(parent, view, position, id) -> presenter.selectDate(java.time.LocalDate.parse(String.valueOf(parent.getItemAtPosition(position))))}"
+                    android:onItemSelected="@{(parent, view, position, id) -> presenter.selectDate((LocalDate) parent.getItemAtPosition(position))}"
                     android:entries="@{movieContent.datesInRange}"/>
 
                 <View
@@ -129,7 +131,7 @@
                     android:id="@+id/screeningTime_spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onItemSelected="@{(parent, view, position, id) -> presenter.selectTime(java.time.LocalTime.parse(String.valueOf(parent.getItemAtPosition(position))))}"
+                    android:onItemSelected="@{(parent, view, position, id) -> presenter.selectTime((LocalTime) parent.getItemAtPosition(position))}"
                     android:spinnerMode="dropdown"
                     android:entries="@{theater.screeningTimes}"/>
             </LinearLayout>

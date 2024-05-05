@@ -29,13 +29,13 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonC
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_home, container, false)
         presenter.loadMovieContents()
+        binding.movieContentList.adapter = adapter
         return binding.root
     }
 
     override fun showMovieContents(movieContents: List<MovieContent>) {
         runCatching {
             this.movieContents = movieContents
-            binding.movieContentList.adapter = adapter
         }.onFailure {
             presenter.handleError(it)
         }
