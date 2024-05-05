@@ -10,7 +10,6 @@ import woowacourse.movie.model.Movie
 import woowacourse.movie.presentation.homefragments.movieList.adapter.MovieAdapter
 import woowacourse.movie.presentation.homefragments.movieList.fragment.TheaterBottomDialogFragment
 import woowacourse.movie.presentation.homefragments.movieList.listener.MovieListClickListener
-import woowacourse.movie.repository.DummyTheaterList
 
 class MovieListFragment : Fragment(), MovieListContract.View, MovieListClickListener {
     private var _binding: FragmentMovieListBinding? = null
@@ -42,7 +41,7 @@ class MovieListFragment : Fragment(), MovieListContract.View, MovieListClickList
     }
 
     override fun ticketingButtonClick(movieId: Long) {
-        val bottomSheet = TheaterBottomDialogFragment(DummyTheaterList, movieId)
+        val bottomSheet = TheaterBottomDialogFragment.newInstance(movieId)
         bottomSheet.show(parentFragmentManager, bottomSheet.tag)
     }
 
