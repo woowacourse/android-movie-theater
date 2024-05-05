@@ -83,19 +83,17 @@ class MovieReservationCompleteActivity :
     }
 }
 
-@BindingAdapter("count", "seats", "theaterName")
+@BindingAdapter("userTicket")
 fun setReservationResult(
     textView: TextView,
-    count: Int,
-    seats: List<Seat>,
-    theaterName: String,
+    userTicket: UserTicket,
 ) {
     textView.text =
         textView.context.getString(
             R.string.complete_reservation_result,
-            count,
-            seats.joinToString(),
-            theaterName,
+            userTicket.reservationDetail.reservationCount,
+            userTicket.reservationDetail.selectedSeat.joinToString(),
+            userTicket.theater,
         )
 }
 

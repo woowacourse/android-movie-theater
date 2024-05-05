@@ -68,9 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
-                movie:count="@{userTicket.reservationDetail.reservationCount}"
-                movie:seats="@{userTicket.reservationDetail.selectedSeat}"
-                movie:theaterName="@{userTicket.theater}" />
+                movie:userTicket="@{userTicket}" />
 
         </LinearLayout>
 
