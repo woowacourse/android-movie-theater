@@ -90,7 +90,7 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
 
         savedInstanceState.let { bundle ->
             val count = bundle.getInt(PUT_TICKET_STATE_KEY)
-            ticketView.restoreTicketCount(count)
+            ticketView.updateTicketCount(count)
             presenter.saveTicket(count)
 
             val datePosition = bundle.getInt(PUT_DATE_POSITION_KEY)

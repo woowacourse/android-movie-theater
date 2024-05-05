@@ -32,8 +32,4 @@ class ScreenDetailTicketView(
     }
 
     override fun ticketCount(): Int = binding.ticketCount
-
-    override fun restoreTicketCount(count: Int) {
-        binding.ticketCount = count
-    }
 }
