@@ -13,6 +13,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieReservationCompleteBinding
 import woowacourse.movie.model.data.UserTicketsImpl
 import woowacourse.movie.model.movie.Seat
+import woowacourse.movie.model.movie.UserTicket
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.main.MovieMainActivity
 import java.time.LocalDateTime
@@ -26,7 +27,6 @@ class MovieReservationCompleteActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_reservation_complete)
-        binding.presenter = presenter
 
         val userTicketId = userTicketId()
         if (userTicketId == USER_TICKET_ID_DEFAULT_VALUE) {
@@ -43,6 +43,10 @@ class MovieReservationCompleteActivity :
     override fun initializePresenter() = MovieReservationCompletePresenter(this, UserTicketsImpl)
 
     private fun userTicketId() = intent.getLongExtra(MovieReservationCompleteKey.TICKET_ID, USER_TICKET_ID_DEFAULT_VALUE)
+
+    override fun showReservationResult(userTicket: UserTicket) {
+        binding.userTicket = userTicket
+    }
 
     override fun showError(throwable: Throwable) {
         Log.e(TAG, throwable.message.toString())
