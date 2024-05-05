@@ -156,11 +156,11 @@ class DummyScreens : ScreenRepository {
                 ?: throw NoSuchElementException()
         }
 
-    override fun findTheaterCount(id: Int): Result<List<TheaterCount>> =
+    override fun findTheaterCount(movieId: Int): Result<List<TheaterCount>> =
         runCatching {
             val tmpList: MutableList<TheaterCount> = mutableListOf()
             theaters.forEach { theater ->
-                val size = theater.findScreenTimeCount(id)
+                val size = theater.findScreenTimeCount(movieId)
                 if (size != 0) {
                     tmpList.add(
                         TheaterCount(

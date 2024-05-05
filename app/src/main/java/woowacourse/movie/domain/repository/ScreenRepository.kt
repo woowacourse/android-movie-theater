@@ -15,7 +15,7 @@ interface ScreenRepository {
         movieId: Int,
     ): Result<Screen>
 
-    fun findTheaterCount(id: Int): Result<List<TheaterCount>>
+    fun findTheaterCount(movieId: Int): Result<List<TheaterCount>>
 
     fun findTheaterNameById(theaterId: Int): Result<String>
 }

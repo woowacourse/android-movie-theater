@@ -3,10 +3,6 @@
 
     <data>
 
-        <variable
-            name="presenter"
-            type="woowacourse.movie.presentation.ui.main.home.HomePresenter" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -16,7 +12,6 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_screen"
-            bindUpdateScreensRecyclerView="@{presenter.screens}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

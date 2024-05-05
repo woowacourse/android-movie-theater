@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
@@ -19,47 +18,58 @@ import woowacourse.movie.presentation.ui.main.home.adapter.ScreenRecyclerViewAda
 import woowacourse.movie.presentation.ui.main.home.bottom.BottomTheatersFragment
 
 class HomeFragment : Fragment(), HomeContract.View {
-    val presenter: HomePresenter by lazy { HomePresenter(this, DummyScreens()) }
-    private val adapter: ScreenRecyclerViewAdapter by lazy { ScreenRecyclerViewAdapter(presenter) }
-    private lateinit var dialog: BottomTheatersFragment
+    private lateinit var presenter: HomeContract.Presenter
+    private lateinit var adapter: ScreenRecyclerViewAdapter
+    private lateinit var theatersFragment: BottomTheatersFragment
 
     private var _binding: FragmentHomeBinding? = null
     private val binding
-        get() = _binding!!
+        get() = requireNotNull(_binding)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-        binding.presenter = presenter
-        initAdapter()
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    private fun initAdapter() {
-        binding.rvScreen.adapter = adapter
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        initAdapter()
+        presenter = HomePresenter(this, DummyScreens())
         presenter.fetchScreens()
+    }
+
+    private fun initAdapter() {
+        adapter = ScreenRecyclerViewAdapter(this)
+        binding.rvScreen.adapter = adapter
     }
 
     override fun showScreenList(screens: List<ScreenView>) {
         adapter.submitList(screens)
     }
 
+    override fun onScreenClick(movieId: Int) {
+        presenter.selectMovie(movieId)
+    }
+
     override fun showBottomTheater(
         theaterCounts: List<TheaterCount>,
         movieId: Int,
     ) {
-        dialog = BottomTheatersFragment(theaterCounts, presenter, movieId)
-        dialog.show(this.parentFragmentManager, null)
+        theatersFragment = BottomTheatersFragment(theaterCounts, this, movieId)
+        theatersFragment.show(this.parentFragmentManager, null)
     }
 
-    override fun navigateToDetail(
+    override fun onTheaterClick(
         movieId: Int,
         theaterId: Int,
     ) {
-        dialog.dismiss()
+        theatersFragment.dismiss()
         MovieDetailActivity.startActivity(requireActivity(), movieId, theaterId)
     }
 
