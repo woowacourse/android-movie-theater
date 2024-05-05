@@ -68,7 +68,7 @@ class HomeFragmentTest {
                 ).atPosition(FIRST_ITEM_POSITION),
             )
 
-        onView(withId(R.id.image_view_item_advertisement)).check(matches(isDisplayed()))
+        onView(withId(R.id.iv_advertisement_banner)).check(matches(isDisplayed()))
     }
 
     private fun matchViewHolderAtPosition(

@@ -8,10 +8,10 @@ class AdvertisementViewHolder(
     private val binding: ItemAdvertisementBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
     init {
-        binding.advertisement = this
+        binding.viewHolder = this
     }
 
-    fun bind(ads: Advertisement) {
-        binding.imageViewItemAdvertisement.setImageResource(ads.banner)
+    fun bind(advertisement: Advertisement) {
+        binding.advertisement = advertisement
     }
 }
