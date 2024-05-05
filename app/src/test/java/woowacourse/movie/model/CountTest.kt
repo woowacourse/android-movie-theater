@@ -13,9 +13,8 @@ class CountTest {
 
     @Test
     fun `초기에_설정한_티켓_개수가_가능한_최소_개수_미만이면_예외를_발생시킨다`() {
-        assertThrows<IllegalArgumentException> {
-            Count(0)
-        }
+        val exception = assertThrows<IllegalArgumentException> { Count(0) }
+        assertThat(exception.message).isEqualTo("구매 티켓은 1개 이상이어야 합니다. Input : 0")
     }
 
     @Test

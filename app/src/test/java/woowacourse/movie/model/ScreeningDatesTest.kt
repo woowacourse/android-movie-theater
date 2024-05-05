@@ -12,6 +12,7 @@ class ScreeningDatesTest {
     fun `영화_상영일의_시작날짜는_종료날짜보다_이르거나_같아야한다`() {
         val startDate = LocalDate("2024.04.01")
         val endDate = LocalDate("2024.04.01")
+
         assertDoesNotThrow { ScreeningDates(startDate, endDate) }
     }
 
@@ -19,7 +20,9 @@ class ScreeningDatesTest {
     fun `영화_상영일의_시작날짜는_종료날짜보다_늦을_수_없다`() {
         val startDate = LocalDate("2024.04.02")
         val endDate = LocalDate("2024.04.01")
-        assertThrows<IllegalArgumentException> { ScreeningDates(startDate, endDate) }
+
+        val exception = assertThrows<IllegalArgumentException> { ScreeningDates(startDate, endDate) }
+        assertThat(exception.message).isEqualTo("유효하지 않는 날짜 범위 입니다.")
     }
 
     @Test
