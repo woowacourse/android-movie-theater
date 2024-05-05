@@ -10,7 +10,6 @@
     <string name="seat_selection_button">좌석 선택</string>
     <string name="complete_button">확인</string>
     <string name="screen">SCREEN</string>
-    <string name="seat">%1$s%2$s</string>
     <string name="result">일반 %d명 | %s | %s 극장</string>
     <string name="screening_date_time">%s %s</string>
     <string name="theater">%s 극장</string>

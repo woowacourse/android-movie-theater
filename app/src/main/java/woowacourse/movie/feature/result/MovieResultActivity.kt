@@ -26,6 +26,7 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_SEATS
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
 import woowacourse.movie.util.formatSeatRow
+import woowacourse.movie.util.formatSeats
 
 class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
     private lateinit var binding: ActivityMovieResultBinding
@@ -58,10 +59,7 @@ class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
         movieTicketData?.let { movieTicket ->
             binding.movieTicket = movieTicket
             binding.totalPrice = movieTicket.seats.totalPrice()
-            val seats =
-                movieTicket.seats.selectedSeats.joinToString(", ") { seat ->
-                    getString(R.string.seat, seat.row.formatSeatRow(), seat.column.toString())
-                }
+            val seats = movieTicket.formatSeats()
             binding.resultText =
                 resources.getString(
                     R.string.result,

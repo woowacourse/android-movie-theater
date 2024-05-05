@@ -29,6 +29,7 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_SEATS
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_SEAT_POSITIONS
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
+import woowacourse.movie.util.formatSeat
 import woowacourse.movie.util.formatSeatColumn
 import woowacourse.movie.util.formatSeatRow
 
@@ -102,8 +103,7 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
     override fun setUpTableSeats(baseSeats: List<MovieSeat>) {
         tableSeats.forEachIndexed { index, view ->
             val seat = baseSeats[index]
-            view.text =
-                getString(R.string.seat, seat.row.formatSeatRow(), seat.column.formatSeatColumn())
+            view.text = seat.formatSeat()
             view.setTextColor(ContextCompat.getColor(this, seat.grade.getSeatColor()))
             view.setOnClickListener {
                 seatSelectionPresenter.clickTableSeat(index)

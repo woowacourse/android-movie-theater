@@ -1,5 +1,8 @@
 package woowacourse.movie.util
 
+import woowacourse.movie.model.MovieSeat
+import woowacourse.movie.model.MovieTicket
+
 fun Int.formatSeatRow(): Char {
     return (this + 'A'.code).toChar()
 }
@@ -14,4 +17,14 @@ fun Int.formatSeatColumn(): String {
 
 fun String.unFormatSeatColumn(): Int {
     return substring(1).toInt()
+}
+
+fun MovieSeat.formatSeat(): String {
+    return row.formatSeatRow() + column.formatSeatColumn()
+}
+
+fun MovieTicket.formatSeats(): String {
+    return seats.selectedSeats.joinToString(", ") { seat ->
+        seat.row.formatSeatRow() + seat.column.toString()
+    }
 }
