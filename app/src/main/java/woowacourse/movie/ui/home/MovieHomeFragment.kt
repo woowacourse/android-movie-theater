@@ -14,6 +14,7 @@ import woowacourse.movie.ui.home.adapter.MovieContentAdapter
 
 class MovieHomeFragment : Fragment(), MovieHomeContract.View {
     private lateinit var binding: FragmentMovieHomeBinding
+    private val adapter by lazy { movieContentAdapter() }
     private val presenter: MovieHomePresenter by lazy {
         MovieHomePresenter(
             this,
@@ -33,13 +34,16 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View {
     }
 
     override fun showMovieContents(movieContents: List<MovieContent>) {
-        binding.movieContentList.adapter =
-            MovieContentAdapter(movieContents) { id ->
-                val fragment = TheaterSelectionBottomSheetFragment()
-                val bundle = Bundle()
-                bundle.putLong(MovieHomeKey.MOVIE_CONTENT_ID, id)
-                fragment.arguments = bundle
-                fragment.show(parentFragmentManager, fragment.tag)
-            }
+        binding.movieContentList.adapter = adapter
+        adapter.updateMovieContents(movieContents)
     }
+
+    private fun movieContentAdapter() =
+        MovieContentAdapter { id ->
+            val fragment = TheaterSelectionBottomSheetFragment()
+            val bundle = Bundle()
+            bundle.putLong(MovieHomeKey.MOVIE_CONTENT_ID, id)
+            fragment.arguments = bundle
+            fragment.show(parentFragmentManager, fragment.tag)
+        }
 }
