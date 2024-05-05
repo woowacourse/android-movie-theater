@@ -2,9 +2,10 @@ package woowacourse.movie.presentation.ui.main.home
 
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHomeBinding
+import woowacourse.movie.domain.dummy.DummyScreens
+import woowacourse.movie.domain.dummy.DummyTheater
 import woowacourse.movie.domain.model.ScreenView
 import woowacourse.movie.domain.model.TheaterCount
-import woowacourse.movie.domain.repository.DummyScreens
 import woowacourse.movie.presentation.base.BaseFragment
 import woowacourse.movie.presentation.ui.detail.DetailActivity
 import woowacourse.movie.presentation.ui.main.home.adapter.ScreenRecyclerViewAdapter
@@ -14,7 +15,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeContract.View {
     override val layoutResourceId: Int
         get() = R.layout.fragment_home
 
-    val presenter: HomePresenter by lazy { HomePresenter(this, DummyScreens()) }
+    val presenter: HomePresenter by lazy { HomePresenter(this, DummyScreens, DummyTheater) }
     private val adapter: ScreenRecyclerViewAdapter by lazy { ScreenRecyclerViewAdapter(presenter) }
     private lateinit var dialog: BottomTheatersFragment
 

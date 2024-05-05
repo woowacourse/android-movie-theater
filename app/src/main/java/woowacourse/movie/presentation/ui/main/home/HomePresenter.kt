@@ -1,18 +1,20 @@
 package woowacourse.movie.presentation.ui.main.home
 
 import woowacourse.movie.domain.repository.ScreenRepository
+import woowacourse.movie.domain.repository.TheaterRepository
 
 class HomePresenter(
     private val view: HomeContract.View,
-    private val repository: ScreenRepository,
+    private val screenRepository: ScreenRepository,
+    private val theaterRepository: TheaterRepository,
 ) : HomeContract.Presenter {
     override fun loadScreens() {
-        val screens = repository.load()
+        val screens = screenRepository.load()
         view.showScreens(screens)
     }
 
     override fun onScreenClick(id: Int) {
-        repository.findTheaterCount(id).onSuccess { theaterCounts ->
+        theaterRepository.findTheaterCount(id).onSuccess { theaterCounts ->
             view.showBottomTheater(theaterCounts, id)
         }
     }

@@ -11,7 +11,7 @@ import woowacourse.movie.presentation.model.UserSeat
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
-    private val repository: ScreenRepository,
+    private val screenRepository: ScreenRepository,
     private val reservationRepository: ReservationRepository,
 ) : SeatSelectionContract.Presenter {
     private var uiModel: SeatSelectionUiModel = SeatSelectionUiModel()
@@ -28,7 +28,7 @@ class SeatSelectionPresenter(
     }
 
     override fun loadScreen(id: Int) {
-        repository.findByScreenId(theaterId = id, movieId = id).onSuccess { screen ->
+        screenRepository.findByScreenId(theaterId = id, movieId = id).onSuccess { screen ->
             uiModel = uiModel.copy(screen = screen)
             view.showScreen(screen, uiModel.totalPrice, uiModel.ticketCount)
         }.onFailure { e ->
@@ -47,7 +47,7 @@ class SeatSelectionPresenter(
     }
 
     override fun loadSeatBoard(id: Int) {
-        repository.loadSeatBoard(id).onSuccess { seatBoard ->
+        screenRepository.loadSeatBoard(id).onSuccess { seatBoard ->
             val seats = seatBoard.seats.map { SeatModel(it.column, it.row, it.seatRank) }
             uiModel = uiModel.copy(userSeat = UserSeat(seats))
             view.showSeatBoard(uiModel.userSeat)

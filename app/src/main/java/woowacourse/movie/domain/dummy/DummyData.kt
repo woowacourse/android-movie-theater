@@ -1,21 +1,50 @@
-package woowacourse.movie.domain.repository
+package woowacourse.movie.domain.dummy
 
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.ScreenDate
 import woowacourse.movie.domain.model.ScreenView
-import woowacourse.movie.domain.model.ScreenView.Ads
-import woowacourse.movie.domain.model.ScreenView.Movie
+import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.SeatBoard
+import woowacourse.movie.domain.model.SeatRank
 import woowacourse.movie.domain.model.Theater
-import woowacourse.movie.domain.model.TheaterCount
 import java.time.LocalDate
 
-class DummyScreens : ScreenRepository {
+object DummyData {
     // TODO 더미 데이터
+    val seatBoard =
+        SeatBoard(
+            0,
+            4,
+            5,
+            listOf(
+                Seat("A", 0, SeatRank.B),
+                Seat("A", 1, SeatRank.B),
+                Seat("A", 2, SeatRank.B),
+                Seat("A", 3, SeatRank.B),
+                Seat("B", 0, SeatRank.B),
+                Seat("B", 1, SeatRank.B),
+                Seat("B", 2, SeatRank.B),
+                Seat("B", 3, SeatRank.B),
+                Seat("C", 0, SeatRank.S),
+                Seat("C", 1, SeatRank.S),
+                Seat("C", 2, SeatRank.S),
+                Seat("C", 3, SeatRank.S),
+                Seat("D", 0, SeatRank.S),
+                Seat("D", 1, SeatRank.S),
+                Seat("D", 2, SeatRank.S),
+                Seat("D", 3, SeatRank.S),
+                Seat("E", 0, SeatRank.A),
+                Seat("E", 1, SeatRank.A),
+                Seat("E", 2, SeatRank.A),
+                Seat("E", 3, SeatRank.A),
+            ),
+        )
+
+    val seatBoards = listOf(seatBoard, seatBoard.copy(id = 1), seatBoard.copy(id = 2))
 
     val wizardStone =
-        Movie(
+        ScreenView.Movie(
             id = 0,
             title = "해리 포터와 마법사의 돌",
             runningTime = 152,
@@ -28,7 +57,7 @@ class DummyScreens : ScreenRepository {
         )
 
     val bang =
-        Movie(
+        ScreenView.Movie(
             id = 1,
             title = "해리 포터와 비밀의 방",
             runningTime = 152,
@@ -41,7 +70,7 @@ class DummyScreens : ScreenRepository {
         )
 
     val zoesu =
-        Movie(
+        ScreenView.Movie(
             id = 2,
             title = "해리 포터와 아즈카반의 죄수",
             runningTime = 152,
@@ -54,7 +83,7 @@ class DummyScreens : ScreenRepository {
         )
 
     val piro =
-        Movie(
+        ScreenView.Movie(
             id = 3,
             title = "해리 포터와 불의 잔",
             runningTime = 152,
@@ -66,9 +95,9 @@ class DummyScreens : ScreenRepository {
             endDate = LocalDate.of(2024, 6, 30),
         )
 
-    private val movies =
+    val movies =
         List(1) {
-            Movie(
+            ScreenView.Movie(
                 id = 0,
                 title = "해리 포터와 마법사의 돌",
                 runningTime = 152,
@@ -81,7 +110,7 @@ class DummyScreens : ScreenRepository {
             )
         }
 
-    private val theater =
+    val theater =
         Theater(
             id = 0,
             name = "선릉",
@@ -124,55 +153,6 @@ class DummyScreens : ScreenRepository {
 
     val theaters =
         listOf(theater, theater.copy(id = 1, name = "강남"), theater.copy(id = 2, name = "잠실"))
-
-    override fun findTheaterNameById(theaterId: Int): Result<String> =
-        runCatching {
-            theaters.find { it.id == theaterId }?.name ?: throw NoSuchElementException()
-        }
-
-    override fun load(): List<ScreenView> =
-        movies.flatMap { movie ->
-            listOf(
-                wizardStone,
-                bang,
-                zoesu,
-                Ads(R.drawable.img_ads),
-                piro,
-            )
-        }
-
-    override fun loadSeatBoard(id: Int): Result<SeatBoard> =
-        runCatching {
-            DummySeatBoard.seatBoards.find { seatBoard -> seatBoard.id == id }
-                ?: throw NoSuchElementException()
-        }
-
-    override fun findByScreenId(
-        theaterId: Int,
-        movieId: Int,
-    ): Result<Screen> =
-        runCatching {
-            theaters.find { it.id == theaterId }?.screens?.find { screen -> screen.movie.id == movieId }
-                ?: throw NoSuchElementException()
-        }
-
-    override fun findTheaterCount(id: Int): Result<List<TheaterCount>> =
-        runCatching {
-            val tmpList: MutableList<TheaterCount> = mutableListOf()
-            theaters.forEach { theater ->
-                val size = theater.findScreenTimeCount(id)
-                if (size != 0) {
-                    tmpList.add(
-                        TheaterCount(
-                            id = theater.id,
-                            name = theater.name,
-                            size = size,
-                        ),
-                    )
-                }
-            }
-            tmpList
-        }
 
     private fun createScreenDateList(
         startDate: LocalDate,

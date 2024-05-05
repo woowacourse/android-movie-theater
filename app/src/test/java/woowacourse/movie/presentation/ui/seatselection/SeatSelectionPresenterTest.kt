@@ -14,7 +14,6 @@ import woowacourse.movie.domain.repository.ScreenRepository
 import woowacourse.movie.presentation.model.MessageType
 import woowacourse.movie.presentation.ui.utils.DummyData.dummyReservationInfo
 import woowacourse.movie.presentation.ui.utils.DummyData.dummyScreen
-import woowacourse.movie.presentation.ui.utils.DummyData.dummySeat
 import woowacourse.movie.presentation.ui.utils.DummyData.dummySeatBoard
 import woowacourse.movie.presentation.ui.utils.DummyData.dummySeatModel
 
@@ -91,13 +90,14 @@ class SeatSelectionPresenterTest {
     fun `SeatSelectionPresenter가 선택된 좌석들의 가격을 계산(calculateSeat) 했을 때, view에게 총 결제 금액에 대한 정보(showTotalPrice)를 전달한다`() {
         // given
         val reservationInfo = dummyReservationInfo
-        val seat = dummySeat
-        every { view.showTotalPrice(any()) } just runs
         every { screenRepository.loadSeatBoard(any()) } returns Result.success(dummySeatBoard)
+        every { view.selectSeat(any()) } just runs
+        every { view.showTotalPrice(any()) } just runs
         presenter.updateUiModel(reservationInfo)
+        presenter.clickSeat(dummySeatModel)
 
         // when
-        presenter.clickSeat(dummySeatModel)
+        presenter.calculateSeat()
 
         // then
         verify { view.showTotalPrice(any()) }
@@ -118,6 +118,7 @@ class SeatSelectionPresenterTest {
         } returns Result.success(1)
         every { view.showToastMessage(MessageType.ReservationSuccessMessage) } just runs
         every { view.navigateToReservation(any()) } just runs
+        every { view.showScreen(any(), any(), any()) } just runs
 
         // when
         presenter.loadScreen(1)
@@ -145,6 +146,7 @@ class SeatSelectionPresenterTest {
         } returns Result.failure(exception)
         every { view.showSnackBar(e = any()) } just runs
         every { view.navigateBackToPrevious() } just runs
+        every { view.showScreen(any(), any(), any()) } just runs
 
         // when
         presenter.loadScreen(1)

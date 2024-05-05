@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.domain.model.TheaterCount
 import woowacourse.movie.domain.repository.ScreenRepository
+import woowacourse.movie.domain.repository.TheaterRepository
 import woowacourse.movie.presentation.ui.utils.DummyData.load
 
 @ExtendWith(MockKExtension::class)
@@ -21,18 +22,21 @@ class ScreenPresenterTest {
     private lateinit var presenter: HomeContract.Presenter
 
     @MockK
-    private lateinit var repository: ScreenRepository
+    private lateinit var screenRepository: ScreenRepository
+
+    @MockK
+    private lateinit var theaterRepository: TheaterRepository
 
     @BeforeEach
     fun setUp() {
-        every { repository.load() } returns load()
-        presenter = HomePresenter(view, repository)
+        every { screenRepository.load() } returns load()
+        presenter = HomePresenter(view, screenRepository, theaterRepository)
     }
 
     @Test
     fun `ScreenPresenter가 loadScreens()을 했을 때, view에게 screens 데이터를 전달한다`() {
         // given
-        every { repository.findTheaterCount(any()) } returns
+        every { theaterRepository.findTheaterCount(any()) } returns
             Result.success(
                 listOf(
                     TheaterCount(

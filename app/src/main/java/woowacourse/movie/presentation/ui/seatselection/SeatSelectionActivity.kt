@@ -8,9 +8,9 @@ import android.os.Bundle
 import android.view.MenuItem
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
+import woowacourse.movie.domain.dummy.DummyReservation
+import woowacourse.movie.domain.dummy.DummyScreens
 import woowacourse.movie.domain.model.Screen
-import woowacourse.movie.domain.repository.DummyReservation
-import woowacourse.movie.domain.repository.DummyScreens
 import woowacourse.movie.presentation.base.BaseActivity
 import woowacourse.movie.presentation.model.ReservationInfo
 import woowacourse.movie.presentation.model.UserSeat
@@ -22,7 +22,7 @@ class SeatSelectionActivity : BaseActivity<ActivitySeatSelectionBinding>(), View
     override val layoutResourceId: Int
         get() = R.layout.activity_seat_selection
     override val presenter: SeatSelectionPresenter by lazy {
-        SeatSelectionPresenter(this, DummyScreens(), DummyReservation)
+        SeatSelectionPresenter(this, DummyScreens, DummyReservation)
     }
 
     override fun initStartView() {

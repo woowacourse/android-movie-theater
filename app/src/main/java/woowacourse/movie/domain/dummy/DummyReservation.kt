@@ -1,8 +1,9 @@
-package woowacourse.movie.domain.repository
+package woowacourse.movie.domain.dummy
 
 import woowacourse.movie.domain.model.Reservation
 import woowacourse.movie.domain.model.ScreenView.Movie
 import woowacourse.movie.domain.model.Seat
+import woowacourse.movie.domain.repository.ReservationRepository
 import java.time.LocalDateTime
 
 object DummyReservation : ReservationRepository {

@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.view.MenuItem
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityDetailBinding
+import woowacourse.movie.domain.dummy.DummyScreens
 import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.ScreenDate
-import woowacourse.movie.domain.repository.DummyScreens
 import woowacourse.movie.presentation.base.BaseActivity
 import woowacourse.movie.presentation.model.ReservationInfo
 import woowacourse.movie.presentation.ui.detail.DetailContract.View
@@ -21,7 +21,7 @@ import java.time.LocalTime
 class DetailActivity : BaseActivity<ActivityDetailBinding>(), View {
     override val layoutResourceId: Int
         get() = R.layout.activity_detail
-    override val presenter: DetailPresenter by lazy { DetailPresenter(this, DummyScreens()) }
+    override val presenter: DetailPresenter by lazy { DetailPresenter(this, DummyScreens) }
 
     private val spinnerDateAdapter: SpinnerDateAdapter by lazy {
         SpinnerDateAdapter(this, presenter)

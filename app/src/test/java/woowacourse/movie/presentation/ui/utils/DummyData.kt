@@ -1,6 +1,7 @@
 package woowacourse.movie.presentation.ui.utils
 
 import woowacourse.movie.R
+import woowacourse.movie.domain.dummy.DummyData.seatBoards
 import woowacourse.movie.domain.model.Reservation
 import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.ScreenDate
@@ -13,7 +14,6 @@ import woowacourse.movie.domain.model.SeatModel
 import woowacourse.movie.domain.model.SeatRank
 import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.domain.model.TheaterCount
-import woowacourse.movie.domain.repository.DummySeatBoard
 import woowacourse.movie.presentation.model.ReservationInfo
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -186,7 +186,7 @@ object DummyData {
 
     fun loadSeatBoard(id: Int): Result<SeatBoard> =
         runCatching {
-            DummySeatBoard.seatBoards.find { seatBoard -> seatBoard.id == id }
+            seatBoards.find { seatBoard -> seatBoard.id == id }
                 ?: throw NoSuchElementException()
         }
 

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.domain.repository.ReservationRepository
-import woowacourse.movie.domain.repository.ScreenRepository
+import woowacourse.movie.domain.repository.TheaterRepository
 import woowacourse.movie.presentation.ui.utils.DummyData.dummyReservation
 
 @ExtendWith(MockKExtension::class)
@@ -24,7 +24,7 @@ class ReservationPresenterTest {
     private lateinit var repository: ReservationRepository
 
     @MockK
-    private lateinit var theaterRepository: ScreenRepository
+    private lateinit var theaterRepository: TheaterRepository
 
     @BeforeEach
     fun setUp() {

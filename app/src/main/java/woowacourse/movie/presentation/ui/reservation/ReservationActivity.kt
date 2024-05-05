@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.Intent
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationBinding
+import woowacourse.movie.domain.dummy.DummyReservation
+import woowacourse.movie.domain.dummy.DummyTheater
 import woowacourse.movie.domain.model.Reservation
-import woowacourse.movie.domain.repository.DummyReservation
-import woowacourse.movie.domain.repository.DummyScreens
 import woowacourse.movie.presentation.base.BaseActivity
 import woowacourse.movie.presentation.ui.reservation.ReservationContract.View
 
@@ -14,11 +14,7 @@ class ReservationActivity : BaseActivity<ActivityReservationBinding>(), View {
     override val layoutResourceId: Int
         get() = R.layout.activity_reservation
     override val presenter: ReservationPresenter by lazy {
-        ReservationPresenter(
-            this,
-            DummyReservation,
-            DummyScreens(),
-        )
+        ReservationPresenter(this, DummyReservation, DummyTheater)
     }
 
     override fun initStartView() {
