@@ -1,13 +1,14 @@
 package woowacourse.movie.presentation.ui.seatselection
 
-import woowacourse.movie.domain.model.Seat
-import woowacourse.movie.domain.model.SeatModel
+import woowacourse.movie.domain.model.toSeatModel
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.ScreenRepository
 import woowacourse.movie.presentation.model.MessageType
 import woowacourse.movie.presentation.model.MessageType.ReservationSuccessMessage
 import woowacourse.movie.presentation.model.ReservationInfo
+import woowacourse.movie.presentation.model.SeatModel
 import woowacourse.movie.presentation.model.UserSeat
+import woowacourse.movie.presentation.model.toSeat
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
@@ -48,7 +49,7 @@ class SeatSelectionPresenter(
 
     override fun loadSeatBoard(id: Int) {
         screenRepository.loadSeatBoard(id).onSuccess { seatBoard ->
-            val seats = seatBoard.seats.map { SeatModel(it.column, it.row, it.seatRank) }
+            val seats = seatBoard.seats.map { seat -> seat.toSeatModel() }
             uiModel = uiModel.copy(userSeat = UserSeat(seats))
             view.showSeatBoard(uiModel.userSeat)
         }.onFailure { e ->
@@ -108,8 +109,8 @@ class SeatSelectionPresenter(
                     screen.movie,
                     uiModel.id,
                     uiModel.ticketCount,
-                    uiModel.userSeat.seatModels.filter { it.isSelected }
-                        .map { Seat(it.column, it.row, it.seatRank) },
+                    uiModel.userSeat.seatModels.filter { seatModel -> seatModel.isSelected }
+                        .map { seatModel -> seatModel.toSeat() },
                     dateTime,
                 ).onSuccess { id ->
                     view.showToastMessage(ReservationSuccessMessage)

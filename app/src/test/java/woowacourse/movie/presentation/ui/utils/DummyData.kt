@@ -9,10 +9,10 @@ import woowacourse.movie.domain.model.ScreenView.Ads
 import woowacourse.movie.domain.model.ScreenView.Movie
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.SeatBoard
-import woowacourse.movie.domain.model.SeatModel
 import woowacourse.movie.domain.model.SeatRank
 import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.presentation.model.ReservationInfo
+import woowacourse.movie.presentation.model.SeatModel
 import java.time.LocalDate
 import java.time.LocalDateTime
 

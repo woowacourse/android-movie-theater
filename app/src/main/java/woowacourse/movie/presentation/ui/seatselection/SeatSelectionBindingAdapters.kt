@@ -5,8 +5,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.SeatModel
 import woowacourse.movie.domain.model.SeatRank
+import woowacourse.movie.presentation.model.SeatModel
 import woowacourse.movie.presentation.model.UserSeat
 import woowacourse.movie.presentation.utils.currency
 import java.time.LocalDate

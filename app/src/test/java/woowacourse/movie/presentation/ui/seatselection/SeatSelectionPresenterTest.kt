@@ -9,10 +9,10 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import woowacourse.movie.domain.model.SeatModel
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.ScreenRepository
 import woowacourse.movie.presentation.model.MessageType
+import woowacourse.movie.presentation.model.SeatModel
 import woowacourse.movie.presentation.model.UserSeat
 import woowacourse.movie.presentation.ui.utils.DummyData.dummyReservationInfo
 import woowacourse.movie.presentation.ui.utils.DummyData.dummyScreen
