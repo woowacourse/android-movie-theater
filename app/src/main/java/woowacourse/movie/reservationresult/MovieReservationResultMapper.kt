@@ -11,7 +11,7 @@ fun MovieReservation.toReservationResultUiModel(theaterName: String): Reservatio
         cancelDeadLine,
         screenDateTime,
         headCount.count,
-        reserveSeats.seats.toSeatUiModel(),
+        selectedSeats.selectedSeats.toSeatUiModel(),
         totalPrice.price,
         theaterName,
     )

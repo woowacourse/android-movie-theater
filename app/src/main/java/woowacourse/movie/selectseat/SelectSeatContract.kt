@@ -3,6 +3,7 @@ package woowacourse.movie.selectseat
 import woowacourse.movie.moviereservation.uimodel.BookingInfoUiModel
 import woowacourse.movie.selectseat.uimodel.PriceUiModel
 import woowacourse.movie.selectseat.uimodel.SeatUiModel
+import woowacourse.movie.selectseat.uimodel.SelectState
 
 interface SelectSeatContract {
     interface View {
@@ -15,13 +16,19 @@ interface SelectSeatContract {
 
         fun updatePrice(updatedPrice: PriceUiModel)
 
-        fun updateSeatState(selectedSeats: List<SeatUiModel>)
+        fun updateSeatState(
+            selectedSeats: List<SeatUiModel>,
+            selectState: SelectState,
+        )
 
         fun navigateToResult(reservationId: Long)
     }
 
     interface Presenter {
-        fun loadSeat(movieId: Long)
+        fun loadSeat(
+            movieId: Long,
+            count: Int,
+        )
 
         fun loadReservationInfo(movieId: Long)
 

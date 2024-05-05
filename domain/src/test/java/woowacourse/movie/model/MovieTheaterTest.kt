@@ -7,8 +7,8 @@ class MovieTheaterTest {
     @Test
     fun `상영관의 1행은 S등급, 2행은 B등급, 열의 길이가 2일 때 그에 따른 좌석들을 생성한다`() {
         val theater =
-            MovieTheater(0, mapOf(SeatRate.S to listOf(1), SeatRate.A to listOf(2)), 2, "잠실")
-        val seats = theater.seats()
+            MovieTheater(0, TheaterSeatsSystem.seats(mapOf(SeatRate.S to listOf(1), SeatRate.A to listOf(2)), 2), "잠실")
+        val seats = theater.seats
         assertThat(seats).contains(
             Seat(SeatRate.S, 0, 0),
             Seat(SeatRate.S, 0, 1),

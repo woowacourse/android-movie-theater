@@ -7,13 +7,10 @@
     <data>
 
         <import type="android.view.View" />
+        <import type="woowacourse.movie.selectseat.uimodel.SelectState"/>
         <variable
-            name="selectedSeats"
-            type="woowacourse.movie.selectseat.uimodel.SelectedSeatsUiModel" />
-
-        <variable
-            name="presenter"
-            type="woowacourse.movie.selectseat.SelectSeatContract.Presenter" />
+            name="state"
+            type="woowacourse.movie.selectseat.uimodel.SelectState" />
 
     </data>
 
@@ -116,9 +113,10 @@
             android:id="@+id/tv_select_seat_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility='@{selectedSeats.seats.isEmpty() ? View.GONE : View.VISIBLE}'
+            android:visibility='@{state == SelectState.NONE || state == SelectState.SUCCESS ? View.GONE : View.VISIBLE}'
             app:layout_constraintTop_toBottomOf="@id/tl_select_seat"
             tools:text="좌석을 더 선택해주세요."
+            android:text="@{state == SelectState.EXCEED ? @string/select_more_seat_error_message: @string/select_less_seat_error_message}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="20dp"

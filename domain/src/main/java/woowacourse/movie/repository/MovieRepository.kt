@@ -4,8 +4,9 @@ import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieReservation
 import woowacourse.movie.model.MovieTheater
-import woowacourse.movie.model.ReserveSeats
 import woowacourse.movie.model.ScreeningMovie
+import woowacourse.movie.model.Seat
+import woowacourse.movie.model.SelectedSeats
 import java.time.LocalDateTime
 
 interface MovieRepository {
@@ -26,9 +27,15 @@ interface MovieRepository {
         screenMovieId: Long,
         dateTime: LocalDateTime,
         count: HeadCount,
-        seats: ReserveSeats,
+        seats: SelectedSeats,
         theaterId: Long,
     ): Long
 
     fun movieReservationById(id: Long): MovieReservation
+
+    fun seatByTheaterId(
+        row: Int,
+        col: Int,
+        theaterId: Long,
+    ): Seat
 }

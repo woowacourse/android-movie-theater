@@ -4,8 +4,9 @@ import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieReservation
 import woowacourse.movie.model.MovieTheater
-import woowacourse.movie.model.ReserveSeats
 import woowacourse.movie.model.ScreeningMovie
+import woowacourse.movie.model.Seat
+import woowacourse.movie.model.SelectedSeats
 import woowacourse.movie.repository.MovieRepository
 import java.time.LocalDateTime
 
@@ -51,16 +52,19 @@ object DummyMovies : MovieRepository {
         screenMovieId: Long,
         dateTime: LocalDateTime,
         count: HeadCount,
-        seats: ReserveSeats,
+        seats: SelectedSeats,
         theaterId: Long,
     ): Long {
+        val theater = theaterById(theaterId)
+        theater.reserveSeat(seats)
+
         reservations +=
             MovieReservation(
                 id = ++reservationId,
                 screeningMovie = screenMovieById(screenMovieId),
                 screenDateTime = dateTime,
                 headCount = count,
-                reserveSeats = seats,
+                selectedSeats = seats,
                 theaterId = theaterId,
             )
         return reservationId
@@ -71,4 +75,11 @@ object DummyMovies : MovieRepository {
             IdError.NO_RESERVATION.message.format(id),
         )
     }
+
+    override fun seatByTheaterId(
+        row: Int,
+        col: Int,
+        theaterId: Long,
+    ): Seat =
+        theaterById(theaterId).seats.firstOrNull { it.row == row && it.col == col } ?: error("해당 극장에는 row:$Int, col:${Int}에 해당하는 좌석이 없습니다.")
 }

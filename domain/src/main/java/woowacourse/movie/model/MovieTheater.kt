@@ -5,22 +5,23 @@ class MovieTheater(
     val seats: List<Seat>,
     val name: String,
 ) {
-    fun selectedSeats() = seats.filter { it.state == SeatState.SELECTED }
+    fun alreadySelected(): List<Seat> = seats.filter { it.state == SeatState.RESERVED }
 
-    fun changeSeatState(
-        row: Int,
-        col: Int,
-    ): MovieTheater {
+    fun reserveSeat(selectedSeats: SelectedSeats): MovieTheater {
+        val selectedSeatsMap = selectedSeats.selectedSeats.associateBy { it.row to it.col }
+
         val updatedSeats =
-            seats.map {
-                if (it.row == row && it.col == col) {
-                    it.changeState()
-                } else {
-                    it
-                }
+            seats.map { seat ->
+                selectedSeatsMap[seat.row to seat.col]?.let { seat.copy(state = it.state) } ?: seat
             }
+
         return MovieTheater(id, updatedSeats, name)
     }
+
+    fun seat(
+        row: Int,
+        col: Int,
+    ) = seats.firstOrNull { it.row == row && it.col == col } ?: error("해당 극장에는 $row $col 에 해당하는 좌석이 없습니다.")
 
     companion object {
         val STUB_A =

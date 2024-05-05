@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.CheckBox
 import android.widget.TableRow
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.data.DummyMovies
@@ -15,16 +14,18 @@ import woowacourse.movie.moviereservation.uimodel.BookingInfoUiModel
 import woowacourse.movie.reservationresult.ReservationResultActivity
 import woowacourse.movie.selectseat.uimodel.PriceUiModel
 import woowacourse.movie.selectseat.uimodel.SeatUiModel
-import woowacourse.movie.selectseat.uimodel.SelectResult
+import woowacourse.movie.selectseat.uimodel.SelectState
 import woowacourse.movie.selectseat.uimodel.SelectedSeatsUiModel
 import woowacourse.movie.util.bundleParcelable
 import woowacourse.movie.util.intentParcelable
 import woowacourse.movie.util.showAlertDialog
+import woowacourse.movie.util.showErrorToastMessage
 
 class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
     private lateinit var presenter: SelectSeatContract.Presenter
     private lateinit var selectedSeats: SelectedSeatsUiModel
     private lateinit var bookingInfoUiModel: BookingInfoUiModel
+    private var state: SelectState = SelectState.NONE
 
     private lateinit var binding: ActivitySelectSeatBinding
 
@@ -66,12 +67,9 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
     }
 
     private fun initView() {
-        binding.btnSelectSeatReserve.setOnClickListener {
-            presenter.completeReservation(bookingInfoUiModel)
-        }
-
-        presenter.loadSeat(bookingInfoUiModel.screenMovieId)
+        presenter.loadSeat(bookingInfoUiModel.screenMovieId, bookingInfoUiModel.count.count.toInt())
         presenter.loadReservationInfo(bookingInfoUiModel.screenMovieId)
+        binding.state = state
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -83,7 +81,6 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
 
     override fun showSeat(theaterSeats: List<SeatUiModel>) {
         selectedSeats = SelectedSeatsUiModel()
-        binding.selectedSeats = selectedSeats
         theaterSeats.forEach { seatUiModel ->
             val seatView: CheckBox = tableChildView(seatUiModel.row, seatUiModel.col)
             seatView.setTextColor(getColor(seatUiModel.rateColor.color))
@@ -91,7 +88,6 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
             seatView.setOnClickListener {
                 presenter.changeSeatState(seatUiModel)
                 binding.btnSelectSeatReserve.isEnabled = selectedSeats.seats.isNotEmpty()
-                binding.selectedSeats = selectedSeats
             }
         }
     }
@@ -108,8 +104,13 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
         binding.tvSelectSeatPrice.text = updatedPrice.price
     }
 
-    override fun updateSeatState(selectedSeats: List<SeatUiModel>) {
+    override fun updateSeatState(
+        selectedSeats: List<SeatUiModel>,
+        selectState: SelectState,
+    ) {
         this.selectedSeats = SelectedSeatsUiModel(selectedSeats)
+        state = selectState
+        binding.state = state
     }
 
     override fun navigateToResult(reservationId: Long) {
@@ -131,15 +132,27 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
     }
 
     private fun showClickResult() {
-        when (val selectResult = selectResult()) {
-            is SelectResult.Exceed -> showErrorToastMessage(selectResult.message)
-            is SelectResult.LessSelect -> showErrorToastMessage(selectResult.message)
-            is SelectResult.Success -> confirmAlertDialog()
-        }
-    }
+        when (state) {
+            SelectState.EXCEED ->
+                showErrorToastMessage(
+                    this,
+                    getString(R.string.select_more_seat_error_message),
+                )
 
-    private fun showErrorToastMessage(messageRes: String) {
-        Toast.makeText(this, messageRes, Toast.LENGTH_SHORT).show()
+            SelectState.LESS ->
+                showErrorToastMessage(
+                    this,
+                    getString(R.string.select_less_seat_error_message),
+                )
+
+            SelectState.NONE ->
+                showErrorToastMessage(
+                    this,
+                    getString(R.string.select_no_seat_error_message),
+                )
+
+            SelectState.SUCCESS -> confirmAlertDialog()
+        }
     }
 
     private fun confirmAlertDialog() =
@@ -155,21 +168,6 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
             },
             "취소",
         )
-
-    private fun selectResult(): SelectResult =
-        when {
-            bookingInfoUiModel.maxSelectSize() < selectedSeats.seats.size ->
-                SelectResult.Exceed(
-                    getString(R.string.select_more_seat_error_message),
-                )
-
-            bookingInfoUiModel.maxSelectSize() > selectedSeats.seats.size ->
-                SelectResult.LessSelect(
-                    getString(R.string.select_less_seat_error_message),
-                )
-
-            else -> SelectResult.Success
-        }
 
     companion object {
         private const val EXTRA_BOOKING_ID: String = "bookingId"

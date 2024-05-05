@@ -1,12 +1,15 @@
 package woowacourse.movie.model
 
 enum class SeatState {
+    NONE,
     SELECTED,
-    NONE, ;
+    RESERVED,
+    ;
 
     fun reserveState(): SeatState =
         when (this) {
-            SELECTED -> NONE
             NONE -> SELECTED
+            SELECTED -> RESERVED
+            RESERVED -> RESERVED
         }
 }
