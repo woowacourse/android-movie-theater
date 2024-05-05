@@ -43,6 +43,7 @@ interface SeatSelectionContract {
 
         fun deliverReservationInfo(onReservationDataSave: OnReservationDataSave)
 
+        fun handleUndeliveredData()
     }
 
     interface View {
@@ -78,5 +79,7 @@ interface SeatSelectionContract {
         fun restoreSelectedSeats(selectedSeats: List<Int>)
 
         fun showErrorToast()
+
+        fun showErrorSnackBar()
     }
 }

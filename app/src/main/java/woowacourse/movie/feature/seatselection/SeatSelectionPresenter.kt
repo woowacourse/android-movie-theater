@@ -92,4 +92,14 @@ class SeatSelectionPresenter(
     override fun deliverReservationInfo(onReservationDataSave: OnReservationDataSave) {
         onReservationDataSave(headCount, seats, seats.seatsIndex)
     }
+
+    override fun handleUndeliveredData() {
+        if (movieId == -1 ||
+            theaterId == -1 ||
+            headCount.count == 0 ||
+            screeningDateTime == ScreeningDateTime("", "")
+        ) {
+            view.showErrorSnackBar()
+        }
+    }
 }

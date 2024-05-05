@@ -8,6 +8,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
+import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.db.screening.ScreeningDao
@@ -15,7 +16,6 @@ import woowacourse.movie.db.seats.SeatsDao
 import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.feature.finished.ReservationFinishedActivity
 import woowacourse.movie.feature.home.HomeFragment.Companion.MOVIE_ID
-import woowacourse.movie.feature.reservation.ReservationActivity
 import woowacourse.movie.feature.reservation.ReservationActivity.Companion.HEAD_COUNT
 import woowacourse.movie.feature.reservation.ReservationActivity.Companion.SCREENING_DATE_TIME
 import woowacourse.movie.feature.reservation.ReservationActivity.Companion.TICKET
@@ -48,6 +48,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         initPresenter()
         seatsTable = collectSeatsInTableLayout()
         with(presenter) {
+            handleUndeliveredData()
             loadSeatNumber()
             loadMovie()
         }
@@ -65,13 +66,14 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         savedInstanceState.let { bundle ->
+            // TODO Seats 에러 핸들링 방법 변경하기
             runCatching {
                 restoreSeatsData(bundle)
-                restoreReservationData(bundle)
             }.onFailure {
                 showErrorToast()
                 finish()
             }
+            restoreReservationData(bundle)
         }
     }
 
@@ -161,6 +163,20 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     override fun showErrorToast() = makeToast(this, getString(R.string.all_error))
 
+    override fun showErrorSnackBar() {
+        val snackBar =
+            Snackbar.make(
+                binding.root,
+                getString(R.string.all_error),
+                Snackbar.LENGTH_INDEFINITE,
+            )
+        snackBar.setAction(R.string.all_confirm) {
+            snackBar.dismiss()
+            finish()
+        }
+        snackBar.show()
+    }
+
     private fun receiveReservationInfo() {
         headCount = receiveHeadCount()
         screeningDateTime = receiveScreeningDateTime()
@@ -184,34 +200,17 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private fun receiveMovieId() =
         intent.getIntExtra(
             MOVIE_ID,
-            ReservationActivity.DEFAULT_MOVIE_ID,
+            -1,
         )
 
-    private fun receiveHeadCount() {
-        runCatching {
-            intent.intentSerializable(HEAD_COUNT, HeadCount::class.java) ?: throw NoSuchElementException()
-        }.onSuccess {
-            headCount = it
-        }.onFailure {
-            showErrorToast()
-            finish()
-        }
-    }
+    private fun receiveHeadCount() = intent.intentSerializable(HEAD_COUNT, HeadCount::class.java) ?: HeadCount(0)
 
-    private fun receiveTheaterId(): Int = intent.getIntExtra(THEATER_ID, 0)
+    private fun receiveTheaterId(): Int = intent.getIntExtra(THEATER_ID, -1)
 
-    private fun receiveScreeningDateTime() {
-        runCatching {
-            intent.intentSerializable(
-                SCREENING_DATE_TIME, ScreeningDateTime::class.java,
-            ) ?: throw NoSuchElementException()
-        }.onSuccess {
-            screeningDateTime = it
-        }.onFailure {
-            showErrorToast()
-            finish()
-        }
-    }
+    private fun receiveScreeningDateTime() =
+        intent.intentSerializable(
+            SCREENING_DATE_TIME, ScreeningDateTime::class.java,
+        ) ?: ScreeningDateTime("", "")
 
     private fun collectSeatsInTableLayout(): List<Button> =
         binding.tableLayoutSeatSelection.children.filterIsInstance<TableRow>().flatMap { it.children }
@@ -220,7 +219,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private fun getSeatsCount(): Int = seatsTable.count { seat -> seat.isSelected }
 
     private fun restoreReservationData(bundle: Bundle) {
-        val headCount = bundle.bundleSerializable(HEAD_COUNT, HeadCount::class.java) ?: throw NoSuchElementException()
+        headCount = bundle.bundleSerializable(HEAD_COUNT, HeadCount::class.java) ?: HeadCount(0)
         presenter.restoreReservation()
     }
 
