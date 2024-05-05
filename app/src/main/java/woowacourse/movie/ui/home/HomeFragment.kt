@@ -17,7 +17,7 @@ import woowacourse.movie.ui.home.adapter.ScreenAdapter
 import woowacourse.movie.ui.home.adapter.TheaterAdapter
 
 class HomeFragment : Fragment(), HomeContract.View {
-    private lateinit var adapter: ScreenAdapter
+    private lateinit var screenAdapter: ScreenAdapter
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -49,16 +49,16 @@ class HomeFragment : Fragment(), HomeContract.View {
     }
 
     private fun initAdapter() {
-        adapter =
+        screenAdapter =
             ScreenAdapter(
                 { screenId -> homePresenter.loadTheaters(screenId) },
                 { adId -> Toast.makeText(activity, "광고 클릭 id: $adId", Toast.LENGTH_SHORT).show() },
             )
-        binding.adapter = adapter
+        binding.rvScreens.adapter = screenAdapter
     }
 
     override fun showScreens(screens: List<ScreenAd>) {
-        adapter.submitList(screens)
+        screenAdapter.submitList(screens)
     }
 
     override fun showTheaters(
