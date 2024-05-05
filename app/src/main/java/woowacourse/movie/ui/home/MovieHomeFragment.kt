@@ -35,13 +35,11 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View {
     override fun showMovieContents(movieContents: List<MovieContent>) {
         binding.movieContentList.adapter =
             MovieContentAdapter(movieContents) { id ->
-                val bundle = Bundle()
                 val fragment = TheaterSelectionBottomSheetFragment()
-                fragment.apply {
-                    bundle.putLong(MovieHomeKey.MOVIE_CONTENT_ID, id)
-                    arguments = bundle
-                    show(parentFragmentManager, fragment.tag)
-                }
+                val bundle = Bundle()
+                bundle.putLong(MovieHomeKey.MOVIE_CONTENT_ID, id)
+                fragment.arguments = bundle
+                fragment.show(parentFragmentManager, fragment.tag)
             }
     }
 }
