@@ -14,6 +14,10 @@ import woowacourse.movie.ui.setting.MovieSettingFragment
 class MovieMainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieMainBinding
 
+    private val homeFragment by lazy { MovieHomeFragment() }
+    private val bookingHistoryFragment by lazy { MovieBookingHistoryFragment() }
+    private val settingFragment by lazy { MovieSettingFragment() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_main)
@@ -22,14 +26,15 @@ class MovieMainActivity : AppCompatActivity() {
     }
 
     private fun initializeBottomNavigation() {
-        replace(MovieHomeFragment())
+        replace(homeFragment) // 초기에는 홈 화면을 표시
+
         binding.mainBottomNavigation.apply {
             selectedItemId = R.id.menu_home
-            setOnItemSelectedListener {
-                when (it.itemId) {
-                    R.id.menu_booking_history -> replace(MovieBookingHistoryFragment())
-                    R.id.menu_home -> replace(MovieHomeFragment())
-                    R.id.menu_setting -> replace(MovieSettingFragment())
+            setOnItemSelectedListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.menu_booking_history -> replace(bookingHistoryFragment)
+                    R.id.menu_home -> replace(homeFragment)
+                    R.id.menu_setting -> replace(settingFragment)
                     else -> return@setOnItemSelectedListener false
                 }
                 true
