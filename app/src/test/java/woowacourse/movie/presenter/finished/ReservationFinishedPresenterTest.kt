@@ -44,8 +44,8 @@ class ReservationFinishedPresenterTest {
         val expectedMovieTitle = "해리 포터와 마법사의 돌"
 
         every { view.showMovieTitle(firstMovie) } answers {
-            val actualMovieTitle = arg<Movie>(0)
-            assertEquals(actualMovieTitle.title, expectedMovieTitle)
+            val actualMovie = arg<Movie>(0)
+            assertEquals(actualMovie.title, expectedMovieTitle)
         }
         presenter.loadMovie(0)
         verify { view.showMovieTitle(firstMovie) }
