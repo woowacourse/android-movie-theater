@@ -7,8 +7,16 @@
     <data>
 
         <variable
+            name="movieContent"
+            type="woowacourse.movie.model.movie.MovieContent" />
+
+        <variable
+            name="theater"
+            type="woowacourse.movie.model.movie.Theater" />
+
+        <variable
             name="presenter"
-            type="woowacourse.movie.ui.reservation.MovieReservationPresenter" />
+            type="woowacourse.movie.ui.reservation.MovieReservationContract.Presenter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,8 +43,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:scaleType="centerCrop"
-                    app:context = "@{context}"
-                    app:imgRes="@{presenter.movieContent.imageId}"
+                    app:context="@{context}"
+                    app:imgRes="@{movieContent.imageId}"
                     app:layout_constraintBottom_toTopOf="@+id/text_layout"
                     app:layout_constraintDimensionRatio="360:340"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -55,7 +63,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="27dp"
-                        android:text="@{presenter.movieContent.title}"
+                        android:text="@{movieContent.title}"
                         android:textSize="24sp"
                         android:textStyle="bold" />
 
@@ -64,17 +72,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="34dp"
+                        android:textSize="16sp"
                         movie:context="@{context}"
-                        movie:openingDate="@{presenter.movieContent.openingMovieDate}"
-                        movie:endingDate="@{presenter.movieContent.endingMoviesDate}"
-                        android:textSize="16sp" />
+                        movie:endingDate="@{movieContent.endingMoviesDate}"
+                        movie:openingDate="@{movieContent.openingMovieDate}" />
 
                     <TextView
                         android:id="@+id/tv_running_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="19dp"
-                        android:text="@{@string/running_time(presenter.movieContent.runningTime)}"
+                        android:text="@{@string/running_time(movieContent.runningTime)}"
                         android:textSize="16sp" />
 
                     <TextView
@@ -82,7 +90,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="30dp"
-                        android:text="@{presenter.movieContent.synopsis}"
+                        android:text="@{movieContent.synopsis}"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -113,8 +121,8 @@
                     android:id="@+id/sp_screening_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:spinnerMode="dropdown"
-                    android:entries="@{presenter.movieContent.datesInRange}"/>
+                    android:entries="@{movieContent.datesInRange}"
+                    android:spinnerMode="dropdown" />
 
                 <View
                     android:layout_width="0dp"
@@ -125,8 +133,8 @@
                     android:id="@+id/sp_screening_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:spinnerMode="dropdown"
-                    android:entries="@{presenter.theater.screeningTimes}"/>
+                    android:entries="@{theater.screeningTimes}"
+                    android:spinnerMode="dropdown" />
             </LinearLayout>
 
             <LinearLayout
@@ -164,11 +172,11 @@
                 android:id="@+id/btn_reservation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> presenter.reserveSeat()}"
                 android:paddingVertical="8dp"
                 android:text="@string/select_seat"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:onClick="@{() -> presenter.reserveSeat()}"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 

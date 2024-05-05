@@ -16,6 +16,8 @@ import woowacourse.movie.databinding.ActivityMovieReservationBinding
 import woowacourse.movie.model.data.MovieContentsImpl
 import woowacourse.movie.model.data.TheatersImpl
 import woowacourse.movie.model.data.UserTicketsImpl
+import woowacourse.movie.model.movie.MovieContent
+import woowacourse.movie.model.movie.Theater
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.selection.MovieSeatSelectionActivity
 import woowacourse.movie.ui.utils.getImageFromId
@@ -27,6 +29,8 @@ class MovieReservationActivity :
     BaseActivity<MovieReservationPresenter>(),
     MovieReservationContract.View {
     private lateinit var binding: ActivityMovieReservationBinding
+    private val theaterId by lazy { theaterId() }
+    private val movieContentId by lazy { movieContentId() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +38,6 @@ class MovieReservationActivity :
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_reservation)
         binding.presenter = presenter
 
-        val theaterId = theaterId()
-        val movieContentId = movieContentId()
         if (movieContentId == DEFAULT_VALUE || theaterId == DEFAULT_VALUE) {
             presenter.handleError(NoSuchElementException())
             return
@@ -119,6 +121,14 @@ class MovieReservationActivity :
             android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun showMovieContent(
+        movieContent: MovieContent,
+        theater: Theater,
+    ) {
+        binding.movieContent = movieContent
+        binding.theater = theater
     }
 
     override fun updateReservationCount(reservationCount: Int) {

@@ -22,6 +22,17 @@ class MovieReservationPresenterTest {
     }
 
     @Test
+    fun `영화 정보를 표시한다`() {
+        // given
+
+        // when
+        presenter.loadMovieContent(0L, 0L)
+
+        // then
+        verify { view.showMovieContent(any(), any()) }
+    }
+
+    @Test
     fun `영화 정보를 표시할수 없을 경우 에러를 표시한다`() {
         // given
 

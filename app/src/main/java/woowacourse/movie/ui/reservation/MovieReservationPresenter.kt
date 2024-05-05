@@ -21,8 +21,8 @@ class MovieReservationPresenter(
     private lateinit var reservationCount: ReservationCount
     private lateinit var screeningDate: ScreeningDate
     private lateinit var movieTime: LocalTime
-    lateinit var theater: Theater
-    lateinit var movieContent: MovieContent
+    private lateinit var theater: Theater
+    private lateinit var movieContent: MovieContent
 
     override fun updateReservationCount(count: Int) {
         reservationCount = ReservationCount(count)
@@ -44,6 +44,7 @@ class MovieReservationPresenter(
         try {
             movieContent = movieContents.find(movieContentId)
             theater = theaters.find(theaterId)
+            view.showMovieContent(movieContent, theater)
         } catch (e: NoSuchElementException) {
             view.showError(e)
         }
