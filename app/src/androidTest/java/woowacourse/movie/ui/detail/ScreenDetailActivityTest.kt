@@ -37,7 +37,7 @@ class ScreenDetailActivityTest {
     private val timeSpinner: ViewInteraction = onView(withId(R.id.spn_time))
 
     @Test
-    fun 카운트가_10_미만일_때_플러스_버튼_눌러을_때_증가() {
+    fun `카운트가_10_미만일_때_플러스_버튼_눌러을_때_증가`() {
         // when
         plusBtn.perform(click())
 
@@ -47,7 +47,7 @@ class ScreenDetailActivityTest {
     }
 
     @Test
-    fun 카운트가_1_초과일_때_마이너스_버튼_눌러을_때_감소() {
+    fun `카운트가_1_초과일_때_마이너스_버튼_눌러을_때_감소`() {
         // given - 카운트가 2일 때
         plusBtn.perform(click())
 
@@ -60,7 +60,7 @@ class ScreenDetailActivityTest {
     }
 
     @Test
-    fun 카운트가_1일_때_마이너스_버튼_누르면_감소하지_않는다() {
+    fun `카운트가_1일_때_마이너스_버튼_누르면_감소하지_않는다`() {
         // when
         minusBtn.perform(click())
 
@@ -70,7 +70,7 @@ class ScreenDetailActivityTest {
     }
 
     @Test
-    fun 카운트가_10일_때_마이너스_버튼_누르면_증가하지_않는다() {
+    fun `카운트가_10일_때_마이너스_버튼_누르면_증가하지_않는다`() {
         // given - 카운트가 1 -> 10 일 때
         plusBtn.perform(click())
         plusBtn.perform(click())
@@ -91,7 +91,7 @@ class ScreenDetailActivityTest {
     }
 
     @Test
-    fun 카운트가_2일_떄_화면을_가로로_회전해도_카운트가_유지된다() {
+    fun `카운트가_2일_떄_화면을_가로로_회전해도_카운트가_유지된다`() {
         val activityScenario = activityRule.scenario
         plusBtn.perform(click())
 
@@ -103,7 +103,7 @@ class ScreenDetailActivityTest {
     }
 
     @Test
-    fun 카운트가_2일_떄_화면을_가로로_회전한_후에_다시_카운트를_올리면_3이_된다() {
+    fun `카운트가_2일_떄_화면을_가로로_회전한_후에_다시_카운트를_올리면_3이_된다`() {
         // given
         val activityScenario = activityRule.scenario
         plusBtn.perform(click())
