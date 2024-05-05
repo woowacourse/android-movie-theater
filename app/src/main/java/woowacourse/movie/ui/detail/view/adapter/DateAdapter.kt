@@ -6,13 +6,13 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import woowacourse.movie.domain.model.DateRange
-import woowacourse.movie.ui.detail.view.SelectDateListener
+import woowacourse.movie.ui.detail.view.OnItemSelectedListener
 import java.time.LocalDate
 
 class DateAdapter(
     context: Context,
     dateRange: DateRange,
-    private val selectDateListener: SelectDateListener,
+    private val onItemSelectedListener: OnItemSelectedListener,
 ) : ArrayAdapter<LocalDate>(context, android.R.layout.simple_spinner_item, dateRange.allDates()), AdapterView.OnItemSelectedListener {
     init {
         Log.d(TAG, "init: ")
@@ -26,7 +26,7 @@ class DateAdapter(
         id: Long,
     ) {
         Log.d(TAG, "onItemSelected: position: $position, ")
-        selectDateListener.selectDate(position)
+        onItemSelectedListener.onItemSelected(position)
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {

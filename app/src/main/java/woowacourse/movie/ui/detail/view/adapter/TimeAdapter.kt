@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import woowacourse.movie.domain.model.ScreenTimePolicy
-import woowacourse.movie.ui.detail.view.SelectTimeListener
+import woowacourse.movie.ui.detail.view.OnItemSelectedListener
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -14,7 +14,7 @@ class TimeAdapter(
     context: Context,
     screenTimePolicy: ScreenTimePolicy,
     date: LocalDate,
-    private val selectTimeListener: SelectTimeListener,
+    private val onTimeSelectedListener: OnItemSelectedListener,
 ) : ArrayAdapter<LocalTime>(
         context,
         android.R.layout.simple_spinner_item,
@@ -31,7 +31,7 @@ class TimeAdapter(
         position: Int,
         id: Long,
     ) {
-        selectTimeListener.selectTime(position)
+        onTimeSelectedListener.onItemSelected(position)
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {

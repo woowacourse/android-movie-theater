@@ -7,8 +7,8 @@ interface DateTimeSpinnerView {
     fun show(
         dateRange: DateRange,
         screenTimePolicy: ScreenTimePolicy,
-        selectDateListener: SelectDateListener,
-        selectTimeListener: SelectTimeListener,
+        onDateSelectedListener: OnItemSelectedListener,
+        onTimeSelectedListener: OnItemSelectedListener,
     )
 
     fun restoreDatePosition(position: Int)

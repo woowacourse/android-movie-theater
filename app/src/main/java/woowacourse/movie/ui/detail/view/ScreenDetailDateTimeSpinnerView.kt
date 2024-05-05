@@ -26,11 +26,11 @@ class ScreenDetailDateTimeSpinnerView(context: Context, attrs: AttributeSet? = n
     override fun show(
         dateRange: DateRange,
         screenTimePolicy: ScreenTimePolicy,
-        selectDateListener: SelectDateListener,
-        selectTimeListener: SelectTimeListener,
+        onDateSelectedListener: OnItemSelectedListener,
+        onTimeSelectedListener: OnItemSelectedListener,
     ) {
-        initDateAdapter(dateRange, screenTimePolicy, selectDateListener)
-        initTimeAdapter(dateRange.start, screenTimePolicy, selectTimeListener)
+        initDateAdapter(dateRange, screenTimePolicy, onDateSelectedListener)
+        initTimeAdapter(dateRange.start, screenTimePolicy, onTimeSelectedListener)
     }
 
     override fun restoreDatePosition(position: Int) {
@@ -52,7 +52,7 @@ class ScreenDetailDateTimeSpinnerView(context: Context, attrs: AttributeSet? = n
     private fun initDateAdapter(
         dateRange: DateRange,
         screenTimePolicy: ScreenTimePolicy,
-        selectDateListener: SelectDateListener,
+        onDateSelectedListener: OnItemSelectedListener,
     ) {
         dateAdapter =
             DateAdapter(context, dateRange) { position ->
@@ -61,7 +61,7 @@ class ScreenDetailDateTimeSpinnerView(context: Context, attrs: AttributeSet? = n
 
                 timeAdapter.clear()
                 timeAdapter.addAll(times)
-                selectDateListener.selectDate(position)
+                onDateSelectedListener.onItemSelected(position)
             }
         binding.dateAdapter = dateAdapter
         binding.spnDate.onItemSelectedListener = dateAdapter
@@ -70,13 +70,13 @@ class ScreenDetailDateTimeSpinnerView(context: Context, attrs: AttributeSet? = n
     private fun initTimeAdapter(
         date: LocalDate,
         screenTimePolicy: ScreenTimePolicy,
-        selectTimeListener: SelectTimeListener,
+        onTimeSelectListener: OnItemSelectedListener,
     ) {
         timeAdapter =
-            TimeAdapter(context, screenTimePolicy, date) { position ->
+            TimeAdapter(context, screenTimePolicy, date, onTimeSelectedListener = { position ->
                 Log.d(TAG, "initTimeAdapter: position: $position")
-                selectTimeListener.selectTime(position)
-            }
+                onTimeSelectListener.onItemSelected(position)
+            })
 
         binding.timeAdapter = timeAdapter
         binding.spnTime.onItemSelectedListener = timeAdapter
