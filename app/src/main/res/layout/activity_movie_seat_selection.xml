@@ -11,6 +11,10 @@
         <variable
             name="presenter"
             type="woowacourse.movie.ui.selection.MovieSeatSelectionPresenter" />
+
+        <variable
+            name="title"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -263,7 +267,7 @@
                     android:id="@+id/movie_title_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{presenter.userTicket.title}"
+                    android:text="@{title}"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 

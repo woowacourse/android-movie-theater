@@ -10,13 +10,14 @@ class MovieSeatSelectionPresenter(
     private val userTicketDataSource: DefaultMovieDataSource<Long, UserTicket>,
 ) :
     MovieSeatSelectionContract.Presenter {
-    lateinit var userTicket: UserTicket
+    private lateinit var userTicket: UserTicket
 
     override fun loadTheaterInfo(ticketId: Long) {
         try {
             userTicket = userTicketDataSource.find(ticketId)
             view.showReservationTotalAmount(userTicket.reservationDetail.totalSeatAmount())
             view.showTheater(Seat.ROW_LEN, Seat.COL_LEN)
+            view.showMovieTitle(userTicket.title)
         } catch (e: NoSuchElementException) {
             view.showError(e)
         }
