@@ -2,6 +2,7 @@ package woowacourse.movie.ui.detail.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
@@ -29,15 +30,8 @@ class ScreenDetailDateTimeSpinnerView(context: Context, attrs: AttributeSet? = n
         selectDateListener: SelectDateListener,
         selectTimeListener: SelectTimeListener,
     ) {
-        initDateAdapter(
-            dateRange,
-            screenTimePolicy,
-            selectDateListener,
-        )
+        initDateAdapter(dateRange, screenTimePolicy, selectDateListener)
         initTimeAdapter(dateRange.start, screenTimePolicy, selectTimeListener)
-
-        binding.spnDate.onItemSelectedListener = dateAdapter.initClickListener()
-        binding.spnTime.onItemSelectedListener = timeAdapter.initClickListener()
     }
 
     override fun restoreDatePosition(position: Int) {
@@ -62,13 +56,16 @@ class ScreenDetailDateTimeSpinnerView(context: Context, attrs: AttributeSet? = n
         selectDateListener: SelectDateListener,
     ) {
         dateAdapter =
-            DateAdapter(context, dateRange, {
+            DateAdapter(context, dateRange) { position ->
+                val times = screenTimePolicy.screeningTimes(dateRange.allDates()[position]).toList()
+                Log.d(TAG, "initDateAdapter: times: $times")
+
                 timeAdapter.clear()
-                timeAdapter.addAll(screenTimePolicy.screeningTimes(it).toList())
-            }, {
-                selectDateListener.selectDate(it)
-            })
+                timeAdapter.addAll(times)
+                selectDateListener.selectDate(position)
+            }
         binding.dateAdapter = dateAdapter
+        binding.spnDate.onItemSelectedListener = dateAdapter
     }
 
     private fun initTimeAdapter(
@@ -77,9 +74,16 @@ class ScreenDetailDateTimeSpinnerView(context: Context, attrs: AttributeSet? = n
         selectTimeListener: SelectTimeListener,
     ) {
         timeAdapter =
-            TimeAdapter(context, screenTimePolicy, date) {
-                selectTimeListener.selectTime(it)
+            TimeAdapter(context, screenTimePolicy, date) { position ->
+                Log.d(TAG, "initTimeAdapter: position: $position")
+                selectTimeListener.selectTime(position)
             }
+
         binding.timeAdapter = timeAdapter
+        binding.spnTime.onItemSelectedListener = timeAdapter
+    }
+
+    companion object {
+        const val TAG = "ScreenDetailDateTimeSpinnerView"
     }
 }

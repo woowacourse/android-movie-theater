@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.detail
 
+import android.util.Log
 import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.DateTime
 import woowacourse.movie.domain.model.Screen
@@ -55,10 +56,12 @@ class ScreenDetailPresenter(
     }
 
     override fun saveDatePosition(datePosition: Int) {
+        Log.d(TAG, "saveDatePosition: $datePosition")
         this.datePosition = datePosition
     }
 
     override fun saveTimePosition(timePosition: Int) {
+        Log.d(TAG, "saveTimePosition: $timePosition")
         this.timePosition = timePosition
     }
 
@@ -107,5 +110,9 @@ class ScreenDetailPresenter(
         }.onFailure { e ->
             view.showToastMessage(e)
         }
+    }
+
+    companion object {
+        private const val TAG = "ScreenDetailPresenter"
     }
 }

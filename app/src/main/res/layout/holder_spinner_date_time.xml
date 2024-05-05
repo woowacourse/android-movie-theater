@@ -12,6 +12,7 @@
         <variable
             name="timeAdapter"
             type="woowacourse.movie.ui.detail.view.adapter.TimeAdapter" />
+
     </data>
 
 

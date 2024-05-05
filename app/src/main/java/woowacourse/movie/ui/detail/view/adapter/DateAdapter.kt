@@ -6,36 +6,34 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import woowacourse.movie.domain.model.DateRange
+import woowacourse.movie.ui.detail.view.SelectDateListener
 import java.time.LocalDate
 
 class DateAdapter(
     context: Context,
     dateRange: DateRange,
-    val updateTime: (LocalDate) -> Unit,
-    val selectDate: (Int) -> Unit,
-) : ArrayAdapter<LocalDate>(context, android.R.layout.simple_spinner_item, dateRange.allDates()) {
+    private val selectDateListener: SelectDateListener,
+) : ArrayAdapter<LocalDate>(context, android.R.layout.simple_spinner_item, dateRange.allDates()), AdapterView.OnItemSelectedListener {
     init {
+        Log.d(TAG, "init: ")
         this.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
     }
 
-    fun initClickListener(): AdapterView.OnItemSelectedListener {
-        return object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long,
-            ) {
-                val date = this@DateAdapter.getItem(position)
-                date?.let { selectedDate ->
-                    updateTime(selectedDate)
-                }
-                selectDate(position)
-            }
+    override fun onItemSelected(
+        parent: AdapterView<*>?,
+        view: View?,
+        position: Int,
+        id: Long,
+    ) {
+        Log.d(TAG, "onItemSelected: position: $position, ")
+        selectDateListener.selectDate(position)
+    }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                Log.e("ScreenDetailDateTimeSpinnerView", "Nothing Selected")
-            }
-        }
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        Log.e("ScreenDetailDateTimeSpinnerView", "Nothing Selected")
+    }
+
+    companion object {
+        const val TAG = "DateAdapter"
     }
 }
