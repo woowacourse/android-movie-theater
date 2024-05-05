@@ -3,6 +3,8 @@ package woowacourse.movie.domain.model
 import java.time.LocalDate
 
 sealed interface ScreenView {
+    fun id(): Long = hashCode().toLong()
+
     data class Movie(
         val id: Int,
         val title: String,
@@ -13,5 +15,7 @@ sealed interface ScreenView {
         val endDate: LocalDate,
     ) : ScreenView
 
-    data class Ads(val poster: Int) : ScreenView
+    data class Ads(
+        val poster: Int,
+    ) : ScreenView
 }

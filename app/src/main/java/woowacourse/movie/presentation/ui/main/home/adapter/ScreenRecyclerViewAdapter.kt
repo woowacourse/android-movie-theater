@@ -2,7 +2,7 @@ package woowacourse.movie.presentation.ui.main.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import woowacourse.movie.databinding.HolderAdsBinding
 import woowacourse.movie.databinding.HolderScreenBinding
@@ -12,13 +12,15 @@ import woowacourse.movie.domain.model.ScreenView.Movie
 import woowacourse.movie.presentation.ui.main.home.ScreenActionHandler
 import woowacourse.movie.presentation.ui.main.home.adapter.ScreenRecyclerViewHolder.AdsViewHolder
 import woowacourse.movie.presentation.ui.main.home.adapter.ScreenRecyclerViewHolder.ScreenViewHolder
+import woowacourse.movie.presentation.utils.ItemDiffCallback
 
 class ScreenRecyclerViewAdapter(
     private val screenActionHandler: ScreenActionHandler,
-    private val screens: MutableList<ScreenView> = mutableListOf(),
-) : RecyclerView.Adapter<ViewHolder>() {
+) : ListAdapter<ScreenView, ViewHolder>(ScreenAdapterDiffCallback) {
+    override fun getItemId(position: Int): Long = position.toLong()
+
     override fun getItemViewType(position: Int): Int {
-        return when (screens[position]) {
+        return when (currentList[position]) {
             is Movie -> VIEW_TYPE_SCREEN
             is Ads -> VIEW_TYPE_ADS
         }
@@ -47,26 +49,23 @@ class ScreenRecyclerViewAdapter(
         }
     }
 
-    override fun getItemCount(): Int = screens.size
-
     override fun onBindViewHolder(
         holder: ViewHolder,
         position: Int,
     ) {
         when (holder) {
-            is ScreenViewHolder -> holder.bind(screens[position] as Movie)
-            is AdsViewHolder -> holder.bind(screens[position] as Ads)
+            is ScreenViewHolder -> holder.bind(currentList[position] as Movie)
+            is AdsViewHolder -> holder.bind(currentList[position] as Ads)
         }
-    }
-
-    fun updateScreens(newScreens: List<ScreenView>) {
-        screens.clear()
-        screens.addAll(newScreens)
-        notifyDataSetChanged()
     }
 
     companion object {
         private const val VIEW_TYPE_SCREEN = 0
         private const val VIEW_TYPE_ADS = 1
+        private val ScreenAdapterDiffCallback =
+            ItemDiffCallback<ScreenView>(
+                onItemsTheSame = { old, new -> old.id() == new.id() },
+                onContentsTheSame = { old, new -> old == new },
+            )
     }
 }

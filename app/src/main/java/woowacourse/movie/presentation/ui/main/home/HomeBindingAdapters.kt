@@ -10,7 +10,7 @@ import woowacourse.movie.presentation.ui.main.home.adapter.ScreenRecyclerViewAda
 @BindingAdapter("bindUpdateScreensRecyclerView")
 fun RecyclerView.updateScreensRecyclerView(screens: List<ScreenView>) {
     if (this.adapter is ScreenRecyclerViewAdapter) {
-        (this.adapter as ScreenRecyclerViewAdapter).updateScreens(screens)
+//        (this.adapter as ScreenRecyclerViewAdapter).updateScreens(screens)
     }
 }
 

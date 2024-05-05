@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHomeBinding
+import woowacourse.movie.domain.model.ScreenView
 import woowacourse.movie.domain.model.TheaterCount
 import woowacourse.movie.domain.repository.DummyScreens
 import woowacourse.movie.presentation.model.MessageType
@@ -26,15 +27,11 @@ class HomeFragment : Fragment(), HomeContract.View {
     private val binding
         get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         binding.presenter = presenter
         initAdapter()
@@ -42,7 +39,12 @@ class HomeFragment : Fragment(), HomeContract.View {
     }
 
     private fun initAdapter() {
-        binding.rvScreen?.adapter = adapter
+        binding.rvScreen.adapter = adapter
+        presenter.fetchScreens()
+    }
+
+    override fun showScreenList(screens: List<ScreenView>) {
+        adapter.submitList(screens)
     }
 
     override fun showBottomTheater(

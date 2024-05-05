@@ -9,6 +9,10 @@ class HomePresenter(
 ) : HomeContract.Presenter {
     val screens: List<ScreenView> = repository.load()
 
+    fun fetchScreens() {
+        view.showScreenList(screens)
+    }
+
     override fun onScreenClick(id: Int) {
         repository.findTheaterCount(id).onSuccess { theaterCounts ->
             view.showBottomTheater(theaterCounts, id)
