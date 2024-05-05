@@ -11,7 +11,7 @@
 
         <variable
             name="list"
-            type="List&lt;woowacourse.movie.domain.model.SeatModel&gt;" />
+            type="List&lt;woowacourse.movie.presentation.model.SeatModel&gt;" />
 
     </data>
 
