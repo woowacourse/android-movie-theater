@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                movie:dateTime="@{userTicket.screeningStartDateTime}" />
+                movie:reservedDateTime="@{userTicket.screeningStartDateTime}" />
         </LinearLayout>
 
         <LinearLayout

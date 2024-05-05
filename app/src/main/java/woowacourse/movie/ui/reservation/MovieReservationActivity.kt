@@ -102,7 +102,7 @@ class MovieReservationActivity :
     }
 }
 
-@BindingAdapter("imgRes")
+@BindingAdapter("drawableResourceId")
 fun setImageViewResource(
     imageView: ImageView,
     imageName: String,

@@ -97,7 +97,7 @@ fun setReservationResult(
         )
 }
 
-@BindingAdapter("dateTime")
+@BindingAdapter("reservedDateTime")
 fun setReservedDateTime(
     textView: TextView,
     dateTime: LocalDateTime,
