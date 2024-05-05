@@ -50,7 +50,7 @@ class HomeFragment : Fragment(), HomeContract.View {
     }
 
     override fun showScreens(screens: List<ScreenView>) {
-        binding.screens = screens
+        adapter.updateScreens(screens)
     }
 
     override fun showBottomTheater(
