@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieHomeBinding
 import woowacourse.movie.feature.home.movie.adapter.MovieAdapter
-import woowacourse.movie.feature.home.movie.listener.ReservationButtonClickListener
 import woowacourse.movie.feature.home.theater.TheaterSelectionBottomSheetFragment
 import woowacourse.movie.model.Movie
 import woowacourse.movie.util.BaseFragment
@@ -32,13 +31,10 @@ class MovieHomeFragment : BaseFragment<MovieHomeContract.Presenter>(), MovieHome
     override fun initializePresenter() = MovieHomePresenter(this)
 
     override fun displayMovies(movies: List<Movie>) {
-        val reservationButtonClickListener =
-            object : ReservationButtonClickListener {
-                override fun onClick(movieId: Long) {
-                    displayTheaterSelectionDialog(movieId)
-                }
+        binding.movieRecyclerView.adapter =
+            MovieAdapter(movies) { movieId ->
+                displayTheaterSelectionDialog(movieId)
             }
-        binding.movieRecyclerView.adapter = MovieAdapter(movies, reservationButtonClickListener)
     }
 
     override fun displayTheaterSelectionDialog(id: Long) {

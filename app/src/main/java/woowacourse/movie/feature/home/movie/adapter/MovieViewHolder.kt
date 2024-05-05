@@ -2,7 +2,6 @@ package woowacourse.movie.feature.home.movie.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemMovieBinding
-import woowacourse.movie.feature.home.movie.listener.ReservationButtonClickListener
 import woowacourse.movie.model.Movie
 
 class MovieViewHolder(private val binding: ItemMovieBinding) :
@@ -12,6 +11,8 @@ class MovieViewHolder(private val binding: ItemMovieBinding) :
         onReservationButtonClick: ReservationButtonClickListener,
     ) {
         binding.movie = movie
-        binding.reservationButtonClickListener = onReservationButtonClick
+        binding.movieReservationBtn.setOnClickListener {
+            onReservationButtonClick(movie.id)
+        }
     }
 }

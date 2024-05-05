@@ -6,8 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import woowacourse.movie.databinding.ItemAdvertisementBinding
 import woowacourse.movie.databinding.ItemMovieBinding
-import woowacourse.movie.feature.home.movie.listener.ReservationButtonClickListener
 import woowacourse.movie.model.Movie
+
+typealias ReservationButtonClickListener = (movieId: Long) -> Unit
 
 class MovieAdapter(
     private val movies: List<Movie>,

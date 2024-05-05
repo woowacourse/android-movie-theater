@@ -1,7 +1,12 @@
+@file:JvmName("Formatter")
+
 package woowacourse.movie.util
 
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieTicket
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 fun Int.formatSeatRow(): Char {
     return (this + 'A'.code).toChar()
@@ -27,4 +32,12 @@ fun MovieTicket.formatSeats(): String {
     return seats.selectedSeats.joinToString(", ") { seat ->
         seat.row.formatSeatRow() + seat.column.toString()
     }
+}
+
+fun LocalDate.formatScreeningDate(): String {
+    return format(DateTimeFormatter.ofPattern("yyyy.M.d"))
+}
+
+fun LocalTime.formatScreeningTime(): String {
+    return format(DateTimeFormatter.ofPattern("HH:mm"))
 }
