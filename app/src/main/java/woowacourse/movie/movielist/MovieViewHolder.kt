@@ -4,7 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemScreeningAdvertiseBinding
 import woowacourse.movie.databinding.ItemScreeningMovieBinding
-import woowacourse.movie.movielist.uimodel.ScreenMovieUiModel
+import woowacourse.movie.movielist.uimodel.MovieUiModel
 
 sealed class ScreeningViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -12,7 +12,7 @@ class MovieViewHolder(
     private val binding: ItemScreeningMovieBinding,
     private val adapterClickListener: AdapterClickListener,
 ) : ScreeningViewHolder(binding.root) {
-    fun onBind(item: ScreenMovieUiModel) {
+    fun onBind(item: MovieUiModel) {
         binding.movie = item
         binding.clickListener = adapterClickListener
     }

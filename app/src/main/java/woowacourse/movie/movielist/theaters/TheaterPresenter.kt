@@ -25,7 +25,7 @@ class TheaterPresenter(
         runCatching {
             repository.screeningByMovieIdAndTheaterId(movieId, theaterId) ?: error("선택한 상영이 존재하지 않습니다")
         }.onSuccess {
-            view.navigateMovieReservation(it.id, theaterId)
+            view.navigateToMovieDetail(it.id, theaterId)
         }
     }
 }

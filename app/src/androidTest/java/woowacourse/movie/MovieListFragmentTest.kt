@@ -30,24 +30,24 @@ import woowacourse.movie.movielist.AdapterClickListener
 import woowacourse.movie.movielist.AdvertiseViewHolder
 import woowacourse.movie.movielist.MovieAdapter
 import woowacourse.movie.movielist.MovieListFragment
-import woowacourse.movie.movielist.uimodel.ScreenMovieUiModel
-import woowacourse.movie.movielist.uimodel.toScreenMovieUiModel
+import woowacourse.movie.movielist.uimodel.MovieUiModel
+import woowacourse.movie.movielist.uimodel.toMovieUiModel
 
-class ScreeningFragmentTest {
+class MovieListFragmentTest {
     private lateinit var fragmentScenario: FragmentScenario<MovieListFragment>
 
     @Before
     fun setUp() {
         fragmentScenario = launchFragmentInContainer<MovieListFragment>()
         fragmentScenario.onFragment { fragment ->
-            val recyclerView = fragment.requireView().findViewById<RecyclerView>(R.id.rcv_screening_movie)
+            val recyclerView = fragment.requireView().findViewById<RecyclerView>(R.id.rcv_screening)
 
             val items =
                 listOf(
                     Movie.STUB,
                     Movie.STUB,
                     Movie.STUB,
-                ).map { it.toScreenMovieUiModel() }
+                ).map { it.toMovieUiModel() }
 
             recyclerView.adapter =
                 MovieAdapter(
@@ -63,15 +63,15 @@ class ScreeningFragmentTest {
     @Test
     @DisplayName("Activity가 실행되면 뷰가 보인다.")
     fun view_is_display_when_Activity_is_created() {
-        onView(withId(R.id.screening_movie)).check(matches(isDisplayed()))
+        onView(withId(R.id.screening)).check(matches(isDisplayed()))
     }
 
     @Test
     fun `영화_리스트의_첫_번째_영화의_제목은_해리_포터와_마법사의_돌이다`() {
-        onView(withId(R.id.rcv_screening_movie))
+        onView(withId(R.id.rcv_screening))
             .check(matches(isDisplayed()))
 
-        onView(withId(R.id.rcv_screening_movie))
+        onView(withId(R.id.rcv_screening))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     0,
@@ -82,10 +82,10 @@ class ScreeningFragmentTest {
 
     @Test
     fun `영화_리스트의_다섯_번째_영화의_제목은_해리포터와_아즈카반의_죄수이다`() {
-        onView(withId(R.id.rcv_screening_movie))
+        onView(withId(R.id.rcv_screening))
             .check(matches(isDisplayed()))
 
-        onView(withId(R.id.rcv_screening_movie))
+        onView(withId(R.id.rcv_screening))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     4,
@@ -97,7 +97,7 @@ class ScreeningFragmentTest {
     @Test
     @DisplayName("리스트의 길이가 3 이상이면 광고가 나타난다.")
     fun advertisement_display_When_list_size_is_more_3() {
-        onView(withId(R.id.rcv_screening_movie)).perform(
+        onView(withId(R.id.rcv_screening)).perform(
             RecyclerViewActions.scrollToHolder(
                 instanceOf(AdvertiseViewHolder::class.java),
             ).atPosition(0),
@@ -141,8 +141,8 @@ class ScreeningFragmentTest {
     }
 
     companion object {
-        private val screenMovieUiModel3 =
-            ScreenMovieUiModel(
+        private val movieUiModel3 =
+            MovieUiModel(
                 2,
                 title = "해리 포터와 아즈카반의 죄수",
                 R.drawable.img_movie_poster,

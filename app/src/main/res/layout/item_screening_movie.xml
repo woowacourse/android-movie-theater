@@ -7,7 +7,7 @@
     <data>
         <variable
             name="movie"
-            type="woowacourse.movie.movielist.uimodel.ScreenMovieUiModel" />
+            type="woowacourse.movie.movielist.uimodel.MovieUiModel" />
         <variable
             name="clickListener"
             type="woowacourse.movie.movielist.AdapterClickListener" />

@@ -8,6 +8,6 @@ data class AdvertisementUiModel(
     @DrawableRes val image: Int = R.drawable.img_advertisement,
 ) : ListItemUiModel {
     constructor(advertisement: Advertisement) : this() {
-        // It's fake advertisement, It does Nothing.
+        // 가짜 광고, 실제 무언가를 표기하지 않음.
     }
 }

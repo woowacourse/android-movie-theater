@@ -8,14 +8,14 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/screening_movie"
+        android:id="@+id/screening"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".movielist.MovieListFragment">
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcv_screening_movie"
+            android:id="@+id/rcv_screening"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />

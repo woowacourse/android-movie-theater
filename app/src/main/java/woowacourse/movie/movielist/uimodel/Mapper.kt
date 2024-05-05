@@ -4,10 +4,10 @@ import woowacourse.movie.model.Advertisement
 import woowacourse.movie.model.Movie
 import java.time.format.DateTimeFormatter
 
-fun Movie.toScreenMovieUiModel(): ScreenMovieUiModel {
+fun Movie.toMovieUiModel(): MovieUiModel {
     val pattern = "yyyy.MM.dd"
     val formatter = DateTimeFormatter.ofPattern(pattern)
-    return ScreenMovieUiModel(
+    return MovieUiModel(
         id = id,
         title = title,
         screenDate = "러닝타임: ${runningTime.time.inWholeMinutes}분",

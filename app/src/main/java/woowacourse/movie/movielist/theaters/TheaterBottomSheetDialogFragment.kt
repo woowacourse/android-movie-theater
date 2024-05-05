@@ -50,14 +50,14 @@ class TheaterBottomSheetDialogFragment :
             )
     }
 
-    override fun navigateMovieReservation(
-        screeningMovieId: Long,
+    override fun navigateToMovieDetail(
+        screeningId: Long,
         theaterId: Long,
     ) {
         startActivity(
             MovieDetailActivity.getIntent(
                 requireContext(),
-                screeningMovieId,
+                screeningId,
                 theaterId,
             ),
         )

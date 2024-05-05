@@ -6,12 +6,12 @@ interface MovieListContract {
     interface View {
         fun showMovies(movies: List<ListItemUiModel>)
 
-        fun showTheaters(screeningMovieId: Long)
+        fun showTheaters(movieId: Long)
     }
 
     interface Presenter {
-        fun startReservation(screeningMovieId: Long)
+        fun selectMovie(movieId: Long)
 
-        fun loadScreeningMovies()
+        fun loadMovies()
     }
 }

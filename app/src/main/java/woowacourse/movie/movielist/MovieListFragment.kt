@@ -29,23 +29,23 @@ class MovieListFragment : Fragment(), MovieListContract.View, AdapterClickListen
     ) {
         super.onViewCreated(view, savedInstanceState)
         presenter = MovieListPresenter(this, DummyMovieRepository)
-        presenter.loadScreeningMovies()
+        presenter.loadMovies()
     }
 
     override fun showMovies(movies: List<ListItemUiModel>) {
-        val listView = binding.rcvScreeningMovie
+        val listView = binding.rcvScreening
         listView.adapter =
             MovieAdapter(movies, this)
     }
 
-    override fun showTheaters(screeningMovieId: Long) {
+    override fun showTheaters(movieId: Long) {
         val fragment = TheaterBottomSheetDialogFragment()
-        val bundle = TheaterBottomSheetDialogFragment.getBundle(screeningMovieId)
+        val bundle = TheaterBottomSheetDialogFragment.getBundle(movieId)
         fragment.arguments = bundle
         fragment.show(parentFragmentManager, "theaterBottomSheet")
     }
 
     override fun onClick(id: Long) {
-        presenter.startReservation(id)
+        presenter.selectMovie(id)
     }
 }

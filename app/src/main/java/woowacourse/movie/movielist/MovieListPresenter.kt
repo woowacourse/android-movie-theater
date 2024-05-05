@@ -2,24 +2,24 @@ package woowacourse.movie.movielist
 
 import woowacourse.movie.movielist.uimodel.AdvertisementUiModel
 import woowacourse.movie.movielist.uimodel.ListItemUiModel
-import woowacourse.movie.movielist.uimodel.ScreenMovieUiModel
+import woowacourse.movie.movielist.uimodel.MovieUiModel
 import woowacourse.movie.movielist.uimodel.toAdvertisementUiModel
-import woowacourse.movie.movielist.uimodel.toScreenMovieUiModel
+import woowacourse.movie.movielist.uimodel.toMovieUiModel
 import woowacourse.movie.repository.MovieRepository
 
 class MovieListPresenter(
     private val view: MovieListContract.View,
     private val repository: MovieRepository,
 ) : MovieListContract.Presenter {
-    override fun loadScreeningMovies() {
-        val movieUiModels = repository.movies().map { it.toScreenMovieUiModel() }
+    override fun loadMovies() {
+        val movieUiModels = repository.movies().map { it.toMovieUiModel() }
         val advertisementUiModels = repository.advertisements().map { it.toAdvertisementUiModel() }
         val mixedList = makeMixedList(movieUiModels, advertisementUiModels)
         view.showMovies(mixedList)
     }
 
     private fun makeMixedList(
-        movieUiModels: List<ScreenMovieUiModel>,
+        movieUiModels: List<MovieUiModel>,
         advertisementUiModels: List<AdvertisementUiModel>,
         interval: Int = ADVERTISEMENT_INTERVAL,
     ): List<ListItemUiModel> {
@@ -34,8 +34,8 @@ class MovieListPresenter(
         }.flatten()
     }
 
-    override fun startReservation(screeningMovieId: Long) {
-        view.showTheaters(screeningMovieId)
+    override fun selectMovie(movieId: Long) {
+        view.showTheaters(movieId)
     }
 
     companion object {

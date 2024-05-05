@@ -7,7 +7,7 @@ import woowacourse.movie.databinding.ItemScreeningAdvertiseBinding
 import woowacourse.movie.databinding.ItemScreeningMovieBinding
 import woowacourse.movie.movielist.uimodel.AdvertisementUiModel
 import woowacourse.movie.movielist.uimodel.ListItemUiModel
-import woowacourse.movie.movielist.uimodel.ScreenMovieUiModel
+import woowacourse.movie.movielist.uimodel.MovieUiModel
 
 class MovieAdapter(
     private val movies: List<ListItemUiModel>,
@@ -15,7 +15,7 @@ class MovieAdapter(
 ) : RecyclerView.Adapter<ScreeningViewHolder>() {
     override fun getItemViewType(position: Int): Int {
         return when (movies[position]) {
-            is ScreenMovieUiModel -> MOVIE
+            is MovieUiModel -> MOVIE
             is AdvertisementUiModel -> ADVERTISE
         }
     }
@@ -54,7 +54,7 @@ class MovieAdapter(
         position: Int,
     ) {
         when (holder) {
-            is MovieViewHolder -> holder.onBind(movies[position] as ScreenMovieUiModel)
+            is MovieViewHolder -> holder.onBind(movies[position] as MovieUiModel)
             is AdvertiseViewHolder -> {}
         }
     }
