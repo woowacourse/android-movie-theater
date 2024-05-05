@@ -33,13 +33,10 @@ class MovieSeatSelectionActivity :
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_seat_selection)
         binding.presenter = presenter
-        binding.activity = this
 
         presenter.loadTheaterInfo(userTicketId)
         presenter.updateSelectCompletion()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        setOnConfirmButtonListener()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -62,20 +59,6 @@ class MovieSeatSelectionActivity :
         }
     }
 
-    fun showAlertDialog() {
-        AlertDialog.Builder(this)
-            .setCancelable(false)
-            .setTitle(R.string.reservation_confirm)
-            .setMessage(R.string.reservation_confirm_comment)
-            .setPositiveButton(R.string.reservation_complete) { _, _ ->
-                moveMovieReservationCompletePage(userTicketId)
-            }
-            .setNegativeButton(R.string.cancel) { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> finish()
@@ -84,6 +67,10 @@ class MovieSeatSelectionActivity :
     }
 
     override fun initializePresenter(): MovieSeatSelectionPresenter = MovieSeatSelectionPresenter(this, UserTicketsImpl)
+
+    override fun showMovieTitle(movieTitle: String) {
+        binding.movieTitle = movieTitle
+    }
 
     override fun showTheater(
         rowSize: Int,
@@ -121,6 +108,20 @@ class MovieSeatSelectionActivity :
         }
     }
 
+    override fun showSeatReservationConfirmation(userTicketId: Long) {
+        AlertDialog.Builder(this)
+            .setCancelable(false)
+            .setTitle(R.string.reservation_confirm)
+            .setMessage(R.string.reservation_confirm_comment)
+            .setPositiveButton(R.string.reservation_complete) { _, _ ->
+                moveMovieReservationCompletePage(userTicketId)
+            }
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
     override fun showError(throwable: Throwable) {
         Log.e(TAG, throwable.message.toString())
         Toast.makeText(this, resources.getString(R.string.invalid_key), Toast.LENGTH_LONG).show()
@@ -156,12 +157,6 @@ class MovieSeatSelectionActivity :
             MovieSeatSelectionKey.TICKET_ID,
             MOVIE_CONTENT_ID_DEFAULT_VALUE,
         )
-
-    private fun setOnConfirmButtonListener() {
-        binding.btnConfirm.setOnClickListener {
-            showAlertDialog()
-        }
-    }
 
     companion object {
         private val TAG = MovieSeatSelectionActivity::class.simpleName

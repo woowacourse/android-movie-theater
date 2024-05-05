@@ -10,11 +10,12 @@ class MovieSeatSelectionPresenter(
     private val userTickets: MovieDataSource<UserTicket>,
 ) :
     MovieSeatSelectionContract.Presenter {
-    lateinit var userTicket: UserTicket
+    private lateinit var userTicket: UserTicket
 
     override fun loadTheaterInfo(ticketId: Long) {
         try {
             userTicket = userTickets.find(ticketId)
+            view.showMovieTitle(userTicket.title)
             view.showReservationTotalAmount(userTicket.reservationDetail.totalSeatAmount())
             view.showTheater(Seat.ROW_LEN, Seat.COL_LEN)
         } catch (e: NoSuchElementException) {
@@ -41,6 +42,10 @@ class MovieSeatSelectionPresenter(
 
     override fun recoverSeatSelection(index: Int) {
         view.showSelectedSeat(index)
+    }
+
+    override fun reservationSeat() {
+        view.showSeatReservationConfirmation(userTicket.id)
     }
 
     private fun selectingWork(

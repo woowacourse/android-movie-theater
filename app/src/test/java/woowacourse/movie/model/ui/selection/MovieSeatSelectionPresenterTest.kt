@@ -37,6 +37,7 @@ class MovieSeatSelectionPresenterTest {
         presenter.loadTheaterInfo(0L)
 
         // then
+        verify { view.showMovieTitle(any()) }
         verify { view.showReservationTotalAmount(any()) }
         verify { view.showTheater(any(), any()) }
     }
