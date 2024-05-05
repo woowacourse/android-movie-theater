@@ -106,7 +106,8 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 updateSeatSelectedState(index, isSelected)
                 presenter.manageSelectedSeats(isSelected, index, seat)
                 presenter.updateTotalPrice(isSelected, seat)
-                setConfirmButtonEnabled(getSeatsCount())
+                val isReservationValid = getSeatsCount() >= headCount.count
+                setConfirmButtonEnabled(isReservationValid)
             }
         }
     }
@@ -140,8 +141,8 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         startActivity(intent)
     }
 
-    override fun setConfirmButtonEnabled(count: Int) {
-        binding.buttonSeatSelectionConfirm.isEnabled = count >= headCount.count
+    override fun setConfirmButtonEnabled(isEnabled: Boolean) {
+        binding.buttonSeatSelectionConfirm.isEnabled = isEnabled
     }
 
     override fun launchReservationConfirmDialog() {

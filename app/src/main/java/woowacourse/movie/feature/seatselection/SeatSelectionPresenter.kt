@@ -22,7 +22,8 @@ class SeatSelectionPresenter(
 
     override fun restoreReservation(count: Int) {
         val headCount = HeadCount(count)
-        view.setConfirmButtonEnabled(headCount.count)
+        val isReservationValid = count >= headCount.count
+        view.setConfirmButtonEnabled(isReservationValid)
         view.showAmount(seats.calculateAmount())
     }
 

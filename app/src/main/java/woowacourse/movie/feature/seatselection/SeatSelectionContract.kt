@@ -57,7 +57,7 @@ interface SeatSelectionContract {
             isSelected: Boolean,
         )
 
-        fun setConfirmButtonEnabled(count: Int)
+        fun setConfirmButtonEnabled(isEnabled: Boolean)
 
         fun showMovieTitle(movie: Movie)
 
