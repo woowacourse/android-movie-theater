@@ -47,7 +47,7 @@ class MovieResultActivityTest {
     @Test
     fun `예매한_영화의_상영일과_상영_시간이_표시된다`() {
         onView(withId(R.id.tv_screening_date_time))
-            .check(matches(withText("2024-04-01 12:00")))
+            .check(matches(withText("2024.4.1 12:00")))
     }
 
     @Test

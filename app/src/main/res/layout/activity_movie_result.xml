@@ -4,16 +4,8 @@
     <data>
 
         <variable
-            name="result_text"
-            type="String" />
-
-        <variable
-            name="movie_ticket"
-            type="woowacourse.movie.model.MovieTicket" />
-
-        <variable
-            name="total_price"
-            type="int" />
+            name="movieResult"
+            type="woowacourse.movie.feature.result.ui.MovieResultUiModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -42,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:gravity="center"
-            android:text="@{movie_ticket.title}"
+            android:text="@{movieResult.title}"
             android:textColor="@color/black"
             android:textSize="25sp"
             android:textStyle="bold"
@@ -57,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="10dp"
-            android:text="@{@string/screening_date_time(movie_ticket.date.toString(), movie_ticket.time.toString())}"
+            android:text="@{@string/screening_date_time(movieResult.screeningDate, movieResult.screeningTime)}"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -74,7 +66,7 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:text="@{result_text}"
+            android:text="@{@string/result(movieResult.seatCount, movieResult.selectedSeats, movieResult.theaterName)}"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -87,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="@{@string/result_price(total_price)}"
+            android:text="@{@string/result_price(movieResult.totalPrice)}"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent"

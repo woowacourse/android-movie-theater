@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieResultBinding
 import woowacourse.movie.feature.MovieMainActivity
+import woowacourse.movie.feature.result.ui.MovieResultUiModel
 import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.util.BaseActivity
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_COUNT
@@ -25,17 +26,24 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_SEATS
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
-import woowacourse.movie.util.formatSeats
 
-class MovieResultActivity : BaseActivity<MovieResultContract.Presenter>(), MovieResultContract.View {
+class MovieResultActivity :
+    BaseActivity<MovieResultContract.Presenter>(),
+    MovieResultContract.View {
     private lateinit var binding: ActivityMovieResultBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_result)
+
+        initializeView()
+    }
+
+    override fun initializePresenter() = MovieResultPresenter(this)
+
+    private fun initializeView() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setUpBackButtonAction()
-
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_result)
 
         presenter.loadMovieTicket(
             intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID),
@@ -47,26 +55,13 @@ class MovieResultActivity : BaseActivity<MovieResultContract.Presenter>(), Movie
         )
     }
 
-    override fun initializePresenter() = MovieResultPresenter(this)
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) finish()
         return super.onOptionsItemSelected(item)
     }
 
-    override fun displayMovieTicket(movieTicketData: MovieTicket?) {
-        movieTicketData?.let { movieTicket ->
-            binding.movieTicket = movieTicket
-            binding.totalPrice = movieTicket.seats.totalPrice()
-            val seats = movieTicket.formatSeats()
-            binding.resultText =
-                resources.getString(
-                    R.string.result,
-                    movieTicket.seats.count,
-                    seats,
-                    movieTicket.theaterName,
-                )
-        }
+    override fun displayMovieTicket(movieTicket: MovieTicket) {
+        binding.movieResult = MovieResultUiModel.from(movieTicket)
     }
 
     override fun showToastInvalidMovieIdError(throwable: Throwable) {

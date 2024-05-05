@@ -5,7 +5,7 @@ import woowacourse.movie.util.BasePresenter
 
 interface MovieResultContract {
     interface View {
-        fun displayMovieTicket(movieTicketData: MovieTicket?)
+        fun displayMovieTicket(movieTicket: MovieTicket)
 
         fun showToastInvalidMovieIdError(throwable: Throwable)
     }
