@@ -8,13 +8,13 @@ import java.time.LocalTime
 
 val movieContent =
     MovieContent(
-        "thumbnail_movie1",
-        "해리 포터와 마법사의 돌",
-        LocalDate.of(2024, 3, 1),
-        LocalDate.of(2024, 3, 28),
-        152,
-        "해리",
-        listOf(0L, 1L, 2L),
+        imageId = "thumbnail_movie1",
+        title = "해리 포터와 마법사의 돌",
+        openingMovieDate = LocalDate.of(2024, 3, 1),
+        endingMoviesDate = LocalDate.of(2024, 3, 28),
+        runningTime = 152,
+        synopsis = "해리",
+        theaterIds = listOf(0L, 1L, 2L),
     )
 
 val theater =

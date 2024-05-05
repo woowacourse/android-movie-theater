@@ -21,10 +21,10 @@ class MovieSeatSelectionPresenterTest {
         presenter = MovieSeatSelectionPresenter(view, UserTicketsImpl)
         UserTicketsImpl.save(
             UserTicket(
-                "",
-                "강남",
-                LocalDateTime.of(2024, 3, 28, 10, 0),
-                ReservationDetail(1),
+                title = "",
+                theater = "강남",
+                screeningStartDateTime = LocalDateTime.of(2024, 3, 28, 10, 0),
+                reservationDetail = ReservationDetail(1),
             ),
         )
     }

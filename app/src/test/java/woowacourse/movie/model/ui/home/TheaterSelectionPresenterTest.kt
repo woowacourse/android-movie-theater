@@ -31,7 +31,7 @@ class TheaterSelectionPresenterTest {
     }
 
     @Test
-    fun `유효하지_않은_영화_아이디가_주어졌을_때_극장 정보_다이얼로그를_닫는다`() {
+    fun `유효하지_않은_영화_아이디가_주어졌을_때_오류메시지를_표출한다`() {
         // given
 
         // when
@@ -39,7 +39,7 @@ class TheaterSelectionPresenterTest {
 
         // then
         verify {
-            view.dismissTheaterSelection()
+            view.showError(any())
         }
     }
 }
