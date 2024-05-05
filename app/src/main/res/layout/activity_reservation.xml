@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -170,8 +170,8 @@
                 android:id="@+id/button_reservation_plus"
                 android:layout_width="65dp"
                 android:layout_height="wrap_content"
-                android:text="@string/reservation_detail_plus"
                 android:onClick="@{() -> presenter.increaseHeadCount()}"
+                android:text="@string/reservation_detail_plus"
                 android:textAppearance="@style/Bold20"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/button_reservation_minus" />
@@ -181,9 +181,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:onClick="@{() -> presenter.sendTicketToSeatSelection()}"
                 android:paddingVertical="8dp"
                 android:text="@string/reservation_detail_select_seat"
-                android:onClick="@{() -> presenter.sendTicketToSeatSelection()}"
                 android:textAppearance="@style/Bold20"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
