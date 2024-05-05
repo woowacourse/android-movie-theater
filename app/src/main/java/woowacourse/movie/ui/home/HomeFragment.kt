@@ -36,10 +36,16 @@ class HomeFragment : Fragment(), HomeContract.View {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
         initAdapter()
         homePresenter.loadScreen()
-
-        return binding.root
     }
 
     private fun initAdapter() {
