@@ -48,7 +48,7 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View {
         theaterSelectionBottomSheetFragment.arguments = bundle
         theaterSelectionBottomSheetFragment.show(
             parentFragmentManager,
-            theaterSelectionBottomSheetFragment.tag
+            theaterSelectionBottomSheetFragment.tag,
         )
     }
 

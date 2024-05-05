@@ -39,12 +39,18 @@ class MovieSeatSelectionPresenter(
         view.updateSelectResult(movieSelectedSeats)
     }
 
-    private fun selectSeat(seat: MovieSeat, index: Int) {
+    private fun selectSeat(
+        seat: MovieSeat,
+        index: Int,
+    ) {
         view.updateSeatBackgroundColor(index, false)
         movieSelectedSeats.selectSeat(seat)
     }
 
-    private fun unSelectSeat(seat: MovieSeat, index: Int) {
+    private fun unSelectSeat(
+        seat: MovieSeat,
+        index: Int,
+    ) {
         view.updateSeatBackgroundColor(index, true)
         movieSelectedSeats.unSelectSeat(seat)
     }

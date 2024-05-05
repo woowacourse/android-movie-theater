@@ -25,7 +25,6 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_SEATS
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
-import woowacourse.movie.util.formatSeatRow
 import woowacourse.movie.util.formatSeats
 
 class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
