@@ -49,6 +49,6 @@ class HomeFragment : BaseMvpBindingFragment<FragmentHomeBinding>(), HomeContract
     }
 
     companion object {
-        val TAG = "HOME_FRAGMENT"
+        const val TAG = "HOME_FRAGMENT"
     }
 }
