@@ -1,5 +1,6 @@
 package woowacourse.movie.feature.theater.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,10 +10,11 @@ import woowacourse.movie.model.theater.Theater
 typealias OnTheaterSelected = (theaterId: Int) -> Unit
 
 class TheaterSelectionAdapter(
-    private val theaters: List<Theater>,
-    private val movieId: Int,
     private val onTheaterSelected: OnTheaterSelected,
 ) : RecyclerView.Adapter<TheaterSelectionViewHolder>() {
+    private var theaters = listOf<Theater>()
+    private var screeningCounts = listOf<Int>()
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -28,6 +30,16 @@ class TheaterSelectionAdapter(
         holder: TheaterSelectionViewHolder,
         position: Int,
     ) {
-        holder.bind(theaters[position], movieId, onTheaterSelected)
+        holder.bind(theaters[position], screeningCounts[position], onTheaterSelected)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateData(
+        newTheaters: List<Theater>,
+        nuwScreeningCounts: List<Int>,
+    ) {
+        theaters = newTheaters
+        screeningCounts = nuwScreeningCounts
+        notifyDataSetChanged()
     }
 }

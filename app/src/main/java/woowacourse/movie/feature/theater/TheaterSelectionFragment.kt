@@ -15,12 +15,12 @@ import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.feature.home.HomeFragment.Companion.MOVIE_ID
 import woowacourse.movie.feature.reservation.ReservationActivity
 import woowacourse.movie.feature.theater.adapter.TheaterSelectionAdapter
+import woowacourse.movie.model.theater.Theater
 
 class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionContract.View {
     private var _binding: FragmentTheaterSelectionBinding? = null
     private val binding get() = _binding!!
     private lateinit var presenter: TheaterSelectionPresenter
-    private var movieId: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,10 +29,21 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
     ): View {
         _binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_theater_selection, container, false)
-        movieId = receiveMovieId()
         initPresenter()
-        initTheaterRecyclerView()
+        presenter.loadTheater()
         return binding.root
+    }
+
+    override fun showTheaters(
+        theaters: List<Theater>,
+        screeningCounts: List<Int>,
+    ) {
+        val theaterSelectionAdapter =
+            TheaterSelectionAdapter { theaterId ->
+                presenter.sendTheaterInfoToReservation(theaterId)
+            }
+        binding.recyclerViewTheaterSelection.adapter = theaterSelectionAdapter
+        theaterSelectionAdapter.updateData(theaters, screeningCounts)
     }
 
     @SuppressLint("ResourceType")
@@ -65,21 +76,9 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
         presenter =
             TheaterSelectionPresenter(
                 view = this@TheaterSelectionFragment,
-                movieId,
-            )
-    }
-
-    private fun initTheaterRecyclerView() {
-        val theaterSelectionAdapter =
-            TheaterSelectionAdapter(
-                TheaterDao().findTheaterByMovieId(receiveMovieId()),
+                TheaterDao(),
                 receiveMovieId(),
-            ) { theaterId ->
-                presenter.sendTheaterInfoToReservation(theaterId)
-            }
-        binding.recyclerViewTheaterSelection.apply {
-            adapter = theaterSelectionAdapter
-        }
+            )
     }
 
     companion object {

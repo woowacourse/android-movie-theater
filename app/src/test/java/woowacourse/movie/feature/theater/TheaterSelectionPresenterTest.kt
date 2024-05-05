@@ -9,6 +9,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import woowacourse.movie.db.theater.TheaterDao
 
 @ExtendWith(MockKExtension::class)
 class TheaterSelectionPresenterTest {
@@ -18,7 +19,7 @@ class TheaterSelectionPresenterTest {
 
     @BeforeEach
     fun setUp() {
-        presenter = TheaterSelectionPresenter(view, 0)
+        presenter = TheaterSelectionPresenter(view, TheaterDao(), movieId = 0)
     }
 
     @Test
@@ -27,6 +28,6 @@ class TheaterSelectionPresenterTest {
         presenter.sendTheaterInfoToReservation(
             theaterId = 0,
         )
-        verify { view.navigateToReservation(0, 0) }
+        verify { view.navigateToReservation(movieId = 0, theaterId = 0) }
     }
 }
