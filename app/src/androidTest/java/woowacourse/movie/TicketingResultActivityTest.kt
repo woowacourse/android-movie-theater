@@ -53,7 +53,7 @@ class TicketingResultActivityTest {
     }
 
     @Test
-    fun when_theater_name_is_long_enough_name_shortened() {
+    fun `극장_이름이_너무_긴_경우_말줄임표로_표시된다`() {
         onView(withId(R.id.tv_theater_name))
             .check(matches(hasEllipsizedText()))
     }

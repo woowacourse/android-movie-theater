@@ -19,7 +19,7 @@ class MovieListFragmentTest {
     var activityRule: ActivityScenarioRule<HomeActivity> = ActivityScenarioRule(HomeActivity::class.java)
 
     @Test
-    fun movieList_DisplayedInUi() {
+    fun `영화_목록이_화면에_표시된다`() {
         val scenario = launchFragmentInContainer<MovieListFragment>()
 
         onView(withId(R.id.rv_movies))

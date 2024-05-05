@@ -17,22 +17,20 @@ class HomeActivityTest {
     @get:Rule
     val activityRule = ActivityScenarioRule(HomeActivity::class.java)
 
-    // Initial displays
     @Test
-    fun when_app_starts_movie_lists_showed() {
+    fun `화면의_시작은_영화_목록_페이지이다`() {
         onView(withId(R.id.rv_movies))
             .check(matches(isDisplayed()))
     }
 
-    // Initial displays
     @Test
-    fun when_app_starts_bottom_navigation_view_showed() {
+    fun `하단에_네비게이션_바가_보여진다`() {
         onView(withId(R.id.bottom_navigation_view))
             .check(matches(isDisplayed()))
     }
 
     @Test
-    fun when_click_reservation_menu_reservation_fragment_showed() {
+    fun `하단_네비게이션_바에서_예매내역_탭을_누르면_예매내역_화면이_보여진다`() {
         onView(withId(R.id.action_reservation_list))
             .perform(click())
 
@@ -41,7 +39,7 @@ class HomeActivityTest {
     }
 
     @Test
-    fun when_click_settings_menu_settings_fragment_showed() {
+    fun `하단_네비게이션_바에서_설정_탭을_누르면_설정_화면이_보여진다`() {
         onView(withId(R.id.action_settings))
             .perform(click())
 

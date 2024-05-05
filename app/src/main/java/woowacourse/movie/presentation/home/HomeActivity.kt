@@ -50,7 +50,6 @@ class HomeActivity : AppCompatActivity() {
 
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.commit {
-//            setReorderingAllowed(true)
             replace(R.id.fragment_container, fragment)
         }
     }

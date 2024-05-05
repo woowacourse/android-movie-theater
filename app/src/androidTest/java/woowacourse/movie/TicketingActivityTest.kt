@@ -32,7 +32,7 @@ class TicketingActivityTest {
     }
 
     @Test
-    fun initial_count_is_one() {
+    fun `예매_인원수의_초기값이_표시된다`() {
         onView(withId(R.id.tv_count))
             .check(matches(withText("1")))
     }
@@ -72,7 +72,7 @@ class TicketingActivityTest {
     }
 
     @Test
-    fun spinners_exist_on_display() {
+    fun `날짜와_시간_선택칸이_표시된다`() {
         onView(withId(R.id.spinner_date))
             .check(matches(isDisplayed()))
 
