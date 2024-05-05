@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.BottomSheetFragmentTheaterSelectionBinding
@@ -24,8 +23,8 @@ class TheaterSelectionBottomSheetFragment :
     TheaterSelectionContract.View {
     private var _binding: BottomSheetFragmentTheaterSelectionBinding? = null
     private val binding get() = _binding!!
-    private lateinit var theaterSelectionPresenter: TheaterSelectionPresenter
 
+    private val presenter by lazy { TheaterSelectionPresenter(this) }
     private val movieId: Long by lazy { arguments?.getLong(KEY_MOVIE_ID) ?: INVALID_VALUE_MOVIE_ID }
 
     override fun onCreateView(
@@ -35,8 +34,7 @@ class TheaterSelectionBottomSheetFragment :
     ): View {
         _binding = BottomSheetFragmentTheaterSelectionBinding.inflate(inflater)
 
-        theaterSelectionPresenter = TheaterSelectionPresenter(this)
-        theaterSelectionPresenter.loadTheaters(movieId)
+        presenter.loadTheaters(movieId)
         return binding.root
     }
 
@@ -61,7 +59,8 @@ class TheaterSelectionBottomSheetFragment :
     private fun showToast(
         @StringRes stringResId: Int,
     ) {
-        Toast.makeText(requireContext(), resources.getString(stringResId), Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), resources.getString(stringResId), Toast.LENGTH_SHORT)
+            .show()
     }
 
     override fun onDestroyView() {
