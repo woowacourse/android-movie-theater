@@ -14,13 +14,16 @@ import woowacourse.movie.ui.setting.MovieSettingFragment
 
 class MovieMainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieMainBinding
+    private val movieBookingHistoryFragment: MovieBookingHistoryFragment by lazy { MovieBookingHistoryFragment() }
+    private val movieHomeFragment: MovieHomeFragment by lazy { MovieHomeFragment() }
+    private val movieSettingFragment: MovieSettingFragment by lazy { MovieSettingFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_main)
 
         if (savedInstanceState == null) {
-            replace(MovieHomeFragment())
+            replace(movieHomeFragment)
             binding.mainBottomNavigation.selectedItemId = R.id.menu_home
         }
 
@@ -31,9 +34,9 @@ class MovieMainActivity : AppCompatActivity() {
         binding.mainBottomNavigation.apply {
             setOnItemSelectedListener {
                 when (it.itemId) {
-                    R.id.menu_booking_history -> replace(MovieBookingHistoryFragment())
-                    R.id.menu_home -> replace(MovieHomeFragment())
-                    R.id.menu_setting -> replace(MovieSettingFragment())
+                    R.id.menu_booking_history -> replace(movieBookingHistoryFragment)
+                    R.id.menu_home -> replace(movieHomeFragment)
+                    R.id.menu_setting -> replace(movieSettingFragment)
                     else -> return@setOnItemSelectedListener false
                 }
                 true
