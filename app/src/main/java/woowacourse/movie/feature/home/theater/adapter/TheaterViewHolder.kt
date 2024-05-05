@@ -9,8 +9,11 @@ class TheaterViewHolder(private val binding: ItemTheaterBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(
         theater: Theater,
-        theaterItemClick: (Int) -> Unit,
+        onTheaterItemClick: TheaterItemClickListener,
     ) {
-        binding.theater = TheaterUiModel.of(theater, theaterItemClick, bindingAdapterPosition)
+        binding.theater = TheaterUiModel.of(theater)
+        binding.root.setOnClickListener {
+            onTheaterItemClick(bindingAdapterPosition)
+        }
     }
 }

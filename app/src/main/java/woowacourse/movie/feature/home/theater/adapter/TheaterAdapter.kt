@@ -6,9 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemTheaterBinding
 import woowacourse.movie.model.Theater
 
+typealias TheaterItemClickListener = (theaterPosition: Int) -> Unit
+
 class TheaterAdapter(
     private val theaters: List<Theater>,
-    private val onTheaterItemClick: (Int) -> Unit,
+    private val onTheaterItemClick: TheaterItemClickListener,
 ) : RecyclerView.Adapter<TheaterViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
