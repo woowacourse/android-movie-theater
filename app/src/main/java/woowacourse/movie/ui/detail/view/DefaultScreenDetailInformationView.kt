@@ -9,7 +9,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.HolderScreenDetailScreenBinding
 import woowacourse.movie.ui.ScreenDetailUi
 
-class ScreenDetailScreenView(context: Context, attrs: AttributeSet? = null) : ScreenDetailView,
+class DefaultScreenDetailInformationView(context: Context, attrs: AttributeSet? = null) : ScreenDetailInformationView,
     ConstraintLayout(context, attrs) {
     private val binding: HolderScreenDetailScreenBinding =
         DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.holder_screen_detail_screen, this, true)

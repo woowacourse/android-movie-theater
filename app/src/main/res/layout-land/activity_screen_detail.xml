@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.detail.ScreenDetailActivity">
 
-    <woowacourse.movie.ui.detail.view.ScreenDetailScreenView
+    <woowacourse.movie.ui.detail.view.DefaultScreenDetailInformationView
         android:id="@+id/screen_detail_screen_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
