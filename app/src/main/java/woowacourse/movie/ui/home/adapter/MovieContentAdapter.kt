@@ -3,6 +3,7 @@ package woowacourse.movie.ui.home.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ListAdapter
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -13,9 +14,8 @@ import woowacourse.movie.model.movie.MovieContent
 import woowacourse.movie.ui.ReservationButtonClickListener
 
 class MovieContentAdapter(
-    private val movieContents: List<MovieContent>,
     private val reservationButtonClickListener: ReservationButtonClickListener,
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : androidx.recyclerview.widget.ListAdapter<MovieContent, RecyclerView.ViewHolder>(MovieContentDiffUtil) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -49,13 +49,13 @@ class MovieContentAdapter(
         }
     }
 
-    override fun getItemCount(): Int = movieContents.size / INTERVAL_ADVERTISEMENT + movieContents.size
+    override fun getItemCount(): Int = currentList.size / INTERVAL_ADVERTISEMENT + currentList.size
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
         position: Int,
     ) {
-        val movieContent = movieContents[position - position / INTERVAL_ADVERTISEMENT]
+        val movieContent = currentList[position - position / INTERVAL_ADVERTISEMENT]
         if (getItemViewType(position) == TYPE_MOVIE) {
             (holder as MovieViewHolder).bind(movieContent)
         }
@@ -66,6 +66,10 @@ class MovieContentAdapter(
             position % DIVIDER_ADVERTISEMENT == INTERVAL_ADVERTISEMENT -> TYPE_ADS
             else -> TYPE_MOVIE
         }
+    }
+
+    fun addMovieContents(movieContents: List<MovieContent>) {
+        submitList(movieContents)
     }
 
     companion object {

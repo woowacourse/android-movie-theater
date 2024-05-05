@@ -21,7 +21,7 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonC
     private lateinit var movieContents: List<MovieContent>
     private val presenter: MovieHomePresenter by lazy { generatePresenter() }
     private val adapter: MovieContentAdapter by lazy { generateMovieContentAdapter() }
-    
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -65,8 +65,11 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonC
         ).show()
     }
 
-    private fun generateMovieContentAdapter(): MovieContentAdapter =
-        MovieContentAdapter(movieContents, this)
+    private fun generateMovieContentAdapter(): MovieContentAdapter {
+        return MovieContentAdapter(this).apply {
+            addMovieContents(movieContents)
+        }
+    }
 
     private fun generatePresenter() = MovieHomePresenter(this, MovieContentsImpl)
 }
