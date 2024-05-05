@@ -22,11 +22,15 @@ class MovieHomeFragment : BaseFragment<MovieHomeContract.Presenter>(), MovieHome
     ): View {
         _binding = FragmentMovieHomeBinding.inflate(inflater)
 
-        presenter.loadMovies()
+        initializeView()
         return binding.root
     }
 
     override fun initializePresenter() = MovieHomePresenter(this)
+
+    private fun initializeView() {
+        presenter.loadMovies()
+    }
 
     override fun displayMovies(movies: List<Movie>) {
         binding.movieRecyclerView.adapter =

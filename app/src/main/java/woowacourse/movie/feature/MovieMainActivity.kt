@@ -15,6 +15,10 @@ class MovieMainActivity : AppCompatActivity() {
         binding = ActivityMovieMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initializeView(savedInstanceState)
+    }
+
+    private fun initializeView(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             binding.bottomNavigation.selectedItemId = R.id.home_item
             replaceFragment(NavigationFragmentType.MOVIE_HOME)

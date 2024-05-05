@@ -26,6 +26,7 @@ class MovieDetailActivity :
     BaseActivity<MovieDetailContract.Presenter>(),
     MovieDetailContract.View {
     private lateinit var binding: ActivityMovieDetailBinding
+
     private val movieId: Long by lazy { intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID) }
     private val selectedTheaterPosition: Int by lazy {
         intent.getIntExtra(KEY_SELECTED_THEATER_POSITION, INVALID_VALUE_THEATER_POSITION)

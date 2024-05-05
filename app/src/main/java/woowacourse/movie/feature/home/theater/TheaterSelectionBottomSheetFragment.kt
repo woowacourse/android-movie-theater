@@ -34,8 +34,12 @@ class TheaterSelectionBottomSheetFragment :
     ): View {
         _binding = BottomSheetFragmentTheaterSelectionBinding.inflate(inflater)
 
-        presenter.loadTheaters(movieId)
+        initializeView()
         return binding.root
+    }
+
+    private fun initializeView() {
+        presenter.loadTheaters(movieId)
     }
 
     override fun setUpTheaterAdapter(theaters: List<Theater>) {
