@@ -8,6 +8,7 @@ import woowacourse.movie.model.result.Failure
 import woowacourse.movie.model.result.Success
 import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.ticket.HeadCount.Companion.DEFAULT_HEAD_COUNT
+import java.time.LocalTime
 
 class ReservationPresenter(
     private val view: ReservationContract.View,
@@ -30,7 +31,7 @@ class ReservationPresenter(
     }
 
     override fun loadScreeningTimes(selectedDate: String) {
-        val theaterTimes = theaterDao.findScreeningTimes(theaterId)
+        val theaterTimes: List<LocalTime> = theaterDao.findScreeningTimesByMovieId(theaterId, movieId)
         view.showScreeningTimes(theaterTimes, selectedDate)
     }
 

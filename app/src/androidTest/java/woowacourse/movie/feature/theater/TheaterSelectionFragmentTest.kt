@@ -15,6 +15,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.TestFixture.FIRST_MOVIE_ITEM_POSITION
+import woowacourse.movie.TestFixture.findScreeningTimesCount
 import woowacourse.movie.TestFixture.makeTheater
 import woowacourse.movie.feature.home.HomeFragment
 import woowacourse.movie.feature.theater.adapter.TheaterSelectionViewHolder
@@ -50,9 +51,7 @@ class TheaterSelectionFragmentTest {
                 instanceOf(TheaterSelectionViewHolder::class.java),
             ).atPosition(FIRST_ITEM_POSITION),
         )
-        val screeningTimeCount =
-            makeTheater()[FIRST_ITEM_POSITION].screeningTimes.weekDay.size + makeTheater()[FIRST_ITEM_POSITION].screeningTimes.weekEnd.size
-        println(screeningTimeCount)
+        val screeningTimeCount = findScreeningTimesCount()
         onView(withText("${screeningTimeCount}개의 상영 시간")).check(matches(isDisplayed()))
     }
 

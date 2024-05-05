@@ -14,7 +14,7 @@ object TestFixture {
     const val FIRST_MOVIE_ITEM_POSITION = 0
     val movies: List<Movie> = ScreeningDao().findAll()
     const val FIRST_THEATER_ITEM_POSITION = 0
-    val theaterDao = TheaterDao()
+    private val theaterDao = TheaterDao()
 
     fun makeMockTicket(): Ticket {
         val movie = movies[FIRST_MOVIE_ITEM_POSITION]
@@ -27,6 +27,11 @@ object TestFixture {
     fun makeTheater(): List<Theater> {
         val movieId = 0
         return theaterDao.findTheaterByMovieId(movieId)
+    }
+
+    fun findScreeningTimesCount(): Int {
+        val movieId = 0
+        return theaterDao.findScreeningTimesByMovieId(FIRST_THEATER_ITEM_POSITION, movieId).size
     }
 
     fun makeMockSeats(): Seats {

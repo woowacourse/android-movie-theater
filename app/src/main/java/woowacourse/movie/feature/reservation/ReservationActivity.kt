@@ -17,10 +17,10 @@ import woowacourse.movie.feature.seatselection.SeatSelectionActivity
 import woowacourse.movie.feature.theater.TheaterSelectionFragment.Companion.THEATER_ID
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
-import woowacourse.movie.model.movie.ScreeningTimes
 import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.ticket.HeadCount.Companion.DEFAULT_HEAD_COUNT
 import woowacourse.movie.utils.MovieUtils.makeToast
+import java.time.LocalTime
 
 class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     private val binding: ActivityReservationBinding by lazy {
@@ -81,14 +81,14 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     }
 
     override fun showScreeningTimes(
-        screeningTimes: ScreeningTimes,
+        screeningTimes: List<LocalTime>,
         selectedDate: String,
     ) {
         binding.spinnerReservationScreeningTime.adapter =
             ArrayAdapter(
                 this,
                 android.R.layout.simple_spinner_item,
-                screeningTimes.loadScheduleByDateType(selectedDate),
+                screeningTimes,
             )
     }
 

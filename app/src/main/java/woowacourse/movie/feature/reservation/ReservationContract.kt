@@ -2,9 +2,9 @@ package woowacourse.movie.feature.reservation
 
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
-import woowacourse.movie.model.movie.ScreeningTimes
 import woowacourse.movie.model.result.ChangeTicketCountResult
 import woowacourse.movie.model.ticket.HeadCount
+import java.time.LocalTime
 
 interface ReservationContract {
     interface View {
@@ -13,7 +13,7 @@ interface ReservationContract {
         fun showScreeningPeriod(movie: Movie)
 
         fun showScreeningTimes(
-            screeningTimes: ScreeningTimes,
+            screeningTimes: List<LocalTime>,
             selectedDate: String,
         )
 

@@ -1,239 +1,210 @@
 package woowacourse.movie.db.theater
 
-import woowacourse.movie.model.movie.ScreeningTimes
+import woowacourse.movie.model.theater.ScreeningSlot
 import woowacourse.movie.model.theater.Theater
 import java.time.LocalTime
 
 object TheaterDatabase {
+    private val seolleungScreeningSchedule =
+        listOf(
+            ScreeningSlot(
+                screeningTime = LocalTime.of(9, 0),
+                movieId = 0,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(10, 0),
+                movieId = 0,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(11, 0),
+                movieId = 1,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(12, 0),
+                movieId = 2,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(13, 0),
+                movieId = 3,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(14, 0),
+                movieId = 4,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(15, 0),
+                movieId = 4,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(16, 0),
+                movieId = 5,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(17, 0),
+                movieId = 6,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(18, 0),
+                movieId = 6,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(19, 0),
+                movieId = 7,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(20, 0),
+                movieId = 7,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(21, 0),
+                movieId = 8,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(22, 0),
+                movieId = 0,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(23, 0),
+                movieId = 0,
+            ),
+        )
+
+    private val jamsilScreeningSchedule =
+        listOf(
+            ScreeningSlot(
+                screeningTime = LocalTime.of(9, 0),
+                movieId = 0,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(10, 0),
+                movieId = 8,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(11, 0),
+                movieId = 2,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(12, 0),
+                movieId = 3,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(13, 0),
+                movieId = 3,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(14, 0),
+                movieId = 5,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(15, 0),
+                movieId = 5,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(16, 0),
+                movieId = 5,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(17, 0),
+                movieId = 1,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(18, 0),
+                movieId = 1,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(19, 0),
+                movieId = 0,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(20, 0),
+                movieId = 6,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(21, 0),
+                movieId = 6,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(22, 0),
+                movieId = 0,
+            ),
+        )
+
+    private val gangnamScreeningSchedule =
+        listOf(
+            ScreeningSlot(
+                screeningTime = LocalTime.of(9, 0),
+                movieId = 8,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(10, 0),
+                movieId = 1,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(11, 0),
+                movieId = 4,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(12, 0),
+                movieId = 4,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(13, 0),
+                movieId = 8,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(14, 0),
+                movieId = 8,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(15, 0),
+                movieId = 6,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(16, 0),
+                movieId = 6,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(17, 0),
+                movieId = 6,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(18, 0),
+                movieId = 7,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(19, 0),
+                movieId = 0,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(20, 0),
+                movieId = 0,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(21, 0),
+                movieId = 2,
+            ),
+            ScreeningSlot(
+                screeningTime = LocalTime.of(22, 0),
+                movieId = 2,
+            ),
+        )
+
     val theaters: List<Theater> =
         listOf(
             Theater(
                 theaterId = 0,
                 name = "선릉 극장",
-                screeningTimes =
-                    ScreeningTimes(
-                        weekDay =
-                            listOf(
-                                LocalTime.of(9, 0),
-                                LocalTime.of(11, 0),
-                                LocalTime.of(13, 0),
-                            ),
-                        weekEnd =
-                            listOf(
-                                LocalTime.of(14, 0),
-                                LocalTime.of(16, 0),
-                            ),
-                    ),
-                movieId = 0,
+                seolleungScreeningSchedule,
             ),
             Theater(
                 theaterId = 1,
                 name = "잠실 극장",
-                screeningTimes =
-                    ScreeningTimes(
-                        weekDay =
-                            listOf(
-                                LocalTime.of(9, 0),
-                            ),
-                        weekEnd =
-                            listOf(
-                                LocalTime.of(14, 0),
-                            ),
-                    ),
-                movieId = 1,
+                jamsilScreeningSchedule,
             ),
             Theater(
                 theaterId = 2,
                 name = "강남 극장",
-                screeningTimes =
-                    ScreeningTimes(
-                        weekDay =
-                            listOf(
-                                LocalTime.of(11, 0),
-                                LocalTime.of(13, 0),
-                            ),
-                        weekEnd =
-                            listOf(
-                                LocalTime.of(14, 0),
-                                LocalTime.of(16, 0),
-                            ),
-                    ),
-                movieId = 2,
-            ),
-            Theater(
-                theaterId = 3,
-                name = "선릉 극장",
-                screeningTimes =
-                    ScreeningTimes(
-                        weekDay =
-                            listOf(
-                                LocalTime.of(9, 0),
-                                LocalTime.of(11, 0),
-                                LocalTime.of(13, 0),
-                            ),
-                        weekEnd =
-                            listOf(
-                                LocalTime.of(14, 0),
-                                LocalTime.of(16, 0),
-                            ),
-                    ),
-                movieId = 2,
-            ),
-            Theater(
-                theaterId = 4,
-                name = "잠실 극장",
-                screeningTimes =
-                    ScreeningTimes(
-                        weekDay =
-                            listOf(
-                                LocalTime.of(9, 0),
-                            ),
-                        weekEnd =
-                            listOf(
-                                LocalTime.of(14, 0),
-                            ),
-                    ),
-                movieId = 1,
-            ),
-            Theater(
-                theaterId = 5,
-                name = "강남 극장",
-                screeningTimes =
-                    ScreeningTimes(
-                        weekDay =
-                            listOf(
-                                LocalTime.of(11, 0),
-                                LocalTime.of(13, 0),
-                            ),
-                        weekEnd =
-                            listOf(
-                                LocalTime.of(14, 0),
-                                LocalTime.of(16, 0),
-                            ),
-                    ),
-                movieId = 0,
-            ),
-            Theater(
-                theaterId = 6,
-                name = "잠실 극장",
-                screeningTimes =
-                    ScreeningTimes(
-                        weekDay =
-                            listOf(
-                                LocalTime.of(9, 0),
-                            ),
-                        weekEnd =
-                            listOf(
-                                LocalTime.of(14, 0),
-                            ),
-                    ),
-                movieId = 0,
-            ),
-            Theater(
-                theaterId = 0,
-                name = "선릉 극장",
-                screeningTimes =
-                    ScreeningTimes(
-                        weekDay =
-                            listOf(
-                                LocalTime.of(9, 0),
-                                LocalTime.of(11, 0),
-                                LocalTime.of(13, 0),
-                            ),
-                        weekEnd =
-                            listOf(
-                                LocalTime.of(14, 0),
-                                LocalTime.of(16, 0),
-                            ),
-                    ),
-                movieId = 3,
-            ),
-            Theater(
-                theaterId = 1,
-                name = "잠실 극장",
-                screeningTimes =
-                    ScreeningTimes(
-                        weekDay =
-                            listOf(
-                                LocalTime.of(9, 0),
-                            ),
-                        weekEnd =
-                            listOf(
-                                LocalTime.of(14, 0),
-                            ),
-                    ),
-                movieId = 4,
-            ),
-            Theater(
-                theaterId = 2,
-                name = "강남 극장",
-                screeningTimes =
-                    ScreeningTimes(
-                        weekDay =
-                            listOf(
-                                LocalTime.of(11, 0),
-                                LocalTime.of(13, 0),
-                            ),
-                        weekEnd =
-                            listOf(
-                                LocalTime.of(14, 0),
-                                LocalTime.of(16, 0),
-                            ),
-                    ),
-                movieId = 5,
-            ),
-            Theater(
-                theaterId = 3,
-                name = "선릉 극장",
-                screeningTimes =
-                    ScreeningTimes(
-                        weekDay =
-                            listOf(
-                                LocalTime.of(9, 0),
-                                LocalTime.of(11, 0),
-                                LocalTime.of(13, 0),
-                            ),
-                        weekEnd =
-                            listOf(
-                                LocalTime.of(14, 0),
-                                LocalTime.of(16, 0),
-                            ),
-                    ),
-                movieId = 6,
-            ),
-            Theater(
-                theaterId = 4,
-                name = "잠실 극장",
-                screeningTimes =
-                    ScreeningTimes(
-                        weekDay =
-                            listOf(
-                                LocalTime.of(9, 0),
-                            ),
-                        weekEnd =
-                            listOf(
-                                LocalTime.of(14, 0),
-                            ),
-                    ),
-                movieId = 7,
-            ),
-            Theater(
-                theaterId = 5,
-                name = "강남 극장",
-                screeningTimes =
-                    ScreeningTimes(
-                        weekDay =
-                            listOf(
-                                LocalTime.of(11, 0),
-                                LocalTime.of(13, 0),
-                            ),
-                        weekEnd =
-                            listOf(
-                                LocalTime.of(14, 0),
-                                LocalTime.of(16, 0),
-                            ),
-                    ),
-                movieId = 8,
+                gangnamScreeningSchedule,
             ),
         )
 }

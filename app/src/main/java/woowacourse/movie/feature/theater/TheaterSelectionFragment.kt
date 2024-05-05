@@ -73,6 +73,7 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
         val theaterSelectionAdapter =
             TheaterSelectionAdapter(
                 TheaterDao().findTheaterByMovieId(receiveMovieId()),
+                receiveMovieId(),
             ) { theaterId ->
                 presenter.sendTheaterInfoToDetail(theaterId)
             }
