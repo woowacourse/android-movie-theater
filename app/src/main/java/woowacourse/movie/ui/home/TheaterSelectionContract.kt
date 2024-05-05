@@ -16,7 +16,7 @@ interface TheaterSelectionContract {
 
         fun showError()
 
-        fun handleDialogError()
+        fun dismissErrorDialog()
     }
 
     interface Presenter {

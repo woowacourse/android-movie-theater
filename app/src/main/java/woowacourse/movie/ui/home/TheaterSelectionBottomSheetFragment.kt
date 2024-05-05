@@ -76,7 +76,7 @@ class TheaterSelectionBottomSheetFragment :
         ).show()
     }
 
-    override fun handleDialogError() {
+    override fun dismissErrorDialog() {
         dismiss()
     }
 

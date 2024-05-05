@@ -20,7 +20,7 @@ class TheaterSelectionPresenter(
             view.showTheaters(movieContentId, movieTheaters)
         }.onFailure {
             view.showError()
-            view.handleDialogError()
+            view.dismissErrorDialog()
         }
     }
 }
