@@ -2,6 +2,7 @@ package woowacourse.movie.movielist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemScreeningAdvertiseBinding
 import woowacourse.movie.databinding.ItemScreeningMovieBinding
@@ -10,7 +11,7 @@ import woowacourse.movie.movielist.uimodel.ListItemUiModel
 import woowacourse.movie.movielist.uimodel.MovieUiModel
 
 class MovieAdapter(
-    private val movies: List<ListItemUiModel>,
+    private var movies: List<ListItemUiModel>,
     private val adapterClickListener: AdapterClickListener,
 ) : RecyclerView.Adapter<ScreeningViewHolder>() {
     override fun getItemViewType(position: Int): Int {
@@ -60,6 +61,31 @@ class MovieAdapter(
     }
 
     override fun getItemCount(): Int = movies.size
+
+    fun updateData(newMovies: List<ListItemUiModel>) {
+        val diffResult = DiffUtil.calculateDiff(DiffCallback(movies, newMovies))
+        movies = newMovies
+        diffResult.dispatchUpdatesTo(this)
+    }
+
+    class DiffCallback(
+        private val old: List<ListItemUiModel>,
+        private val new: List<ListItemUiModel>,
+    ) : DiffUtil.Callback() {
+        override fun getOldListSize(): Int = old.size
+
+        override fun getNewListSize(): Int = new.size
+
+        override fun areItemsTheSame(
+            oldItemPosition: Int,
+            newItemPosition: Int,
+        ): Boolean = old[oldItemPosition] == new[newItemPosition]
+
+        override fun areContentsTheSame(
+            oldItemPosition: Int,
+            newItemPosition: Int,
+        ): Boolean = old[oldItemPosition] == new[newItemPosition]
+    }
 
     companion object {
         private const val MOVIE = 0

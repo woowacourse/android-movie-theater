@@ -13,6 +13,7 @@ import woowacourse.movie.movielist.uimodel.ListItemUiModel
 class MovieListFragment : Fragment(), MovieListContract.View, AdapterClickListener {
     private lateinit var presenter: MovieListPresenter
     private lateinit var binding: FragmentMovieListBinding
+    private lateinit var movieAdapter: MovieAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,6 +21,9 @@ class MovieListFragment : Fragment(), MovieListContract.View, AdapterClickListen
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentMovieListBinding.inflate(inflater, container, false)
+        movieAdapter = MovieAdapter(kotlin.collections.listOf(), this)
+        val listView = binding.rcvScreening
+        listView.adapter = movieAdapter
         return binding.root
     }
 
@@ -33,9 +37,7 @@ class MovieListFragment : Fragment(), MovieListContract.View, AdapterClickListen
     }
 
     override fun showMovies(movies: List<ListItemUiModel>) {
-        val listView = binding.rcvScreening
-        listView.adapter =
-            MovieAdapter(movies, this)
+        movieAdapter.updateData(movies)
     }
 
     override fun showTheaters(movieId: Long) {
