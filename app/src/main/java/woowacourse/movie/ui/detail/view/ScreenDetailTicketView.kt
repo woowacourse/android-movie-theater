@@ -15,10 +15,7 @@ class ScreenDetailTicketView(
     private val binding: HolderScreenDetailTicketBinding =
         DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.holder_screen_detail_ticket, this, true)
 
-    override fun initClickListener(
-        screenId: Int,
-        ticketReserveListener: TicketReserveListener<Int>,
-    ) {
+    override fun initClickListener(ticketReserveListener: TicketReserveListener) {
         binding.btnPlus.setOnClickListener {
             ticketReserveListener.increaseTicket()
         }
@@ -26,7 +23,7 @@ class ScreenDetailTicketView(
             ticketReserveListener.decreaseTicket()
         }
         binding.btnReserveDone.setOnClickListener {
-            ticketReserveListener.reserve(screenId = screenId)
+            ticketReserveListener.reserve()
         }
     }
 

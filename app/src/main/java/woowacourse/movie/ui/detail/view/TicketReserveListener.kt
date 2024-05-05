@@ -1,9 +1,9 @@
 package woowacourse.movie.ui.detail.view
 
-interface TicketReserveListener<T> {
+interface TicketReserveListener {
     fun increaseTicket()
 
     fun decreaseTicket()
 
-    fun reserve(screenId: T)
+    fun reserve()
 }

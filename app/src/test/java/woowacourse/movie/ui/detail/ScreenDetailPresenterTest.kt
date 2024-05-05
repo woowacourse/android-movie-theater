@@ -52,7 +52,8 @@ class ScreenDetailPresenterTest {
         every { mockView.showDateTimePicker(any(), any(), any(), any()) } just runs
 
         // when
-        presenter.loadScreen(1)
+        presenter.saveId(screenId = 1, theaterId = 1)
+        presenter.loadScreen()
 
         // then
         verify(exactly = 1) { mockView.showScreen(fakeScreenDetailUI) }
@@ -111,13 +112,15 @@ class ScreenDetailPresenterTest {
         verify(exactly = 1) { mockView.showToastMessage(any()) }
     }
 
+//     TODO: 테스트 수정
     @Test
     fun `reserve with date, time and ticket count`() {
         // given
         every { mockView.navigateToSeatsReservation(2, any()) } just runs
 
         // when
-        presenter.reserve(1, 1)
+        presenter.saveId(1, 1)
+        presenter.reserve()
 
         // then
         verify(exactly = 1) { mockView.navigateToSeatsReservation(2, any()) }

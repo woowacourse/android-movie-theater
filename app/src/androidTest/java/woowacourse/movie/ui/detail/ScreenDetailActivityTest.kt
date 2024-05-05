@@ -27,6 +27,7 @@ class ScreenDetailActivityTest {
         ActivityScenarioRule<ScreenDetailActivity>(
             Intent(ApplicationProvider.getApplicationContext(), ScreenDetailActivity::class.java).apply {
                 putExtra("screenId", 1)
+                putExtra("theaterId", 1)
             },
         )
 
@@ -36,7 +37,7 @@ class ScreenDetailActivityTest {
     private val timeSpinner: ViewInteraction = onView(withId(R.id.spn_time))
 
     @Test
-    fun `카운트가_10_미만일_때_플러스_버튼_눌러을_때_증가`() {
+    fun 카운트가_10_미만일_때_플러스_버튼_눌러을_때_증가() {
         // when
         plusBtn.perform(click())
 
@@ -46,7 +47,7 @@ class ScreenDetailActivityTest {
     }
 
     @Test
-    fun `카운트가_1_초과일_때_마이너스_버튼_눌러을_때_감소`() {
+    fun 카운트가_1_초과일_때_마이너스_버튼_눌러을_때_감소() {
         // given - 카운트가 2일 때
         plusBtn.perform(click())
 
@@ -59,7 +60,7 @@ class ScreenDetailActivityTest {
     }
 
     @Test
-    fun `카운트가_1일_때_마이너스_버튼_누르면_감소하지_않는다`() {
+    fun 카운트가_1일_때_마이너스_버튼_누르면_감소하지_않는다() {
         // when
         minusBtn.perform(click())
 
@@ -69,7 +70,7 @@ class ScreenDetailActivityTest {
     }
 
     @Test
-    fun `카운트가_10일_때_마이너스_버튼_누르면_증가하지_않는다`() {
+    fun 카운트가_10일_때_마이너스_버튼_누르면_증가하지_않는다() {
         // given - 카운트가 1 -> 10 일 때
         plusBtn.perform(click())
         plusBtn.perform(click())
@@ -90,7 +91,7 @@ class ScreenDetailActivityTest {
     }
 
     @Test
-    fun `카운트가_2일_떄_화면을_가로로_회전해도_카운트가_유지된다`() {
+    fun 카운트가_2일_떄_화면을_가로로_회전해도_카운트가_유지된다() {
         val activityScenario = activityRule.scenario
         plusBtn.perform(click())
 
@@ -102,7 +103,7 @@ class ScreenDetailActivityTest {
     }
 
     @Test
-    fun `카운트가_2일_떄_화면을_가로로_회전한_후에_다시_카운트를_올리면_3이_된다`() {
+    fun 카운트가_2일_떄_화면을_가로로_회전한_후에_다시_카운트를_올리면_3이_된다() {
         // given
         val activityScenario = activityRule.scenario
         plusBtn.perform(click())
@@ -120,7 +121,7 @@ class ScreenDetailActivityTest {
     @Test
     fun `set_first_date_in_dateSpinner_and_the_date_is_2024-03-01`() {
         dateSpinner.perform(click())
-        onData(anything()).atPosition(0).perform(click()); // LocalDate.of(2024, 3, 2))
+        onData(anything()).atPosition(0).perform(click()) // LocalDate.of(2024, 3, 2))
 
         dateSpinner.check(matches(withSpinnerText(containsString("2024-03-01"))))
     }
@@ -128,7 +129,7 @@ class ScreenDetailActivityTest {
     @Test
     fun set_second_date_in_dateSpinner_and_check_the_first_time_is_09AM() {
         dateSpinner.perform(click())
-        onData(anything()).atPosition(0).perform(click()); // LocalDate.of(2024, 3, 2))
+        onData(anything()).atPosition(0).perform(click()) // LocalDate.of(2024, 3, 2))
 
         timeSpinner.check(matches(withSpinnerText(containsString("09:00"))))
     }
@@ -136,7 +137,7 @@ class ScreenDetailActivityTest {
     @Test
     fun `set_second_date_in_dateSpinner_and_the_date_is_2024-03-02`() {
         dateSpinner.perform(click())
-        onData(anything()).atPosition(1).perform(click()); // LocalDate.of(2024, 3, 2))
+        onData(anything()).atPosition(1).perform(click()) // LocalDate.of(2024, 3, 2))
 
         dateSpinner.check(matches(withSpinnerText(containsString("2024-03-02"))))
     }
@@ -144,7 +145,7 @@ class ScreenDetailActivityTest {
     @Test
     fun set_second_date_in_dateSpinner_and_check_the_first_time_is_10AM() {
         dateSpinner.perform(click())
-        onData(anything()).atPosition(1).perform(click()); // LocalDate.of(2024, 3, 2))
+        onData(anything()).atPosition(1).perform(click()) // LocalDate.of(2024, 3, 2))
 
         timeSpinner.check(matches(withSpinnerText(containsString("10:00"))))
     }
@@ -152,7 +153,7 @@ class ScreenDetailActivityTest {
     @Test
     fun set_second_date_in_date_spinner_keep_the_date_when_device_is_rotated() {
         dateSpinner.perform(click())
-        onData(anything()).atPosition(1).perform(click()); // LocalDate.of(2024, 3, 2))
+        onData(anything()).atPosition(1).perform(click()) // LocalDate.of(2024, 3, 2))
 
         dateSpinner.check(matches(withSpinnerText(containsString("2024-03-02"))))
     }
@@ -160,7 +161,7 @@ class ScreenDetailActivityTest {
     @Test
     fun set_second_time_in_time_spinner_keep_the_time_when_device_is_rotated() {
         timeSpinner.perform(click())
-        onData(anything()).atPosition(1).perform(click()); // LocalDate.of(2024, 3, 1))
+        onData(anything()).atPosition(1).perform(click()) // LocalDate.of(2024, 3, 1))
 
         timeSpinner.check(matches(withSpinnerText(containsString("11:00"))))
     }

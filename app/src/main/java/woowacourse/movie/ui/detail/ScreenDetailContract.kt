@@ -34,7 +34,12 @@ interface ScreenDetailContract {
     }
 
     interface Presenter {
-        fun loadScreen(screenId: Int)
+        fun loadScreen()
+
+        fun saveId(
+            screenId: Int,
+            theaterId: Int,
+        )
 
         fun loadTicket()
 
@@ -48,9 +53,6 @@ interface ScreenDetailContract {
 
         fun minusTicket()
 
-        fun reserve(
-            screenId: Int,
-            theaterId: Int,
-        )
+        fun reserve()
     }
 }

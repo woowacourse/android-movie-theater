@@ -25,7 +25,18 @@ class ScreenDetailPresenter(
     private var datePosition: Int = 0
     private var timePosition: Int = 0
 
-    override fun loadScreen(screenId: Int) {
+    private var screenId: Int = -1
+    private var theaterId: Int = -1
+
+    override fun saveId(
+        screenId: Int,
+        theaterId: Int,
+    ) {
+        this.screenId = screenId
+        this.theaterId = theaterId
+    }
+
+    override fun loadScreen() {
         try {
             val loadedScreen = screen(screenId)
             view.showScreen(loadedScreen.toDetailUI(movieRepository.imageSrc(screen(screenId).movie.id)))
@@ -82,10 +93,7 @@ class ScreenDetailPresenter(
         }
     }
 
-    override fun reserve(
-        screenId: Int,
-        theaterId: Int,
-    ) {
+    override fun reserve() {
         reservationRepository.saveTimeReservation(
             screen(screenId),
             count = ticket.count,

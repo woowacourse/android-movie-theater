@@ -48,21 +48,19 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val screenId = intent.getIntExtra(PUT_EXTRA_KEY_ID, DEFAULT_SCREEN_ID)
         val theaterId = intent.getIntExtra(PUT_EXTRA_THEATER_ID_KEY, DEFAULT_THEATER_ID)
-        initClickListener(screenId, theaterId)
+        with(presenter) {
+            saveId(screenId, theaterId)
+            loadScreen()
+            loadTicket()
+        }
 
-        presenter.loadScreen(screenId)
-        presenter.loadTicket()
-
+        initClickListener()
         dateTimeSpinnerView.selectedDatePosition()
     }
 
-    private fun initClickListener(
-        screenId: Int,
-        theaterId: Int,
-    ) {
+    private fun initClickListener() {
         ticketView.initClickListener(
-            screenId = screenId,
-            object : TicketReserveListener<Int> {
+            object : TicketReserveListener {
                 override fun increaseTicket() {
                     presenter.plusTicket()
                 }
@@ -71,8 +69,8 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
                     presenter.minusTicket()
                 }
 
-                override fun reserve(screenId: Int) {
-                    presenter.reserve(screenId, theaterId)
+                override fun reserve() {
+                    presenter.reserve()
                 }
             },
         )
@@ -126,7 +124,11 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
         timeReservationId: Int,
         theaterId: Int,
     ) {
-        SeatReservationActivity.startActivity(context = this, timeReservationId = timeReservationId, theaterId = theaterId)
+        SeatReservationActivity.startActivity(
+            context = this,
+            timeReservationId = timeReservationId,
+            theaterId = theaterId,
+        )
     }
 
     override fun goToBack(e: Throwable) {
