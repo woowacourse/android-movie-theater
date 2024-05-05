@@ -10,16 +10,15 @@ data class ScreenDetailUi(
     val dateRange: DateRange,
 )
 
-
 fun Screen.toDetailUI(image: Image<Any>) =
     ScreenDetailUi(
         id = id,
         movieDetailUI =
-        MovieDetailUI(
-            title = movie.title,
-            runningTime = movie.runningTime,
-            description = movie.description,
-            image = image,
-        ),
+            MovieDetailUI(
+                title = movie.title,
+                runningTime = movie.runningTime,
+                description = movie.description,
+                image = image,
+            ),
         dateRange = dateRange,
     )

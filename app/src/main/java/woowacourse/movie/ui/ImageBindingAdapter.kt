@@ -11,7 +11,7 @@ import woowacourse.movie.domain.model.Image
 fun setImageResource(
     imageView: ImageView,
     @DrawableRes resId: Int,
-)  {
+) {
     imageView.setImageResource(resId)
 }
 
@@ -19,7 +19,7 @@ fun setImageResource(
 fun setImageResource(
     imageView: ImageView,
     image: Image<Any>,
-)  {
+) {
     when {
         image.imageSource is Int -> setImageResource(imageView, image.imageSource as Int)
         // ...
