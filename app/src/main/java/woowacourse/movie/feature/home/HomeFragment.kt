@@ -13,11 +13,13 @@ import woowacourse.movie.db.advertisement.AdvertisementDao
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.feature.home.adapter.MovieCatalogAdapter
 import woowacourse.movie.feature.theater.TheaterSelectionFragment
+import woowacourse.movie.model.advertisement.Advertisement
+import woowacourse.movie.model.movie.Movie
 
 class HomeFragment : Fragment(), ReservationHomeContract.View {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private val presenter = ReservationHomePresenter(this)
+    private val presenter = ReservationHomePresenter(this, ScreeningDao(), AdvertisementDao())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,11 +35,23 @@ class HomeFragment : Fragment(), ReservationHomeContract.View {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        initMovieRecyclerView()
+        presenter.loadMovieCatalog()
+    }
+
+    override fun showMovieCatalog(
+        movies: List<Movie>,
+        advertisements: List<Advertisement>,
+    ) {
+        val movieCatalogAdapter =
+            MovieCatalogAdapter { movieId ->
+                presenter.sendMovieIdToTheaterSelection(movieId)
+            }
+        binding.recyclerViewHome.adapter = movieCatalogAdapter
+        movieCatalogAdapter.updateData(movies, advertisements)
     }
 
     @SuppressLint("ResourceType")
-    override fun navigateToDetail(movieId: Int) {
+    override fun navigateToTheaterSelection(movieId: Int) {
         val bundle = Bundle()
         bundle.putInt(MOVIE_ID, movieId)
         val bottomSheetDialogFragment = TheaterSelectionFragment()
@@ -49,19 +63,6 @@ class HomeFragment : Fragment(), ReservationHomeContract.View {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun initMovieRecyclerView() {
-        val movieCatalogAdapter =
-            MovieCatalogAdapter(
-                ScreeningDao().findAll(),
-                AdvertisementDao().findAll(),
-            ) { movieId ->
-                presenter.loadMovie(movieId)
-            }
-        binding.recyclerViewHome.apply {
-            adapter = movieCatalogAdapter
-        }
     }
 
     companion object {
