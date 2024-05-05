@@ -10,7 +10,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
@@ -20,6 +19,7 @@ import woowacourse.movie.feature.result.MovieResultActivity
 import woowacourse.movie.model.MovieGrade
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
+import woowacourse.movie.util.BaseActivity
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_COUNT
@@ -33,10 +33,11 @@ import woowacourse.movie.util.formatSeat
 import woowacourse.movie.util.formatSeatColumn
 import woowacourse.movie.util.formatSeatRow
 
-class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContract.View {
+class MovieSeatSelectionActivity :
+    BaseActivity<MovieSeatSelectionContract.Presenter>(),
+    MovieSeatSelectionContract.View {
     private lateinit var binding: ActivityMovieSeatSelectionBinding
-    private lateinit var seatSelectionPresenter: MovieSeatSelectionPresenter
-
+    private lateinit var movieSelectedSeats: MovieSelectedSeats
     private val tableSeats: List<TextView> by lazy {
         findViewById<TableLayout>(R.id.table_seat).children.filterIsInstance<TableRow>()
             .flatMap { tableRow ->
@@ -50,45 +51,34 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_seat_selection)
         binding.activity = this
+        movieSelectedSeats =
+            MovieSelectedSeats(
+                intent.getIntExtra(KEY_MOVIE_COUNT, INVALID_VALUE_MOVIE_COUNT),
+            )
 
-        seatSelectionPresenter =
-            MovieSeatSelectionPresenter(this)
-        seatSelectionPresenter.loadMovieTitle(
+        presenter.loadMovieTitle(
             intent.getLongExtra(
                 KEY_MOVIE_ID,
                 INVALID_VALUE_MOVIE_ID,
             ),
         )
-        seatSelectionPresenter.loadTableSeats(
-            intent.getIntExtra(
-                KEY_MOVIE_COUNT,
-                INVALID_VALUE_MOVIE_COUNT,
-            ),
-        )
+        presenter.loadTableSeats(movieSelectedSeats)
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-
-        val count = seatSelectionPresenter.movieSelectedSeats.count
-        outState.putInt(KEY_MOVIE_COUNT, count)
-
-        val selectedPositions = seatSelectionPresenter.movieSelectedSeats.getSelectedPositions()
-        outState.putIntArray(KEY_SELECTED_SEAT_POSITIONS, selectedPositions)
-    }
+    override fun initializePresenter() = MovieSeatSelectionPresenter(this)
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-
-        val savedCount =
+        val movieCount =
             savedInstanceState.getInt(
                 KEY_MOVIE_COUNT,
                 INVALID_VALUE_MOVIE_COUNT,
             )
-        seatSelectionPresenter.updateSelectedSeats(savedCount)
+        movieSelectedSeats = MovieSelectedSeats(movieCount)
+        presenter.updateSelectedSeats(movieSelectedSeats)
 
-        val selectedPositions = savedInstanceState.getIntArray(KEY_SELECTED_SEAT_POSITIONS)
-        setUpSelectedSeats(selectedPositions)
+        val selectedSeatPositions = savedInstanceState.getIntArray(KEY_SELECTED_SEAT_POSITIONS)
+        setUpSelectedSeats(selectedSeatPositions)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -106,7 +96,7 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
             view.text = seat.formatSeat()
             view.setTextColor(ContextCompat.getColor(this, seat.grade.getSeatColor()))
             view.setOnClickListener {
-                seatSelectionPresenter.clickTableSeat(index)
+                presenter.clickTableSeat(index)
             }
         }
     }
@@ -121,7 +111,7 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
 
     override fun displayDialog() {
         AlertDialog.Builder(this).setTitle("예매 확인").setMessage("정말 예매하시겠습니까?")
-            .setPositiveButton("예매 완료") { _, _ -> seatSelectionPresenter.clickPositiveButton() }
+            .setPositiveButton("예매 완료") { _, _ -> presenter.clickPositiveButton() }
             .setNegativeButton("취소") { dialog, _ -> dialog.dismiss() }.setCancelable(false).show()
     }
 
@@ -161,7 +151,7 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
 
     private fun setUpSelectedSeats(selectedPositions: IntArray?) {
         selectedPositions?.forEach { position ->
-            seatSelectionPresenter.clickTableSeat(position)
+            presenter.clickTableSeat(position)
         }
     }
 
@@ -171,6 +161,16 @@ class MovieSeatSelectionActivity : AppCompatActivity(), MovieSeatSelectionContra
             MovieGrade.S_GRADE -> R.color.s_grade
             MovieGrade.A_GRADE -> R.color.a_grade
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        val count = movieSelectedSeats.count
+        outState.putInt(KEY_MOVIE_COUNT, count)
+
+        val selectedPositions = movieSelectedSeats.getSelectedPositions()
+        outState.putIntArray(KEY_SELECTED_SEAT_POSITIONS, selectedPositions)
     }
 
     companion object {

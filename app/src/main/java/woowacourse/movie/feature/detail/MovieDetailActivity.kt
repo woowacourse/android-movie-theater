@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieRepository
@@ -14,6 +13,7 @@ import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.feature.detail.ui.MovieDetailUiModel
 import woowacourse.movie.feature.seatselection.MovieSeatSelectionActivity
 import woowacourse.movie.model.Movie
+import woowacourse.movie.util.BaseActivity
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_POSITION
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_COUNT
@@ -23,10 +23,8 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
 
-class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
+class MovieDetailActivity : BaseActivity<MovieDetailContract.Presenter>(), MovieDetailContract.View {
     private lateinit var binding: ActivityMovieDetailBinding
-    private lateinit var movieDetailPresenter: MovieDetailPresenter
-
     private val movieId: Long by lazy { intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID) }
     private val selectedTheaterPosition: Int by lazy {
         intent.getIntExtra(
@@ -41,9 +39,10 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
         binding.activity = this
 
-        movieDetailPresenter = MovieDetailPresenter(this)
-        movieDetailPresenter.loadMovieDetail(movieId)
+        presenter.loadMovieDetail(movieId)
     }
+
+    override fun initializePresenter() = MovieDetailPresenter(this)
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
@@ -57,7 +56,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         binding.spScreeningTime.setSelection(screeningTimeSpinnerPosition)
 
         val movieCount = savedInstanceState.getInt(MOVIE_COUNT_KEY)
-        movieDetailPresenter.updateReservationCount(movieCount)
+        presenter.updateReservationCount(movieCount)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -105,15 +104,15 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     }
 
     fun onMinusButtonClick() {
-        movieDetailPresenter.minusReservationCount()
+        presenter.minusReservationCount()
     }
 
     fun onPlusButtonClick() {
-        movieDetailPresenter.plusReservationCount()
+        presenter.plusReservationCount()
     }
 
     fun onSeatSelectionButtonClick() {
-        movieDetailPresenter.reserveMovie(
+        presenter.reserveMovie(
             movieId,
             binding.spScreeningDate.selectedItem.toString(),
             binding.spScreeningTime.selectedItem.toString(),

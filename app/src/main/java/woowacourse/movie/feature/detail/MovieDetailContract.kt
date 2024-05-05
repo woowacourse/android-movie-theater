@@ -1,6 +1,7 @@
 package woowacourse.movie.feature.detail
 
 import woowacourse.movie.model.Movie
+import woowacourse.movie.util.BasePresenter
 
 interface MovieDetailContract {
     interface View {
@@ -18,7 +19,7 @@ interface MovieDetailContract {
         fun showToastInvalidMovieIdError(throwable: Throwable)
     }
 
-    interface Presenter {
+    interface Presenter : BasePresenter {
         fun loadMovieDetail(movieId: Long)
 
         fun plusReservationCount()

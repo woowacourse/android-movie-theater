@@ -7,7 +7,7 @@ import woowacourse.movie.model.MovieSelectedSeats
 class MovieSeatSelectionPresenter(
     private val view: MovieSeatSelectionContract.View,
 ) : MovieSeatSelectionContract.Presenter {
-    lateinit var movieSelectedSeats: MovieSelectedSeats
+    private lateinit var movieSelectedSeats: MovieSelectedSeats
 
     override fun loadMovieTitle(movieId: Long) {
         val movie =
@@ -21,13 +21,13 @@ class MovieSeatSelectionPresenter(
         view.displayMovieTitle(movie.title)
     }
 
-    override fun loadTableSeats(count: Int) {
-        movieSelectedSeats = MovieSelectedSeats(count)
+    override fun loadTableSeats(movieSelectedSeats: MovieSelectedSeats) {
+        this.movieSelectedSeats = movieSelectedSeats
         view.setUpTableSeats(movieSelectedSeats.getBaseSeats())
     }
 
-    override fun updateSelectedSeats(count: Int) {
-        movieSelectedSeats = MovieSelectedSeats(count)
+    override fun updateSelectedSeats(movieSelectedSeats: MovieSelectedSeats) {
+        this.movieSelectedSeats = movieSelectedSeats
     }
 
     override fun clickTableSeat(index: Int) {

@@ -7,12 +7,12 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieResultBinding
 import woowacourse.movie.feature.MovieMainActivity
 import woowacourse.movie.model.MovieTicket
+import woowacourse.movie.util.BaseActivity
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_DATE
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
@@ -27,9 +27,8 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
 import woowacourse.movie.util.formatSeats
 
-class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
+class MovieResultActivity : BaseActivity<MovieResultContract.Presenter>(), MovieResultContract.View {
     private lateinit var binding: ActivityMovieResultBinding
-    private lateinit var movieResultPresenter: MovieResultPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +37,7 @@ class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_result)
 
-        movieResultPresenter = MovieResultPresenter(this)
-        movieResultPresenter.loadMovieTicket(
+        presenter.loadMovieTicket(
             intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID),
             intent.getStringExtra(KEY_MOVIE_DATE) ?: INVALID_VALUE_MOVIE_DATE,
             intent.getStringExtra(KEY_MOVIE_TIME) ?: INVALID_VALUE_MOVIE_TIME,
@@ -48,6 +46,8 @@ class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
             intent.getStringExtra(KEY_SELECTED_THEATER_NAME) ?: INVALID_VALUE_THEATER_NAME,
         )
     }
+
+    override fun initializePresenter() = MovieResultPresenter(this)
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) finish()

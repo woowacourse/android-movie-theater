@@ -1,6 +1,7 @@
 package woowacourse.movie.feature.home.movie
 
 import woowacourse.movie.model.Movie
+import woowacourse.movie.util.BasePresenter
 
 interface MovieHomeContract {
     interface View {
@@ -9,7 +10,7 @@ interface MovieHomeContract {
         fun displayTheaterSelectionDialog(id: Long)
     }
 
-    interface Presenter {
+    interface Presenter : BasePresenter {
         fun loadMovies()
     }
 }

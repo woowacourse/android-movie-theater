@@ -5,19 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieHomeBinding
 import woowacourse.movie.feature.home.movie.adapter.MovieAdapter
 import woowacourse.movie.feature.home.movie.listener.ReservationButtonClickListener
 import woowacourse.movie.feature.home.theater.TheaterSelectionBottomSheetFragment
 import woowacourse.movie.model.Movie
+import woowacourse.movie.util.BaseFragment
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 
-class MovieHomeFragment : Fragment(), MovieHomeContract.View {
+class MovieHomeFragment : BaseFragment<MovieHomeContract.Presenter>(), MovieHomeContract.View {
     private var _binding: FragmentMovieHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var movieHomePresenter: MovieHomePresenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,10 +25,11 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View {
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_home, container, false)
 
-        movieHomePresenter = MovieHomePresenter(this)
-        movieHomePresenter.loadMovies()
+        presenter.loadMovies()
         return binding.root
     }
+
+    override fun initializePresenter() = MovieHomePresenter(this)
 
     override fun displayMovies(movies: List<Movie>) {
         val reservationButtonClickListener =

@@ -10,17 +10,19 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.feature.firstMovie
 import woowacourse.movie.feature.firstMovieId
 import woowacourse.movie.feature.invalidMovieId
+import woowacourse.movie.model.MovieSelectedSeats
 
 class MovieSeatSelectionPresenterTest {
     private lateinit var view: MovieSeatSelectionContract.View
     private lateinit var presenter: MovieSeatSelectionPresenter
+    private val movieSelectedSeats = MovieSelectedSeats(3)
     private val movie = firstMovie
 
     @BeforeEach
     fun setUp() {
         view = mockk()
         presenter = MovieSeatSelectionPresenter(view)
-        presenter.updateSelectedSeats(3)
+        presenter.updateSelectedSeats(movieSelectedSeats)
     }
 
     @Test
@@ -53,7 +55,7 @@ class MovieSeatSelectionPresenterTest {
         every { view.setUpTableSeats(any()) } just runs
 
         // When
-        presenter.loadTableSeats(3)
+        presenter.loadTableSeats(movieSelectedSeats)
 
         // Then
         verify { view.setUpTableSeats(any()) }
