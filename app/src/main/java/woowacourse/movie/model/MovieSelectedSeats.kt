@@ -1,7 +1,7 @@
 package woowacourse.movie.model
 
 class MovieSelectedSeats(
-    val count: Int,
+    val reservationCount: Int,
     rowSize: Int = DEFAULT_ROW_SIZE,
     private val columnSize: Int = DEFAULT_COLUMN_SIZE,
 ) {
@@ -28,7 +28,7 @@ class MovieSelectedSeats(
 
     fun totalPrice(): Int = selectedSeats.sumOf { selectedSeat -> selectedSeat.grade.price }
 
-    fun isSelectionComplete(): Boolean = count == selectedSeats.size
+    fun isSelectionComplete(): Boolean = reservationCount == selectedSeats.size
 
     fun getSelectedPositions(): IntArray {
         return selectedSeats.map { seat ->

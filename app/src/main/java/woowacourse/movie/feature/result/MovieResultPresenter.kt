@@ -15,7 +15,7 @@ class MovieResultPresenter(private val view: MovieResultContract.View) :
         movieId: Long,
         screeningDate: String,
         screeningTime: String,
-        movieCount: Int,
+        reservationCount: Int,
         selectedSeats: String,
         theaterName: String,
     ) {
@@ -27,7 +27,7 @@ class MovieResultPresenter(private val view: MovieResultContract.View) :
                 return
             }
 
-        val movieSelectedSeats = MovieSelectedSeats(movieCount)
+        val movieSelectedSeats = MovieSelectedSeats(reservationCount)
         selectedSeats.split(", ").forEach { seat ->
             movieSelectedSeats.selectSeat(
                 MovieSeat(
@@ -42,7 +42,7 @@ class MovieResultPresenter(private val view: MovieResultContract.View) :
                 movie.title,
                 LocalDate.parse(screeningDate),
                 LocalTime.parse(screeningTime),
-                movieCount,
+                reservationCount,
                 movieSelectedSeats,
                 theaterName,
             ),

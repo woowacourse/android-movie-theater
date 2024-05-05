@@ -15,7 +15,7 @@ interface MovieResultContract {
             movieId: Long,
             screeningDate: String,
             screeningTime: String,
-            movieCount: Int,
+            reservationCount: Int,
             selectedSeats: String,
             theaterName: String,
         )

@@ -20,12 +20,12 @@ import woowacourse.movie.model.MovieGrade
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
 import woowacourse.movie.util.BaseActivity
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_COUNT
+import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_RESERVATION_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_DATE
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
+import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_SEAT_POSITIONS
 import woowacourse.movie.util.MovieIntentConstant.KEY_THEATER_NAME
 import woowacourse.movie.util.formatSeat
@@ -50,7 +50,7 @@ class MovieSeatSelectionActivity :
         setContentView(binding.root)
 
         movieSelectedSeats =
-            MovieSelectedSeats(intent.getIntExtra(KEY_MOVIE_COUNT, INVALID_VALUE_MOVIE_COUNT))
+            MovieSelectedSeats(intent.getIntExtra(KEY_RESERVATION_COUNT, INVALID_VALUE_RESERVATION_COUNT))
         initializeView()
     }
 
@@ -67,9 +67,9 @@ class MovieSeatSelectionActivity :
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        val movieCount =
-            savedInstanceState.getInt(KEY_MOVIE_COUNT, INVALID_VALUE_MOVIE_COUNT)
-        movieSelectedSeats = MovieSelectedSeats(movieCount)
+        val reservationCount =
+            savedInstanceState.getInt(KEY_RESERVATION_COUNT, INVALID_VALUE_RESERVATION_COUNT)
+        movieSelectedSeats = MovieSelectedSeats(reservationCount)
         presenter.updateSelectedSeats(movieSelectedSeats)
 
         val selectedSeatPositions = savedInstanceState.getIntArray(KEY_SELECTED_SEAT_POSITIONS)
@@ -126,7 +126,7 @@ class MovieSeatSelectionActivity :
                 movieId = intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID),
                 screeningDate = intent.getStringExtra(KEY_MOVIE_DATE),
                 screeningTime = intent.getStringExtra(KEY_MOVIE_TIME),
-                movieCount = movieSelectedSeats.count,
+                reservationCount = movieSelectedSeats.reservationCount,
                 selectedSeats = seats,
                 theaterName = intent.getStringExtra(KEY_THEATER_NAME),
             )
@@ -162,8 +162,8 @@ class MovieSeatSelectionActivity :
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        val count = movieSelectedSeats.count
-        outState.putInt(KEY_MOVIE_COUNT, count)
+        val count = movieSelectedSeats.reservationCount
+        outState.putInt(KEY_RESERVATION_COUNT, count)
 
         val selectedPositions = movieSelectedSeats.getSelectedPositions()
         outState.putIntArray(KEY_SELECTED_SEAT_POSITIONS, selectedPositions)
@@ -177,14 +177,14 @@ class MovieSeatSelectionActivity :
             movieId: Long,
             screeningDate: String,
             screeningTime: String,
-            movieCount: Int,
+            reservationCount: Int,
             theaterName: String,
         ): Intent {
             return Intent(context, MovieSeatSelectionActivity::class.java).apply {
                 putExtra(KEY_MOVIE_ID, movieId)
                 putExtra(KEY_MOVIE_DATE, screeningDate)
                 putExtra(KEY_MOVIE_TIME, screeningTime)
-                putExtra(KEY_MOVIE_COUNT, movieCount)
+                putExtra(KEY_RESERVATION_COUNT, reservationCount)
                 putExtra(KEY_THEATER_NAME, theaterName)
             }
         }

@@ -4,10 +4,10 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 data class MovieTicket(
-    val title: String,
-    val date: LocalDate,
-    val time: LocalTime,
-    val count: Int,
-    val seats: MovieSelectedSeats,
+    val movieTitle: String,
+    val screeningDate: LocalDate,
+    val screeningTime: LocalTime,
+    val reservationCount: Int,
+    val movieSelectedSeats: MovieSelectedSeats,
     val theaterName: String,
 )

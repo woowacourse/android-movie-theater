@@ -26,14 +26,14 @@ class MovieDetailPresenterTest {
     fun `loadMovieDetail를 호출하면 view에서 영화 리스트를 보여준다`() {
         // Given
         every { view.displayMovieDetail(any()) } just runs
-        every { view.updateCountView(any()) } just runs
+        every { view.updateReservationCountView(any()) } just runs
 
         // When
         presenter.loadMovieDetail(firstMovieId)
 
         // Then
         verify { view.displayMovieDetail(movie) }
-        every { view.updateCountView(any()) } just runs
+        every { view.updateReservationCountView(any()) } just runs
     }
 
     @Test
@@ -51,31 +51,31 @@ class MovieDetailPresenterTest {
     @Test
     fun `plusReservationCount를 호출하면 카운트가 1만큼 증가한다`() {
         // Given
-        every { view.updateCountView(any()) } just runs
+        every { view.updateReservationCountView(any()) } just runs
 
         // When
         presenter.plusReservationCount()
 
         // Then
-        verify { view.updateCountView(2) }
+        verify { view.updateReservationCountView(2) }
     }
 
     @Test
     fun `count가 1일때 minusReservationCount를 호출하면 카운트가 감소되지 않는다`() {
         // Given
-        every { view.updateCountView(any()) } just runs
+        every { view.updateReservationCountView(any()) } just runs
 
         // When
         presenter.minusReservationCount()
 
         // Then
-        verify { view.updateCountView(1) }
+        verify { view.updateReservationCountView(1) }
     }
 
     @Test
     fun `minusReservationCount를 호출하면 카운트가 감소된다`() {
         // Given
-        every { view.updateCountView(any()) } just runs
+        every { view.updateReservationCountView(any()) } just runs
 
         // When
         presenter.plusReservationCount()
@@ -83,7 +83,7 @@ class MovieDetailPresenterTest {
         presenter.minusReservationCount()
 
         // Then
-        verify { view.updateCountView(2) }
+        verify { view.updateReservationCountView(2) }
     }
 
     @Test

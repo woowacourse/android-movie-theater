@@ -14,17 +14,17 @@ import woowacourse.movie.feature.MovieMainActivity
 import woowacourse.movie.feature.result.ui.MovieResultUiModel
 import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.util.BaseActivity
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_DATE
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_SEATS
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_TIME
+import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_RESERVATION_COUNT
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_NAME
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_DATE
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_SEATS
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
+import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_THEATER_NAME
 
 class MovieResultActivity :
@@ -50,7 +50,7 @@ class MovieResultActivity :
             intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID),
             intent.getStringExtra(KEY_MOVIE_DATE) ?: INVALID_VALUE_MOVIE_DATE,
             intent.getStringExtra(KEY_MOVIE_TIME) ?: INVALID_VALUE_MOVIE_TIME,
-            intent.getIntExtra(KEY_MOVIE_COUNT, INVALID_VALUE_MOVIE_COUNT),
+            intent.getIntExtra(KEY_RESERVATION_COUNT, INVALID_VALUE_RESERVATION_COUNT),
             intent.getStringExtra(KEY_MOVIE_SEATS) ?: INVALID_VALUE_MOVIE_SEATS,
             intent.getStringExtra(KEY_THEATER_NAME) ?: INVALID_VALUE_THEATER_NAME,
         )
@@ -98,7 +98,7 @@ class MovieResultActivity :
             movieId: Long,
             screeningDate: String?,
             screeningTime: String?,
-            movieCount: Int,
+            reservationCount: Int,
             selectedSeats: String,
             theaterName: String?,
         ): Intent {
@@ -106,7 +106,7 @@ class MovieResultActivity :
                 putExtra(KEY_MOVIE_ID, movieId)
                 putExtra(KEY_MOVIE_DATE, screeningDate)
                 putExtra(KEY_MOVIE_TIME, screeningTime)
-                putExtra(KEY_MOVIE_COUNT, movieCount)
+                putExtra(KEY_RESERVATION_COUNT, reservationCount)
                 putExtra(KEY_MOVIE_SEATS, selectedSeats)
                 putExtra(KEY_THEATER_NAME, theaterName)
             }

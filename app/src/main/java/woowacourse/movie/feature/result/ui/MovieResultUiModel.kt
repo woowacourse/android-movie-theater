@@ -17,13 +17,13 @@ class MovieResultUiModel(
     companion object {
         fun from(movieTicket: MovieTicket): MovieResultUiModel {
             return MovieResultUiModel(
-                movieTicket.title,
-                movieTicket.date.formatScreeningDate(),
-                movieTicket.time.formatScreeningTime(),
-                movieTicket.count,
+                movieTicket.movieTitle,
+                movieTicket.screeningDate.formatScreeningDate(),
+                movieTicket.screeningTime.formatScreeningTime(),
+                movieTicket.reservationCount,
                 movieTicket.formatSeats(),
                 movieTicket.theaterName,
-                movieTicket.seats.totalPrice(),
+                movieTicket.movieSelectedSeats.totalPrice(),
             )
         }
     }

@@ -29,7 +29,7 @@ fun MovieSeat.formatSeat(): String {
 }
 
 fun MovieTicket.formatSeats(): String {
-    return seats.selectedSeats.joinToString(", ") { seat ->
+    return movieSelectedSeats.selectedSeats.joinToString(", ") { seat ->
         seat.row.formatSeatRow() + seat.column.toString()
     }
 }

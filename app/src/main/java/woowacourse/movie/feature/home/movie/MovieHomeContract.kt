@@ -7,7 +7,7 @@ interface MovieHomeContract {
     interface View {
         fun displayMovies(movies: List<Movie>)
 
-        fun displayTheaterSelectionDialog(id: Long)
+        fun displayTheaterSelectionDialog(movieId: Long)
     }
 
     interface Presenter : BasePresenter {

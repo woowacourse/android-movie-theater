@@ -38,10 +38,9 @@ class MovieHomeFragment : BaseFragment<MovieHomeContract.Presenter>(), MovieHome
             }
     }
 
-    override fun displayTheaterSelectionDialog(id: Long) {
-        TheaterSelectionBottomSheetFragment.newInstance(id).run {
-            show(parentFragmentManager, tag)
-        }
+    override fun displayTheaterSelectionDialog(movieId: Long) {
+        val fragment = TheaterSelectionBottomSheetFragment.newInstance(movieId)
+        fragment.show(parentFragmentManager, fragment.tag)
     }
 
     override fun onDestroyView() {

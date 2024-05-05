@@ -49,15 +49,15 @@ class MovieDetailActivity :
         super.onRestoreInstanceState(savedInstanceState)
 
         val screeningDateSpinnerPosition =
-            savedInstanceState.getInt(SCREENING_DATE_SPINNER_POSITION_KEY)
+            savedInstanceState.getInt(KEY_SCREENING_DATE_SPINNER_POSITION)
         binding.spScreeningDate.setSelection(screeningDateSpinnerPosition)
 
         val screeningTimeSpinnerPosition =
-            savedInstanceState.getInt(SCREENING_TIME_SPINNER_POSITION_KEY)
+            savedInstanceState.getInt(KEY_SCREENING_TIME_SPINNER_POSITION)
         binding.spScreeningTime.setSelection(screeningTimeSpinnerPosition)
 
-        val movieCount = savedInstanceState.getInt(MOVIE_COUNT_KEY)
-        presenter.updateReservationCount(movieCount)
+        val reservationCount = savedInstanceState.getInt(KEY_RESERVATION_COUNT)
+        presenter.updateReservationCount(reservationCount)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -87,20 +87,28 @@ class MovieDetailActivity :
         binding.movie = MovieDetailUiModel.of(movie, selectedTheaterPosition)
     }
 
-    override fun updateCountView(count: Int) {
-        binding.movieCount = count
+    override fun updateReservationCountView(count: Int) {
+        binding.reservationCount = count
     }
 
     override fun navigateToSeatSelectionView(
-        id: Long,
-        date: String,
-        time: String,
-        count: Int,
+        movieId: Long,
+        screeningDate: String,
+        screeningTime: String,
+        reservationCount: Int,
     ) {
-        val movie = MovieRepository.getMovieById(movieId)
+        val movie = MovieRepository.getMovieById(this.movieId)
         val theaterName = movie.theaters[selectedTheaterPosition].name
 
-        val intent = MovieSeatSelectionActivity.newIntent(this, id, date, time, count, theaterName)
+        val intent =
+            MovieSeatSelectionActivity.newIntent(
+                this,
+                movieId,
+                screeningDate,
+                screeningTime,
+                reservationCount,
+                theaterName,
+            )
         startActivity(intent)
     }
 
@@ -118,22 +126,22 @@ class MovieDetailActivity :
 
     override fun onSaveInstanceState(outState: Bundle) {
         val screeningDateSpinnerPosition = binding.spScreeningDate.selectedItemPosition
-        outState.putInt(SCREENING_DATE_SPINNER_POSITION_KEY, screeningDateSpinnerPosition)
+        outState.putInt(KEY_SCREENING_DATE_SPINNER_POSITION, screeningDateSpinnerPosition)
 
         val screeningTimeSpinnerPosition = binding.spScreeningTime.selectedItemPosition
-        outState.putInt(SCREENING_TIME_SPINNER_POSITION_KEY, screeningTimeSpinnerPosition)
+        outState.putInt(KEY_SCREENING_TIME_SPINNER_POSITION, screeningTimeSpinnerPosition)
 
-        val movieCount = binding.movieCount
-        outState.putInt(MOVIE_COUNT_KEY, movieCount)
+        val reservationCount = binding.reservationCount
+        outState.putInt(KEY_RESERVATION_COUNT, reservationCount)
 
         super.onSaveInstanceState(outState)
     }
 
     companion object {
         private val TAG = MovieDetailActivity::class.simpleName
-        private const val SCREENING_DATE_SPINNER_POSITION_KEY = "screeningDateSpinnerPosition"
-        private const val SCREENING_TIME_SPINNER_POSITION_KEY = "screeningTimeSpinnerPosition"
-        private const val MOVIE_COUNT_KEY = "movieCount"
+        private const val KEY_SCREENING_DATE_SPINNER_POSITION = "screeningDateSpinnerPosition"
+        private const val KEY_SCREENING_TIME_SPINNER_POSITION = "screeningTimeSpinnerPosition"
+        private const val KEY_RESERVATION_COUNT = "reservationCount"
 
         fun newIntent(
             context: Context,

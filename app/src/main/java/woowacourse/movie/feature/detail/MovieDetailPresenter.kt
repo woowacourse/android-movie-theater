@@ -1,12 +1,12 @@
 package woowacourse.movie.feature.detail
 
 import woowacourse.movie.data.MovieRepository
-import woowacourse.movie.model.MovieCount
+import woowacourse.movie.model.ReservationCount
 
 class MovieDetailPresenter(
     private val view: MovieDetailContract.View,
 ) : MovieDetailContract.Presenter {
-    private var movieCount: MovieCount = MovieCount()
+    private var reservationCount: ReservationCount = ReservationCount()
 
     override fun loadMovieDetail(movieId: Long) {
         val movie =
@@ -18,29 +18,29 @@ class MovieDetailPresenter(
             }
 
         view.displayMovieDetail(movie)
-        view.updateCountView(movieCount.count)
+        view.updateReservationCountView(reservationCount.count)
     }
 
     override fun updateReservationCount(count: Int) {
-        movieCount = movieCount.update(count)
-        view.updateCountView(movieCount.count)
+        reservationCount = reservationCount.update(count)
+        view.updateReservationCountView(reservationCount.count)
     }
 
     override fun plusReservationCount() {
-        movieCount = ++movieCount
-        view.updateCountView(movieCount.count)
+        reservationCount = ++reservationCount
+        view.updateReservationCountView(reservationCount.count)
     }
 
     override fun minusReservationCount() {
-        movieCount = --movieCount
-        view.updateCountView(movieCount.count)
+        reservationCount = --reservationCount
+        view.updateReservationCountView(reservationCount.count)
     }
 
     override fun reserveMovie(
-        id: Long,
-        date: String,
-        time: String,
+        movieId: Long,
+        screeningDate: String,
+        screeningTime: String,
     ) {
-        view.navigateToSeatSelectionView(id, date, time, movieCount.count)
+        view.navigateToSeatSelectionView(movieId, screeningDate, screeningTime, reservationCount.count)
     }
 }

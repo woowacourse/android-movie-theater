@@ -7,13 +7,13 @@ interface MovieDetailContract {
     interface View {
         fun displayMovieDetail(movie: Movie)
 
-        fun updateCountView(count: Int)
+        fun updateReservationCountView(count: Int)
 
         fun navigateToSeatSelectionView(
-            id: Long,
-            date: String,
-            time: String,
-            count: Int,
+            movieId: Long,
+            screeningDate: String,
+            screeningTime: String,
+            reservationCount: Int,
         )
 
         fun showToastInvalidMovieIdError(throwable: Throwable)
@@ -27,9 +27,9 @@ interface MovieDetailContract {
         fun minusReservationCount()
 
         fun reserveMovie(
-            id: Long,
-            date: String,
-            time: String,
+            movieId: Long,
+            screeningDate: String,
+            screeningTime: String,
         )
 
         fun updateReservationCount(count: Int)
