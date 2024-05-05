@@ -1,6 +1,7 @@
 package woowacourse.movie.feature.seatselection
 
 import woowacourse.movie.data.MovieRepository
+import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
 
 class MovieSeatSelectionPresenter(
@@ -31,16 +32,21 @@ class MovieSeatSelectionPresenter(
 
     override fun clickTableSeat(index: Int) {
         val seat = movieSelectedSeats.getBaseSeats()[index]
-        if (movieSelectedSeats.isSelected(index)) {
-            view.updateSeatBackgroundColor(index, true)
-            movieSelectedSeats.unSelectSeat(seat)
-        } else {
-            if (!movieSelectedSeats.isSelectionComplete()) {
-                view.updateSeatBackgroundColor(index, false)
-                movieSelectedSeats.selectSeat(seat)
-            }
+        when {
+            movieSelectedSeats.isSelected(index) -> unSelectSeat(seat, index)
+            !movieSelectedSeats.isSelectionComplete() -> selectSeat(seat, index)
         }
         view.updateSelectResult(movieSelectedSeats)
+    }
+
+    private fun selectSeat(seat: MovieSeat, index: Int) {
+        view.updateSeatBackgroundColor(index, false)
+        movieSelectedSeats.selectSeat(seat)
+    }
+
+    private fun unSelectSeat(seat: MovieSeat, index: Int) {
+        view.updateSeatBackgroundColor(index, true)
+        movieSelectedSeats.unSelectSeat(seat)
     }
 
     override fun clickPositiveButton() {
