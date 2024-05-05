@@ -12,7 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
 import woowacourse.movie.presentation.model.MessageType
 
-abstract class BaseFragment<T : ViewDataBinding> : Fragment(), BaseView {
+abstract class BaseMvpBindingFragment<T : ViewDataBinding> : Fragment(), BaseView {
     abstract val layoutResourceId: Int
     private var _binding: T? = null
     val binding

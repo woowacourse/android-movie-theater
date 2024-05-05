@@ -6,12 +6,12 @@ import woowacourse.movie.domain.dummy.DummyScreens
 import woowacourse.movie.domain.dummy.DummyTheater
 import woowacourse.movie.domain.model.ScreenView
 import woowacourse.movie.domain.model.TheaterCount
-import woowacourse.movie.presentation.base.BaseFragment
+import woowacourse.movie.presentation.base.BaseMvpBindingFragment
 import woowacourse.movie.presentation.ui.detail.DetailActivity
 import woowacourse.movie.presentation.ui.main.home.adapter.ScreenRecyclerViewAdapter
 import woowacourse.movie.presentation.ui.main.home.bottom.BottomTheatersFragment
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeContract.View {
+class HomeFragment : BaseMvpBindingFragment<FragmentHomeBinding>(), HomeContract.View {
     override val layoutResourceId: Int
         get() = R.layout.fragment_home
 
