@@ -5,6 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="woowacourse.movie.ui.MoneyUi" />
+        
         <variable
             name="presenter"
             type="woowacourse.movie.ui.seat.SeatReservationPresenter" />
@@ -86,6 +89,7 @@
                 android:id="@+id/tv_seat_reservation_total_price"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:text="@{MoneyUi.currency(totalPrice)}"
                 android:textSize="18dp"
                 app:currency="@{totalPrice}"
                 app:layout_constraintStart_toStartOf="@+id/tv_seat_reservation_movie_title"

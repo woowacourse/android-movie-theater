@@ -40,6 +40,7 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationContract.Vie
     ) {
         binding.reservation = reservation
         binding.theaterName = theaterName
+        binding.totalPrice = reservation.seats.totalPrice()
     }
 
     private fun Reservation.currency(): String =

@@ -5,9 +5,15 @@
 
     <data>
 
+        <import type="woowacourse.movie.ui.MoneyUi"/>
+
         <variable
             name="reservation"
             type="woowacourse.movie.domain.model.Reservation" />
+
+        <variable
+            name="totalPrice"
+            type="int" />
 
         <variable
             name="theaterName"
@@ -130,10 +136,10 @@
             android:layout_marginTop="32dp"
             android:textColor="@color/black"
             android:textSize="20dp"
-            app:currency="@{reservation.seats.totalPrice()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_reservation_information"
+            android:text="@{String.format(@string/reservation_complete_currency_format, MoneyUi.currency(totalPrice))}"
             tools:text="13,000원(현장 결제)" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
