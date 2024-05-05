@@ -47,33 +47,28 @@ class MovieSeatSelectionActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_seat_selection)
-        binding.activity = this
-        movieSelectedSeats =
-            MovieSelectedSeats(
-                intent.getIntExtra(KEY_MOVIE_COUNT, INVALID_VALUE_MOVIE_COUNT),
-            )
 
-        presenter.loadMovieTitle(
-            intent.getLongExtra(
-                KEY_MOVIE_ID,
-                INVALID_VALUE_MOVIE_ID,
-            ),
-        )
-        presenter.loadTableSeats(movieSelectedSeats)
+        movieSelectedSeats =
+            MovieSelectedSeats(intent.getIntExtra(KEY_MOVIE_COUNT, INVALID_VALUE_MOVIE_COUNT))
+        initializeView()
     }
 
     override fun initializePresenter() = MovieSeatSelectionPresenter(this)
 
+    private fun initializeView() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        presenter.loadMovieTitle(intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID))
+        presenter.loadTableSeats(movieSelectedSeats)
+
+        binding.btnComplete.setOnClickListener { displayDialog() }
+    }
+
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         val movieCount =
-            savedInstanceState.getInt(
-                KEY_MOVIE_COUNT,
-                INVALID_VALUE_MOVIE_COUNT,
-            )
+            savedInstanceState.getInt(KEY_MOVIE_COUNT, INVALID_VALUE_MOVIE_COUNT)
         movieSelectedSeats = MovieSelectedSeats(movieCount)
         presenter.updateSelectedSeats(movieSelectedSeats)
 
@@ -87,7 +82,7 @@ class MovieSeatSelectionActivity :
     }
 
     override fun displayMovieTitle(movieTitle: String) {
-        binding.seatTitleText = movieTitle
+        binding.movieTitle = movieTitle
     }
 
     override fun setUpTableSeats(baseSeats: List<MovieSeat>) {
@@ -117,7 +112,6 @@ class MovieSeatSelectionActivity :
 
     override fun updateSelectResult(movieSelectedSeats: MovieSelectedSeats) {
         binding.movieSelectedSeats = movieSelectedSeats
-        binding.totalPrice = movieSelectedSeats.totalPrice()
     }
 
     override fun navigateToResultView(movieSelectedSeats: MovieSelectedSeats) {
