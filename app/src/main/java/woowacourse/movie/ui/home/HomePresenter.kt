@@ -1,12 +1,12 @@
 package woowacourse.movie.ui.home
 
 import woowacourse.movie.domain.model.ScreenAd
+import woowacourse.movie.domain.model.toPreviewUI
 import woowacourse.movie.domain.repository.DummyAdvertisement
 import woowacourse.movie.domain.repository.DummyTheaters
 import woowacourse.movie.domain.repository.MovieRepository
 import woowacourse.movie.domain.repository.ScreenRepository
 import woowacourse.movie.domain.repository.TheaterRepository
-import woowacourse.movie.ui.toPreviewUI
 
 class HomePresenter(
     private val view: HomeContract.View,
