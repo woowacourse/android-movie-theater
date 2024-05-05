@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.main.util
+package woowacourse.movie.presentation.ui.util
 
 import android.content.Context
 import woowacourse.movie.R

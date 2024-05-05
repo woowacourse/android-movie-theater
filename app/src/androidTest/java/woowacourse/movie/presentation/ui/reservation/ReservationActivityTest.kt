@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.main.reservation
+package woowacourse.movie.presentation.ui.reservation
 
 import android.content.Context
 import android.content.Intent
@@ -15,11 +15,10 @@ import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.domain.dummy.DummyReservation
 import woowacourse.movie.domain.repository.ReservationRepository
-import woowacourse.movie.presentation.main.util.currency
-import woowacourse.movie.presentation.main.util.getDummyMovie
-import woowacourse.movie.presentation.main.util.getDummyReservation
-import woowacourse.movie.presentation.main.util.getDummySeats
-import woowacourse.movie.presentation.ui.reservation.ReservationActivity
+import woowacourse.movie.presentation.ui.util.currency
+import woowacourse.movie.presentation.ui.util.getDummyMovie
+import woowacourse.movie.presentation.ui.util.getDummyReservation
+import woowacourse.movie.presentation.ui.util.getDummySeats
 import woowacourse.movie.presentation.utils.toScreeningDate
 import java.time.LocalDateTime
 
