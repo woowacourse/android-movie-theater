@@ -3,10 +3,7 @@ package woowacourse.movie.presenter.home
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
-import io.mockk.just
-import io.mockk.runs
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -21,8 +18,8 @@ class ReservationHomePresenterTest {
     @MockK
     private lateinit var view: ReservationHomeContract.View
     private lateinit var presenter: ReservationHomeContract.Presenter
-    private lateinit var movies : List<Movie>
-    private lateinit var ads : List<Advertisement>
+    private lateinit var movies: List<Movie>
+    private lateinit var ads: List<Advertisement>
 
     @BeforeEach
     fun setUp() {
@@ -37,7 +34,7 @@ class ReservationHomePresenterTest {
 
         every { view.navigateToDetail(0) } answers {
             val actualMovieId = arg<Int>(0)
-            assertEquals(actualMovieId,expectedMovieId)
+            assertEquals(actualMovieId, expectedMovieId)
         }
         presenter.loadMovie(
             Movie(
@@ -54,17 +51,15 @@ class ReservationHomePresenterTest {
 
     @Test
     fun `홈 화면으로 이동하면 영화와 광고 목록이 화면에 표시되어야 한다`() {
-
         every { view.showMovieData(movies, ads) } answers {
             arg<List<Movie>>(0).forEachIndexed { index, movie ->
                 val actualMovie = movies[index]
-                assertEquals(movie.id,actualMovie.id)
+                assertEquals(movie.id, actualMovie.id)
             }
             arg<List<Advertisement>>(1).forEachIndexed { index, advertisement ->
                 val actualAd = ads[index]
-                assertEquals(advertisement.banner,actualAd.banner)
+                assertEquals(advertisement.banner, actualAd.banner)
             }
-
         }
         presenter.loadMovies()
         verify { view.showMovieData(movies, ads) }

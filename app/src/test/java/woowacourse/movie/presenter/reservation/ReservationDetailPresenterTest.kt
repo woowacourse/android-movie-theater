@@ -47,7 +47,6 @@ class ReservationDetailPresenterTest {
             assertEquals(expectedMoviePosterId, actualMovie.posterId)
             assertEquals(expectedMovieTitle, actualMovie.title)
             assertEquals(expectedRunningTime, actualMovie.runningTime)
-
         }
         presenter.loadMovie(0)
         verify { view.showMovieInformation(firstMovie) }
@@ -55,18 +54,19 @@ class ReservationDetailPresenterTest {
 
     @Test
     fun `영화와 극장 선택을 완료하면 선택한 극장의 상영 날짜가 표시되어야 한다`() {
-        val expectedPeriod = listOf(
-            LocalDate.of(2024, 3, 1),
-            LocalDate.of(2024, 3, 2),
-            LocalDate.of(2024, 3, 3),
-            LocalDate.of(2024, 3, 4),
-            LocalDate.of(2024, 3, 5),
-            LocalDate.of(2024, 3, 6),
-            LocalDate.of(2024, 3, 7),
-            LocalDate.of(2024, 3, 8),
-            LocalDate.of(2024, 3, 9),
-            LocalDate.of(2024, 3, 10),
-        )
+        val expectedPeriod =
+            listOf(
+                LocalDate.of(2024, 3, 1),
+                LocalDate.of(2024, 3, 2),
+                LocalDate.of(2024, 3, 3),
+                LocalDate.of(2024, 3, 4),
+                LocalDate.of(2024, 3, 5),
+                LocalDate.of(2024, 3, 6),
+                LocalDate.of(2024, 3, 7),
+                LocalDate.of(2024, 3, 8),
+                LocalDate.of(2024, 3, 9),
+                LocalDate.of(2024, 3, 10),
+            )
         every { view.showScreeningPeriod(firstMovie) } answers {
             val actualMovie = arg<Movie>(0)
             assertEquals(actualMovie.screeningPeriod, expectedPeriod)
@@ -77,23 +77,24 @@ class ReservationDetailPresenterTest {
 
     @Test
     fun `영화와 극장 선택을 완료하면 선택한 극장의 상영 시간이 표시되어야 한다`() {
-        val expectedScreeningTimes = ScreeningTimes(
-            weekDay =
-            listOf(
-                LocalTime.of(9, 0),
-                LocalTime.of(11, 0),
-                LocalTime.of(13, 0),
-            ),
-            weekEnd =
-            listOf(
-                LocalTime.of(14, 0),
-                LocalTime.of(16, 0),
-            ),
-        )
+        val expectedScreeningTimes =
+            ScreeningTimes(
+                weekDay =
+                    listOf(
+                        LocalTime.of(9, 0),
+                        LocalTime.of(11, 0),
+                        LocalTime.of(13, 0),
+                    ),
+                weekEnd =
+                    listOf(
+                        LocalTime.of(14, 0),
+                        LocalTime.of(16, 0),
+                    ),
+            )
         every {
             view.showScreeningTimes(
                 firstTheater.screeningTimes,
-                "2024-03-01"
+                "2024-03-01",
             )
         }.answers {
             val actualScreeningTimes = arg<ScreeningTimes>(0)
@@ -108,7 +109,7 @@ class ReservationDetailPresenterTest {
         verify {
             view.showScreeningTimes(
                 firstTheater.screeningTimes,
-                "2024-03-01"
+                "2024-03-01",
             )
         }
     }
@@ -126,7 +127,7 @@ class ReservationDetailPresenterTest {
 
         every { view.changeHeadCount(1) } answers {
             val actualCount = arg<Int>(0)
-            assertEquals(actualCount,expectedCount)
+            assertEquals(actualCount, expectedCount)
         }
         presenter.decreaseHeadCount(2)
         verify { view.changeHeadCount(1) }
@@ -145,7 +146,7 @@ class ReservationDetailPresenterTest {
 
         every { view.changeHeadCount(3) } answers {
             val actualCount = arg<Int>(0)
-            assertEquals(actualCount,expectedCount)
+            assertEquals(actualCount, expectedCount)
         }
         presenter.increaseHeadCount(2)
         verify { view.changeHeadCount(3) }
