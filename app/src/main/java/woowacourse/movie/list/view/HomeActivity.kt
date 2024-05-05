@@ -25,7 +25,7 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
         binding.bottomNav.selectedItemId = R.id.home_fragment_item
         showFragment(MovieListFragment())
         binding.bottomNav.setOnItemSelectedListener { item ->
-            presenter.onBottomNavItemSelected(item.itemId)
+            presenter.setBottomNavFragment(item.itemId)
             true
         }
     }

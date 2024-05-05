@@ -8,6 +8,6 @@ interface HomeActivityContract {
     }
 
     interface Presenter {
-        fun onBottomNavItemSelected(itemId: Int)
+        fun setBottomNavFragment(itemId: Int)
     }
 }

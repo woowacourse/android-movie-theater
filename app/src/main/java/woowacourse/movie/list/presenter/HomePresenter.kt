@@ -7,7 +7,7 @@ import woowacourse.movie.list.view.ReservationHistoryFragment
 import woowacourse.movie.list.view.SettingFragment
 
 class HomePresenter(private val view: HomeActivityContract.View) : HomeActivityContract.Presenter {
-    override fun onBottomNavItemSelected(itemId: Int) {
+    override fun setBottomNavFragment(itemId: Int) {
         when (itemId) {
             R.id.home_fragment_item -> view.showFragment(MovieListFragment())
             R.id.reservation_details_fragment_item -> view.showFragment(ReservationHistoryFragment())
