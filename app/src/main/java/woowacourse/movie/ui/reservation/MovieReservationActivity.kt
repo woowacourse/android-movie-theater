@@ -13,6 +13,8 @@ import woowacourse.movie.databinding.ActivityMovieReservationBinding
 import woowacourse.movie.model.data.MovieContentsImpl
 import woowacourse.movie.model.data.TheatersImpl
 import woowacourse.movie.model.data.UserTicketsImpl
+import woowacourse.movie.model.movie.MovieContent
+import woowacourse.movie.model.movie.Theater
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.selection.MovieSeatSelectionActivity
 import woowacourse.movie.ui.utils.getImageFromId
@@ -37,7 +39,7 @@ class MovieReservationActivity :
             return
         }
 
-        presenter.loadMovieContent(movieContentId, theaterId)
+        presenter.loadScreeningContent(movieContentId, theaterId)
         presenter.updateReservationCount()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -87,6 +89,11 @@ class MovieReservationActivity :
             putExtra(MovieReservationKey.TICKET_ID, userTicketId)
             startActivity(this)
         }
+    }
+
+    override fun showScreeningContent(movieContent: MovieContent, theater: Theater) {
+        binding.movieContent = movieContent
+        binding.theater = theater
     }
 
     companion object {

@@ -26,7 +26,7 @@ class MovieReservationPresenterTest {
         // given
 
         // when
-        presenter.loadMovieContent(-1L, 0L)
+        presenter.loadScreeningContent(-1L, 0L)
 
         // then
         verify { view.showError(any()) }
