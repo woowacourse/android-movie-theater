@@ -1,4 +1,4 @@
-package woowacourse.movie.selectseat.uimodel
+package woowacourse.movie.model
 
 enum class SeatState {
     SELECTED,

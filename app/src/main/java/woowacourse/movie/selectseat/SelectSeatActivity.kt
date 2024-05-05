@@ -15,15 +15,15 @@ import woowacourse.movie.moviereservation.uimodel.BookingInfoUiModel
 import woowacourse.movie.reservationresult.ReservationResultActivity
 import woowacourse.movie.selectseat.uimodel.PriceUiModel
 import woowacourse.movie.selectseat.uimodel.SeatUiModel
-import woowacourse.movie.selectseat.uimodel.SeatsUiModel
 import woowacourse.movie.selectseat.uimodel.SelectResult
+import woowacourse.movie.selectseat.uimodel.SelectedSeatsUiModel
 import woowacourse.movie.util.bundleParcelable
 import woowacourse.movie.util.intentParcelable
 import woowacourse.movie.util.showAlertDialog
 
 class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
     private lateinit var presenter: SelectSeatContract.Presenter
-    private lateinit var seats: SeatsUiModel
+    private lateinit var selectedSeats: SelectedSeatsUiModel
     private lateinit var bookingInfoUiModel: BookingInfoUiModel
 
     private lateinit var binding: ActivitySelectSeatBinding
@@ -46,28 +46,28 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        outState.putParcelable(EXTRA_SEATS_ID, seats)
+        outState.putParcelable(EXTRA_SEATS_ID, selectedSeats)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 
         val selectedSeats =
-            savedInstanceState.bundleParcelable(EXTRA_SEATS_ID, SeatsUiModel::class.java)
+            savedInstanceState.bundleParcelable(EXTRA_SEATS_ID, SelectedSeatsUiModel::class.java)
         selectedSeats?.let {
-            seats = selectedSeats
-            seats.selectedSeats().forEach {
+            this.selectedSeats = selectedSeats
+            this.selectedSeats.seats.forEach {
                 val seatView = tableChildView(it.row, it.col)
                 seatView.isChecked = true
+                presenter.changeSeatState(it)
             }
-            presenter.calculatePrice(seats.selectedSeats())
         }
-        binding.btnSelectSeatReserve.isEnabled = seats.selectedSeats().isNotEmpty()
+        binding.btnSelectSeatReserve.isEnabled = this.selectedSeats.seats.isNotEmpty()
     }
 
     private fun initView() {
         binding.btnSelectSeatReserve.setOnClickListener {
-            presenter.completeReservation(bookingInfoUiModel, seats.seats)
+            presenter.completeReservation(bookingInfoUiModel)
         }
 
         presenter.loadSeat(bookingInfoUiModel.screenMovieId)
@@ -82,21 +82,18 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
     }
 
     override fun showSeat(theaterSeats: List<SeatUiModel>) {
-        seats = SeatsUiModel(theaterSeats)
-        binding.seats = seats
+        selectedSeats = SelectedSeatsUiModel()
+        binding.selectedSeats = selectedSeats
         theaterSeats.forEach { seatUiModel ->
             val seatView: CheckBox = tableChildView(seatUiModel.row, seatUiModel.col)
+            seatView.setTextColor(getColor(seatUiModel.rateColor.color))
+            seatView.text = seatUiModel.showPosition
             seatView.setOnClickListener {
-                updateDate(seatUiModel)
+                presenter.changeSeatState(seatUiModel)
+                binding.btnSelectSeatReserve.isEnabled = selectedSeats.seats.isNotEmpty()
+                binding.selectedSeats = selectedSeats
             }
         }
-    }
-
-    private fun updateDate(seatUiModel: SeatUiModel) {
-        seats = seats.changeState(seatUiModel)
-        binding.seats = seats
-        presenter.calculatePrice(seats.selectedSeats())
-        binding.btnSelectSeatReserve.isEnabled = seats.selectedSeats().isNotEmpty()
     }
 
     override fun showMovieInfo(
@@ -109,6 +106,10 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
 
     override fun updatePrice(updatedPrice: PriceUiModel) {
         binding.tvSelectSeatPrice.text = updatedPrice.price
+    }
+
+    override fun updateSeatState(selectedSeats: List<SeatUiModel>) {
+        this.selectedSeats = SelectedSeatsUiModel(selectedSeats)
     }
 
     override fun navigateToResult(reservationId: Long) {
@@ -150,7 +151,6 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
             onPositiveButtonClicked = {
                 presenter.completeReservation(
                     bookingInfoUiModel,
-                    seats.selectedSeats(),
                 )
             },
             "취소",
@@ -158,12 +158,12 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
 
     private fun selectResult(): SelectResult =
         when {
-            bookingInfoUiModel.maxSelectSize() < seats.selectedSeats().size ->
+            bookingInfoUiModel.maxSelectSize() < selectedSeats.seats.size ->
                 SelectResult.Exceed(
                     getString(R.string.select_more_seat_error_message),
                 )
 
-            bookingInfoUiModel.maxSelectSize() > seats.selectedSeats().size ->
+            bookingInfoUiModel.maxSelectSize() > selectedSeats.seats.size ->
                 SelectResult.LessSelect(
                     getString(R.string.select_less_seat_error_message),
                 )

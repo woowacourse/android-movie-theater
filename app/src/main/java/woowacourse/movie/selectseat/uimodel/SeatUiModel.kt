@@ -3,6 +3,7 @@ package woowacourse.movie.selectseat.uimodel
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import woowacourse.movie.model.SeatRate
+import woowacourse.movie.model.SeatState
 
 @Parcelize
 data class SeatUiModel(
@@ -18,8 +19,6 @@ data class SeatUiModel(
         row,
         col,
     )
-
-    fun changeState(): SeatUiModel = SeatUiModel(showPosition, rateColor, row, col, state.reserveState())
 
     companion object {
         private fun positionFormat(

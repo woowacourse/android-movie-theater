@@ -5,12 +5,12 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
-import woowacourse.movie.selectseat.uimodel.SeatsUiModel
+import woowacourse.movie.selectseat.uimodel.SelectedSeatsUiModel
 
 @BindingAdapter("settingSeats")
 fun setTableItems(
     table: TableLayout,
-    seats: SeatsUiModel,
+    seats: SelectedSeatsUiModel,
 ) {
     seats.seats.forEach { seat ->
         val chb = tableChildView(table, seat.row, seat.col)

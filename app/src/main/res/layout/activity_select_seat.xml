@@ -5,9 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.view.View" />
         <variable
-            name="seats"
-            type="woowacourse.movie.selectseat.uimodel.SeatsUiModel" />
+            name="selectedSeats"
+            type="woowacourse.movie.selectseat.uimodel.SelectedSeatsUiModel" />
 
         <variable
             name="presenter"
@@ -41,7 +43,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="34dp"
-            custom:settingSeats="@{seats}"
             android:layout_marginTop="56dp"
             android:stretchColumns="*"
             app:layout_constraintEnd_toEndOf="parent"
@@ -110,6 +111,18 @@
 
 
         </TableLayout>
+
+        <TextView
+            android:id="@+id/tv_select_seat_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility='@{selectedSeats.seats.isEmpty() ? View.GONE : View.VISIBLE}'
+            app:layout_constraintTop_toBottomOf="@id/tl_select_seat"
+            tools:text="좌석을 더 선택해주세요."
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/red"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

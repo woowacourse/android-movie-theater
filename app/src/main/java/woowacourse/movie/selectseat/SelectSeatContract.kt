@@ -15,6 +15,8 @@ interface SelectSeatContract {
 
         fun updatePrice(updatedPrice: PriceUiModel)
 
+        fun updateSeatState(selectedSeats: List<SeatUiModel>)
+
         fun navigateToResult(reservationId: Long)
     }
 
@@ -23,11 +25,8 @@ interface SelectSeatContract {
 
         fun loadReservationInfo(movieId: Long)
 
-        fun calculatePrice(selectedSeats: List<SeatUiModel>)
+        fun completeReservation(bookingInfoUiModel: BookingInfoUiModel)
 
-        fun completeReservation(
-            bookingInfoUiModel: BookingInfoUiModel,
-            selectedSeats: List<SeatUiModel>,
-        )
+        fun changeSeatState(selectedSeat: SeatUiModel)
     }
 }
