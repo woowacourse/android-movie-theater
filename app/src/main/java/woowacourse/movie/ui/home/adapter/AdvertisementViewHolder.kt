@@ -8,11 +8,11 @@ class AdvertisementViewHolder(
     private val onItemClick: (id: Int) -> Unit,
     private val binding: HolderAdvertisementBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(ad: ScreenAd.Advertisement) {
-        binding.advertisementAd = ad
+    fun bind(advertisement: ScreenAd.Advertisement) {
+        binding.advertisement = advertisement
 
         binding.ivAdvertisement.setOnClickListener {
-            onItemClick(ad.id)
+            onItemClick(advertisement.id)
         }
     }
 }
