@@ -2,7 +2,7 @@ package woowacourse.movie.list.contract
 
 import androidx.fragment.app.Fragment
 
-interface HomeActivityContract {
+interface HomeContract {
     interface View {
         fun showFragment(fragment: Fragment)
     }

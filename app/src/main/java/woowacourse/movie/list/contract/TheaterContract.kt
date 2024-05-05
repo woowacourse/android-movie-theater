@@ -1,6 +1,6 @@
 package woowacourse.movie.list.contract
 
-interface TheaterFragmentContract {
+interface TheaterContract {
     interface View {
         fun navigateToDetailActivity(movieId: Long, theaterId: Long)
     }

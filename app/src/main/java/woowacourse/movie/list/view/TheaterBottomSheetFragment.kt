@@ -10,12 +10,12 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.databinding.FragmentTheaterBinding
 import woowacourse.movie.detail.view.MovieInformationDetailActivity
 import woowacourse.movie.list.adapter.TheaterAdapter
-import woowacourse.movie.list.contract.TheaterFragmentContract
+import woowacourse.movie.list.contract.TheaterContract
 import woowacourse.movie.list.model.TheaterData.theaters
 import woowacourse.movie.list.presenter.TheaterPresenter
 import woowacourse.movie.list.view.MovieListFragment.Companion.EXTRA_MOVIE_ID_KEY_TO_FRAGMENT
 
-class TheaterBottomSheetFragment : BottomSheetDialogFragment(), TheaterFragmentContract.View {
+class TheaterBottomSheetFragment : BottomSheetDialogFragment(), TheaterContract.View {
     private lateinit var binding: FragmentTheaterBinding
     private lateinit var presenter: TheaterPresenter
 
