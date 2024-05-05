@@ -1,6 +1,6 @@
 package woowacourse.movie.list.presenter
 
-import woowacourse.movie.list.view.TheaterFragmentContract
+import woowacourse.movie.list.contract.TheaterFragmentContract
 
 class TheaterPresenter(private val view: TheaterFragmentContract.View) :
     TheaterFragmentContract.Presenter {

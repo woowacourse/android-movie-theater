@@ -1,4 +1,4 @@
-package woowacourse.movie.list.view
+package woowacourse.movie.list.contract
 
 interface TheaterFragmentContract {
     interface View {

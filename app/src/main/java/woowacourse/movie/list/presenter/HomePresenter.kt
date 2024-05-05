@@ -1,7 +1,7 @@
 package woowacourse.movie.list.presenter
 
 import woowacourse.movie.R
-import woowacourse.movie.list.view.HomeActivityContract
+import woowacourse.movie.list.contract.HomeActivityContract
 import woowacourse.movie.list.view.MovieListFragment
 import woowacourse.movie.list.view.ReservationHistoryFragment
 import woowacourse.movie.list.view.SettingFragment

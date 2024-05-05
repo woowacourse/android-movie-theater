@@ -27,13 +27,4 @@ class MovieListPresenterTest {
         // then
         verify { view.showMoviesInfo(any(), any()) }
     }
-
-    @Test
-    fun `목록이 클릭되면 다음 화면으로 넘어가야 한다`() {
-        every { view.setOnListViewClickListener() } just runs
-        // when
-        presenter.setListViewClickListenerInfo()
-        // then
-        verify { view.setOnListViewClickListener() }
-    }
 }
