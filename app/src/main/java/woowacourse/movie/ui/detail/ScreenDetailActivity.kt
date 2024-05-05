@@ -55,7 +55,6 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
         }
 
         initClickListener()
-        dateTimeSpinnerView.selectedDatePosition()
     }
 
     private fun initClickListener() {

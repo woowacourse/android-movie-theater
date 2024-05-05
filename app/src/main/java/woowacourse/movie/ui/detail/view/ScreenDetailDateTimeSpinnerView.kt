@@ -12,7 +12,6 @@ import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.ScreenTimePolicy
 import woowacourse.movie.ui.detail.view.adapter.DateAdapter
 import woowacourse.movie.ui.detail.view.adapter.TimeAdapter
-import java.time.LocalDate
 
 class ScreenDetailDateTimeSpinnerView(context: Context, attrs: AttributeSet? = null) : DateTimeSpinnerView,
     ConstraintLayout(context, attrs) {
@@ -20,17 +19,49 @@ class ScreenDetailDateTimeSpinnerView(context: Context, attrs: AttributeSet? = n
         DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.holder_spinner_date_time, this, true)
     }
 
-    private lateinit var dateAdapter: DateAdapter
-    private lateinit var timeAdapter: TimeAdapter
-
     override fun show(
         dateRange: DateRange,
         screenTimePolicy: ScreenTimePolicy,
         onDateSelectedListener: OnItemSelectedListener,
         onTimeSelectedListener: OnItemSelectedListener,
     ) {
-        initDateAdapter(dateRange, screenTimePolicy, onDateSelectedListener)
-        initTimeAdapter(dateRange.start, screenTimePolicy, onTimeSelectedListener)
+        val timeAdapter = initTimeAdapter(screenTimePolicy, dateRange, onTimeSelectedListener)
+        val dateAdapter = initDateAdapter(dateRange, screenTimePolicy, timeAdapter, onDateSelectedListener)
+
+        bindAdapters(timeAdapter, dateAdapter)
+    }
+
+    private fun initTimeAdapter(
+        screenTimePolicy: ScreenTimePolicy,
+        dateRange: DateRange,
+        onTimeSelectedListener: OnItemSelectedListener,
+    ) = TimeAdapter(context, screenTimePolicy, dateRange.start, onTimeSelectedListener = { position ->
+        onTimeSelectedListener.onItemSelected(position)
+    })
+
+    private fun initDateAdapter(
+        dateRange: DateRange,
+        screenTimePolicy: ScreenTimePolicy,
+        timeAdapter: TimeAdapter,
+        onDateSelectedListener: OnItemSelectedListener,
+    ) = DateAdapter(context, dateRange) { position ->
+        val times = screenTimePolicy.screeningTimes(dateRange.allDates()[position]).toList()
+        Log.d(TAG, "initDateAdapter: times: $times")
+
+        timeAdapter.clear()
+        timeAdapter.addAll(times)
+        onDateSelectedListener.onItemSelected(position)
+    }
+
+    private fun bindAdapters(
+        timeAdapter: TimeAdapter,
+        dateAdapter: DateAdapter,
+    ) {
+        binding.timeAdapter = timeAdapter
+        binding.spnTime.onItemSelectedListener = timeAdapter
+
+        binding.dateAdapter = dateAdapter
+        binding.spnDate.onItemSelectedListener = dateAdapter
     }
 
     override fun restoreDatePosition(position: Int) {
@@ -47,39 +78,6 @@ class ScreenDetailDateTimeSpinnerView(context: Context, attrs: AttributeSet? = n
 
     override fun selectedTimePosition(): Int {
         return binding.spnTime.selectedItemPosition
-    }
-
-    private fun initDateAdapter(
-        dateRange: DateRange,
-        screenTimePolicy: ScreenTimePolicy,
-        onDateSelectedListener: OnItemSelectedListener,
-    ) {
-        dateAdapter =
-            DateAdapter(context, dateRange) { position ->
-                val times = screenTimePolicy.screeningTimes(dateRange.allDates()[position]).toList()
-                Log.d(TAG, "initDateAdapter: times: $times")
-
-                timeAdapter.clear()
-                timeAdapter.addAll(times)
-                onDateSelectedListener.onItemSelected(position)
-            }
-        binding.dateAdapter = dateAdapter
-        binding.spnDate.onItemSelectedListener = dateAdapter
-    }
-
-    private fun initTimeAdapter(
-        date: LocalDate,
-        screenTimePolicy: ScreenTimePolicy,
-        onTimeSelectListener: OnItemSelectedListener,
-    ) {
-        timeAdapter =
-            TimeAdapter(context, screenTimePolicy, date, onTimeSelectedListener = { position ->
-                Log.d(TAG, "initTimeAdapter: position: $position")
-                onTimeSelectListener.onItemSelected(position)
-            })
-
-        binding.timeAdapter = timeAdapter
-        binding.spnTime.onItemSelectedListener = timeAdapter
     }
 
     companion object {
