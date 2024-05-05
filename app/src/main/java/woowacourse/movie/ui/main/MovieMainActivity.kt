@@ -1,6 +1,7 @@
 package woowacourse.movie.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -18,13 +19,16 @@ class MovieMainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_main)
 
+        if (savedInstanceState == null) {
+            replace(MovieHomeFragment())
+            binding.mainBottomNavigation.selectedItemId = R.id.menu_home
+        }
+
         initializeBottomNavigation()
     }
 
     private fun initializeBottomNavigation() {
-        replace(MovieHomeFragment())
         binding.mainBottomNavigation.apply {
-            selectedItemId = R.id.menu_home
             setOnItemSelectedListener {
                 when (it.itemId) {
                     R.id.menu_booking_history -> replace(MovieBookingHistoryFragment())
