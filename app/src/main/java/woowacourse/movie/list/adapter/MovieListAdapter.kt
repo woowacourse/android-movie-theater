@@ -21,15 +21,13 @@ class MovieListAdapter(
         this.advertisements = advertisements
     }
 
-    inner class MovieViewHolder(val binding: MovieItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class MovieViewHolder(val binding: MovieItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(
             movie: Movie,
-            clickListener: OnItemClickListener,
         ) {
             binding.movie = movie
             binding.moviePoster.setImageResource(movie.posterResourceId)
-            binding.onItemClickListener = clickListener
+            binding.onItemClickListener = movieHomeClickListener
         }
     }
 
@@ -66,7 +64,7 @@ class MovieListAdapter(
     ) {
         if (getItemViewType(position) == MovieListItemType.MOVIE.separator) {
             val movieHolder = holder as MovieViewHolder
-            movieHolder.bind(movies[position], movieHomeClickListener)
+            movieHolder.bind(movies[position])
         } else {
             val advertisementHolder = holder as AdvertisementViewHolder
             advertisementHolder.bind(advertisements[0])
