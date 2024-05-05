@@ -1,7 +1,6 @@
 package woowacourse.movie.presentation.ui.utils
 
 import woowacourse.movie.R
-import woowacourse.movie.domain.dummy.DummyData.seatBoards
 import woowacourse.movie.domain.model.Reservation
 import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.ScreenDate
@@ -13,12 +12,43 @@ import woowacourse.movie.domain.model.SeatBoard
 import woowacourse.movie.domain.model.SeatModel
 import woowacourse.movie.domain.model.SeatRank
 import woowacourse.movie.domain.model.Theater
-import woowacourse.movie.domain.model.TheaterCount
 import woowacourse.movie.presentation.model.ReservationInfo
 import java.time.LocalDate
 import java.time.LocalDateTime
 
 object DummyData {
+    // TODO 더미 데이터
+    val seatBoard =
+        SeatBoard(
+            0,
+            4,
+            5,
+            listOf(
+                Seat("A", 0, SeatRank.B),
+                Seat("A", 1, SeatRank.B),
+                Seat("A", 2, SeatRank.B),
+                Seat("A", 3, SeatRank.B),
+                Seat("B", 0, SeatRank.B),
+                Seat("B", 1, SeatRank.B),
+                Seat("B", 2, SeatRank.B),
+                Seat("B", 3, SeatRank.B),
+                Seat("C", 0, SeatRank.S),
+                Seat("C", 1, SeatRank.S),
+                Seat("C", 2, SeatRank.S),
+                Seat("C", 3, SeatRank.S),
+                Seat("D", 0, SeatRank.S),
+                Seat("D", 1, SeatRank.S),
+                Seat("D", 2, SeatRank.S),
+                Seat("D", 3, SeatRank.S),
+                Seat("E", 0, SeatRank.A),
+                Seat("E", 1, SeatRank.A),
+                Seat("E", 2, SeatRank.A),
+                Seat("E", 3, SeatRank.A),
+            ),
+        )
+
+    val seatBoards = listOf(seatBoard, seatBoard.copy(id = 1), seatBoard.copy(id = 2))
+
     val wizardStone =
         Movie(
             id = 0,
@@ -71,7 +101,7 @@ object DummyData {
             endDate = LocalDate.of(2024, 6, 30),
         )
 
-    private val movies =
+    val movies =
         List(1) {
             Movie(
                 id = 0,
@@ -86,7 +116,7 @@ object DummyData {
             )
         }
 
-    private val theater =
+    val theater =
         Theater(
             id = 0,
             name = "선릉",
@@ -129,6 +159,16 @@ object DummyData {
 
     val theaters =
         listOf(theater, theater.copy(id = 1, name = "강남"), theater.copy(id = 2, name = "잠실"))
+
+    private fun createScreenDateList(
+        startDate: LocalDate,
+        endDate: LocalDate,
+    ): List<ScreenDate> {
+        return generateSequence(startDate) { it.plusDays(1) }
+            .takeWhile { !it.isAfter(endDate) }
+            .map { ScreenDate(it) }
+            .toList()
+    }
 
     val dummyScreen =
         Screen(
@@ -174,21 +214,13 @@ object DummyData {
         )
 
     fun load(): List<ScreenView> =
-        movies.flatMap { movie ->
-            listOf(
-                wizardStone,
-                bang,
-                zoesu,
-                Ads(R.drawable.img_ads),
-                piro,
-            )
-        }
-
-    fun loadSeatBoard(id: Int): Result<SeatBoard> =
-        runCatching {
-            seatBoards.find { seatBoard -> seatBoard.id == id }
-                ?: throw NoSuchElementException()
-        }
+        listOf(
+            wizardStone,
+            bang,
+            zoesu,
+            Ads(R.drawable.img_ads),
+            piro,
+        )
 
     fun findByScreenId(
         theaterId: Int,
@@ -196,30 +228,4 @@ object DummyData {
     ): Screen =
         theaters.find { it.id == theaterId }?.screens?.find { screen -> screen.movie.id == movieId }
             ?: throw NoSuchElementException()
-
-    fun findTheaterCount(id: Int): Result<List<TheaterCount>> =
-        runCatching {
-            val tmpList: MutableList<TheaterCount> = mutableListOf()
-            theaters.forEach { theater ->
-                val size = theater.findScreenTimeCount(id)
-                if (size != 0) {
-                    tmpList.add(
-                        TheaterCount(
-                            id = theater.id,
-                            name = theater.name,
-                            size = size,
-                        ),
-                    )
-                }
-            }
-            tmpList
-        }
-
-    private fun createScreenDateList(
-        startDate: LocalDate,
-        endDate: LocalDate,
-    ): List<ScreenDate> {
-        return generateSequence(startDate) { it.plusDays(1) }.takeWhile { !it.isAfter(endDate) }
-            .map { ScreenDate(it) }.toList()
-    }
 }

@@ -9,9 +9,11 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import woowacourse.movie.domain.model.SeatModel
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.ScreenRepository
 import woowacourse.movie.presentation.model.MessageType
+import woowacourse.movie.presentation.model.UserSeat
 import woowacourse.movie.presentation.ui.utils.DummyData.dummyReservationInfo
 import woowacourse.movie.presentation.ui.utils.DummyData.dummyScreen
 import woowacourse.movie.presentation.ui.utils.DummyData.dummySeatBoard
@@ -36,6 +38,20 @@ class SeatSelectionPresenterTest {
     }
 
     @Test
+    fun `SeatSelectionPresenter가 유효한 상영 id값으로 loadScreen()을 했을 때, view에게 screen 정보, 가격, 티켓 개수를 전달한다`() {
+        // given
+        every { screenRepository.findByScreenId(any(), any()) } returns Result.success(dummyScreen)
+        every { view.showScreen(any(), any(), any()) } just runs
+        presenter.updateUiModel(dummyReservationInfo)
+
+        // when
+        presenter.loadScreen(1)
+
+        // then
+        verify { view.showScreen(dummyScreen, 0, dummyReservationInfo.ticketCount) }
+    }
+
+    @Test
     fun `SeatSelectionPresenter가 유효하지 않은 상영 id값으로 loadScreen()을 했을 때, view에게 back과 throwable를 전달한다`() {
         // given
         every { screenRepository.findByScreenId(any(), any()) } returns
@@ -51,6 +67,21 @@ class SeatSelectionPresenterTest {
         // then
         verify { view.showToastMessage(e = any()) }
         verify { view.navigateBackToPrevious() }
+    }
+
+    @Test
+    fun `SeatSelectionPresenter가 유효한 상영 id값으로 loadSeatBoard()를 했을 때, view에게 좌석 정보와 클릭 설정에 대한 좌석 정보를 전달한다`() {
+        // given
+        every { screenRepository.loadSeatBoard(any()) } returns Result.success(dummySeatBoard)
+        every { view.showSeatBoard(any()) } just runs
+
+        // when
+        presenter.loadSeatBoard(1)
+
+        // then
+        val userSeat =
+            UserSeat(dummySeatBoard.seats.map { SeatModel(it.column, it.row, it.seatRank) })
+        verify { view.showSeatBoard(userSeat) }
     }
 
     @Test
@@ -84,6 +115,71 @@ class SeatSelectionPresenterTest {
         // then
         verify { view.showToastMessage(e = any()) }
         verify { view.navigateBackToPrevious() }
+    }
+
+    @Test
+    fun `SeatSelectionPresenter가 남은 좌석을 선택(clickSeat()) 했을 때, 선택할 티켓이 있다면 view에게 좌석을 선택하라는 정보(selectSeat)를 전달한다`() {
+        // given
+        every { screenRepository.loadSeatBoard(any()) } returns Result.success(dummySeatBoard)
+        every { view.showSeatBoard(any()) } just runs
+        every { view.selectSeat(any()) } just runs
+        presenter.updateUiModel(dummyReservationInfo)
+        presenter.loadSeatBoard(1)
+
+        // when
+        presenter.clickSeat(dummySeatModel)
+
+        // then
+        var userSeat =
+            UserSeat(dummySeatBoard.seats.map { SeatModel(it.column, it.row, it.seatRank, true) })
+
+        val seatModels =
+            userSeat.seatModels.map {
+                if (dummySeatModel.column == it.column && dummySeatModel.row == it.row) {
+                    it.copy(isSelected = true)
+                } else {
+                    it
+                }
+            }
+        userSeat = userSeat.copy(seatModels = seatModels)
+        verify { view.selectSeat(userSeat) }
+    }
+
+    @Test
+    fun `SeatSelectionPresenter가 남은 좌석을 선택(clickSeat()) 했을 때, 선택할 티켓이 없다면 view에게 snackBar message(AllSeatsSelectedMessage)를 전달한다`() {
+        // given
+        val reservationInfo = dummyReservationInfo.copy(ticketCount = 0)
+
+        every { screenRepository.loadSeatBoard(any()) } returns Result.success(dummySeatBoard)
+        every { view.showSnackBar(messageType = any()) } just runs
+
+        // when
+        presenter.clickSeat(dummySeatModel)
+
+        // then
+        verify { view.showSnackBar(MessageType.AllSeatsSelectedMessage(reservationInfo.ticketCount)) }
+    }
+
+    @Test
+    fun `SeatSelectionPresenter가 이미 선택된 좌석을 선택(clickSeat()) 했을 때, view에게 좌석 선택 해제라는 정보(unselectSeat)를 전달한다`() {
+        // given
+        var userSeat =
+            UserSeat(dummySeatBoard.seats.map { SeatModel(it.column, it.row, it.seatRank) })
+
+        every { screenRepository.loadSeatBoard(any()) } returns Result.success(dummySeatBoard)
+        every { view.showSeatBoard(any()) } just runs
+        every { view.selectSeat(any()) } just runs
+        every { view.unselectSeat(any()) } just runs
+        presenter.updateUiModel(dummyReservationInfo)
+        presenter.loadSeatBoard(1)
+
+        // when
+        presenter.updateUiModel(dummyReservationInfo)
+        presenter.clickSeat(dummySeatModel.copy(isSelected = false))
+        presenter.clickSeat(dummySeatModel.copy(isSelected = true))
+
+        // then
+        verify { view.unselectSeat(userSeat) }
     }
 
     @Test
