@@ -11,15 +11,11 @@ interface MovieListContract {
             movies: List<Movie>,
             advertisements: List<Advertisement>,
         )
-
-        fun setOnListViewClickListener()
     }
 
     interface Presenter {
         val movieList: List<Movie>
 
         fun setMoviesInfo()
-
-        fun setListViewClickListenerInfo()
     }
 }

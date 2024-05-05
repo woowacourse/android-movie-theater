@@ -13,8 +13,4 @@ class MovieListPresenter(
     override fun setMoviesInfo() {
         view.showMoviesInfo(movieList, advertisementList)
     }
-
-    override fun setListViewClickListenerInfo() {
-        view.setOnListViewClickListener()
-    }
 }
