@@ -34,7 +34,8 @@ class MovieResultActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_result)
+        binding = ActivityMovieResultBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         initializeView()
     }

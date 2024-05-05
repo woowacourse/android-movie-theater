@@ -15,8 +15,8 @@ class TheaterAdapter(
         viewType: Int,
     ): TheaterViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val theaterItemBinding = ItemTheaterBinding.inflate(inflater, parent, false)
-        return TheaterViewHolder(theaterItemBinding)
+        val binding = ItemTheaterBinding.inflate(inflater, parent, false)
+        return TheaterViewHolder(binding)
     }
 
     override fun getItemCount(): Int {

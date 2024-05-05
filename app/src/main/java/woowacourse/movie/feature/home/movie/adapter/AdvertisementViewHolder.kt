@@ -13,7 +13,7 @@ class AdvertisementViewHolder(private val binding: ItemAdvertisementBinding) :
         binding.advertisement = AdvertisementUiModel(R.drawable.advertisement, advertisementLink, ::advertisementImageClick)
     }
 
-    fun advertisementImageClick(advertisementLink: String) {
+    private fun advertisementImageClick(advertisementLink: String) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(advertisementLink))
         itemView.context.startActivity(intent)
     }

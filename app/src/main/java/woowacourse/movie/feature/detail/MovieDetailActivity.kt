@@ -23,20 +23,19 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
 
-class MovieDetailActivity : BaseActivity<MovieDetailContract.Presenter>(),
+class MovieDetailActivity :
+    BaseActivity<MovieDetailContract.Presenter>(),
     MovieDetailContract.View {
     private lateinit var binding: ActivityMovieDetailBinding
     private val movieId: Long by lazy { intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID) }
     private val selectedTheaterPosition: Int by lazy {
-        intent.getIntExtra(
-            KEY_SELECTED_THEATER_POSITION,
-            INVALID_VALUE_THEATER_POSITION,
-        )
+        intent.getIntExtra(KEY_SELECTED_THEATER_POSITION, INVALID_VALUE_THEATER_POSITION,)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
+        binding = ActivityMovieDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         initializeView()
     }

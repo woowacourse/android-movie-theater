@@ -18,7 +18,7 @@ class ReservationListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_reservation_list, container, false)
+        _binding = FragmentReservationListBinding.inflate(inflater)
         return binding.root
     }
 

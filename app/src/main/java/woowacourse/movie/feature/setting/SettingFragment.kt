@@ -18,7 +18,7 @@ class SettingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
+        _binding = FragmentSettingBinding.inflate(inflater)
         return binding.root
     }
 

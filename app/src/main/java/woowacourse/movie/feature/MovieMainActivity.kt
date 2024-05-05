@@ -13,7 +13,8 @@ class MovieMainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_main)
+        binding = ActivityMovieMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         if (savedInstanceState == null) {
             binding.bottomNavigation.selectedItemId = R.id.home_item

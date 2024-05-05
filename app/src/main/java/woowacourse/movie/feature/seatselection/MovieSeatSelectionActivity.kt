@@ -47,7 +47,8 @@ class MovieSeatSelectionActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_seat_selection)
+        binding = ActivityMovieSeatSelectionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         movieSelectedSeats =
             MovieSelectedSeats(intent.getIntExtra(KEY_MOVIE_COUNT, INVALID_VALUE_MOVIE_COUNT))

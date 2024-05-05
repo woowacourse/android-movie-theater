@@ -25,11 +25,11 @@ class MovieAdapter(
     ): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         if (viewType == ADVERTISEMENT_VIEW_TYPE) {
-            val advertisementItemBinding = ItemAdvertisementBinding.inflate(inflater, parent, false)
-            return AdvertisementViewHolder(advertisementItemBinding)
+            val binding = ItemAdvertisementBinding.inflate(inflater, parent, false)
+            return AdvertisementViewHolder(binding)
         }
-        val movieItemBinding = ItemMovieBinding.inflate(inflater, parent, false)
-        return MovieViewHolder(movieItemBinding)
+        val binding = ItemMovieBinding.inflate(inflater, parent, false)
+        return MovieViewHolder(binding)
     }
 
     override fun onBindViewHolder(

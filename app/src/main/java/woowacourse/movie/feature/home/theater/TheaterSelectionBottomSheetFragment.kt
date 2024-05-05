@@ -11,7 +11,7 @@ import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
-import woowacourse.movie.databinding.FragmentTheaterSelectionBinding
+import woowacourse.movie.databinding.BottomSheetFragmentTheaterSelectionBinding
 import woowacourse.movie.feature.detail.MovieDetailActivity
 import woowacourse.movie.feature.home.theater.adapter.TheaterAdapter
 import woowacourse.movie.model.Theater
@@ -22,7 +22,7 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
 class TheaterSelectionBottomSheetFragment :
     BottomSheetDialogFragment(),
     TheaterSelectionContract.View {
-    private var _binding: FragmentTheaterSelectionBinding? = null
+    private var _binding: BottomSheetFragmentTheaterSelectionBinding? = null
     private val binding get() = _binding!!
     private lateinit var theaterSelectionPresenter: TheaterSelectionPresenter
 
@@ -33,7 +33,7 @@ class TheaterSelectionBottomSheetFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_theater_selection, container, false)
+        _binding = BottomSheetFragmentTheaterSelectionBinding.inflate(inflater)
 
         theaterSelectionPresenter = TheaterSelectionPresenter(this)
         theaterSelectionPresenter.loadTheaters(movieId)

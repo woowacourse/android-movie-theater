@@ -22,7 +22,7 @@ class MovieHomeFragment : BaseFragment<MovieHomeContract.Presenter>(), MovieHome
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_home, container, false)
+        _binding = FragmentMovieHomeBinding.inflate(inflater)
 
         presenter.loadMovies()
         return binding.root
