@@ -140,6 +140,20 @@ object DummyData {
             ),
         )
 
+    val dummyTheaterCount =
+        listOf(
+            TheaterCount(
+                1,
+                "선릉",
+                180,
+            ),
+            TheaterCount(
+                3,
+                "강남",
+                258,
+            ),
+        )
+
     val dummyReservationInfo =
         ReservationInfo(
             theaterId = 0,

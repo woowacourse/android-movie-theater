@@ -10,7 +10,5 @@ interface HomeContract {
 
     interface Presenter {
         fun fetchScreens()
-
-//        fun selectMovie(movieId: Int)
     }
 }

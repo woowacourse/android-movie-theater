@@ -18,7 +18,7 @@ class BottomTheatersFragment : BottomSheetDialogFragment(), BottomTheaterContrac
     val binding: FragmentBottomTheatersBinding
         get() = _binding!!
 
-    private var movieId: Int = -1
+    private var movieId: Int? = null
     private lateinit var adapter: BottomTheatersAdapter
     private lateinit var presenter: BottomTheaterContract.Presenter
 
@@ -43,7 +43,7 @@ class BottomTheatersFragment : BottomSheetDialogFragment(), BottomTheaterContrac
         savedInstanceState: Bundle?,
     ) {
         presenter = BottomTheaterPresenter(this, DummyScreens())
-        presenter.fetchTheaterCounts(movieId)
+        movieId?.let { presenter.fetchTheaterCounts(it) }
     }
 
     override fun showBottomTheater(
