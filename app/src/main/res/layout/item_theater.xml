@@ -16,7 +16,7 @@
         android:padding="8dp">
 
         <TextView
-            android:id="@+id/theater_name"
+            android:id="@+id/tv_theater_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -32,24 +32,24 @@
             tools:hint="선릉 극장" />
 
         <TextView
-            android:id="@+id/screening_time_number"
+            android:id="@+id/tv_screening_time_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{String.valueOf(theater.screeningTimeCount)}"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@id/screening_time_number_format"
-            app:layout_constraintLeft_toLeftOf="@id/theater_name"
-            app:layout_constraintTop_toBottomOf="@id/theater_name"
+            app:layout_constraintBottom_toBottomOf="@id/tv_screening_time_count_format"
+            app:layout_constraintLeft_toLeftOf="@id/tv_theater_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_theater_name"
             tools:hint="3" />
 
         <TextView
-            android:id="@+id/screening_time_number_format"
+            android:id="@+id/tv_screening_time_count_format"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="개의 상영 시간"
             android:textSize="12sp"
-            app:layout_constraintLeft_toRightOf="@id/screening_time_number"
-            app:layout_constraintTop_toBottomOf="@id/theater_name" />
+            app:layout_constraintLeft_toRightOf="@id/tv_screening_time_count"
+            app:layout_constraintTop_toBottomOf="@id/tv_theater_name" />
 
         <ImageView
             android:layout_width="24dp"

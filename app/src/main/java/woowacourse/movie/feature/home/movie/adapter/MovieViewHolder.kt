@@ -11,7 +11,7 @@ class MovieViewHolder(private val binding: ItemMovieBinding) :
         onReservationButtonClick: ReservationButtonClickListener,
     ) {
         binding.movie = movie
-        binding.movieReservationBtn.setOnClickListener {
+        binding.btnReservation.setOnClickListener {
             onReservationButtonClick(movie.id)
         }
     }
