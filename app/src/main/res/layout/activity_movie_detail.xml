@@ -4,15 +4,11 @@
     <data>
 
         <variable
-            name="activity"
-            type="woowacourse.movie.feature.detail.MovieDetailActivity" />
-
-        <variable
             name="movie"
             type="woowacourse.movie.feature.detail.ui.MovieDetailUiModel" />
 
         <variable
-            name="movie_count"
+            name="movieCount"
             type="int" />
     </data>
 
@@ -125,7 +121,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:onClick="@{() -> activity.onMinusButtonClick()}"
                 android:text="@string/minus_button"
                 android:textSize="25sp"
                 android:textStyle="bold"
@@ -137,7 +132,7 @@
                 android:id="@+id/tv_reservation_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{String.valueOf(movie_count)}"
+                android:text="@{String.valueOf(movieCount)}"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -152,7 +147,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="15dp"
-                android:onClick="@{() -> activity.onPlusButtonClick()}"
                 android:text="@string/plus_button"
                 android:textSize="25sp"
                 android:textStyle="bold"
@@ -165,7 +159,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:onClick="@{()->activity.onSeatSelectionButtonClick()}"
                 android:padding="10dp"
                 android:text="@string/seat_selection_button"
                 android:textSize="20sp"

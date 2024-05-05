@@ -23,7 +23,8 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
 
-class MovieDetailActivity : BaseActivity<MovieDetailContract.Presenter>(), MovieDetailContract.View {
+class MovieDetailActivity : BaseActivity<MovieDetailContract.Presenter>(),
+    MovieDetailContract.View {
     private lateinit var binding: ActivityMovieDetailBinding
     private val movieId: Long by lazy { intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID) }
     private val selectedTheaterPosition: Int by lazy {
@@ -35,14 +36,18 @@ class MovieDetailActivity : BaseActivity<MovieDetailContract.Presenter>(), Movie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
-        binding.activity = this
 
-        presenter.loadMovieDetail(movieId)
+        initializeView()
     }
 
     override fun initializePresenter() = MovieDetailPresenter(this)
+
+    private fun initializeView() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        presenter.loadMovieDetail(movieId)
+        setUpButtonListener()
+    }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
@@ -62,6 +67,24 @@ class MovieDetailActivity : BaseActivity<MovieDetailContract.Presenter>(), Movie
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) finish()
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun setUpButtonListener() {
+        binding.btnPlus.setOnClickListener {
+            presenter.plusReservationCount()
+        }
+
+        binding.btnMinus.setOnClickListener {
+            presenter.minusReservationCount()
+        }
+
+        binding.btnSeatSelection.setOnClickListener {
+            presenter.reserveMovie(
+                movieId,
+                binding.spScreeningDate.selectedItem.toString(),
+                binding.spScreeningTime.selectedItem.toString(),
+            )
+        }
     }
 
     override fun displayMovieDetail(movie: Movie) {
@@ -101,22 +124,6 @@ class MovieDetailActivity : BaseActivity<MovieDetailContract.Presenter>(), Movie
         @StringRes stringResId: Int,
     ) {
         Toast.makeText(this, resources.getString(stringResId), Toast.LENGTH_SHORT).show()
-    }
-
-    fun onMinusButtonClick() {
-        presenter.minusReservationCount()
-    }
-
-    fun onPlusButtonClick() {
-        presenter.plusReservationCount()
-    }
-
-    fun onSeatSelectionButtonClick() {
-        presenter.reserveMovie(
-            movieId,
-            binding.spScreeningDate.selectedItem.toString(),
-            binding.spScreeningTime.selectedItem.toString(),
-        )
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
