@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
-import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.presentation.base.BaseActivity
@@ -18,26 +16,22 @@ class MovieDetailActivity : BaseActivity(), MovieDetailContract.View {
     private lateinit var movieDetailPresenter: MovieDetailContract.Presenter
     private lateinit var timeSpinnerAdapter: ArrayAdapter<String>
     private lateinit var binding: ActivityMovieDetailBinding
-    private val dateSpinner: Spinner by lazy {
-        findViewById(R.id.dateSpinner)
-    }
-    private val timeSpinner: Spinner by lazy {
-        findViewById(R.id.timeSpinner)
-    }
 
     override fun getLayoutResId(): Int = R.layout.activity_movie_detail
 
     override fun onCreateSetup(savedInstanceState: Bundle?) {
+        binding =
+            ActivityMovieDetailBinding.inflate(
+                layoutInflater,
+            )
+        setContentView(binding.root)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-
         val movieId = intent.getIntExtra(MOVIE_ID_KEY, DEFAULT_MOVIE_ID)
         val theaterId = intent.getIntExtra(THEATER_ID_KEY, DEFAULT_THEATER_ID)
 
         movieDetailPresenter =
-            MovieDetailPresenterImpl(movieId, theaterId) // todo: theaterId 넣어줘서 극장별 상영시간 받아오기
+            MovieDetailPresenterImpl(movieId, theaterId)
         movieDetailPresenter.attachView(this)
-
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
         binding.view = this
         binding.data = movieDetailPresenter as MovieDetailPresenterImpl
 
@@ -64,20 +58,16 @@ class MovieDetailActivity : BaseActivity(), MovieDetailContract.View {
         times: List<String>,
         defaultDataIndex: Int,
     ) {
-        attachDateSpinnerAdapter(dates, defaultDataIndex)
+        attachDateSpinnerAdapter(dates)
         attachTimeSpinnerAdapter(times, defaultDataIndex)
     }
 
-    private fun attachDateSpinnerAdapter(
-        dates: List<String>,
-        defaultDataIndex: Int,
-    ) {
+    private fun attachDateSpinnerAdapter(dates: List<String>) {
         val adapter =
             ArrayAdapter(this, android.R.layout.simple_spinner_item, dates).apply {
                 setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             }
-        dateSpinner.adapter = adapter
-        dateSpinner.setSelection(defaultDataIndex)
+        binding.dateSpinner.adapter = adapter
         onSelectDateListener()
     }
 
@@ -88,7 +78,7 @@ class MovieDetailActivity : BaseActivity(), MovieDetailContract.View {
         timeSpinnerAdapter.clear()
         timeSpinnerAdapter.addAll(times)
         timeSpinnerAdapter.notifyDataSetChanged()
-        timeSpinner.setSelection(defaultDataIndex)
+        binding.timeSpinner.setSelection(defaultDataIndex)
     }
 
     private fun attachTimeSpinnerAdapter(
@@ -99,13 +89,13 @@ class MovieDetailActivity : BaseActivity(), MovieDetailContract.View {
             ArrayAdapter(this, android.R.layout.simple_spinner_item, times).apply {
                 setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             }
-        timeSpinner.adapter = timeSpinnerAdapter
-        timeSpinner.setSelection(defaultDataIndex)
+        binding.timeSpinner.adapter = timeSpinnerAdapter
+        binding.timeSpinner.setSelection(defaultDataIndex)
         onSelectTimeListener()
     }
 
     private fun onSelectDateListener() {
-        dateSpinner.onItemSelectedListener =
+        binding.dateSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>,
@@ -118,13 +108,13 @@ class MovieDetailActivity : BaseActivity(), MovieDetailContract.View {
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
-                    dateSpinner.setSelection(DEFAULT_SPINNER_INDEX)
+                    binding.dateSpinner.setSelection(DEFAULT_SPINNER_INDEX)
                 }
             }
     }
 
     private fun onSelectTimeListener() {
-        timeSpinner.onItemSelectedListener =
+        binding.timeSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>,
@@ -137,7 +127,7 @@ class MovieDetailActivity : BaseActivity(), MovieDetailContract.View {
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
-                    timeSpinner.setSelection(DEFAULT_SPINNER_INDEX)
+                    binding.timeSpinner.setSelection(DEFAULT_SPINNER_INDEX)
                 }
             }
     }
