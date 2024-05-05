@@ -1,5 +1,6 @@
 package woowacourse.movie.feature.seatselection
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -24,10 +25,9 @@ import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_DATE
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_SEATS
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_SEAT_POSITIONS
-import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
+import woowacourse.movie.util.MovieIntentConstant.KEY_THEATER_NAME
 import woowacourse.movie.util.formatSeat
 import woowacourse.movie.util.formatSeatColumn
 import woowacourse.movie.util.formatSeatRow
@@ -120,15 +120,17 @@ class MovieSeatSelectionActivity :
                 seat.row.formatSeatRow() + seat.column.formatSeatColumn()
             }
 
-        Intent(this, MovieResultActivity::class.java).apply {
-            putExtra(KEY_MOVIE_ID, intent?.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID))
-            putExtra(KEY_MOVIE_DATE, intent?.getStringExtra(KEY_MOVIE_DATE))
-            putExtra(KEY_MOVIE_TIME, intent?.getStringExtra(KEY_MOVIE_TIME))
-            putExtra(KEY_MOVIE_COUNT, movieSelectedSeats.count)
-            putExtra(KEY_MOVIE_SEATS, seats)
-            putExtra(KEY_SELECTED_THEATER_NAME, intent?.getStringExtra(KEY_SELECTED_THEATER_NAME))
-            startActivity(this)
-        }
+        val intent =
+            MovieResultActivity.newIntent(
+                context = this,
+                movieId = intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID),
+                screeningDate = intent.getStringExtra(KEY_MOVIE_DATE),
+                screeningTime = intent.getStringExtra(KEY_MOVIE_TIME),
+                movieCount = movieSelectedSeats.count,
+                selectedSeats = seats,
+                theaterName = intent.getStringExtra(KEY_THEATER_NAME),
+            )
+        startActivity(intent)
     }
 
     override fun showToastInvalidMovieIdError(throwable: Throwable) {
@@ -169,5 +171,22 @@ class MovieSeatSelectionActivity :
 
     companion object {
         private val TAG = MovieSeatSelectionActivity::class.simpleName
+
+        fun newIntent(
+            context: Context,
+            movieId: Long,
+            screeningDate: String,
+            screeningTime: String,
+            movieCount: Int,
+            theaterName: String,
+        ): Intent {
+            return Intent(context, MovieSeatSelectionActivity::class.java).apply {
+                putExtra(KEY_MOVIE_ID, movieId)
+                putExtra(KEY_MOVIE_DATE, screeningDate)
+                putExtra(KEY_MOVIE_TIME, screeningTime)
+                putExtra(KEY_MOVIE_COUNT, movieCount)
+                putExtra(KEY_THEATER_NAME, theaterName)
+            }
+        }
     }
 }

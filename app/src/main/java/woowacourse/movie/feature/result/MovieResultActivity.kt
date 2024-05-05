@@ -1,5 +1,6 @@
 package woowacourse.movie.feature.result
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -24,7 +25,7 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_DATE
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_SEATS
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
-import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
+import woowacourse.movie.util.MovieIntentConstant.KEY_THEATER_NAME
 
 class MovieResultActivity :
     BaseActivity<MovieResultContract.Presenter>(),
@@ -51,7 +52,7 @@ class MovieResultActivity :
             intent.getStringExtra(KEY_MOVIE_TIME) ?: INVALID_VALUE_MOVIE_TIME,
             intent.getIntExtra(KEY_MOVIE_COUNT, INVALID_VALUE_MOVIE_COUNT),
             intent.getStringExtra(KEY_MOVIE_SEATS) ?: INVALID_VALUE_MOVIE_SEATS,
-            intent.getStringExtra(KEY_SELECTED_THEATER_NAME) ?: INVALID_VALUE_THEATER_NAME,
+            intent.getStringExtra(KEY_THEATER_NAME) ?: INVALID_VALUE_THEATER_NAME,
         )
     }
 
@@ -91,5 +92,24 @@ class MovieResultActivity :
 
     companion object {
         private val TAG = MovieResultActivity::class.simpleName
+
+        fun newIntent(
+            context: Context,
+            movieId: Long,
+            screeningDate: String?,
+            screeningTime: String?,
+            movieCount: Int,
+            selectedSeats: String,
+            theaterName: String?,
+        ): Intent {
+            return Intent(context, MovieResultActivity::class.java).apply {
+                putExtra(KEY_MOVIE_ID, movieId)
+                putExtra(KEY_MOVIE_DATE, screeningDate)
+                putExtra(KEY_MOVIE_TIME, screeningTime)
+                putExtra(KEY_MOVIE_COUNT, movieCount)
+                putExtra(KEY_MOVIE_SEATS, selectedSeats)
+                putExtra(KEY_THEATER_NAME, theaterName)
+            }
+        }
     }
 }

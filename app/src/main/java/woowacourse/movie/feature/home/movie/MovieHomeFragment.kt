@@ -9,7 +9,6 @@ import woowacourse.movie.feature.home.movie.adapter.MovieAdapter
 import woowacourse.movie.feature.home.theater.TheaterSelectionBottomSheetFragment
 import woowacourse.movie.model.Movie
 import woowacourse.movie.util.BaseFragment
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 
 class MovieHomeFragment : BaseFragment<MovieHomeContract.Presenter>(), MovieHomeContract.View {
     private var _binding: FragmentMovieHomeBinding? = null
@@ -40,14 +39,9 @@ class MovieHomeFragment : BaseFragment<MovieHomeContract.Presenter>(), MovieHome
     }
 
     override fun displayTheaterSelectionDialog(id: Long) {
-        val bundle = Bundle()
-        bundle.putLong(KEY_MOVIE_ID, id)
-        val theaterSelectionBottomSheetFragment = TheaterSelectionBottomSheetFragment()
-        theaterSelectionBottomSheetFragment.arguments = bundle
-        theaterSelectionBottomSheetFragment.show(
-            parentFragmentManager,
-            theaterSelectionBottomSheetFragment.tag,
-        )
+        TheaterSelectionBottomSheetFragment.newInstance(id).run {
+            show(parentFragmentManager, tag)
+        }
     }
 
     override fun onDestroyView() {

@@ -16,7 +16,7 @@ import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.feature.firstMovieId
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
+import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_INDEX
 
 @RunWith(AndroidJUnit4::class)
 class MovieDetailActivityTest {
@@ -26,7 +26,7 @@ class MovieDetailActivityTest {
             MovieDetailActivity::class.java,
         ).apply {
             putExtra(KEY_MOVIE_ID, firstMovieId)
-            putExtra(KEY_SELECTED_THEATER_POSITION, 0)
+            putExtra(KEY_SELECTED_THEATER_INDEX, 0)
         }
 
     @get:Rule

@@ -1,6 +1,5 @@
 package woowacourse.movie.feature.home.theater
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,7 +15,6 @@ import woowacourse.movie.feature.home.theater.adapter.TheaterAdapter
 import woowacourse.movie.model.Theater
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
 
 class TheaterSelectionBottomSheetFragment :
     BottomSheetDialogFragment(),
@@ -44,13 +42,10 @@ class TheaterSelectionBottomSheetFragment :
 
     override fun setUpTheaterAdapter(theaters: List<Theater>) {
         binding.theaterRecyclerview.adapter =
-            TheaterAdapter(theaters) { position ->
-                Intent(requireActivity(), MovieDetailActivity::class.java).apply {
-                    putExtra(KEY_MOVIE_ID, movieId)
-                    putExtra(KEY_SELECTED_THEATER_POSITION, position)
-                    startActivity(this)
-                    dismiss()
-                }
+            TheaterAdapter(theaters) { selectedTheaterIndex ->
+                val intent = MovieDetailActivity.newIntent(requireContext(), movieId, selectedTheaterIndex)
+                startActivity(intent)
+                dismiss()
             }
     }
 
@@ -74,5 +69,13 @@ class TheaterSelectionBottomSheetFragment :
 
     companion object {
         private val TAG = TheaterSelectionBottomSheetFragment::class.simpleName
+
+        fun newInstance(movieId: Long): TheaterSelectionBottomSheetFragment {
+            return TheaterSelectionBottomSheetFragment().apply {
+                val bundle = Bundle()
+                bundle.putLong(KEY_MOVIE_ID, movieId)
+                arguments = bundle
+            }
+        }
     }
 }

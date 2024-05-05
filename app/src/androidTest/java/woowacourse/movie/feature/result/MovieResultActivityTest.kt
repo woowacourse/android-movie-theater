@@ -18,7 +18,7 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_DATE
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_SEATS
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
-import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
+import woowacourse.movie.util.MovieIntentConstant.KEY_THEATER_NAME
 
 @RunWith(AndroidJUnit4::class)
 class MovieResultActivityTest {
@@ -32,7 +32,7 @@ class MovieResultActivityTest {
             putExtra(KEY_MOVIE_TIME, "12:00")
             putExtra(KEY_MOVIE_COUNT, 3)
             putExtra(KEY_MOVIE_SEATS, "A3, C2, E1")
-            putExtra(KEY_SELECTED_THEATER_NAME, "선릉")
+            putExtra(KEY_THEATER_NAME, "선릉")
         }
 
     @get:Rule

@@ -1,5 +1,6 @@
 package woowacourse.movie.feature.detail
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -14,13 +15,9 @@ import woowacourse.movie.feature.seatselection.MovieSeatSelectionActivity
 import woowacourse.movie.model.Movie
 import woowacourse.movie.util.BaseActivity
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_POSITION
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_COUNT
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_DATE
+import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_INDEX
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
-import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
-import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
+import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_INDEX
 
 class MovieDetailActivity :
     BaseActivity<MovieDetailContract.Presenter>(),
@@ -29,7 +26,7 @@ class MovieDetailActivity :
 
     private val movieId: Long by lazy { intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID) }
     private val selectedTheaterPosition: Int by lazy {
-        intent.getIntExtra(KEY_SELECTED_THEATER_POSITION, INVALID_VALUE_THEATER_POSITION)
+        intent.getIntExtra(KEY_SELECTED_THEATER_INDEX, INVALID_VALUE_THEATER_INDEX)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,14 +100,8 @@ class MovieDetailActivity :
         val movie = MovieRepository.getMovieById(movieId)
         val theaterName = movie.theaters[selectedTheaterPosition].name
 
-        Intent(this, MovieSeatSelectionActivity::class.java).apply {
-            putExtra(KEY_MOVIE_ID, id)
-            putExtra(KEY_MOVIE_DATE, date)
-            putExtra(KEY_MOVIE_TIME, time)
-            putExtra(KEY_MOVIE_COUNT, count)
-            putExtra(KEY_SELECTED_THEATER_NAME, theaterName)
-            startActivity(this)
-        }
+        val intent = MovieSeatSelectionActivity.newIntent(this, id, date, time, count, theaterName)
+        startActivity(intent)
     }
 
     override fun showToastInvalidMovieIdError(throwable: Throwable) {
@@ -143,5 +134,16 @@ class MovieDetailActivity :
         private const val SCREENING_DATE_SPINNER_POSITION_KEY = "screeningDateSpinnerPosition"
         private const val SCREENING_TIME_SPINNER_POSITION_KEY = "screeningTimeSpinnerPosition"
         private const val MOVIE_COUNT_KEY = "movieCount"
+
+        fun newIntent(
+            context: Context,
+            movieId: Long,
+            selectedTheaterIndex: Int,
+        ): Intent {
+            return Intent(context, MovieDetailActivity::class.java).apply {
+                putExtra(KEY_MOVIE_ID, movieId)
+                putExtra(KEY_SELECTED_THEATER_INDEX, selectedTheaterIndex)
+            }
+        }
     }
 }
