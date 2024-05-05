@@ -118,7 +118,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:onClick="@{() -> listener.ticketingButtonClick(movie.id)}"
+            android:onClick="@{() -> listener.ticketingButtonClickListener(movie.id)}"
             android:text="@string/text_ticketing_button"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -1,6 +1,7 @@
 package woowacourse.movie.presentation.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -63,6 +64,31 @@ class HomeActivity : AppCompatActivity() {
             R.id.action_settings -> settingFragment
             else -> movieListFragment
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("HomeActivity", "onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("HomeActivity", "onResume")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("HomeActivity", "onStop")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("HomeActivity", "onPause")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("HomeActivity", "onDestroy")
     }
 
     companion object {
