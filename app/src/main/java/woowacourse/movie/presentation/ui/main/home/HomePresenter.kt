@@ -12,9 +12,10 @@ class HomePresenter(
         view.showScreenList(screens)
     }
 
-    override fun selectMovie(movieId: Int) {
-        repository.findTheaterCount(movieId).onSuccess { theaterCounts ->
-            view.showBottomTheater(theaterCounts, movieId)
-        }
-    }
+//    override fun selectMovie(movieId: Int) {
+//        view.showBottomTheater(movieId)
+//        repository.findTheaterCount(movieId).onSuccess { theaterCounts ->
+//            view.showBottomTheater(theaterCounts, movieId)
+//        }
+//    }
 }

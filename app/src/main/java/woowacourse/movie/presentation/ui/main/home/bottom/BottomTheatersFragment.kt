@@ -10,21 +10,22 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.databinding.FragmentBottomTheatersBinding
 import woowacourse.movie.domain.model.TheaterCount
+import woowacourse.movie.domain.repository.DummyScreens
+import woowacourse.movie.presentation.ui.detail.MovieDetailActivity
 
-class BottomTheatersFragment(
-    private val theaterCounts: List<TheaterCount> = mutableListOf(),
-    private val actionHandler: BottomTheaterActionHandler,
-    private val movieId: Int,
-) : BottomSheetDialogFragment() {
+class BottomTheatersFragment : BottomSheetDialogFragment(), BottomTheaterContract.View {
     private var _binding: FragmentBottomTheatersBinding? = null
     val binding: FragmentBottomTheatersBinding
         get() = _binding!!
 
+    private var movieId: Int = -1
     private lateinit var adapter: BottomTheatersAdapter
+    private lateinit var presenter: BottomTheaterContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
+            movieId = it.getInt(MOVIE_ID)
         }
     }
 
@@ -41,7 +42,15 @@ class BottomTheatersFragment(
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        adapter = BottomTheatersAdapter(actionHandler, theaterCounts, movieId)
+        presenter = BottomTheaterPresenter(this, DummyScreens())
+        presenter.fetchTheaterCounts(movieId)
+    }
+
+    override fun showBottomTheater(
+        theaterCounts: List<TheaterCount>,
+        movieId: Int,
+    ) {
+        adapter = BottomTheatersAdapter(this, theaterCounts, movieId)
         binding.rvBottomTheaters.adapter = adapter
     }
 
@@ -60,8 +69,29 @@ class BottomTheatersFragment(
         return dialog
     }
 
+    override fun onTheaterClick(
+        movieId: Int,
+        theaterId: Int,
+    ) {
+        MovieDetailActivity.startActivity(requireActivity(), movieId, theaterId)
+        this.dismiss()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        private const val MOVIE_ID = "movie_id"
+
+        @JvmStatic
+        fun newInstance(movieId: Int) =
+            BottomTheatersFragment().apply {
+                arguments =
+                    Bundle().apply {
+                        putInt(MOVIE_ID, movieId)
+                    }
+            }
     }
 }

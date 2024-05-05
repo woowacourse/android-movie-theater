@@ -10,10 +10,8 @@ import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.domain.model.ScreenView
-import woowacourse.movie.domain.model.TheaterCount
 import woowacourse.movie.domain.repository.DummyScreens
 import woowacourse.movie.presentation.model.MessageType
-import woowacourse.movie.presentation.ui.detail.MovieDetailActivity
 import woowacourse.movie.presentation.ui.main.home.adapter.ScreenRecyclerViewAdapter
 import woowacourse.movie.presentation.ui.main.home.bottom.BottomTheatersFragment
 
@@ -54,23 +52,8 @@ class HomeFragment : Fragment(), HomeContract.View {
     }
 
     override fun onScreenClick(movieId: Int) {
-        presenter.selectMovie(movieId)
-    }
-
-    override fun showBottomTheater(
-        theaterCounts: List<TheaterCount>,
-        movieId: Int,
-    ) {
-        theatersFragment = BottomTheatersFragment(theaterCounts, this, movieId)
+        theatersFragment = BottomTheatersFragment.newInstance(movieId)
         theatersFragment.show(this.parentFragmentManager, null)
-    }
-
-    override fun onTheaterClick(
-        movieId: Int,
-        theaterId: Int,
-    ) {
-        theatersFragment.dismiss()
-        MovieDetailActivity.startActivity(requireActivity(), movieId, theaterId)
     }
 
     override fun showToastMessage(messageType: MessageType) {
