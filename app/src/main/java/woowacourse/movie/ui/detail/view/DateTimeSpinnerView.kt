@@ -1,12 +1,12 @@
 package woowacourse.movie.ui.detail.view
 
 import woowacourse.movie.domain.model.DateRange
-import woowacourse.movie.domain.model.WeeklyScreenTimePolicy
+import woowacourse.movie.domain.model.ScreenTimePolicy
 
 interface DateTimeSpinnerView {
     fun show(
         dateRange: DateRange,
-        screenTimePolicy: WeeklyScreenTimePolicy,
+        screenTimePolicy: ScreenTimePolicy,
         selectDateListener: SelectDateListener,
         selectTimeListener: SelectTimeListener,
     )

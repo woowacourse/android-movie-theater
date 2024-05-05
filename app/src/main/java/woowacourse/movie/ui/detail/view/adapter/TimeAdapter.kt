@@ -5,14 +5,14 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import woowacourse.movie.domain.model.WeeklyScreenTimePolicy
+import woowacourse.movie.domain.model.ScreenTimePolicy
 import woowacourse.movie.ui.detail.view.SelectTimeListener
 import java.time.LocalDate
 import java.time.LocalTime
 
 class TimeAdapter(
     context: Context,
-    screenTimePolicy: WeeklyScreenTimePolicy,
+    screenTimePolicy: ScreenTimePolicy,
     date: LocalDate,
     private val selectTimeListener: SelectTimeListener,
 ) : ArrayAdapter<LocalTime>(

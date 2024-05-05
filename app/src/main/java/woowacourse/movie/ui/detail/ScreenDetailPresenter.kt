@@ -1,9 +1,9 @@
 package woowacourse.movie.ui.detail
 
-import android.util.Log
 import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.DateTime
 import woowacourse.movie.domain.model.Screen
+import woowacourse.movie.domain.model.ScreenTimePolicy
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.Ticket.Companion.MIN_TICKET_COUNT
 import woowacourse.movie.domain.model.WeeklyScreenTimePolicy
@@ -11,7 +11,6 @@ import woowacourse.movie.domain.repository.MovieRepository
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.ScreenRepository
 import woowacourse.movie.ui.toDetailUI
-import java.lang.IllegalStateException
 import java.time.LocalDate
 
 class ScreenDetailPresenter(
@@ -19,7 +18,7 @@ class ScreenDetailPresenter(
     private val movieRepository: MovieRepository,
     private val screenRepository: ScreenRepository,
     private val reservationRepository: ReservationRepository,
-    private val screenTimePolicy: WeeklyScreenTimePolicy = WeeklyScreenTimePolicy(),
+    private val screenTimePolicy: ScreenTimePolicy = WeeklyScreenTimePolicy(),
 ) : ScreenDetailContract.Presenter {
     private var ticket: Ticket = Ticket(MIN_TICKET_COUNT)
     private var dateRange = DateRange(LocalDate.now(), LocalDate.now())
@@ -56,12 +55,10 @@ class ScreenDetailPresenter(
     }
 
     override fun saveDatePosition(datePosition: Int) {
-        Log.d(TAG, "saveDatePosition: $datePosition")
         this.datePosition = datePosition
     }
 
     override fun saveTimePosition(timePosition: Int) {
-        Log.d(TAG, "saveTimePosition: $timePosition")
         this.timePosition = timePosition
     }
 

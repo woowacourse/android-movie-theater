@@ -1,7 +1,7 @@
 package woowacourse.movie.ui.detail
 
 import woowacourse.movie.domain.model.DateRange
-import woowacourse.movie.domain.model.WeeklyScreenTimePolicy
+import woowacourse.movie.domain.model.ScreenTimePolicy
 import woowacourse.movie.ui.ScreenDetailUi
 import woowacourse.movie.ui.detail.view.SelectDateListener
 import woowacourse.movie.ui.detail.view.SelectTimeListener
@@ -14,7 +14,7 @@ interface ScreenDetailContract {
 
         fun showDateTimePicker(
             dateRange: DateRange,
-            screenTimePolicy: WeeklyScreenTimePolicy,
+            screenTimePolicy: ScreenTimePolicy,
             selectDateListener: SelectDateListener,
             selectTimeListener: SelectTimeListener,
         )

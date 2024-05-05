@@ -10,7 +10,6 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.HolderSpinnerDateTimeBinding
 import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.ScreenTimePolicy
-import woowacourse.movie.domain.model.WeeklyScreenTimePolicy
 import woowacourse.movie.ui.detail.view.adapter.DateAdapter
 import woowacourse.movie.ui.detail.view.adapter.TimeAdapter
 import java.time.LocalDate
@@ -26,7 +25,7 @@ class ScreenDetailDateTimeSpinnerView(context: Context, attrs: AttributeSet? = n
 
     override fun show(
         dateRange: DateRange,
-        screenTimePolicy: WeeklyScreenTimePolicy,
+        screenTimePolicy: ScreenTimePolicy,
         selectDateListener: SelectDateListener,
         selectTimeListener: SelectTimeListener,
     ) {
@@ -70,7 +69,7 @@ class ScreenDetailDateTimeSpinnerView(context: Context, attrs: AttributeSet? = n
 
     private fun initTimeAdapter(
         date: LocalDate,
-        screenTimePolicy: WeeklyScreenTimePolicy,
+        screenTimePolicy: ScreenTimePolicy,
         selectTimeListener: SelectTimeListener,
     ) {
         timeAdapter =
