@@ -14,9 +14,11 @@ import woowacourse.movie.db.seats.SeatsDao
 import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.feature.reservation.ReservationActivity.Companion.DEFAULT_MOVIE_ID
 import woowacourse.movie.feature.reservation.ReservationActivity.Companion.DEFAULT_THEATER_ID
+import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.seats.Grade
 import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
+import woowacourse.movie.model.ticket.HeadCount
 
 @ExtendWith(MockKExtension::class)
 class SeatSelectionPresenterTest {
@@ -26,7 +28,17 @@ class SeatSelectionPresenterTest {
 
     @BeforeEach
     fun setUp() {
-        presenter = SeatSelectionPresenter(view, SeatsDao(), ScreeningDao(), TheaterDao(), DEFAULT_MOVIE_ID, DEFAULT_THEATER_ID)
+        presenter =
+            SeatSelectionPresenter(
+                view,
+                SeatsDao(),
+                ScreeningDao(),
+                TheaterDao(),
+                DEFAULT_MOVIE_ID,
+                DEFAULT_THEATER_ID,
+                HeadCount(3),
+                ScreeningDateTime("", ""),
+            )
         with(presenter) {
             manageSelectedSeats(true, 0, Seat('A', 1, Grade.B))
             manageSelectedSeats(true, 0, Seat('C', 1, Grade.S))
@@ -73,7 +85,7 @@ class SeatSelectionPresenterTest {
     fun `예약 상태를 복구한다`() {
         every { view.setConfirmButtonEnabled(any()) } just runs
         every { view.showAmount(37_000) } just runs
-        presenter.restoreReservation(3)
+        presenter.restoreReservation()
         verify { view.setConfirmButtonEnabled(any()) }
         verify { view.showAmount(37_000) }
     }

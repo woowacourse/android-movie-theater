@@ -43,10 +43,9 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.activity = this
-        initPresenter()
         initAmount()
-        receiveHeadCount()
-        receiveScreeningDateTime()
+        receiveReservationInfo()
+        initPresenter()
         seatsTable = collectSeatsInTableLayout()
         with(presenter) {
             loadSeatNumber()
@@ -56,10 +55,10 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.apply {
-            putSerializable(HEAD_COUNT, headCount)
-            putSerializable(SEATS, presenter.seats)
-            putIntegerArrayList(SEATS_INDEX, ArrayList(presenter.seats.seatsIndex))
+        presenter.deliverReservationInfo { headCount, seats, seatsIndex ->
+            outState.putSerializable(HEAD_COUNT, headCount)
+            outState.putSerializable(SEATS, seats)
+            outState.putIntegerArrayList(SEATS_INDEX, ArrayList(seatsIndex))
         }
     }
 
@@ -106,8 +105,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 updateSeatSelectedState(index, isSelected)
                 presenter.manageSelectedSeats(isSelected, index, seat)
                 presenter.updateTotalPrice(isSelected, seat)
-                val isReservationValid = getSeatsCount() >= headCount.count
-                setConfirmButtonEnabled(isReservationValid)
+                presenter.validateReservationAvailable()
             }
         }
     }
@@ -163,6 +161,11 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     override fun showErrorToast() = makeToast(this, getString(R.string.all_error))
 
+    private fun receiveReservationInfo() {
+        headCount = receiveHeadCount()
+        screeningDateTime = receiveScreeningDateTime()
+    }
+
     private fun initPresenter() {
         presenter =
             SeatSelectionPresenter(
@@ -170,13 +173,15 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 SeatsDao(),
                 ScreeningDao(),
                 TheaterDao(),
-                takeMovieId(),
+                receiveMovieId(),
                 receiveTheaterId(),
+                headCount,
+                screeningDateTime,
             )
         binding.presenter = presenter
     }
 
-    private fun takeMovieId() =
+    private fun receiveMovieId() =
         intent.getIntExtra(
             MOVIE_ID,
             ReservationActivity.DEFAULT_MOVIE_ID,
@@ -216,7 +221,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     private fun restoreReservationData(bundle: Bundle) {
         val headCount = bundle.bundleSerializable(HEAD_COUNT, HeadCount::class.java) ?: throw NoSuchElementException()
-        presenter.restoreReservation(headCount.count)
+        presenter.restoreReservation()
     }
 
     private fun restoreSeatsData(bundle: Bundle) {

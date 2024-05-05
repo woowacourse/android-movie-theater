@@ -17,13 +17,13 @@ class SeatSelectionPresenter(
     private val theaterDao: TheaterDao,
     private val movieId: Int,
     private val theaterId: Int,
+    private val headCount: HeadCount,
+    private val screeningDateTime: ScreeningDateTime,
 ) : SeatSelectionContract.Presenter {
-    val seats = Seats()
+    private val seats = Seats()
 
-    override fun restoreReservation(count: Int) {
-        val headCount = HeadCount(count)
-        val isReservationValid = count >= headCount.count
-        view.setConfirmButtonEnabled(isReservationValid)
+    override fun restoreReservation() {
+        validateReservationAvailable()
         view.showAmount(seats.calculateAmount())
     }
 
@@ -82,5 +82,14 @@ class SeatSelectionPresenter(
 
     override fun requestReservationConfirm() {
         view.launchReservationConfirmDialog()
+    }
+
+    override fun validateReservationAvailable() {
+        val isReservationAvailable = seats.seats.size >= headCount.count
+        view.setConfirmButtonEnabled(isReservationAvailable)
+    }
+
+    override fun deliverReservationInfo(onReservationDataSave: OnReservationDataSave) {
+        onReservationDataSave(headCount, seats, seats.seatsIndex)
     }
 }
