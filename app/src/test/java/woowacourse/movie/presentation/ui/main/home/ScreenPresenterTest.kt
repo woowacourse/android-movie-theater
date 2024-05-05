@@ -25,41 +25,43 @@ class ScreenPresenterTest {
 
     @BeforeEach
     fun setUp() {
-        every { repository.load() } returns load()
+//        every { repository.load() } returns load()
         presenter = HomePresenter(view, repository)
     }
 
     @Test
-    fun `ScreenPresenter가 loadScreens()을 했을 때, view에게 screens 데이터를 전달한다`() {
+    fun `상영 중인 영화 정보를 불러와 뷰에 전달한다`() {
         // given
-        every { repository.findTheaterCount(any()) } returns
-            Result.success(
-                listOf(
-                    TheaterCount(
-                        3,
-                        "선릉",
-                        180,
-                    ),
-                ),
-            )
-        every { view.showBottomTheater(any(), any()) } just runs
+        every { repository.load() } returns load()
+        every { view.showScreenList(any()) } just runs
 
         // when
-//        presenter.onScreenClick(0)
+        presenter.fetchScreens()
 
         // then
-        verify { view.showBottomTheater(any(), any()) }
+        verify { view.showScreenList(load()) }
     }
 
     @Test
-    fun `ScreenPresenter가 유효한 상영장 id를 통해 onScreenClick을 했을 때, view에게 사영장 id를 전달한다`() {
+    fun `영화의 id로 해당 영화를 상영 중인 상영관을 찾아 뷰에 전달한다`() {
         // given
-//        every { view.navigateToDetail(any(), any()) } just runs
+        val movieId = 1
+        val theaterCount =
+            listOf(
+                TheaterCount(
+                    3,
+                    "선릉",
+                    180,
+                ),
+            )
+        every { repository.findTheaterCount(any()) } returns
+            Result.success(theaterCount)
+        every { view.showBottomTheater(any(), any()) } just runs
 
         // when
-//        presenter.onTheaterClick(1, 1)
+        presenter.selectMovie(movieId)
 
         // then
-//        verify { view.navigateToDetail(any(), any()) }
+        verify { view.showBottomTheater(theaterCount, movieId) }
     }
 }
