@@ -8,11 +8,11 @@ class ScreenViewHolder(
     private val onReserveClick: (id: Int) -> Unit,
     private val binding: HolderScreenBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(screen: ScreenAd.ScreenPreviewUi) {
-        binding.screenAd = screen
+    fun bind(screenPreviewUi: ScreenAd.ScreenPreviewUi) {
+        binding.screenAd = screenPreviewUi
 
         binding.btnReserveNow.setOnClickListener {
-            onReserveClick(screen.id)
+            onReserveClick(screenPreviewUi.id)
         }
     }
 }
