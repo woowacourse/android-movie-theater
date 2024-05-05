@@ -13,7 +13,6 @@ import woowacourse.movie.R
 
 @RunWith(AndroidJUnit4::class)
 class NavigationActivityTest {
-
     @get:Rule
     var activityScenarioRule = ActivityScenarioRule(NavigationActivity::class.java)
 

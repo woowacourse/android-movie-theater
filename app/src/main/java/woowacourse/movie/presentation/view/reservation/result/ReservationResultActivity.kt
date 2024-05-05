@@ -1,11 +1,15 @@
 package woowacourse.movie.presentation.view.reservation.result
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
+import androidx.core.content.IntentCompat
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationResultBinding
 import woowacourse.movie.presentation.base.BaseActivity
 import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
+import woowacourse.movie.presentation.view.navigation.NavigationActivity
 
 class ReservationResultActivity : BaseActivity() {
     override fun getLayoutResId(): Int = R.layout.activity_reservation_result
@@ -19,8 +23,21 @@ class ReservationResultActivity : BaseActivity() {
     }
 
     private fun setUpFromIntent() {
-        val ticket = intent.getParcelableExtra<MovieTicketUiModel>(INTENT_TICKET)
+        val ticket =
+            IntentCompat.getParcelableExtra(intent, INTENT_TICKET, MovieTicketUiModel::class.java)
         binding.data = ticket
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                val intent = Intent(this, NavigationActivity::class.java)
+                startActivity(intent)
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {
