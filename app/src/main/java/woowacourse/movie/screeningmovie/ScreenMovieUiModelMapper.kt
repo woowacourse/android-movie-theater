@@ -21,6 +21,9 @@ fun List<ScreenView>.toScreenItems(): List<ScreeningItem> =
     this.map { screenView ->
         when (screenView) {
             is Movie -> screenView.toScreenMovieUiModel()
-            is Advertisement -> AdvertiseUiModel()
+            is Advertisement -> isUrlNone(screenView)
         }
     }
+
+private fun isUrlNone(screenView: Advertisement) =
+    if (screenView.imageUrl.isNone()) AdvertiseUiModelDrawableUiModel() else AdvertiseUiModelUrlUiModel()
