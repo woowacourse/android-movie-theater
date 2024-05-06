@@ -8,6 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.model.ticket.ReservationTicket
@@ -15,12 +19,12 @@ import woowacourse.movie.model.ticket.toTicket
 import woowacourse.movie.presenter.history.ReservationHistoryContract
 import woowacourse.movie.presenter.history.ReservationHistoryPresenter
 import woowacourse.movie.repository.ReservationTicketRepositoryImpl
-import woowacourse.movie.view.result.ReservationResultActivity
 import woowacourse.movie.view.history.adapter.ReservationTicketAdapter
 import woowacourse.movie.view.reservation.ReservationDetailActivity
+import woowacourse.movie.view.result.ReservationResultActivity
 
 class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
-    private lateinit var presenter : ReservationHistoryPresenter
+    private lateinit var presenter: ReservationHistoryPresenter
     private var _binding: FragmentReservationHistoryBinding? = null
     private val binding: FragmentReservationHistoryBinding get() = _binding!!
     private lateinit var reservationTicketAdapter: ReservationTicketAdapter
@@ -38,7 +42,12 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = DataBindingUtil.inflate(inflater,R.layout.fragment_reservation_history,container,false)
+        _binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_reservation_history,
+            container,
+            false
+        )
         return binding.root
     }
 
@@ -46,6 +55,9 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
         super.onViewCreated(view, savedInstanceState)
         initReservationTicketRecyclerView()
 
+        lifecycleScope.launch {
+            presenter.loadReservationTickets()
+        }
     }
 
     override fun onDestroyView() {
@@ -53,11 +65,14 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
         _binding = null
     }
 
-    private fun initReservationTicketRecyclerView(){
+    private fun initReservationTicketRecyclerView() {
         reservationTicketAdapter =
             ReservationTicketAdapter { reservationTicket ->
                 presenter.loadReservationTicket(reservationTicket)
             }
+        binding.recyclerViewHistory.apply {
+            adapter = reservationTicketAdapter
+        }
     }
 
     override fun navigateToDetail(reservationTicket: ReservationTicket) {
@@ -68,6 +83,6 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
     }
 
     override fun showReservationHistory(tickets: List<ReservationTicket>) {
-        reservationTicketAdapter.initTickets(tickets)
+        reservationTicketAdapter.updateTickets(tickets)
     }
 }
