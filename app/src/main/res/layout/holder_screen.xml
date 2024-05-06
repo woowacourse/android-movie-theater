@@ -89,7 +89,7 @@
             android:id="@+id/tv_screen_running_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{String.format(@string/running_time, screenAd.moviePreviewUI.runningTime)}"
+            android:text="@{@string/running_time(screenAd.moviePreviewUI.runningTime)}"
             android:textSize="12dp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_screen_running_time_guide"
             app:layout_constraintStart_toEndOf="@+id/tv_screen_running_time_guide"

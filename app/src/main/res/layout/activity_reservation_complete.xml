@@ -6,7 +6,7 @@
 
     <data>
 
-        <import type="woowacourse.movie.ui.MoneyUi"/>
+        <import type="woowacourse.movie.ui.MoneyUi" />
 
         <variable
             name="reservation"
@@ -102,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
-                android:text="@{String.format(@string/reserve_count, reservation.ticket.count)}"
+                android:text="@{@string/reserve_count(reservation.ticket.count)}"
                 android:textColor="@color/black"
                 android:textSize="20dp"
                 tools:text="일반 2명 | " />
@@ -135,12 +135,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:text="@{@string/reservation_complete_currency_format(MoneyUi.currency(totalPrice))}"
             android:textColor="@color/black"
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_reservation_information"
-            android:text="@{String.format(@string/reservation_complete_currency_format, MoneyUi.currency(totalPrice))}"
             tools:text="13,000원(현장 결제)" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
