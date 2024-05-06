@@ -8,6 +8,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.db.screening.ScreeningDao
@@ -21,20 +25,33 @@ import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.ticket.Ticket
 import woowacourse.movie.presenter.reservation.SeatSelectionContract
 import woowacourse.movie.presenter.reservation.SeatSelectionPresenter
+import woowacourse.movie.repository.ReservationTicketRepositoryImpl
 import woowacourse.movie.utils.MovieUtils.bundleSerializable
 import woowacourse.movie.utils.MovieUtils.convertAmountFormat
 import woowacourse.movie.utils.MovieUtils.intentSerializable
 import woowacourse.movie.utils.MovieUtils.makeToast
-import woowacourse.movie.view.result.ReservationResultActivity
 import woowacourse.movie.view.home.HomeFragment.Companion.MOVIE_ID
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.HEAD_COUNT
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.SCREENING_DATE_TIME
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.TICKET
+import woowacourse.movie.view.result.ReservationResultActivity
 import woowacourse.movie.view.theater.TheaterSelectionFragment.Companion.THEATER_ID
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
-    private val binding: ActivitySeatSelectionBinding by lazy { DataBindingUtil.setContentView(this, R.layout.activity_seat_selection) }
-    private val presenter: SeatSelectionPresenter = SeatSelectionPresenter(this, SeatsDao(), ScreeningDao())
+    private val binding: ActivitySeatSelectionBinding by lazy {
+        DataBindingUtil.setContentView(
+            this,
+            R.layout.activity_seat_selection
+        )
+    }
+    private val presenter: SeatSelectionPresenter by lazy{
+        SeatSelectionPresenter(
+            view = this,
+            seatsDao = SeatsDao(),
+            screeningDao = ScreeningDao(),
+            repository = ReservationTicketRepositoryImpl(this@SeatSelectionActivity),
+        )
+    }
 
     private lateinit var seatsTable: List<Button>
     private lateinit var headCount: HeadCount
@@ -138,6 +155,11 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     override fun navigateToFinished(ticket: Ticket) {
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO){
+                presenter.saveTicket(ticket)
+            }
+        }
         val intent = Intent(this, ReservationResultActivity::class.java)
         intent.putExtra(TICKET, ticket)
         startActivity(intent)
@@ -173,7 +195,8 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     private fun receiveHeadCount() {
         runCatching {
-            intent.intentSerializable(HEAD_COUNT, HeadCount::class.java) ?: throw NoSuchElementException()
+            intent.intentSerializable(HEAD_COUNT, HeadCount::class.java)
+                ?: throw NoSuchElementException()
         }.onSuccess {
             headCount = it
         }.onFailure {
@@ -198,7 +221,8 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun collectSeatsInTableLayout(): List<Button> =
-        binding.tableLayoutSeatSelection.children.filterIsInstance<TableRow>().flatMap { it.children }
+        binding.tableLayoutSeatSelection.children.filterIsInstance<TableRow>()
+            .flatMap { it.children }
             .filterIsInstance<Button>().toList()
 
     private fun getSeatsCount(): Int = seatsTable.count { seat -> seat.isSelected }
@@ -210,12 +234,14 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun restoreReservationData(bundle: Bundle) {
-        val headCount = bundle.bundleSerializable(HEAD_COUNT, HeadCount::class.java) ?: throw NoSuchElementException()
+        val headCount = bundle.bundleSerializable(HEAD_COUNT, HeadCount::class.java)
+            ?: throw NoSuchElementException()
         presenter.restoreReservation(headCount.count)
     }
 
     private fun restoreSeatsData(bundle: Bundle) {
-        val seats = bundle.bundleSerializable(SEATS, Seats::class.java) ?: throw NoSuchElementException()
+        val seats =
+            bundle.bundleSerializable(SEATS, Seats::class.java) ?: throw NoSuchElementException()
         val index = bundle.getIntegerArrayList(SEATS_INDEX) ?: throw NoSuchElementException()
         presenter.restoreSeats(seats, index.toList())
     }

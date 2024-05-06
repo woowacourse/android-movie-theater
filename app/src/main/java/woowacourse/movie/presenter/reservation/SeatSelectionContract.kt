@@ -39,6 +39,8 @@ interface SeatSelectionContract {
             theaterId: Int,
             screeningDateTime: ScreeningDateTime,
         )
+
+        fun saveTicket(ticket: Ticket)
     }
 
     interface View {

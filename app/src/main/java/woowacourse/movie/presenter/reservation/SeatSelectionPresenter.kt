@@ -2,17 +2,20 @@ package woowacourse.movie.presenter.reservation
 
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.seats.SeatsDao
+import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.ticket.Ticket
+import woowacourse.movie.repository.ReservationTicketRepository
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
     private val seatsDao: SeatsDao,
     private val screeningDao: ScreeningDao,
+    private val repository: ReservationTicketRepository,
 ) : SeatSelectionContract.Presenter {
     val seats = Seats()
     private val headCount = HeadCount()
@@ -69,6 +72,10 @@ class SeatSelectionPresenter(
                 seats.calculateAmount(),
             )
         view.navigateToFinished(ticket)
+    }
+
+    override fun saveTicket(ticket: Ticket) {
+        repository.saveReservationTicket(ticket)
     }
 
     override fun updateTotalPrice(
