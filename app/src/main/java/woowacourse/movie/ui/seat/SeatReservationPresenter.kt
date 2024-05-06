@@ -37,7 +37,7 @@ class SeatReservationPresenter(
             selectedSeats = selectedSeats.remove(seat)
         } else {
             if (selectedSeats.seats.size >= ticketCount) {
-                view.showToast(IllegalArgumentException("exceed ticket count that can be reserved."))
+                view.showToast(IllegalArgumentException("예약 가능한 티켓 수를 초과했습니다."))
             } else {
                 seatView.isSelected = !seatView.isSelected
                 selectedSeats = selectedSeats.add(seat)
