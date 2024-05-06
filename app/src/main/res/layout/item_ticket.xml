@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="ticket"
+            type="woowacourse.movie.model.ticket.Ticket" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/constraint_layout_item_theater"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="12dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="13dp">
+        <!--        android:onClick="@{() -> theater_view_holder.onClickTheater(theater.theaterId)}"-->
+
+        <TextView
+            android:id="@+id/ticket_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@id/bar_with_date_time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2024.3.2" />
+
+        <TextView
+            android:id="@+id/bar_with_date_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text=" | "
+            android:textColor="@color/bar_color"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@id/ticket_time"
+            app:layout_constraintStart_toEndOf="@id/ticket_date"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/ticket_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@id/bar_with_time_theater"
+            app:layout_constraintStart_toEndOf="@id/bar_with_date_time"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="16:00" />
+
+        <TextView
+            android:id="@+id/bar_with_time_theater"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text=" | "
+            android:textColor="@color/bar_color"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/ticket_time"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/theater_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/bar_with_time_theater"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="선릉 극장" />
+
+        <TextView
+            android:id="@+id/movie_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ticket_date"
+            tools:text="해리포터와 마법사의 돌" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
