@@ -7,11 +7,6 @@ class ScreenMoviePresenter(
     private val view: ScreeningMovieContract.View,
     private val repository: MovieRepository,
 ) : ScreeningMovieContract.Presenter {
-    override fun startReservation(screeningMovieId: Long) {
-        val screenMovie = repository.screenMovieById(screeningMovieId)
-        view.showTheaters(screenMovie.id)
-    }
-
     override fun loadScreeningMovies() {
         val movies = repository.movies()
         val moviesWithAds =

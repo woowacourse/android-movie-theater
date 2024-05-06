@@ -36,14 +36,10 @@ class ScreeningMovieFragment : Fragment(), ScreeningMovieContract.View, AdapterC
             MovieAdapter(this).apply { this.submitList(movies) }
     }
 
-    override fun showTheaters(screeningMovieId: Long) {
+    override fun onClick(screeningMovieId: Long) {
         val fragment = TheaterBottomSheetDialogFragment()
         val bundle = TheaterBottomSheetDialogFragment.getBundle(screeningMovieId)
         fragment.arguments = bundle
         fragment.show(parentFragmentManager, "theaterBottomSheet")
-    }
-
-    override fun onClick(id: Long) {
-        presenter.startReservation(id)
     }
 }
