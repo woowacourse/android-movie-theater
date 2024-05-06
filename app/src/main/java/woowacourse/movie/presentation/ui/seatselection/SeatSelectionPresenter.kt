@@ -23,7 +23,7 @@ class SeatSelectionPresenter(
             seatSelectionModel.copy(
                 id = reservationInfo.theaterId,
                 dateTime = reservationInfo.dateTime,
-                ticketCount = reservationInfo.ticketCount,
+                ticketCount = reservationInfo.ticketQuantity,
             )
     }
 

@@ -155,7 +155,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="25dp"
-            android:text="@{String.valueOf(detailModel.ticket.count)}"
+            android:text="@{String.valueOf(detailModel.quantity.count)}"
             android:textSize="20dp"
             app:layout_constraintBottom_toTopOf="@+id/btn_select_seat"
             app:layout_constraintEnd_toStartOf="@+id/btn_plus"

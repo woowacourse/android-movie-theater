@@ -1,13 +1,13 @@
 package woowacourse.movie.presentation.ui.detail
 
 import woowacourse.movie.presentation.base.BaseView
-import woowacourse.movie.presentation.model.Ticket
+import woowacourse.movie.presentation.model.Quantity
 
 interface ScreenDetailContract {
     interface View : BaseView, ScreenDetailActionHandler {
         fun showScreenDetail(screenDetail: ScreenDetailUiModel)
 
-        fun updateTicketCount(ticket: Ticket)
+        fun updateTicketQuantity(quantity: Quantity)
 
         fun back()
     }
@@ -18,8 +18,8 @@ interface ScreenDetailContract {
             theaterId: Int,
         )
 
-        fun plusTicket(ticket: Ticket)
+        fun increaseQuantity(quantity: Quantity)
 
-        fun minusTicket(ticket: Ticket)
+        fun decreaseQuantity(quantity: Quantity)
     }
 }

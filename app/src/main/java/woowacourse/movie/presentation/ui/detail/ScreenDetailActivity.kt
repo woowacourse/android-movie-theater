@@ -12,8 +12,8 @@ import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.ScreenDate
 import woowacourse.movie.domain.repository.DummyScreens
 import woowacourse.movie.presentation.base.BaseActivity
+import woowacourse.movie.presentation.model.Quantity
 import woowacourse.movie.presentation.model.ReservationInfo
-import woowacourse.movie.presentation.model.Ticket
 import woowacourse.movie.presentation.ui.seatselection.SeatSelectionActivity
 import java.time.LocalDate
 import java.time.LocalTime
@@ -116,15 +116,15 @@ class ScreenDetailActivity :
     }
 
     override fun onMinusButtonClicked() {
-        presenter.minusTicket(detailModel.ticket)
+        presenter.decreaseQuantity(detailModel.quantity)
     }
 
     override fun onPlusButtonClicked() {
-        presenter.plusTicket(detailModel.ticket)
+        presenter.increaseQuantity(detailModel.quantity)
     }
 
-    override fun updateTicketCount(ticket: Ticket) {
-        _detailModel = detailModel.copy(ticket = ticket)
+    override fun updateTicketQuantity(quantity: Quantity) {
+        _detailModel = detailModel.copy(quantity = quantity)
         binding.detailModel = detailModel
     }
 
@@ -134,7 +134,7 @@ class ScreenDetailActivity :
             ReservationInfo(
                 theaterId = this.detailModel.theaterId,
                 dateTime = selectedDate.getLocalDateTime(this.detailModel.selectedTime),
-                ticketCount = this.detailModel.ticket.count,
+                ticketQuantity = this.detailModel.quantity.count,
             )
         SeatSelectionActivity.startActivity(this, reservationInfo, movieId)
         back()
@@ -149,7 +149,7 @@ class ScreenDetailActivity :
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(PUT_TICKET_STATE_KEY, detailModel.ticket.count)
+        outState.putInt(PUT_TICKET_STATE_KEY, detailModel.quantity.count)
         outState.putInt(PUT_STATE_KEY_SELECTED_DATE, datePosition)
         outState.putInt(PUT_STATE_KEY_SELECTED_TIME, timePosition)
     }
@@ -157,15 +157,15 @@ class ScreenDetailActivity :
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 
-        restoreTicketCount(savedInstanceState)
+        restoreTicketQuantity(savedInstanceState)
         restoreSelectedDate(savedInstanceState)
         restoreSelectedTime(savedInstanceState)
     }
 
-    private fun restoreTicketCount(savedInstanceState: Bundle) {
-        val count = savedInstanceState.getInt(PUT_TICKET_STATE_KEY, DEFAULT_TICKET_COUNT)
-        if (count != DEFAULT_TICKET_COUNT) {
-            updateTicketCount(Ticket(count))
+    private fun restoreTicketQuantity(savedInstanceState: Bundle) {
+        val count = savedInstanceState.getInt(PUT_TICKET_STATE_KEY, DEFAULT_TICKET_QUANTITY)
+        if (count != DEFAULT_TICKET_QUANTITY) {
+            updateTicketQuantity(Quantity(count))
         }
     }
 
@@ -183,11 +183,11 @@ class ScreenDetailActivity :
 
     companion object {
         private const val DEFAULT_ID = -1
-        private const val DEFAULT_TICKET_COUNT = -1
+        private const val DEFAULT_TICKET_QUANTITY = -1
         private const val PUT_EXTRA_KEY_MOVIE_ID = "movieId"
         private const val PUT_EXTRA_KEY_THEATER_ID = "theaterId"
 
-        private const val PUT_TICKET_STATE_KEY = "ticketCount"
+        private const val PUT_TICKET_STATE_KEY = "ticketQuantity"
         private const val PUT_STATE_KEY_SELECTED_DATE = "selectedDate"
         private const val PUT_STATE_KEY_SELECTED_TIME = "selectedTime"
 

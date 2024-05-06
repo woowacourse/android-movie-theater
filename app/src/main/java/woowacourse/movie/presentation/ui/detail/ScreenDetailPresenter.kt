@@ -2,9 +2,9 @@ package woowacourse.movie.presentation.ui.detail
 
 import woowacourse.movie.domain.repository.ScreenRepository
 import woowacourse.movie.presentation.model.MessageType
-import woowacourse.movie.presentation.model.Ticket
-import woowacourse.movie.presentation.model.Ticket.Companion.MAX_TICKET_COUNT
-import woowacourse.movie.presentation.model.Ticket.Companion.MIN_TICKET_COUNT
+import woowacourse.movie.presentation.model.Quantity
+import woowacourse.movie.presentation.model.Quantity.Companion.MAX_COUNT
+import woowacourse.movie.presentation.model.Quantity.Companion.MIN_COUNT
 
 class ScreenDetailPresenter(
     private val view: ScreenDetailContract.View,
@@ -44,21 +44,21 @@ class ScreenDetailPresenter(
         }
     }
 
-    override fun plusTicket(ticket: Ticket) {
-        val newTicket = ticket.increase(1)
-        if (newTicket.isInvalidCount()) {
-            view.showSnackBar(MessageType.TicketMaxCountMessage(MAX_TICKET_COUNT))
+    override fun increaseQuantity(quantity: Quantity) {
+        val newQuantity = quantity.increase(1)
+        if (newQuantity.isInvalidCount()) {
+            view.showSnackBar(MessageType.TicketMaxCountMessage(MAX_COUNT))
             return
         }
-        view.updateTicketCount(newTicket)
+        view.updateTicketQuantity(newQuantity)
     }
 
-    override fun minusTicket(ticket: Ticket) {
-        val newTicket = ticket.decrease(1)
+    override fun decreaseQuantity(quantity: Quantity) {
+        val newTicket = quantity.decrease(1)
         if (newTicket.isInvalidCount()) {
-            view.showSnackBar(MessageType.TicketMinCountMessage(MIN_TICKET_COUNT))
+            view.showSnackBar(MessageType.TicketMinCountMessage(MIN_COUNT))
             return
         }
-        view.updateTicketCount(newTicket)
+        view.updateTicketQuantity(newTicket)
     }
 }

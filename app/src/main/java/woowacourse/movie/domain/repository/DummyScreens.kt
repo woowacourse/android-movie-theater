@@ -14,7 +14,7 @@ import java.time.LocalDate
 class DummyScreens : ScreenRepository {
     // TODO 더미 데이터
 
-    val wizardStone =
+    private val wizardStone =
         Movie(
             id = 0,
             title = "해리 포터와 마법사의 돌",
@@ -27,7 +27,7 @@ class DummyScreens : ScreenRepository {
             endDate = LocalDate.of(2024, 3, 31),
         )
 
-    val bang =
+    private val bang =
         Movie(
             id = 1,
             title = "해리 포터와 비밀의 방",
@@ -40,7 +40,7 @@ class DummyScreens : ScreenRepository {
             endDate = LocalDate.of(2024, 4, 28),
         )
 
-    val zoesu =
+    private val zoesu =
         Movie(
             id = 2,
             title = "해리 포터와 아즈카반의 죄수",
@@ -53,7 +53,7 @@ class DummyScreens : ScreenRepository {
             endDate = LocalDate.of(2024, 5, 31),
         )
 
-    val piro =
+    private val piro =
         Movie(
             id = 3,
             title = "해리 포터와 불의 잔",
@@ -122,7 +122,7 @@ class DummyScreens : ScreenRepository {
                 ),
         )
 
-    val theaters =
+    private val theaters =
         listOf(theater, theater.copy(id = 1, name = "강남"), theater.copy(id = 2, name = "잠실"))
 
     override fun findTheaterNameById(theaterId: Int): Result<String> =
@@ -131,7 +131,7 @@ class DummyScreens : ScreenRepository {
         }
 
     override fun load(): List<ScreenView> =
-        movies.flatMap { movie ->
+        movies.flatMap {
             listOf(
                 wizardStone,
                 bang,
