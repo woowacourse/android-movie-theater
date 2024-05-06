@@ -16,6 +16,7 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.assertj.core.api.Assertions.assertThat
 import org.hamcrest.Description
 import org.hamcrest.Matcher
@@ -30,6 +31,7 @@ import woowacourse.movie.model.Movies
 import woowacourse.movie.screeningmovie.AdapterClickListener
 import woowacourse.movie.screeningmovie.AdvertiseViewHolder
 import woowacourse.movie.screeningmovie.MovieAdapter
+import woowacourse.movie.screeningmovie.MovieViewHolder
 import woowacourse.movie.screeningmovie.ScreenMovieUiModel
 import woowacourse.movie.screeningmovie.ScreeningMovieFragment
 import woowacourse.movie.screeningmovie.toScreenItems
@@ -90,11 +92,10 @@ class ScreeningMovieFragmentTest {
 
         onView(withId(R.id.rcv_screening_movie))
             .perform(
-                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    4,
-                    checkChildViewWithId(R.id.tv_movie_title, screenMovieUiModel3.title),
-                ),
+                RecyclerViewActions.scrollToPosition<MovieViewHolder>(4),
             )
+
+        onView(withText(screenMovieUiModel3.title)).check(matches(isDisplayed()))
     }
 
     @Test
