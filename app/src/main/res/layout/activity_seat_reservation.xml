@@ -7,10 +7,6 @@
     <data>
 
         <import type="woowacourse.movie.ui.MoneyUi" />
-        
-        <variable
-            name="presenter"
-            type="woowacourse.movie.ui.seat.SeatReservationPresenter" />
 
         <variable
             name="timeReservation"
@@ -21,9 +17,8 @@
             type="Integer" />
 
         <variable
-            name="theaterId"
-            type="Integer" />
-
+            name="onReserveClickedListener"
+            type="woowacourse.movie.ui.seat.OnReserveClickedListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -102,11 +97,11 @@
             android:layout_height="0dp"
             android:background="@color/complete_deactivated"
             android:enabled="false"
+            android:onClick="@{() -> onReserveClickedListener.onClick()}"
             android:text="@string/ok"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:onClick="@{() -> presenter.reserve(theaterId)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/cl_seat_reservation_bottom" />

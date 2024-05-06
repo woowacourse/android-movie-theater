@@ -29,6 +29,8 @@ class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.Vie
         )
     }
 
+    private lateinit var onReserveButtonClickedListener: OnReserveClickedListener
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seat_reservation)
@@ -36,19 +38,16 @@ class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.Vie
         val timeReservationId = intent.getIntExtra(TIME_RESERVATION_ID, DEFAULT_TIME_RESERVATION_ID)
         val theaterId = intent.getIntExtra(PUT_EXTRA_THEATER_ID_KEY, DEFAULT_THEATER_ID)
 
-        binding.presenter = presenter
-        binding.theaterId = theaterId
-
         with(presenter) {
             saveId(theaterId, timeReservationId)
             loadAllSeats()
             loadTimeReservation()
+            onReserveButtonClickedListener = OnReserveClickedListener { reserve(theaterId) }
+            binding.onReserveClickedListener = onReserveButtonClickedListener
         }
     }
 
-    override fun showTimeReservation(
-        timeReservation: TimeReservation,
-    ) {
+    override fun showTimeReservation(timeReservation: TimeReservation) {
         binding.timeReservation = timeReservation
     }
 
@@ -147,4 +146,8 @@ class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.Vie
             context.startActivity(intent)
         }
     }
+}
+
+fun interface OnReserveClickedListener {
+    fun onClick()
 }

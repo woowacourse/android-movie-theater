@@ -6,9 +6,7 @@ import woowacourse.movie.domain.model.TimeReservation
 
 interface SeatReservationContract {
     interface View {
-        fun showTimeReservation(
-            timeReservation: TimeReservation,
-        )
+        fun showTimeReservation(timeReservation: TimeReservation)
 
         fun showAllSeats(seats: Seats)
 

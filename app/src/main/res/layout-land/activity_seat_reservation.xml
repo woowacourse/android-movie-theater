@@ -4,11 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="woowacourse.movie.ui.MoneyUi"/>
 
-        <variable
-            name="presenter"
-            type="woowacourse.movie.ui.seat.SeatReservationPresenter" />
+        <import type="woowacourse.movie.ui.MoneyUi" />
 
         <variable
             name="timeReservation"
@@ -19,9 +16,8 @@
             type="Integer" />
 
         <variable
-            name="theaterId"
-            type="Integer" />
-
+            name="onReserveClickedListener"
+            type="woowacourse.movie.ui.seat.OnReserveClickedListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -104,10 +100,10 @@
                 android:id="@+id/tv_seat_reservation_total_price"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:text="@{MoneyUi.currency(totalPrice)}"
                 android:textSize="18dp"
                 app:layout_constraintStart_toStartOf="@+id/tv_seat_reservation_movie_title"
                 app:layout_constraintTop_toBottomOf="@+id/tv_seat_reservation_movie_title"
-                android:text="@{MoneyUi.currency(totalPrice)}"
                 tools:text="20,000원" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -117,7 +113,7 @@
             android:layout_height="0dp"
             android:background="@color/complete_deactivated"
             android:enabled="false"
-            android:onClick="@{() -> presenter.reserve(theaterId)}"
+            android:onClick="@{() -> onReserveClickedListener.onClick()}"
             android:text="@string/ok"
             android:textColor="@color/white"
             android:textSize="20dp"
