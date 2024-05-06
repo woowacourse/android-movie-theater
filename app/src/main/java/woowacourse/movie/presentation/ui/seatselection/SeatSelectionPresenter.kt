@@ -27,8 +27,11 @@ class SeatSelectionPresenter(
             )
     }
 
-    override fun loadScreen(id: Int) {
-        repository.findByScreenId(theaterId = id, movieId = id).onSuccess { screen ->
+    override fun loadScreen(
+        theaterId: Int,
+        movieId: Int,
+    ) {
+        repository.findByScreenId(theaterId = theaterId, movieId = movieId).onSuccess { screen ->
             _seatSelectionModel = seatSelectionModel.copy(screen = screen)
         }.onFailure { e ->
             when (e) {

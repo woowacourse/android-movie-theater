@@ -36,10 +36,11 @@ class SeatSelectionActivity : BaseActivity<ActivitySeatSelectionBinding>(), View
             } else {
                 intent.getSerializableExtra(PUT_EXTRA_KEY_RESERVATION_INFO) as ReservationInfo
             }
+        val movieId = intent.getIntExtra(PUT_EXTRA_KEY_MOVIE_ID, -1)
 
         reservationInfo?.let { reservationInfoItem ->
             presenter.updateUiModel(reservationInfoItem)
-            presenter.loadScreen(reservationInfoItem.theaterId)
+            presenter.loadScreen(reservationInfoItem.theaterId, movieId)
             presenter.loadSeatBoard(reservationInfoItem.theaterId)
         }
     }
