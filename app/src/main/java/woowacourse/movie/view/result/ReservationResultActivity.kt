@@ -1,4 +1,4 @@
-package woowacourse.movie.view.finished
+package woowacourse.movie.view.result
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,24 +6,25 @@ import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
-import woowacourse.movie.databinding.ActivityReservationFinishedBinding
+import woowacourse.movie.databinding.ActivityReservationResultBinding
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.ticket.Ticket
-import woowacourse.movie.presenter.finished.ReservationFinishedContract
-import woowacourse.movie.presenter.finished.ReservationFinishedPresenter
+import woowacourse.movie.presenter.result.ReservationResultContract
+import woowacourse.movie.presenter.result.ReservationResultPresenter
 import woowacourse.movie.utils.MovieUtils.convertAmountFormat
 import woowacourse.movie.utils.MovieUtils.intentSerializable
 import woowacourse.movie.utils.MovieUtils.makeToast
 import woowacourse.movie.view.MainActivity
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.TICKET
 
-class ReservationFinishedActivity : AppCompatActivity(), ReservationFinishedContract.View {
-    private val binding: ActivityReservationFinishedBinding by lazy {
-        DataBindingUtil.setContentView(this, R.layout.activity_reservation_finished)
+class ReservationResultActivity : AppCompatActivity(), ReservationResultContract.View {
+    private val binding: ActivityReservationResultBinding by lazy {
+        DataBindingUtil.setContentView(this, R.layout.activity_reservation_result)
     }
-    private val presenter: ReservationFinishedPresenter = ReservationFinishedPresenter(this, ScreeningDao(), TheaterDao())
+    private val presenter: ReservationResultPresenter =
+        ReservationResultPresenter(this, ScreeningDao(), TheaterDao())
 
     private lateinit var ticket: Ticket
 
@@ -45,7 +46,8 @@ class ReservationFinishedActivity : AppCompatActivity(), ReservationFinishedCont
     override fun showReservationHistory(ticket: Ticket) {
         val seats = ticket.seats.seats
         binding.textViewReservationFinishedNumberOfTickets.text = seats.size.toString()
-        binding.textViewReservationFinishedTicketPrice.text = convertAmountFormat(this, ticket.amount)
+        binding.textViewReservationFinishedTicketPrice.text =
+            convertAmountFormat(this, ticket.amount)
         binding.textViewReservationFinishedSeats.text =
             seats.joinToString(getString(R.string.reservation_finished_seat_separator)) { "${it.row}${it.column}" }
         presenter.loadTheater(ticket.theaterId)
@@ -58,7 +60,8 @@ class ReservationFinishedActivity : AppCompatActivity(), ReservationFinishedCont
     }
 
     override fun showTheaterName(theaterName: String) {
-        binding.textViewReservationFinishedTheaterName.text = getString(R.string.reservation_finished_theater, theaterName)
+        binding.textViewReservationFinishedTheaterName.text =
+            getString(R.string.reservation_finished_theater, theaterName)
     }
 
     private fun receiveTicket() {
@@ -74,7 +77,7 @@ class ReservationFinishedActivity : AppCompatActivity(), ReservationFinishedCont
 
     private fun handleBackPressed() {
         onBackPressedDispatcher.addCallback(this) {
-            val intent = Intent(this@ReservationFinishedActivity, MainActivity::class.java)
+            val intent = Intent(this@ReservationResultActivity, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
             finish()

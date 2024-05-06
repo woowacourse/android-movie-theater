@@ -1,4 +1,4 @@
-package woowacourse.movie.presenter.finished
+package woowacourse.movie.presenter.result
 
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -21,17 +21,17 @@ import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.model.ticket.Ticket
 
 @ExtendWith(MockKExtension::class)
-class ReservationFinishedPresenterTest {
+class ReservationResultPresenterTest {
     @MockK
-    private lateinit var view: ReservationFinishedContract.View
-    private lateinit var presenter: ReservationFinishedContract.Presenter
+    private lateinit var view: ReservationResultContract.View
+    private lateinit var presenter: ReservationResultContract.Presenter
     private lateinit var firstMovie: Movie
     private lateinit var sampleTicket: Ticket
     private lateinit var firstTheater: Theater
 
     @BeforeEach
     fun setUp() {
-        presenter = ReservationFinishedPresenter(view, ScreeningDao(), TheaterDao())
+        presenter = ReservationResultPresenter(view, ScreeningDao(), TheaterDao())
         firstMovie = ScreeningDatabase.movies.first()
         firstTheater = TheaterDatabase.theaters.first()
         val seats = Seats()

@@ -1,4 +1,4 @@
-package woowacourse.movie.view.finished
+package woowacourse.movie.view.result
 
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
@@ -21,13 +21,13 @@ import woowacourse.movie.view.reservation.ReservationDetailActivity
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.TICKET
 import woowacourse.movie.view.theater.TheaterSelectionFragment
 
-class ReservationFinishedActivityTest {
+class ReservationResultActivityTest {
     @get:Rule
     var activityRule =
-        ActivityScenarioRule<ReservationFinishedActivity>(
+        ActivityScenarioRule<ReservationResultActivity>(
             Intent(
                 ApplicationProvider.getApplicationContext(),
-                ReservationFinishedActivity::class.java,
+                ReservationResultActivity::class.java,
             ).apply {
                 putExtra(TICKET, makeMockTicket())
             },

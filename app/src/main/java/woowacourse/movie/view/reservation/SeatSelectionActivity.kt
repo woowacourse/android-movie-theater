@@ -25,7 +25,7 @@ import woowacourse.movie.utils.MovieUtils.bundleSerializable
 import woowacourse.movie.utils.MovieUtils.convertAmountFormat
 import woowacourse.movie.utils.MovieUtils.intentSerializable
 import woowacourse.movie.utils.MovieUtils.makeToast
-import woowacourse.movie.view.finished.ReservationFinishedActivity
+import woowacourse.movie.view.result.ReservationResultActivity
 import woowacourse.movie.view.home.HomeFragment.Companion.MOVIE_ID
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.HEAD_COUNT
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.SCREENING_DATE_TIME
@@ -138,7 +138,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     override fun navigateToFinished(ticket: Ticket) {
-        val intent = Intent(this, ReservationFinishedActivity::class.java)
+        val intent = Intent(this, ReservationResultActivity::class.java)
         intent.putExtra(TICKET, ticket)
         startActivity(intent)
     }

@@ -1,9 +1,9 @@
-package woowacourse.movie.presenter.finished
+package woowacourse.movie.presenter.result
 
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.ticket.Ticket
 
-interface ReservationFinishedContract {
+interface ReservationResultContract {
     interface View {
         fun showMovieTitle(movie: Movie)
 
