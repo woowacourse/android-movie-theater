@@ -1,12 +1,15 @@
 package woowacourse.movie.presenter.history
 
 import woowacourse.movie.model.ticket.ReservationTicket
+import woowacourse.movie.repository.ReservationTicketRepository
 
 class ReservationHistoryPresenter(
     private val view: ReservationHistoryContract.View,
+    private val reservationTicketRepository: ReservationTicketRepository,
 ) : ReservationHistoryContract.Presenter {
     override fun loadReservationTickets() {
-//        view.showReservationHistory()
+        val tickets = reservationTicketRepository.loadReservationTickets()
+        view.showReservationHistory(tickets)
     }
 
     override fun loadReservationTicket(reservationTicket: ReservationTicket) {
