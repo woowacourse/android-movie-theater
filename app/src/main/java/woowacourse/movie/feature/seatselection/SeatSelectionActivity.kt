@@ -21,10 +21,12 @@ import woowacourse.movie.feature.reservation.ReservationActivity.Companion.SCREE
 import woowacourse.movie.feature.reservation.ReservationActivity.Companion.TICKET
 import woowacourse.movie.feature.theater.TheaterSelectionFragment.Companion.THEATER_ID
 import woowacourse.movie.model.movie.Movie
+import woowacourse.movie.model.movie.Movie.Companion.DEFAULT_MOVIE_ID
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.seats.Grade
 import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
+import woowacourse.movie.model.theater.Theater.Companion.DEFAULT_THEATER_ID
 import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.ticket.Ticket
 import woowacourse.movie.utils.MovieUtils.bundleSerializable
@@ -66,12 +68,10 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         savedInstanceState.let { bundle ->
-            // TODO Seats 에러 핸들링 방법 변경하기
             runCatching {
                 restoreSeatsData(bundle)
             }.onFailure {
-                showErrorToast()
-                finish()
+                showErrorSnackBar()
             }
             restoreReservationData(bundle)
         }
@@ -200,12 +200,12 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private fun receiveMovieId() =
         intent.getIntExtra(
             MOVIE_ID,
-            -1,
+            DEFAULT_MOVIE_ID,
         )
 
     private fun receiveHeadCount() = intent.intentSerializable(HEAD_COUNT, HeadCount::class.java) ?: HeadCount(0)
 
-    private fun receiveTheaterId(): Int = intent.getIntExtra(THEATER_ID, -1)
+    private fun receiveTheaterId(): Int = intent.getIntExtra(THEATER_ID, DEFAULT_THEATER_ID)
 
     private fun receiveScreeningDateTime() =
         intent.intentSerializable(
