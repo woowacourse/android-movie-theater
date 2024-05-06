@@ -1,9 +1,6 @@
 package woowacourse.movie.ui.screen
 
-import io.mockk.every
-import io.mockk.just
 import io.mockk.mockk
-import io.mockk.runs
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -18,7 +15,7 @@ class HomePresenterTest {
 
     @BeforeEach
     fun setUp() {
-        view = mockk<HomeContract.View>()
+        view = mockk<HomeContract.View>(relaxed = true)
         presenter =
             HomePresenter(
                 view = view,
@@ -29,8 +26,6 @@ class HomePresenterTest {
 
     @Test
     fun `영화들을 보여준다`() {
-        every { view.showScreens(any()) } just runs
-
         presenter.loadScreen()
 
         verify { view.showScreens(any()) }
@@ -38,8 +33,6 @@ class HomePresenterTest {
 
     @Test
     fun `영화를 상영하는 상영관들을 보여준다`() {
-        every { view.showTheatersBottomSheet(any()) } just runs
-
         presenter.loadTheaters(1)
 
         verify { view.showTheatersBottomSheet(any()) }

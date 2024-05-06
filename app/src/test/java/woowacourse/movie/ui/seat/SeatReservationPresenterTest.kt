@@ -1,9 +1,6 @@
 package woowacourse.movie.ui.seat
 
-import io.mockk.every
-import io.mockk.just
 import io.mockk.mockk
-import io.mockk.runs
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -16,7 +13,7 @@ class SeatReservationPresenterTest {
 
     @BeforeEach
     fun setUp() {
-        mockView = mockk<SeatReservationContract.View>()
+        mockView = mockk<SeatReservationContract.View>(relaxed = true)
         presenter =
             SeatReservationPresenter(
                 view = mockView,
@@ -27,10 +24,6 @@ class SeatReservationPresenterTest {
 
     @Test
     fun showSeats() {
-        // given
-        every { mockView.showAllSeats(any()) } just runs
-        every { mockView.showTimeReservation(any()) } just runs
-
         // when
         presenter.loadAllSeats()
 
