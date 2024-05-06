@@ -13,7 +13,7 @@ import woowacourse.movie.movielist.uimodel.MovieUiModel
 class MovieAdapter(
     private var movies: List<ListItemUiModel>,
     private val adapterClickListener: AdapterClickListener,
-) : RecyclerView.Adapter<ScreeningViewHolder>() {
+) : RecyclerView.Adapter<ListItemViewHolder>() {
     override fun getItemViewType(position: Int): Int {
         return when (movies[position]) {
             is MovieUiModel -> MOVIE
@@ -24,7 +24,7 @@ class MovieAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): ScreeningViewHolder {
+    ): ListItemViewHolder {
         return when (viewType) {
             MOVIE -> {
                 val binding =
@@ -51,7 +51,7 @@ class MovieAdapter(
     }
 
     override fun onBindViewHolder(
-        holder: ScreeningViewHolder,
+        holder: ListItemViewHolder,
         position: Int,
     ) {
         when (holder) {

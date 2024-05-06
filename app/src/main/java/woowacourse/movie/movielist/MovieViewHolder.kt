@@ -6,16 +6,16 @@ import woowacourse.movie.databinding.ItemScreeningAdvertiseBinding
 import woowacourse.movie.databinding.ItemScreeningMovieBinding
 import woowacourse.movie.movielist.uimodel.MovieUiModel
 
-sealed class ScreeningViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+sealed class ListItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 class MovieViewHolder(
     private val binding: ItemScreeningMovieBinding,
     private val adapterClickListener: AdapterClickListener,
-) : ScreeningViewHolder(binding.root) {
+) : ListItemViewHolder(binding.root) {
     fun onBind(item: MovieUiModel) {
         binding.movie = item
         binding.clickListener = adapterClickListener
     }
 }
 
-class AdvertiseViewHolder(binding: ItemScreeningAdvertiseBinding) : ScreeningViewHolder(binding.root)
+class AdvertiseViewHolder(binding: ItemScreeningAdvertiseBinding) : ListItemViewHolder(binding.root)
