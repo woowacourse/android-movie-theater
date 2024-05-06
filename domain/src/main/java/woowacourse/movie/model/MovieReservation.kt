@@ -32,4 +32,20 @@ data class MovieReservation(
     )
 
     val totalPrice: Price get() = selectedSeats.totalPrice
+
+    companion object {
+        val STUB =
+            MovieReservation(
+                0,
+                Movie.STUB,
+                SelectedSeats(
+                    MovieTheater.STUB_A,
+                    HeadCount(1),
+                    listOf(Seat(SeatRate.B, 0, 0, SeatState.SELECTED)),
+                ),
+                LocalDateTime.now(),
+                HeadCount(1),
+                theaterId = 0L,
+            )
+    }
 }
