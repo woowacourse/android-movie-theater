@@ -29,11 +29,10 @@ class SeatReservationPresenterTest {
     fun showSeats() {
         // given
         every { mockView.showAllSeats(any()) } just runs
-        every { mockView.initBinding(any(), any()) } just runs
-        every { mockView.updateTotalPrice(any()) } just runs
+        every { mockView.showTimeReservation(any()) } just runs
 
         // when
-        presenter.loadData(0)
+        presenter.loadAllSeats()
 
         // then
         verify(exactly = 1) { mockView.showAllSeats(any()) }

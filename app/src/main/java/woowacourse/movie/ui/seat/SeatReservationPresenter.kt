@@ -4,6 +4,7 @@ import android.view.View
 import woowacourse.movie.domain.model.Position
 import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.Seats
+import woowacourse.movie.domain.model.TimeReservation
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.ScreenRepository
 
@@ -12,19 +13,32 @@ class SeatReservationPresenter(
     private val screenRepository: ScreenRepository,
     private val reservationRepository: ReservationRepository,
 ) : SeatReservationContract.Presenter {
+    private var theaterId: Int = 0
+    private var timeReservationId: Int = 0
+
+    private lateinit var timeReservation: TimeReservation
+    private var loadedAllSeats: Seats = Seats()
     private var selectedSeats = Seats()
     private var ticketCount = 0
-    private var loadedAllSeats: Seats = Seats()
 
-    override fun loadData(timeReservationId: Int) {
-        val timeReservation = reservationRepository.loadTimeReservation(timeReservationId)
-        val seats = screenRepository.seats(timeReservation.screen.id)
-        this.loadedAllSeats = seats
+    override fun saveId(
+        theaterId: Int,
+        timeReservationId: Int,
+    ) {
+        this.theaterId = theaterId
+        this.timeReservationId = timeReservationId
+
+        timeReservation = reservationRepository.loadTimeReservation(timeReservationId)
+        loadedAllSeats = screenRepository.seats(timeReservation.screen.id)
         ticketCount = timeReservation.ticket.count
+    }
 
-        view.showAllSeats(seats)
-        view.initBinding(selectedSeats.totalPrice(), timeReservation)
-        view.updateTotalPrice(selectedSeats.totalPrice())
+    override fun loadAllSeats() {
+        view.showAllSeats(loadedAllSeats)
+    }
+
+    override fun loadTimeReservation() {
+        view.showTimeReservation(timeReservation)
     }
 
     override fun selectSeat(
@@ -44,44 +58,35 @@ class SeatReservationPresenter(
             }
         }
 
-        view.updateTotalPrice(selectedSeats.totalPrice())
         if (selectedSeats.count() == ticketCount) {
             view.activateReservation(true)
         } else {
             view.activateReservation(false)
         }
+
+        view.updateTotalPrice(selectedSeats.totalPrice())
     }
 
-    private fun screen(id: Int): Screen {
-        screenRepository.findById(id = id).onSuccess { screen ->
+    override fun reserve(theaterId: Int) {
+        val screenId = timeReservation.screen.id
+
+        reservationRepository.save(
+            loadedScreen(screenId),
+            selectedSeats,
+            timeReservation.dateTime,
+        ).onSuccess { reservationId ->
+            view.navigateToCompleteReservation(reservationId, theaterId)
+        }.onFailure { e ->
+            view.showSeatReservationFail(e)
+        }
+    }
+
+    private fun loadedScreen(screenId: Int): Screen {
+        screenRepository.findById(id = screenId).onSuccess { screen ->
             return screen
         }.onFailure { e ->
             throw e
         }
         throw IllegalStateException("예기치 못한 오류")
-    }
-
-    override fun attemptReservation(
-        screenId: Int,
-        theaterId: Int,
-    ) {
-        view.showDialog(screenId, theaterId)
-    }
-
-    override fun completeReservation(
-        screenId: Int,
-        theaterId: Int,
-    ) {
-        val timeReservation = reservationRepository.loadTimeReservation(screenId)
-
-        reservationRepository.save(
-            screen(screenId),
-            selectedSeats,
-            timeReservation.dateTime,
-        ).onSuccess { id ->
-            view.navigateToCompleteReservation(id, theaterId)
-        }.onFailure { e ->
-            view.showSeatReservationFail(e)
-        }
     }
 }
