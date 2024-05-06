@@ -72,7 +72,7 @@ class MovieReservationPresenterTest {
     }
 
     @Test
-    @DisplayName("현재 예매 인원이 1일 때, 플러스 버튼을 누르면 인원이 2가 된다.")
+    @DisplayName("현재 예매 인원이 1일 때, 플러스 버튼을 누르면 2를 전달한다.")
     fun becomes_2_when_current_number_is_1_And_click_plus_button() {
         every { view.updateHeadCount(2) } just Runs
 
@@ -82,7 +82,7 @@ class MovieReservationPresenterTest {
     }
 
     @Test
-    @DisplayName("현재 예매 인원이 2일 때, 마이너스 버튼을 누르면 인원이 1이 된다.")
+    @DisplayName("현재 예매 인원이 2일 때, 마이너스 버튼을 누르면 1을 전달한다.")
     fun becomes_1_when_current_number_is_2_And_click_minus_button() {
         every { view.updateHeadCount(1) } just Runs
 
