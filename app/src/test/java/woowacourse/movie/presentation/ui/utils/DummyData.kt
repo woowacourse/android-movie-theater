@@ -133,6 +133,8 @@ object DummyData {
 
     const val THEATER_ID = 0
 
+    const val RESERVATION_ID = 0
+
     const val MOVIE_ID = 0
 
     val dummySeats =
@@ -224,10 +226,10 @@ object DummyData {
 
     val dummyReservation =
         Reservation(
-            id = 1,
-            1,
-            piro,
-            3,
+            id = 0,
+            theaterId = 0,
+            movie = piro,
+            ticketCount = 3,
             seats = listOf(dummySeat),
             dateTime = LocalDateTime.now(),
         )

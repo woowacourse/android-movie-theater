@@ -10,7 +10,7 @@ class ReservationPresenter(
     private val theaterRepository: ScreenRepository,
 ) : ReservationContract.Presenter {
     private var _reservationModel: ReservationModel = ReservationModel()
-    val reservationModel
+    private val reservationModel
         get() = _reservationModel
 
     override fun loadReservation(id: Int) {

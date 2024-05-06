@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.ScreenRepository
+import woowacourse.movie.presentation.ui.utils.DummyData.RESERVATION_ID
+import woowacourse.movie.presentation.ui.utils.DummyData.THEATER_ID
 import woowacourse.movie.presentation.ui.utils.DummyData.dummyReservation
 
 @ExtendWith(MockKExtension::class)
@@ -21,60 +23,77 @@ class ReservationPresenterTest {
     private lateinit var presenter: ReservationContract.Presenter
 
     @MockK
-    private lateinit var repository: ReservationRepository
+    private lateinit var reservationRepository: ReservationRepository
 
     @MockK
     private lateinit var theaterRepository: ScreenRepository
 
     @BeforeEach
     fun setUp() {
-        presenter = ReservationPresenter(view, repository, theaterRepository)
+        presenter = ReservationPresenter(view, reservationRepository, theaterRepository)
     }
 
     @Test
-    fun `ReservationPresenter가 유효한 예매 id를 통해 loadReservation()을 했을 때, view에게 reservation 데이터를 전달한다`() {
+    fun `예매 id로 예매 정보를 불러와 뷰에 보여준다`() {
         // given
-        every { theaterRepository.findTheaterNameById(any()) } returns Result.success("선릉")
-        every { repository.findByReservationId(any()) } returns Result.success(dummyReservation)
+        val theaterName = "선릉"
+        every { reservationRepository.findByReservationId(RESERVATION_ID) } returns
+            Result.success(
+                dummyReservation,
+            )
+        every { theaterRepository.findTheaterNameById(THEATER_ID) } returns
+            Result.success(
+                theaterName,
+            )
         every { view.showReservation(any(), any()) } just runs
 
         // when
-        presenter.loadReservation(1)
+        presenter.loadReservation(RESERVATION_ID)
 
         // then
-        verify { view.showReservation(any(), any()) }
+        val result = ReservationModel(theaterName = theaterName, reservation = dummyReservation)
+        verify { view.showReservation(result, theaterName) }
     }
 
     @Test
-    fun `ScreenPresenter가 유효하지 않은 예매 id를 통해 loadReservation()했을 때, view에게 back과 throwable를 전달한다`() {
+    fun `유효하지 않은 예매 id라면 뷰에게 예외를 전달하고 이전 화면으로 간다`() {
         // given
-        every { repository.findByReservationId(any()) } returns
+        every { reservationRepository.findByReservationId(RESERVATION_ID) } returns
             Result.failure(
                 NoSuchElementException(),
             )
         every { view.showToastMessage(e = any()) } just runs
-        every { view.back() } just runs
+        every { view.finishReservation() } just runs
 
         // when
-        presenter.loadReservation(1)
+        presenter.loadReservation(RESERVATION_ID)
 
         // then
         verify { view.showToastMessage(e = any()) }
-        verify { view.back() }
+        verify { view.finishReservation() }
     }
 
     @Test
-    fun `ScreenPresenter가 loadReservation()했을 때, 예상치 못한 에러가 발생하면 view에게 back과 throwable를 전달한다`() {
+    fun `유효하지 않은 상영관 id라면 뷰에게 예외를 전달하고 이전 화면으로 간다`() {
         // given
-        every { repository.findByReservationId(any()) } returns Result.failure(Exception())
+        every { reservationRepository.findByReservationId(RESERVATION_ID) } returns
+            Result.success(
+                dummyReservation,
+            )
+
+        every { theaterRepository.findTheaterNameById(THEATER_ID) } returns
+            Result.failure(
+                NoSuchElementException(),
+            )
+
         every { view.showToastMessage(e = any()) } just runs
-        every { view.back() } just runs
+        every { view.finishReservation() } just runs
 
         // when
-        presenter.loadReservation(1)
+        presenter.loadReservation(RESERVATION_ID)
 
         // then
         verify { view.showToastMessage(e = any()) }
-        verify { view.back() }
+        verify { view.finishReservation() }
     }
 }
