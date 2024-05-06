@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="userSeat"
+            type="woowacourse.movie.presentation.model.UserSeat" />
+
+        <variable
+            name="screen"
+            type="woowacourse.movie.domain.model.Screen" />
+
+        <variable
+            name="ticketCount"
+            type="int" />
+
+        <variable
+            name="totalPrice"
+            type="int" />
+
+        <variable
+            name="presenter"
+            type="woowacourse.movie.presentation.ui.seatselection.SeatSelectionPresenter" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray"
+        tools:context=".presentation.ui.seatselection.SeatSelectionActivity">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_screen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_screen"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TableLayout
+                    android:id="@+id/table_layout_seat_board"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="34dp"
+                    android:layout_marginTop="56dp"
+                    android:layout_marginBottom="96dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_screen">
+
+                    <include
+                        android:id="@+id/first_row"
+                        layout="@layout/include_seat_contents"
+                        app:list="@{userSeat.seatModels.subList(0, 4)}"
+                        app:presenter="@{presenter}" />
+
+                    <include
+                        android:id="@+id/second_row"
+                        layout="@layout/include_seat_contents"
+                        app:list="@{userSeat.seatModels.subList(4, 8)}"
+                        app:presenter="@{presenter}" />
+
+                    <include
+                        android:id="@+id/third_row"
+                        layout="@layout/include_seat_contents"
+                        app:list="@{userSeat.seatModels.subList(8, 12)}"
+                        app:presenter="@{presenter}" />
+
+                    <include
+                        android:id="@+id/fourth_row"
+                        layout="@layout/include_seat_contents"
+                        app:list="@{userSeat.seatModels.subList(12, 16)}"
+                        app:presenter="@{presenter}" />
+
+                    <include
+                        android:id="@+id/fifth_row"
+                        layout="@layout/include_seat_contents"
+                        app:list="@{userSeat.seatModels.subList(16, 20)}"
+                        app:presenter="@{presenter}" />
+
+                </TableLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </ScrollView>
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="78dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_done"
+            app:layout_constraintStart_toStartOf="parent">
+
+
+            <TextView
+                android:id="@+id/tv_screen_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{screen.movie.title}"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_done"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="해리포터와 마법사의 돌" />
+
+
+            <TextView
+                android:id="@+id/tv_screen_total_price"
+                bindFormatPrice="@{totalPrice}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_done"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="0원" />
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/btn_done"
+            ticketCount="@{ticketCount}"
+            userSeat="@{userSeat}"
+            android:layout_width="88dp"
+            android:layout_height="78dp"
+            android:background="@color/purple"
+            android:gravity="center"
+            android:onClick="@{() -> presenter.showConfirmDialog()}"
+            android:text="@string/done"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
