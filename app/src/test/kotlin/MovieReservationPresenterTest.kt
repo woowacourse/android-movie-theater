@@ -3,17 +3,24 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.DummyMovies
+import woowacourse.movie.model.HeadCount
+import woowacourse.movie.model.ScreeningMovie
 import woowacourse.movie.moviereservation.MovieReservationContract
 import woowacourse.movie.moviereservation.MovieReservationPresenter
+import woowacourse.movie.moviereservation.toMovieReservationUiModel
+import woowacourse.movie.moviereservation.toScreeningDateTimeUiModel
+import woowacourse.movie.moviereservation.uimodel.CurrentBookingDetail
+import woowacourse.movie.moviereservation.uimodel.MovieReservationUiModel
 
 class MovieReservationPresenterTest {
     private lateinit var view: MovieReservationContract.View
 
-    private lateinit var presenter: MovieReservationContract.Presenter
+    private lateinit var presenter: MovieReservationPresenter
 
     @BeforeEach
     fun setUp() {
@@ -22,14 +29,46 @@ class MovieReservationPresenterTest {
     }
 
     @Test
-    @DisplayName("영화 정보를 불러오면 화면에 나타난다")
-    fun show_movie_info_When_load_movie_data() {
-        every { view.showMovieInfo(any()) } just Runs
-        every { view.showBookingDetail(any(), any()) } just Runs
+    @DisplayName("영화 정보를 불러오는데 실패하면, 데이터가 정제되어 뷰에 전달된다.")
+    fun send_movie_info_When_load_movie_data() {
+        // when
+        val screeningMovie = ScreeningMovie.STUB_A
 
-        presenter.loadMovieDetail(1)
+        val expectedReservationUiModel: MovieReservationUiModel =
+            screeningMovie.toMovieReservationUiModel()
+        val expectedScreeningDateTimeUiModel = screeningMovie.toScreeningDateTimeUiModel()
+        val expectedCurrentBookingDetail = CurrentBookingDetail(HeadCount.MIN_COUNT)
 
-        verify(exactly = 1) { view.showMovieInfo(any()) }
+        every {
+            view.showMovieInfo(expectedReservationUiModel)
+            view.showBookingDetail(
+                expectedScreeningDateTimeUiModel,
+                expectedCurrentBookingDetail,
+            )
+        } just Runs
+
+        // given
+        presenter.loadMovieDetail(0)
+        assertThat(DummyMovies.screenMovieById(0)).isEqualTo(screeningMovie)
+
+        // then
+        verify(exactly = 1) {
+            view.showMovieInfo(expectedReservationUiModel)
+            view.showBookingDetail(expectedScreeningDateTimeUiModel, expectedCurrentBookingDetail)
+        }
+    }
+
+    @Test
+    @DisplayName("영화 정보를 불러오는데 실패하면, 에러에 관한 뷰를 호출한다.")
+    fun call_error_view_When_fail_load_movie() {
+        // when
+        every { view.showScreeningMovieError() } just Runs
+
+        // given
+        presenter.loadMovieDetail(-1)
+
+        // then
+        verify(exactly = 1) { view.showScreeningMovieError() }
     }
 
     @Test
