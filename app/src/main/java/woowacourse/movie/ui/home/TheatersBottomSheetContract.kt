@@ -21,6 +21,8 @@ interface TheatersBottomSheetContract {
     interface Presenter {
         fun saveScreenId(screenId: Int)
 
+        fun initTheaterAdapter()
+
         fun loadTheaters()
 
         fun onTheaterSelected(theaterId: Int)

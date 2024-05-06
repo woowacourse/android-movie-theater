@@ -4,9 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import woowacourse.movie.R
+import woowacourse.movie.databinding.BottomSheetTheaterBinding
 import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.Theaters
 import woowacourse.movie.domain.repository.DummyScreens
@@ -15,10 +14,12 @@ import woowacourse.movie.ui.detail.ScreenDetailActivity
 import woowacourse.movie.ui.home.adapter.TheaterAdapter
 
 class TheaterBottomSheet : BottomSheetDialogFragment(), TheatersBottomSheetContract.View {
+    private var _binding: BottomSheetTheaterBinding? = null
+    private val binding get() = _binding!!
+
     private val presenter: TheatersBottomSheetContract.Presenter by lazy {
         TheaterBottomSheetPresenter(this, DummyScreens(), DummyTheaters())
     }
-
     private lateinit var theaterAdapter: TheaterAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +33,9 @@ class TheaterBottomSheet : BottomSheetDialogFragment(), TheatersBottomSheetContr
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.bottom_sheet_theater, container, false)
+    ): View {
+        _binding = BottomSheetTheaterBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onViewCreated(
@@ -41,9 +43,8 @@ class TheaterBottomSheet : BottomSheetDialogFragment(), TheatersBottomSheetContr
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        presenter.initTheaterAdapter()
         presenter.loadTheaters()
-
-        view.findViewById<RecyclerView>(R.id.rv_theater).adapter = theaterAdapter
     }
 
     override fun initTheaterAdapter(screen: Screen) {
@@ -51,13 +52,14 @@ class TheaterBottomSheet : BottomSheetDialogFragment(), TheatersBottomSheetContr
             TheaterAdapter(screen) { theaterId ->
                 presenter.onTheaterSelected(theaterId)
             }
+        binding.rvTheater.adapter = theaterAdapter
     }
 
     override fun showTheaters(
         screen: Screen,
         theaters: Theaters,
     ) {
-        theaterAdapter.submitList(theaters.screeningTheater(screen).theaters)
+        theaterAdapter.submitList(theaters.theaters)
     }
 
     override fun navigateToScreenDetail(
@@ -65,6 +67,11 @@ class TheaterBottomSheet : BottomSheetDialogFragment(), TheatersBottomSheetContr
         theaterId: Int,
     ) {
         ScreenDetailActivity.startActivity(requireContext(), screenId, theaterId)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

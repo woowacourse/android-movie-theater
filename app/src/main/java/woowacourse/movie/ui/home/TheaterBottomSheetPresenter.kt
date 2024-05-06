@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.home
 
+import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.repository.ScreenRepository
 import woowacourse.movie.domain.repository.TheaterRepository
 
@@ -9,19 +10,24 @@ class TheaterBottomSheetPresenter(
     private val theaterRepository: TheaterRepository,
 ) : TheatersBottomSheetContract.Presenter {
     private var screenId: Int = 0
+    private lateinit var loadedScreen: Screen
 
     override fun saveScreenId(screenId: Int) {
         this.screenId = screenId
+        loadedScreen = loadedScreen()
+    }
 
-        view.initTheaterAdapter(screenRepository.findById(screenId).getOrThrow())
+    override fun initTheaterAdapter() {
+        view.initTheaterAdapter(loadedScreen)
     }
 
     override fun loadTheaters() {
-        val screen = screenRepository.findById(screenId).getOrThrow()
         val theaters = theaterRepository.loadAll()
 
-        view.showTheaters(screen, theaters.screeningTheater(screen))
+        view.showTheaters(loadedScreen, theaters.screeningTheater(loadedScreen))
     }
+
+    private fun loadedScreen() = screenRepository.findById(screenId).getOrThrow()
 
     override fun onTheaterSelected(theaterId: Int) {
         view.navigateToScreenDetail(screenId, theaterId)
