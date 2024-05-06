@@ -39,7 +39,7 @@ class ScreenAdapter(
 
             ScreenType.ADVERTISEMENT -> {
                 val binding: HolderAdvertisementBinding = HolderAdvertisementBinding.inflate(inflater, parent, false)
-                AdvertisementViewHolder(onAdClick, binding)
+                AdvertisementViewHolder(binding, onAdClick)
             }
         }
     }

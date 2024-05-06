@@ -5,8 +5,8 @@ import woowacourse.movie.databinding.HolderAdvertisementBinding
 import woowacourse.movie.domain.model.ScreenAd
 
 class AdvertisementViewHolder(
-    private val onItemClick: (id: Int) -> Unit,
     private val binding: HolderAdvertisementBinding,
+    private val onItemClick: (id: Int) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(advertisement: ScreenAd.Advertisement) {
         binding.advertisement = advertisement
