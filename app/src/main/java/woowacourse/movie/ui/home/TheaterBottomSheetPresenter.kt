@@ -12,6 +12,8 @@ class TheaterBottomSheetPresenter(
 
     override fun saveScreenId(screenId: Int) {
         this.screenId = screenId
+
+        view.initTheaterAdapter(screenRepository.findById(screenId).getOrThrow())
     }
 
     override fun loadTheaters() {

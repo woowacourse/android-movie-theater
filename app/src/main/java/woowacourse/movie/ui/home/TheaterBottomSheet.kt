@@ -46,14 +46,17 @@ class TheaterBottomSheet : BottomSheetDialogFragment(), TheatersBottomSheetContr
         view.findViewById<RecyclerView>(R.id.rv_theater).adapter = theaterAdapter
     }
 
-    override fun showTheaters(
-        screen: Screen,
-        theaters: Theaters,
-    ) {
+    override fun initTheaterAdapter(screen: Screen) {
         theaterAdapter =
             TheaterAdapter(screen) { theaterId ->
                 presenter.onTheaterSelected(theaterId)
             }
+    }
+
+    override fun showTheaters(
+        screen: Screen,
+        theaters: Theaters,
+    ) {
         theaterAdapter.submitList(theaters.screeningTheater(screen).theaters)
     }
 

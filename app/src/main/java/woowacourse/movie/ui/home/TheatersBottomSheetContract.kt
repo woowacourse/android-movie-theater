@@ -5,6 +5,8 @@ import woowacourse.movie.domain.model.Theaters
 
 interface TheatersBottomSheetContract {
     interface View {
+        fun initTheaterAdapter(screen: Screen)
+
         fun showTheaters(
             screen: Screen,
             theaters: Theaters,
