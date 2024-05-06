@@ -70,9 +70,4 @@ class MovieAdapter(
         itemList = newItemList
         notifyDataSetChanged()
     }
-
-    companion object {
-        private const val MOVIE = 0
-        private const val ADVERTISE = 1
-    }
 }
