@@ -26,7 +26,7 @@ class MovieMainActivity : AppCompatActivity() {
     }
 
     private fun initializeBottomNavigation() {
-        replace(homeFragment) // 초기에는 홈 화면을 표시
+        replace(homeFragment)
 
         binding.mainBottomNavigation.apply {
             selectedItemId = R.id.menu_home

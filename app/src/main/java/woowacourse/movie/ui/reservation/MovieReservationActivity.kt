@@ -1,6 +1,5 @@
 package woowacourse.movie.ui.reservation
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -148,26 +147,31 @@ class MovieReservationActivity :
     }
 }
 
-@BindingAdapter("context", "imgRes")
+@BindingAdapter("imgRes")
 fun setImageViewResource(
     imageView: ImageView,
-    context: Context,
     imageName: String,
 ) {
-    imageView.setImageResource(imageName.getImageFromId(context))
+    imageView.apply {
+        setImageResource(imageName.getImageFromId(context))
+    }
 }
 
-@BindingAdapter("context", "openingDate", "endingDate")
+@BindingAdapter("openingDate", "endingDate")
 fun setScreeningDate(
     textView: TextView,
-    context: Context,
     openingDate: LocalDate,
     endingDate: LocalDate,
 ) {
-    val formattedOpeningDate =
-        openingDate.format(DateTimeFormatter.ofPattern(context.getString(R.string.reservation_screening_date_format)))
-    val formattedEndingDate =
-        endingDate.format(DateTimeFormatter.ofPattern(context.getString(R.string.reservation_screening_date_format)))
-    textView.text =
-        context.getString(R.string.screening_date, formattedOpeningDate, formattedEndingDate)
+    textView.apply {
+        val formattedOpeningDate =
+            openingDate.format(
+                DateTimeFormatter.ofPattern(context.getString(R.string.reservation_screening_date_format)),
+            )
+        val formattedEndingDate =
+            endingDate.format(
+                DateTimeFormatter.ofPattern(context.getString(R.string.reservation_screening_date_format)),
+            )
+        text = context.getString(R.string.screening_date, formattedOpeningDate, formattedEndingDate)
+    }
 }

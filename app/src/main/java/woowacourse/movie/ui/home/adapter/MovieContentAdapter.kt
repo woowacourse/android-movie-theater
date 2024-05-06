@@ -1,6 +1,5 @@
 package woowacourse.movie.ui.home.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -14,10 +13,6 @@ class MovieContentAdapter(
     private val movieContents: MutableList<MovieContent> = mutableListOf(),
     private val reservationButtonClickListener: (Long) -> Unit,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    init {
-        Log.e("seogi", "adapter!!!!!!!!!!!!!!!!!!!!")
-    }
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,

@@ -43,7 +43,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:scaleType="centerCrop"
-                    app:context="@{context}"
                     app:imgRes="@{movieContent.imageId}"
                     app:layout_constraintBottom_toTopOf="@+id/text_layout"
                     app:layout_constraintDimensionRatio="360:340"
@@ -73,7 +72,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="34dp"
                         android:textSize="16sp"
-                        movie:context="@{context}"
                         movie:endingDate="@{movieContent.endingMoviesDate}"
                         movie:openingDate="@{movieContent.openingMovieDate}" />
 

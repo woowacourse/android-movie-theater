@@ -1,6 +1,5 @@
 package woowacourse.movie.ui.complete
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -83,24 +82,26 @@ class MovieReservationCompleteActivity :
     }
 }
 
-@BindingAdapter("context", "count", "seats", "theaterName")
+@BindingAdapter("count", "seats", "theaterName")
 fun setReservationResult(
     textView: TextView,
-    context: Context,
     count: Int,
     seats: List<Seat>,
     theaterName: String,
 ) {
-    textView.text =
-        context.getString(R.string.reservation_result, count, seats.joinToString(), theaterName)
+    textView.apply {
+        text =
+            context.getString(R.string.reservation_result, count, seats.joinToString(), theaterName)
+    }
 }
 
-@BindingAdapter("context", "dateTime")
+@BindingAdapter("dateTime")
 fun setReservedDateTime(
     textView: TextView,
-    context: Context,
     dateTime: LocalDateTime,
 ) {
-    textView.text =
-        dateTime.format(DateTimeFormatter.ofPattern(context.getString(R.string.reservation_screening_date_time_format)))
+    textView.apply {
+        text =
+            dateTime.format(DateTimeFormatter.ofPattern(context.getString(R.string.reservation_screening_date_time_format)))
+    }
 }
