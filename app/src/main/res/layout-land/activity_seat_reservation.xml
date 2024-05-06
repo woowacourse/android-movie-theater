@@ -41,9 +41,9 @@
 
                 <TextView
                     android:id="@+id/tv_seat_reservation_screen"
-                    android:layout_width="400dp"
-                    android:layout_height="30dp"
-                    android:layout_marginHorizontal="50dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="150dp"
                     android:layout_marginBottom="40dp"
                     android:background="@color/screen"
                     android:gravity="center"
