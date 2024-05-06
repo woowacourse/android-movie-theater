@@ -8,12 +8,10 @@
         <variable
             name="movieReservationUiModel"
             type="woowacourse.movie.moviereservation.uimodel.MovieReservationUiModel" />
+
         <variable
-            name="presenter"
-            type="woowacourse.movie.moviereservation.MovieReservationContract.Presenter" />
-        <variable
-            name="bookingDetail"
-            type="woowacourse.movie.moviereservation.uimodel.BookingDetail" />
+            name="currentBookingDetail"
+            type="woowacourse.movie.moviereservation.uimodel.CurrentBookingDetail" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -141,7 +139,6 @@
                 android:layout_marginBottom="16dp"
                 android:fontFamily="@font/roboto_bold"
                 android:text="-"
-                android:onClick="@{()->presenter.minusCount(bookingDetail.count)}"
                 app:layout_constraintBottom_toTopOf="@id/btn_detail_complete"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -152,7 +149,7 @@
                 android:fontFamily="@font/roboto"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:text="@{bookingDetail.count.count}"
+                android:text="@{String.valueOf(currentBookingDetail.count)}"
                 app:layout_constraintBottom_toBottomOf="@id/btn_detail_minus"
                 app:layout_constraintEnd_toStartOf="@id/btn_detail_plus"
                 app:layout_constraintStart_toEndOf="@id/btn_detail_minus"
@@ -165,7 +162,6 @@
                 android:layout_height="41dp"
                 android:layout_marginBottom="16dp"
                 android:text="+"
-                android:onClick="@{()->presenter.plusCount(bookingDetail.count)}"
                 app:layout_constraintBottom_toTopOf="@id/btn_detail_complete"
                 app:layout_constraintEnd_toEndOf="parent" />
 

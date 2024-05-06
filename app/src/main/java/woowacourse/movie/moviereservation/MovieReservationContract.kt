@@ -1,7 +1,7 @@
 package woowacourse.movie.moviereservation
 
-import woowacourse.movie.moviereservation.uimodel.BookingDetail
-import woowacourse.movie.moviereservation.uimodel.HeadCountUiModel
+import woowacourse.movie.moviereservation.uimodel.BookingInfo
+import woowacourse.movie.moviereservation.uimodel.CurrentBookingDetail
 import woowacourse.movie.moviereservation.uimodel.MovieReservationUiModel
 import woowacourse.movie.moviereservation.uimodel.ScreeningDateTimesUiModel
 
@@ -13,12 +13,12 @@ interface MovieReservationContract {
 
         fun showBookingDetail(
             screeningDateTimeUiModels: ScreeningDateTimesUiModel,
-            bookingDetail: BookingDetail,
+            currentBookingDetail: CurrentBookingDetail,
         )
 
-        fun updateHeadCount(updatedCount: HeadCountUiModel)
+        fun updateHeadCount(updatedCount: Int)
 
-        fun navigateToReservationResultView(reservationId: Long)
+        fun navigateToSelectSeatView(bookingInfo: BookingInfo)
 
         fun showScreeningMovieError()
 
@@ -28,8 +28,14 @@ interface MovieReservationContract {
     interface Presenter {
         fun loadMovieDetail(screenMovieId: Long)
 
-        fun plusCount(currentCount: HeadCountUiModel)
+        fun plusCount(currentCount: Int)
 
-        fun minusCount(currentCount: HeadCountUiModel)
+        fun minusCount(currentCount: Int)
+
+        fun completeBookingDetail(
+            movieId: Long,
+            theaterId: Long,
+            currentBookingDetail: CurrentBookingDetail,
+        )
     }
 }

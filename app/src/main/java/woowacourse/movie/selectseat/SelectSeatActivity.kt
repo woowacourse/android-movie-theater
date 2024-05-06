@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
 import woowacourse.movie.data.DummyMovies
 import woowacourse.movie.databinding.ActivitySelectSeatBinding
-import woowacourse.movie.moviereservation.uimodel.BookingInfoUiModel
+import woowacourse.movie.moviereservation.uimodel.BookingInfo
 import woowacourse.movie.reservationresult.ReservationResultActivity
 import woowacourse.movie.selectseat.uimodel.SeatUiModel
 import woowacourse.movie.selectseat.uimodel.SelectState
@@ -23,7 +23,7 @@ import woowacourse.movie.util.showErrorToastMessage
 class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
     private lateinit var presenter: SelectSeatContract.Presenter
     private lateinit var selectedSeats: SelectedSeatsUiModel
-    private lateinit var bookingInfoUiModel: BookingInfoUiModel
+    private lateinit var bookingInfoUiModel: BookingInfo
     private var state: SelectState = SelectState.NONE
 
     private lateinit var binding: ActivitySelectSeatBinding
@@ -35,7 +35,7 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         bookingInfoUiModel =
-            intent.intentParcelable(EXTRA_BOOKING_ID, BookingInfoUiModel::class.java)
+            intent.intentParcelable(EXTRA_BOOKING_ID, BookingInfo::class.java)
                 ?: error("bookingInfo에 대한 정보가 없습니다.")
         presenter = SelectSeatPresenter(this, DummyMovies)
 
@@ -65,7 +65,7 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
     }
 
     private fun initView() {
-        presenter.loadSeat(bookingInfoUiModel.screenMovieId, bookingInfoUiModel.count.count.toInt())
+        presenter.loadSeat(bookingInfoUiModel.screenMovieId, bookingInfoUiModel.count)
         presenter.loadReservationInfo(bookingInfoUiModel.screenMovieId)
         binding.state = state
     }
@@ -174,7 +174,7 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
 
         fun getIntent(
             context: Context,
-            bookingInfoUiModel: BookingInfoUiModel,
+            bookingInfoUiModel: BookingInfo,
         ): Intent {
             return Intent(context, SelectSeatActivity::class.java).apply {
                 putExtra(EXTRA_BOOKING_ID, bookingInfoUiModel)

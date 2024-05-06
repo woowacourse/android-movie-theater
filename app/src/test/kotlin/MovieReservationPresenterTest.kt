@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.data.DummyMovies
 import woowacourse.movie.moviereservation.MovieReservationContract
 import woowacourse.movie.moviereservation.MovieReservationPresenter
-import woowacourse.movie.moviereservation.uimodel.HeadCountUiModel
 
 class MovieReservationPresenterTest {
     private lateinit var view: MovieReservationContract.View
@@ -36,25 +35,21 @@ class MovieReservationPresenterTest {
     @Test
     @DisplayName("현재 예매 인원이 1일 때, 플러스 버튼을 누르면 인원이 2가 된다.")
     fun becomes_2_when_current_number_is_1_And_click_plus_button() {
-        val updatedCount = HeadCountUiModel("2")
-        every { view.updateHeadCount(updatedCount) } just Runs
+        every { view.updateHeadCount(2) } just Runs
 
-        val currentCount = HeadCountUiModel("1")
-        presenter.plusCount(currentCount)
+        presenter.plusCount(1)
 
-        verify(exactly = 1) { view.updateHeadCount(updatedCount) }
+        verify(exactly = 1) { view.updateHeadCount(2) }
     }
 
     @Test
     @DisplayName("현재 예매 인원이 2일 때, 마이너스 버튼을 누르면 인원이 1이 된다.")
     fun becomes_1_when_current_number_is_2_And_click_minus_button() {
-        val updatedCount = HeadCountUiModel("1")
-        every { view.updateHeadCount(updatedCount) } just Runs
+        every { view.updateHeadCount(1) } just Runs
 
-        val currentCount = HeadCountUiModel("2")
-        presenter.minusCount(currentCount)
+        presenter.minusCount(2)
 
-        verify(exactly = 1) { view.updateHeadCount(updatedCount) }
+        verify(exactly = 1) { view.updateHeadCount(1) }
     }
 
     @Test
@@ -62,8 +57,7 @@ class MovieReservationPresenterTest {
     fun does_not_decrease_When_current_number_is_1_And_click_minus_button() {
         every { view.showCantDecreaseError(1) } just Runs
 
-        val currentCount = HeadCountUiModel("1")
-        presenter.minusCount(currentCount)
+        presenter.minusCount(1)
 
         verify(exactly = 1) { view.showCantDecreaseError(1) }
         verify(exactly = 0) { view.updateHeadCount(any()) }

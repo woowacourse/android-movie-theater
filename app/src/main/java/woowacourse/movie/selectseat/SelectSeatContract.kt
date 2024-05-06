@@ -1,6 +1,6 @@
 package woowacourse.movie.selectseat
 
-import woowacourse.movie.moviereservation.uimodel.BookingInfoUiModel
+import woowacourse.movie.moviereservation.uimodel.BookingInfo
 import woowacourse.movie.selectseat.uimodel.SeatUiModel
 import woowacourse.movie.selectseat.uimodel.SelectState
 
@@ -31,7 +31,7 @@ interface SelectSeatContract {
 
         fun loadReservationInfo(movieId: Long)
 
-        fun completeReservation(bookingInfoUiModel: BookingInfoUiModel)
+        fun completeReservation(bookingInfoUiModel: BookingInfo)
 
         fun changeSeatState(selectedSeat: SeatUiModel)
     }
