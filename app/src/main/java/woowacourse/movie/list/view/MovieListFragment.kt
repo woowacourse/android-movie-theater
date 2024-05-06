@@ -13,6 +13,7 @@ import woowacourse.movie.list.contract.MovieListContract
 import woowacourse.movie.list.model.Advertisement
 import woowacourse.movie.list.model.Movie
 import woowacourse.movie.list.presenter.MovieListPresenter
+import woowacourse.movie.list.view.TheaterBottomSheetFragment.Companion.newFragmentInstance
 
 class MovieListFragment : Fragment(), MovieListContract.View, OnItemClickListener {
     override val presenter = MovieListPresenter(this)
@@ -50,13 +51,5 @@ class MovieListFragment : Fragment(), MovieListContract.View, OnItemClickListene
     companion object {
         const val EXTRA_MOVIE_ID_KEY = "movie_id_key"
         const val EXTRA_MOVIE_ID_KEY_TO_FRAGMENT = "movie_id_key_to_fragment"
-
-        fun newFragmentInstance(movieId: Long): TheaterBottomSheetFragment {
-            return TheaterBottomSheetFragment().apply {
-                arguments = Bundle().apply {
-                    putLong(EXTRA_MOVIE_ID_KEY_TO_FRAGMENT, movieId)
-                }
-            }
-        }
     }
 }

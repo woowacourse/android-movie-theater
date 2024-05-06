@@ -59,5 +59,13 @@ class TheaterBottomSheetFragment : BottomSheetDialogFragment(), TheaterContract.
         const val INVALID_MOVIE_ID = -99L
         const val EXTRA_MOVIE_ID_KEY = "movie_id_key"
         const val EXTRA_THEATER_ID_KEY = "theater_id_key"
+
+        fun newFragmentInstance(movieId: Long): TheaterBottomSheetFragment {
+            return TheaterBottomSheetFragment().apply {
+                arguments = Bundle().apply {
+                    putLong(EXTRA_MOVIE_ID_KEY_TO_FRAGMENT, movieId)
+                }
+            }
+        }
     }
 }
