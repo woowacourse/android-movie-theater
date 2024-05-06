@@ -27,7 +27,7 @@ class ScreenDetailActivityTest {
         ActivityScenarioRule<ScreenDetailActivity>(
             Intent(
                 ApplicationProvider.getApplicationContext(),
-                ScreenDetailActivity::class.java
+                ScreenDetailActivity::class.java,
             ).apply {
                 putExtra("screenId", 1)
             },
@@ -113,7 +113,7 @@ class ScreenDetailActivityTest {
     }
 
     @Test
-    fun `set_first_date_in_dateSpinner_and_the_date_is_2024-03-01`() {
+    fun `날짜_스피너에서_첫_번째_날짜를_선택하면_선택된_날짜는_2024-03-01이다`() {
         dateSpinner.perform(click())
         onData(anything()).atPosition(0).perform(click()); // LocalDate.of(2024, 3, 2))
 
@@ -121,7 +121,7 @@ class ScreenDetailActivityTest {
     }
 
     @Test
-    fun set_second_date_in_dateSpinner_and_check_the_first_time_is_09AM() {
+    fun `날짜_스피너에서_첫_번째_날짜를_선택하면_시간_스피너에서_첫_번째_시간은_09AM_이다`() {
         dateSpinner.perform(click())
         onData(anything()).atPosition(0).perform(click()); // LocalDate.of(2024, 3, 2))
 
@@ -129,7 +129,7 @@ class ScreenDetailActivityTest {
     }
 
     @Test
-    fun `set_second_date_in_dateSpinner_and_the_date_is_2024-03-02`() {
+    fun `날짜_스피너에서_두_번째_날짜를_선택하면_선택된_날짜는_2024-03-02`() {
         dateSpinner.perform(click())
         onData(anything()).atPosition(1).perform(click()); // LocalDate.of(2024, 3, 2))
 
@@ -137,7 +137,7 @@ class ScreenDetailActivityTest {
     }
 
     @Test
-    fun set_second_date_in_dateSpinner_and_check_the_first_time_is_10AM() {
+    fun `날짜_스피너에서_두_번째_날짜를_선택하면_시간_스피너에서_첫_번째_시간은_10AM_이다`() {
         dateSpinner.perform(click())
         onData(anything()).atPosition(1).perform(click()); // LocalDate.of(2024, 3, 2))
 
@@ -145,7 +145,7 @@ class ScreenDetailActivityTest {
     }
 
     @Test
-    fun set_second_date_in_date_spinner_keep_the_date_when_device_is_rotated() {
+    fun `날짜_스피너에서_두_번째_날짜를_선택하고_화면_회전을_해도_2024-03-02_날짜가_유지된다`() {
         dateSpinner.perform(click())
         onData(anything()).atPosition(1).perform(click()); // LocalDate.of(2024, 3, 2))
 
@@ -153,7 +153,7 @@ class ScreenDetailActivityTest {
     }
 
     @Test
-    fun set_second_time_in_time_spinner_keep_the_time_when_device_is_rotated() {
+    fun `시간_스피너에서_두_번째_날짜를_선택하고_화면_회전을_해도_11-00_시간이_유지된다`() {
         timeSpinner.perform(click())
         onData(anything()).atPosition(1).perform(click()); // LocalDate.of(2024, 3, 1))
 
