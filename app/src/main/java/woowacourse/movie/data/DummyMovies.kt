@@ -38,7 +38,7 @@ object DummyMovies : MovieRepository {
         screenMovies.firstOrNull {
             it.movie.id == movieId && it.theater.id == theaterId
         } ?: error(
-            "mola",
+            "movieId: $movieId, theaterId: $theaterId 에 해당하는 ScreeningMovie가 없습니다.",
         )
 
     override fun theatersByMovieId(movieId: Long): List<MovieTheater> =
