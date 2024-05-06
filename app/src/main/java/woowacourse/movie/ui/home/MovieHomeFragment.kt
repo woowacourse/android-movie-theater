@@ -11,6 +11,7 @@ import woowacourse.movie.databinding.FragmentMovieHomeBinding
 import woowacourse.movie.model.data.MovieContentsImpl
 import woowacourse.movie.model.movie.MovieContent
 import woowacourse.movie.ui.home.adapter.MovieContentAdapter
+import woowacourse.movie.ui.home.theater.TheaterSelectionBottomSheetFragment
 
 class MovieHomeFragment : Fragment(), MovieHomeContract.View {
     private lateinit var binding: FragmentMovieHomeBinding

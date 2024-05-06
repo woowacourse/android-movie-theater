@@ -8,7 +8,7 @@
         android:id="@+id/theater_selection_bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.home.TheaterSelectionBottomSheetFragment">
+        tools:context=".ui.home.theater.TheaterSelectionBottomSheetFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/theater_list"

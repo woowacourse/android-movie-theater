@@ -6,8 +6,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.model.data.MovieContentsImpl
 import woowacourse.movie.model.data.TheatersImpl
-import woowacourse.movie.ui.home.TheaterSelectionContract
-import woowacourse.movie.ui.home.TheaterSelectionPresenter
+import woowacourse.movie.ui.home.theater.TheaterSelectionContract
+import woowacourse.movie.ui.home.theater.TheaterSelectionPresenter
 
 class TheaterSelectionPresenterTest {
     private lateinit var view: TheaterSelectionContract.View

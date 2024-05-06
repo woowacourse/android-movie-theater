@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.home
+package woowacourse.movie.ui.home.theater
 
 import woowacourse.movie.model.data.MovieDataSource
 import woowacourse.movie.model.movie.MovieContent
