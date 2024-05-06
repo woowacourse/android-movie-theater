@@ -7,14 +7,18 @@ class ScreenPreviewUiDiffUtil : DiffUtil.ItemCallback<ScreenAd>() {
     override fun areItemsTheSame(
         oldItem: ScreenAd,
         newItem: ScreenAd,
-    ): Boolean {
-        return oldItem.equalsWith(newItem)
+    ): Boolean = when (oldItem) {
+        is ScreenAd.ScreenPreviewUi -> {
+            oldItem.id == (newItem as ScreenAd.ScreenPreviewUi).id
+        }
+
+        is ScreenAd.Advertisement -> {
+            oldItem.id == (newItem as ScreenAd.Advertisement).id
+        }
     }
 
     override fun areContentsTheSame(
         oldItem: ScreenAd,
         newItem: ScreenAd,
-    ): Boolean {
-        return oldItem.equalsWith(newItem)
-    }
+    ): Boolean = oldItem == newItem
 }
