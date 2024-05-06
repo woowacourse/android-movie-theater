@@ -56,7 +56,6 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             replace(R.id.fcv_main, fragment)
-            addToBackStack(null)
         }
     }
 }
