@@ -94,7 +94,7 @@ class SeatSelectionPresenterTest {
         val seat = dummySeat
         every { view.showTotalPrice(any()) } just runs
         every { screenRepository.loadSeatBoard(any()) } returns Result.success(dummySeatBoard)
-        presenter.updateUiModel(reservationInfo)
+        presenter.updateUiModel(reservationInfo, movieId)
 
         // when
         presenter.clickSeat(dummySeatModel)
@@ -121,7 +121,7 @@ class SeatSelectionPresenterTest {
 
         // when
         presenter.loadScreen(1)
-        presenter.updateUiModel(dummyReservationInfo)
+        presenter.updateUiModel(dummyReservationInfo, movieId)
         presenter.reserve()
 
         // then
@@ -148,7 +148,7 @@ class SeatSelectionPresenterTest {
 
         // when
         presenter.loadScreen(1)
-        presenter.updateUiModel(dummyReservationInfo)
+        presenter.updateUiModel(dummyReservationInfo, movieId)
         presenter.reserve()
 
         // then

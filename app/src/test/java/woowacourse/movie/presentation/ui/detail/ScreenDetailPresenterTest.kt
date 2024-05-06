@@ -35,7 +35,7 @@ class ScreenDetailPresenterTest {
     @Test
     fun `영화와 상영관 id로 상영 세부 정보를 찾아 뷰에 넘겨준다`() {
         // given
-        every { repository.findByScreenId(any(), any()) } returns Result.success(dummyScreen)
+        every { repository.findScreen(any(), any()) } returns Result.success(dummyScreen)
         every { view.showScreenDetail(dummyScreenDetail) } just runs
 
         // when
@@ -49,7 +49,7 @@ class ScreenDetailPresenterTest {
     fun `상영 세부 정보를 찾을 수 없으면 예외를 전달한다`() {
         // given
         val throwable: Throwable = NoSuchElementException()
-        every { repository.findByScreenId(THEATER_ID, MOVIE_ID) } returns Result.failure(throwable)
+        every { repository.findScreen(THEATER_ID, MOVIE_ID) } returns Result.failure(throwable)
         every { view.showToastMessage(e = throwable) } just runs
         every { view.back() } just runs
 

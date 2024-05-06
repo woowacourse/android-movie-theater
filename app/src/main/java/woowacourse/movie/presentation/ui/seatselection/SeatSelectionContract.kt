@@ -5,10 +5,10 @@ import woowacourse.movie.presentation.base.BaseView
 import woowacourse.movie.presentation.model.ReservationInfo
 
 interface SeatSelectionContract {
-    interface View : BaseView {
-        fun showTotalPrice(totalPrice: Int)
+    interface View : BaseView, SeatSelectionActionHandler {
+        fun showSeatModel(seatModel: SeatSelectionUiModel)
 
-        fun navigateToReservation(id: Int)
+        fun navigateToReservation(reservationId: Int)
 
         fun showReservationDialog()
 
@@ -16,20 +16,14 @@ interface SeatSelectionContract {
     }
 
     interface Presenter {
-        fun updateUiModel(reservationInfo: ReservationInfo)
-
-        fun loadScreen(
-            theaterId: Int,
+        fun updateUiModel(
+            reservationInfo: ReservationInfo,
             movieId: Int,
         )
-
-        fun loadSeatBoard(id: Int)
 
         fun clickSeat(seatModel: SeatModel)
 
         fun calculateSeat()
-
-        fun showConfirmDialog()
 
         fun reserve()
     }

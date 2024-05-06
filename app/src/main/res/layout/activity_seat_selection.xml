@@ -4,8 +4,12 @@
     <data>
 
         <variable
-            name="presenter"
-            type="woowacourse.movie.presentation.ui.seatselection.SeatSelectionPresenter" />
+            name="seatSelectionModel"
+            type="woowacourse.movie.presentation.ui.seatselection.SeatSelectionUiModel" />
+
+        <variable
+            name="handler"
+            type="woowacourse.movie.presentation.ui.seatselection.SeatSelectionActionHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -53,32 +57,32 @@
                     <include
                         android:id="@+id/first_row"
                         layout="@layout/include_seat_contents"
-                        app:list="@{presenter.seatSelectionModel.userSeat.seatModels.subList(0, 4)}"
-                        app:presenter="@{presenter}" />
+                        app:list="@{seatSelectionModel.userSeat.seatModels.subList(0, 4)}"
+                        app:handler="@{handler}" />
 
                     <include
                         android:id="@+id/second_row"
                         layout="@layout/include_seat_contents"
-                        app:list="@{presenter.seatSelectionModel.userSeat.seatModels.subList(4, 8)}"
-                        app:presenter="@{presenter}" />
+                        app:list="@{seatSelectionModel.userSeat.seatModels.subList(4, 8)}"
+                        app:handler="@{handler}" />
 
                     <include
                         android:id="@+id/third_row"
                         layout="@layout/include_seat_contents"
-                        app:list="@{presenter.seatSelectionModel.userSeat.seatModels.subList(8, 12)}"
-                        app:presenter="@{presenter}" />
+                        app:list="@{seatSelectionModel.userSeat.seatModels.subList(8, 12)}"
+                        app:handler="@{handler}" />
 
                     <include
                         android:id="@+id/fourth_row"
                         layout="@layout/include_seat_contents"
-                        app:list="@{presenter.seatSelectionModel.userSeat.seatModels.subList(12, 16)}"
-                        app:presenter="@{presenter}" />
+                        app:list="@{seatSelectionModel.userSeat.seatModels.subList(12, 16)}"
+                        app:handler="@{handler}" />
 
                     <include
                         android:id="@+id/fifth_row"
                         layout="@layout/include_seat_contents"
-                        app:list="@{presenter.seatSelectionModel.userSeat.seatModels.subList(16, 20)}"
-                        app:presenter="@{presenter}" />
+                        app:list="@{seatSelectionModel.userSeat.seatModels.subList(16, 20)}"
+                        app:handler="@{handler}" />
 
                 </TableLayout>
 
@@ -105,7 +109,7 @@
                 android:id="@+id/tv_screen_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{presenter.seatSelectionModel.screen.movie.title}"
+                android:text="@{seatSelectionModel.screen.movie.title}"
                 android:textSize="18dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -116,7 +120,7 @@
 
             <TextView
                 android:id="@+id/tv_screen_total_price"
-                bindFormatPrice="@{presenter.seatSelectionModel.totalPrice}"
+                bindFormatPrice="@{seatSelectionModel.totalPrice}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18dp"
@@ -135,9 +139,9 @@
             android:layout_height="78dp"
             android:background="@color/purple"
             android:gravity="center"
-            android:onClick="@{() -> presenter.showConfirmDialog()}"
+            android:onClick="@{() -> handler.onReservationButtonClicked()}"
+            bindChangeEnabled="@{seatSelectionModel}"
             android:text="@string/done"
-            bindChangeEnabled="@{presenter.seatSelectionModel}"
             android:textColor="@color/white"
             android:textSize="18dp"
             android:textStyle="bold"

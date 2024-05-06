@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
+import woowacourse.movie.domain.model.SeatModel
 import woowacourse.movie.domain.repository.DummyReservation
 import woowacourse.movie.domain.repository.DummyScreens
 import woowacourse.movie.presentation.base.BaseActivity
@@ -25,7 +26,7 @@ class SeatSelectionActivity : BaseActivity<ActivitySeatSelectionBinding>(), View
     }
 
     override fun initStartView() {
-        binding.presenter = presenter
+        binding.handler = this
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val reservationInfo =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -39,35 +40,40 @@ class SeatSelectionActivity : BaseActivity<ActivitySeatSelectionBinding>(), View
         val movieId = intent.getIntExtra(PUT_EXTRA_KEY_MOVIE_ID, -1)
 
         reservationInfo?.let { reservationInfoItem ->
-            presenter.updateUiModel(reservationInfoItem)
-            presenter.loadScreen(reservationInfoItem.theaterId, movieId)
-            presenter.loadSeatBoard(reservationInfoItem.theaterId)
+            presenter.updateUiModel(reservationInfoItem, movieId)
         }
     }
 
-    override fun showTotalPrice(totalPrice: Int) {
-        binding.invalidateAll()
+    override fun showSeatModel(seatModel: SeatSelectionUiModel) {
+        binding.seatSelectionModel = seatModel
+    }
+
+    override fun onSeatClicked(seatModel: SeatModel) {
+        presenter.clickSeat(seatModel)
+    }
+
+    override fun onReservationButtonClicked() {
+        showReservationDialog()
     }
 
     override fun showReservationDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle(getString(R.string.dialog_reservation_title))
-        builder.setMessage(getString(R.string.dialog_reservation_message))
-        builder.setCancelable(false)
-
-        builder.setPositiveButton(getString(R.string.reservation_done)) { _, _ ->
-            presenter.reserve()
+        with(builder) {
+            setCancelable(false)
+            setTitle(getString(R.string.dialog_reservation_title))
+            setMessage(getString(R.string.dialog_reservation_message))
+            setPositiveButton(getString(R.string.reservation_done)) { _, _ ->
+                presenter.reserve()
+            }
+            setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            show()
         }
-
-        builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
-            dialog.dismiss()
-        }
-
-        builder.show()
     }
 
-    override fun navigateToReservation(id: Int) {
-        ReservationActivity.startActivity(this, id)
+    override fun navigateToReservation(reservationId: Int) {
+        ReservationActivity.startActivity(this, reservationId)
         back()
     }
 

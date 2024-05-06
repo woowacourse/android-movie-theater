@@ -31,7 +31,7 @@ fun TextView.formatPrice(price: Int) {
 
 @BindingAdapter("bindChangeEnabled")
 fun Button.changeEnabled(seatSelectionModel: SeatSelectionUiModel) {
-    this.isEnabled = seatSelectionModel.userSeat.seatModels.filter { it.isSelected }.size == seatSelectionModel.ticketCount
+    this.isEnabled = seatSelectionModel.userSeat.seatModels.filter { it.isSelected }.size == seatSelectionModel.ticketQuantity
 }
 
 @BindingAdapter("bindShowSeat")
