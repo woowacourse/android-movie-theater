@@ -7,8 +7,7 @@
             type="woowacourse.movie.view.setting.SettingFragment" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
         android:background="@color/white"
         android:layout_width="match_parent"
@@ -38,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
             </TextView>
-            <Switch
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch_button"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

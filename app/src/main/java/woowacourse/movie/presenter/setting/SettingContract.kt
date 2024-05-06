@@ -8,7 +8,5 @@ interface SettingContract {
 
     interface Presenter{
         fun loadSavedSetting(isPushSetting: Boolean)
-
-        fun saveSetting(isPushSetting: Boolean)
     }
 }
