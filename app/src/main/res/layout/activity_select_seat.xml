@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:custom ="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <import type="android.view.View" />
-        <import type="woowacourse.movie.selectseat.uimodel.SelectState"/>
+
+        <import type="woowacourse.movie.selectseat.uimodel.SelectState" />
+
         <variable
             name="state"
             type="woowacourse.movie.selectseat.uimodel.SelectState" />
+
+        <variable
+            name="selectedSeats"
+            type="woowacourse.movie.selectseat.uimodel.SelectedSeatsUiModel" />
 
     </data>
 
@@ -113,14 +118,14 @@
             android:id="@+id/tv_select_seat_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility='@{state == SelectState.NONE || state == SelectState.SUCCESS ? View.GONE : View.VISIBLE}'
-            app:layout_constraintTop_toBottomOf="@id/tl_select_seat"
-            tools:text="좌석을 더 선택해주세요."
-            android:text="@{state == SelectState.EXCEED ? @string/select_more_seat_error_message: @string/select_less_seat_error_message}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="20dp"
-            android:textColor="@color/red"/>
+            android:text="@{state == SelectState.EXCEED ? @string/select_more_seat_error_message: @string/select_less_seat_error_message}"
+            android:textColor="@color/red"
+            android:visibility='@{state == SelectState.NONE || state == SelectState.SUCCESS ? View.GONE : View.VISIBLE}'
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tl_select_seat"
+            tools:text="좌석을 더 선택해주세요." />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -156,12 +161,12 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_select_seat_title"
                 tools:text="0원" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <Button
                 android:id="@+id/btn_select_seat_reserve"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:backgroundTint="@drawable/sel_reserve_btn"
-                android:enabled="false"
+                android:enabled="@{!selectedSeats.seats.empty}"
                 android:fontFamily="@font/roboto_bold"
                 android:text="확인"
                 android:textColor="@color/white"

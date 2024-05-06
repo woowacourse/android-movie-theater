@@ -63,7 +63,6 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
                 presenter.changeSeatState(it)
             }
         }
-        binding.btnSelectSeatReserve.isEnabled = this.selectedSeats.seats.isNotEmpty()
     }
 
     private fun initView() {
@@ -87,7 +86,6 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
             seatView.text = seatUiModel.showPosition
             seatView.setOnClickListener {
                 presenter.changeSeatState(seatUiModel)
-                binding.btnSelectSeatReserve.isEnabled = selectedSeats.seats.isNotEmpty()
             }
         }
     }
@@ -110,6 +108,7 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
     ) {
         this.selectedSeats = SelectedSeatsUiModel(selectedSeats)
         state = selectState
+        binding.selectedSeats = this.selectedSeats
         binding.state = state
     }
 
