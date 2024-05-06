@@ -11,3 +11,18 @@ data class Ticket(
     val screeningDateTime: ScreeningDateTime,
     val amount: Int,
 ) : Serializable
+
+fun Ticket.toReservationTicket(
+    movieTitle: String,
+    theaterName: String,
+): ReservationTicket {
+    return ReservationTicket(
+        theaterId = theaterId,
+        movieId = movieId,
+        theaterName = theaterName,
+        movieTitle = movieTitle,
+        seats = seats,
+        amount = amount,
+        screeningDateTime = screeningDateTime
+    )
+}
