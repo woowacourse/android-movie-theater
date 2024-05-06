@@ -34,7 +34,7 @@ class SeatSelectionPresenterTest {
                 TheaterDao(),
                 movieId = 0,
                 theaterId = 0,
-                HeadCount(3),
+                HeadCount(4),
                 ScreeningDateTime("", ""),
             )
         with(presenter) {
@@ -59,13 +59,6 @@ class SeatSelectionPresenterTest {
     }
 
     @Test
-    fun `총 결제 금액을 보여준다`() {
-        every { view.showAmount(any()) } just runs
-        presenter.updateTotalPrice(true, Seat('E', 1, Grade.A))
-        verify { view.showAmount(37_000) }
-    }
-
-    @Test
     fun `확인 버튼을 누르면 예매 진행 여부를 묻는 다이얼로그를 띄운다 `() {
         every { view.launchReservationConfirmDialog() } just runs
         presenter.requestReservationConfirm()
@@ -84,7 +77,18 @@ class SeatSelectionPresenterTest {
         every { view.setConfirmButtonEnabled(any()) } just runs
         every { view.showAmount(37_000) } just runs
         presenter.restoreReservation()
-        verify { view.setConfirmButtonEnabled(any()) }
+        verify { view.setConfirmButtonEnabled(false) }
         verify { view.showAmount(37_000) }
+    }
+
+    @Test
+    fun `좌석 선택 시 좌석 선택 상태, 현재 금액, 확인 버튼 상태를 업데이트한다`() {
+        every { view.updateSeatSelectedState(any(), any()) } just runs
+        every { view.showAmount(49_000) } just runs
+        every { view.setConfirmButtonEnabled(any()) } just runs
+        presenter.updateReservationState(Seat('E', 2, Grade.A), 0, false)
+        verify { view.updateSeatSelectedState(0, false) }
+        verify { view.showAmount(49_000) }
+        verify { view.setConfirmButtonEnabled(true) }
     }
 }

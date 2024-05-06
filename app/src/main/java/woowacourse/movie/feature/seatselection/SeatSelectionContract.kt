@@ -17,10 +17,7 @@ interface SeatSelectionContract {
 
         fun loadMovie()
 
-        fun updateTotalPrice(
-            isSelected: Boolean,
-            seat: Seat,
-        )
+        fun updateTotalPrice()
 
         fun requestReservationConfirm()
 
@@ -44,6 +41,12 @@ interface SeatSelectionContract {
         fun deliverReservationInfo(onReservationDataSave: OnReservationDataSave)
 
         fun handleUndeliveredData()
+
+        fun updateReservationState(
+            seat: Seat,
+            index: Int,
+            isSelected: Boolean,
+        )
     }
 
     interface View {
@@ -77,8 +80,6 @@ interface SeatSelectionContract {
         fun navigateToFinished(ticket: Ticket)
 
         fun restoreSelectedSeats(selectedSeats: List<Int>)
-
-        fun showErrorToast()
 
         fun showErrorSnackBar()
     }

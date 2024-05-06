@@ -32,7 +32,6 @@ import woowacourse.movie.model.ticket.Ticket
 import woowacourse.movie.utils.MovieUtils.bundleSerializable
 import woowacourse.movie.utils.MovieUtils.convertAmountFormat
 import woowacourse.movie.utils.MovieUtils.intentSerializable
-import woowacourse.movie.utils.MovieUtils.makeToast
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private val binding: ActivitySeatSelectionBinding by lazy { DataBindingUtil.setContentView(this, R.layout.activity_seat_selection) }
@@ -103,12 +102,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         seat: Seat,
     ) {
         setOnClickListener {
-            if (getSeatsCount() < headCount.count || isSelected) {
-                updateSeatSelectedState(index, isSelected)
-                presenter.manageSelectedSeats(isSelected, index, seat)
-                presenter.updateTotalPrice(isSelected, seat)
-                presenter.validateReservationAvailable()
-            }
+            presenter.updateReservationState(seat, index, isSelected)
         }
     }
 
@@ -160,8 +154,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 .show()
         }
     }
-
-    override fun showErrorToast() = makeToast(this, getString(R.string.all_error))
 
     override fun showErrorSnackBar() {
         val snackBar =
@@ -215,8 +207,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private fun collectSeatsInTableLayout(): List<Button> =
         binding.tableLayoutSeatSelection.children.filterIsInstance<TableRow>().flatMap { it.children }
             .filterIsInstance<Button>().toList()
-
-    private fun getSeatsCount(): Int = seatsTable.count { seat -> seat.isSelected }
 
     private fun restoreReservationData(bundle: Bundle) {
         headCount = bundle.bundleSerializable(HEAD_COUNT, HeadCount::class.java) ?: HeadCount(0)

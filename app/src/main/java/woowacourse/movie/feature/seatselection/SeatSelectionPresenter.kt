@@ -48,17 +48,6 @@ class SeatSelectionPresenter(
         view.showMovieTitle(movie)
     }
 
-    override fun manageSelectedSeats(
-        isSelected: Boolean,
-        index: Int,
-        seat: Seat,
-    ) {
-        seats.apply {
-            manageSelectedIndex(isSelected, index)
-            manageSelected(isSelected, seat)
-        }
-    }
-
     override fun makeTicket(screeningDateTime: ScreeningDateTime) {
         val theaterName = theaterDao.find(theaterId).name
         val ticket =
@@ -72,21 +61,8 @@ class SeatSelectionPresenter(
         view.navigateToFinished(ticket)
     }
 
-    override fun updateTotalPrice(
-        isSelected: Boolean,
-        seat: Seat,
-    ) {
-        val totalPrice = seats.calculateAmount()
-        view.showAmount(totalPrice)
-    }
-
     override fun requestReservationConfirm() {
         view.launchReservationConfirmDialog()
-    }
-
-    override fun validateReservationAvailable() {
-        val isReservationAvailable = seats.seats.size >= headCount.count
-        view.setConfirmButtonEnabled(isReservationAvailable)
     }
 
     override fun deliverReservationInfo(onReservationDataSave: OnReservationDataSave) {
@@ -101,5 +77,39 @@ class SeatSelectionPresenter(
         ) {
             view.showErrorSnackBar()
         }
+    }
+
+    override fun updateReservationState(
+        seat: Seat,
+        index: Int,
+        isSelected: Boolean,
+    ) {
+        if (seats.seats.size < headCount.count || isSelected) {
+            view.updateSeatSelectedState(index, isSelected)
+            manageSelectedSeats(!isSelected, index, seat)
+            updateTotalPrice()
+            validateReservationAvailable()
+        }
+    }
+
+    override fun manageSelectedSeats(
+        isSelected: Boolean,
+        index: Int,
+        seat: Seat,
+    ) {
+        seats.apply {
+            manageSelectedIndex(isSelected, index)
+            manageSelected(isSelected, seat)
+        }
+    }
+
+    override fun updateTotalPrice() {
+        val totalPrice = seats.calculateAmount()
+        view.showAmount(totalPrice)
+    }
+
+    override fun validateReservationAvailable() {
+        val isReservationAvailable = seats.seats.size >= headCount.count
+        view.setConfirmButtonEnabled(isReservationAvailable)
     }
 }
