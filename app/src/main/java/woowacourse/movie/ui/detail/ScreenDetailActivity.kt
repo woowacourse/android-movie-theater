@@ -119,14 +119,23 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
         selectDateListener: SelectDateListener,
         selectTimeListener: SelectTimeListener,
     ) {
-        dateTimeSpinnerView.show(dateRange, screenTimePolicy, selectDateListener, selectTimeListener)
+        dateTimeSpinnerView.show(
+            dateRange,
+            screenTimePolicy,
+            selectDateListener,
+            selectTimeListener,
+        )
     }
 
     override fun navigateToSeatsReservation(
         timeReservationId: Int,
         theaterId: Int,
     ) {
-        SeatReservationActivity.startActivity(context = this, timeReservationId = timeReservationId, theaterId = theaterId)
+        SeatReservationActivity.startActivity(
+            context = this,
+            timeReservationId = timeReservationId,
+            theaterId = theaterId,
+        )
     }
 
     override fun goToBack(e: Throwable) {
@@ -141,15 +150,26 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
 
     override fun showToastMessage(e: Throwable) {
         when (e) {
-            is NoSuchElementException -> Toast.makeText(this, "해당하는 상영 정보가 없습니다!!", Toast.LENGTH_SHORT).show()
-            is IllegalArgumentException ->
+            is NoSuchElementException ->
                 Toast.makeText(
                     this,
-                    "티켓 수량은 ${Ticket.MIN_TICKET_COUNT}~${Ticket.MAX_TICKET_COUNT} 사이어야 합니다!!",
+                    R.string.NO_SHOWTIME_INFORMATION,
                     Toast.LENGTH_SHORT,
                 ).show()
 
-            else -> Toast.makeText(this, "예상치 못한 에러가 발생했습니다!!", Toast.LENGTH_SHORT).show()
+            is IllegalArgumentException ->
+                Toast.makeText(
+                    this,
+                    getString(R.string.UNEXPECTED_ERROR_OCCURRED).format(
+                        Ticket.MIN_TICKET_COUNT,
+                        Ticket.MAX_TICKET_COUNT,
+                    ),
+                    Toast.LENGTH_SHORT,
+                ).show()
+
+            else ->
+                Toast.makeText(this, R.string.UNEXPECTED_ERROR_OCCURRED, Toast.LENGTH_SHORT)
+                    .show()
         }
     }
 
@@ -158,19 +178,26 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
             is NoSuchElementException ->
                 Snackbar.make(
                     findViewById(android.R.id.content),
-                    "해당하는 상영 정보가 없습니다!!",
+                    R.string.NO_SHOWTIME_INFORMATION,
                     Snackbar.LENGTH_SHORT,
                 ).show()
 
             is IllegalArgumentException ->
                 Snackbar.make(
                     findViewById(android.R.id.content),
-                    "티켓 수량은 ${Ticket.MIN_TICKET_COUNT}~${Ticket.MAX_TICKET_COUNT} 사이어야 합니다!!",
+                    getString(R.string.UNEXPECTED_ERROR_OCCURRED).format(
+                        Ticket.MIN_TICKET_COUNT,
+                        Ticket.MAX_TICKET_COUNT,
+                    ),
                     Toast.LENGTH_SHORT,
                 ).show()
 
             else ->
-                Snackbar.make(findViewById(android.R.id.content), "예상치 못한 에러가 발생했습니다!!", Snackbar.LENGTH_SHORT)
+                Snackbar.make(
+                    findViewById(android.R.id.content),
+                    R.string.UNEXPECTED_ERROR_OCCURRED,
+                    Snackbar.LENGTH_SHORT,
+                )
                     .show()
         }
     }
