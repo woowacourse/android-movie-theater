@@ -16,10 +16,10 @@ import woowacourse.movie.feature.theater.TheaterSelectionFragment
 import woowacourse.movie.model.advertisement.Advertisement
 import woowacourse.movie.model.movie.Movie
 
-class HomeFragment : Fragment(), ReservationHomeContract.View {
+class HomeFragment : Fragment(), HomeContract.View {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private val presenter = ReservationHomePresenter(this, ScreeningDao(), AdvertisementDao())
+    private val presenter = HomePresenter(this, ScreeningDao(), AdvertisementDao())
 
     override fun onCreateView(
         inflater: LayoutInflater,

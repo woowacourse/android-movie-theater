@@ -3,7 +3,7 @@ package woowacourse.movie.feature.home
 import woowacourse.movie.model.advertisement.Advertisement
 import woowacourse.movie.model.movie.Movie
 
-interface ReservationHomeContract {
+interface HomeContract {
     interface View {
         fun showMovieCatalog(
             movies: List<Movie>,

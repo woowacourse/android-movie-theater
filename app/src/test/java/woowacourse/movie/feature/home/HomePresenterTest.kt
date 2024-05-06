@@ -15,14 +15,14 @@ import woowacourse.movie.db.advertisement.AdvertisementDao
 import woowacourse.movie.db.screening.ScreeningDao
 
 @ExtendWith(MockKExtension::class)
-class ReservationHomePresenterTest {
+class HomePresenterTest {
     @MockK
-    private lateinit var view: ReservationHomeContract.View
-    private lateinit var presenter: ReservationHomeContract.Presenter
+    private lateinit var view: HomeContract.View
+    private lateinit var presenter: HomeContract.Presenter
 
     @BeforeEach
     fun setUp() {
-        presenter = ReservationHomePresenter(view, ScreeningDao(), AdvertisementDao())
+        presenter = HomePresenter(view, ScreeningDao(), AdvertisementDao())
     }
 
     @Test
