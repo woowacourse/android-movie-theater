@@ -3,6 +3,7 @@ package woowacourse.movie.ui.seat
 import android.view.View
 import woowacourse.movie.domain.model.Position
 import woowacourse.movie.domain.model.Screen
+import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.TimeReservation
 import woowacourse.movie.domain.repository.ReservationRepository
@@ -46,25 +47,48 @@ class SeatReservationPresenter(
         seatView: View,
     ) {
         val seat = loadedAllSeats.findSeat(position)
-        if (selectedSeats.seats.contains(seat)) {
-            seatView.isSelected = !seatView.isSelected
-            selectedSeats = selectedSeats.remove(seat)
-        } else {
-            if (selectedSeats.seats.size >= ticketCount) {
+
+        if (toggleSeatSelection(seat, seatView)) {
+            view.activateReservation(selectedSeats.count() == ticketCount)
+            view.updateTotalPrice(selectedSeats.totalPrice())
+        }
+    }
+
+    private fun toggleSeatSelection(
+        seat: Seat,
+        seatView: View,
+    ): Boolean =
+        when {
+            selectedSeats.seats.contains(seat) -> {
+                deselectSeat(seatView, seat)
+                true
+            }
+
+            selectedSeats.seats.size < ticketCount -> {
+                selectSeat(seatView, seat)
+                true
+            }
+
+            else -> {
                 view.showToast(IllegalArgumentException("exceed ticket count that can be reserved."))
-            } else {
-                seatView.isSelected = !seatView.isSelected
-                selectedSeats = selectedSeats.add(seat)
+                false
             }
         }
 
-        if (selectedSeats.count() == ticketCount) {
-            view.activateReservation(true)
-        } else {
-            view.activateReservation(false)
-        }
+    private fun selectSeat(
+        seatView: View,
+        seat: Seat,
+    ) {
+        seatView.isSelected = true
+        selectedSeats = selectedSeats.add(seat)
+    }
 
-        view.updateTotalPrice(selectedSeats.totalPrice())
+    private fun deselectSeat(
+        seatView: View,
+        seat: Seat,
+    ) {
+        seatView.isSelected = false
+        selectedSeats = selectedSeats.remove(seat)
     }
 
     override fun reserve(theaterId: Int) {
