@@ -25,7 +25,10 @@ class ScreenDetailActivityTest {
     @get:Rule
     val activityRule: ActivityScenarioRule<ScreenDetailActivity> =
         ActivityScenarioRule<ScreenDetailActivity>(
-            Intent(ApplicationProvider.getApplicationContext(), ScreenDetailActivity::class.java).apply {
+            Intent(
+                ApplicationProvider.getApplicationContext(),
+                ScreenDetailActivity::class.java
+            ).apply {
                 putExtra("screenId", 1)
             },
         )
@@ -69,17 +72,9 @@ class ScreenDetailActivityTest {
     }
 
     @Test
-    fun `카운트가_10일_때_마이너스_버튼_누르면_증가하지_않는다`() {
+    fun `카운트가_10일_때_플러스_버튼_누르면_증가하지_않는다`() {
         // given - 카운트가 1 -> 10 일 때
-        plusBtn.perform(click())
-        plusBtn.perform(click())
-        plusBtn.perform(click())
-        plusBtn.perform(click())
-        plusBtn.perform(click())
-        plusBtn.perform(click())
-        plusBtn.perform(click())
-        plusBtn.perform(click())
-        plusBtn.perform(click())
+        clickPlusButtonMultipleTimes(9)
 
         // when
         plusBtn.perform(click())
@@ -163,5 +158,11 @@ class ScreenDetailActivityTest {
         onData(anything()).atPosition(1).perform(click()); // LocalDate.of(2024, 3, 1))
 
         timeSpinner.check(matches(withSpinnerText(containsString("11:00"))))
+    }
+
+    private fun clickPlusButtonMultipleTimes(attempts: Int) {
+        repeat(attempts) {
+            plusBtn.perform(click())
+        }
     }
 }
