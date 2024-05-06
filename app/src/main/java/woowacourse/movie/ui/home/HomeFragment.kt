@@ -73,7 +73,7 @@ class HomeFragment : Fragment(), HomeContract.View {
         val theaterBottomSheet = TheaterBottomSheet(theaterAdapter)
 
         theaterAdapter.submitList(theaters.theaters)
-        theaterBottomSheet.show(parentFragmentManager, "theaterBottomSheet")
+        theaterBottomSheet.show(childFragmentManager, "theaterBottomSheet")
     }
 
     override fun onDestroyView() {
