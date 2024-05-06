@@ -1,6 +1,7 @@
 package woowacourse.movie.feature.theater
 
 import woowacourse.movie.db.theater.TheaterDao
+import woowacourse.movie.model.movie.Movie.Companion.DEFAULT_MOVIE_ID
 
 class TheaterSelectionPresenter(
     private val view: TheaterSelectionContract.View,
@@ -18,5 +19,9 @@ class TheaterSelectionPresenter(
 
     override fun sendTheaterInfoToReservation(theaterId: Int) {
         view.navigateToReservation(movieId, theaterId)
+    }
+
+    override fun handleUndeliveredMovieId() {
+        if (movieId == DEFAULT_MOVIE_ID) view.showErrorSnackBar()
     }
 }
