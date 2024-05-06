@@ -16,6 +16,8 @@ object DummyMovieRepository : MovieRepository {
             Screening.STUB_A,
             Screening.STUB_B,
             Screening.STUB_C,
+            Screening.STUB_D,
+            Screening.STUB_E,
         )
 
     private val theaters: List<Theater> =

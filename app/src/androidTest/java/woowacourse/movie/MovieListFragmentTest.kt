@@ -39,7 +39,7 @@ class MovieListFragmentTest {
 
             val movies =
                 listOf(
-                    Movie.STUB,
+                    Movie.STUB_A,
                 ).map { it.toMovieUiModel() }
 
             val advertisements: List<AdvertisementUiModel> =
