@@ -4,8 +4,12 @@
     <data>
 
         <variable
-            name="ticket"
-            type="woowacourse.movie.model.ticket.Ticket" />
+            name="reservationTicket"
+            type="woowacourse.movie.model.ticket.ReservationTicket" />
+        
+        <variable
+            name="ticketCatalog"
+            type="woowacourse.movie.view.history.adapter.viewholder.TicketViewHolder" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -15,14 +19,15 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="12dp"
         android:paddingTop="12dp"
+        android:onClick="@{() -> ticketCatalog.onClickTicket(reservationTicket)}"
         android:paddingBottom="13dp">
-        <!--        android:onClick="@{() -> theater_view_holder.onClickTheater(theater.theaterId)}"-->
 
         <TextView
             android:id="@+id/ticket_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
+            android:text="@{reservationTicket.screeningDateTime.date}"
             android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@id/bar_with_date_time"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,6 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
+            android:text="@{reservationTicket.screeningDateTime.time}"
             android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@id/bar_with_time_theater"
             app:layout_constraintStart_toEndOf="@id/bar_with_date_time"
@@ -70,6 +76,7 @@
             android:layout_marginStart="4dp"
             android:textColor="@color/black"
             android:textSize="12sp"
+            android:text="@{reservationTicket.theaterName}"
             app:layout_constraintStart_toEndOf="@id/bar_with_time_theater"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="선릉 극장" />
@@ -81,6 +88,7 @@
             android:layout_marginTop="6dp"
             android:textColor="@color/black"
             android:textSize="16sp"
+            android:text="@{reservationTicket.movieTitle}"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ticket_date"
