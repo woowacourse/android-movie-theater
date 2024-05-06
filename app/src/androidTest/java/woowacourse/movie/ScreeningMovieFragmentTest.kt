@@ -92,7 +92,7 @@ class ScreeningMovieFragmentTest {
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     4,
-                    checkChildViewWithId(R.id.tv_movie_title, "해리 포터와 아즈카반의 죄수"),
+                    checkChildViewWithId(R.id.tv_movie_title, screenMovieUiModel3.title),
                 ),
             )
     }
