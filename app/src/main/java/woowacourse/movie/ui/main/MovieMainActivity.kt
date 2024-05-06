@@ -24,14 +24,16 @@ class MovieMainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_main)
 
+        if (savedInstanceState == null) {
+            replace(homeFragment)
+            binding.mainBottomNavigation.selectedItemId = R.id.menu_home
+        }
+
         initializeBottomNavigation()
     }
 
     private fun initializeBottomNavigation() {
-        replace(homeFragment)
-
         binding.mainBottomNavigation.apply {
-            selectedItemId = R.id.menu_home
             setOnItemSelectedListener { menuItem ->
                 when (menuItem.itemId) {
                     R.id.menu_booking_history -> replace(bookingHistoryFragment)
