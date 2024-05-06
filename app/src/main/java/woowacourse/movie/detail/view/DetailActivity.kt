@@ -104,14 +104,8 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
     }
 
     override fun setMovieView(info: Movie) {
-        val formattedScreeningDate =
-            info.firstScreeningDate.format(DateTimeFormatter.ofPattern(DATE_PATTERN))
-
-        binding.movieDetailTitle.text = info.title
-        binding.movieDetailScreeningDate.text = formattedScreeningDate
-        binding.movieDetailRunningTime.text = info.runningTime.toString()
-        binding.movieDetailDescription.text = info.description
-        binding.movieDetailPoster.setImageResource(info.posterResourceId)
+        binding.movie = info
+        binding.executePendingBindings()
     }
 
     override fun showToast(message: String) {
