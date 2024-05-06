@@ -53,7 +53,7 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
             TheaterSelectionAdapter { theaterId ->
                 presenter.sendTheaterInfoToReservation(theaterId)
             }
-        binding.recyclerViewTheaterSelection.adapter = theaterSelectionAdapter
+        binding.rvTheaterSelection.adapter = theaterSelectionAdapter
         theaterSelectionAdapter.updateData(theaters, screeningCounts)
     }
 

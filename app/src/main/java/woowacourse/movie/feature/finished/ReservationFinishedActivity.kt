@@ -27,7 +27,7 @@ class ReservationFinishedActivity : AppCompatActivity(), ReservationFinishedCont
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.activitiy = this
+        binding.activity = this
         handleBackPressed()
         initPresenter()
         with(presenter) {

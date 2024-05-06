@@ -205,7 +205,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         ) ?: ScreeningDateTime("", "")
 
     private fun collectSeatsInTableLayout(): List<Button> =
-        binding.tableLayoutSeatSelection.children.filterIsInstance<TableRow>().flatMap { it.children }
+        binding.tlSeatSelection.children.filterIsInstance<TableRow>().flatMap { it.children }
             .filterIsInstance<Button>().toList()
 
     private fun restoreReservationData(bundle: Bundle) {

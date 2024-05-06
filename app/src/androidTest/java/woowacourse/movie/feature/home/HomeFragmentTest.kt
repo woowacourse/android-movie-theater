@@ -29,12 +29,12 @@ class HomeFragmentTest {
 
     @Test
     fun `영화_목록을_보여준다`() {
-        onView(withId(R.id.recycler_view_home)).check(matches(isDisplayed()))
+        onView(withId(R.id.rv_home)).check(matches(isDisplayed()))
     }
 
     @Test
     fun `영화_목록을_3번째_아이템으로_스크롤_했을_시_영화가_보여진다`() {
-        onView(withId(R.id.recycler_view_home))
+        onView(withId(R.id.rv_home))
             .perform(
                 RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(THIRD_ITEM_POSITION),
             ).check(
@@ -46,7 +46,7 @@ class HomeFragmentTest {
 
     @Test
     fun `영화_목록을_4번째_아이템으로_스크롤_했을_시_광고가_보여진다`() {
-        onView(withId(R.id.recycler_view_home))
+        onView(withId(R.id.rv_home))
             .perform(
                 RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(FOURTH_ITEM_POSITION),
             ).check(
@@ -61,7 +61,7 @@ class HomeFragmentTest {
 
     @Test
     fun `영화_목록을_스크롤했을_때_첫_번째_위치의_AdvertisementViewHolder는_광고_이미지를_보여준다`() {
-        onView(withId(R.id.recycler_view_home))
+        onView(withId(R.id.rv_home))
             .perform(
                 RecyclerViewActions.scrollToHolder(
                     instanceOf(AdvertisementViewHolder::class.java),

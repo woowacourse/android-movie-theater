@@ -46,7 +46,7 @@ class HomeFragment : Fragment(), ReservationHomeContract.View {
             MovieCatalogAdapter { movieId ->
                 presenter.sendMovieIdToTheaterSelection(movieId)
             }
-        binding.recyclerViewHome.adapter = movieCatalogAdapter
+        binding.rvHome.adapter = movieCatalogAdapter
         movieCatalogAdapter.updateData(movies, advertisements)
     }
 

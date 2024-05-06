@@ -10,7 +10,7 @@
     </data>
 
     <androidx.recyclerview.widget.RecyclerView xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/recycler_view_theater_selection"
+        android:id="@+id/rv_theater_selection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

@@ -30,12 +30,12 @@ class TheaterSelectionFragmentTest {
 
     @Test
     fun `극장_목록을_보여준다`() {
-        onView(withId(R.id.recycler_view_theater_selection)).check(matches(isDisplayed()))
+        onView(withId(R.id.rv_theater_selection)).check(matches(isDisplayed()))
     }
 
     @Test
     fun `극장_목록을_스크롤했을_때_첫_번째_위치의_TheaterSelectionViewHolder는_극장_이름을_보여준다`() {
-        onView(withId(R.id.recycler_view_theater_selection)).perform(
+        onView(withId(R.id.rv_theater_selection)).perform(
             RecyclerViewActions.scrollToHolder(
                 instanceOf(TheaterSelectionViewHolder::class.java),
             ).atPosition(FIRST_ITEM_POSITION),
@@ -46,7 +46,7 @@ class TheaterSelectionFragmentTest {
 
     @Test
     fun `극장_목록을_스크롤했을_때_첫_번째_위치의_TheaterSelectionViewHolder는_극장_시간을_보여준다`() {
-        onView(withId(R.id.recycler_view_theater_selection)).perform(
+        onView(withId(R.id.rv_theater_selection)).perform(
             RecyclerViewActions.scrollToHolder(
                 instanceOf(TheaterSelectionViewHolder::class.java),
             ).atPosition(FIRST_ITEM_POSITION),
