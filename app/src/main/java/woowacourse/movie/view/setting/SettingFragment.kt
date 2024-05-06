@@ -8,10 +8,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentSettingBinding
+import woowacourse.movie.presenter.setting.SettingContract
 
-class SettingFragment : Fragment() {
-    private var _binding : FragmentSettingBinding?= null
-    private val binding : FragmentSettingBinding get() = _binding!!
+class SettingFragment : Fragment(), SettingContract.View {
+    private var _binding: FragmentSettingBinding? = null
+    private val binding: FragmentSettingBinding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,8 +23,16 @@ class SettingFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun showSavedSetting(isPushSetting: Boolean) {
+        TODO("Not yet implemented")
     }
 }
