@@ -16,23 +16,35 @@ class HomePresenter(
     private val theaterRepository: TheaterRepository = DummyTheaters(),
 ) : HomeContract.Presenter {
     override fun loadScreen() {
-        val screens =
+        val screenPreviewUis =
             screenRepository.load()
                 .map { screen -> screen.toPreviewUI(image = movieRepository.imageSrc(screen.movie.id)) }.toMutableList()
 
-        val ad = adRepository.load()
+        val advertisement = adRepository.load()
 
-        val list = mutableListOf<ScreenAd>()
+        val screenAdList = generatedScreenAdList(screenPreviewUis, advertisement)
+        view.showScreens(screenAdList)
+    }
 
-        (1..screens.size + screens.size / 3).map {
-            if (it % 4 == 0) {
-                list.add(ad)
+    private fun generatedScreenAdList(
+        screenPreviewUis: MutableList<ScreenAd.ScreenPreviewUi>,
+        advertisement: ScreenAd.Advertisement
+    ): MutableList<ScreenAd> {
+        val totalItems = screenPreviewUis.size + screenPreviewUis.size / 3
+        val screenAdList = mutableListOf<ScreenAd>()
+
+        (0 until totalItems).mapIndexed { index: Int, _ ->
+            if ((index + 1) % 4 == 0) {
+                screenAdList.add(advertisement)
             } else {
-                list.add(screens.removeFirst())
+                val screenIndex = index - index / 4
+                if (screenIndex < screenPreviewUis.size) {
+                    screenAdList.add(screenPreviewUis[screenIndex])
+                } else {
+                }
             }
         }
-
-        view.showScreens(list.toList())
+        return screenAdList
     }
 
     override fun loadTheaters(screenId: Int) {
