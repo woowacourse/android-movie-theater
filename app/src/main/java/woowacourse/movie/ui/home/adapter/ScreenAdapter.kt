@@ -3,7 +3,6 @@ package woowacourse.movie.ui.home.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.HolderAdvertisementBinding
 import woowacourse.movie.databinding.HolderScreenBinding
 import woowacourse.movie.domain.model.ScreenAd
@@ -12,52 +11,38 @@ import woowacourse.movie.domain.model.ScreenType
 class ScreenAdapter(
     private val onScreenClick: (id: Int) -> Unit,
     private val onAdClick: (id: Int) -> Unit,
-) : ListAdapter<ScreenAd, RecyclerView.ViewHolder>(ScreenPreviewUiDiffUtil()) {
+) : ListAdapter<ScreenAd, ScreenAdViewHolder>(ScreenPreviewUiDiffUtil()) {
     override fun getItemViewType(position: Int): Int =
-        when {
-            ((position + 1) % ADVERTISEMENT_INTERVAL == 0) -> ScreenType.ADVERTISEMENT.id
-            else -> ScreenType.SCREEN.id
+        when (getItem(position)) {
+            is ScreenAd.ScreenPreviewUi -> ScreenType.SCREEN.id
+            is ScreenAd.Advertisement -> ScreenType.ADVERTISEMENT.id
         }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): RecyclerView.ViewHolder {
-        val screenType =
-            ScreenType.entries.find { it.id == viewType }
-                ?: throw IllegalArgumentException("Invalid viewType. viewType: $viewType")
-
+    ): ScreenAdViewHolder {
         val inflater = LayoutInflater.from(parent.context)
 
-        return when (screenType) {
-            ScreenType.SCREEN -> {
-                val binding: HolderScreenBinding = HolderScreenBinding.inflate(inflater, parent, false)
-                ScreenViewHolder(onScreenClick, binding)
+        return when (viewType) {
+            ScreenType.SCREEN.id -> {
+                val binding = HolderScreenBinding.inflate(inflater, parent, false)
+                ScreenAdViewHolder.ScreenViewHolder(binding, onScreenClick)
             }
 
-            ScreenType.ADVERTISEMENT -> {
-                val binding: HolderAdvertisementBinding = HolderAdvertisementBinding.inflate(inflater, parent, false)
-                AdvertisementViewHolder(binding, onAdClick)
+            ScreenType.ADVERTISEMENT.id -> {
+                val binding = HolderAdvertisementBinding.inflate(inflater, parent, false)
+                ScreenAdViewHolder.AdvertisementViewHolder(binding, onAdClick)
             }
+
+            else -> throw IllegalArgumentException("Invalid viewType: $viewType")
         }
     }
 
     override fun onBindViewHolder(
-        holder: RecyclerView.ViewHolder,
+        holder: ScreenAdViewHolder,
         position: Int,
     ) {
-        when (val item = getItem(position)) {
-            is ScreenAd.ScreenPreviewUi -> {
-                (holder as ScreenViewHolder).bind(item)
-            }
-
-            is ScreenAd.Advertisement -> {
-                (holder as AdvertisementViewHolder).bind(item)
-            }
-        }
-    }
-
-    companion object {
-        private const val ADVERTISEMENT_INTERVAL = 4
+        holder.bind(getItem(position))
     }
 }
