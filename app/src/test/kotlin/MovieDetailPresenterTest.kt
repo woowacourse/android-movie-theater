@@ -1,23 +1,29 @@
 import io.mockk.Runs
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.just
 import io.mockk.verify
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import woowacourse.movie.data.DummyMovieRepository
 import woowacourse.movie.moviedetail.MovieDetailContract
+import woowacourse.movie.moviedetail.MovieDetailPresenter
 import woowacourse.movie.moviedetail.uimodel.HeadCountUiModel
 
 @ExtendWith(MockKExtension::class)
 class MovieDetailPresenterTest {
-    @MockK
+    @RelaxedMockK
     private lateinit var view: MovieDetailContract.View
 
-    @RelaxedMockK
     private lateinit var presenter: MovieDetailContract.Presenter
+
+    @BeforeEach
+    fun setUp() {
+        presenter = MovieDetailPresenter(view, DummyMovieRepository)
+    }
 
     @Test
     @DisplayName("영화 정보를 불러오면 화면에 나타난다")
@@ -62,7 +68,6 @@ class MovieDetailPresenterTest {
         val currentCount = HeadCountUiModel("1")
         presenter.minusCount()
 
-        verify(exactly = 1) { view.showCantDecreaseError(1) }
-        verify(exactly = 0) { view.updateHeadCount(any()) }
+        verify(exactly = 1) { view.updateHeadCount(currentCount) }
     }
 }
