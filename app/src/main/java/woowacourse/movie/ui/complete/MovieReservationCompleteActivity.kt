@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.complete
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -69,16 +70,19 @@ class MovieReservationCompleteActivity :
         onBackPressedDispatcher.addCallback(onBackPressedCallBack)
     }
 
-    private fun navigateBackToMainScreen() {
-        Intent(this, MovieMainActivity::class.java).also {
-            it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(it)
-        }
-    }
+    private fun navigateBackToMainScreen() = MovieMainActivity.startActivity(this)
 
     companion object {
         private val TAG = MovieReservationCompleteActivity::class.simpleName
         private const val USER_TICKET_ID_DEFAULT_VALUE = -1L
+
+        fun startActivity(
+            context: Context,
+            userTicketId: Long,
+        ) = Intent(context, MovieReservationCompleteActivity::class.java).run {
+            putExtra(MovieReservationCompleteKey.TICKET_ID, userTicketId)
+            context.startActivity(this)
+        }
     }
 }
 

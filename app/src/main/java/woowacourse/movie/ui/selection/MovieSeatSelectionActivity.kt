@@ -1,6 +1,7 @@
 package woowacourse.movie.ui.selection
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -146,10 +147,7 @@ class MovieSeatSelectionActivity :
     }
 
     private fun moveMovieReservationCompletePage(ticketId: Long) {
-        Intent(this, MovieReservationCompleteActivity::class.java).run {
-            putExtra(MovieSeatSelectionKey.TICKET_ID, ticketId)
-            startActivity(this)
-        }
+        MovieReservationCompleteActivity.startActivity(this, ticketId)
     }
 
     private fun userTicketId() =
@@ -161,6 +159,14 @@ class MovieSeatSelectionActivity :
     companion object {
         private val TAG = MovieSeatSelectionActivity::class.simpleName
         private const val MOVIE_CONTENT_ID_DEFAULT_VALUE = -1L
+
+        fun startActivity(
+            context: Context,
+            userTicketId: Long,
+        ) = Intent(context, MovieSeatSelectionActivity::class.java).run {
+            putExtra(MovieSeatSelectionKey.TICKET_ID, userTicketId)
+            context.startActivity(this)
+        }
     }
 }
 

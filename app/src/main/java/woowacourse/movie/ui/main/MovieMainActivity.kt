@@ -1,5 +1,7 @@
 package woowacourse.movie.ui.main
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -46,5 +48,13 @@ class MovieMainActivity : AppCompatActivity() {
         supportFragmentManager.commit {
             replace(R.id.main_fragment_container, fragment, fragment.tag)
         }
+    }
+
+    companion object {
+        fun startActivity(context: Context) =
+            Intent(context, MovieMainActivity::class.java).run {
+                setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                context.startActivity(this)
+            }
     }
 }
