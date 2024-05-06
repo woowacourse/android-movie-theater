@@ -10,7 +10,10 @@ class TheaterAdapter(
     private val items: List<TheaterUiModel>,
     private val clickListener: AdapterClickListener,
 ) : RecyclerView.Adapter<TheaterAdapter.TheaterViewHolder>() {
-    class TheaterViewHolder(private val binding: ItemTheaterBinding, private val clickListener: AdapterClickListener) :
+    class TheaterViewHolder(
+        private val binding: ItemTheaterBinding,
+        private val clickListener: AdapterClickListener,
+    ) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(item: TheaterUiModel) {
             binding.theater = item

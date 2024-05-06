@@ -89,7 +89,15 @@ class MovieReservationActivityTest {
             allOf(`is`(instanceOf(String::class.java)), `is`(expected)),
         ).perform(click())
 
-        onView(withId(R.id.spinner_detail_date)).check(matches(withSpinnerText(containsString(expected))))
+        onView(withId(R.id.spinner_detail_date)).check(
+            matches(
+                withSpinnerText(
+                    containsString(
+                        expected,
+                    ),
+                ),
+            ),
+        )
     }
 
     @Test
@@ -107,7 +115,15 @@ class MovieReservationActivityTest {
             allOf(`is`(instanceOf(String::class.java)), `is`(expected)),
         ).perform(click())
 
-        onView(withId(R.id.spinner_detail_time)).check(matches(withSpinnerText(containsString(expected))))
+        onView(withId(R.id.spinner_detail_time)).check(
+            matches(
+                withSpinnerText(
+                    containsString(
+                        expected,
+                    ),
+                ),
+            ),
+        )
     }
 
     companion object {

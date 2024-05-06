@@ -17,4 +17,5 @@ class MovieViewHolder(
     }
 }
 
-class AdvertiseViewHolder(binding: ItemScreeningAdvertiseBinding) : ScreeningViewHolder(binding.root)
+class AdvertiseViewHolder(binding: ItemScreeningAdvertiseBinding) :
+    ScreeningViewHolder(binding.root)

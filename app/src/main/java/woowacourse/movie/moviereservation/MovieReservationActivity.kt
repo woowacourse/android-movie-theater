@@ -107,8 +107,13 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         with(binding) {
             ivDetailPoster.setImageResource(reservation.imageRes)
             tvDetailTitle.text = reservation.title
-            tvDetailRunningDate.text = getString(R.string.screening_movie_running_date).format(reservation.startDate, reservation.endDate)
-            tvDetailRunningTime.text = getString(R.string.screening_movie_running_time).format(reservation.runningTime)
+            tvDetailRunningDate.text =
+                getString(R.string.screening_movie_running_date).format(
+                    reservation.startDate,
+                    reservation.endDate,
+                )
+            tvDetailRunningTime.text =
+                getString(R.string.screening_movie_running_time).format(reservation.runningTime)
             tvDetailMovieDesc.text = reservation.description
         }
     }
