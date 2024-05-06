@@ -15,6 +15,7 @@ import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.domain.model.TheaterCount
 import woowacourse.movie.domain.repository.DummySeatBoard
 import woowacourse.movie.presentation.model.ReservationInfo
+import woowacourse.movie.presentation.ui.detail.ScreenDetailUiModel
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -127,8 +128,12 @@ object DummyData {
                 ),
         )
 
-    val theaters =
+    private val theaters =
         listOf(theater, theater.copy(id = 1, name = "강남"), theater.copy(id = 2, name = "잠실"))
+
+    const val THEATER_ID = 0
+
+    const val MOVIE_ID = 0
 
     val dummyScreen =
         Screen(
@@ -138,6 +143,16 @@ object DummyData {
                 wizardStone.startDate,
                 wizardStone.endDate,
             ),
+        )
+
+    val dummyScreenDetail =
+        ScreenDetailUiModel(
+            screenId = dummyScreen.id,
+            theaterId = THEATER_ID,
+            screen = dummyScreen,
+            selectableDates = dummyScreen.selectableDates,
+            selectedDate = dummyScreen.selectableDates.first(),
+            selectedTime = dummyScreen.selectableDates.first().getSelectableTimes().first(),
         )
 
     val dummyTheaterCount =
@@ -158,7 +173,7 @@ object DummyData {
         ReservationInfo(
             theaterId = 0,
             dateTime = LocalDateTime.now(),
-            ticketCount = 2,
+            ticketQuantity = 2,
         )
 
     val dummySeat =
@@ -188,7 +203,7 @@ object DummyData {
         )
 
     fun load(): List<ScreenView> =
-        movies.flatMap { movie ->
+        movies.flatMap {
             listOf(
                 wizardStone,
                 bang,
@@ -203,13 +218,6 @@ object DummyData {
             DummySeatBoard.seatBoards.find { seatBoard -> seatBoard.id == id }
                 ?: throw NoSuchElementException()
         }
-
-    fun findByScreenId(
-        theaterId: Int,
-        movieId: Int,
-    ): Screen =
-        theaters.find { it.id == theaterId }?.screens?.find { screen -> screen.movie.id == movieId }
-            ?: throw NoSuchElementException()
 
     fun findTheaterCount(id: Int): Result<List<TheaterCount>> =
         runCatching {
