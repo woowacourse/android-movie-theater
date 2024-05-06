@@ -3,22 +3,21 @@ package woowacourse.movie.ui.home
 import woowacourse.movie.domain.model.ScreenAd
 import woowacourse.movie.domain.model.toPreviewUI
 import woowacourse.movie.domain.repository.DummyAdvertisement
-import woowacourse.movie.domain.repository.DummyTheaters
 import woowacourse.movie.domain.repository.MovieRepository
 import woowacourse.movie.domain.repository.ScreenRepository
-import woowacourse.movie.domain.repository.TheaterRepository
 
 class HomePresenter(
     private val view: HomeContract.View,
     private val movieRepository: MovieRepository,
     private val screenRepository: ScreenRepository,
     private val adRepository: DummyAdvertisement = DummyAdvertisement(),
-    private val theaterRepository: TheaterRepository = DummyTheaters(),
 ) : HomeContract.Presenter {
     override fun loadScreen() {
         val screenPreviewUis =
-            screenRepository.load()
-                .map { screen -> screen.toPreviewUI(image = movieRepository.imageSrc(screen.movie.id)) }.toMutableList()
+            screenRepository.load().map { screen ->
+                val moviePoster = movieRepository.imageSrc(screen.movie.id)
+                screen.toPreviewUI(image = moviePoster)
+            }.toMutableList()
 
         val advertisement = adRepository.load()
 
@@ -28,7 +27,7 @@ class HomePresenter(
 
     private fun generatedScreenAdList(
         screenPreviewUis: MutableList<ScreenAd.ScreenPreviewUi>,
-        advertisement: ScreenAd.Advertisement
+        advertisement: ScreenAd.Advertisement,
     ): MutableList<ScreenAd> {
         val totalItems = screenPreviewUis.size + screenPreviewUis.size / 3
         val screenAdList = mutableListOf<ScreenAd>()
@@ -49,8 +48,6 @@ class HomePresenter(
 
     override fun loadTheaters(screenId: Int) {
         val screen = screenRepository.findById(screenId).getOrThrow()
-        val theaters = theaterRepository.loadAll()
-
-        view.showTheaters(screen, theaters.screeningTheater(screen))
+        view.showTheatersBottomSheet(screen)
     }
 }

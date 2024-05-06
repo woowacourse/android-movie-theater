@@ -9,16 +9,11 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.ScreenAd
-import woowacourse.movie.domain.model.Theaters
 import woowacourse.movie.domain.repository.DummyMovies
 import woowacourse.movie.domain.repository.DummyScreens
-import woowacourse.movie.ui.detail.ScreenDetailActivity
 import woowacourse.movie.ui.home.adapter.ScreenAdapter
-import woowacourse.movie.ui.home.adapter.TheaterAdapter
 
 class HomeFragment : Fragment(), HomeContract.View {
-    private lateinit var screenAdapter: ScreenAdapter
-
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -29,6 +24,7 @@ class HomeFragment : Fragment(), HomeContract.View {
             DummyScreens(),
         )
     }
+    private lateinit var screenAdapter: ScreenAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,19 +57,9 @@ class HomeFragment : Fragment(), HomeContract.View {
         screenAdapter.submitList(screens)
     }
 
-    override fun showTheaters(
-        screen: Screen,
-        theaters: Theaters,
-    ) {
-        val theaterAdapter =
-            TheaterAdapter(screen) { screenId, theaterId ->
-                ScreenDetailActivity.startActivity(requireContext(), screenId, theaterId)
-            }
-
-        val theaterBottomSheet = TheaterBottomSheet(theaterAdapter)
-
-        theaterAdapter.submitList(theaters.theaters)
-        theaterBottomSheet.show(childFragmentManager, "theaterBottomSheet")
+    override fun showTheatersBottomSheet(screen: Screen) {
+        val theaterBottomSheet = TheaterBottomSheet.newInstance(screen.id)
+        theaterBottomSheet.show(childFragmentManager, "TheaterBottomSheet")
     }
 
     override fun onDestroyView() {

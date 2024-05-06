@@ -7,7 +7,7 @@ import woowacourse.movie.domain.model.Theater
 
 class TheaterViewHolder(
     private val binding: HolderTheaterBinding,
-    private val itemClick: (screenId: Int, theaterId: Int) -> Unit,
+    private val itemClick: (theaterId: Int) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(
         theater: Theater,
@@ -17,7 +17,7 @@ class TheaterViewHolder(
         binding.theater = theater
 
         binding.next.setOnClickListener {
-            itemClick(screen.id, theater.id)
+            itemClick(theater.id)
         }
     }
 }

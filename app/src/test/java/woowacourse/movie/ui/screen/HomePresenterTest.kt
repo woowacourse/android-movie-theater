@@ -38,10 +38,10 @@ class HomePresenterTest {
 
     @Test
     fun `영화를 상영하는 상영관들을 보여준다`() {
-        every { view.showTheaters(any(), any()) } just runs
+        every { view.showTheatersBottomSheet(any()) } just runs
 
         presenter.loadTheaters(1)
 
-        verify { view.showTheaters(any(), any()) }
+        verify { view.showTheatersBottomSheet(any()) }
     }
 }
