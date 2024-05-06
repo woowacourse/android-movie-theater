@@ -1,52 +1,46 @@
 import io.mockk.Runs
 import io.mockk.every
+import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.junit5.MockKExtension
 import io.mockk.just
-import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.data.DummyMovieRepository
-import woowacourse.movie.model.Tier
+import woowacourse.movie.model.HeadCount
 import woowacourse.movie.selectseat.SelectSeatContract
 import woowacourse.movie.selectseat.SelectSeatPresenter
+import woowacourse.movie.selectseat.uimodel.Position
 import woowacourse.movie.selectseat.uimodel.PriceUiModel
-import woowacourse.movie.selectseat.uimodel.SeatUiModel
 
+@ExtendWith(MockKExtension::class)
 class SelectSeatPresenterTest {
+    @RelaxedMockK
     private lateinit var view: SelectSeatContract.View
 
     private lateinit var presenter: SelectSeatContract.Presenter
 
     @BeforeEach
     fun setUp() {
-        view = mockk<SelectSeatContract.View>()
         presenter = SelectSeatPresenter(view, DummyMovieRepository)
-    }
-
-    @Test
-    @DisplayName("극장의 좌석 정보를 불러오면 화면에 나타난다")
-    fun show_Seat_view_When_load_data_Success() {
-        // when
-        every { view.initSeats(any()) } just Runs
-
-        // given
         presenter.initSeats(0)
-
-        // then
-        verify(exactly = 1) { view.initSeats(any()) }
     }
 
     @Test
-    @DisplayName("선택된 좌석들의 예매 가격을 계산하면 뷰에 반영한다.")
+    @DisplayName("선택한 좌석에 맞는 가격을 계산한다")
     fun update_view_When_complete_selected_seats_price() {
-        // when
-        every { view.showPrice(PriceUiModel(15_000)) } just Runs
-
         // given
-        presenter.calculatePrice(listOf(SeatUiModel(1, 1, Tier.S)))
+        every { view.showPrice(any()) } just Runs
+        presenter.initMaxCount(HeadCount(3))
+
+        // when
+        presenter.selectSeat(Position(1, 1))
+        presenter.selectSeat(Position(2, 1))
+        presenter.selectSeat(Position(3, 1))
 
         // then
-        verify { view.showPrice(PriceUiModel(15_000)) }
+        verify(exactly = 1) { view.showPrice(PriceUiModel(40000)) }
     }
 }

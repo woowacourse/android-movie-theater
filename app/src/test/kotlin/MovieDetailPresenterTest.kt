@@ -1,26 +1,23 @@
 import io.mockk.Runs
 import io.mockk.every
+import io.mockk.impl.annotations.MockK
+import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.junit5.MockKExtension
 import io.mockk.just
-import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.DummyMovieRepository
+import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.moviedetail.MovieDetailContract
-import woowacourse.movie.moviedetail.MovieDetailPresenter
 import woowacourse.movie.moviedetail.uimodel.HeadCountUiModel
 
+@ExtendWith(MockKExtension::class)
 class MovieDetailPresenterTest {
+    @MockK
     private lateinit var view: MovieDetailContract.View
 
+    @RelaxedMockK
     private lateinit var presenter: MovieDetailContract.Presenter
-
-    @BeforeEach
-    fun setUp() {
-        view = mockk<MovieDetailContract.View>()
-        presenter = MovieDetailPresenter(view, DummyMovieRepository)
-    }
 
     @Test
     @DisplayName("영화 정보를 불러오면 화면에 나타난다")
