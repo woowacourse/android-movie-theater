@@ -46,12 +46,14 @@ class ScreenAdapter(
         holder: RecyclerView.ViewHolder,
         position: Int,
     ) {
-        val item = getItem(position)
+        when (val item = getItem(position)) {
+            is ScreenAd.ScreenPreviewUi -> {
+                (holder as ScreenViewHolder).bind(item)
+            }
 
-        if (item is ScreenAd.ScreenPreviewUi) {
-            (holder as ScreenViewHolder).bind(item)
-        } else if (item is ScreenAd.Advertisement) {
-            (holder as AdvertisementViewHolder).bind(item)
+            is ScreenAd.Advertisement -> {
+                (holder as AdvertisementViewHolder).bind(item)
+            }
         }
     }
 
