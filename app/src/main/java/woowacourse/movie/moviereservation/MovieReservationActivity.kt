@@ -104,7 +104,13 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
     }
 
     override fun showMovieInfo(reservation: MovieReservationUiModel) {
-        binding.movieReservationUiModel = reservation
+        with(binding) {
+            ivDetailPoster.setImageResource(reservation.imageRes)
+            tvDetailTitle.text = reservation.title
+            tvDetailRunningDate.text = getString(R.string.screening_movie_running_date).format(reservation.startDate, reservation.endDate)
+            tvDetailRunningTime.text = getString(R.string.screening_movie_running_time).format(reservation.runningTime)
+            tvDetailMovieDesc.text = reservation.description
+        }
     }
 
     override fun updateHeadCount(updatedCount: Int) {
@@ -132,10 +138,8 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         screeningDateTimesUiModel: ScreeningDateTimesUiModel,
         currentBookingDetail: CurrentBookingDetail,
     ) {
-        Log.d("테스트", "showBookingDetail $currentBookingDetail")
         this.currentBookingDetail = currentBookingDetail
         binding.currentBookingDetail = currentBookingDetail
-        Log.d("테스트", "showBookingDetail2 ${this.currentBookingDetail}")
         initSpinner(screeningDateTimesUiModel)
     }
 

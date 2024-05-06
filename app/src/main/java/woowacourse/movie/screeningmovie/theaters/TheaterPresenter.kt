@@ -1,6 +1,5 @@
 package woowacourse.movie.screeningmovie.theaters
 
-import android.util.Log
 import woowacourse.movie.repository.MovieRepository
 
 class TheaterPresenter(
@@ -12,7 +11,6 @@ class TheaterPresenter(
         val uiModels =
             theaters.map { theater ->
                 val screeningMovie = repository.screenMovieById(movieId, theater.id)
-                Log.d("uiModel", "$movieId ${theater.id}")
                 screeningMovie.theater.toTheaterUiModel(screeningMovie.totalScreeningTimesNum())
             }
         view.showTheaters(uiModels)
