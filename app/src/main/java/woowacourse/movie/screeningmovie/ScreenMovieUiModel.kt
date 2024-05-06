@@ -7,6 +7,7 @@ data class ScreenMovieUiModel(
     val id: Long,
     val title: String,
     @DrawableRes val imageRes: Int = R.drawable.img_movie_poster,
-    val screenDate: String,
-    val runningTime: String,
+    val startDate: String,
+    val endDate: String,
+    val runningTime: Int,
 ) : ScreeningItem

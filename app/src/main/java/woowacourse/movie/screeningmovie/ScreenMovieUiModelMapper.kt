@@ -11,8 +11,9 @@ fun Movie.toScreenMovieUiModel(): ScreenMovieUiModel {
     return ScreenMovieUiModel(
         id = id,
         title = title,
-        screenDate = "러닝타임: ${runningTime.time.inWholeMinutes}분",
-        runningTime = "상영일: ${startDate.format(formatter)} ~ ${endDate.format(formatter)}",
+        startDate = startDate.format(formatter),
+        endDate = endDate.format(formatter),
+        runningTime = runningTime.time.inWholeMinutes.toInt(),
     )
 }
 

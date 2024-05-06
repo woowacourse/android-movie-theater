@@ -51,7 +51,7 @@
             android:fontFamily="@font/roboto"
             android:textColor="@color/black"
             android:textSize="12sp"
-            android:text="@{movie.screenDate}"
+            android:text="@{@string/screening_movie_running_date(movie.startDate, movie.endDate)}"
             app:layout_constraintStart_toStartOf="@id/tv_movie_title"
             app:layout_constraintTop_toBottomOf="@id/tv_movie_title"
             tools:text="상영일: 2024.3.1 " />
@@ -64,7 +64,7 @@
             android:fontFamily="@font/roboto"
             android:textColor="@color/black"
             android:textSize="12sp"
-            android:text="@{movie.runningTime}"
+            android:text="@{@string/screening_movie_running_time(movie.runningTime)}"
             app:layout_constraintStart_toStartOf="@id/tv_movie_running_date"
             app:layout_constraintTop_toBottomOf="@id/tv_movie_running_date"
             tools:text="러닝타임: 152분" />
