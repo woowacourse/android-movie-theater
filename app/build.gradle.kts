@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("de.mannodermaus.android-junit5") version "1.10.0.0"
+    id("kotlin-kapt")
 }
 
 android {
@@ -55,6 +56,8 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.8.2")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.activity:activity:1.8.0")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
     testImplementation("io.mockk:mockk:1.13.10")
     testImplementation("io.mockk:mockk-android:1.13.10")
     testImplementation("io.mockk:mockk-agent:1.13.10")
