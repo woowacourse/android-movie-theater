@@ -11,7 +11,6 @@ import woowacourse.movie.domain.repository.MovieRepository
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.ScreenRepository
 import woowacourse.movie.ui.toDetailUI
-import java.time.LocalDate
 
 class ScreenDetailPresenter(
     private val view: ScreenDetailContract.View,
@@ -20,13 +19,16 @@ class ScreenDetailPresenter(
     private val reservationRepository: ReservationRepository,
     private val screenTimePolicy: ScreenTimePolicy = WeeklyScreenTimePolicy(),
 ) : ScreenDetailContract.Presenter {
-    private var ticket: Ticket = Ticket(MIN_TICKET_COUNT)
-    private var dateRange = DateRange(LocalDate.now(), LocalDate.now())
+    private var screenId: Int = -1
+    private var theaterId: Int = -1
+
     private var datePosition: Int = 0
     private var timePosition: Int = 0
 
-    private var screenId: Int = -1
-    private var theaterId: Int = -1
+    private var ticket: Ticket = Ticket(MIN_TICKET_COUNT)
+
+    private lateinit var loadedScreen: Screen
+    private lateinit var dateRange: DateRange
 
     override fun saveId(
         screenId: Int,
@@ -34,13 +36,14 @@ class ScreenDetailPresenter(
     ) {
         this.screenId = screenId
         this.theaterId = theaterId
+
+        loadedScreen = screen(screenId)
+        dateRange = loadedScreen.dateRange
     }
 
     override fun loadScreen() {
         try {
-            val loadedScreen = screen(screenId)
-            view.showScreen(loadedScreen.toDetailUI(movieRepository.imageSrc(screen(screenId).movie.id)))
-            dateRange = loadedScreen.dateRange
+            view.showScreen(loadedScreen.toDetailUI(movieRepository.imageSrc(loadedScreen.movie.id)))
             view.showDateTimePicker(dateRange, screenTimePolicy, ::saveDatePosition, ::saveTimePosition)
         } catch (e: Exception) {
             when (e) {
@@ -94,13 +97,15 @@ class ScreenDetailPresenter(
     }
 
     override fun reserve() {
+        val date = dateRange.allDates()[datePosition]
+
         reservationRepository.saveTimeReservation(
-            screen(screenId),
+            loadedScreen,
             count = ticket.count,
             dateTime =
                 DateTime(
-                    dateRange.allDates()[datePosition],
-                    screenTimePolicy.screeningTimes(dateRange.allDates()[datePosition])[timePosition],
+                    date = date,
+                    time = screenTimePolicy.screeningTimes(date)[timePosition],
                 ),
         ).onSuccess { timeReservationId ->
             view.navigateToSeatsReservation(timeReservationId, theaterId)

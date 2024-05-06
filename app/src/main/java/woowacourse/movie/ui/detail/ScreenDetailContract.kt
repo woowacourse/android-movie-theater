@@ -33,12 +33,12 @@ interface ScreenDetailContract {
     }
 
     interface Presenter {
-        fun loadScreen()
-
         fun saveId(
             screenId: Int,
             theaterId: Int,
         )
+
+        fun loadScreen()
 
         fun loadTicket()
 
