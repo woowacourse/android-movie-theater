@@ -17,14 +17,16 @@ class TheaterBottomSheetDialogFragment :
     private lateinit var presenter: TheaterContract.Presenter
     private var movieId: Long = -1L
 
-    private lateinit var binding: BottomSheetTheaterBinding
+    private var _binding: BottomSheetTheaterBinding? = null
+    val binding: BottomSheetTheaterBinding
+        get() = requireNotNull(_binding) { "${this::class.java.simpleName}에서 에러가 발생했습니다." }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = BottomSheetTheaterBinding.inflate(inflater, container, false)
+        _binding = BottomSheetTheaterBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -61,6 +63,11 @@ class TheaterBottomSheetDialogFragment :
                 theaterId,
             ),
         )
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

@@ -11,14 +11,16 @@ import woowacourse.movie.screeningmovie.theaters.TheaterBottomSheetDialogFragmen
 
 class ScreeningMovieFragment : Fragment(), ScreeningMovieContract.View, AdapterClickListener {
     private lateinit var presenter: ScreenMoviePresenter
-    private lateinit var binding: FragmentScreeningMovieBinding
+    private var _binding: FragmentScreeningMovieBinding? = null
+    val binding: FragmentScreeningMovieBinding
+        get() = requireNotNull(_binding) { "${this::class.java.simpleName}에서 에러가 발생했습니다." }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentScreeningMovieBinding.inflate(inflater, container, false)
+        _binding = FragmentScreeningMovieBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -41,5 +43,10 @@ class ScreeningMovieFragment : Fragment(), ScreeningMovieContract.View, AdapterC
         val bundle = TheaterBottomSheetDialogFragment.getBundle(screeningMovieId)
         fragment.arguments = bundle
         fragment.show(parentFragmentManager, "theaterBottomSheet")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
