@@ -11,7 +11,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.databinding.FragmentBottomTheatersBinding
 import woowacourse.movie.domain.model.TheaterCount
 import woowacourse.movie.domain.repository.DummyScreens
-import woowacourse.movie.presentation.ui.detail.MovieDetailActivity
+import woowacourse.movie.presentation.ui.detail.ScreenDetailActivity
 
 class BottomTheatersFragment : BottomSheetDialogFragment(), BottomTheaterContract.View {
     private var _binding: FragmentBottomTheatersBinding? = null
@@ -73,7 +73,7 @@ class BottomTheatersFragment : BottomSheetDialogFragment(), BottomTheaterContrac
         movieId: Int,
         theaterId: Int,
     ) {
-        MovieDetailActivity.startActivity(requireActivity(), movieId, theaterId)
+        ScreenDetailActivity.startActivity(requireActivity(), movieId, theaterId)
         this.dismiss()
     }
 

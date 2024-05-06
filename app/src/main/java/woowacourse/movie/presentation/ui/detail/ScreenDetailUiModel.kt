@@ -5,12 +5,12 @@ import woowacourse.movie.domain.model.ScreenDate
 import woowacourse.movie.presentation.model.Ticket
 import java.time.LocalTime
 
-data class DetailUiModel(
-    val screenId: Int = -1,
-    val theaterId: Int = -1,
-    val screen: Screen? = null,
+data class ScreenDetailUiModel(
+    val screenId: Int,
+    val theaterId: Int,
+    val screen: Screen,
     val ticket: Ticket = Ticket(Ticket.MIN_TICKET_COUNT),
     val selectableDates: List<ScreenDate> = emptyList(),
-    val selectedDate: ScreenDate? = null,
-    val selectedTime: LocalTime? = null,
+    val selectedDate: ScreenDate,
+    val selectedTime: LocalTime,
 )

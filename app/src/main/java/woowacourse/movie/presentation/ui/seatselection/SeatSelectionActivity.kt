@@ -96,13 +96,16 @@ class SeatSelectionActivity : BaseActivity<ActivitySeatSelectionBinding>(), View
     companion object {
         private const val PUT_EXTRA_KEY_RESERVATION_INFO = "reservationInfo"
         private const val PUT_STATE_KEY_USER_SEAT = "userSeat"
+        private const val PUT_EXTRA_KEY_MOVIE_ID = "movieId"
 
         fun startActivity(
             context: Context,
             reservationInfo: ReservationInfo,
+            movieId: Int,
         ) {
             val intent = Intent(context, SeatSelectionActivity::class.java)
             intent.putExtra(PUT_EXTRA_KEY_RESERVATION_INFO, reservationInfo as Serializable)
+            intent.putExtra(PUT_EXTRA_KEY_MOVIE_ID, movieId)
             context.startActivity(intent)
         }
     }

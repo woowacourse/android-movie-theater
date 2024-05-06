@@ -4,8 +4,12 @@
     <data>
 
         <variable
-            name="presenter"
-            type="woowacourse.movie.presentation.ui.detail.DetailPresenter" />
+            name="detailModel"
+            type="woowacourse.movie.presentation.ui.detail.ScreenDetailUiModel" />
+
+        <variable
+            name="handler"
+            type="woowacourse.movie.presentation.ui.detail.ScreenDetailActionHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,7 +18,7 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.ui.detail.MovieDetailActivity">
+        tools:context=".presentation.ui.detail.ScreenDetailActivity">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -34,7 +38,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="341dp"
                     android:scaleType="centerCrop"
-                    app:imageResource="@{presenter.detailModel.screen.movie.imageSrc}"
+                    app:imageResource="@{detailModel.screen.movie.imageSrc}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -48,7 +52,7 @@
                     android:layout_marginTop="27dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="@{presenter.detailModel.screen.movie.title}"
+                    android:text="@{detailModel.screen.movie.title}"
                     android:textSize="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -68,8 +72,8 @@
 
                 <TextView
                     android:id="@+id/tv_screen_date"
-                    endDate="@{presenter.detailModel.screen.movie.endDate}"
-                    startDate="@{presenter.detailModel.screen.movie.startDate}"
+                    endDate="@{detailModel.screen.movie.endDate}"
+                    startDate="@{detailModel.screen.movie.startDate}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12dp"
@@ -90,7 +94,7 @@
 
                 <TextView
                     android:id="@+id/tv_screen_running_time"
-                    bindFormatRunningTime="@{presenter.detailModel.screen.movie.runningTime}"
+                    bindFormatRunningTime="@{detailModel.screen.movie.runningTime}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12dp"
@@ -106,7 +110,7 @@
                     android:layout_marginStart="21dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="19dp"
-                    android:text="@{presenter.detailModel.screen.movie.description}"
+                    android:text="@{detailModel.screen.movie.description}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_screen_running_time"
@@ -139,7 +143,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:onClick="@{() -> presenter.minusTicket()}"
+            android:onClick="@{() -> handler.onMinusButtonClicked()}"
             android:text="@string/minus"
             android:textSize="25dp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_count"
@@ -151,7 +155,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="25dp"
-            android:text="@{String.valueOf(presenter.detailModel.ticket.count)}"
+            android:text="@{String.valueOf(detailModel.ticket.count)}"
             android:textSize="20dp"
             app:layout_constraintBottom_toTopOf="@+id/btn_select_seat"
             app:layout_constraintEnd_toStartOf="@+id/btn_plus"
@@ -163,7 +167,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
-            android:onClick="@{() -> presenter.plusTicket()}"
+            android:onClick="@{() -> handler.onPlusButtonClicked()}"
             android:text="@string/plus"
             android:textSize="25dp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_count"
@@ -177,7 +181,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginBottom="20dp"
-            android:onClick="@{()-> presenter.selectSeat()}"
+            android:onClick="@{()-> handler.onSeatSelectionButtonClicked()}"
             android:text="@string/select_seat"
             android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="parent"
