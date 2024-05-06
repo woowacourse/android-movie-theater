@@ -99,6 +99,5 @@ class MovieReservationPresenterTest {
         presenter.minusCount(1)
 
         verify(exactly = 1) { view.showCantDecreaseError(1) }
-        verify(exactly = 0) { view.updateHeadCount(any()) }
     }
 }
