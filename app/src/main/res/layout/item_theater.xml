@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -17,48 +17,52 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="8dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp">
 
         <TextView
             android:id="@+id/tv_theater_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/tv_theater_time_count"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="선릉 극장"
-            android:text="@{theater.name}"
             android:layout_marginStart="24dp"
-            android:textSize="16sp"
             android:layout_marginTop="8dp"
-            android:textColor="@color/black"
+            android:layout_marginEnd="24dp"
+            android:ellipsize="end"
             android:fontFamily="@font/roboto_bold"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:maxLines="1"
+            android:text="@{theater.name}"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_theater_time_count"
+            app:layout_constraintEnd_toStartOf="@id/btn_theater_navigate_next"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="선릉 극장" />
 
         <TextView
             android:id="@+id/tv_theater_time_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="3개의 상영 시간"
-            android:textSize="12sp"
-            android:text="@{@string/time_count_format(theater.timeCount)}"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/roboto"
-            app:layout_constraintTop_toBottomOf="@id/tv_theater_name"
+            android:text="@{@string/time_count_format(theater.timeCount)}"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/tv_theater_name"/>
+            app:layout_constraintStart_toStartOf="@id/tv_theater_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_theater_name"
+            tools:text="3개의 상영 시간" />
 
         <ImageButton
             android:id="@+id/btn_theater_navigate_next"
             android:layout_width="wrap_content"
-            android:src="@drawable/ic_chevron_right"
             android:layout_height="wrap_content"
             android:layout_marginEnd="14dp"
-            android:onClick="@{() -> clickListener.onClick(theater.id)}"
             android:background="@android:color/transparent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:onClick="@{() -> clickListener.onClick(theater.id)}"
+            android:src="@drawable/ic_chevron_right"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
