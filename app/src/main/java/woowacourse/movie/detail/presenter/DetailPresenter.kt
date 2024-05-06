@@ -12,9 +12,8 @@ class DetailPresenter(
     private val view: DetailContract.View,
 ) : DetailContract.Presenter {
     val model = DetailTicketCountData
-
-    private val theater
-        get() = TheaterData.theaters.first { it.id == theaterId }
+    
+    private val theater = TheaterData.theaters.first { it.id == theaterId }
 
     private val screeningTimes: List<LocalTime>
         get() = theater.getScreeningTimes(DetailDataResource.movieId)
