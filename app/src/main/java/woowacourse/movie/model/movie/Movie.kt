@@ -11,4 +11,8 @@ data class Movie(
     val screeningPeriod: List<LocalDate>,
     val runningTime: String,
     val summary: String,
-)
+) {
+    companion object {
+        const val DEFAULT_MOVIE_ID = -1
+    }
+}

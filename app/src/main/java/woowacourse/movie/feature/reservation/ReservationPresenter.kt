@@ -2,10 +2,12 @@ package woowacourse.movie.feature.reservation
 
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.theater.TheaterDao
+import woowacourse.movie.model.movie.Movie.Companion.DEFAULT_MOVIE_ID
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.result.ChangeTicketCountResult
 import woowacourse.movie.model.result.Failure
 import woowacourse.movie.model.result.Success
+import woowacourse.movie.model.theater.Theater.Companion.DEFAULT_THEATER_ID
 import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.ticket.HeadCount.Companion.DEFAULT_HEAD_COUNT
 import java.time.LocalTime
@@ -49,7 +51,7 @@ class ReservationPresenter(
         val date: String = view.getScreeningDate()
         val time: String = view.getScreeningTime()
         val dateTime = ScreeningDateTime(date, time)
-        view.bindDateTime(dateTime)
+        view.showDateTime(dateTime)
         view.navigateToSeatSelection(dateTime, movieId, theaterId, headCount)
     }
 
@@ -62,5 +64,13 @@ class ReservationPresenter(
 
     override fun restoreHeadCount() {
         view.changeHeadCount(headCount.count)
+    }
+
+    override fun handleUndeliveredData() {
+        if (movieId == DEFAULT_MOVIE_ID ||
+            theaterId == DEFAULT_THEATER_ID
+        ) {
+            view.showErrorSnackBar()
+        }
     }
 }

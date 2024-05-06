@@ -1,6 +1,8 @@
 package woowacourse.movie.feature.reservation
 
+import android.content.Intent
 import android.content.pm.ActivityInfo
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -26,7 +28,16 @@ import java.time.LocalTime
 @RunWith(AndroidJUnit4::class)
 class ReservationActivityTest {
     @get:Rule
-    var activityRule = ActivityScenarioRule(ReservationActivity::class.java)
+    var activityRule =
+        ActivityScenarioRule<ReservationActivity>(
+            Intent(
+                ApplicationProvider.getApplicationContext(),
+                ReservationActivity::class.java,
+            ).apply {
+                putExtra("movieId", 0)
+                putExtra("theaterId", 0)
+            },
+        )
 
     @Before
     fun setUp() {

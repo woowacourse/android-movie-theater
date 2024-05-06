@@ -11,8 +11,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.theater.TheaterDao
-import woowacourse.movie.feature.reservation.ReservationActivity.Companion.DEFAULT_MOVIE_ID
-import woowacourse.movie.feature.reservation.ReservationActivity.Companion.DEFAULT_THEATER_ID
 
 @ExtendWith(MockKExtension::class)
 class ReservationPresenterTest {
@@ -27,8 +25,8 @@ class ReservationPresenterTest {
                 view,
                 ScreeningDao(),
                 TheaterDao(),
-                DEFAULT_MOVIE_ID,
-                DEFAULT_THEATER_ID,
+                movieId = 0,
+                theaterId = 0,
             )
     }
 

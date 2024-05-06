@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationBinding
 import woowacourse.movie.db.screening.ScreeningDao
@@ -16,7 +17,9 @@ import woowacourse.movie.feature.home.HomeFragment.Companion.MOVIE_ID
 import woowacourse.movie.feature.seatselection.SeatSelectionActivity
 import woowacourse.movie.feature.theater.TheaterSelectionFragment.Companion.THEATER_ID
 import woowacourse.movie.model.movie.Movie
+import woowacourse.movie.model.movie.Movie.Companion.DEFAULT_MOVIE_ID
 import woowacourse.movie.model.movie.ScreeningDateTime
+import woowacourse.movie.model.theater.Theater.Companion.DEFAULT_THEATER_ID
 import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.ticket.HeadCount.Companion.DEFAULT_HEAD_COUNT
 import woowacourse.movie.utils.MovieUtils.makeToast
@@ -40,6 +43,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         initPresenter(savedHeadCount)
 
         with(presenter) {
+            handleUndeliveredData()
             loadMovie()
             loadScreeningPeriod()
         }
@@ -59,7 +63,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         presenter.restoreHeadCount()
-        val selectedTimeId = savedInstanceState.getInt(SCREENING_TIME, 0)
+        val selectedTimeId = savedInstanceState.getInt(SCREENING_TIME, DEFAULT_TIME_ID)
         updateScreeningTimes(selectedTimeId)
     }
 
@@ -97,8 +101,6 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     }
 
     override fun showResultToast() = makeToast(this, getString(R.string.invalid_number_of_tickets))
-
-    override fun showErrorToast() = makeToast(this, getString(R.string.all_error))
 
     override fun navigateToSeatSelection(
         dateTime: ScreeningDateTime,
@@ -165,13 +167,25 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
 
     override fun getScreeningTime(): String = binding.spinnerReservationScreeningTime.selectedItem.toString()
 
-    override fun bindDateTime(dateTime: ScreeningDateTime) {
+    override fun showDateTime(dateTime: ScreeningDateTime) {
         binding.dateTime = dateTime
     }
 
+    override fun showErrorSnackBar() {
+        val snackBar =
+            Snackbar.make(
+                binding.root,
+                getString(R.string.all_error),
+                Snackbar.LENGTH_INDEFINITE,
+            )
+        snackBar.setAction(R.string.all_confirm) {
+            snackBar.dismiss()
+            finish()
+        }
+        snackBar.show()
+    }
+
     companion object {
-        const val DEFAULT_MOVIE_ID = 0
-        const val DEFAULT_THEATER_ID = 0
         const val TICKET = "ticket"
         const val HEAD_COUNT = "headCount"
         const val SCREENING_DATE_TIME = "screeningDateTime"

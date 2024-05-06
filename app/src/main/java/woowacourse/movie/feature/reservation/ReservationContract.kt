@@ -28,13 +28,13 @@ interface ReservationContract {
             count: HeadCount,
         )
 
-        fun showErrorToast()
-
         fun getScreeningDate(): String
 
         fun getScreeningTime(): String
 
-        fun bindDateTime(dateTime: ScreeningDateTime)
+        fun showDateTime(dateTime: ScreeningDateTime)
+
+        fun showErrorSnackBar()
     }
 
     interface Presenter {
@@ -53,5 +53,7 @@ interface ReservationContract {
         fun handleHeadCountBounds(result: ChangeTicketCountResult)
 
         fun restoreHeadCount()
+
+        fun handleUndeliveredData()
     }
 }
