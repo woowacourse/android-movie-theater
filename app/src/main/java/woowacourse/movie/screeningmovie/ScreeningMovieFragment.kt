@@ -32,9 +32,8 @@ class ScreeningMovieFragment : Fragment(), ScreeningMovieContract.View, AdapterC
     }
 
     override fun showMovies(movies: List<ScreeningItem>) {
-        val listView = binding.rcvScreeningMovie
-        listView.adapter =
-            MovieAdapter(movies, this)
+        binding.rcvScreeningMovie.adapter =
+            MovieAdapter(this).apply { this.submitList(movies) }
     }
 
     override fun showTheaters(screeningMovieId: Long) {
