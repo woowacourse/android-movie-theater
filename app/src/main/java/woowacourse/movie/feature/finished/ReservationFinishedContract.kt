@@ -9,12 +9,16 @@ interface ReservationFinishedContract {
 
         fun showReservationHistory(ticket: Ticket)
 
-        fun showErrorToast()
+        fun showErrorSnackBar()
+
+        fun navigateToHome()
     }
 
     interface Presenter {
-        fun loadMovie(movieId: Int)
+        fun handleUndeliveredTicket()
 
-        fun loadTicket(ticket: Ticket)
+        fun loadMovie()
+
+        fun loadTicket()
     }
 }
