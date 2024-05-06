@@ -12,8 +12,6 @@ import woowacourse.movie.databinding.ActivityReservationCompleteBinding
 import woowacourse.movie.domain.model.Reservation
 import woowacourse.movie.domain.repository.DummyReservation
 import woowacourse.movie.domain.repository.DummyTheaters
-import woowacourse.movie.ui.Currency
-import java.util.Locale
 
 class ReservationCompleteActivity : AppCompatActivity(), ReservationContract.View {
     private val presenter: ReservationContract.Presenter by lazy { ReservationPresenter(this, DummyReservation, DummyTheaters()) }
@@ -41,9 +39,6 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationContract.Vie
         binding.reservation = reservation
         binding.theaterName = theaterName
     }
-
-    private fun Reservation.currency(): String =
-        getString(R.string.reserve_amount, Currency.of(Locale.getDefault().country).format(seats.totalPrice()))
 
     override fun showToastMessage(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
