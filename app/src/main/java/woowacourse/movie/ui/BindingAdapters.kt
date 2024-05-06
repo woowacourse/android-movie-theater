@@ -2,7 +2,10 @@ package woowacourse.movie.ui
 
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatButton
+import androidx.core.app.NotificationCompat.getColor
 import androidx.databinding.BindingAdapter
+import woowacourse.movie.R
 import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.Image
 import woowacourse.movie.domain.model.ScreenAd
@@ -26,7 +29,8 @@ fun currency(
     textView: TextView,
     price: Int,
 ) {
-    textView.text = String.format("%s(현장 결제)", Currency.of(Locale.getDefault().country).format(price))
+    textView.text =
+        String.format("%s(현장 결제)", Currency.of(Locale.getDefault().country).format(price))
 }
 
 @BindingAdapter("app:srcScreenAdvertisement")
@@ -55,4 +59,18 @@ fun screenPoster(
     image: Image<Any>,
 ) {
     imageView.setImageResource(image.imageSource as Int)
+}
+
+@BindingAdapter("app:appCompatButtonEnabled")
+fun buttonEnabled(
+    appCompatButton: AppCompatButton,
+    boolean: Boolean,
+) {
+    if (boolean) {
+        appCompatButton.isEnabled = true
+        appCompatButton.setBackgroundColor(appCompatButton.context.getColor(R.color.complete_activated))
+    } else {
+        appCompatButton.isEnabled = false
+        appCompatButton.setBackgroundColor(appCompatButton.context.getColor(R.color.complete_deactivated))
+    }
 }

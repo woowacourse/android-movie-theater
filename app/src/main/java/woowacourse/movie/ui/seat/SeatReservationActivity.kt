@@ -88,15 +88,7 @@ class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.Vie
     }
 
     override fun activateReservation(boolean: Boolean) {
-        with(binding.btnSeatReservationComplete) {
-            if (boolean) {
-                isEnabled = true
-                setBackgroundColor(getColor(R.color.complete_activated))
-            } else {
-                isEnabled = false
-                setBackgroundColor(getColor(R.color.complete_deactivated))
-            }
-        }
+        binding.isReservationComplete = boolean
     }
 
     override fun showSeatReservationFail(throwable: Throwable) {
