@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:movie="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="userTicket"
+            type="woowacourse.movie.model.movie.UserTicket" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/movie_reservation_complete_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.complete.MovieReservationCompleteActivity">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#9160F9"
+            android:gravity="bottom|center_horizontal"
+            android:paddingTop="30dp"
+            android:paddingBottom="10dp"
+            android:text="@string/reservation_complete_guide"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:paddingBottom="20dp"
+            android:text="@{userTicket.title}"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="6dp">
+
+            <TextView
+                android:id="@+id/tv_screening_date_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                movie:dateTime="@{userTicket.screeningStartDateTime}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="6dp">
+
+            <TextView
+                android:id="@+id/tv_selection_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                movie:count="@{userTicket.reservationDetail.reservationCount}"
+                movie:seats="@{userTicket.reservationDetail.selectedSeat}"
+                movie:theaterName="@{userTicket.theater}" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_reservation_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@{@string/reservation_amount(userTicket.reservationDetail.totalSeatAmount())}"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+</layout>

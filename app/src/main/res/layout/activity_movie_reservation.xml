@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:movie="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="movieContent"
+            type="woowacourse.movie.model.movie.MovieContent" />
+
+        <variable
+            name="theater"
+            type="woowacourse.movie.model.movie.Theater" />
+
+        <variable
+            name="presenter"
+            type="woowacourse.movie.ui.reservation.MovieReservationContract.Presenter" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/movie_reservation_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.reservation.MovieReservationActivity">
+
+        <ScrollView
+            android:id="@+id/sv_information_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toTopOf="@+id/reservation_layout"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_poster"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:scaleType="centerCrop"
+                    app:imgRes="@{movieContent.imageId}"
+                    app:layout_constraintBottom_toTopOf="@+id/text_layout"
+                    app:layout_constraintDimensionRatio="360:340"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/text_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_poster">
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="27dp"
+                        android:text="@{movieContent.title}"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_screening_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="34dp"
+                        android:textSize="16sp"
+                        movie:endingDate="@{movieContent.endingMoviesDate}"
+                        movie:openingDate="@{movieContent.openingMovieDate}" />
+
+                    <TextView
+                        android:id="@+id/tv_running_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="19dp"
+                        android:text="@{@string/running_time(movieContent.runningTime)}"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_synopsis"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="30dp"
+                        android:text="@{movieContent.synopsis}"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/reservation_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sv_information_layout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="9dp"
+                android:layout_marginBottom="21dp"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/sp_screening_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@{movieContent.datesInRange}"
+                    android:spinnerMode="dropdown" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <Spinner
+                    android:id="@+id/sp_screening_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@{theater.screeningTimes}"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="17dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_minus"
+                    android:layout_width="65dp"
+                    android:layout_height="match_parent"
+                    android:onClick="@{() -> presenter.decreaseCount()}"
+                    android:text="@string/minus" />
+
+                <TextView
+                    android:id="@+id/tv_reservation_count"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btn_plus"
+                    android:layout_width="65dp"
+                    android:layout_height="match_parent"
+                    android:onClick="@{() -> presenter.increaseCount()}"
+                    android:text="@string/plus" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_reservation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> presenter.reserveSeat()}"
+                android:paddingVertical="8dp"
+                android:text="@string/select_seat"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
