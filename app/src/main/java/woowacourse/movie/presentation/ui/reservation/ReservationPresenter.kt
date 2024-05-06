@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.ui.reservation
 
+import woowacourse.movie.domain.model.Reservation
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.ScreenRepository
 
@@ -14,21 +15,39 @@ class ReservationPresenter(
 
     override fun loadReservation(id: Int) {
         repository.findByReservationId(id).onSuccess { reservation ->
-            theaterRepository.findTheaterNameById(reservation.theaterId).onSuccess { theaterName ->
-                view.showReservation(reservation, theaterName)
-                _reservationModel = reservationModel.copy(theaterName = theaterName, reservation = reservation)
-            }
+            findTheaterName(reservation)
         }.onFailure { e ->
-            when (e) {
-                is NoSuchElementException -> {
-                    view.showToastMessage(e)
-                    view.back()
-                }
+            onLoadError(e)
+        }
+    }
 
-                else -> {
-                    view.showToastMessage(e)
-                    view.back()
-                }
+    private fun findTheaterName(reservation: Reservation) {
+        theaterRepository.findTheaterNameById(reservation.theaterId).onSuccess { theaterName ->
+            updateReservation(theaterName, reservation)
+        }.onFailure { e ->
+            onLoadError(e)
+        }
+    }
+
+    private fun updateReservation(
+        theaterName: String,
+        reservation: Reservation,
+    ) {
+        _reservationModel =
+            reservationModel.copy(theaterName = theaterName, reservation = reservation)
+        view.showReservation(reservationModel, theaterName)
+    }
+
+    private fun onLoadError(e: Throwable) {
+        when (e) {
+            is NoSuchElementException -> {
+                view.showToastMessage(e)
+                view.finishReservation()
+            }
+
+            else -> {
+                view.showToastMessage(e)
+                view.finishReservation()
             }
         }
     }

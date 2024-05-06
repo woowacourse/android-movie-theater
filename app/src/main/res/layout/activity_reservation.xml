@@ -4,8 +4,8 @@
     <data>
 
         <variable
-            name="presenter"
-            type="woowacourse.movie.presentation.ui.reservation.ReservationPresenter" />
+            name="reservationModel"
+            type="woowacourse.movie.presentation.ui.reservation.ReservationModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:text="@{presenter.reservationModel.reservation.movie.title}"
+            android:text="@{reservationModel.reservation.movie.title}"
             android:textColor="@color/black"
             android:textSize="25dp"
             android:textStyle="bold"
@@ -49,7 +49,7 @@
 
         <TextView
             android:id="@+id/tv_reservation_date"
-            bindShowReservationDate="@{presenter.reservationModel.reservation.dateTime}"
+            bindShowReservationDate="@{reservationModel.reservation.dateTime}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -62,9 +62,9 @@
 
         <TextView
             android:id="@+id/tv_reservation_count"
-            count="@{presenter.reservationModel.reservation.ticketCount}"
-            seats="@{presenter.reservationModel.reservation.seats}"
-            theaterName="@{presenter.reservationModel.theaterName}"
+            count="@{reservationModel.reservation.ticketCount}"
+            seats="@{reservationModel.reservation.seats}"
+            theaterName="@{reservationModel.theaterName}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
@@ -80,7 +80,7 @@
 
         <TextView
             android:id="@+id/tv_reservation_amount"
-            bindShowTotalPrice="@{presenter.reservationModel.reservation.totalPrice}"
+            bindShowTotalPrice="@{reservationModel.reservation.totalPrice}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
