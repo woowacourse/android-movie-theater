@@ -41,7 +41,7 @@ class ScreeningMovieFragmentTest {
     fun setUp() {
         fragmentScenario = launchFragmentInContainer<ScreeningMovieFragment>()
         fragmentScenario.onFragment { fragment ->
-            val listView =
+            val recyclerView =
                 fragment.requireView().findViewById<RecyclerView>(R.id.rcv_screening_movie)
 
             val items =
@@ -53,14 +53,13 @@ class ScreeningMovieFragmentTest {
                     ),
                 ).insertAdvertisements(3).toScreenItems() + screenMovieUiModel3
 
-            listView.adapter =
+            recyclerView.adapter =
                 MovieAdapter(
-                    items,
                     object : AdapterClickListener {
                         override fun onClick(id: Long) {
                         }
                     },
-                )
+                ).also { it.submitList(items) }
         }
     }
 
@@ -150,8 +149,9 @@ class ScreeningMovieFragmentTest {
                 2,
                 title = "해리 포터와 아즈카반의 죄수",
                 R.drawable.img_movie_poster,
-                "상영일: 2024.3.2",
-                "러닝타임: 181분",
+                "2024.3.1",
+                "2024.3.31",
+                181,
             )
     }
 }
