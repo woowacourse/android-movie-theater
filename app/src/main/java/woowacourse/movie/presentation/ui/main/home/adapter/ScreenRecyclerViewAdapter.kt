@@ -21,8 +21,8 @@ class ScreenRecyclerViewAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return when (currentList[position]) {
-            is Movie -> VIEW_TYPE_SCREEN
-            is Ads -> VIEW_TYPE_ADS
+            is Movie -> ScreenViewType.Screen.value
+            is Ads -> ScreenViewType.Ad.value
         }
     }
 
@@ -30,21 +30,17 @@ class ScreenRecyclerViewAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): ViewHolder {
-        return when (viewType) {
-            VIEW_TYPE_SCREEN -> {
+        return when (ScreenViewType.of(viewType)) {
+            ScreenViewType.Screen -> {
                 val inflater = LayoutInflater.from(parent.context)
                 val binding = HolderScreenBinding.inflate(inflater, parent, false)
                 ScreenViewHolder(binding, screenActionHandler)
             }
 
-            VIEW_TYPE_ADS -> {
+            ScreenViewType.Ad -> {
                 val inflater = LayoutInflater.from(parent.context)
                 val binding = HolderAdsBinding.inflate(inflater, parent, false)
                 AdsViewHolder(binding)
-            }
-
-            else -> {
-                throw IllegalArgumentException("잘못된 viewType입니다.")
             }
         }
     }
@@ -60,8 +56,6 @@ class ScreenRecyclerViewAdapter(
     }
 
     companion object {
-        private const val VIEW_TYPE_SCREEN = 0
-        private const val VIEW_TYPE_ADS = 1
         private val ScreenAdapterDiffCallback =
             ItemDiffCallback<ScreenView>(
                 onItemsTheSame = { old, new -> old.id() == new.id() },
