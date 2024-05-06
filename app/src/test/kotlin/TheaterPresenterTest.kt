@@ -1,6 +1,7 @@
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
+import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.just
 import io.mockk.runs
@@ -16,7 +17,7 @@ import woowacourse.movie.repository.MovieRepository
 
 @ExtendWith(MockKExtension::class)
 class TheaterPresenterTest {
-    @MockK
+    @RelaxedMockK
     private lateinit var view: TheaterContract.View
 
     @MockK
@@ -32,7 +33,6 @@ class TheaterPresenterTest {
         // given
         every { repository.theatersByMovieId(0) } returns theaterList
         every { repository.screeningByMovieIdAndTheaterId(0, any()) } returns Screening.STUB_A
-        every { view.showTheaters(any()) } just runs
         // when
         presenter.loadTheaters(0)
         // then

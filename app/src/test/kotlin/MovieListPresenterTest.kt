@@ -1,9 +1,8 @@
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
+import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.junit5.MockKExtension
-import io.mockk.just
-import io.mockk.runs
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -17,7 +16,7 @@ import woowacourse.movie.repository.MovieRepository
 
 @ExtendWith(MockKExtension::class)
 class MovieListPresenterTest {
-    @MockK
+    @RelaxedMockK
     private lateinit var view: MovieListContract.View
 
     @MockK
@@ -33,7 +32,6 @@ class MovieListPresenterTest {
         // given
         every { repository.movies() } returns movieList
         every { repository.advertisements() } returns advertisementList
-        every { view.showContents(any()) } just runs
         // when
         presenter.loadContents()
         // then
@@ -44,8 +42,6 @@ class MovieListPresenterTest {
 
     @Test
     fun `영화를 선택하면 극장 목록이 보여진다`() {
-        // given
-        every { view.showTheaters(0) } just runs
         // when
         presenter.selectMovie(0)
         // then

@@ -1,8 +1,5 @@
-import io.mockk.Runs
-import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.junit5.MockKExtension
-import io.mockk.just
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -30,7 +27,6 @@ class SelectSeatPresenterTest {
     @Test
     fun `선택한_좌석에_맞는_가격을_계산한다`() {
         // given
-        every { view.showPrice(any()) } just Runs
         presenter.initMaxCount(HeadCount(3))
 
         // when
@@ -45,7 +41,6 @@ class SelectSeatPresenterTest {
     @Test
     fun `티켓_인원만큼_좌석을_선택하면_확인_버튼을_활성화_시킨다`() {
         // given
-        every { view.showPrice(any()) } just Runs
         presenter.initMaxCount(HeadCount(3))
 
         // when
@@ -60,7 +55,6 @@ class SelectSeatPresenterTest {
     @Test
     fun `티켓_인원보다_좌석을_많이_선택하면_좌석이_선택되지_않는다`() {
         // given
-        every { view.showPrice(any()) } just Runs
         presenter.initMaxCount(HeadCount(0))
 
         // when

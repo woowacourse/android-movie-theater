@@ -1,9 +1,8 @@
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
+import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.junit5.MockKExtension
-import io.mockk.just
-import io.mockk.runs
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -19,7 +18,7 @@ class PurchaseConfirmationPresenterTest {
     @MockK
     private lateinit var repository: MovieRepository
 
-    @MockK
+    @RelaxedMockK
     private lateinit var view: PurchaseConfirmationContract.View
 
     @InjectMockKs
@@ -28,7 +27,6 @@ class PurchaseConfirmationPresenterTest {
     @Test
     fun `예매 내역을 보여준다`() {
         // given
-        every { view.showResult(any()) } just runs
         every { repository.reservationById(0) } returns Reservation.STUB
         every { repository.theaterById(Reservation.STUB.theaterId) } returns Theater.STUB_A
         // when
