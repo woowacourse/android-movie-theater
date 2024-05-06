@@ -12,11 +12,12 @@ import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.ScreenRepository
 import woowacourse.movie.presentation.model.MessageType
+import woowacourse.movie.presentation.ui.utils.DummyData.MOVIE_ID
+import woowacourse.movie.presentation.ui.utils.DummyData.THEATER_ID
 import woowacourse.movie.presentation.ui.utils.DummyData.dummyReservationInfo
 import woowacourse.movie.presentation.ui.utils.DummyData.dummyScreen
-import woowacourse.movie.presentation.ui.utils.DummyData.dummySeat
-import woowacourse.movie.presentation.ui.utils.DummyData.dummySeatBoard
-import woowacourse.movie.presentation.ui.utils.DummyData.dummySeatModel
+import woowacourse.movie.presentation.ui.utils.DummyData.dummySelectedSeatModel
+import woowacourse.movie.presentation.ui.utils.DummyData.seatBoard
 
 @ExtendWith(MockKExtension::class)
 class SeatSelectionPresenterTest {
@@ -37,76 +38,78 @@ class SeatSelectionPresenterTest {
     }
 
     @Test
-    fun `SeatSelectionPresenter가 유효하지 않은 상영 id값으로 loadScreen()을 했을 때, view에게 back과 throwable를 전달한다`() {
+    fun `예약 정보와 영화 id로 데이터를 가져온다`() {
         // given
-        every { screenRepository.findByScreenId(any(), any()) } returns
-            Result.failure(
-                NoSuchElementException(),
-            )
-        every { view.showToastMessage(e = any()) } just runs
+
+        every { screenRepository.findScreen(THEATER_ID, MOVIE_ID) } returns
+            Result.success(dummyScreen)
+        every { view.showSeatModel(any()) } just runs
         every { view.back() } just runs
+        every { screenRepository.loadSeatBoard(THEATER_ID) } returns Result.success(seatBoard)
 
         // when
-        presenter.loadScreen(1)
+        presenter.updateUiModel(dummyReservationInfo, MOVIE_ID)
 
         // then
-        verify { view.showToastMessage(e = any()) }
+        verify { view.showSeatModel(any()) }
+    }
+
+    @Test
+    fun `스크린을 불러오지 못하면 view에게 예외를 전달한다`() {
+        // given
+        val exception = NoSuchElementException()
+        every { screenRepository.findScreen(THEATER_ID, MOVIE_ID) } returns
+            Result.failure(exception)
+        every { view.showToastMessage(e = exception) } just runs
+        every { view.back() } just runs
+        every { screenRepository.loadSeatBoard(THEATER_ID) } returns Result.success(seatBoard)
+        every { view.showSeatModel(any()) } just runs
+
+        // when
+        presenter.updateUiModel(dummyReservationInfo, MOVIE_ID)
+
+        // then
+        verify { view.showToastMessage(e = exception) }
+        verify { view.showSeatModel(any()) }
         verify { view.back() }
     }
 
     @Test
-    fun `SeatSelectionPresenter가 유효하지 않은 상영 id값으로 loadSeatBoard()를 했을 때, view에게 back과 throwable를 전달한다`() {
+    fun `좌석 배치를 불러오지 못하면 view에게 예외를 전달한다`() {
         // given
-        every { screenRepository.loadSeatBoard(any()) } returns
-            Result.failure(
-                NoSuchElementException(),
-            )
-        every { view.showToastMessage(e = any()) } just runs
+        val exception = NoSuchElementException()
+        every { screenRepository.findScreen(THEATER_ID, MOVIE_ID) } returns
+            Result.success(dummyScreen)
+        every { screenRepository.loadSeatBoard(THEATER_ID) } returns Result.failure(exception)
+        every { view.showToastMessage(e = exception) } just runs
         every { view.back() } just runs
 
         // when
-        presenter.loadSeatBoard(1)
+        presenter.updateUiModel(dummyReservationInfo, MOVIE_ID)
 
         // then
-        verify { view.showToastMessage(e = any()) }
+        verify { view.showToastMessage(e = exception) }
         verify { view.back() }
     }
 
     @Test
-    fun `SeatSelectionPresenter가 loadSeatBoard()를 했을 때, 예기치 않은 오류가 발생하면 view에게 back과 throwable를 전달한다`() {
+    fun `좌석이 선택되어 있으면 선택을 해제한 뒤 가격을 다시 계산한다`() {
         // given
-        every { screenRepository.loadSeatBoard(any()) } returns Result.failure(Exception())
-        every { view.showToastMessage(e = any()) } just runs
-        every { view.back() } just runs
+        every { view.showSeatModel(any()) } just runs
 
         // when
-        presenter.loadSeatBoard(1)
+        presenter.clickSeat(dummySelectedSeatModel)
 
         // then
-        verify { view.showToastMessage(e = any()) }
-        verify { view.back() }
+        verify { view.showSeatModel(any()) }
     }
 
     @Test
-    fun `SeatSelectionPresenter가 선택된 좌석들의 가격을 계산(calculateSeat) 했을 때, view에게 총 결제 금액에 대한 정보(showTotalPrice)를 전달한다`() {
+    fun `예매 완료 시, view에게 메시지(ReservationSuccessMessage)와 결과 화면으로 이동하라는 정보를 전달한다()`() {
         // given
-        val reservationInfo = dummyReservationInfo
-        val seat = dummySeat
-        every { view.showTotalPrice(any()) } just runs
-        every { screenRepository.loadSeatBoard(any()) } returns Result.success(dummySeatBoard)
-        presenter.updateUiModel(reservationInfo, movieId)
-
-        // when
-        presenter.clickSeat(dummySeatModel)
-
-        // then
-        verify { view.showTotalPrice(any()) }
-    }
-
-    @Test
-    fun `SeatSelectionPresenter가 예매 완료 버튼을 누르면(reverse), view에게 메시지(ReservationSuccessMessage)와 결과 화면으로 이동하라는 정보를 전달한다()`() {
-        // given
-        every { screenRepository.findByScreenId(any(), any()) } returns Result.success(dummyScreen)
+        every { view.showSeatModel(any()) } just runs
+        every { screenRepository.loadSeatBoard(THEATER_ID) } returns Result.success(seatBoard)
+        every { screenRepository.findScreen(THEATER_ID, MOVIE_ID) } returns Result.success(dummyScreen)
         every {
             reservationRepository.saveReservation(
                 any(),
@@ -120,39 +123,11 @@ class SeatSelectionPresenterTest {
         every { view.navigateToReservation(any()) } just runs
 
         // when
-        presenter.loadScreen(1)
-        presenter.updateUiModel(dummyReservationInfo, movieId)
+        presenter.updateUiModel(dummyReservationInfo, MOVIE_ID)
         presenter.reserve()
 
         // then
         verify { view.showToastMessage(MessageType.ReservationSuccessMessage) }
         verify { view.navigateToReservation(1) }
-    }
-
-    @Test
-    fun `SeatSelectionPresenter가 예매 정보가 잘못되었을 때 예매 완료 버튼을 누르면(reverse), view에게 메시지(Exception)와 뒤로 돌아가라고() 전달한다(back)`() {
-        // given
-        val exception = NoSuchElementException()
-        every { screenRepository.findByScreenId(any(), any()) } returns Result.success(dummyScreen)
-        every {
-            reservationRepository.saveReservation(
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-            )
-        } returns Result.failure(exception)
-        every { view.showSnackBar(e = any()) } just runs
-        every { view.back() } just runs
-
-        // when
-        presenter.loadScreen(1)
-        presenter.updateUiModel(dummyReservationInfo, movieId)
-        presenter.reserve()
-
-        // then
-        verify { view.showSnackBar(e = exception) }
-        verify { view.back() }
     }
 }

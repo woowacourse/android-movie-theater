@@ -135,6 +135,27 @@ object DummyData {
 
     const val MOVIE_ID = 0
 
+    val dummySeats =
+        listOf(
+            Seat("A", 1, SeatRank.B),
+            Seat("A", 2, SeatRank.B),
+            Seat("A", 3, SeatRank.B),
+            Seat("B", 1, SeatRank.S),
+            Seat("B", 2, SeatRank.S),
+            Seat("B", 3, SeatRank.S),
+            Seat("C", 1, SeatRank.A),
+            Seat("C", 2, SeatRank.A),
+            Seat("C", 3, SeatRank.A),
+        )
+
+    val seatBoard =
+        SeatBoard(
+            1,
+            3,
+            1,
+            dummySeats,
+        )
+
     val dummyScreen =
         Screen(
             0,
@@ -183,11 +204,20 @@ object DummyData {
             seatRank = SeatRank.A,
         )
 
-    val dummySeatModel =
+    val dummySelectedSeatModel =
         SeatModel(
             dummySeat.column,
             dummySeat.row,
             dummySeat.seatRank,
+            isSelected = true,
+        )
+
+    val dummyUnselectedSeatModel =
+        SeatModel(
+            dummySeat.column,
+            dummySeat.row,
+            dummySeat.seatRank,
+            isSelected = false,
         )
 
     val dummySeatBoard = SeatBoard(1, 4, 5, listOf(dummySeat))

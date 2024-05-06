@@ -24,17 +24,13 @@ class SeatSelectionPresenter(
         reservationInfo: ReservationInfo,
         movieId: Int,
     ) {
-        initSeatSelectionModel(reservationInfo)
-        loadScreen(reservationInfo.theaterId, movieId)
-        loadSeatBoard(reservationInfo.theaterId)
-    }
-
-    private fun initSeatSelectionModel(reservationInfo: ReservationInfo) {
         _seatSelectionModel =
             seatSelectionModel.copy(
                 dateTime = reservationInfo.dateTime,
                 ticketQuantity = reservationInfo.ticketQuantity,
             )
+        loadScreen(reservationInfo.theaterId, movieId)
+        loadSeatBoard(reservationInfo.theaterId)
     }
 
     private fun loadScreen(

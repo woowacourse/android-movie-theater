@@ -14,7 +14,7 @@ class ScreenDetailPresenter(
         movieId: Int,
         theaterId: Int,
     ) {
-        repository.findByScreenId(movieId = movieId, theaterId = theaterId).onSuccess { screen ->
+        repository.findScreen(movieId = movieId, theaterId = theaterId).onSuccess { screen ->
             val screenDetail =
                 ScreenDetailUiModel(
                     screenId = screen.id,

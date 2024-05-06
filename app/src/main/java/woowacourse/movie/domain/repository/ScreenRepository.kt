@@ -10,7 +10,7 @@ interface ScreenRepository {
 
     fun loadSeatBoard(id: Int): Result<SeatBoard>
 
-    fun findByScreenId(
+    fun findScreen(
         theaterId: Int,
         movieId: Int,
     ): Result<Screen>

@@ -81,20 +81,22 @@ class DummyScreens : ScreenRepository {
             )
         }
 
+    val dummyScreen =
+        Screen(
+            0,
+            wizardStone,
+            createScreenDateList(
+                wizardStone.startDate,
+                wizardStone.endDate,
+            ),
+        )
     private val theater =
         Theater(
             id = 0,
             name = "선릉",
             screens =
                 listOf(
-                    Screen(
-                        0,
-                        wizardStone,
-                        createScreenDateList(
-                            wizardStone.startDate,
-                            wizardStone.endDate,
-                        ),
-                    ),
+                    dummyScreen,
                     Screen(
                         1,
                         bang,
@@ -147,7 +149,7 @@ class DummyScreens : ScreenRepository {
                 ?: throw NoSuchElementException()
         }
 
-    override fun findByScreenId(
+    override fun findScreen(
         theaterId: Int,
         movieId: Int,
     ): Result<Screen> =
