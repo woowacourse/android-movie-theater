@@ -1,0 +1,34 @@
+package woowacourse.movie.db.history
+
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import woowacourse.movie.model.ticket.ReservationTicket
+
+
+@Database(
+    entities = [
+        ReservationTicket::class
+    ],
+    version = 1,
+)
+abstract class ReservationHistoryDatabase : RoomDatabase() {
+    abstract fun reservationDao(): ReservationHistoryDao
+
+    companion object {
+        private var instance: ReservationHistoryDatabase? = null
+
+        @Synchronized
+        fun getInstance(context: Context): ReservationHistoryDatabase {
+            return instance
+                ?: synchronized(ReservationHistoryDatabase::class) {
+                    Room.databaseBuilder(
+                        context.applicationContext,
+                        ReservationHistoryDatabase::class.java,
+                        "reservationTicket"
+                    ).build()
+                }
+        }
+    }
+}
