@@ -24,7 +24,7 @@ class TheaterBottomSheetPresenter(
     override fun loadTheaters() {
         val theaters = theaterRepository.loadAll()
 
-        view.showTheaters(loadedScreen, theaters.screeningTheater(loadedScreen))
+        view.showTheaters(loadedScreen, theaters.screeningTheater(loadedScreen.movie))
     }
 
     private fun loadedScreen() = screenRepository.findById(screenId).getOrThrow()
