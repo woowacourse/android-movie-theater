@@ -24,7 +24,7 @@ interface SeatReservationContract {
 
         fun showSeatReservationFail(throwable: Throwable)
 
-        fun showDialog(
+        fun showReservationConfirmDialog(
             reservationId: Int,
             theaterId: Int,
         )

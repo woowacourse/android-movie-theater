@@ -103,7 +103,7 @@ class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.Vie
         showToast(throwable)
     }
 
-    override fun showDialog(
+    override fun showReservationConfirmDialog(
         reservationId: Int,
         theaterId: Int,
     ) {

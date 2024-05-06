@@ -65,7 +65,7 @@ class SeatReservationPresenter(
         screenId: Int,
         theaterId: Int,
     ) {
-        view.showDialog(screenId, theaterId)
+        view.showReservationConfirmDialog(screenId, theaterId)
     }
 
     override fun completeReservation(
