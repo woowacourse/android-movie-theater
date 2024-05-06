@@ -7,7 +7,6 @@ import woowacourse.movie.model.SelectedSeats
 import woowacourse.movie.moviereservation.toHeadCount
 import woowacourse.movie.moviereservation.uimodel.BookingInfoUiModel
 import woowacourse.movie.repository.MovieRepository
-import woowacourse.movie.selectseat.uimodel.PriceUiModel
 import woowacourse.movie.selectseat.uimodel.SeatUiModel
 import woowacourse.movie.selectseat.uimodel.SelectState
 
@@ -35,7 +34,7 @@ class SelectSeatPresenter(
         runCatching {
             repository.screenMovieById(movieId)
         }.onSuccess {
-            view.showMovieInfo(it.movie.title, PriceUiModel(selectedSeats.totalPrice.price.toInt()))
+            view.showMovieInfo(it.movie.title, selectedSeats.totalPrice.price)
         }
     }
 
@@ -52,7 +51,7 @@ class SelectSeatPresenter(
                 view.updateSeatState(selectedSeats, SelectState.SUCCESS)
         }
 
-        view.updatePrice(PriceUiModel(this.selectedSeats.totalPrice.price))
+        view.updatePrice(this.selectedSeats.totalPrice.price)
     }
 
     override fun completeReservation(bookingInfoUiModel: BookingInfoUiModel) {

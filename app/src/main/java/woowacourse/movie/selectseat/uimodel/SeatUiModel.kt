@@ -21,12 +21,15 @@ data class SeatUiModel(
     )
 
     companion object {
+        private const val START_ROW_ALPHABET = 'A'
+        private const val SHOW_COL_FORMAT = 1
+
         private fun positionFormat(
             row: Int,
             col: Int,
         ): String {
-            val rowLetter = 'A' + row
-            return "$rowLetter${col + 1}"
+            val rowLetter = START_ROW_ALPHABET + row
+            return "$rowLetter${col + SHOW_COL_FORMAT}"
         }
 
         private fun color(rate: SeatRate): RateColor =

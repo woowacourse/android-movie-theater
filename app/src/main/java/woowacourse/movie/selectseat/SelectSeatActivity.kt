@@ -12,7 +12,6 @@ import woowacourse.movie.data.DummyMovies
 import woowacourse.movie.databinding.ActivitySelectSeatBinding
 import woowacourse.movie.moviereservation.uimodel.BookingInfoUiModel
 import woowacourse.movie.reservationresult.ReservationResultActivity
-import woowacourse.movie.selectseat.uimodel.PriceUiModel
 import woowacourse.movie.selectseat.uimodel.SeatUiModel
 import woowacourse.movie.selectseat.uimodel.SelectState
 import woowacourse.movie.selectseat.uimodel.SelectedSeatsUiModel
@@ -92,14 +91,15 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
 
     override fun showMovieInfo(
         title: String,
-        priceUiModel: PriceUiModel,
+        price: Int,
     ) {
         binding.tvSelectSeatTitle.text = title
-        binding.tvSelectSeatPrice.text = priceUiModel.price
+        binding.tvSelectSeatPrice.text = getString(R.string.select_seat_price_format).format(price)
     }
 
-    override fun updatePrice(updatedPrice: PriceUiModel) {
-        binding.tvSelectSeatPrice.text = updatedPrice.price
+    override fun updatePrice(updatedPrice: Int) {
+        binding.tvSelectSeatPrice.text =
+            getString(R.string.select_seat_price_format).format(updatedPrice)
     }
 
     override fun updateSeatState(

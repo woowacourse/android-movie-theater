@@ -10,7 +10,6 @@ import woowacourse.movie.data.DummyMovies
 import woowacourse.movie.model.SeatRate
 import woowacourse.movie.selectseat.SelectSeatContract
 import woowacourse.movie.selectseat.SelectSeatPresenter
-import woowacourse.movie.selectseat.uimodel.PriceUiModel
 import woowacourse.movie.selectseat.uimodel.SeatUiModel
 
 class SelectSeatPresenterTest {
@@ -31,7 +30,7 @@ class SelectSeatPresenterTest {
         every { view.showSeat(any()) } just Runs
 
         // given
-        presenter.loadSeat(0)
+        presenter.loadSeat(0, 3)
 
         // then
         verify(exactly = 1) { view.showSeat(any()) }
@@ -41,12 +40,12 @@ class SelectSeatPresenterTest {
     @DisplayName("선택된 좌석들의 예매 가격을 계산하면 뷰에 반영한다.")
     fun update_view_When_complete_selected_seats_price() {
         // when
-        every { view.updatePrice(PriceUiModel(15_000)) } just Runs
+        every { view.updatePrice(15_000) } just Runs
 
         // given
-        presenter.calculatePrice(listOf(SeatUiModel(1, 1, SeatRate.S)))
+        presenter.changeSeatState(SeatUiModel(1, 1, SeatRate.S))
 
         // then
-        verify { view.updatePrice(PriceUiModel(15_000)) }
+        verify { view.updatePrice(15_000) }
     }
 }
