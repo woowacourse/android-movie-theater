@@ -7,4 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="clickedSeat_bgr">#FAFF00</color>
+    <color name="unClickedSeat_bgr">#FFFFFFFF</color>
+    <color name="arrow_gray">#5F5F5F</color>
 </resources>
