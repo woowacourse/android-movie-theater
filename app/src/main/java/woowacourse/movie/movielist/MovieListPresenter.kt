@@ -11,11 +11,11 @@ class MovieListPresenter(
     private val view: MovieListContract.View,
     private val repository: MovieRepository,
 ) : MovieListContract.Presenter {
-    override fun loadMovies() {
+    override fun loadContents() {
         val movieUiModels = repository.movies().map { it.toMovieUiModel() }
         val advertisementUiModels = repository.advertisements().map { it.toAdvertisementUiModel() }
         val mixedList = makeMixedList(movieUiModels, advertisementUiModels)
-        view.showMovies(mixedList)
+        view.showContents(mixedList)
     }
 
     private fun makeMixedList(

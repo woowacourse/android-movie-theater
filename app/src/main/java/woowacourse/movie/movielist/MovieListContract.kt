@@ -4,7 +4,7 @@ import woowacourse.movie.movielist.uimodel.ListItemUiModel
 
 interface MovieListContract {
     interface View {
-        fun showMovies(movies: List<ListItemUiModel>)
+        fun showContents(movies: List<ListItemUiModel>)
 
         fun showTheaters(movieId: Long)
     }
@@ -12,6 +12,6 @@ interface MovieListContract {
     interface Presenter {
         fun selectMovie(movieId: Long)
 
-        fun loadMovies()
+        fun loadContents()
     }
 }

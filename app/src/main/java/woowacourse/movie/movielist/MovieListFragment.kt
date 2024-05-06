@@ -33,10 +33,10 @@ class MovieListFragment : Fragment(), MovieListContract.View, AdapterClickListen
     ) {
         super.onViewCreated(view, savedInstanceState)
         presenter = MovieListPresenter(this, DummyMovieRepository)
-        presenter.loadMovies()
+        presenter.loadContents()
     }
 
-    override fun showMovies(movies: List<ListItemUiModel>) {
+    override fun showContents(movies: List<ListItemUiModel>) {
         movieAdapter.updateData(movies)
     }
 
