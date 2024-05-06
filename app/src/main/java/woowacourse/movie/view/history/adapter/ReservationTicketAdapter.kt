@@ -28,13 +28,6 @@ class ReservationTicketAdapter(
         holder.bind(item)
     }
 
-    fun initTickets(reservationTickets: List<ReservationTicket>) {
-        this.reservationTickets.apply {
-            clear()
-            addAll(reservationTickets)
-        }
-    }
-
     fun updateTickets(reservationTickets: List<ReservationTicket>) {
         val startInsertPosition = this.reservationTickets.size
         this.reservationTickets.addAll(reservationTickets)
