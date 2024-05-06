@@ -38,7 +38,23 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
     }
 
     override fun showResult(reservationResult: ReservationResultUiModel) {
-        binding.reservation = reservationResult
+        with(binding) {
+            tvResultCancelDeadline.text =
+                getString(
+                    R.string.reservation_result_cancel_deadline_message,
+                    reservationResult.cancelDeadLine,
+                )
+            tvResultTitle.text = reservationResult.title
+            tvResultRunningDate.text = reservationResult.dateTime
+            tvResultBookingDetail.text =
+                getString(R.string.booking_detail_info_format).format(
+                    reservationResult.headCount,
+                    reservationResult.seats.joinToString { it.showPosition },
+                    reservationResult.theaterName,
+                )
+            tvResultTotalPrice.text =
+                getString(R.string.reservation_total_price_format, reservationResult.totalPrice)
+        }
     }
 
     companion object {
