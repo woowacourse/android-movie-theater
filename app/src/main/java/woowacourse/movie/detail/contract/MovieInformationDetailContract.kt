@@ -1,6 +1,7 @@
 package woowacourse.movie.detail.contract
 
 import woowacourse.movie.detail.model.Count
+import woowacourse.movie.detail.model.DetailTicketCountData
 import woowacourse.movie.detail.presenter.MovieInformationDetailPresenter
 import woowacourse.movie.list.model.Movie
 import java.time.LocalDate
@@ -54,5 +55,6 @@ interface MovieInformationDetailContract {
         fun storeSelectedTime(selectedTime: LocalTime)
 
         fun storeTheaterId(theaterId: Long)
+        val model: DetailTicketCountData
     }
 }

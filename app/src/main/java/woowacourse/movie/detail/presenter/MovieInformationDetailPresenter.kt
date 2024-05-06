@@ -12,7 +12,7 @@ import java.time.LocalTime
 class MovieInformationDetailPresenter(
     private val view: MovieInformationDetailContract.View,
 ) : MovieInformationDetailContract.Presenter {
-    val model = DetailTicketCountData
+    override val model = DetailTicketCountData
 
     private val theater
         get() = TheaterData.theaters.first { it.id == theaterId }

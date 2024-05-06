@@ -4,13 +4,15 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.runs
+import io.mockk.slot
 import io.mockk.verify
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.detail.contract.MovieInformationDetailContract
 import woowacourse.movie.detail.model.Count
 
-class MovieInformationDetailTest {
+class MovieInformationDetailPresenterTest {
     private lateinit var view: MovieInformationDetailContract.View
     private lateinit var presenter: MovieInformationDetailContract.Presenter
 
@@ -91,5 +93,17 @@ class MovieInformationDetailTest {
         presenter.setSpinnerTimeItemInfo()
         // then
         verify { view.setOnSpinnerTimeItemSelectedListener(any()) }
+    }
+
+    @Test
+    fun `예약 인원이 3일 때 플러스 버튼을 누르면 4가 되어야 한다`() {
+        // given
+        presenter.model.initTicketCount(3)
+        val countSlot = slot<Int>()
+        every { view.showCurrentResultTicketCountView(capture(countSlot)) } just runs
+        // when
+        presenter.setPlusButtonClickInfo()
+        // then
+        assertThat(countSlot.captured).isEqualTo(4)
     }
 }
