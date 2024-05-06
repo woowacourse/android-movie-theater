@@ -3,7 +3,6 @@ package woowacourse.movie.moviereservation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
@@ -63,7 +62,6 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         super.onSaveInstanceState(outState)
 
         val bookingInfo = currentBookingDetail
-        Log.d("테스트", "$bookingInfo")
         outState.putParcelable(STATE_BOOKING_ID, bookingInfo)
     }
 
@@ -72,7 +70,6 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
 
         val storedBookingInfo =
             savedInstanceState.bundleParcelable(STATE_BOOKING_ID, CurrentBookingDetail::class.java)
-        Log.d("테스트", "$storedBookingInfo")
         storedBookingInfo?.let {
             currentBookingDetail = it
             binding.currentBookingDetail = currentBookingDetail
@@ -87,7 +84,6 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         }
 
         binding.btnDetailPlus.setOnClickListener {
-            Log.d("테스트", "플러스 버튼 $currentBookingDetail")
             presenter.plusCount(this.currentBookingDetail.count)
         }
 
