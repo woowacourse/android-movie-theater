@@ -14,6 +14,6 @@ interface ReservationHistoryDao {
     @Query("SELECT * FROM reservationTicket")
     fun findReservations(): List<ReservationTicket>
 
-    @Query("DELETE FROM rservationTicket")
+    @Query("DELETE FROM reservationTicket")
     fun clearReservations()
 }
