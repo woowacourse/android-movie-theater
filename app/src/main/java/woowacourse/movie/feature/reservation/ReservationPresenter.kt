@@ -55,13 +55,6 @@ class ReservationPresenter(
         view.navigateToSeatSelection(dateTime, movieId, theaterId, headCount)
     }
 
-    override fun handleHeadCountBounds(result: ChangeTicketCountResult) {
-        when (result) {
-            is Success -> view.changeHeadCount(headCount.count)
-            is Failure -> view.showResultToast()
-        }
-    }
-
     override fun restoreHeadCount() {
         view.changeHeadCount(headCount.count)
     }
@@ -71,6 +64,13 @@ class ReservationPresenter(
             theaterId == DEFAULT_THEATER_ID
         ) {
             view.showErrorSnackBar()
+        }
+    }
+
+    private fun handleHeadCountBounds(result: ChangeTicketCountResult) {
+        when (result) {
+            is Success -> view.changeHeadCount(headCount.count)
+            is Failure -> view.showResultToast()
         }
     }
 }
