@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="movieResult"
+            type="woowacourse.movie.feature.result.ui.MovieResultUiModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".feature.result.MovieResultActivity">
+
+        <TextView
+            android:id="@+id/tv_reservation_notice"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="#9160f9"
+            android:gravity="bottom|center"
+            android:paddingBottom="10dp"
+            android:text="@string/reservation_result_notice"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_movie_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:text="@{movieResult.title}"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_reservation_notice"
+            tools:text="해리포터와 마법사의 돌" />
+
+        <TextView
+            android:id="@+id/tv_screening_date_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="10dp"
+            android:text="@{@string/screening_date_time(movieResult.screeningDate, movieResult.screeningTime)}"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_movie_title"
+            tools:text="2024.3.1 17:00" />
+
+        <TextView
+            android:id="@+id/tv_reservation_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@{@string/result(movieResult.seatCount, movieResult.selectedSeats, movieResult.theaterName)}"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_screening_date_time"
+            tools:text="일반 2명 | B3, D2 | 선릉 극장" />
+
+        <TextView
+            android:id="@+id/tv_reservation_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@{@string/result_price(movieResult.totalPrice)}"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_reservation_info"
+            tools:text="13,000원 (현장 결제)" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
