@@ -46,6 +46,7 @@ class MovieReservationCompleteActivity :
 
     override fun showReservationResult(userTicket: UserTicket) {
         binding.userTicket = userTicket
+        binding.executePendingBindings()
     }
 
     override fun showError(throwable: Throwable) {
