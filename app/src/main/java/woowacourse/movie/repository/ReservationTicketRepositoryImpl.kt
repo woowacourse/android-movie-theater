@@ -17,16 +17,20 @@ class ReservationTicketRepositoryImpl(context: Context) : ReservationTicketRepos
         return historyDao.findReservations()
     }
 
-    override fun saveReservationTicket(ticket: Ticket) {
+    override fun saveReservationTicket(ticket: Ticket): Long {
         val reservationTicket =
             ticket.toReservationTicket(
                 movieTitle = movieDao.find(ticket.movieId).title,
                 theaterName = theaterDao.find(ticket.theaterId).theaterName,
             )
-        historyDao.saveReservationTicket(reservationTicket)
+        return historyDao.saveReservationTicket(reservationTicket)
     }
 
     override fun clearReservationTickets() {
         historyDao.clearReservations()
+    }
+
+    override fun findReservationTicket(ticketId: Long): ReservationTicket? {
+        return historyDao.findReservationById(ticketId)
     }
 }

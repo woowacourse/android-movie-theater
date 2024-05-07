@@ -8,11 +8,14 @@ import woowacourse.movie.model.ticket.ReservationTicket
 @Dao
 interface ReservationHistoryDao {
     @Insert
-    fun saveReservationTicket(reservationTicket: ReservationTicket)
+    fun saveReservationTicket(reservationTicket: ReservationTicket) : Long
 
     @Query("SELECT * FROM reservationTicket")
     fun findReservations(): List<ReservationTicket>
 
     @Query("DELETE FROM reservationTicket")
     fun clearReservations()
+
+    @Query("SELECT * FROM reservationTicket WHERE ticketId = :ticketId")
+    fun findReservationById(ticketId: Long): ReservationTicket?
 }

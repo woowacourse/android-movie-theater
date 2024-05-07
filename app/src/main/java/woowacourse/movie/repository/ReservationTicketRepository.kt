@@ -6,7 +6,9 @@ import woowacourse.movie.model.ticket.Ticket
 interface ReservationTicketRepository {
     fun loadReservationTickets(): List<ReservationTicket>
 
-    fun saveReservationTicket(ticket: Ticket)
+    fun saveReservationTicket(ticket: Ticket) :Long
 
     fun clearReservationTickets()
+
+    fun findReservationTicket(ticketId: Long): ReservationTicket?
 }
