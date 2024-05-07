@@ -1,7 +1,7 @@
 package woowacourse.movie.ui.complete
 
 import woowacourse.movie.model.data.MovieDataSource
-import woowacourse.movie.model.movie.UserTicket
+import woowacourse.movie.model.db.UserTicket
 
 class MovieReservationCompletePresenter(
     private val view: MovieReservationCompleteContract.View,
