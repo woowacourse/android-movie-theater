@@ -33,13 +33,13 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
         binding.detail = this
         val movieId = intent.getLongExtra(EXTRA_MOVIE_ID_KEY, 0)
         val theaterId = intent.getLongExtra(EXTRA_THEATER_ID_KEY, 0)
-        executePresenterTasks(movieId, theaterId)
+        initializePresenterTasks(movieId, theaterId)
         setOnPlusButtonClickListener()
         setOnMinusButtonClickListener()
         setOnTicketingButtonListener()
     }
 
-    private fun executePresenterTasks(movieId: Long, theaterId: Long) {
+    private fun initializePresenterTasks(movieId: Long, theaterId: Long) {
         presenter.setCurrentResultTicketCountInfo()
         presenter.storeMovieId(movieId)
         presenter.storeTheaterId(theaterId)
