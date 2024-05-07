@@ -16,6 +16,7 @@ interface DetailContract {
 
         fun startMovieTicketActivity(
             count: Count,
+            movieId: Long,
             theaterId: Long,
         )
 

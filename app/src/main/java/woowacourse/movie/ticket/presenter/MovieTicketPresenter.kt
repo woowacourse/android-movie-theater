@@ -12,7 +12,7 @@ import woowacourse.movie.ticket.model.TicketDataResource.seats
 class MovieTicketPresenter(
     val view: MovieTicketContract.View,
 ) : MovieTicketContract.Presenter {
-    override fun storeTicketCount(count: Count) {
+    override fun storeTicketCount(count: Int) {
         TicketDataResource.ticketCount = count
     }
 
@@ -43,11 +43,7 @@ class MovieTicketPresenter(
     override fun storeSeats(seats: List<Seat>) {
         TicketDataResource.seats = seats
     }
-
-//    override fun setSeatsInfo() {
-//        view.showSeats(seats)
-//    }
-
+    
     override fun setScreeningTimeInfo() {
         view.showScreeningTime(TicketDataResource.screeningTime)
     }

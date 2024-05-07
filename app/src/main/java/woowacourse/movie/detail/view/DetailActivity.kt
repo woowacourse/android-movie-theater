@@ -15,7 +15,6 @@ import woowacourse.movie.detail.model.Count
 import woowacourse.movie.detail.presenter.DetailPresenter
 import woowacourse.movie.list.model.Movie
 import woowacourse.movie.list.view.HomeFragment.Companion.EXTRA_MOVIE_ID_KEY
-import woowacourse.movie.list.view.TheaterFragment.Companion.EXTRA_THEATER_ID_KEY
 import woowacourse.movie.seats.view.SeatsActivity
 import java.time.LocalDate
 import java.time.LocalTime
@@ -26,23 +25,21 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
     private var toast: Toast? = null
     lateinit var selectedDate: LocalDate
     lateinit var selectedTime: LocalTime
-    private var movieId: Long = -1
-    private var theaterId: Long = -1
     override val presenter = DetailPresenter(this@DetailActivity)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
         binding.detail = this
-        movieId = intent.getLongExtra(EXTRA_MOVIE_ID_KEY, 0)
-        theaterId = intent.getLongExtra(EXTRA_THEATER_ID_KEY, 0)
-        executePresenterTasks()
+        val movieId = intent.getLongExtra(EXTRA_MOVIE_ID_KEY, 0)
+        val theaterId = intent.getLongExtra(EXTRA_THEATER_ID_KEY, 0)
+        executePresenterTasks(movieId, theaterId)
         setOnPlusButtonClickListener()
         setOnMinusButtonClickListener()
         setOnTicketingButtonListener()
     }
 
-    private fun executePresenterTasks() {
+    private fun executePresenterTasks(movieId: Long, theaterId: Long) {
         presenter.setCurrentResultTicketCountInfo()
         presenter.storeMovieId(movieId)
         presenter.storeTheaterId(theaterId)
@@ -138,6 +135,7 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
 
     override fun startMovieTicketActivity(
         count: Count,
+        movieId: Long,
         theaterId: Long,
     ) {
         val intent = Intent(this, SeatsActivity::class.java)
@@ -156,7 +154,7 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
         const val EXTRA_COUNT_KEY = "count_key"
         const val EXTRA_DATE_KEY = "selected_date_key"
         const val EXTRA_TIME_KEY = "selected_time_key"
-        const val EXTRA_THEATER_ID_KEY = "threater_id_key"
+        const val EXTRA_THEATER_ID_KEY = "theater_id_key"
         private const val DATE_PATTERN = "yyyy.MM.dd"
     }
 }

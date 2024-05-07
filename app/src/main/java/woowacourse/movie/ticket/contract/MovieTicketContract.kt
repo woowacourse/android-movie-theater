@@ -20,7 +20,7 @@ interface MovieTicketContract {
     }
 
     interface Presenter {
-        fun storeTicketCount(count: Count)
+        fun storeTicketCount(count: Int)
 
         fun setTicketInfo()
 

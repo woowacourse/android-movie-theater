@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieTicketBinding
 import woowacourse.movie.detail.view.DetailActivity
+import woowacourse.movie.detail.view.DetailActivity.Companion.EXTRA_COUNT_KEY
 import woowacourse.movie.list.model.TheaterData
 import woowacourse.movie.seats.model.Seat
 import woowacourse.movie.seats.view.SeatsActivity.Companion.DATE_KEY
@@ -15,7 +16,6 @@ import woowacourse.movie.seats.view.SeatsActivity.Companion.SEATS_KEY
 import woowacourse.movie.seats.view.SeatsActivity.Companion.TIME_KEY
 import woowacourse.movie.ticket.contract.MovieTicketContract
 import woowacourse.movie.ticket.presenter.MovieTicketPresenter
-import woowacourse.movie.util.IntentUtil.getSerializableCountData
 
 class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
     override val presenter: MovieTicketPresenter = MovieTicketPresenter(this)
@@ -32,7 +32,7 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
     }
 
     private fun processPresenterTask() {
-        presenter.storeTicketCount(getSerializableCountData(intent))
+        presenter.storeTicketCount(intent.getIntExtra(EXTRA_COUNT_KEY, 0))
         presenter.storeMovieId(intent.getLongExtra(ID_KEY, -1))
         presenter.storeScreeningDate(intent.getStringExtra(DATE_KEY) ?: "ddd")
         presenter.storeScreeningTime(intent.getStringExtra(TIME_KEY) ?: "ddd")

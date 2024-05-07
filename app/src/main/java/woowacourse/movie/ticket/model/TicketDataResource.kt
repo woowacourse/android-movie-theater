@@ -10,7 +10,7 @@ object TicketDataResource {
 
     var seats = listOf<Seat>()
 
-    var ticketCount: Count = Count(1)
+    var ticketCount: Int = 1
 
     var screeningDate = ""
 
