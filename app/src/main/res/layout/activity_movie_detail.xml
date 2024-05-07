@@ -24,7 +24,7 @@
 
         <variable
             name="listener"
-            type="woowacourse.movie.movieDetail.ClickListener" />
+            type="woowacourse.movie.movieDetail.TicketCountListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
