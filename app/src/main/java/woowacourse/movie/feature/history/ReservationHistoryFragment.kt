@@ -8,6 +8,7 @@ import woowacourse.movie.MovieTheaterApplication
 import woowacourse.movie.data.entity.Ticket
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.feature.history.adapter.ReservationHistoryAdapter
+import woowacourse.movie.feature.history.adapter.ReservationHistoryDividerDecoration
 import woowacourse.movie.feature.result.MovieResultActivity
 import woowacourse.movie.util.BaseFragment
 
@@ -25,6 +26,12 @@ class ReservationHistoryFragment :
     ): View {
         _binding = FragmentReservationHistoryBinding.inflate(inflater)
 
+        reservationHistoryAdapter =
+            ReservationHistoryAdapter {
+                val intent = MovieResultActivity.newIntent(requireContext(), it.id)
+                startActivity(intent)
+            }
+
         initializeView()
         return binding.root
     }
@@ -32,12 +39,9 @@ class ReservationHistoryFragment :
     override fun initializePresenter() = ReservationHistoryPresenter(this)
 
     private fun initializeView() {
-        reservationHistoryAdapter =
-            ReservationHistoryAdapter {
-                val intent = MovieResultActivity.newIntent(requireContext(), it.id)
-                startActivity(intent)
-            }
         binding.reservationHistoryRecyclerView.adapter = reservationHistoryAdapter
+        binding.reservationHistoryRecyclerView.addItemDecoration(ReservationHistoryDividerDecoration())
+
         presenter.loadTickets((requireActivity().application as MovieTheaterApplication).ticketRepository)
     }
 
