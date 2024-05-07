@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.BundleCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import woowacourse.movie.ErrorActivity
+import woowacourse.movie.error.ErrorActivity
 import woowacourse.movie.common.ui.withArgs
 import woowacourse.movie.databinding.FragmentBottomSheetTheatersBinding
 import woowacourse.movie.model.Cinema

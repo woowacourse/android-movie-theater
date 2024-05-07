@@ -13,7 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.IntentCompat
 import androidx.core.view.children
-import woowacourse.movie.ErrorActivity
+import woowacourse.movie.error.ErrorActivity
 import woowacourse.movie.R
 import woowacourse.movie.base.BindingActivity
 import woowacourse.movie.databinding.ActivityTheaterSeatBinding

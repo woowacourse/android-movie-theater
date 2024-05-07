@@ -9,7 +9,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.IntentCompat
-import woowacourse.movie.ErrorActivity
+import woowacourse.movie.error.ErrorActivity
 import woowacourse.movie.R
 import woowacourse.movie.base.BindingActivity
 import woowacourse.movie.databinding.ActivityMovieDetailBinding

@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.core.content.IntentCompat
-import woowacourse.movie.ErrorActivity
+import woowacourse.movie.error.ErrorActivity
 import woowacourse.movie.R
 import woowacourse.movie.base.BindingActivity
 import woowacourse.movie.databinding.ActivityPurchaseConfirmationBinding
