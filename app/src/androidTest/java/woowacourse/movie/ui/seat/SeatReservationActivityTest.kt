@@ -72,4 +72,18 @@ class SeatReservationActivityTest {
         // then
         onView(withId(R.id.btn_seat_reservation_complete)).check(matches(isNotEnabled()))
     }
+
+    @Test
+    fun `좌석을_count_2_만큼_선택하면_확인_버튼이_활성화된다`() {
+        // given
+        val a1 = onView(withText("A 1"))
+        val b2 = onView(withText("B 2"))
+
+        // when
+        a1.perform(click())
+        b2.perform(click())
+
+        // then
+        onView(withId(R.id.btn_seat_reservation_complete)).check(matches(isEnabled()))
+    }
 }
