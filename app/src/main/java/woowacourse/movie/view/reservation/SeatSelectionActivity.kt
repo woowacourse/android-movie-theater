@@ -35,6 +35,8 @@ import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.HE
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.SCREENING_DATE_TIME
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.TICKET
 import woowacourse.movie.view.result.ReservationResultActivity
+import woowacourse.movie.view.setting.SettingFragment
+import woowacourse.movie.view.setting.SettingFragment.Companion.PUSH_SETTING
 import woowacourse.movie.view.theater.TheaterSelectionFragment.Companion.THEATER_ID
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
@@ -160,6 +162,13 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 presenter.saveTicket(ticket)
             }
         }
+        if (isOnAlarmState()){
+            presenter.settingAlarm(
+                context = this@SeatSelectionActivity,
+                movieTitle = binding.textviewSeatSelectionTitle.text.toString(),
+                ticket  = ticket,
+            )
+        }
         val intent = Intent(this, ReservationResultActivity::class.java)
         intent.putExtra(TICKET, ticket)
         startActivity(intent)
@@ -244,6 +253,11 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             bundle.bundleSerializable(SEATS, Seats::class.java) ?: throw NoSuchElementException()
         val index = bundle.getIntegerArrayList(SEATS_INDEX) ?: throw NoSuchElementException()
         presenter.restoreSeats(seats, index.toList())
+    }
+
+    private fun isOnAlarmState(): Boolean{
+        val sharedPreference = this.getSharedPreferences(PUSH_SETTING, MODE_PRIVATE)
+        return sharedPreference.getBoolean(PUSH_SETTING, false)
     }
 
     companion object {

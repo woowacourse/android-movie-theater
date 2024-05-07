@@ -1,5 +1,6 @@
 package woowacourse.movie.presenter.reservation
 
+import android.content.Context
 import android.widget.Button
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
@@ -17,6 +18,12 @@ interface SeatSelectionContract {
         fun updateTotalPrice(
             isSelected: Boolean,
             seat: Seat,
+        )
+
+        fun settingAlarm(
+            context: Context,
+            movieTitle: String,
+            ticket: Ticket,
         )
 
         fun initializeConfirmButton()
@@ -76,5 +83,6 @@ interface SeatSelectionContract {
         fun restoreSelectedSeats(selectedSeats: List<Int>)
 
         fun showErrorToast()
+
     }
 }

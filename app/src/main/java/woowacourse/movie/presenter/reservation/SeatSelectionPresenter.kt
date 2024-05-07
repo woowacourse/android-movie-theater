@@ -1,5 +1,8 @@
 package woowacourse.movie.presenter.reservation
 
+import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.seats.SeatsDao
 import woowacourse.movie.db.theater.TheaterDao
@@ -9,6 +12,8 @@ import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.ticket.Ticket
+import woowacourse.movie.model.ticket.toTicket
+import woowacourse.movie.notification.TicketNotification
 import woowacourse.movie.repository.ReservationTicketRepository
 
 class SeatSelectionPresenter(
@@ -84,6 +89,18 @@ class SeatSelectionPresenter(
     ) {
         val totalPrice = seats.calculateAmount()
         view.showAmount(totalPrice)
+    }
+
+    override fun settingAlarm(
+        context: Context,
+        movieTitle: String,
+        ticket: Ticket,
+    ) {
+        TicketNotification.setNotification(
+            context = context,
+            ticket = ticket,
+            movieTitle = movieTitle,
+        )
     }
 
     override fun initializeConfirmButton() {
