@@ -10,6 +10,10 @@
             type="woowacourse.movie.detail.view.DetailActivity" />
 
         <variable
+            name="count"
+            type="int"/>
+
+        <variable
             name="movie"
             type="woowacourse.movie.list.model.Movie" />
 
@@ -196,7 +200,7 @@
                     android:id="@+id/ticket_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="1"
+                    tools:text="@{String.valueOf(count)}"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"

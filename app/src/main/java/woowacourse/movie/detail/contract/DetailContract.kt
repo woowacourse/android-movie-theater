@@ -1,6 +1,5 @@
 package woowacourse.movie.detail.contract
 
-import woowacourse.movie.detail.model.Count
 import woowacourse.movie.detail.presenter.DetailPresenter
 import woowacourse.movie.list.model.Movie
 import java.time.LocalDate
@@ -10,12 +9,12 @@ interface DetailContract {
     interface View {
         val presenter: DetailPresenter
 
-        fun showCurrentResultTicketCountView(info: Int)
+        fun showCurrentResultTicketCountView(ticketCount: Int)
 
         fun setMovieView(info: Movie)
 
         fun startMovieTicketActivity(
-            count: Count,
+            count: Int,
             movieId: Long,
             theaterId: Long,
         )

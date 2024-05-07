@@ -13,13 +13,12 @@ class DetailPresenter(
     private val view: DetailContract.View,
 ) : DetailContract.Presenter {
     val model = DetailTicketCountData
-    
+
     private val theater = TheaterData.theaters.first { it.id == theaterId }
 
     private val screeningTimes: List<LocalTime> = theater.getScreeningTimes(movieId)
 
-    private val ticketCount
-        get() = model.ticketCount
+    private val ticketCount = model.ticketCount
 
     override fun setCurrentResultTicketCountInfo() {
         view.showCurrentResultTicketCountView(ticketCount.number)
@@ -38,21 +37,25 @@ class DetailPresenter(
     }
 
     override fun setPlusButtonClickInfo() {
-        model.plusTicketCount()
-        view.showCurrentResultTicketCountView(ticketCount.number)
+        runCatching {
+            model.plusTicketCount()
+            view.showCurrentResultTicketCountView(model.ticketCount.number)
+        }.onFailure {
+            view.showToast(it.message ?: "")
+        }
     }
 
     override fun setMinusButtonClickInfo() {
         runCatching {
             model.minusTicketCount()
-            view.showCurrentResultTicketCountView(ticketCount.number)
+            view.showCurrentResultTicketCountView(model.ticketCount.number)
         }.onFailure {
             view.showToast(it.message ?: "")
         }
     }
 
     override fun setTicketingButtonClickInfo() {
-        view.startMovieTicketActivity(ticketCount, movieId, theaterId)
+        view.startMovieTicketActivity(model.ticketCount.number, movieId, theaterId)
     }
 
     override fun setSpinnerInfo(theaterId: Long) {

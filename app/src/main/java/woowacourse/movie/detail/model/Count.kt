@@ -3,7 +3,7 @@ package woowacourse.movie.detail.model
 @JvmInline
 value class Count(val number: Int) {
     init {
-        require(number >= 1) { "개수는 1 이상이어야 합니다." }
+        require(number in RANGE) { "개수는 1이상 20이하 이어야 합니다." }
     }
 
     operator fun inc(): Count {
@@ -12,5 +12,11 @@ value class Count(val number: Int) {
 
     operator fun dec(): Count {
         return Count(number - 1)
+    }
+
+    companion object {
+        const val MIN_COUNT = 1
+        const val MAX_COUNT = 20
+        val RANGE = MIN_COUNT..MAX_COUNT
     }
 }

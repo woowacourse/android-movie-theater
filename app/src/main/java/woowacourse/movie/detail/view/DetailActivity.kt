@@ -11,14 +11,13 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityDetailBinding
 import woowacourse.movie.detail.contract.DetailContract
-import woowacourse.movie.detail.model.Count
 import woowacourse.movie.detail.presenter.DetailPresenter
 import woowacourse.movie.list.model.Movie
-import woowacourse.movie.list.view.HomeFragment.Companion.EXTRA_MOVIE_ID_KEY
 import woowacourse.movie.seats.view.SeatsActivity
+import woowacourse.movie.util.dateToString
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 
 class DetailActivity : AppCompatActivity(), DetailContract.View {
     private lateinit var binding: ActivityDetailBinding
@@ -48,7 +47,7 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
         presenter.setSpinnerDateItemInfo()
         presenter.setSpinnerTimeItemInfo()
     }
-    
+
     override fun setSpinners(
         screeningDates: List<LocalDate>,
         screeningTimes: List<LocalTime>,
@@ -111,8 +110,9 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
         toast?.show()
     }
 
-    override fun showCurrentResultTicketCountView(info: Int) {
-        binding.ticketCount.text = info.toString()
+    override fun showCurrentResultTicketCountView(ticketCount: Int) {
+        binding.count = ticketCount
+        binding.executePendingBindings()
     }
 
     private fun setOnPlusButtonClickListener() {
@@ -134,27 +134,23 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
     }
 
     override fun startMovieTicketActivity(
-        count: Count,
+        count: Int,
         movieId: Long,
         theaterId: Long,
     ) {
         val intent = Intent(this, SeatsActivity::class.java)
-        intent.putExtra(EXTRA_COUNT_KEY, count.number)
-        intent.putExtra(EXTRA_MOVIE_ID_KEY, movieId)
-        intent.putExtra(
-            EXTRA_DATE_KEY,
-            selectedDate.format(DateTimeFormatter.ofPattern(DATE_PATTERN)),
-        )
-        intent.putExtra(EXTRA_TIME_KEY, selectedTime.toString())
         intent.putExtra(EXTRA_THEATER_ID_KEY, theaterId)
+        intent.putExtra(EXTRA_MOVIE_ID_KEY, movieId)
+        val localDateTime: LocalDateTime = selectedDate.atTime(selectedTime)
+        intent.putExtra(EXTRA_SCREENING_SCHEDULE_KEY, localDateTime.dateToString())
+        intent.putExtra(EXTRA_COUNT_KEY, count)
         this.startActivity(intent)
     }
 
     companion object {
         const val EXTRA_COUNT_KEY = "count_key"
-        const val EXTRA_DATE_KEY = "selected_date_key"
-        const val EXTRA_TIME_KEY = "selected_time_key"
         const val EXTRA_THEATER_ID_KEY = "theater_id_key"
-        private const val DATE_PATTERN = "yyyy.MM.dd"
+        const val EXTRA_MOVIE_ID_KEY = "movie_id_key"
+        const val EXTRA_SCREENING_SCHEDULE_KEY = "screening_schedule_key"
     }
 }
