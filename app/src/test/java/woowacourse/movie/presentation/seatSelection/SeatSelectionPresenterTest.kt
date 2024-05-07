@@ -1,6 +1,7 @@
 package woowacourse.movie.presentation.seatSelection
 
 import io.mockk.impl.annotations.MockK
+import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
@@ -14,7 +15,7 @@ class SeatSelectionPresenterTest {
 
     private val ticketCount = 3
 
-    @MockK(relaxed = true)
+    @RelaxedMockK
     private lateinit var view: SeatSelectionContract.View
 
     @MockK

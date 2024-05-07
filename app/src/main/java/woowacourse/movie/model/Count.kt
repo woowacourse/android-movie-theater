@@ -18,6 +18,16 @@ class Count(number: Int = INITIAL_COUNT) {
         value = newValue
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Count) return false
+        return this.value == other.value
+    }
+
+    override fun hashCode(): Int {
+        return value.hashCode()
+    }
+
     companion object {
         private const val INITIAL_COUNT = 1
         private const val ERROR_NON_POSITIVE_NUMBER = "구매 티켓은 1개 이상이어야 합니다. "
