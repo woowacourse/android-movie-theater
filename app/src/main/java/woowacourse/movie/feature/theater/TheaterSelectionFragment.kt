@@ -22,6 +22,7 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
     private var _binding: FragmentTheaterSelectionBinding? = null
     private val binding get() = _binding!!
     private lateinit var presenter: TheaterSelectionPresenter
+    private lateinit var theaterSelectionAdapter: TheaterSelectionAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +40,7 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
     ) {
         super.onViewCreated(view, savedInstanceState)
         initPresenter()
+        initTheaterSelectionAdapter()
         with(presenter) {
             handleUndeliveredMovieId()
             loadTheater()
@@ -49,11 +51,6 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
         theaters: List<Theater>,
         screeningCounts: List<Int>,
     ) {
-        val theaterSelectionAdapter =
-            TheaterSelectionAdapter { theaterId ->
-                presenter.sendTheaterInfoToReservation(theaterId)
-            }
-        binding.rvTheaterSelection.adapter = theaterSelectionAdapter
         theaterSelectionAdapter.updateData(theaters, screeningCounts)
     }
 
@@ -102,6 +99,14 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
                 TheaterDao(),
                 receiveMovieId(),
             )
+    }
+
+    private fun initTheaterSelectionAdapter() {
+        theaterSelectionAdapter =
+            TheaterSelectionAdapter { theaterId ->
+                presenter.sendTheaterInfoToReservation(theaterId)
+            }
+        binding.rvTheaterSelection.adapter = theaterSelectionAdapter
     }
 
     companion object {
