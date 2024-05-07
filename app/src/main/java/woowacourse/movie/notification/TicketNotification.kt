@@ -32,42 +32,45 @@ object TicketNotification {
         intent.putExtra(TICKET, ticket)
         intent.putExtra(MOVIE_TITLE, movieTitle)
 
-        val pendingIntent = PendingIntent.getBroadcast(
-            context,
-            PENDING_REQUEST_CODE,
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )
-
-        val dateTime = SimpleDateFormat(
-            DATE_PATTERN_FORMAT,
-            Locale.getDefault()
-        ).parse(
-            DATE_PARSE_FORMAT.format(
-                ticket.screeningDateTime.date,
-                ticket.screeningDateTime.time
+        val pendingIntent =
+            PendingIntent.getBroadcast(
+                context,
+                PENDING_REQUEST_CODE,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT,
             )
-        )
-        val calendar = Calendar.getInstance().apply {
-            if (dateTime != null) {
-                timeInMillis = dateTime.time
+
+        val dateTime =
+            SimpleDateFormat(
+                DATE_PATTERN_FORMAT,
+                Locale.getDefault(),
+            ).parse(
+                DATE_PARSE_FORMAT.format(
+                    ticket.screeningDateTime.date,
+                    ticket.screeningDateTime.time,
+                ),
+            )
+        val calendar =
+            Calendar.getInstance().apply {
+                if (dateTime != null) {
+                    timeInMillis = dateTime.time
+                }
+                add(Calendar.MINUTE, ALARM_MINUTE)
             }
-            add(Calendar.MINUTE, ALARM_MINUTE)
-        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (alarmManager.canScheduleExactAlarms()) {
                 alarmManager.setExact(
                     AlarmManager.RTC_WAKEUP,
                     calendar.timeInMillis,
-                    pendingIntent
+                    pendingIntent,
                 )
             }
         } else {
             alarmManager.set(
                 AlarmManager.RTC_WAKEUP,
                 calendar.timeInMillis,
-                pendingIntent
+                pendingIntent,
             )
         }
     }
@@ -76,14 +79,16 @@ object TicketNotification {
     fun cancelNotification(context: Context) {
         val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, TicketNotificationReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(
-            context, PENDING_REQUEST_CODE, intent,
-            PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
+        val pendingIntent =
+            PendingIntent.getBroadcast(
+                context,
+                PENDING_REQUEST_CODE,
+                intent,
+                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+            )
         alarmManager.cancel(pendingIntent)
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.cancel(NOTIFICATION_ID)
     }
-
 }

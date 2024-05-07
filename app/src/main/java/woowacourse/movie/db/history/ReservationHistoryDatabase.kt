@@ -7,10 +7,9 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import woowacourse.movie.model.ticket.ReservationTicket
 
-
 @Database(
     entities = [
-        ReservationTicket::class
+        ReservationTicket::class,
     ],
     version = 1,
 )
@@ -28,7 +27,7 @@ abstract class ReservationHistoryDatabase : RoomDatabase() {
                     Room.databaseBuilder(
                         context.applicationContext,
                         ReservationHistoryDatabase::class.java,
-                        "reservationTicket"
+                        "reservationTicket",
                     ).build()
                 }
         }

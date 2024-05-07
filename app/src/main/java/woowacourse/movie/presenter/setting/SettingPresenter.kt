@@ -1,8 +1,6 @@
 package woowacourse.movie.presenter.setting
 
 import android.content.Context
-import android.os.Build
-import androidx.annotation.RequiresApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import woowacourse.movie.model.ticket.toTicket

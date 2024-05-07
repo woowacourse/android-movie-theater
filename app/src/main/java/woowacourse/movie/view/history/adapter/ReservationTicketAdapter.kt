@@ -14,7 +14,10 @@ class ReservationTicketAdapter(
 ) : RecyclerView.Adapter<TicketViewHolder>() {
     private var reservationTickets: ArrayList<ReservationTicket> = arrayListOf()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TicketViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): TicketViewHolder {
         val view = ItemTicketBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TicketViewHolder(view, onClickTicketItem)
     }
@@ -23,7 +26,10 @@ class ReservationTicketAdapter(
         return reservationTickets.size
     }
 
-    override fun onBindViewHolder(holder: TicketViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: TicketViewHolder,
+        position: Int,
+    ) {
         val item = reservationTickets[position]
         holder.bind(item)
     }

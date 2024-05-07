@@ -1,6 +1,5 @@
 package woowacourse.movie.presenter.history
 
-import android.content.Context
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import woowacourse.movie.model.ticket.ReservationTicket
@@ -11,10 +10,10 @@ class ReservationHistoryPresenter(
     private val reservationTicketRepository: ReservationTicketRepository,
 ) : ReservationHistoryContract.Presenter {
     override suspend fun loadReservationTickets() {
-        withContext(Dispatchers.IO){
+        withContext(Dispatchers.IO) {
             val tickets = reservationTicketRepository.loadReservationTickets()
 
-            withContext(Dispatchers.Main){
+            withContext(Dispatchers.Main) {
                 view.showReservationHistory(tickets)
             }
         }

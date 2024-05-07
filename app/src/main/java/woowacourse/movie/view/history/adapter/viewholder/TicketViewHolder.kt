@@ -9,7 +9,6 @@ class TicketViewHolder(
     private val binding: ItemTicketBinding,
     private val onClickTicketItem: OnClickTicketItem,
 ) : RecyclerView.ViewHolder(binding.root) {
-
     init {
         binding.ticketCatalog = this
     }
@@ -19,5 +18,4 @@ class TicketViewHolder(
     }
 
     fun onClickTicket(item: ReservationTicket) = onClickTicketItem(item)
-
 }

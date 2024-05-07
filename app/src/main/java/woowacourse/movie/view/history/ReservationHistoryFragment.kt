@@ -9,9 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.model.ticket.ReservationTicket
@@ -31,10 +29,11 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        presenter = ReservationHistoryPresenter(
-            this@ReservationHistoryFragment,
-            ReservationTicketRepositoryImpl(context),
-        )
+        presenter =
+            ReservationHistoryPresenter(
+                this@ReservationHistoryFragment,
+                ReservationTicketRepositoryImpl(context),
+            )
     }
 
     override fun onCreateView(
@@ -42,16 +41,20 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_reservation_history,
-            container,
-            false
-        )
+        _binding =
+            DataBindingUtil.inflate(
+                inflater,
+                R.layout.fragment_reservation_history,
+                container,
+                false,
+            )
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         initReservationTicketRecyclerView()
 

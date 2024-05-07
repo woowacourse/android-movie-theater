@@ -1,6 +1,5 @@
 package woowacourse.movie.presenter.history
 
-import android.content.Context
 import woowacourse.movie.model.ticket.ReservationTicket
 
 class ReservationHistoryContract {
@@ -10,7 +9,7 @@ class ReservationHistoryContract {
         fun showReservationHistory(tickets: List<ReservationTicket>)
     }
 
-    interface Presenter{
+    interface Presenter {
         suspend fun loadReservationTickets()
 
         fun loadReservationTicket(reservationTicket: ReservationTicket)

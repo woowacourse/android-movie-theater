@@ -2,12 +2,10 @@ package woowacourse.movie.view.setting
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -25,10 +23,11 @@ class SettingFragment : Fragment(), SettingContract.View {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        presenter = SettingPresenter(
-            view = this,
-            repository = ReservationTicketRepositoryImpl(context)
-        )
+        presenter =
+            SettingPresenter(
+                view = this,
+                repository = ReservationTicketRepositoryImpl(context),
+            )
     }
 
     override fun onCreateView(
@@ -40,7 +39,10 @@ class SettingFragment : Fragment(), SettingContract.View {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         presenter.loadSavedSetting(getPushSetting())
         initView()
@@ -73,7 +75,6 @@ class SettingFragment : Fragment(), SettingContract.View {
             }
         }
     }
-
 
     companion object {
         const val PUSH_SETTING = "pushSetting"

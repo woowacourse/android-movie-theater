@@ -7,7 +7,6 @@ import woowacourse.movie.model.ticket.ReservationTicket
 
 @Dao
 interface ReservationHistoryDao {
-
     @Insert
     fun saveReservationTicket(reservationTicket: ReservationTicket)
 

@@ -18,10 +18,11 @@ class ReservationTicketRepositoryImpl(context: Context) : ReservationTicketRepos
     }
 
     override fun saveReservationTicket(ticket: Ticket) {
-        val reservationTicket = ticket.toReservationTicket(
-            movieTitle = movieDao.find(ticket.movieId).title,
-            theaterName = theaterDao.find(ticket.theaterId).theaterName,
-        )
+        val reservationTicket =
+            ticket.toReservationTicket(
+                movieTitle = movieDao.find(ticket.movieId).title,
+                theaterName = theaterDao.find(ticket.theaterId).theaterName,
+            )
         historyDao.saveReservationTicket(reservationTicket)
     }
 

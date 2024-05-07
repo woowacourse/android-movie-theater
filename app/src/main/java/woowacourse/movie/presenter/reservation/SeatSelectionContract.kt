@@ -83,6 +83,5 @@ interface SeatSelectionContract {
         fun restoreSelectedSeats(selectedSeats: List<Int>)
 
         fun showErrorToast()
-
     }
 }

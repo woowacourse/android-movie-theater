@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -33,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         requestNotificationPermission()
     }
 
-
     @SuppressLint("ResourceType")
     private fun setBottomNavigationView() {
         val fragments =
@@ -56,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun requestNotificationPermission() {
         if (ContextCompat.checkSelfPermission(
-                this, Manifest.permission.POST_NOTIFICATIONS
+                this, Manifest.permission.POST_NOTIFICATIONS,
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -70,7 +68,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { _: Boolean -> }
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+        ) { _: Boolean -> }
 }
