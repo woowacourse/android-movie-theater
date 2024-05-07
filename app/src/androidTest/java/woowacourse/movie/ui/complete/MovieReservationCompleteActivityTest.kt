@@ -15,8 +15,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.model.data.UserTicketsImpl
+import woowacourse.movie.model.db.UserTicket
 import woowacourse.movie.model.movie.ReservationDetail
-import woowacourse.movie.model.movie.UserTicket
+import woowacourse.movie.model.movie.Seat
+import woowacourse.movie.model.movie.SeatRow
 import woowacourse.movie.ui.selection.MovieSeatSelectionKey
 import java.time.LocalDateTime
 
@@ -39,7 +41,7 @@ class MovieReservationCompleteActivityTest {
     fun `화면이_띄워지면_영화_제목이_보인다`() {
         onView(withId(R.id.tv_title))
             .check(matches(isDisplayed()))
-            .check(matches(withText(userTicket.title)))
+            .check(matches(withText(userTicket.movieTitle)))
     }
 
     @Test
@@ -58,7 +60,7 @@ class MovieReservationCompleteActivityTest {
 
     @Test
     fun `화면이_띄워지면_예매_금액이_보인다`() {
-        val reservationAmount = userTicket.reservationDetail.totalSeatAmount()
+        val reservationAmount = userTicket.reservationAmount
 
         onView(withId(R.id.tv_reservation_amount))
             .check(matches(isDisplayed()))
@@ -77,10 +79,12 @@ class MovieReservationCompleteActivityTest {
                 }
             UserTicketsImpl.save(
                 UserTicket(
-                    title = "해리",
-                    theater = "선릉",
-                    screeningStartDateTime = LocalDateTime.of(2024, 3, 28, 21, 0),
-                    reservationDetail = reservationDetail,
+                    movieTitle = "",
+                    screeningStartDateTime = LocalDateTime.of(2024, 3, 28, 10, 0),
+                    reservationCount = 1,
+                    reservationSeats = listOf(Seat(SeatRow.A, 1)),
+                    theaterName = "강남",
+                    reservationAmount = 10000,
                 ),
             )
         }

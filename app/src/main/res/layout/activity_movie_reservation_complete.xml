@@ -7,7 +7,7 @@
 
         <variable
             name="userTicket2"
-            type="woowacourse.movie.model.movie.UserTicket" />
+            type="woowacourse.movie.model.db.UserTicket" />
     </data>
 
     <LinearLayout

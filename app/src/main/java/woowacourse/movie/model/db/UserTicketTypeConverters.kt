@@ -4,7 +4,7 @@ import androidx.room.TypeConverter
 import woowacourse.movie.model.movie.Seat
 import java.time.LocalDateTime
 
-class ReservationTypeConverters {
+class UserTicketTypeConverters {
     @TypeConverter
     fun fromLocalDateTime(screeningStartDateTime: LocalDateTime): String {
         return screeningStartDateTime.toString()

@@ -13,8 +13,8 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieReservationCompleteBinding
 import woowacourse.movie.model.data.UserTicketsImpl
+import woowacourse.movie.model.db.UserTicket
 import woowacourse.movie.model.movie.Seat
-import woowacourse.movie.model.movie.UserTicket
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.main.MovieMainActivity
 import java.time.LocalDateTime
@@ -43,8 +43,7 @@ class MovieReservationCompleteActivity :
 
     override fun initializePresenter() = MovieReservationCompletePresenter(this, UserTicketsImpl)
 
-    private fun userTicketId() =
-        intent.getLongExtra(MovieReservationCompleteKey.TICKET_ID, USER_TICKET_ID_DEFAULT_VALUE)
+    private fun userTicketId() = intent.getLongExtra(MovieReservationCompleteKey.TICKET_ID, USER_TICKET_ID_DEFAULT_VALUE)
 
     override fun showTicket(userTicket: UserTicket) {
         binding.userTicket2 = userTicket

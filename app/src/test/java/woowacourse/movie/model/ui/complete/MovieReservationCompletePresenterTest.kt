@@ -4,9 +4,9 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.model.A1_SEAT
 import woowacourse.movie.model.data.UserTicketsImpl
-import woowacourse.movie.model.movie.ReservationDetail
-import woowacourse.movie.model.movie.UserTicket
+import woowacourse.movie.model.db.UserTicket
 import woowacourse.movie.ui.complete.MovieReservationCompleteContract
 import woowacourse.movie.ui.complete.MovieReservationCompletePresenter
 import java.time.LocalDateTime
@@ -21,10 +21,12 @@ class MovieReservationCompletePresenterTest {
         presenter = MovieReservationCompletePresenter(view, UserTicketsImpl)
         UserTicketsImpl.save(
             UserTicket(
-                "",
-                "강남",
-                LocalDateTime.of(2024, 3, 28, 10, 0),
-                ReservationDetail(1),
+                movieTitle = "",
+                screeningStartDateTime = LocalDateTime.of(2024, 3, 28, 10, 0),
+                reservationCount = 1,
+                reservationSeats = listOf(A1_SEAT),
+                theaterName = "강남",
+                reservationAmount = 10000,
             ),
         )
     }

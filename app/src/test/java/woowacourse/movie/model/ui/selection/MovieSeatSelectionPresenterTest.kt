@@ -4,9 +4,10 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.model.data.ReservationsImpl
 import woowacourse.movie.model.data.UserTicketsImpl
-import woowacourse.movie.model.movie.ReservationDetail
-import woowacourse.movie.model.movie.UserTicket
+import woowacourse.movie.model.movie.Reservation
+import woowacourse.movie.model.movie.ReservationCount
 import woowacourse.movie.ui.selection.MovieSeatSelectionContract
 import woowacourse.movie.ui.selection.MovieSeatSelectionPresenter
 import java.time.LocalDateTime
@@ -18,13 +19,13 @@ class MovieSeatSelectionPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk<MovieSeatSelectionContract.View>(relaxed = true)
-        presenter = MovieSeatSelectionPresenter(view, UserTicketsImpl)
-        UserTicketsImpl.save(
-            UserTicket(
-                "",
-                "강남",
-                LocalDateTime.of(2024, 3, 28, 10, 0),
-                ReservationDetail(1),
+        presenter = MovieSeatSelectionPresenter(view, ReservationsImpl, UserTicketsImpl)
+        ReservationsImpl.save(
+            Reservation(
+                title = "",
+                theater = "강남",
+                screeningStartDateTime = LocalDateTime.of(2024, 3, 28, 10, 0),
+                reservationCount = ReservationCount(1),
             ),
         )
     }
