@@ -14,7 +14,7 @@ class ReservationActivity : BaseMvpBindingActivity<ActivityReservationBinding>()
     override val layoutResourceId: Int
         get() = R.layout.activity_reservation
     override val presenter: ReservationPresenter by lazy {
-        ReservationPresenter(this, DummyReservation, DummyTheater)
+        ReservationPresenter(this, ReservationRepositoryImpl(applicationContext), DummyTheater)
     }
 
     override fun initStartView() {
