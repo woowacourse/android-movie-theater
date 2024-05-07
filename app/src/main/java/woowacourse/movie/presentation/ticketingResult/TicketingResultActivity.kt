@@ -7,14 +7,12 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityTicketingResultBinding
-import woowacourse.movie.model.Ticket
-import woowacourse.movie.repository.DummyTheaterList
+import woowacourse.movie.model.Reservation
 
 class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.View {
     private lateinit var binding: ActivityTicketingResultBinding
-    private val presenter: TicketingResultPresenter = TicketingResultPresenter(this, DummyTheaterList)
+    private val presenter: TicketingResultPresenter = TicketingResultPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,21 +20,18 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val movieTicket =
+        val movieReservation =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                intent.getParcelableExtra(EXTRA_MOVIE_TICKET, Ticket::class.java)
+                intent.getParcelableExtra(EXTRA_MOVIE_TICKET, Reservation::class.java)
             } else {
                 intent.getParcelableExtra(EXTRA_MOVIE_TICKET)
             }
-        presenter.loadTicketInfo(movieTicket)
+        presenter.loadTicketInfo(movieReservation)
     }
 
-    override fun displayTicketInfo(
-        ticket: Ticket,
-        theaterName: String,
-    ) {
-        binding.ticket = ticket
-        binding.theaterName = "$theaterName 극장"
+    override fun displayTicketInfo(reservation: Reservation) {
+        binding.reservation = reservation
+        binding.theaterName = "${reservation.theaterName} 극장"
     }
 
     override fun showToastMessage(message: String?) {
@@ -53,10 +48,10 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
 
         fun createIntent(
             context: Context,
-            movieTicket: Ticket,
+            movieReservation: Reservation,
         ): Intent {
             return Intent(context, TicketingResultActivity::class.java).apply {
-                putExtra(EXTRA_MOVIE_TICKET, movieTicket)
+                putExtra(EXTRA_MOVIE_TICKET, movieReservation)
             }
         }
     }

@@ -11,13 +11,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
-import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.model.Movie
+import woowacourse.movie.model.Reservation
 import woowacourse.movie.model.Seat
 import woowacourse.movie.model.SeatGrade
 import woowacourse.movie.model.SeatingSystem
-import woowacourse.movie.model.Ticket
 import woowacourse.movie.presentation.ticketingResult.TicketingResultActivity
 import woowacourse.movie.utils.formatSeat
 
@@ -104,8 +103,8 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun navigate(ticket: Ticket) {
-        startActivity(TicketingResultActivity.createIntent(this, ticket))
+    override fun navigate(reservation: Reservation) {
+        startActivity(TicketingResultActivity.createIntent(this, reservation))
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

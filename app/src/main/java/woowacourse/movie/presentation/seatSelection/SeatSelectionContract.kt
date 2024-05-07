@@ -1,9 +1,9 @@
 package woowacourse.movie.presentation.seatSelection
 
 import woowacourse.movie.model.Movie
+import woowacourse.movie.model.Reservation
 import woowacourse.movie.model.Seat
 import woowacourse.movie.model.SeatingSystem
-import woowacourse.movie.model.Ticket
 
 interface SeatSelectionContract {
     interface View {
@@ -21,7 +21,7 @@ interface SeatSelectionContract {
 
         fun showToastMessage(message: String?)
 
-        fun navigate(ticket: Ticket)
+        fun navigate(reservation: Reservation)
     }
 
     interface Presenter {

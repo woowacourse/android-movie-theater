@@ -3,8 +3,8 @@
 
     <data>
         <variable
-            name="ticket"
-            type="woowacourse.movie.model.Ticket" />
+            name="reservation"
+            type="woowacourse.movie.model.Reservation" />
         <variable
             name="theaterName"
             type="String" />
@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="44dp"
                     android:gravity="center"
-                    android:text="@{ticket.movieTitle}"
+                    android:text="@{reservation.movieTitle}"
                     android:textColor="@color/black"
                     android:textSize="26sp"
                     android:textStyle="bold"
@@ -65,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:gravity="center"
-                    android:text="@{ticket.screeningDateTime}"
+                    android:text="@{reservation.screeningDateTime}"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -91,7 +91,7 @@
                     android:id="@+id/tv_ticket_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{String.valueOf(ticket.totalCount)}"
+                    android:text="@{String.valueOf(reservation.totalCount)}"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     app:layout_constraintBaseline_toBaselineOf="@id/tv_ticket_count_head"
@@ -129,7 +129,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxWidth="130dp"
-                    android:text="@{ticket.selectedSeatsToString()}"
+                    android:text="@{reservation.selectedSeatsToString()}"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="@id/tv_ticket_count"
@@ -173,7 +173,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
                     android:gravity="center"
-                    android:text="@{ticket.totalPriceToString()}"
+                    android:text="@{reservation.totalPriceToString()}"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:layout_marginBottom="100dp"

@@ -34,7 +34,7 @@ class HomeActivityTest {
         onView(withId(R.id.action_reservation_list))
             .perform(click())
 
-        onView(withId(R.id.reservation_fragment_tv))
+        onView(withId(R.id.rv_reservations))
             .check(matches(isDisplayed()))
     }
 
