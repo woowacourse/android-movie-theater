@@ -13,7 +13,7 @@ import woowacourse.TestFixture.makeMockReservationTicket
 import woowacourse.movie.model.ticket.ReservationTicket
 
 @ExtendWith(MockKExtension::class)
-class ReservationHistoryTest {
+class ReservationHistoryPresenterTest {
     @MockK
     private lateinit var view: ReservationHistoryContract.View
     private lateinit var presenter: ReservationHistoryContract.Presenter
