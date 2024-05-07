@@ -31,8 +31,8 @@ class TheaterSeatActivity :
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setContentView(binding.root)
-        initializePresenter()
-        setupSeats()
+        initPresenter()
+        initSeats()
 
         binding.confirmButton.setOnClickListener {
             confirmTicketPurchase()
@@ -89,18 +89,21 @@ class TheaterSeatActivity :
         return true
     }
 
-    private fun initializePresenter() {
+    private fun initPresenter() {
         val intent = intent
         val ticketNum = intent.getStringExtra(EXTRA_TICKET_NUM) ?: return ErrorActivity.start(this)
-        IntentCompat.getSerializableExtra(intent, EXTRA_CINEMA, Cinema::class.java)?.let { cinema ->
-            presenter =
-                TheaterSeatPresenter(this, ticketNum.toInt(), cinema).also { presenter ->
-                    binding.presenter = presenter
-                }
-        } ?: ErrorActivity.start(this)
+        val cinema = IntentCompat.getSerializableExtra(intent, EXTRA_CINEMA, Cinema::class.java)
+        if (cinema == null) {
+            ErrorActivity.start(this)
+            return finish()
+        }
+        presenter =
+            TheaterSeatPresenter(this, ticketNum.toInt(), cinema).also { presenter ->
+                binding.presenter = presenter
+            }
     }
 
-    private fun setupSeats() {
+    private fun initSeats() {
         binding.seatTable.children.filterIsInstance<TableRow>()
             .forEach { row ->
                 row.children.filterIsInstance<Button>()
