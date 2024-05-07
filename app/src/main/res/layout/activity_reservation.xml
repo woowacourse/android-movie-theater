@@ -14,11 +14,11 @@
             type="woowacourse.movie.feature.reservation.ReservationPresenter" />
 
         <variable
-            name="head_count"
+            name="headCount"
             type="int" />
 
         <variable
-            name="date_time"
+            name="dateTime"
             type="woowacourse.movie.model.movie.ScreeningDateTime" />
 
         <variable
@@ -26,11 +26,11 @@
             type="woowacourse.movie.model.movie.Movie" />
 
         <variable
-            name="screening_start_date"
+            name="screeningStartDate"
             type="java.time.LocalDate" />
 
         <variable
-            name="screening_end_date"
+            name="screeningEndDate"
             type="java.time.LocalDate" />
     </data>
 
@@ -80,7 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="34dp"
-                    android:text="@{@string/all_screening_period(screening_start_date, screening_end_date)}"
+                    android:text="@{@string/all_screening_period(screeningStartDate, screeningEndDate)}"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="@id/tv_reservation_title"
                     app:layout_constraintTop_toBottomOf="@id/tv_reservation_title"
@@ -159,7 +159,7 @@
                 android:id="@+id/tv_reservation_head_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{String.valueOf(head_count)}"
+                android:text="@{String.valueOf(headCount)}"
                 android:textAppearance="@style/Bold20"
                 app:layout_constraintBottom_toBottomOf="@id/button_reservation_minus"
                 app:layout_constraintEnd_toStartOf="@id/button_reservation_plus"

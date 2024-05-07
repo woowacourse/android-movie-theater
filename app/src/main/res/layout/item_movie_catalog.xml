@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="view_holder"
+            name="viewHolder"
             type="woowacourse.movie.feature.home.adapter.viewholder.MovieViewHolder" />
 
         <variable
@@ -14,11 +14,11 @@
             type="woowacourse.movie.model.movie.Movie" />
 
         <variable
-            name="screening_start_date"
+            name="screeningStartDate"
             type="java.time.LocalDate" />
 
         <variable
-            name="screening_end_date"
+            name="screeningEndDate"
             type="java.time.LocalDate" />
     </data>
 
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@{@string/all_screening_period(screening_start_date, screening_end_date)}"
+            android:text="@{@string/all_screening_period(screeningStartDate, screeningEndDate)}"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@id/tv_movie_catalog_title"
             app:layout_constraintTop_toBottomOf="@id/tv_movie_catalog_title"

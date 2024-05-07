@@ -12,7 +12,7 @@
             type="woowacourse.movie.feature.seatselection.SeatSelectionPresenter" />
 
         <variable
-            name="movie_title"
+            name="movieTitle"
             type="String" />
 
         <variable
@@ -107,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="20dp"
-                android:text="@{String.valueOf(movie_title)}"
+                android:text="@{String.valueOf(movieTitle)}"
                 android:textAppearance="@style/Bold18"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toStartOf="@id/button_seat_selection_confirm"

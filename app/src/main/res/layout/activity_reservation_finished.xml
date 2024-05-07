@@ -14,11 +14,11 @@
             type="woowacourse.movie.model.ticket.Ticket" />
 
         <variable
-            name="movie_title"
+            name="movieTitle"
             type="String" />
 
         <variable
-            name="head_count"
+            name="headCount"
             type="int" />
 
         <variable
@@ -61,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:text="@{String.valueOf(movie_title)}"
+            android:text="@{String.valueOf(movieTitle)}"
             android:textAppearance="@style/Bold24"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
@@ -115,7 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="@{@string/reservation_finished_person(head_count)}"
+            android:text="@{@string/reservation_finished_person(headCount)}"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/tv_reservation_finished_viewing_class"
             app:layout_constraintEnd_toStartOf="@id/tv_reservation_finished_seats"
