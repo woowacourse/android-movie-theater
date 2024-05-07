@@ -23,4 +23,5 @@
     <string name="advertisement">광고</string>
     <string name="screening_count_text">개의 상영 시간</string>
     <string name="chevron_right">\></string>
+    <string name="reservation_schedule">%1$s | %2$s | %3$s </string>
 </resources>
