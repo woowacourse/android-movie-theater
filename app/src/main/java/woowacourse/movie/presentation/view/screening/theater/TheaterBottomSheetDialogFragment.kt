@@ -5,9 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import woowacourse.movie.R
+import woowacourse.movie.databinding.TheaterBottomSheetBinding
 import woowacourse.movie.presentation.uimodel.TheaterUiModel
 import woowacourse.movie.presentation.view.navigation.ScreeningMovieFragment.Companion.DEFAULT_MOVIE_ID
 import woowacourse.movie.presentation.view.navigation.ScreeningMovieFragment.Companion.MOVIE_ID_KEY
@@ -22,15 +21,17 @@ class TheaterBottomSheetDialogFragment :
         TheaterBottomSheetPresenterImpl(this, movieId)
     }
     private var movieId = DEFAULT_MOVIE_ID
-    private lateinit var theatersView: RecyclerView
+    private lateinit var binding: TheaterBottomSheetBinding
     private lateinit var theaterAdapter: TheaterAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.theater_bottom_sheet, container, false)
+    ): View {
+        binding =
+            TheaterBottomSheetBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(
@@ -39,13 +40,12 @@ class TheaterBottomSheetDialogFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         movieId = arguments?.getInt(MOVIE_ID_KEY, DEFAULT_MOVIE_ID) ?: DEFAULT_MOVIE_ID
-        theatersView = view.findViewById(R.id.theater_recycler_view)
         theaterPresenter.loadTheaters()
     }
 
     override fun showTheaterInfo(theatersInfo: List<TheaterUiModel>) {
         theaterAdapter = TheaterAdapter(theatersInfo, this)
-        theatersView.adapter = theaterAdapter
+        binding.theaterRecyclerView.adapter = theaterAdapter
     }
 
     override fun onClick(theaterId: Int) {
