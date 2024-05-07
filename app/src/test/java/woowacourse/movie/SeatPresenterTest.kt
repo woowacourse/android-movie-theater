@@ -50,11 +50,11 @@ class SeatPresenterTest {
         val seatId = "A1"
         val expectedPrice = 10_000
         val priceSlot = slot<Int>()
-        every { view.updateTotalPrice(capture(priceSlot)) } just runs
+        every { view.showPrice(capture(priceSlot)) } just runs
         // when
         presenter.toggleSeatSelection(seatId)
         // then
-        verify(exactly = 1) { view.updateTotalPrice(priceSlot.captured) }
+        verify(exactly = 1) { view.showPrice(priceSlot.captured) }
         priceSlot.captured shouldBe expectedPrice
     }
 
