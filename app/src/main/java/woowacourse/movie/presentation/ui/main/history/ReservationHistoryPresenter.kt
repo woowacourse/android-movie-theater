@@ -1,6 +1,5 @@
 package woowacourse.movie.presentation.ui.main.history
 
-import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,7 +17,6 @@ class ReservationHistoryPresenter(
                     view.showReservations(reservations)
                 }
             }.onFailure { e ->
-                Log.d("Ttt e", e.toString())
                 withContext(Dispatchers.Main) {
                     view.showToastMessage(e)
                 }

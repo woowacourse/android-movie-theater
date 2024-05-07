@@ -2,7 +2,6 @@ package woowacourse.movie.presentation.ui.seatselection
 
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import woowacourse.movie.domain.model.toSeatModel
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.ScreenRepository
@@ -24,7 +23,6 @@ class SeatSelectionPresenter(
         get() = UserSeat(uiModel.userSeat.seatModels.filter { it.isSelected })
 
     override fun updateUiModel(reservationInfo: ReservationInfo) {
-        Log.d("Ttt updateUiModel reservationInfo", reservationInfo.toString())
         uiModel =
             uiModel.copy(
                 id = reservationInfo.theaterId,
@@ -39,9 +37,6 @@ class SeatSelectionPresenter(
     ) {
         screenRepository.findByScreenId(theaterId = theaterId, movieId = movieId)
             .onSuccess { screen ->
-                Log.d("ttt hh theaterId", theaterId.toString())
-
-                Log.d("ttt screen", screen.toString())
                 uiModel = uiModel.copy(screen = screen)
                 view.showScreen(screen, uiModel.totalPrice, uiModel.ticketCount)
             }.onFailure { e ->
@@ -120,7 +115,6 @@ class SeatSelectionPresenter(
         uiModel.screen?.let { screen ->
             uiModel.dateTime?.let { dateTime ->
                 thread {
-                    Log.d("ttt uiModel.id", uiModel.id.toString())
                     reservationRepository.saveReservation(
                         screen.movie.id,
                         uiModel.id,
@@ -131,7 +125,6 @@ class SeatSelectionPresenter(
                         dateTime,
                     ).onSuccess { id ->
                         handler.post {
-                            Log.d("ttt", id.toString())
                             view.showToastMessage(ReservationSuccessMessage)
                             view.navigateToReservation(id)
                         }
