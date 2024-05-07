@@ -15,8 +15,8 @@
             type="String" />
 
         <variable
-            name="releaseDate"
-            type="String" />
+            name="date"
+            type="java.time.LocalDate" />
 
         <variable
             name="ticketNum"
@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="8dp"
-                    android:text="@{releaseDate}" />
+                    android:text="@{@string/running_date_format(date.year, date.monthValue, date.dayOfMonth)}" />
 
                 <TextView
                     android:id="@+id/movie_running_time"

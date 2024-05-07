@@ -8,9 +8,6 @@ import woowacourse.movie.model.movieInfo.Synopsis
 import woowacourse.movie.model.movieInfo.Title
 import woowacourse.movie.model.theater.Seat
 import woowacourse.movie.model.theater.Theater
-import woowacourse.movie.model.ui.AdItemDisplay
-import woowacourse.movie.model.ui.MovieDisplay
-import woowacourse.movie.model.ui.MovieItemDisplay
 import java.time.LocalDate
 
 class MovieListPresenter(
@@ -24,27 +21,13 @@ class MovieListPresenter(
         loadMovies()
     }
 
-    private fun convertToDisplayData(theaters: List<Theater>): List<MovieDisplay> {
-        val movies: List<MovieDisplay> =
-            theaters.map { theater ->
-                MovieItemDisplay(
-                    title = theater.movie.title.toString(),
-                    releaseDate = theater.movie.releaseDate.toString(),
-                    runningTime = theater.movie.runningTime.toString(),
-                )
-            }.chunked(3).flatMap {
-                it + AdItemDisplay()
-            }
-        return movies
-    }
-
     fun onDetailButtonClicked(position: Int) {
         val theater = theaters[position]
         view.navigateToCinemaView(theater)
     }
 
     private fun loadMovies() {
-        val displayData = convertToDisplayData(theaters)
+        val displayData = theaters.toMovieDisplays()
         view.updateAdapter(displayData)
     }
 

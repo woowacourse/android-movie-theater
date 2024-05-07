@@ -41,7 +41,7 @@
             android:id="@+id/movie_release_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{data.releaseDate}"
+            android:text="@{@string/running_date_format(data.releaseDate.year, data.releaseDate.monthValue, data.releaseDate.dayOfMonth)}"
             app:layout_constraintEnd_toStartOf="@id/movie_details_button"
             app:layout_constraintStart_toStartOf="@id/movie_title"
             app:layout_constraintTop_toBottomOf="@id/movie_title" />
@@ -50,7 +50,7 @@
             android:id="@+id/movie_duration"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{data.runningTime}"
+            android:text="@{@string/running_time_format(data.runningTime)}"
             app:layout_constraintEnd_toStartOf="@id/movie_details_button"
             app:layout_constraintStart_toStartOf="@id/movie_release_date"
             app:layout_constraintTop_toBottomOf="@id/movie_release_date" />
@@ -60,8 +60,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/purple_700"
-            android:text="지금 예매"
             android:onClick="@{() ->listener.onClick()}"
+            android:text="지금 예매"
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="@id/movie_thumbnail"
             app:layout_constraintEnd_toEndOf="parent" />

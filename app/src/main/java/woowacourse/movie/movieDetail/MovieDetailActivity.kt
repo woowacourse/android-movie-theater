@@ -73,7 +73,7 @@ class MovieDetailActivity :
     }
 
     override fun showReleaseDate(movieDate: MovieDate) {
-        binding.releaseDate = movieDate.toString()
+        binding.date = movieDate.date
         binding.invalidateAll()
     }
 
