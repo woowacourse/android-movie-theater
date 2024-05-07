@@ -86,4 +86,19 @@ class SeatReservationActivityTest {
         // then
         onView(withId(R.id.btn_seat_reservation_complete)).check(matches(isEnabled()))
     }
+
+    @Test
+    fun `확인버튼_선택_시_예매_확인_다이얼로그가_나타난다`() {
+        // given
+        val a1 = onView(withText("A 1"))
+        val b2 = onView(withText("B 2"))
+
+        // when
+        a1.perform(click())
+        b2.perform(click())
+
+        onView(withId(R.id.btn_seat_reservation_complete)).perform(click())
+        onView(withText("예매 확인")).check(matches(isDisplayed()))
+        onView(withText("정말 예매하시겠습니까?")).check(matches(isDisplayed()))
+    }
 }
