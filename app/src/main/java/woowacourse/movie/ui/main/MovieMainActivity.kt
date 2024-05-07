@@ -55,7 +55,7 @@ class MovieMainActivity : AppCompatActivity() {
     companion object {
         fun startActivity(context: Context) =
             Intent(context, MovieMainActivity::class.java).run {
-                setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
                 context.startActivity(this)
             }
     }
