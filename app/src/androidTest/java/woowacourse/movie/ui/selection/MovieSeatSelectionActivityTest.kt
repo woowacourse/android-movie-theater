@@ -16,8 +16,8 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.model.data.UserTicketsImpl
-import woowacourse.movie.model.db.UserTicket
 import woowacourse.movie.model.movie.ReservationDetail
+import woowacourse.movie.model.movie.UserTicket
 import woowacourse.movie.ui.reservation.MovieReservationKey
 import java.time.LocalDateTime
 

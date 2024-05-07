@@ -1,6 +1,6 @@
 package woowacourse.movie.model.data
 
-import woowacourse.movie.model.db.UserTicket
+import woowacourse.movie.model.movie.UserTicket
 
 object UserTicketsImpl : MovieDataSource<UserTicket> {
     private const val EXCEPTION_INVALID_ID = "Movie not found with id: %d"

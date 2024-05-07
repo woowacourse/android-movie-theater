@@ -5,8 +5,8 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.model.data.UserTicketsImpl
-import woowacourse.movie.model.db.UserTicket
 import woowacourse.movie.model.movie.ReservationDetail
+import woowacourse.movie.model.movie.UserTicket
 import woowacourse.movie.ui.selection.MovieSeatSelectionContract
 import woowacourse.movie.ui.selection.MovieSeatSelectionPresenter
 import java.time.LocalDateTime

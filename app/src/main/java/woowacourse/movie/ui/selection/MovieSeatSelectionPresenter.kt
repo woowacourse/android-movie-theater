@@ -1,8 +1,8 @@
 package woowacourse.movie.ui.selection
 
 import woowacourse.movie.model.data.MovieDataSource
-import woowacourse.movie.model.db.UserTicket
 import woowacourse.movie.model.movie.Seat
+import woowacourse.movie.model.movie.UserTicket
 import woowacourse.movie.ui.utils.positionToIndex
 
 class MovieSeatSelectionPresenter(

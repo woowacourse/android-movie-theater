@@ -1,12 +1,12 @@
 package woowacourse.movie.ui.reservation
 
 import woowacourse.movie.model.data.MovieDataSource
-import woowacourse.movie.model.db.UserTicket
 import woowacourse.movie.model.movie.MovieContent
 import woowacourse.movie.model.movie.ReservationCount
 import woowacourse.movie.model.movie.ReservationDetail
 import woowacourse.movie.model.movie.ScreeningDate
 import woowacourse.movie.model.movie.Theater
+import woowacourse.movie.model.movie.UserTicket
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
