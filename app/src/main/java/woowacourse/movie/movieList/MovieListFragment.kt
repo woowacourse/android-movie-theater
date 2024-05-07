@@ -40,13 +40,8 @@ class MovieListFragment :
     }
 
     override fun navigateToCinemaView(theater: Theater) {
-        val fragment =
-            (
-                childFragmentManager.findFragmentByTag(ChooseCinemasBottomSheetFragment.TAG)
-                    as? ChooseCinemasBottomSheetFragment
-            ) ?: ChooseCinemasBottomSheetFragment()
         val bottomSheet =
-            fragment.withArgs {
+            ChooseCinemasBottomSheetFragment().withArgs {
                 putSerializable(THEATER_KEY, theater)
             }
         bottomSheet.show(childFragmentManager, ChooseCinemasBottomSheetFragment.TAG)
