@@ -9,6 +9,8 @@ import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.ticket.Ticket
+import java.time.LocalDate
+import java.time.LocalTime
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
@@ -73,7 +75,7 @@ class SeatSelectionPresenter(
         if (movieId == -1 ||
             theaterId == -1 ||
             headCount.count == 0 ||
-            screeningDateTime == ScreeningDateTime("", "")
+            screeningDateTime == ScreeningDateTime(LocalDate.now(), LocalTime.now())
         ) {
             view.showErrorSnackBar()
         }

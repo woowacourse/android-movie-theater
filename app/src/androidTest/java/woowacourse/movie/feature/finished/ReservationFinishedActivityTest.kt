@@ -35,7 +35,7 @@ class ReservationFinishedActivityTest {
     fun `예매한_영화의_상영일을_보여준다`() {
         onView(
             withId(R.id.tv_reservation_finished_screening_date),
-        ).check(matches(withText(makeMockTicket().screeningDateTime.date)))
+        ).check(matches(withText(makeMockTicket().screeningDateTime.date.toString())))
     }
 
     @Test

@@ -9,6 +9,8 @@ import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.model.ticket.Ticket
+import java.time.LocalDate
+import java.time.LocalTime
 
 object TestFixture {
     const val FIRST_MOVIE_ITEM_POSITION = 0
@@ -21,7 +23,7 @@ object TestFixture {
         val theater: Theater = theaterDao.findTheaterByMovieId(movie.id)[FIRST_THEATER_ITEM_POSITION]
         val seats = makeMockSeats()
         val amount = seats.calculateAmount()
-        return Ticket(movie.id, theater.name, seats, ScreeningDateTime("", ""), amount)
+        return Ticket(movie.id, theater.name, seats, ScreeningDateTime(LocalDate.now(), LocalTime.now()), amount)
     }
 
     fun makeTheater(): List<Theater> {

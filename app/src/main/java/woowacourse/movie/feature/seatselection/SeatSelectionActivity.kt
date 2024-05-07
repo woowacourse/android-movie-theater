@@ -32,6 +32,8 @@ import woowacourse.movie.model.ticket.Ticket
 import woowacourse.movie.utils.MovieUtils.bundleSerializable
 import woowacourse.movie.utils.MovieUtils.convertAmountFormat
 import woowacourse.movie.utils.MovieUtils.intentSerializable
+import java.time.LocalDate
+import java.time.LocalTime
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private val binding: ActivitySeatSelectionBinding by lazy { DataBindingUtil.setContentView(this, R.layout.activity_seat_selection) }
@@ -202,7 +204,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private fun receiveScreeningDateTime() =
         intent.intentSerializable(
             SCREENING_DATE_TIME, ScreeningDateTime::class.java,
-        ) ?: ScreeningDateTime("", "")
+        ) ?: ScreeningDateTime(LocalDate.now(), LocalTime.now())
 
     private fun collectSeatsInTableLayout(): List<Button> =
         binding.tlSeatSelection.children.filterIsInstance<TableRow>().flatMap { it.children }

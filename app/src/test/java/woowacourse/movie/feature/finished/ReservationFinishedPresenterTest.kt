@@ -14,6 +14,8 @@ import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.ticket.Ticket
+import java.time.LocalDate
+import java.time.LocalTime
 
 @ExtendWith(MockKExtension::class)
 class ReservationFinishedPresenterTest {
@@ -26,7 +28,7 @@ class ReservationFinishedPresenterTest {
             movieId = 0,
             theaterName = "선릉 극장",
             Seats(),
-            ScreeningDateTime("2024.05.06", "10:00"),
+            ScreeningDateTime(LocalDate.of(2024, 5, 6), LocalTime.of(10, 0)),
             32_000,
         )
 

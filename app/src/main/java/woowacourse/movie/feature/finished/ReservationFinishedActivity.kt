@@ -18,6 +18,8 @@ import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.ticket.Ticket
 import woowacourse.movie.utils.MovieUtils.convertAmountFormat
 import woowacourse.movie.utils.MovieUtils.intentSerializable
+import java.time.LocalDate
+import java.time.LocalTime
 
 class ReservationFinishedActivity : AppCompatActivity(), ReservationFinishedContract.View {
     private val binding: ActivityReservationFinishedBinding by lazy {
@@ -77,7 +79,13 @@ class ReservationFinishedActivity : AppCompatActivity(), ReservationFinishedCont
     }
 
     private fun receiveTicket() =
-        intent.intentSerializable(TICKET, Ticket::class.java) ?: Ticket(DEFAULT_MOVIE_ID, "", Seats(), ScreeningDateTime("", ""), 0)
+        intent.intentSerializable(TICKET, Ticket::class.java) ?: Ticket(
+            DEFAULT_MOVIE_ID, "", Seats(),
+            ScreeningDateTime(
+                LocalDate.now(), LocalTime.now(),
+            ),
+            0,
+        )
 
     private fun handleBackPressed() {
         onBackPressedDispatcher.addCallback(this) {

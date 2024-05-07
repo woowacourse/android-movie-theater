@@ -3,6 +3,7 @@ package woowacourse.movie.feature.reservation
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.ticket.HeadCount
+import java.time.LocalDate
 import java.time.LocalTime
 
 interface ReservationContract {
@@ -27,9 +28,9 @@ interface ReservationContract {
             count: HeadCount,
         )
 
-        fun getScreeningDate(): String
+        fun getScreeningDate(): LocalDate
 
-        fun getScreeningTime(): String
+        fun getScreeningTime(): LocalTime
 
         fun showDateTime(dateTime: ScreeningDateTime)
 

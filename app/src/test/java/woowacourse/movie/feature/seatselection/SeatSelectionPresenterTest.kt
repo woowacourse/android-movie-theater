@@ -17,6 +17,8 @@ import woowacourse.movie.model.seats.Grade
 import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.ticket.HeadCount
+import java.time.LocalDate
+import java.time.LocalTime
 
 @ExtendWith(MockKExtension::class)
 class SeatSelectionPresenterTest {
@@ -35,7 +37,7 @@ class SeatSelectionPresenterTest {
                 movieId = 0,
                 theaterId = 0,
                 HeadCount(4),
-                ScreeningDateTime("", ""),
+                ScreeningDateTime(LocalDate.now(), LocalTime.now()),
             )
         with(presenter) {
             manageSelectedSeats(true, 0, Seat('A', 1, Grade.B))

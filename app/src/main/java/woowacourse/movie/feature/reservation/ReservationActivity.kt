@@ -23,6 +23,7 @@ import woowacourse.movie.model.theater.Theater.Companion.DEFAULT_THEATER_ID
 import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.ticket.HeadCount.Companion.DEFAULT_HEAD_COUNT
 import woowacourse.movie.utils.MovieUtils.makeToast
+import java.time.LocalDate
 import java.time.LocalTime
 
 class ReservationActivity : AppCompatActivity(), ReservationContract.View {
@@ -163,9 +164,9 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
             }
     }
 
-    override fun getScreeningDate(): String = binding.spinnerReservationScreeningDate.selectedItem.toString()
+    override fun getScreeningDate(): LocalDate = LocalDate.parse(binding.spinnerReservationScreeningDate.selectedItem.toString())
 
-    override fun getScreeningTime(): String = binding.spinnerReservationScreeningTime.selectedItem.toString()
+    override fun getScreeningTime(): LocalTime = LocalTime.parse(binding.spinnerReservationScreeningTime.selectedItem.toString())
 
     override fun showDateTime(dateTime: ScreeningDateTime) {
         binding.dateTime = dateTime
