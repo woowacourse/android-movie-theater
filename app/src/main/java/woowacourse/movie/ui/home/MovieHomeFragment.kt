@@ -72,9 +72,7 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonC
     }
 
     private fun generateMovieContentAdapter(): MovieContentAdapter {
-        return MovieContentAdapter(this).apply {
-            addMovieContents(movieContents)
-        }
+        return MovieContentAdapter(this).apply { submitList(movieContents) }
     }
 
     private fun generatePresenter() = MovieHomePresenter(this, MovieContentsImpl)

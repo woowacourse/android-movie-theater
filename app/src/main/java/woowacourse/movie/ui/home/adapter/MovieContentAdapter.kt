@@ -68,10 +68,6 @@ class MovieContentAdapter(
         }
     }
 
-    fun addMovieContents(movieContents: List<MovieContent>) {
-        submitList(movieContents)
-    }
-
     companion object {
         private const val TYPE_ADS = 0
         private const val TYPE_MOVIE = 1
