@@ -1,7 +1,6 @@
 package woowacourse.movie.seats.presenter
 
 import android.widget.TextView
-import woowacourse.movie.common.MovieDataSource
 import woowacourse.movie.common.MovieDataSource.movieList
 import woowacourse.movie.seats.contract.SeatsContract
 import woowacourse.movie.seats.model.Seat
@@ -67,8 +66,7 @@ class SeatsPresenter(val view: SeatsContract.View) : SeatsContract.Presenter {
     }
 
     override fun setMovieTitleInfo() {
-        val id = movieId.toInt()
-        view.setMovieTitle(MovieDataSource.movieList[id].title)
+        view.setMovieTitle(movieList.first { it.id == movieId }.title)
     }
 
     override fun setSeatsCellsBackgroundColorInfo() {

@@ -41,7 +41,7 @@ class MovieInformationDetailActivity : AppCompatActivity(), MovieInformationDeta
 
     private fun executePresenterTasks() {
         presenter.setCurrentResultTicketCountInfo()
-        presenter.storeMovieId(intent.getLongExtra(EXTRA_MOVIE_ID_KEY, 0))
+        presenter.storeMovieId(intent.getLongExtra(EXTRA_MOVIE_ID_KEY, -1))
         presenter.storeTheaterId(intent.getLongExtra(EXTRA_THEATER_ID_KEY, -1))
         presenter.setMovieInfo()
         presenter.setSpinnerInfo()
