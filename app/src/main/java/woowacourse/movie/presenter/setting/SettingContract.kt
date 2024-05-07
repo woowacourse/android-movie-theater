@@ -1,12 +1,20 @@
 package woowacourse.movie.presenter.setting
 
+import android.content.Context
+
 interface SettingContract {
-    interface View{
+    interface View {
         fun showSavedSetting(isPushSetting: Boolean)
 
+        fun saveSetting(isPushSetting: Boolean)
     }
 
-    interface Presenter{
+    interface Presenter {
         fun loadSavedSetting(isPushSetting: Boolean)
+
+        suspend fun settingAlarm(
+            context: Context,
+            isPushSetting: Boolean,
+        )
     }
 }
