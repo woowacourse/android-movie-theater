@@ -50,8 +50,6 @@ interface ReservationContract {
 
         fun sendTicketToSeatSelection()
 
-        fun restoreHeadCount()
-
         fun handleUndeliveredData()
     }
 }

@@ -20,6 +20,7 @@ class ReservationPresenterTest {
 
     @BeforeEach
     fun setUp() {
+        every { view.changeHeadCount(1) } just runs
         presenter =
             ReservationPresenter(
                 view,
@@ -27,7 +28,9 @@ class ReservationPresenterTest {
                 TheaterDao(),
                 movieId = 0,
                 theaterId = 0,
+                savedHeadCount = 1,
             )
+        verify { view.changeHeadCount(1) }
     }
 
     @Test
@@ -60,8 +63,11 @@ class ReservationPresenterTest {
 
     @Test
     fun `예약 인원이 2인 상태에 마이너스 버튼을 누르면 예약 인원은 1이 된다`() {
-        every { view.changeHeadCount(any()) } just runs
+        every { view.changeHeadCount(2) } just runs
         presenter.increaseHeadCount()
+        verify { view.changeHeadCount(2) }
+
+        every { view.changeHeadCount(1) } just runs
         presenter.decreaseHeadCount()
         verify { view.changeHeadCount(1) }
     }

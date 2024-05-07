@@ -48,7 +48,6 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
             loadMovie()
             loadScreeningPeriod()
         }
-        changeHeadCount(savedHeadCount)
         updateScreeningTimes(DEFAULT_TIME_ID)
     }
 
@@ -63,7 +62,6 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        presenter.restoreHeadCount()
         val selectedTimeId = savedInstanceState.getInt(SCREENING_TIME, DEFAULT_TIME_ID)
         updateScreeningTimes(selectedTimeId)
     }

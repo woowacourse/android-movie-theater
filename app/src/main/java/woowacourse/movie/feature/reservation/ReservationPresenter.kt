@@ -9,7 +9,6 @@ import woowacourse.movie.model.result.Failure
 import woowacourse.movie.model.result.Success
 import woowacourse.movie.model.theater.Theater.Companion.DEFAULT_THEATER_ID
 import woowacourse.movie.model.ticket.HeadCount
-import woowacourse.movie.model.ticket.HeadCount.Companion.DEFAULT_HEAD_COUNT
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -19,9 +18,13 @@ class ReservationPresenter(
     private val theaterDao: TheaterDao,
     private val movieId: Int,
     private val theaterId: Int,
-    savedHeadCount: Int = DEFAULT_HEAD_COUNT,
+    savedHeadCount: Int,
 ) : ReservationContract.Presenter {
     private val headCount = HeadCount(savedHeadCount)
+
+    init {
+        view.changeHeadCount(savedHeadCount)
+    }
 
     override fun loadMovie() {
         val movie = screeningDao.find(movieId)
@@ -54,10 +57,6 @@ class ReservationPresenter(
         val dateTime = ScreeningDateTime(date, time)
         view.showDateTime(dateTime)
         view.navigateToSeatSelection(dateTime, movieId, theaterId, headCount)
-    }
-
-    override fun restoreHeadCount() {
-        view.changeHeadCount(headCount.count)
     }
 
     override fun handleUndeliveredData() {
