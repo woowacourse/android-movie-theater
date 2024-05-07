@@ -14,10 +14,11 @@ import woowacourse.movie.model.data.MovieContentsImpl
 import woowacourse.movie.model.movie.MovieContent
 import woowacourse.movie.ui.ReservationButtonClickListener
 import woowacourse.movie.ui.home.adapter.MovieContentAdapter
-import java.lang.IllegalStateException
 
 class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonClickListener {
-    private lateinit var binding: FragmentMovieHomeBinding
+    private var _binding: FragmentMovieHomeBinding? = null
+    private val binding: FragmentMovieHomeBinding
+        get() = _binding!!
     private lateinit var movieContents: List<MovieContent>
     private val presenter: MovieHomePresenter by lazy { generatePresenter() }
     private val adapter: MovieContentAdapter by lazy { generateMovieContentAdapter() }
@@ -27,10 +28,15 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonC
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_home, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_home, container, false)
         presenter.loadMovieContents()
         binding.movieContentList.adapter = adapter
         return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     override fun showMovieContents(movieContents: List<MovieContent>) {
