@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:movie="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="java.util.List" />
+
+        <variable
+            name="detailClickListener"
+            type="woowacourse.movie.detail.view.listener.MovieDetailClickListener" />
+
+        <variable
+            name="movie"
+            type="woowacourse.movie.home.view.adapter.movie.HomeContent.Movie" />
+
+        <variable
+            name="reservationCount"
+            type="int" />
+
+        <variable
+            name="dates"
+            type="List&lt;String>" />
+
+        <variable
+            name="times"
+            type="List&lt;String>" />
+    </data>
+
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".detail.view.MovieDetailActivity">
+
+        <ScrollView
+            android:id="@+id/scroll_view_detail"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_detail_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/titanic"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    movie:imgRes="@{movie.image}" />
+
+                <TextView
+                    android:id="@+id/tv_detail_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:hint="타이타닉"
+                    android:text="@{movie.title}"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:textSize="24dp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_detail_image" />
+
+                <TextView
+                    android:id="@+id/tv_detail_date_prefix"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="상영일: "
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    app:layout_constraintLeft_toLeftOf="@id/tv_detail_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_detail_title" />
+
+                <TextView
+                    android:id="@+id/tv_detail_start_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="2024.3.1"
+                    android:text="@{movie.date.startLocalDate.toString()}"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_detail_date_prefix"
+                    app:layout_constraintLeft_toRightOf="@id/tv_detail_date_prefix"
+                    app:layout_constraintTop_toTopOf="@id/tv_detail_date_prefix" />
+
+                <TextView
+                    android:id="@+id/tv_detail_date_separator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" ~ "
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_detail_date_prefix"
+                    app:layout_constraintLeft_toRightOf="@id/tv_detail_start_date"
+                    app:layout_constraintTop_toTopOf="@id/tv_detail_date_prefix" />
+
+
+                <TextView
+                    android:id="@+id/tv_detail_end_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="2024.3.5"
+                    android:text="@{movie.date.endLocalDate.toString()}"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_detail_date_prefix"
+                    app:layout_constraintLeft_toRightOf="@id/tv_detail_date_separator"
+                    app:layout_constraintTop_toTopOf="@id/tv_detail_date_prefix" />
+
+
+                <TextView
+                    android:id="@+id/tv_detail_running_time_prefix"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="러닝타임: "
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    app:layout_constraintLeft_toLeftOf="@id/tv_detail_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_detail_date_prefix" />
+
+                <TextView
+                    android:id="@+id/tv_detail_running_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="152"
+                    android:text="@{String.valueOf(movie.runningTime)}"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_detail_running_time_prefix"
+                    app:layout_constraintLeft_toRightOf="@id/tv_detail_running_time_prefix"
+                    app:layout_constraintTop_toTopOf="@id/tv_detail_running_time_prefix" />
+
+                <TextView
+                    android:id="@+id/tv_detail_running_time_postfix"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="분"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_detail_running_time"
+                    app:layout_constraintLeft_toRightOf="@id/tv_detail_running_time"
+                    app:layout_constraintTop_toTopOf="@id/tv_detail_running_time_prefix" />
+
+                <TextView
+                    android:id="@+id/tv_detail_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:hint="설명1\n설명2\n설명3\n설명4\n설명\n"
+                    android:text="@{movie.description}"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    app:layout_constraintLeft_toLeftOf="@id/tv_detail_running_time_prefix"
+                    app:layout_constraintTop_toBottomOf="@id/tv_detail_running_time" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/spinner_detail_date"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:entries="@{dates}"
+                app:layout_constraintEnd_toStartOf="@+id/spinner_detail_running_time"
+                app:layout_constraintStart_toStartOf="@id/btn_detail_minus"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Spinner
+                android:id="@+id/spinner_detail_running_time"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:entries="@{times}"
+                app:layout_constraintEnd_toEndOf="@id/btn_detail_plus"
+                app:layout_constraintStart_toEndOf="@+id/spinner_detail_date"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_detail_minus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:onClick="@{() -> detailClickListener.onMinusButtonClick()}"
+                android:text="-"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/btn_detail_seat_selection"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spinner_detail_date" />
+
+            <TextView
+                android:id="@+id/tv_detail_reservation_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(reservationCount)}"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/btn_detail_seat_selection"
+                app:layout_constraintEnd_toStartOf="@+id/btn_detail_plus"
+                app:layout_constraintStart_toEndOf="@+id/btn_detail_minus"
+                app:layout_constraintTop_toBottomOf="@id/spinner_detail_date"
+                tools:hint="1" />
+
+            <Button
+                android:id="@+id/btn_detail_plus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:onClick="@{() -> detailClickListener.onPlusButtonClick()}"
+                android:text="+"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/btn_detail_seat_selection"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spinner_detail_running_time" />
+
+            <Button
+                android:id="@+id/btn_detail_seat_selection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:onClick="@{()-> detailClickListener.onSeatSelectionButtonClick()}"
+                android:padding="10dp"
+                android:text="좌석 선택"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</layout>

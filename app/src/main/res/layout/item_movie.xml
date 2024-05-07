@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:movie="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="movie"
+            type="woowacourse.movie.home.view.adapter.movie.HomeContent.Movie" />
+
+        <variable
+            name="movieClickListener"
+            type="woowacourse.movie.home.view.listener.MovieHomeClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="140dp">
+
+        <ImageView
+            android:id="@+id/iv_movie_thumbnail"
+            android:layout_width="76dp"
+            android:layout_height="108dp"
+            android:layout_margin="15dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            movie:imgRes="@{movie.image}"
+            tools:src="@drawable/titanic" />
+
+        <TextView
+            android:id="@+id/tv_movie_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:hint="타이타닉"
+            android:text="@{movie.title}"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@id/iv_movie_thumbnail"
+            app:layout_constraintTop_toTopOf="@id/iv_movie_thumbnail" />
+
+        <TextView
+            android:id="@+id/tv_movie_date_prefix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:text="상영일: "
+            android:textColor="@color/black"
+            android:textSize="12dp"
+            app:layout_constraintLeft_toRightOf="@id/iv_movie_thumbnail"
+            app:layout_constraintTop_toBottomOf="@id/tv_movie_title" />
+
+        <TextView
+            android:id="@+id/tv_movie_start_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:hint="2024.3.1"
+            android:text="@{movie.date.startLocalDate.toString()}"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_movie_date_prefix"
+            app:layout_constraintLeft_toRightOf="@id/tv_movie_date_prefix"
+            app:layout_constraintTop_toBottomOf="@id/tv_movie_title" />
+
+        <TextView
+            android:id="@+id/tv_detail_date_separator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text=" ~ "
+            android:textColor="@color/black"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_movie_date_prefix"
+            app:layout_constraintLeft_toRightOf="@id/tv_movie_start_date"
+            app:layout_constraintTop_toBottomOf="@id/tv_movie_title" />
+
+        <TextView
+            android:id="@+id/tv_movie_end_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:hint="2024.3.5"
+            android:text="@{movie.date.endLocalDate.toString()}"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_movie_date_prefix"
+            app:layout_constraintLeft_toRightOf="@id/tv_detail_date_separator"
+            app:layout_constraintTop_toBottomOf="@id/tv_movie_title" />
+
+
+        <TextView
+            android:id="@+id/tv_movie_running_time_prefix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:text="러닝타임: "
+            android:textColor="@color/black"
+            android:textSize="12dp"
+            app:layout_constraintLeft_toRightOf="@id/iv_movie_thumbnail"
+            app:layout_constraintTop_toBottomOf="@id/tv_movie_date_prefix" />
+
+        <TextView
+            android:id="@+id/tv_movie_running_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:hint="152"
+            android:text="@{String.valueOf(movie.runningTime)}"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_movie_running_time_prefix"
+            app:layout_constraintLeft_toRightOf="@id/tv_movie_running_time_prefix"
+            app:layout_constraintTop_toBottomOf="@id/tv_movie_date_prefix" />
+
+        <TextView
+            android:id="@+id/tv_movie_running_time_postfix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:hint="분"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_movie_running_time_prefix"
+            app:layout_constraintLeft_toRightOf="@id/tv_movie_running_time"
+            app:layout_constraintTop_toBottomOf="@id/tv_movie_date_prefix" />
+
+
+
+
+        <Button
+            android:id="@+id/btn_movie_reservation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:onClick="@{() -> movieClickListener.onReservationButtonClick(movie.id)}"
+            android:text="지금 예매"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
