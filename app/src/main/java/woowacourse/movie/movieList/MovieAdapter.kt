@@ -1,37 +1,42 @@
+package woowacourse.movie.movieList
+
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
-import woowacourse.movie.model.MovieDisplayData
+import woowacourse.movie.databinding.ItemAdBinding
+import woowacourse.movie.databinding.ItemMovieListBinding
+import woowacourse.movie.model.ui.AdItemDisplay
+import woowacourse.movie.model.ui.MovieDisplay
+import woowacourse.movie.model.ui.MovieItemDisplay
 
 class MovieAdapter(
     private val context: Context,
-    private val onClick: (Int) -> Unit,
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var items: List<MovieDisplayData> = emptyList()
+    private val onClick: (position: Int) -> Unit,
+) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+    private var items: List<MovieDisplay> = emptyList()
 
     override fun getItemViewType(position: Int): Int {
-        return if ((position + 1) % 4 == 0) ITEM_VIEW_TYPE_AD else ITEM_VIEW_TYPE_MOVIE
+        return items[position].viewType
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): RecyclerView.ViewHolder {
+    ): MovieViewHolder {
         val layoutInflater = LayoutInflater.from(context)
+
         return when (viewType) {
-            ITEM_VIEW_TYPE_MOVIE -> {
-                val view = layoutInflater.inflate(R.layout.item_movie_list, parent, false)
-                MovieViewHolder(view, onClick)
+            MovieItemDisplay.ITEM_VIEW_TYPE_MOVIE -> {
+                val view = ItemMovieListBinding.inflate(layoutInflater, parent, false)
+                MovieItemViewHolder(view, onClick)
             }
 
-            ITEM_VIEW_TYPE_AD -> {
-                val view = layoutInflater.inflate(R.layout.item_ad, parent, false)
-                AdViewHolder(view)
+            AdItemDisplay.ITEM_VIEW_TYPE_AD -> {
+                val view = ItemAdBinding.inflate(layoutInflater, parent, false)
+                AdItemViewHolder(view)
             }
 
             else -> throw IllegalArgumentException("Invalid view type")
@@ -39,47 +44,38 @@ class MovieAdapter(
     }
 
     override fun onBindViewHolder(
-        holder: RecyclerView.ViewHolder,
+        holder: MovieViewHolder,
         position: Int,
     ) {
         when (holder) {
-            is MovieViewHolder -> holder.bind(items[position])
-            is AdViewHolder -> holder.bind()
+            is MovieItemViewHolder -> holder.bind(items[position] as MovieItemDisplay)
+            is AdItemViewHolder -> holder.bind(items[position] as AdItemDisplay)
         }
     }
 
     override fun getItemCount(): Int {
-        val originalCount = items.size
-        return originalCount + originalCount / 3
+        return items.size
     }
 
-    fun updateItems(displayData: List<MovieDisplayData>) {
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateItems(displayData: List<MovieDisplay>) {
         items = displayData
+        notifyDataSetChanged()
     }
 
-    companion object {
-        private const val ITEM_VIEW_TYPE_MOVIE = 0
-        private const val ITEM_VIEW_TYPE_AD = 1
-    }
+    sealed class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
-    class MovieViewHolder(view: View, private val onClick: (Int) -> Unit) :
-        RecyclerView.ViewHolder(view) {
-        private val titleTextView: TextView = view.findViewById(R.id.movie_title)
-        private val releaseDateTextView: TextView = view.findViewById(R.id.movie_release_date)
-        private val durationTextView: TextView = view.findViewById(R.id.movie_duration)
-        private val detailButton: Button = view.findViewById(R.id.movie_details_button)
-
-        fun bind(movie: MovieDisplayData) {
-            titleTextView.text = movie.title
-            releaseDateTextView.text = movie.releaseDate
-            durationTextView.text = movie.runningTime
-            detailButton.setOnClickListener {
-                onClick(absoluteAdapterPosition)
-            }
+    class MovieItemViewHolder(private val binding: ItemMovieListBinding, private val onClick: (position: Int) -> Unit) :
+        MovieViewHolder(binding.root) {
+        fun bind(movie: MovieItemDisplay) {
+            binding.data = movie
+            binding.listener = MovieItemListener { onClick(absoluteAdapterPosition) }
         }
     }
 
-    class AdViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind() {}
+    class AdItemViewHolder(private val binding: ItemAdBinding) : MovieViewHolder(binding.root) {
+        fun bind(ad: AdItemDisplay) {
+            binding.data = ad
+        }
     }
 }

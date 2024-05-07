@@ -1,6 +1,5 @@
 package woowacourse.movie
 
-import MovieAdapter
 import android.view.View
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso
@@ -13,12 +12,14 @@ import androidx.test.espresso.matcher.ViewMatchers
 import org.hamcrest.Matcher
 import org.junit.Test
 import org.junit.jupiter.api.DisplayName
+import woowacourse.movie.movieList.MovieAdapter
 import woowacourse.movie.movieList.MovieListFragment
 
 class IntegrationTest {
     @Test
-    fun `좌석선택버튼클릭_좌석선택표시`() {
-        Espresso.onView(ViewMatchers.withId(R.id.seat_confirmation_button)).perform(ViewActions.click())
+    fun `좌석선택버튼클릭_좌석선택화면으로_이동`() {
+        Espresso.onView(ViewMatchers.withId(R.id.seat_confirmation_button))
+            .perform(ViewActions.click())
         Espresso.onView(ViewMatchers.withId(R.id.seatTable)).check(
             ViewAssertions.matches(
                 ViewMatchers.isDisplayed(),
@@ -28,7 +29,8 @@ class IntegrationTest {
 
     @Test
     fun `다음화면에서_뒤로가기버튼클릭_영화디테일화면표시`() {
-        Espresso.onView(ViewMatchers.withId(R.id.seat_confirmation_button)).perform(ViewActions.click())
+        Espresso.onView(ViewMatchers.withId(R.id.seat_confirmation_button))
+            .perform(ViewActions.click())
         Espresso.pressBack()
         Espresso.onView(ViewMatchers.withId(R.id.scroll_view)).check(
             ViewAssertions.matches(

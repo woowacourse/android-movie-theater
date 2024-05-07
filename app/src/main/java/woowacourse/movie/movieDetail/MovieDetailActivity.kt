@@ -4,49 +4,41 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.IntentCompat
-import woowacourse.movie.ErrorActivity
 import woowacourse.movie.R
 import woowacourse.movie.base.BindingActivity
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
+import woowacourse.movie.error.ErrorActivity
 import woowacourse.movie.model.Cinema
+import woowacourse.movie.model.movieInfo.MovieDate
+import woowacourse.movie.model.movieInfo.RunningTime
+import woowacourse.movie.model.movieInfo.Synopsis
+import woowacourse.movie.model.movieInfo.Title
 import woowacourse.movie.seat.TheaterSeatActivity
 
 class MovieDetailActivity :
     BindingActivity<ActivityMovieDetailBinding>(R.layout.activity_movie_detail),
-    MovieDetailContract.View {
+    MovieDetailContract.View,
+    TicketCountListener {
     private lateinit var presenter: MovieDetailContract.Presenter
-    private lateinit var dateAdapter: ArrayAdapter<String>
-    private lateinit var timeAdapter: ArrayAdapter<String>
+    private lateinit var dateAdapter: SpinnerDateAdapter
+    private lateinit var timeAdapter: SpinnerTimeAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val cinema =
             IntentCompat.getSerializableExtra(intent, EXTRA_CINEMA, Cinema::class.java)
-        if (cinema == null) {
-            ErrorActivity.start(this)
-            return
-        }
+                ?: return ErrorActivity.start(this)
+        presenter = MovieDetailPresenter(this, cinema)
         initView()
-        presenter =
-            MovieDetailPresenter(
-                view = this@MovieDetailActivity,
-                cinema,
-            ).also { binding.presenter = it }
-        setupEventListeners(cinema)
-        presenter.loadDateRange()
+        initClickListener()
+        presenter.loadMovieInfo()
+        presenter.loadRunMovieDateRange()
     }
 
-    override fun navigateToPurchaseConfirmation(intent: Intent) {
-        startActivity(intent)
-    }
-
-    override fun onTicketCountChanged() {
+    override fun onTicketCountChanged(ticketNum: Int) {
+        binding.ticketNum = ticketNum
         binding.invalidateAll()
     }
 
@@ -54,14 +46,51 @@ class MovieDetailActivity :
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
+    override fun onClickDecrease() {
+        presenter.decreaseTicketCount()
+    }
+
+    override fun onClickIncrease() {
+        presenter.increaseTicketCount()
+    }
+
+    override fun showTitle(title: Title) {
+        binding.title = title.toString()
+        binding.invalidateAll()
+    }
+
+    override fun showRunningTime(runningTime: RunningTime) {
+        binding.runningTime = runningTime.toString()
+        binding.invalidateAll()
+    }
+
+    override fun showSynopsis(synopsis: Synopsis) {
+        binding.synopsis = synopsis.toString()
+        binding.invalidateAll()
+    }
+
+    override fun showReleaseDate(movieDate: MovieDate) {
+        binding.date = movieDate.date
+        binding.invalidateAll()
+    }
+
     override fun updateDateAdapter(dates: List<String>) {
-        dateAdapter.clear()
-        dateAdapter.addAll(dates)
+        dateAdapter.updateRunningDates(dates)
     }
 
     override fun updateTimeAdapter(times: List<String>) {
-        timeAdapter.clear()
-        timeAdapter.addAll(times)
+        timeAdapter.updateRunningTimes(times)
+    }
+
+    override fun navigateToPurchaseConfirmation(cinema: Cinema) {
+        val intent =
+            TheaterSeatActivity.newIntent(
+                this,
+                binding.quantityTextView.text.toString(),
+                cinema,
+                timeDate(),
+            )
+        startActivity(intent)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -70,45 +99,22 @@ class MovieDetailActivity :
     }
 
     private fun initView() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.listener = this
         dateAdapter =
-            ArrayAdapter(
-                this,
-                android.R.layout.simple_spinner_dropdown_item,
-                mutableListOf(),
-            )
-        binding.movieDateSpinner.adapter = dateAdapter
-        binding.movieDateSpinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View,
-                    position: Int,
-                    id: Long,
-                ) {
-                    presenter.updateTimes()
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>) {}
+            SpinnerDateAdapter(this, presenter::updateRunMovieTimes).also {
+                binding.movieDateSpinner.adapter = it
+                binding.movieDateSpinner.onItemSelectedListener = it.selectedListener()
             }
         timeAdapter =
-            ArrayAdapter(
-                this,
-                android.R.layout.simple_spinner_dropdown_item,
-                mutableListOf(),
-            )
-        binding.movieTimeSpinner.adapter = timeAdapter
+            SpinnerTimeAdapter(this).also {
+                binding.movieTimeSpinner.adapter = it
+            }
     }
 
-    private fun setupEventListeners(cinema: Cinema) {
+    private fun initClickListener() {
         binding.seatConfirmationButton.setOnClickListener {
-            val intent =
-                TheaterSeatActivity.newIntent(
-                    this,
-                    binding.quantityTextView.text.toString(),
-                    cinema,
-                    timeDate(),
-                )
-            navigateToPurchaseConfirmation(intent)
+            presenter.confirmPurchase()
         }
     }
 

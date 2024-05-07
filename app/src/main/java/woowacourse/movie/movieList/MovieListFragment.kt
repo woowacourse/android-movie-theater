@@ -1,17 +1,15 @@
 package woowacourse.movie.movieList
 
-import MovieAdapter
 import MovieListView
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import woowacourse.movie.R
 import woowacourse.movie.base.BindingFragment
-import woowacourse.movie.common.ui.withArgs
 import woowacourse.movie.databinding.FragmentMovieListBinding
-import woowacourse.movie.model.MovieDisplayData
 import woowacourse.movie.model.theater.Theater
-import woowacourse.movie.movieList.cinemaListDialog.TheatersBottomSheetFragment
+import woowacourse.movie.model.ui.MovieDisplay
+import woowacourse.movie.movieList.cinemaListDialog.ChooseCinemasBottomSheetFragment
 
 class MovieListFragment :
     BindingFragment<FragmentMovieListBinding>(R.layout.fragment_movie_list),
@@ -32,21 +30,13 @@ class MovieListFragment :
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun updateAdapter(displayData: List<MovieDisplayData>) {
+    override fun updateAdapter(displayData: List<MovieDisplay>) {
         adapter.updateItems(displayData)
     }
 
     override fun navigateToCinemaView(theater: Theater) {
-        val fragment =
-            (
-                childFragmentManager.findFragmentByTag(TheatersBottomSheetFragment.TAG)
-                    as? TheatersBottomSheetFragment
-            ) ?: TheatersBottomSheetFragment()
-        val bottomSheet =
-            fragment.withArgs {
-                putSerializable(THEATER_KEY, theater)
-            }
-        bottomSheet.show(childFragmentManager, TheatersBottomSheetFragment.TAG)
+        val bottomSheet = ChooseCinemasBottomSheetFragment.newInstance(theater)
+        bottomSheet.show(childFragmentManager, ChooseCinemasBottomSheetFragment.TAG)
     }
 
     private fun initViews() {
