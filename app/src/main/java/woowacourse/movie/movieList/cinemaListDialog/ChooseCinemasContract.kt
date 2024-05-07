@@ -3,7 +3,7 @@ package woowacourse.movie.movieList.cinemaListDialog
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.theater.Theater
 
-interface TheatersBottomSheetContract {
+interface ChooseCinemasContract {
     interface View {
         fun showCinemas(cinemas: List<Cinema>)
 

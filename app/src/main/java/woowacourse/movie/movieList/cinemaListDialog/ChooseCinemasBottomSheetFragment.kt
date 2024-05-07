@@ -13,13 +13,13 @@ import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.movieDetail.MovieDetailActivity
 import woowacourse.movie.movieList.MovieListFragment.Companion.THEATER_KEY
 
-class TheatersBottomSheetFragment : BottomSheetDialogFragment(), TheatersBottomSheetContract.View {
+class ChooseCinemasBottomSheetFragment : BottomSheetDialogFragment(), ChooseCinemasContract.View {
     private var _binding: FragmentBottomSheetTheatersBinding? = null
     private val binding get() = _binding ?: error("error")
-    private lateinit var adapter: CinemaAdapter
+    private lateinit var adapter: ChooseCinemasAdapter
 
-    private val presenter: TheatersBottomSheetContract.Presenter by lazy {
-        TheatersBottomSheetPresenter(this)
+    private val presenter: ChooseCinemasContract.Presenter by lazy {
+        ChooseCinemasPresenter(this)
     }
     private lateinit var theater: Theater
 
@@ -46,7 +46,7 @@ class TheatersBottomSheetFragment : BottomSheetDialogFragment(), TheatersBottomS
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = CinemaAdapter { presenter.selectCinema(it) }
+        adapter = ChooseCinemasAdapter { presenter.selectCinema(it) }
         presenter.loadCinema(theater)
     }
 

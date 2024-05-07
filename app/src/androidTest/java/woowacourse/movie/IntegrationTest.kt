@@ -17,7 +17,7 @@ import woowacourse.movie.movieList.MovieListFragment
 
 class IntegrationTest {
     @Test
-    fun `좌석선택버튼클릭_좌석선택표시`() {
+    fun `좌석선택버튼클릭_좌석선택화면표시`() {
         Espresso.onView(ViewMatchers.withId(R.id.seat_confirmation_button)).perform(ViewActions.click())
         Espresso.onView(ViewMatchers.withId(R.id.seatTable)).check(
             ViewAssertions.matches(

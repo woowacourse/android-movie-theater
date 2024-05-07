@@ -7,22 +7,22 @@ import androidx.recyclerview.widget.ListAdapter
 import woowacourse.movie.databinding.ItemBottomSheetTheatersBinding
 import woowacourse.movie.model.Cinema
 
-class CinemaAdapter(private val onTheaterClicked: (Cinema) -> Unit) :
-    ListAdapter<Cinema, TheaterViewHolder>(theaterComparator) {
+class ChooseCinemasAdapter(private val onTheaterClicked: (Cinema) -> Unit) :
+    ListAdapter<Cinema, ChooseCinemasViewHolder>(theaterComparator) {
     private lateinit var inflater: LayoutInflater
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): TheaterViewHolder {
+    ): ChooseCinemasViewHolder {
         if (::inflater.isInitialized.not()) inflater = LayoutInflater.from(parent.context)
         val binding = ItemBottomSheetTheatersBinding.inflate(inflater, parent, false)
 
-        return TheaterViewHolder(binding, onTheaterClicked)
+        return ChooseCinemasViewHolder(binding, onTheaterClicked)
     }
 
     override fun onBindViewHolder(
-        holder: TheaterViewHolder,
+        holder: ChooseCinemasViewHolder,
         position: Int,
     ) {
         holder.bind(getItem(position))

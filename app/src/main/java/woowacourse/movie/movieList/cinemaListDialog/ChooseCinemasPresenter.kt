@@ -4,8 +4,8 @@ import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.theater.Theater
 import java.time.LocalTime
 
-class TheatersBottomSheetPresenter(private val view: TheatersBottomSheetContract.View) :
-    TheatersBottomSheetContract.Presenter {
+class ChooseCinemasPresenter(private val view: ChooseCinemasContract.View) :
+    ChooseCinemasContract.Presenter {
     override fun loadCinema(theater: Theater) {
         val cinemas =
             listOf(
