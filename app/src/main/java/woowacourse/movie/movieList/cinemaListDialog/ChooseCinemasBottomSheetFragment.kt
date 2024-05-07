@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.BundleCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import woowacourse.movie.error.ErrorActivity
 import woowacourse.movie.common.ui.withArgs
 import woowacourse.movie.databinding.FragmentBottomSheetTheatersBinding
+import woowacourse.movie.error.ErrorActivity
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.movieDetail.MovieDetailActivity
@@ -37,7 +37,7 @@ class ChooseCinemasBottomSheetFragment : BottomSheetDialogFragment(), ChooseCine
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = ChooseCinemasAdapter { presenter.selectCinema(it) }
+        adapter = ChooseCinemasAdapter(onTheaterClicked = { presenter.selectCinema(it) })
         arguments?.let {
             BundleCompat.getSerializable(it, THEATER_KEY, Theater::class.java)
         }?.let {
