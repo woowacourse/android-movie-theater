@@ -41,7 +41,6 @@ class HomeFragment : Fragment(), ScreeningContract.View, ScreeningContract.ViewA
     ) {
         super.onViewCreated(view, savedInstanceState)
         val movieListView = view.findViewById<RecyclerView>(R.id.movieList)
-        movieListView.layoutManager = LinearLayoutManager(context)
         movieListView.adapter = adapter
     }
 
