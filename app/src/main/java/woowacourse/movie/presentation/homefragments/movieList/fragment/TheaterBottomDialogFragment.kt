@@ -12,13 +12,12 @@ import woowacourse.movie.presentation.homefragments.movieList.adapter.TheaterAda
 import woowacourse.movie.presentation.homefragments.movieList.listener.TheaterClickListener
 import woowacourse.movie.presentation.homefragments.movieList.uimodel.ScreeningTheater
 import woowacourse.movie.presentation.ticketing.TicketingActivity
-import woowacourse.movie.repository.TheaterListRepository
+import woowacourse.movie.repository.DummyTheaterList
 
 class TheaterBottomDialogFragment(
-    theaterListRepository: TheaterListRepository,
     private val movieId: Long,
 ) : BottomSheetDialogFragment(), TheaterClickListener, TheaterBottomDialogContract.View {
-    private val presenter = TheaterBottomDialogPresenter(this, theaterListRepository)
+    private val presenter = TheaterBottomDialogPresenter(this, DummyTheaterList)
     private lateinit var binding: FragmentTheaterBottomSheetDialogBinding
 
     override fun onCreateView(
