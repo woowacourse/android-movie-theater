@@ -32,7 +32,10 @@ class ReservationActivity : BaseActivity<ActivityReservationBinding>(), View {
         binding.reservationModel = reservationModel
     }
 
-    override fun finishReservation() = finish()
+    override fun terminateOnError(e: Throwable) {
+        showToastMessage(e)
+        finish()
+    }
 
     companion object {
         private const val PUT_EXTRA_KEY_RESERVATION_ID = "reservationId"

@@ -9,7 +9,7 @@ interface ScreenDetailContract {
 
         fun updateTicketQuantity(quantity: Quantity)
 
-        fun back()
+        fun terminateOnError(e: Throwable)
     }
 
     interface Presenter {

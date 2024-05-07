@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.ScreenRepository
-import woowacourse.movie.presentation.model.MessageType
 import woowacourse.movie.presentation.ui.utils.DummyData.MOVIE_ID
+import woowacourse.movie.presentation.ui.utils.DummyData.RESERVATION_ID
 import woowacourse.movie.presentation.ui.utils.DummyData.THEATER_ID
 import woowacourse.movie.presentation.ui.utils.DummyData.dummyReservationInfo
 import woowacourse.movie.presentation.ui.utils.DummyData.dummyScreen
@@ -44,7 +44,7 @@ class SeatSelectionPresenterTest {
         every { screenRepository.findScreen(THEATER_ID, MOVIE_ID) } returns
             Result.success(dummyScreen)
         every { view.showSeatModel(any()) } just runs
-        every { view.back() } just runs
+        every { view.terminateOnError(any()) } just runs
         every { screenRepository.loadSeatBoard(THEATER_ID) } returns Result.success(seatBoard)
 
         // when
@@ -60,8 +60,7 @@ class SeatSelectionPresenterTest {
         val exception = NoSuchElementException()
         every { screenRepository.findScreen(THEATER_ID, MOVIE_ID) } returns
             Result.failure(exception)
-        every { view.showToastMessage(e = exception) } just runs
-        every { view.back() } just runs
+        every { view.terminateOnError(any()) } just runs
         every { screenRepository.loadSeatBoard(THEATER_ID) } returns Result.success(seatBoard)
         every { view.showSeatModel(any()) } just runs
 
@@ -69,9 +68,8 @@ class SeatSelectionPresenterTest {
         presenter.updateUiModel(dummyReservationInfo, MOVIE_ID)
 
         // then
-        verify { view.showToastMessage(e = exception) }
         verify { view.showSeatModel(any()) }
-        verify { view.back() }
+        verify { view.terminateOnError(any()) }
     }
 
     @Test
@@ -81,15 +79,13 @@ class SeatSelectionPresenterTest {
         every { screenRepository.findScreen(THEATER_ID, MOVIE_ID) } returns
             Result.success(dummyScreen)
         every { screenRepository.loadSeatBoard(THEATER_ID) } returns Result.failure(exception)
-        every { view.showToastMessage(e = exception) } just runs
-        every { view.back() } just runs
+        every { view.terminateOnError(any()) } just runs
 
         // when
         presenter.updateUiModel(dummyReservationInfo, MOVIE_ID)
 
         // then
-        verify { view.showToastMessage(e = exception) }
-        verify { view.back() }
+        verify { view.terminateOnError(any()) }
     }
 
     @Test
@@ -105,7 +101,7 @@ class SeatSelectionPresenterTest {
     }
 
     @Test
-    fun `예매 완료 시, view에게 메시지(ReservationSuccessMessage)와 결과 화면으로 이동하라는 정보를 전달한다()`() {
+    fun `예매 완료 시, 예매 정보를 저장하고 결과 화면으로 이동한다`() {
         // given
         every { view.showSeatModel(any()) } just runs
         every { screenRepository.loadSeatBoard(THEATER_ID) } returns Result.success(seatBoard)
@@ -118,8 +114,7 @@ class SeatSelectionPresenterTest {
                 any(),
                 any(),
             )
-        } returns Result.success(1)
-        every { view.showToastMessage(MessageType.ReservationSuccessMessage) } just runs
+        } returns Result.success(RESERVATION_ID)
         every { view.navigateToReservation(any()) } just runs
 
         // when
@@ -127,7 +122,6 @@ class SeatSelectionPresenterTest {
         presenter.reserve()
 
         // then
-        verify { view.showToastMessage(MessageType.ReservationSuccessMessage) }
-        verify { view.navigateToReservation(1) }
+        verify { view.navigateToReservation(RESERVATION_ID) }
     }
 }

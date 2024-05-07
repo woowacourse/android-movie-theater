@@ -26,21 +26,7 @@ class ScreenDetailPresenter(
                 )
             view.showScreenDetail(screenDetail)
         }.onFailure { e ->
-            showLoadingScreenFailed(e)
-        }
-    }
-
-    private fun showLoadingScreenFailed(e: Throwable) {
-        when (e) {
-            is NoSuchElementException -> {
-                view.showToastMessage(e)
-                view.back()
-            }
-
-            else -> {
-                view.showToastMessage(e)
-                view.back()
-            }
+            view.terminateOnError(e)
         }
     }
 

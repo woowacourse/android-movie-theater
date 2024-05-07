@@ -16,17 +16,13 @@ class ReservationPresenter(
     override fun loadReservation(id: Int) {
         repository.findByReservationId(id).onSuccess { reservation ->
             findTheaterName(reservation)
-        }.onFailure { e ->
-            onLoadError(e)
-        }
+        }.onFailure { e -> view.terminateOnError(e) }
     }
 
     private fun findTheaterName(reservation: Reservation) {
         theaterRepository.findTheaterNameById(reservation.theaterId).onSuccess { theaterName ->
             updateReservation(theaterName, reservation)
-        }.onFailure { e ->
-            onLoadError(e)
-        }
+        }.onFailure { e -> view.terminateOnError(e) }
     }
 
     private fun updateReservation(
@@ -36,19 +32,5 @@ class ReservationPresenter(
         _reservationModel =
             reservationModel.copy(theaterName = theaterName, reservation = reservation)
         view.showReservation(reservationModel, theaterName)
-    }
-
-    private fun onLoadError(e: Throwable) {
-        when (e) {
-            is NoSuchElementException -> {
-                view.showToastMessage(e)
-                view.finishReservation()
-            }
-
-            else -> {
-                view.showToastMessage(e)
-                view.finishReservation()
-            }
-        }
     }
 }

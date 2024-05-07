@@ -50,15 +50,13 @@ class ScreenDetailPresenterTest {
         // given
         val throwable: Throwable = NoSuchElementException()
         every { repository.findScreen(THEATER_ID, MOVIE_ID) } returns Result.failure(throwable)
-        every { view.showToastMessage(e = throwable) } just runs
-        every { view.back() } just runs
+        every { view.terminateOnError(e = throwable) } just runs
 
         // when
         presenter.loadScreenDetail(THEATER_ID, MOVIE_ID)
 
         // then
-        verify { view.showToastMessage(e = throwable) }
-        verify { view.back() }
+        verify { view.terminateOnError(e = throwable) }
     }
 
     @Test

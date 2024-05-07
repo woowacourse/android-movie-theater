@@ -137,13 +137,15 @@ class ScreenDetailActivity :
                 ticketQuantity = this.detailModel.quantity.count,
             )
         SeatSelectionActivity.startActivity(this, reservationInfo, movieId)
-        back()
     }
 
-    override fun back() = finish()
+    override fun terminateOnError(e: Throwable) {
+        showToastMessage(e)
+        finish()
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        back()
+        finish()
         return true
     }
 

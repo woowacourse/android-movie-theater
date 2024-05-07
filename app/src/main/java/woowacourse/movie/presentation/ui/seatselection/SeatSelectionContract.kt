@@ -12,7 +12,7 @@ interface SeatSelectionContract {
 
         fun showReservationDialog()
 
-        fun back()
+        fun terminateOnError(e: Throwable)
     }
 
     interface Presenter {

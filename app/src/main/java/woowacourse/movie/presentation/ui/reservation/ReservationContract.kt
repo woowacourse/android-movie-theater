@@ -9,7 +9,7 @@ interface ReservationContract {
             theaterName: String,
         )
 
-        fun finishReservation()
+        fun terminateOnError(e: Throwable)
     }
 
     interface Presenter {

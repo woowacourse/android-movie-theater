@@ -62,15 +62,13 @@ class ReservationPresenterTest {
             Result.failure(
                 NoSuchElementException(),
             )
-        every { view.showToastMessage(e = any()) } just runs
-        every { view.finishReservation() } just runs
+        every { view.terminateOnError(any()) } just runs
 
         // when
         presenter.loadReservation(RESERVATION_ID)
 
         // then
-        verify { view.showToastMessage(e = any()) }
-        verify { view.finishReservation() }
+        verify { view.terminateOnError(e = any()) }
     }
 
     @Test
@@ -86,14 +84,12 @@ class ReservationPresenterTest {
                 NoSuchElementException(),
             )
 
-        every { view.showToastMessage(e = any()) } just runs
-        every { view.finishReservation() } just runs
+        every { view.terminateOnError(e = any()) } just runs
 
         // when
         presenter.loadReservation(RESERVATION_ID)
 
         // then
-        verify { view.showToastMessage(e = any()) }
-        verify { view.finishReservation() }
+        verify { view.terminateOnError(e = any()) }
     }
 }

@@ -7,7 +7,6 @@ import woowacourse.movie.domain.model.SeatModel
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.ScreenRepository
 import woowacourse.movie.presentation.model.MessageType
-import woowacourse.movie.presentation.model.MessageType.ReservationSuccessMessage
 import woowacourse.movie.presentation.model.ReservationInfo
 import woowacourse.movie.presentation.model.UserSeat
 
@@ -37,11 +36,9 @@ class SeatSelectionPresenter(
         theaterId: Int,
         movieId: Int,
     ) {
-        repository.findScreen(theaterId = theaterId, movieId = movieId).onSuccess { screen ->
-            updateScreen(theaterId, screen)
-        }.onFailure { e ->
-            onLoadError(e)
-        }
+        repository.findScreen(theaterId = theaterId, movieId = movieId)
+            .onSuccess { screen -> updateScreen(theaterId, screen) }
+            .onFailure { e -> view.terminateOnError(e) }
     }
 
     private fun updateScreen(
@@ -61,7 +58,7 @@ class SeatSelectionPresenter(
                 updateSeatBoard(seatBoard)
                 view.showSeatModel(seatSelectionModel)
             }
-            .onFailure { e -> onLoadError(e) }
+            .onFailure { e -> view.terminateOnError(e) }
     }
 
     private fun updateSeatBoard(seatBoard: SeatBoard) {
@@ -70,20 +67,6 @@ class SeatSelectionPresenter(
                 SeatModel(seat.column, seat.row, seat.seatRank)
             }
         _seatSelectionModel = seatSelectionModel.copy(userSeat = UserSeat(userSeats))
-    }
-
-    private fun onLoadError(e: Throwable) {
-        when (e) {
-            is NoSuchElementException -> {
-                view.showToastMessage(e)
-                view.back()
-            }
-
-            else -> {
-                view.showToastMessage(e)
-                view.back()
-            }
-        }
     }
 
     override fun clickSeat(seatModel: SeatModel) {
@@ -120,11 +103,9 @@ class SeatSelectionPresenter(
                         .map { Seat(it.column, it.row, it.seatRank) },
                     dateTime,
                 ).onSuccess { reservationId ->
-                    view.showToastMessage(ReservationSuccessMessage)
                     view.navigateToReservation(reservationId)
                 }.onFailure { e ->
-                    view.showSnackBar(e)
-                    view.back()
+                    view.terminateOnError(e)
                 }
             }
         }

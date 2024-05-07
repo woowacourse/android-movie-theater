@@ -12,6 +12,7 @@ import woowacourse.movie.domain.model.SeatModel
 import woowacourse.movie.domain.repository.DummyReservation
 import woowacourse.movie.domain.repository.DummyScreens
 import woowacourse.movie.presentation.base.BaseActivity
+import woowacourse.movie.presentation.model.MessageType
 import woowacourse.movie.presentation.model.ReservationInfo
 import woowacourse.movie.presentation.model.UserSeat
 import woowacourse.movie.presentation.ui.reservation.ReservationActivity
@@ -73,14 +74,17 @@ class SeatSelectionActivity : BaseActivity<ActivitySeatSelectionBinding>(), View
     }
 
     override fun navigateToReservation(reservationId: Int) {
+        showToastMessage(MessageType.ReservationSuccessMessage)
         ReservationActivity.startActivity(this, reservationId)
-        back()
     }
 
-    override fun back() = finish()
+    override fun terminateOnError(e: Throwable) {
+        showToastMessage(e)
+        finish()
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        back()
+        finish()
         return true
     }
 

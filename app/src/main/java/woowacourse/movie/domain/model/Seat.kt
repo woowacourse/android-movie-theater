@@ -1,5 +1,7 @@
 package woowacourse.movie.domain.model
 
+import java.io.Serializable
+
 data class Seat(
     val column: String,
     val row: Int,
@@ -11,4 +13,4 @@ data class SeatModel(
     val row: Int,
     val seatRank: SeatRank,
     var isSelected: Boolean = false,
-)
+) : Serializable
