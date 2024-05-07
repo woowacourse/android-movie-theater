@@ -168,7 +168,9 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
 
     companion object {
         const val DEFAULT_ID = -1
+        const val DEFAULT_TICKET_ID = -1L
         const val TICKET = "ticket"
+        const val RESERVATION_TICKET_ID = "ticketId"
         const val HEAD_COUNT = "headCount"
         const val SCREENING_DATE_TIME = "screeningDateTime"
         const val SELECTED_DATE_TAG = "notSelectedDate"
