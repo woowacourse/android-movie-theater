@@ -22,7 +22,7 @@ interface DetailContract {
 
         fun showToast(message: String)
 
-        fun showSpinner(
+        fun setSpinners(
             screeningDates: List<LocalDate>,
             screeningTimes: List<LocalTime>,
         )

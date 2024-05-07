@@ -48,8 +48,8 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
         presenter.setSpinnerDateItemInfo()
         presenter.setSpinnerTimeItemInfo()
     }
-
-    override fun showSpinner(
+    
+    override fun setSpinners(
         screeningDates: List<LocalDate>,
         screeningTimes: List<LocalTime>,
     ) {

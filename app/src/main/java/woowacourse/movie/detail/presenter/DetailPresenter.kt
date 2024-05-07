@@ -56,7 +56,7 @@ class DetailPresenter(
     }
 
     override fun setSpinnerInfo(theaterId: Long) {
-        view.showSpinner(DetailDataResource.screeningDates, screeningTimes)
+        view.setSpinners(DetailDataResource.screeningDates, screeningTimes)
     }
 
     override fun setSpinnerDateItemInfo() {
