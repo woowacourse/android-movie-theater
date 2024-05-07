@@ -2,6 +2,7 @@ package woowacourse.movie.view.result
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -75,15 +76,14 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
             withContext(Dispatchers.IO) {
                 runCatching {
                     val ticketId = intent.getLongExtra(RESERVATION_TICKET_ID, DEFAULT_TICKET_ID)
+                    Log.d("ticketId",ticketId.toString())
                     val reservationTicket = presenter.loadTicketWithTicketId(ticketId)
                     reservationTicket ?: throw NoSuchElementException()
                 }.onSuccess {
                     withContext(Dispatchers.Main) {
-                        it.toTicket().let { ticket ->
-                            with(presenter) {
-                                loadMovie(ticket.movieId)
-                                loadTicket(ticket)
-                            }
+                        with(presenter) {
+                            loadMovie(it.movieId)
+                            loadTicket(it.toTicket())
                         }
                     }
                 }.onFailure {

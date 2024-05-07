@@ -1,15 +1,19 @@
 package woowacourse.movie.presenter.reservation
 
+import android.content.Context
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.just
+import io.mockk.mockk
+import io.mockk.mockkClass
 import io.mockk.runs
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import woowacourse.MockReservationTicketRepository
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.screening.ScreeningDatabase
 import woowacourse.movie.db.seats.SeatsDao
@@ -24,10 +28,14 @@ class SeatSelectionPresenterTest {
     private lateinit var view: SeatSelectionContract.View
     private lateinit var presenter: SeatSelectionContract.Presenter
     private lateinit var firstMovie: Movie
+    private lateinit var context: Context
 
     @BeforeEach
     fun setUp() {
-        presenter = SeatSelectionPresenter(view, SeatsDao(), ScreeningDao())
+        context = mockk<Context>()
+        presenter = SeatSelectionPresenter(view, SeatsDao(), ScreeningDao(),
+            MockReservationTicketRepository()
+        )
         with(presenter) {
             manageSelectedSeats(true, 0, Seat('A', 1, Grade.B))
             manageSelectedSeats(true, 0, Seat('C', 1, Grade.S))

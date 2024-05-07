@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import woowacourse.MockReservationTicketRepository
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.screening.ScreeningDatabase
 import woowacourse.movie.db.theater.TheaterDao
@@ -31,7 +32,7 @@ class ReservationResultPresenterTest {
 
     @BeforeEach
     fun setUp() {
-        presenter = ReservationResultPresenter(view, ScreeningDao(), TheaterDao())
+        presenter = ReservationResultPresenter(view, MockReservationTicketRepository(),ScreeningDao(), TheaterDao(),)
         firstMovie = ScreeningDatabase.movies.first()
         firstTheater = TheaterDatabase.theaters.first()
         val seats = Seats()
