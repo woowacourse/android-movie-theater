@@ -32,6 +32,7 @@ class TheaterAdapter : RecyclerView.Adapter<TheaterAdapter.TheaterViewHolder>() 
             binding.theaterItem.setOnClickListener {
                 itemClickListener.onClick(movieId, theaters[position].id)
             }
+            if (count == 0) binding.theaterItem.isClickable = false
         }
     }
 
