@@ -66,12 +66,12 @@ class MovieMainPresenterTest {
     fun `loadMovies를 호출하면 view에서 영화 리스트를 보여준다`() {
         // Given
         every { MovieRepository.getAllMovies() } returns movies
-        every { view.displayMovies(any(), any()) } just Runs
+        every { view.displayHomeContents(any(), any()) } just Runs
 
         // When
-        presenter.loadMovies()
+        presenter.loadHomeContents()
 
         // Then
-        verify { view.displayMovies(movies, any()) }
+        verify { view.displayHomeContents(movies, any()) }
     }
 }

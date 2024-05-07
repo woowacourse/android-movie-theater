@@ -12,7 +12,7 @@
 
         <variable
             name="movie"
-            type="woowacourse.movie.model.Movie" />
+            type="woowacourse.movie.home.view.adapter.movie.HomeContent.Movie" />
 
         <variable
             name="reservationCount"

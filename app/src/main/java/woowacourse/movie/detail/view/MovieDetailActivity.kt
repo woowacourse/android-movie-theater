@@ -9,7 +9,7 @@ import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.detail.presenter.MovieDetailPresenter
 import woowacourse.movie.detail.presenter.contract.MovieDetailContract
 import woowacourse.movie.detail.view.listener.MovieDetailClickListener
-import woowacourse.movie.model.Movie
+import woowacourse.movie.home.view.adapter.movie.HomeContent.Movie
 import woowacourse.movie.model.MovieDate
 import woowacourse.movie.model.MovieReservationCount
 import woowacourse.movie.seatselection.view.MovieSeatSelectionActivity

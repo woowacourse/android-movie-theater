@@ -7,18 +7,14 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import woowacourse.movie.databinding.ItemAdvertisementBinding
 import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.home.view.listener.MovieHomeClickListener
-import woowacourse.movie.model.Advertisement
-import woowacourse.movie.model.Movie
 
-class MovieAdapter(
+class HomeContentAdapter(
     private val movieHomeClickListener: MovieHomeClickListener,
 ) : RecyclerView.Adapter<ViewHolder>() {
-    private var movies: List<Movie> = emptyList()
-    private var advertisements: List<Advertisement> = emptyList()
+    private var homeContents: List<HomeContent> = emptyList()
 
     override fun getItemViewType(position: Int): Int {
-        if ((position + 1) % ADVERTISEMENT_PER_INDEX == 0) return ADVERTISEMENT_VIEW_TYPE
-        return MOVIE_VIEW_TYPE
+        return homeContents[position].viewType
     }
 
     override fun onCreateViewHolder(
@@ -38,35 +34,24 @@ class MovieAdapter(
         holder: ViewHolder,
         position: Int,
     ) {
-        val movie = movies[position - getAdvertisementPosition(position)]
-        val advertisement = advertisements[getAdvertisementPosition(position)]
-        when (holder) {
-            is MovieViewHolder -> holder.bind(movie, movieHomeClickListener)
-            is AdvertisementViewHolder -> holder.bind(advertisement, movieHomeClickListener)
+        val content = homeContents[position]
+        if (content is HomeContent.Movie && holder is MovieViewHolder) {
+            holder.bind(content, movieHomeClickListener)
+        }
+        if (content is HomeContent.Advertisement && holder is AdvertisementViewHolder) {
+            holder.bind(content, movieHomeClickListener)
         }
     }
 
     override fun getItemCount(): Int {
-        return movies.size + movies.size / 3
+        return homeContents.size
     }
 
-    fun updateMovies(movies: List<Movie>) {
-        this.movies = movies
-        notifyDataSetChanged()
-    }
-
-    fun updateAdvertisements(advertisements: List<Advertisement>) {
-        this.advertisements = advertisements
-        notifyDataSetChanged()
-    }
-
-    private fun getAdvertisementPosition(position: Int): Int {
-        return (position + 1) / ADVERTISEMENT_PER_INDEX
+    fun updateHomeContents(homeContents: List<HomeContent>) {
+        this.homeContents = homeContents
     }
 
     companion object {
-        private const val MOVIE_VIEW_TYPE = 0
         private const val ADVERTISEMENT_VIEW_TYPE = 1
-        private const val ADVERTISEMENT_PER_INDEX = 4
     }
 }

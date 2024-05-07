@@ -9,7 +9,7 @@
 
         <variable
             name="advertisement"
-            type="woowacourse.movie.model.Advertisement" />
+            type="woowacourse.movie.home.view.adapter.movie.HomeContent.Advertisement" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"

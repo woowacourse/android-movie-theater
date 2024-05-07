@@ -1,8 +1,8 @@
 package woowacourse.movie.data
 
 import woowacourse.movie.R
-import woowacourse.movie.model.Advertisement
-import woowacourse.movie.model.Movie
+import woowacourse.movie.home.view.adapter.movie.HomeContent.Advertisement
+import woowacourse.movie.home.view.adapter.movie.HomeContent.Movie
 import woowacourse.movie.model.MovieDate
 import woowacourse.movie.model.Theater
 import java.time.LocalDate
@@ -45,7 +45,7 @@ object MovieRepository {
         }
 
     private val advertisements =
-        List(100) {
+        List(10) {
             Advertisement(
                 banner = R.drawable.advertisement,
                 link = "https://www.woowacourse.io/",

@@ -1,17 +1,13 @@
 package woowacourse.movie.home.presenter.contract
 
-import woowacourse.movie.model.Advertisement
-import woowacourse.movie.model.Movie
+import woowacourse.movie.home.view.adapter.movie.HomeContent
 
 interface MovieHomeContract {
     interface View {
-        fun displayMovies(
-            movies: List<Movie>,
-            advertisements: List<Advertisement>,
-        )
+        fun displayHomeContents(homeContents: List<HomeContent>)
     }
 
     interface Presenter {
-        fun loadMovies()
+        fun loadHomeContents()
     }
 }

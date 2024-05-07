@@ -10,16 +10,16 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentMovieHomeBinding
 import woowacourse.movie.home.presenter.MovieHomePresenter
 import woowacourse.movie.home.presenter.contract.MovieHomeContract
-import woowacourse.movie.home.view.adapter.movie.MovieAdapter
+import woowacourse.movie.home.view.adapter.movie.HomeContent
+import woowacourse.movie.home.view.adapter.movie.HomeContent.Advertisement
+import woowacourse.movie.home.view.adapter.movie.HomeContentAdapter
 import woowacourse.movie.home.view.listener.MovieHomeClickListener
-import woowacourse.movie.model.Advertisement
-import woowacourse.movie.model.Movie
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 
 class MovieHomeFragment : Fragment(), MovieHomeContract.View, MovieHomeClickListener {
     private lateinit var binding: FragmentMovieHomeBinding
     private lateinit var movieHomePresenter: MovieHomePresenter
-    private lateinit var movieAdapter: MovieAdapter
+    private lateinit var homeContentAdapter: HomeContentAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,19 +33,15 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, MovieHomeClickList
     }
 
     private fun initializeHomeFragment() {
-        movieAdapter = MovieAdapter(this)
-        binding.recyclerViewHome.adapter = movieAdapter
+        homeContentAdapter = HomeContentAdapter(this)
+        binding.recyclerViewHome.adapter = homeContentAdapter
 
         movieHomePresenter = MovieHomePresenter(this)
-        movieHomePresenter.loadMovies()
+        movieHomePresenter.loadHomeContents()
     }
 
-    override fun displayMovies(
-        movies: List<Movie>,
-        advertisements: List<Advertisement>,
-    ) {
-        movieAdapter.updateMovies(movies)
-        movieAdapter.updateAdvertisements(advertisements)
+    override fun displayHomeContents(homeContents: List<HomeContent>) {
+        homeContentAdapter.updateHomeContents(homeContents)
     }
 
     override fun onReservationButtonClick(movieId: Long) {

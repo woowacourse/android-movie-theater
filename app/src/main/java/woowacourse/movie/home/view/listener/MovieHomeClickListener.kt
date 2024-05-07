@@ -1,6 +1,6 @@
 package woowacourse.movie.home.view.listener
 
-import woowacourse.movie.model.Advertisement
+import woowacourse.movie.home.view.adapter.movie.HomeContent.Advertisement
 
 interface MovieHomeClickListener {
     fun onReservationButtonClick(movieId: Long)
