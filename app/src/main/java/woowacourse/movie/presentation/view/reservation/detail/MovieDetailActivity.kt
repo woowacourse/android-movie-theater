@@ -132,18 +132,8 @@ class MovieDetailActivity : BaseActivity(), MovieDetailContract.View {
             }
     }
 
-    fun subCount() {
-        movieDetailPresenter.minusReservationCount()
-        updateBinding()
-    }
-
-    fun addCount() {
-        movieDetailPresenter.plusReservationCount()
-        updateBinding()
-    }
-
-    private fun updateBinding() {
-        binding.invalidateAll()
+    override fun updateCount(count: Int) {
+        binding.reservationInfo.text = count.toString()
     }
 
     override fun moveToSeatSelection(

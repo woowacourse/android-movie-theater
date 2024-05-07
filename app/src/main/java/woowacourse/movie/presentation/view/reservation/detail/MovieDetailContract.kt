@@ -13,6 +13,8 @@ interface MovieDetailContract {
             defaultDataIndex: Int,
         )
 
+        fun updateCount(count: Int)
+
         fun moveToSeatSelection(
             reservationCount: Int,
             title: String,

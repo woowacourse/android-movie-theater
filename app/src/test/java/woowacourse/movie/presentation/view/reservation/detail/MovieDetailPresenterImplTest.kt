@@ -54,6 +54,27 @@ class MovieDetailPresenterImplTest {
     }
 
     @Test
+    fun `예약 인원 증가 버튼을 누르면 count값을 업데이트 한다`() {
+        // when
+        presenter.plusReservationCount()
+
+        // then
+        verify(exactly = 1) { view.updateCount(any()) }
+    }
+
+    @Test
+    fun `예약 인원 감소 버튼을 누르면 count값을 업데이트 한다`() {
+        // given
+        presenter.plusReservationCount()
+
+        // when
+        presenter.minusReservationCount()
+
+        // then
+        verify(exactly = 2) { view.updateCount(any()) }
+    }
+
+    @Test
     fun `예매 버튼을 누르면 count값을 가지고 좌석 선택 화면으로 넘어간다`() {
         // given
         val count = 1
