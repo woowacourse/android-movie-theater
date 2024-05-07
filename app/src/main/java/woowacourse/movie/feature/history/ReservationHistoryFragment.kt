@@ -41,7 +41,10 @@ class ReservationHistoryFragment :
     private fun initializeView() {
         binding.reservationHistoryRecyclerView.adapter = reservationHistoryAdapter
         binding.reservationHistoryRecyclerView.addItemDecoration(ReservationHistoryDividerDecoration())
+    }
 
+    override fun onResume() {
+        super.onResume()
         presenter.loadTickets((requireActivity().application as MovieTheaterApplication).ticketRepository)
     }
 

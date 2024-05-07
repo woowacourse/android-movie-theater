@@ -44,7 +44,7 @@ class MovieResultActivity :
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) finish()
+        if (item.itemId == android.R.id.home) backToMovieMainActivity()
         return super.onOptionsItemSelected(item)
     }
 
@@ -68,13 +68,17 @@ class MovieResultActivity :
         val onBackPressedCallback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    val intent = Intent(this@MovieResultActivity, MovieMainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    startActivity(intent)
+                    backToMovieMainActivity()
                 }
             }
-
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+    }
+
+    private fun backToMovieMainActivity() {
+        val intent = Intent(this@MovieResultActivity, MovieMainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        startActivity(intent)
+        finish()
     }
 
     companion object {
