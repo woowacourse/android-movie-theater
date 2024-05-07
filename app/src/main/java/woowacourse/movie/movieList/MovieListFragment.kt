@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.Toast
 import woowacourse.movie.R
 import woowacourse.movie.base.BindingFragment
-import woowacourse.movie.common.ui.withArgs
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.model.MovieDisplayData
 import woowacourse.movie.model.theater.Theater
@@ -40,10 +39,7 @@ class MovieListFragment :
     }
 
     override fun navigateToCinemaView(theater: Theater) {
-        val bottomSheet =
-            ChooseCinemasBottomSheetFragment().withArgs {
-                putSerializable(THEATER_KEY, theater)
-            }
+        val bottomSheet = ChooseCinemasBottomSheetFragment.newInstance(theater)
         bottomSheet.show(childFragmentManager, ChooseCinemasBottomSheetFragment.TAG)
     }
 

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.os.BundleCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.ErrorActivity
+import woowacourse.movie.common.ui.withArgs
 import woowacourse.movie.databinding.FragmentBottomSheetTheatersBinding
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.theater.Theater
@@ -64,5 +65,10 @@ class ChooseCinemasBottomSheetFragment : BottomSheetDialogFragment(), ChooseCine
 
     companion object {
         val TAG: String? = this::class.java.canonicalName
+
+        fun newInstance(theater: Theater) =
+            ChooseCinemasBottomSheetFragment().withArgs {
+                putSerializable(THEATER_KEY, theater)
+            }
     }
 }
