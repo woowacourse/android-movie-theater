@@ -103,6 +103,8 @@ fun setReservedDateTime(
     textView: TextView,
     dateTime: LocalDateTime,
 ) {
-    textView.text =
-        dateTime.format(DateTimeFormatter.ofPattern(textView.context.getString(R.string.reservation_screening_date_time_format)))
+    val context = textView.context
+    val dateTimeFormat = context.getString(R.string.reservation_screening_date_time_format)
+    val dateTimePattern = DateTimeFormatter.ofPattern(dateTimeFormat)
+    textView.text = dateTime.format(dateTimePattern)
 }
