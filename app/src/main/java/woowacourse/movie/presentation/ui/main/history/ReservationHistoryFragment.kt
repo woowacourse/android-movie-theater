@@ -1,23 +1,42 @@
 package woowacourse.movie.presentation.ui.main.history
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.data.repository.ReservationRepositoryImpl
+import woowacourse.movie.databinding.FragmentReservationHistoryBinding
+import woowacourse.movie.domain.model.Reservation
+import woowacourse.movie.presentation.base.BaseMvpBindingFragment
+import woowacourse.movie.presentation.ui.main.history.adapter.ReservationHistoryAdapter
+import woowacourse.movie.presentation.ui.reservation.ReservationActivity
 
-class ReservationHistoryFragment : Fragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+class ReservationHistoryFragment :
+    BaseMvpBindingFragment<FragmentReservationHistoryBinding>(),
+    ReservationHistoryContract.View {
+    override val layoutResourceId: Int
+        get() = R.layout.fragment_reservation_history
+
+    val presenter: ReservationHistoryPresenter by lazy {
+        ReservationHistoryPresenter(
+            this,
+            ReservationRepositoryImpl(requireContext().applicationContext),
+        )
+    }
+    private val adapter: ReservationHistoryAdapter by lazy { ReservationHistoryAdapter(presenter) }
+
+    override fun initStartView() {
+        presenter.loadReservations()
+        initAdapter()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.fragment_reservation_history, container, false)
+    private fun initAdapter() {
+        binding.rvReservation.adapter = adapter
+    }
+
+    override fun showReservations(reservations: List<Reservation>) {
+        adapter.updateReservations(reservations)
+    }
+
+    override fun navigateToReservation(reservationId: Long) {
+        ReservationActivity.startActivity(requireActivity(), reservationId)
     }
 
     companion object {
