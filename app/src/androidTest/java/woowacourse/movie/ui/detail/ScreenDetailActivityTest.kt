@@ -160,6 +160,20 @@ class ScreenDetailActivityTest {
         timeSpinner.check(matches(withSpinnerText(containsString("11:00"))))
     }
 
+    @Test
+    fun `카운트_1을_증가시키고_화면회전_시켜도_티켓_수가_2로_유지된다`() {
+        // when
+        plusBtn.perform(click())
+
+        activityRule.scenario.onActivity { activity ->
+            activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        }
+
+        // then
+        onView(withId(R.id.tv_count))
+            .check(matches(withText("2")))
+    }
+
     private fun clickPlusButtonMultipleTimes(attempts: Int) {
         repeat(attempts) {
             plusBtn.perform(click())
