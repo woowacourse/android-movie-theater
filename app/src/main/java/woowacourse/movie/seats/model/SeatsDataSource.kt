@@ -7,6 +7,7 @@ object SeatsDataSource {
     val selectedSeats
         get() = Seat.seats.filter { it.selected }
     var movieId: Long = -1
+    var theaterId: Long = -1
     var ticketCount: Int = -1
     var seat: Seat = Seat.of(1, 1)
 }

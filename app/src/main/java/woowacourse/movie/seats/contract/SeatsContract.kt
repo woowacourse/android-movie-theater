@@ -18,7 +18,8 @@ interface SeatsContract {
         fun setSeatsText(info: Seat)
 
         fun startNextActivity(
-            id: Long,
+            movieId: Long,
+            theaterId: Long,
             title: String,
             date: String,
             time: String,
@@ -66,5 +67,6 @@ interface SeatsContract {
         fun storeTicketCount(ticketCount: Int)
         fun setConfirmButtonClickListener()
         fun clearSelectedSeats()
+        fun storeTheaterId(theaterId: Long)
     }
 }

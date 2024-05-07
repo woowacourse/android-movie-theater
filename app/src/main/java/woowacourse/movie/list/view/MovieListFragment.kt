@@ -53,9 +53,4 @@ class MovieListFragment : Fragment(), MovieListContract.View, OnItemClickListene
             theaterBottomSheetFragment::class.java.simpleName
         )
     }
-
-    companion object {
-        const val EXTRA_MOVIE_ID_KEY = "movie_id_key"
-        const val EXTRA_MOVIE_ID_KEY_TO_FRAGMENT = "movie_id_key_to_fragment"
-    }
 }

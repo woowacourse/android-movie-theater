@@ -15,7 +15,7 @@ import woowacourse.movie.detail.contract.MovieInformationDetailContract
 import woowacourse.movie.detail.model.Count
 import woowacourse.movie.detail.presenter.MovieInformationDetailPresenter
 import woowacourse.movie.list.model.Movie
-import woowacourse.movie.list.view.MovieListFragment.Companion.EXTRA_MOVIE_ID_KEY
+import woowacourse.movie.list.view.TheaterBottomSheetFragment.Companion.EXTRA_MOVIE_ID_KEY
 import woowacourse.movie.list.view.TheaterBottomSheetFragment.Companion.EXTRA_THEATER_ID_KEY
 import woowacourse.movie.seats.view.SeatsActivity
 import java.time.LocalDate

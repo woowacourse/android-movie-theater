@@ -6,10 +6,10 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieTicketBinding
 import woowacourse.movie.list.model.TheaterData
+import woowacourse.movie.list.view.TheaterBottomSheetFragment.Companion.EXTRA_MOVIE_ID_KEY
 import woowacourse.movie.list.view.TheaterBottomSheetFragment.Companion.EXTRA_THEATER_ID_KEY
 import woowacourse.movie.seats.model.Seat
 import woowacourse.movie.seats.view.SeatsActivity.Companion.DATE_KEY
-import woowacourse.movie.seats.view.SeatsActivity.Companion.ID_KEY
 import woowacourse.movie.seats.view.SeatsActivity.Companion.PRICE_KEY
 import woowacourse.movie.seats.view.SeatsActivity.Companion.SEATS_KEY
 import woowacourse.movie.seats.view.SeatsActivity.Companion.TIME_KEY
@@ -33,7 +33,7 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
 
     private fun processPresenterTask() {
         presenter.storeTicketCount(getSerializableCountData(intent))
-        presenter.storeMovieId(intent.getLongExtra(ID_KEY, -1))
+        presenter.storeMovieId(intent.getLongExtra(EXTRA_MOVIE_ID_KEY, -1))
         presenter.storeScreeningDate(intent.getStringExtra(DATE_KEY) ?: "ddd")
         presenter.storeScreeningTime(intent.getStringExtra(TIME_KEY) ?: "ddd")
         presenter.storePrice(intent.getIntExtra(PRICE_KEY, 0))

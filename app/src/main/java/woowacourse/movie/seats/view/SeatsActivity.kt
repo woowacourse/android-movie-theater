@@ -14,7 +14,7 @@ import woowacourse.movie.databinding.ActivitySeatsBinding
 import woowacourse.movie.detail.view.MovieInformationDetailActivity.Companion.EXTRA_COUNT_KEY
 import woowacourse.movie.detail.view.MovieInformationDetailActivity.Companion.EXTRA_DATE_KEY
 import woowacourse.movie.detail.view.MovieInformationDetailActivity.Companion.EXTRA_TIME_KEY
-import woowacourse.movie.list.view.MovieListFragment.Companion.EXTRA_MOVIE_ID_KEY
+import woowacourse.movie.list.view.TheaterBottomSheetFragment.Companion.EXTRA_MOVIE_ID_KEY
 import woowacourse.movie.list.view.TheaterBottomSheetFragment.Companion.EXTRA_THEATER_ID_KEY
 import woowacourse.movie.seats.contract.SeatsContract
 import woowacourse.movie.seats.model.Seat
@@ -25,23 +25,21 @@ import java.io.Serializable
 class SeatsActivity : AppCompatActivity(), SeatsContract.View {
     override val presenter: SeatsContract.Presenter = SeatsPresenter(this)
     private lateinit var binding: ActivitySeatsBinding
-    private var theaterId: Long = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seats)
         binding.seats = this
         setContentView(binding.root)
-        theaterId = intent.getLongExtra(EXTRA_THEATER_ID_KEY, -1)
-        val ticketCount = intent.getIntExtra(EXTRA_COUNT_KEY, -1)
-        presenter.storeTicketCount(ticketCount)
         initSeats()
         setOnSelectSeat()
         processPresenterTask()
     }
 
     private fun processPresenterTask() {
+        presenter.storeTicketCount(intent.getIntExtra(EXTRA_COUNT_KEY, -1))
         presenter.storeMovieId(intent.getLongExtra(EXTRA_MOVIE_ID_KEY, -1))
+        presenter.storeTheaterId(intent.getLongExtra(EXTRA_THEATER_ID_KEY, -1))
         presenter.storeDate(intent.getStringExtra(EXTRA_DATE_KEY) ?: "")
         presenter.storeTime(intent.getStringExtra(EXTRA_TIME_KEY) ?: "")
         presenter.setMovieTitleInfo()
@@ -141,15 +139,17 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
     }
 
     override fun startNextActivity(
-        id: Long,
+        movieId: Long,
+        theaterId: Long,
         title: String,
         date: String,
         time: String,
         seats: List<Seat>,
-        price: Int,
+        price: Int
     ) {
         val intent = Intent(this, MovieTicketActivity::class.java)
-        intent.putExtra(ID_KEY, id)
+        intent.putExtra(EXTRA_MOVIE_ID_KEY, movieId)
+        intent.putExtra(EXTRA_THEATER_ID_KEY, theaterId)
         intent.putExtra(TITLE_KEY, title)
         intent.putExtra(DATE_KEY, date)
         intent.putExtra(TIME_KEY, time)
@@ -174,7 +174,6 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
 
     companion object {
         const val TOTAL_PRICE = "%d원"
-        const val ID_KEY = "id_key"
         const val TITLE_KEY = "title_key"
         const val DATE_KEY = "date_key"
         const val TIME_KEY = "time_key"

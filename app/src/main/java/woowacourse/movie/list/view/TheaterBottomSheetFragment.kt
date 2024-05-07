@@ -13,7 +13,6 @@ import woowacourse.movie.list.adapter.TheaterAdapter
 import woowacourse.movie.list.contract.TheaterContract
 import woowacourse.movie.list.model.TheaterData.theaters
 import woowacourse.movie.list.presenter.TheaterPresenter
-import woowacourse.movie.list.view.MovieListFragment.Companion.EXTRA_MOVIE_ID_KEY_TO_FRAGMENT
 
 class TheaterBottomSheetFragment : BottomSheetDialogFragment(), TheaterContract.View {
     private lateinit var binding: FragmentTheaterBinding
@@ -27,7 +26,7 @@ class TheaterBottomSheetFragment : BottomSheetDialogFragment(), TheaterContract.
         binding = FragmentTheaterBinding.inflate(inflater, container, false)
         presenter = TheaterPresenter(this)
 
-        val movieId = arguments?.getLong(EXTRA_MOVIE_ID_KEY_TO_FRAGMENT)
+        val movieId = arguments?.getLong(EXTRA_MOVIE_ID_KEY)
         setupRecyclerView(movieId ?: INVALID_MOVIE_ID)
 
         return binding.root
@@ -60,7 +59,7 @@ class TheaterBottomSheetFragment : BottomSheetDialogFragment(), TheaterContract.
         fun newFragmentInstance(movieId: Long): TheaterBottomSheetFragment {
             return TheaterBottomSheetFragment().apply {
                 arguments = Bundle().apply {
-                    putLong(EXTRA_MOVIE_ID_KEY_TO_FRAGMENT, movieId)
+                    putLong(EXTRA_MOVIE_ID_KEY, movieId)
                 }
             }
         }
