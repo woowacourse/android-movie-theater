@@ -1,6 +1,5 @@
 package woowacourse.movie.detail.presenter
 
-import io.mockk.CapturingSlot
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -9,12 +8,13 @@ import io.mockk.mockkObject
 import io.mockk.runs
 import io.mockk.slot
 import io.mockk.verify
+import io.mockk.verifyAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.detail.presenter.contract.MovieDetailContract
-import woowacourse.movie.home.view.adapter.movie.HomeContent.*
+import woowacourse.movie.home.view.adapter.movie.HomeContent.Movie
 import woowacourse.movie.model.MovieDate
 import woowacourse.movie.model.Theater
 import java.time.LocalDate
@@ -68,7 +68,7 @@ class MovieDetailPresenterTest {
         // Given
         val movieSlot = slot<Movie>()
         val dateSlot = slot<MovieDate>()
-        val timeSlot = CapturingSlot<List<LocalTime>>()
+        val timeSlot = mutableListOf<List<LocalTime>>()
 
         every { MovieRepository.getMovieById(any()) } returns movie
         every { view.displayMovieDetail(capture(movieSlot), any()) } just Runs
@@ -79,13 +79,15 @@ class MovieDetailPresenterTest {
         presenter.loadMovieDetail(0L, 0)
 
         // Then
-        verify { view.displayMovieDetail(movie, any()) }
-        verify { view.setUpDateSpinner(movie.date) }
-        verify { view.setUpTimeSpinner(any()) }
+        verifyAll {
+            view.displayMovieDetail(movie, any())
+            view.setUpDateSpinner(movie.date)
+            view.setUpTimeSpinner(any())
+        }
 
         assert(movieSlot.captured == movie)
         assert(dateSlot.captured == movie.date)
-        assert(timeSlot.captured == movie.theaters[0].screeningTimes)
+        assert(timeSlot.all { it == movie.theaters[0].screeningTimes })
     }
 
     @Test
