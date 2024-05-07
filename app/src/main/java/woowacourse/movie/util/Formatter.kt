@@ -2,8 +2,9 @@
 
 package woowacourse.movie.util
 
+import woowacourse.movie.data.entity.Ticket
 import woowacourse.movie.model.MovieSeat
-import woowacourse.movie.model.MovieTicket
+import woowacourse.movie.model.MovieSelectedSeats
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -28,8 +29,8 @@ fun MovieSeat.formatSeat(): String {
     return row.formatSeatRow() + column.formatSeatColumn()
 }
 
-fun MovieTicket.formatSeats(): String {
-    return movieSelectedSeats.selectedSeats.joinToString(", ") { seat ->
+fun MovieSelectedSeats.formatSeats(): String {
+    return selectedSeats.joinToString(", ") { seat ->
         seat.row.formatSeatRow() + seat.column.toString()
     }
 }

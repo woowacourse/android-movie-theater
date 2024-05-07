@@ -1,17 +1,17 @@
 package woowacourse.movie.feature.result
 
-import woowacourse.movie.model.MovieTicket
+import woowacourse.movie.data.entity.Ticket
 import woowacourse.movie.util.BasePresenter
 
 interface MovieResultContract {
     interface View {
-        fun displayMovieTicket(movieTicket: MovieTicket)
+        fun displayTicket(ticket: Ticket)
 
         fun showToastInvalidMovieIdError(throwable: Throwable)
     }
 
     interface Presenter : BasePresenter {
-        fun loadMovieTicket(
+        fun loadTicket(
             movieId: Long,
             screeningDate: String,
             screeningTime: String,

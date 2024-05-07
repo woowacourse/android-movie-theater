@@ -1,9 +1,9 @@
 package woowacourse.movie.feature.result
 
 import woowacourse.movie.data.MovieRepository
+import woowacourse.movie.data.entity.Ticket
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
-import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.util.unFormatSeatColumn
 import woowacourse.movie.util.unFormatSeatRow
 import java.time.LocalDate
@@ -11,7 +11,7 @@ import java.time.LocalTime
 
 class MovieResultPresenter(private val view: MovieResultContract.View) :
     MovieResultContract.Presenter {
-    override fun loadMovieTicket(
+    override fun loadTicket(
         movieId: Long,
         screeningDate: String,
         screeningTime: String,
@@ -37,12 +37,13 @@ class MovieResultPresenter(private val view: MovieResultContract.View) :
             )
         }
 
-        view.displayMovieTicket(
-            MovieTicket(
-                movie.title,
+        // TODO: DB에 Ticket 저장
+        view.displayTicket(
+            Ticket(
+                0L,
+                movie.id,
                 LocalDate.parse(screeningDate),
                 LocalTime.parse(screeningTime),
-                reservationCount,
                 movieSelectedSeats,
                 theaterName,
             ),

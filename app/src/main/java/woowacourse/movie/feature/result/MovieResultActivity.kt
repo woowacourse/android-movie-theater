@@ -9,10 +9,10 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
 import woowacourse.movie.R
+import woowacourse.movie.data.entity.Ticket
 import woowacourse.movie.databinding.ActivityMovieResultBinding
 import woowacourse.movie.feature.MovieMainActivity
 import woowacourse.movie.feature.result.ui.MovieResultUiModel
-import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.util.BaseActivity
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_DATE
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
@@ -46,7 +46,7 @@ class MovieResultActivity :
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setUpBackButtonAction()
 
-        presenter.loadMovieTicket(
+        presenter.loadTicket(
             intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID),
             intent.getStringExtra(KEY_MOVIE_DATE) ?: INVALID_VALUE_MOVIE_DATE,
             intent.getStringExtra(KEY_MOVIE_TIME) ?: INVALID_VALUE_MOVIE_TIME,
@@ -61,8 +61,8 @@ class MovieResultActivity :
         return super.onOptionsItemSelected(item)
     }
 
-    override fun displayMovieTicket(movieTicket: MovieTicket) {
-        binding.movieResult = MovieResultUiModel.from(movieTicket)
+    override fun displayTicket(ticket: Ticket) {
+        binding.movieResult = MovieResultUiModel.from(ticket)
     }
 
     override fun showToastInvalidMovieIdError(throwable: Throwable) {
