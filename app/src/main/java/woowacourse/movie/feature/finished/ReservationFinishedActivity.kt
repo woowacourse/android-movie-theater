@@ -68,8 +68,9 @@ class ReservationFinishedActivity : AppCompatActivity(), ReservationFinishedCont
     }
 
     override fun navigateToHome() {
-        val intent = Intent(this@ReservationFinishedActivity, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        val intent =
+            Intent(this@ReservationFinishedActivity, MainActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
         finish()
     }

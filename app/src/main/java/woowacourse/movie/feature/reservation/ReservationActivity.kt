@@ -109,13 +109,12 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         theaterId: Int,
         count: HeadCount,
     ) {
-        val intent = Intent(this, SeatSelectionActivity::class.java)
-        intent.apply {
-            putExtra(MOVIE_ID, movieId)
-            putExtra(THEATER_ID, theaterId)
-            putExtra(SCREENING_DATE_TIME, dateTime)
-            putExtra(HEAD_COUNT, count)
-        }
+        val intent =
+            Intent(this, SeatSelectionActivity::class.java)
+                .putExtra(MOVIE_ID, movieId)
+                .putExtra(THEATER_ID, theaterId)
+                .putExtra(SCREENING_DATE_TIME, dateTime)
+                .putExtra(HEAD_COUNT, count)
         startActivity(intent)
     }
 
