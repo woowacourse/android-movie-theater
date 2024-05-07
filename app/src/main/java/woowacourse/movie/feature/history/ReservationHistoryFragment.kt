@@ -1,14 +1,14 @@
-package woowacourse.movie.feature.reservationlist
+package woowacourse.movie.feature.history
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import woowacourse.movie.databinding.FragmentReservationListBinding
+import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 
-class ReservationListFragment : Fragment() {
-    private var _binding: FragmentReservationListBinding? = null
+class ReservationHistoryFragment : Fragment() {
+    private var _binding: FragmentReservationHistoryBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -16,7 +16,7 @@ class ReservationListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentReservationListBinding.inflate(inflater)
+        _binding = FragmentReservationHistoryBinding.inflate(inflater)
         return binding.root
     }
 
