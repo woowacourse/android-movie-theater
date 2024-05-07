@@ -27,7 +27,7 @@ class MovieSeatSelectionActivity :
     BaseActivity<MovieSeatSelectionPresenter>(),
     MovieSeatSelectionContract.View {
     private lateinit var binding: ActivityMovieSeatSelectionBinding
-    private val userTicketId by lazy { userTicketId() }
+    private val reservationId by lazy { reservationId() }
     private val selectedSeatInfo = mutableListOf<Int>()
     private val seats by lazy { binding.tlSeats.makeSeats() }
 
@@ -36,7 +36,7 @@ class MovieSeatSelectionActivity :
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_seat_selection)
         binding.presenter = presenter
 
-        presenter.loadTheaterInfo(userTicketId)
+        presenter.loadTheaterInfo(reservationId)
         presenter.updateSelectCompletion()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -110,18 +110,22 @@ class MovieSeatSelectionActivity :
         }
     }
 
-    override fun showSeatReservationConfirmation(userTicketId: Long) {
+    override fun showSeatReservationConfirmation() {
         AlertDialog.Builder(this)
             .setCancelable(false)
             .setTitle(R.string.reservation_confirm)
             .setMessage(R.string.reservation_confirm_comment)
             .setPositiveButton(R.string.reservation_complete) { _, _ ->
-                moveMovieReservationCompletePage(userTicketId)
+                presenter.reservationSeat()
             }
             .setNegativeButton(R.string.cancel) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
+    }
+
+    override fun showReservationComplete(userTicketId: Long) {
+        MovieReservationCompleteActivity.startActivity(this, userTicketId)
     }
 
     override fun showError(throwable: Throwable) {
@@ -147,11 +151,7 @@ class MovieSeatSelectionActivity :
         }
     }
 
-    private fun moveMovieReservationCompletePage(ticketId: Long) {
-        MovieReservationCompleteActivity.startActivity(this, ticketId)
-    }
-
-    private fun userTicketId() =
+    private fun reservationId() =
         intent.getLongExtra(
             MovieSeatSelectionKey.RESERVATION_ID,
             MOVIE_CONTENT_ID_DEFAULT_VALUE,

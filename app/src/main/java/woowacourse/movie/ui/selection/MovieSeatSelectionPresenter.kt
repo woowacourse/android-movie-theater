@@ -60,7 +60,11 @@ class MovieSeatSelectionPresenter(
                 reservationAmount = reservationDetail.totalSeatAmount(),
             )
         val userTicketId = userTickets.save(userTicket)
-        view.showSeatReservationConfirmation(userTicketId)
+        view.showReservationComplete(userTicketId)
+    }
+
+    override fun checkReservationSeat() {
+        view.showSeatReservationConfirmation()
     }
 
     private fun selectingWork(
