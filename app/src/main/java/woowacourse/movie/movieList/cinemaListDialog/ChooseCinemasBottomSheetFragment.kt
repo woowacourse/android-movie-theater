@@ -22,16 +22,6 @@ class ChooseCinemasBottomSheetFragment : BottomSheetDialogFragment(), ChooseCine
     private val presenter: ChooseCinemasContract.Presenter by lazy {
         ChooseCinemasPresenter(this)
     }
-    private lateinit var theater: Theater
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            BundleCompat.getSerializable(it, THEATER_KEY, Theater::class.java)
-        }?.let {
-            theater = it
-        } ?: ErrorActivity.start(requireActivity())
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +38,11 @@ class ChooseCinemasBottomSheetFragment : BottomSheetDialogFragment(), ChooseCine
     ) {
         super.onViewCreated(view, savedInstanceState)
         adapter = ChooseCinemasAdapter { presenter.selectCinema(it) }
-        presenter.loadCinema(theater)
+        arguments?.let {
+            BundleCompat.getSerializable(it, THEATER_KEY, Theater::class.java)
+        }?.let {
+            presenter.loadCinema(it)
+        } ?: ErrorActivity.start(requireActivity())
     }
 
     override fun navigateToMovieDetail(cinema: Cinema) {
