@@ -111,7 +111,7 @@ class SeatPresenterTest {
         // then
         verify(exactly = 1) { view.setSeatBackground(seatId, colorSlot[0]) }
         verify(exactly = 1) { view.setSeatBackground(seatId, colorSlot[1]) }
-        colorSlot[0] shouldBe whiteColor
-        colorSlot[1] shouldBe redColor
+        colorSlot[0] shouldBe redColor
+        colorSlot[1] shouldBe whiteColor
     }
 }
