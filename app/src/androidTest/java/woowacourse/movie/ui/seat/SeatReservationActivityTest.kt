@@ -6,13 +6,18 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.isEnabled
+import androidx.test.espresso.matcher.ViewMatchers.isNotEnabled
 import androidx.test.espresso.matcher.ViewMatchers.isNotSelected
 import androidx.test.espresso.matcher.ViewMatchers.isSelected
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import woowacourse.movie.R
 import woowacourse.movie.domain.model.DateTime
 import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.repository.DummyReservation
@@ -54,5 +59,17 @@ class SeatReservationActivityTest {
         a1.check((matches(isSelected())))
         b2.check((matches(isSelected())))
         c3.check((matches(isNotSelected())))
+    }
+
+    @Test
+    fun `좌석을_count_2_보다_적게_선택하면_확인_버튼이_비활성화된다`() {
+        // given
+        val a1 = onView(withText("A 1"))
+
+        // when
+        a1.perform(click())
+
+        // then
+        onView(withId(R.id.btn_seat_reservation_complete)).check(matches(isNotEnabled()))
     }
 }
