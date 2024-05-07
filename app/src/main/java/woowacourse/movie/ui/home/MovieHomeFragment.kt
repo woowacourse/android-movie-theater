@@ -53,7 +53,7 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonC
         bundle.putLong(MovieHomeKey.MOVIE_CONTENT_ID, movieContentId)
         fragment.arguments = bundle
         fragment.show(
-            parentFragmentManager.apply {
+            childFragmentManager.apply {
                 setFragmentResult(MovieHomeKey.FRAGMENT_REQUEST_KEY, bundle)
                 commit {
                     addToBackStack(null)
