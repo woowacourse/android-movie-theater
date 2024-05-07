@@ -2,41 +2,50 @@ package woowacourse.movie.view.result
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationResultBinding
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.ticket.Ticket
+import woowacourse.movie.model.ticket.toTicket
 import woowacourse.movie.presenter.result.ReservationResultContract
 import woowacourse.movie.presenter.result.ReservationResultPresenter
+import woowacourse.movie.repository.ReservationTicketRepositoryImpl
 import woowacourse.movie.utils.MovieUtils.convertAmountFormat
 import woowacourse.movie.utils.MovieUtils.intentSerializable
 import woowacourse.movie.utils.MovieUtils.makeToast
 import woowacourse.movie.view.MainActivity
+import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.DEFAULT_TICKET_ID
+import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.RESERVATION_TICKET_ID
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.TICKET
 
 class ReservationResultActivity : AppCompatActivity(), ReservationResultContract.View {
     private val binding: ActivityReservationResultBinding by lazy {
         DataBindingUtil.setContentView(this, R.layout.activity_reservation_result)
     }
-    private val presenter: ReservationResultPresenter =
-        ReservationResultPresenter(this, ScreeningDao(), TheaterDao())
-
-    private lateinit var ticket: Ticket
+    private val presenter: ReservationResultPresenter by lazy {
+        ReservationResultPresenter(
+            this,
+            ReservationTicketRepositoryImpl(this),
+            ScreeningDao(),
+            TheaterDao(),
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.reservationFinished = this
         handleBackPressed()
         receiveTicket()
-        with(presenter) {
-            loadMovie(ticket.movieId)
-            loadTicket(ticket)
-        }
     }
 
     override fun showMovieTitle(movie: Movie) {
@@ -65,13 +74,28 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
     }
 
     private fun receiveTicket() {
-        runCatching {
-            intent.intentSerializable(TICKET, Ticket::class.java) ?: throw NoSuchElementException()
-        }.onSuccess {
-            ticket = it
-        }.onFailure {
-            showErrorToast()
-            finish()
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                runCatching {
+                    val ticketId = intent.getLongExtra(RESERVATION_TICKET_ID, DEFAULT_TICKET_ID)
+                    val reservationTicket = presenter.loadTicketWithTicketId(ticketId)
+                    reservationTicket ?: throw NoSuchElementException()
+                }.onSuccess {
+                    withContext(Dispatchers.Main) {
+                        it.toTicket().let { ticket ->
+                            with(presenter) {
+                                loadMovie(ticket.movieId)
+                                loadTicket(ticket)
+                            }
+                        }
+                    }
+                }.onFailure {
+                    withContext(Dispatchers.Main) {
+                        showErrorToast()
+                        finish()
+                    }
+                }
+            }
         }
     }
 

@@ -9,7 +9,7 @@ import java.io.Serializable
 @Entity(tableName = "reservationTicket")
 data class ReservationTicket(
     @PrimaryKey(autoGenerate = true)
-    val ticketId: Int = 0,
+    val ticketId: Long = 0,
     val movieId: Int,
     val theaterId: Int,
     val movieTitle: String,

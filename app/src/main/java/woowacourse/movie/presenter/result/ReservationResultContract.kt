@@ -1,6 +1,7 @@
 package woowacourse.movie.presenter.result
 
 import woowacourse.movie.model.movie.Movie
+import woowacourse.movie.model.ticket.ReservationTicket
 import woowacourse.movie.model.ticket.Ticket
 
 interface ReservationResultContract {
@@ -15,6 +16,9 @@ interface ReservationResultContract {
     }
 
     interface Presenter {
+
+        fun loadTicketWithTicketId(ticketId: Long) : ReservationTicket?
+
         fun loadMovie(movieId: Int)
 
         fun loadTicket(ticket: Ticket)
