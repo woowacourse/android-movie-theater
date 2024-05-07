@@ -4,13 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable
-            name="fragment"
-            type="woowacourse.movie.list.view.MovieListFragment" />
 
         <variable
-            name="presenter"
-            type="woowacourse.movie.list.presenter.MovieListPresenter" />
+            name="movieListfragment"
+            type="woowacourse.movie.list.view.MovieListFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,6 +24,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/movie_item" />
 
         <androidx.fragment.app.FragmentContainerView

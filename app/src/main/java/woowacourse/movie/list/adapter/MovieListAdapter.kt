@@ -9,18 +9,12 @@ import woowacourse.movie.list.model.Advertisement
 import woowacourse.movie.list.model.Movie
 import woowacourse.movie.list.model.MovieListItem
 import woowacourse.movie.list.model.MovieListItemType
+import woowacourse.movie.list.model.TheaterContent
 
 class MovieListAdapter(
+    private var theaterContent: List<TheaterContent>,
     private val movieHomeClickListener: OnItemClickListener,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var movies: List<Movie> = emptyList()
-    private var advertisements: List<Advertisement> = emptyList()
-
-    fun initMovieListInfo(movies: List<Movie>, advertisements: List<Advertisement>) {
-        this.movies = movies
-        this.advertisements = advertisements
-    }
-
     inner class MovieViewHolder(val binding: MovieItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(
             movie: Movie,
@@ -37,6 +31,11 @@ class MovieListAdapter(
             binding.advertisement = advertisement
         }
     }
+
+//    fun updateEntity(movies: List<Movie>, advertisements: List<Advertisement>){
+//        this.movies = movies
+//        this.advertisements = advertisements
+//    }
 
     override fun getItemViewType(position: Int): Int {
         val item = MovieListItem(position)
@@ -62,16 +61,21 @@ class MovieListAdapter(
         holder: RecyclerView.ViewHolder,
         position: Int,
     ) {
-        if (getItemViewType(position) == MovieListItemType.MOVIE.separator) {
-            val movieHolder = holder as MovieViewHolder
-            movieHolder.bind(movies[position])
-        } else {
-            val advertisementHolder = holder as AdvertisementViewHolder
-            advertisementHolder.bind(advertisements[0])
+        when (theaterContent[position]) {
+            is Movie -> {
+                val movieHolder = holder as MovieViewHolder
+                val movie = theaterContent[position] as Movie
+                movieHolder.bind(movie)
+            }
+            is Advertisement -> {
+                val advertisementHolder = holder as AdvertisementViewHolder
+                val advertisement = theaterContent[position] as Advertisement
+                advertisementHolder.bind(advertisement)
+            }
         }
     }
 
     override fun getItemCount(): Int {
-        return movies.size
+        return theaterContent.size
     }
 }

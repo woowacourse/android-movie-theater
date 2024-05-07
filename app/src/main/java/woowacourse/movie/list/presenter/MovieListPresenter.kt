@@ -9,8 +9,17 @@ class MovieListPresenter(
 ) : MovieListContract.Presenter {
     override val movieList = MovieDataSource.movieList
     private val advertisementList = AdvertisementDataSource.advertisementList
+    private val theaterContent = MovieDataSource.theaterContent
 
     override fun setMoviesInfo() {
-        view.showMoviesInfo(movieList, advertisementList)
+        view.showMoviesInfo()
+    }
+
+//    override fun updateMoviesInfo() {
+//        view.updateMovieEntity(movieList, advertisementList)
+//    }
+
+    override fun setMovieListAdapter() {
+        view.makeMovieListAdapter(theaterContent)
     }
 }

@@ -5,47 +5,53 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.list.adapter.MovieListAdapter
 import woowacourse.movie.list.adapter.OnItemClickListener
 import woowacourse.movie.list.contract.MovieListContract
-import woowacourse.movie.list.model.Advertisement
-import woowacourse.movie.list.model.Movie
+import woowacourse.movie.list.model.TheaterContent
 import woowacourse.movie.list.presenter.MovieListPresenter
 import woowacourse.movie.list.view.TheaterBottomSheetFragment.Companion.newFragmentInstance
 
 class MovieListFragment : Fragment(), MovieListContract.View, OnItemClickListener {
     override val presenter = MovieListPresenter(this)
     private lateinit var binding: FragmentHomeBinding
-    private var movieListAdapter: MovieListAdapter = MovieListAdapter(this)
+    private lateinit var movieListAdapter: MovieListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding =
-            FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding.movieListfragment = this
+        presenter.setMovieListAdapter()
         presenter.setMoviesInfo()
 
         return binding.root
     }
 
-    override fun showMoviesInfo(
-        movies: List<Movie>,
-        advertisements: List<Advertisement>,
+    override fun makeMovieListAdapter(
+        theaterContent: List<TheaterContent>,
     ) {
-        movieListAdapter.initMovieListInfo(movies, advertisements)
-        binding.movieRecyclerView.adapter = movieListAdapter
-        movieListAdapter.notifyDataSetChanged()
-        binding.movieRecyclerView.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        movieListAdapter = MovieListAdapter(theaterContent, this)
     }
+
+    override fun showMoviesInfo() {
+        binding.movieRecyclerView.adapter = movieListAdapter
+    }
+
+//    override fun updateMovieEntity(movieList: List<Movie>, advertisementList: List<Advertisement>) {
+//        movieListAdapter.updateEntity(movieList, advertisementList)
+//        movieListAdapter.notifyDataSetChanged()
+//    }
 
     override fun onClick(movieId: Long) {
         val theaterBottomSheetFragment = newFragmentInstance(movieId)
-        theaterBottomSheetFragment.show(parentFragmentManager, theaterBottomSheetFragment::class.java.simpleName)
+        theaterBottomSheetFragment.show(
+            parentFragmentManager,
+            theaterBottomSheetFragment::class.java.simpleName
+        )
     }
 
     companion object {
