@@ -37,7 +37,7 @@ class ChooseCinemasBottomSheetFragment : BottomSheetDialogFragment(), ChooseCine
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = ChooseCinemasAdapter(onTheaterClicked = { presenter.selectCinema(it) })
+        initViews()
         arguments?.let {
             BundleCompat.getSerializable(it, THEATER_KEY, Theater::class.java)
         }?.let {
@@ -53,8 +53,12 @@ class ChooseCinemasBottomSheetFragment : BottomSheetDialogFragment(), ChooseCine
     }
 
     override fun showCinemas(cinemas: List<Cinema>) {
-        binding.rvCinema.adapter = adapter
         adapter.submitList(cinemas)
+    }
+
+    private fun initViews() {
+        adapter = ChooseCinemasAdapter(onTheaterClicked = { presenter.selectCinema(it) })
+        binding.rvCinema.adapter = adapter
     }
 
     companion object {
