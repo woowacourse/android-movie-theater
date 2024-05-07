@@ -1,6 +1,5 @@
 package woowacourse.movie.movieList
 
-import MovieAdapter
 import MovieListView
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -9,7 +8,7 @@ import android.widget.Toast
 import woowacourse.movie.R
 import woowacourse.movie.base.BindingFragment
 import woowacourse.movie.databinding.FragmentMovieListBinding
-import woowacourse.movie.model.MovieDisplayData
+import woowacourse.movie.model.ui.MovieDisplay
 import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.movieList.cinemaListDialog.ChooseCinemasBottomSheetFragment
 
@@ -33,7 +32,7 @@ class MovieListFragment :
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun updateAdapter(displayData: List<MovieDisplayData>) {
+    override fun updateAdapter(displayData: List<MovieDisplay>) {
         adapter.updateItems(displayData)
         adapter.notifyDataSetChanged()
     }

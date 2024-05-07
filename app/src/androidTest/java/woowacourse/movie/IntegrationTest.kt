@@ -1,6 +1,6 @@
 package woowacourse.movie
 
-import MovieAdapter
+import woowacourse.movie.movieList.MovieAdapter
 import android.view.View
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso

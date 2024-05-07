@@ -1,7 +1,7 @@
 package woowacourse.movie.movieList
 
 import MovieListView
-import woowacourse.movie.model.MovieDisplayData
+import woowacourse.movie.model.ui.MovieDisplay
 import woowacourse.movie.model.movieInfo.MovieDate
 import woowacourse.movie.model.movieInfo.MovieInfo
 import woowacourse.movie.model.movieInfo.RunningTime
@@ -9,6 +9,8 @@ import woowacourse.movie.model.movieInfo.Synopsis
 import woowacourse.movie.model.movieInfo.Title
 import woowacourse.movie.model.theater.Seat
 import woowacourse.movie.model.theater.Theater
+import woowacourse.movie.model.ui.AdItemDisplay
+import woowacourse.movie.model.ui.MovieItemDisplay
 import java.time.LocalDate
 
 class MovieListPresenter(
@@ -23,14 +25,17 @@ class MovieListPresenter(
     }
 
 
-    private fun convertToDisplayData(theaters: List<Theater>): List<MovieDisplayData> {
-        return theaters.map { theater ->
-            MovieDisplayData(
+    private fun convertToDisplayData(theaters: List<Theater>): List<MovieDisplay> {
+        val movies: List<MovieDisplay> =  theaters.map { theater ->
+            MovieItemDisplay(
                 title = theater.movie.title.toString(),
                 releaseDate = theater.movie.releaseDate.toString(),
                 runningTime = theater.movie.runningTime.toString(),
             )
+        }.chunked(3).flatMap {
+            it + AdItemDisplay()
         }
+        return movies
     }
 
     fun onDetailButtonClicked(position: Int) {
