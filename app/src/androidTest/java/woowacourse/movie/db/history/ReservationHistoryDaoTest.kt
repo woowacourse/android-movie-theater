@@ -26,6 +26,7 @@ class ReservationHistoryDaoTest {
 
     @After
     fun closeDb() {
+        reservationDao.clearReservations()
         db.close()
     }
 
