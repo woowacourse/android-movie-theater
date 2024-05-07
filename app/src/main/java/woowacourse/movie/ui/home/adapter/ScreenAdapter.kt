@@ -16,9 +16,9 @@ class ScreenAdapter(
     private lateinit var inflater: LayoutInflater
 
     override fun getItemViewType(position: Int): Int =
-        when {
-            ((position + 1) % ADVERTISEMENT_INTERVAL == 0) -> ScreenType.ADVERTISEMENT.id
-            else -> ScreenType.SCREEN.id
+        when (currentList[position]) {
+            is ScreenAd.ScreenPreviewUi -> ScreenType.SCREEN.id
+            is ScreenAd.Advertisement -> ScreenType.ADVERTISEMENT.id
         }
 
     override fun onCreateViewHolder(
@@ -29,7 +29,7 @@ class ScreenAdapter(
 
         val screenType =
             ScreenType.entries.find { it.id == viewType }
-                ?: throw IllegalArgumentException("Invalid viewType. viewType: $viewType")
+                ?: throw IllegalArgumentException("유효하지 않은 View Type입니다. viewType: $viewType")
 
         return when (screenType) {
             ScreenType.SCREEN -> {
@@ -50,14 +50,10 @@ class ScreenAdapter(
     ) {
         val item = getItem(position)
 
-        if (item is ScreenAd.ScreenPreviewUi) {
-            (holder as ScreenViewHolder).bind(item)
-        } else if (item is ScreenAd.Advertisement) {
-            (holder as AdvertisementViewHolder).bind(item)
+        if (item is ScreenAd.ScreenPreviewUi && holder is ScreenViewHolder) {
+            holder.bind(item)
+        } else if (item is ScreenAd.Advertisement && holder is AdvertisementViewHolder) {
+            holder.bind(item)
         }
-    }
-
-    companion object {
-        private const val ADVERTISEMENT_INTERVAL = 4
     }
 }
