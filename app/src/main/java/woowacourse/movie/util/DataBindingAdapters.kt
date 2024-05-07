@@ -19,20 +19,20 @@ object DataBindingAdapters {
     ) {
         imageView.setImageResource(resourceId)
     }
-    
+
     @JvmStatic
     @BindingAdapter("formattedDate")
     fun setFormattedDate(textView: TextView, date: LocalDate?) {
         textView.text = date?.format(DateTimeFormatter.ofPattern("yyyy.MM.dd")) ?: ""
     }
-    
+
     @JvmStatic
     @BindingAdapter("entries")
     fun setSpinnerEntries(spinner: Spinner, entries: List<Any>?) {
         val adapter = ArrayAdapter(spinner.context, R.layout.simple_spinner_dropdown_item, entries ?: emptyList())
         spinner.adapter = adapter
     }
-    
+
     @JvmStatic
     @BindingAdapter("onItemSelected")
     fun setSpinnerItemSelectedListener(spinner: Spinner, itemSelectedListener: AdapterView.OnItemSelectedListener?) {

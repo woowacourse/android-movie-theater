@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/seat_1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/seat_selector"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        tools:text="A1"
+        android:textStyle="bold"
+        android:textSize="22dp"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="27dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/seat_2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/seat_selector"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        tools:text="A1"
+        android:textStyle="bold"
+        android:textSize="22dp"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="27dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/seat_3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/seat_selector"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        tools:text="A3"
+        android:textStyle="bold"
+        android:textSize="22dp"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="27dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/seat_4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/seat_selector"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        tools:text="A4"
+        android:textStyle="bold"
+        android:textSize="22dp"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="27dp"/>
+
+</TableRow>

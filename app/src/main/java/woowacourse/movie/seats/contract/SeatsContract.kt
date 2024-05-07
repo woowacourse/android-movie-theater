@@ -1,64 +1,31 @@
 package woowacourse.movie.seats.contract
 
-import android.widget.TextView
-import woowacourse.movie.seats.model.Seat
+import woowacourse.movie.seats.model.Seats
 
 interface SeatsContract {
     interface View {
-        fun setOnSelectSeat()
+        fun initClickListener()
 
-        val presenter: Presenter
+        fun showMovieTitle(movieTitle: String)
 
-        fun setSeatCellBackgroundColor(info: Seat)
+        fun showSeats(seats: Seats)
 
-        fun setMovieTitle(info: String)
+        fun showTotalPrice(total: Int)
 
-        fun setTotalPrice(info: Int)
+        fun updateConfirmButton(enabled: Boolean)
 
-        fun setSeatsText(info: Seat)
+        fun moveToReservationResult(movieTicketId: Int)
 
-        fun startNextActivity(
-            id: Long,
-            title: String,
-            date: String,
-            time: String,
-            seats: List<Seat>,
-            price: Int,
-        )
-
-        fun initCell(
-            cell: TextView,
-            seat: Seat,
-        )
+        fun showMessage(message: String)
     }
 
     interface Presenter {
-        fun setPriceInfo()
+        fun loadScreeningInformation()
 
-        fun setSeatsCellsBackgroundColorInfo()
+        fun onSeatClicked(seatIndex: Int)
 
-        fun createSeat(
-            rowIndex: Int,
-            colIndex: Int,
-        )
+        fun requestReservationResult()
 
-        fun setSeatsTextInfo()
-
-        fun setMovieTitleInfo()
-
-        fun storeMovieId(movieId: Long)
-
-        fun startNextActivity()
-
-        fun storeDate(date: String)
-
-        fun storeTime(time: String)
-
-        fun selectSeat(
-            rowIndex: Int,
-            colIndex: Int,
-        )
-
-        fun initCell(cell: TextView)
+        fun selectedSeats(): ArrayList<Int>
     }
 }

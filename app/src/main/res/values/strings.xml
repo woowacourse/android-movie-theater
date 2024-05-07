@@ -14,4 +14,12 @@
     <string name="ticket_information_format">일반 %1$d명 | %2$s | %3$s</string>
     <string name="hello_blank_fragment"></string>
     <string name="screening_time_count_format">%1$d개의 상영 시간</string>
+    <string name="total_price_text">0원 (현장 결제)</string>
+    <string name="confirm_text">확인</string>
+    <string name="reservation_confirm_title">예매 확인</string>
+    <string name="reservation_confirm_message">정말 예매하시겠습니까?</string>
+    <string name="cancel">취소</string>
+    <string name="reservation_finish_text">예매 완료</string>
+    <string name="total_price_format">%1$,d원 (현장 결제)</string>
+    <string name="reservation_cancel_info">영화 상영 시작 시간 15분 전까지\n취소가 가능합니다.</string>
 </resources>
