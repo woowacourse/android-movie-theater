@@ -14,11 +14,14 @@ interface MovieDetailContract {
 
         fun showTicketMessage(message: String)
 
+        fun showTitle(title: Title)
 
-        fun showTitle(title:Title)
         fun showRunningTime(runningTime: RunningTime)
+
         fun showSynopsis(synopsis: Synopsis)
+
         fun showReleaseDate(movieDate: MovieDate)
+
         fun updateDateAdapter(dates: List<String>)
 
         fun updateTimeAdapter(times: List<String>)
@@ -32,6 +35,7 @@ interface MovieDetailContract {
         fun updateRunMovieTimes()
 
         fun loadRunMovieDateRange()
+
         fun loadMovieInfo()
     }
 }

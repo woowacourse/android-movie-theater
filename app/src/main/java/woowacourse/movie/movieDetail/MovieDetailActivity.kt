@@ -28,7 +28,8 @@ interface ClickListener {
 
 class MovieDetailActivity :
     BindingActivity<ActivityMovieDetailBinding>(R.layout.activity_movie_detail),
-    MovieDetailContract.View, ClickListener {
+    MovieDetailContract.View,
+    ClickListener {
     private lateinit var presenter: MovieDetailContract.Presenter
     private lateinit var dateAdapter: ArrayAdapter<String>
     private lateinit var timeAdapter: ArrayAdapter<String>

@@ -1,5 +1,5 @@
-import woowacourse.movie.model.ui.MovieDisplay
 import woowacourse.movie.model.theater.Theater
+import woowacourse.movie.model.ui.MovieDisplay
 
 interface MovieListView {
     fun showToast(message: String)

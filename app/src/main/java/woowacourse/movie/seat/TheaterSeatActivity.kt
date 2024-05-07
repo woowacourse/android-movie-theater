@@ -105,6 +105,7 @@ class TheaterSeatActivity :
         }
         presenter = TheaterSeatPresenter(this, ticketNum.toInt(), cinema)
     }
+
     private fun initSeats() {
         binding.seatTable.children.filterIsInstance<TableRow>()
             .forEach { row ->

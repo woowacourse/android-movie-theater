@@ -5,11 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemAdBinding
 import woowacourse.movie.databinding.ItemMovieListBinding
 import woowacourse.movie.model.ui.AdItemDisplay
@@ -26,7 +22,10 @@ class MovieAdapter(
         return items[position].viewType
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): MovieViewHolder {
         val layoutInflater = LayoutInflater.from(context)
 
         return when (viewType) {
@@ -44,7 +43,10 @@ class MovieAdapter(
         }
     }
 
-    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: MovieViewHolder,
+        position: Int,
+    ) {
         when (holder) {
             is MovieItemViewHolder -> holder.bind(items[position] as MovieItemDisplay)
             is AdItemViewHolder -> holder.bind(items[position] as AdItemDisplay)
@@ -62,6 +64,7 @@ class MovieAdapter(
     }
 
     sealed class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view)
+
     class MovieItemViewHolder(private val binding: ItemMovieListBinding, private val onClick: (position: Int) -> Unit) :
         MovieViewHolder(binding.root) {
         fun bind(movie: MovieItemDisplay) {

@@ -1,15 +1,14 @@
 package woowacourse.movie.movieList
 
 import MovieListView
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import woowacourse.movie.R
 import woowacourse.movie.base.BindingFragment
 import woowacourse.movie.databinding.FragmentMovieListBinding
-import woowacourse.movie.model.ui.MovieDisplay
 import woowacourse.movie.model.theater.Theater
+import woowacourse.movie.model.ui.MovieDisplay
 import woowacourse.movie.movieList.cinemaListDialog.ChooseCinemasBottomSheetFragment
 
 class MovieListFragment :

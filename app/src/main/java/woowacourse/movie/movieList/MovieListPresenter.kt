@@ -1,7 +1,6 @@
 package woowacourse.movie.movieList
 
 import MovieListView
-import woowacourse.movie.model.ui.MovieDisplay
 import woowacourse.movie.model.movieInfo.MovieDate
 import woowacourse.movie.model.movieInfo.MovieInfo
 import woowacourse.movie.model.movieInfo.RunningTime
@@ -10,31 +9,32 @@ import woowacourse.movie.model.movieInfo.Title
 import woowacourse.movie.model.theater.Seat
 import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.model.ui.AdItemDisplay
+import woowacourse.movie.model.ui.MovieDisplay
 import woowacourse.movie.model.ui.MovieItemDisplay
 import java.time.LocalDate
 
 class MovieListPresenter(
     private val view: MovieListView,
-    private val theaters: List<Theater> = generateTheaters(
-        GENERATE_DUMMY_DATA_NUM
-    )
+    private val theaters: List<Theater> =
+        generateTheaters(
+            GENERATE_DUMMY_DATA_NUM,
+        ),
 ) {
-
     init {
         loadMovies()
     }
 
-
     private fun convertToDisplayData(theaters: List<Theater>): List<MovieDisplay> {
-        val movies: List<MovieDisplay> =  theaters.map { theater ->
-            MovieItemDisplay(
-                title = theater.movie.title.toString(),
-                releaseDate = theater.movie.releaseDate.toString(),
-                runningTime = theater.movie.runningTime.toString(),
-            )
-        }.chunked(3).flatMap {
-            it + AdItemDisplay()
-        }
+        val movies: List<MovieDisplay> =
+            theaters.map { theater ->
+                MovieItemDisplay(
+                    title = theater.movie.title.toString(),
+                    releaseDate = theater.movie.releaseDate.toString(),
+                    runningTime = theater.movie.runningTime.toString(),
+                )
+            }.chunked(3).flatMap {
+                it + AdItemDisplay()
+            }
         return movies
     }
 
@@ -50,6 +50,7 @@ class MovieListPresenter(
 
     companion object {
         const val GENERATE_DUMMY_DATA_NUM = 10000
+
         private fun generateTheaters(count: Int): List<Theater> {
             return makeDummyData(count)
         }
@@ -88,6 +89,4 @@ class MovieListPresenter(
             return seats
         }
     }
-
-
 }

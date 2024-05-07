@@ -9,6 +9,7 @@ class MovieDetailPresenter(
     private val cinema: Cinema,
 ) : MovieDetailContract.Presenter {
     private var ticketNum = 1
+
     init {
         view.onTicketCountChanged(ticketNum)
     }
@@ -48,12 +49,10 @@ class MovieDetailPresenter(
     }
 
     override fun loadMovieInfo() {
-        val movie=cinema.theater.movie
+        val movie = cinema.theater.movie
         view.showTitle(movie.title)
         view.showReleaseDate(movie.releaseDate)
         view.showSynopsis(movie.synopsis)
         view.showRunningTime(movie.runningTime)
     }
-
-
 }

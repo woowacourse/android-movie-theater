@@ -77,5 +77,4 @@ class TheaterSeatPresenter(
             }
         view.showPrice(totalPrice)
     }
-
 }
