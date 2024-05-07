@@ -90,7 +90,7 @@ class SeatSelectionActivity : BaseMvpBindingActivity<ActivitySeatSelectionBindin
         builder.show()
     }
 
-    override fun navigateToReservation(id: Int) {
+    override fun navigateToReservation(id: Long) {
         ReservationActivity.startActivity(this, id)
         navigateBackToPrevious()
     }

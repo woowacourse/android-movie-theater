@@ -35,7 +35,7 @@ class ReservationPresenterTest {
     fun `ReservationPresenter가 유효한 예매 id를 통해 loadReservation()을 했을 때, view에게 reservation 데이터를 전달한다`() {
         // given
         every { theaterRepository.findTheaterNameById(any()) } returns Result.success("선릉")
-        every { repository.findByReservationId(any()) } returns Result.success(dummyReservation)
+        every { repository.findReservation(any()) } returns Result.success(dummyReservation)
         every { view.showReservation(any(), any()) } just runs
 
         // when
@@ -48,7 +48,7 @@ class ReservationPresenterTest {
     @Test
     fun `ScreenPresenter가 유효하지 않은 예매 id를 통해 loadReservation()했을 때, view에게 back과 throwable를 전달한다`() {
         // given
-        every { repository.findByReservationId(any()) } returns
+        every { repository.findReservation(any()) } returns
             Result.failure(
                 NoSuchElementException(),
             )
@@ -66,7 +66,7 @@ class ReservationPresenterTest {
     @Test
     fun `ScreenPresenter가 loadReservation()했을 때, 예상치 못한 에러가 발생하면 view에게 back과 throwable를 전달한다`() {
         // given
-        every { repository.findByReservationId(any()) } returns Result.failure(Exception())
+        every { repository.findReservation(any()) } returns Result.failure(Exception())
         every { view.showToastMessage(e = any()) } just runs
         every { view.navigateBackToPrevious() } just runs
 

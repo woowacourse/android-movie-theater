@@ -11,8 +11,8 @@ class ReservationPresenter(
 ) : ReservationContract.Presenter {
     private var uiModel: ReservationUiModel = ReservationUiModel()
 
-    override fun loadReservation(id: Int) {
-        reservationRepository.findByReservationId(id).onSuccess { reservation ->
+    override fun loadReservation(id: Long) {
+        reservationRepository.findReservation(id).onSuccess { reservation ->
             processReservation(reservation)
         }.onFailure { e ->
             when (e) {

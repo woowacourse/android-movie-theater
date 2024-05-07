@@ -106,8 +106,9 @@ class SeatSelectionPresenter(
         uiModel.screen?.let { screen ->
             uiModel.dateTime?.let { dateTime ->
                 reservationRepository.saveReservation(
-                    screen.movie,
+                    screen.movie.id,
                     uiModel.id,
+                    screen.movie.title,
                     uiModel.ticketCount,
                     uiModel.userSeat.seatModels.filter { seatModel -> seatModel.isSelected }
                         .map { seatModel -> seatModel.toSeat() },

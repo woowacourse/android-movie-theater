@@ -23,7 +23,7 @@ interface SeatSelectionContract {
 
         fun showTotalPrice(totalPrice: Int)
 
-        fun navigateToReservation(id: Int)
+        fun navigateToReservation(id: Long)
 
         fun showReservationDialog()
 

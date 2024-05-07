@@ -25,7 +25,7 @@ import java.time.LocalDateTime
 @RunWith(AndroidJUnit4::class)
 class ReservationActivityTest {
     private val repository: ReservationRepository by lazy { DummyReservation }
-    private var reservationId: Int
+    private var reservationId: Long
     private val reservation = getDummyReservation()
     private val count = 3
 
@@ -38,8 +38,9 @@ class ReservationActivityTest {
             ).apply {
                 reservationId =
                     repository.saveReservation(
-                        getDummyMovie(),
+                        getDummyMovie().id,
                         1,
+                        getDummyMovie().title,
                         count,
                         getDummySeats(),
                         LocalDateTime.now(),
@@ -50,7 +51,7 @@ class ReservationActivityTest {
 
     @Test
     fun `예약한_영화의_제목을_표시한다`() {
-        onView(withId(R.id.tv_reservation_title)).check(matches(withText(reservation.movie.title)))
+        onView(withId(R.id.tv_reservation_title)).check(matches(withText(reservation.title)))
     }
 
     @Test
@@ -65,7 +66,7 @@ class ReservationActivityTest {
 
     @Test
     fun `상영_영화_예매_가격을_표시한다`() {
-        val reservation = repository.findByReservationId(reservationId)
+        val reservation = repository.findReservation(reservationId)
         val context = ApplicationProvider.getApplicationContext<Context>()
 
         onView(withId(R.id.tv_reservation_amount)).check(
