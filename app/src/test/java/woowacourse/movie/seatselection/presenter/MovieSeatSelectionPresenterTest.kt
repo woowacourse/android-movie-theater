@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.data.MovieRepository.getMovieById
-import woowacourse.movie.model.Movie
+import woowacourse.movie.home.view.adapter.movie.HomeContent.Movie
 import woowacourse.movie.model.MovieDate
 import woowacourse.movie.model.Theater
 import woowacourse.movie.seatselection.presenter.contract.MovieSeatSelectionContract

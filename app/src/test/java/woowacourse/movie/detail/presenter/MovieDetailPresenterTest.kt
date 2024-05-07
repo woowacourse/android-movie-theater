@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.detail.presenter.contract.MovieDetailContract
-import woowacourse.movie.model.Movie
+import woowacourse.movie.home.view.adapter.movie.HomeContent.*
 import woowacourse.movie.model.MovieDate
 import woowacourse.movie.model.Theater
 import java.time.LocalDate

@@ -11,7 +11,8 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.home.presenter.contract.MovieHomeContract
-import woowacourse.movie.model.Movie
+import woowacourse.movie.home.view.adapter.movie.HomeContent
+import woowacourse.movie.home.view.adapter.movie.HomeContent.Movie
 import woowacourse.movie.model.MovieDate
 import woowacourse.movie.model.Theater
 import java.time.LocalDate
@@ -55,6 +56,14 @@ class MovieMainPresenterTest {
             ),
         )
 
+    private val advertisements =
+        listOf(
+            HomeContent.Advertisement(
+                banner = R.drawable.advertisement,
+                link = "https://www.woowacourse.io/",
+            ),
+        )
+
     @BeforeEach
     fun setUp() {
         view = mockk()
@@ -63,15 +72,16 @@ class MovieMainPresenterTest {
     }
 
     @Test
-    fun `loadMovies를 호출하면 view에서 영화 리스트를 보여준다`() {
+    fun `loadHomeContents 호출하면 view에서 영화 리스트를 보여준다`() {
         // Given
         every { MovieRepository.getAllMovies() } returns movies
-        every { view.displayHomeContents(any(), any()) } just Runs
+        every { MovieRepository.getAllAdvertisements() } returns advertisements
+        every { view.displayHomeContents(any()) } just Runs
 
         // When
         presenter.loadHomeContents()
 
         // Then
-        verify { view.displayHomeContents(movies, any()) }
+        verify { view.displayHomeContents(any()) }
     }
 }
