@@ -1,6 +1,8 @@
 package woowacourse.movie.domain.model
 
-data class Theaters(val theaters: List<Theater>) {
+import java.io.Serializable
+
+data class Theaters(val theaters: List<Theater>) : Serializable {
     constructor(vararg theaters: Theater) : this(theaters.toList())
 
     fun screeningTheater(screen: Screen): Theaters =

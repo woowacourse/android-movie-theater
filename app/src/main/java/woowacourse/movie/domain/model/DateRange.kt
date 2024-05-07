@@ -1,11 +1,12 @@
 package woowacourse.movie.domain.model
 
+import java.io.Serializable
 import java.time.LocalDate
 
 data class DateRange(
     override val start: LocalDate,
     override val endInclusive: LocalDate,
-) : ClosedRange<LocalDate> {
+) : ClosedRange<LocalDate>, Serializable {
     fun allDates(): List<LocalDate> = (start..endInclusive).toList()
 }
 

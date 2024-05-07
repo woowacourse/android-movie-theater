@@ -12,9 +12,7 @@ import woowacourse.movie.domain.model.ScreenAd
 import woowacourse.movie.domain.model.Theaters
 import woowacourse.movie.domain.repository.DummyMovies
 import woowacourse.movie.domain.repository.DummyScreens
-import woowacourse.movie.ui.detail.ScreenDetailActivity
 import woowacourse.movie.ui.home.adapter.ScreenAdapter
-import woowacourse.movie.ui.home.adapter.TheaterAdapter
 
 class HomeFragment : Fragment(), HomeContract.View {
     private lateinit var adapter: ScreenAdapter
@@ -56,14 +54,6 @@ class HomeFragment : Fragment(), HomeContract.View {
         screen: Screen,
         theaters: Theaters,
     ) {
-        val theaterAdapter =
-            TheaterAdapter(screen) { screenId, theaterId ->
-                ScreenDetailActivity.startActivity(requireContext(), screenId, theaterId)
-            }
-
-        val theaterBottomSheet = TheaterBottomSheet(theaterAdapter)
-
-        theaterAdapter.submitList(theaters.theaters)
-        theaterBottomSheet.show(parentFragmentManager, "theaterBottomSheet")
+        TheaterBottomSheet.startFragment(parentFragmentManager, screen, theaters)
     }
 }
