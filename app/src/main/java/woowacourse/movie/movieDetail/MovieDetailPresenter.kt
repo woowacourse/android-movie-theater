@@ -13,7 +13,7 @@ class MovieDetailPresenter(
 
     val movie: MovieInfo = cinema.theater.movie
 
-    override fun onTicketPlus() {
+    override fun increaseTicketCount() {
         if (ticketNum < 10) {
             ticketNum++
             view.onTicketCountChanged()
@@ -22,7 +22,7 @@ class MovieDetailPresenter(
         }
     }
 
-    override fun onTicketMinus() {
+    override fun decreaseTicketCount() {
         if (ticketNum > 1) {
             ticketNum--
             view.onTicketCountChanged()
@@ -31,11 +31,11 @@ class MovieDetailPresenter(
         }
     }
 
-    override fun updateTimes() {
+    override fun updateRunMovieTimes() {
         view.updateTimeAdapter(cinema.theater.times.map { it.toString() })
     }
 
-    override fun loadDateRange() {
+    override fun loadRunMovieDateRange() {
         val startDate = LocalDate.of(2024, 4, 1)
         val endDate = LocalDate.of(2024, 4, 30)
         val dates = mutableListOf<String>()

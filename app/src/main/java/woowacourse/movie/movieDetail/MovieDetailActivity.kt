@@ -39,7 +39,7 @@ class MovieDetailActivity :
                 cinema,
             ).also { binding.presenter = it }
         setupEventListeners(cinema)
-        presenter.loadDateRange()
+        presenter.loadRunMovieDateRange()
     }
 
     override fun navigateToPurchaseConfirmation(intent: Intent) {
@@ -85,7 +85,7 @@ class MovieDetailActivity :
                     position: Int,
                     id: Long,
                 ) {
-                    presenter.updateTimes()
+                    presenter.updateRunMovieTimes()
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}

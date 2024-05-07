@@ -16,12 +16,12 @@ interface MovieDetailContract {
     }
 
     interface Presenter {
-        fun onTicketPlus()
+        fun increaseTicketCount()
 
-        fun onTicketMinus()
+        fun decreaseTicketCount()
 
-        fun updateTimes()
+        fun updateRunMovieTimes()
 
-        fun loadDateRange()
+        fun loadRunMovieDateRange()
     }
 }
