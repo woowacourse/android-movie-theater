@@ -31,10 +31,8 @@ class MovieListFragment :
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     override fun updateAdapter(displayData: List<MovieDisplay>) {
         adapter.updateItems(displayData)
-        adapter.notifyDataSetChanged()
     }
 
     override fun navigateToCinemaView(theater: Theater) {

@@ -1,5 +1,6 @@
 package woowacourse.movie.movieList
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -9,13 +10,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemAdBinding
+import woowacourse.movie.databinding.ItemMovieListBinding
 import woowacourse.movie.model.ui.AdItemDisplay
 import woowacourse.movie.model.ui.MovieDisplay
 import woowacourse.movie.model.ui.MovieItemDisplay
 
 class MovieAdapter(
     private val context: Context,
-    private val onClick: (Int) -> Unit,
+    private val onClick: (position: Int) -> Unit,
 ) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     private var items: List<MovieDisplay> = emptyList()
 
@@ -28,12 +31,12 @@ class MovieAdapter(
 
         return when (viewType) {
             MovieItemDisplay.ITEM_VIEW_TYPE_MOVIE -> {
-                val view = layoutInflater.inflate(R.layout.item_movie_list, parent, false)
+                val view = ItemMovieListBinding.inflate(layoutInflater, parent, false)
                 MovieItemViewHolder(view, onClick)
             }
 
             AdItemDisplay.ITEM_VIEW_TYPE_AD -> {
-                val view = layoutInflater.inflate(R.layout.item_ad, parent, false)
+                val view = ItemAdBinding.inflate(layoutInflater, parent, false)
                 AdItemViewHolder(view)
             }
 
@@ -49,36 +52,27 @@ class MovieAdapter(
     }
 
     override fun getItemCount(): Int {
-        val originalCount = items.size
-        return originalCount + originalCount / 3
+        return items.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateItems(displayData: List<MovieDisplay>) {
         items = displayData
+        notifyDataSetChanged()
     }
 
     sealed class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view)
-    class MovieItemViewHolder(view: View, private val onClick: (Int) -> Unit) :
-        MovieViewHolder(view) {
-        private val titleTextView: TextView = view.findViewById(R.id.movie_title)
-        private val releaseDateTextView: TextView = view.findViewById(R.id.movie_release_date)
-        private val durationTextView: TextView = view.findViewById(R.id.movie_duration)
-        private val detailButton: Button = view.findViewById(R.id.movie_details_button)
-
+    class MovieItemViewHolder(private val binding: ItemMovieListBinding, private val onClick: (position: Int) -> Unit) :
+        MovieViewHolder(binding.root) {
         fun bind(movie: MovieItemDisplay) {
-            titleTextView.text = movie.title
-            releaseDateTextView.text = movie.releaseDate
-            durationTextView.text = movie.runningTime
-            detailButton.setOnClickListener {
-                onClick(absoluteAdapterPosition)
-            }
+            binding.data = movie
+            binding.listener = MovieItemListener { onClick(absoluteAdapterPosition) }
         }
     }
 
-    class AdItemViewHolder(view: View) : MovieViewHolder(view) {
-        private val adView: ImageView = view.findViewById(R.id.img_ad)
+    class AdItemViewHolder(private val binding: ItemAdBinding) : MovieViewHolder(binding.root) {
         fun bind(ad: AdItemDisplay) {
-            adView.setImageResource(ad.poster)
+            binding.data = ad
         }
     }
 }
