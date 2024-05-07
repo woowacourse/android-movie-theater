@@ -64,18 +64,17 @@ class SeatPresenterTest {
         val seatId1 = "A1"
         val seatId2 = "A2"
         val redColor = "#FF0000"
-        val seatOneColorSlot = slot<String>()
-        val seatTwoColorSlot = slot<String>()
-        every { view.setSeatBackground(seatId1, capture(seatOneColorSlot)) } just runs
-        every { view.setSeatBackground(seatId2, capture(seatTwoColorSlot)) } just runs
+        val seatColorSlot = mutableListOf<String>()
+        every { view.setSeatBackground(seatId1, capture(seatColorSlot)) } just runs
+        every { view.setSeatBackground(seatId2, capture(seatColorSlot)) } just runs
         // when
         presenter.toggleSeatSelection(seatId1)
         presenter.toggleSeatSelection(seatId2)
         // then
-        verify(exactly = 1) { view.setSeatBackground(seatId1, seatOneColorSlot.captured) }
-        verify(exactly = 1) { view.setSeatBackground(seatId2, seatTwoColorSlot.captured) }
-        seatOneColorSlot.captured shouldBe redColor
-        seatTwoColorSlot.captured shouldBe redColor
+        verify(exactly = 1) { view.setSeatBackground(seatId1, seatColorSlot[0]) }
+        verify(exactly = 1) { view.setSeatBackground(seatId2, seatColorSlot[1]) }
+        seatColorSlot[0] shouldBe redColor
+        seatColorSlot[1] shouldBe redColor
     }
 
     @Test
@@ -104,14 +103,16 @@ class SeatPresenterTest {
         val seatId = "A1"
         val whiteColor = "#FFFFFF"
         val redColor = "#FF0000"
-        val colorSlot = slot<String>()
+        val colorSlot = mutableListOf<String>()
         every { view.setSeatBackground(seatId, capture(colorSlot)) } just runs
         // when
         presenter.toggleSeatSelection(seatId) // Select
         presenter.toggleSeatSelection(seatId) // Deselect
         // then
-        verify(exactly = 1) { view.setSeatBackground(seatId, redColor) }
-        verify(exactly = 1) { view.setSeatBackground(seatId, whiteColor) }
-        colorSlot.captured shouldBe whiteColor
+        verify(exactly = 1) { view.setSeatBackground(seatId, colorSlot[0]) }
+        verify(exactly = 1) { view.setSeatBackground(seatId, colorSlot[1]) }
+        colorSlot[0] shouldBe whiteColor
+        colorSlot[1] shouldBe redColor
+
     }
 }
