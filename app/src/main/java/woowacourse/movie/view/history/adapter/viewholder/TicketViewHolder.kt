@@ -1,5 +1,6 @@
 package woowacourse.movie.view.history.adapter.viewholder
 
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemTicketBinding
 import woowacourse.movie.model.ticket.ReservationTicket
@@ -9,6 +10,8 @@ class TicketViewHolder(
     private val binding: ItemTicketBinding,
     private val onClickTicketItem: OnClickTicketItem,
 ) : RecyclerView.ViewHolder(binding.root) {
+    var isSelected: Boolean = false
+
     init {
         binding.ticketCatalog = this
     }
@@ -17,5 +20,8 @@ class TicketViewHolder(
         binding.reservationTicket = item
     }
 
-    fun onClickTicket(item: ReservationTicket) = onClickTicketItem(item)
+    fun onClickTicket(item: ReservationTicket) {
+        isSelected = true
+        onClickTicketItem(item)
+    }
 }
