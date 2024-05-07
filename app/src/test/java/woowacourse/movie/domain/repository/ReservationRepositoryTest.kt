@@ -21,7 +21,7 @@ class ReservationRepositoryTest {
     }
 
     @Test
-    fun `find reservation by id`() {
+    fun `예약을 id로 찾는다`() {
         val reservation = repository.findById(-1).getOrThrow()
         assertThat(reservation).isEqualTo(
             Reservation(
@@ -37,7 +37,7 @@ class ReservationRepositoryTest {
     }
 
     @Test
-    fun `find the timeReservation with timeReservationId`() {
+    fun `시간예약 id로 시간예약을 찾는다`() {
         val timeReservation = repository.loadTimeReservation(0)
 
         assertThat(timeReservation).isEqualTo(TimeReservation.NULL)

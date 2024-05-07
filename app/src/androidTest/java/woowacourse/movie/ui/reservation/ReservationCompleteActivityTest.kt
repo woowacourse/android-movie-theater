@@ -54,12 +54,12 @@ class ReservationCompleteActivityTest {
     }
 
     @Test
-    fun showTheReservedSeats() {
+    fun `예약_좌석을_보여준다`() {
         onView(withId(R.id.tv_reservation_seats)).check(matches(withText("A1,B2 |")))
     }
 
     @Test
-    fun showTimeOfReservation() {
+    fun `예약_시각을_보여준다`() {
         onView(withId(R.id.tv_reservation_time)).check(matches(withText("10:00")))
     }
 

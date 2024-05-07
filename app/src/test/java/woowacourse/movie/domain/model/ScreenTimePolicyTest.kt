@@ -7,7 +7,7 @@ import java.time.LocalTime
 
 class ScreenTimePolicyTest {
     @Test
-    fun `screening time of weekend is from 10H to 22H step 2H`() {
+    fun `평일 상영시간은 10시 ~ 22시까지 2시간 간격이다`() {
         val screenTimePolicy = WeeklyScreenTimePolicy() // saturday
         val actual = screenTimePolicy.screeningTimes(LocalDate.of(2024, 4, 27))
 
@@ -26,7 +26,7 @@ class ScreenTimePolicyTest {
     }
 
     @Test
-    fun `screeningTime of weekday is from 09 to 23 step 2H`() {
+    fun `주말 상영시간은 9시 ~ 23시까지 2시간 간격이다`() {
         val screenTimePolicy = WeeklyScreenTimePolicy() // friday
         val actual = screenTimePolicy.screeningTimes(LocalDate.of(2024, 4, 26))
 

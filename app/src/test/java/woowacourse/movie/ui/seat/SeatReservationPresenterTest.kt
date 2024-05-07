@@ -26,7 +26,7 @@ class SeatReservationPresenterTest {
     }
 
     @Test
-    fun showSeats() {
+    fun `좌석들을_보여준다`() {
         // given
         every { mockView.showAllSeats(any()) } just runs
         every { mockView.initBinding(any(), any()) } just runs

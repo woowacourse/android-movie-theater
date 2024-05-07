@@ -16,7 +16,7 @@ class SeatsTest {
     }
 
     @Test
-    fun `count of the seats`() {
+    fun `좌석의 갯수를 센다`() {
         val seats =
             Seats(
                 Seat(Position(0, 0), Grade.S),
@@ -26,7 +26,7 @@ class SeatsTest {
     }
 
     @Test
-    fun `find the max row of the seats`() {
+    fun `제일 긴 행의 길이를 구한다`() {
         val seats =
             Seats(
                 Seat(Position(0, 0), Grade.S),
@@ -36,7 +36,7 @@ class SeatsTest {
     }
 
     @Test
-    fun `find the max column of the seats`() {
+    fun `제일 긴 열으 길이를 구한다`() {
         val seats =
             Seats(
                 Seat(Position(0, 0), Grade.S),
@@ -46,7 +46,7 @@ class SeatsTest {
     }
 
     @Test
-    fun `find seat with position`() {
+    fun `위치를 가지고 좌석을 찾는다`() {
         val seats =
             Seats(
                 Seat(Position(0, 0), Grade.S),

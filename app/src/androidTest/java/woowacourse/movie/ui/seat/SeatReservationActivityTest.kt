@@ -40,7 +40,7 @@ class SeatReservationActivityTest {
     }
 
     @Test
-    fun the_View_Is_Selected_When_Seats_Are_Selected() {
+    fun `좌석을_count_2_보다_적은_갯수만큼_선택한_좌석만_선택된다`() {
         // given
         val a1 = onView(withText("A 1"))
         val b2 = onView(withText("B 2"))

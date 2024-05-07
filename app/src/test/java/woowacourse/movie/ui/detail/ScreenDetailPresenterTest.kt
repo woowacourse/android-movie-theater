@@ -112,7 +112,7 @@ class ScreenDetailPresenterTest {
     }
 
     @Test
-    fun `reserve with date, time and ticket count`() {
+    fun `날짜_시간_티켓_숫자를_가지고_예약한다`() {
         // given
         every { mockView.navigateToSeatsReservation(2, any()) } just runs
 
