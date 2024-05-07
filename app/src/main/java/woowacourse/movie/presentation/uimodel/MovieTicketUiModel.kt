@@ -1,9 +1,11 @@
 package woowacourse.movie.presentation.uimodel
 
+import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import kotlinx.parcelize.Parceler
+import woowacourse.movie.R
 import woowacourse.movie.domain.model.reservation.MovieTicket
 import woowacourse.movie.presentation.view.reservation.seat.SeatSelectionActivity.Companion.SEAT_COL_START_VALUE
 import woowacourse.movie.presentation.view.reservation.seat.SeatSelectionActivity.Companion.SEAT_POSITION_TEXT_FORMAT
@@ -59,17 +61,28 @@ data class MovieTicketUiModel(
         movieTicket.reservationMovieInfo.theaterName,
     )
 
-    fun screeningTime(): String = "$startTime ~ $endTime"
+    fun screeningTime(context: Context): String {
+        return context.getString(R.string.screening_time_format, startTime, endTime)
+    }
 
-    fun runningTime(): String = "(${runningTime}분)"
+    fun runningTime(context: Context): String {
+        return context.getString(R.string.running_time, runningTime)
+    }
 
-    fun reservationInfo(): String {
-        return "일반 ${reservationCount}명 | ${joinReservedSeat()} | $theaterName 극장"
+    fun reservationInfo(context: Context): String {
+        return context.getString(
+            R.string.reservation_info_format,
+            reservationCount,
+            joinReservedSeat(),
+            theaterName,
+        )
     }
 
     private fun joinReservedSeat(): String = selectedSeats.joinToString(", ")
 
-    fun totalPrice(): String = "${String.format("%,d", totalPrice)}원 (현장 결제)"
+    fun totalPrice(context: Context): String {
+        return context.getString(R.string.reservation_total_price_format, totalPrice)
+    }
 
     companion object : Parceler<MovieTicketUiModel> {
         val DEFAULT_DATE_FORMAT: DateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE
