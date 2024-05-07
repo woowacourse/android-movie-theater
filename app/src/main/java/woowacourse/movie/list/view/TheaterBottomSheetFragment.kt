@@ -1,6 +1,6 @@
 package woowacourse.movie.list.view
 
-import android.content.Intent
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.databinding.FragmentTheaterBinding
-import woowacourse.movie.detail.view.MovieInformationDetailActivity
+import woowacourse.movie.detail.view.MovieInformationDetailActivity.Companion.makeIntentInstance
 import woowacourse.movie.list.adapter.TheaterAdapter
 import woowacourse.movie.list.contract.TheaterContract
 import woowacourse.movie.list.model.TheaterData.theaters
@@ -48,11 +48,8 @@ class TheaterBottomSheetFragment : BottomSheetDialogFragment(), TheaterContract.
     }
 
     override fun navigateToDetailActivity(movieId: Long, theaterId: Long) {
-        Intent(activity, MovieInformationDetailActivity::class.java).apply {
-            putExtra(EXTRA_MOVIE_ID_KEY, movieId)
-            putExtra(EXTRA_THEATER_ID_KEY, theaterId)
-            startActivity(this)
-        }
+        val intent = makeIntentInstance(activity as Context, movieId, theaterId,)
+        startActivity(intent)
     }
 
     companion object {

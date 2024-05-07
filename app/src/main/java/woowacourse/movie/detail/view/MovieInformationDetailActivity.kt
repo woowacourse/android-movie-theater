@@ -1,5 +1,6 @@
 package woowacourse.movie.detail.view
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -160,5 +161,13 @@ class MovieInformationDetailActivity : AppCompatActivity(), MovieInformationDeta
         const val EXTRA_DATE_KEY = "selected_date_key"
         const val EXTRA_TIME_KEY = "selected_time_key"
         private const val DATE_PATTERN = "yyyy.MM.dd"
+
+        fun makeIntentInstance(context: Context, movieId: Long, theaterId: Long): Intent {
+            val intent = Intent(context, MovieInformationDetailActivity::class.java).apply {
+                putExtra(EXTRA_MOVIE_ID_KEY, movieId)
+                putExtra(EXTRA_THEATER_ID_KEY, theaterId)
+            }
+            return intent
+        }
     }
 }
