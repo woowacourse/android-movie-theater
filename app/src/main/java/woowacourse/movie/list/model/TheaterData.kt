@@ -4,7 +4,7 @@ import woowacourse.movie.common.MovieDataSource.movieList
 import java.time.LocalTime
 
 object TheaterData {
-    val screeningTimes1 =
+    private val screeningTimes1 =
         listOf(
             LocalTime.of(9, 0, 0),
             LocalTime.of(11, 0, 0),
@@ -12,7 +12,7 @@ object TheaterData {
             LocalTime.of(23, 0, 0),
         )
 
-    val screeningTimes2 =
+    private val screeningTimes2 =
         listOf(
             LocalTime.of(10, 0, 0),
             LocalTime.of(12, 0, 0),

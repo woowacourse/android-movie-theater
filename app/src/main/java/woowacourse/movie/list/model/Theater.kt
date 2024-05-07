@@ -1,6 +1,5 @@
 package woowacourse.movie.list.model
 
-import android.util.Log
 import java.time.LocalTime
 
 data class Theater(

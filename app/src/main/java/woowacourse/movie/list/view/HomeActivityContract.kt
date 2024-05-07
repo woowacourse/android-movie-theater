@@ -6,7 +6,7 @@ interface HomeActivityContract {
     interface View {
         fun showFragment(fragment: Fragment)
     }
-    
+
     interface Presenter {
         fun onBottomNavItemSelected(itemId: Int)
     }

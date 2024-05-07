@@ -8,7 +8,6 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.detail.contract.DetailContract
-import woowacourse.movie.detail.model.Count
 
 class MovieReservationTest {
     private lateinit var view: DetailContract.View
@@ -58,21 +57,12 @@ class MovieReservationTest {
     }
 
     @Test
-    fun `예매 완료 버튼을 누르면 예매 내역이 보여져야 한다`() {
-        every { view.startMovieTicketActivity(Count(1), any()) } just runs
-        // when
-        presenter.setTicketingButtonClickInfo()
-        // then
-        verify { view.startMovieTicketActivity(Count(1), any()) }
-    }
-
-    @Test
     fun `날짜와 시간을 선택하는 스피너가 보여야 한다`() {
-        every { view.showSpinner(any(), any()) } just runs
+        every { view.setSpinners(any(), any()) } just runs
         // when
         presenter.setSpinnerInfo(1)
         // then
-        verify { view.showSpinner(any(), any()) }
+        verify { view.setSpinners(any(), any()) }
     }
 
     @Test

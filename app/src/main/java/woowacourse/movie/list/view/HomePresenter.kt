@@ -2,7 +2,7 @@ package woowacourse.movie.list.view
 
 import woowacourse.movie.R
 
-class HomePresenter(private val view: HomeActivityContract.View): HomeActivityContract.Presenter {
+class HomePresenter(private val view: HomeActivityContract.View) : HomeActivityContract.Presenter {
     override fun onBottomNavItemSelected(itemId: Int) {
         when (itemId) {
             R.id.home_fragment_item -> view.showFragment(HomeFragment())
