@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.movie.R
 import woowacourse.movie.databinding.HolderAdvertisementBinding
 import woowacourse.movie.databinding.HolderScreenBinding
 import woowacourse.movie.domain.model.ScreenAd
-import woowacourse.movie.domain.model.ScreenType
 
 class ScreenAdapter(
     private val onScreenClick: (id: Int) -> Unit,
@@ -17,8 +17,8 @@ class ScreenAdapter(
 
     override fun getItemViewType(position: Int): Int =
         when (currentList[position]) {
-            is ScreenAd.ScreenPreviewUi -> ScreenType.SCREEN.id
-            is ScreenAd.Advertisement -> ScreenType.ADVERTISEMENT.id
+            is ScreenAd.ScreenPreviewUi -> R.layout.holder_screen
+            is ScreenAd.Advertisement -> R.layout.holder_advertisement
         }
 
     override fun onCreateViewHolder(
@@ -27,20 +27,20 @@ class ScreenAdapter(
     ): RecyclerView.ViewHolder {
         if (!::inflater.isInitialized) inflater = LayoutInflater.from(parent.context)
 
-        val screenType =
-            ScreenType.entries.find { it.id == viewType }
-                ?: throw IllegalArgumentException("유효하지 않은 View Type입니다. viewType: $viewType")
-
-        return when (screenType) {
-            ScreenType.SCREEN -> {
-                val binding: HolderScreenBinding = HolderScreenBinding.inflate(inflater, parent, false)
+        return when (viewType) {
+            R.layout.holder_screen -> {
+                val binding: HolderScreenBinding =
+                    HolderScreenBinding.inflate(inflater, parent, false)
                 ScreenViewHolder(onScreenClick, binding)
             }
 
-            ScreenType.ADVERTISEMENT -> {
-                val binding: HolderAdvertisementBinding = HolderAdvertisementBinding.inflate(inflater, parent, false)
+            R.layout.holder_advertisement -> {
+                val binding: HolderAdvertisementBinding =
+                    HolderAdvertisementBinding.inflate(inflater, parent, false)
                 AdvertisementViewHolder(onAdClick, binding)
             }
+
+            else -> throw IllegalArgumentException("유효하지 않은 View Type입니다. viewType: $viewType")
         }
     }
 
