@@ -1,10 +1,12 @@
 package woowacourse.movie.presentation.uimodel
 
+import androidx.annotation.DrawableRes
 import woowacourse.movie.domain.model.Movie
 import java.time.format.DateTimeFormatter
 
 data class MovieUiModel(
     val movieId: Int,
+    @DrawableRes
     val posterImageId: Int,
     val title: String,
     val screeningStartDate: String,
