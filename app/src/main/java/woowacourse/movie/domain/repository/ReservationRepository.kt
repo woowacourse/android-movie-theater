@@ -15,4 +15,6 @@ interface ReservationRepository {
     ): Result<Long>
 
     fun findReservation(reservationId: Long): Result<Reservation>
+
+    fun findReservations(): Result<List<Reservation>>
 }
