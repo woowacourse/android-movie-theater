@@ -3,9 +3,11 @@ package woowacourse.movie.model.movie
 import java.time.LocalDateTime
 
 data class UserTicket(
-    val title: String,
-    val theater: String,
+    val movieTitle: String,
     val screeningStartDateTime: LocalDateTime,
-    val reservationDetail: ReservationDetail,
+    val reservationCount: Int,
+    val reservationSeats: List<Seat>,
+    val theaterName: String,
+    val reservationAmount: Int,
     val id: Long = 0,
 )

@@ -50,13 +50,14 @@ class MovieSeatSelectionPresenter(
     }
 
     override fun reservationSeat() {
-        val userTicket =
-            UserTicket(
-                reservation.title,
-                reservation.theater,
-                reservation.screeningStartDateTime,
-                reservationDetail,
-            )
+        val userTicket = UserTicket(
+            movieTitle = reservation.title,
+            screeningStartDateTime = reservation.screeningStartDateTime,
+            reservationCount = reservationDetail.reservationCount,
+            reservationSeats = reservationDetail.selectedSeat,
+            theaterName = reservation.theater,
+            reservationAmount = reservationDetail.totalSeatAmount(),
+        )
         val userTicketId = userTickets.save(userTicket)
         view.showSeatReservationConfirmation(userTicketId)
     }
