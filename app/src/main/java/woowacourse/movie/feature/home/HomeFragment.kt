@@ -20,6 +20,7 @@ class HomeFragment : Fragment(), HomeContract.View {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val presenter = HomePresenter(this, ScreeningDao(), AdvertisementDao())
+    private lateinit var movieCatalogAdapter: MovieCatalogAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,6 +36,7 @@ class HomeFragment : Fragment(), HomeContract.View {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        initMovieCatalogAdapter()
         presenter.loadMovieCatalog()
     }
 
@@ -42,11 +44,6 @@ class HomeFragment : Fragment(), HomeContract.View {
         movies: List<Movie>,
         advertisements: List<Advertisement>,
     ) {
-        val movieCatalogAdapter =
-            MovieCatalogAdapter { movieId ->
-                presenter.sendMovieIdToTheaterSelection(movieId)
-            }
-        binding.rvHome.adapter = movieCatalogAdapter
         movieCatalogAdapter.updateData(movies, advertisements)
     }
 
@@ -63,6 +60,14 @@ class HomeFragment : Fragment(), HomeContract.View {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun initMovieCatalogAdapter() {
+        movieCatalogAdapter =
+            MovieCatalogAdapter { movieId ->
+                presenter.sendMovieIdToTheaterSelection(movieId)
+            }
+        binding.rvHome.adapter = movieCatalogAdapter
     }
 
     companion object {
