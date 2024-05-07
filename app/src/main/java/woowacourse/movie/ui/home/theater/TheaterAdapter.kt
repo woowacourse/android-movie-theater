@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.home.adapter
+package woowacourse.movie.ui.home.theater
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -13,7 +13,6 @@ import woowacourse.movie.model.data.MovieContentsImpl
 import woowacourse.movie.model.data.TheatersImpl
 import woowacourse.movie.model.movie.Theater
 import woowacourse.movie.ui.home.MovieHomeKey
-import woowacourse.movie.ui.home.adapter.TheaterAdapter
 import woowacourse.movie.ui.reservation.MovieReservationActivity
 
 class TheaterSelectionBottomSheetFragment :
