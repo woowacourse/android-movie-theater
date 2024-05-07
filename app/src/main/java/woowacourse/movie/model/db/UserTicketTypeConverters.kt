@@ -22,6 +22,6 @@ class UserTicketTypeConverters {
 
     @TypeConverter
     fun toList(reservationSeats: String): List<Seat> {
-        return reservationSeats.split(",").map { Seat(it) }
+        return reservationSeats.split(", ").map { Seat(it) }
     }
 }
