@@ -161,14 +161,13 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 presenter.saveTicket(ticket)
             }
         }
-        if (isOnAlarmState())
-            {
-                presenter.settingAlarm(
-                    context = this@SeatSelectionActivity,
-                    movieTitle = binding.textviewSeatSelectionTitle.text.toString(),
-                    ticket = ticket,
-                )
-            }
+        if (isOnAlarmState()) {
+            presenter.settingAlarm(
+                context = this@SeatSelectionActivity,
+                movieTitle = binding.textviewSeatSelectionTitle.text.toString(),
+                ticket = ticket,
+            )
+        }
         val intent = Intent(this, ReservationResultActivity::class.java)
         intent.putExtra(TICKET, ticket)
         startActivity(intent)
@@ -256,7 +255,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         presenter.restoreSeats(seats, index.toList())
     }
 
-    private fun isOnAlarmState(): Boolean  {
+    private fun isOnAlarmState(): Boolean {
         val sharedPreference = this.getSharedPreferences(PUSH_SETTING, MODE_PRIVATE)
         return sharedPreference.getBoolean(PUSH_SETTING, false)
     }
