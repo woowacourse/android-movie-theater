@@ -15,7 +15,7 @@ data class Ticket(
 fun Ticket.toReservationTicket(
     movieTitle: String,
     theaterName: String,
-): ReservationTicket {
+): ReservationTicket{
     return ReservationTicket(
         theaterId = theaterId,
         movieId = movieId,
