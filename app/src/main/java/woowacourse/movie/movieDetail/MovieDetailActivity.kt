@@ -20,43 +20,24 @@ import woowacourse.movie.model.movieInfo.Synopsis
 import woowacourse.movie.model.movieInfo.Title
 import woowacourse.movie.seat.TheaterSeatActivity
 
-interface ClickListener {
-    fun onClickDecrease()
-
-    fun onClickIncrease()
-}
-
 class MovieDetailActivity :
     BindingActivity<ActivityMovieDetailBinding>(R.layout.activity_movie_detail),
     MovieDetailContract.View,
-    ClickListener {
+    TicketCountListener {
     private lateinit var presenter: MovieDetailContract.Presenter
     private lateinit var dateAdapter: ArrayAdapter<String>
     private lateinit var timeAdapter: ArrayAdapter<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val cinema =
             IntentCompat.getSerializableExtra(intent, EXTRA_CINEMA, Cinema::class.java)
-        if (cinema == null) {
-            ErrorActivity.start(this)
-            return
-        }
-        binding.listener = this
+                ?: return ErrorActivity.start(this)
+        presenter = MovieDetailPresenter(this, cinema)
         initView()
-        presenter =
-            MovieDetailPresenter(
-                view = this@MovieDetailActivity,
-                cinema,
-            )
+        initClickListener()
         presenter.loadMovieInfo()
-        setupEventListeners(cinema)
         presenter.loadRunMovieDateRange()
-    }
-
-    override fun navigateToPurchaseConfirmation(intent: Intent) {
-        startActivity(intent)
     }
 
     override fun onTicketCountChanged(ticketNum: Int) {
@@ -106,12 +87,25 @@ class MovieDetailActivity :
         timeAdapter.addAll(times)
     }
 
+    override fun navigateToPurchaseConfirmation(cinema: Cinema) {
+        val intent =
+            TheaterSeatActivity.newIntent(
+                this,
+                binding.quantityTextView.text.toString(),
+                cinema,
+                timeDate(),
+            )
+        startActivity(intent)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         finish()
         return true
     }
 
     private fun initView() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.listener = this
         dateAdapter =
             ArrayAdapter(
                 this,
@@ -141,16 +135,9 @@ class MovieDetailActivity :
         binding.movieTimeSpinner.adapter = timeAdapter
     }
 
-    private fun setupEventListeners(cinema: Cinema) {
+    private fun initClickListener() {
         binding.seatConfirmationButton.setOnClickListener {
-            val intent =
-                TheaterSeatActivity.newIntent(
-                    this,
-                    binding.quantityTextView.text.toString(),
-                    cinema,
-                    timeDate(),
-                )
-            navigateToPurchaseConfirmation(intent)
+            presenter.confirmPurchase()
         }
     }
 

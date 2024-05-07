@@ -1,6 +1,6 @@
 package woowacourse.movie.movieDetail
 
-import android.content.Intent
+import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.movieInfo.MovieDate
 import woowacourse.movie.model.movieInfo.RunningTime
 import woowacourse.movie.model.movieInfo.Synopsis
@@ -8,7 +8,7 @@ import woowacourse.movie.model.movieInfo.Title
 
 interface MovieDetailContract {
     interface View {
-        fun navigateToPurchaseConfirmation(intent: Intent)
+        fun navigateToPurchaseConfirmation(cinema: Cinema)
 
         fun onTicketCountChanged(ticketNum: Int)
 
@@ -37,5 +37,7 @@ interface MovieDetailContract {
         fun loadRunMovieDateRange()
 
         fun loadMovieInfo()
+
+        fun confirmPurchase()
     }
 }

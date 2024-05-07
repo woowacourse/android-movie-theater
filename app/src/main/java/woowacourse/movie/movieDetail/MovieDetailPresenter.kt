@@ -55,4 +55,8 @@ class MovieDetailPresenter(
         view.showSynopsis(movie.synopsis)
         view.showRunningTime(movie.runningTime)
     }
+
+    override fun confirmPurchase() {
+        view.navigateToPurchaseConfirmation(cinema)
+    }
 }
