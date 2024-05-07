@@ -1,31 +1,30 @@
 package woowacourse.movie.view.result
 
-
 // TODO : room에 저장 된 데이터가 다 다르기 때문에, room에 있는 ticketId를 통한 로드가 실패하게 됩니다.
 // TODO : 이를 위한 해결 방안을 찾고 있습니다.
-//import android.content.Intent
-//import androidx.test.core.app.ActivityScenario
-//import androidx.test.core.app.ApplicationProvider
-//import androidx.test.espresso.Espresso.onView
-//import androidx.test.espresso.action.ViewActions
-//import androidx.test.espresso.assertion.ViewAssertions.matches
-//import androidx.test.espresso.matcher.ViewMatchers
-//import androidx.test.espresso.matcher.ViewMatchers.withId
-//import androidx.test.espresso.matcher.ViewMatchers.withText
-//import androidx.test.ext.junit.rules.ActivityScenarioRule
-//import org.junit.Rule
-//import org.junit.Test
-//import woowacourse.movie.R
-//import woowacourse.movie.TestFixture.FIRST_MOVIE_ITEM_POSITION
-//import woowacourse.movie.TestFixture.makeMockTicket
-//import woowacourse.movie.TestFixture.movies
-//import woowacourse.movie.view.home.HomeFragment
-//import woowacourse.movie.view.reservation.ReservationDetailActivity
-//import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.RESERVATION_TICKET_ID
-//import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.TICKET
-//import woowacourse.movie.view.theater.TheaterSelectionFragment
+// import android.content.Intent
+// import androidx.test.core.app.ActivityScenario
+// import androidx.test.core.app.ApplicationProvider
+// import androidx.test.espresso.Espresso.onView
+// import androidx.test.espresso.action.ViewActions
+// import androidx.test.espresso.assertion.ViewAssertions.matches
+// import androidx.test.espresso.matcher.ViewMatchers
+// import androidx.test.espresso.matcher.ViewMatchers.withId
+// import androidx.test.espresso.matcher.ViewMatchers.withText
+// import androidx.test.ext.junit.rules.ActivityScenarioRule
+// import org.junit.Rule
+// import org.junit.Test
+// import woowacourse.movie.R
+// import woowacourse.movie.TestFixture.FIRST_MOVIE_ITEM_POSITION
+// import woowacourse.movie.TestFixture.makeMockTicket
+// import woowacourse.movie.TestFixture.movies
+// import woowacourse.movie.view.home.HomeFragment
+// import woowacourse.movie.view.reservation.ReservationDetailActivity
+// import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.RESERVATION_TICKET_ID
+// import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.TICKET
+// import woowacourse.movie.view.theater.TheaterSelectionFragment
 //
-//class ReservationResultActivityTest {
+// class ReservationResultActivityTest {
 //    @get:Rule
 //    var activityRule =
 //        ActivityScenarioRule<ReservationResultActivity>(
@@ -84,4 +83,4 @@ package woowacourse.movie.view.result
 //        onView(withId(R.id.button_reservation_detail_finished)).perform(ViewActions.click())
 //        onView(withId(R.id.constraint_layout_seat_selection)).check(matches(ViewMatchers.isDisplayed()))
 //    }
-//}
+// }

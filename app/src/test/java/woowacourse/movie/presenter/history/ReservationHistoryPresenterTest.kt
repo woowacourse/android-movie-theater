@@ -29,7 +29,7 @@ class ReservationHistoryPresenterTest {
         val reservationTicket = makeMockReservationTicket()
         every {
             view.navigateToDetail(
-                reservationTicket
+                reservationTicket,
             )
         } answers {
             val actualTicket = arg<ReservationTicket>(0)
@@ -38,5 +38,4 @@ class ReservationHistoryPresenterTest {
         presenter.loadReservationTicket(reservationTicket)
         verify { view.navigateToDetail(reservationTicket) }
     }
-
 }

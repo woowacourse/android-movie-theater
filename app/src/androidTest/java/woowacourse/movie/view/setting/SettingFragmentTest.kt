@@ -29,10 +29,11 @@ class SettingFragmentTest {
     @Before
     fun setUp() {
         activityRule.scenario.onActivity {
-            sharedPreferences = it.getSharedPreferences(
-                SettingFragment.PUSH_SETTING,
-                Context.MODE_PRIVATE
-            )
+            sharedPreferences =
+                it.getSharedPreferences(
+                    SettingFragment.PUSH_SETTING,
+                    Context.MODE_PRIVATE,
+                )
             it.supportFragmentManager.navigateToBottomMenu(
                 R.id.fragment_container_main,
                 SettingFragment(),
@@ -42,9 +43,8 @@ class SettingFragmentTest {
 
     @Test
     fun `기존_설정값이_on으로_되어있다면_스위치_버튼이_활성화_되어_있어야_한다`() {
-
         // When
-        sharedPreferences.edit().putBoolean(SettingFragment.PUSH_SETTING,true).commit()
+        sharedPreferences.edit().putBoolean(SettingFragment.PUSH_SETTING, true).commit()
         activityRule.scenario.recreate()
         activityRule.scenario.onActivity {
             it.supportFragmentManager.navigateToBottomMenu(
@@ -59,9 +59,8 @@ class SettingFragmentTest {
 
     @Test
     fun `기존_설정값이_off로_되어있다면_스위치_버튼이_비활성화_되어_있어야_한다`() {
-
         // When
-        sharedPreferences.edit().putBoolean(SettingFragment.PUSH_SETTING,false).commit()
+        sharedPreferences.edit().putBoolean(SettingFragment.PUSH_SETTING, false).commit()
         activityRule.scenario.recreate()
         activityRule.scenario.onActivity {
             it.supportFragmentManager.navigateToBottomMenu(
@@ -77,7 +76,7 @@ class SettingFragmentTest {
     @Test
     fun `스위치_버튼이_활성화_상태일_때_스위치_버튼을_클릭하면_활성화되어야_한다`() {
         // When
-        sharedPreferences.edit().putBoolean(SettingFragment.PUSH_SETTING,false).commit()
+        sharedPreferences.edit().putBoolean(SettingFragment.PUSH_SETTING, false).commit()
         activityRule.scenario.recreate()
         activityRule.scenario.onActivity {
             it.supportFragmentManager.navigateToBottomMenu(
@@ -94,7 +93,7 @@ class SettingFragmentTest {
     @Test
     fun `스위치_버튼이_비활성화_상태일_때_스위치_버튼을_클릭하면_비활성화되어야_한다`() {
         // When
-        sharedPreferences.edit().putBoolean(SettingFragment.PUSH_SETTING,true).commit()
+        sharedPreferences.edit().putBoolean(SettingFragment.PUSH_SETTING, true).commit()
         activityRule.scenario.recreate()
         activityRule.scenario.onActivity {
             it.supportFragmentManager.navigateToBottomMenu(

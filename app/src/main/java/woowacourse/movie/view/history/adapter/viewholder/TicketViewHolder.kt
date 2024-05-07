@@ -1,6 +1,5 @@
 package woowacourse.movie.view.history.adapter.viewholder
 
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemTicketBinding
 import woowacourse.movie.model.ticket.ReservationTicket

@@ -30,7 +30,7 @@ object TestFixture {
             seats = seats,
             screeningDateTime = ScreeningDateTime("", ""),
             amount = amount,
-            theaterName = theater.theaterName
+            theaterName = theater.theaterName,
         )
     }
 
@@ -40,5 +40,4 @@ object TestFixture {
         seats.manageSelected(true, Seat('C', 3, Grade.S))
         return seats
     }
-
 }

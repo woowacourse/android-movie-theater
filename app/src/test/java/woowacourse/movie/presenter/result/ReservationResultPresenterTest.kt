@@ -32,7 +32,7 @@ class ReservationResultPresenterTest {
 
     @BeforeEach
     fun setUp() {
-        presenter = ReservationResultPresenter(view, MockReservationTicketRepository(),ScreeningDao(), TheaterDao(),)
+        presenter = ReservationResultPresenter(view, MockReservationTicketRepository(), ScreeningDao(), TheaterDao())
         firstMovie = ScreeningDatabase.movies.first()
         firstTheater = TheaterDatabase.theaters.first()
         val seats = Seats()

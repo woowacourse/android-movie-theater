@@ -6,7 +6,6 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.just
 import io.mockk.mockk
-import io.mockk.mockkClass
 import io.mockk.runs
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -33,9 +32,11 @@ class SeatSelectionPresenterTest {
     @BeforeEach
     fun setUp() {
         context = mockk<Context>()
-        presenter = SeatSelectionPresenter(view, SeatsDao(), ScreeningDao(),
-            MockReservationTicketRepository()
-        )
+        presenter =
+            SeatSelectionPresenter(
+                view, SeatsDao(), ScreeningDao(),
+                MockReservationTicketRepository(),
+            )
         with(presenter) {
             manageSelectedSeats(true, 0, Seat('A', 1, Grade.B))
             manageSelectedSeats(true, 0, Seat('C', 1, Grade.S))
