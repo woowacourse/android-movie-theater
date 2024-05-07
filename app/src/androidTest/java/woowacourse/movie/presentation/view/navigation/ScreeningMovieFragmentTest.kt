@@ -16,7 +16,7 @@ import woowacourse.movie.R
 import woowacourse.movie.presentation.view.screening.adapter.MovieViewHolder
 
 @RunWith(AndroidJUnit4::class)
-class HomeFragmentTest {
+class ScreeningMovieFragmentTest {
     @get:Rule
     val activityRule = ActivityScenarioRule(NavigationActivity::class.java)
 
@@ -25,7 +25,7 @@ class HomeFragmentTest {
         activityRule.scenario.onActivity {
             it.supportFragmentManager.beginTransaction().replace(
                 R.id.selected_fragment,
-                HomeFragment(),
+                ScreeningMovieFragment(),
             ).commit()
         }
     }

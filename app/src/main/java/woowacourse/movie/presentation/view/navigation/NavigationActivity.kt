@@ -10,7 +10,7 @@ class NavigationActivity : AppCompatActivity() {
     private val bottomNavigationView: BottomNavigationView by lazy {
         findViewById(R.id.navigationView)
     }
-    private val homeFragment: HomeFragment by lazy { HomeFragment() }
+    private val screeningMovieFragment: ScreeningMovieFragment by lazy { ScreeningMovieFragment() }
     private val reservationListFragment: ReservationListFragment by lazy { ReservationListFragment() }
     private val settingFragment: SettingFragment by lazy { SettingFragment() }
 
@@ -27,7 +27,7 @@ class NavigationActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home_fragment -> {
-                    replaceFragment(homeFragment)
+                    replaceFragment(screeningMovieFragment)
                     true
                 }
 
