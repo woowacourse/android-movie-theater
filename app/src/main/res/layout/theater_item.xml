@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="data"
+            type="woowacourse.movie.presentation.uimodel.TheaterUiModel" />
+
+        <variable
+            name="listener"
+            type="woowacourse.movie.presentation.view.screening.theater.TheaterBottomSheetContract.ItemListener" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{()->listener.onClick(data.theaterId)}"
+        android:paddingHorizontal="@dimen/size_25"
+        android:paddingVertical="@dimen/size_25">
+
+        <TextView
+            android:id="@+id/theater_name"
+            android:layout_width="@dimen/size_200"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{data.name}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/size_21"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/theater_movie_screen_time_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(data.screeningCount)}"
+            app:layout_constraintBottom_toBottomOf="@id/theater_movie_screen_time_title"
+            app:layout_constraintEnd_toStartOf="@id/theater_movie_screen_time_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/theater_name" />
+
+        <TextView
+            android:id="@+id/theater_movie_screen_time_title"
+            android:layout_width="@dimen/size_108"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/screening_count_text"
+            app:layout_constraintBottom_toBottomOf="@id/theater_movie_screen_time_count"
+            app:layout_constraintStart_toEndOf="@id/theater_movie_screen_time_count"
+            app:layout_constraintTop_toBottomOf="@id/theater_name" />
+
+        <TextView
+            android:id="@+id/theater_select_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/chevron_right"
+            android:textColor="@color/icon_color"
+            android:textSize="@dimen/size_32"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
