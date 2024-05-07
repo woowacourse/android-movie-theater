@@ -1,6 +1,5 @@
 package woowacourse.movie.list.contract
 
-import woowacourse.movie.list.model.Movie
 import woowacourse.movie.list.model.TheaterContent
 
 interface MovieListContract {
@@ -9,15 +8,13 @@ interface MovieListContract {
 
         fun showMoviesInfo()
 
-//        fun updateMovieEntity(movieList: List<Movie>, advertisementList: List<Advertisement>)
+        fun updateMovieEntity(theaterContent: List<TheaterContent>)
         fun makeMovieListAdapter(theaterContent: List<TheaterContent>)
     }
 
     interface Presenter {
-        val movieList: List<Movie>
-
         fun setMoviesInfo()
         fun setMovieListAdapter()
-//        fun updateMoviesInfo()
+        fun updateMoviesInfo()
     }
 }

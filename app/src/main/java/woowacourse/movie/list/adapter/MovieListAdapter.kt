@@ -32,10 +32,10 @@ class MovieListAdapter(
         }
     }
 
-//    fun updateEntity(movies: List<Movie>, advertisements: List<Advertisement>){
-//        this.movies = movies
-//        this.advertisements = advertisements
-//    }
+    fun updateItems(theaterContent: List<TheaterContent>) {
+        this.theaterContent = theaterContent
+        notifyDataSetChanged()
+    }
 
     override fun getItemViewType(position: Int): Int {
         val item = MovieListItem(position)

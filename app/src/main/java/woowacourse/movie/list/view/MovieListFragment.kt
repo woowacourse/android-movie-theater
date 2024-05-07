@@ -34,17 +34,17 @@ class MovieListFragment : Fragment(), MovieListContract.View, OnItemClickListene
     override fun makeMovieListAdapter(
         theaterContent: List<TheaterContent>,
     ) {
-        movieListAdapter = MovieListAdapter(theaterContent, this)
+        movieListAdapter =
+            MovieListAdapter(theaterContent = theaterContent, movieHomeClickListener = this)
     }
 
     override fun showMoviesInfo() {
         binding.movieRecyclerView.adapter = movieListAdapter
     }
 
-//    override fun updateMovieEntity(movieList: List<Movie>, advertisementList: List<Advertisement>) {
-//        movieListAdapter.updateEntity(movieList, advertisementList)
-//        movieListAdapter.notifyDataSetChanged()
-//    }
+    override fun updateMovieEntity(theaterContent: List<TheaterContent>) {
+        movieListAdapter.updateItems(theaterContent)
+    }
 
     override fun onClick(movieId: Long) {
         val theaterBottomSheetFragment = newFragmentInstance(movieId)

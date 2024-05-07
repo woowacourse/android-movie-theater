@@ -34,11 +34,11 @@ class MovieListPresenterTest {
     @Test
     fun `영화 개수는 9개여야 한다(광고 2개 포함)`() {
         // given
-        val movieListSlot = slot<List<Movie>>()
-        every { view.makeMovieListAdapter(capture(movieListSlot)) } just runs
+        val theaterContentSlot = slot<List<Movie>>()
+        every { view.makeMovieListAdapter(capture(theaterContentSlot)) } just runs
         // when
         presenter.setMovieListAdapter()
         // then
-        assertThat(movieListSlot.captured.size).isEqualTo(9)
+        assertThat(theaterContentSlot.captured.size).isEqualTo(9)
     }
 }
