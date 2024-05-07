@@ -2,7 +2,7 @@
 
 package woowacourse.movie.util
 
-import woowacourse.movie.data.entity.Ticket
+import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
 import java.time.LocalDate
@@ -30,9 +30,18 @@ fun MovieSeat.formatSeat(): String {
 }
 
 fun MovieSelectedSeats.formatSeats(): String {
-    return selectedSeats.joinToString(", ") { seat ->
+    return selectedSeats.joinToString(SELECTED_SEATS_SEPARATOR) { seat ->
         seat.row.formatSeatRow() + seat.column.toString()
     }
+}
+
+fun String.unFormatSeats(): MovieSelectedSeats {
+    val seats = split(SELECTED_SEATS_SEPARATOR)
+    val selectedSeats = MovieSelectedSeats(seats.size)
+    seats.forEach {
+        selectedSeats.selectSeat(MovieSeat(it.unFormatSeatRow(), it.unFormatSeatColumn()))
+    }
+    return selectedSeats
 }
 
 fun LocalDate.formatScreeningDate(): String {
@@ -42,3 +51,5 @@ fun LocalDate.formatScreeningDate(): String {
 fun LocalTime.formatScreeningTime(): String {
     return format(DateTimeFormatter.ofPattern("HH:mm"))
 }
+
+private const val SELECTED_SEATS_SEPARATOR = ", "
