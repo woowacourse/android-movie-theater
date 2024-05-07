@@ -1,6 +1,5 @@
 package woowacourse.movie.home.view
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,9 +14,11 @@ import woowacourse.movie.home.view.adapter.theater.listener.TheaterClickListener
 import woowacourse.movie.model.Theater
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
 
-class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionContract.View, TheaterClickListener {
+class TheaterSelectionFragment :
+    BottomSheetDialogFragment(),
+    TheaterSelectionContract.View,
+    TheaterClickListener {
     private lateinit var binding: FragmentTheaterSelectionBinding
     private lateinit var theaterSelectionPresenter: TheaterSelectionPresenter
 
@@ -42,11 +43,19 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
     }
 
     override fun onTheaterClick(position: Int) {
-        Intent(requireActivity(), MovieDetailActivity::class.java).apply {
-            putExtra(KEY_MOVIE_ID, movieId)
-            putExtra(KEY_SELECTED_THEATER_POSITION, position)
-            startActivity(this)
-        }
+        val intent = MovieDetailActivity.createIntent(requireActivity(), movieId, position)
+        startActivity(intent)
         dialog?.dismiss()
+    }
+
+    companion object {
+        fun newInstance(movieId: Long): TheaterSelectionFragment {
+            return TheaterSelectionFragment().apply {
+                arguments =
+                    Bundle().apply {
+                        putLong(KEY_MOVIE_ID, movieId)
+                    }
+            }
+        }
     }
 }

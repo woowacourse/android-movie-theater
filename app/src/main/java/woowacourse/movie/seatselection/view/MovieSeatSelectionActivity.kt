@@ -1,5 +1,6 @@
 package woowacourse.movie.seatselection.view
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -26,7 +27,6 @@ import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_DATE
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_SEATS
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_SEAT_POSITIONS
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
@@ -126,20 +126,27 @@ class MovieSeatSelectionActivity :
     }
 
     override fun navigateToResultView(movieSelectedSeats: MovieSelectedSeats) {
+        val movieId = intent?.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID)
+        val date = intent?.getStringExtra(KEY_MOVIE_DATE)
+        val time = intent?.getStringExtra(KEY_MOVIE_TIME)
+        val count = movieSelectedSeats.count
         val seats =
             movieSelectedSeats.selectedSeats.map { seat ->
                 (seat.row.formatRow() + seat.column.formatColumn())
             }.joinToString(", ")
+        val theaterName = intent?.getStringExtra(KEY_SELECTED_THEATER_NAME)
 
-        Intent(this, MovieResultActivity::class.java).apply {
-            putExtra(KEY_MOVIE_ID, intent?.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID))
-            putExtra(KEY_MOVIE_DATE, intent?.getStringExtra(KEY_MOVIE_DATE))
-            putExtra(KEY_MOVIE_TIME, intent?.getStringExtra(KEY_MOVIE_TIME))
-            putExtra(KEY_MOVIE_COUNT, movieSelectedSeats.count)
-            putExtra(KEY_MOVIE_SEATS, seats)
-            putExtra(KEY_SELECTED_THEATER_NAME, intent?.getStringExtra(KEY_SELECTED_THEATER_NAME))
-            startActivity(this)
-        }
+        val intent =
+            MovieResultActivity.createIntent(
+                baseContext,
+                movieId,
+                date,
+                time,
+                count,
+                seats,
+                theaterName,
+            )
+        startActivity(intent)
     }
 
     private fun setUpSelectedSeats(selectedPositions: IntArray?) {
@@ -160,5 +167,24 @@ class MovieSeatSelectionActivity :
         AlertDialog.Builder(this).setTitle("예매 확인").setMessage("정말 예매하시겠습니까?")
             .setPositiveButton("예매 완료") { _, _ -> seatSelectionPresenter.clickPositiveButton() }
             .setNegativeButton("취소") { dialog, _ -> dialog.dismiss() }.setCancelable(false).show()
+    }
+
+    companion object {
+        fun createIntent(
+            context: Context,
+            movieId: Long,
+            date: String,
+            time: String,
+            count: Int,
+            theaterName: String,
+        ): Intent {
+            return Intent(context, MovieSeatSelectionActivity::class.java).apply {
+                putExtra(KEY_MOVIE_ID, movieId)
+                putExtra(KEY_MOVIE_DATE, date)
+                putExtra(KEY_MOVIE_TIME, time)
+                putExtra(KEY_MOVIE_COUNT, count)
+                putExtra(KEY_SELECTED_THEATER_NAME, theaterName)
+            }
+        }
     }
 }

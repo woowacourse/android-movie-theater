@@ -1,5 +1,6 @@
 package woowacourse.movie.detail.view
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -18,10 +19,7 @@ import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_NAME
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_POSITION
 import woowacourse.movie.util.MovieIntentConstant.KEY_ITEM_POSITION
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_COUNT
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_DATE
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
-import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -109,24 +107,26 @@ class MovieDetailActivity :
     }
 
     override fun navigateToSeatSelectionView(
-        id: Long,
+        movieId: Long,
         date: String,
         time: String,
         count: Int,
     ) {
         val theaterName =
-            getMovieById(movieId)?.let {
+            getMovieById(this.movieId)?.let {
                 it.theaters[selectedTheaterPosition].name
             } ?: INVALID_VALUE_THEATER_NAME
 
-        Intent(this, MovieSeatSelectionActivity::class.java).apply {
-            putExtra(KEY_MOVIE_ID, id)
-            putExtra(KEY_MOVIE_DATE, date)
-            putExtra(KEY_MOVIE_TIME, time)
-            putExtra(KEY_MOVIE_COUNT, count)
-            putExtra(KEY_SELECTED_THEATER_NAME, theaterName)
-            startActivity(this)
-        }
+        val intent =
+            MovieSeatSelectionActivity.createIntent(
+                baseContext,
+                movieId,
+                date,
+                time,
+                count,
+                theaterName,
+            )
+        startActivity(intent)
     }
 
     override fun onMinusButtonClick() {
@@ -145,5 +145,18 @@ class MovieDetailActivity :
             binding.spinnerDetailDate.selectedItem.toString(),
             binding.spinnerDetailRunningTime.selectedItem.toString(),
         )
+    }
+
+    companion object {
+        fun createIntent(
+            context: Context,
+            movieId: Long,
+            position: Int,
+        ): Intent {
+            return Intent(context, MovieDetailActivity::class.java).apply {
+                putExtra(KEY_MOVIE_ID, movieId)
+                putExtra(KEY_SELECTED_THEATER_POSITION, position)
+            }
+        }
     }
 }

@@ -19,7 +19,7 @@ interface MovieDetailContract {
         )
 
         fun navigateToSeatSelectionView(
-            id: Long,
+            movieId: Long,
             date: String,
             time: String,
             count: Int,
@@ -39,7 +39,7 @@ interface MovieDetailContract {
         fun minusReservationCount()
 
         fun reserveMovie(
-            id: Long,
+            movieId: Long,
             date: String,
             time: String,
         )

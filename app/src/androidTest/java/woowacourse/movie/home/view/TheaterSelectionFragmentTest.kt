@@ -1,6 +1,5 @@
 package woowacourse.movie.home.view
 
-import android.os.Bundle
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
@@ -17,7 +16,6 @@ import org.junit.runner.RunWith
 import woowacourse.movie.MovieMainActivity
 import woowacourse.movie.R
 import woowacourse.movie.home.view.adapter.theater.TheaterViewHolder
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 
 @RunWith(AndroidJUnit4::class)
 class TheaterSelectionFragmentTest {
@@ -31,11 +29,9 @@ class TheaterSelectionFragmentTest {
                 R.id.fragment_main_container,
                 MovieHomeFragment(),
             ).commit()
-            val bundle = Bundle()
-            bundle.putLong(KEY_MOVIE_ID, 0L)
-            val theaterSelectionFragment = TheaterSelectionFragment()
-            theaterSelectionFragment.arguments = bundle
-            theaterSelectionFragment.show(it.supportFragmentManager, theaterSelectionFragment.tag)
+
+            val theaterSelectionInstance = TheaterSelectionFragment.newInstance(0L)
+            theaterSelectionInstance.show(it.supportFragmentManager, theaterSelectionInstance.tag)
         }
     }
 

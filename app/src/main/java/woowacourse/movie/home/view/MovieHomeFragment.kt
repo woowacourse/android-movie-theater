@@ -14,7 +14,6 @@ import woowacourse.movie.home.view.adapter.movie.HomeContent
 import woowacourse.movie.home.view.adapter.movie.HomeContent.Advertisement
 import woowacourse.movie.home.view.adapter.movie.HomeContentAdapter
 import woowacourse.movie.home.view.listener.MovieHomeClickListener
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 
 class MovieHomeFragment : Fragment(), MovieHomeContract.View, MovieHomeClickListener {
     private lateinit var binding: FragmentMovieHomeBinding
@@ -45,13 +44,8 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, MovieHomeClickList
     }
 
     override fun onReservationButtonClick(movieId: Long) {
-        val bundle = Bundle()
-        bundle.apply {
-            putLong(KEY_MOVIE_ID, movieId)
-        }
-        val theaterSelectionFragment = TheaterSelectionFragment()
-        theaterSelectionFragment.arguments = bundle
-        theaterSelectionFragment.show(parentFragmentManager, theaterSelectionFragment.tag)
+        val theaterSelectionInstance = TheaterSelectionFragment.newInstance(movieId)
+        theaterSelectionInstance.show(parentFragmentManager, theaterSelectionInstance.tag)
     }
 
     override fun onAdvertisementClick(advertisement: Advertisement) {

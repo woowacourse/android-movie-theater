@@ -1,5 +1,6 @@
 package woowacourse.movie.result.view
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -82,5 +83,26 @@ class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
                 }
             },
         )
+    }
+
+    companion object {
+        fun createIntent(
+            context: Context,
+            movieId: Long?,
+            date: String?,
+            time: String?,
+            count: Int,
+            seats: String,
+            theaterName: String?,
+        ): Intent {
+            return Intent(context, MovieResultActivity::class.java).apply {
+                putExtra(KEY_MOVIE_ID, movieId)
+                putExtra(KEY_MOVIE_DATE, date)
+                putExtra(KEY_MOVIE_TIME, time)
+                putExtra(KEY_MOVIE_COUNT, count)
+                putExtra(KEY_MOVIE_SEATS, seats)
+                putExtra(KEY_SELECTED_THEATER_NAME, theaterName)
+            }
+        }
     }
 }
