@@ -7,12 +7,8 @@
             type="woowacourse.movie.presentation.homefragments.movieList.listener.TheaterClickListener" />
 
         <variable
-            name="theater"
-            type="woowacourse.movie.model.Theater" />
-
-        <variable
-            name="movieId"
-            type="Long" />
+            name="screeningTheater"
+            type="woowacourse.movie.presentation.homefragments.movieList.uimodel.ScreeningTheater" />
 
     </data>
 
@@ -38,7 +34,7 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:text="@{theater.name}"
+            android:text="@{screeningTheater.theaterName}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="선릉" />
@@ -64,7 +60,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/item_theater_name_tv"
             app:layout_constraintTop_toBottomOf="@id/item_theater_name_tv"
-            android:text="@{String.valueOf(theater.findScreenScheduleListWithMovieId(movieId).size())}"
+            android:text="@{String.valueOf(screeningTheater.numberOfScreeningSchedule)}"
             tools:text="3" />
 
         <TextView
@@ -83,7 +79,7 @@
             android:layout_height="0dp"
             android:background="@android:color/transparent"
             android:src="@drawable/arrow_img"
-            android:onClick="@{() -> listener.onTheaterClick(theater.id, movieId)}"
+            android:onClick="@{() -> listener.onTheaterClick(screeningTheater.theaterId, screeningTheater.movieId)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/gl_div"

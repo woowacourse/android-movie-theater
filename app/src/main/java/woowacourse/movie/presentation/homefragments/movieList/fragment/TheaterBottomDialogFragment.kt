@@ -8,9 +8,9 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
-import woowacourse.movie.model.Theater
 import woowacourse.movie.presentation.homefragments.movieList.adapter.TheaterAdapter
 import woowacourse.movie.presentation.homefragments.movieList.listener.TheaterClickListener
+import woowacourse.movie.presentation.homefragments.movieList.uimodel.ScreeningTheater
 import woowacourse.movie.presentation.ticketing.TicketingActivity
 import woowacourse.movie.repository.TheaterListRepository
 
@@ -44,9 +44,9 @@ class TheaterBottomDialogFragment(
         presenter.loadTheaters(movieId)
     }
 
-    override fun showTheaterList(theaterList: List<Theater>) {
+    override fun showTheaterList(screeningTheaters: List<ScreeningTheater>) {
         val adapter =
-            TheaterAdapter(theaterList, movieId, this)
+            TheaterAdapter(screeningTheaters = screeningTheaters, listener = this)
         binding.theaterListRv.adapter = adapter
     }
 

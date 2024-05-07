@@ -1,10 +1,10 @@
 package woowacourse.movie.presentation.homefragments.movieList.fragment
 
-import woowacourse.movie.model.Theater
+import woowacourse.movie.presentation.homefragments.movieList.uimodel.ScreeningTheater
 
 interface TheaterBottomDialogContract {
     interface View {
-        fun showTheaterList(theaterList: List<Theater>)
+        fun showTheaterList(screeningTheaters: List<ScreeningTheater>)
     }
 
     interface Presenter {
