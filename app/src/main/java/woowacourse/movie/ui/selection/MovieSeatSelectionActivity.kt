@@ -17,7 +17,6 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieSeatSelectionBinding
 import woowacourse.movie.model.data.ReservationsImpl
-import woowacourse.movie.model.data.UserTicketsImpl
 import woowacourse.movie.model.movie.Seat
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.complete.MovieReservationCompleteActivity
@@ -68,7 +67,7 @@ class MovieSeatSelectionActivity :
         return super.onOptionsItemSelected(item)
     }
 
-    override fun initializePresenter(): MovieSeatSelectionPresenter = MovieSeatSelectionPresenter(this, ReservationsImpl, UserTicketsImpl)
+    override fun initializePresenter(): MovieSeatSelectionPresenter = MovieSeatSelectionPresenter(this, ReservationsImpl)
 
     override fun showMovieTitle(movieTitle: String) {
         binding.movieTitle = movieTitle
@@ -125,6 +124,7 @@ class MovieSeatSelectionActivity :
     }
 
     override fun showReservationComplete(userTicketId: Long) {
+        Log.e(TAG, "dslkfdsjklsfdldfsalkdfslakjdfs")
         MovieReservationCompleteActivity.startActivity(this, userTicketId)
     }
 

@@ -5,7 +5,6 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.model.data.ReservationsImpl
-import woowacourse.movie.model.data.UserTicketsImpl
 import woowacourse.movie.model.movie.Reservation
 import woowacourse.movie.model.movie.ReservationCount
 import woowacourse.movie.ui.selection.MovieSeatSelectionContract

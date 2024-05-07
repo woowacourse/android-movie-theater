@@ -15,7 +15,7 @@ interface UserTicketDao {
     fun findAll(): List<UserTicket>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(data: UserTicket)
+    fun insert(userTicket: UserTicket): Long
 
     @Delete
     fun delete(userTicket: UserTicket)

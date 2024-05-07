@@ -2,6 +2,7 @@ package woowacourse.movie.ui.selection
 
 import woowacourse.movie.model.data.MovieDataSource
 import woowacourse.movie.model.db.UserTicket
+import woowacourse.movie.model.db.UserTicketRepository
 import woowacourse.movie.model.movie.Reservation
 import woowacourse.movie.model.movie.ReservationDetail
 import woowacourse.movie.model.movie.Seat
@@ -10,7 +11,6 @@ import woowacourse.movie.ui.utils.positionToIndex
 class MovieSeatSelectionPresenter(
     private val view: MovieSeatSelectionContract.View,
     private val reservations: MovieDataSource<Reservation>,
-    private val userTickets: MovieDataSource<UserTicket>,
 ) :
     MovieSeatSelectionContract.Presenter {
     private lateinit var reservation: Reservation
@@ -59,8 +59,11 @@ class MovieSeatSelectionPresenter(
                 theaterName = reservation.theater,
                 reservationAmount = reservationDetail.totalSeatAmount(),
             )
-        val userTicketId = userTickets.save(userTicket)
-        view.showReservationComplete(userTicketId)
+        val userTicketRepository = UserTicketRepository.instance()
+        Thread {
+            val userTicketId = userTicketRepository.insertUserTicket(userTicket)
+            view.showReservationComplete(userTicketId)
+        }.start()
     }
 
     override fun checkReservationSeat() {

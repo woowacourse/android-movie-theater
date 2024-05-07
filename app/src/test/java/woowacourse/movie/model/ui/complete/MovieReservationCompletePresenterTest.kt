@@ -5,7 +5,6 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.model.A1_SEAT
-import woowacourse.movie.model.data.UserTicketsImpl
 import woowacourse.movie.model.db.UserTicket
 import woowacourse.movie.ui.complete.MovieReservationCompleteContract
 import woowacourse.movie.ui.complete.MovieReservationCompletePresenter
