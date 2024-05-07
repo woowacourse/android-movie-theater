@@ -9,11 +9,6 @@ interface TheaterSelectionContract {
             movieContentId: Long,
             theaters: List<Theater>,
         )
-
-        fun navigateToMovieReservation(
-            movieContentId: Long,
-            theaterId: Long,
-        )
     }
 
     interface Presenter {

@@ -56,17 +56,6 @@ class TheaterSelectionBottomSheetFragment :
         binding.theaterList.adapter = adapter
     }
 
-    override fun navigateToMovieReservation(
-        movieContentId: Long,
-        theaterId: Long,
-    ) {
-        Intent(requireContext(), MovieReservationActivity::class.java).apply {
-            putExtra(MovieHomeKey.MOVIE_CONTENT_ID, movieContentId)
-            putExtra(MovieHomeKey.THEATER_ID, theaterId)
-            startActivity(this)
-        }
-    }
-
     override fun showError(throwable: Throwable) {
         Toast.makeText(
             requireContext(),
@@ -76,11 +65,10 @@ class TheaterSelectionBottomSheetFragment :
     }
 
     override fun onTheaterClick(movieContentId: Long, theaterId: Long) {
-        Intent(requireContext(), MovieReservationActivity::class.java).apply {
-            putExtra(MovieHomeKey.MOVIE_CONTENT_ID, movieContentId)
-            putExtra(MovieHomeKey.THEATER_ID, theaterId)
-            startActivity(this)
-        }
+        Intent(requireContext(), MovieReservationActivity::class.java)
+            .putExtra(MovieHomeKey.MOVIE_CONTENT_ID, movieContentId)
+            .putExtra(MovieHomeKey.THEATER_ID, theaterId)
+            .also(::startActivity)
     }
 
     private fun generateTheaterAdapter() =
