@@ -2,6 +2,7 @@ package woowacourse.movie.movieList
 
 import MovieAdapter
 import MovieListView
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -32,8 +33,10 @@ class MovieListFragment :
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun updateAdapter(displayData: List<MovieDisplayData>) {
         adapter.updateItems(displayData)
+        adapter.notifyDataSetChanged()
     }
 
     override fun navigateToCinemaView(theater: Theater) {
