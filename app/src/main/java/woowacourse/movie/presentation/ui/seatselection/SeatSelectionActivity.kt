@@ -40,7 +40,7 @@ class SeatSelectionActivity : BaseMvpBindingActivity<ActivitySeatSelectionBindin
 
         reservationInfo?.let { reservationInfoItem ->
             presenter.updateUiModel(reservationInfoItem)
-            presenter.loadScreen(reservationInfoItem.theaterId)
+            presenter.loadScreen(reservationInfoItem.theaterId, reservationInfoItem.movieId)
             presenter.loadSeatBoard(reservationInfoItem.theaterId)
         }
     }

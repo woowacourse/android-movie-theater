@@ -28,8 +28,9 @@ class DetailPresenter(
         repository.findByScreenId(movieId = movieId, theaterId = theaterId).onSuccess { screen ->
             uiModel =
                 uiModel.copy(
-                    screenId = screen.id,
+                    screenId = screen.screenId,
                     theaterId = theaterId,
+                    movieId = movieId,
                     screen = screen,
                     selectableDates = screen.selectableDates,
                     selectedDate = screen.selectableDates.first(),
@@ -100,6 +101,7 @@ class DetailPresenter(
             val reservationInfo =
                 ReservationInfo(
                     theaterId = uiModel.theaterId,
+                    movieId = uiModel.movieId,
                     dateTime = selectedDate.getLocalDateTime(uiModel.selectedTime),
                     ticketCount = uiModel.ticket.count,
                 )

@@ -113,7 +113,7 @@ object DummyData {
     val theater =
         Theater(
             id = 0,
-            name = "선릉",
+            name = "선릉 극장",
             screens =
                 listOf(
                     Screen(
@@ -152,7 +152,7 @@ object DummyData {
         )
 
     val theaters =
-        listOf(theater, theater.copy(id = 1, name = "강남"), theater.copy(id = 2, name = "잠실"))
+        listOf(theater, theater.copy(id = 1, name = "강남 극장"), theater.copy(id = 2, name = "잠실 극장"))
 
     private fun createScreenDateList(
         startDate: LocalDate,

@@ -37,7 +37,8 @@ fun getDummyReservation(): Reservation {
     return Reservation(
         reservationId = 1,
         1,
-        getDummyMovie(),
+        getDummyMovie().id,
+        getDummyMovie().title,
         3,
         seats = getDummySeats(),
         dateTime = LocalDateTime.now(),
@@ -50,7 +51,7 @@ fun getDummyReservationInfo(): ReservationInfo {
 
 fun getDummyScreen(): Screen {
     return Screen(
-        id = 1,
+        screenId = 1,
         movie = getDummyMovie(),
         selectableDates =
             listOf(

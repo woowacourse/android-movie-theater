@@ -18,7 +18,8 @@ object DummyReservation : ReservationRepository {
     ): Result<Long> {
         return runCatching {
             val id = reservations.size + 1
-            val reservation = Reservation(id.toLong(), theaterId, movieId, title, ticketCount, seats, dateTime)
+            val reservation =
+                Reservation(id.toLong(), theaterId, movieId, title, ticketCount, seats, dateTime)
             reservations.add(reservation)
             id.toLong()
         }
@@ -26,7 +27,8 @@ object DummyReservation : ReservationRepository {
 
     override fun findReservation(reservationId: Long): Result<Reservation> {
         return runCatching {
-            val reservation = reservations.find { reservation -> reservation.reservationId == reservationId }
+            val reservation =
+                reservations.find { reservation -> reservation.reservationId == reservationId }
             reservation ?: throw NoSuchElementException("예약 정보를 찾을 수 없습니다.")
         }
     }

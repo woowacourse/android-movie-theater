@@ -8,6 +8,7 @@ import java.time.LocalTime
 data class DetailUiModel(
     val screenId: Int = -1,
     val theaterId: Int = -1,
+    val movieId: Int = -1,
     val screen: Screen? = null,
     val ticket: Ticket = Ticket(Ticket.MIN_TICKET_COUNT),
     val selectableDates: List<ScreenDate> = emptyList(),
