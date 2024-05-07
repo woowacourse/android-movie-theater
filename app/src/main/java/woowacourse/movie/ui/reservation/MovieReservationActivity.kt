@@ -14,8 +14,8 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieReservationBinding
 import woowacourse.movie.model.data.MovieContentsImpl
+import woowacourse.movie.model.data.ReservationsImpl
 import woowacourse.movie.model.data.TheatersImpl
-import woowacourse.movie.model.data.UserTicketsImpl
 import woowacourse.movie.model.movie.MovieContent
 import woowacourse.movie.model.movie.Theater
 import woowacourse.movie.ui.base.BaseActivity
@@ -105,7 +105,7 @@ class MovieReservationActivity :
             }
     }
 
-    override fun initializePresenter() = MovieReservationPresenter(this, MovieContentsImpl, TheatersImpl, UserTicketsImpl)
+    override fun initializePresenter() = MovieReservationPresenter(this, MovieContentsImpl, TheatersImpl, ReservationsImpl)
 
     private fun theaterId() = intent.getLongExtra(MovieReservationKey.THEATER_ID, DEFAULT_VALUE)
 
@@ -135,8 +135,8 @@ class MovieReservationActivity :
         binding.tvReservationCount.text = reservationCount.toString()
     }
 
-    override fun moveMovieSeatSelectionPage(userTicketId: Long) {
-        MovieSeatSelectionActivity.startActivity(this, userTicketId)
+    override fun moveMovieSeatSelectionPage(reservationId: Long) {
+        MovieSeatSelectionActivity.startActivity(this, reservationId)
     }
 
     companion object {

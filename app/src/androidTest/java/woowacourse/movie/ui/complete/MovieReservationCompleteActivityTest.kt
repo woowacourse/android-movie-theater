@@ -29,7 +29,7 @@ class MovieReservationCompleteActivityTest {
             ApplicationProvider.getApplicationContext(),
             MovieReservationCompleteActivity::class.java,
         ).run {
-            putExtra(MovieSeatSelectionKey.TICKET_ID, 0L)
+            putExtra(MovieSeatSelectionKey.RESERVATION_ID, 0L)
         }
 
     @get:Rule

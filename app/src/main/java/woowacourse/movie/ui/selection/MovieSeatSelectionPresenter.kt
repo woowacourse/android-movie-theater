@@ -1,22 +1,27 @@
 package woowacourse.movie.ui.selection
 
 import woowacourse.movie.model.data.MovieDataSource
+import woowacourse.movie.model.movie.Reservation
+import woowacourse.movie.model.movie.ReservationDetail
 import woowacourse.movie.model.movie.Seat
 import woowacourse.movie.model.movie.UserTicket
 import woowacourse.movie.ui.utils.positionToIndex
 
 class MovieSeatSelectionPresenter(
     private val view: MovieSeatSelectionContract.View,
+    private val reservations: MovieDataSource<Reservation>,
     private val userTickets: MovieDataSource<UserTicket>,
 ) :
     MovieSeatSelectionContract.Presenter {
-    private lateinit var userTicket: UserTicket
+    private lateinit var reservation: Reservation
+    private lateinit var reservationDetail: ReservationDetail
 
-    override fun loadTheaterInfo(ticketId: Long) {
+    override fun loadTheaterInfo(reservationId: Long) {
         try {
-            userTicket = userTickets.find(ticketId)
-            view.showMovieTitle(userTicket.title)
-            view.showReservationTotalAmount(userTicket.reservationDetail.totalSeatAmount())
+            reservation = reservations.find(reservationId)
+            reservationDetail = ReservationDetail(reservation.reservationCount.count)
+            view.showMovieTitle(reservation.title)
+            view.showReservationTotalAmount(reservationDetail.totalSeatAmount())
             view.showTheater(Seat.ROW_LEN, Seat.COL_LEN)
         } catch (e: NoSuchElementException) {
             view.showError(e)
@@ -24,20 +29,20 @@ class MovieSeatSelectionPresenter(
     }
 
     override fun updateSelectCompletion() {
-        view.updateSelectCompletion(userTicket.reservationDetail.checkSelectCompletion())
+        view.updateSelectCompletion(reservationDetail.checkSelectCompletion())
     }
 
     override fun selectSeat(
         row: Int,
         col: Int,
     ) {
-        if (userTicket.reservationDetail.selectedSeat.contains(Seat(row, col))) {
+        if (reservationDetail.selectedSeat.contains(Seat(row, col))) {
             unSelectingWork(row, col)
         } else {
             selectingWork(row, col)
         }
-        view.updateSelectCompletion(userTicket.reservationDetail.checkSelectCompletion())
-        view.showReservationTotalAmount(userTicket.reservationDetail.totalSeatAmount())
+        view.updateSelectCompletion(reservationDetail.checkSelectCompletion())
+        view.showReservationTotalAmount(reservationDetail.totalSeatAmount())
     }
 
     override fun recoverSeatSelection(index: Int) {
@@ -45,14 +50,22 @@ class MovieSeatSelectionPresenter(
     }
 
     override fun reservationSeat() {
-        view.showSeatReservationConfirmation(userTicket.id)
+        val userTicket =
+            UserTicket(
+                reservation.title,
+                reservation.theater,
+                reservation.screeningStartDateTime,
+                reservationDetail,
+            )
+        val userTicketId = userTickets.save(userTicket)
+        view.showSeatReservationConfirmation(userTicketId)
     }
 
     private fun selectingWork(
         row: Int,
         col: Int,
     ) {
-        if (userTicket.reservationDetail.addSeat(row, col)) {
+        if (reservationDetail.addSeat(row, col)) {
             view.showSelectedSeat(positionToIndex(row, col))
         }
     }
@@ -61,7 +74,7 @@ class MovieSeatSelectionPresenter(
         row: Int,
         col: Int,
     ) {
-        userTicket.reservationDetail.removeSeat(row, col)
+        reservationDetail.removeSeat(row, col)
         view.showUnSelectedSeat(positionToIndex(row, col))
     }
 }
