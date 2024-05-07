@@ -35,7 +35,7 @@ fun getDummySeats(): List<Seat> {
 
 fun getDummyReservation(): Reservation {
     return Reservation(
-        id = 1,
+        reservationId = 1,
         1,
         getDummyMovie(),
         3,

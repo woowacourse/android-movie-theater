@@ -205,7 +205,7 @@ object DummyData {
 
     val dummyReservation =
         Reservation(
-            id = 1,
+            reservationId = 1,
             1,
             piro,
             3,
