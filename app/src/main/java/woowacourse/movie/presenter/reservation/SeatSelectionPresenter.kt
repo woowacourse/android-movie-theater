@@ -1,6 +1,8 @@
 package woowacourse.movie.presenter.reservation
 
 import android.content.Context
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.seats.SeatsDao
 import woowacourse.movie.model.movie.Movie
@@ -59,7 +61,7 @@ class SeatSelectionPresenter(
         }
     }
 
-    override fun makeTicket(
+    override suspend fun makeTicket(
         movieId: Int,
         theaterId: Int,
         screeningDateTime: ScreeningDateTime,
@@ -72,11 +74,15 @@ class SeatSelectionPresenter(
                 screeningDateTime,
                 seats.calculateAmount(),
             )
-        view.navigateToFinished(ticket)
+
+        saveTicket(ticket)
     }
 
-    override fun saveTicket(ticket: Ticket) {
-        repository.saveReservationTicket(ticket)
+    override suspend fun saveTicket(ticket: Ticket) {
+        val ticketId = repository.saveReservationTicket(ticket)
+        withContext(Dispatchers.Main) {
+            view.navigateToFinished(ticket, ticketId)
+        }
     }
 
     override fun updateTotalPrice(
@@ -91,11 +97,13 @@ class SeatSelectionPresenter(
         context: Context,
         movieTitle: String,
         ticket: Ticket,
+        ticketId: Long,
     ) {
         TicketNotification.setNotification(
             context = context,
-            ticket = ticket,
             movieTitle = movieTitle,
+            screeningDateTime = ticket.screeningDateTime,
+            ticketId = ticketId,
         )
     }
 

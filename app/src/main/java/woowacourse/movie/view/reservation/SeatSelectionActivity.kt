@@ -32,8 +32,8 @@ import woowacourse.movie.utils.MovieUtils.intentSerializable
 import woowacourse.movie.utils.MovieUtils.makeToast
 import woowacourse.movie.view.home.HomeFragment.Companion.MOVIE_ID
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.HEAD_COUNT
+import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.RESERVATION_TICKET_ID
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.SCREENING_DATE_TIME
-import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.TICKET
 import woowacourse.movie.view.result.ReservationResultActivity
 import woowacourse.movie.view.setting.SettingFragment.Companion.PUSH_SETTING
 import woowacourse.movie.view.theater.TheaterSelectionFragment.Companion.THEATER_ID
@@ -155,21 +155,20 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         binding.textviewSeatSelectionPrice.text = convertAmountFormat(this, amount)
     }
 
-    override fun navigateToFinished(ticket: Ticket) {
-        lifecycleScope.launch {
-            withContext(Dispatchers.IO) {
-                presenter.saveTicket(ticket)
-            }
-        }
+    override fun navigateToFinished(
+        ticket: Ticket,
+        ticketId: Long,
+    ) {
         if (isOnAlarmState()) {
             presenter.settingAlarm(
                 context = this@SeatSelectionActivity,
                 movieTitle = binding.textviewSeatSelectionTitle.text.toString(),
                 ticket = ticket,
+                ticketId = ticketId,
             )
         }
         val intent = Intent(this, ReservationResultActivity::class.java)
-        intent.putExtra(TICKET, ticket)
+        intent.putExtra(RESERVATION_TICKET_ID, ticketId)
         startActivity(intent)
     }
 
@@ -183,7 +182,11 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 .setTitle(getString(R.string.seat_selection_reservation_confirm))
                 .setMessage(getString(R.string.seat_selection_reservation_ask_purchase_ticket))
                 .setPositiveButton(getString(R.string.seat_selection_reservation_finish)) { _, _ ->
-                    presenter.makeTicket(movieId, theaterId, screeningDateTime)
+                    lifecycleScope.launch {
+                        withContext(Dispatchers.IO) {
+                            presenter.makeTicket(movieId, theaterId, screeningDateTime)
+                        }
+                    }
                 }
                 .setNegativeButton(getString(R.string.seat_selection_cancel)) { dialog, _ ->
                     dialog.dismiss()

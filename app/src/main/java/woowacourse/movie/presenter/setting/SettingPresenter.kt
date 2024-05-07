@@ -27,8 +27,9 @@ class SettingPresenter(
                     withContext(Dispatchers.Main) {
                         TicketNotification.setNotification(
                             context = context,
-                            ticket = reservationTicket.toTicket(),
+                            ticketId = reservationTicket.ticketId,
                             movieTitle = reservationTicket.movieTitle,
+                            screeningDateTime = reservationTicket.screeningDateTime,
                         )
                     }
                 }
