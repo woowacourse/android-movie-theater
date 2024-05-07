@@ -9,6 +9,11 @@ class MovieViewHolder(private val binding: ItemMovieBinding, val listener: Movie
     RecyclerView.ViewHolder(binding.root) {
     fun bind(movie: Movie) {
         binding.movie = movie
+        binding.screeningPeriod = movie.screeningPeriodToString()
         binding.listener = listener
+    }
+
+    private fun Movie.screeningPeriodToString(): String {
+        return "${screeningDates.startDate} ~ ${screeningDates.endDate}"
     }
 }

@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -54,6 +53,7 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
 
     override fun displayMovieDetail(movie: Movie) {
         binding.movie = movie
+        binding.screeningPeriod = movie.screeningPeriodToString()
     }
 
     override fun bindTicketCount(count: Count) {
@@ -117,6 +117,10 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) finish()
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun Movie.screeningPeriodToString(): String {
+        return "${screeningDates.startDate} ~ ${screeningDates.endDate}"
     }
 
     companion object {

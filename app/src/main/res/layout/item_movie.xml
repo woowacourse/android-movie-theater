@@ -3,7 +3,6 @@
     xmlns:movieList="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="listener"
             type="woowacourse.movie.presentation.homefragments.movieList.listener.MovieListClickListener" />
@@ -11,6 +10,10 @@
         <variable
             name="movie"
             type="woowacourse.movie.model.Movie" />
+
+        <variable
+            name="screeningPeriod"
+            type="String" />
     </data>
 
 
@@ -51,7 +54,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/gl_thumbnail"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="kmkim" />
+            tools:text="영화 제목" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_date_header"
@@ -68,7 +71,7 @@
             android:id="@+id/tv_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{movie.screenPeriodToString}"
+            android:text="@{screeningPeriod}"
             android:textColor="@color/black"
             android:textSize="12sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/tv_date_header"
