@@ -12,7 +12,7 @@ class TheaterSeatPresenter(
     private val seats: MutableMap<String, Seat> = mutableMapOf()
     var selectedSeats = mutableListOf<String>()
         private set
-    var totalPrice = 0
+    private var totalPrice = 0
 
     init {
         val rows = mapOf(1 to "B", 2 to "B", 3 to "S", 4 to "S", 5 to "A")
@@ -23,6 +23,8 @@ class TheaterSeatPresenter(
                 seats[seatId] = Seat(row.toChar() + (('A' - 1).code), col, grade)
             }
         }
+        view.showTitle(cinema.theater.movie.title)
+        view.showPrice(totalPrice)
     }
 
     override fun toggleSeatSelection(seatId: String) {
@@ -73,6 +75,7 @@ class TheaterSeatPresenter(
             selectedSeats.sumOf { seatId ->
                 seats[seatId]?.price ?: 0
             }
-        view.updateTotalPrice(totalPrice)
+        view.showPrice(totalPrice)
     }
+
 }

@@ -1,7 +1,6 @@
 package woowacourse.movie.movieDetail
 
 import woowacourse.movie.model.Cinema
-import woowacourse.movie.model.movieInfo.MovieInfo
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -9,14 +8,15 @@ class MovieDetailPresenter(
     private val view: MovieDetailContract.View,
     private val cinema: Cinema,
 ) : MovieDetailContract.Presenter {
-    var ticketNum = 1
-
-    val movie: MovieInfo = cinema.theater.movie
+    private var ticketNum = 1
+    init {
+        view.onTicketCountChanged(ticketNum)
+    }
 
     override fun increaseTicketCount() {
         if (ticketNum < 10) {
             ticketNum++
-            view.onTicketCountChanged()
+            view.onTicketCountChanged(ticketNum)
         } else {
             view.showTicketMessage("최대 티켓 수량에 도달했습니다.")
         }
@@ -25,7 +25,7 @@ class MovieDetailPresenter(
     override fun decreaseTicketCount() {
         if (ticketNum > 1) {
             ticketNum--
-            view.onTicketCountChanged()
+            view.onTicketCountChanged(ticketNum)
         } else {
             view.showTicketMessage("최소 티켓 수량입니다.")
         }
@@ -46,4 +46,14 @@ class MovieDetailPresenter(
         }
         view.updateDateAdapter(dates)
     }
+
+    override fun loadMovieInfo() {
+        val movie=cinema.theater.movie
+        view.showTitle(movie.title)
+        view.showReleaseDate(movie.releaseDate)
+        view.showSynopsis(movie.synopsis)
+        view.showRunningTime(movie.runningTime)
+    }
+
+
 }

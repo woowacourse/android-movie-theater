@@ -13,11 +13,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.IntentCompat
 import androidx.core.view.children
-import woowacourse.movie.error.ErrorActivity
 import woowacourse.movie.R
 import woowacourse.movie.base.BindingActivity
 import woowacourse.movie.databinding.ActivityTheaterSeatBinding
+import woowacourse.movie.error.ErrorActivity
 import woowacourse.movie.model.Cinema
+import woowacourse.movie.model.movieInfo.Title
 import woowacourse.movie.model.theater.Seat
 import woowacourse.movie.purchaseConfirmation.PurchaseConfirmationActivity
 
@@ -76,10 +77,6 @@ class TheaterSeatActivity :
         button.setBackgroundColor(colorInt)
     }
 
-    override fun updateTotalPrice(price: Int) {
-        binding.invalidateAll()
-    }
-
     override fun navigateToNextPage(intent: Intent) {
         startActivity(intent)
     }
@@ -89,20 +86,25 @@ class TheaterSeatActivity :
         return true
     }
 
+    override fun showTitle(title: Title) {
+        binding.title = title.toString()
+        binding.invalidateAll()
+    }
+
+    override fun showPrice(price: Int) {
+        binding.price = price
+        binding.invalidateAll()
+    }
+
     private fun initPresenter() {
-        val intent = intent
         val ticketNum = intent.getStringExtra(EXTRA_TICKET_NUM) ?: return ErrorActivity.start(this)
         val cinema = IntentCompat.getSerializableExtra(intent, EXTRA_CINEMA, Cinema::class.java)
         if (cinema == null) {
             ErrorActivity.start(this)
             return finish()
         }
-        presenter =
-            TheaterSeatPresenter(this, ticketNum.toInt(), cinema).also { presenter ->
-                binding.presenter = presenter
-            }
+        presenter = TheaterSeatPresenter(this, ticketNum.toInt(), cinema)
     }
-
     private fun initSeats() {
         binding.seatTable.children.filterIsInstance<TableRow>()
             .forEach { row ->

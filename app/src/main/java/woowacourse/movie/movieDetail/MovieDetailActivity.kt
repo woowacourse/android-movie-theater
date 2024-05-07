@@ -9,16 +9,26 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.IntentCompat
-import woowacourse.movie.error.ErrorActivity
 import woowacourse.movie.R
 import woowacourse.movie.base.BindingActivity
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
+import woowacourse.movie.error.ErrorActivity
 import woowacourse.movie.model.Cinema
+import woowacourse.movie.model.movieInfo.MovieDate
+import woowacourse.movie.model.movieInfo.RunningTime
+import woowacourse.movie.model.movieInfo.Synopsis
+import woowacourse.movie.model.movieInfo.Title
 import woowacourse.movie.seat.TheaterSeatActivity
+
+interface ClickListener {
+    fun onClickDecrease()
+
+    fun onClickIncrease()
+}
 
 class MovieDetailActivity :
     BindingActivity<ActivityMovieDetailBinding>(R.layout.activity_movie_detail),
-    MovieDetailContract.View {
+    MovieDetailContract.View, ClickListener {
     private lateinit var presenter: MovieDetailContract.Presenter
     private lateinit var dateAdapter: ArrayAdapter<String>
     private lateinit var timeAdapter: ArrayAdapter<String>
@@ -32,12 +42,14 @@ class MovieDetailActivity :
             ErrorActivity.start(this)
             return
         }
+        binding.listener = this
         initView()
         presenter =
             MovieDetailPresenter(
                 view = this@MovieDetailActivity,
                 cinema,
-            ).also { binding.presenter = it }
+            )
+        presenter.loadMovieInfo()
         setupEventListeners(cinema)
         presenter.loadRunMovieDateRange()
     }
@@ -46,12 +58,41 @@ class MovieDetailActivity :
         startActivity(intent)
     }
 
-    override fun onTicketCountChanged() {
+    override fun onTicketCountChanged(ticketNum: Int) {
+        binding.ticketNum = ticketNum
         binding.invalidateAll()
     }
 
     override fun showTicketMessage(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onClickDecrease() {
+        presenter.decreaseTicketCount()
+    }
+
+    override fun onClickIncrease() {
+        presenter.increaseTicketCount()
+    }
+
+    override fun showTitle(title: Title) {
+        binding.title = title.toString()
+        binding.invalidateAll()
+    }
+
+    override fun showRunningTime(runningTime: RunningTime) {
+        binding.runningTime = runningTime.toString()
+        binding.invalidateAll()
+    }
+
+    override fun showSynopsis(synopsis: Synopsis) {
+        binding.synopsis = synopsis.toString()
+        binding.invalidateAll()
+    }
+
+    override fun showReleaseDate(movieDate: MovieDate) {
+        binding.releaseDate = movieDate.toString()
+        binding.invalidateAll()
     }
 
     override fun updateDateAdapter(dates: List<String>) {
