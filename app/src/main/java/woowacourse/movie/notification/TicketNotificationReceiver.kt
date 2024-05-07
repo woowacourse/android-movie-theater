@@ -40,7 +40,7 @@ class TicketNotificationReceiver : BroadcastReceiver() {
                 context,
                 PENDING_REQUEST_CODE,
                 notificationIntent,
-                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+                 PendingIntent.FLAG_IMMUTABLE,
             )
 
         val notification =

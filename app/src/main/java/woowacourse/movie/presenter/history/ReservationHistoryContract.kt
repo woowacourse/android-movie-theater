@@ -10,7 +10,7 @@ class ReservationHistoryContract {
     }
 
     interface Presenter {
-        suspend fun loadReservationTickets()
+        fun loadReservationTickets()
 
         fun loadReservationTicket(reservationTicket: ReservationTicket)
     }

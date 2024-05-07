@@ -6,10 +6,6 @@ import android.util.Log
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationResultBinding
 import woowacourse.movie.db.screening.ScreeningDao
@@ -72,28 +68,26 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
     }
 
     private fun receiveTicket() {
-        lifecycleScope.launch {
-            withContext(Dispatchers.IO) {
-                runCatching {
-                    val ticketId = intent.getLongExtra(RESERVATION_TICKET_ID, DEFAULT_TICKET_ID)
-                    Log.d("ticketId", ticketId.toString())
-                    val reservationTicket = presenter.loadTicketWithTicketId(ticketId)
-                    reservationTicket ?: throw NoSuchElementException()
-                }.onSuccess {
-                    withContext(Dispatchers.Main) {
-                        with(presenter) {
-                            loadMovie(it.movieId)
-                            loadTicket(it.toTicket())
-                        }
-                    }
-                }.onFailure {
-                    withContext(Dispatchers.Main) {
-                        showErrorToast()
-                        finish()
+        Thread {
+            runCatching {
+                val ticketId = intent.getLongExtra(RESERVATION_TICKET_ID, DEFAULT_TICKET_ID)
+                Log.d("ticketId", ticketId.toString())
+                val reservationTicket = presenter.loadTicketWithTicketId(ticketId)
+                reservationTicket ?: throw NoSuchElementException()
+            }.onSuccess {
+                runOnUiThread {
+                    with(presenter) {
+                        loadMovie(it.movieId)
+                        loadTicket(it.toTicket())
                     }
                 }
+            }.onFailure {
+                runOnUiThread {
+                    showErrorToast()
+                    finish()
+                }
             }
-        }
+        }.start()
     }
 
     private fun handleBackPressed() {

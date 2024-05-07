@@ -42,13 +42,13 @@ interface SeatSelectionContract {
             seat: Seat,
         )
 
-        suspend fun makeTicket(
+        fun makeTicket(
             movieId: Int,
             theaterId: Int,
             screeningDateTime: ScreeningDateTime,
         )
 
-        suspend fun saveTicket(ticket: Ticket)
+        fun saveTicket(ticket: Ticket)
     }
 
     interface View {

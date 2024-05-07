@@ -12,7 +12,7 @@ interface SettingContract {
     interface Presenter {
         fun loadSavedSetting(isPushSetting: Boolean)
 
-        suspend fun settingAlarm(
+        fun settingAlarm(
             context: Context,
             isPushSetting: Boolean,
         )

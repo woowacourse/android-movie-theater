@@ -38,7 +38,7 @@ object TicketNotification {
                 context,
                 PENDING_REQUEST_CODE,
                 intent,
-                PendingIntent.FLAG_UPDATE_CURRENT,
+                PendingIntent.FLAG_IMMUTABLE,
             )
 
         val dateTime =
@@ -85,7 +85,7 @@ object TicketNotification {
                 context,
                 PENDING_REQUEST_CODE,
                 intent,
-                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+                PendingIntent.FLAG_IMMUTABLE,
             )
         alarmManager.cancel(pendingIntent)
         val notificationManager =

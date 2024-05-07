@@ -8,8 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.launch
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.model.ticket.ReservationTicket
@@ -56,10 +54,7 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
     ) {
         super.onViewCreated(view, savedInstanceState)
         initReservationTicketRecyclerView()
-
-        lifecycleScope.launch {
-            presenter.loadReservationTickets()
-        }
+        presenter.loadReservationTickets()
     }
 
     override fun onDestroyView() {
@@ -85,6 +80,8 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
     }
 
     override fun showReservationHistory(tickets: List<ReservationTicket>) {
-        reservationTicketAdapter.updateTickets(tickets)
+        view?.post {
+            reservationTicketAdapter.updateTickets(tickets)
+        }
     }
 }

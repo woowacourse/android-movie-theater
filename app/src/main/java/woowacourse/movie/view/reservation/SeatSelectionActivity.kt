@@ -8,10 +8,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.db.screening.ScreeningDao
@@ -158,7 +154,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     override fun navigateToFinished(
         ticket: Ticket,
         ticketId: Long,
-    ) {
+    ) = runOnUiThread {
         if (isOnAlarmState()) {
             presenter.settingAlarm(
                 context = this@SeatSelectionActivity,
@@ -182,11 +178,9 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 .setTitle(getString(R.string.seat_selection_reservation_confirm))
                 .setMessage(getString(R.string.seat_selection_reservation_ask_purchase_ticket))
                 .setPositiveButton(getString(R.string.seat_selection_reservation_finish)) { _, _ ->
-                    lifecycleScope.launch {
-                        withContext(Dispatchers.IO) {
-                            presenter.makeTicket(movieId, theaterId, screeningDateTime)
-                        }
-                    }
+                    Thread {
+                        presenter.makeTicket(movieId, theaterId, screeningDateTime)
+                    }.start()
                 }
                 .setNegativeButton(getString(R.string.seat_selection_cancel)) { dialog, _ ->
                     dialog.dismiss()
