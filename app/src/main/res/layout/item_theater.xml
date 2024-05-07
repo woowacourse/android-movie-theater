@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="view_holder"
+            type="woowacourse.movie.feature.theater.adapter.TheaterSelectionViewHolder" />
+
+        <variable
+            name="theater"
+            type="woowacourse.movie.model.theater.Theater" />
+
+        <variable
+            name="screening_count"
+            type="int" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/cl_theater"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="5dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:paddingVertical="6dp">
+
+        <TextView
+            android:id="@+id/tv_theater_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="24dp"
+            android:text="@{theater.name}"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="잠실 극장" />
+
+        <TextView
+            android:id="@+id/tv_theater_screening_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="24dp"
+            android:text="@{@string/theater_screening_counts(screening_count)}"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tv_theater_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_theater_name"
+            tools:text="10개의 상영 시간" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/chevron_right"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

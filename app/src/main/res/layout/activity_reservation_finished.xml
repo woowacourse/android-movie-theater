@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="activity"
+            type="woowacourse.movie.feature.finished.ReservationFinishedActivity" />
+
+        <variable
+            name="ticket"
+            type="woowacourse.movie.model.ticket.Ticket" />
+
+        <variable
+            name="movie_title"
+            type="String" />
+
+        <variable
+            name="head_count"
+            type="int" />
+
+        <variable
+            name="seats"
+            type="String" />
+
+        <variable
+            name="amount"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_reservation_finished"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".feature.finished.ReservationFinishedActivity">
+
+        <View
+            android:id="@+id/view_reservation_finished"
+            android:layout_width="0dp"
+            android:layout_height="114dp"
+            android:background="@color/dark_skyblue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/reservation_finished_notice"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/view_reservation_finished"
+            app:layout_constraintEnd_toEndOf="@id/view_reservation_finished"
+            app:layout_constraintStart_toStartOf="@id/view_reservation_finished" />
+
+        <TextView
+            android:id="@+id/tv_reservation_finished_movie_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="@{String.valueOf(movie_title)}"
+            android:textAppearance="@style/Bold24"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_reservation_finished"
+            tools:text="해리 포터와 마법사의 돌" />
+
+        <TextView
+            android:id="@+id/tv_reservation_finished_screening_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@{String.valueOf(ticket.screeningDateTime.date)}"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@id/tv_reservation_finished_screening_time"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/tv_reservation_finished_movie_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_reservation_finished_movie_title"
+            tools:text="2024.3.1" />
+
+        <TextView
+            android:id="@+id/tv_reservation_finished_screening_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="20dp"
+            android:text="@{String.valueOf(ticket.screeningDateTime.time)}"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@id/tv_reservation_finished_movie_title"
+            app:layout_constraintStart_toEndOf="@id/tv_reservation_finished_screening_date"
+            app:layout_constraintTop_toBottomOf="@id/tv_reservation_finished_movie_title"
+            tools:text="17:00" />
+
+        <TextView
+            android:id="@+id/tv_reservation_finished_viewing_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:paddingStart="20dp"
+            android:text="@string/reservation_finished_general"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@id/tv_reservation_finished_head_count"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_reservation_finished_screening_date" />
+
+        <TextView
+            android:id="@+id/tv_reservation_finished_head_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@{@string/reservation_finished_person(head_count)}"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_reservation_finished_viewing_class"
+            app:layout_constraintEnd_toStartOf="@id/tv_reservation_finished_seats"
+            app:layout_constraintStart_toEndOf="@id/tv_reservation_finished_viewing_class"
+            app:layout_constraintTop_toTopOf="@id/tv_reservation_finished_viewing_class"
+            tools:text="1명 |" />
+
+        <TextView
+            android:id="@+id/tv_reservation_finished_seats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@{String.valueOf(seats)}"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_reservation_finished_viewing_class"
+            app:layout_constraintEnd_toStartOf="@id/tv_reservation_finished_theater_name"
+            app:layout_constraintStart_toEndOf="@id/tv_reservation_finished_head_count"
+            app:layout_constraintTop_toTopOf="@id/tv_reservation_finished_viewing_class"
+            tools:text="B3, D2" />
+
+        <TextView
+            android:id="@+id/tv_reservation_finished_theater_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingEnd="20dp"
+            android:text="@{@string/reservation_finished_theater(ticket.theaterName)}"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_reservation_finished_viewing_class"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_reservation_finished_seats"
+            app:layout_constraintTop_toTopOf="@id/tv_reservation_finished_viewing_class"
+            tools:text="| 선릉 극장선릉 극장선릉 극장선릉 극장선릉 극장" />
+
+        <TextView
+            android:id="@+id/tv_reservation_finished_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@{String.valueOf(amount)}"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@id/text_view_reservation_finished_price_unit"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_reservation_finished_head_count"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/text_view_reservation_finished_price_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reservation_finished_price_unit"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_reservation_finished_amount"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_reservation_finished_amount"
+            app:layout_constraintTop_toTopOf="@id/tv_reservation_finished_amount" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -21,6 +21,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".feature.finished.ReservationFinishedActivity"
+            android:parentActivityName=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".feature.reservation.ReservationActivity"
+            android:parentActivityName=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".feature.seatselection.SeatSelectionActivity"
+            android:parentActivityName=".feature.reservation.ReservationActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

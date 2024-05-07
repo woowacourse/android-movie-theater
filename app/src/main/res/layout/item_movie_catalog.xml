@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="view_holder"
+            type="woowacourse.movie.feature.home.adapter.viewholder.MovieViewHolder" />
+
+        <variable
+            name="movie"
+            type="woowacourse.movie.model.movie.Movie" />
+
+        <variable
+            name="screening_start_date"
+            type="java.time.LocalDate" />
+
+        <variable
+            name="screening_end_date"
+            type="java.time.LocalDate" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_movie_catalog_poster"
+            android:layout_width="76dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            app:imageResource="@{movie.posterId}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_movie_catalog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:text="@{movie.title}"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/iv_movie_catalog_poster"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="해리 포터와 마법사의 돌" />
+
+        <TextView
+            android:id="@+id/tv_movie_catalog_screening_period"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@{@string/all_screening_period(screening_start_date, screening_end_date)}"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tv_movie_catalog_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_movie_catalog_title"
+            tools:text="상영일: 2024.3.1~2024.03.10" />
+
+        <TextView
+            android:id="@+id/tv_movie_catalog_running_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@{@string/all_running_time(movie.runningTime)}"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tv_movie_catalog_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_movie_catalog_screening_period"
+            tools:text="러닝타임: 152분" />
+
+        <Button
+            android:id="@+id/button_movie_catalog_reservation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/movie_catalog_reservation_now"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_movie_catalog_running_time" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

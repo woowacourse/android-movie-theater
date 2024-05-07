@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="view_holder"
+            type="woowacourse.movie.feature.home.adapter.viewholder.AdvertisementViewHolder" />
+
+        <variable
+            name="advertisement"
+            type="woowacourse.movie.model.advertisement.Advertisement" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_advertisement_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/advertisement_message"
+            android:scaleType="centerCrop"
+            app:imageResource="@{advertisement.banner}" />
+    </LinearLayout>
+</layout>
