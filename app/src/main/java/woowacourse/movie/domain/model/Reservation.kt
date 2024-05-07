@@ -3,9 +3,9 @@ package woowacourse.movie.domain.model
 import java.time.LocalDateTime
 
 data class Reservation(
-    val id: Int,
-    val theaterId: Int,
-    val movie: ScreenView.Movie,
+    val id: Long,
+    val theaterName: String,
+    val movieTitle: String,
     val ticketCount: Int,
     val seats: List<Seat>,
     val dateTime: LocalDateTime,

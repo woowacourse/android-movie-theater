@@ -20,7 +20,6 @@ fun TextView.showReservation(
 
 fun List<Seat>.toSeatString(): String = this.map { "${it.column}${it.row + 1}" }.sorted().joinToString(", ")
 
-// this.joinToString(", ")
 @BindingAdapter("bindShowTotalPrice")
 fun TextView.showTotalPrice(totalPrice: Int) {
     this.text =

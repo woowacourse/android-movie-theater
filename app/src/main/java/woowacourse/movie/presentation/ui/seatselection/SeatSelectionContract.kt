@@ -8,7 +8,7 @@ interface SeatSelectionContract {
     interface View : BaseView, SeatSelectionActionHandler {
         fun showSeatModel(seatModel: SeatSelectionUiModel)
 
-        fun navigateToReservation(reservationId: Int)
+        fun navigateToReservation(reservationId: Long)
 
         fun showReservationDialog()
 

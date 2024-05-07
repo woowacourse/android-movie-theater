@@ -1,8 +1,8 @@
 package woowacourse.movie.presentation.ui.reservation
 
-import woowacourse.movie.domain.model.Reservation
+import woowacourse.movie.domain.db.reservationdb.ReservationEntity
 
 data class ReservationModel(
-    val reservation: Reservation? = null,
+    val reservation: ReservationEntity? = null,
     val theaterName: String = "",
 )

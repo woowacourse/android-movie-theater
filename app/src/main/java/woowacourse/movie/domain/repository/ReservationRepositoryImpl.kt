@@ -3,11 +3,22 @@ package woowacourse.movie.domain.repository
 import android.util.Log
 import woowacourse.movie.domain.db.reservationdb.ReservationDao
 import woowacourse.movie.domain.db.reservationdb.ReservationEntity
+import woowacourse.movie.domain.model.Reservation
 
 class ReservationRepositoryImpl(private val dao: ReservationDao) : ReservationRepository {
-    override fun saveReservation(reservation: ReservationEntity): Result<Long> {
+    override fun saveReservation(reservation: Reservation): Result<Long> {
         return runCatching {
-            dao.insert(reservation)
+            dao.insert(
+                ReservationEntity(
+                    reservation.id,
+                    reservation.theaterName,
+                    reservation.movieTitle,
+                    reservation.ticketCount,
+                    reservation.seats,
+                    reservation.dateTime,
+                    reservation.totalPrice,
+                ),
+            )
         }.onSuccess {
             Log.d("테스트", "new reservationId = $it")
         }.onFailure { e ->
@@ -15,9 +26,17 @@ class ReservationRepositoryImpl(private val dao: ReservationDao) : ReservationRe
         }
     }
 
-    override fun findByReservationId(id: Long): Result<ReservationEntity> {
+    override fun findByReservationId(id: Long): Result<Reservation> {
         return runCatching {
-            dao.getData(id) ?: throw IllegalArgumentException()
+            val entity = dao.getData(id) ?: throw IllegalArgumentException()
+            Reservation(
+                entity.uid,
+                entity.theaterName,
+                entity.movieName,
+                entity.ticketCount,
+                entity.seats,
+                entity.dateTime,
+            )
         }
     }
 }

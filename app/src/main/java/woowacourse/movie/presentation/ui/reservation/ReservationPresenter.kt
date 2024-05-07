@@ -2,35 +2,25 @@ package woowacourse.movie.presentation.ui.reservation
 
 import woowacourse.movie.domain.model.Reservation
 import woowacourse.movie.domain.repository.ReservationRepository
-import woowacourse.movie.domain.repository.ScreenRepository
+import kotlin.concurrent.thread
 
 class ReservationPresenter(
     private val view: ReservationContract.View,
     private val repository: ReservationRepository,
-    private val theaterRepository: ScreenRepository,
 ) : ReservationContract.Presenter {
-    private var _reservationModel: ReservationModel = ReservationModel()
-    private val reservationModel
-        get() = _reservationModel
+    private lateinit var _reservation: Reservation
+    private val reservation
+        get() = _reservation
 
-    override fun loadReservation(id: Int) {
-        repository.findByReservationId(id).onSuccess { reservation ->
-            findTheaterName(reservation)
-        }.onFailure { e -> view.terminateOnError(e) }
-    }
-
-    private fun findTheaterName(reservation: Reservation) {
-        theaterRepository.findTheaterNameById(reservation.theaterId).onSuccess { theaterName ->
-            updateReservation(theaterName, reservation)
-        }.onFailure { e -> view.terminateOnError(e) }
-    }
-
-    private fun updateReservation(
-        theaterName: String,
-        reservation: Reservation,
-    ) {
-        _reservationModel =
-            reservationModel.copy(theaterName = theaterName, reservation = reservation)
-        view.showReservation(reservationModel, theaterName)
+    override fun loadReservation(reservationId: Long) {
+        thread(start = true) {
+            repository.findByReservationId(reservationId)
+                .onSuccess { reservation ->
+                    _reservation = reservation
+                    view.showReservation(this.reservation)
+                }.onFailure { e ->
+                    view.terminateOnError(e)
+                }
+        }
     }
 }

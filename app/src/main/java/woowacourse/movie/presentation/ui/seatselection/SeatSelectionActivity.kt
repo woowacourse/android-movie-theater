@@ -8,9 +8,11 @@ import android.os.Bundle
 import android.view.MenuItem
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
+import woowacourse.movie.domain.db.AppDatabase
+import woowacourse.movie.domain.db.reservationdb.ReservationDao
 import woowacourse.movie.domain.model.SeatModel
-import woowacourse.movie.domain.repository.DummyReservation
 import woowacourse.movie.domain.repository.DummyScreens
+import woowacourse.movie.domain.repository.ReservationRepositoryImpl
 import woowacourse.movie.presentation.base.BaseActivity
 import woowacourse.movie.presentation.model.MessageType
 import woowacourse.movie.presentation.model.ReservationInfo
@@ -22,13 +24,19 @@ import java.io.Serializable
 class SeatSelectionActivity : BaseActivity<ActivitySeatSelectionBinding>(), View {
     override val layoutResourceId: Int
         get() = R.layout.activity_seat_selection
+
+    private lateinit var reservationDao: ReservationDao
+    private lateinit var reservationRepository: ReservationRepositoryImpl
+
     val presenter: SeatSelectionPresenter by lazy {
-        SeatSelectionPresenter(this, DummyScreens(), DummyReservation)
+        SeatSelectionPresenter(this, DummyScreens(), reservationRepository)
     }
 
     override fun initStartView() {
         binding.handler = this
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        reservationDao = AppDatabase.getDatabase(applicationContext)!!.reservationDao()
+        reservationRepository = ReservationRepositoryImpl(reservationDao)
         val reservationInfo =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 intent.getSerializableExtra(
@@ -73,7 +81,7 @@ class SeatSelectionActivity : BaseActivity<ActivitySeatSelectionBinding>(), View
         }
     }
 
-    override fun navigateToReservation(reservationId: Int) {
+    override fun navigateToReservation(reservationId: Long) {
         showToastMessage(MessageType.ReservationSuccessMessage)
         ReservationActivity.startActivity(this, reservationId)
     }

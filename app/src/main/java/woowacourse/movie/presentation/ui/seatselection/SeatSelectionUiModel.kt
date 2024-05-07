@@ -5,7 +5,7 @@ import woowacourse.movie.presentation.model.UserSeat
 import java.time.LocalDateTime
 
 data class SeatSelectionUiModel(
-    val id: Int = -1,
+    val theaterName: String = "",
     val screen: Screen? = null,
     val dateTime: LocalDateTime? = null,
     val ticketQuantity: Int = 0,
