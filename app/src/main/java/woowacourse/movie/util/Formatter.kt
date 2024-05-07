@@ -2,7 +2,6 @@
 
 package woowacourse.movie.util
 
-import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
 import java.time.LocalDate

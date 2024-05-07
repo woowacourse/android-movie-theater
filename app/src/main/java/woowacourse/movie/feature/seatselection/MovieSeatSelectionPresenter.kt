@@ -76,7 +76,7 @@ class MovieSeatSelectionPresenter(
                     LocalDate.parse(screeningDate),
                     LocalTime.parse(screeningTime),
                     selectedSeats,
-                    theaterName
+                    theaterName,
                 )
             handler.post {
                 view.navigateToResultView(ticketId)

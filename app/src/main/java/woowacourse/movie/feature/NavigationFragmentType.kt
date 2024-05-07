@@ -2,8 +2,8 @@ package woowacourse.movie.feature
 
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.feature.home.movie.MovieHomeFragment
 import woowacourse.movie.feature.history.ReservationHistoryFragment
+import woowacourse.movie.feature.home.movie.MovieHomeFragment
 import woowacourse.movie.feature.setting.SettingFragment
 import java.lang.IllegalArgumentException
 

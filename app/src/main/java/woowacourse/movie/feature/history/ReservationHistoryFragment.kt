@@ -1,7 +1,6 @@
 package woowacourse.movie.feature.history
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,8 @@ import woowacourse.movie.feature.history.adapter.ReservationHistoryAdapter
 import woowacourse.movie.feature.result.MovieResultActivity
 import woowacourse.movie.util.BaseFragment
 
-class ReservationHistoryFragment : BaseFragment<ReservationHistoryContract.Presenter>(),
+class ReservationHistoryFragment :
+    BaseFragment<ReservationHistoryContract.Presenter>(),
     ReservationHistoryContract.View {
     private var _binding: FragmentReservationHistoryBinding? = null
     private val binding get() = _binding!!
@@ -32,10 +32,11 @@ class ReservationHistoryFragment : BaseFragment<ReservationHistoryContract.Prese
     override fun initializePresenter() = ReservationHistoryPresenter(this)
 
     private fun initializeView() {
-        reservationHistoryAdapter = ReservationHistoryAdapter {
-            val intent = MovieResultActivity.newIntent(requireContext(), it.id)
-            startActivity(intent)
-        }
+        reservationHistoryAdapter =
+            ReservationHistoryAdapter {
+                val intent = MovieResultActivity.newIntent(requireContext(), it.id)
+                startActivity(intent)
+            }
         binding.reservationHistoryRecyclerView.adapter = reservationHistoryAdapter
         presenter.loadTickets((requireActivity().application as MovieTheaterApplication).ticketRepository)
     }

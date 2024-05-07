@@ -15,7 +15,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import woowacourse.movie.MovieTheaterApplication
 import woowacourse.movie.R
-import woowacourse.movie.data.TicketRepositoryImpl
 import woowacourse.movie.databinding.ActivityMovieSeatSelectionBinding
 import woowacourse.movie.feature.result.MovieResultActivity
 import woowacourse.movie.model.MovieGrade
@@ -31,8 +30,6 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_SEAT_POSITIONS
 import woowacourse.movie.util.MovieIntentConstant.KEY_THEATER_NAME
 import woowacourse.movie.util.formatSeat
-import woowacourse.movie.util.formatSeatColumn
-import woowacourse.movie.util.formatSeatRow
 
 class MovieSeatSelectionActivity :
     BaseActivity<MovieSeatSelectionContract.Presenter>(),
@@ -55,8 +52,8 @@ class MovieSeatSelectionActivity :
             MovieSelectedSeats(
                 intent.getIntExtra(
                     KEY_RESERVATION_COUNT,
-                    INVALID_VALUE_RESERVATION_COUNT
-                )
+                    INVALID_VALUE_RESERVATION_COUNT,
+                ),
             )
         initializeView()
     }

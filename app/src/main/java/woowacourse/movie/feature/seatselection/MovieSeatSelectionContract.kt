@@ -1,13 +1,9 @@
 package woowacourse.movie.feature.seatselection
 
-import android.content.Context
 import woowacourse.movie.data.TicketRepository
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
 import woowacourse.movie.util.BasePresenter
-import woowacourse.movie.util.MovieIntentConstant
-import java.time.LocalDate
-import java.time.LocalTime
 
 interface MovieSeatSelectionContract {
     interface View {

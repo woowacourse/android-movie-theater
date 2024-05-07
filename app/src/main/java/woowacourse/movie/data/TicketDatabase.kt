@@ -13,14 +13,14 @@ abstract class TicketDatabase : RoomDatabase() {
     abstract fun ticketDao(): TicketDao
 
     companion object {
-        private var INSTANCE: TicketDatabase? = null
+        private var instance: TicketDatabase? = null
 
         fun getInstance(context: Context): TicketDatabase {
-            return INSTANCE ?: run {
-                val instance =
+            return instance ?: run {
+                val newInstance =
                     Room.databaseBuilder(context, TicketDatabase::class.java, "ticket").build()
-                INSTANCE = instance
-                instance
+                instance = newInstance
+                newInstance
             }
         }
     }

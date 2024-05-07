@@ -19,8 +19,8 @@ class TicketRepositoryImpl(private val ticketDao: TicketDao) : TicketRepository 
                 screeningDate,
                 screeningTime,
                 selectedSeats,
-                theaterName
-            )
+                theaterName,
+            ),
         )
     }
 
