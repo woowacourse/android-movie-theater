@@ -4,9 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.IntentCompat
 import woowacourse.movie.R
@@ -25,8 +22,8 @@ class MovieDetailActivity :
     MovieDetailContract.View,
     TicketCountListener {
     private lateinit var presenter: MovieDetailContract.Presenter
-    private lateinit var dateAdapter: ArrayAdapter<String>
-    private lateinit var timeAdapter: ArrayAdapter<String>
+    private lateinit var dateAdapter: SpinnerDateAdapter
+    private lateinit var timeAdapter: SpinnerTimeAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,13 +75,11 @@ class MovieDetailActivity :
     }
 
     override fun updateDateAdapter(dates: List<String>) {
-        dateAdapter.clear()
-        dateAdapter.addAll(dates)
+        dateAdapter.updateRunningDates(dates)
     }
 
     override fun updateTimeAdapter(times: List<String>) {
-        timeAdapter.clear()
-        timeAdapter.addAll(times)
+        timeAdapter.updateRunningTimes(times)
     }
 
     override fun navigateToPurchaseConfirmation(cinema: Cinema) {
@@ -107,32 +102,14 @@ class MovieDetailActivity :
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.listener = this
         dateAdapter =
-            ArrayAdapter(
-                this,
-                android.R.layout.simple_spinner_dropdown_item,
-                mutableListOf(),
-            )
-        binding.movieDateSpinner.adapter = dateAdapter
-        binding.movieDateSpinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View,
-                    position: Int,
-                    id: Long,
-                ) {
-                    presenter.updateRunMovieTimes()
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>) {}
+            SpinnerDateAdapter(this, presenter::updateRunMovieTimes).also {
+                binding.movieDateSpinner.adapter = it
+                binding.movieDateSpinner.onItemSelectedListener = it.selectedListener()
             }
         timeAdapter =
-            ArrayAdapter(
-                this,
-                android.R.layout.simple_spinner_dropdown_item,
-                mutableListOf(),
-            )
-        binding.movieTimeSpinner.adapter = timeAdapter
+            SpinnerTimeAdapter(this).also {
+                binding.movieTimeSpinner.adapter = it
+            }
     }
 
     private fun initClickListener() {
