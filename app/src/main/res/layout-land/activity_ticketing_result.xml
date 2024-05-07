@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="ticket"
+            type="woowacourse.movie.model.Ticket" />
+        <variable
+            name="theaterName"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/cl_ticketing_result_activity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.ticketingResult.TicketingResultActivity">
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_guide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#9160F9"
+                    android:gravity="bottom|center"
+                    android:paddingTop="72dp"
+                    android:paddingBottom="12dp"
+                    android:text="@string/text_guide"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_movie_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="44dp"
+                    android:gravity="center"
+                    android:text="@{ticket.movieTitle}"
+                    android:textColor="@color/black"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_guide"
+                    tools:text="영화이름" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_movie_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:text="@{ticket.screeningDateTime}"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_movie_title"
+                    tools:text="2024.1.1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_ticket_count_head"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="72dp"
+                    android:text="일반"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toStartOf="@id/tv_ticket_count"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_movie_date" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_ticket_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(ticket.totalCount)}"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/tv_ticket_count_head"
+                    app:layout_constraintEnd_toStartOf="@id/tv_ticket_count_tail"
+                    app:layout_constraintStart_toEndOf="@id/tv_ticket_count_head"
+                    tools:text="1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_ticket_count_tail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="명"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/tv_ticket_count"
+                    app:layout_constraintEnd_toStartOf="@id/tv_divider_1"
+                    app:layout_constraintStart_toEndOf="@id/tv_ticket_count" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_divider_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="@string/text_divider"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_ticket_count_tail"
+                    app:layout_constraintEnd_toStartOf="@id/tv_selected_seats"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toEndOf="@id/tv_ticket_count_tail"
+                    app:layout_constraintTop_toTopOf="@id/tv_ticket_count" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_selected_seats"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="130dp"
+                    android:text="@{ticket.selectedSeatsToString()}"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_ticket_count"
+                    app:layout_constraintEnd_toStartOf="@id/tv_divider_2"
+                    app:layout_constraintStart_toEndOf="@id/tv_divider_1"
+                    app:layout_constraintTop_toTopOf="@id/tv_ticket_count"
+                    tools:text="B2, B3" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_divider_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="@string/text_divider"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_ticket_count"
+                    app:layout_constraintEnd_toStartOf="@id/tv_theater_name"
+                    app:layout_constraintStart_toEndOf="@id/tv_selected_seats"
+                    app:layout_constraintTop_toTopOf="@id/tv_ticket_count" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_theater_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxWidth="130dp"
+                    android:maxLines="1"
+                    android:text="@{theaterName}"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_ticket_count"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tv_divider_2"
+                    app:layout_constraintTop_toTopOf="@id/tv_ticket_count"
+                    tools:text="강남" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:gravity="center"
+                    android:text="@{ticket.totalPriceToString()}"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:layout_marginBottom="100dp"
+                    app:layout_constraintEnd_toStartOf="@id/tv_price_tail"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_ticket_count"
+                    tools:text="13,000" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_price_tail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:gravity="center"
+                    android:text="@string/text_ticketing_result_price_tail"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/tv_price"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tv_price"
+                    tools:text="원 (현장 결제)" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
