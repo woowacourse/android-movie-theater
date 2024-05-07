@@ -13,7 +13,6 @@ class ReservationResultPresenter(
     private val screeningDao: ScreeningDao,
     private val theaterDao: TheaterDao,
 ) : ReservationResultContract.Presenter {
-
     override fun loadTicketWithTicketId(ticketId: Long): ReservationTicket? {
         return repository.findReservationTicket(ticketId)
     }

@@ -2,7 +2,6 @@ package woowacourse.movie.view.result
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -21,12 +20,10 @@ import woowacourse.movie.presenter.result.ReservationResultContract
 import woowacourse.movie.presenter.result.ReservationResultPresenter
 import woowacourse.movie.repository.ReservationTicketRepositoryImpl
 import woowacourse.movie.utils.MovieUtils.convertAmountFormat
-import woowacourse.movie.utils.MovieUtils.intentSerializable
 import woowacourse.movie.utils.MovieUtils.makeToast
 import woowacourse.movie.view.MainActivity
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.DEFAULT_TICKET_ID
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.RESERVATION_TICKET_ID
-import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.TICKET
 
 class ReservationResultActivity : AppCompatActivity(), ReservationResultContract.View {
     private val binding: ActivityReservationResultBinding by lazy {

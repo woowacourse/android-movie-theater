@@ -10,7 +10,6 @@ import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
 import woowacourse.movie.notification.TicketNotification.NOTIFICATION_ID
 import woowacourse.movie.notification.TicketNotification.PENDING_REQUEST_CODE
-import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.DEFAULT_ID
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.DEFAULT_TICKET_ID
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.RESERVATION_TICKET_ID
 import woowacourse.movie.view.result.ReservationResultActivity

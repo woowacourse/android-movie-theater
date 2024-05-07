@@ -16,8 +16,7 @@ interface ReservationResultContract {
     }
 
     interface Presenter {
-
-        fun loadTicketWithTicketId(ticketId: Long) : ReservationTicket?
+        fun loadTicketWithTicketId(ticketId: Long): ReservationTicket?
 
         fun loadMovie(movieId: Int)
 

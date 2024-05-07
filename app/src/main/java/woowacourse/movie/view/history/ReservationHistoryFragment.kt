@@ -13,12 +13,10 @@ import kotlinx.coroutines.launch
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.model.ticket.ReservationTicket
-import woowacourse.movie.model.ticket.toTicket
 import woowacourse.movie.presenter.history.ReservationHistoryContract
 import woowacourse.movie.presenter.history.ReservationHistoryPresenter
 import woowacourse.movie.repository.ReservationTicketRepositoryImpl
 import woowacourse.movie.view.history.adapter.ReservationTicketAdapter
-import woowacourse.movie.view.reservation.ReservationDetailActivity
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.RESERVATION_TICKET_ID
 import woowacourse.movie.view.result.ReservationResultActivity
 

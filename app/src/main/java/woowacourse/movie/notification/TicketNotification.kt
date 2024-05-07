@@ -9,11 +9,8 @@ import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import android.os.Build
 import woowacourse.movie.model.movie.ScreeningDateTime
-import woowacourse.movie.model.ticket.ReservationTicket
-import woowacourse.movie.model.ticket.Ticket
 import woowacourse.movie.notification.TicketNotificationReceiver.Companion.MOVIE_TITLE
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.RESERVATION_TICKET_ID
-import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.TICKET
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale

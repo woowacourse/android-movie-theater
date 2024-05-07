@@ -3,7 +3,6 @@ package woowacourse.movie.presenter.setting
 import android.content.Context
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import woowacourse.movie.model.ticket.toTicket
 import woowacourse.movie.notification.TicketNotification
 import woowacourse.movie.repository.ReservationTicketRepository
 
