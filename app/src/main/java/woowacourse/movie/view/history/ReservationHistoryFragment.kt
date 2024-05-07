@@ -19,6 +19,7 @@ import woowacourse.movie.presenter.history.ReservationHistoryPresenter
 import woowacourse.movie.repository.ReservationTicketRepositoryImpl
 import woowacourse.movie.view.history.adapter.ReservationTicketAdapter
 import woowacourse.movie.view.reservation.ReservationDetailActivity
+import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.RESERVATION_TICKET_ID
 import woowacourse.movie.view.result.ReservationResultActivity
 
 class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
@@ -80,7 +81,7 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
 
     override fun navigateToDetail(reservationTicket: ReservationTicket) {
         Intent(context, ReservationResultActivity::class.java).apply {
-            putExtra(ReservationDetailActivity.TICKET, reservationTicket.toTicket())
+            putExtra(RESERVATION_TICKET_ID, reservationTicket.ticketId)
             startActivity(this)
         }
     }

@@ -24,6 +24,7 @@ interface SeatSelectionContract {
             context: Context,
             movieTitle: String,
             ticket: Ticket,
+            ticketId: Long,
         )
 
         fun initializeConfirmButton()
@@ -41,13 +42,13 @@ interface SeatSelectionContract {
             seat: Seat,
         )
 
-        fun makeTicket(
+        suspend fun makeTicket(
             movieId: Int,
             theaterId: Int,
             screeningDateTime: ScreeningDateTime,
         )
 
-        fun saveTicket(ticket: Ticket)
+        suspend fun saveTicket(ticket: Ticket)
     }
 
     interface View {
@@ -78,7 +79,10 @@ interface SeatSelectionContract {
 
         fun launchReservationConfirmDialog()
 
-        fun navigateToFinished(ticket: Ticket)
+        fun navigateToFinished(
+            ticket: Ticket,
+            ticketId: Long,
+        )
 
         fun restoreSelectedSeats(selectedSeats: List<Int>)
 

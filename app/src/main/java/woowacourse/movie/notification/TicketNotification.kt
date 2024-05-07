@@ -8,8 +8,11 @@ import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import android.os.Build
+import woowacourse.movie.model.movie.ScreeningDateTime
+import woowacourse.movie.model.ticket.ReservationTicket
 import woowacourse.movie.model.ticket.Ticket
 import woowacourse.movie.notification.TicketNotificationReceiver.Companion.MOVIE_TITLE
+import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.RESERVATION_TICKET_ID
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.TICKET
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -24,13 +27,14 @@ object TicketNotification {
 
     fun setNotification(
         context: Context,
-        ticket: Ticket,
+        ticketId: Long,
         movieTitle: String,
+        screeningDateTime: ScreeningDateTime,
     ) {
         val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, TicketNotificationReceiver::class.java)
-        intent.putExtra(TICKET, ticket)
         intent.putExtra(MOVIE_TITLE, movieTitle)
+        intent.putExtra(RESERVATION_TICKET_ID, ticketId)
 
         val pendingIntent =
             PendingIntent.getBroadcast(
@@ -46,8 +50,8 @@ object TicketNotification {
                 Locale.getDefault(),
             ).parse(
                 DATE_PARSE_FORMAT.format(
-                    ticket.screeningDateTime.date,
-                    ticket.screeningDateTime.time,
+                    screeningDateTime.date,
+                    screeningDateTime.time,
                 ),
             )
         val calendar =

@@ -8,11 +8,11 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
-import woowacourse.movie.model.ticket.Ticket
 import woowacourse.movie.notification.TicketNotification.NOTIFICATION_ID
 import woowacourse.movie.notification.TicketNotification.PENDING_REQUEST_CODE
-import woowacourse.movie.utils.MovieUtils.intentSerializable
-import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.TICKET
+import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.DEFAULT_ID
+import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.DEFAULT_TICKET_ID
+import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.RESERVATION_TICKET_ID
 import woowacourse.movie.view.result.ReservationResultActivity
 
 class TicketNotificationReceiver : BroadcastReceiver() {
@@ -20,7 +20,7 @@ class TicketNotificationReceiver : BroadcastReceiver() {
         context: Context?,
         intent: Intent?,
     ) {
-        val ticket = intent?.intentSerializable(TICKET, Ticket::class.java)
+        val ticketId = intent?.getLongExtra(RESERVATION_TICKET_ID, DEFAULT_TICKET_ID)
         val movieTitle = intent?.getStringExtra(MOVIE_TITLE) ?: ""
 
         val notificationManager =
@@ -35,20 +35,20 @@ class TicketNotificationReceiver : BroadcastReceiver() {
         notificationManager.createNotificationChannel(channel)
 
         val notificationIntent = Intent(context, ReservationResultActivity::class.java)
-        notificationIntent.putExtra(TICKET, ticket)
+        notificationIntent.putExtra(RESERVATION_TICKET_ID, ticketId)
         val pendingIntent =
             PendingIntent.getActivity(
                 context,
                 PENDING_REQUEST_CODE,
                 notificationIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT,
+                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE,
             )
 
         val notification =
             NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle(ALARM_TITLE)
                 .setContentText(ALARM_TEXT.format(movieTitle))
-                .setSmallIcon(R.drawable.home_icon)
+                .setSmallIcon(R.drawable.movie_filter_24dp)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
                 .build()
