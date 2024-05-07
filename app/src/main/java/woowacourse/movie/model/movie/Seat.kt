@@ -2,6 +2,7 @@ package woowacourse.movie.model.movie
 
 data class Seat(val row: SeatRow, val col: Int) {
     constructor(row: Int, col: Int) : this(SeatRow.findRow(row), col)
+    constructor(position: String) : this(findRow(position), findCol(position))
 
     fun price() =
         when (row) {
@@ -16,5 +17,9 @@ data class Seat(val row: SeatRow, val col: Int) {
         const val ROW_LEN = 5
         const val COL_LEN = 4
         private const val OFFSET = 1
+
+        private fun findRow(position: String): SeatRow = SeatRow.valueOf(position.first().toString())
+
+        private fun findCol(position: String): Int = position.substring(1).toInt()
     }
 }
