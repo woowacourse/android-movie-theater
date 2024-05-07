@@ -56,7 +56,10 @@ class TheaterAdapter(
     }
 
     interface TheaterClickListener {
-        fun onTheaterClick(movieContentId: Long, theaterId: Long)
+        fun onTheaterClick(
+            movieContentId: Long,
+            theaterId: Long,
+        )
     }
 }
 

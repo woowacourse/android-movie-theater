@@ -13,7 +13,10 @@ interface MovieReservationContract {
 
         fun moveMovieSeatSelectionPage(userTicketId: Long)
 
-        fun showScreeningContent(movieContent: MovieContent, theater: Theater)
+        fun showScreeningContent(
+            movieContent: MovieContent,
+            theater: Theater,
+        )
     }
 
     interface Presenter {

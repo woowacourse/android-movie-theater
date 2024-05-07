@@ -67,7 +67,7 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonC
         Toast.makeText(
             requireContext(),
             resources.getString(R.string.toast_invalid_key),
-            Toast.LENGTH_LONG
+            Toast.LENGTH_LONG,
         ).show()
     }
 

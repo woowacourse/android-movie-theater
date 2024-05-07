@@ -62,13 +62,11 @@ class MovieReservationActivity :
         }
     }
 
-    override fun initializePresenter() =
-        MovieReservationPresenter(this, MovieContentsImpl, TheatersImpl, UserTicketsImpl)
+    override fun initializePresenter() = MovieReservationPresenter(this, MovieContentsImpl, TheatersImpl, UserTicketsImpl)
 
     private fun theaterId() = intent.getLongExtra(MovieReservationKey.THEATER_ID, DEFAULT_VALUE)
 
-    private fun movieContentId() =
-        intent.getLongExtra(MovieReservationKey.MOVIE_CONTENT_ID, DEFAULT_VALUE)
+    private fun movieContentId() = intent.getLongExtra(MovieReservationKey.MOVIE_CONTENT_ID, DEFAULT_VALUE)
 
     override fun showError(throwable: Throwable) {
         Toast.makeText(this, resources.getString(R.string.toast_invalid_key), Toast.LENGTH_LONG)
@@ -93,7 +91,10 @@ class MovieReservationActivity :
             .also(::startActivity)
     }
 
-    override fun showScreeningContent(movieContent: MovieContent, theater: Theater) {
+    override fun showScreeningContent(
+        movieContent: MovieContent,
+        theater: Theater,
+    ) {
         binding.movieContent = movieContent
         binding.theater = theater
     }

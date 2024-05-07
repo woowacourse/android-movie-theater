@@ -60,22 +60,23 @@ class TheaterSelectionBottomSheetFragment :
         Toast.makeText(
             requireContext(),
             resources.getString(R.string.toast_invalid_key),
-            Toast.LENGTH_LONG
+            Toast.LENGTH_LONG,
         ).show()
     }
 
-    override fun onTheaterClick(movieContentId: Long, theaterId: Long) {
+    override fun onTheaterClick(
+        movieContentId: Long,
+        theaterId: Long,
+    ) {
         Intent(requireContext(), MovieReservationActivity::class.java)
             .putExtra(MovieHomeKey.MOVIE_CONTENT_ID, movieContentId)
             .putExtra(MovieHomeKey.THEATER_ID, theaterId)
             .also(::startActivity)
     }
 
-    private fun generateTheaterAdapter() =
-        TheaterAdapter(theaters, movieContentId, this)
+    private fun generateTheaterAdapter() = TheaterAdapter(theaters, movieContentId, this)
 
-    private fun generatePresenter() =
-        TheaterSelectionPresenter(this, MovieContentsImpl, TheatersImpl)
+    private fun generatePresenter() = TheaterSelectionPresenter(this, MovieContentsImpl, TheatersImpl)
 
     companion object {
         private const val DEFAULT_MOVIE_CONTENT_ID: Long = -1L
