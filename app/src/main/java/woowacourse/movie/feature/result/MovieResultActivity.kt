@@ -8,24 +8,15 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
+import woowacourse.movie.MovieTheaterApplication
 import woowacourse.movie.R
 import woowacourse.movie.data.entity.Ticket
 import woowacourse.movie.databinding.ActivityMovieResultBinding
 import woowacourse.movie.feature.MovieMainActivity
 import woowacourse.movie.feature.result.ui.MovieResultUiModel
 import woowacourse.movie.util.BaseActivity
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_DATE
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_SEATS
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_TIME
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_RESERVATION_COUNT
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_NAME
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_DATE
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_SEATS
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
-import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_COUNT
-import woowacourse.movie.util.MovieIntentConstant.KEY_THEATER_NAME
+import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_TICKET_ID
+import woowacourse.movie.util.MovieIntentConstant.KEY_TICKET_ID
 
 class MovieResultActivity :
     BaseActivity<MovieResultContract.Presenter>(),
@@ -47,12 +38,8 @@ class MovieResultActivity :
         setUpBackButtonAction()
 
         presenter.loadTicket(
-            intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID),
-            intent.getStringExtra(KEY_MOVIE_DATE) ?: INVALID_VALUE_MOVIE_DATE,
-            intent.getStringExtra(KEY_MOVIE_TIME) ?: INVALID_VALUE_MOVIE_TIME,
-            intent.getIntExtra(KEY_RESERVATION_COUNT, INVALID_VALUE_RESERVATION_COUNT),
-            intent.getStringExtra(KEY_MOVIE_SEATS) ?: INVALID_VALUE_MOVIE_SEATS,
-            intent.getStringExtra(KEY_THEATER_NAME) ?: INVALID_VALUE_THEATER_NAME,
+            (application as MovieTheaterApplication).ticketRepository,
+            intent.getLongExtra(KEY_TICKET_ID, INVALID_VALUE_TICKET_ID),
         )
     }
 
@@ -95,20 +82,10 @@ class MovieResultActivity :
 
         fun newIntent(
             context: Context,
-            movieId: Long,
-            screeningDate: String?,
-            screeningTime: String?,
-            reservationCount: Int,
-            selectedSeats: String,
-            theaterName: String?,
+            ticketId: Long,
         ): Intent {
             return Intent(context, MovieResultActivity::class.java).apply {
-                putExtra(KEY_MOVIE_ID, movieId)
-                putExtra(KEY_MOVIE_DATE, screeningDate)
-                putExtra(KEY_MOVIE_TIME, screeningTime)
-                putExtra(KEY_RESERVATION_COUNT, reservationCount)
-                putExtra(KEY_MOVIE_SEATS, selectedSeats)
-                putExtra(KEY_THEATER_NAME, theaterName)
+                putExtra(KEY_TICKET_ID, ticketId)
             }
         }
     }

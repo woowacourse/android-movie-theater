@@ -13,7 +13,9 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
+import woowacourse.movie.MovieTheaterApplication
 import woowacourse.movie.R
+import woowacourse.movie.data.TicketRepositoryImpl
 import woowacourse.movie.databinding.ActivityMovieSeatSelectionBinding
 import woowacourse.movie.feature.result.MovieResultActivity
 import woowacourse.movie.model.MovieGrade
@@ -50,7 +52,12 @@ class MovieSeatSelectionActivity :
         setContentView(binding.root)
 
         movieSelectedSeats =
-            MovieSelectedSeats(intent.getIntExtra(KEY_RESERVATION_COUNT, INVALID_VALUE_RESERVATION_COUNT))
+            MovieSelectedSeats(
+                intent.getIntExtra(
+                    KEY_RESERVATION_COUNT,
+                    INVALID_VALUE_RESERVATION_COUNT
+                )
+            )
         initializeView()
     }
 
@@ -106,7 +113,16 @@ class MovieSeatSelectionActivity :
 
     override fun displayDialog() {
         AlertDialog.Builder(this).setTitle("예매 확인").setMessage("정말 예매하시겠습니까?")
-            .setPositiveButton("예매 완료") { _, _ -> presenter.clickPositiveButton() }
+            .setPositiveButton("예매 완료") { _, _ ->
+                presenter.clickPositiveButton(
+                    ticketRepository = (application as MovieTheaterApplication).ticketRepository,
+                    movieId = intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID),
+                    screeningDate = intent.getStringExtra(KEY_MOVIE_DATE)!!,
+                    screeningTime = intent.getStringExtra(KEY_MOVIE_TIME)!!,
+                    selectedSeats = movieSelectedSeats,
+                    theaterName = intent.getStringExtra(KEY_THEATER_NAME)!!,
+                )
+            }
             .setNegativeButton("취소") { dialog, _ -> dialog.dismiss() }.setCancelable(false).show()
     }
 
@@ -114,22 +130,8 @@ class MovieSeatSelectionActivity :
         binding.movieSelectedSeats = movieSelectedSeats
     }
 
-    override fun navigateToResultView(movieSelectedSeats: MovieSelectedSeats) {
-        val seats =
-            movieSelectedSeats.selectedSeats.joinToString(", ") { seat ->
-                seat.row.formatSeatRow() + seat.column.formatSeatColumn()
-            }
-
-        val intent =
-            MovieResultActivity.newIntent(
-                context = this,
-                movieId = intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID),
-                screeningDate = intent.getStringExtra(KEY_MOVIE_DATE),
-                screeningTime = intent.getStringExtra(KEY_MOVIE_TIME),
-                reservationCount = movieSelectedSeats.reservationCount,
-                selectedSeats = seats,
-                theaterName = intent.getStringExtra(KEY_THEATER_NAME),
-            )
+    override fun navigateToResultView(ticketId: Long) {
+        val intent = MovieResultActivity.newIntent(this, ticketId)
         startActivity(intent)
     }
 

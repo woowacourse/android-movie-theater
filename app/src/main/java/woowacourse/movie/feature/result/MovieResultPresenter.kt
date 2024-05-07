@@ -1,52 +1,30 @@
 package woowacourse.movie.feature.result
 
-import woowacourse.movie.data.MovieRepository
-import woowacourse.movie.data.entity.Ticket
-import woowacourse.movie.model.MovieSeat
-import woowacourse.movie.model.MovieSelectedSeats
-import woowacourse.movie.util.unFormatSeatColumn
-import woowacourse.movie.util.unFormatSeatRow
-import java.time.LocalDate
-import java.time.LocalTime
+import android.os.Handler
+import android.os.Looper
+import woowacourse.movie.data.TicketRepository
 
 class MovieResultPresenter(private val view: MovieResultContract.View) :
     MovieResultContract.Presenter {
     override fun loadTicket(
-        movieId: Long,
-        screeningDate: String,
-        screeningTime: String,
-        reservationCount: Int,
-        selectedSeats: String,
-        theaterName: String,
+        ticketRepository: TicketRepository,
+        ticketId: Long,
     ) {
-        val movie =
-            runCatching {
-                MovieRepository.getMovieById(movieId)
-            }.getOrElse {
-                view.showToastInvalidMovieIdError(it)
-                return
+//        val ticket =
+//            runCatching {
+//                ticketRepository.find(ticketId)
+//            }.getOrElse {
+//                view.showToastInvalidMovieIdError(it)
+//                return
+//            }
+//        view.displayTicket(ticket)
+
+        val handler = Handler(Looper.getMainLooper())
+        Thread {
+            val ticket = ticketRepository.find(ticketId)
+            handler.post {
+                view.displayTicket(ticket)
             }
-
-        val movieSelectedSeats = MovieSelectedSeats(reservationCount)
-        selectedSeats.split(", ").forEach { seat ->
-            movieSelectedSeats.selectSeat(
-                MovieSeat(
-                    seat.unFormatSeatRow(),
-                    seat.unFormatSeatColumn(),
-                ),
-            )
-        }
-
-        // TODO: DB에 Ticket 저장
-        view.displayTicket(
-            Ticket(
-                0L,
-                movie.id,
-                LocalDate.parse(screeningDate),
-                LocalTime.parse(screeningTime),
-                movieSelectedSeats,
-                theaterName,
-            ),
-        )
+        }.start()
     }
 }

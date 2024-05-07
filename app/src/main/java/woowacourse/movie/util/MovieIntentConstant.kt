@@ -9,6 +9,7 @@ object MovieIntentConstant {
     const val KEY_SELECTED_SEAT_POSITIONS = "selectedSeatPositions"
     const val KEY_SELECTED_THEATER_INDEX = "selectedTheaterIndex"
     const val KEY_THEATER_NAME = "theaterName"
+    const val KEY_TICKET_ID = "movieId"
 
     const val INVALID_VALUE_MOVIE_ID: Long = -1
     const val INVALID_VALUE_MOVIE_DATE: String = ""
@@ -17,4 +18,5 @@ object MovieIntentConstant {
     const val INVALID_VALUE_MOVIE_SEATS: String = ""
     const val INVALID_VALUE_THEATER_INDEX: Int = -1
     const val INVALID_VALUE_THEATER_NAME: String = ""
+    const val INVALID_VALUE_TICKET_ID: Long = -1
 }

@@ -1,8 +1,13 @@
 package woowacourse.movie.feature.seatselection
 
+import android.os.Handler
+import android.os.Looper
 import woowacourse.movie.data.MovieRepository
+import woowacourse.movie.data.TicketRepository
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
+import java.time.LocalDate
+import java.time.LocalTime
 
 class MovieSeatSelectionPresenter(
     private val view: MovieSeatSelectionContract.View,
@@ -55,7 +60,27 @@ class MovieSeatSelectionPresenter(
         movieSelectedSeats.unSelectSeat(seat)
     }
 
-    override fun clickPositiveButton() {
-        view.navigateToResultView(movieSelectedSeats)
+    override fun clickPositiveButton(
+        ticketRepository: TicketRepository,
+        movieId: Long,
+        screeningDate: String,
+        screeningTime: String,
+        selectedSeats: MovieSelectedSeats,
+        theaterName: String,
+    ) {
+        val handler = Handler(Looper.getMainLooper())
+        Thread {
+            val ticketId =
+                ticketRepository.save(
+                    movieId,
+                    LocalDate.parse(screeningDate),
+                    LocalTime.parse(screeningTime),
+                    selectedSeats,
+                    theaterName
+                )
+            handler.post {
+                view.navigateToResultView(ticketId)
+            }
+        }.start()
     }
 }

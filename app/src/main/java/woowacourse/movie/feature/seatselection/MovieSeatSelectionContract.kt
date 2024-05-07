@@ -1,8 +1,13 @@
 package woowacourse.movie.feature.seatselection
 
+import android.content.Context
+import woowacourse.movie.data.TicketRepository
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
 import woowacourse.movie.util.BasePresenter
+import woowacourse.movie.util.MovieIntentConstant
+import java.time.LocalDate
+import java.time.LocalTime
 
 interface MovieSeatSelectionContract {
     interface View {
@@ -19,7 +24,7 @@ interface MovieSeatSelectionContract {
 
         fun updateSelectResult(movieSelectedSeats: MovieSelectedSeats)
 
-        fun navigateToResultView(movieSelectedSeats: MovieSelectedSeats)
+        fun navigateToResultView(ticketId: Long)
 
         fun showToastInvalidMovieIdError(throwable: Throwable)
     }
@@ -31,7 +36,14 @@ interface MovieSeatSelectionContract {
 
         fun clickTableSeat(index: Int)
 
-        fun clickPositiveButton()
+        fun clickPositiveButton(
+            ticketRepository: TicketRepository,
+            movieId: Long,
+            screeningDate: String,
+            screeningTime: String,
+            selectedSeats: MovieSelectedSeats,
+            theaterName: String,
+        )
 
         fun updateSelectedSeats(movieSelectedSeats: MovieSelectedSeats)
     }
