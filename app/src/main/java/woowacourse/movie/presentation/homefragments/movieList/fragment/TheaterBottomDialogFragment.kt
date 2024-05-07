@@ -1,12 +1,10 @@
 package woowacourse.movie.presentation.homefragments.movieList.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
@@ -57,43 +55,5 @@ class TheaterBottomDialogFragment(
         movieId: Long,
     ) {
         startActivity(TicketingActivity.createIntent(requireActivity(), theaterId, movieId))
-    }
-
-    override fun show(
-        manager: FragmentManager,
-        tag: String?,
-    ) {
-        super.show(manager, tag)
-        Log.d("fragmentManager", "${manager.hashCode()}")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.d("TheaterBottomDialogFragment", "onStart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("TheaterBottomDialogFragment", "onResume")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("TheaterBottomDialogFragment", "onStop")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("TheaterBottomDialogFragment", "onPause")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.d("TheaterBottomDialogFragment", "onDestroyView")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("TheaterBottomDialogFragment", "onDestroy")
     }
 }

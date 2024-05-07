@@ -1,7 +1,6 @@
 package woowacourse.movie.presentation.homefragments.movieList
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +24,6 @@ class MovieListFragment : Fragment(), MovieListContract.View, MovieListClickList
         savedInstanceState: Bundle?,
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_list, container, false)
-        // Log.d("MovieListFragment", "onCreateView")
         return binding.root
     }
 
@@ -34,7 +32,6 @@ class MovieListFragment : Fragment(), MovieListContract.View, MovieListClickList
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        // Log.d("MovieListFragment", "onViewCreated")
         presenter.loadMovies()
     }
 
@@ -48,25 +45,5 @@ class MovieListFragment : Fragment(), MovieListContract.View, MovieListClickList
 
     override fun showBottomSheetFragment(bottomSheetDialogFragment: BottomSheetDialogFragment) {
         bottomSheetDialogFragment.show(childFragmentManager, bottomSheetDialogFragment.tag)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.d("MovieListFragment", "onStart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("MovieListFragment", "onResume")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("MovieListFragment", "onStop")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("MovieListFragment", "onPause")
     }
 }
