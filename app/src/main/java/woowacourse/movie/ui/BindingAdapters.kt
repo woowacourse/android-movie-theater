@@ -67,10 +67,9 @@ fun buttonEnabled(
     boolean: Boolean,
 ) {
     if (boolean) {
-        appCompatButton.isEnabled = true
         appCompatButton.setBackgroundColor(appCompatButton.context.getColor(R.color.complete_activated))
     } else {
-        appCompatButton.isEnabled = false
         appCompatButton.setBackgroundColor(appCompatButton.context.getColor(R.color.complete_deactivated))
     }
+    appCompatButton.isEnabled = boolean
 }
