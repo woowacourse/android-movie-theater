@@ -17,4 +17,6 @@
     <string name="theater">%s 극장</string>
     <string name="invalid_movie_id">영화 정보를 불러오지 못했습니다.</string>
     <string name="separator">|</string>
+    <string name="notification_receive">푸시 알림 수신</string>
+    <string name="notification_info">해제하면 푸시 알림을 수신할 수 없습니다.</string>
 </resources>
