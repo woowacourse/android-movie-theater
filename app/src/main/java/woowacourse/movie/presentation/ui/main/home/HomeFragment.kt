@@ -1,10 +1,16 @@
 package woowacourse.movie.presentation.ui.main.home
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
@@ -14,6 +20,7 @@ import woowacourse.movie.domain.repository.DummyScreens
 import woowacourse.movie.presentation.model.MessageType
 import woowacourse.movie.presentation.ui.main.home.adapter.ScreenRecyclerViewAdapter
 import woowacourse.movie.presentation.ui.main.home.bottom.BottomTheatersFragment
+import woowacourse.movie.presentation.ui.main.setting.SettingFragment.Companion.PREF_KEY
 
 class HomeFragment : Fragment(), HomeContract.View {
     private lateinit var presenter: HomeContract.Presenter
@@ -23,6 +30,15 @@ class HomeFragment : Fragment(), HomeContract.View {
     private var _binding: FragmentHomeBinding? = null
     private val binding
         get() = requireNotNull(_binding)
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            val pref = requireActivity().getPreferences(Context.MODE_PRIVATE)
+            val edit = pref.edit()
+            with(edit) {
+                putBoolean("notification_permission", isGranted)
+                apply()
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +56,27 @@ class HomeFragment : Fragment(), HomeContract.View {
         initAdapter()
         presenter = HomePresenter(this, DummyScreens())
         presenter.fetchScreens()
+        requestNotificationPermission()
+    }
+
+    private fun requestNotificationPermission() {
+        val pref = requireActivity().getPreferences(Context.MODE_PRIVATE)
+        val edit = pref.edit()
+        val permission = Manifest.permission.POST_NOTIFICATIONS
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // 티라미수 이상 버전!
+            val isGranted =
+                ContextCompat.checkSelfPermission(
+                    requireActivity(),
+                    permission,
+                ) == PackageManager.PERMISSION_GRANTED
+            if (!isGranted && shouldShowRequestPermissionRationale(permission)) {
+                requestPermissionLauncher.launch(permission)
+            } else {
+                edit.putBoolean(PREF_KEY, isGranted).apply()
+            }
+        } else {
+            edit.putBoolean(PREF_KEY, true).apply()
+        }
     }
 
     private fun initAdapter() {
