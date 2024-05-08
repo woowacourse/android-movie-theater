@@ -11,12 +11,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
+import woowacourse.movie.MovieTheaterApplication
 import woowacourse.movie.databinding.FragmentSettingBinding
+import woowacourse.movie.util.BaseFragment
 import woowacourse.movie.util.MovieIntentConstant.KEY_NOTIFICATION
 import woowacourse.movie.util.SharedPreferencesManager
+import java.time.LocalDateTime
 
-class SettingFragment : Fragment() {
+class SettingFragment :
+    BaseFragment<SettingContract.Presenter>(),
+    SettingContract.View {
     private var _binding: FragmentSettingBinding? = null
     private val binding get() = _binding!!
 
@@ -31,6 +35,8 @@ class SettingFragment : Fragment() {
         _binding = FragmentSettingBinding.inflate(inflater)
         return binding.root
     }
+
+    override fun initializePresenter() = SettingPresenter(this)
 
     override fun onStart() {
         super.onStart()
@@ -73,15 +79,23 @@ class SettingFragment : Fragment() {
         binding.switchNotification.setOnCheckedChangeListener { _, isChecked ->
             SharedPreferencesManager(requireContext()).setBoolean(KEY_NOTIFICATION, isChecked)
             if (isChecked) {
-
-                return@setOnCheckedChangeListener
+                presenter.setTicketsAlarm((requireActivity().application as MovieTheaterApplication).ticketRepository)
+            } else {
+                presenter.cancelTicketsAlarm((requireActivity().application as MovieTheaterApplication).ticketRepository)
             }
-
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun setTicketAlarm(localDateTime: LocalDateTime, requestCode: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun cancelTicketAlarm(requestCode: Int) {
+        TODO("Not yet implemented")
     }
 }
