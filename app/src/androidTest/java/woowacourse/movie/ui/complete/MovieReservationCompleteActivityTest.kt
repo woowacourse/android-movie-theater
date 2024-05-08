@@ -9,13 +9,14 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.AfterClass
 import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.model.db.UserTicket
-import woowacourse.movie.model.movie.ReservationDetail
+import woowacourse.movie.model.db.UserTicketDatabase
 import woowacourse.movie.model.movie.Seat
 import woowacourse.movie.model.movie.SeatRow
 import woowacourse.movie.ui.selection.MovieSeatSelectionKey
@@ -23,7 +24,8 @@ import java.time.LocalDateTime
 
 @RunWith(AndroidJUnit4::class)
 class MovieReservationCompleteActivityTest {
-    private val userTicket: UserTicket = UserTicketsImpl.find(0L)
+    private val db = UserTicketDatabase.database()
+    private val userTicket: UserTicket = db.userTicketDao().find(testUserTicket.id)
 
     private val intent =
         Intent(
@@ -67,25 +69,28 @@ class MovieReservationCompleteActivityTest {
     }
 
     companion object {
-        private const val RESERVATION_COUNT = 1
+        private val testUserTicket =
+            UserTicket(
+                movieTitle = "",
+                screeningStartDateTime = LocalDateTime.of(2024, 3, 28, 10, 0),
+                reservationCount = 1,
+                reservationSeats = listOf(Seat(SeatRow.A, 1)),
+                theaterName = "강남",
+                reservationAmount = 10000,
+            )
 
         @JvmStatic
         @BeforeClass
         fun setUp() {
-            val reservationDetail =
-                ReservationDetail(RESERVATION_COUNT).apply {
-                    addSeat(0, 0) // A1
-                }
-            UserTicketsImpl.save(
-                UserTicket(
-                    movieTitle = "",
-                    screeningStartDateTime = LocalDateTime.of(2024, 3, 28, 10, 0),
-                    reservationCount = 1,
-                    reservationSeats = listOf(Seat(SeatRow.A, 1)),
-                    theaterName = "강남",
-                    reservationAmount = 10000,
-                ),
-            )
+            val db = UserTicketDatabase.database()
+            db.userTicketDao().insert(testUserTicket)
+        }
+
+        @JvmStatic
+        @AfterClass
+        fun tearDown() {
+            val db = UserTicketDatabase.database()
+            db.userTicketDao().delete(testUserTicket)
         }
     }
 }

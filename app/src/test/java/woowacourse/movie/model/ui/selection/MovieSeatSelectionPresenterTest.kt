@@ -18,7 +18,7 @@ class MovieSeatSelectionPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk<MovieSeatSelectionContract.View>(relaxed = true)
-        presenter = MovieSeatSelectionPresenter(view, ReservationsImpl, UserTicketsImpl)
+        presenter = MovieSeatSelectionPresenter(view, ReservationsImpl)
         ReservationsImpl.save(
             Reservation(
                 title = "",

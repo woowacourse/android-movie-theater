@@ -5,6 +5,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.model.data.MovieContentsImpl
+import woowacourse.movie.model.data.ReservationsImpl
 import woowacourse.movie.model.data.TheatersImpl
 import woowacourse.movie.ui.reservation.MovieReservationContract
 import woowacourse.movie.ui.reservation.MovieReservationPresenter
@@ -17,7 +18,7 @@ class MovieReservationPresenterTest {
     fun setUp() {
         view = mockk<MovieReservationContract.View>(relaxed = true)
         presenter =
-            MovieReservationPresenter(view, MovieContentsImpl, TheatersImpl, UserTicketsImpl)
+            MovieReservationPresenter(view, MovieContentsImpl, TheatersImpl, ReservationsImpl)
     }
 
     @Test

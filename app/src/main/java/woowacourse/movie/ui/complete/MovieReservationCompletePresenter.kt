@@ -8,14 +8,15 @@ class MovieReservationCompletePresenter(
     MovieReservationCompleteContract.Presenter {
     override fun loadTicket(ticketId: Long) {
         val db = UserTicketDatabase.database()
-        try {
-            Thread {
+
+        Thread {
+            try {
                 val userTicket = db.userTicketDao().find(ticketId)
                 view.showTicket(userTicket)
-            }.start()
-        } catch (e: NoSuchElementException) {
-            view.showError(e)
-        }
+            } catch (e: NoSuchElementException) {
+                view.showError(e)
+            }
+        }.start()
     }
 
     override fun handleError(throwable: Throwable) {

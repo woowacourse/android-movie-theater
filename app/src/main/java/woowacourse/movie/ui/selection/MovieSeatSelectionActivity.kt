@@ -124,7 +124,6 @@ class MovieSeatSelectionActivity :
     }
 
     override fun showReservationComplete(userTicketId: Long) {
-        Log.e(TAG, "dslkfdsjklsfdldfsalkdfslakjdfs")
         MovieReservationCompleteActivity.startActivity(this, userTicketId)
     }
 
