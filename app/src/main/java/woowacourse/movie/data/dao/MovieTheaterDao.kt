@@ -14,9 +14,12 @@ interface MovieTheaterDao {
     @Insert
     fun insertAll(vararg movieTheaters: MovieTheater)
 
+    @Insert
+    fun insert(movieTheater: MovieTheater)
+
     @Delete
     fun delete(theater: MovieTheater)
 
-    @Query("SELECT * FROM movie WHERE id = :theaterId")
+    @Query("SELECT * FROM movie_theater WHERE id = :theaterId")
     fun getMovieById(theaterId: Long): MovieTheater
 }
