@@ -40,5 +40,7 @@ interface TheaterSeatContract {
             negativeLabel: String,
             onNegativeButtonClicked: () -> Unit,
         )
+
+        fun saveTicketToDatabase()
     }
 }
