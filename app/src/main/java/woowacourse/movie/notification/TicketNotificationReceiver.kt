@@ -31,16 +31,18 @@ class TicketNotificationReceiver : BroadcastReceiver() {
 
         registrationChannel(notificationManager)
 
-        val pendingIntent = makePendingIntent(
-            context = context,
-            ticketId = ticketId
-        )
+        val pendingIntent =
+            makePendingIntent(
+                context = context,
+                ticketId = ticketId,
+            )
 
-        val notification = buildNotification(
-            context = context,
-            movieTitle = movieTitle,
-            pendingIntent = pendingIntent,
-        )
+        val notification =
+            buildNotification(
+                context = context,
+                movieTitle = movieTitle,
+                pendingIntent = pendingIntent,
+            )
         notificationManager.notify(NOTIFICATION_ID, notification)
     }
 
@@ -49,9 +51,7 @@ class TicketNotificationReceiver : BroadcastReceiver() {
         return sharedPreferences?.getBoolean(PUSH_SETTING, false) ?: false
     }
 
-    private fun registrationChannel(
-        notificationManager: NotificationManager,
-    ) {
+    private fun registrationChannel(notificationManager: NotificationManager) {
         val channel =
             NotificationChannel(
                 CHANNEL_ID,

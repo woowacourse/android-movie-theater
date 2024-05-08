@@ -1,7 +1,6 @@
 package woowacourse.movie.presenter.setting
 
 import android.content.Context
-import woowacourse.movie.notification.TicketNotification
 
 class SettingPresenter(private val view: SettingContract.View) : SettingContract.Presenter {
     override fun loadSavedSetting(isPushSetting: Boolean) {

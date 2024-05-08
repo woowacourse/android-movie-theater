@@ -26,22 +26,23 @@ object TicketNotification {
         movieTitle: String,
         screeningDateTime: ScreeningDateTime,
     ) {
-
         val screeningTime = makeScreeningTime(screeningDateTime)
         if (!isValidScreeningTime(screeningTime)) return
 
         val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
 
-        val pendingIntent = makePendingIntent(
-            context = context,
-            movieTitle = movieTitle,
-            ticketId = ticketId
-        )
+        val pendingIntent =
+            makePendingIntent(
+                context = context,
+                movieTitle = movieTitle,
+                ticketId = ticketId,
+            )
 
-        val calendar = Calendar.getInstance().apply {
-            timeInMillis = screeningTime
-            add(Calendar.MINUTE, ALARM_MINUTE)
-        }
+        val calendar =
+            Calendar.getInstance().apply {
+                timeInMillis = screeningTime
+                add(Calendar.MINUTE, ALARM_MINUTE)
+            }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (alarmManager.canScheduleExactAlarms()) {
@@ -63,7 +64,7 @@ object TicketNotification {
     private fun makeScreeningTime(screeningDateTime: ScreeningDateTime): Long {
         return SimpleDateFormat(
             DATE_PATTERN_FORMAT,
-            Locale.getDefault()
+            Locale.getDefault(),
         ).parse(
             DATE_PARSE_FORMAT.format(
                 screeningDateTime.date,
@@ -72,9 +73,7 @@ object TicketNotification {
         )?.time ?: -1L
     }
 
-    private fun isValidScreeningTime(
-        screeningTime: Long
-    ): Boolean {
+    private fun isValidScreeningTime(screeningTime: Long): Boolean {
         val currentDateTime = Calendar.getInstance().timeInMillis
         return screeningTime != -1L && currentDateTime < screeningTime
     }
