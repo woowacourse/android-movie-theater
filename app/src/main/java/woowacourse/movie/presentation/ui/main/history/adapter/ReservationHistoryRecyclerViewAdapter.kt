@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import woowacourse.movie.databinding.HolderReservationHistoryBinding
 import woowacourse.movie.domain.model.Reservation
+import woowacourse.movie.presentation.ui.main.history.ReservationHistoryActionHandler
 import woowacourse.movie.presentation.utils.ItemDiffCallback
 
-class ReservationHistoryRecyclerViewAdapter :
+class ReservationHistoryRecyclerViewAdapter(private val handler: ReservationHistoryActionHandler) :
     ListAdapter<Reservation, ReservationHistoryRecyclerViewHolder>(
         ReservationHistoryAdapterDiffCallback,
     ) {
@@ -17,7 +18,7 @@ class ReservationHistoryRecyclerViewAdapter :
     ): ReservationHistoryRecyclerViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = HolderReservationHistoryBinding.inflate(inflater, parent, false)
-        return ReservationHistoryRecyclerViewHolder(binding)
+        return ReservationHistoryRecyclerViewHolder(binding, handler)
     }
 
     override fun onBindViewHolder(

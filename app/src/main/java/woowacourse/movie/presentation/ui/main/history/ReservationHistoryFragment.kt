@@ -12,11 +12,21 @@ import woowacourse.movie.domain.model.Reservation
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.ReservationRepositoryImpl
 import woowacourse.movie.presentation.ui.main.history.adapter.ReservationHistoryRecyclerViewAdapter
+import woowacourse.movie.presentation.ui.reservation.ReservationActivity
 
-class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
+class ReservationHistoryFragment :
+    Fragment(),
+    ReservationHistoryContract.View,
+    ReservationHistoryActionHandler {
     private var _binding: FragmentReservationHistoryBinding? = null
     private val binding
         get() = requireNotNull(_binding)
+
+    private lateinit var reservationDao: ReservationDao
+
+    private lateinit var reservationRepository: ReservationRepository
+    private lateinit var presenter: ReservationHistoryPresenter
+    private lateinit var adapter: ReservationHistoryRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,19 +37,19 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
         return binding.root
     }
 
-    private val adapter = ReservationHistoryRecyclerViewAdapter()
-    private lateinit var reservationDao: ReservationDao
-    private lateinit var reservationRepository: ReservationRepository
-    private lateinit var presenter: ReservationHistoryPresenter
-
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rvReservationHistory.adapter = adapter
+        initAdapter()
         initRepository()
         loadReservationHistory()
+    }
+
+    private fun initAdapter() {
+        adapter = ReservationHistoryRecyclerViewAdapter(this)
+        binding.rvReservationHistory.adapter = adapter
     }
 
     private fun initRepository() {
@@ -57,5 +67,9 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
         activity?.runOnUiThread {
             adapter.submitList(reservataions)
         }
+    }
+
+    override fun onReservationClick(reservationId: Long) {
+        this.context?.let { ReservationActivity.startActivity(it, reservationId) }
     }
 }

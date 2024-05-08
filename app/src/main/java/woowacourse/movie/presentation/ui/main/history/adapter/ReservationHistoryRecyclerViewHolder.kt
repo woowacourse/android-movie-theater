@@ -3,13 +3,19 @@ package woowacourse.movie.presentation.ui.main.history.adapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.HolderReservationHistoryBinding
 import woowacourse.movie.domain.model.Reservation
+import woowacourse.movie.presentation.ui.main.history.ReservationHistoryActionHandler
 
-class ReservationHistoryRecyclerViewHolder(private val binding: HolderReservationHistoryBinding) :
+class ReservationHistoryRecyclerViewHolder(
+    private val binding: HolderReservationHistoryBinding,
+    private val handler: ReservationHistoryActionHandler,
+) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(reservation: Reservation) {
-        binding.tvHistoryDate.text = reservation.dateTime.toString()
-        binding.tvHistoryTime.text = reservation.dateTime.toString()
-        binding.tvHistoryTheater.text = reservation.theaterName
-        binding.tvHistoryTitle.text = reservation.movieTitle
+        binding.handler = handler
+        binding.reservation = reservation
+//        binding.tvHistoryDate.text = reservation.dateTime.toString()
+//        binding.tvHistoryTime.text = reservation.dateTime.toString()
+//        binding.tvHistoryTheater.text = reservation.theaterName
+//        binding.tvHistoryTitle.text = reservation.movieTitle
     }
 }
