@@ -28,6 +28,19 @@ object TicketNotification {
         movieTitle: String,
         screeningDateTime: ScreeningDateTime,
     ) {
+        val currentDateTime = Calendar.getInstance().timeInMillis
+        val screeningTime = SimpleDateFormat(
+            DATE_PATTERN_FORMAT,
+            Locale.getDefault()
+        ).parse(
+            DATE_PARSE_FORMAT.format(
+                screeningDateTime.date,
+                screeningDateTime.time,
+            ),
+        )?.time ?: return
+
+        if (currentDateTime > screeningTime) return
+
         val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, TicketNotificationReceiver::class.java)
         intent.putExtra(MOVIE_TITLE, movieTitle)
@@ -41,23 +54,10 @@ object TicketNotification {
                 PendingIntent.FLAG_IMMUTABLE,
             )
 
-        val dateTime =
-            SimpleDateFormat(
-                DATE_PATTERN_FORMAT,
-                Locale.getDefault(),
-            ).parse(
-                DATE_PARSE_FORMAT.format(
-                    screeningDateTime.date,
-                    screeningDateTime.time,
-                ),
-            )
-        val calendar =
-            Calendar.getInstance().apply {
-                if (dateTime != null) {
-                    timeInMillis = dateTime.time
-                }
-                add(Calendar.MINUTE, ALARM_MINUTE)
-            }
+        val calendar = Calendar.getInstance().apply {
+            timeInMillis = screeningTime
+            add(Calendar.MINUTE, ALARM_MINUTE)
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (alarmManager.canScheduleExactAlarms()) {
