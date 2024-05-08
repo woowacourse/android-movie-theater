@@ -14,7 +14,7 @@ object TheaterDatabase {
                     ScreeningTimes(
                         weekDay =
                             listOf(
-                                LocalTime.of(0, 55),
+                                LocalTime.of(9, 0),
                                 LocalTime.of(11, 0),
                                 LocalTime.of(13, 0),
                             ),

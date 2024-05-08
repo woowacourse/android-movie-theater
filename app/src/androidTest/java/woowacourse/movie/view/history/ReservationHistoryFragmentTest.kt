@@ -32,6 +32,7 @@ class ReservationHistoryFragmentTest {
             repository = ReservationTicketRepositoryImpl(it)
             Thread {
                 val reservationTicket = makeMockTicket()
+                repository.clearReservationTickets()
                 repository.saveReservationTicket(reservationTicket)
             }.start()
             Thread.sleep(1000)

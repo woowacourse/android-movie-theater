@@ -56,16 +56,16 @@ class ReservationDetailPresenterTest {
     fun `영화와 극장 선택을 완료하면 선택한 극장의 상영 날짜가 표시되어야 한다`() {
         val expectedPeriod =
             listOf(
-                LocalDate.of(2024, 3, 1),
-                LocalDate.of(2024, 3, 2),
-                LocalDate.of(2024, 3, 3),
-                LocalDate.of(2024, 3, 4),
-                LocalDate.of(2024, 3, 5),
-                LocalDate.of(2024, 3, 6),
-                LocalDate.of(2024, 3, 7),
-                LocalDate.of(2024, 3, 8),
-                LocalDate.of(2024, 3, 9),
-                LocalDate.of(2024, 3, 10),
+                LocalDate.of(2024, 5, 8),
+                LocalDate.of(2024, 5, 8),
+                LocalDate.of(2024, 5, 8),
+                LocalDate.of(2024, 5, 8),
+                LocalDate.of(2024, 5, 9),
+                LocalDate.of(2024, 5, 9),
+                LocalDate.of(2024, 5, 9),
+                LocalDate.of(2024, 5, 9),
+                LocalDate.of(2024, 5, 9),
+                LocalDate.of(2024, 5, 9),
             )
         every { view.showScreeningPeriod(firstMovie) } answers {
             val actualMovie = arg<Movie>(0)
