@@ -1,12 +1,12 @@
 package woowacourse.movie.presentation.ui.detail
 
 import io.mockk.every
+import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.just
 import io.mockk.runs
 import io.mockk.verify
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.domain.repository.ScreenRepository
@@ -21,15 +21,11 @@ class DetailPresenterTest {
     @MockK
     private lateinit var view: DetailContract.View
 
-    private lateinit var presenter: DetailContract.Presenter
-
     @MockK
     private lateinit var repository: ScreenRepository
 
-    @BeforeEach
-    fun setUp() {
-        presenter = DetailPresenter(view, repository)
-    }
+    @InjectMockKs
+    private lateinit var presenter: DetailPresenter
 
     @Test
     fun `DetailPresenter가 유효한 상영 id값으로 loadScreen()을 했을 때, view에게 screen, count 정보를 전달한다`() {

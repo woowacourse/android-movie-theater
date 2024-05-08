@@ -1,6 +1,7 @@
 package woowacourse.movie.presentation.ui.main.home
 
 import io.mockk.every
+import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.just
@@ -19,18 +20,18 @@ class HomePresenterTest {
     @MockK
     private lateinit var view: HomeContract.View
 
-    private lateinit var presenter: HomeContract.Presenter
-
     @MockK
     private lateinit var screenRepository: ScreenRepository
 
     @MockK
     private lateinit var theaterRepository: TheaterRepository
 
+    @InjectMockKs
+    private lateinit var presenter: HomePresenter
+
     @BeforeEach
     fun setUp() {
         every { screenRepository.load() } returns load()
-        presenter = HomePresenter(view, screenRepository, theaterRepository)
     }
 
     @Test

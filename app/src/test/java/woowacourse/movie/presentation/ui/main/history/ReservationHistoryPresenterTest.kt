@@ -1,12 +1,12 @@
 package woowacourse.movie.presentation.ui.main.history
 
 import io.mockk.every
+import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.just
 import io.mockk.runs
 import io.mockk.verify
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.domain.repository.ReservationRepository
@@ -17,15 +17,11 @@ class ReservationHistoryPresenterTest {
     @MockK
     private lateinit var view: ReservationHistoryContract.View
 
-    private lateinit var presenter: ReservationHistoryContract.Presenter
-
     @MockK
     private lateinit var repository: ReservationRepository
 
-    @BeforeEach
-    fun setUp() {
-        presenter = ReservationHistoryPresenter(view, repository)
-    }
+    @InjectMockKs
+    private lateinit var presenter: ReservationHistoryPresenter
 
     @Test
     fun `ReservationPresenter가 loadReservation()을 했을 때, view에게 reservation 데이터와 theaterName을 전달한다`() {

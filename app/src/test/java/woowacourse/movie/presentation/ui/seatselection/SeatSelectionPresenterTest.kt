@@ -1,12 +1,12 @@
 package woowacourse.movie.presentation.ui.seatselection
 
 import io.mockk.every
+import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.just
 import io.mockk.runs
 import io.mockk.verify
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.domain.repository.NotificationRepository
@@ -25,8 +25,6 @@ class SeatSelectionPresenterTest {
     @MockK
     private lateinit var view: SeatSelectionContract.View
 
-    private lateinit var presenter: SeatSelectionPresenter
-
     @MockK
     private lateinit var screenRepository: ScreenRepository
 
@@ -36,16 +34,8 @@ class SeatSelectionPresenterTest {
     @MockK
     private lateinit var notificationRepository: NotificationRepository
 
-    @BeforeEach
-    fun setUp() {
-        presenter =
-            SeatSelectionPresenter(
-                view,
-                screenRepository,
-                reservationRepository,
-                notificationRepository,
-            )
-    }
+    @InjectMockKs
+    private lateinit var presenter: SeatSelectionPresenter
 
     @Test
     fun `SeatSelectionPresenter가 유효하지 않은 상영 id값으로 loadScreen()을 했을 때, view에게 back과 throwable를 전달한다`() {

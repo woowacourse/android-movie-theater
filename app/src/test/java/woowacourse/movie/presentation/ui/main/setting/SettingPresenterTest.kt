@@ -1,12 +1,12 @@
 package woowacourse.movie.presentation.ui.main.setting
 
 import io.mockk.every
+import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.just
 import io.mockk.runs
 import io.mockk.verify
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.domain.repository.PreferenceRepository
@@ -17,15 +17,11 @@ class SettingPresenterTest {
     @MockK
     private lateinit var view: SettingContract.View
 
-    private lateinit var presenter: SettingContract.Presenter
-
     @MockK
     private lateinit var repository: PreferenceRepository
 
-    @BeforeEach
-    fun setUp() {
-        presenter = SettingPresenter(view, repository)
-    }
+    @InjectMockKs
+    private lateinit var presenter: SettingPresenter
 
     @Test
     fun `SettingPresenter가 loadNotificationMode()을 했을 때, view에게 mode를 전달한다`() {
