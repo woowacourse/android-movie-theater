@@ -8,5 +8,5 @@ data class Ticket(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val movieName: String,
     val seatNumbers: String,
-    val ticketPrice: Int
+    val ticketPrice: Int,
 )

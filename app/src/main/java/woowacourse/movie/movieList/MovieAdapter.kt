@@ -65,7 +65,10 @@ class MovieAdapter(
 
     sealed class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
-    class MovieItemViewHolder(private val binding: ItemMovieListBinding, private val onClick: (position: Int) -> Unit) :
+    class MovieItemViewHolder(
+        private val binding: ItemMovieListBinding,
+        private val onClick: (position: Int) -> Unit
+    ) :
         MovieViewHolder(binding.root) {
         fun bind(movie: MovieItemDisplay) {
             binding.data = movie
