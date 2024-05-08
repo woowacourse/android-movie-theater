@@ -15,7 +15,7 @@ import woowacourse.movie.domain.repository.TheaterRepository
 import woowacourse.movie.presentation.ui.utils.DummyData.load
 
 @ExtendWith(MockKExtension::class)
-class ScreenPresenterTest {
+class HomePresenterTest {
     @MockK
     private lateinit var view: HomeContract.View
 
