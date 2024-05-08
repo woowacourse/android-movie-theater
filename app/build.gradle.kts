@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("de.mannodermaus.android-junit5") version "1.10.0.0"
+    id("kotlin-parcelize")
 }
 
 android {
@@ -70,4 +71,6 @@ dependencies {
     androidTestRuntimeOnly("de.mannodermaus.junit5:android-test-runner:1.3.0")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     debugImplementation("androidx.fragment:fragment-testing:1.6.2")
+    implementation("androidx.room:room-runtime:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
 }

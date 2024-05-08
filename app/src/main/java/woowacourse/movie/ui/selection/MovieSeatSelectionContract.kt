@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.selection
 
+import woowacourse.movie.model.movie.ReservationDetail
 import woowacourse.movie.ui.HandleError
 
 interface MovieSeatSelectionContract {
@@ -18,10 +19,12 @@ interface MovieSeatSelectionContract {
         fun updateSelectCompletion(isComplete: Boolean)
 
         fun showMovieTitle(title: String)
+
+        fun navigateToCompleteScreen(ticketId: Long)
     }
 
     interface Presenter {
-        fun loadTheaterInfo(ticketId: Long)
+        fun loadTheaterInfo(reservationDetail: ReservationDetail)
 
         fun updateSelectCompletion()
 
@@ -31,5 +34,9 @@ interface MovieSeatSelectionContract {
         )
 
         fun recoverSeatSelection(index: Int)
+
+        fun completeReservation()
+
+        fun handleError(throwable: Throwable)
     }
 }

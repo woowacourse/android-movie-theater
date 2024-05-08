@@ -4,9 +4,12 @@ import woowacourse.movie.model.data.DefaultMovieDataSource
 import woowacourse.movie.model.movie.MovieContent
 import woowacourse.movie.model.movie.ReservationCount
 import woowacourse.movie.model.movie.ReservationDetail
+import woowacourse.movie.model.movie.SeatInformation
 import woowacourse.movie.model.movie.ScreeningDate
 import woowacourse.movie.model.movie.Theater
+import woowacourse.movie.model.movie.TicketDao
 import woowacourse.movie.model.movie.UserTicket
+import woowacourse.movie.model.movie.toTicketEntity
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -15,7 +18,7 @@ class MovieReservationPresenter(
     private val view: MovieReservationContract.View,
     private val movieContentDataSource: DefaultMovieDataSource<Long, MovieContent>,
     private val theaterDataSource: DefaultMovieDataSource<Long, Theater>,
-    private val userTicketDataSource: DefaultMovieDataSource<Long, UserTicket>,
+    private val userTicketDataSource: TicketDao,
 ) :
     MovieReservationContract.Presenter {
     private lateinit var reservationCount: ReservationCount
@@ -61,15 +64,14 @@ class MovieReservationPresenter(
     }
 
     override fun reserveSeat() {
-        val userTicket =
-            UserTicket(
+        val reservationDetail =
+            ReservationDetail(
                 title = movieContent.title,
                 theater = theater.name,
-                screeningStartDateTime = LocalDateTime.of(screeningDate.date, movieTime),
-                reservationDetail = ReservationDetail(reservationCount.count),
+                screeningDateTime = LocalDateTime.of(screeningDate.date, movieTime),
+                reservationCount.count,
             )
-        val ticketId = userTicketDataSource.save(userTicket)
-        view.moveMovieSeatSelectionPage(ticketId)
+        view.moveMovieSeatSelectionPage(reservationDetail)
     }
 
     override fun handleError(throwable: Throwable) {

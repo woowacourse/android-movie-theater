@@ -5,7 +5,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.model.data.UserTicketsImpl
-import woowacourse.movie.model.movie.ReservationDetail
+import woowacourse.movie.model.movie.SeatInformation
 import woowacourse.movie.model.movie.UserTicket
 import woowacourse.movie.ui.selection.MovieSeatSelectionContract
 import woowacourse.movie.ui.selection.MovieSeatSelectionPresenter
@@ -24,7 +24,7 @@ class MovieSeatSelectionPresenterTest {
                 title = "",
                 theater = "강남",
                 screeningStartDateTime = LocalDateTime.of(2024, 3, 28, 10, 0),
-                reservationDetail = ReservationDetail(1),
+                seatInformation = SeatInformation(1),
             ),
         )
     }

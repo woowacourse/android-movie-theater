@@ -11,8 +11,9 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieReservationCompleteBinding
-import woowacourse.movie.model.data.UserTicketsImpl
-import woowacourse.movie.model.movie.UserTicket
+import woowacourse.movie.model.movie.MovieDatabase
+import woowacourse.movie.model.movie.TicketDao
+import woowacourse.movie.model.movie.TicketEntity
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.main.MovieMainActivity
 import java.time.LocalDateTime
@@ -22,6 +23,7 @@ class MovieReservationCompleteActivity :
     BaseActivity<MovieReservationCompletePresenter>(),
     MovieReservationCompleteContract.View {
     private lateinit var binding: ActivityMovieReservationCompleteBinding
+    private val dao: TicketDao by lazy { MovieDatabase.getDatabase(applicationContext).ticketDao() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,19 +41,20 @@ class MovieReservationCompleteActivity :
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun initializePresenter() = MovieReservationCompletePresenter(this, UserTicketsImpl)
+    override fun initializePresenter() = MovieReservationCompletePresenter(this, dao)
 
     private fun userTicketId() = intent.getLongExtra(MovieReservationCompleteKey.TICKET_ID, USER_TICKET_ID_DEFAULT_VALUE)
 
-    override fun showReservationResult(userTicket: UserTicket) {
-        binding.userTicket = userTicket
-        binding.executePendingBindings()
+    override fun showReservationResult(userTicket: TicketEntity) {
+        runOnUiThread {
+            binding.userTicket = userTicket
+            binding.executePendingBindings()
+        }
     }
 
     override fun showError(throwable: Throwable) {
         Log.e(TAG, throwable.message.toString())
-        Toast.makeText(this, resources.getString(R.string.toast_invalid_key), Toast.LENGTH_LONG)
-            .show()
+        Toast.makeText(this, resources.getString(R.string.toast_invalid_key), Toast.LENGTH_LONG).show()
         finish()
     }
 
@@ -81,29 +84,4 @@ class MovieReservationCompleteActivity :
         private val TAG = MovieReservationCompleteActivity::class.simpleName
         private const val USER_TICKET_ID_DEFAULT_VALUE = -1L
     }
-}
-
-@BindingAdapter("userTicket")
-fun setReservationResult(
-    textView: TextView,
-    userTicket: UserTicket,
-) {
-    textView.text =
-        textView.context.getString(
-            R.string.complete_reservation_result,
-            userTicket.reservationDetail.reservationCount,
-            userTicket.reservationDetail.selectedSeat.joinToString(),
-            userTicket.theater,
-        )
-}
-
-@BindingAdapter("reservedDateTime")
-fun setReservedDateTime(
-    textView: TextView,
-    dateTime: LocalDateTime,
-) {
-    val context = textView.context
-    val dateTimeFormat = context.getString(R.string.reservation_screening_date_time_format)
-    val dateTimePattern = DateTimeFormatter.ofPattern(dateTimeFormat)
-    textView.text = dateTime.format(dateTimePattern)
 }

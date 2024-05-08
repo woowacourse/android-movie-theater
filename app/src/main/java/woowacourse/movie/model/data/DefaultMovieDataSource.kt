@@ -1,5 +1,7 @@
 package woowacourse.movie.model.data
 
+import androidx.room.Dao
+
 interface DefaultMovieDataSource<K, T> {
     fun save(data: T): K
 

@@ -1,11 +1,12 @@
 package woowacourse.movie.ui.complete
 
+import woowacourse.movie.model.movie.TicketEntity
 import woowacourse.movie.model.movie.UserTicket
 import woowacourse.movie.ui.HandleError
 
 interface MovieReservationCompleteContract {
     interface View : HandleError {
-        fun showReservationResult(userTicket: UserTicket)
+        fun showReservationResult(userTicket: TicketEntity)
     }
 
     interface Presenter {

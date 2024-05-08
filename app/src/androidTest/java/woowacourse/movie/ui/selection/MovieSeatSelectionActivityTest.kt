@@ -16,7 +16,7 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.model.data.UserTicketsImpl
-import woowacourse.movie.model.movie.ReservationDetail
+import woowacourse.movie.model.movie.SeatInformation
 import woowacourse.movie.model.movie.UserTicket
 import woowacourse.movie.ui.reservation.MovieReservationKey
 import java.time.LocalDateTime
@@ -93,7 +93,7 @@ class MovieSeatSelectionActivityTest {
                     title = "해리포터와 마법사의 돌0",
                     theater = "선릉",
                     screeningStartDateTime = LocalDateTime.of(2024, 3, 28, 10, 0),
-                    reservationDetail = ReservationDetail(2),
+                    seatInformation = SeatInformation(2),
                     id = 0L,
                 ),
             )

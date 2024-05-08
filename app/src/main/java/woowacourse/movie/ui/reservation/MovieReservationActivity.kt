@@ -12,9 +12,11 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieReservationBinding
 import woowacourse.movie.model.data.MovieContentsImpl
 import woowacourse.movie.model.data.TheatersImpl
-import woowacourse.movie.model.data.UserTicketsImpl
 import woowacourse.movie.model.movie.MovieContent
+import woowacourse.movie.model.movie.MovieDatabase
+import woowacourse.movie.model.movie.ReservationDetail
 import woowacourse.movie.model.movie.Theater
+import woowacourse.movie.model.movie.TicketDao
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.selection.MovieSeatSelectionActivity
 import woowacourse.movie.ui.utils.getImageFromId
@@ -25,6 +27,7 @@ class MovieReservationActivity :
     BaseActivity<MovieReservationPresenter>(),
     MovieReservationContract.View {
     private lateinit var binding: ActivityMovieReservationBinding
+    private val dao: TicketDao by lazy { MovieDatabase.getDatabase(applicationContext).ticketDao() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +35,9 @@ class MovieReservationActivity :
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_reservation)
         binding.presenter = presenter
 
-        val theaterId = theaterId()
-        val movieContentId = movieContentId()
+        val theaterId = intent.getLongExtra(MovieReservationKey.THEATER_ID, DEFAULT_VALUE)
+        val movieContentId =
+            intent.getLongExtra(MovieReservationKey.MOVIE_CONTENT_ID, DEFAULT_VALUE)
         if (movieContentId == DEFAULT_VALUE || theaterId == DEFAULT_VALUE) {
             presenter.handleError(NoSuchElementException())
             return
@@ -62,11 +66,8 @@ class MovieReservationActivity :
         }
     }
 
-    override fun initializePresenter() = MovieReservationPresenter(this, MovieContentsImpl, TheatersImpl, UserTicketsImpl)
-
-    private fun theaterId() = intent.getLongExtra(MovieReservationKey.THEATER_ID, DEFAULT_VALUE)
-
-    private fun movieContentId() = intent.getLongExtra(MovieReservationKey.MOVIE_CONTENT_ID, DEFAULT_VALUE)
+    override fun initializePresenter() =
+        MovieReservationPresenter(this, MovieContentsImpl, TheatersImpl, dao)
 
     override fun showError(throwable: Throwable) {
         Toast.makeText(this, resources.getString(R.string.toast_invalid_key), Toast.LENGTH_LONG)
@@ -85,9 +86,9 @@ class MovieReservationActivity :
         binding.reservationCountText.text = reservationCount.toString()
     }
 
-    override fun moveMovieSeatSelectionPage(userTicketId: Long) {
+    override fun moveMovieSeatSelectionPage(reservationDetail: ReservationDetail) {
         Intent(this, MovieSeatSelectionActivity::class.java)
-            .putExtra(MovieReservationKey.TICKET_ID, userTicketId)
+            .putExtra(MovieReservationKey.RESERVATION_DETAIL, reservationDetail)
             .also(::startActivity)
     }
 
