@@ -7,22 +7,29 @@ import io.mockk.runs
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.data.FakeTicketRepository
+import woowacourse.movie.data.TicketRepository
 import woowacourse.movie.feature.firstMovie
 import woowacourse.movie.feature.firstMovieId
 import woowacourse.movie.feature.invalidMovieId
-import woowacourse.movie.model.MovieSelectedSeats
+import woowacourse.movie.feature.movieId
+import woowacourse.movie.feature.screeningDate
+import woowacourse.movie.feature.screeningTime
+import woowacourse.movie.feature.selectedSeats
+import woowacourse.movie.feature.theaterName
 
 class MovieSeatSelectionPresenterTest {
     private lateinit var view: MovieSeatSelectionContract.View
     private lateinit var presenter: MovieSeatSelectionPresenter
-    private val movieSelectedSeats = MovieSelectedSeats(3)
+    private lateinit var ticketRepository: TicketRepository
     private val movie = firstMovie
 
     @BeforeEach
     fun setUp() {
         view = mockk()
+        ticketRepository = FakeTicketRepository()
         presenter = MovieSeatSelectionPresenter(view)
-        presenter.updateSelectedSeats(movieSelectedSeats)
+        presenter.updateSelectedSeats(selectedSeats)
     }
 
     @Test
@@ -55,7 +62,7 @@ class MovieSeatSelectionPresenterTest {
         every { view.setUpTableSeats(any()) } just runs
 
         // When
-        presenter.loadTableSeats(movieSelectedSeats)
+        presenter.loadTableSeats(selectedSeats)
 
         // Then
         verify { view.setUpTableSeats(any()) }
@@ -76,14 +83,24 @@ class MovieSeatSelectionPresenterTest {
     }
 
     @Test
-    fun `clickPositiveButton를 예매 결과를 보여주는 화면으로 이동한다`() {
-        // Given
+    fun `clickPositiveButton를 호출하면 예매 알림을 등록하고 예매 결과를 보여주는 화면으로 이동한다`() {
+        // given
         every { view.navigateToResultView(any()) } just runs
+        every { view.setTicketAlarm(any()) } just runs
 
-        // When
-        presenter.clickPositiveButton()
+        // when
+        presenter.clickPositiveButton(
+            ticketRepository,
+            movieId,
+            screeningDate.toString(),
+            screeningTime.toString(),
+            selectedSeats,
+            theaterName,
+        )
+        Thread.sleep(1000)
 
-        // Then
-        verify { view.navigateToResultView(any()) }
+        // then
+        verify { view.navigateToResultView(0L) }
+        verify { view.setTicketAlarm(ticketRepository.find(0L)) }
     }
 }

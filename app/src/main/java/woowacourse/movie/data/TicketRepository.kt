@@ -17,4 +17,6 @@ interface TicketRepository {
     fun find(id: Long): Ticket
 
     fun findAll(): List<Ticket>
+
+    fun deleteAll()
 }

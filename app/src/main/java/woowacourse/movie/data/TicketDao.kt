@@ -17,4 +17,7 @@ interface TicketDao {
 
     @Insert
     fun insert(ticket: Ticket): Long
+
+    @Query("DELETE FROM tickets")
+    fun deleteAll()
 }

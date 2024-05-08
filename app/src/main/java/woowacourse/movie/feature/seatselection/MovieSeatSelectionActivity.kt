@@ -22,11 +22,13 @@ import woowacourse.movie.model.MovieGrade
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
 import woowacourse.movie.util.BaseActivity
+import woowacourse.movie.util.MovieIntentConstant.DEFAULT_VALUE_NOTIFICATION
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_RESERVATION_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_DATE
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
+import woowacourse.movie.util.MovieIntentConstant.KEY_NOTIFICATION
 import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_SEAT_POSITIONS
 import woowacourse.movie.util.MovieIntentConstant.KEY_THEATER_NAME
@@ -143,6 +145,10 @@ class MovieSeatSelectionActivity :
     }
 
     override fun setTicketAlarm(ticket: Ticket) {
+        val sharedPreferencesManager = (application as MovieTheaterApplication).sharedPreferencesManager
+        if (!sharedPreferencesManager.getBoolean(KEY_NOTIFICATION, DEFAULT_VALUE_NOTIFICATION)) {
+            return
+        }
         TicketAlarmRegister(this).setReservationAlarm(ticket)
     }
 

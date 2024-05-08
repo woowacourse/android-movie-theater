@@ -31,4 +31,8 @@ class TicketRepositoryImpl(private val ticketDao: TicketDao) : TicketRepository 
     override fun findAll(): List<Ticket> {
         return ticketDao.getAll()
     }
+
+    override fun deleteAll() {
+        ticketDao.deleteAll()
+    }
 }
