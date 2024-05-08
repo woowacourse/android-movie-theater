@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemReservationHistoryBinding
 import woowacourse.movie.model.ticket.Ticket
 
-class ReservationHistoryAdapter : RecyclerView.Adapter<ReservationHistoryViewHolder>() {
+class ReservationHistoryAdapter(
+    private val onClickItem: OnClickItem
+) : RecyclerView.Adapter<ReservationHistoryViewHolder>() {
     private var tickets = listOf<Ticket>()
 
     override fun onCreateViewHolder(
@@ -27,7 +29,7 @@ class ReservationHistoryAdapter : RecyclerView.Adapter<ReservationHistoryViewHol
         holder: ReservationHistoryViewHolder,
         position: Int,
     ) {
-        holder.bind(tickets[position])
+        holder.bind(tickets[position], onClickItem)
     }
 
     @SuppressLint("NotifyDataSetChanged")

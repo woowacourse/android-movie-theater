@@ -12,6 +12,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.feature.history.adapter.ReservationHistoryAdapter
 import woowacourse.movie.model.ticket.Ticket
+import woowacourse.movie.utils.MovieUtils.makeToast
 
 class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
     private var _binding: FragmentReservationHistoryBinding? = null
@@ -42,7 +43,8 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
     }
 
     private fun initReservationHistoryRecyclerView() {
-        reservationHistoryAdapter = ReservationHistoryAdapter()
+        // TODO 토스트 띄우는 동작 제거 후 예약 정보 화면으로 이동하도록 변경
+        reservationHistoryAdapter = ReservationHistoryAdapter { makeToast(requireContext(), "ripple test") }
         binding.rvReservationHistory.adapter = reservationHistoryAdapter
         val dividerItemDecoration = MaterialDividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
         binding.rvReservationHistory.addItemDecoration(dividerItemDecoration)
