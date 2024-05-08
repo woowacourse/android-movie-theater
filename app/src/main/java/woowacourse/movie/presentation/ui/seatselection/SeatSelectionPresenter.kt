@@ -3,6 +3,7 @@ package woowacourse.movie.presentation.ui.seatselection
 import android.os.Handler
 import android.os.Looper
 import woowacourse.movie.domain.model.toSeatModel
+import woowacourse.movie.domain.repository.NotificationRepository
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.ScreenRepository
 import woowacourse.movie.presentation.model.MessageType
@@ -11,16 +12,20 @@ import woowacourse.movie.presentation.model.ReservationInfo
 import woowacourse.movie.presentation.model.SeatModel
 import woowacourse.movie.presentation.model.UserSeat
 import woowacourse.movie.presentation.model.toSeat
+import java.time.LocalDateTime
 import kotlin.concurrent.thread
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
     private val screenRepository: ScreenRepository,
     private val reservationRepository: ReservationRepository,
+    private val notificationRepository: NotificationRepository,
 ) : SeatSelectionContract.Presenter {
     private var uiModel: SeatSelectionUiModel = SeatSelectionUiModel()
     val userSeat: UserSeat
         get() = UserSeat(uiModel.userSeat.seatModels.filter { it.isSelected })
+
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun updateUiModel(reservationInfo: ReservationInfo) {
         uiModel =
@@ -110,8 +115,6 @@ class SeatSelectionPresenter(
     }
 
     override fun reserve() {
-        val handler = Handler(Looper.getMainLooper())
-
         uiModel.screen?.let { screen ->
             uiModel.dateTime?.let { dateTime ->
                 thread {
@@ -124,18 +127,34 @@ class SeatSelectionPresenter(
                             .map { seatModel -> seatModel.toSeat() },
                         dateTime,
                     ).onSuccess { id ->
-                        handler.post {
-                            view.showToastMessage(ReservationSuccessMessage)
-                            view.navigateToReservation(id)
-                        }
+                        createNotification(id, screen.movie.title, dateTime)
                     }.onFailure { e ->
                         handler.post {
-                            view.showSnackBar(e)
+                            view.showToastMessage(e)
                             view.navigateBackToPrevious()
                         }
                     }
                 }
             }
         }
+    }
+
+    private fun createNotification(
+        reservationId: Long,
+        movieTitle: String,
+        screeningDateTime: LocalDateTime,
+    ) {
+        notificationRepository.createNotification(reservationId, movieTitle, screeningDateTime)
+            .onSuccess {
+                handler.post {
+                    view.showToastMessage(ReservationSuccessMessage)
+                    view.navigateToReservation(reservationId)
+                }
+            }.onFailure { e ->
+                handler.post {
+                    view.showToastMessage(e)
+                    view.navigateBackToPrevious()
+                }
+            }
     }
 }
