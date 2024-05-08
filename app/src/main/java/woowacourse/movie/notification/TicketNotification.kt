@@ -1,14 +1,11 @@
 package woowacourse.movie.notification
 
-import android.annotation.SuppressLint
 import android.app.AlarmManager
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.notification.TicketNotificationReceiver.Companion.MOVIE_TITLE
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.RESERVATION_TICKET_ID
@@ -29,29 +26,17 @@ object TicketNotification {
         movieTitle: String,
         screeningDateTime: ScreeningDateTime,
     ) {
-        val currentDateTime = Calendar.getInstance().timeInMillis
-        val screeningTime = SimpleDateFormat(
-            DATE_PATTERN_FORMAT,
-            Locale.getDefault()
-        ).parse(
-            DATE_PARSE_FORMAT.format(
-                screeningDateTime.date,
-                screeningDateTime.time,
-            ),
-        )?.time ?: return
-        if (currentDateTime > screeningTime) return
-        val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
-        val intent = Intent(context, TicketNotificationReceiver::class.java)
-        intent.putExtra(MOVIE_TITLE, movieTitle)
-        intent.putExtra(RESERVATION_TICKET_ID, ticketId)
 
-        val pendingIntent =
-            PendingIntent.getBroadcast(
-                context,
-                PENDING_REQUEST_CODE,
-                intent,
-                PendingIntent.FLAG_IMMUTABLE,
-            )
+        val screeningTime = makeScreeningTime(screeningDateTime)
+        if (!isValidScreeningTime(screeningTime)) return
+
+        val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
+
+        val pendingIntent = makePendingIntent(
+            context = context,
+            movieTitle = movieTitle,
+            ticketId = ticketId
+        )
 
         val calendar = Calendar.getInstance().apply {
             timeInMillis = screeningTime
@@ -73,5 +58,41 @@ object TicketNotification {
                 pendingIntent,
             )
         }
+    }
+
+    private fun makeScreeningTime(screeningDateTime: ScreeningDateTime): Long {
+        return SimpleDateFormat(
+            DATE_PATTERN_FORMAT,
+            Locale.getDefault()
+        ).parse(
+            DATE_PARSE_FORMAT.format(
+                screeningDateTime.date,
+                screeningDateTime.time,
+            ),
+        )?.time ?: -1L
+    }
+
+    private fun isValidScreeningTime(
+        screeningTime: Long
+    ): Boolean {
+        val currentDateTime = Calendar.getInstance().timeInMillis
+        return screeningTime != -1L && currentDateTime < screeningTime
+    }
+
+    private fun makePendingIntent(
+        context: Context,
+        movieTitle: String,
+        ticketId: Long,
+    ): PendingIntent {
+        val intent = Intent(context, TicketNotificationReceiver::class.java)
+        intent.putExtra(MOVIE_TITLE, movieTitle)
+        intent.putExtra(RESERVATION_TICKET_ID, ticketId)
+
+        return PendingIntent.getBroadcast(
+            context,
+            PENDING_REQUEST_CODE,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE,
+        )
     }
 }
