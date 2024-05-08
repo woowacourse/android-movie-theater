@@ -8,6 +8,7 @@ import woowacourse.movie.model.theater.Seat
 class TheaterSeatPresenter(
     private val view: TheaterSeatContract.View,
     private val database: AppDatabase,
+    private val showTime: String,
     private val ticketLimit: Int,
     val cinema: Cinema,
 ) :
@@ -85,7 +86,9 @@ class TheaterSeatPresenter(
         val ticket =
             Ticket(
                 movieName = cinema.theater.movie.title.toString(),
+                date = showTime,
                 seatNumbers = selectedSeats.joinToString(),
+                cinemaName = cinema.cinemaName,
                 ticketPrice = totalPrice,
             )
         Thread{
