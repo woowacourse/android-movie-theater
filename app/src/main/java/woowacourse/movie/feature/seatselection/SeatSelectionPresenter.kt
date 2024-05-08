@@ -17,7 +17,7 @@ import java.time.LocalTime
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
-    private val seatsDao: SeatsDao,
+    seatsDao: SeatsDao,
     private val screeningDao: ScreeningDao,
     private val theaterDao: TheaterDao,
     private val movieId: Int,
@@ -25,7 +25,8 @@ class SeatSelectionPresenter(
     private val headCount: HeadCount,
     private val screeningDateTime: ScreeningDateTime,
 ) : SeatSelectionContract.Presenter {
-    private val seats = Seats()
+    private val selectedSeats = Seats()
+    private val seats = seatsDao.findAll()
 
     override fun loadReservationInformation() {
         if (movieId != DEFAULT_MOVIE_ID &&
@@ -42,20 +43,19 @@ class SeatSelectionPresenter(
 
     override fun restoreReservation() {
         validateReservationAvailable()
-        view.showAmount(seats.calculateAmount())
+        view.showAmount(selectedSeats.calculateAmount())
     }
 
     override fun restoreSeats(
-        selectedSeats: Seats,
+        seats: Seats,
         seatsIndex: List<Int>,
     ) {
-        seats.restoreSeats(selectedSeats)
-        seats.restoreSeatsIndex(seatsIndex)
+        selectedSeats.restoreSeats(seats)
+        selectedSeats.restoreSeatsIndex(seatsIndex)
         view.restoreSelectedSeats(seatsIndex)
     }
 
     override fun loadSeatNumber() {
-        val seats = seatsDao.findAll()
         seats.forEachIndexed { index, seat ->
             view.initializeSeatsTable(index, seat)
         }
@@ -72,9 +72,9 @@ class SeatSelectionPresenter(
             Ticket(
                 movieId,
                 theaterName,
-                seats,
+                selectedSeats,
                 screeningDateTime,
-                seats.calculateAmount(),
+                selectedSeats.calculateAmount(),
             )
         view.navigateToFinished(ticket)
     }
@@ -84,17 +84,17 @@ class SeatSelectionPresenter(
     }
 
     override fun deliverReservationInfo(onReservationDataSave: OnReservationDataSave) {
-        onReservationDataSave(headCount, seats, seats.seatsIndex)
+        onReservationDataSave(headCount, selectedSeats, selectedSeats.seatsIndex)
     }
 
     override fun updateReservationState(
         seat: Seat,
-        index: Int,
         isSelected: Boolean,
     ) {
-        if (seats.seats.size < headCount.count || isSelected) {
-            view.updateSeatSelectedState(index, isSelected)
-            manageSelectedSeats(!isSelected, index, seat)
+        if (selectedSeats.seats.size < headCount.count || isSelected) {
+            val seatIndex = seats.indexOf(seat)
+            view.updateSeatSelectedState(seatIndex, isSelected)
+            manageSelectedSeats(!isSelected, seatIndex, seat)
             updateTotalPrice()
             validateReservationAvailable()
         }
@@ -105,19 +105,19 @@ class SeatSelectionPresenter(
         index: Int,
         seat: Seat,
     ) {
-        seats.apply {
+        selectedSeats.apply {
             manageSelectedIndex(isSelected, index)
             manageSelected(isSelected, seat)
         }
     }
 
     override fun updateTotalPrice() {
-        val totalPrice = seats.calculateAmount()
+        val totalPrice = selectedSeats.calculateAmount()
         view.showAmount(totalPrice)
     }
 
     override fun validateReservationAvailable() {
-        val isReservationAvailable = seats.seats.size >= headCount.count
+        val isReservationAvailable = selectedSeats.seats.size >= headCount.count
         view.setConfirmButtonEnabled(isReservationAvailable)
     }
 

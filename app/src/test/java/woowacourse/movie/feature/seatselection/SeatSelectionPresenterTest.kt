@@ -88,8 +88,8 @@ class SeatSelectionPresenterTest {
         every { view.updateSeatSelectedState(any(), any()) } just runs
         every { view.showAmount(49_000) } just runs
         every { view.setConfirmButtonEnabled(any()) } just runs
-        presenter.updateReservationState(Seat('E', 2, Grade.A), 0, false)
-        verify { view.updateSeatSelectedState(0, false) }
+        presenter.updateReservationState(Seat('E', 2, Grade.A), false)
+        verify { view.updateSeatSelectedState(17, false) }
         verify { view.showAmount(49_000) }
         verify { view.setConfirmButtonEnabled(true) }
     }

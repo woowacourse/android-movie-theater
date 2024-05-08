@@ -44,7 +44,6 @@ interface SeatSelectionContract {
 
         fun updateReservationState(
             seat: Seat,
-            index: Int,
             isSelected: Boolean,
         )
     }
@@ -59,10 +58,7 @@ interface SeatSelectionContract {
 
         fun Button.showSeatNumber(seat: Seat)
 
-        fun Button.updateReservationInformation(
-            index: Int,
-            seat: Seat,
-        )
+        fun Button.updateReservationInformation(seat: Seat)
 
         fun updateSeatSelectedState(
             index: Int,

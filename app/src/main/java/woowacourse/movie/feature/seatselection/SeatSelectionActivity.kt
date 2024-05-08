@@ -86,7 +86,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     ) {
         seatsTable[index].apply {
             showSeatNumber(seat)
-            updateReservationInformation(index, seat)
+            updateReservationInformation(seat)
         }
     }
 
@@ -95,12 +95,9 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         setTextColor(setUpSeatColorByGrade(seat.grade))
     }
 
-    override fun Button.updateReservationInformation(
-        index: Int,
-        seat: Seat,
-    ) {
+    override fun Button.updateReservationInformation(seat: Seat) {
         setOnClickListener {
-            presenter.updateReservationState(seat, index, isSelected)
+            presenter.updateReservationState(seat, isSelected)
         }
     }
 
