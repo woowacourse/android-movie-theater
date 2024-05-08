@@ -5,8 +5,6 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import java.time.LocalDateTime
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.minutes
 
 @Entity(
     tableName = "movie_reservation",
@@ -31,6 +29,19 @@ data class MovieReservation(
     @ColumnInfo(name = "selected_seats") val selectedSeats: List<Map<Int, Int>>,
     @ColumnInfo(name = "screen_date_time") val screenDateTime: LocalDateTime,
     @ColumnInfo(name = "head_count") val headCount: Int,
-    @ColumnInfo(name = "cancel_dead_line") val cancelDeadLine: Duration = 15.minutes,
+    @ColumnInfo(name = "cancel_dead_line") val cancelDeadLine: Long = 0,
     @ColumnInfo(name = "theater_id") val theaterId: Long,
-)
+) {
+    companion object {
+        val STUB =
+            MovieReservation(
+                0L,
+                0L,
+                listOf(mapOf(0 to 0), mapOf(0 to 1)),
+                LocalDateTime.of(2024, 3, 1, 9, 0),
+                3,
+                152,
+                0,
+            )
+    }
+}
