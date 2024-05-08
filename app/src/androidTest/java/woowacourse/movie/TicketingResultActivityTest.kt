@@ -22,7 +22,8 @@ class TicketingResultActivityTest {
     private val movieReservation =
         Reservation(
             movieTitle = "해리 포터와 마법사의 돌",
-            screeningDateTime = "2024-04-30",
+            screeningDate = "2024-04-30",
+            screeningTime = "17:00",
             selectedSeats =
                 listOf(
                     Seat(1, 1),
