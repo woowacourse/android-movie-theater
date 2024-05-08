@@ -11,6 +11,7 @@ import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.SeatBoard
 import woowacourse.movie.domain.model.SeatRank
 import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.domain.model.TheaterCount
 import woowacourse.movie.presentation.model.ReservationInfo
 import woowacourse.movie.presentation.model.SeatModel
 import java.time.LocalDate
@@ -159,6 +160,13 @@ object DummyData {
 
     val theaters =
         listOf(theater, theater.copy(id = 1, name = "강남"), theater.copy(id = 2, name = "잠실"))
+
+    val theaterCount =
+        TheaterCount(
+            3,
+            "선릉",
+            180,
+        )
 
     private fun createScreenDateList(
         startDate: LocalDate,
