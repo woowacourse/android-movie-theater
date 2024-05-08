@@ -34,7 +34,7 @@ class ReservationHistoryAdapter(
     fun updateReservations(newReservations: List<Reservation>) {
         reservations.clear()
         reservations.addAll(newReservations)
-        notifyDataSetChanged()
+        notifyItemRangeChanged(0, newReservations.size)
     }
 
     class ReservationHistoryViewHolder(

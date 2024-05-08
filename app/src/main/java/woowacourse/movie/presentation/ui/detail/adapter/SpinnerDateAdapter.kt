@@ -35,6 +35,5 @@ class SpinnerDateAdapter(
     fun updateDate(newItems: List<LocalDate>) {
         clear()
         addAll(newItems)
-        notifyDataSetChanged()
     }
 }

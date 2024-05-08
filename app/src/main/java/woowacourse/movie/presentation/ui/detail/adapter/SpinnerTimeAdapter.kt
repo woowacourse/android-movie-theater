@@ -29,6 +29,5 @@ class SpinnerTimeAdapter(
     fun updateTime(newItems: List<LocalTime>) {
         clear()
         addAll(newItems)
-        notifyDataSetChanged()
     }
 }
