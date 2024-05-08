@@ -12,8 +12,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.model.Cinema
-import woowacourse.movie.seat.TheaterSeatContract
-import woowacourse.movie.seat.TheaterSeatPresenter
+import woowacourse.movie.presentation.seat.TheaterSeatContract
+import woowacourse.movie.presentation.seat.TheaterSeatPresenter
 
 @ExtendWith(MockKExtension::class)
 class SeatPresenterTest {

@@ -12,8 +12,8 @@ import androidx.test.espresso.matcher.ViewMatchers
 import org.hamcrest.Matcher
 import org.junit.Test
 import org.junit.jupiter.api.DisplayName
-import woowacourse.movie.movieList.MovieAdapter
-import woowacourse.movie.movieList.MovieListFragment
+import woowacourse.movie.presentation.movieList.MovieAdapter
+import woowacourse.movie.presentation.movieList.MovieListFragment
 
 class IntegrationTest {
     @Test
