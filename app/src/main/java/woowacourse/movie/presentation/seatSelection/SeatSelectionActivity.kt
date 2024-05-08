@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
+import woowacourse.movie.db.ReservationDatabase
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.Reservation
 import woowacourse.movie.model.Seat
@@ -42,7 +43,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         val screeningTime = intent.getStringExtra(EXTRA_SCREENING_TIME) ?: ""
         val theaterId = intent.getLongExtra(EXTRA_THEATER_ID, EXTRA_DEFAULT_THEATER_ID)
 
-        presenter = SeatSelectionPresenter(this, ticketCount)
+        presenter = SeatSelectionPresenter(this, ticketCount, ReservationDatabase.getDatabase(this))
         presenter.loadMovieData(movieId)
         presenter.loadSeats()
         initializeCompleteButton(screeningDate, screeningTime, theaterId)

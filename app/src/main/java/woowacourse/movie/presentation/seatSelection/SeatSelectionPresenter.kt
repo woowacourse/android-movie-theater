@@ -1,5 +1,7 @@
 package woowacourse.movie.presentation.seatSelection
 
+import woowacourse.movie.db.ReservationDatabase
+import woowacourse.movie.db.ReservationEntity
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.Reservation
 import woowacourse.movie.model.SeatingSystem
@@ -10,11 +12,14 @@ import woowacourse.movie.repository.TheaterListRepository
 class SeatSelectionPresenter(
     private val seatSelectionContractView: SeatSelectionContract.View,
     ticketCount: Int,
+    private val reservationDatabase: ReservationDatabase,
     private val movieRepository: MovieRepository = MovieRepository(),
     private val theaterListRepository: TheaterListRepository = DummyTheaterList,
 ) : SeatSelectionContract.Presenter {
     private lateinit var selectedMovie: Movie
     val seatingSystem = SeatingSystem(ticketCount)
+
+    private val reservationDao = reservationDatabase.reservationDao()
 
     override fun loadMovieData(id: Long) {
         movieRepository.findMovieById(id)
@@ -69,6 +74,17 @@ class SeatSelectionPresenter(
     ) {
         val reservation =
             Reservation(selectedMovie.title, screeningDate, screeningTime, seatingSystem.selectedSeats.toList(), findTheaterName(theaterId))
+        val entity =
+            ReservationEntity(
+                selectedMovie.title,
+                screeningDate,
+                screeningTime,
+                seatingSystem.selectedSeats.toList(),
+                findTheaterName(theaterId),
+            )
+        Thread {
+            reservationDao.saveReservation(entity)
+        }.start()
         seatSelectionContractView.navigate(reservation)
     }
 
