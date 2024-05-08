@@ -1,6 +1,7 @@
 package woowacourse.movie.feature.seatselection
 
 import woowacourse.movie.data.TicketRepository
+import woowacourse.movie.data.entity.Ticket
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
 import woowacourse.movie.util.BasePresenter
@@ -23,6 +24,8 @@ interface MovieSeatSelectionContract {
         fun navigateToResultView(ticketId: Long)
 
         fun showToastInvalidMovieIdError(throwable: Throwable)
+
+        fun setTicketAlarm(ticket: Ticket)
     }
 
     interface Presenter : BasePresenter {

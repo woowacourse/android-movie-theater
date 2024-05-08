@@ -1,7 +1,5 @@
 package woowacourse.movie.feature.seatselection
 
-import android.os.Handler
-import android.os.Looper
 import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.data.TicketRepository
 import woowacourse.movie.model.MovieSeat
@@ -68,7 +66,6 @@ class MovieSeatSelectionPresenter(
         selectedSeats: MovieSelectedSeats,
         theaterName: String,
     ) {
-        val handler = Handler(Looper.getMainLooper())
         Thread {
             val ticketId =
                 ticketRepository.save(
@@ -78,9 +75,8 @@ class MovieSeatSelectionPresenter(
                     selectedSeats,
                     theaterName,
                 )
-            handler.post {
-                view.navigateToResultView(ticketId)
-            }
+            view.navigateToResultView(ticketId)
+            view.setTicketAlarm(ticketRepository.find(ticketId))
         }.start()
     }
 }

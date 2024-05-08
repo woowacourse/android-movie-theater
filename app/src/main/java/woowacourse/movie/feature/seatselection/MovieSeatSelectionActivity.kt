@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import woowacourse.movie.MovieTheaterApplication
 import woowacourse.movie.R
+import woowacourse.movie.data.entity.Ticket
 import woowacourse.movie.databinding.ActivityMovieSeatSelectionBinding
 import woowacourse.movie.feature.result.MovieResultActivity
 import woowacourse.movie.model.MovieGrade
@@ -29,6 +30,7 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
 import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_SEAT_POSITIONS
 import woowacourse.movie.util.MovieIntentConstant.KEY_THEATER_NAME
+import woowacourse.movie.util.TicketAlarmRegister
 import woowacourse.movie.util.formatSeat
 
 class MovieSeatSelectionActivity :
@@ -128,14 +130,20 @@ class MovieSeatSelectionActivity :
     }
 
     override fun navigateToResultView(ticketId: Long) {
-        val intent = MovieResultActivity.newIntent(this, ticketId)
-        startActivity(intent)
+        runOnUiThread {
+            val intent = MovieResultActivity.newIntent(this, ticketId)
+            startActivity(intent)
+        }
     }
 
     override fun showToastInvalidMovieIdError(throwable: Throwable) {
         Log.e(TAG, "invalid movie id - ${throwable.message}")
         showToast(R.string.invalid_movie_id)
         finish()
+    }
+
+    override fun setTicketAlarm(ticket: Ticket) {
+        TicketAlarmRegister(this).setReservationAlarm(ticket)
     }
 
     private fun showToast(

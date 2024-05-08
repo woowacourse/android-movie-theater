@@ -45,7 +45,9 @@ class ReservationHistoryFragment :
 
     override fun onResume() {
         super.onResume()
-        presenter.loadTickets((requireActivity().application as MovieTheaterApplication).ticketRepository)
+        presenter.loadTickets(
+            (requireActivity().application as MovieTheaterApplication).ticketRepository,
+        )
     }
 
     override fun onDestroyView() {
@@ -54,6 +56,8 @@ class ReservationHistoryFragment :
     }
 
     override fun displayTickets(tickets: List<Ticket>) {
-        reservationHistoryAdapter.submitList(tickets)
+        requireActivity().runOnUiThread {
+            reservationHistoryAdapter.submitList(tickets)
+        }
     }
 }

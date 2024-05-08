@@ -15,11 +15,11 @@ class TicketRepositoryImpl(private val ticketDao: TicketDao) : TicketRepository 
     ): Long {
         return ticketDao.insert(
             Ticket(
-                movieId,
-                screeningDate,
-                screeningTime,
-                selectedSeats,
-                theaterName,
+                movieId = movieId,
+                screeningDate = screeningDate,
+                screeningTime = screeningTime,
+                selectedSeats = selectedSeats,
+                theaterName = theaterName,
             ),
         )
     }

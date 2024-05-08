@@ -1,5 +1,6 @@
 package woowacourse.movie.data
 
+import android.database.sqlite.SQLiteException
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -11,6 +12,7 @@ interface TicketDao {
     fun getAll(): List<Ticket>
 
     @Query("SELECT * FROM tickets WHERE id = :id")
+    @Throws(SQLiteException::class)
     fun find(id: Long): Ticket
 
     @Insert
