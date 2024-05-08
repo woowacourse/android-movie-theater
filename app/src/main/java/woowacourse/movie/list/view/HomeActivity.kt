@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.room.Room
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityHomeBinding
 import woowacourse.movie.list.contract.HomeContract
@@ -20,6 +21,11 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
         presenter = HomePresenter(this)
         setContentView(binding.root)
         initBottomNavigation()
+
+        val db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, "tickets"
+        ).build()
     }
 
     private fun initBottomNavigation() {
