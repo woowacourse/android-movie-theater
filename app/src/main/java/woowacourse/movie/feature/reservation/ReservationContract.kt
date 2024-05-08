@@ -35,11 +35,7 @@ interface ReservationContract {
     }
 
     interface Presenter {
-        fun loadMovie()
-
-        fun loadScreeningDates()
-
-        fun loadScreeningTimes()
+        fun loadMovieInformation()
 
         fun selectScreeningDate(selectedDateId: Long)
 
@@ -50,7 +46,5 @@ interface ReservationContract {
         fun decreaseHeadCount()
 
         fun sendTicketToSeatSelection()
-
-        fun handleUndeliveredData()
     }
 }

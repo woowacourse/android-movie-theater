@@ -10,18 +10,25 @@ class ReservationFinishedPresenter(
     private val screeningDao: ScreeningDao,
     private val ticket: Ticket,
 ) : ReservationFinishedContract.Presenter {
-    override fun handleUndeliveredTicket() {
-        if (ticket.movieId == DEFAULT_MOVIE_ID) {
-            view.showErrorSnackBar()
+    override fun loadTicket() {
+        if (ticket.movieId != DEFAULT_MOVIE_ID) {
+            loadMovie()
+            loadReservationInformation()
+        } else {
+            handleUndeliveredTicket()
         }
     }
 
-    override fun loadMovie() {
+    private fun loadMovie() {
         val movie: Movie = screeningDao.find(ticket.movieId)
         view.showMovieTitle(movie)
     }
 
-    override fun loadTicket() {
+    private fun loadReservationInformation() {
         view.showReservationHistory(ticket)
+    }
+
+    private fun handleUndeliveredTicket() {
+        view.showErrorSnackBar()
     }
 }

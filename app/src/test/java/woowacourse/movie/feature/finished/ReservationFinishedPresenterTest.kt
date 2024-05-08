@@ -38,16 +38,11 @@ class ReservationFinishedPresenterTest {
     }
 
     @Test
-    fun `예매한 영화의 제목을 보여준다`() {
-        every { view.showMovieTitle(any()) } just runs
-        presenter.loadMovie()
-        verify { view.showMovieTitle(movie) }
-    }
-
-    @Test
-    fun `예매 내역을 보여준다`() {
+    fun `예매 내역을 불러온다`() {
         every { view.showReservationHistory(any()) } just runs
+        every { view.showMovieTitle(any()) } just runs
         presenter.loadTicket()
         verify { view.showReservationHistory(mockTicket) }
+        verify { view.showMovieTitle(movie) }
     }
 }

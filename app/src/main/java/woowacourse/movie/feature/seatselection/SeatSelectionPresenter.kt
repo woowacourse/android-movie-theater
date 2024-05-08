@@ -4,10 +4,13 @@ import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.seats.SeatsDao
 import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.model.movie.Movie
+import woowacourse.movie.model.movie.Movie.Companion.DEFAULT_MOVIE_ID
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
+import woowacourse.movie.model.theater.Theater.Companion.DEFAULT_THEATER_ID
 import woowacourse.movie.model.ticket.HeadCount
+import woowacourse.movie.model.ticket.HeadCount.Companion.DEFAULT_HEAD_COUNT
 import woowacourse.movie.model.ticket.Ticket
 import java.time.LocalDate
 import java.time.LocalTime
@@ -23,6 +26,19 @@ class SeatSelectionPresenter(
     private val screeningDateTime: ScreeningDateTime,
 ) : SeatSelectionContract.Presenter {
     private val seats = Seats()
+
+    override fun loadReservationInformation() {
+        if (movieId != DEFAULT_MOVIE_ID &&
+            theaterId != DEFAULT_THEATER_ID &&
+            headCount.count != DEFAULT_HEAD_COUNT &&
+            screeningDateTime != ScreeningDateTime(LocalDate.now(), LocalTime.now())
+        ) {
+            loadSeatNumber()
+            loadMovie()
+        } else {
+            handleUndeliveredData()
+        }
+    }
 
     override fun restoreReservation() {
         validateReservationAvailable()
@@ -71,16 +87,6 @@ class SeatSelectionPresenter(
         onReservationDataSave(headCount, seats, seats.seatsIndex)
     }
 
-    override fun handleUndeliveredData() {
-        if (movieId == -1 ||
-            theaterId == -1 ||
-            headCount.count == 0 ||
-            screeningDateTime == ScreeningDateTime(LocalDate.now(), LocalTime.now())
-        ) {
-            view.showErrorSnackBar()
-        }
-    }
-
     override fun updateReservationState(
         seat: Seat,
         index: Int,
@@ -113,5 +119,9 @@ class SeatSelectionPresenter(
     override fun validateReservationAvailable() {
         val isReservationAvailable = seats.seats.size >= headCount.count
         view.setConfirmButtonEnabled(isReservationAvailable)
+    }
+
+    private fun handleUndeliveredData() {
+        view.showErrorSnackBar()
     }
 }

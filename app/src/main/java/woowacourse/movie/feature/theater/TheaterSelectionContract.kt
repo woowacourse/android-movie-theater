@@ -7,8 +7,6 @@ interface TheaterSelectionContract {
         fun loadTheater()
 
         fun sendTheaterInfoToReservation(theaterId: Int)
-
-        fun handleUndeliveredMovieId()
     }
 
     interface View {

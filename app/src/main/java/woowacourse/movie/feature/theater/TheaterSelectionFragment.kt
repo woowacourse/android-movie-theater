@@ -41,10 +41,7 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
         super.onViewCreated(view, savedInstanceState)
         initPresenter()
         initTheaterSelectionAdapter()
-        with(presenter) {
-            handleUndeliveredMovieId()
-            loadTheater()
-        }
+        presenter.loadTheater()
     }
 
     override fun showTheaters(

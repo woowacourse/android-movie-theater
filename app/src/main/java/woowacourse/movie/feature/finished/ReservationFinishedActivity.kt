@@ -32,11 +32,7 @@ class ReservationFinishedActivity : AppCompatActivity(), ReservationFinishedCont
         binding.activity = this
         handleBackPressed()
         initPresenter()
-        with(presenter) {
-            handleUndeliveredTicket()
-            loadMovie()
-            loadTicket()
-        }
+        presenter.loadTicket()
     }
 
     override fun showMovieTitle(movie: Movie) {

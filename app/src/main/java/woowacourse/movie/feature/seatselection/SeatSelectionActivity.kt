@@ -50,11 +50,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         receiveReservationInfo()
         initPresenter()
         seatsTable = collectSeatsInTableLayout()
-        with(presenter) {
-            handleUndeliveredData()
-            loadSeatNumber()
-            loadMovie()
-        }
+        presenter.loadReservationInformation()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

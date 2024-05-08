@@ -32,17 +32,16 @@ class ReservationPresenter(
         view.changeHeadCount(savedHeadCount)
     }
 
-    override fun loadMovie() {
-        view.showMovieInformation(movie)
-    }
-
-    override fun loadScreeningDates() {
-        view.showScreeningDates(screeningDates)
-    }
-
-    override fun loadScreeningTimes() {
-        screeningTimes = theaterDao.findScreeningTimesByMovieId(theaterId, movieId)
-        view.showScreeningTimes(screeningTimes)
+    override fun loadMovieInformation() {
+        if (movieId != DEFAULT_MOVIE_ID &&
+            theaterId != DEFAULT_THEATER_ID
+        ) {
+            loadMovie()
+            loadScreeningDates()
+            loadScreeningTimes()
+        } else {
+            handleUndeliveredData()
+        }
     }
 
     override fun selectScreeningDate(selectedDateId: Long) {
@@ -73,12 +72,21 @@ class ReservationPresenter(
         view.navigateToSeatSelection(dateTime, movieId, theaterId, headCount)
     }
 
-    override fun handleUndeliveredData() {
-        if (movieId == DEFAULT_MOVIE_ID ||
-            theaterId == DEFAULT_THEATER_ID
-        ) {
-            view.showErrorSnackBar()
-        }
+    private fun handleUndeliveredData() {
+        view.showErrorSnackBar()
+    }
+
+    private fun loadMovie() {
+        view.showMovieInformation(movie)
+    }
+
+    private fun loadScreeningDates() {
+        view.showScreeningDates(screeningDates)
+    }
+
+    private fun loadScreeningTimes() {
+        screeningTimes = theaterDao.findScreeningTimesByMovieId(theaterId, movieId)
+        view.showScreeningTimes(screeningTimes)
     }
 
     private fun handleHeadCountBounds(result: ChangeTicketCountResult) {

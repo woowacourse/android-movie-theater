@@ -43,12 +43,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
 
         val savedHeadCount = bringSavedHeadCount(savedInstanceState)
         initPresenter(savedHeadCount)
-        with(presenter) {
-            handleUndeliveredData()
-            loadMovie()
-            loadScreeningDates()
-            loadScreeningTimes()
-        }
+        presenter.loadMovieInformation()
         setOnScreeningDateSelectedListener()
         setOnScreeningTimeSelectedListener()
     }

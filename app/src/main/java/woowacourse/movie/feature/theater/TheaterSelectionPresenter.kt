@@ -9,6 +9,18 @@ class TheaterSelectionPresenter(
     private val movieId: Int,
 ) : TheaterSelectionContract.Presenter {
     override fun loadTheater() {
+        if (movieId != DEFAULT_MOVIE_ID) {
+            loadTheaterInformation()
+        } else {
+            handleUndeliveredMovieId()
+        }
+    }
+
+    override fun sendTheaterInfoToReservation(theaterId: Int) {
+        view.navigateToReservation(movieId, theaterId)
+    }
+
+    private fun loadTheaterInformation() {
         val theaters = theaterDao.findTheaterByMovieId(movieId)
         val screeningCounts =
             theaters.map {
@@ -17,11 +29,7 @@ class TheaterSelectionPresenter(
         view.showTheaters(theaters, screeningCounts)
     }
 
-    override fun sendTheaterInfoToReservation(theaterId: Int) {
-        view.navigateToReservation(movieId, theaterId)
-    }
-
-    override fun handleUndeliveredMovieId() {
-        if (movieId == DEFAULT_MOVIE_ID) view.showErrorSnackBar()
+    private fun handleUndeliveredMovieId() {
+        view.showErrorSnackBar()
     }
 }

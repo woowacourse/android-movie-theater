@@ -36,23 +36,13 @@ class ReservationPresenterTest {
     }
 
     @Test
-    fun `영화 정보를 보여준다`() {
+    fun `영화 정보와 상영일, 상영시간을 불러온다`() {
         every { view.showMovieInformation(any()) } just runs
-        presenter.loadMovie()
-        verify { view.showMovieInformation(mockMovies[0]) }
-    }
-
-    @Test
-    fun `상영 기간을 불러온다`() {
         every { view.showScreeningDates(any()) } just runs
-        presenter.loadScreeningDates()
-        verify { view.showScreeningDates(mockMovies[0].screeningPeriod) }
-    }
-
-    @Test
-    fun `상영 시간을 불러온다`() {
         every { view.showScreeningTimes(any()) } just runs
-        presenter.loadScreeningTimes()
+        presenter.loadMovieInformation()
+        verify { view.showMovieInformation(mockMovies[0]) }
+        verify { view.showScreeningDates(mockMovies[0].screeningPeriod) }
         val mockScreeningTimes = getMockScreeningTimes(movieId = 0, theaterId = 0)
         verify { view.showScreeningTimes(mockScreeningTimes) }
     }

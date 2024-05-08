@@ -15,10 +15,6 @@ interface ReservationFinishedContract {
     }
 
     interface Presenter {
-        fun handleUndeliveredTicket()
-
-        fun loadMovie()
-
         fun loadTicket()
     }
 }
