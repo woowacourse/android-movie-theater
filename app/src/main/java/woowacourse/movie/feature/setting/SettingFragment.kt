@@ -13,6 +13,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentSettingBinding
+import woowacourse.movie.util.MovieIntentConstant.KEY_NOTIFICATION
+import woowacourse.movie.util.SharedPreferencesManager
 
 class SettingFragment : Fragment() {
     private var _binding: FragmentSettingBinding? = null
@@ -65,6 +67,17 @@ class SettingFragment : Fragment() {
             return false
         }
         return true
+    }
+
+    private fun initializeNotificationSwitch() {
+        binding.switchNotification.setOnCheckedChangeListener { _, isChecked ->
+            SharedPreferencesManager(requireContext()).setBoolean(KEY_NOTIFICATION, isChecked)
+            if (isChecked) {
+
+                return@setOnCheckedChangeListener
+            }
+
+        }
     }
 
     override fun onDestroyView() {
