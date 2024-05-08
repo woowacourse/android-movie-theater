@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.message
 
+import android.view.View
 import woowacourse.movie.presentation.model.MessageType
 
 object Messenger {
@@ -15,9 +16,18 @@ object Messenger {
 
     fun showToast(messageType: MessageType) = this.message.showToast(messageType)
 
-    fun showSnackBar(message: String) = this.message.showSnackBar(message)
+    fun showSnackBar(
+        view: View,
+        message: String,
+    ) = this.message.showSnackBar(view, message)
 
-    fun showSnackBar(e: Throwable) = this.message.showSnackBar(e)
+    fun showSnackBar(
+        view: View,
+        e: Throwable,
+    ) = this.message.showSnackBar(view, e)
 
-    fun showSnackBar(messageType: MessageType) = this.message.showSnackBar(messageType)
+    fun showSnackBar(
+        view: View,
+        messageType: MessageType,
+    ) = this.message.showSnackBar(view, messageType)
 }

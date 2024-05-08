@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.message
 
+import android.view.View
 import woowacourse.movie.presentation.model.MessageType
 
 interface Message {
@@ -9,9 +10,18 @@ interface Message {
 
     fun showToast(e: Throwable)
 
-    fun showSnackBar(message: String)
+    fun showSnackBar(
+        view: View,
+        message: String,
+    )
 
-    fun showSnackBar(messageType: MessageType)
+    fun showSnackBar(
+        view: View,
+        messageType: MessageType,
+    )
 
-    fun showSnackBar(e: Throwable)
+    fun showSnackBar(
+        view: View,
+        e: Throwable,
+    )
 }

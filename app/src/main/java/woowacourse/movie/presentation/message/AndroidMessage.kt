@@ -25,18 +25,27 @@ class AndroidMessage(private val context: Context) : Message {
         showToast(e.toErrorMessage())
     }
 
-    override fun showSnackBar(message: String) {
+    override fun showSnackBar(
+        view: View,
+        message: String,
+    ) {
         snackbar?.dismiss()
-        snackbar = Snackbar.make(View(context), message, Snackbar.LENGTH_SHORT)
+        snackbar = Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
         snackbar?.show()
     }
 
-    override fun showSnackBar(messageType: MessageType) {
-        showSnackBar(messageType.toMessage())
+    override fun showSnackBar(
+        view: View,
+        messageType: MessageType,
+    ) {
+        showSnackBar(view, messageType.toMessage())
     }
 
-    override fun showSnackBar(e: Throwable) {
-        showSnackBar(e.toErrorMessage())
+    override fun showSnackBar(
+        view: View,
+        e: Throwable,
+    ) {
+        showSnackBar(view, e.toErrorMessage())
     }
 
     private fun MessageType.toMessage(): String {

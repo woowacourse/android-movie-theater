@@ -6,7 +6,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import woowacourse.movie.presentation.message.Messenger
 import woowacourse.movie.presentation.model.MessageType
-import woowacourse.movie.presentation.model.MessageType.*
 
 abstract class BaseMvpBindingActivity<T : ViewDataBinding> : AppCompatActivity(), BaseView {
     abstract val layoutResourceId: Int
@@ -37,13 +36,13 @@ abstract class BaseMvpBindingActivity<T : ViewDataBinding> : AppCompatActivity()
 
     override fun showSnackBar(e: Throwable) {
         runOnUiThread {
-            Messenger.showSnackBar(e)
+            Messenger.showSnackBar(e, binding.root)
         }
     }
 
     override fun showSnackBar(messageType: MessageType) {
         runOnUiThread {
-            Messenger.showSnackBar(messageType)
+            Messenger.showSnackBar(messageType, binding.root)
         }
     }
 
