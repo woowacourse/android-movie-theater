@@ -4,8 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.data.entity.Ticket
 import woowacourse.movie.databinding.ItemReservationHistoryBinding
 
@@ -48,22 +46,5 @@ class ReservationHistoryAdapter(
                     return oldItem == newItem
                 }
             }
-    }
-}
-
-class ReservationHistoryViewHolder(
-    private val binding: ItemReservationHistoryBinding,
-) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(
-        ticket: Ticket,
-        onReservationHistoryItemClickListener: ReservationHistoryItemClickListener,
-    ) {
-        binding.tvMovieTitle.text = MovieRepository.getMovieById(ticket.movieId).title
-        binding.tvScreeningDate.text = ticket.screeningDate.toString()
-        binding.tvScreeningTime.text = ticket.screeningTime.toString()
-        binding.tvTheaterName.text = "${ticket.theaterName} 극장"
-        binding.root.setOnClickListener {
-            onReservationHistoryItemClickListener(ticket)
-        }
     }
 }

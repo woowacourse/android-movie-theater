@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="reservationHistory"
+            type="woowacourse.movie.feature.history.ui.ReservationHistoryUiModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,6 +23,7 @@
             android:layout_marginTop="12dp"
             android:layout_marginBottom="6dp"
             android:textColor="@color/black"
+            android:text="@{reservationHistory.screeningDate}"
             android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/tv_movie_title"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -47,6 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:text="@{reservationHistory.screeningTime}"
             android:layout_marginBottom="6dp"
             android:textColor="@color/black"
             android:textSize="12sp"
@@ -74,6 +79,7 @@
         <TextView
             android:id="@+id/tv_theater_name"
             android:layout_width="0dp"
+            android:text="@{@string/theater(reservationHistory.theaterName)}"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="12dp"
@@ -95,6 +101,7 @@
             android:layout_marginHorizontal="12dp"
             android:layout_marginBottom="13dp"
             android:ellipsize="end"
+            android:text="@{reservationHistory.movieTitle}"
             android:maxLines="1"
             android:textColor="@color/black"
             android:textSize="16sp"
