@@ -5,6 +5,7 @@ import woowacourse.movie.detail.model.Count
 import woowacourse.movie.list.model.TheaterData
 import woowacourse.movie.seats.model.Seat
 import woowacourse.movie.ticket.contract.MovieTicketContract
+import woowacourse.movie.ticket.db_mapper.DbMapper
 import woowacourse.movie.ticket.model.Ticket
 import woowacourse.movie.ticket.model.TicketDataResource
 
@@ -21,29 +22,30 @@ class MovieTicketPresenter(
         theaterId: Long,
         price: Int,
     ) {
-        val movieTitle = MovieDataSource.movieList.first { it.id == movieId }.title
-        val seatsFormatted = seats.joinToString { it.coordinate }
-        val theaterName = TheaterData.theaters.first { it.id == theaterId }.name
         TicketDataResource.ticket =
             Ticket(
-                movieTitle,
+                movieId,
                 screeningDate,
                 screeningTime,
-                seatsCount.number,
-                seatsFormatted,
-                theaterName,
+                seatsCount,
+                seats,
+                theaterId,
                 price,
             )
+
+        TicketDataResource.dbTicket = DbMapper.mapTicketDb(TicketDataResource.ticket)
     }
 
     override fun setTicketInfo() {
+        val movieTitle = MovieDataSource.movieList.first { it.id == TicketDataResource.ticket.movieId }.title
+        val theaterName = TheaterData.theaters.first { it.id == TicketDataResource.ticket.theaterId }.name
         view.showTicketView(
-            TicketDataResource.ticket.movieTitle,
+            movieTitle,
             TicketDataResource.ticket.screeningDate,
             TicketDataResource.ticket.screeningTime,
             TicketDataResource.ticket.seatsCount,
             TicketDataResource.ticket.seats,
-            TicketDataResource.ticket.theaterName,
+            theaterName,
             TicketDataResource.ticket.price,
         )
     }

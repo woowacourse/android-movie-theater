@@ -11,8 +11,8 @@ interface MovieTicketContract {
             movieTitle: String,
             screeningDate: String,
             screeningTime: String,
-            ticketCount: Int,
-            seats: String,
+            seatsCount: Count,
+            seats: List<Seat>,
             theater: String,
             moviePrice: Int,
         )

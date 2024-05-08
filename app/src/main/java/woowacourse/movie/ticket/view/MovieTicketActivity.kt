@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieTicketBinding
+import woowacourse.movie.detail.model.Count
 import woowacourse.movie.list.view.TheaterBottomSheetFragment.Companion.EXTRA_MOVIE_ID_KEY
 import woowacourse.movie.list.view.TheaterBottomSheetFragment.Companion.EXTRA_THEATER_ID_KEY
 import woowacourse.movie.seats.model.Seat
@@ -46,19 +47,20 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
         movieTitle: String,
         screeningDate: String,
         screeningTime: String,
-        ticketCount: Int,
-        seats: String,
+        seatsCount: Count,
+        seats: List<Seat>,
         theater: String,
         moviePrice: Int,
     ) {
+        val seatsFormatted = seats.joinToString { it.coordinate }
         binding.ticketTitle.text = movieTitle
         binding.ticketScreeningDate.text = screeningDate
         binding.ticketScreeningTime.text = screeningTime
         binding.ticketReservationInformation.text =
             getString(
                 R.string.ticket_information_format,
-                ticketCount,
-                seats,
+                seatsCount.number,
+                seatsFormatted,
                 theater,
             )
         binding.ticketPrice.text = TICKET_PRICE.format(moviePrice)
