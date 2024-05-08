@@ -48,20 +48,6 @@ class SeatSelectionPresenterTest {
     }
 
     @Test
-    fun `SeatSelectionPresenter가 유효한 상영 id값으로 loadScreen()을 했을 때, view에게 screen 정보, 가격, 티켓 개수를 전달한다`() {
-        // given
-        every { screenRepository.findByScreenId(any(), any()) } returns Result.success(dummyScreen)
-        every { view.showScreen(any(), any(), any()) } just runs
-        presenter.updateUiModel(dummyReservationInfo)
-
-        // when
-        presenter.loadScreen(1, dummyScreen.movie.id)
-
-        // then
-        verify { view.showScreen(dummyScreen, 0, dummyReservationInfo.ticketCount) }
-    }
-
-    @Test
     fun `SeatSelectionPresenter가 유효하지 않은 상영 id값으로 loadScreen()을 했을 때, view에게 back과 throwable를 전달한다`() {
         // given
         every { screenRepository.findByScreenId(any(), any()) } returns
@@ -72,7 +58,7 @@ class SeatSelectionPresenterTest {
         every { view.navigateBackToPrevious() } just runs
 
         // when
-        presenter.loadScreen(1, 1)
+        presenter.loadScreen(dummyReservationInfo)
 
         // then
         verify { view.showToastMessage(e = any()) }
@@ -82,10 +68,13 @@ class SeatSelectionPresenterTest {
     @Test
     fun `SeatSelectionPresenter가 유효한 상영 id값으로 loadSeatBoard()를 했을 때, view에게 좌석 정보와 클릭 설정에 대한 좌석 정보를 전달한다`() {
         // given
+        every { screenRepository.findByScreenId(any(), any()) } returns Result.success(dummyScreen)
         every { screenRepository.loadSeatBoard(any()) } returns Result.success(dummySeatBoard)
+        every { view.showScreen(any(), any(), any()) } just runs
         every { view.showSeatBoard(any()) } just runs
 
         // when
+        presenter.loadScreen(dummyReservationInfo)
         presenter.loadSeatBoard(1)
 
         // then
@@ -130,11 +119,13 @@ class SeatSelectionPresenterTest {
     @Test
     fun `SeatSelectionPresenter가 남은 좌석을 선택(clickSeat()) 했을 때, 선택할 티켓이 있다면 view에게 좌석을 선택하라는 정보(selectSeat)를 전달한다`() {
         // given
+        every { screenRepository.findByScreenId(any(), any()) } returns Result.success(dummyScreen)
         every { screenRepository.loadSeatBoard(any()) } returns Result.success(dummySeatBoard)
+        every { view.showScreen(any(), any(), any()) } just runs
         every { view.showSeatBoard(any()) } just runs
         every { view.selectSeat(any()) } just runs
-        presenter.updateUiModel(dummyReservationInfo)
-        presenter.loadSeatBoard(1)
+        presenter.loadScreen(dummyReservationInfo)
+        presenter.loadSeatBoard(dummyReservationInfo.theaterId)
 
         // when
         presenter.clickSeat(dummySeatModel)
@@ -159,11 +150,13 @@ class SeatSelectionPresenterTest {
     fun `SeatSelectionPresenter가 남은 좌석을 선택(clickSeat()) 했을 때, 선택할 티켓이 없다면 view에게 snackBar message(AllSeatsSelectedMessage)를 전달한다`() {
         // given
         val reservationInfo = dummyReservationInfo.copy(ticketCount = 0)
-
+        every { screenRepository.findByScreenId(any(), any()) } returns Result.success(dummyScreen)
         every { screenRepository.loadSeatBoard(any()) } returns Result.success(dummySeatBoard)
+        every { view.showScreen(any(), any(), any()) } just runs
         every { view.showSnackBar(messageType = any()) } just runs
 
         // when
+        presenter.loadScreen(reservationInfo)
         presenter.clickSeat(dummySeatModel)
 
         // then
@@ -175,16 +168,16 @@ class SeatSelectionPresenterTest {
         // given
         var userSeat =
             UserSeat(dummySeatBoard.seats.map { SeatModel(it.column, it.row, it.seatRank) })
-
+        every { screenRepository.findByScreenId(any(), any()) } returns Result.success(dummyScreen)
         every { screenRepository.loadSeatBoard(any()) } returns Result.success(dummySeatBoard)
+        every { view.showScreen(any(), any(), any()) } just runs
         every { view.showSeatBoard(any()) } just runs
         every { view.selectSeat(any()) } just runs
         every { view.unselectSeat(any()) } just runs
-        presenter.updateUiModel(dummyReservationInfo)
+        presenter.loadScreen(dummyReservationInfo)
         presenter.loadSeatBoard(1)
 
         // when
-        presenter.updateUiModel(dummyReservationInfo)
         presenter.clickSeat(dummySeatModel.copy(isSelected = false))
         presenter.clickSeat(dummySeatModel.copy(isSelected = true))
 
@@ -195,11 +188,12 @@ class SeatSelectionPresenterTest {
     @Test
     fun `SeatSelectionPresenter가 선택된 좌석들의 가격을 계산(calculateSeat) 했을 때, view에게 총 결제 금액에 대한 정보(showTotalPrice)를 전달한다`() {
         // given
-        val reservationInfo = dummyReservationInfo
+        every { screenRepository.findByScreenId(any(), any()) } returns Result.success(dummyScreen)
         every { screenRepository.loadSeatBoard(any()) } returns Result.success(dummySeatBoard)
+        every { view.showScreen(any(), any(), any()) } just runs
         every { view.selectSeat(any()) } just runs
         every { view.showTotalPrice(any()) } just runs
-        presenter.updateUiModel(reservationInfo)
+        presenter.loadScreen(dummyReservationInfo)
         presenter.clickSeat(dummySeatModel)
 
         // when
@@ -235,8 +229,7 @@ class SeatSelectionPresenterTest {
         every { view.showScreen(any(), any(), any()) } just runs
 
         // when
-        presenter.loadScreen(1, dummyScreen.movie.id)
-        presenter.updateUiModel(dummyReservationInfo)
+        presenter.loadScreen(dummyReservationInfo)
         presenter.reserve()
 
         // then
@@ -271,8 +264,7 @@ class SeatSelectionPresenterTest {
         every { view.showScreen(any(), any(), any()) } just runs
 
         // when
-        presenter.loadScreen(1, dummyScreen.movie.id)
-        presenter.updateUiModel(dummyReservationInfo)
+        presenter.loadScreen(dummyReservationInfo)
         presenter.reserve()
 
         // then

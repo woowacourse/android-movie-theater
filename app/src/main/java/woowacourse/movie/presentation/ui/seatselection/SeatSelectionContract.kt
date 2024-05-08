@@ -31,12 +31,7 @@ interface SeatSelectionContract {
     }
 
     interface Presenter : BasePresenter {
-        fun updateUiModel(reservationInfo: ReservationInfo)
-
-        fun loadScreen(
-            theaterId: Int,
-            movieId: Int,
-        )
+        fun loadScreen(reservationInfo: ReservationInfo)
 
         fun loadSeatBoard(id: Int)
 

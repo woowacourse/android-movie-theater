@@ -19,40 +19,36 @@ class SeatSelectionPresenter(
     private val reservationRepository: ReservationRepository,
     private val notificationRepository: NotificationRepository,
 ) : SeatSelectionContract.Presenter {
-    private var uiModel: SeatSelectionUiModel = SeatSelectionUiModel()
+    private lateinit var uiModel: SeatSelectionUiModel
     val userSeat: UserSeat
         get() = UserSeat(uiModel.userSeat.seatModels.filter { it.isSelected })
 
-    override fun updateUiModel(reservationInfo: ReservationInfo) {
-        uiModel =
-            uiModel.copy(
-                id = reservationInfo.theaterId,
-                dateTime = reservationInfo.dateTime,
-                ticketCount = reservationInfo.ticketCount,
-            )
-    }
+    override fun loadScreen(reservationInfo: ReservationInfo) {
+        screenRepository.findByScreenId(
+            theaterId = reservationInfo.theaterId,
+            movieId = reservationInfo.movieId,
+        ).onSuccess { screen ->
+            uiModel =
+                SeatSelectionUiModel(
+                    theaterId = reservationInfo.theaterId,
+                    screen = screen,
+                    dateTime = reservationInfo.dateTime,
+                    ticketCount = reservationInfo.ticketCount,
+                )
+            view.showScreen(screen, uiModel.totalPrice, uiModel.ticketCount)
+        }.onFailure { e ->
+            when (e) {
+                is NoSuchElementException -> {
+                    view.showToastMessage(e)
+                    view.navigateBackToPrevious()
+                }
 
-    override fun loadScreen(
-        theaterId: Int,
-        movieId: Int,
-    ) {
-        screenRepository.findByScreenId(theaterId = theaterId, movieId = movieId)
-            .onSuccess { screen ->
-                uiModel = uiModel.copy(screen = screen)
-                view.showScreen(screen, uiModel.totalPrice, uiModel.ticketCount)
-            }.onFailure { e ->
-                when (e) {
-                    is NoSuchElementException -> {
-                        view.showToastMessage(e)
-                        view.navigateBackToPrevious()
-                    }
-
-                    else -> {
-                        view.showToastMessage(e)
-                        view.navigateBackToPrevious()
-                    }
+                else -> {
+                    view.showToastMessage(e)
+                    view.navigateBackToPrevious()
                 }
             }
+        }
     }
 
     override fun loadSeatBoard(id: Int) {
@@ -116,7 +112,7 @@ class SeatSelectionPresenter(
                 thread {
                     reservationRepository.saveReservation(
                         screen.movie.id,
-                        uiModel.id,
+                        uiModel.theaterId,
                         screen.movie.title,
                         uiModel.ticketCount,
                         uiModel.userSeat.seatModels.filter { seatModel -> seatModel.isSelected }
