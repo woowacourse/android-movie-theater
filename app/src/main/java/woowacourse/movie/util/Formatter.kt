@@ -21,7 +21,7 @@ fun Int.formatSeatColumn(): String {
 }
 
 fun String.unFormatSeatColumn(): Int {
-    return substring(1).toInt()
+    return substring(1).toInt() - 1
 }
 
 fun MovieSeat.formatSeat(): String {
@@ -30,7 +30,7 @@ fun MovieSeat.formatSeat(): String {
 
 fun MovieSelectedSeats.formatSeats(): String {
     return selectedSeats.joinToString(SELECTED_SEATS_SEPARATOR) { seat ->
-        seat.row.formatSeatRow() + seat.column.toString()
+        seat.row.formatSeatRow() + seat.column.formatSeatColumn()
     }
 }
 
