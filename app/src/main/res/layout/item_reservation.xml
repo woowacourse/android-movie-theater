@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="reservation"
+            type="woowacourse.movie.model.Reservation" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tool="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="10dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="10dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_ticket_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@{reservation.screeningDate}"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_ticket_title"
+            app:layout_constraintStart_toStartOf="@id/gl_start"
+            app:layout_constraintTop_toTopOf="@id/gl_top"
+            tool:text="2024.04.10" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_divider_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/text_divider"
+            app:layout_constraintBaseline_toBaselineOf="@id/tv_ticket_date"
+            app:layout_constraintStart_toEndOf="@id/tv_ticket_date" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_ticket_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textSize="12sp"
+            android:text="@{reservation.screeningTime}"
+            app:layout_constraintBaseline_toBaselineOf="@id/tv_ticket_date"
+            app:layout_constraintStart_toEndOf="@id/tv_divider_1"
+            tool:text="17:00" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_divider_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/text_divider"
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/tv_ticket_date"
+            app:layout_constraintStart_toEndOf="@id/tv_ticket_time" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_ticket_theater"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{reservation.theaterName}"
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/tv_ticket_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_divider_2"
+            tool:text="선릉 극장" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_ticket_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{reservation.movieTitle}"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/gl_bottom"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_start"
+            app:layout_constraintTop_toBottomOf="@id/tv_ticket_date"
+            tool:text="영화 제목" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
