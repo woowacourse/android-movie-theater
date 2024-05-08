@@ -52,8 +52,8 @@ class DetailActivity : BaseMvpBindingActivity<ActivityDetailBinding>(), View {
     override fun showScreen(screen: Screen) {
         binding.screen = screen
         binding.count = presenter.count
-        presenter.createDateSpinnerAdapter(screen.selectableDates)
-        presenter.createTimeSpinnerAdapter(screen.selectableDates.first())
+        presenter.loadDateSpinnerAdapter(screen.selectableDates)
+        presenter.loadTimeSpinnerAdapter(screen.selectableDates.first())
     }
 
     override fun showDateSpinnerAdapter(screenDates: List<ScreenDate>) {
@@ -113,7 +113,7 @@ class DetailActivity : BaseMvpBindingActivity<ActivityDetailBinding>(), View {
             binding.spinnerDate.onItemSelectedListener =
                 spinnerDateAdapter.initClickListener(localDate)
             binding.spinnerDate.setSelection(position)
-            presenter.createTimeSpinnerAdapter(ScreenDate(localDate))
+            presenter.loadTimeSpinnerAdapter(ScreenDate(localDate))
         }
     }
 

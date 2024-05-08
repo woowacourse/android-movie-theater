@@ -10,7 +10,7 @@ import java.time.LocalDate
 
 class SpinnerDateAdapter(
     context: Context,
-    private val spinnerActionHandler: SpinnerActionHandler,
+    private val actionHandler: SpinnerDateActionHandler,
 ) : ArrayAdapter<LocalDate>(context, android.R.layout.simple_spinner_item) {
     fun initClickListener(preDate: LocalDate?): OnItemSelectedListener {
         return object : OnItemSelectedListener {
@@ -23,8 +23,8 @@ class SpinnerDateAdapter(
                 val localDate = parent.getItemAtPosition(position) as LocalDate
 
                 if (preDate != localDate) {
-                    spinnerActionHandler.registerDate(localDate)
-                    spinnerActionHandler.createTimeSpinnerAdapter(ScreenDate(localDate))
+                    actionHandler.registerDate(localDate)
+                    actionHandler.loadTimeSpinnerAdapter(ScreenDate(localDate))
                 }
             }
 

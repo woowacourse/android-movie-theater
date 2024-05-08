@@ -9,7 +9,7 @@ import java.time.LocalTime
 
 class SpinnerTimeAdapter(
     context: Context,
-    private val spinnerActionHandler: SpinnerActionHandler,
+    private val actionHandler: SpinnerTimeActionHandler,
 ) : ArrayAdapter<LocalTime>(context, android.R.layout.simple_spinner_item) {
     fun initClickListener(): OnItemSelectedListener {
         return object : OnItemSelectedListener {
@@ -19,7 +19,7 @@ class SpinnerTimeAdapter(
                 position: Int,
                 id: Long,
             ) {
-                spinnerActionHandler.registerTime(parent.getItemAtPosition(position) as LocalTime)
+                actionHandler.registerTime(parent.getItemAtPosition(position) as LocalTime)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}

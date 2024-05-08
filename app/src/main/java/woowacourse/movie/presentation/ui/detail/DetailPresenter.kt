@@ -53,11 +53,11 @@ class DetailPresenter(
         }
     }
 
-    override fun createDateSpinnerAdapter(screenDates: List<ScreenDate>) {
+    override fun loadDateSpinnerAdapter(screenDates: List<ScreenDate>) {
         view.showDateSpinnerAdapter(screenDates)
     }
 
-    override fun createTimeSpinnerAdapter(screenDate: ScreenDate) {
+    override fun loadTimeSpinnerAdapter(screenDate: ScreenDate) {
         view.showTimeSpinnerAdapter(screenDate)
     }
 
