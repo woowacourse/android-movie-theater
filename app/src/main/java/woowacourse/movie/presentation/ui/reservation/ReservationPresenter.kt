@@ -10,8 +10,6 @@ class ReservationPresenter(
     private val reservationRepository: ReservationRepository,
     private val theaterRepository: TheaterRepository,
 ) : ReservationContract.Presenter {
-    private lateinit var uiModel: ReservationUiModel
-
     override fun loadReservation(id: Long) {
         thread {
             reservationRepository.findReservation(id).onSuccess { reservation ->
@@ -34,7 +32,6 @@ class ReservationPresenter(
 
     private fun processReservation(reservation: Reservation) {
         theaterRepository.findTheaterNameById(reservation.theaterId).onSuccess { theaterName ->
-            uiModel = ReservationUiModel(theaterName = theaterName, reservation = reservation)
             view.showReservation(reservation, theaterName)
         }.onFailure { e ->
             when (e) {
