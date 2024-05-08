@@ -9,9 +9,6 @@ interface ReservationHistoryDAO {
     @Insert
     fun saveReservationHistory(reservationHistoryEntity: ReservationHistoryEntity)
 
-    @Query("SELECT * FROM reservation_history WHERE id = :id")
-    fun findReservationHistoryById(id: Long): ReservationHistoryEntity?
-
     @Query("SELECT * from reservation_history")
     fun findReservationHistories(): List<ReservationHistoryEntity>
 

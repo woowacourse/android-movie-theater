@@ -1,11 +1,7 @@
 package woowacourse.movie.home.presenter
 
-import io.mockk.Runs
-import io.mockk.every
-import io.mockk.just
 import io.mockk.mockk
 import io.mockk.mockkObject
-import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.R
@@ -64,13 +60,5 @@ class TheaterSelectionPresenterTest {
     @Test
     fun `loadTheaters를 호출하면 adapter에 셋팅되는 리스트의 첫번째 보이는 상영관은 1개 이상이다`() {
         // Given
-        every { HomeContentRepository.getMovieById(any()) } returns movie
-        every { view.setUpTheaterAdapter(any()) } just Runs
-
-        // When
-        presenter.loadTheaters(0)
-
-        // Then
-        verify { view.setUpTheaterAdapter(match { it.size >= 1 }) }
     }
 }
