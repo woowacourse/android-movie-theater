@@ -118,8 +118,7 @@ class SeatSelectionActivity : BaseMvpBindingActivity<ActivitySeatSelectionBindin
         val savedUserSeat = savedInstanceState.getSerializable(PUT_STATE_KEY_USER_SEAT) as UserSeat?
         savedUserSeat?.let { userSeat ->
             userSeat.seatModels.forEach { seat ->
-                val n = seat.copy(isSelected = false)
-                presenter.clickSeat(n)
+                presenter.clickSeat(seat.copy(isSelected = false))
             }
         }
     }
