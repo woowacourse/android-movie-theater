@@ -1,5 +1,8 @@
 package woowacourse.movie.domain.model.reservation
 
+import android.content.Context
+import android.util.Log
+import woowacourse.movie.R
 import woowacourse.movie.domain.model.ScreeningInfo
 import woowacourse.movie.domain.model.reservation.date.ScreeningDateTime
 
@@ -23,5 +26,15 @@ class ReservationMovieInfo(
         minute: Int,
     ) {
         dateTime.changeScreeningTime(hour, minute)
+    }
+
+    fun reservationSchedule(context: Context): String {
+        val info = context.getString(
+            R.string.reservation_schedule_format, "24-3-1",
+            "15:00",
+            theaterName,
+        )
+        Log.d("info",info)
+        return info
     }
 }
