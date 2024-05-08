@@ -29,7 +29,6 @@ class SettingFragment :
     private var _binding: FragmentSettingBinding? = null
     private val binding get() = _binding!!
 
-    private val sharedPreferencesManager by lazy { SharedPreferencesManager(requireContext()) }
     private val ticketAlarmRegister by lazy { TicketAlarmRegister(requireContext()) }
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
@@ -84,6 +83,8 @@ class SettingFragment :
     }
 
     private fun initializeNotificationSwitch() {
+        val sharedPreferencesManager = (requireActivity().application as MovieTheaterApplication).sharedPreferencesManager
+
         binding.switchNotification.isChecked = sharedPreferencesManager.getBoolean(KEY_NOTIFICATION, DEFAULT_VALUE_NOTIFICATION)
         binding.switchNotification.setOnCheckedChangeListener { _, isChecked ->
             sharedPreferencesManager.setBoolean(KEY_NOTIFICATION, isChecked)
