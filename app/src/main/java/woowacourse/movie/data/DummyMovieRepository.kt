@@ -4,42 +4,94 @@ import woowacourse.movie.model.Advertisement
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.Reservation
 import woowacourse.movie.model.Screening
+import woowacourse.movie.model.ScreeningSchedule
 import woowacourse.movie.model.Seats
 import woowacourse.movie.model.Theater
 import woowacourse.movie.repository.MovieRepository
 import java.time.LocalDateTime
 
 object DummyMovieRepository : MovieRepository {
-    private val screenings: List<Screening> =
+    private val screeningSchedules: List<ScreeningSchedule> =
         listOf(
-            Screening.STUB_A,
-            Screening.STUB_B,
-            Screening.STUB_C,
-            Screening.STUB_D,
-            Screening.STUB_E,
+            ScreeningSchedule.STUB_A,
+            ScreeningSchedule.STUB_B,
+            ScreeningSchedule.STUB_C,
+            ScreeningSchedule.STUB_D,
+            ScreeningSchedule.STUB_E,
         )
 
-    private val theaters: List<Theater> =
-        listOf(Theater.STUB_A, Theater.STUB_B, Theater.STUB_C)
+    private val screenings: List<Screening> by lazy {
+        var id = 0L
+        val listA =
+            (1..3).flatMap { day ->
+                (9..15 step 3).map { time ->
+                    id++
+                    Screening(id, Movie.STUB_A, Theater.STUB_A, LocalDateTime.of(2024, 3, day, time, 0))
+                }
+            }
+
+        val listB =
+            (1..3).flatMap { day ->
+                (9..15 step 3).map { time ->
+                    id++
+                    Screening(id, Movie.STUB_A, Theater.STUB_B, LocalDateTime.of(2024, 3, day, time, 0))
+                }
+            }
+
+        val listC =
+            (1..3).flatMap { day ->
+                (9..15 step 3).map { time ->
+                    id++
+                    Screening(id, Movie.STUB_A, Theater.STUB_C, LocalDateTime.of(2024, 3, day, time, 0))
+                }
+            }
+
+        val listD =
+            (1..3).flatMap { day ->
+                (9..15 step 3).map { time ->
+                    id++
+                    Screening(id, Movie.STUB_B, Theater.STUB_C, LocalDateTime.of(2024, 3, day, time, 0))
+                }
+            }
+
+        val listE =
+            (1..3).flatMap { day ->
+                (9..15 step 3).map { time ->
+                    id++
+                    Screening(id, Movie.STUB_C, Theater.STUB_C, LocalDateTime.of(2024, 3, day, time, 0))
+                }
+            }
+
+        listA + listB + listC + listD + listE
+    }
+
+    private val theaters: List<Theater> = listOf(Theater.STUB_A, Theater.STUB_B, Theater.STUB_C)
     private var reservations: List<Reservation> = emptyList()
     private var reservationId: Long = 0
 
-    override fun movies(): List<Movie> = screenings.map { it.movie }.distinct()
+    override fun movies(): List<Movie> = screeningSchedules.map { it.movie }.distinct()
 
     override fun advertisements(): List<Advertisement> = List(10) { Advertisement() }
 
-    override fun screeningById(id: Long): Screening? = screenings.firstOrNull { it.id == id }
+    override fun screeningById(id: Long): Screening? = screenings[id.toInt()]
 
-    override fun screeningByMovieIdAndTheaterId(
+    override fun screeningsByMovieIdAndTheaterId(
         movieId: Long,
         theaterId: Long,
-    ): Screening? =
-        screenings.firstOrNull {
+    ): List<Screening> = screenings.filter { it.movie.id == movieId && it.theater.id == theaterId }
+
+    override fun screeningScheduleById(id: Long): ScreeningSchedule? = screeningSchedules.firstOrNull { it.id == id }
+
+    override fun screeningScheduleByMovieIdAndTheaterId(
+        movieId: Long,
+        theaterId: Long,
+    ): ScreeningSchedule? =
+        screeningSchedules.firstOrNull {
             it.movie.id == movieId && it.theater.id == theaterId
         }
 
     override fun theatersByMovieId(movieId: Long): List<Theater> =
-        screenings.filter {
+        screeningSchedules.filter {
             it.movie.id == movieId
         }.map { it.theater }
 
@@ -47,14 +99,12 @@ object DummyMovieRepository : MovieRepository {
 
     override fun makeReservation(
         screening: Screening,
-        dateTime: LocalDateTime,
         seats: Seats,
     ): Long {
         reservations +=
             Reservation(
                 id = ++reservationId,
                 screening = screening,
-                screenDateTime = dateTime,
                 seats = seats,
             )
         return reservationId

@@ -7,7 +7,7 @@ fun Reservation.toPurchaseConfirmationUiModel(): PurchaseConfirmationUiModel {
     return PurchaseConfirmationUiModel(
         screening.movie.title,
         cancelDeadLine,
-        screenDateTime,
+        screening.localDateTime,
         seats.count,
         seats.toSeatUiModels(),
         totalPrice.price,

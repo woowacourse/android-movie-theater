@@ -1,9 +1,9 @@
 package woowacourse.movie.moviedetail.uimodel
 
 import woowacourse.movie.model.HeadCount
-import woowacourse.movie.model.Screening
+import woowacourse.movie.model.ScreeningSchedule
 
-fun Screening.toMovieDetailUiModel(): MovieDetailUiModel =
+fun ScreeningSchedule.toMovieDetailUiModel(): MovieDetailUiModel =
     MovieDetailUiModel(
         id,
         movie.title,
@@ -17,10 +17,10 @@ fun HeadCount.toHeadCountUiModel(): HeadCountUiModel = HeadCountUiModel(count)
 
 fun HeadCountUiModel.toHeadCount(): HeadCount = HeadCount(count.toInt())
 
-fun Screening.toScreeningDateTimeUiModel(): ScreeningDateTimesUiModel =
-    ScreeningDateTimesUiModel(
+fun ScreeningSchedule.toScheduleUiModels(): ScheduleUiModels =
+    ScheduleUiModels(
         schedules.map {
-            ScreeningDateTimeUiModel(
+            ScheduleUiModel(
                 it.date,
                 it.times,
             )

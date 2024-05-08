@@ -61,8 +61,8 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
     }
 
     private fun initView(bookingInfoUiModel: BookingInfoUiModel) {
-        presenter.initSeats(bookingInfoUiModel.screenMovieId)
-        presenter.loadReservationInfo(bookingInfoUiModel.screenMovieId)
+        presenter.initSeats(bookingInfoUiModel.screeningId)
+        presenter.loadReservationInfo(bookingInfoUiModel.screeningId)
         presenter.initMaxCount(bookingInfoUiModel.count.toHeadCount())
         binding.btnSelectSeatReserve.setOnClickListener {
             confirmAlertDialog()

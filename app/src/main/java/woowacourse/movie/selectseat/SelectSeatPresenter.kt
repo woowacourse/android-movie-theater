@@ -71,7 +71,6 @@ class SelectSeatPresenter(
                 )
             repository.makeReservation(
                 screening,
-                bookingInfoUiModel.localDateTime(),
                 Seats(selectedSeats.toSeats()),
             )
         }.onSuccess {

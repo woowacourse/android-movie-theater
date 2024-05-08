@@ -10,8 +10,8 @@ class TheaterPresenter(
         val theaters = repository.theatersByMovieId(movieId)
         runCatching {
             theaters.map { theater ->
-                val screening = repository.screeningByMovieIdAndTheaterId(movieId, theater.id) ?: error("선택한 상영이 존재하지 않습니다")
-                screening.theater.toTheaterUiModel(screening.totalScreeningTimesNum())
+                val screeningSchedule = repository.screeningScheduleByMovieIdAndTheaterId(movieId, theater.id) ?: error("선택한 상영이 존재하지 않습니다")
+                screeningSchedule.theater.toTheaterUiModel(screeningSchedule.totalScreeningTimesNum())
             }
         }.onSuccess {
             view.showTheaters(it)
@@ -23,9 +23,9 @@ class TheaterPresenter(
         theaterId: Long,
     ) {
         runCatching {
-            repository.screeningByMovieIdAndTheaterId(movieId, theaterId) ?: error("선택한 상영이 존재하지 않습니다")
+            repository.screeningScheduleByMovieIdAndTheaterId(movieId, theaterId) ?: error("선택한 상영이 존재하지 않습니다")
         }.onSuccess {
-            view.navigateToMovieDetail(it.id, theaterId)
+            view.navigateToMovieDetail(it.id)
         }
     }
 }

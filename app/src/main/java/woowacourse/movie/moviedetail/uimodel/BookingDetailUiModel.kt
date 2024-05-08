@@ -19,16 +19,10 @@ data class BookingDetailUiModel(
 
     fun updateCount(updatedCount: HeadCountUiModel): BookingDetailUiModel = BookingDetailUiModel(updatedCount, date, time)
 
-    fun updateCount(updatedCount: Int): BookingDetailUiModel = BookingDetailUiModel(HeadCountUiModel(updatedCount), date, time)
-
-    fun updateDate(updatedDate: SelectedDateUiModel): BookingDetailUiModel = BookingDetailUiModel(count, updatedDate, time)
-
     fun updateDate(
         position: Int,
         updatedDate: String,
     ): BookingDetailUiModel = BookingDetailUiModel(count, SelectedDateUiModel(position, updatedDate), time)
-
-    fun updateTime(updatedTime: SelectedTimeUiModel): BookingDetailUiModel = BookingDetailUiModel(count, date, updatedTime)
 
     fun updateTime(
         position: Int,
