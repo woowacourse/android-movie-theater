@@ -1,7 +1,5 @@
 package woowacourse.movie.presentation.ui.seatselection
 
-import android.os.Handler
-import android.os.Looper
 import woowacourse.movie.domain.model.toSeatModel
 import woowacourse.movie.domain.repository.NotificationRepository
 import woowacourse.movie.domain.repository.ReservationRepository
@@ -24,8 +22,6 @@ class SeatSelectionPresenter(
     private var uiModel: SeatSelectionUiModel = SeatSelectionUiModel()
     val userSeat: UserSeat
         get() = UserSeat(uiModel.userSeat.seatModels.filter { it.isSelected })
-
-    private val handler = Handler(Looper.getMainLooper())
 
     override fun updateUiModel(reservationInfo: ReservationInfo) {
         uiModel =
@@ -129,10 +125,8 @@ class SeatSelectionPresenter(
                     ).onSuccess { id ->
                         createNotification(id, screen.movie.title, dateTime)
                     }.onFailure { e ->
-                        handler.post {
-                            view.showToastMessage(e)
-                            view.navigateBackToPrevious()
-                        }
+                        view.showToastMessage(e)
+                        view.navigateBackToPrevious()
                     }
                 }
             }
@@ -146,15 +140,11 @@ class SeatSelectionPresenter(
     ) {
         notificationRepository.createNotification(reservationId, movieTitle, screeningDateTime)
             .onSuccess {
-                handler.post {
-                    view.showToastMessage(ReservationSuccessMessage)
-                    view.navigateToReservation(reservationId)
-                }
+                view.showToastMessage(ReservationSuccessMessage)
+                view.navigateToReservation(reservationId)
             }.onFailure { e ->
-                handler.post {
-                    view.showToastMessage(e)
-                    view.navigateBackToPrevious()
-                }
+                view.showToastMessage(e)
+                view.navigateBackToPrevious()
             }
     }
 }

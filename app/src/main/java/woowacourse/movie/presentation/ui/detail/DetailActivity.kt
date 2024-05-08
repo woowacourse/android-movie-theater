@@ -75,7 +75,7 @@ class DetailActivity : BaseMvpBindingActivity<ActivityDetailBinding>(), View {
         navigateBackToPrevious()
     }
 
-    override fun navigateBackToPrevious() = finish()
+    override fun navigateBackToPrevious() = runOnUiThread { finish() }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         navigateBackToPrevious()

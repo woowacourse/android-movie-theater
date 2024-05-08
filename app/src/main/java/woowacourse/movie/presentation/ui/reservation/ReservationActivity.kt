@@ -26,11 +26,13 @@ class ReservationActivity : BaseMvpBindingActivity<ActivityReservationBinding>()
         reservation: Reservation,
         theaterName: String,
     ) {
-        binding.reservation = reservation
-        binding.theaterName = theaterName
+        runOnUiThread {
+            binding.reservation = reservation
+            binding.theaterName = theaterName
+        }
     }
 
-    override fun navigateBackToPrevious() = finish()
+    override fun navigateBackToPrevious() = runOnUiThread { finish() }
 
     companion object {
         private const val PUT_EXTRA_KEY_RESERVATION_ID = "reservationId"

@@ -32,7 +32,9 @@ class ReservationHistoryFragment :
     }
 
     override fun showReservations(reservations: List<Reservation>) {
-        adapter.updateReservations(reservations)
+        requireActivity().runOnUiThread {
+            adapter.updateReservations(reservations)
+        }
     }
 
     override fun navigateToReservation(reservationId: Long) {

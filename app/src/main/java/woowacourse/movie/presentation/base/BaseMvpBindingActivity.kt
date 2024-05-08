@@ -26,27 +26,35 @@ abstract class BaseMvpBindingActivity<T : ViewDataBinding> : AppCompatActivity()
     abstract fun initStartView()
 
     override fun showToastMessage(messageType: MessageType) {
-        Toast.makeText(this, messageType.toMessage(), Toast.LENGTH_SHORT).show()
+        runOnUiThread {
+            Toast.makeText(this, messageType.toMessage(), Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun showToastMessage(e: Throwable) {
-        Toast.makeText(this, e.toErrorMessage(), Toast.LENGTH_SHORT).show()
+        runOnUiThread {
+            Toast.makeText(this, e.toErrorMessage(), Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun showSnackBar(e: Throwable) {
-        Snackbar.make(
-            findViewById(android.R.id.content),
-            e.toErrorMessage(),
-            Snackbar.LENGTH_SHORT,
-        ).show()
+        runOnUiThread {
+            Snackbar.make(
+                findViewById(android.R.id.content),
+                e.toErrorMessage(),
+                Snackbar.LENGTH_SHORT,
+            ).show()
+        }
     }
 
     override fun showSnackBar(messageType: MessageType) {
-        Snackbar.make(
-            findViewById(android.R.id.content),
-            messageType.toMessage(),
-            Snackbar.LENGTH_SHORT,
-        ).show()
+        runOnUiThread {
+            Snackbar.make(
+                findViewById(android.R.id.content),
+                messageType.toMessage(),
+                Snackbar.LENGTH_SHORT,
+            ).show()
+        }
     }
 
     private fun MessageType.toMessage(): String {

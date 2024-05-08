@@ -18,7 +18,9 @@ class SettingFragment : BaseMvpBindingFragment<FragmentSettingBinding>(), View {
     }
 
     override fun showNotificationMode(mode: Boolean) {
-        binding.mode = mode
+        requireActivity().runOnUiThread {
+            binding.mode = mode
+        }
     }
 
     companion object {
