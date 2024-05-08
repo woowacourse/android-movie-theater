@@ -1,13 +1,14 @@
 package woowacourse.movie.feature.home.movie
 
 import android.view.View
+import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import androidx.test.runner.AndroidJUnit4
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
@@ -22,17 +23,9 @@ import woowacourse.movie.feature.home.movie.adapter.MovieViewHolder
 
 @RunWith(AndroidJUnit4::class)
 class MovieHomeFragmentTest {
-    @get:Rule
-    val activityRule = ActivityScenarioRule(MovieMainActivity::class.java)
-
     @Before
     fun setUp() {
-        activityRule.scenario.onActivity {
-            it.supportFragmentManager.beginTransaction().replace(
-                R.id.fragment_container_view,
-                MovieHomeFragment(),
-            ).commit()
-        }
+        launchFragmentInContainer<MovieHomeFragment>()
     }
 
     @Test
