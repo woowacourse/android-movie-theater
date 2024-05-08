@@ -13,14 +13,14 @@ import java.time.LocalTime
 class MovieResultPresenter(private val movieResultContractView: MovieResultContract.View) :
     MovieResultContract.Presenter {
     override fun loadMovieTicket(
-        id: Long,
+        movieId: Long,
         date: String,
         time: String,
         count: Int,
         seats: String,
         theaterName: String,
     ) {
-        val movieData = getMovieById(id)
+        val movieData = getMovieById(movieId)
 
         val movieSelectedSeats = MovieSelectedSeats(count)
         seats.split(", ").forEach { seat ->
@@ -35,6 +35,7 @@ class MovieResultPresenter(private val movieResultContractView: MovieResultContr
         movieResultContractView.displayMovieTicket(
             movieData?.let { movie ->
                 MovieTicket(
+                    movieId,
                     movie.title,
                     LocalDate.parse(date),
                     LocalTime.parse(time),
