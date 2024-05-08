@@ -12,7 +12,6 @@ import woowacourse.movie.databinding.ActivityMovieResultBinding
 import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.result.presenter.MovieResultPresenter
 import woowacourse.movie.result.presenter.contract.MovieResultContract
-import woowacourse.movie.util.Formatter.formatRow
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_DATE
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
@@ -57,17 +56,6 @@ class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
     override fun displayMovieTicket(movieTicketData: MovieTicket?) {
         movieTicketData?.let { movieTicket ->
             binding.movieTicket = movieTicket
-            val seats =
-                movieTicket.seats.selectedSeats.joinToString(", ") { seat ->
-                    getString(R.string.seat, seat.row.formatRow(), seat.column.toString())
-                }
-            binding.resultInformation =
-                resources.getString(
-                    R.string.result,
-                    movieTicket.seats.count,
-                    seats,
-                    movieTicket.theaterName,
-                )
         }
     }
 
