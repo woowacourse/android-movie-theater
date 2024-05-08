@@ -10,12 +10,9 @@ interface ReservationContract {
     interface View {
         fun showMovieInformation(movie: Movie)
 
-        fun showScreeningPeriod(movie: Movie)
+        fun showScreeningDates(screeningDates: List<LocalDate>)
 
-        fun showScreeningTimes(
-            screeningTimes: List<LocalTime>,
-            selectedDate: String,
-        )
+        fun showScreeningTimes(screeningTimes: List<LocalTime>)
 
         fun changeHeadCount(count: Int)
 
@@ -28,21 +25,25 @@ interface ReservationContract {
             count: HeadCount,
         )
 
-        fun getScreeningDate(): LocalDate
-
-        fun getScreeningTime(): LocalTime
-
         fun showDateTime(dateTime: ScreeningDateTime)
 
         fun showErrorSnackBar()
+
+        fun showScreeningDate(selectedDateId: Long)
+
+        fun showScreeningTime(selectedTimeId: Long)
     }
 
     interface Presenter {
         fun loadMovie()
 
-        fun loadScreeningPeriod()
+        fun loadScreeningDates()
 
-        fun loadScreeningTimes(selectedDate: String)
+        fun loadScreeningTimes()
+
+        fun selectScreeningDate(selectedDateId: Long)
+
+        fun selectScreeningTime(selectedTimeId: Long)
 
         fun increaseHeadCount()
 

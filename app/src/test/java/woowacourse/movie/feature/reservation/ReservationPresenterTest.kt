@@ -9,6 +9,8 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import woowacourse.movie.TestFixture.getMockScreeningTimes
+import woowacourse.movie.TestFixture.mockMovies
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.theater.TheaterDao
 
@@ -37,21 +39,22 @@ class ReservationPresenterTest {
     fun `영화 정보를 보여준다`() {
         every { view.showMovieInformation(any()) } just runs
         presenter.loadMovie()
-        verify { view.showMovieInformation(any()) }
+        verify { view.showMovieInformation(mockMovies[0]) }
     }
 
     @Test
-    fun `상영 기간을 보여준다`() {
-        every { view.showScreeningPeriod(any()) } just runs
-        presenter.loadScreeningPeriod()
-        verify { view.showScreeningPeriod(any()) }
+    fun `상영 기간을 불러온다`() {
+        every { view.showScreeningDates(any()) } just runs
+        presenter.loadScreeningDates()
+        verify { view.showScreeningDates(mockMovies[0].screeningPeriod) }
     }
 
     @Test
-    fun `상영 시간을 보여준다`() {
-        every { view.showScreeningTimes(any(), any()) } just runs
-        presenter.loadScreeningTimes("2024-03-01")
-        verify { view.showScreeningTimes(any(), any()) }
+    fun `상영 시간을 불러온다`() {
+        every { view.showScreeningTimes(any()) } just runs
+        presenter.loadScreeningTimes()
+        val mockScreeningTimes = getMockScreeningTimes(movieId = 0, theaterId = 0)
+        verify { view.showScreeningTimes(mockScreeningTimes) }
     }
 
     @Test
@@ -89,5 +92,12 @@ class ReservationPresenterTest {
             presenter.increaseHeadCount()
         }
         verify { view.changeHeadCount(3) }
+    }
+
+    @Test
+    fun `선택된 상영시간을 보여준다`() {
+        every { view.showScreeningTime(0) } just runs
+        presenter.selectScreeningTime(0)
+        verify { view.showScreeningTime(0) }
     }
 }

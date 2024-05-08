@@ -2,6 +2,7 @@ package woowacourse.movie.feature.reservation
 
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.theater.TheaterDao
+import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.Movie.Companion.DEFAULT_MOVIE_ID
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.result.ChangeTicketCountResult
@@ -14,31 +15,44 @@ import java.time.LocalTime
 
 class ReservationPresenter(
     private val view: ReservationContract.View,
-    private val screeningDao: ScreeningDao,
+    screeningDao: ScreeningDao,
     private val theaterDao: TheaterDao,
     private val movieId: Int,
     private val theaterId: Int,
     savedHeadCount: Int,
 ) : ReservationContract.Presenter {
     private val headCount = HeadCount(savedHeadCount)
+    private val movie: Movie = screeningDao.find(movieId)
+    private val screeningDates: List<LocalDate> = movie.screeningPeriod
+    private lateinit var screeningTimes: List<LocalTime>
+    private var screeningDateId: Long = 0
+    private var screeningTimeId: Long = 0
 
     init {
         view.changeHeadCount(savedHeadCount)
     }
 
     override fun loadMovie() {
-        val movie = screeningDao.find(movieId)
         view.showMovieInformation(movie)
     }
 
-    override fun loadScreeningPeriod() {
-        val movie = screeningDao.find(movieId)
-        view.showScreeningPeriod(movie)
+    override fun loadScreeningDates() {
+        view.showScreeningDates(screeningDates)
     }
 
-    override fun loadScreeningTimes(selectedDate: String) {
-        val theaterTimes: List<LocalTime> = theaterDao.findScreeningTimesByMovieId(theaterId, movieId)
-        view.showScreeningTimes(theaterTimes, selectedDate)
+    override fun loadScreeningTimes() {
+        screeningTimes = theaterDao.findScreeningTimesByMovieId(theaterId, movieId)
+        view.showScreeningTimes(screeningTimes)
+    }
+
+    override fun selectScreeningDate(selectedDateId: Long) {
+        screeningDateId = selectedDateId
+        view.showScreeningDate(screeningDateId)
+    }
+
+    override fun selectScreeningTime(selectedTimeId: Long) {
+        screeningTimeId = selectedTimeId
+        view.showScreeningTime(screeningTimeId)
     }
 
     override fun increaseHeadCount() {
@@ -52,9 +66,9 @@ class ReservationPresenter(
     }
 
     override fun sendTicketToSeatSelection() {
-        val date: LocalDate = view.getScreeningDate()
-        val time: LocalTime = view.getScreeningTime()
-        val dateTime = ScreeningDateTime(date, time)
+        val screeningDate = screeningDates[screeningDateId.toInt()]
+        val screeningTime = screeningTimes[screeningTimeId.toInt()]
+        val dateTime = ScreeningDateTime(screeningDate, screeningTime)
         view.showDateTime(dateTime)
         view.navigateToSeatSelection(dateTime, movieId, theaterId, headCount)
     }

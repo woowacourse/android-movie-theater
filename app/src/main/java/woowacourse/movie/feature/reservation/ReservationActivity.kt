@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
@@ -42,28 +43,21 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
 
         val savedHeadCount = bringSavedHeadCount(savedInstanceState)
         initPresenter(savedHeadCount)
-
         with(presenter) {
             handleUndeliveredData()
             loadMovie()
-            loadScreeningPeriod()
+            loadScreeningDates()
+            loadScreeningTimes()
         }
-        updateScreeningTimes(DEFAULT_TIME_ID)
+        setOnScreeningDateSelectedListener()
+        setOnScreeningTimeSelectedListener()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.apply {
             putInt(HEAD_COUNT, binding.tvReservationHeadCount.text.toString().toInt())
-            putInt(SCREENING_PERIOD, binding.spinnerReservationScreeningDate.selectedItemPosition)
-            putInt(SCREENING_TIME, binding.spinnerReservationScreeningTime.selectedItemPosition)
         }
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        val selectedTimeId = savedInstanceState.getInt(SCREENING_TIME, DEFAULT_TIME_ID)
-        updateScreeningTimes(selectedTimeId)
     }
 
     override fun showMovieInformation(movie: Movie) {
@@ -74,19 +68,16 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         }
     }
 
-    override fun showScreeningPeriod(movie: Movie) {
+    override fun showScreeningDates(screeningDates: List<LocalDate>) {
         binding.spinnerReservationScreeningDate.adapter =
             ArrayAdapter(
                 this,
                 android.R.layout.simple_spinner_item,
-                movie.screeningPeriod,
+                screeningDates,
             )
     }
 
-    override fun showScreeningTimes(
-        screeningTimes: List<LocalTime>,
-        selectedDate: String,
-    ) {
+    override fun showScreeningTimes(screeningTimes: List<LocalTime>) {
         binding.spinnerReservationScreeningTime.adapter =
             ArrayAdapter(
                 this,
@@ -137,33 +128,21 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
 
     private fun bringSavedHeadCount(savedInstanceState: Bundle?) = savedInstanceState?.getInt(HEAD_COUNT) ?: DEFAULT_HEAD_COUNT
 
-    private fun updateScreeningTimes(selectedTimeId: Int? = null) {
-        binding.spinnerReservationScreeningDate.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long,
-                ) {
-                    val selectedDate = binding.spinnerReservationScreeningDate.selectedItem.toString()
-                    presenter.loadScreeningTimes(selectedDate)
-                    selectedTimeId?.let {
-                        if (selectedTimeId < binding.spinnerReservationScreeningTime.count) {
-                            binding.spinnerReservationScreeningTime.setSelection(it)
-                        }
-                    }
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    Log.d(SELECTED_DATE_TAG, NOTHING_SELECTED_MESSAGE)
-                }
-            }
+    private fun setOnScreeningDateSelectedListener() {
+        binding.spinnerReservationScreeningDate.setOnItemSelectedListener { selectDateId -> presenter.selectScreeningDate(selectDateId) }
     }
 
-    override fun getScreeningDate(): LocalDate = LocalDate.parse(binding.spinnerReservationScreeningDate.selectedItem.toString())
+    private fun setOnScreeningTimeSelectedListener() {
+        binding.spinnerReservationScreeningTime.setOnItemSelectedListener { selectTimeId -> presenter.selectScreeningTime(selectTimeId) }
+    }
 
-    override fun getScreeningTime(): LocalTime = LocalTime.parse(binding.spinnerReservationScreeningTime.selectedItem.toString())
+    override fun showScreeningDate(selectedDateId: Long) {
+        binding.spinnerReservationScreeningDate.setSelection(selectedDateId.toInt())
+    }
+
+    override fun showScreeningTime(selectedTimeId: Long) {
+        binding.spinnerReservationScreeningTime.setSelection(selectedTimeId.toInt())
+    }
 
     override fun showDateTime(dateTime: ScreeningDateTime) {
         binding.dateTime = dateTime
@@ -183,14 +162,31 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         snackBar.show()
     }
 
+    private fun Spinner.setOnItemSelectedListener(onSelectItem: OnSelectedSpinnerItem) {
+        onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long,
+                ) {
+                    onSelectItem(id)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    Log.d(SPINNER_TAG, NOTHING_SELECTED_MESSAGE)
+                }
+            }
+    }
+
     companion object {
         const val TICKET = "ticket"
         const val HEAD_COUNT = "headCount"
         const val SCREENING_DATE_TIME = "screeningDateTime"
-        const val SELECTED_DATE_TAG = "notSelectedDate"
-        const val NOTHING_SELECTED_MESSAGE = "nothingSelected"
-        private const val DEFAULT_TIME_ID = 0
-        private const val SCREENING_TIME = "screeningTime"
-        private const val SCREENING_PERIOD = "screeningPeriod"
+        private const val SPINNER_TAG = "spinner"
+        private const val NOTHING_SELECTED_MESSAGE = "nothingSelected"
     }
 }
+
+typealias OnSelectedSpinnerItem = (itemId: Long) -> Unit
