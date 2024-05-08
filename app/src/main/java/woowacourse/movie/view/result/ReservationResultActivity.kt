@@ -71,7 +71,6 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
         Thread {
             runCatching {
                 val ticketId = intent.getLongExtra(RESERVATION_TICKET_ID, DEFAULT_TICKET_ID)
-                Log.d("ticketId", ticketId.toString())
                 val reservationTicket = presenter.loadTicketWithTicketId(ticketId)
                 reservationTicket ?: throw NoSuchElementException()
             }.onSuccess {
