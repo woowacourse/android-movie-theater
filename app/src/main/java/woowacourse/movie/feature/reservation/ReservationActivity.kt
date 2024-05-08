@@ -107,35 +107,6 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         startActivity(intent)
     }
 
-    private fun initPresenter(savedHeadCount: Int) {
-        val movieId = receiveMovieId()
-        val theaterId = receiveTheaterId()
-        presenter =
-            ReservationPresenter(
-                view = this,
-                ScreeningDao(),
-                TheaterDao(),
-                movieId,
-                theaterId,
-                savedHeadCount,
-            )
-        binding.presenter = presenter
-    }
-
-    private fun receiveMovieId() = intent.getIntExtra(MOVIE_ID, DEFAULT_MOVIE_ID)
-
-    private fun receiveTheaterId() = intent.getIntExtra(THEATER_ID, DEFAULT_THEATER_ID)
-
-    private fun bringSavedHeadCount(savedInstanceState: Bundle?) = savedInstanceState?.getInt(HEAD_COUNT) ?: DEFAULT_HEAD_COUNT
-
-    private fun setOnScreeningDateSelectedListener() {
-        binding.spinnerReservationScreeningDate.setOnItemSelectedListener { selectDateId -> presenter.selectScreeningDate(selectDateId) }
-    }
-
-    private fun setOnScreeningTimeSelectedListener() {
-        binding.spinnerReservationScreeningTime.setOnItemSelectedListener { selectTimeId -> presenter.selectScreeningTime(selectTimeId) }
-    }
-
     override fun showScreeningDate(selectedDateId: Long) {
         binding.spinnerReservationScreeningDate.setSelection(selectedDateId.toInt())
     }
@@ -160,6 +131,35 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
             finish()
         }
         snackBar.show()
+    }
+
+    private fun bringSavedHeadCount(savedInstanceState: Bundle?) = savedInstanceState?.getInt(HEAD_COUNT) ?: DEFAULT_HEAD_COUNT
+
+    private fun initPresenter(savedHeadCount: Int) {
+        val movieId = receiveMovieId()
+        val theaterId = receiveTheaterId()
+        presenter =
+            ReservationPresenter(
+                view = this,
+                ScreeningDao(),
+                TheaterDao(),
+                movieId,
+                theaterId,
+                savedHeadCount,
+            )
+        binding.presenter = presenter
+    }
+
+    private fun receiveMovieId() = intent.getIntExtra(MOVIE_ID, DEFAULT_MOVIE_ID)
+
+    private fun receiveTheaterId() = intent.getIntExtra(THEATER_ID, DEFAULT_THEATER_ID)
+
+    private fun setOnScreeningDateSelectedListener() {
+        binding.spinnerReservationScreeningDate.setOnItemSelectedListener { selectDateId -> presenter.selectScreeningDate(selectDateId) }
+    }
+
+    private fun setOnScreeningTimeSelectedListener() {
+        binding.spinnerReservationScreeningTime.setOnItemSelectedListener { selectTimeId -> presenter.selectScreeningTime(selectTimeId) }
     }
 
     private fun Spinner.setOnItemSelectedListener(onSelectItem: OnSelectedSpinnerItem) {
