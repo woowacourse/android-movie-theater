@@ -1,6 +1,5 @@
 package woowacourse.movie.view.setting
 
-import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,27 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.launch
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.presenter.setting.SettingContract
 import woowacourse.movie.presenter.setting.SettingPresenter
-import woowacourse.movie.repository.ReservationTicketRepositoryImpl
 
 class SettingFragment : Fragment(), SettingContract.View {
-    private lateinit var presenter: SettingPresenter
+    private val presenter: SettingPresenter by lazy {
+        SettingPresenter(view = this)
+    }
     private var _binding: FragmentSettingBinding? = null
     private val binding: FragmentSettingBinding get() = _binding!!
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        presenter =
-            SettingPresenter(
-                view = this,
-                repository = ReservationTicketRepositoryImpl(context),
-            )
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,9 +59,7 @@ class SettingFragment : Fragment(), SettingContract.View {
 
     private fun initView() {
         binding.switchButton.setOnCheckedChangeListener { _, isChecked ->
-            lifecycleScope.launch {
-                presenter.settingAlarm(requireContext(), isChecked)
-            }
+            presenter.settingAlarm(requireContext(), isChecked)
         }
     }
 

@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
 import woowacourse.movie.notification.TicketNotification.NOTIFICATION_ID
@@ -13,12 +14,17 @@ import woowacourse.movie.notification.TicketNotification.PENDING_REQUEST_CODE
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.DEFAULT_TICKET_ID
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.RESERVATION_TICKET_ID
 import woowacourse.movie.view.result.ReservationResultActivity
+import woowacourse.movie.view.setting.SettingFragment.Companion.PUSH_SETTING
 
 class TicketNotificationReceiver : BroadcastReceiver() {
     override fun onReceive(
         context: Context?,
         intent: Intent?,
     ) {
+        val sharedPreferences = context?.getSharedPreferences(PUSH_SETTING, Context.MODE_PRIVATE)
+        val isPushEnabled = sharedPreferences?.getBoolean(PUSH_SETTING, false) ?: false
+        if (!isPushEnabled) return
+
         val ticketId = intent?.getLongExtra(RESERVATION_TICKET_ID, DEFAULT_TICKET_ID)
         val movieTitle = intent?.getStringExtra(MOVIE_TITLE) ?: ""
 
