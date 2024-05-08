@@ -8,33 +8,14 @@
         android:layout_height="match_parent"
         tools:context=".reservation.ReservationFragment">
 
-        <!-- AppBarLayout with Toolbar for title -->
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:title="Movie - Pressed"/>
-
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <!-- RecyclerView for displaying list of reservations -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/reservationRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:layout_marginTop="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/item_reservation" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
