@@ -72,7 +72,16 @@ class DetailPresenterTest {
     @Test
     fun `DetailPresenter가 ticket 값이 1일 때 plusTicket()을 하면, view에게 티켓 개수를 전달한다`() {
         // given
+        every { repository.findByScreenId(any(), any()) } returns
+            Result.success(
+                findByScreenId(
+                    0,
+                    0,
+                ),
+            )
+        every { view.showScreen(any()) } just runs
         every { view.showTicket(any()) } just runs
+        presenter.loadScreen(0, 0)
 
         // when
         presenter.plusTicket()
@@ -84,8 +93,17 @@ class DetailPresenterTest {
     @Test
     fun `DetailPresenter가 ticket 값이 티켓의 최대 개수일 때 plusTicket()을 하면, view에게 snackbar message(TicketMaxCountMessage)를 전달한다`() {
         // given
+        every { repository.findByScreenId(any(), any()) } returns
+            Result.success(
+                findByScreenId(
+                    0,
+                    0,
+                ),
+            )
+        every { view.showScreen(any()) } just runs
         every { view.showTicket(any()) } just runs
         every { view.showSnackBar(MessageType.TicketMaxCountMessage(Ticket.MAX_TICKET_COUNT)) } just runs
+        presenter.loadScreen(0, 0)
 
         // when
         repeat(Ticket.MAX_TICKET_COUNT - 1) {
@@ -100,7 +118,17 @@ class DetailPresenterTest {
     @Test
     fun `DetailPresenter가 ticket 값이 1일 때 minusTicket()을 하면, view에게 snackbar message(TicketMinCountMessage)를 전달한다`() {
         // given
+        every { repository.findByScreenId(any(), any()) } returns
+            Result.success(
+                findByScreenId(
+                    0,
+                    0,
+                ),
+            )
+        every { view.showScreen(any()) } just runs
+        every { view.showTicket(any()) } just runs
         every { view.showSnackBar(MessageType.TicketMinCountMessage(Ticket.MIN_TICKET_COUNT)) } just runs
+        presenter.loadScreen(0, 0)
 
         // when
         presenter.minusTicket()
@@ -112,6 +140,17 @@ class DetailPresenterTest {
     @Test
     fun `DetailPresenter가 ticket 값이 티켓의 최대 개수일 때 minusTicket()을 하면, view에게 티켓 개수를 전달한다`() {
         // given && when
+        every { repository.findByScreenId(any(), any()) } returns
+            Result.success(
+                findByScreenId(
+                    0,
+                    0,
+                ),
+            )
+        every { view.showScreen(any()) } just runs
+        every { view.showTicket(any()) } just runs
+        presenter.loadScreen(0, 0)
+
         repeat(Ticket.MAX_TICKET_COUNT - 1) {
             every { view.showTicket(it + 2) } just runs
             presenter.plusTicket()

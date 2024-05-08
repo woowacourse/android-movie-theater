@@ -46,7 +46,7 @@ fun getDummyReservation(): Reservation {
 }
 
 fun getDummyReservationInfo(): ReservationInfo {
-    return ReservationInfo(1, LocalDateTime.now(), 4)
+    return ReservationInfo(1, 1, LocalDateTime.now(), 4)
 }
 
 fun getDummyScreen(): Screen {
