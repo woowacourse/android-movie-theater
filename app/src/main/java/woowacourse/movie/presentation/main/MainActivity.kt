@@ -1,20 +1,15 @@
 package woowacourse.movie.presentation.main
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
+import woowacourse.movie.presentation.base.BaseActivity
 import woowacourse.movie.presentation.main.home.HomeFragment
 
-class MainActivity : AppCompatActivity(), MainContract.View {
-    private lateinit var binding: ActivityMainBinding
+class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main), MainContract.View {
     private lateinit var presenter: MainPresenter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+    override fun onCreateSetup() {
         binding.home = this
         presenter = MainPresenter(this)
         setContentView(binding.root)
@@ -31,8 +26,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .commitAllowingStateLoss()
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, fragment)
+        transaction.commit()
     }
 }
