@@ -31,13 +31,19 @@ class DetailActivity : BaseMvpBindingActivity<ActivityDetailBinding>(), View {
     }
 
     override fun initStartView() {
-        binding.presenter = presenter
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.presenter = presenter
         val movieId = intent.getIntExtra(PUT_EXTRA_KEY_MOVIE_ID, DEFAULT_ID)
         val theaterId = intent.getIntExtra(PUT_EXTRA_KEY_THEATER_ID, DEFAULT_ID)
-        initAdapter()
         presenter.loadScreen(movieId, theaterId)
+    }
+
+    override fun showScreen(screen: Screen) {
+        binding.screen = screen
+        binding.count = presenter.count
+        presenter.loadDateSpinnerAdapter(screen.selectableDates)
+        presenter.loadTimeSpinnerAdapter(screen.selectableDates.first())
+        initAdapter()
     }
 
     private fun initAdapter() {
@@ -47,13 +53,6 @@ class DetailActivity : BaseMvpBindingActivity<ActivityDetailBinding>(), View {
 
         binding.spinnerTime.adapter = spinnerTimeAdapter
         binding.spinnerTime.onItemSelectedListener = spinnerTimeAdapter.initClickListener()
-    }
-
-    override fun showScreen(screen: Screen) {
-        binding.screen = screen
-        binding.count = presenter.count
-        presenter.loadDateSpinnerAdapter(screen.selectableDates)
-        presenter.loadTimeSpinnerAdapter(screen.selectableDates.first())
     }
 
     override fun showDateSpinnerAdapter(screenDates: List<ScreenDate>) {

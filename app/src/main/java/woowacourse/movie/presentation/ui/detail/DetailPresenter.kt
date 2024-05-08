@@ -14,12 +14,12 @@ class DetailPresenter(
     private val view: DetailContract.View,
     private val repository: ScreenRepository,
 ) : DetailContract.Presenter {
-    private var uiModel = DetailUiModel()
+    private lateinit var uiModel: DetailUiModel
     val count: Int get() = uiModel.ticket.count
     val selectableDates: List<ScreenDate> get() = uiModel.selectableDates
-    val selectedDate: ScreenDate? get() = uiModel.selectedDate
-    val date: LocalDate? get() = uiModel.selectedDate?.date
-    val selectedTime: LocalTime? get() = uiModel.selectedTime
+    val selectedDate: ScreenDate get() = uiModel.selectedDate
+    val date: LocalDate get() = uiModel.selectedDate.date
+    val selectedTime: LocalTime get() = uiModel.selectedTime
 
     override fun loadScreen(
         movieId: Int,
@@ -27,7 +27,7 @@ class DetailPresenter(
     ) {
         repository.findByScreenId(movieId = movieId, theaterId = theaterId).onSuccess { screen ->
             uiModel =
-                uiModel.copy(
+                DetailUiModel(
                     screenId = screen.screenId,
                     theaterId = theaterId,
                     movieId = movieId,
