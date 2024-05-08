@@ -12,16 +12,16 @@
         android:theme="@style/Theme.Movie"
         tools:targetApi="31">
         <activity
-            android:name=".movieDetail.MovieDetailActivity"
+            android:name=".presentation.movieDetail.MovieDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".purchaseConfirmation.PurchaseConfirmationActivity"
+            android:name=".presentation.purchaseConfirmation.PurchaseConfirmationActivity"
             android:exported="false" />
         <activity
-            android:name=".seat.TheaterSeatActivity"
+            android:name=".presentation.seat.TheaterSeatActivity"
             android:exported="false" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".presentation.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,7 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".error.ErrorActivity" />
+        <activity android:name=".presentation.error.ErrorActivity" />
     </application>
 
 </manifest>
