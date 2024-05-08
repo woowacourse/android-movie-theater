@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import woowacourse.movie.data.ReservationHistoryEntity
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.reservationhistory.presenter.ReservationHistoryContract
@@ -36,6 +37,9 @@ class ReservationHistoryFragment :
     private fun initializeReservationHistoryFragment() {
         reservationHistoryAdapter = ReservationHistoryAdapter(this)
         binding.recyclerViewHistory.adapter = reservationHistoryAdapter
+
+        val divider = DividerItemDecoration(requireActivity(), DividerItemDecoration.VERTICAL)
+        binding.recyclerViewHistory.addItemDecoration(divider)
 
         reservationHistoryPresenter = ReservationHistoryPresenter(this)
         reservationHistoryPresenter.loadReservationHistories()
