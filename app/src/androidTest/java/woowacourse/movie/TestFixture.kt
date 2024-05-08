@@ -1,7 +1,5 @@
 package woowacourse.movie
 
-import android.app.Activity
-import android.content.Context
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.model.movie.Movie
@@ -41,7 +39,7 @@ object TestFixture {
         return seats
     }
 
-    fun MainActivity.fragmentChangeToReservationHistoryFragment(){
+    fun MainActivity.fragmentChangeToReservationHistoryFragment() {
         supportFragmentManager.navigateToBottomMenu(
             R.id.fragment_container_main,
             ReservationHistoryFragment(),

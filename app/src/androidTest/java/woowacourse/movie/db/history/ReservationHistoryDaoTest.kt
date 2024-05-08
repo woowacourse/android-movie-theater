@@ -71,7 +71,7 @@ class ReservationHistoryDaoTest {
     }
 
     @Test
-    fun `저장_된_모든_티켓을_삭제하는지_확인한다`()  {
+    fun `저장_된_모든_티켓을_삭제하는지_확인한다`() {
         // given
         val reservationTicket = makeMockTicket().toReservationTicket("영화 제목", "극장 이름")
         reservationDao.saveReservationTicket(reservationTicket)

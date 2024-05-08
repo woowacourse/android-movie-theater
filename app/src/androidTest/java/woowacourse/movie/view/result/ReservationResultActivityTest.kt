@@ -1,6 +1,5 @@
 package woowacourse.movie.view.result
 
-import android.content.Context
 import android.content.Intent
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
@@ -27,7 +26,6 @@ import woowacourse.movie.repository.ReservationTicketRepositoryImpl
 import woowacourse.movie.view.MainActivity
 import woowacourse.movie.view.home.HomeFragment
 import woowacourse.movie.view.reservation.ReservationDetailActivity
-import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.RESERVATION_TICKET_ID
 import woowacourse.movie.view.theater.TheaterSelectionFragment
 
 class ReservationResultActivityTest {
@@ -51,9 +49,11 @@ class ReservationResultActivityTest {
         Thread.sleep(1000)
         onView(withId(R.id.recycler_view_history))
             .perform(
-                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0,
-                    ViewActions.click()
-                ))
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                    0,
+                    ViewActions.click(),
+                ),
+            )
         Thread.sleep(1000)
     }
 
@@ -103,7 +103,7 @@ class ReservationResultActivityTest {
         val intent =
             Intent(
                 ApplicationProvider.getApplicationContext(),
-                ReservationDetailActivity::class.java
+                ReservationDetailActivity::class.java,
             ).apply {
                 putExtra(HomeFragment.MOVIE_ID, 0)
                 putExtra(TheaterSelectionFragment.THEATER_ID, 0)
