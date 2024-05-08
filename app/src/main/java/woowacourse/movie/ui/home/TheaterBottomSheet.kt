@@ -15,6 +15,13 @@ import woowacourse.movie.domain.model.Theaters
 import woowacourse.movie.ui.detail.ScreenDetailActivity
 import woowacourse.movie.ui.home.adapter.TheaterAdapter
 
+interface TheaterAdapterActionHandler {
+    fun moveToDetailActivity(
+        screenId: Int,
+        theaterId: Int,
+    )
+}
+
 class TheaterBottomSheet : BottomSheetDialogFragment() {
     private lateinit var theaterAdapter: TheaterAdapter
 
@@ -49,9 +56,18 @@ class TheaterBottomSheet : BottomSheetDialogFragment() {
         theaters: Theaters,
     ) {
         theaterAdapter =
-            TheaterAdapter(screen) { screenId, theaterId ->
-                ScreenDetailActivity.startActivity(requireContext(), screenId, theaterId)
-            }
+            TheaterAdapter(
+                screen,
+                object : TheaterAdapterActionHandler {
+                    override fun moveToDetailActivity(
+                        screenId: Int,
+                        theaterId: Int,
+                    ) {
+                        ScreenDetailActivity.startActivity(requireContext(), screenId, theaterId)
+                    }
+                },
+            )
+
         theaterAdapter.submitList(theaters.theaters)
     }
 

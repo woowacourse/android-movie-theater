@@ -12,6 +12,10 @@
         <variable
             name="screen"
             type="woowacourse.movie.domain.model.Screen" />
+        
+        <variable
+            name="theaterAdapterHandler"
+            type="woowacourse.movie.ui.home.TheaterAdapterActionHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,6 +55,7 @@
             android:layout_marginEnd="16dp"
             android:background="@color/white"
             android:src="@drawable/arrow_right"
+            android:onClick="@{() -> theaterAdapterHandler.moveToDetailActivity(screen.id, theater.id)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
