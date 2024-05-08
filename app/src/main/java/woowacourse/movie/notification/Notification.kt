@@ -7,13 +7,8 @@ import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import android.os.Build
 import woowacourse.movie.domain.repository.NotificationRepository
-import java.text.ParseException
-import java.text.SimpleDateFormat
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
+import java.time.ZoneId
 
 class Notification(private val context: Context) : NotificationRepository {
     override fun createNotification(
@@ -37,40 +32,38 @@ class Notification(private val context: Context) : NotificationRepository {
                     PendingIntent.FLAG_IMMUTABLE,
                 )
 
-            val date = parseScreeningDateTime(dateTime)
+            val alarmTimeMillis = calculateAlarmTime(dateTime)
 
-            val calendar =
-                Calendar.getInstance().apply {
-                    timeInMillis = date.time
-                    add(Calendar.MINUTE, ALARM_MINUTE)
-                }
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                if (alarmManager.canScheduleExactAlarms()) {
-                    alarmManager.setExact(
+            if (alarmTimeMillis != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    if (alarmManager.canScheduleExactAlarms()) {
+                        alarmManager.setExact(
+                            AlarmManager.RTC_WAKEUP,
+                            alarmTimeMillis,
+                            pendingIntent,
+                        )
+                    }
+                } else {
+                    alarmManager.set(
                         AlarmManager.RTC_WAKEUP,
-                        calendar.timeInMillis,
+                        alarmTimeMillis,
                         pendingIntent,
                     )
                 }
-            } else {
-                alarmManager.set(
-                    AlarmManager.RTC_WAKEUP,
-                    calendar.timeInMillis,
-                    pendingIntent,
-                )
             }
         }
 
-    private fun parseScreeningDateTime(screeningDateTime: LocalDateTime): Date {
-        val formatter = DateTimeFormatter.ofPattern(DATE_PATTERN_FORMAT, Locale.getDefault())
-        val dateString = screeningDateTime.format(formatter)
-        val dateFormat = SimpleDateFormat(DATE_PATTERN_FORMAT, Locale.getDefault())
-        return dateFormat.parse(dateString) ?: throw ParseException("날짜 parse 에러 발생", 0)
+    private fun calculateAlarmTime(dateTime: LocalDateTime): Long? {
+        val screeningTime = dateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+        val alarmTime = screeningTime - ALARM_OFFSET_MINUTES * 60 * 1000
+        val currentTime = System.currentTimeMillis()
+
+        return if (alarmTime > currentTime) alarmTime else null
     }
 
     companion object {
         private const val DATE_PATTERN_FORMAT = "yyyy-MM-dd HH:mm"
+        private const val ALARM_OFFSET_MINUTES = 30
 
         const val NOTIFICATION_ID = 1
         const val PENDING_REQUEST_CODE = 0
