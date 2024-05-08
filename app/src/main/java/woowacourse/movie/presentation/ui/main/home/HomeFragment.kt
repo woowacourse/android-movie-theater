@@ -1,9 +1,9 @@
 package woowacourse.movie.presentation.ui.main.home
 
 import woowacourse.movie.R
+import woowacourse.movie.data.repository.remote.DummyScreens
+import woowacourse.movie.data.repository.remote.DummyTheater
 import woowacourse.movie.databinding.FragmentHomeBinding
-import woowacourse.movie.domain.dummy.DummyScreens
-import woowacourse.movie.domain.dummy.DummyTheater
 import woowacourse.movie.domain.model.ScreenView
 import woowacourse.movie.domain.model.TheaterCount
 import woowacourse.movie.presentation.base.BaseMvpBindingFragment

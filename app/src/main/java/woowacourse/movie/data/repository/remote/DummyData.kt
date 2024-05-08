@@ -1,4 +1,4 @@
-package woowacourse.movie.domain.dummy
+package woowacourse.movie.data.repository.remote
 
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.Screen

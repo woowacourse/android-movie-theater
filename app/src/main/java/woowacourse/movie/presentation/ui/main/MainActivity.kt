@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
-import woowacourse.movie.data.repository.PreferenceRepositoryImpl
+import woowacourse.movie.data.repository.local.PreferenceRepositoryImpl
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.presentation.base.BaseMvpBindingActivity
 import woowacourse.movie.presentation.ui.main.history.ReservationHistoryFragment

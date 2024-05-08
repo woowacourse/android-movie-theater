@@ -13,7 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.domain.dummy.DummyReservation
+import woowacourse.movie.data.repository.remote.DummyReservation
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.presentation.ui.util.currency
 import woowacourse.movie.presentation.ui.util.getDummyMovie

@@ -1,7 +1,7 @@
 package woowacourse.movie.presentation.ui.main.history
 
 import woowacourse.movie.R
-import woowacourse.movie.data.repository.ReservationRepositoryImpl
+import woowacourse.movie.data.repository.local.ReservationRepositoryImpl
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.domain.model.Reservation
 import woowacourse.movie.presentation.base.BaseMvpBindingFragment

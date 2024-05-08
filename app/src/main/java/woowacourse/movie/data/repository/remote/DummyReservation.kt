@@ -1,4 +1,4 @@
-package woowacourse.movie.domain.dummy
+package woowacourse.movie.data.repository.remote
 
 import woowacourse.movie.domain.model.Reservation
 import woowacourse.movie.domain.model.Seat

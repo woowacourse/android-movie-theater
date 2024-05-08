@@ -5,8 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import woowacourse.movie.R
+import woowacourse.movie.data.repository.remote.DummyScreens
 import woowacourse.movie.databinding.ActivityDetailBinding
-import woowacourse.movie.domain.dummy.DummyScreens
 import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.ScreenDate
 import woowacourse.movie.presentation.base.BaseMvpBindingActivity

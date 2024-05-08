@@ -7,9 +7,9 @@ import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import woowacourse.movie.R
-import woowacourse.movie.data.repository.ReservationRepositoryImpl
+import woowacourse.movie.data.repository.local.ReservationRepositoryImpl
+import woowacourse.movie.data.repository.remote.DummyScreens
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
-import woowacourse.movie.domain.dummy.DummyScreens
 import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.notification.Notification
 import woowacourse.movie.presentation.base.BaseMvpBindingActivity

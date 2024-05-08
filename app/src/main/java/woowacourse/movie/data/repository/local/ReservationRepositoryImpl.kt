@@ -1,4 +1,4 @@
-package woowacourse.movie.data.repository
+package woowacourse.movie.data.repository.local
 
 import android.content.Context
 import woowacourse.movie.data.db.ReservationDatabase

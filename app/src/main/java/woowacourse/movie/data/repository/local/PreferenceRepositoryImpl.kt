@@ -1,4 +1,4 @@
-package woowacourse.movie.data.repository
+package woowacourse.movie.data.repository.local
 
 import androidx.core.content.edit
 import woowacourse.movie.MovieApplication.Companion.sharedPreferences

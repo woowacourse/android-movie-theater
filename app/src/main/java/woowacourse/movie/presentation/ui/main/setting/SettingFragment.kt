@@ -1,7 +1,7 @@
 package woowacourse.movie.presentation.ui.main.setting
 
 import woowacourse.movie.R
-import woowacourse.movie.data.repository.PreferenceRepositoryImpl
+import woowacourse.movie.data.repository.local.PreferenceRepositoryImpl
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.presentation.base.BaseMvpBindingFragment
 import woowacourse.movie.presentation.ui.main.setting.SettingContract.View

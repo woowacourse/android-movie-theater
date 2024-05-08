@@ -3,9 +3,9 @@ package woowacourse.movie.presentation.ui.reservation
 import android.content.Context
 import android.content.Intent
 import woowacourse.movie.R
-import woowacourse.movie.data.repository.ReservationRepositoryImpl
+import woowacourse.movie.data.repository.local.ReservationRepositoryImpl
+import woowacourse.movie.data.repository.remote.DummyTheater
 import woowacourse.movie.databinding.ActivityReservationBinding
-import woowacourse.movie.domain.dummy.DummyTheater
 import woowacourse.movie.domain.model.Reservation
 import woowacourse.movie.presentation.base.BaseMvpBindingActivity
 import woowacourse.movie.presentation.ui.reservation.ReservationContract.View
