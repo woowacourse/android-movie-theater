@@ -17,11 +17,12 @@ class ReservationHistoryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_reservation_history, container, false,
-            )
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_reservation_history,
+            container,
+            false,
+        )
 
         return binding.root
     }

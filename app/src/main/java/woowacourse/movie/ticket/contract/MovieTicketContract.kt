@@ -7,37 +7,28 @@ interface MovieTicketContract {
     interface View {
         val presenter: Presenter
 
-        fun showScreeningDate(info: String)
-
-        fun showScreeningTime(info: String)
-
         fun showTicketView(
             movieTitle: String,
             moviePrice: Int,
             ticketCount: Int,
             seats: List<Seat>,
+            theater: String,
+            screeningDate: String,
+            screeningTime: String,
         )
     }
 
     interface Presenter {
-        fun storeTicketCount(count: Count)
-
         fun setTicketInfo()
 
-        fun storeScreeningDate(date: String)
-
-        fun storeScreeningTime(time: String)
-
-        fun setScreeningDateInfo()
-
-        fun setScreeningTimeInfo()
-
-        fun storeMovieId(id: Long)
-
-        fun storePrice(price: Int)
-
-        fun storeSeats(seats: List<Seat>)
-
-//        fun setSeatsInfo()
+        fun storeTicketData(
+            theaterId: Long,
+            ticketCount: Count,
+            movieId: Long,
+            screeningDate: String,
+            screeningTime: String,
+            price: Int,
+            seats: List<Seat>
+        )
     }
 }
