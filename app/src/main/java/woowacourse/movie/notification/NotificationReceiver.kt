@@ -8,7 +8,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
-import woowacourse.movie.MovieApplication
+import woowacourse.movie.MovieApplication.Companion.sharedPreferences
 import woowacourse.movie.R
 import woowacourse.movie.notification.Notification.Companion.NOTIFICATION_ID
 import woowacourse.movie.notification.Notification.Companion.PENDING_REQUEST_CODE
@@ -60,12 +60,10 @@ class NotificationReceiver : BroadcastReceiver() {
             NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle(context.getString(R.string.notification_title))
                 .setContentText(context.getString(R.string.notification_description, movieTitle))
-                .setSmallIcon(R.drawable.ic_notification)
-                .setContentIntent(pendingIntent).setAutoCancel(true)
-                .build()
+                .setSmallIcon(R.drawable.ic_notification).setContentIntent(pendingIntent)
+                .setAutoCancel(true).build()
 
-        val notificationMode =
-            MovieApplication.sharedPreferences.getBoolean(KEY_NOTIFICATION_MODE, false)
+        val notificationMode = sharedPreferences.getBoolean(KEY_NOTIFICATION_MODE, false)
 
         if (notificationMode) {
             notificationManager.notify(NOTIFICATION_ID, notification)
