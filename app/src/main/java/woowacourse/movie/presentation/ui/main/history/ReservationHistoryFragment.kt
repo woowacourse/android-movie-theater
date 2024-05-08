@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout.VERTICAL
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.domain.db.AppDatabase
 import woowacourse.movie.domain.db.reservationdb.ReservationDao
@@ -49,7 +51,9 @@ class ReservationHistoryFragment :
 
     private fun initAdapter() {
         adapter = ReservationHistoryRecyclerViewAdapter(this)
+        val decoration = DividerItemDecoration(this.context, VERTICAL)
         binding.rvReservationHistory.adapter = adapter
+        binding.rvReservationHistory.addItemDecoration(decoration)
     }
 
     private fun initRepository() {

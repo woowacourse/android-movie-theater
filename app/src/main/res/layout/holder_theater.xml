@@ -23,6 +23,7 @@
         android:id="@+id/cl_theater"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
         android:onClick="@{() -> handler.onTheaterClick(movieId,theaterCount.id)}"
         android:paddingHorizontal="8dp"
         android:paddingVertical="4dp">
