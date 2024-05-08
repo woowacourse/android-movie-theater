@@ -1,18 +1,18 @@
 package woowacourse.movie.purchaseconfirmation.uimodel
 
 import woowacourse.movie.model.Reservation
-import woowacourse.movie.model.Seat
+import woowacourse.movie.model.Seats
 
-fun Reservation.toReservationResultUiModel(theaterName: String): PurchaseConfirmationUiModel {
+fun Reservation.toPurchaseConfirmationUiModel(): PurchaseConfirmationUiModel {
     return PurchaseConfirmationUiModel(
-        movie.title,
+        screening.movie.title,
         cancelDeadLine,
         screenDateTime,
-        headCount.count,
-        seats.seats.toSeatUiModel(),
+        seats.count,
+        seats.toSeatUiModels(),
         totalPrice.price,
-        theaterName,
+        screening.theater.name,
     )
 }
 
-fun List<Seat>.toSeatUiModel(): List<SeatUiModel> = this.map { SeatUiModel(it.row, it.col) }
+fun Seats.toSeatUiModels(): List<SeatUiModel> = seats.map { SeatUiModel(it.row, it.col) }

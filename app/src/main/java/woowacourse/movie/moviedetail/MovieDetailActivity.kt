@@ -14,7 +14,7 @@ import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.moviedetail.uimodel.BookingDetailUiModel
 import woowacourse.movie.moviedetail.uimodel.BookingInfoUiModel
 import woowacourse.movie.moviedetail.uimodel.HeadCountUiModel
-import woowacourse.movie.moviedetail.uimodel.ReservationPlanUiModel
+import woowacourse.movie.moviedetail.uimodel.MovieDetailUiModel
 import woowacourse.movie.moviedetail.uimodel.ScreeningDateTimesUiModel
 import woowacourse.movie.purchaseconfirmation.PurchaseConfirmationActivity
 import woowacourse.movie.selectseat.SelectSeatActivity
@@ -103,7 +103,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         presenter.minusCount()
     }
 
-    override fun showMovieInfo(reservation: ReservationPlanUiModel) {
+    override fun showMovieInfo(reservation: MovieDetailUiModel) {
         binding.movieReservationUiModel = reservation
     }
 

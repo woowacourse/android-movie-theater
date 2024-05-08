@@ -1,7 +1,6 @@
 package woowacourse.movie.repository
 
 import woowacourse.movie.model.Advertisement
-import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.Reservation
 import woowacourse.movie.model.Screening
@@ -21,16 +20,14 @@ interface MovieRepository {
         theaterId: Long,
     ): Screening?
 
-    fun theatersByMovieId(movieId: Long): List<Theater>
-
     fun theaterById(theaterId: Long): Theater?
+
+    fun theatersByMovieId(movieId: Long): List<Theater>
 
     fun makeReservation(
         screening: Screening,
         dateTime: LocalDateTime,
-        count: HeadCount,
         seats: Seats,
-        theaterId: Long,
     ): Long
 
     fun reservationById(id: Long): Reservation?

@@ -3,7 +3,7 @@ package woowacourse.movie.moviedetail
 import woowacourse.movie.model.HeadCount
 import woowacourse.movie.moviedetail.uimodel.BookingDetailUiModel
 import woowacourse.movie.moviedetail.uimodel.toHeadCountUiModel
-import woowacourse.movie.moviedetail.uimodel.toMovieReservationUiModel
+import woowacourse.movie.moviedetail.uimodel.toMovieDetailUiModel
 import woowacourse.movie.moviedetail.uimodel.toScreeningDateTimeUiModel
 import woowacourse.movie.repository.MovieRepository
 
@@ -16,7 +16,7 @@ class MovieDetailPresenter(
     override fun loadMovieDetail(screeningId: Long) {
         val screening = repository.screeningById(screeningId)
         if (screening != null) {
-            view.showMovieInfo(screening.toMovieReservationUiModel())
+            view.showMovieInfo(screening.toMovieDetailUiModel())
             view.showBookingDetail(
                 screening.toScreeningDateTimeUiModel(),
                 BookingDetailUiModel(

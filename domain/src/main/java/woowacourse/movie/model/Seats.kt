@@ -2,6 +2,7 @@ package woowacourse.movie.model
 
 class Seats(val seats: List<Seat> = emptyList()) {
     val totalPrice = Price(seats.sumOf { it.price })
+    val count = seats.size
 
     init {
         require(seats.distinct().size == seats.size) {

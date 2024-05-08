@@ -3,7 +3,6 @@ package woowacourse.movie.selectseat
 import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.Seats
 import woowacourse.movie.moviedetail.uimodel.BookingInfoUiModel
-import woowacourse.movie.moviedetail.uimodel.toHeadCount
 import woowacourse.movie.repository.MovieRepository
 import woowacourse.movie.selectseat.uimodel.Position
 import woowacourse.movie.selectseat.uimodel.PriceUiModel
@@ -73,9 +72,7 @@ class SelectSeatPresenter(
             repository.makeReservation(
                 screening,
                 bookingInfoUiModel.localDateTime(),
-                bookingInfoUiModel.count.toHeadCount(),
                 Seats(selectedSeats.toSeats()),
-                bookingInfoUiModel.theaterId,
             )
         }.onSuccess {
             view.navigateToResult(it)

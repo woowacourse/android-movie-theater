@@ -1,6 +1,6 @@
 package woowacourse.movie.purchaseconfirmation
 
-import woowacourse.movie.purchaseconfirmation.uimodel.toReservationResultUiModel
+import woowacourse.movie.purchaseconfirmation.uimodel.toPurchaseConfirmationUiModel
 import woowacourse.movie.repository.MovieRepository
 
 class PurchaseConfirmationPresenter(
@@ -11,9 +11,7 @@ class PurchaseConfirmationPresenter(
         runCatching {
             val reservation =
                 repository.reservationById(reservationId) ?: error(RESERVATION_CHECK_ERROR)
-            val theater =
-                repository.theaterById(reservation.theaterId) ?: error(THEATER_CHECK_ERROR)
-            reservation.toReservationResultUiModel(theater.name)
+            reservation.toPurchaseConfirmationUiModel()
         }.onSuccess {
             view.showResult(it)
         }.onFailure {
@@ -23,6 +21,5 @@ class PurchaseConfirmationPresenter(
 
     companion object {
         private const val RESERVATION_CHECK_ERROR = "예매 내역을 찾을 수 없었습니다"
-        private const val THEATER_CHECK_ERROR = "예매한 영화관을 찾을 수 없었습니다"
     }
 }

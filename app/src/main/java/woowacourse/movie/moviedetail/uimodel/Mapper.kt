@@ -3,8 +3,8 @@ package woowacourse.movie.moviedetail.uimodel
 import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.Screening
 
-fun Screening.toMovieReservationUiModel(): ReservationPlanUiModel =
-    ReservationPlanUiModel(
+fun Screening.toMovieDetailUiModel(): MovieDetailUiModel =
+    MovieDetailUiModel(
         id,
         movie.title,
         startDate,

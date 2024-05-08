@@ -29,6 +29,12 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.findFragmentById(R.id.fcv_main) ?: changeFragment(
             movieListFragment,
         )
+        /*
+        val intent = Intent()
+        intent.action = "custom.movie"
+        intent.putExtra("name", 1)
+        sendBroadcast(intent)
+         */
         setNavigation()
     }
 

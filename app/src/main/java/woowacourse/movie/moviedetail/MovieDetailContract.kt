@@ -2,7 +2,7 @@ package woowacourse.movie.moviedetail
 
 import woowacourse.movie.moviedetail.uimodel.BookingDetailUiModel
 import woowacourse.movie.moviedetail.uimodel.HeadCountUiModel
-import woowacourse.movie.moviedetail.uimodel.ReservationPlanUiModel
+import woowacourse.movie.moviedetail.uimodel.MovieDetailUiModel
 import woowacourse.movie.moviedetail.uimodel.ScreeningDateTimesUiModel
 
 interface MovieDetailContract {
@@ -11,7 +11,7 @@ interface MovieDetailContract {
 
         fun intendToMinusCount()
 
-        fun showMovieInfo(reservation: ReservationPlanUiModel)
+        fun showMovieInfo(reservation: MovieDetailUiModel)
 
         fun showCantDecreaseError(minCount: Int)
 

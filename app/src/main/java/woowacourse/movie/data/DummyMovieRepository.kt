@@ -1,7 +1,6 @@
 package woowacourse.movie.data
 
 import woowacourse.movie.model.Advertisement
-import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.Reservation
 import woowacourse.movie.model.Screening
@@ -49,18 +48,14 @@ object DummyMovieRepository : MovieRepository {
     override fun makeReservation(
         screening: Screening,
         dateTime: LocalDateTime,
-        count: HeadCount,
         seats: Seats,
-        theaterId: Long,
     ): Long {
         reservations +=
             Reservation(
                 id = ++reservationId,
                 screening = screening,
                 screenDateTime = dateTime,
-                headCount = count,
                 seats = seats,
-                theaterId = theaterId,
             )
         return reservationId
     }

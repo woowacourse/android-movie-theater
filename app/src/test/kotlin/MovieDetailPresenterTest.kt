@@ -15,8 +15,8 @@ import woowacourse.movie.model.Screening
 import woowacourse.movie.moviedetail.MovieDetailContract
 import woowacourse.movie.moviedetail.MovieDetailPresenter
 import woowacourse.movie.moviedetail.uimodel.HeadCountUiModel
-import woowacourse.movie.moviedetail.uimodel.ReservationPlanUiModel
-import woowacourse.movie.moviedetail.uimodel.toMovieReservationUiModel
+import woowacourse.movie.moviedetail.uimodel.MovieDetailUiModel
+import woowacourse.movie.moviedetail.uimodel.toMovieDetailUiModel
 
 @ExtendWith(MockKExtension::class)
 class MovieDetailPresenterTest {
@@ -33,14 +33,14 @@ class MovieDetailPresenterTest {
     @Test
     @DisplayName("영화 정보를 불러오면 화면에 나타난다")
     fun show_movie_info_When_load_movie_data() {
-        val slot = slot<ReservationPlanUiModel>()
+        val slot = slot<MovieDetailUiModel>()
         every { view.showBookingDetail(any(), any()) } just Runs
         every { view.showMovieInfo(capture(slot)) } just Runs
 
         presenter.loadMovieDetail(0)
 
         verify(exactly = 1) { view.showMovieInfo(any()) }
-        assertThat(Screening.STUB_A.toMovieReservationUiModel()).isEqualTo(slot.captured)
+        assertThat(Screening.STUB_A.toMovieDetailUiModel()).isEqualTo(slot.captured)
     }
 
     @Test

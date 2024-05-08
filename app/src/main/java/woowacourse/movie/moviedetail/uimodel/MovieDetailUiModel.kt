@@ -6,7 +6,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import kotlin.time.Duration
 
-data class ReservationPlanUiModel(
+data class MovieDetailUiModel(
     val id: Long,
     val title: String,
     @DrawableRes val imageRes: Int = R.drawable.img_movie_poster,
