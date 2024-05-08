@@ -4,8 +4,8 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import woowacourse.movie.TicketAlarmBroadcastReceiver
 import woowacourse.movie.R
+import woowacourse.movie.TicketAlarmBroadcastReceiver
 import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.data.entity.Ticket
 import woowacourse.movie.util.MovieIntentConstant.KEY_NOTIFICATION_DESCRIPTION
@@ -34,11 +34,12 @@ class TicketAlarmRegister(private val context: Context) {
 
     private fun alarmPendingIntent(ticket: Ticket): PendingIntent {
         val notificationTitle = context.resources.getString(R.string.notification_title)
-        val notificationText = context.resources.getString(
-            R.string.notification_description,
-            MovieRepository.getMovieById(ticket.movieId).title,
-            TICKET_ALARM_INTERVAL_MINUTE,
-        )
+        val notificationText =
+            context.resources.getString(
+                R.string.notification_description,
+                MovieRepository.getMovieById(ticket.movieId).title,
+                TICKET_ALARM_INTERVAL_MINUTE,
+            )
 
         val intent =
             Intent(context, TicketAlarmBroadcastReceiver::class.java)
@@ -50,7 +51,7 @@ class TicketAlarmRegister(private val context: Context) {
             context,
             ticket.id.toInt(),
             intent,
-            PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_IMMUTABLE,
         )
     }
 

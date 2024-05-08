@@ -15,7 +15,7 @@ class FakeTicketRepository : TicketRepository {
         screeningDate: LocalDate,
         screeningTime: LocalTime,
         selectedSeats: MovieSelectedSeats,
-        theaterName: String
+        theaterName: String,
     ): Long {
         tickets[id] = Ticket(id, movieId, screeningDate, screeningTime, selectedSeats, theaterName)
         return id++

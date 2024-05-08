@@ -28,7 +28,7 @@ import woowacourse.movie.feature.theaterName
 class ReservationHistoryFragmentTest {
     private val ticketRepository =
         TicketRepositoryImpl(
-            TicketDatabase.getInstance(ApplicationProvider.getApplicationContext()).ticketDao()
+            TicketDatabase.getInstance(ApplicationProvider.getApplicationContext()).ticketDao(),
         )
 
     @Before

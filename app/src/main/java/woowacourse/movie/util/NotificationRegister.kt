@@ -29,19 +29,20 @@ class NotificationRegister(private val context: Context) {
     ) {
         val pendingIntent =
             PendingIntent.getActivity(
-               context,
+                context,
                 NOTIFICATION_ID,
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
             )
 
-        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle(notificationTitle)
-            .setContentText(notificationText)
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-            .setDefaults(NotificationCompat.DEFAULT_ALL)
+        val builder =
+            NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle(notificationTitle)
+                .setContentText(notificationText)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
 
         notificationManager.notify(NOTIFICATION_ID, builder.build())
     }

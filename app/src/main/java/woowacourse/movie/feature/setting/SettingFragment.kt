@@ -14,14 +14,10 @@ import androidx.core.content.ContextCompat
 import woowacourse.movie.MovieTheaterApplication
 import woowacourse.movie.data.entity.Ticket
 import woowacourse.movie.databinding.FragmentSettingBinding
-import woowacourse.movie.feature.result.MovieResultActivity
 import woowacourse.movie.util.BaseFragment
 import woowacourse.movie.util.MovieIntentConstant.DEFAULT_VALUE_NOTIFICATION
 import woowacourse.movie.util.MovieIntentConstant.KEY_NOTIFICATION
-import woowacourse.movie.util.NotificationRegister
-import woowacourse.movie.util.SharedPreferencesManager
 import woowacourse.movie.util.TicketAlarmRegister
-import java.time.LocalDateTime
 
 class SettingFragment :
     BaseFragment<SettingContract.Presenter>(),
@@ -74,7 +70,7 @@ class SettingFragment :
         }
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
-                Manifest.permission.POST_NOTIFICATIONS
+                Manifest.permission.POST_NOTIFICATIONS,
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             return false

@@ -13,12 +13,16 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_TICKET_ID
 import woowacourse.movie.util.NotificationRegister
 
 class TicketAlarmBroadcastReceiver : BroadcastReceiver() {
-    override fun onReceive(context: Context, intent: Intent) {
+    override fun onReceive(
+        context: Context,
+        intent: Intent,
+    ) {
         val notificationRegister = NotificationRegister(context)
-        val newIntent = MovieResultActivity.newIntent(
-            context,
-            intent.getLongExtra(KEY_TICKET_ID, INVALID_VALUE_TICKET_ID)
-        )
+        val newIntent =
+            MovieResultActivity.newIntent(
+                context,
+                intent.getLongExtra(KEY_TICKET_ID, INVALID_VALUE_TICKET_ID),
+            )
         notificationRegister.deliverNotification(
             newIntent,
             intent.getStringExtra(KEY_NOTIFICATION_TITLE) ?: DEFAULT_VALUE_NOTIFICATION_TITLE,

@@ -7,13 +7,19 @@ class SharedPreferencesManager(context: Context) {
         context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
     }
 
-    fun setBoolean(key: String, value: Boolean) {
+    fun setBoolean(
+        key: String,
+        value: Boolean,
+    ) {
         val editor = sharedPreferences.edit()
-        editor.putBoolean(key, value);
-        editor.apply();
+        editor.putBoolean(key, value)
+        editor.apply()
     }
 
-    fun getBoolean(key: String, defaultValue: Boolean): Boolean {
+    fun getBoolean(
+        key: String,
+        defaultValue: Boolean,
+    ): Boolean {
         return sharedPreferences.getBoolean(key, defaultValue)
     }
 

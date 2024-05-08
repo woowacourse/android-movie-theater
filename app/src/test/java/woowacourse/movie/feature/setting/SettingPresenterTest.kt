@@ -31,26 +31,13 @@ class SettingPresenterTest {
                 screeningDate,
                 screeningTime,
                 selectedSeats,
-                theaterName
+                theaterName,
             )
         }
     }
 
     @Test
     fun `예매한 티켓들의 알림을 설정한다`() {
-//        val ticketSlot = mutableListOf<Ticket>()
-//        every { view.setTicketAlarm(capture(ticketSlot)) } just runs
-//
-//        presenter.setTicketsAlarm(ticketRepository)
-//
-//        val actual = ticketSlot
-//        println(actual.size)
-//        assertThat(actual.size).isEqualTo(3)
-//        assertThat(actual[0].movieId).isEqualTo(0)
-//        assertThat(actual[1].movieId).isEqualTo(1)
-//        assertThat(actual[2].movieId).isEqualTo(2)
-//        verify { view.setTicketAlarm(any()) }
-
         // given
         every { view.setTicketAlarm(any()) } just runs
 
