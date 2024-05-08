@@ -54,6 +54,7 @@ class ReservationResultActivityTest {
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0,
                     ViewActions.click()
                 ))
+        Thread.sleep(1000)
     }
 
     @After
@@ -65,13 +66,11 @@ class ReservationResultActivityTest {
 
     @Test
     fun `예매한_영화의_제목을_보여준다`() {
-        Thread.sleep(1000)
         onView(withId(R.id.text_view_reservation_finished_title)).check(matches(withText(movies[FIRST_MOVIE_ITEM_POSITION].title)))
     }
 
     @Test
     fun `예매한_영화의_상영일을_보여준다`() {
-        Thread.sleep(1000)
         onView(
             withId(R.id.text_view_reservation_finished_screening_date),
         ).check(matches(withText(makeMockTicket().screeningDateTime.date)))
@@ -79,7 +78,6 @@ class ReservationResultActivityTest {
 
     @Test
     fun `예매한_영화의_관람인원을_보여준다`() {
-        Thread.sleep(1000)
         onView(withId(R.id.text_view_reservation_finished_number_of_tickets)).check(
             matches(
                 withText(
@@ -91,7 +89,6 @@ class ReservationResultActivityTest {
 
     @Test
     fun `예매한_영화의_총_결제금액을_보여준다`() {
-        Thread.sleep(1000)
         onView(withId(R.id.text_view_reservation_finished_ticket_price)).check(
             matches(
                 withText(
@@ -103,7 +100,6 @@ class ReservationResultActivityTest {
 
     @Test
     fun `영화_예매_완료_화면은_영화_상세_화면의_예매_완료_버튼을_누르면_보여진다`() {
-        Thread.sleep(1000)
         val intent =
             Intent(
                 ApplicationProvider.getApplicationContext(),
