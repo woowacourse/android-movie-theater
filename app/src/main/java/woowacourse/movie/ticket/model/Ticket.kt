@@ -1,21 +1,15 @@
 package woowacourse.movie.ticket.model
 
-import woowacourse.movie.common.MovieDataSource
-import woowacourse.movie.detail.model.Count
-import woowacourse.movie.list.model.TheaterData
-import woowacourse.movie.seats.model.Seat
+import androidx.room.ColumnInfo
+import androidx.room.Entity
 
+@Entity(tableName = "users")
 data class Ticket(
-    val price: Int,
-    val seats: List<Seat>,
-    val ticketCount: Count,
-    val screeningDate: String,
-    val screeningTime: String,
-    val movieId: Long,
-    val theaterId: Long,
-) {
-    val title
-        get() = MovieDataSource.movieList.first { it.id == movieId }.title
-    val theater
-        get() = TheaterData.theaters.first { it.id == theaterId }.name
-}
+    @ColumnInfo(name = "movie_title") val movieTitle: String,
+    @ColumnInfo(name = "screening_date") val screeningDate: String,
+    @ColumnInfo(name = "screening_time") val screeningTime: String,
+    @ColumnInfo(name = "seats_count") val seatsCount: Int,
+    @ColumnInfo(name = "seats") val seats: String,
+    @ColumnInfo(name = "theater_name") val theaterName: String,
+    @ColumnInfo(name = "price") val price: Int,
+)

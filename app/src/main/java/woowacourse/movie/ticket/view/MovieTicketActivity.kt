@@ -30,13 +30,13 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
 
     private fun processPresenterTask() {
         presenter.storeTicketData(
-            intent.getLongExtra(EXTRA_THEATER_ID_KEY, -1),
-            getSerializableCountData(intent),
             intent.getLongExtra(EXTRA_MOVIE_ID_KEY, -1),
             intent.getStringExtra(DATE_KEY) ?: "",
             intent.getStringExtra(TIME_KEY) ?: "",
-            intent.getIntExtra(PRICE_KEY, 0),
+            getSerializableCountData(intent),
             intent.getSerializableExtra(SEATS_KEY) as List<Seat>,
+            intent.getLongExtra(EXTRA_THEATER_ID_KEY, -1),
+            intent.getIntExtra(PRICE_KEY, 0),
         )
 
         presenter.setTicketInfo()
@@ -44,26 +44,24 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
 
     override fun showTicketView(
         movieTitle: String,
-        moviePrice: Int,
-        ticketCount: Int,
-        seats: List<Seat>,
-        theater: String,
         screeningDate: String,
         screeningTime: String,
+        ticketCount: Int,
+        seats: String,
+        theater: String,
+        moviePrice: Int,
     ) {
-        val seatsCoordinate = seats.map { it.coordinate }
-        val seat = seatsCoordinate.joinToString()
         binding.ticketTitle.text = movieTitle
-        binding.ticketPrice.text = TICKET_PRICE.format(moviePrice)
+        binding.ticketScreeningDate.text = screeningDate
+        binding.ticketScreeningTime.text = screeningTime
         binding.ticketReservationInformation.text =
             getString(
                 R.string.ticket_information_format,
                 ticketCount,
-                seat,
+                seats,
                 theater,
             )
-        binding.ticketScreeningDate.text = screeningDate
-        binding.ticketScreeningTime.text = screeningTime
+        binding.ticketPrice.text = TICKET_PRICE.format(moviePrice)
     }
 
     companion object {

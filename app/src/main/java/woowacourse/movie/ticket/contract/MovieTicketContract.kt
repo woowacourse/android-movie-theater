@@ -9,12 +9,12 @@ interface MovieTicketContract {
 
         fun showTicketView(
             movieTitle: String,
-            moviePrice: Int,
-            ticketCount: Int,
-            seats: List<Seat>,
-            theater: String,
             screeningDate: String,
             screeningTime: String,
+            ticketCount: Int,
+            seats: String,
+            theater: String,
+            moviePrice: Int,
         )
     }
 
@@ -22,13 +22,13 @@ interface MovieTicketContract {
         fun setTicketInfo()
 
         fun storeTicketData(
-            theaterId: Long,
-            ticketCount: Count,
             movieId: Long,
             screeningDate: String,
             screeningTime: String,
+            seatsCount: Count,
+            seats: List<Seat>,
+            theaterId: Long,
             price: Int,
-            seats: List<Seat>
         )
     }
 }
