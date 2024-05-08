@@ -25,7 +25,7 @@ class SelectSeatPresenterTest {
     }
 
     @Test
-    fun `선택한_좌석에_맞는_가격을_계산한다`() {
+    fun `선택한 좌석에 맞는 가격을 계산한다`() {
         // given
         presenter.initMaxCount(HeadCount(3))
 
@@ -39,7 +39,7 @@ class SelectSeatPresenterTest {
     }
 
     @Test
-    fun `티켓_인원만큼_좌석을_선택하면_확인_버튼을_활성화_시킨다`() {
+    fun `티켓 인원만큼 좌석을 선택하면 확인 버튼을 활성화 시킨다`() {
         // given
         presenter.initMaxCount(HeadCount(3))
 
@@ -53,7 +53,7 @@ class SelectSeatPresenterTest {
     }
 
     @Test
-    fun `티켓_인원보다_좌석을_많이_선택하면_좌석이_선택되지_않는다`() {
+    fun `티켓 인원보다 좌석을 많이 선택하면 좌석이 선택되지 않는다`() {
         // given
         presenter.initMaxCount(HeadCount(0))
 
