@@ -10,7 +10,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.model.Movie
 import woowacourse.movie.presentation.homefragments.movieList.adapter.MovieAdapter
-import woowacourse.movie.presentation.homefragments.movieList.fragment.TheaterBottomDialogFragment
+import woowacourse.movie.presentation.homefragments.movieList.bottomDialog.TheaterBottomDialogFragment
 import woowacourse.movie.presentation.homefragments.movieList.listener.MovieListClickListener
 
 class MovieListFragment : Fragment(), MovieListContract.View, MovieListClickListener {

@@ -6,7 +6,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".presentation.homefragments.movieList.fragment.TheaterBottomDialogFragment">
+        tools:context=".presentation.homefragments.movieList.bottomDialog.TheaterBottomDialogFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/theater_list_rv"
