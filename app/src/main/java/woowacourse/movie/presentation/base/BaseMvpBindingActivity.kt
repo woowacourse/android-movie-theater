@@ -8,10 +8,7 @@ import androidx.databinding.ViewDataBinding
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
 import woowacourse.movie.presentation.model.MessageType
-import woowacourse.movie.presentation.model.MessageType.AllSeatsSelectedMessage
-import woowacourse.movie.presentation.model.MessageType.ReservationSuccessMessage
-import woowacourse.movie.presentation.model.MessageType.TicketMaxCountMessage
-import woowacourse.movie.presentation.model.MessageType.TicketMinCountMessage
+import woowacourse.movie.presentation.model.MessageType.*
 
 abstract class BaseMvpBindingActivity<T : ViewDataBinding> : AppCompatActivity(), BaseView {
     abstract val layoutResourceId: Int
@@ -58,6 +55,8 @@ abstract class BaseMvpBindingActivity<T : ViewDataBinding> : AppCompatActivity()
             is TicketMinCountMessage -> getString(R.string.ticke_min_count_message, this.count)
             is AllSeatsSelectedMessage -> getString(R.string.all_seats_selected_message, this.count)
             is ReservationSuccessMessage -> getString(R.string.reservation_success_message)
+            is NotificationFailureMessage -> getString(R.string.notification_failure_message)
+            is NotificationSuccessMessage -> getString(R.string.notification_success_message)
         }
     }
 

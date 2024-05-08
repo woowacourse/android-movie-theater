@@ -82,6 +82,8 @@ abstract class BaseMvpBindingFragment<T : ViewDataBinding> : Fragment(), BaseVie
                 )
 
             is MessageType.ReservationSuccessMessage -> getString(R.string.reservation_success_message)
+            is MessageType.NotificationFailureMessage -> getString(R.string.notification_failure_message)
+            is MessageType.NotificationSuccessMessage -> getString(R.string.notification_success_message)
         }
     }
 

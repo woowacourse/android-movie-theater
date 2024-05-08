@@ -1,23 +1,24 @@
 package woowacourse.movie.presentation.ui.main.setting
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.data.repository.PreferenceRepositoryImpl
+import woowacourse.movie.databinding.FragmentSettingBinding
+import woowacourse.movie.presentation.base.BaseMvpBindingFragment
+import woowacourse.movie.presentation.ui.main.setting.SettingContract.View
 
-class SettingFragment : Fragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+class SettingFragment : BaseMvpBindingFragment<FragmentSettingBinding>(), View {
+    override val layoutResourceId: Int
+        get() = R.layout.fragment_setting
+
+    private val presenter by lazy { SettingPresenter(this, PreferenceRepositoryImpl()) }
+
+    override fun initStartView() {
+        binding.presenter = presenter
+        presenter.loadNotificationMode()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.fragment_setting, container, false)
+    override fun showNotificationMode(mode: Boolean) {
+        binding.mode = mode
     }
 
     companion object {
