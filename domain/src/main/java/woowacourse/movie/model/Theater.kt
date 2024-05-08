@@ -1,11 +1,18 @@
 package woowacourse.movie.model
 
-class Theater(
+data class Theater(
     val id: Long,
-    rowRate: Map<Tier, List<Int>>,
+    val rowRate: Map<Tier, List<Int>>,
     private val colLength: Int,
     val name: String,
 ) {
+    constructor(id: Long, name: String) : this(
+        id = id,
+        rowRate = defaultRowRate,
+        colLength = 4,
+        name = name,
+    )
+
     val seats =
         Seats(
             rowRate.flatMap { (tier, rateRows) ->
@@ -18,25 +25,20 @@ class Theater(
         )
 
     companion object {
+        private val defaultRowRate = mapOf(Tier.S to listOf(3, 4), Tier.A to listOf(5), Tier.B to listOf(1, 2))
         val STUB_A =
             Theater(
-                0,
-                mapOf(Tier.S to listOf(3, 4), Tier.A to listOf(5), Tier.B to listOf(1, 2)),
-                4,
+                1,
                 "잠실 극장",
             )
         val STUB_B =
             Theater(
-                1,
-                mapOf(Tier.S to listOf(3, 4), Tier.A to listOf(5), Tier.B to listOf(1, 2)),
-                4,
+                2,
                 "선릉 극장",
             )
         val STUB_C =
             Theater(
-                2,
-                mapOf(Tier.S to listOf(3, 4), Tier.A to listOf(5), Tier.B to listOf(1, 2)),
-                4,
+                3,
                 "강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남 ",
             )
     }
