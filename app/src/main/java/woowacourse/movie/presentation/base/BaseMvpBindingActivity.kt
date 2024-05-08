@@ -36,13 +36,13 @@ abstract class BaseMvpBindingActivity<T : ViewDataBinding> : AppCompatActivity()
 
     override fun showSnackBar(e: Throwable) {
         runOnUiThread {
-            Messenger.showSnackBar(e, binding.root)
+            Messenger.showSnackBar(binding.root, e)
         }
     }
 
     override fun showSnackBar(messageType: MessageType) {
         runOnUiThread {
-            Messenger.showSnackBar(messageType, binding.root)
+            Messenger.showSnackBar(binding.root, messageType)
         }
     }
 
