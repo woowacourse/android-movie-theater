@@ -1,6 +1,6 @@
 package woowacourse.movie.result.presenter
 
-import woowacourse.movie.data.MovieRepository.getMovieById
+import woowacourse.movie.data.repository.HomeContentRepository.getMovieById
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
 import woowacourse.movie.model.MovieTicket
@@ -18,7 +18,7 @@ class MovieResultPresenter(private val movieResultContractView: MovieResultContr
         time: String,
         count: Int,
         seats: String,
-        theaterName: String,
+        theaterPosition: Int,
     ) {
         val movieData = getMovieById(movieId)
 
@@ -34,6 +34,8 @@ class MovieResultPresenter(private val movieResultContractView: MovieResultContr
 
         movieResultContractView.displayMovieTicket(
             movieData?.let { movie ->
+                val theaterName = movie.theaters[theaterPosition].name
+
                 MovieTicket(
                     movieId,
                     movie.title,

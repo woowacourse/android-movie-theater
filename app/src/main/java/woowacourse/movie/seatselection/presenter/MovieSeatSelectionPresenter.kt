@@ -1,11 +1,14 @@
 package woowacourse.movie.seatselection.presenter
 
-import woowacourse.movie.data.MovieRepository.getMovieById
+import woowacourse.movie.data.db.ReservationHistoryDatabase
+import woowacourse.movie.data.db.ReservationHistoryEntity
+import woowacourse.movie.data.repository.HomeContentRepository.getMovieById
 import woowacourse.movie.model.MovieSelectedSeats
 import woowacourse.movie.seatselection.presenter.contract.MovieSeatSelectionContract
 
 class MovieSeatSelectionPresenter(
     private val movieSeatSelectionContractView: MovieSeatSelectionContract.View,
+    private val database: ReservationHistoryDatabase,
 ) : MovieSeatSelectionContract.Presenter {
     lateinit var movieSelectedSeats: MovieSelectedSeats
 
@@ -43,5 +46,11 @@ class MovieSeatSelectionPresenter(
 
     override fun clickPositiveButton() {
         movieSeatSelectionContractView.navigateToResultView(movieSelectedSeats)
+    }
+
+    override fun saveReservationHistory(reservationHistoryEntity: ReservationHistoryEntity) {
+        Thread {
+            database.reservationHistoryDao().saveReservationHistory(reservationHistoryEntity)
+        }.start()
     }
 }

@@ -6,7 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import woowacourse.movie.data.ReservationHistoryEntity
+import woowacourse.movie.data.db.ReservationHistoryDatabase
+import woowacourse.movie.data.db.ReservationHistoryEntity
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.reservationhistory.presenter.ReservationHistoryContract
 import woowacourse.movie.reservationhistory.presenter.ReservationHistoryPresenter
@@ -41,7 +42,7 @@ class ReservationHistoryFragment :
         val divider = DividerItemDecoration(requireActivity(), DividerItemDecoration.VERTICAL)
         binding.recyclerViewHistory.addItemDecoration(divider)
 
-        reservationHistoryPresenter = ReservationHistoryPresenter(this)
+        reservationHistoryPresenter = ReservationHistoryPresenter(this, ReservationHistoryDatabase.getInstance(requireActivity()))
         reservationHistoryPresenter.loadReservationHistories()
     }
 
@@ -49,12 +50,12 @@ class ReservationHistoryFragment :
         val intent =
             MovieResultActivity.createIntent(
                 requireActivity(),
-                reservationHistoryEntity.id,
+                reservationHistoryEntity.movieId,
                 reservationHistoryEntity.date,
                 reservationHistoryEntity.time,
                 reservationHistoryEntity.count,
                 reservationHistoryEntity.seats,
-                reservationHistoryEntity.theaterName,
+                reservationHistoryEntity.theaterPosition,
             )
         startActivity(intent)
     }

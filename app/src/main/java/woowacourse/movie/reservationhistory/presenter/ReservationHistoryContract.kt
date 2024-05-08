@@ -1,6 +1,6 @@
 package woowacourse.movie.reservationhistory.presenter
 
-import woowacourse.movie.data.ReservationHistoryEntity
+import woowacourse.movie.data.db.ReservationHistoryEntity
 
 interface ReservationHistoryContract {
     interface View {

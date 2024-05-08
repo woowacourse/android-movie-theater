@@ -5,7 +5,8 @@ import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import woowacourse.movie.R
-import woowacourse.movie.data.ReservationHistoryEntity
+import woowacourse.movie.data.db.ReservationHistoryEntity
+import woowacourse.movie.data.repository.HomeContentRepository.getMovieById
 import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.util.Formatter.formatRow
 
@@ -50,12 +51,15 @@ object MovieDataBindingAdapter {
         textView: TextView,
         reservationHistory: ReservationHistoryEntity,
     ) {
+        val theaterName =
+            getMovieById(reservationHistory.movieId)?.theaters?.get(reservationHistory.theaterPosition)?.name
+
         textView.text =
             textView.context.getString(
                 R.string.history_information,
                 reservationHistory.date,
                 reservationHistory.time,
-                reservationHistory.theaterName,
+                theaterName,
             )
     }
 }

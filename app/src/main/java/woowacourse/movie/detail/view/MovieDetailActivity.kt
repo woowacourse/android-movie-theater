@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import woowacourse.movie.data.MovieRepository.getMovieById
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.detail.presenter.MovieDetailPresenter
 import woowacourse.movie.detail.presenter.contract.MovieDetailContract
@@ -15,7 +14,6 @@ import woowacourse.movie.model.MovieDate
 import woowacourse.movie.model.MovieReservationCount
 import woowacourse.movie.seatselection.view.MovieSeatSelectionActivity
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_NAME
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_POSITION
 import woowacourse.movie.util.MovieIntentConstant.KEY_ITEM_POSITION
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_COUNT
@@ -112,11 +110,6 @@ class MovieDetailActivity :
         time: String,
         count: Int,
     ) {
-        val theaterName =
-            getMovieById(this.movieId)?.let {
-                it.theaters[selectedTheaterPosition].name
-            } ?: INVALID_VALUE_THEATER_NAME
-
         val intent =
             MovieSeatSelectionActivity.createIntent(
                 baseContext,
@@ -124,7 +117,7 @@ class MovieDetailActivity :
                 date,
                 time,
                 count,
-                theaterName,
+                selectedTheaterPosition,
             )
         startActivity(intent)
     }

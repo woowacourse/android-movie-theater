@@ -4,15 +4,17 @@
 
     <data>
 
-        <import type="woowacourse.movie.model.MovieTicket" />
-
         <variable
             name="reservationHistoryClickListener"
             type="woowacourse.movie.reservationhistory.view.listener.ReservationHistoryClickListener" />
 
         <variable
             name="reservationHistoryEntity"
-            type="woowacourse.movie.data.ReservationHistoryEntity" />
+            type="woowacourse.movie.data.db.ReservationHistoryEntity" />
+
+        <variable
+            name="reservationMovieTitle"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -44,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="@{reservationHistoryEntity.title}"
+            android:text="@{reservationMovieTitle}"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"

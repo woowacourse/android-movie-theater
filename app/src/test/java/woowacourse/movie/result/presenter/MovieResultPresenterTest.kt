@@ -8,7 +8,7 @@ import io.mockk.runs
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.MovieRepository
+import woowacourse.movie.data.repository.HomeContentRepository
 import woowacourse.movie.result.presenter.contract.MovieResultContract
 
 class MovieResultPresenterTest {
@@ -19,7 +19,7 @@ class MovieResultPresenterTest {
     fun setUp() {
         view = mockk()
         presenter = MovieResultPresenter(view)
-        mockkObject(MovieRepository)
+        mockkObject(HomeContentRepository)
     }
 
     @Test
@@ -28,7 +28,7 @@ class MovieResultPresenterTest {
         every { view.displayMovieTicket(any()) } just runs
 
         // When
-        presenter.loadMovieTicket(0, "2024-04-01", "10:00", 3, "A0, A1, A2", "선릉")
+        presenter.loadMovieTicket(0, "2024-04-01", "10:00", 3, "A0, A1, A2", 1)
 
         // Then
         verify { view.displayMovieTicket(any()) }

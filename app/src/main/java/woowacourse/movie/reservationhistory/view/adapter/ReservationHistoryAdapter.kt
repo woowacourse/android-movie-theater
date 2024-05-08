@@ -3,11 +3,9 @@ package woowacourse.movie.reservationhistory.view.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.data.ReservationHistoryEntity
+import woowacourse.movie.data.db.ReservationHistoryEntity
 import woowacourse.movie.databinding.ItemReservationHistoryBinding
 import woowacourse.movie.reservationhistory.view.listener.ReservationHistoryClickListener
-import java.time.LocalDate
-import java.time.LocalTime
 
 class ReservationHistoryAdapter(
     private val clickListener: ReservationHistoryClickListener,
@@ -36,18 +34,6 @@ class ReservationHistoryAdapter(
     }
 
     fun updateReservationHistory(reservationHistories: List<ReservationHistoryEntity>) {
-//        this.reservationHistories = reservationHistories
-        this.reservationHistories =
-            listOf(
-                ReservationHistoryEntity(
-                    0L,
-                    "타이타닉",
-                    LocalDate.of(2024, 4, 1).toString(),
-                    LocalTime.of(12, 30).toString(),
-                    4,
-                    "A1, B1, A3, D1",
-                    "선릉",
-                ),
-            )
+        this.reservationHistories = reservationHistories
     }
 }
