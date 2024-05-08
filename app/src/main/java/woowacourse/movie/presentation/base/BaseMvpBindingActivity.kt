@@ -1,12 +1,10 @@
 package woowacourse.movie.presentation.base
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.google.android.material.snackbar.Snackbar
-import woowacourse.movie.R
+import woowacourse.movie.presentation.message.Messenger
 import woowacourse.movie.presentation.model.MessageType
 import woowacourse.movie.presentation.model.MessageType.*
 
@@ -27,51 +25,25 @@ abstract class BaseMvpBindingActivity<T : ViewDataBinding> : AppCompatActivity()
 
     override fun showToastMessage(messageType: MessageType) {
         runOnUiThread {
-            Toast.makeText(this, messageType.toMessage(), Toast.LENGTH_SHORT).show()
+            Messenger.showToast(messageType)
         }
     }
 
     override fun showToastMessage(e: Throwable) {
         runOnUiThread {
-            Toast.makeText(this, e.toErrorMessage(), Toast.LENGTH_SHORT).show()
+            Messenger.showToast(e)
         }
     }
 
     override fun showSnackBar(e: Throwable) {
         runOnUiThread {
-            Snackbar.make(
-                findViewById(android.R.id.content),
-                e.toErrorMessage(),
-                Snackbar.LENGTH_SHORT,
-            ).show()
+            Messenger.showSnackBar(e)
         }
     }
 
     override fun showSnackBar(messageType: MessageType) {
         runOnUiThread {
-            Snackbar.make(
-                findViewById(android.R.id.content),
-                messageType.toMessage(),
-                Snackbar.LENGTH_SHORT,
-            ).show()
-        }
-    }
-
-    private fun MessageType.toMessage(): String {
-        return when (this) {
-            is TicketMaxCountMessage -> getString(R.string.ticke_max_count_message, this.count)
-            is TicketMinCountMessage -> getString(R.string.ticke_min_count_message, this.count)
-            is AllSeatsSelectedMessage -> getString(R.string.all_seats_selected_message, this.count)
-            is ReservationSuccessMessage -> getString(R.string.reservation_success_message)
-            is NotificationFailureMessage -> getString(R.string.notification_failure_message)
-            is NotificationSuccessMessage -> getString(R.string.notification_success_message)
-        }
-    }
-
-    private fun Throwable.toErrorMessage(): String {
-        return when (this) {
-            is NoSuchElementException -> getString(R.string.no_such_element_exception_message)
-            else -> getString(R.string.unforeseen_error_message)
+            Messenger.showSnackBar(messageType)
         }
     }
 
