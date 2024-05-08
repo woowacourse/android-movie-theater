@@ -1,29 +1,29 @@
 package woowacourse.movie.feature.setting
 
+import android.os.Handler
+import android.os.Looper
 import woowacourse.movie.data.TicketRepository
-import java.time.LocalDateTime
 
 class SettingPresenter(
     private val view: SettingContract.View
 ) : SettingContract.Presenter {
     override fun setTicketsAlarm(ticketRepository: TicketRepository) {
-        val tickets = ticketRepository.findAll()
-        tickets.forEach { ticket ->
-            val screeningDateTime =
-                LocalDateTime.of(ticket.screeningDate, ticket.screeningTime)
-                    .minusMinutes(TICKET_ALARM_INTERVAL_MINUTE)
-            view.setTicketAlarm(screeningDateTime, ticket.id.toInt())
-        }
+        val handler = Handler(Looper.getMainLooper())
+        Thread {
+            val tickets = ticketRepository.findAll()
+            handler.post {
+                tickets.forEach { view.setTicketAlarm(it) }
+            }
+        }.start()
     }
 
     override fun cancelTicketsAlarm(ticketRepository: TicketRepository) {
-        val tickets = ticketRepository.findAll()
-        tickets.forEach {
-            view.cancelTicketAlarm(it.id.toInt())
-        }
-    }
-
-    companion object {
-        private const val TICKET_ALARM_INTERVAL_MINUTE = 30L
+        val handler = Handler(Looper.getMainLooper())
+        Thread {
+            val tickets = ticketRepository.findAll()
+            handler.post {
+                tickets.forEach { view.cancelTicketAlarm(it) }
+            }
+        }.start()
     }
 }

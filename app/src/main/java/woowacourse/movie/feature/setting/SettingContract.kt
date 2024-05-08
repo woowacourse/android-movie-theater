@@ -1,17 +1,15 @@
 package woowacourse.movie.feature.setting
 
 import woowacourse.movie.data.TicketRepository
+import woowacourse.movie.data.entity.Ticket
 import woowacourse.movie.util.BasePresenter
 import java.time.LocalDateTime
 
 interface SettingContract {
     interface View {
-        fun setTicketAlarm(
-            localDateTime: LocalDateTime,
-            requestCode: Int,
-        )
+        fun setTicketAlarm(ticket: Ticket)
 
-        fun cancelTicketAlarm(requestCode: Int)
+        fun cancelTicketAlarm(ticket: Ticket)
     }
 
     interface Presenter : BasePresenter {

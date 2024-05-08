@@ -12,10 +12,15 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import woowacourse.movie.MovieTheaterApplication
+import woowacourse.movie.data.entity.Ticket
 import woowacourse.movie.databinding.FragmentSettingBinding
+import woowacourse.movie.feature.result.MovieResultActivity
 import woowacourse.movie.util.BaseFragment
+import woowacourse.movie.util.MovieIntentConstant.DEFAULT_VALUE_NOTIFICATION
 import woowacourse.movie.util.MovieIntentConstant.KEY_NOTIFICATION
+import woowacourse.movie.util.NotificationRegister
 import woowacourse.movie.util.SharedPreferencesManager
+import woowacourse.movie.util.TicketAlarmRegister
 import java.time.LocalDateTime
 
 class SettingFragment :
@@ -24,6 +29,8 @@ class SettingFragment :
     private var _binding: FragmentSettingBinding? = null
     private val binding get() = _binding!!
 
+    private val sharedPreferencesManager by lazy { SharedPreferencesManager(requireContext()) }
+    private val ticketAlarmRegister by lazy { TicketAlarmRegister(requireContext()) }
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
 
@@ -33,6 +40,7 @@ class SettingFragment :
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSettingBinding.inflate(inflater)
+        initializeNotificationSwitch()
         return binding.root
     }
 
@@ -76,8 +84,9 @@ class SettingFragment :
     }
 
     private fun initializeNotificationSwitch() {
+        binding.switchNotification.isChecked = sharedPreferencesManager.getBoolean(KEY_NOTIFICATION, DEFAULT_VALUE_NOTIFICATION)
         binding.switchNotification.setOnCheckedChangeListener { _, isChecked ->
-            SharedPreferencesManager(requireContext()).setBoolean(KEY_NOTIFICATION, isChecked)
+            sharedPreferencesManager.setBoolean(KEY_NOTIFICATION, isChecked)
             if (isChecked) {
                 presenter.setTicketsAlarm((requireActivity().application as MovieTheaterApplication).ticketRepository)
             } else {
@@ -91,11 +100,11 @@ class SettingFragment :
         _binding = null
     }
 
-    override fun setTicketAlarm(localDateTime: LocalDateTime, requestCode: Int) {
-        TODO("Not yet implemented")
+    override fun setTicketAlarm(ticket: Ticket) {
+        ticketAlarmRegister.setReservationAlarm(ticket)
     }
 
-    override fun cancelTicketAlarm(requestCode: Int) {
-        TODO("Not yet implemented")
+    override fun cancelTicketAlarm(ticket: Ticket) {
+        ticketAlarmRegister.cancelReservationAlarm(ticket)
     }
 }

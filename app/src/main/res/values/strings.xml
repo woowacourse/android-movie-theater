@@ -19,4 +19,6 @@
     <string name="separator">|</string>
     <string name="notification_receive">푸시 알림 수신</string>
     <string name="notification_info">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+    <string name="notification_title">예매 알림</string>
+    <string name="notification_description">%s %d분 후에 상영</string>
 </resources>
