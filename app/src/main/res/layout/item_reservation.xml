@@ -6,12 +6,21 @@
         <variable
             name="reservation"
             type="woowacourse.movie.model.Reservation" />
+
+        <variable
+            name="theaterName"
+            type="String" />
+
+        <variable
+            name="listener"
+            type="woowacourse.movie.presentation.homefragments.reservation.ReservationItemClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tool="http://schemas.android.com/tools"
         android:background="@drawable/effect_item_reservation"
         android:layout_width="match_parent"
+        android:onClick="@{() -> listener.onClickReservationItem(reservation)}"
         android:clickable="true"
         android:focusable="true"
         android:layout_height="wrap_content">

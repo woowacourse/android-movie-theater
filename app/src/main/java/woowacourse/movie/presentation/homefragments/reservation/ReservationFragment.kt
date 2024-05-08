@@ -8,12 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import woowacourse.movie.databinding.FragmentReservationBinding
 import woowacourse.movie.model.Reservation
+import woowacourse.movie.presentation.ticketingResult.TicketingResultActivity
 
-class ReservationFragment : Fragment(), ReservationContract.View {
+class ReservationFragment : Fragment(), ReservationContract.View, ReservationItemClickListener {
     private var _binding: FragmentReservationBinding? = null
     val binding get() = _binding!!
     private val presenter by lazy { ReservationPresenter(this) }
-    private val reservationAdapter: ReservationAdapter by lazy { ReservationAdapter() }
+    private val reservationAdapter: ReservationAdapter by lazy { ReservationAdapter(this) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,5 +39,10 @@ class ReservationFragment : Fragment(), ReservationContract.View {
 
     override fun displayReservations(reservations: List<Reservation>) {
         reservationAdapter.updateReservations(reservations)
+    }
+
+    override fun onClickReservationItem(reservation: Reservation) {
+        val intent = TicketingResultActivity.createIntent(requireContext(), reservation)
+        startActivity(intent)
     }
 }

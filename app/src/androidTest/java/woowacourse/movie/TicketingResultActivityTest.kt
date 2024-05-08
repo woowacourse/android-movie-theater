@@ -39,7 +39,7 @@ class TicketingResultActivityTest {
                 TicketingResultActivity::class.java,
             ).apply
                 {
-                    putExtra(TicketingResultActivity.EXTRA_MOVIE_TICKET, movieReservation)
+                    putExtra(TicketingResultActivity.EXTRA_MOVIE_RESERVATION, movieReservation)
                 },
         )
 

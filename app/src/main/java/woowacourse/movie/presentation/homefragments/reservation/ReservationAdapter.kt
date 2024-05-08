@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemReservationBinding
 import woowacourse.movie.model.Reservation
 
-class ReservationAdapter : RecyclerView.Adapter<ReservationViewHolder>() {
+class ReservationAdapter(private val listener: ReservationItemClickListener) : RecyclerView.Adapter<ReservationViewHolder>() {
     private lateinit var reservations: List<Reservation>
 
     override fun onCreateViewHolder(
@@ -26,7 +26,7 @@ class ReservationAdapter : RecyclerView.Adapter<ReservationViewHolder>() {
         holder: ReservationViewHolder,
         position: Int,
     ) {
-        holder.bind(reservations[position])
+        holder.bind(reservations[position], listener)
     }
 
     override fun getItemCount(): Int {

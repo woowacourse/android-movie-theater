@@ -22,9 +22,9 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
 
         val movieReservation =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                intent.getParcelableExtra(EXTRA_MOVIE_TICKET, Reservation::class.java)
+                intent.getParcelableExtra(EXTRA_MOVIE_RESERVATION, Reservation::class.java)
             } else {
-                intent.getParcelableExtra(EXTRA_MOVIE_TICKET)
+                intent.getParcelableExtra(EXTRA_MOVIE_RESERVATION)
             }
         presenter.loadTicketInfo(movieReservation)
     }
@@ -44,14 +44,14 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
     }
 
     companion object {
-        const val EXTRA_MOVIE_TICKET = "movie_ticket"
+        const val EXTRA_MOVIE_RESERVATION = "movie_reservation"
 
         fun createIntent(
             context: Context,
             movieReservation: Reservation,
         ): Intent {
             return Intent(context, TicketingResultActivity::class.java).apply {
-                putExtra(EXTRA_MOVIE_TICKET, movieReservation)
+                putExtra(EXTRA_MOVIE_RESERVATION, movieReservation)
             }
         }
     }
