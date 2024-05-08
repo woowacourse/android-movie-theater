@@ -9,6 +9,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import woowacourse.movie.domain.repository.NotificationRepository
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.ScreenRepository
 import woowacourse.movie.presentation.model.MessageType
@@ -32,9 +33,18 @@ class SeatSelectionPresenterTest {
     @MockK
     private lateinit var reservationRepository: ReservationRepository
 
+    @MockK
+    private lateinit var notificationRepository: NotificationRepository
+
     @BeforeEach
     fun setUp() {
-        presenter = SeatSelectionPresenter(view, screenRepository, reservationRepository)
+        presenter =
+            SeatSelectionPresenter(
+                view,
+                screenRepository,
+                reservationRepository,
+                notificationRepository,
+            )
     }
 
     @Test
@@ -45,7 +55,7 @@ class SeatSelectionPresenterTest {
         presenter.updateUiModel(dummyReservationInfo)
 
         // when
-        presenter.loadScreen(1)
+        presenter.loadScreen(1, dummyScreen.movie.id)
 
         // then
         verify { view.showScreen(dummyScreen, 0, dummyReservationInfo.ticketCount) }
@@ -62,7 +72,7 @@ class SeatSelectionPresenterTest {
         every { view.navigateBackToPrevious() } just runs
 
         // when
-        presenter.loadScreen(1)
+        presenter.loadScreen(1, 1)
 
         // then
         verify { view.showToastMessage(e = any()) }
@@ -210,14 +220,22 @@ class SeatSelectionPresenterTest {
                 any(),
                 any(),
                 any(),
+                any(),
             )
         } returns Result.success(1)
+        every {
+            notificationRepository.createNotification(
+                any(),
+                any(),
+                any(),
+            )
+        } returns Result.success(Unit)
         every { view.showToastMessage(MessageType.ReservationSuccessMessage) } just runs
         every { view.navigateToReservation(any()) } just runs
         every { view.showScreen(any(), any(), any()) } just runs
 
         // when
-        presenter.loadScreen(1)
+        presenter.loadScreen(1, dummyScreen.movie.id)
         presenter.updateUiModel(dummyReservationInfo)
         presenter.reserve()
 
@@ -238,19 +256,27 @@ class SeatSelectionPresenterTest {
                 any(),
                 any(),
                 any(),
+                any(),
             )
         } returns Result.failure(exception)
-        every { view.showSnackBar(e = any()) } just runs
+        every {
+            notificationRepository.createNotification(
+                any(),
+                any(),
+                any(),
+            )
+        } returns Result.failure(IllegalArgumentException())
+        every { view.showToastMessage(e = any()) } just runs
         every { view.navigateBackToPrevious() } just runs
         every { view.showScreen(any(), any(), any()) } just runs
 
         // when
-        presenter.loadScreen(1)
+        presenter.loadScreen(1, dummyScreen.movie.id)
         presenter.updateUiModel(dummyReservationInfo)
         presenter.reserve()
 
         // then
-        verify { view.showSnackBar(e = exception) }
+        verify { view.showToastMessage(e = exception) }
         verify { view.navigateBackToPrevious() }
     }
 }
