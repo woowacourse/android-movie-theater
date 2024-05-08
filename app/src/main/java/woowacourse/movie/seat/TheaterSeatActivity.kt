@@ -101,12 +101,13 @@ class TheaterSeatActivity :
     private fun initPresenter() {
         val ticketNum = intent.getStringExtra(EXTRA_TICKET_NUM) ?: return ErrorActivity.start(this)
         val cinema = IntentCompat.getSerializableExtra(intent, EXTRA_CINEMA, Cinema::class.java)
+        val showTime=intent.getStringExtra(EXTRA_TIME_DATE) ?: return ErrorActivity.start(this)
         if (cinema == null) {
             ErrorActivity.start(this)
             return finish()
         }
         val database = Room.databaseBuilder(this, AppDatabase::class.java, "ticket").build()
-        presenter = TheaterSeatPresenter(this, database, ticketNum.toInt(), cinema)
+        presenter = TheaterSeatPresenter(this, database, showTime, ticketNum.toInt(), cinema)
     }
 
     private fun initSeats() {
