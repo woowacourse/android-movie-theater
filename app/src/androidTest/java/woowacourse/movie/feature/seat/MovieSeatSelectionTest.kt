@@ -1,4 +1,4 @@
-package woowacourse.movie.feature.seatselection
+package woowacourse.movie.feature.seat
 
 import android.content.Intent
 import android.content.pm.ActivityInfo

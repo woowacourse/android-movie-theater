@@ -1,7 +1,7 @@
 package woowacourse.movie.feature.result.ui
 
-import woowacourse.movie.data.MovieRepository
-import woowacourse.movie.data.entity.Ticket
+import woowacourse.movie.data.movie.MovieRepository
+import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.util.formatScreeningDate
 import woowacourse.movie.util.formatScreeningTime
 import woowacourse.movie.util.formatSeats

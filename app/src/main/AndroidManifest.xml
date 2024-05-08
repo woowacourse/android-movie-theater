@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Movie"
         tools:targetApi="31">
         <activity
-            android:name=".feature.seatselection.MovieSeatSelectionActivity"
+            android:name=".feature.seat.MovieSeatSelectionActivity"
             android:exported="false" />
         <activity
             android:name=".feature.result.MovieResultActivity"
@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".TicketAlarmBroadcastReceiver" />
+        <receiver android:name=".feature.setting.notification.TicketAlarmBroadcastReceiver" />
     </application>
 
 </manifest>

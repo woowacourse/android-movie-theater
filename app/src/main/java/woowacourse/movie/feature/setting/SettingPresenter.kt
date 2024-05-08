@@ -1,6 +1,6 @@
 package woowacourse.movie.feature.setting
 
-import woowacourse.movie.data.TicketRepository
+import woowacourse.movie.data.ticket.TicketRepository
 
 class SettingPresenter(private val view: SettingContract.View) : SettingContract.Presenter {
     override fun setTicketsAlarm(ticketRepository: TicketRepository) {

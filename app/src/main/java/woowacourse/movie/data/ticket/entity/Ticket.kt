@@ -1,4 +1,4 @@
-package woowacourse.movie.data.entity
+package woowacourse.movie.data.ticket.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

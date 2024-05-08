@@ -1,6 +1,6 @@
 package woowacourse.movie.feature.history
 
-import woowacourse.movie.data.TicketRepository
+import woowacourse.movie.data.ticket.TicketRepository
 
 class ReservationHistoryPresenter(private val view: ReservationHistoryContract.View) :
     ReservationHistoryContract.Presenter {

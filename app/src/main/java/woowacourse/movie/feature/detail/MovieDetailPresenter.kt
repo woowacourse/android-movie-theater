@@ -1,6 +1,6 @@
 package woowacourse.movie.feature.detail
 
-import woowacourse.movie.data.MovieRepository
+import woowacourse.movie.data.movie.MovieRepository
 import woowacourse.movie.model.ReservationCount
 
 class MovieDetailPresenter(

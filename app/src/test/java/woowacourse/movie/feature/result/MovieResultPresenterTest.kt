@@ -7,7 +7,7 @@ import io.mockk.runs
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.FakeTicketRepository
+import woowacourse.movie.data.ticket.FakeTicketRepository
 import woowacourse.movie.feature.movieId
 import woowacourse.movie.feature.screeningDate
 import woowacourse.movie.feature.screeningTime

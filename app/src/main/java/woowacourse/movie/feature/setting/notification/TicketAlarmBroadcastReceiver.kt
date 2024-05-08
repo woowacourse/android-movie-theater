@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.feature.setting.notification
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -10,7 +10,7 @@ import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_TICKET_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_NOTIFICATION_DESCRIPTION
 import woowacourse.movie.util.MovieIntentConstant.KEY_NOTIFICATION_TITLE
 import woowacourse.movie.util.MovieIntentConstant.KEY_TICKET_ID
-import woowacourse.movie.util.NotificationRegister
+import woowacourse.movie.feature.setting.notification.NotificationRegister
 
 class TicketAlarmBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(

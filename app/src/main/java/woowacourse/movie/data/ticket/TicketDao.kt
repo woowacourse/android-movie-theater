@@ -1,10 +1,10 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.ticket
 
 import android.database.sqlite.SQLiteException
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import woowacourse.movie.data.entity.Ticket
+import woowacourse.movie.data.ticket.entity.Ticket
 
 @Dao
 interface TicketDao {

@@ -10,7 +10,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
 import woowacourse.movie.MovieTheaterApplication
 import woowacourse.movie.R
-import woowacourse.movie.data.entity.Ticket
+import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.databinding.ActivityMovieResultBinding
 import woowacourse.movie.feature.MovieMainActivity
 import woowacourse.movie.feature.result.ui.MovieResultUiModel

@@ -1,4 +1,4 @@
-package woowacourse.movie.feature.seatselection
+package woowacourse.movie.feature.seat
 
 import android.content.Context
 import android.content.Intent
@@ -15,7 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import woowacourse.movie.MovieTheaterApplication
 import woowacourse.movie.R
-import woowacourse.movie.data.entity.Ticket
+import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.databinding.ActivityMovieSeatSelectionBinding
 import woowacourse.movie.feature.result.MovieResultActivity
 import woowacourse.movie.model.MovieGrade
@@ -32,7 +32,7 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_NOTIFICATION
 import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_SEAT_POSITIONS
 import woowacourse.movie.util.MovieIntentConstant.KEY_THEATER_NAME
-import woowacourse.movie.util.TicketAlarmRegister
+import woowacourse.movie.feature.setting.notification.TicketAlarmRegister
 import woowacourse.movie.util.formatSeat
 
 class MovieSeatSelectionActivity :

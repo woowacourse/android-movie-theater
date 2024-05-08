@@ -1,7 +1,7 @@
 package woowacourse.movie.feature.history.adapter
 
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.data.entity.Ticket
+import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.databinding.ItemReservationHistoryBinding
 import woowacourse.movie.feature.history.ui.ReservationHistoryUiModel
 

@@ -1,11 +1,11 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.ticket
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import woowacourse.movie.data.entity.Ticket
+import woowacourse.movie.data.ticket.entity.Ticket
 
 @Database(entities = [Ticket::class], version = 1)
 @TypeConverters(TicketConverters::class)

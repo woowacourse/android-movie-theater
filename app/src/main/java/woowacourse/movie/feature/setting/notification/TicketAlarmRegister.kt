@@ -1,13 +1,12 @@
-package woowacourse.movie.util
+package woowacourse.movie.feature.setting.notification
 
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import woowacourse.movie.R
-import woowacourse.movie.TicketAlarmBroadcastReceiver
-import woowacourse.movie.data.MovieRepository
-import woowacourse.movie.data.entity.Ticket
+import woowacourse.movie.data.movie.MovieRepository
+import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.util.MovieIntentConstant.KEY_NOTIFICATION_DESCRIPTION
 import woowacourse.movie.util.MovieIntentConstant.KEY_NOTIFICATION_TITLE
 import woowacourse.movie.util.MovieIntentConstant.KEY_TICKET_ID

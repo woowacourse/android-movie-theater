@@ -1,7 +1,7 @@
-package woowacourse.movie.feature.seatselection
+package woowacourse.movie.feature.seat
 
-import woowacourse.movie.data.TicketRepository
-import woowacourse.movie.data.entity.Ticket
+import woowacourse.movie.data.ticket.TicketRepository
+import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
 import woowacourse.movie.util.BasePresenter

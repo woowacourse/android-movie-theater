@@ -1,8 +1,8 @@
 package woowacourse.movie
 
 import android.app.Application
-import woowacourse.movie.data.TicketDatabase
-import woowacourse.movie.data.TicketRepositoryImpl
+import woowacourse.movie.data.ticket.TicketDatabase
+import woowacourse.movie.data.ticket.TicketRepositoryImpl
 import woowacourse.movie.util.SharedPreferencesManager
 
 class MovieTheaterApplication : Application() {

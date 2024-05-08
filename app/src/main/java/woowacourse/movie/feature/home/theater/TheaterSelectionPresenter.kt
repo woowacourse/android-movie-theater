@@ -1,6 +1,6 @@
 package woowacourse.movie.feature.home.theater
 
-import woowacourse.movie.data.MovieRepository
+import woowacourse.movie.data.movie.MovieRepository
 
 class TheaterSelectionPresenter(private val view: TheaterSelectionContract.View) :
     TheaterSelectionContract.Presenter {

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import woowacourse.movie.data.entity.Ticket
+import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.databinding.ItemReservationHistoryBinding
 
 typealias ReservationHistoryItemClickListener = (Ticket) -> Unit

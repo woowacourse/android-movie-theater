@@ -1,4 +1,4 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.ticket
 
 import androidx.room.TypeConverter
 import woowacourse.movie.model.MovieSelectedSeats

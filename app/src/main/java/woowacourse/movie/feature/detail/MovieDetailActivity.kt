@@ -8,10 +8,10 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.annotation.StringRes
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieRepository
+import woowacourse.movie.data.movie.MovieRepository
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.feature.detail.ui.MovieDetailUiModel
-import woowacourse.movie.feature.seatselection.MovieSeatSelectionActivity
+import woowacourse.movie.feature.seat.MovieSeatSelectionActivity
 import woowacourse.movie.model.Movie
 import woowacourse.movie.util.BaseActivity
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID

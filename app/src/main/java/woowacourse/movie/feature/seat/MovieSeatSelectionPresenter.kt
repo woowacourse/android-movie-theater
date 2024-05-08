@@ -1,7 +1,7 @@
-package woowacourse.movie.feature.seatselection
+package woowacourse.movie.feature.seat
 
-import woowacourse.movie.data.MovieRepository
-import woowacourse.movie.data.TicketRepository
+import woowacourse.movie.data.movie.MovieRepository
+import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
 import java.time.LocalDate

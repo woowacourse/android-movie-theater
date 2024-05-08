@@ -1,6 +1,6 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.ticket
 
-import woowacourse.movie.data.entity.Ticket
+import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.model.MovieSelectedSeats
 import java.time.LocalDate
 import java.time.LocalTime

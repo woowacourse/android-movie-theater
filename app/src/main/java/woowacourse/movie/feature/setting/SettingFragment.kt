@@ -12,12 +12,12 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import woowacourse.movie.MovieTheaterApplication
-import woowacourse.movie.data.entity.Ticket
+import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.util.BaseFragment
 import woowacourse.movie.util.MovieIntentConstant.DEFAULT_VALUE_NOTIFICATION
 import woowacourse.movie.util.MovieIntentConstant.KEY_NOTIFICATION
-import woowacourse.movie.util.TicketAlarmRegister
+import woowacourse.movie.feature.setting.notification.TicketAlarmRegister
 
 class SettingFragment :
     BaseFragment<SettingContract.Presenter>(),
@@ -80,7 +80,6 @@ class SettingFragment :
 
     private fun initializeNotificationSwitch() {
         val sharedPreferencesManager = (requireActivity().application as MovieTheaterApplication).sharedPreferencesManager
-
         binding.switchNotification.isChecked = sharedPreferencesManager.getBoolean(KEY_NOTIFICATION, DEFAULT_VALUE_NOTIFICATION)
         binding.switchNotification.setOnCheckedChangeListener { _, isChecked ->
             sharedPreferencesManager.setBoolean(KEY_NOTIFICATION, isChecked)

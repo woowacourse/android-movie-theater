@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import woowacourse.movie.MovieTheaterApplication
-import woowacourse.movie.data.entity.Ticket
+import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.feature.history.adapter.ReservationHistoryAdapter
 import woowacourse.movie.feature.history.adapter.ReservationHistoryDividerDecoration

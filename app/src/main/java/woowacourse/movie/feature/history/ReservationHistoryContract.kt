@@ -1,7 +1,7 @@
 package woowacourse.movie.feature.history
 
-import woowacourse.movie.data.TicketRepository
-import woowacourse.movie.data.entity.Ticket
+import woowacourse.movie.data.ticket.TicketRepository
+import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.util.BasePresenter
 
 interface ReservationHistoryContract {

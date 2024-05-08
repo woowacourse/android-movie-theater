@@ -1,6 +1,6 @@
 package woowacourse.movie.feature.result
 
-import woowacourse.movie.data.TicketRepository
+import woowacourse.movie.data.ticket.TicketRepository
 
 class MovieResultPresenter(private val view: MovieResultContract.View) :
     MovieResultContract.Presenter {

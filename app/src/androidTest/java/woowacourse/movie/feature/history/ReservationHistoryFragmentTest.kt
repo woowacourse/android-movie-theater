@@ -15,8 +15,8 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.data.TicketDatabase
-import woowacourse.movie.data.TicketRepositoryImpl
+import woowacourse.movie.data.ticket.TicketDatabase
+import woowacourse.movie.data.ticket.TicketRepositoryImpl
 import woowacourse.movie.feature.history.adapter.ReservationHistoryViewHolder
 import woowacourse.movie.feature.movieId
 import woowacourse.movie.feature.screeningDate
