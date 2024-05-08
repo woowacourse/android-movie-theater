@@ -7,12 +7,12 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.Window
-import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.presentation.base.BaseActivity
 import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
 import woowacourse.movie.presentation.view.reservation.detail.MovieDetailActivity.Companion.RESERVATION_COUNT_KEY
@@ -21,32 +21,27 @@ import woowacourse.movie.presentation.view.reservation.result.ReservationResultA
 
 class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View {
     private lateinit var seatSelectionPresenter: SeatSelectionContract.Presenter
-    private val seatingChartLayout: TableLayout by lazy {
-        findViewById(R.id.seatingChartLayout)
-    }
-    private val movieTitle: TextView by lazy {
-        findViewById(R.id.movieTitle)
-    }
-    private val totalPriceText: TextView by lazy {
-        findViewById(R.id.totalPrice)
-    }
-    private val confirmButton: Button by lazy {
-        findViewById(R.id.confirmButton)
-    }
+    private lateinit var binding: ActivitySeatSelectionBinding
 
     override fun getLayoutResId(): Int = R.layout.activity_seat_selection
 
     override fun onCreateSetup(savedInstanceState: Bundle?) {
+        binding =
+            ActivitySeatSelectionBinding.inflate(
+                layoutInflater,
+            )
+        setContentView(binding.root)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        movieTitle.text = intent.getStringExtra(TITLE_KEY)
+        binding.title = intent.getStringExtra(TITLE_KEY)
+        binding.price = getString(R.string.seat_total_price_format, 0)
         val reservationCount = intent.getIntExtra(RESERVATION_COUNT_KEY, DEFAULT_COUNT)
 
         seatSelectionPresenter = SeatSelectionPresenterImpl(reservationCount)
         seatSelectionPresenter.attachView(this)
 
-        confirmButton.isEnabled = false
-        confirmButton.setOnClickListener {
+        binding.confirmButton.isEnabled = false
+        binding.confirmButton.setOnClickListener {
             showConfirmationDialog()
         }
     }
@@ -81,7 +76,7 @@ class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View {
             rowSeats.setPadding(10, 10, 10, 10)
             val color = getColorByRank(seatRankInfo, row)
             drawEachColumnSeats(rowSeats, row, colCount, color)
-            seatingChartLayout.addView(rowSeats)
+            binding.seatingChartLayout.addView(rowSeats)
         }
     }
 
@@ -142,7 +137,7 @@ class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View {
         row: Int,
         col: Int,
     ) {
-        val seatsRow = seatingChartLayout.getChildAt(row) as TableRow
+        val seatsRow = binding.seatingChartLayout.getChildAt(row) as TableRow
         val seatView = seatsRow.getChildAt(col) as TextView
         val currentColor = (seatView.background as? ColorDrawable)?.color
         val newColor =
@@ -155,11 +150,11 @@ class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View {
     }
 
     override fun updateTotalPrice(price: Int) {
-        totalPriceText.text = this.getString(R.string.seat_total_price_format, price)
+        binding.price = getString(R.string.seat_total_price_format, price)
     }
 
     override fun changeConfirmClickable(hasMatchedCount: Boolean) {
-        confirmButton.isEnabled = hasMatchedCount
+        binding.confirmButton.isEnabled = hasMatchedCount
     }
 
     override fun showAlreadyFilledSeatsSelectionMessage() {

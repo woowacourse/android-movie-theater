@@ -18,7 +18,7 @@ class ReservationResultActivity : BaseActivity() {
 
     override fun onCreateSetup(savedInstanceState: Bundle?) {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_reservation_result)
+        binding = DataBindingUtil.setContentView(this, getLayoutResId())
         setUpFromIntent()
     }
 
