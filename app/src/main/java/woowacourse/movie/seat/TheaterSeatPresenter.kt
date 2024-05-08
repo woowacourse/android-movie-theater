@@ -1,10 +1,13 @@
 package woowacourse.movie.seat
 
+import woowacourse.movie.database.AppDatabase
+import woowacourse.movie.database.Ticket
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.theater.Seat
 
 class TheaterSeatPresenter(
     private val view: TheaterSeatContract.View,
+    private val database: AppDatabase,
     private val ticketLimit: Int,
     val cinema: Cinema,
 ) :
@@ -76,5 +79,17 @@ class TheaterSeatPresenter(
                 seats[seatId]?.price ?: 0
             }
         view.showPrice(totalPrice)
+    }
+
+    override fun saveTicketToDatabase() {
+        val ticket =
+            Ticket(
+                movieName = cinema.theater.movie.title.toString(),
+                seatNumbers = selectedSeats.joinToString(),
+                ticketPrice = totalPrice,
+            )
+        Thread{
+            database.ticketDao().insertTicket(ticket)
+        }.start()
     }
 }

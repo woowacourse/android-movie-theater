@@ -13,8 +13,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.IntentCompat
 import androidx.core.view.children
+import androidx.room.Room
 import woowacourse.movie.R
 import woowacourse.movie.base.BindingActivity
+import woowacourse.movie.database.AppDatabase
 import woowacourse.movie.databinding.ActivityTheaterSeatBinding
 import woowacourse.movie.error.ErrorActivity
 import woowacourse.movie.model.Cinema
@@ -103,7 +105,8 @@ class TheaterSeatActivity :
             ErrorActivity.start(this)
             return finish()
         }
-        presenter = TheaterSeatPresenter(this, ticketNum.toInt(), cinema)
+        val database = Room.databaseBuilder(this, AppDatabase::class.java, "ticket").build()
+        presenter = TheaterSeatPresenter(this, database, ticketNum.toInt(), cinema)
     }
 
     private fun initSeats() {
@@ -135,6 +138,7 @@ class TheaterSeatActivity :
                         cinema,
                         intent.getStringExtra(EXTRA_TIME_DATE)!!,
                     ).apply {
+                        presenter.saveTicketToDatabase()
                         navigateToNextPage(this)
                     }
                 } else {
