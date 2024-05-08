@@ -10,10 +10,8 @@ import woowacourse.movie.domain.model.Theater
 data class ReservationHistory(
     @PrimaryKey
     val id: Int,
-
     @ColumnInfo(name = "reservation")
     val reservation: Reservation,
-
     @ColumnInfo(name = "theater")
     val theater: Theater,
 )
