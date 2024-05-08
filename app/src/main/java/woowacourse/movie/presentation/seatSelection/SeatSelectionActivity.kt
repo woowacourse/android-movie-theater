@@ -38,17 +38,19 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
         val movieId = intent.getLongExtra(EXTRA_MOVIE_ID, EXTRA_DEFAULT_MOVIE_ID)
         val ticketCount = intent.getIntExtra(EXTRA_COUNT, EXTRA_DEFAULT_TICKET_COUNT)
-        val screeningDateTime = intent.getStringExtra(EXTRA_SCREENING_DATE_TIME) ?: ""
+        val screeningDate = intent.getStringExtra(EXTRA_SCREENING_DATE) ?: ""
+        val screeningTime = intent.getStringExtra(EXTRA_SCREENING_TIME) ?: ""
         val theaterId = intent.getLongExtra(EXTRA_THEATER_ID, EXTRA_DEFAULT_THEATER_ID)
 
         presenter = SeatSelectionPresenter(this, ticketCount)
         presenter.loadMovieData(movieId)
         presenter.loadSeats()
-        initializeCompleteButton(screeningDateTime, theaterId)
+        initializeCompleteButton(screeningDate, screeningTime, theaterId)
     }
 
     private fun initializeCompleteButton(
-        screeningDateTime: String,
+        screeningDate: String,
+        screeningTime: String,
         theaterId: Long,
     ) {
         binding.btnComplete.setOnClickListener {
@@ -56,7 +58,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 .setTitle("예매 확인")
                 .setMessage("정말 예매하시겠습니까?")
                 .setPositiveButton("예매 완료") { _, _ ->
-                    presenter.navigate(screeningDateTime, theaterId)
+                    presenter.navigate(screeningDate, screeningTime, theaterId)
                 }
                 .setNegativeButton("취소") { dialog, _ -> dialog.dismiss() }
                 .setCancelable(false)
@@ -129,7 +131,8 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         const val EXTRA_MOVIE_ID = "movie_id"
         const val EXTRA_COUNT = "ticket_count"
         const val EXTRA_THEATER_ID = "theater_id"
-        const val EXTRA_SCREENING_DATE_TIME = "screening_date_time"
+        const val EXTRA_SCREENING_DATE = "screening_date"
+        const val EXTRA_SCREENING_TIME = "screening_time"
         const val EXTRA_DEFAULT_MOVIE_ID = -1L
         const val EXTRA_DEFAULT_TICKET_COUNT = -1
         const val EXTRA_DEFAULT_THEATER_ID = -1L
@@ -139,13 +142,15 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             context: Context,
             movieId: Long,
             count: Int,
-            screeningDateTime: String,
+            screeningDate: String,
+            screeningTime: String,
             theaterId: Long,
         ): Intent {
             return Intent(context, SeatSelectionActivity::class.java).apply {
                 putExtra(EXTRA_MOVIE_ID, movieId)
                 putExtra(EXTRA_COUNT, count)
-                putExtra(EXTRA_SCREENING_DATE_TIME, screeningDateTime)
+                putExtra(EXTRA_SCREENING_DATE, screeningDate)
+                putExtra(EXTRA_SCREENING_TIME, screeningTime)
                 putExtra(EXTRA_THEATER_ID, theaterId)
             }
         }

@@ -81,10 +81,15 @@ class TicketingActivity : AppCompatActivity(), TicketingContract.View {
         count: Int,
         theaterId: Long,
     ) {
-        val screeningDateTime =
-            "${binding.spinnerDate.selectedItem} ${binding.spinnerTimeSlot.selectedItem}"
         startActivity(
-            SeatSelectionActivity.createIntent(this, movieId, count, screeningDateTime, theaterId),
+            SeatSelectionActivity.createIntent(
+                this,
+                movieId,
+                count,
+                binding.spinnerDate.selectedItem.toString(),
+                binding.spinnerTimeSlot.selectedItem.toString(),
+                theaterId,
+            ),
         )
     }
 

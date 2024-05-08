@@ -6,7 +6,13 @@ import woowacourse.movie.utils.formatSeat
 import java.text.DecimalFormat
 
 @Parcelize
-data class Reservation(val movieTitle: String, val screeningDateTime: String, val selectedSeats: List<Seat>, val theaterName: String) :
+data class Reservation(
+    val movieTitle: String,
+    val screeningDate: String,
+    val screeningTime: String,
+    val selectedSeats: List<Seat>,
+    val theaterName: String,
+) :
     Parcelable {
     private val totalPrice = selectedSeats.sumOf { it.seatGrade.price }
     val totalCount = selectedSeats.size

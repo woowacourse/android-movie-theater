@@ -63,11 +63,12 @@ class SeatSelectionPresenter(
     }
 
     override fun navigate(
-        screeningDateTime: String,
+        screeningDate: String,
+        screeningTime: String,
         theaterId: Long,
     ) {
         val reservation =
-            Reservation(selectedMovie.title, screeningDateTime, seatingSystem.selectedSeats.toList(), findTheaterName(theaterId))
+            Reservation(selectedMovie.title, screeningDate, screeningTime, seatingSystem.selectedSeats.toList(), findTheaterName(theaterId))
         seatSelectionContractView.navigate(reservation)
     }
 
