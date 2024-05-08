@@ -9,13 +9,13 @@ import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityHomeBinding
 import woowacourse.movie.presentation.homefragments.movieList.MovieListFragment
-import woowacourse.movie.presentation.homefragments.reservation.ReservationFragment
+import woowacourse.movie.presentation.homefragments.reservationList.ReservationListFragment
 import woowacourse.movie.presentation.homefragments.setting.SettingFragment
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private val movieListFragment by lazy { MovieListFragment() }
-    private val reservationFragment by lazy { ReservationFragment() }
+    private val reservationListFragment by lazy { ReservationListFragment() }
     private val settingFragment by lazy { SettingFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +59,7 @@ class HomeActivity : AppCompatActivity() {
     private fun matchedFragment(menu: MenuItem): Fragment {
         return when (menu.itemId) {
             R.id.action_home -> movieListFragment
-            R.id.action_reservation_list -> reservationFragment
+            R.id.action_reservation_list -> reservationListFragment
             R.id.action_settings -> settingFragment
             else -> movieListFragment
         }

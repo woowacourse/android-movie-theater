@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.homefragments.reservation
+package woowacourse.movie.presentation.homefragments.reservationList
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 
-class ReservationFragment : Fragment() {
+class ReservationListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
