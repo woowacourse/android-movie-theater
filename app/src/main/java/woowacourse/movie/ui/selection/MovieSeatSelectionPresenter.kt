@@ -4,7 +4,7 @@ import android.os.Handler
 import android.os.Looper
 import woowacourse.movie.model.data.MovieDataSource
 import woowacourse.movie.model.db.UserTicket
-import woowacourse.movie.model.db.UserTicketRepository
+import woowacourse.movie.model.db.UserTicketDatabase
 import woowacourse.movie.model.movie.Reservation
 import woowacourse.movie.model.movie.ReservationDetail
 import woowacourse.movie.model.movie.Seat
@@ -61,10 +61,10 @@ class MovieSeatSelectionPresenter(
                 theaterName = reservation.theater,
                 reservationAmount = reservationDetail.totalSeatAmount(),
             )
-        val userTicketRepository = UserTicketRepository.instance()
+        val db = UserTicketDatabase.database()
         val handler = Handler(Looper.getMainLooper())
         Thread {
-            val userTicketId = userTicketRepository.insertUserTicket(userTicket)
+            val userTicketId = db.userTicketDao().insert(userTicket)
             handler.post {
                 view.showReservationComplete(userTicketId)
             }
