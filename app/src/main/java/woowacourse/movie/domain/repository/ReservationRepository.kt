@@ -6,4 +6,6 @@ interface ReservationRepository {
     fun saveReservation(reservation: Reservation): Result<Long>
 
     fun findByReservationId(id: Long): Result<Reservation>
+
+    fun findAll(): Result<List<Reservation>>
 }

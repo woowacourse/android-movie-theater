@@ -29,14 +29,25 @@ class ReservationRepositoryImpl(private val dao: ReservationDao) : ReservationRe
     override fun findByReservationId(id: Long): Result<Reservation> {
         return runCatching {
             val entity = dao.getData(id) ?: throw IllegalArgumentException()
-            Reservation(
-                entity.uid,
-                entity.theaterName,
-                entity.movieName,
-                entity.ticketCount,
-                entity.seats,
-                entity.dateTime,
-            )
+            mapEntityToReservation(entity)
         }
     }
+
+    override fun findAll(): Result<List<Reservation>> {
+        return runCatching {
+            dao.getAll().map { entity ->
+                mapEntityToReservation(entity)
+            }
+        }
+    }
+
+    private fun mapEntityToReservation(entity: ReservationEntity) =
+        Reservation(
+            entity.uid,
+            entity.theaterName,
+            entity.movieName,
+            entity.ticketCount,
+            entity.seats,
+            entity.dateTime,
+        )
 }

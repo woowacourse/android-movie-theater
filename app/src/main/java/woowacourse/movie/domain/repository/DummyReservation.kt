@@ -19,4 +19,10 @@ object DummyReservation : ReservationRepository {
             reservation ?: throw NoSuchElementException("예약 정보를 찾을 수 없습니다.")
         }
     }
+
+    override fun findAll(): Result<List<Reservation>> {
+        return runCatching {
+            reservations.toList()
+        }
+    }
 }
