@@ -183,6 +183,7 @@ object DummyData {
     val dummyReservationInfo =
         ReservationInfo(
             theaterId = 0,
+            movieId = 0,
             dateTime = LocalDateTime.now(),
             ticketCount = 2,
         )
@@ -207,7 +208,8 @@ object DummyData {
         Reservation(
             reservationId = 1,
             1,
-            piro,
+            1,
+            piro.title,
             3,
             seats = listOf(dummySeat),
             dateTime = LocalDateTime.now(),
