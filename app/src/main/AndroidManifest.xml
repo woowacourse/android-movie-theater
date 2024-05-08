@@ -13,16 +13,16 @@
         android:theme="@style/Theme.Movie"
         tools:targetApi="31">
         <activity
-            android:name=".seats.view.SeatsActivity"
+            android:name=".presentation.seats.SeatsActivity"
             android:exported="false" />
         <activity
-            android:name=".detail.view.DetailActivity"
+            android:name=".presentation.detail.DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ticket.view.MovieTicketActivity"
+            android:name=".presentation.ticket.MovieTicketActivity"
             android:exported="false" />
 
-        <activity android:name=".list.view.HomeActivity"
+        <activity android:name=".presentation.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

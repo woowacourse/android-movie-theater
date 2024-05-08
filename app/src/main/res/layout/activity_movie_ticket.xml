@@ -7,14 +7,14 @@
 
         <variable
             name="movieTicket"
-            type="woowacourse.movie.ticket.model.MovieTicket" />
+            type="woowacourse.movie.domain.model.movieticket.MovieTicket" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/reservation_result_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ticket.view.MovieTicketActivity">
+        tools:context=".presentation.ticket.MovieTicketActivity">
 
         <ScrollView
             android:layout_width="match_parent"

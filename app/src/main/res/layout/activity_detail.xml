@@ -7,7 +7,7 @@
 
         <variable
             name="detail"
-            type="woowacourse.movie.detail.view.DetailActivity" />
+            type="woowacourse.movie.presentation.detail.DetailActivity" />
 
         <variable
             name="count"
@@ -15,7 +15,7 @@
 
         <variable
             name="movie"
-            type="woowacourse.movie.list.model.Movie" />
+            type="woowacourse.movie.domain.model.home.Movie" />
 
 
     </data>
@@ -24,7 +24,7 @@
         android:id="@+id/activity_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".detail.view.DetailActivity">
+        tools:context=".presentation.detail.DetailActivity">
 
         <ScrollView
             android:layout_width="match_parent"
