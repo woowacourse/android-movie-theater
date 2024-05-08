@@ -1,10 +1,11 @@
 package woowacourse.movie.presentation
 
 import android.os.Bundle
+import android.os.HandlerThread
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityHomeBinding
 import woowacourse.movie.presentation.base.BindingActivity
 import woowacourse.movie.presentation.common.replaceTo
-import woowacourse.movie.databinding.ActivityHomeBinding
 import woowacourse.movie.presentation.movieList.MovieListFragment
 import woowacourse.movie.presentation.reservation.ReservationFragment
 import woowacourse.movie.presentation.setting.SettingFragment
