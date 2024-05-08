@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
+import woowacourse.movie.model.Reservation
 import woowacourse.movie.model.Seat
 
 @Parcelize
@@ -18,4 +19,14 @@ data class ReservationEntity(
 ) : Parcelable {
     @PrimaryKey(autoGenerate = true)
     var uid: Long = 0
+}
+
+fun ReservationEntity.toReservation(): Reservation {
+    return Reservation(
+        movieTitle = this.movieTitle,
+        screeningDate = this.screeningDate,
+        screeningTime = this.screeningTime,
+        selectedSeats = this.selectedSeats,
+        theaterName = this.theaterName,
+    )
 }

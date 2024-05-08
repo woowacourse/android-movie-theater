@@ -1,29 +1,23 @@
 package woowacourse.movie.presentation.homefragments.reservation
 
+import woowacourse.movie.db.ReservationDatabase
+import woowacourse.movie.db.toReservation
 import woowacourse.movie.model.Reservation
-import woowacourse.movie.model.Seat
 
-class ReservationPresenter(private val view: ReservationContract.View) :
-    ReservationContract.Presenter {
-    private val dummy =
-        listOf(
-            Reservation(
-                "영화 제목 1",
-                "2024.01.01",
-                "17:00",
-                listOf(Seat(0, 0), Seat(0, 1)),
-                "극장 이름 1",
-            ),
-            Reservation(
-                "영화 제목 2",
-                "2024.07.10",
-                "17:00",
-                listOf(Seat(1, 1), Seat(0, 1)),
-                "극장 이름 2",
-            ),
-        )
+class ReservationPresenter(
+    private val view: ReservationContract.View,
+    private val reservationDatabase: ReservationDatabase,
+) : ReservationContract.Presenter {
+    private val reservationDao = reservationDatabase.reservationDao()
 
     override fun loadReservations() {
-        view.displayReservations(dummy)
+        val result: MutableList<Reservation> = mutableListOf()
+        val thread =
+            Thread {
+                result.addAll(reservationDao.getAllReservation().map { it.toReservation() })
+            }
+        thread.start()
+        thread.join()
+        view.displayReservations(result)
     }
 }

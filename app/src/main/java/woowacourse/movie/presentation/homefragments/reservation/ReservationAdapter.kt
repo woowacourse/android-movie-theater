@@ -7,7 +7,7 @@ import woowacourse.movie.databinding.ItemReservationBinding
 import woowacourse.movie.model.Reservation
 
 class ReservationAdapter(private val listener: ReservationItemClickListener) : RecyclerView.Adapter<ReservationViewHolder>() {
-    private lateinit var reservations: List<Reservation>
+    private var reservations: List<Reservation> = listOf()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

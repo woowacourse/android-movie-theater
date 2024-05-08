@@ -7,6 +7,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import woowacourse.movie.db.ReservationDatabase
 import woowacourse.movie.repository.MovieRepository
 
 @ExtendWith(MockKExtension::class)
@@ -21,9 +22,12 @@ class SeatSelectionPresenterTest {
     @MockK
     private lateinit var repository: MovieRepository
 
+    @MockK
+    private lateinit var db: ReservationDatabase
+
     @BeforeEach
     fun setUp() {
-        presenter = SeatSelectionPresenter(view, ticketCount, repository)
+        presenter = SeatSelectionPresenter(view, ticketCount, db, repository)
     }
 
     @Test

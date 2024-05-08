@@ -7,13 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import woowacourse.movie.databinding.FragmentReservationBinding
+import woowacourse.movie.db.ReservationDatabase
 import woowacourse.movie.model.Reservation
 import woowacourse.movie.presentation.ticketingResult.TicketingResultActivity
 
 class ReservationFragment : Fragment(), ReservationContract.View, ReservationItemClickListener {
     private var _binding: FragmentReservationBinding? = null
     val binding get() = _binding!!
-    private val presenter by lazy { ReservationPresenter(this) }
+    private val presenter by lazy { ReservationPresenter(this, ReservationDatabase.getDatabase(requireContext())) }
     private val reservationAdapter: ReservationAdapter by lazy { ReservationAdapter(this) }
 
     override fun onCreateView(
