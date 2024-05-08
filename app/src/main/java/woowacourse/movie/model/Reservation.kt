@@ -2,6 +2,7 @@ package woowacourse.movie.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import woowacourse.movie.db.ReservationEntity
 import woowacourse.movie.utils.formatSeat
 import java.text.DecimalFormat
 
@@ -24,4 +25,14 @@ data class Reservation(
     companion object {
         val decimal = DecimalFormat("#,###")
     }
+}
+
+fun Reservation.toReservationEntity(): ReservationEntity {
+    return ReservationEntity(
+        movieTitle = movieTitle,
+        screeningDate = screeningDate,
+        screeningTime = screeningTime,
+        selectedSeats = selectedSeats,
+        theaterName = theaterName,
+    )
 }

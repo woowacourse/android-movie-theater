@@ -1,10 +1,10 @@
 package woowacourse.movie.presentation.seatSelection
 
 import woowacourse.movie.db.ReservationDatabase
-import woowacourse.movie.db.ReservationEntity
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.Reservation
 import woowacourse.movie.model.SeatingSystem
+import woowacourse.movie.model.toReservationEntity
 import woowacourse.movie.repository.DummyTheaterList
 import woowacourse.movie.repository.MovieRepository
 import woowacourse.movie.repository.TheaterListRepository
@@ -73,9 +73,7 @@ class SeatSelectionPresenter(
         theaterId: Long,
     ) {
         val reservation =
-            Reservation(selectedMovie.title, screeningDate, screeningTime, seatingSystem.selectedSeats.toList(), findTheaterName(theaterId))
-        val entity =
-            ReservationEntity(
+            Reservation(
                 selectedMovie.title,
                 screeningDate,
                 screeningTime,
@@ -83,7 +81,7 @@ class SeatSelectionPresenter(
                 findTheaterName(theaterId),
             )
         Thread {
-            reservationDao.saveReservation(entity)
+            reservationDao.saveReservation(reservation.toReservationEntity())
         }.start()
         seatSelectionContractView.navigate(reservation)
     }

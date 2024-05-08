@@ -23,10 +23,10 @@ data class ReservationEntity(
 
 fun ReservationEntity.toReservation(): Reservation {
     return Reservation(
-        movieTitle = this.movieTitle,
-        screeningDate = this.screeningDate,
-        screeningTime = this.screeningTime,
-        selectedSeats = this.selectedSeats,
-        theaterName = this.theaterName,
+        movieTitle = movieTitle,
+        screeningDate = screeningDate,
+        screeningTime = screeningTime,
+        selectedSeats = selectedSeats,
+        theaterName = theaterName,
     )
 }

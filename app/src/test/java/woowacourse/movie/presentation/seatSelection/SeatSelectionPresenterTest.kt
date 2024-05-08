@@ -22,7 +22,7 @@ class SeatSelectionPresenterTest {
     @MockK
     private lateinit var repository: MovieRepository
 
-    @MockK
+    @RelaxedMockK
     private lateinit var db: ReservationDatabase
 
     @BeforeEach
