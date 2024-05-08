@@ -87,7 +87,7 @@
 
         <TextView
             android:id="@+id/tv_screen_running_time"
-            bindFormatRunningTime="@{movie.runningTime}"
+            android:text="@{@string/running_time(movie.runningTime)}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12dp"
