@@ -8,7 +8,7 @@ import android.graphics.BitmapFactory
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
 
-class AlarmNotificationBuilder(private val context: Context) {
+class MovieAlarmNotificationBuilder(private val context: Context) {
     private val builder by lazy { notificationBuilder(context) }
     private val manager by lazy { notificationManager(context) }
 
