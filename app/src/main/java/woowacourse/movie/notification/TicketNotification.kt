@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.notification.TicketNotificationReceiver.Companion.MOVIE_TITLE
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.RESERVATION_TICKET_ID
@@ -38,9 +39,7 @@ object TicketNotification {
                 screeningDateTime.time,
             ),
         )?.time ?: return
-
         if (currentDateTime > screeningTime) return
-
         val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, TicketNotificationReceiver::class.java)
         intent.putExtra(MOVIE_TITLE, movieTitle)
@@ -74,22 +73,5 @@ object TicketNotification {
                 pendingIntent,
             )
         }
-    }
-
-    @SuppressLint("ServiceCast")
-    fun cancelNotification(context: Context) {
-        val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
-        val intent = Intent(context, TicketNotificationReceiver::class.java)
-        val pendingIntent =
-            PendingIntent.getBroadcast(
-                context,
-                PENDING_REQUEST_CODE,
-                intent,
-                PendingIntent.FLAG_IMMUTABLE,
-            )
-        alarmManager.cancel(pendingIntent)
-        val notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.cancel(NOTIFICATION_ID)
     }
 }
