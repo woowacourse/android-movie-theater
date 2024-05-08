@@ -16,7 +16,7 @@ abstract class UserTicketDatabase : RoomDatabase() {
         private var database: UserTicketDatabase? = null
 
         fun initialize(context: Context) {
-            if (UserTicketDatabase.database == null) {
+            if (database == null) {
                 database =
                     Room.databaseBuilder(
                         context.applicationContext,
