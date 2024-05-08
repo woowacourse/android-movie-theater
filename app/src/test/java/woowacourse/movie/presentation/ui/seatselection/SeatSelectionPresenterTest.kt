@@ -25,7 +25,7 @@ class SeatSelectionPresenterTest {
     @MockK
     private lateinit var view: SeatSelectionContract.View
 
-    private lateinit var presenter: SeatSelectionContract.Presenter
+    private lateinit var presenter: SeatSelectionPresenter
 
     @MockK
     private lateinit var screenRepository: ScreenRepository
@@ -50,10 +50,9 @@ class SeatSelectionPresenterTest {
     @Test
     fun `SeatSelectionPresenter가 유효하지 않은 상영 id값으로 loadScreen()을 했을 때, view에게 back과 throwable를 전달한다`() {
         // given
+        val exception = NoSuchElementException()
         every { screenRepository.findByScreenId(any(), any()) } returns
-            Result.failure(
-                NoSuchElementException(),
-            )
+            Result.failure(exception)
         every { view.showToastMessage(e = any()) } just runs
         every { view.navigateBackToPrevious() } just runs
 
@@ -61,7 +60,7 @@ class SeatSelectionPresenterTest {
         presenter.loadScreen(dummyReservationInfo)
 
         // then
-        verify { view.showToastMessage(e = any()) }
+        verify { view.showToastMessage(e = exception) }
         verify { view.navigateBackToPrevious() }
     }
 
@@ -86,10 +85,8 @@ class SeatSelectionPresenterTest {
     @Test
     fun `SeatSelectionPresenter가 유효하지 않은 상영 id값으로 loadSeatBoard()를 했을 때, view에게 back과 throwable를 전달한다`() {
         // given
-        every { screenRepository.loadSeatBoard(any()) } returns
-            Result.failure(
-                NoSuchElementException(),
-            )
+        val exception = NoSuchElementException()
+        every { screenRepository.loadSeatBoard(any()) } returns Result.failure(exception)
         every { view.showToastMessage(e = any()) } just runs
         every { view.navigateBackToPrevious() } just runs
 
@@ -97,14 +94,15 @@ class SeatSelectionPresenterTest {
         presenter.loadSeatBoard(1)
 
         // then
-        verify { view.showToastMessage(e = any()) }
+        verify { view.showToastMessage(e = exception) }
         verify { view.navigateBackToPrevious() }
     }
 
     @Test
     fun `SeatSelectionPresenter가 loadSeatBoard()를 했을 때, 예기치 않은 오류가 발생하면 view에게 back과 throwable를 전달한다`() {
         // given
-        every { screenRepository.loadSeatBoard(any()) } returns Result.failure(Exception())
+        val exception = Exception()
+        every { screenRepository.loadSeatBoard(any()) } returns Result.failure(exception)
         every { view.showToastMessage(e = any()) } just runs
         every { view.navigateBackToPrevious() } just runs
 
@@ -112,7 +110,7 @@ class SeatSelectionPresenterTest {
         presenter.loadSeatBoard(1)
 
         // then
-        verify { view.showToastMessage(e = any()) }
+        verify { view.showToastMessage(e = exception) }
         verify { view.navigateBackToPrevious() }
     }
 
@@ -191,16 +189,18 @@ class SeatSelectionPresenterTest {
         every { screenRepository.findByScreenId(any(), any()) } returns Result.success(dummyScreen)
         every { screenRepository.loadSeatBoard(any()) } returns Result.success(dummySeatBoard)
         every { view.showScreen(any(), any(), any()) } just runs
+        every { view.showSeatBoard(any()) } just runs
         every { view.selectSeat(any()) } just runs
         every { view.showTotalPrice(any()) } just runs
         presenter.loadScreen(dummyReservationInfo)
+        presenter.loadSeatBoard(0)
         presenter.clickSeat(dummySeatModel)
 
         // when
         presenter.calculateSeat()
 
         // then
-        verify { view.showTotalPrice(any()) }
+        verify { view.showTotalPrice(dummySeatModel.seatRank.price) }
     }
 
     @Test
