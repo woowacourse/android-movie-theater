@@ -26,7 +26,7 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
     }
 
     private fun processPresenterTask() {
-        presenter.storeTicketData(intent.getSerializableExtra("ticket_key"))
+        presenter.storeTicketData(intent.getSerializableExtra(EXTRA_TICKET_KEY))
         presenter.setTicketInfo()
         presenter.storeTicketInDb()
     }
@@ -62,10 +62,11 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
 
     companion object {
         private const val TICKET_PRICE = "%,d원 (현장결제)"
+        private const val EXTRA_TICKET_KEY = "ticket_key"
 
         fun newTicketActivityInstance(context: Context, tickets: List<DbTicket>, id: Long): Intent {
             return Intent(context, MovieTicketActivity::class.java).apply {
-                putExtra("ticket_key", tickets[id.toInt() - 1] as Serializable)
+                putExtra(EXTRA_TICKET_KEY, tickets[id.toInt() - 1] as Serializable)
             }
         }
     }
