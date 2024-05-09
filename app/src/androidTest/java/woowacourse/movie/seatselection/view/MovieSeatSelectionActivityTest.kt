@@ -30,7 +30,7 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 
 @RunWith(AndroidJUnit4::class)
-class MovieSeatSelectionTest {
+class MovieSeatSelectionActivityTest {
     private val intent =
         Intent(
             ApplicationProvider.getApplicationContext(),
