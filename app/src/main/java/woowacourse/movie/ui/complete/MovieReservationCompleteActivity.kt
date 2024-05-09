@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieReservationCompleteBinding
 import woowacourse.movie.model.db.UserTicket
+import woowacourse.movie.model.db.UserTicketRepositoryImpl
 import woowacourse.movie.model.movie.Seat
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.main.MovieMainActivity
@@ -40,7 +41,7 @@ class MovieReservationCompleteActivity :
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun initializePresenter() = MovieReservationCompletePresenter(this)
+    override fun initializePresenter() = MovieReservationCompletePresenter(this, UserTicketRepositoryImpl.get())
 
     private fun userTicketId() = intent.getLongExtra(MovieReservationCompleteKey.TICKET_ID, USER_TICKET_ID_DEFAULT_VALUE)
 
@@ -93,8 +94,14 @@ fun setReservationResult(
     theaterName: String,
 ) {
     textView.apply {
+        Log.e("seogi", "$seats")
         text =
-            context.getString(R.string.reservation_result, count, seats.joinToString(), theaterName)
+            context.getString(
+                R.string.reservation_result,
+                count,
+                seats.joinToString { it.toString() },
+                theaterName,
+            )
     }
 }
 

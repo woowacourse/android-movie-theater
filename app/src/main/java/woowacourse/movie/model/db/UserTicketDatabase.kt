@@ -12,22 +12,24 @@ abstract class UserTicketDatabase : RoomDatabase() {
     abstract fun userTicketDao(): UserTicketDao
 
     companion object {
+        private const val DATABASE_NAME = "user_ticket_db"
         private const val ERROR_DATABASE = "데이터베이스가 초기화 되지 않았습니다."
         private var database: UserTicketDatabase? = null
 
-        fun initialize(context: Context) {
+        fun database(context: Context): UserTicketDatabase {
+            initialize(context)
+            return database ?: throw IllegalStateException(ERROR_DATABASE)
+        }
+
+        private fun initialize(context: Context) {
             if (database == null) {
                 database =
                     Room.databaseBuilder(
                         context.applicationContext,
                         UserTicketDatabase::class.java,
-                        "user_ticket_db",
+                        DATABASE_NAME,
                     ).build()
             }
-        }
-
-        fun database(): UserTicketDatabase {
-            return database ?: throw IllegalStateException(ERROR_DATABASE)
         }
     }
 }
