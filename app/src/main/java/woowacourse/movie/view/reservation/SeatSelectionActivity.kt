@@ -15,7 +15,7 @@ import woowacourse.movie.db.seats.SeatsDao
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.seats.Grade
-import woowacourse.movie.model.seats.Seat
+import woowacourse.movie.model.seats.TheaterSeat
 import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.ticket.Ticket
@@ -101,28 +101,28 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     override fun initializeSeatsTable(
         index: Int,
-        seat: Seat,
+        theaterSeat: TheaterSeat,
     ) {
         seatsTable[index].apply {
-            showSeatNumber(seat)
-            updateReservationInformation(index, seat)
+            showSeatNumber(theaterSeat)
+            updateReservationInformation(index, theaterSeat)
         }
     }
 
-    override fun Button.showSeatNumber(seat: Seat) {
-        text = getString(R.string.select_seat_number, seat.row, seat.column)
-        setTextColor(setUpSeatColorByGrade(seat.grade))
+    override fun Button.showSeatNumber(theaterSeat: TheaterSeat) {
+        text = getString(R.string.select_seat_number, theaterSeat.row, theaterSeat.column)
+        setTextColor(setUpSeatColorByGrade(theaterSeat.grade))
     }
 
     override fun Button.updateReservationInformation(
         index: Int,
-        seat: Seat,
+        theaterSeat: TheaterSeat,
     ) {
         setOnClickListener {
             if (getSeatsCount() < headCount.count || isSelected) {
                 updateSeatSelectedState(index, isSelected)
-                presenter.manageSelectedSeats(isSelected, index, seat)
-                presenter.updateTotalPrice(isSelected, seat)
+                presenter.manageSelectedSeats(isSelected, index, theaterSeat)
+                presenter.updateTotalPrice(isSelected, theaterSeat)
                 setConfirmButtonEnabled(getSeatsCount())
             }
         }

@@ -5,7 +5,7 @@ import android.widget.Button
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.seats.Grade
-import woowacourse.movie.model.seats.Seat
+import woowacourse.movie.model.seats.TheaterSeat
 import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.ticket.Ticket
 
@@ -17,7 +17,7 @@ interface SeatSelectionContract {
 
         fun updateTotalPrice(
             isSelected: Boolean,
-            seat: Seat,
+            theaterSeat: TheaterSeat,
         )
 
         fun settingAlarm(
@@ -39,7 +39,7 @@ interface SeatSelectionContract {
         fun manageSelectedSeats(
             isSelected: Boolean,
             index: Int,
-            seat: Seat,
+            theaterSeat: TheaterSeat,
         )
 
         fun makeTicket(
@@ -54,16 +54,16 @@ interface SeatSelectionContract {
     interface View {
         fun initializeSeatsTable(
             index: Int,
-            seat: Seat,
+            theaterSeat: TheaterSeat,
         )
 
         fun setUpSeatColorByGrade(grade: Grade): Int
 
-        fun Button.showSeatNumber(seat: Seat)
+        fun Button.showSeatNumber(theaterSeat: TheaterSeat)
 
         fun Button.updateReservationInformation(
             index: Int,
-            seat: Seat,
+            theaterSeat: TheaterSeat,
         )
 
         fun updateSeatSelectedState(

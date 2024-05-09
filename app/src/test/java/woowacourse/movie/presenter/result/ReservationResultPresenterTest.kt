@@ -16,7 +16,7 @@ import woowacourse.movie.db.theater.TheaterDatabase
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.seats.Grade
-import woowacourse.movie.model.seats.Seat
+import woowacourse.movie.model.seats.TheaterSeat
 import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.model.ticket.Ticket
@@ -36,7 +36,7 @@ class ReservationResultPresenterTest {
         firstMovie = ScreeningDatabase.movies.first()
         firstTheater = TheaterDatabase.theaters.first()
         val seats = Seats()
-        seats.manageSelected(true, Seat('A', 1, Grade.A))
+        seats.manageSelected(true, TheaterSeat('A', 1, Grade.A))
         sampleTicket = Ticket(0, 0, seats, ScreeningDateTime("", ""), 12000)
     }
 
@@ -62,9 +62,9 @@ class ReservationResultPresenterTest {
         every { view.showReservationTicketInfo(sampleTicket) } answers {
             val actualTicket = arg<Ticket>(0)
             assertEquals(actualTicket.amount, expectedTicketPrice)
-            assertEquals(actualTicket.seats.seats.size, expectedNumberOfTicket)
-            assertEquals(actualTicket.seats.seats.first().row, expectedSeatRow)
-            assertEquals(actualTicket.seats.seats.first().column, expectedSeatColumn)
+            assertEquals(actualTicket.seats.theaterSeats.size, expectedNumberOfTicket)
+            assertEquals(actualTicket.seats.theaterSeats.first().row, expectedSeatRow)
+            assertEquals(actualTicket.seats.theaterSeats.first().column, expectedSeatColumn)
         }
         presenter.loadTicket(sampleTicket)
         verify { view.showReservationTicketInfo(sampleTicket) }

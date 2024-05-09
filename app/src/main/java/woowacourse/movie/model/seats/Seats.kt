@@ -3,14 +3,14 @@ package woowacourse.movie.model.seats
 import java.io.Serializable
 
 class Seats : Serializable {
-    var seats = mutableListOf<Seat>()
+    var theaterSeats = mutableListOf<TheaterSeat>()
         private set
 
     var seatsIndex = mutableListOf<Int>()
         private set
 
     fun restoreSeats(recordOfSeats: Seats): Seats {
-        seats = recordOfSeats.seats
+        theaterSeats = recordOfSeats.theaterSeats
         return this
     }
 
@@ -27,12 +27,12 @@ class Seats : Serializable {
 
     fun manageSelected(
         isSelected: Boolean,
-        seat: Seat,
+        theaterSeat: TheaterSeat,
     ) {
-        if (isSelected) seats.add(seat) else seats.remove(seat)
+        if (isSelected) theaterSeats.add(theaterSeat) else theaterSeats.remove(theaterSeat)
     }
 
     fun calculateAmount(): Int {
-        return seats.sumOf { it.grade.price }
+        return theaterSeats.sumOf { it.grade.price }
     }
 }

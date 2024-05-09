@@ -1,9 +1,9 @@
 package woowacourse.movie.db.seats
 
-import woowacourse.movie.model.seats.Seat
+import woowacourse.movie.model.seats.TheaterSeat
 
 class SeatsDao {
-    private val seats: List<Seat> = SeatsDatabase.seats
+    private val theaterSeats: List<TheaterSeat> = SeatsDatabase.theaterSeats
 
-    fun findAll(): List<Seat> = seats
+    fun findAll(): List<TheaterSeat> = theaterSeats
 }

@@ -5,7 +5,7 @@ import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.seats.SeatsDao
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
-import woowacourse.movie.model.seats.Seat
+import woowacourse.movie.model.seats.TheaterSeat
 import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.ticket.Ticket
@@ -51,11 +51,11 @@ class SeatSelectionPresenter(
     override fun manageSelectedSeats(
         isSelected: Boolean,
         index: Int,
-        seat: Seat,
+        theaterSeat: TheaterSeat,
     ) {
         seats.apply {
             manageSelectedIndex(isSelected, index)
-            manageSelected(isSelected, seat)
+            manageSelected(isSelected, theaterSeat)
         }
     }
 
@@ -83,7 +83,7 @@ class SeatSelectionPresenter(
 
     override fun updateTotalPrice(
         isSelected: Boolean,
-        seat: Seat,
+        theaterSeat: TheaterSeat,
     ) {
         val totalPrice = seats.calculateAmount()
         view.showAmount(totalPrice)

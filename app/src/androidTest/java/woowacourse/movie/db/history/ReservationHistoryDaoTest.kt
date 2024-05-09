@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.runner.RunWith
 import woowacourse.movie.TestFixture.makeMockTicket
-import woowacourse.movie.model.ticket.toReservationTicket
 
 @RunWith(AndroidJUnit4::class)
 class ReservationHistoryDaoTest {
@@ -45,7 +44,7 @@ class ReservationHistoryDaoTest {
             assertEquals(theaterId, reservationTicket.theaterId)
             assertEquals(screeningDateTime.time, reservationTicket.screeningDateTime.time)
             assertEquals(screeningDateTime.date, reservationTicket.screeningDateTime.date)
-            assertEquals(seats.seats.size, reservationTicket.seats.seats.size)
+            assertEquals(seats.theaterSeats.size, reservationTicket.seats.theaterSeats.size)
         }
         assertEquals(1, reservations.size)
     }
@@ -66,7 +65,7 @@ class ReservationHistoryDaoTest {
             assertEquals(theaterId, expectedReservation?.theaterId)
             assertEquals(screeningDateTime.time, expectedReservation?.screeningDateTime?.time)
             assertEquals(screeningDateTime.date, expectedReservation?.screeningDateTime?.date)
-            assertEquals(seats.seats.size, expectedReservation?.seats?.seats?.size)
+            assertEquals(seats.theaterSeats.size, expectedReservation?.seats?.theaterSeats?.size)
         }
     }
 
