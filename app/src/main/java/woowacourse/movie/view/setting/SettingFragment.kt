@@ -11,10 +11,14 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.presenter.setting.SettingContract
 import woowacourse.movie.presenter.setting.SettingPresenter
+import woowacourse.movie.utils.MovieUtils
 
 class SettingFragment : Fragment(), SettingContract.View {
     private val presenter: SettingPresenter by lazy {
-        SettingPresenter(view = this)
+        SettingPresenter(
+            view = this,
+            sharedPreference = requireContext().getSharedPreferences(PUSH_SETTING, MODE_PRIVATE)
+        )
     }
     private var _binding: FragmentSettingBinding? = null
     private val binding: FragmentSettingBinding get() = _binding!!
@@ -33,7 +37,7 @@ class SettingFragment : Fragment(), SettingContract.View {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.loadSavedSetting(getPushSetting())
+        presenter.loadSavedSetting()
         initView()
     }
 
@@ -46,22 +50,16 @@ class SettingFragment : Fragment(), SettingContract.View {
         binding.switchButton.isChecked = isPushSetting
     }
 
-    override fun saveSetting(isPushSetting: Boolean) {
-        val sharedPreference = context?.getSharedPreferences(PUSH_SETTING, MODE_PRIVATE)
-        val editor = sharedPreference?.edit()
-        editor?.putBoolean(PUSH_SETTING, isPushSetting)?.apply()
-    }
+    override fun showPushSettingOnToast()  = MovieUtils.makeToast(requireContext(), getString(R.string.on_push_text))
 
-    private fun getPushSetting(): Boolean {
-        val sharedPreference = context?.getSharedPreferences(PUSH_SETTING, MODE_PRIVATE)
-        return sharedPreference?.getBoolean(PUSH_SETTING, false) ?: false
-    }
+    override fun showPushSettingOffToast()  = MovieUtils.makeToast(requireContext(), getString(R.string.off_push_text))
 
     private fun initView() {
         binding.switchButton.setOnCheckedChangeListener { _, isChecked ->
             presenter.settingPushAlarmState(isChecked)
         }
     }
+
 
     companion object {
         const val PUSH_SETTING = "pushSetting"

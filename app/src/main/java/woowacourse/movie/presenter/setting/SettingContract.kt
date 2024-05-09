@@ -6,11 +6,12 @@ interface SettingContract {
     interface View {
         fun showSavedSetting(isPushSetting: Boolean)
 
-        fun saveSetting(isPushSetting: Boolean)
+        fun showPushSettingOnToast()
+        fun showPushSettingOffToast()
     }
 
     interface Presenter {
-        fun loadSavedSetting(isPushSetting: Boolean)
+        fun loadSavedSetting()
 
         fun settingPushAlarmState(isPushSetting: Boolean)
     }
