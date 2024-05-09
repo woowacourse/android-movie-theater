@@ -1,11 +1,9 @@
 package woowacourse.movie.ui.home
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.databinding.BottomSheetTheaterBinding
@@ -64,11 +62,17 @@ class TheaterBottomSheet : BottomSheetDialogFragment(), TheaterContract.View {
         binding.rvTheater.adapter = theaterAdapter
     }
 
-    override fun showTheaters(screen: Screen, theaters: Theaters) {
+    override fun showTheaters(
+        screen: Screen,
+        theaters: Theaters,
+    ) {
         theaterAdapter.submitList(theaters.theaters)
     }
 
-    override fun navigateToScreenDetail(screenId: Int, theaterId: Int) {
+    override fun navigateToScreenDetail(
+        screenId: Int,
+        theaterId: Int,
+    ) {
         ScreenDetailActivity.startActivity(requireContext(), screenId, theaterId)
     }
 

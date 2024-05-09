@@ -4,7 +4,6 @@ import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.Theaters
 
 interface TheaterContract {
-
     interface View {
         fun initTheaterAdapter(screen: Screen)
 
