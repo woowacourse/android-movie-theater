@@ -18,7 +18,7 @@ import woowacourse.movie.data.screeningref.ScreeningRefDto
     ],
 )
 data class ReservationRefDto(
-    @PrimaryKey val id: Long,
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val screeningRefId: Long,
     val seats: String,
 )

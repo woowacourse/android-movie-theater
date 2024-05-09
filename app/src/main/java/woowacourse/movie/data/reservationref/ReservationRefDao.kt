@@ -7,8 +7,8 @@ import androidx.room.Query
 @Dao
 interface ReservationRefDao {
     @Insert
-    fun insert(reservationRef: ReservationRefDto)
+    fun insert(reservationRefDto: ReservationRefDto): Long
 
     @Query("select * from reservationRefs where id == :id")
-    fun findById(id: Long): ReservationRefDto
+    fun findById(id: Long): ReservationRefDto?
 }

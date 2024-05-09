@@ -11,7 +11,6 @@ fun ReservationRefDto.toReservationRef() =
 
 fun ReservationRef.toDto() =
     ReservationRefDto(
-        id,
-        screeningId,
-        seats,
+        screeningRefId = screeningId,
+        seats = seats,
     )
