@@ -61,7 +61,6 @@ class ReservationListPresenter(
             Thread {
                 val dao = reservationDatabase.reservationDao()
                 val data = dao.selectWithId(reservationId)
-                Log.d("reservationPresenter", "data found")
                 ticket =
                     Ticket(
                         movieTitle = data.movieTitle,
@@ -69,11 +68,9 @@ class ReservationListPresenter(
                         selectedSeats = data.selectedSeats.toSeatList(),
                         theaterId = data.theaterId,
                     )
-                Log.d("ticket", "$ticket")
             }
         t.start()
         t.join()
-        Log.d("ticket(out of thread)", "$ticket")
         return ticket
     }
 
