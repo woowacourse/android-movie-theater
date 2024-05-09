@@ -8,25 +8,39 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TableRow
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.IntentCompat
 import androidx.core.view.children
+import woowacourse.movie.MovieReservationApp
 import woowacourse.movie.R
-import woowacourse.movie.presentation.base.BindingActivity
 import woowacourse.movie.databinding.ActivityTheaterSeatBinding
-import woowacourse.movie.presentation.error.ErrorActivity
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.movieInfo.Title
 import woowacourse.movie.model.theater.Seat
+import woowacourse.movie.presentation.base.BindingActivity
+import woowacourse.movie.presentation.error.ErrorActivity
 import woowacourse.movie.presentation.purchaseConfirmation.PurchaseConfirmationActivity
+import kotlin.concurrent.thread
 
 @SuppressLint("DiscouragedApi")
 class TheaterSeatActivity :
     BindingActivity<ActivityTheaterSeatBinding>(R.layout.activity_theater_seat),
     TheaterSeatContract.View {
     private lateinit var presenter: TheaterSeatPresenter
+    private val dialog: AlertDialog by lazy {
+        AlertDialog.Builder(this)
+            .setTitle("예매 확인")
+            .setMessage("예매를 완료하시겠습니까?")
+            .setCancelable(false)
+            .setPositiveButton("확인") { _, _ ->
+                thread {
+                    presenter.confirmPurchase()
+                }.join()
+            }
+            .setNegativeButton("취소") { dialog, _ ->
+                dialog.dismiss()
+            }.create()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +50,7 @@ class TheaterSeatActivity :
         initSeats()
 
         binding.confirmButton.setOnClickListener {
-            confirmTicketPurchase()
+            presenter.completeSeatSelection()
         }
     }
 
@@ -47,24 +61,8 @@ class TheaterSeatActivity :
         button.setBackgroundColor(color)
     }
 
-    override fun showConfirmationDialog(
-        title: String,
-        message: String,
-        positiveLabel: String,
-        onPositiveButtonClicked: () -> Unit,
-        negativeLabel: String,
-        onNegativeButtonClicked: () -> Unit,
-    ) {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(title)
-        builder.setMessage(message)
-        builder.setCancelable(false)
-        builder.setPositiveButton(positiveLabel) { _, _ -> onPositiveButtonClicked() }
-        builder.setNegativeButton(negativeLabel) { dialog, _ ->
-            onNegativeButtonClicked()
-            dialog.dismiss()
-        }
-        builder.show()
+    override fun showConfirmationDialog() {
+        dialog.show()
     }
 
     override fun setSeatBackground(
@@ -77,8 +75,12 @@ class TheaterSeatActivity :
         button.setBackgroundColor(colorInt)
     }
 
-    override fun navigateToNextPage(intent: Intent) {
-        startActivity(intent)
+    override fun navigateToPurchaseConfirmView(reservationId: Long) {
+        runOnUiThread {
+            PurchaseConfirmationActivity.newIntent(this, reservationId).also {
+                startActivity(it)
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -96,6 +98,11 @@ class TheaterSeatActivity :
         binding.invalidateAll()
     }
 
+    override fun showError() {
+        ErrorActivity.start(this)
+        finish()
+    }
+
     private fun initPresenter() {
         val ticketNum = intent.getStringExtra(EXTRA_TICKET_NUM) ?: return ErrorActivity.start(this)
         val cinema = IntentCompat.getSerializableExtra(intent, EXTRA_CINEMA, Cinema::class.java)
@@ -103,7 +110,13 @@ class TheaterSeatActivity :
             ErrorActivity.start(this)
             return finish()
         }
-        presenter = TheaterSeatPresenter(this, ticketNum.toInt(), cinema)
+        presenter =
+            TheaterSeatPresenter(
+                (application as MovieReservationApp).movieRepository,
+                this,
+                ticketNum.toInt(),
+                cinema
+            )
     }
 
     private fun initSeats() {
@@ -116,35 +129,6 @@ class TheaterSeatActivity :
                         }
                     }
             }
-    }
-
-    private fun confirmTicketPurchase() {
-        showConfirmationDialog(
-            title = "예매 확인",
-            message = "정말 예매하시겠습니까?",
-            positiveLabel = "예매 완료",
-            onPositiveButtonClicked = {
-                val cinema =
-                    IntentCompat.getSerializableExtra(intent, EXTRA_CINEMA, Cinema::class.java)
-                val ticketPrice = findViewById<TextView>(R.id.total_price).text
-                if (cinema != null) {
-                    PurchaseConfirmationActivity.newIntent(
-                        this,
-                        ticketPrice.toString(),
-                        presenter.selectedSeats.toTypedArray(),
-                        cinema,
-                        intent.getStringExtra(EXTRA_TIME_DATE)!!,
-                    ).apply {
-                        navigateToNextPage(this)
-                    }
-                } else {
-                    Toast.makeText(this, "Cinema data is not available.", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            },
-            negativeLabel = "취소",
-            onNegativeButtonClicked = {},
-        )
     }
 
     companion object {

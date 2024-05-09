@@ -25,11 +25,11 @@
   - [x]: Seat Table(=Entity) 만들기
   - [x]: dao
   - [x]: dao Test
-  - [ ]: Mapper (Entity -> Domain Model)
-  - [ ]: repository
-- [ ]: 좌석 선택 뷰에서 예매 확인 시 Room 에 저장 하고 return 받은 id를 넘겨 주자
-  - [ ]: 저장은 worker Thread, startActivity 는 ui Thread 에서 하자고~
-  - [ ]: 기존 객체 직렬화 방식 -> id 넘겨 주는 방식으로 변경
+  - [x]: Mapper (Entity -> Domain Model)
+  - [x]: repository
+- [x]: 좌석 선택 뷰에서 예매 확인 시 Room 에 저장 하고 return 받은 id를 넘겨 주자
+  - [x]: 저장은 worker Thread, startActivity 는 ui Thread 에서 하자고~
+  - [x]: 기존 객체 직렬화 방식 -> id 넘겨 주는 방식으로 변경
 
 ### 4단계 요구 사항  
 
