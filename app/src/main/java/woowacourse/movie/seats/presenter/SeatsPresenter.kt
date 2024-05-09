@@ -1,7 +1,7 @@
 package woowacourse.movie.seats.presenter
 
 import android.widget.TextView
-import woowacourse.movie.common.MovieDataSource.movieList
+import woowacourse.movie.common.CommonDataSource.movieList
 import woowacourse.movie.seats.contract.SeatsContract
 import woowacourse.movie.seats.model.Seat
 import woowacourse.movie.seats.model.SeatsDataSource

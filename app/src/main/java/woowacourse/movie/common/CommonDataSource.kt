@@ -4,9 +4,10 @@ import woowacourse.movie.R
 import woowacourse.movie.list.model.Advertisement
 import woowacourse.movie.list.model.Movie
 import woowacourse.movie.list.model.TheaterContent
+import woowacourse.movie.ticket.model.DbTicket
 import java.time.LocalDate
 
-object MovieDataSource {
+object CommonDataSource {
     val theaterContent: List<TheaterContent> =
         listOf(
             Movie(
@@ -168,4 +169,6 @@ object MovieDataSource {
                 6,
             ),
         )
+
+    var dbTickets = listOf<DbTicket>()
 }
