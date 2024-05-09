@@ -42,7 +42,7 @@ class MovieSettingFragment : Fragment(), MovieSettingContract.View {
         binding.swAlarmStatus.setOnCheckedChangeListener { _, isChecked ->
             sharedPreference.setAlarmChecked(isChecked)
             if (!isChecked) {
-                MovieAlarmManager.cancelAlarm(requireContext())
+                MovieAlarmManager.cancelAlarm(requireContext(), 1)
             } else {
                 requestNotificationPermission(requireContext())
             }

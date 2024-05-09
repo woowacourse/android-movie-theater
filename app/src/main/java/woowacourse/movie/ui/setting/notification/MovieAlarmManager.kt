@@ -5,15 +5,13 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
+import android.util.Log
 import woowacourse.movie.ui.setting.MovieSettingKey
 import java.time.LocalDateTime
-import java.time.LocalTime
-import java.util.Calendar
+import java.time.ZoneId
 
 object MovieAlarmManager {
-    val REQUEST_CODE = LocalTime.now().hashCode()
-    private const val MONTH_OFFSET = 1
-    private const val ALARM_OFFSET = 30
+    private const val ALARM_OFFSET = 30L
 
     fun setAlarm(
         context: Context,
@@ -28,35 +26,32 @@ object MovieAlarmManager {
                 putExtra(MovieSettingKey.TICKET_ID, userTicketId)
             }
 
-        val calendar =
-            Calendar.getInstance().apply {
-                timeInMillis = System.currentTimeMillis()
-                settingCalendar(screeningStartDateTime)
-            }
+        val alarmTime = screeningStartDateTime
+            .minusMinutes(ALARM_OFFSET)
+            .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
-        alarmManager.set(
+        alarmManager.setAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis,
-            makePendingIntent(context, intent),
+            alarmTime,
+            makePendingIntent(context, userTicketId.toInt(), intent),
         )
     }
 
-    private fun Calendar.settingCalendar(screeningStartDateTime: LocalDateTime) {
-        set(Calendar.YEAR, screeningStartDateTime.year)
-        set(Calendar.MONTH, screeningStartDateTime.monthValue - MONTH_OFFSET)
-        set(Calendar.DAY_OF_MONTH, screeningStartDateTime.dayOfMonth)
-        set(Calendar.HOUR_OF_DAY, screeningStartDateTime.hour)
-        set(Calendar.MINUTE, screeningStartDateTime.minute - ALARM_OFFSET)
-    }
-
-    fun cancelAlarm(context: Context) {
+    fun cancelAlarm(context: Context, requestCode: Int) {
         val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, MovieAlarmReceiver::class.java)
-        alarmManager.cancel(makePendingIntent(context, intent))
+        alarmManager.cancel(makePendingIntent(context, requestCode, intent))
     }
 
     private fun makePendingIntent(
         context: Context,
+        requestCode: Int,
         intent: Intent,
-    ): PendingIntent = PendingIntent.getBroadcast(context, REQUEST_CODE, intent, PendingIntent.FLAG_IMMUTABLE)
+    ): PendingIntent =
+        PendingIntent.getBroadcast(
+            context,
+            requestCode,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE
+        )
 }

@@ -7,13 +7,14 @@ import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
-import woowacourse.movie.ui.setting.notification.MovieAlarmManager.REQUEST_CODE
 
 class MovieAlarmNotificationBuilder(
     private val context: Context,
     private val movieTitle: String,
+    private val requestCode: Int,
     private val movieIntent: Intent,
 ) {
     private val builder by lazy { notificationBuilder(context, movieTitle, movieIntent) }
@@ -59,7 +60,8 @@ class MovieAlarmNotificationBuilder(
     private fun makePendingIntent(
         context: Context,
         movieIntent: Intent,
-    ): PendingIntent? = PendingIntent.getActivity(context, REQUEST_CODE, movieIntent, PendingIntent.FLAG_IMMUTABLE)
+    ): PendingIntent? =
+        PendingIntent.getActivity(context, requestCode, movieIntent, PendingIntent.FLAG_IMMUTABLE)
 
     private fun notificationChannel(): NotificationChannel {
         return NotificationChannel(
