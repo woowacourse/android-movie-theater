@@ -14,7 +14,7 @@ data class Reservation(
     companion object {
         val STUB =
             Reservation(
-                id = 0,
+                id = 1,
                 screening = Screening.STUB,
                 seats = Seats(listOf(Seat(Tier.A, 1, 1))),
             )
