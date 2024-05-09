@@ -24,5 +24,5 @@ interface ScreeningMovieDao {
     fun getByMovieIdAndTheaterId(
         movieId: Long,
         theaterId: Long,
-    ): List<ScreeningMovie>
+    ): ScreeningMovie
 }
