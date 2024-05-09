@@ -30,8 +30,9 @@
     <string name="menu_booking_history">예매 내역</string>
     <string name="menu_setting">설정</string>
 
-    <string name="history_booking_datetime_format">yyyy.M.d HH:mm</string>
-    <string name="history_booking_data">%s | %s</string>
+    <string name="history_booking_date_format">yyyy.M.d</string>
+    <string name="history_booking_time_format">HH:mm</string>
+    <string name="history_booking_data">%s | %s | %s 극장</string>
 
     <string name="toast_invalid_key">잘못된 접근입니다.</string>
 

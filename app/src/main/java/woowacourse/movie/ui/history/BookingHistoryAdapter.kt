@@ -2,6 +2,8 @@ package woowacourse.movie.ui.history
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -9,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemBookingHistoryBinding
 import woowacourse.movie.model.movie.UserTicket
+import java.time.format.DateTimeFormatter
 
 class BookingHistoryAdapter(
     private val bookingHistoryClickListener: BookingHistoryClickListener,
@@ -60,4 +63,13 @@ object BookingHistoryDiffUtil : DiffUtil.ItemCallback<UserTicket>() {
     override fun areContentsTheSame(oldItem: UserTicket, newItem: UserTicket): Boolean {
         return oldItem == newItem
     }
+}
+
+@BindingAdapter("ticketDataForHistory")
+fun TextView.setBookingHistoryData(ticket: UserTicket) {
+    val dateFormat = DateTimeFormatter.ofPattern(context.getString(R.string.history_booking_date_format))
+    val timeFormat = DateTimeFormatter.ofPattern(context.getString(R.string.history_booking_time_format))
+    val date = ticket.screeningStartDateTime.toLocalDate().format(dateFormat)
+    val time = ticket.screeningStartDateTime.toLocalTime().format(timeFormat)
+    text = context.getString(R.string.history_booking_data, date, time, ticket.theater)
 }
