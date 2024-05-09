@@ -2,6 +2,7 @@ package woowacourse.movie.ui.reservation
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
@@ -10,13 +11,12 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieReservationBinding
-import woowacourse.movie.model.data.MovieContentsImpl
-import woowacourse.movie.model.data.TheatersImpl
 import woowacourse.movie.model.movie.MovieContent
+import woowacourse.movie.model.movie.MovieContentDao
 import woowacourse.movie.model.movie.MovieDatabase
 import woowacourse.movie.model.movie.ReservationDetail
 import woowacourse.movie.model.movie.Theater
-import woowacourse.movie.model.movie.TicketDao
+import woowacourse.movie.model.movie.TheaterDao
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.selection.MovieSeatSelectionActivity
 import woowacourse.movie.ui.utils.getImageFromId
@@ -27,7 +27,8 @@ class MovieReservationActivity :
     BaseActivity<MovieReservationPresenter>(),
     MovieReservationContract.View {
     private lateinit var binding: ActivityMovieReservationBinding
-    private val dao: TicketDao by lazy { MovieDatabase.getDatabase(applicationContext).ticketDao() }
+    private val theaterDao: TheaterDao by lazy { MovieDatabase.getDatabase(applicationContext).theaterDao() }
+    private val movieContentDao: MovieContentDao by lazy { MovieDatabase.getDatabase(applicationContext).movieContentDao() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,7 +68,7 @@ class MovieReservationActivity :
     }
 
     override fun initializePresenter() =
-        MovieReservationPresenter(this, MovieContentsImpl, TheatersImpl, dao)
+        MovieReservationPresenter(this, movieContentDao, theaterDao)
 
     override fun showError(throwable: Throwable) {
         Toast.makeText(this, resources.getString(R.string.toast_invalid_key), Toast.LENGTH_LONG)
@@ -96,8 +97,11 @@ class MovieReservationActivity :
         movieContent: MovieContent,
         theater: Theater,
     ) {
-        binding.movieContent = movieContent
-        binding.theater = theater
+        runOnUiThread {
+            binding.movieContent = movieContent
+            binding.theater = theater
+            binding.executePendingBindings()
+        }
     }
 
     companion object {
@@ -109,22 +113,26 @@ class MovieReservationActivity :
 @BindingAdapter("drawableResourceId")
 fun setImageViewResource(
     imageView: ImageView,
-    imageName: String,
+    imageName: String?,
 ) {
-    imageView.setImageResource(imageName.getImageFromId(imageView.context))
+    imageName?.let {
+        imageView.setImageResource(it.getImageFromId(imageView.context))
+    }
 }
 
 @BindingAdapter("openingDate", "endingDate")
 fun setScreeningDate(
     textView: TextView,
-    openingDate: LocalDate,
-    endingDate: LocalDate,
+    openingDate: LocalDate?,
+    endingDate: LocalDate?,
 ) {
-    val context = textView.context
-    val formattedOpeningDate =
-        openingDate.format(DateTimeFormatter.ofPattern(context.getString(R.string.reservation_screening_date_format)))
-    val formattedEndingDate =
-        endingDate.format(DateTimeFormatter.ofPattern(context.getString(R.string.reservation_screening_date_format)))
-    textView.text =
-        context.getString(R.string.home_screening_date, formattedOpeningDate, formattedEndingDate)
+    if (openingDate != null && endingDate != null) {
+        val context = textView.context
+        val formattedOpeningDate =
+            openingDate.format(DateTimeFormatter.ofPattern(context.getString(R.string.reservation_screening_date_format)))
+        val formattedEndingDate =
+            endingDate.format(DateTimeFormatter.ofPattern(context.getString(R.string.reservation_screening_date_format)))
+        textView.text =
+            context.getString(R.string.home_screening_date, formattedOpeningDate, formattedEndingDate)
+    }
 }

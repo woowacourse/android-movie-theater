@@ -10,8 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieHomeBinding
-import woowacourse.movie.model.data.MovieContentsImpl
 import woowacourse.movie.model.movie.MovieContent
+import woowacourse.movie.model.movie.MovieContentDao
+import woowacourse.movie.model.movie.MovieDatabase
 import woowacourse.movie.ui.ReservationButtonClickListener
 import woowacourse.movie.ui.home.adapter.MovieContentAdapter
 
@@ -19,9 +20,8 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonC
     private var _binding: FragmentMovieHomeBinding? = null
     private val binding: FragmentMovieHomeBinding
         get() = _binding!!
-    private lateinit var movieContents: List<MovieContent>
     private val presenter: MovieHomePresenter by lazy { generatePresenter() }
-    private val adapter: MovieContentAdapter by lazy { generateMovieContentAdapter() }
+    private val dao: MovieContentDao by lazy { MovieDatabase.getDatabase(requireContext()).movieContentDao() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,7 +30,6 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonC
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_home, container, false)
         presenter.loadMovieContents()
-        binding.movieContentList.adapter = adapter
         return binding.root
     }
 
@@ -40,10 +39,13 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonC
     }
 
     override fun showMovieContents(movieContents: List<MovieContent>) {
-        runCatching {
-            this.movieContents = movieContents
-        }.onFailure {
-            presenter.handleError(it)
+        view?.post {
+            runCatching {
+                val adapter = MovieContentAdapter(this).apply { submitList(movieContents) }
+                binding.movieContentList.adapter = adapter
+            }.onFailure {
+                presenter.handleError(it)
+            }
         }
     }
 
@@ -71,9 +73,5 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonC
         ).show()
     }
 
-    private fun generateMovieContentAdapter(): MovieContentAdapter {
-        return MovieContentAdapter(this).apply { submitList(movieContents) }
-    }
-
-    private fun generatePresenter() = MovieHomePresenter(this, MovieContentsImpl)
+    private fun generatePresenter() = MovieHomePresenter(this, dao)
 }

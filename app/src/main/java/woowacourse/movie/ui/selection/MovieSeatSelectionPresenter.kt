@@ -6,7 +6,6 @@ import woowacourse.movie.model.movie.SeatInformation
 import woowacourse.movie.model.movie.TicketDao
 import woowacourse.movie.model.movie.UserTicket
 import woowacourse.movie.model.movie.toTicketEntity
-import woowacourse.movie.model.movie.toUserTicket
 import woowacourse.movie.ui.utils.positionToIndex
 
 class MovieSeatSelectionPresenter(

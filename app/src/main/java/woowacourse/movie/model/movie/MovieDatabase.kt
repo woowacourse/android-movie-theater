@@ -4,25 +4,43 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import woowacourse.movie.model.data.DefaultMovieDataSource
+import androidx.room.TypeConverters
 import woowacourse.movie.model.movie.TicketContract.MOVIE_DATABASE
 
+@TypeConverters(
+    StringListConverter::class,
+    LongListConverter::class,
+)
 @Database(
-    entities = [TicketEntity::class],
-    version = 1
+    entities = [
+        TicketEntity::class,
+        TheaterEntity::class,
+        MovieContentEntity::class
+    ],
+    version = 6,
 )
 abstract class MovieDatabase : RoomDatabase() {
     abstract fun ticketDao(): TicketDao
+    abstract fun theaterDao(): TheaterDao
+    abstract fun movieContentDao(): MovieContentDao
 
     companion object {
+        @Volatile
+        private var INSTANCE: MovieDatabase? = null
+
         fun getDatabase(context: Context): MovieDatabase {
-            return Room
-                .databaseBuilder(
-                    context,
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
                     MovieDatabase::class.java,
                     MOVIE_DATABASE
                 )
-                .build()
+                    .fallbackToDestructiveMigration()
+                    .createFromAsset("database/movie_contents.db")
+                    .build()
+                INSTANCE = instance
+                instance
+            }
         }
     }
 }
