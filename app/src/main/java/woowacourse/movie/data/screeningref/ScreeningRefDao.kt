@@ -10,7 +10,7 @@ interface ScreeningRefDao {
     fun insert(screeningRefDto: ScreeningRefDto)
 
     @Query("select * from screenings where id == :id")
-    fun findById(id: Long): ScreeningRefDto
+    fun findById(id: Long): ScreeningRefDto?
 
     @Query("select * from screenings where movieId == :movieId and theaterId == :theaterId")
     fun findByMovieIdAndTheaterId(
