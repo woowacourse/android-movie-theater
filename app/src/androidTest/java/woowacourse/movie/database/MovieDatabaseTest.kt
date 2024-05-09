@@ -10,7 +10,7 @@ import woowacourse.movie.data.dao.MovieDao
 import woowacourse.movie.data.dao.MovieReservationDao
 import woowacourse.movie.data.dao.MovieTheaterDao
 import woowacourse.movie.data.dao.ScreeningMovieDao
-import woowacourse.movie.data.database.MovieReservationDatabase
+import woowacourse.movie.data.database.MovieDatabase
 import woowacourse.movie.data.entity.Movie
 import woowacourse.movie.data.entity.MovieReservation
 import woowacourse.movie.data.entity.MovieTheater
@@ -24,13 +24,13 @@ class MovieDatabaseTest {
     private lateinit var theaterDao: MovieTheaterDao
     private lateinit var screeningMovieDao: ScreeningMovieDao
 
-    private lateinit var db: MovieReservationDatabase
+    private lateinit var db: MovieDatabase
 
     @Before
     fun setUp() {
         db =
             Room.inMemoryDatabaseBuilder(
-                context, MovieReservationDatabase::class.java,
+                context, MovieDatabase::class.java,
             ).build()
         movieDao = db.movieDao()
         theaterDao = db.movieTheaterDao()
