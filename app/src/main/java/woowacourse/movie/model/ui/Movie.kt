@@ -9,7 +9,7 @@ data class Movie(
     val releaseDate: LocalDate,
     val runningTime: Int,
     @DrawableRes val imgSrc: Int = R.drawable.movie_making_poster,
-) : Movieitem(ITEM_VIEW_TYPE_MOVIE) {
+) : MovieItem(ITEM_VIEW_TYPE_MOVIE) {
     companion object {
         const val ITEM_VIEW_TYPE_MOVIE = 0
     }

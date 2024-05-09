@@ -9,14 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemAdBinding
 import woowacourse.movie.databinding.ItemMovieListBinding
 import woowacourse.movie.model.ui.Ad
-import woowacourse.movie.model.ui.Movieitem
+import woowacourse.movie.model.ui.MovieItem
 import woowacourse.movie.model.ui.Movie
 
 class MovieAdapter(
     private val context: Context,
     private val onClick: (position: Int) -> Unit,
 ) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
-    private var items: List<Movieitem> = emptyList()
+    private var items: List<MovieItem> = emptyList()
 
     override fun getItemViewType(position: Int): Int {
         return items[position].viewType
@@ -58,7 +58,7 @@ class MovieAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateItems(displayData: List<Movieitem>) {
+    fun updateItems(displayData: List<MovieItem>) {
         items = displayData
         notifyDataSetChanged()
     }
