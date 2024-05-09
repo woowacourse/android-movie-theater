@@ -9,14 +9,14 @@ class MovieListPresenter(
     private val theaterContent = MovieDataSource.theaterContent
 
     override fun setMoviesInfo() {
-        view.showMoviesInfo()
+        view.showMoviesList()
     }
 
     override fun updateMoviesInfo() {
-        view.updateMovieEntity(theaterContent)
+        view.updateMovieItems(theaterContent)
     }
 
     override fun setMovieListAdapter() {
-        view.makeMovieListAdapter(theaterContent)
+        view.linkMovieListAdapter(theaterContent)
     }
 }

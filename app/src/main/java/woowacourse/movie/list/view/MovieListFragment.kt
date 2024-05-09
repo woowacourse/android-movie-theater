@@ -31,18 +31,16 @@ class MovieListFragment : Fragment(), MovieListContract.View, OnItemClickListene
         return binding.root
     }
 
-    override fun makeMovieListAdapter(
-        theaterContent: List<TheaterContent>,
-    ) {
+    override fun linkMovieListAdapter(theaterContent: List<TheaterContent>) {
         movieListAdapter =
             MovieListAdapter(theaterContent = theaterContent, movieHomeClickListener = this)
     }
 
-    override fun showMoviesInfo() {
+    override fun showMoviesList() {
         binding.movieRecyclerView.adapter = movieListAdapter
     }
 
-    override fun updateMovieEntity(theaterContent: List<TheaterContent>) {
+    override fun updateMovieItems(theaterContent: List<TheaterContent>) {
         movieListAdapter.updateItems(theaterContent)
     }
 

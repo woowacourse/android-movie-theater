@@ -10,11 +10,16 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
+import woowacourse.movie.list.adapter.ReservationHistoryAdapter
 import woowacourse.movie.list.adapter.TicketDao
+import woowacourse.movie.list.contract.ReservationHistoryContract
+import woowacourse.movie.list.presenter.ReservationHistoryPresenter
 import woowacourse.movie.ticket.model.DbTicket
 
-class ReservationHistoryFragment : Fragment() {
+class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
+    override val presenter = ReservationHistoryPresenter(this)
     private lateinit var binding: FragmentReservationHistoryBinding
+    private lateinit var reservationHistoryAdapter: ReservationHistoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,6 +33,18 @@ class ReservationHistoryFragment : Fragment() {
             false,
         )
         return binding.root
+    }
+
+    override fun linkReservationHistoryAdapter(tickets: List<DbTicket>) {
+        reservationHistoryAdapter = ReservationHistoryAdapter(tickets)
+    }
+
+    override fun showReservationHistoryList() {
+        binding.reservationHistoryRecyclerView.adapter = reservationHistoryAdapter
+    }
+
+    override fun updateItems(items: List<DbTicket>) {
+        reservationHistoryAdapter.updateItems(items)
     }
 }
 
