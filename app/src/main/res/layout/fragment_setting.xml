@@ -1,15 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    android:id="@+id/settings_fragment_layout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.homefragments.setting.SettingFragment">
-
-    <TextView
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/settings_fragment_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="설정 Fragment 입니다." />
+        tools:context=".presentation.homefragments.setting.SettingFragment">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/tv_setting_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/text_setting_title"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/switch_setting"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_setting_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/text_setting_content"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="@id/tv_setting_title"
+            app:layout_constraintStart_toStartOf="@id/tv_setting_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_setting_title" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

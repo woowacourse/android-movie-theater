@@ -17,4 +17,6 @@
     <string name="item_movie_screen_date">상영일:</string>
     <string name="item_movie_running_time">러닝타임:</string>
     <string name="text_price_won">원</string>
+    <string name="text_setting_title">푸시 알림 수신</string>
+    <string name="text_setting_content">해제하면 푸시 알림을 수신할 수 없습니다.</string>
 </resources>
