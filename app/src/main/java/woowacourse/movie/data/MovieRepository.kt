@@ -7,7 +7,7 @@ interface MovieRepository {
 
     fun loadReservedMovie(id: Long): Result<Reservation>
 
-    fun saveReservation(reservation: Reservation): Result<Unit>
+    fun saveReservation(reservation: Reservation): Result<Long>
 
     fun deleteAllReservedMovie(): Result<Unit>
 }

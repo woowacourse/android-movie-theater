@@ -1,17 +1,20 @@
 package woowacourse.movie.presentation.seat
 
+import android.util.Log
+import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.model.Cinema
+import woowacourse.movie.model.Reservation
 import woowacourse.movie.model.theater.Seat
 
 class TheaterSeatPresenter(
+    private val movieRepository: MovieRepository,
     private val view: TheaterSeatContract.View,
     private val ticketLimit: Int,
     val cinema: Cinema,
 ) :
     TheaterSeatContract.Presenter {
     private val seats: MutableMap<String, Seat> = mutableMapOf()
-    var selectedSeats = mutableListOf<String>()
-        private set
+    private val selectedSeats = mutableListOf<String>()
     private var totalPrice = 0
 
     init {
@@ -50,23 +53,26 @@ class TheaterSeatPresenter(
         }
     }
 
-    override fun showConfirmationDialog(
-        title: String,
-        message: String,
-        positiveLabel: String,
-        onPositiveButtonClicked: () -> Unit,
-        negativeLabel: String,
-        onNegativeButtonClicked: () -> Unit,
-    ) {
-        if (seats.values.any { it.chosen }) {
-            view.showConfirmationDialog(
-                title,
-                message,
-                positiveLabel,
-                onPositiveButtonClicked,
-                negativeLabel,
-                onNegativeButtonClicked,
-            )
+    override fun completeSeatSelection() {
+        if (seats.values.count { it.chosen } == ticketLimit) {
+            view.showConfirmationDialog()
+        }
+    }
+
+    override fun confirmPurchase() {
+        val reservation = Reservation(
+            cinemaName = cinema.cinemaName,
+            title = cinema.theater.movie.title,
+            releaseDate = cinema.theater.movie.releaseDate,
+            runningTime = cinema.theater.movie.runningTime,
+            synopsis = cinema.theater.movie.synopsis,
+            seats = selectedSeats.mapNotNull { seats[it] }.toSet(),
+        )
+        movieRepository.saveReservation(reservation).onSuccess {
+            view.navigateToPurchaseConfirmView(it)
+        }.onFailure {
+            Log.e("confirmPurchase", it.stackTraceToString())
+            view.showError()
         }
     }
 

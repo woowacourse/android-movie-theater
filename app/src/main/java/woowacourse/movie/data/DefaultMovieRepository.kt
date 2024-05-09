@@ -14,10 +14,11 @@ class DefaultMovieRepository(
         movieDao.loadReservationWithSeats(id).toReservation()
     }
 
-    override fun saveReservation(reservation: Reservation): Result<Unit> = runCatching {
+    override fun saveReservation(reservation: Reservation): Result<Long> = runCatching {
         val reservationId = movieDao.saveReservation(reservation.toReservationEntity())
         val seatEntities = reservation.toSeatEntities(reservationId)
         movieDao.saveMovieSeats(seatEntities)
+        reservationId
     }
 
     override fun deleteAllReservedMovie(): Result<Unit> = runCatching {
