@@ -8,8 +8,8 @@ import woowacourse.movie.domain.model.Theater
 
 @Entity(tableName = "reservationHistory")
 data class ReservationHistory(
-    @PrimaryKey
-    val id: Int,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
     @ColumnInfo(name = "reservation")
     val reservation: Reservation,
     @ColumnInfo(name = "theater")
