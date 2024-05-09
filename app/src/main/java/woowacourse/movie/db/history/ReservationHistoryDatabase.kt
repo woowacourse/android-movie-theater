@@ -11,7 +11,7 @@ import woowacourse.movie.model.ticket.ReservationTicket
     entities = [
         ReservationTicket::class,
     ],
-    version = 1,
+    version = 2,
 )
 @TypeConverters(ReservationHistoryConverters::class)
 abstract class ReservationHistoryDatabase : RoomDatabase() {
