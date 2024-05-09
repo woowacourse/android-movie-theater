@@ -7,7 +7,7 @@ import woowacourse.movie.domain.repository.TheaterRepository
 
 class ReservationPresenter(
     private val view: ReservationContract.View,
-    private val repository: ReservationRepository,
+    private val reservationRepository: ReservationRepository,
     private val theaterRepository: TheaterRepository,
     private val db: AppDatabase,
 ) : ReservationContract.Presenter {
@@ -15,7 +15,7 @@ class ReservationPresenter(
         reservationId: Int,
         theaterId: Int,
     ) {
-        repository.findById(reservationId)
+        reservationRepository.findById(reservationId)
             .onSuccess {
                 val theaterName = theaterRepository.findById(theaterId).name
 
@@ -35,14 +35,14 @@ class ReservationPresenter(
     ) {
         val thread =
             Thread {
-                repository.findById(reservationId)
+                reservationRepository.findById(reservationId)
                     .onSuccess {
                         db.reservationHistoryDao().insert(
                             ReservationHistory(
-                                screeningDate = it.dateTime?.date.toString(),
-                                screeningTime = it.dateTime?.time.toString(),
+                                reservation = it,
                                 theaterName = theaterRepository.findById(theaterId).name,
-                                movieName = it.screen.movie.title,
+                                screeningDate = it.dateTime?.date!!,
+                                screeningTime = it.dateTime.time,
                             ),
                         )
                     }

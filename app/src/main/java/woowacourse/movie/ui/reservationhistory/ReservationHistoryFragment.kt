@@ -1,8 +1,8 @@
 package woowacourse.movie.ui.reservationhistory
 
 import android.graphics.drawable.ClipDrawable.HORIZONTAL
-import android.graphics.drawable.ClipDrawable.VERTICAL
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,15 +42,16 @@ class ReservationHistoryFragment : Fragment() {
 
         val thread =
             Thread {
-                val a = db.reservationHistoryDao().getAll()
+                val reservationHistories = db.reservationHistoryDao().getAll()
+
+                Log.d("HELLO", "onViewCreated: $reservationHistories")
 
                 reservationHistoryAdapter = ReservationHistoryAdapter()
-                reservationHistoryAdapter.submitList(a)
+                reservationHistoryAdapter.submitList(reservationHistories)
 
                 binding.adapter = reservationHistoryAdapter
                 val decoration = DividerItemDecoration(requireContext(), HORIZONTAL)
                 binding.reservationHistoryList.addItemDecoration(decoration)
-
             }
         thread.start()
 

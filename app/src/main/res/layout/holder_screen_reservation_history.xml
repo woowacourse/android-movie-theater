@@ -78,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:text="@{reservationHistory.movieName}"
+            android:text="@{reservationHistory.reservation.screen.movie.title}"
             android:textColor="@color/black"
             android:textSize="16dp"
             android:textStyle="bold"

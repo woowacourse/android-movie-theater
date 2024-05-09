@@ -44,8 +44,8 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationContract.Vie
         val theaterId =
             intent.getIntExtra(PUT_EXTRA_THEATER_ID_KEY, DEFAULT_THEATER_ID)
 
-        presenter.saveReservation(reservationId, theaterId)
         presenter.loadReservation(reservationId, theaterId)
+        presenter.saveReservation(reservationId, theaterId)
     }
 
     override fun showReservation(
