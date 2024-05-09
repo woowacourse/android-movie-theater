@@ -20,6 +20,6 @@ data class Seat(val row: SeatRow, val col: Int) {
 
         private fun findRow(position: String): SeatRow = SeatRow.valueOf(position.first().toString())
 
-        private fun findCol(position: String): Int = position.substring(1).toInt()
+        private fun findCol(position: String): Int = position.substring(1).toInt() - OFFSET
     }
 }
