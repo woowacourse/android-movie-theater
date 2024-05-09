@@ -7,7 +7,6 @@ import woowacourse.movie.database.AppDatabase
 import woowacourse.movie.database.Ticket
 
 class ReservationPresenter() : ReservationContract.Presenter {
-
     private var view: ReservationContract.View? = null
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
@@ -30,5 +29,4 @@ class ReservationPresenter() : ReservationContract.Presenter {
     override fun onClickedList(ticket: Ticket) {
         view?.navigateToTicketDetail(ticket)
     }
-
 }

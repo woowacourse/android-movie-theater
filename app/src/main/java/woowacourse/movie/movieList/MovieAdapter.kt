@@ -67,7 +67,7 @@ class MovieAdapter(
 
     class MovieItemViewHolder(
         private val binding: ItemMovieListBinding,
-        private val onClick: (position: Int) -> Unit
+        private val onClick: (position: Int) -> Unit,
     ) :
         MovieViewHolder(binding.root) {
         fun bind(movie: MovieItemDisplay) {

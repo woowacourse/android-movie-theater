@@ -8,7 +8,6 @@ import woowacourse.movie.R
 import woowacourse.movie.base.BindingActivity
 import woowacourse.movie.databinding.ActivityPurchaseConfirmationBinding
 import woowacourse.movie.error.ErrorActivity
-import woowacourse.movie.model.Cinema
 
 class PurchaseConfirmationActivity :
     BindingActivity<ActivityPurchaseConfirmationBinding>(R.layout.activity_purchase_confirmation) {
