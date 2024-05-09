@@ -34,9 +34,7 @@ class MovieReservationCompleteActivity :
             presenter.handleError(NoSuchElementException())
             return
         }
-
         initializeOnBackPressedCallback()
-
         presenter.loadTicket(userTicketId)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -75,7 +73,7 @@ class MovieReservationCompleteActivity :
 
     private fun navigateBackToMainScreen() {
         Intent(this, MovieMainActivity::class.java).also {
-            it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            it.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(it)
         }
     }
