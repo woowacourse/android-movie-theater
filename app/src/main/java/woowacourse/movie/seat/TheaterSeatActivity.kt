@@ -1,20 +1,21 @@
 package woowacourse.movie.seat
 
-import android.annotation.SuppressLint
+import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.provider.Settings
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.IntentCompat
 import androidx.core.view.children
 import androidx.room.Room
@@ -26,9 +27,12 @@ import woowacourse.movie.error.ErrorActivity
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.movieInfo.Title
 import woowacourse.movie.model.theater.Seat
+import woowacourse.movie.notification.NotificationReceiver
 import woowacourse.movie.purchaseConfirmation.PurchaseConfirmationActivity
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Locale
 
-@SuppressLint("DiscouragedApi")
 class TheaterSeatActivity :
     BindingActivity<ActivityTheaterSeatBinding>(R.layout.activity_theater_seat),
     TheaterSeatContract.View {
@@ -144,23 +148,36 @@ class TheaterSeatActivity :
             title = "예매 확인",
             message = "정말 예매하시겠습니까?",
             positiveLabel = "예매 완료",
-            onPositiveButtonClicked = {
+            onPositiveButtonClicked = onPositiveButtonClicked@{
                 val cinema =
                     IntentCompat.getSerializableExtra(intent, EXTRA_CINEMA, Cinema::class.java)
                 val ticketPrice = findViewById<TextView>(R.id.total_price).text
                 if (cinema != null) {
-                    sendNotification("${cinema.theater.movie.title} 30분 뒤에 상영")
-                    PurchaseConfirmationActivity.newIntent(
-                        context = this,
-                        ticketPrice = ticketPrice.toString(),
-                        seatNumber = presenter.selectedSeats.toTypedArray(),
-                        cinemaName = cinema.cinemaName,
-                        movieTitle = cinema.theater.movie.title.toString(),
-                        runningTime = cinema.theater.movie.runningTime.toString(),
-                        timeDate = intent.getStringExtra(EXTRA_TIME_DATE)!!,
-                    ).apply {
-                        presenter.saveTicketToDatabase()
-                        navigateToNextPage(this)
+                    val timeDate = intent.getStringExtra(EXTRA_TIME_DATE)!!
+                    val formatter = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.KOREA)
+                    try {
+                        val date = formatter.parse(timeDate)
+                        val movieStartTime = date?.time ?: return@onPositiveButtonClicked
+                        scheduleNotification(
+                            this,
+                            movieStartTime,
+                            cinema,
+                            ticketPrice.toString()
+                        )
+                        PurchaseConfirmationActivity.newIntent(
+                            context = this,
+                            ticketPrice = ticketPrice.toString(),
+                            seatNumber = presenter.selectedSeats.toTypedArray(),
+                            cinemaName = cinema.cinemaName,
+                            movieTitle = cinema.theater.movie.title.toString(),
+                            runningTime = cinema.theater.movie.runningTime.toString(),
+                            timeDate = timeDate,
+                        ).apply {
+                            presenter.saveTicketToDatabase()
+                            navigateToNextPage(this)
+                        }
+                    } catch (e: ParseException) {
+                        Toast.makeText(this, "예매 시간 형식이 잘못되었습니다.", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     Toast.makeText(this, "Cinema data is not available.", Toast.LENGTH_SHORT)
@@ -172,19 +189,41 @@ class TheaterSeatActivity :
         )
     }
 
-    fun sendNotification(ticketInfo: String) {
-        val notificationId = 1001
-        val channelId = "ticket_confirmation_channel"
-        val notificationBuilder = NotificationCompat.Builder(this, channelId).apply {
-            setSmallIcon(R.drawable.ic_home_check)  // 알림 아이콘 설정
-            setContentTitle("예매 완료")  // 알림 제목
-            setContentText("$ticketInfo")  // 알림 내용
-            setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            setAutoCancel(true)  // 사용자가 탭할 때 알림을 자동으로 삭제
-        }
+    private fun scheduleNotification(
+        context: Context,
+        movieStartTime: Long,
+        cinema: Cinema,
+        ticketPrice: String
+    ) {
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        if (AlarmManagerCompat.canScheduleExactAlarms(alarmManager)) {
+            val alarmTime = movieStartTime - 30*60*1000 // 영화 시작 시간 30분 전
+            val intent = Intent(context, NotificationReceiver::class.java).apply {
+                putExtra("notificationId", 1001)
+                putExtra("message", "${cinema.theater.movie.title} 영화 시작 30분 전입니다!")
+                putExtra("title", cinema.theater.movie.title.toString())
+                putExtra("cinemaName", cinema.cinemaName)
+                putExtra("ticketPrice", ticketPrice)
+                putExtra("seatNumber", presenter.selectedSeats.toTypedArray())
+                putExtra("runningTime", cinema.theater.movie.runningTime.toString())
+                putExtra("timeDate", intent.getStringExtra(EXTRA_TIME_DATE))
+            }
+            val pendingIntent = PendingIntent.getBroadcast(
+                context,
+                1001,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
 
-        val notificationManager = NotificationManagerCompat.from(this)
-        notificationManager.notify(notificationId, notificationBuilder.build())
+            alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                alarmTime,
+                pendingIntent
+            )
+        } else {
+            val settingsIntent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+            context.startActivity(settingsIntent)
+        }
     }
 
 
