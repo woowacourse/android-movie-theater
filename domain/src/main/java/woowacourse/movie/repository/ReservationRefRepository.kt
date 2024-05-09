@@ -9,4 +9,6 @@ interface ReservationRefRepository {
     ): Long
 
     fun reservationRefById(id: Long): ReservationRef?
+
+    fun allReservationRefs(): List<ReservationRef>
 }

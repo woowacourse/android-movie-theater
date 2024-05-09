@@ -23,6 +23,5 @@ class FetchReservationWithIdUseCase(
 
     companion object {
         private const val NO_RESERVATION = "id에 해당하는 reservation이 없습니다"
-        private const val NO_SCREENING = "id에 해당하는 screening이 없습니다"
     }
 }
