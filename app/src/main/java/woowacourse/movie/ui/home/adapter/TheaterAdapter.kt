@@ -10,14 +10,14 @@ import woowacourse.movie.ui.home.TheaterAdapterActionHandler
 
 class TheaterAdapter(
     private val screen: Screen,
-    private val theaterAdapterActionHandler: TheaterAdapterActionHandler,
-) : ListAdapter<Theater, TheaterViewHolder>(TheaterDiffUtil()) {
+    private val onMove: (Int, Int) -> Unit,
+) : ListAdapter<Theater, TheaterViewHolder>(TheaterDiffUtil()), TheaterAdapterActionHandler {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): TheaterViewHolder {
         val binding = HolderTheaterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return TheaterViewHolder(binding, theaterAdapterActionHandler)
+        return TheaterViewHolder(binding, this)
     }
 
     override fun onBindViewHolder(
@@ -25,5 +25,12 @@ class TheaterAdapter(
         position: Int,
     ) {
         holder.bind(getItem(position), screen)
+    }
+
+    override fun moveToDetailActivity(
+        screenId: Int,
+        theaterId: Int,
+    ) {
+        onMove(screenId, theaterId)
     }
 }

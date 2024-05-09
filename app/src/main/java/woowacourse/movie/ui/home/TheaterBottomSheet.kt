@@ -56,17 +56,9 @@ class TheaterBottomSheet : BottomSheetDialogFragment() {
         theaters: Theaters,
     ) {
         theaterAdapter =
-            TheaterAdapter(
-                screen,
-                object : TheaterAdapterActionHandler {
-                    override fun moveToDetailActivity(
-                        screenId: Int,
-                        theaterId: Int,
-                    ) {
-                        ScreenDetailActivity.startActivity(requireContext(), screenId, theaterId)
-                    }
-                },
-            )
+            TheaterAdapter(screen) { screenId, theaterId ->
+                ScreenDetailActivity.startActivity(requireContext(), screenId, theaterId)
+            }
 
         theaterAdapter.submitList(theaters.theaters)
     }
