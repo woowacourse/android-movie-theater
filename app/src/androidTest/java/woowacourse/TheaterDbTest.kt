@@ -32,7 +32,7 @@ class TheaterDbTest {
     @Test
     fun `영화관_정보를_DB에_저장하고_불러온다`() {
         theaterDao.insert(Theater.STUB_A.toDto())
-        val actual = theaterDao.findById(1).toTheater()
+        val actual = theaterDao.findById(1)?.toTheater()
         val expected = Theater.STUB_A
         assertThat(actual).isEqualTo(expected)
     }

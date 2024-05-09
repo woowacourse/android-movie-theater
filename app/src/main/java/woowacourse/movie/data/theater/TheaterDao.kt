@@ -10,5 +10,5 @@ interface TheaterDao {
     fun insert(theaterDto: TheaterDto)
 
     @Query("select * from theaters where id == :id")
-    fun findById(id: Long): TheaterDto
+    fun findById(id: Long): TheaterDto?
 }
