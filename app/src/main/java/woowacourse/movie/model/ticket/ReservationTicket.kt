@@ -17,14 +17,15 @@ data class ReservationTicket(
     val seats: Seats,
     val screeningDateTime: ScreeningDateTime,
     val amount: Int,
-) : Serializable
-
-fun ReservationTicket.toTicket(): Ticket {
-    return Ticket(
-        movieId = this.movieId,
-        theaterId = this.theaterId,
-        seats = this.seats,
-        screeningDateTime = this.screeningDateTime,
-        amount = this.amount,
-    )
+) : Serializable {
+    fun toTicket(): Ticket {
+        return Ticket(
+            movieId = this.movieId,
+            theaterId = this.theaterId,
+            seats = this.seats,
+            screeningDateTime = this.screeningDateTime,
+            amount = this.amount,
+        )
+    }
 }
+
