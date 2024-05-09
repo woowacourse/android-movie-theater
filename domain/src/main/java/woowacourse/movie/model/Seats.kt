@@ -1,8 +1,6 @@
 package woowacourse.movie.model
 
-import java.io.Serializable
-
-data class Seats(val seats: List<Seat> = emptyList()) : Serializable {
+data class Seats(val seats: List<Seat> = emptyList()) {
     val totalPrice = Price(seats.sumOf { it.price })
     val count = seats.size
 
@@ -15,6 +13,8 @@ data class Seats(val seats: List<Seat> = emptyList()) : Serializable {
     }
 
     companion object {
+        val STUB = Seats(listOf(Seat.STUB))
+
         fun from(string: String): Seats {
             val seats = string.split(",").map { Seat.from(it) }
             return Seats(seats)

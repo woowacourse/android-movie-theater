@@ -1,12 +1,10 @@
 package woowacourse.movie.model
 
-import java.io.Serializable
-
 data class Seat(
     val rate: Tier,
     val row: Int,
     val col: Int,
-) : Serializable {
+) {
     val price = rate.price.price
 
     override fun toString(): String {
@@ -20,6 +18,8 @@ data class Seat(
     }
 
     companion object {
+        val STUB = Seat(Tier.A, 1, 1)
+
         fun from(seatString: String): Seat {
             val splited = seatString.split("|")
             val rate =
