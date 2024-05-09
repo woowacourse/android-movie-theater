@@ -10,7 +10,7 @@ interface MovieDetailContract {
     interface View {
         fun navigateToPurchaseConfirmation(cinema: Cinema)
 
-        fun onTicketCountChanged(ticketNum: Int)
+        fun showTicketCount(ticketNum: Int)
 
         fun showTicketMessage(message: String)
 

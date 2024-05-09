@@ -11,13 +11,13 @@ class MovieDetailPresenter(
     private var ticketNum = 1
 
     init {
-        view.onTicketCountChanged(ticketNum)
+        view.showTicketCount(ticketNum)
     }
 
     override fun increaseTicketCount() {
         if (ticketNum < 10) {
             ticketNum++
-            view.onTicketCountChanged(ticketNum)
+            view.showTicketCount(ticketNum)
         } else {
             view.showTicketMessage("최대 티켓 수량에 도달했습니다.")
         }
@@ -26,7 +26,7 @@ class MovieDetailPresenter(
     override fun decreaseTicketCount() {
         if (ticketNum > 1) {
             ticketNum--
-            view.onTicketCountChanged(ticketNum)
+            view.showTicketCount(ticketNum)
         } else {
             view.showTicketMessage("최소 티켓 수량입니다.")
         }

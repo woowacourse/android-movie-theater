@@ -37,7 +37,7 @@ class MovieDetailActivity :
         presenter.loadRunMovieDateRange()
     }
 
-    override fun onTicketCountChanged(ticketNum: Int) {
+    override fun showTicketCount(ticketNum: Int) {
         binding.ticketNum = ticketNum
         binding.executePendingBindings()
     }
