@@ -7,7 +7,7 @@ import kotlin.time.Duration.Companion.minutes
 data class MovieReservation(
     val id: Long,
     val movie: Movie,
-    val selectedSeats: SelectedSeats,
+    val selectedSeats: List<Seat>,
     val screenDateTime: LocalDateTime,
     val headCount: HeadCount,
     val cancelDeadLine: Duration = 15.minutes,
@@ -24,14 +24,14 @@ data class MovieReservation(
     ) : this(
         id,
         screeningMovie.movie,
-        selectedSeats,
+        selectedSeats.selectedSeats,
         screenDateTime,
         headCount,
         cancelDeadLine,
         theaterId,
     )
 
-    val totalPrice: Price get() = selectedSeats.totalPrice
+    val totalPrice: Price get() = selectedSeats.sumOf { it.price }.let(::Price)
 
     companion object {
         val STUB =
@@ -42,7 +42,7 @@ data class MovieReservation(
                     MovieTheater.STUB_A,
                     HeadCount(1),
                     listOf(Seat(SeatRate.B, 0, 0, SeatState.SELECTED)),
-                ),
+                ).selectedSeats,
                 LocalDateTime.now(),
                 HeadCount(1),
                 theaterId = 0L,

@@ -9,6 +9,8 @@ data class MovieTheater(
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "name") val name: String,
 ) {
+    fun toMovieTheater(): woowacourse.movie.model.MovieTheater = woowacourse.movie.model.MovieTheater(id, name)
+
     companion object {
         val STUB_A =
             MovieTheater(

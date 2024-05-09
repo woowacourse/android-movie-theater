@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import woowacourse.movie.model.ScreenDateTime
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -17,6 +18,21 @@ data class ScreeningMovie(
     @ColumnInfo(name = "screen_date_times")
     val screenDateTimes: List<Map<LocalDate, List<LocalTime>>>,
 ) {
+    fun toScreeningMovie(): woowacourse.movie.model.ScreeningMovie {
+        val transformedDateTimes =
+            screenDateTimes.flatMap { map ->
+                map.entries.map { entry ->
+                    ScreenDateTime(date = entry.key, times = entry.value)
+                }
+            }
+        return woowacourse.movie.model.ScreeningMovie(
+            id = id,
+            movie = movie.toMovie(),
+            theater = theater.toMovieTheater(),
+            screenDateTimes = transformedDateTimes,
+        )
+    }
+
     companion object {
         val STUB_A =
             ScreeningMovie(

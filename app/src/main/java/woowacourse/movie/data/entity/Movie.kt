@@ -3,7 +3,11 @@ package woowacourse.movie.data.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import woowacourse.movie.model.ImageUrl
+import woowacourse.movie.model.Movie
+import woowacourse.movie.model.RunningTime
 import java.time.LocalDate
+import kotlin.time.Duration.Companion.minutes
 
 @Entity(tableName = "movie")
 data class Movie(
@@ -15,6 +19,17 @@ data class Movie(
     @ColumnInfo(name = "end_date") val endDate: LocalDate,
     @ColumnInfo(name = "running_time") val runningTime: Long,
 ) {
+    fun toMovie() =
+        Movie(
+            id,
+            title,
+            description,
+            ImageUrl(imageUrl),
+            startDate,
+            endDate,
+            RunningTime(runningTime.minutes),
+        )
+
     companion object {
         val STUB =
             Movie(
