@@ -14,9 +14,6 @@ interface MovieReservationDao {
     @Insert
     fun insertAll(vararg movieReservations: MovieReservation)
 
-    @Insert
-    fun insert(movieReservation: MovieReservation)
-
     @Delete
     fun delete(movieReservation: MovieReservation)
 

@@ -14,9 +14,6 @@ interface MovieTheaterDao {
     @Insert
     fun insertAll(vararg movieTheaters: MovieTheater)
 
-    @Insert
-    fun insert(movieTheater: MovieTheater)
-
     @Delete
     fun delete(theater: MovieTheater)
 

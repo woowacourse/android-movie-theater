@@ -1,12 +1,10 @@
 package woowacourse.movie.data.converter
 
-import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 
-@ProvidedTypeConverter
 class ReservationSeatsConverters {
     private val gson = Gson()
 
