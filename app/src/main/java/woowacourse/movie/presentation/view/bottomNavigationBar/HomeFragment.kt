@@ -16,7 +16,7 @@ import woowacourse.movie.presentation.view.screening.ScreeningPresenterImpl
 import woowacourse.movie.presentation.view.screening.adapter.MovieListAdapter
 import woowacourse.movie.presentation.view.screening.theater.TheaterBottomSheetDialogFragment
 
-class Home : Fragment(), ScreeningContract.View, ScreeningContract.ViewActions {
+class HomeFragment : Fragment(), ScreeningContract.View, ScreeningContract.ViewActions {
     private lateinit var adapter: MovieListAdapter
     private lateinit var presenter: ScreeningContract.Presenter
 

@@ -24,7 +24,7 @@ class NavigationActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.home_fragment -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.selected_fragment, Home())
+                        .replace(R.id.selected_fragment, HomeFragment())
                         .addToBackStack(null)
                         .commit()
                     true
@@ -32,7 +32,7 @@ class NavigationActivity : AppCompatActivity() {
 
                 R.id.setting_fragment -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.selected_fragment, Setting())
+                        .replace(R.id.selected_fragment, SettingFragment())
                         .addToBackStack(null)
                         .commit()
                     true
@@ -40,7 +40,7 @@ class NavigationActivity : AppCompatActivity() {
 
                 R.id.reservation_list_fragment -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.selected_fragment, ReservationList())
+                        .replace(R.id.selected_fragment, ReservationListFragment())
                         .addToBackStack(null)
                         .commit()
                     true

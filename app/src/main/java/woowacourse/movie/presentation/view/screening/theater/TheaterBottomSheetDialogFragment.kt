@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.presentation.uimodel.TheaterUiModel
-import woowacourse.movie.presentation.view.bottomNavigationBar.Home.Companion.DEFAULT_MOVIE_ID
-import woowacourse.movie.presentation.view.bottomNavigationBar.Home.Companion.MOVIE_ID_KEY
+import woowacourse.movie.presentation.view.bottomNavigationBar.HomeFragment.Companion.DEFAULT_MOVIE_ID
+import woowacourse.movie.presentation.view.bottomNavigationBar.HomeFragment.Companion.MOVIE_ID_KEY
 import woowacourse.movie.presentation.view.reservation.detail.MovieDetailActivity
 import woowacourse.movie.presentation.view.screening.theater.adapter.TheaterAdapter
 
