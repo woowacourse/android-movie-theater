@@ -1,6 +1,6 @@
 package woowacourse.movie.ticket.presenter
 
-import woowacourse.movie.common.MovieDataSource
+import woowacourse.movie.common.CommonDataSource
 import woowacourse.movie.detail.model.Count
 import woowacourse.movie.list.model.TheaterData
 import woowacourse.movie.seats.model.Seat
@@ -38,15 +38,15 @@ class MovieTicketPresenter(
     }
 
     override fun saveTicketIntDb() {
-        view.storeTicketsIntDb(TicketDataResource.dbTicket)
+        view.storeTicketsInDb(TicketDataResource.dbTicket)
     }
 
     override fun storeDbTickets(tickets: List<DbTicket>) {
-        TicketDataResource.dbTickets = tickets
+        CommonDataSource.dbTickets = tickets
     }
 
     override fun setTicketInfo() {
-        val movieTitle = MovieDataSource.movieList.first { it.id == TicketDataResource.ticket.movieId }.title
+        val movieTitle = CommonDataSource.movieList.first { it.id == TicketDataResource.ticket.movieId }.title
         val theaterName = TheaterData.theaters.first { it.id == TicketDataResource.ticket.theaterId }.name
         view.showTicketView(
             movieTitle,

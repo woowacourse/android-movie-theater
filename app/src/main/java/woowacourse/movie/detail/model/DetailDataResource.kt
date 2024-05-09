@@ -1,6 +1,6 @@
 package woowacourse.movie.detail.model
 
-import woowacourse.movie.common.MovieDataSource
+import woowacourse.movie.common.CommonDataSource
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -10,7 +10,7 @@ object DetailDataResource {
     var theaterId: Long = 0
 
     private val firstScreeningDate
-        get() = MovieDataSource.movieList.first { it.id == movieId }.firstScreeningDate
+        get() = CommonDataSource.movieList.first { it.id == movieId }.firstScreeningDate
 
     val screeningDates
         get() =

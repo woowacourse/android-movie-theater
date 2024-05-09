@@ -1,10 +1,22 @@
 package woowacourse.movie.list.presenter
 
+import woowacourse.movie.common.CommonDataSource
 import woowacourse.movie.list.contract.ReservationHistoryContract
-import woowacourse.movie.ticket.model.TicketDataResource
 
 class ReservationHistoryPresenter(
     override val view: ReservationHistoryContract.View
 ) : ReservationHistoryContract.Presenter {
-    private val ticket = TicketDataResource.dbTicket
+    private val tickets = CommonDataSource.dbTickets
+
+    override fun setReservationHistoryInfo() {
+        view.showReservationHistoryList()
+    }
+
+    override fun updateReservationHistoryInfo() {
+        view.updateItems(tickets)
+    }
+
+    override fun setReservationHistoryAdapter() {
+        view.linkReservationHistoryAdapter(tickets)
+    }
 }

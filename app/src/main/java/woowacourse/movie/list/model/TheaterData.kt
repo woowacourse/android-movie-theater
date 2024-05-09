@@ -1,6 +1,6 @@
 package woowacourse.movie.list.model
 
-import woowacourse.movie.common.MovieDataSource.movieList
+import woowacourse.movie.common.CommonDataSource.movieList
 import java.time.LocalTime
 
 object TheaterData {

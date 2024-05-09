@@ -92,7 +92,9 @@
                 app:layout_constraintTop_toBottomOf="@id/theater_name"
                 tools:text="해리포터와 마법사의 돌" />
 
+
         </LinearLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import woowacourse.movie.databinding.FragmentHomeBinding
+import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.list.adapter.MovieListAdapter
 import woowacourse.movie.list.adapter.OnItemClickListener
 import woowacourse.movie.list.contract.MovieListContract
@@ -15,7 +15,7 @@ import woowacourse.movie.list.view.TheaterBottomSheetFragment.Companion.newFragm
 
 class MovieListFragment : Fragment(), MovieListContract.View, OnItemClickListener {
     override val presenter = MovieListPresenter(this)
-    private lateinit var binding: FragmentHomeBinding
+    private lateinit var binding: FragmentMovieListBinding
     private lateinit var movieListAdapter: MovieListAdapter
 
     override fun onCreateView(
@@ -23,7 +23,7 @@ class MovieListFragment : Fragment(), MovieListContract.View, OnItemClickListene
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentMovieListBinding.inflate(inflater, container, false)
         binding.movieListfragment = this
         presenter.setMovieListAdapter()
         presenter.setMoviesInfo()
@@ -33,7 +33,7 @@ class MovieListFragment : Fragment(), MovieListContract.View, OnItemClickListene
 
     override fun linkMovieListAdapter(theaterContent: List<TheaterContent>) {
         movieListAdapter =
-            MovieListAdapter(theaterContent = theaterContent, movieHomeClickListener = this)
+            MovieListAdapter(theaterContent, this)
     }
 
     override fun showMoviesList() {

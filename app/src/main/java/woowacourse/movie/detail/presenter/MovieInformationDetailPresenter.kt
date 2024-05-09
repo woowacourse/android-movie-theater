@@ -1,6 +1,6 @@
 package woowacourse.movie.detail.presenter
 
-import woowacourse.movie.common.MovieDataSource
+import woowacourse.movie.common.CommonDataSource
 import woowacourse.movie.detail.contract.MovieInformationDetailContract
 import woowacourse.movie.detail.model.DetailDataResource
 import woowacourse.movie.detail.model.DetailDataResource.movieId
@@ -37,7 +37,7 @@ class MovieInformationDetailPresenter(
 
     override fun setMovieInfo() {
         val movieId = DetailDataResource.movieId
-        view.setMovieView(MovieDataSource.movieList.first { it.id == movieId })
+        view.setMovieView(CommonDataSource.movieList.first { it.id == movieId })
     }
 
     override fun setPlusButtonClickInfo() {

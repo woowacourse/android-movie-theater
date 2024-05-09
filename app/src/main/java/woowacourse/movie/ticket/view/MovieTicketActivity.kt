@@ -1,5 +1,6 @@
 package woowacourse.movie.ticket.view
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -34,11 +35,8 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
         presenter.saveTicketIntDb()
     }
 
-    override fun storeTicketsIntDb(ticket: DbTicket) {
-        val ticketDb = Room.databaseBuilder(
-            applicationContext, AppDatabase::class.java, "tickets",
-        ).build()
-
+    override fun storeTicketsInDb(ticket: DbTicket) {
+        val ticketDb = getTicketDb(applicationContext)
         Thread {
             ticketDb.ticketDao().insertAll(ticket)
             val tickets = ticketDb.ticketDao().getAll()
@@ -85,5 +83,8 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
 
     companion object {
         private const val TICKET_PRICE = "%,d원 (현장결제)"
+        fun getTicketDb(context: Context): AppDatabase {
+            return Room.databaseBuilder(context, AppDatabase::class.java, "tickets").build()
+        }
     }
 }

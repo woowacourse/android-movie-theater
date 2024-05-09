@@ -12,5 +12,8 @@ interface ReservationHistoryContract {
 
     interface Presenter {
         val view: View
+        fun setReservationHistoryInfo()
+        fun updateReservationHistoryInfo()
+        fun setReservationHistoryAdapter()
     }
 }
