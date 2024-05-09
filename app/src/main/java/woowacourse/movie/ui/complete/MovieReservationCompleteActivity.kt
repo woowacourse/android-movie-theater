@@ -42,8 +42,7 @@ class MovieReservationCompleteActivity :
 
     override fun initializePresenter() = MovieReservationCompletePresenter(this)
 
-    private fun userTicketId() =
-        intent.getLongExtra(MovieReservationCompleteKey.TICKET_ID, USER_TICKET_ID_DEFAULT_VALUE)
+    private fun userTicketId() = intent.getLongExtra(MovieReservationCompleteKey.TICKET_ID, USER_TICKET_ID_DEFAULT_VALUE)
 
     override fun showTicket(userTicket: UserTicket) {
         binding.userTicket = userTicket

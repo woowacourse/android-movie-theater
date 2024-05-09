@@ -3,7 +3,6 @@ package woowacourse.movie.ui.setting
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,6 +31,9 @@ class MovieSettingFragment : Fragment() {
         binding.swAlarmStatus.isChecked = getAlarmChecked()
         binding.swAlarmStatus.setOnCheckedChangeListener { _, isChecked ->
             setAlarmChecked(isChecked)
+            if (!isChecked) {
+                context?.let { MovieAlarmManager.cancelAlarm(it) }
+            }
         }
 
         return binding.root
@@ -40,7 +42,6 @@ class MovieSettingFragment : Fragment() {
     private fun initializeSharedPreference(): SharedPreferences =
         activity?.getSharedPreferences("settings", MODE_PRIVATE)
             ?: throw IllegalStateException()
-
 
     private fun setAlarmChecked(isChecked: Boolean) {
         with(sharedPreference.edit()) {

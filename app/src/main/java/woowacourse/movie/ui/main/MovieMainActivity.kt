@@ -59,7 +59,7 @@ class MovieMainActivity : AppCompatActivity() {
 
     private fun requestNotificationPermission() {
         if (ContextCompat.checkSelfPermission(
-                this, Manifest.permission.POST_NOTIFICATIONS
+                this, Manifest.permission.POST_NOTIFICATIONS,
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -74,11 +74,11 @@ class MovieMainActivity : AppCompatActivity() {
         }
     }
 
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean ->
-
-    }
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+        ) { isGranted: Boolean ->
+        }
 
     companion object {
         fun startActivity(context: Context) =

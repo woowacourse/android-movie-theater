@@ -7,8 +7,8 @@ val HARRY_PORTER_WIZARD =
     MovieContent(
         imageId = "thumbnail_movie1",
         title = "해리 포터와 마법사의 돌",
-        openingMovieDate = LocalDate.of(2024, 3, 1),
-        endingMoviesDate = LocalDate.of(2024, 3, 28),
+        openingMovieDate = LocalDate.of(2024, 5, 1),
+        endingMoviesDate = LocalDate.of(2024, 5, 28),
         runningTime = 152,
         synopsis =
             "《해리 포터와 마법사의 돌》은 2001년 J. K. 롤링의 동명 소설을 원작으로 하여 만든, 영국과 미국 합작, " +

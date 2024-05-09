@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.selection
 
+import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import woowacourse.movie.model.data.MovieDataSource
@@ -8,6 +9,7 @@ import woowacourse.movie.model.db.UserTicketDatabase
 import woowacourse.movie.model.movie.Reservation
 import woowacourse.movie.model.movie.ReservationDetail
 import woowacourse.movie.model.movie.Seat
+import woowacourse.movie.ui.setting.MovieAlarmManager
 import woowacourse.movie.ui.utils.positionToIndex
 
 class MovieSeatSelectionPresenter(
@@ -51,7 +53,7 @@ class MovieSeatSelectionPresenter(
         view.showSelectedSeat(index)
     }
 
-    override fun reservationSeat() {
+    override fun reservationSeat(context: Context) {
         val userTicket =
             UserTicket(
                 movieTitle = reservation.title,
@@ -65,6 +67,12 @@ class MovieSeatSelectionPresenter(
         val handler = Handler(Looper.getMainLooper())
         Thread {
             val userTicketId = db.userTicketDao().insert(userTicket)
+            MovieAlarmManager.setAlarm(
+                context,
+                userTicket.movieTitle,
+                userTicketId,
+                userTicket.screeningStartDateTime,
+            )
             handler.post {
                 view.showReservationComplete(userTicketId)
             }
