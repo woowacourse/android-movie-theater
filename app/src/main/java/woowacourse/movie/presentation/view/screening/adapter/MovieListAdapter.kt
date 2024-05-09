@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import woowacourse.movie.R
+import woowacourse.movie.databinding.MovieItemBinding
 import woowacourse.movie.domain.admodel.Ad
 import woowacourse.movie.presentation.uimodel.MovieUiModel
 import woowacourse.movie.presentation.view.screening.ScreeningContract
@@ -16,6 +17,8 @@ class MovieListAdapter(
     private var adList: List<Ad>,
     private val listener: ScreeningContract.ViewActions,
 ) : RecyclerView.Adapter<ViewHolder>() {
+    private lateinit var movieItemBinding: MovieItemBinding
+
     fun updateMovieList(newMovieList: List<MovieUiModel>) {
         val diffCallback = MovieDiffCallback(movieList, newMovieList)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
@@ -44,9 +47,8 @@ class MovieListAdapter(
         viewType: Int,
     ): ViewHolder {
         return if (viewType == MOVIE_TYPE) {
-            val view =
-                LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
-            MovieViewHolder(view, ::onReserveButtonClicked)
+            movieItemBinding = MovieItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            MovieViewHolder(movieItemBinding)
         } else {
             val view =
                 LayoutInflater.from(parent.context).inflate(R.layout.ad_item, parent, false)
@@ -59,7 +61,7 @@ class MovieListAdapter(
         position: Int,
     ) {
         when (holder) {
-            is MovieViewHolder -> holder.bind(movieList[position])
+            is MovieViewHolder -> holder.bind(movieList[position], listener)
             is AdViewHolder -> holder.bind(adList[getAdIndex(position)].imageId)
         }
     }

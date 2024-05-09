@@ -1,39 +1,18 @@
 package woowacourse.movie.presentation.view.screening.adapter
 
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.MovieItemBinding
 import woowacourse.movie.presentation.uimodel.MovieUiModel
+import woowacourse.movie.presentation.view.screening.ScreeningContract
 
 class MovieViewHolder(
-    itemView: View,
-    private val buttonClickedListener: (Int) -> Unit,
-) : RecyclerView.ViewHolder(itemView) {
-    val posterImage: ImageView = itemView.findViewById(R.id.posterImage)
-    val title: TextView = itemView.findViewById(R.id.title)
-    val screeningDate: TextView = itemView.findViewById(R.id.screeningDate)
-    val runningTime: TextView = itemView.findViewById(R.id.runningTime)
-    val reserveButton: TextView = itemView.findViewById(R.id.reserveButton)
-
-    init {
-        reserveButton.setOnClickListener { buttonClickedListener(adapterPosition) }
-    }
-
-    fun bind(movie: MovieUiModel) {
-        posterImage.setImageResource(movie.posterImageId)
-        title.text = movie.title
-        screeningDate.text =
-            itemView.context.getString(
-                R.string.screening_date_format,
-                movie.screeningStartDate,
-                movie.screeningEndDate,
-            )
-        runningTime.text =
-            itemView.context.getString(
-                R.string.running_time_format,
-                movie.runningTime,
-            )
+    private val binding: MovieItemBinding
+) : RecyclerView.ViewHolder(binding.root) {
+    fun bind(
+        movie: MovieUiModel,
+        itemClickListener: ScreeningContract.ViewActions,
+    ) {
+        binding.data = movie
+        binding.listener = itemClickListener
     }
 }
