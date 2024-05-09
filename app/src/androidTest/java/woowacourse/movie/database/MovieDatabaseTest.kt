@@ -100,4 +100,14 @@ class MovieDatabaseTest {
         // then
         assertThat(screenMovie).isEqualTo(ScreeningMovie.STUB_A)
     }
+
+    @Test
+    @DisplayName("movieId에 해당하는 극장 리스트를 반환한다")
+    fun get_theaterList_Using_movieId()  {
+        screeningMovieDao.insertAll(ScreeningMovie.STUB_A, ScreeningMovie.STUB_B, ScreeningMovie.STUB_C)
+
+        val theaters: List<MovieTheater> = screeningMovieDao.getTheatersByMovieId(Movie.STUB.id)
+
+        assertThat(theaters).contains(MovieTheater.STUB_A)
+    }
 }
