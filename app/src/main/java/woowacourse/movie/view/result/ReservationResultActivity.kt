@@ -45,7 +45,7 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
     }
 
     override fun showReservationTicketInfo(ticket: Ticket)  = runOnUiThread {
-        val seats = ticket.seats.theaterSeats
+        val seats = ticket.seatSelection.theaterSeats
         binding.textViewReservationFinishedNumberOfTickets.text = seats.size.toString()
         binding.textViewReservationFinishedTicketPrice.text =
             convertAmountFormat(this, ticket.amount)

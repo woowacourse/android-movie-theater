@@ -44,7 +44,7 @@ class ReservationHistoryDaoTest {
             assertEquals(theaterId, reservationTicket.theaterId)
             assertEquals(screeningDateTime.time, reservationTicket.screeningDateTime.time)
             assertEquals(screeningDateTime.date, reservationTicket.screeningDateTime.date)
-            assertEquals(seats.theaterSeats.size, reservationTicket.seats.theaterSeats.size)
+            assertEquals(seatSelection.theaterSeats.size, reservationTicket.seatSelection.theaterSeats.size)
         }
         assertEquals(1, reservations.size)
     }
@@ -65,7 +65,7 @@ class ReservationHistoryDaoTest {
             assertEquals(theaterId, expectedReservation?.theaterId)
             assertEquals(screeningDateTime.time, expectedReservation?.screeningDateTime?.time)
             assertEquals(screeningDateTime.date, expectedReservation?.screeningDateTime?.date)
-            assertEquals(seats.theaterSeats.size, expectedReservation?.seats?.theaterSeats?.size)
+            assertEquals(seatSelection.theaterSeats.size, expectedReservation?.seatSelection?.theaterSeats?.size)
         }
     }
 

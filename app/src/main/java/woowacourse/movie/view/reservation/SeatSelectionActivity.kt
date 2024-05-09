@@ -16,7 +16,7 @@ import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.seats.Grade
 import woowacourse.movie.model.seats.TheaterSeat
-import woowacourse.movie.model.seats.Seats
+import woowacourse.movie.model.seats.SeatSelection
 import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.ticket.Ticket
 import woowacourse.movie.presenter.reservation.SeatSelectionContract
@@ -75,8 +75,8 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         super.onSaveInstanceState(outState)
         outState.apply {
             putSerializable(HEAD_COUNT, headCount)
-            putSerializable(SEATS, presenter.seats)
-            putIntegerArrayList(SEATS_INDEX, ArrayList(presenter.seats.seatsIndex))
+            putSerializable(SEATS, presenter.seatSelection)
+            putIntegerArrayList(SEATS_INDEX, ArrayList(presenter.seatSelection.seatsIndex))
         }
     }
 
@@ -246,10 +246,10 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun restoreSeatsData(bundle: Bundle) {
-        val seats =
-            bundle.bundleSerializable(SEATS, Seats::class.java) ?: throw NoSuchElementException()
+        val seatSelection =
+            bundle.bundleSerializable(SEATS, SeatSelection::class.java) ?: throw NoSuchElementException()
         val index = bundle.getIntegerArrayList(SEATS_INDEX) ?: throw NoSuchElementException()
-        presenter.restoreSeats(seats, index.toList())
+        presenter.restoreSeats(seatSelection, index.toList())
     }
 
     private fun isOnAlarmState(): Boolean {

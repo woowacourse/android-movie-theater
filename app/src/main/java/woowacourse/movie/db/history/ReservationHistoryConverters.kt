@@ -3,19 +3,19 @@ package woowacourse.movie.db.history
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import woowacourse.movie.model.movie.ScreeningDateTime
-import woowacourse.movie.model.seats.Seats
+import woowacourse.movie.model.seats.SeatSelection
 
 class ReservationHistoryConverters {
     private val gson = Gson()
 
     @TypeConverter
-    fun fromSeats(seats: Seats): String {
-        return gson.toJson(seats)
+    fun fromSeats(seatSelection: SeatSelection): String {
+        return gson.toJson(seatSelection)
     }
 
     @TypeConverter
-    fun toSeats(seatsString: String): Seats {
-        return gson.fromJson(seatsString, Seats::class.java)
+    fun toSeats(seatsString: String): SeatSelection {
+        return gson.fromJson(seatsString, SeatSelection::class.java)
     }
 
     @TypeConverter

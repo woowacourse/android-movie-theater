@@ -3,7 +3,7 @@ package woowacourse.movie.model.ticket
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import woowacourse.movie.model.movie.ScreeningDateTime
-import woowacourse.movie.model.seats.Seats
+import woowacourse.movie.model.seats.SeatSelection
 import java.io.Serializable
 
 @Entity(tableName = "reservationTicket")
@@ -14,7 +14,7 @@ data class ReservationTicket(
     val theaterId: Int,
     val movieTitle: String,
     val theaterName: String,
-    val seats: Seats,
+    val seatSelection: SeatSelection,
     val screeningDateTime: ScreeningDateTime,
     val amount: Int,
 ) : Serializable {
@@ -22,7 +22,7 @@ data class ReservationTicket(
         return Ticket(
             movieId = this.movieId,
             theaterId = this.theaterId,
-            seats = this.seats,
+            seatSelection = this.seatSelection,
             screeningDateTime = this.screeningDateTime,
             amount = this.amount,
         )

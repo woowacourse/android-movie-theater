@@ -6,7 +6,7 @@ import woowacourse.movie.db.seats.SeatsDao
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.seats.TheaterSeat
-import woowacourse.movie.model.seats.Seats
+import woowacourse.movie.model.seats.SeatSelection
 import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.ticket.Ticket
 import woowacourse.movie.notification.TicketNotification
@@ -18,21 +18,21 @@ class SeatSelectionPresenter(
     private val screeningDao: ScreeningDao,
     private val repository: ReservationTicketRepository,
 ) : SeatSelectionContract.Presenter {
-    val seats = Seats()
+    val seatSelection = SeatSelection()
     private val headCount = HeadCount()
 
     override fun restoreReservation(count: Int) {
         headCount.restore(count)
         view.setConfirmButtonEnabled(headCount.count)
-        view.showAmount(seats.calculateAmount())
+        view.showAmount(seatSelection.calculateAmount())
     }
 
     override fun restoreSeats(
-        selectedSeats: Seats,
+        selectedSeatSelection: SeatSelection,
         seatsIndex: List<Int>,
     ) {
-        seats.restoreSeats(selectedSeats)
-        seats.restoreSeatsIndex(seatsIndex)
+        seatSelection.restoreSeats(selectedSeatSelection)
+        seatSelection.restoreSeatsIndex(seatsIndex)
         view.restoreSelectedSeats(seatsIndex)
     }
 
@@ -53,7 +53,7 @@ class SeatSelectionPresenter(
         index: Int,
         theaterSeat: TheaterSeat,
     ) {
-        seats.apply {
+        seatSelection.apply {
             manageSelectedIndex(isSelected, index)
             manageSelected(isSelected, theaterSeat)
         }
@@ -68,9 +68,9 @@ class SeatSelectionPresenter(
             Ticket(
                 movieId,
                 theaterId,
-                seats,
+                seatSelection,
                 screeningDateTime,
-                seats.calculateAmount(),
+                seatSelection.calculateAmount(),
             )
 
         saveTicket(ticket)
@@ -85,7 +85,7 @@ class SeatSelectionPresenter(
         isSelected: Boolean,
         theaterSeat: TheaterSeat,
     ) {
-        val totalPrice = seats.calculateAmount()
+        val totalPrice = seatSelection.calculateAmount()
         view.showAmount(totalPrice)
     }
 

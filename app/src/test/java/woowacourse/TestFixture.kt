@@ -6,7 +6,7 @@ import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.seats.Grade
 import woowacourse.movie.model.seats.TheaterSeat
-import woowacourse.movie.model.seats.Seats
+import woowacourse.movie.model.seats.SeatSelection
 import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.model.ticket.ReservationTicket
 
@@ -27,17 +27,17 @@ object TestFixture {
             movieTitle = movie.title,
             movieId = movie.id,
             theaterId = theater.theaterId,
-            seats = seats,
+            seatSelection = seats,
             screeningDateTime = ScreeningDateTime("", ""),
             amount = amount,
             theaterName = theater.theaterName,
         )
     }
 
-    private fun makeMockSeats(): Seats {
-        val seats = Seats()
-        seats.manageSelected(true, TheaterSeat('A', 2, Grade.B))
-        seats.manageSelected(true, TheaterSeat('C', 3, Grade.S))
-        return seats
+    private fun makeMockSeats(): SeatSelection {
+        val seatSelection = SeatSelection()
+        seatSelection.manageSelected(true, TheaterSeat('A', 2, Grade.B))
+        seatSelection.manageSelected(true, TheaterSeat('C', 3, Grade.S))
+        return seatSelection
     }
 }

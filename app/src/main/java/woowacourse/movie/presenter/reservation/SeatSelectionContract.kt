@@ -6,7 +6,7 @@ import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.seats.Grade
 import woowacourse.movie.model.seats.TheaterSeat
-import woowacourse.movie.model.seats.Seats
+import woowacourse.movie.model.seats.SeatSelection
 import woowacourse.movie.model.ticket.Ticket
 
 interface SeatSelectionContract {
@@ -32,7 +32,7 @@ interface SeatSelectionContract {
         fun restoreReservation(count: Int)
 
         fun restoreSeats(
-            selectedSeats: Seats,
+            selectedSeatSelection: SeatSelection,
             seatsIndex: List<Int>,
         )
 

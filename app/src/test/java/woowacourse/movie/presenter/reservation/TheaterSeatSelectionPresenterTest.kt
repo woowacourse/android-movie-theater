@@ -19,7 +19,7 @@ import woowacourse.movie.db.seats.SeatsDao
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.seats.Grade
 import woowacourse.movie.model.seats.TheaterSeat
-import woowacourse.movie.model.seats.Seats
+import woowacourse.movie.model.seats.SeatSelection
 
 @ExtendWith(MockKExtension::class)
 class TheaterSeatSelectionPresenterTest {
@@ -65,12 +65,12 @@ class TheaterSeatSelectionPresenterTest {
 
     @Test
     fun `좌석 금액이 25000인 상황에서 A좌석을 선택하면 총 결제 금액을 37000으로 업데이트하여 화면에 표시한다`() {
-        val seats =
-            Seats().apply {
+        val seatSelection =
+            SeatSelection().apply {
                 manageSelected(true, TheaterSeat('A', 1, Grade.B))
                 manageSelected(true, TheaterSeat('C', 1, Grade.S))
             }
-        val expectedPrice = seats.calculateAmount() + Grade.A.price
+        val expectedPrice = seatSelection.calculateAmount() + Grade.A.price
 
         every { view.showAmount(37_000) }.answers {
             val actualPrice = arg<Int>(0)
@@ -89,8 +89,8 @@ class TheaterSeatSelectionPresenterTest {
 
     @Test
     fun `화면 회전이 발생했을 때 선택되었던 좌석들을 복구하여 화면에 표시되어야 한다`() {
-        val seats =
-            Seats().apply {
+        val seatSelection =
+            SeatSelection().apply {
                 manageSelectedIndex(true, 0)
                 manageSelectedIndex(true, 1)
                 manageSelectedIndex(true, 2)
@@ -98,19 +98,19 @@ class TheaterSeatSelectionPresenterTest {
 
         val expectedSeatIndex = listOf(0, 1, 2)
 
-        every { view.restoreSelectedSeats(seats.seatsIndex) } answers {
+        every { view.restoreSelectedSeats(seatSelection.seatsIndex) } answers {
             assertEquals(
-                expectedSeatIndex, seats.seatsIndex,
+                expectedSeatIndex, seatSelection.seatsIndex,
             )
         }
-        presenter.restoreSeats(seats, seats.seatsIndex)
-        verify { view.restoreSelectedSeats(seats.seatsIndex) }
+        presenter.restoreSeats(seatSelection, seatSelection.seatsIndex)
+        verify { view.restoreSelectedSeats(seatSelection.seatsIndex) }
     }
 
     @Test
     fun `화면 회전이 발생했을 때 예약 상태를 복구하여 화면에 표시되어야 한다`() {
-        val seats =
-            Seats().apply {
+        val seatSelection =
+            SeatSelection().apply {
                 manageSelected(true, TheaterSeat('A', 1, Grade.B))
                 manageSelected(true, TheaterSeat('C', 1, Grade.S))
                 manageSelected(true, TheaterSeat('E', 1, Grade.A))
@@ -118,12 +118,12 @@ class TheaterSeatSelectionPresenterTest {
         val expectedPrice = 37000
 
         every { view.setConfirmButtonEnabled(3) } just runs
-        every { view.showAmount(seats.calculateAmount()) } answers {
+        every { view.showAmount(seatSelection.calculateAmount()) } answers {
             val actualPrice = arg<Int>(0)
             assertEquals(expectedPrice, actualPrice)
         }
         presenter.restoreReservation(3)
         verify { view.setConfirmButtonEnabled(any()) }
-        verify { view.showAmount(seats.calculateAmount()) }
+        verify { view.showAmount(seatSelection.calculateAmount()) }
     }
 }

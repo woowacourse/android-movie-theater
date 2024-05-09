@@ -1,13 +1,13 @@
 package woowacourse.movie.model.ticket
 
 import woowacourse.movie.model.movie.ScreeningDateTime
-import woowacourse.movie.model.seats.Seats
+import woowacourse.movie.model.seats.SeatSelection
 import java.io.Serializable
 
 data class Ticket(
     val movieId: Int,
     val theaterId: Int,
-    val seats: Seats,
+    val seatSelection: SeatSelection,
     val screeningDateTime: ScreeningDateTime,
     val amount: Int,
 ) : Serializable {
@@ -20,7 +20,7 @@ data class Ticket(
             movieId = movieId,
             theaterName = theaterName,
             movieTitle = movieTitle,
-            seats = seats,
+            seatSelection = seatSelection,
             amount = amount,
             screeningDateTime = screeningDateTime,
         )

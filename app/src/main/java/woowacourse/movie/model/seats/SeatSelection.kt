@@ -2,15 +2,15 @@ package woowacourse.movie.model.seats
 
 import java.io.Serializable
 
-class Seats : Serializable {
+class SeatSelection : Serializable {
     var theaterSeats = mutableListOf<TheaterSeat>()
         private set
 
     var seatsIndex = mutableListOf<Int>()
         private set
 
-    fun restoreSeats(recordOfSeats: Seats): Seats {
-        theaterSeats = recordOfSeats.theaterSeats
+    fun restoreSeats(recordOfSeatSelection: SeatSelection): SeatSelection {
+        theaterSeats = recordOfSeatSelection.theaterSeats
         return this
     }
 
