@@ -10,9 +10,8 @@ import woowacourse.movie.data.entity.Movie
 import woowacourse.movie.data.entity.MovieReservation
 import woowacourse.movie.data.entity.MovieTheater
 
-
 @Database(entities = [MovieReservation::class, MovieTheater::class, Movie::class], version = 1)
 @TypeConverters(value = [ReservationSeatsConverters::class, LocalDateTimeConverters::class, ReservationSeatsConverters::class])
-abstract class MovieReservationDatabase:RoomDatabase() {
+abstract class MovieReservationDatabase : RoomDatabase() {
     abstract fun movieReservationDao(): MovieReservationDao
 }

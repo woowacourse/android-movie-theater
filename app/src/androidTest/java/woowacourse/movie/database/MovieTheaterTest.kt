@@ -26,12 +26,12 @@ class MovieTheaterTest {
 
     @After
     @Throws(IOException::class)
-    fun closeDb()  {
+    fun closeDb() {
         db.close()
     }
 
     @Test
-    fun insertTheater()  {
+    fun insertTheater() {
         theaterDao.insertAll(MovieTheater.STUB_A, MovieTheater.STUB_B, MovieTheater.STUB_C)
 
         val theaters = theaterDao.getAll()

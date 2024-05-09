@@ -16,21 +16,22 @@ class MovieReservationTest {
     private lateinit var db: MovieReservationDatabase
 
     @Before
-    fun setUp(){
-        db = Room.inMemoryDatabaseBuilder(
-            context, MovieReservationDatabase::class.java,
-        ).build()
+    fun setUp() {
+        db =
+            Room.inMemoryDatabaseBuilder(
+                context, MovieReservationDatabase::class.java,
+            ).build()
         movieReservationDao = db.movieReservationDao()
     }
 
     @After
     @Throws(IOException::class)
-    fun closeDb(){
+    fun closeDb() {
         db.close()
     }
 
     @Test
-    fun insertReservation(){
+    fun insertReservation() {
         movieReservationDao.insertAll(MovieReservation.STUB)
 
         val reservation = movieReservationDao.getAll()
