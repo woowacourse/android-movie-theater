@@ -1,18 +1,18 @@
 package woowacourse.movie.movieList
 
 import woowacourse.movie.model.theater.Theater
-import woowacourse.movie.model.ui.AdItemDisplay
-import woowacourse.movie.model.ui.MovieDisplay
-import woowacourse.movie.model.ui.MovieItemDisplay
+import woowacourse.movie.model.ui.Ad
+import woowacourse.movie.model.ui.Movieitem
+import woowacourse.movie.model.ui.Movie
 
-fun List<Theater>.toMovieDisplays(): List<MovieDisplay> {
+fun List<Theater>.toMovieDisplays(): List<Movieitem> {
     return map(Theater::toMovieItemDisplay)
         .chunked(3)
-        .flatMap { it + AdItemDisplay() }
+        .flatMap { it + Ad() }
 }
 
-fun Theater.toMovieItemDisplay(): MovieItemDisplay {
-    return MovieItemDisplay(
+fun Theater.toMovieItemDisplay(): Movie {
+    return Movie(
         title = movie.title.name,
         releaseDate = movie.releaseDate.date,
         runningTime = movie.runningTime.time,
