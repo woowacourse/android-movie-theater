@@ -2,7 +2,6 @@ package woowacourse.movie.ui.reservation
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
@@ -67,8 +66,7 @@ class MovieReservationActivity :
         }
     }
 
-    override fun initializePresenter() =
-        MovieReservationPresenter(this, movieContentDao, theaterDao)
+    override fun initializePresenter() = MovieReservationPresenter(this, movieContentDao, theaterDao)
 
     override fun showError(throwable: Throwable) {
         Toast.makeText(this, resources.getString(R.string.toast_invalid_key), Toast.LENGTH_LONG)

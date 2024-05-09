@@ -23,12 +23,12 @@ fun TheaterEntity.toTheater() =
     Theater(
         id = id,
         name = name,
-        screeningTimes = screeningTimes.map { LocalTime.parse(it) }
+        screeningTimes = screeningTimes.map { LocalTime.parse(it) },
     )
 
 fun Theater.toTheaterEntity() =
     TheaterEntity(
         id = id,
         name = name,
-        screeningTimes = screeningTimes.map(LocalTime::toString)
+        screeningTimes = screeningTimes.map(LocalTime::toString),
     )

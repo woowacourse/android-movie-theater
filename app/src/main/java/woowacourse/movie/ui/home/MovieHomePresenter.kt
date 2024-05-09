@@ -1,7 +1,5 @@
 package woowacourse.movie.ui.home
 
-import woowacourse.movie.model.data.DefaultMovieDataSource
-import woowacourse.movie.model.movie.MovieContent
 import woowacourse.movie.model.movie.MovieContentDao
 import woowacourse.movie.model.movie.MovieContentEntity
 import woowacourse.movie.model.movie.toMovieContent

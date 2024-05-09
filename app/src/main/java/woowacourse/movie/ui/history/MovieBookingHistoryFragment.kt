@@ -29,7 +29,7 @@ class MovieBookingHistoryFragment : Fragment(), BookingHistoryContract.View, Boo
     private val presenter: BookingHistoryPresenter by lazy {
         BookingHistoryPresenter(
             this,
-            ticketDao
+            ticketDao,
         )
     }
 
@@ -38,16 +38,20 @@ class MovieBookingHistoryFragment : Fragment(), BookingHistoryContract.View, Boo
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_movie_booking_history,
-            container,
-            false
-        )
+        _binding =
+            DataBindingUtil.inflate(
+                inflater,
+                R.layout.fragment_movie_booking_history,
+                container,
+                false,
+            )
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         presenter.loadHistoryItems()
     }
@@ -66,7 +70,6 @@ class MovieBookingHistoryFragment : Fragment(), BookingHistoryContract.View, Boo
     }
 
     override fun showError(throwable: Throwable) {
-
     }
 
     override fun onBookingHistoryClick(ticketId: Long) {
@@ -88,7 +91,7 @@ interface BookingHistoryContract {
 
 class BookingHistoryPresenter(
     private val view: BookingHistoryContract.View,
-    private val ticketDao: TicketDao
+    private val ticketDao: TicketDao,
 ) : BookingHistoryContract.Presenter {
     override fun loadHistoryItems() {
         thread {

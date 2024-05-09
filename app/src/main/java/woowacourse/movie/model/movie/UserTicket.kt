@@ -42,21 +42,27 @@ fun UserTicket.toTicketEntity(): TicketEntity =
         screeningStartDateTime = screeningStartDateTime.format(DateTimeFormatter.ofPattern("yyyy.M.d HH:mm")),
         reservationCount = seatInformation.reservationCount,
         seats = seatInformation.selectedSeat.joinToString(),
-        price = seatInformation.totalSeatAmount()
+        price = seatInformation.totalSeatAmount(),
     )
 
 fun TicketEntity.toUserTicket(): UserTicket {
-    val seat = if (seats.isEmpty()) mutableListOf() else seats.split(", ").map {
-        Seat(SeatRow.findRow(it[0].code - 65), it[1].digitToInt())
-    }.toMutableList()
+    val seat =
+        if (seats.isEmpty()) {
+            mutableListOf()
+        } else {
+            seats.split(", ").map {
+                Seat(SeatRow.findRow(it[0].code - 65), it[1].digitToInt())
+            }.toMutableList()
+        }
     return UserTicket(
         id = id,
         title = title,
         theater = theater,
         screeningStartDateTime = LocalDateTime.parse(screeningStartDateTime, DateTimeFormatter.ofPattern("yyyy.M.d HH:mm")),
-        seatInformation = SeatInformation(
-            reservationCount,
-            seat
-        )
+        seatInformation =
+            SeatInformation(
+                reservationCount,
+                seat,
+            ),
     )
 }

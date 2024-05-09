@@ -15,13 +15,15 @@ import woowacourse.movie.model.movie.TicketContract.MOVIE_DATABASE
     entities = [
         TicketEntity::class,
         TheaterEntity::class,
-        MovieContentEntity::class
+        MovieContentEntity::class,
     ],
     version = 6,
 )
 abstract class MovieDatabase : RoomDatabase() {
     abstract fun ticketDao(): TicketDao
+
     abstract fun theaterDao(): TheaterDao
+
     abstract fun movieContentDao(): MovieContentDao
 
     companion object {
@@ -30,13 +32,14 @@ abstract class MovieDatabase : RoomDatabase() {
 
         fun getDatabase(context: Context): MovieDatabase {
             return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    MovieDatabase::class.java,
-                    MOVIE_DATABASE
-                )
-                    .createFromAsset("database/movie_contents.db")
-                    .build()
+                val instance =
+                    Room.databaseBuilder(
+                        context.applicationContext,
+                        MovieDatabase::class.java,
+                        MOVIE_DATABASE,
+                    )
+                        .createFromAsset("database/movie_contents.db")
+                        .build()
                 INSTANCE = instance
                 instance
             }

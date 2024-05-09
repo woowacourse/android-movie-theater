@@ -1,9 +1,6 @@
 package woowacourse.movie.ui.complete
 
-import woowacourse.movie.model.data.DefaultMovieDataSource
 import woowacourse.movie.model.movie.TicketDao
-import woowacourse.movie.model.movie.TicketEntity
-import woowacourse.movie.model.movie.UserTicket
 import kotlin.concurrent.thread
 
 class MovieReservationCompletePresenter(

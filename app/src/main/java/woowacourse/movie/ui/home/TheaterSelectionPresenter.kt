@@ -1,10 +1,7 @@
 package woowacourse.movie.ui.home
 
-import android.util.Log
-import woowacourse.movie.model.data.DefaultMovieDataSource
 import woowacourse.movie.model.movie.MovieContent
 import woowacourse.movie.model.movie.MovieContentDao
-import woowacourse.movie.model.movie.Theater
 import woowacourse.movie.model.movie.TheaterDao
 import woowacourse.movie.model.movie.toMovieContent
 import woowacourse.movie.model.movie.toTheater

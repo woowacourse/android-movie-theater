@@ -17,18 +17,25 @@ class BookingHistoryAdapter(
     private val bookingHistoryClickListener: BookingHistoryClickListener,
 ) :
     ListAdapter<UserTicket, BookingHistoryAdapter.BookingHistoryViewHolder>(BookingHistoryDiffUtil) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookingHistoryViewHolder {
-        val binding = DataBindingUtil.inflate<ItemBookingHistoryBinding>(
-            LayoutInflater.from(parent.context),
-            R.layout.item_booking_history,
-            parent,
-            false
-        )
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): BookingHistoryViewHolder {
+        val binding =
+            DataBindingUtil.inflate<ItemBookingHistoryBinding>(
+                LayoutInflater.from(parent.context),
+                R.layout.item_booking_history,
+                parent,
+                false,
+            )
 
         return BookingHistoryViewHolder(binding, bookingHistoryClickListener)
     }
 
-    override fun onBindViewHolder(holder: BookingHistoryViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: BookingHistoryViewHolder,
+        position: Int,
+    ) {
         holder.bind(currentList[position])
     }
 
@@ -56,11 +63,17 @@ class BookingHistoryAdapter(
 }
 
 object BookingHistoryDiffUtil : DiffUtil.ItemCallback<UserTicket>() {
-    override fun areItemsTheSame(oldItem: UserTicket, newItem: UserTicket): Boolean {
+    override fun areItemsTheSame(
+        oldItem: UserTicket,
+        newItem: UserTicket,
+    ): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: UserTicket, newItem: UserTicket): Boolean {
+    override fun areContentsTheSame(
+        oldItem: UserTicket,
+        newItem: UserTicket,
+    ): Boolean {
         return oldItem == newItem
     }
 }

@@ -21,7 +21,7 @@ class MovieSettingFragment : Fragment(), MovieSettingContract.View {
     private val presenter: MovieSettingPresenter by lazy {
         MovieSettingPresenter(
             this,
-            moviePreferencesUtil
+            moviePreferencesUtil,
         )
     }
 
@@ -94,7 +94,10 @@ class MoviePreferencesUtil(private val context: Context) {
         return getSharedPreferences(context).getBoolean(key, false)
     }
 
-    fun setBoolean(key: String, newValue: Boolean): Boolean {
+    fun setBoolean(
+        key: String,
+        newValue: Boolean,
+    ): Boolean {
         getSharedPreferences(context).edit().putBoolean(key, newValue).apply()
         return newValue
     }
@@ -103,7 +106,7 @@ class MoviePreferencesUtil(private val context: Context) {
         fun getSharedPreferences(context: Context): SharedPreferences {
             return context.applicationContext.getSharedPreferences(
                 "prefs_name",
-                Context.MODE_PRIVATE
+                Context.MODE_PRIVATE,
             )
         }
     }

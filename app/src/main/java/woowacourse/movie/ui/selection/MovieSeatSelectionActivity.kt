@@ -39,11 +39,12 @@ class MovieSeatSelectionActivity :
         binding.presenter = presenter
         binding.activity = this
 
-        val reservationDetail = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(RESERVATION_DETAIL, ReservationDetail::class.java)
-        } else {
-            intent.getParcelableExtra(RESERVATION_DETAIL)
-        }
+        val reservationDetail =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                intent.getParcelableExtra(RESERVATION_DETAIL, ReservationDetail::class.java)
+            } else {
+                intent.getParcelableExtra(RESERVATION_DETAIL)
+            }
 
         if (reservationDetail == null) {
             presenter.handleError(IllegalStateException())

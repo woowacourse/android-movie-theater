@@ -4,10 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieReservationCompleteBinding
@@ -16,8 +14,6 @@ import woowacourse.movie.model.movie.TicketDao
 import woowacourse.movie.model.movie.TicketEntity
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.main.MovieMainActivity
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class MovieReservationCompleteActivity :
     BaseActivity<MovieReservationCompletePresenter>(),

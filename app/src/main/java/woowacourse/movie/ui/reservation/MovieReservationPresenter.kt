@@ -1,19 +1,14 @@
 package woowacourse.movie.ui.reservation
 
-import woowacourse.movie.model.data.DefaultMovieDataSource
 import woowacourse.movie.model.movie.MovieContent
 import woowacourse.movie.model.movie.MovieContentDao
 import woowacourse.movie.model.movie.ReservationCount
 import woowacourse.movie.model.movie.ReservationDetail
-import woowacourse.movie.model.movie.SeatInformation
 import woowacourse.movie.model.movie.ScreeningDate
 import woowacourse.movie.model.movie.Theater
 import woowacourse.movie.model.movie.TheaterDao
-import woowacourse.movie.model.movie.TicketDao
-import woowacourse.movie.model.movie.UserTicket
 import woowacourse.movie.model.movie.toMovieContent
 import woowacourse.movie.model.movie.toTheater
-import woowacourse.movie.model.movie.toTicketEntity
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime

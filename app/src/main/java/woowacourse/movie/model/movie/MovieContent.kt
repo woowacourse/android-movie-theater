@@ -48,5 +48,5 @@ fun MovieContentEntity.toMovieContent(): MovieContent =
         endingMoviesDate = LocalDate.parse(endingMoviesDate),
         runningTime = runningTime,
         synopsis = synopsis,
-        theaterIds = theaterIds
+        theaterIds = theaterIds,
     )

@@ -2,7 +2,6 @@ package woowacourse.movie.model.movie
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
-import java.time.LocalTime
 
 class StringListConverter {
     @TypeConverter

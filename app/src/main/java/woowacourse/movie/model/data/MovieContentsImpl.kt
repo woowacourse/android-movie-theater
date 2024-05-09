@@ -1,8 +1,6 @@
 package woowacourse.movie.model.data
 
-import woowacourse.movie.model.movie.MovieContent
-
-//object MovieContentsImpl : DefaultMovieDataSource<Long, MovieContent> {
+// object MovieContentsImpl : DefaultMovieDataSource<Long, MovieContent> {
 //    private const val EXCEPTION_INVALID_ID = "Movie not found with id: %d"
 //    private var id: Long = 0
 //    private val movieContents = mutableMapOf<Long, MovieContent>()
@@ -32,4 +30,4 @@ import woowacourse.movie.model.movie.MovieContent
 //    }
 //
 //    private fun invalidIdMessage(id: Long) = EXCEPTION_INVALID_ID.format(id)
-//}
+// }

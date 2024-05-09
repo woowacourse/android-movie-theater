@@ -17,12 +17,13 @@ class MovieSeatSelectionPresenter(
     private lateinit var userTicket: UserTicket
 
     override fun loadTheaterInfo(reservationDetail: ReservationDetail) {
-        userTicket = UserTicket(
-            title = reservationDetail.title,
-            theater = reservationDetail.theater,
-            screeningStartDateTime = reservationDetail.screeningDateTime,
-            seatInformation = SeatInformation(reservationCount = reservationDetail.count)
-        )
+        userTicket =
+            UserTicket(
+                title = reservationDetail.title,
+                theater = reservationDetail.theater,
+                screeningStartDateTime = reservationDetail.screeningDateTime,
+                seatInformation = SeatInformation(reservationCount = reservationDetail.count),
+            )
         view.showReservationTotalAmount(userTicket.seatInformation.totalSeatAmount())
         view.showTheater(Seat.ROW_LEN, Seat.COL_LEN)
         view.showMovieTitle(userTicket.title)

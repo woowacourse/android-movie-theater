@@ -3,7 +3,6 @@ package woowacourse.movie.model.movie
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
-import woowacourse.movie.model.data.DefaultMovieDataSource
 
 @Dao
 interface TicketDao {
