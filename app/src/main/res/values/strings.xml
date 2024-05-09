@@ -49,6 +49,13 @@
     <string name="reservation_success_message">성공적으로 예매가 되었습니다</string>
     <string name="notification_success_message">상영 시작 30분 전 알림이 울립니다.</string>
     <string name="notification_failure_message">알림 설정을 취소했습니다</string>
+    <string name="request_permission_message">권한이 거부 되었습니다. 설정에서 %s 권한을 허용해주세요.</string>
+
+    <!--    권한-->
+    <string name="permission_notification_text">알림</string>
+    <string name="permission_alarm_text">알람</string>
+    <string name="permission_default_text">특정</string>
+    <string name="permission_done">확인</string>
 
 
 </resources>

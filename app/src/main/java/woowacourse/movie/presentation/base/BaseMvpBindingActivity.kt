@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.presentation.message.Messenger
 import woowacourse.movie.presentation.model.MessageType
 
@@ -43,6 +44,15 @@ abstract class BaseMvpBindingActivity<T : ViewDataBinding> : AppCompatActivity()
     override fun showSnackBar(messageType: MessageType) {
         runOnUiThread {
             Messenger.showSnackBar(binding.root, messageType)
+        }
+    }
+
+    override fun showSnackBar(
+        messageType: MessageType,
+        action: Snackbar.() -> Snackbar,
+    ) {
+        runOnUiThread {
+            Messenger.showSnackBar(binding.root, messageType, action)
         }
     }
 

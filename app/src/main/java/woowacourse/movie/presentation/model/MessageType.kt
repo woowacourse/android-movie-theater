@@ -12,4 +12,6 @@ sealed class MessageType {
     data object NotificationSuccessMessage : MessageType()
 
     data object NotificationFailureMessage : MessageType()
+
+    data class RequestPermissionMessage(val permission: String) : MessageType()
 }

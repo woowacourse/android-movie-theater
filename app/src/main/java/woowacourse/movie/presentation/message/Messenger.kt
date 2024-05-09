@@ -1,6 +1,7 @@
 package woowacourse.movie.presentation.message
 
 import android.view.View
+import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.presentation.model.MessageType
 
 object Messenger {
@@ -30,4 +31,10 @@ object Messenger {
         view: View,
         messageType: MessageType,
     ) = this.message.showSnackBar(view, messageType)
+
+    fun showSnackBar(
+        view: View,
+        messageType: MessageType,
+        action: Snackbar.() -> Snackbar,
+    ) = this.message.showSnackBar(view, messageType, action)
 }

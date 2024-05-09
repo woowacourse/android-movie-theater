@@ -1,21 +1,25 @@
 package woowacourse.movie.presentation.ui.main
 
-import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
+import android.net.Uri
+import android.provider.Settings
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
+import androidx.annotation.StringRes
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.data.repository.local.PreferenceRepositoryImpl
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.presentation.base.BaseMvpBindingActivity
+import woowacourse.movie.presentation.permision.Permission
+import woowacourse.movie.presentation.permision.Permission.toPermissionText
 import woowacourse.movie.presentation.ui.main.history.ReservationHistoryFragment
 import woowacourse.movie.presentation.ui.main.home.HomeFragment
 import woowacourse.movie.presentation.ui.main.setting.SettingFragment
 
-class MainActivity() : BaseMvpBindingActivity<ActivityMainBinding>(), MainContract.View {
+class MainActivity : BaseMvpBindingActivity<ActivityMainBinding>(), MainContract.View {
     override val layoutResourceId: Int
         get() = R.layout.activity_main
 
@@ -27,7 +31,9 @@ class MainActivity() : BaseMvpBindingActivity<ActivityMainBinding>(), MainContra
         binding.bottomNavigationViewMain.selectedItemId = R.id.fragment_home
         replaceFragment(HomeFragment(), HomeFragment.TAG)
         setupBottomNavigationView()
-        requestNotificationPermission()
+        if (Permission.notificationPermissions.isNotEmpty()) {
+            requestNotificationPermissions(Permission.notificationPermissions.toList())
+        }
     }
 
     private fun setupBottomNavigationView() {
@@ -63,22 +69,50 @@ class MainActivity() : BaseMvpBindingActivity<ActivityMainBinding>(), MainContra
         return true
     }
 
-    private fun requestNotificationPermission() {
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.POST_NOTIFICATIONS,
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+    private fun requestNotificationPermissions(permissionList: List<String>) {
+        val requestList = ArrayList<String>()
+        for (permission in permissionList) {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    permission,
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                requestList.add(permission)
+            }
+
+            if (requestList.isNotEmpty()) {
+                requestMultiplePermissionsLauncher.launch(requestList.toTypedArray())
+                return
             }
         }
     }
 
-    private val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            presenter.changeNotificationMode(isGranted)
+    private val requestMultiplePermissionsLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            if (permissions.values.all { it }) {
+                presenter.changeNotificationMode(true)
+            } else {
+                val stringResId =
+                    permissions.entries.find { !it.value }?.key?.toPermissionText()
+                        ?: R.string.permission_default_text
+
+                showPermissionSnackBar(stringResId)
+            }
         }
+
+    private fun showPermissionSnackBar(
+        @StringRes stringResId: Int,
+    ) {
+        presenter.requestNotificationPermission(getString(stringResId)) {
+            setAction(getString(R.string.permission_done)) {
+                val intent =
+                    Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                        data = Uri.fromParts("package", packageName, null)
+                    }
+                startActivity(intent)
+            }
+        }
+    }
 
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount > 1) {

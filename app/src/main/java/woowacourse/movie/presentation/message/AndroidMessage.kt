@@ -43,6 +43,16 @@ class AndroidMessage(private val context: Context) : Message {
 
     override fun showSnackBar(
         view: View,
+        messageType: MessageType,
+        action: Snackbar.() -> Snackbar,
+    ) {
+        snackbar?.dismiss()
+        snackbar = Snackbar.make(view, messageType.toMessage(), Snackbar.LENGTH_SHORT).action()
+        snackbar?.show()
+    }
+
+    override fun showSnackBar(
+        view: View,
         e: Throwable,
     ) {
         showSnackBar(view, e.toErrorMessage())
@@ -71,6 +81,11 @@ class AndroidMessage(private val context: Context) : Message {
             is MessageType.ReservationSuccessMessage -> context.getString(R.string.reservation_success_message)
             is MessageType.NotificationFailureMessage -> context.getString(R.string.notification_failure_message)
             is MessageType.NotificationSuccessMessage -> context.getString(R.string.notification_success_message)
+            is MessageType.RequestPermissionMessage ->
+                context.getString(
+                    R.string.request_permission_message,
+                    this.permission,
+                )
         }
     }
 
