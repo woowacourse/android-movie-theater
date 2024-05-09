@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import android.os.Build
+import woowacourse.movie.R
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.notification.TicketNotificationReceiver.Companion.MOVIE_TITLE
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.RESERVATION_TICKET_ID
@@ -16,8 +17,6 @@ import java.util.Locale
 object TicketNotification {
     const val NOTIFICATION_ID = 1
     const val PENDING_REQUEST_CODE = 0
-    private const val DATE_PATTERN_FORMAT = "yyyy-MM-dd HH:mm"
-    private const val DATE_PARSE_FORMAT = "%s %s"
     private const val ALARM_MINUTE = -30
 
     fun setNotification(
@@ -26,7 +25,10 @@ object TicketNotification {
         movieTitle: String,
         screeningDateTime: ScreeningDateTime,
     ) {
-        val screeningTime = makeScreeningTime(screeningDateTime)
+        val screeningTime = makeScreeningTime(
+            context = context,
+            screeningDateTime = screeningDateTime,
+        )
         if (!isValidScreeningTime(screeningTime)) return
 
         val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
@@ -61,12 +63,15 @@ object TicketNotification {
         }
     }
 
-    private fun makeScreeningTime(screeningDateTime: ScreeningDateTime): Long {
+    private fun makeScreeningTime(
+        context: Context,
+        screeningDateTime: ScreeningDateTime,
+    ): Long {
         return SimpleDateFormat(
-            DATE_PATTERN_FORMAT,
+            context.getString(R.string.ticket_date_pattern_format),
             Locale.getDefault(),
         ).parse(
-            DATE_PARSE_FORMAT.format(
+            context.getString(R.string.ticket_date_format).format(
                 screeningDateTime.date,
                 screeningDateTime.time,
             ),

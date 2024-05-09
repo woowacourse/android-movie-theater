@@ -67,8 +67,8 @@ class TicketNotificationReceiver : BroadcastReceiver() {
         pendingIntent: PendingIntent,
     ): Notification {
         return NotificationCompat.Builder(context, CHANNEL_ID)
-            .setContentTitle(ALARM_TITLE)
-            .setContentText(ALARM_TEXT.format(movieTitle))
+            .setContentTitle(context.getString(R.string.ticket_alarm_title))
+            .setContentText(context.getString(R.string.ticket_alarm_text).format(movieTitle))
             .setSmallIcon(R.drawable.movie_filter_24dp)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
@@ -93,7 +93,5 @@ class TicketNotificationReceiver : BroadcastReceiver() {
         const val MOVIE_TITLE = "movieTitle"
         const val CHANNEL_ID = "ticket_notification_channel"
         const val CHANNEL_NAME = "Ticket Notifications"
-        const val ALARM_TITLE = "예매 알림"
-        const val ALARM_TEXT = "%s 30분 후에 상영"
     }
 }
