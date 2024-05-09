@@ -13,7 +13,7 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_TICKET_ID
 import java.time.LocalDateTime
 import java.time.ZoneId
 
-class TicketAlarmRegister(private val context: Context) {
+class TicketAlarm(private val context: Context) {
     private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
     fun setReservationAlarm(ticket: Ticket) {

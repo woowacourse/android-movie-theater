@@ -17,7 +17,7 @@ import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.util.BaseFragment
 import woowacourse.movie.util.MovieIntentConstant.DEFAULT_VALUE_NOTIFICATION
 import woowacourse.movie.util.MovieIntentConstant.KEY_NOTIFICATION
-import woowacourse.movie.feature.setting.notification.TicketAlarmRegister
+import woowacourse.movie.feature.setting.notification.TicketAlarm
 
 class SettingFragment :
     BaseFragment<SettingContract.Presenter>(),
@@ -25,7 +25,7 @@ class SettingFragment :
     private var _binding: FragmentSettingBinding? = null
     private val binding get() = _binding!!
 
-    private val ticketAlarmRegister by lazy { TicketAlarmRegister(requireContext()) }
+    private val ticketAlarm by lazy { TicketAlarm(requireContext()) }
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
 
@@ -96,10 +96,10 @@ class SettingFragment :
     }
 
     override fun setTicketAlarm(ticket: Ticket) {
-        ticketAlarmRegister.setReservationAlarm(ticket)
+        ticketAlarm.setReservationAlarm(ticket)
     }
 
     override fun cancelTicketAlarm(ticket: Ticket) {
-        ticketAlarmRegister.cancelReservationAlarm(ticket)
+        ticketAlarm.cancelReservationAlarm(ticket)
     }
 }

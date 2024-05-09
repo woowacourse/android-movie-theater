@@ -8,7 +8,7 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
 
-class NotificationRegister(private val context: Context) {
+class TicketNotification(private val context: Context) {
     private var notificationManager: NotificationManager =
         context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -22,7 +22,7 @@ class NotificationRegister(private val context: Context) {
         notificationManager.createNotificationChannel(notificationChannel)
     }
 
-    fun deliverNotification(
+    fun sendNotification(
         intent: Intent,
         notificationTitle: String,
         notificationText: String,

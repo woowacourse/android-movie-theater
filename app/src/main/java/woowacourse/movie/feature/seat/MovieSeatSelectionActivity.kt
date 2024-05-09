@@ -10,7 +10,6 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
@@ -34,7 +33,7 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_NOTIFICATION
 import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_SEAT_POSITIONS
 import woowacourse.movie.util.MovieIntentConstant.KEY_THEATER_NAME
-import woowacourse.movie.feature.setting.notification.TicketAlarmRegister
+import woowacourse.movie.feature.setting.notification.TicketAlarm
 import woowacourse.movie.util.MovieIntentConstant.DEFAULT_VALUE_SCREENING_DATE
 import woowacourse.movie.util.MovieIntentConstant.DEFAULT_VALUE_SCREENING_TIME
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_NAME
@@ -53,6 +52,7 @@ class MovieSeatSelectionActivity :
                 tableRow.children.filterIsInstance<TextView>().toList()
             }.toList()
     }
+    private val ticketAlarm by lazy { TicketAlarm(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -173,7 +173,7 @@ class MovieSeatSelectionActivity :
         if (!sharedPreferencesManager.getBoolean(KEY_NOTIFICATION, DEFAULT_VALUE_NOTIFICATION)) {
             return
         }
-        TicketAlarmRegister(this).setReservationAlarm(ticket)
+        ticketAlarm.setReservationAlarm(ticket)
     }
 
     private fun showToast(
