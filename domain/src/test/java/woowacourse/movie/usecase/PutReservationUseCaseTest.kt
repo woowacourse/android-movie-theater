@@ -4,8 +4,6 @@ import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
-import io.mockk.just
-import io.mockk.runs
 import io.mockk.slot
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
@@ -26,7 +24,7 @@ class PutReservationUseCaseTest {
         // given
         val screeningIdSlot = slot<Long>()
         val seatsSlot = slot<String>()
-        every { reservationRefRepository.makeReservationRef(capture(screeningIdSlot), capture(seatsSlot)) } just runs
+        every { reservationRefRepository.makeReservationRef(capture(screeningIdSlot), capture(seatsSlot)) } returns 1
 
         // when
         val seats = Seats.STUB

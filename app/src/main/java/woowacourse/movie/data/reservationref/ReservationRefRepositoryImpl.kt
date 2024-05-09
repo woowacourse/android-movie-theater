@@ -7,13 +7,13 @@ class ReservationRefRepositoryImpl(private val reservationRefDao: ReservationRef
     override fun makeReservationRef(
         screeningId: Long,
         seats: String,
-    ) {
+    ): Long {
         val reservationRefDto =
             ReservationRefDto(
                 screeningRefId = screeningId,
                 seats = seats,
             )
-        reservationRefDao.insert(reservationRefDto)
+        return reservationRefDao.insert(reservationRefDto)
     }
 
     override fun reservationRefById(id: Long): ReservationRef? = reservationRefDao.findById(id)?.toReservationRef()
