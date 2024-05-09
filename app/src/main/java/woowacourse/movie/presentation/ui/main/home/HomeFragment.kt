@@ -1,6 +1,6 @@
 package woowacourse.movie.presentation.ui.main.home
 
-import android.Manifest
+import android.Manifest.permission.POST_NOTIFICATIONS
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
@@ -20,7 +20,6 @@ import woowacourse.movie.domain.repository.DummyScreens
 import woowacourse.movie.presentation.model.MessageType
 import woowacourse.movie.presentation.ui.main.home.adapter.ScreenRecyclerViewAdapter
 import woowacourse.movie.presentation.ui.main.home.bottom.BottomTheatersFragment
-import woowacourse.movie.presentation.ui.main.setting.SettingFragment.Companion.PREF_KEY
 
 class HomeFragment : Fragment(), HomeContract.View {
     private lateinit var presenter: HomeContract.Presenter
@@ -60,22 +59,15 @@ class HomeFragment : Fragment(), HomeContract.View {
     }
 
     private fun requestNotificationPermission() {
-        val pref = requireActivity().getPreferences(Context.MODE_PRIVATE)
-        val edit = pref.edit()
-        val permission = Manifest.permission.POST_NOTIFICATIONS
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // 티라미수 이상 버전!
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val permission = POST_NOTIFICATIONS
             val isGranted =
                 ContextCompat.checkSelfPermission(
-                    requireActivity(),
-                    permission,
+                    requireActivity(), permission,
                 ) == PackageManager.PERMISSION_GRANTED
-            if (!isGranted && shouldShowRequestPermissionRationale(permission)) {
+            if (!isGranted || shouldShowRequestPermissionRationale(permission)) {
                 requestPermissionLauncher.launch(permission)
-            } else {
-                edit.putBoolean(PREF_KEY, isGranted).apply()
             }
-        } else {
-            edit.putBoolean(PREF_KEY, true).apply()
         }
     }
 

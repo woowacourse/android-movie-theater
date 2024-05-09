@@ -9,6 +9,7 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
 import woowacourse.movie.TheaterApplication.Companion.CHANNEL_ID
+import woowacourse.movie.presentation.ui.main.setting.SettingFragment
 import woowacourse.movie.presentation.ui.reservation.ReservationActivity
 import woowacourse.movie.presentation.ui.reservation.ReservationActivity.Companion.PUT_EXTRA_KEY_RESERVATION_ID
 
@@ -19,7 +20,10 @@ class MyBroadCastReceiver : BroadcastReceiver() {
         context: Context,
         intent: Intent,
     ) {
-        if (actionName == intent.action) {
+        val pref =
+            context.getSharedPreferences("ReservationNotificationSettings", Context.MODE_PRIVATE)
+        val isNotifiable = pref.getBoolean(SettingFragment.PREF_KEY_RESERVATION_NOTIFICATION, false)
+        if (actionName == intent.action && isNotifiable) {
             notifyReservationAlarm(context, intent)
         }
     }

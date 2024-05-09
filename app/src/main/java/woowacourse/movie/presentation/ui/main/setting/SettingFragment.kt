@@ -1,13 +1,17 @@
 package woowacourse.movie.presentation.ui.main.setting
 
+import android.Manifest.permission.POST_NOTIFICATIONS
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentSettingBinding
 
@@ -31,10 +35,29 @@ class SettingFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         activity?.let {
-            val pref = it.getPreferences(Context.MODE_PRIVATE)
-            val value = pref.getBoolean(PREF_KEY, false)
-            binding.btnSetting.text = value.toString()
+            val pref = getNotificationPreferences()
+            val isPermissionGranted = checkNotificationPermission()
+            val isReservationNotifiable = pref.getBoolean(PREF_KEY_RESERVATION_NOTIFICATION, false)
+            initSwitch(isPermissionGranted)
+            binding.isGranted = isReservationNotifiable
             initButton()
+        }
+    }
+
+    private fun checkNotificationPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            requireActivity(),
+            POST_NOTIFICATIONS,
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun initSwitch(isPermissionGranted: Boolean) {
+        binding.switchSetting.isEnabled = isPermissionGranted
+        binding.switchSetting.setOnCheckedChangeListener { _, isChecked ->
+            val pref = getNotificationPreferences()
+            val edit = pref.edit()
+            edit.putBoolean(PREF_KEY_RESERVATION_NOTIFICATION, isChecked && isPermissionGranted)
+                ?.apply()
         }
     }
 
@@ -56,7 +79,14 @@ class SettingFragment : Fragment() {
         _binding = null
     }
 
+    private fun getNotificationPreferences(): SharedPreferences {
+        return requireActivity().getSharedPreferences(
+            "ReservationNotificationSettings",
+            Context.MODE_PRIVATE,
+        )
+    }
+
     companion object {
-        const val PREF_KEY = "notification_permission"
+        const val PREF_KEY_RESERVATION_NOTIFICATION = "reservation_notification"
     }
 }
