@@ -59,7 +59,7 @@ class MovieDetailActivityTest {
 
     @Test
     fun `영화_상세_화면에서_초기_예매_수량은_1이다`() {
-        onView(withId(R.id.reservationInfo))
+        onView(withId(R.id.reservationCount))
             .check(matches(withText("1")))
     }
 
@@ -68,7 +68,7 @@ class MovieDetailActivityTest {
         // when
         onView(withId(R.id.plusButton)).perform(click())
         // then
-        onView(withId(R.id.reservationInfo)).check(matches(withText("2")))
+        onView(withId(R.id.reservationCount)).check(matches(withText("2")))
     }
 
     @Test
@@ -78,7 +78,7 @@ class MovieDetailActivityTest {
         // when
         onView(withId(R.id.minusButton)).perform(click())
         // then
-        onView(withId(R.id.reservationInfo)).check(matches(withText("1")))
+        onView(withId(R.id.reservationCount)).check(matches(withText("1")))
     }
 
     @Test
@@ -90,6 +90,6 @@ class MovieDetailActivityTest {
             activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         }
         // then
-        onView(withId(R.id.reservationInfo)).check(matches(withText("2")))
+        onView(withId(R.id.reservationCount)).check(matches(withText("2")))
     }
 }

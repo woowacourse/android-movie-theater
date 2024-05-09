@@ -5,12 +5,12 @@
 
     <data>
         <variable
-            name="data"
-            type="woowacourse.movie.presentation.view.reservation.detail.MovieDetailPresenterImpl" />
+            name="movieDetails"
+            type="woowacourse.movie.presentation.uimodel.MovieUiModel" />
 
         <variable
             name="view"
-            type="woowacourse.movie.presentation.view.reservation.detail.MovieDetailActivity" />
+            type="woowacourse.movie.presentation.view.reservation.detail.MovieDetailContract.ViewActions" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -40,7 +40,7 @@
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/harry_potter_title"
                     android:scaleType="fitCenter"
-                    poster:imgRes="@{data.movieUiModel.posterImageId}" />
+                    poster:imgRes="@{movieDetails.posterImageId}" />
 
                 <Space
                     android:layout_width="match_parent"
@@ -48,7 +48,7 @@
 
                 <TextView
                     android:id="@+id/title"
-                    android:text="@{data.movieUiModel.title}"
+                    android:text="@{movieDetails.title}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_21"
@@ -63,7 +63,7 @@
 
                 <TextView
                     android:id="@+id/screeningDate"
-                    android:text="@{data.movieUiModel.joinScreeningDates()}"
+                    android:text="@{movieDetails.joinScreeningDates()}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_21"
@@ -73,7 +73,7 @@
 
                 <TextView
                     android:id="@+id/runningTime"
-                    android:text="@{String.valueOf(data.movieUiModel.runningTimeString())}"
+                    android:text="@{movieDetails.runningTimeString()}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_21"
@@ -87,7 +87,7 @@
 
                 <TextView
                     android:id="@+id/summary"
-                    android:text="@{data.movieUiModel.summary}"
+                    android:text="@{movieDetails.summary}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_21"
@@ -137,7 +137,7 @@
                 android:layout_height="@dimen/size_45"
                 android:layout_marginStart="@dimen/size_20"
                 android:layout_marginTop="@dimen/size_16"
-                android:onClick="@{()->view.subCount()}"
+                android:onClick="@{()->view.onMinusButtonClicked()}"
                 android:text="@string/minus"
                 android:textSize="@dimen/size_20"
                 android:textStyle="bold"
@@ -150,7 +150,7 @@
                 android:layout_height="@dimen/size_45"
                 android:layout_marginTop="@dimen/size_16"
                 android:layout_marginEnd="@dimen/size_20"
-                android:onClick="@{()->view.addCount()}"
+                android:onClick="@{()->view.onPlusButtonClicked()}"
                 android:text="@string/plus"
                 android:textSize="@dimen/size_20"
                 android:textStyle="bold"
@@ -158,11 +158,11 @@
                 app:layout_constraintTop_toBottomOf="@id/timeSpinner" />
 
             <TextView
-                android:id="@+id/reservationInfo"
+                android:id="@+id/reservationCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLength="3"
-                android:text="@{String.valueOf(data.reservationCount.count)}"
+                android:text="1"
                 android:textColor="@color/black"
                 android:textSize="@dimen/size_20"
                 android:textStyle="bold"
@@ -178,7 +178,7 @@
                 android:layout_marginStart="@dimen/size_20"
                 android:layout_marginEnd="@dimen/size_20"
                 android:layout_marginBottom="@dimen/size_20"
-                android:onClick="@{() -> data.onReserveButtonClicked()}"
+                android:onClick="@{() -> view.onReserveButtonClicked()}"
                 android:text="@string/seats_selection_text"
                 android:textSize="@dimen/size_20"
                 android:textStyle="bold"

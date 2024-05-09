@@ -1,7 +1,11 @@
 package woowacourse.movie.presentation.view.reservation.detail
 
+import woowacourse.movie.presentation.uimodel.MovieUiModel
+
 interface MovieDetailContract {
     interface View {
+        fun showMovieDetails(movieUiModel: MovieUiModel)
+
         fun setScreeningDatesAndTimes(
             dates: List<String>,
             times: List<String>,
@@ -12,6 +16,8 @@ interface MovieDetailContract {
             times: List<String>,
             defaultDataIndex: Int,
         )
+
+        fun updateReservationCount(count: Int)
 
         fun moveToSeatSelection(
             reservationCount: Int,
@@ -26,6 +32,8 @@ interface MovieDetailContract {
 
         fun onViewSetUp()
 
+        fun loadMovieDetails()
+
         fun loadScreeningDates(movieId: Int)
 
         fun loadScreeningTimes(isWeekend: Boolean)
@@ -39,6 +47,14 @@ interface MovieDetailContract {
         fun plusReservationCount()
 
         fun initReservationCount(count: Int)
+
+        fun onReserveButtonClicked()
+    }
+
+    interface ViewActions {
+        fun onPlusButtonClicked()
+
+        fun onMinusButtonClicked()
 
         fun onReserveButtonClicked()
     }

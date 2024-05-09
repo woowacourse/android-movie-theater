@@ -24,8 +24,8 @@ class MovieDetailPresenterImpl(
     private val reservationMovieInfo: ReservationMovieInfo by lazy {
         setScreeningMovieInfo()
     }
-    val reservationCount: ReservationCount = ReservationCount()
-    val movieUiModel: MovieUiModel = MovieUiModel(movie)
+    private val reservationCount: ReservationCount = ReservationCount()
+    private val movieUiModel: MovieUiModel = MovieUiModel(movie)
     private val reservationMovieInfoRepository: ReservationMovieInfoRepository =
         ReservationMovieInfoRepositoryImpl
     private val theaterRepository: TheaterRepository = TheaterRepositoryImpl
@@ -45,7 +45,12 @@ class MovieDetailPresenterImpl(
     }
 
     override fun onViewSetUp() {
+        loadMovieDetails()
         loadScreeningDates(movieId)
+    }
+
+    override fun loadMovieDetails() {
+        view?.showMovieDetails(movieUiModel)
     }
 
     override fun loadScreeningDates(movieId: Int) {
