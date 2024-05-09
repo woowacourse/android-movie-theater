@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.view
+package woowacourse.movie.presentation.view.reservation.result
 
 import android.content.Context
 import android.content.Intent
@@ -11,7 +11,11 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.presentation.view.reservation.result.ReservationResultActivity
+import woowacourse.movie.presentation.view.RESERVATION_COUNT
+import woowacourse.movie.presentation.view.SCREENING_DATE
+import woowacourse.movie.presentation.view.TITLE
+import woowacourse.movie.presentation.view.TOTAL_PRICE
+import woowacourse.movie.presentation.view.reservationResultActivityIntent
 
 class ReservationResultActivityTest {
     private val testContext = ApplicationProvider.getApplicationContext<Context>()

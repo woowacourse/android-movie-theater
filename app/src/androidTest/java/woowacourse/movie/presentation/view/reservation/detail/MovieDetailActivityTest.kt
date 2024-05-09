@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.view
+package woowacourse.movie.presentation.view.reservation.detail
 
 import android.content.Context
 import android.content.Intent
@@ -16,7 +16,11 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.presentation.view.reservation.detail.MovieDetailActivity
+import woowacourse.movie.presentation.view.RUNNING_TIME
+import woowacourse.movie.presentation.view.SCREENING_DATE
+import woowacourse.movie.presentation.view.SUMMARY
+import woowacourse.movie.presentation.view.TITLE
+import woowacourse.movie.presentation.view.detailActivityIntent
 
 @RunWith(AndroidJUnit4::class)
 class MovieDetailActivityTest {
