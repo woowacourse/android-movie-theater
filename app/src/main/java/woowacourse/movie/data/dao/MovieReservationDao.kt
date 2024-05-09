@@ -12,7 +12,10 @@ interface MovieReservationDao {
     fun getAll(): List<MovieReservation>
 
     @Insert
-    fun insertAll(vararg movieReservations: MovieReservation)
+    fun insertAll(vararg movieReservations: MovieReservation): List<Long>
+
+    @Insert
+    fun insert(movieReservation: MovieReservation): Long
 
     @Delete
     fun delete(movieReservation: MovieReservation)
