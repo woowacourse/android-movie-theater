@@ -110,12 +110,12 @@ class TheaterSeatActivity :
 
     override fun showTitle(title: Title) {
         binding.title = title.toString()
-        binding.invalidateAll()
+        binding.executePendingBindings()
     }
 
     override fun showPrice(price: Int) {
         binding.price = price
-        binding.invalidateAll()
+        binding.executePendingBindings()
     }
 
     private fun initPresenter() {
