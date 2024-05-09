@@ -20,9 +20,11 @@
   - [ ]: Adapter 
   - [ ]: ItemView xml
   - [ ]: ViewHolder
-- [ ]: Movie DB 만들기 
-  - [ ]: Reservation Table(=Entity) 만들기
-  - [ ]: dao
+- [x]: Movie DB 만들기 
+  - [x]: Reservation Table(=Entity) 만들기
+  - [x]: Seat Table(=Entity) 만들기
+  - [x]: dao
+  - [x]: dao Test
   - [ ]: Mapper (Entity -> Domain Model)
   - [ ]: repository
 - [ ]: 좌석 선택 뷰에서 예매 확인 시 Room 에 저장 하고 return 받은 id를 넘겨 주자
