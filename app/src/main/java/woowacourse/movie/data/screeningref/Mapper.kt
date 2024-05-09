@@ -1,4 +1,4 @@
-package woowacourse.movie.data.screening
+package woowacourse.movie.data.screeningref
 
 import woowacourse.movie.model.ScreeningRef
 

@@ -10,8 +10,8 @@ import org.junit.Test
 import woowacourse.movie.data.AppDatabase
 import woowacourse.movie.data.movie.MovieDao
 import woowacourse.movie.data.movie.toDto
-import woowacourse.movie.data.screening.ScreeningRefDao
-import woowacourse.movie.data.screening.toDto
+import woowacourse.movie.data.screeningref.ScreeningRefDao
+import woowacourse.movie.data.screeningref.toDto
 import woowacourse.movie.data.theater.TheaterDao
 import woowacourse.movie.data.theater.toDto
 import woowacourse.movie.model.Movie

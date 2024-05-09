@@ -4,8 +4,8 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import woowacourse.movie.data.movie.MovieDao
 import woowacourse.movie.data.movie.MovieDto
-import woowacourse.movie.data.screening.ScreeningRefDao
-import woowacourse.movie.data.screening.ScreeningRefDto
+import woowacourse.movie.data.screeningref.ScreeningRefDao
+import woowacourse.movie.data.screeningref.ScreeningRefDto
 import woowacourse.movie.data.theater.TheaterDao
 import woowacourse.movie.data.theater.TheaterDto
 
