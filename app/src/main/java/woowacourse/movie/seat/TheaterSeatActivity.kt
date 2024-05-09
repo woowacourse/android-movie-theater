@@ -1,6 +1,8 @@
 package woowacourse.movie.seat
 
 import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -11,6 +13,8 @@ import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.IntentCompat
 import androidx.core.view.children
 import androidx.room.Room
@@ -36,6 +40,19 @@ class TheaterSeatActivity :
         setContentView(binding.root)
         initPresenter()
         initSeats()
+
+
+        val channelName = "Ticket Confirmation"
+        val channelId = "ticket_confirmation_channel"
+        val channelDescription = "Notifications for ticket confirmations"
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(channelId, channelName, importance).apply {
+            description = channelDescription
+        }
+        val notificationManager: NotificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+
 
         binding.confirmButton.setOnClickListener {
             confirmTicketPurchase()
@@ -101,7 +118,7 @@ class TheaterSeatActivity :
     private fun initPresenter() {
         val ticketNum = intent.getStringExtra(EXTRA_TICKET_NUM) ?: return ErrorActivity.start(this)
         val cinema = IntentCompat.getSerializableExtra(intent, EXTRA_CINEMA, Cinema::class.java)
-        val showTime=intent.getStringExtra(EXTRA_TIME_DATE) ?: return ErrorActivity.start(this)
+        val showTime = intent.getStringExtra(EXTRA_TIME_DATE) ?: return ErrorActivity.start(this)
         if (cinema == null) {
             ErrorActivity.start(this)
             return finish()
@@ -132,6 +149,7 @@ class TheaterSeatActivity :
                     IntentCompat.getSerializableExtra(intent, EXTRA_CINEMA, Cinema::class.java)
                 val ticketPrice = findViewById<TextView>(R.id.total_price).text
                 if (cinema != null) {
+                    sendNotification("${cinema.theater.movie.title} 30분 뒤에 상영")
                     PurchaseConfirmationActivity.newIntent(
                         context = this,
                         ticketPrice = ticketPrice.toString(),
@@ -153,6 +171,22 @@ class TheaterSeatActivity :
             onNegativeButtonClicked = {},
         )
     }
+
+    fun sendNotification(ticketInfo: String) {
+        val notificationId = 1001
+        val channelId = "ticket_confirmation_channel"
+        val notificationBuilder = NotificationCompat.Builder(this, channelId).apply {
+            setSmallIcon(R.drawable.ic_home_check)  // 알림 아이콘 설정
+            setContentTitle("예매 완료")  // 알림 제목
+            setContentText("$ticketInfo")  // 알림 내용
+            setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            setAutoCancel(true)  // 사용자가 탭할 때 알림을 자동으로 삭제
+        }
+
+        val notificationManager = NotificationManagerCompat.from(this)
+        notificationManager.notify(notificationId, notificationBuilder.build())
+    }
+
 
     companion object {
         const val EXTRA_TIME_DATE = "timeDate"
