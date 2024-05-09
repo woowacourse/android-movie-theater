@@ -11,7 +11,6 @@ import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.ticket.Ticket
-import woowacourse.movie.model.ticket.toTicket
 import woowacourse.movie.presenter.result.ReservationResultContract
 import woowacourse.movie.presenter.result.ReservationResultPresenter
 import woowacourse.movie.repository.ReservationTicketRepositoryImpl

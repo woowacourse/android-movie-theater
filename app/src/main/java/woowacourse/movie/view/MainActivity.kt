@@ -2,6 +2,7 @@ package woowacourse.movie.view
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -15,6 +16,7 @@ import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.utils.MovieUtils.navigateToBottomMenu
 import woowacourse.movie.view.history.ReservationHistoryFragment
 import woowacourse.movie.view.home.HomeFragment
+import woowacourse.movie.view.result.ReservationResultActivity
 import woowacourse.movie.view.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
@@ -72,4 +74,8 @@ class MainActivity : AppCompatActivity() {
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
         ) { _: Boolean -> }
+
+    override fun getIntent(): Intent {
+        return Intent(this, ReservationResultActivity::class.java)
+    }
 }
