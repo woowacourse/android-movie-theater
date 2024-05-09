@@ -89,7 +89,7 @@ class SeatSelectionPresenter(
         view.showAmount(totalPrice)
     }
 
-    override fun settingAlarm(
+    override fun setTicketAlarm(
         context: Context,
         movieTitle: String,
         ticket: Ticket,

@@ -156,7 +156,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         ticketId: Long,
     ) = runOnUiThread {
         if (isOnAlarmState()) {
-            presenter.settingAlarm(
+            presenter.setTicketAlarm(
                 context = this@SeatSelectionActivity,
                 movieTitle = binding.textviewSeatSelectionTitle.text.toString(),
                 ticket = ticket,

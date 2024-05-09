@@ -20,7 +20,7 @@ interface SeatSelectionContract {
             theaterSeat: TheaterSeat,
         )
 
-        fun settingAlarm(
+        fun setTicketAlarm(
             context: Context,
             movieTitle: String,
             ticket: Ticket,
