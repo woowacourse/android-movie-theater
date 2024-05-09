@@ -1,12 +1,12 @@
 package woowacourse.movie.presentation.homefragments.setting
 
-import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentSettingBinding
+import woowacourse.movie.presentation.home.HomeActivity
 
 class SettingFragment : Fragment(), SettingContract.View {
     private var _binding: FragmentSettingBinding? = null
@@ -27,20 +27,13 @@ class SettingFragment : Fragment(), SettingContract.View {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val sharedPref = activity?.getPreferences(MODE_PRIVATE)
-        val savedValue = sharedPref?.getBoolean(SHARED_PREF_KEY_NOTIFICATION, false)
-        presenter.loadNotificationState(savedValue)
 
+        presenter.loadNotificationState(HomeActivity.sharedPreference.isNotificationPermissionGranted())
+
+        val result = arguments?.getBoolean(KEY_ENABLED, true)
+        binding.isSwitchEnabled = result
         binding.switchSetting.setOnCheckedChangeListener { _, isChecked ->
-            saveNotificationState(isChecked)
-        }
-    }
-
-    private fun saveNotificationState(state: Boolean) {
-        val sharedPref = activity?.getPreferences(MODE_PRIVATE) ?: return
-        with(sharedPref.edit()) {
-            putBoolean(SHARED_PREF_KEY_NOTIFICATION, state)
-            apply()
+            HomeActivity.sharedPreference.saveNotificationState(isChecked)
         }
     }
 
@@ -49,6 +42,10 @@ class SettingFragment : Fragment(), SettingContract.View {
     }
 
     companion object {
-        const val SHARED_PREF_KEY_NOTIFICATION = "notification"
+        private const val KEY_ENABLED = "isEnabled"
+
+        fun createBundle(isEnabled: Boolean): Bundle {
+            return Bundle().apply { putBoolean(KEY_ENABLED, isEnabled) }
+        }
     }
 }
