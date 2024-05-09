@@ -1,6 +1,5 @@
 package woowacourse.movie.seat
 
-import android.util.Log
 import woowacourse.movie.database.AppDatabase
 import woowacourse.movie.database.Ticket
 import woowacourse.movie.model.Cinema
@@ -33,13 +32,10 @@ class TheaterSeatPresenter(
     }
 
     override fun toggleSeatSelection(seatId: String) {
-        val seat = seats[seatId] ?: return
         if (seatId in selectedSeats) {
-            seat.chosen = false
             selectedSeats.remove(seatId)
         } else {
             if (selectedSeats.size >= ticketLimit) return
-            seat.chosen = true
             selectedSeats.add(seatId)
         }
         updateSeatBackground(seatId)
@@ -93,7 +89,6 @@ class TheaterSeatPresenter(
                 runningTime = cinema.theater.movie.runningTime.toString(),
                 ticketPrice = totalPrice,
             )
-        Log.d("cinema", cinema.toString())
         Thread {
             database.ticketDao().insertTicket(ticket)
         }.start()
