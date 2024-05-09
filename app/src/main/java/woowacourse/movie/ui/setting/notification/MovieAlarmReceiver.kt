@@ -3,34 +3,28 @@ package woowacourse.movie.ui.setting.notification
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
+import woowacourse.movie.ui.MovieSharedPreference
 import woowacourse.movie.ui.complete.MovieReservationCompleteActivity
+import woowacourse.movie.ui.setting.MovieSettingKey
 
 class MovieAlarmReceiver : BroadcastReceiver() {
     override fun onReceive(
         context: Context,
         intent: Intent,
     ) {
-        if (getAlarmChecked(context)) {
+        if (MovieSharedPreference(context).getAlarmChecked()) {
             val userTicketId = userTicketId(intent)
             val movieTitle = movieTitle(intent)
-            Log.e("seogi", "title: $movieTitle   id: $userTicketId")
             val movieIntent =
                 Intent(context, MovieReservationCompleteActivity::class.java).apply {
-                    putExtra("ticket_id", userTicketId)
+                    putExtra(MovieSettingKey.TICKET_ID, userTicketId)
                 }
 
             MovieAlarmNotificationBuilder(context, movieTitle, movieIntent).notifyAlarm()
         }
     }
 
-    private fun userTicketId(intent: Intent) = intent.getLongExtra("ticket_id", -1L)
+    private fun userTicketId(intent: Intent) = intent.getLongExtra(MovieSettingKey.TICKET_ID, -1L)
 
-    private fun movieTitle(intent: Intent) = intent.getStringExtra("movie_title_id") ?: throw IllegalStateException()
-
-    private fun getAlarmChecked(context: Context?): Boolean {
-        val sharedPreference =
-            context?.getSharedPreferences("settings", Context.MODE_PRIVATE)
-        return sharedPreference?.getBoolean("settings", false) ?: false
-    }
+    private fun movieTitle(intent: Intent) = intent.getStringExtra(MovieSettingKey.MOVIE_TITLE_ID) ?: throw IllegalStateException()
 }

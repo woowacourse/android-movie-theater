@@ -27,19 +27,6 @@ class MovieAlarmNotificationBuilder(
         val manager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         manager.createNotificationChannel(notificationChannel())
 
-        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-
-        builder.apply {
-            setSmallIcon(R.drawable.thumbnail_movie2)
-            setLargeIcon(
-                BitmapFactory.decodeResource(
-                    context.resources,
-                    R.drawable.thumbnail_movie2,
-                ),
-            )
-            setContentTitle("예매 알림")
-        }
-
         return manager
     }
 
@@ -50,8 +37,7 @@ class MovieAlarmNotificationBuilder(
     ): NotificationCompat.Builder {
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
 
-        val pendingIntent =
-            PendingIntent.getActivity(context, REQUEST_CODE, movieIntent, PendingIntent.FLAG_IMMUTABLE)
+        val pendingIntent = makePendingIntent(context, movieIntent)
 
         builder.apply {
             setSmallIcon(R.drawable.thumbnail_movie2)
@@ -61,8 +47,8 @@ class MovieAlarmNotificationBuilder(
                     R.drawable.thumbnail_movie2,
                 ),
             )
-            setContentTitle("예매 알림")
-            setContentText(movieTitle)
+            setContentTitle(context.getString(R.string.movie_alarm_title))
+            setContentText(context.getString(R.string.movie_alarm_comment, movieTitle))
             setContentIntent(pendingIntent)
             setAutoCancel(true)
         }
@@ -70,16 +56,17 @@ class MovieAlarmNotificationBuilder(
         return builder
     }
 
+    private fun makePendingIntent(
+        context: Context,
+        movieIntent: Intent,
+    ): PendingIntent? = PendingIntent.getActivity(context, REQUEST_CODE, movieIntent, PendingIntent.FLAG_IMMUTABLE)
+
     private fun notificationChannel(): NotificationChannel {
-        val channel =
-            NotificationChannel(
-                CHANNEL_ID,
-                CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_DEFAULT,
-            ).apply {
-                description = "My Little Description"
-            }
-        return channel
+        return NotificationChannel(
+            CHANNEL_ID,
+            CHANNEL_NAME,
+            NotificationManager.IMPORTANCE_DEFAULT,
+        )
     }
 
     companion object {
