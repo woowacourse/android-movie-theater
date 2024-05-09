@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="reservationHistory"
+            type="woowacourse.movie.db.ReservationHistory" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/screening_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(reservationHistory.screeningDate)}"
+            android:textColor="@color/black"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2024.3.2" />
+
+        <View
+            android:id="@+id/first_separator"
+            android:layout_width="1dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="@id/screening_date"
+            app:layout_constraintEnd_toStartOf="@id/screening_time"
+            app:layout_constraintStart_toEndOf="@id/screening_date"
+            app:layout_constraintTop_toTopOf="@id/screening_date" />
+
+        <TextView
+            android:id="@+id/screening_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@{String.valueOf(reservationHistory.screeningTime)}"
+            android:textColor="@color/black"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="@id/screening_date"
+            app:layout_constraintStart_toEndOf="@id/first_separator"
+            app:layout_constraintTop_toTopOf="@id/screening_date"
+            tools:text="17:00" />
+
+        <View
+            android:id="@+id/second_separator"
+            android:layout_width="1dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="@id/screening_date"
+            app:layout_constraintStart_toEndOf="@id/screening_time"
+            app:layout_constraintTop_toTopOf="@id/screening_date" />
+
+        <TextView
+            android:id="@+id/theater_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@{reservationHistory.theaterName}"
+            android:textColor="@color/black"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="@id/screening_time"
+            app:layout_constraintStart_toEndOf="@id/second_separator"
+            app:layout_constraintTop_toTopOf="@id/screening_time"
+            tools:text="선릉 극장" />
+
+        <TextView
+            android:id="@+id/movie_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@{reservationHistory.movieName}"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/screening_date"
+            app:layout_constraintTop_toBottomOf="@id/screening_date"
+            tools:text="해리 포터와 마법사의 돌" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

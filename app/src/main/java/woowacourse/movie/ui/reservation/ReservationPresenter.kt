@@ -33,13 +33,28 @@ class ReservationPresenter(
         reservationId: Int,
         theaterId: Int,
     ) {
-        Thread {
-            db.reservationHistoryDao().insert(
-                ReservationHistory(
-                    reservation = repository.findById(reservationId).getOrThrow(),
-                    theater = theaterRepository.findById(theaterId),
-                ),
-            )
-        }.start()
+        val thread =
+            Thread {
+                repository.findById(reservationId)
+                    .onSuccess {
+                        db.reservationHistoryDao().insert(
+                            ReservationHistory(
+                                screeningDate = it.dateTime?.date.toString(),
+                                screeningTime = it.dateTime?.time.toString(),
+                                theaterName = theaterRepository.findById(theaterId).name,
+                                movieName = it.screen.movie.title,
+                            ),
+                        )
+                    }
+                    .onFailure { e ->
+                        when (e) {
+                            is NoSuchElementException -> view.goToBack("해당하는 상영 정보가 없습니다.")
+                            else -> view.unexpectedFinish("예상치 못한 에러가 발생했습니다")
+                        }
+                    }
+            }
+        thread.start()
+
+        thread.join()
     }
 }
