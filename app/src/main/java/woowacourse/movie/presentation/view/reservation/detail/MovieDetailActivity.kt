@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
@@ -91,7 +90,6 @@ class MovieDetailActivity : BaseActivity(), MovieDetailContract.View, MovieDetai
 
     override fun updateReservationCount(count: Int) {
         binding.reservationCount.text = count.toString()
-        updateBinding()
     }
 
     private fun attachTimeSpinnerAdapter(

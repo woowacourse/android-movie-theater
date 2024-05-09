@@ -87,14 +87,17 @@ class MovieDetailPresenterImpl(
 
     override fun minusReservationCount() {
         reservationCount.minusCount()
+        view?.updateReservationCount(reservationCount.count)
     }
 
     override fun plusReservationCount() {
         reservationCount.plusCount()
+        view?.updateReservationCount(reservationCount.count)
     }
 
     override fun initReservationCount(count: Int) {
         reservationCount.initCount(count)
+        view?.updateReservationCount(reservationCount.count)
     }
 
     override fun onReserveButtonClicked() {
