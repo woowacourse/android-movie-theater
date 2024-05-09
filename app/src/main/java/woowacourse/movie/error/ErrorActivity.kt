@@ -20,7 +20,6 @@ class ErrorActivity : AppCompatActivity() {
     }
 
     companion object {
-        @JvmStatic
         fun start(context: Context) {
             context.startActivity(Intent(context, ErrorActivity::class.java))
         }
