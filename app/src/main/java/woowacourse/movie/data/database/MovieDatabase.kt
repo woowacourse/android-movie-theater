@@ -34,7 +34,11 @@ abstract class MovieDatabase : RoomDatabase() {
 
         fun database(context: Context): MovieDatabase =
             instance ?: synchronized(this) {
-                val newInstance = buildDatabase(context)
+                val newInstance =
+                    buildDatabase(context).apply {
+                        val screeningMovieDao = this.screeningMovieDao()
+                        screeningMovieDao.insertAll(ScreeningMovie.STUB_A, ScreeningMovie.STUB_B, ScreeningMovie.STUB_C)
+                    }
                 instance = newInstance
                 return newInstance
             }

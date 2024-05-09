@@ -78,26 +78,26 @@ class MovieDatabaseTest {
     @DisplayName("screen_movie를_저장하면_다시_꺼낼_수_있다")
     fun can_get_stored_Screen_movie() {
         // when
-        screeningMovieDao.insertAll(ScreeningMovie.STUB)
+        screeningMovieDao.insertAll(ScreeningMovie.STUB_A)
 
         // given
         val screenMovie = screeningMovieDao.getAll()
 
         // then
-        assertThat(screenMovie).contains(ScreeningMovie.STUB)
+        assertThat(screenMovie).contains(ScreeningMovie.STUB_A)
     }
 
     @Test
     @DisplayName("movieId와 theaterId를 이용해 screeningMovie를 조회할 수 있다")
     fun get_screen_movie_Useing_movieId_and_theaterId() {
         // when
-        screeningMovieDao.insertAll(ScreeningMovie.STUB)
+        screeningMovieDao.insertAll(ScreeningMovie.STUB_A)
 
         // given
         val screenMovie =
             screeningMovieDao.getByMovieIdAndTheaterId(Movie.STUB.id, MovieTheater.STUB_A.id)
 
         // then
-        assertThat(screenMovie).isEqualTo(ScreeningMovie.STUB)
+        assertThat(screenMovie).isEqualTo(ScreeningMovie.STUB_A)
     }
 }
