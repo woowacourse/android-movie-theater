@@ -1,31 +1,13 @@
 package woowacourse.movie.presenter.setting
 
-import android.content.Context
-
 class SettingPresenter(private val view: SettingContract.View) : SettingContract.Presenter {
     override fun loadSavedSetting(isPushSetting: Boolean) {
         view.showSavedSetting(isPushSetting)
     }
 
-    override fun settingAlarm(
-        context: Context,
+    override fun settingPushAlarmState(
         isPushSetting: Boolean,
     ) {
         view.saveSetting(isPushSetting)
-//        Thread {
-//            val tickets = repository.loadReservationTickets()
-//            if (isPushSetting) {
-//                tickets.forEach { reservationTicket ->
-//                    TicketNotification.setNotification(
-//                        context = context,
-//                        ticketId = reservationTicket.ticketId,
-//                        movieTitle = reservationTicket.movieTitle,
-//                        screeningDateTime = reservationTicket.screeningDateTime,
-//                    )
-//                }
-//            } else {
-//                TicketNotification.cancelNotification(context)
-//            }
-//        }.start()
     }
 }

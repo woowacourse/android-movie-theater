@@ -59,7 +59,7 @@ class SettingFragment : Fragment(), SettingContract.View {
 
     private fun initView() {
         binding.switchButton.setOnCheckedChangeListener { _, isChecked ->
-            presenter.settingAlarm(requireContext(), isChecked)
+            presenter.settingPushAlarmState(isChecked)
         }
     }
 
