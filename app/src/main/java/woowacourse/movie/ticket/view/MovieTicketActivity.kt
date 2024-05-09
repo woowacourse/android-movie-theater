@@ -38,26 +38,18 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
         }.start()
     }
 
-    override fun showTicketView(
-        movieTitle: String,
-        screeningDate: String,
-        screeningTime: String,
-        seatsCount: Int,
-        seats: String,
-        theater: String,
-        moviePrice: Int,
-    ) {
-        binding.ticketTitle.text = movieTitle
-        binding.ticketScreeningDate.text = screeningDate
-        binding.ticketScreeningTime.text = screeningTime
+    override fun showTicketView(dbTicket: DbTicket) {
+        binding.ticketTitle.text = dbTicket.movieTitle
+        binding.ticketScreeningDate.text = dbTicket.screeningDate
+        binding.ticketScreeningTime.text = dbTicket.screeningTime
         binding.ticketReservationInformation.text =
             getString(
                 R.string.ticket_information_format,
-                seatsCount,
-                seats,
-                theater,
+                dbTicket.seatsCount,
+                dbTicket.seats,
+                dbTicket.theaterName,
             )
-        binding.ticketPrice.text = TICKET_PRICE.format(moviePrice)
+        binding.ticketPrice.text = TICKET_PRICE.format(dbTicket.price)
     }
 
     companion object {

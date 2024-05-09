@@ -7,15 +7,7 @@ interface MovieTicketContract {
     interface View {
         val presenter: Presenter
 
-        fun showTicketView(
-            movieTitle: String,
-            screeningDate: String,
-            screeningTime: String,
-            seatsCount: Int,
-            seats: String,
-            theater: String,
-            moviePrice: Int,
-        )
+        fun showTicketView(dbTicket: DbTicket)
 
         fun storeTicketInDb(ticket: DbTicket)
     }

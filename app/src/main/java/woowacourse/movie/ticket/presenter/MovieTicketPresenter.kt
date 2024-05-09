@@ -18,14 +18,6 @@ class MovieTicketPresenter(
     }
 
     override fun setTicketInfo() {
-        view.showTicketView(
-            TicketDataResource.dbTicket.movieTitle,
-            TicketDataResource.dbTicket.screeningDate,
-            TicketDataResource.dbTicket.screeningTime,
-            TicketDataResource.dbTicket.seatsCount,
-            TicketDataResource.dbTicket.seats,
-            TicketDataResource.dbTicket.theaterName,
-            TicketDataResource.dbTicket.price,
-        )
+        view.showTicketView(TicketDataResource.dbTicket)
     }
 }
