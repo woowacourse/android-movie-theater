@@ -11,40 +11,34 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.databinding.BottomSheetTheaterBinding
 import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.Theaters
+import woowacourse.movie.domain.repository.DummyScreens
+import woowacourse.movie.domain.repository.DummyTheaters
 import woowacourse.movie.ui.detail.ScreenDetailActivity
 import woowacourse.movie.ui.home.adapter.TheaterAdapter
 
-interface TheaterAdapterActionHandler {
-    fun moveToDetailActivity(
-        screenId: Int,
-        theaterId: Int,
-    )
-}
-
-class TheaterBottomSheet : BottomSheetDialogFragment() {
+class TheaterBottomSheet : BottomSheetDialogFragment(), TheaterContract.View {
     private var _binding: BottomSheetTheaterBinding? = null
     private val binding: BottomSheetTheaterBinding
         get() = requireNotNull(_binding)
 
     private lateinit var theaterAdapter: TheaterAdapter
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private val presenter: TheaterContract.Presenter by lazy {
+        TheaterPresenter(this, DummyScreens(), DummyTheaters())
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val screenId = arguments?.getInt(SCREEN_ID) ?: throw IllegalArgumentException("ScreenId is required")
+        presenter.saveScreenId(screenId)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
         _binding = BottomSheetTheaterBinding.inflate(inflater, container, false)
-
-        val screen =
-            arguments?.getSerializable(SCREEN, Screen::class.java)
-                ?: throw IllegalArgumentException()
-        val theaters =
-            arguments?.getSerializable(THEATERS, Theaters::class.java)
-                ?: throw IllegalArgumentException()
-
-        initTheaterAdapter(screen, theaters)
-
         return binding.root
     }
 
@@ -53,19 +47,8 @@ class TheaterBottomSheet : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rvTheater.adapter = theaterAdapter
-    }
-
-    private fun initTheaterAdapter(
-        screen: Screen,
-        theaters: Theaters,
-    ) {
-        theaterAdapter =
-            TheaterAdapter(screen) { screenId, theaterId ->
-                ScreenDetailActivity.startActivity(requireContext(), screenId, theaterId)
-            }
-
-        theaterAdapter.submitList(theaters.theaters)
+        presenter.initTheaterAdapter()
+        presenter.loadTheaters()
     }
 
     override fun onDestroyView() {
@@ -73,21 +56,34 @@ class TheaterBottomSheet : BottomSheetDialogFragment() {
         _binding = null
     }
 
+    override fun initTheaterAdapter(screen: Screen) {
+        theaterAdapter =
+            TheaterAdapter(screen) { theaterId ->
+                presenter.onTheaterSelected(theaterId)
+            }
+        binding.rvTheater.adapter = theaterAdapter
+    }
+
+    override fun showTheaters(screen: Screen, theaters: Theaters) {
+        theaterAdapter.submitList(theaters.theaters)
+    }
+
+    override fun navigateToScreenDetail(screenId: Int, theaterId: Int) {
+        ScreenDetailActivity.startActivity(requireContext(), screenId, theaterId)
+    }
+
     companion object {
-        private const val SCREEN = "screen"
-        private const val THEATERS = "theaters"
+        private const val SCREEN_ID = "screenId"
         private const val THEATER_BOTTOM_SHEET = "theaterBottomSheet"
 
         fun startFragment(
             parentFragmentManager: FragmentManager,
-            screen: Screen,
-            theaters: Theaters,
+            screenId: Int,
         ) {
             val theaterBottomSheet = TheaterBottomSheet()
             val bundle = Bundle()
 
-            bundle.putSerializable(SCREEN, screen)
-            bundle.putSerializable(THEATERS, theaters)
+            bundle.putSerializable(SCREEN_ID, screenId)
             theaterBottomSheet.arguments = bundle
 
             theaterBottomSheet.show(parentFragmentManager, THEATER_BOTTOM_SHEET)

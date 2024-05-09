@@ -10,7 +10,6 @@ interface HomeContract {
 
         fun showTheaters(
             screen: Screen,
-            theaters: Theaters,
         )
     }
 

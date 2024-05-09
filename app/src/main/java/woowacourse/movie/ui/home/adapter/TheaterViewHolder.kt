@@ -4,11 +4,10 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.HolderTheaterBinding
 import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.Theater
-import woowacourse.movie.ui.home.TheaterAdapterActionHandler
 
 class TheaterViewHolder(
     private val binding: HolderTheaterBinding,
-    private val theaterAdapterActionHandler: TheaterAdapterActionHandler,
+    private val itemClick: (theaterId: Int) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(
         theater: Theater,
@@ -16,6 +15,9 @@ class TheaterViewHolder(
     ) {
         binding.screen = screen
         binding.theater = theater
-        binding.theaterAdapterHandler = theaterAdapterActionHandler
+
+        binding.next.setOnClickListener {
+            itemClick(theater.id)
+        }
     }
 }

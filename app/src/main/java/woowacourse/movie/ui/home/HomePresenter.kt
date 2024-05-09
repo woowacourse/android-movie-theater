@@ -37,8 +37,6 @@ class HomePresenter(
 
     override fun loadTheaters(screenId: Int) {
         val screen = screenRepository.findById(screenId).getOrThrow()
-        val theaters = theaterRepository.loadAll()
-
-        view.showTheaters(screen, theaters.screeningTheater(screen))
+        view.showTheaters(screen)
     }
 }

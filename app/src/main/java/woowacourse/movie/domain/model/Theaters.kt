@@ -11,4 +11,11 @@ data class Theaters(val theaters: List<Theater>) : Serializable {
                 theater.screens.any { it.id == screen.id }
             },
         )
+
+    fun screeningTheater(movie: Movie): Theaters =
+        Theaters(
+            theaters.filter { theater ->
+                theater.screens.any { it.id == movie.id }
+            },
+        )
 }

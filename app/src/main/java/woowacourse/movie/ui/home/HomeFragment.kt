@@ -52,8 +52,7 @@ class HomeFragment : Fragment(), HomeContract.View {
 
     override fun showTheaters(
         screen: Screen,
-        theaters: Theaters,
     ) {
-        TheaterBottomSheet.startFragment(parentFragmentManager, screen, theaters)
+        TheaterBottomSheet.startFragment(parentFragmentManager, screen.id)
     }
 }
