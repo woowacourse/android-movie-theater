@@ -7,6 +7,7 @@
         <variable
             name="ticket"
             type="woowacourse.movie.database.Ticket" />
+
         <variable
             name="listener"
             type="woowacourse.movie.reservation.TicketItemListener" />
@@ -21,11 +22,12 @@
             android:id="@+id/movieDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{ticket.date}"
+            android:text="@{@string/reservation_detail(ticket.date,ticket.cinemaName)}"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="극장" />
+            tools:text="디테일" />
 
         <TextView
             android:id="@+id/movieTitle"
@@ -35,7 +37,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/movieDetails"
-            tools:text="Details" />
+            tools:text="영화이름" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
