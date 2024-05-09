@@ -20,12 +20,23 @@ class FetchScreeningsWithMovieIdAndTheaterIdUseCase(
             val screeningRefs =
                 screeningRefRepository.screeningRefsByMovieIdAndTheaterId(movieId, theaterId)
             screeningRefs.map {
-                val movie = movieRepository.movieById(it.movieId) ?: throw error("")
-                val theater = theaterRepository.theaterById(it.theaterId) ?: throw error("")
+                val movie =
+                    movieRepository.movieById(it.movieId) ?: throw NoSuchElementException(
+                        NO_MOVIE,
+                    )
+                val theater =
+                    theaterRepository.theaterById(it.theaterId) ?: throw NoSuchElementException(
+                        NO_THEATER,
+                    )
                 val localDateTime =
                     LocalDateTime.ofEpochSecond(it.screeningTimeStamp, 0, ZoneOffset.UTC)
                 Screening(it.id, movie, theater, localDateTime)
             }
         }
+    }
+
+    companion object {
+        private const val NO_MOVIE = "해당하는 id의 movie가 없습니다"
+        private const val NO_THEATER = "해당하는 id의 theater가 없습니다"
     }
 }
