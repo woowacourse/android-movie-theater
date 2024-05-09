@@ -1,3 +1,5 @@
+package woowacourse.movie.presentation.movieList
+
 import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.presentation.movieList.model.MovieDisplay
 
