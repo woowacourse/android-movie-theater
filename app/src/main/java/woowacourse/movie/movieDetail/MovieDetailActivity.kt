@@ -133,9 +133,7 @@ class MovieDetailActivity :
             context: Context,
             cinema: Cinema,
         ): Intent {
-            return Intent(context, MovieDetailActivity::class.java).apply {
-                putExtra(EXTRA_CINEMA, cinema)
-            }
+            return Intent(context, MovieDetailActivity::class.java).putExtra(EXTRA_CINEMA, cinema)
         }
     }
 }
