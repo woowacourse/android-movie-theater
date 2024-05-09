@@ -94,7 +94,6 @@ fun setReservationResult(
     theaterName: String,
 ) {
     textView.apply {
-        Log.e("seogi", "$seats")
         text =
             context.getString(
                 R.string.reservation_result,
