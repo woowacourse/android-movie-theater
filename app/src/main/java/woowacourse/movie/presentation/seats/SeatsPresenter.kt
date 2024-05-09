@@ -2,11 +2,11 @@ package woowacourse.movie.presentation.seats
 
 import woowacourse.movie.data.SampleMovieData
 import woowacourse.movie.data.SampleSeatData
+import woowacourse.movie.data.SampleTheaterData
 import woowacourse.movie.data.repository.MovieTicketRepositoryImpl
 import woowacourse.movie.domain.model.detail.DetailDataResource
 import woowacourse.movie.domain.model.home.Movie
 import woowacourse.movie.domain.model.home.Theater
-import woowacourse.movie.domain.model.home.TheaterData
 import woowacourse.movie.domain.model.seat.SeatSelectionResult
 import woowacourse.movie.domain.model.seat.Seats
 import woowacourse.movie.domain.model.seat.SelectedSeat
@@ -81,7 +81,7 @@ class SeatsPresenter(
 
     override fun requestReservationResult() {
         runCatching {
-            theater = TheaterData.theaters.first { it.id == DetailDataResource.theaterId }
+            theater = SampleTheaterData.theaters.first { it.id == DetailDataResource.theaterId }
             movieTicketRepository.createMovieTicket(theater.name, movie.title, screeningSchedule, reservationCount, seats.toString(), seats.totalPrice())
         }.onSuccess {
             view.moveToReservationResult(it.id)

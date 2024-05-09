@@ -9,6 +9,7 @@
     <string name="minute_text">분</string>
     <string name="screen">SCREEN</string>
     <string name="reservation_details">예매 내역</string>
+    <string name="reserve_button_text">지금 예매</string>
     <string name="home">홈</string>
     <string name="setting">설정</string>
     <string name="ticket_information_format">일반 %1$d명 | %2$s | %3$s</string>
@@ -22,4 +23,6 @@
     <string name="reservation_finish_text">예매 완료</string>
     <string name="total_price_format">%1$,d원 (현장 결제)</string>
     <string name="reservation_cancel_info">영화 상영 시작 시간 15분 전까지\n취소가 가능합니다.</string>
+    <string name="error_message">오류가 발생했습니다.</string>
+    <string name="no_theater">상영하는 극장이 없습니다.</string>
 </resources>
