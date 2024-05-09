@@ -48,6 +48,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.appcompat:appcompat:1.4.1")
     implementation("com.google.code.gson:gson:2.8.9")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("androidx.core:core-ktx:1.13.0")
