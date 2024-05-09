@@ -5,12 +5,15 @@ import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.Reservation
 import woowacourse.movie.model.theater.Seat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class TheaterSeatPresenter(
     private val movieRepository: MovieRepository,
     private val view: TheaterSeatContract.View,
     private val ticketLimit: Int,
-    val cinema: Cinema,
+    private val dateTime: String,
+    private val cinema: Cinema,
 ) :
     TheaterSeatContract.Presenter {
     private val seats: MutableMap<String, Seat> = mutableMapOf()
@@ -63,7 +66,7 @@ class TheaterSeatPresenter(
         val reservation = Reservation(
             cinemaName = cinema.cinemaName,
             title = cinema.theater.movie.title,
-            releaseDate = cinema.theater.movie.releaseDate,
+            releaseDate = LocalDateTime.parse(dateTime, Formatter),
             runningTime = cinema.theater.movie.runningTime,
             synopsis = cinema.theater.movie.synopsis,
             seats = selectedSeats.mapNotNull { seats[it] }.toSet(),
@@ -82,5 +85,9 @@ class TheaterSeatPresenter(
                 seats[seatId]?.price ?: 0
             }
         view.showPrice(totalPrice)
+    }
+
+    companion object {
+        private val Formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm")
     }
 }

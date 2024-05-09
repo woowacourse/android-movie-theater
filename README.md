@@ -16,10 +16,10 @@
 
 ## 3단계 기능 요구 사항
 
-- [ ]: 예매 내역 리사이클러 뷰 만들기
-  - [ ]: Adapter 
-  - [ ]: ItemView xml
-  - [ ]: ViewHolder
+- [x]: 예매 내역 리사이클러 뷰 만들기
+  - [x]: Adapter 
+  - [x]: ItemView xml
+  - [x]: ViewHolder
 - [x]: Movie DB 만들기 
   - [x]: Reservation Table(=Entity) 만들기
   - [x]: Seat Table(=Entity) 만들기
@@ -30,6 +30,8 @@
 - [x]: 좌석 선택 뷰에서 예매 확인 시 Room 에 저장 하고 return 받은 id를 넘겨 주자
   - [x]: 저장은 worker Thread, startActivity 는 ui Thread 에서 하자고~
   - [x]: 기존 객체 직렬화 방식 -> id 넘겨 주는 방식으로 변경
+- [x]: 예매 결과 뷰 dataBinding 적용
+- [x]: 예매 결과 뷰 id로 예매 정보 가져오기
 
 ### 4단계 요구 사항  
 

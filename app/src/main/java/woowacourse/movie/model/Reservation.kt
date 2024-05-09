@@ -1,16 +1,16 @@
 package woowacourse.movie.model
 
-import woowacourse.movie.model.movieInfo.MovieDate
 import woowacourse.movie.model.movieInfo.RunningTime
 import woowacourse.movie.model.movieInfo.Synopsis
 import woowacourse.movie.model.movieInfo.Title
 import woowacourse.movie.model.theater.Seat
+import java.time.LocalDateTime
 
 data class Reservation(
     val id: Long = NONE_ID,
     val cinemaName: String,
     val title: Title,
-    val releaseDate: MovieDate,
+    val releaseDate: LocalDateTime,
     val runningTime: RunningTime,
     val synopsis: Synopsis,
     val seats: Set<Seat>,
