@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="ticket"
-            type="woowacourse.movie.ticket.model.Ticket" />
+            name="dbTicket"
+            type="woowacourse.movie.ticket.model.DbTicket" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,6 +29,7 @@
                 android:layout_width="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="12dp"
+                android:text="@{dbTicket.screeningDate}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="2024.3.2" />
@@ -45,6 +46,7 @@
                 android:layout_width="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="12dp"
+                android:text="@{dbTicket.screeningTime}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="17:00" />
@@ -61,6 +63,7 @@
                 android:layout_width="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="12dp"
+                android:text="@{dbTicket.theaterName}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="선릉 극장" />
@@ -83,6 +86,7 @@
                 android:textColor="@color/black"
                 android:textSize="16dp"
                 android:textStyle="bold"
+                android:text="@{dbTicket.movieTitle}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/theater_name"
                 app:layout_constraintTop_toBottomOf="@id/theater_name"
