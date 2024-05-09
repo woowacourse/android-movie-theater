@@ -1,9 +1,18 @@
-package woowacourse.movie.domain.model.home
+package woowacourse.movie.data
 
 import woowacourse.movie.data.SampleMovieData.movieList
+import woowacourse.movie.domain.model.home.Theater
 import java.time.LocalTime
 
-object TheaterData {
+object SampleTheaterData {
+    val defaultTheater = Theater(
+        "선릉 극장",
+        mapOf(
+            movieList[0] to listOf(LocalTime.of(9, 0, 0)),
+        ),
+        -1,
+    )
+
     private val screeningTimes1 =
         listOf(
             LocalTime.of(9, 0, 0),
@@ -21,7 +30,7 @@ object TheaterData {
             LocalTime.of(18, 0, 0),
         )
 
-    val theaters =
+    val theaters: List<Theater> =
         listOf(
             Theater(
                 "선릉 극장",
@@ -41,7 +50,6 @@ object TheaterData {
                     movieList[4] to screeningTimes1,
                     movieList[5] to screeningTimes2,
                     movieList[6] to screeningTimes1,
-                    movieList[7] to screeningTimes1,
                 ),
                 1,
             ),

@@ -1,11 +1,11 @@
 package woowacourse.movie.presentation.detail
 
 import woowacourse.movie.data.SampleMovieData
+import woowacourse.movie.data.SampleTheaterData
 import woowacourse.movie.domain.model.detail.DetailDataResource
 import woowacourse.movie.domain.model.detail.DetailDataResource.movieId
 import woowacourse.movie.domain.model.detail.DetailDataResource.theaterId
 import woowacourse.movie.domain.model.detail.DetailTicketCountData
-import woowacourse.movie.domain.model.home.TheaterData
 import java.time.LocalTime
 
 class DetailPresenter(
@@ -13,7 +13,7 @@ class DetailPresenter(
 ) : DetailContract.Presenter {
     val model = DetailTicketCountData
 
-    private val theater = TheaterData.theaters.first { it.id == theaterId }
+    private val theater = SampleTheaterData.theaters.first { it.id == theaterId }
 
     private val screeningTimes: List<LocalTime> = theater.getScreeningTimes(movieId)
 

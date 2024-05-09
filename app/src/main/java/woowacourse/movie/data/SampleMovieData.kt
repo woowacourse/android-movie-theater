@@ -5,7 +5,7 @@ import woowacourse.movie.domain.model.home.Movie
 import java.time.LocalDate
 
 object SampleMovieData {
-    val defaultMovie =
+    private val defaultMovie =
         Movie(
             "",
             0,
@@ -47,7 +47,6 @@ object SampleMovieData {
                 """.trimIndent(),
                 2,
             ),
-            defaultMovie,
             Movie(
                 "해리 포터와 불의 잔",
                 R.drawable.harry_potter_4_poster,
@@ -78,7 +77,6 @@ object SampleMovieData {
                 """.trimIndent(),
                 5,
             ),
-            defaultMovie,
             Movie(
                 "해리 포터와 죽음의 성물",
                 R.drawable.harry_potter_7_poster,
