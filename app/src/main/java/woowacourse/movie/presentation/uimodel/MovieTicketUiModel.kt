@@ -65,7 +65,7 @@ data class MovieTicketUiModel(
                 movieTicket.ticketId,
                 movieTicket.reservationMovieInfo.title,
                 movieTicket.reservationMovieInfo.dateTime.screeningDate.date.format(
-                    DEFAULT_DATE_FORMAT
+                    DEFAULT_DATE_FORMAT,
                 ),
                 movieTicket.reservationMovieInfo.dateTime.screeningDate.screeningTime.startTime.format(
                     DateTimeFormatter.ofPattern(DEFAULT_TIME_FORMAT),
