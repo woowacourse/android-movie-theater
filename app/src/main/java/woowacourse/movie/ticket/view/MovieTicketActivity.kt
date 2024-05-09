@@ -1,5 +1,7 @@
 package woowacourse.movie.ticket.view
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -9,6 +11,7 @@ import woowacourse.movie.list.model.TicketDatabase.Companion.getDatabase
 import woowacourse.movie.ticket.contract.MovieTicketContract
 import woowacourse.movie.ticket.model.DbTicket
 import woowacourse.movie.ticket.presenter.MovieTicketPresenter
+import java.io.Serializable
 
 class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
     override val presenter: MovieTicketPresenter = MovieTicketPresenter(this)
@@ -59,5 +62,11 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
 
     companion object {
         private const val TICKET_PRICE = "%,d원 (현장결제)"
+
+        fun newTicketActivityInstance(context: Context, tickets: List<DbTicket>, id: Long): Intent {
+            return Intent(context, MovieTicketActivity::class.java).apply {
+                putExtra("ticket_key", tickets[id.toInt() - 1] as Serializable)
+            }
+        }
     }
 }
