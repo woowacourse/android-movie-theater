@@ -9,30 +9,28 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.junit.AfterClass
 import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import woowacourse.movie.FakeUserTicketDao
 import woowacourse.movie.R
 import woowacourse.movie.model.db.UserTicket
-import woowacourse.movie.model.db.UserTicketDatabase
+import woowacourse.movie.model.db.UserTicketRepositoryImpl
 import woowacourse.movie.model.movie.Seat
 import woowacourse.movie.model.movie.SeatRow
-import woowacourse.movie.ui.selection.MovieSeatSelectionKey
 import java.time.LocalDateTime
 
 @RunWith(AndroidJUnit4::class)
 class MovieReservationCompleteActivityTest {
-    private val db = UserTicketDatabase.database()
-    private val userTicket: UserTicket = db.userTicketDao().find(testUserTicket.id)
+    private val userTicket: UserTicket = UserTicketRepositoryImpl.get().find(testUserTicket.id)
 
     private val intent =
         Intent(
             ApplicationProvider.getApplicationContext(),
             MovieReservationCompleteActivity::class.java,
         ).run {
-            putExtra(MovieSeatSelectionKey.RESERVATION_ID, 0L)
+            putExtra(MovieReservationCompleteKey.TICKET_ID, 1L)
         }
 
     @get:Rule
@@ -72,25 +70,21 @@ class MovieReservationCompleteActivityTest {
         private val testUserTicket =
             UserTicket(
                 movieTitle = "",
-                screeningStartDateTime = LocalDateTime.of(2024, 3, 28, 10, 0),
+                screeningStartDateTime = LocalDateTime.of(2024, 3, 28, 21, 0),
                 reservationCount = 1,
-                reservationSeats = listOf(Seat(SeatRow.A, 1)),
-                theaterName = "강남",
+                reservationSeats = listOf(Seat(SeatRow.A, 0)),
+                theaterName = "선릉",
                 reservationAmount = 10000,
+                id = 1L,
             )
 
         @JvmStatic
         @BeforeClass
         fun setUp() {
-            val db = UserTicketDatabase.database()
-            db.userTicketDao().insert(testUserTicket)
-        }
-
-        @JvmStatic
-        @AfterClass
-        fun tearDown() {
-            val db = UserTicketDatabase.database()
-            db.userTicketDao().delete(testUserTicket)
+            UserTicketRepositoryImpl.initializeRepository(FakeUserTicketDao())
+            UserTicketRepositoryImpl.get().apply {
+                insert(testUserTicket)
+            }
         }
     }
 }

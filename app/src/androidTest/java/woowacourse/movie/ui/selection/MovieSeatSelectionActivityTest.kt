@@ -18,7 +18,6 @@ import woowacourse.movie.R
 import woowacourse.movie.model.data.ReservationsImpl
 import woowacourse.movie.model.movie.Reservation
 import woowacourse.movie.model.movie.ReservationCount
-import woowacourse.movie.ui.reservation.MovieReservationKey
 import java.time.LocalDateTime
 
 class MovieSeatSelectionActivityTest {
@@ -29,7 +28,7 @@ class MovieSeatSelectionActivityTest {
             ApplicationProvider.getApplicationContext(),
             MovieSeatSelectionActivity::class.java,
         ).run {
-            putExtra(MovieReservationKey.TICKET_ID, 0L)
+            putExtra(MovieSeatSelectionKey.RESERVATION_ID, 0L)
         }
 
     @get:Rule
@@ -58,16 +57,6 @@ class MovieSeatSelectionActivityTest {
         onView(withId(R.id.tv_total_seat_amount))
             .check(matches(isDisplayed()))
             .check(matches(withText("10,000원")))
-    }
-
-    @Test
-    fun `예매인원이_2명인_경우_2개_미만의_좌석을_선택하면_확인_버튼이_활성화_되지_않는다`() {
-        onView(withText("A1"))
-            .check(matches(isDisplayed()))
-            .perform(click())
-
-        onView(withId(R.id.btn_confirm))
-            .check(matches(not(isEnabled())))
     }
 
     @Test

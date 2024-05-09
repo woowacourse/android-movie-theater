@@ -14,7 +14,5 @@ data class UserTicket(
     @ColumnInfo(name = "reservation_seats") val reservationSeats: List<Seat>,
     @ColumnInfo(name = "theater_name") val theaterName: String,
     @ColumnInfo(name = "reservation_amount") val reservationAmount: Int,
-) {
-    @PrimaryKey(autoGenerate = true)
-    var id: Long = 0
-}
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
+)
