@@ -45,18 +45,17 @@ class TheaterSeatActivity :
         initPresenter()
         initSeats()
 
-
         val channelName = "Ticket Confirmation"
         val channelId = "ticket_confirmation_channel"
         val channelDescription = "Notifications for ticket confirmations"
         val importance = NotificationManager.IMPORTANCE_DEFAULT
-        val channel = NotificationChannel(channelId, channelName, importance).apply {
-            description = channelDescription
-        }
+        val channel =
+            NotificationChannel(channelId, channelName, importance).apply {
+                description = channelDescription
+            }
         val notificationManager: NotificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
-
 
         binding.confirmButton.setOnClickListener {
             confirmTicketPurchase()
@@ -162,7 +161,7 @@ class TheaterSeatActivity :
                             this,
                             movieStartTime,
                             cinema,
-                            ticketPrice.toString()
+                            ticketPrice.toString(),
                         )
                         PurchaseConfirmationActivity.newIntent(
                             context = this,
@@ -193,39 +192,40 @@ class TheaterSeatActivity :
         context: Context,
         movieStartTime: Long,
         cinema: Cinema,
-        ticketPrice: String
+        ticketPrice: String,
     ) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         if (AlarmManagerCompat.canScheduleExactAlarms(alarmManager)) {
-            val alarmTime = movieStartTime - 30*60*1000 // 영화 시작 시간 30분 전
-            val intent = Intent(context, NotificationReceiver::class.java).apply {
-                putExtra("notificationId", 1001)
-                putExtra("message", "${cinema.theater.movie.title} 영화 시작 30분 전입니다!")
-                putExtra("title", cinema.theater.movie.title.toString())
-                putExtra("cinemaName", cinema.cinemaName)
-                putExtra("ticketPrice", ticketPrice)
-                putExtra("seatNumber", presenter.selectedSeats.toTypedArray())
-                putExtra("runningTime", cinema.theater.movie.runningTime.toString())
-                putExtra("timeDate", intent.getStringExtra(EXTRA_TIME_DATE))
-            }
-            val pendingIntent = PendingIntent.getBroadcast(
-                context,
-                1001,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            )
+            val alarmTime = movieStartTime - 30 * 60 * 1000 // 영화 시작 시간 30분 전
+            val intent =
+                Intent(context, NotificationReceiver::class.java).apply {
+                    putExtra("notificationId", 1001)
+                    putExtra("message", "${cinema.theater.movie.title} 영화 시작 30분 전입니다!")
+                    putExtra("title", cinema.theater.movie.title.toString())
+                    putExtra("cinemaName", cinema.cinemaName)
+                    putExtra("ticketPrice", ticketPrice)
+                    putExtra("seatNumber", presenter.selectedSeats.toTypedArray())
+                    putExtra("runningTime", cinema.theater.movie.runningTime.toString())
+                    putExtra("timeDate", intent.getStringExtra(EXTRA_TIME_DATE))
+                }
+            val pendingIntent =
+                PendingIntent.getBroadcast(
+                    context,
+                    1001,
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+                )
 
             alarmManager.setExactAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
                 alarmTime,
-                pendingIntent
+                pendingIntent,
             )
         } else {
             val settingsIntent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
             context.startActivity(settingsIntent)
         }
     }
-
 
     companion object {
         const val EXTRA_TIME_DATE = "timeDate"

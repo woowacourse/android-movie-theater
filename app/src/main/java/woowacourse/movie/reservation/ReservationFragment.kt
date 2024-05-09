@@ -15,18 +15,22 @@ import woowacourse.movie.purchaseConfirmation.PurchaseConfirmationActivity
 class ReservationFragment :
     BindingFragment<FragmentReservationBinding>(R.layout.fragment_reservation),
     ReservationContract.View {
-
     private lateinit var presenter: ReservationPresenter
     private lateinit var reservationAdapter: ReservationAdapter
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         val database =
             Room.databaseBuilder(requireContext(), AppDatabase::class.java, "ticket").build()
         presenter = ReservationPresenter()
         presenter.attachView(this)
-        reservationAdapter = ReservationAdapter {
-            presenter.onClickedList(it)
-        }
+        reservationAdapter =
+            ReservationAdapter {
+                presenter.onClickedList(it)
+            }
         binding.reservationRecyclerView.adapter = reservationAdapter
         presenter.loadData(database)
     }

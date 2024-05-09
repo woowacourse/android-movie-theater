@@ -45,13 +45,13 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     private fun requestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(
-                    this, Manifest.permission.POST_NOTIFICATIONS
+                    this, Manifest.permission.POST_NOTIFICATIONS,
                 ) !=
                 PackageManager.PERMISSION_GRANTED
             ) {
-
                 if (ActivityCompat.shouldShowRequestPermissionRationale(
-                        this, Manifest.permission.POST_NOTIFICATIONS
+                        this,
+                        Manifest.permission.POST_NOTIFICATIONS,
                     )
                 ) {
                     // 여기에 권한이 필요한 이유를 설명하는 UI를 보여주는 코드를 추가하세요.
@@ -60,7 +60,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                     ActivityCompat.requestPermissions(
                         this,
                         arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                        REQUEST_NOTIFICATION_PERMISSION
+                        REQUEST_NOTIFICATION_PERMISSION,
                     )
                 }
             }
@@ -68,7 +68,9 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
@@ -85,5 +87,4 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     companion object {
         private const val REQUEST_NOTIFICATION_PERMISSION = 101 // 권한 요청 코드
     }
-
 }

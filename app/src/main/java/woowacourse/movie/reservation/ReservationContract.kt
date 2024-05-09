@@ -6,14 +6,17 @@ import woowacourse.movie.database.Ticket
 interface ReservationContract {
     interface View {
         fun showReservations(reservations: List<Ticket>)
-        fun showError(message: String)
-        fun navigateToTicketDetail(ticket: Ticket)
 
+        fun showError(message: String)
+
+        fun navigateToTicketDetail(ticket: Ticket)
     }
 
     interface Presenter {
         fun attachView(view: View)
+
         fun detachView()
+
         fun loadData(database: AppDatabase)
 
         fun onClickedList(ticket: Ticket)

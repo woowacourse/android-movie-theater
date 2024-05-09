@@ -11,14 +11,19 @@ class ReservationAdapter(
     private var reservations: MutableList<Ticket> = mutableListOf(),
     private val onClick: (Ticket) -> Unit,
 ) : RecyclerView.Adapter<ReservationAdapter.ReservationViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReservationViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): ReservationViewHolder {
         val view =
             ItemReservationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ReservationViewHolder(view, onClick)
     }
 
-    override fun onBindViewHolder(holder: ReservationViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ReservationViewHolder,
+        position: Int,
+    ) {
         holder.bind(reservations[position])
     }
 
@@ -33,9 +38,8 @@ class ReservationAdapter(
 
     class ReservationViewHolder(
         private val binding: ItemReservationBinding,
-        private val onClick: (Ticket) -> Unit
+        private val onClick: (Ticket) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
-
         fun bind(ticket: Ticket) {
             binding.ticket = ticket
             binding.executePendingBindings()
