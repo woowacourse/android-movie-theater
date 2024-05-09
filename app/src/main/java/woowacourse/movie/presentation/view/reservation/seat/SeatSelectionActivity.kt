@@ -6,32 +6,32 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.Window
-import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivitySeatSelectionBinding
+import woowacourse.movie.databinding.ReservationConfirmDialogBinding
 import woowacourse.movie.presentation.base.BaseActivity
 import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
 import woowacourse.movie.presentation.view.reservation.detail.MovieDetailActivity.Companion.RESERVATION_COUNT_KEY
 import woowacourse.movie.presentation.view.reservation.detail.MovieDetailActivity.Companion.TITLE_KEY
 import woowacourse.movie.presentation.view.reservation.result.ReservationResultActivity
 
-class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View {
+class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View, SeatSelectionContract.ViewActions {
     private lateinit var seatSelectionPresenter: SeatSelectionContract.Presenter
-    private val seatingChartLayout: TableLayout by lazy {
-        findViewById(R.id.seatingChartLayout)
-    }
-    private val movieTitle: TextView by lazy {
-        findViewById(R.id.movieTitle)
-    }
-    private val totalPriceText: TextView by lazy {
-        findViewById(R.id.totalPrice)
-    }
-    private val confirmButton: Button by lazy {
-        findViewById(R.id.confirmButton)
+    private lateinit var activitySeatSelectionBinding: ActivitySeatSelectionBinding
+    private lateinit var dialogBinding: ReservationConfirmDialogBinding
+    private val dialog: Dialog by lazy {
+        Dialog(this).apply {
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            setContentView(dialogBinding.root)
+            setCancelable(false)
+        }
     }
 
     override fun getLayoutResId(): Int = R.layout.activity_seat_selection
@@ -39,16 +39,16 @@ class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View {
     override fun onCreateSetup(savedInstanceState: Bundle?) {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        movieTitle.text = intent.getStringExtra(TITLE_KEY)
+        activitySeatSelectionBinding = DataBindingUtil.setContentView(this, R.layout.activity_seat_selection)
+        activitySeatSelectionBinding.listener = this
+        dialogBinding = ReservationConfirmDialogBinding.inflate(LayoutInflater.from(this))
+        dialogBinding.listener = this
+
+        activitySeatSelectionBinding.movieTitle.text = intent.getStringExtra(TITLE_KEY)
         val reservationCount = intent.getIntExtra(RESERVATION_COUNT_KEY, DEFAULT_COUNT)
 
         seatSelectionPresenter = SeatSelectionPresenterImpl(reservationCount)
         seatSelectionPresenter.attachView(this)
-
-        confirmButton.isEnabled = false
-        confirmButton.setOnClickListener {
-            showConfirmationDialog()
-        }
     }
 
     override fun onDestroy() {
@@ -81,7 +81,7 @@ class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View {
             rowSeats.setPadding(10, 10, 10, 10)
             val color = getColorByRank(seatRankInfo, row)
             drawEachColumnSeats(rowSeats, row, colCount, color)
-            seatingChartLayout.addView(rowSeats)
+            activitySeatSelectionBinding.seatingChartLayout.addView(rowSeats)
         }
     }
 
@@ -142,7 +142,7 @@ class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View {
         row: Int,
         col: Int,
     ) {
-        val seatsRow = seatingChartLayout.getChildAt(row) as TableRow
+        val seatsRow = activitySeatSelectionBinding.seatingChartLayout.getChildAt(row) as TableRow
         val seatView = seatsRow.getChildAt(col) as TextView
         val currentColor = (seatView.background as? ColorDrawable)?.color
         val newColor =
@@ -155,11 +155,11 @@ class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View {
     }
 
     override fun updateTotalPrice(price: Int) {
-        totalPriceText.text = this.getString(R.string.seat_total_price_format, price)
+        activitySeatSelectionBinding.totalPrice.text = this.getString(R.string.seat_total_price_format, price)
     }
 
     override fun changeConfirmClickable(hasMatchedCount: Boolean) {
-        confirmButton.isEnabled = hasMatchedCount
+        activitySeatSelectionBinding.confirmButton.isEnabled = hasMatchedCount
     }
 
     override fun showAlreadyFilledSeatsSelectionMessage() {
@@ -181,26 +181,17 @@ class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View {
         }
     }
 
-    private fun showConfirmationDialog() {
-        val dialog =
-            Dialog(this).apply {
-                requestWindowFeature(Window.FEATURE_NO_TITLE)
-                setContentView(R.layout.reservation_confirm_dialog)
-                setCancelable(false)
-            }
-
-        val cancelButton = dialog.findViewById<TextView>(R.id.cancelButton)
-        cancelButton.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        val confirmButton = dialog.findViewById<TextView>(R.id.confirmButton)
-        confirmButton.setOnClickListener {
-            seatSelectionPresenter.onAcceptButtonClicked()
-            dialog.dismiss()
-        }
-
+    override fun onConfirmButtonClicked() {
         dialog.show()
+    }
+
+    override fun onDialogAcceptButtonClicked() {
+        seatSelectionPresenter.onAcceptButtonClicked()
+        dialog.dismiss()
+    }
+
+    override fun onDialogCancelButtonClicked() {
+        dialog.dismiss()
     }
 
     companion object {

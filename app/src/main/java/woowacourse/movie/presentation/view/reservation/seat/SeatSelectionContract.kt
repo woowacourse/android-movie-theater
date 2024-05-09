@@ -40,4 +40,12 @@ interface SeatSelectionContract {
 
         fun onAcceptButtonClicked()
     }
+
+    interface ViewActions {
+        fun onConfirmButtonClicked()
+
+        fun onDialogAcceptButtonClicked()
+
+        fun onDialogCancelButtonClicked()
+    }
 }
