@@ -17,6 +17,7 @@ import woowacourse.movie.model.movie.toUserTicket
 import woowacourse.movie.ui.HandleError
 import woowacourse.movie.ui.complete.MovieReservationCompleteActivity
 import woowacourse.movie.ui.complete.MovieReservationCompleteKey.TICKET_ID
+import kotlin.concurrent.thread
 
 class MovieBookingHistoryFragment : Fragment(), BookingHistoryContract.View, BookingHistoryAdapter.BookingHistoryClickListener {
     private var _binding: FragmentMovieBookingHistoryBinding? = null
@@ -90,9 +91,9 @@ class BookingHistoryPresenter(
     private val ticketDao: TicketDao
 ) : BookingHistoryContract.Presenter {
     override fun loadHistoryItems() {
-        Thread {
+        thread {
             val items: List<UserTicket> = ticketDao.findAll().map(TicketEntity::toUserTicket)
             view.showHistoryItems(items)
-        }.start()
+        }
     }
 }

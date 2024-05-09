@@ -7,6 +7,7 @@ import woowacourse.movie.model.movie.TicketDao
 import woowacourse.movie.model.movie.UserTicket
 import woowacourse.movie.model.movie.toTicketEntity
 import woowacourse.movie.ui.utils.positionToIndex
+import kotlin.concurrent.thread
 
 class MovieSeatSelectionPresenter(
     private val view: MovieSeatSelectionContract.View,
@@ -50,10 +51,10 @@ class MovieSeatSelectionPresenter(
     }
 
     override fun completeReservation() {
-        Thread {
+        thread {
             val ticketId = userTicketDataSource.save(userTicket.toTicketEntity())
             view.navigateToCompleteScreen(ticketId)
-        }.start()
+        }
     }
 
     override fun handleError(throwable: Throwable) {

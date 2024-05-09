@@ -8,6 +8,7 @@ import woowacourse.movie.model.movie.Theater
 import woowacourse.movie.model.movie.TheaterDao
 import woowacourse.movie.model.movie.toMovieContent
 import woowacourse.movie.model.movie.toTheater
+import kotlin.concurrent.thread
 
 class TheaterSelectionPresenter(
     private val view: TheaterSelectionContract.View,
@@ -18,7 +19,7 @@ class TheaterSelectionPresenter(
     private lateinit var movieContent: MovieContent
 
     override fun loadTheaters(movieContentId: Long) {
-        Thread {
+        thread {
             runCatching {
                 movieContent = movieContentDataSource.find(movieContentId).toMovieContent()
                 val movieTheaters =
@@ -30,6 +31,6 @@ class TheaterSelectionPresenter(
             }.onFailure {
                 view.showError(it)
             }
-        }.start()
+        }
     }
 }
