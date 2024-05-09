@@ -3,7 +3,6 @@ package woowacourse.movie.ui.setting.notification
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import woowacourse.movie.ui.MovieSharedPreference
 import woowacourse.movie.ui.complete.MovieReservationCompleteActivity
 import woowacourse.movie.ui.setting.MovieSettingKey
@@ -25,13 +24,12 @@ class MovieAlarmReceiver : BroadcastReceiver() {
                 context,
                 movieTitle,
                 userTicketId.toInt(),
-                movieIntent
+                movieIntent,
             ).notifyAlarm()
         }
     }
 
     private fun userTicketId(intent: Intent) = intent.getLongExtra(MovieSettingKey.TICKET_ID, -1L)
 
-    private fun movieTitle(intent: Intent) =
-        intent.getStringExtra(MovieSettingKey.MOVIE_TITLE_ID) ?: throw IllegalStateException()
+    private fun movieTitle(intent: Intent) = intent.getStringExtra(MovieSettingKey.MOVIE_TITLE_ID) ?: throw IllegalStateException()
 }

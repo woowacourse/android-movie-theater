@@ -5,7 +5,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
-import android.util.Log
 import woowacourse.movie.ui.setting.MovieSettingKey
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -26,9 +25,10 @@ object MovieAlarmManager {
                 putExtra(MovieSettingKey.TICKET_ID, userTicketId)
             }
 
-        val alarmTime = screeningStartDateTime
-            .minusMinutes(ALARM_OFFSET)
-            .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+        val alarmTime =
+            screeningStartDateTime
+                .minusMinutes(ALARM_OFFSET)
+                .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
         alarmManager.setAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
@@ -37,7 +37,10 @@ object MovieAlarmManager {
         )
     }
 
-    fun cancelAlarm(context: Context, requestCode: Int) {
+    fun cancelAlarm(
+        context: Context,
+        requestCode: Int,
+    ) {
         val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, MovieAlarmReceiver::class.java)
         alarmManager.cancel(makePendingIntent(context, requestCode, intent))
@@ -52,6 +55,6 @@ object MovieAlarmManager {
             context,
             requestCode,
             intent,
-            PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_IMMUTABLE,
         )
 }

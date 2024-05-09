@@ -14,12 +14,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieSettingBinding
+import woowacourse.movie.model.db.UserTicketRepositoryImpl
 import woowacourse.movie.ui.MovieSharedPreference
-import woowacourse.movie.ui.setting.notification.MovieAlarmManager
 
 class MovieSettingFragment : Fragment(), MovieSettingContract.View {
     private lateinit var binding: FragmentMovieSettingBinding
-    private val presenter by lazy { MovieSettingPresenter(this) }
+    private val presenter by lazy { MovieSettingPresenter(this, UserTicketRepositoryImpl.get()) }
     private val sharedPreference: MovieSharedPreference by lazy {
         MovieSharedPreference(requireContext())
     }
@@ -42,7 +42,7 @@ class MovieSettingFragment : Fragment(), MovieSettingContract.View {
         binding.swAlarmStatus.setOnCheckedChangeListener { _, isChecked ->
             sharedPreference.setAlarmChecked(isChecked)
             if (!isChecked) {
-                MovieAlarmManager.cancelAlarm(requireContext(), 1)
+                presenter.cancelNotification(requireContext())
             } else {
                 requestNotificationPermission(requireContext())
             }
