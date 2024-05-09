@@ -35,7 +35,6 @@ abstract class MovieDatabase : RoomDatabase() {
                     MovieDatabase::class.java,
                     MOVIE_DATABASE
                 )
-                    .fallbackToDestructiveMigration()
                     .createFromAsset("database/movie_contents.db")
                     .build()
                 INSTANCE = instance

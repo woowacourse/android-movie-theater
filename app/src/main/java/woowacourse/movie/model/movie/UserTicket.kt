@@ -28,6 +28,7 @@ data class ReservationDetail(
 ) : Parcelable
 
 data class UserTicket(
+    val id: Long? = null,
     val title: String,
     val theater: String,
     val screeningStartDateTime: LocalDateTime,
@@ -44,17 +45,18 @@ fun UserTicket.toTicketEntity(): TicketEntity =
         price = seatInformation.totalSeatAmount()
     )
 
-//fun TicketEntity.toUserTicket(): UserTicket {
-//    val seat = if (seats.isEmpty()) mutableListOf() else seats.split(", ").map {
-//        Seat(SeatRow.findRow(it[0].digitToInt()), it[1].digitToInt())
-//    }.toMutableList()
-//    return UserTicket(
-//        title = title,
-//        theater = theater,
-//        screeningStartDateTime = LocalDateTime.parse(screeningStartDateTime, DateTimeFormatter.ofPattern("yyyy.M.d HH:mm")),
-//        seatInformation = SeatInformation(
-//            reservationCount,
-//            seat
-//        )
-//    )
-//}
+fun TicketEntity.toUserTicket(): UserTicket {
+    val seat = if (seats.isEmpty()) mutableListOf() else seats.split(", ").map {
+        Seat(SeatRow.findRow(it[0].code - 65), it[1].digitToInt())
+    }.toMutableList()
+    return UserTicket(
+        id = id,
+        title = title,
+        theater = theater,
+        screeningStartDateTime = LocalDateTime.parse(screeningStartDateTime, DateTimeFormatter.ofPattern("yyyy.M.d HH:mm")),
+        seatInformation = SeatInformation(
+            reservationCount,
+            seat
+        )
+    )
+}

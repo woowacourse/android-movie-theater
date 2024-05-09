@@ -1,14 +1,13 @@
 package woowacourse.movie.ui.main
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieMainBinding
-import woowacourse.movie.ui.booking.MovieBookingHistoryFragment
+import woowacourse.movie.ui.history.MovieBookingHistoryFragment
 import woowacourse.movie.ui.home.MovieHomeFragment
 import woowacourse.movie.ui.setting.MovieSettingFragment
 
