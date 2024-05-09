@@ -2,27 +2,27 @@ package woowacourse.movie.db
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
-import woowacourse.movie.domain.model.Reservation
-import woowacourse.movie.domain.model.Theater
+import java.time.LocalDate
+import java.time.LocalTime
 
 class ReservationHistoryConverter {
     @TypeConverter
-    fun reservationToJson(value: Reservation): String {
+    fun localDateToJson(value: LocalDate): String {
         return Gson().toJson(value)
     }
 
     @TypeConverter
-    fun jsonToReservation(value: String): Reservation {
-        return Gson().fromJson(value, Reservation::class.java)
+    fun jsonToLocalDate(value: String): LocalDate {
+        return Gson().fromJson(value, LocalDate::class.java)
     }
 
     @TypeConverter
-    fun theaterToJson(value: Theater): String {
+    fun localTimeToJson(value: LocalTime): String {
         return Gson().toJson(value)
     }
 
     @TypeConverter
-    fun jsonToTheater(value: String): Theater {
-        return Gson().fromJson(value, Theater::class.java)
+    fun jsonToLocalTime(value: String): LocalTime {
+        return Gson().fromJson(value, LocalTime::class.java)
     }
 }
