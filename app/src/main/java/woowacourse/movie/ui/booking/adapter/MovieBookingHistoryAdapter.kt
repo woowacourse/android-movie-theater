@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemBookedMovieBinding
 import woowacourse.movie.model.db.UserTicket
-import woowacourse.movie.ui.booking.UserTicketDiffUtil
 
 class MovieBookingHistoryAdapter(
     private val bookingHistoryClickListener: (Long) -> Unit,

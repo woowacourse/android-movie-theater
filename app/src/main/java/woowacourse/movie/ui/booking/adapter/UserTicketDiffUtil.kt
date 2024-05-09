@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.booking
+package woowacourse.movie.ui.booking.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import woowacourse.movie.model.db.UserTicket
