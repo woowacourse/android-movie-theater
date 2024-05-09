@@ -4,6 +4,8 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import woowacourse.movie.data.movie.MovieDao
 import woowacourse.movie.data.movie.MovieDto
+import woowacourse.movie.data.reservationref.ReservationRefDao
+import woowacourse.movie.data.reservationref.ReservationRefDto
 import woowacourse.movie.data.screeningref.ScreeningRefDao
 import woowacourse.movie.data.screeningref.ScreeningRefDto
 import woowacourse.movie.data.theater.TheaterDao
@@ -14,6 +16,7 @@ import woowacourse.movie.data.theater.TheaterDto
         MovieDto::class,
         TheaterDto::class,
         ScreeningRefDto::class,
+        ReservationRefDto::class,
     ],
     version = 1,
 )
@@ -23,4 +26,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun theaterDao(): TheaterDao
 
     abstract fun screeningDao(): ScreeningRefDao
+
+    abstract fun reservationDao(): ReservationRefDao
 }
