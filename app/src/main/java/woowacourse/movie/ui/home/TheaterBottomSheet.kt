@@ -7,9 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import woowacourse.movie.R
+import woowacourse.movie.databinding.BottomSheetTheaterBinding
 import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.Theaters
 import woowacourse.movie.ui.detail.ScreenDetailActivity
@@ -23,6 +22,10 @@ interface TheaterAdapterActionHandler {
 }
 
 class TheaterBottomSheet : BottomSheetDialogFragment() {
+    private var _binding: BottomSheetTheaterBinding? = null
+    private val binding: BottomSheetTheaterBinding
+        get() = requireNotNull(_binding)
+
     private lateinit var theaterAdapter: TheaterAdapter
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -30,7 +33,9 @@ class TheaterBottomSheet : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
+        _binding = BottomSheetTheaterBinding.inflate(inflater, container, false)
+
         val screen =
             arguments?.getSerializable(SCREEN, Screen::class.java)
                 ?: throw IllegalArgumentException()
@@ -40,7 +45,7 @@ class TheaterBottomSheet : BottomSheetDialogFragment() {
 
         initTheaterAdapter(screen, theaters)
 
-        return inflater.inflate(R.layout.bottom_sheet_theater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(
@@ -48,7 +53,7 @@ class TheaterBottomSheet : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<RecyclerView>(R.id.rv_theater).adapter = theaterAdapter
+        binding.rvTheater.adapter = theaterAdapter
     }
 
     private fun initTheaterAdapter(
@@ -61,6 +66,11 @@ class TheaterBottomSheet : BottomSheetDialogFragment() {
             }
 
         theaterAdapter.submitList(theaters.theaters)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
