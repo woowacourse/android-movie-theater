@@ -1,6 +1,5 @@
 package woowacourse.movie.presentation.movieList
 
-import MovieListView
 import woowacourse.movie.model.movieInfo.MovieDate
 import woowacourse.movie.model.movieInfo.MovieInfo
 import woowacourse.movie.model.movieInfo.RunningTime
