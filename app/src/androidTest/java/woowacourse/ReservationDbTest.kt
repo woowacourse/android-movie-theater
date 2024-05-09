@@ -54,7 +54,7 @@ class ReservationDbTest {
 
         val reservationRef = ReservationRef.STUB
         reservationRefDao.insert(reservationRef.toDto())
-        val actual = reservationRefDao.findById(1).toReservationRef()
+        val actual = reservationRefDao.findById(1)?.toReservationRef()
 
         val expected = reservationRef
         assertThat(actual).isEqualTo(expected)
