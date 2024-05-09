@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -35,6 +36,7 @@ class MovieMainActivity : AppCompatActivity() {
         }
 
         initializeBottomNavigation()
+        requestNotificationPermission()
     }
 
     private fun initializeBottomNavigation() {
@@ -64,12 +66,11 @@ class MovieMainActivity : AppCompatActivity() {
         ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                    // 권한 요청 거부한 경우
+                    Toast.makeText(this, "예매 알림 기능을 사용할 수 없습니다.", Toast.LENGTH_SHORT)
+                        .show()
                 } else {
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
-            } else {
-                // 안드로이드 12 이하는 Notification에 관한 권한 필요 없음
             }
         }
     }
