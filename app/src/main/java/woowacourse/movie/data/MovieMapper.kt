@@ -3,15 +3,14 @@ package woowacourse.movie.data
 import woowacourse.movie.data.entity.ReservationEntity
 import woowacourse.movie.data.entity.SeatEntity
 import woowacourse.movie.model.Reservation
-import woowacourse.movie.model.movieInfo.MovieDate
 import woowacourse.movie.model.movieInfo.RunningTime
 import woowacourse.movie.model.movieInfo.Synopsis
 import woowacourse.movie.model.movieInfo.Title
 import woowacourse.movie.model.theater.Seat
-import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-private val Formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+private val Formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
 
 fun Reservation.toReservationEntity(): ReservationEntity {
     return ReservationEntity(
@@ -44,7 +43,7 @@ fun Map<ReservationEntity, List<SeatEntity>>.toReservation(): Reservation {
         id = reservationEntity.id,
         cinemaName = reservationEntity.cinemaName,
         title = Title(reservationEntity.movieName),
-        releaseDate = reservationEntity.releaseDate.toMovieDate(),
+        releaseDate = reservationEntity.releaseDate.toDateTime(),
         runningTime = RunningTime(reservationEntity.runningTime.toInt()),
         synopsis = Synopsis(reservationEntity.synopsis),
         seats = seats
@@ -60,7 +59,7 @@ fun Map<ReservationEntity, List<SeatEntity>>.toReservations(): List<Reservation>
             id = reservation.id,
             cinemaName = reservation.cinemaName,
             title = Title(reservation.movieName),
-            releaseDate = reservation.releaseDate.toMovieDate(),
+            releaseDate = reservation.releaseDate.toDateTime(),
             runningTime = RunningTime(reservation.runningTime.toInt()),
             synopsis = Synopsis(reservation.synopsis),
             seats = seats
@@ -68,6 +67,6 @@ fun Map<ReservationEntity, List<SeatEntity>>.toReservations(): List<Reservation>
     }
 }
 
-private fun MovieDate.toFormattedString(): String = date.format(Formatter)
+private fun LocalDateTime.toFormattedString(): String = format(Formatter)
 
-private fun String.toMovieDate(): MovieDate = LocalDate.parse(this, Formatter).let(::MovieDate)
+private fun String.toDateTime(): LocalDateTime = LocalDateTime.parse(this, Formatter)
