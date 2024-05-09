@@ -6,15 +6,17 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.room.Room
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
+import woowacourse.movie.db.AppDatabase
 import woowacourse.movie.domain.model.Reservation
 import woowacourse.movie.domain.repository.DummyReservation
 import woowacourse.movie.domain.repository.DummyTheaters
 
 class ReservationCompleteActivity : AppCompatActivity(), ReservationContract.View {
-    private val presenter: ReservationContract.Presenter by lazy { ReservationPresenter(this, DummyReservation, DummyTheaters()) }
+    private lateinit var presenter: ReservationContract.Presenter
     private val binding: ActivityReservationCompleteBinding by lazy {
         DataBindingUtil.setContentView(this, R.layout.activity_reservation_complete)
     }
@@ -22,13 +24,27 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationContract.Vie
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        initPresenter()
         initView()
+    }
+
+    private fun initPresenter() {
+        val db =
+            Room.databaseBuilder(
+                applicationContext,
+                AppDatabase::class.java,
+                "reservationHistory",
+            ).build()
+
+        presenter = ReservationPresenter(this, DummyReservation, DummyTheaters(), db)
     }
 
     private fun initView() {
         val reservationId = intent.getIntExtra(PUT_EXTRA_KEY_RESERVATION_ID, DEFAULT_RESERVATION_ID)
         val theaterId =
             intent.getIntExtra(PUT_EXTRA_THEATER_ID_KEY, DEFAULT_THEATER_ID)
+
+        presenter.saveReservation(reservationId, theaterId)
         presenter.loadReservation(reservationId, theaterId)
     }
 

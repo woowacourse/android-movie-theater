@@ -23,5 +23,10 @@ interface ReservationContract {
             reservationId: Int,
             theaterId: Int,
         )
+
+        fun saveReservation(
+            reservationId: Int,
+            theaterId: Int,
+        )
     }
 }
