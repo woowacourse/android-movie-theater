@@ -17,7 +17,7 @@ class FetchScreeningWithIdUseCase(
             val screeningRef = screeningRefRepository.screeningRefById(screeningId) ?: throw error("no screeningRef")
             val movie = movieRepository.movieById(screeningRef.movieId) ?: throw error("no movie")
             val theater = theaterRepository.theaterById(screeningRef.theaterId) ?: throw error("no theater")
-            val localDateTime = LocalDateTime.ofEpochSecond(screeningRef.dateTimeStamp, 0, ZoneOffset.UTC)
+            val localDateTime = LocalDateTime.ofEpochSecond(screeningRef.screeningTimeStamp, 0, ZoneOffset.UTC)
             Screening(screeningId, movie, theater, localDateTime)
         }
     }

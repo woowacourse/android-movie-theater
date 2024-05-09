@@ -6,7 +6,7 @@ data class ScreeningRef(
     val id: Long,
     val movieId: Long,
     val theaterId: Long,
-    val dateTimeStamp: Long,
+    val screeningTimeStamp: Long,
 ) {
     companion object {
         val STUB =

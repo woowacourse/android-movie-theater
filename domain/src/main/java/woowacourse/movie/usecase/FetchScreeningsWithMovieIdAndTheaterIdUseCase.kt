@@ -23,7 +23,7 @@ class FetchScreeningsWithMovieIdAndTheaterIdUseCase(
                 val movie = movieRepository.movieById(it.movieId) ?: throw error("")
                 val theater = theaterRepository.theaterById(it.theaterId) ?: throw error("")
                 val localDateTime =
-                    LocalDateTime.ofEpochSecond(it.dateTimeStamp, 0, ZoneOffset.UTC)
+                    LocalDateTime.ofEpochSecond(it.screeningTimeStamp, 0, ZoneOffset.UTC)
                 Screening(it.id, movie, theater, localDateTime)
             }
         }
