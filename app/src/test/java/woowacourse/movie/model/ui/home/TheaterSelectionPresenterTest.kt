@@ -38,8 +38,6 @@ class TheaterSelectionPresenterTest {
         presenter.loadTheaters(-1L)
 
         // then
-        verify {
-            view.showError()
-        }
+        verify { view.showError() }
     }
 }

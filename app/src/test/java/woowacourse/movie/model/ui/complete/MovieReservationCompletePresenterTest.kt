@@ -1,49 +1,44 @@
 package woowacourse.movie.model.ui.complete
 
-import android.content.Context
-import androidx.room.Room
-import io.kotest.assertions.any
-import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkStatic
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.model.A1_SEAT
 import woowacourse.movie.model.db.UserTicket
-import woowacourse.movie.model.db.UserTicketDatabase
+import woowacourse.movie.model.db.UserTicketRepositoryImpl
+import woowacourse.movie.model.ui.FakeUserTicketDao
 import woowacourse.movie.ui.complete.MovieReservationCompleteContract
 import woowacourse.movie.ui.complete.MovieReservationCompletePresenter
+import java.time.LocalDateTime
 
 class MovieReservationCompletePresenterTest {
     private lateinit var presenter: MovieReservationCompletePresenter
     private lateinit var view: MovieReservationCompleteContract.View
-    private lateinit var db: UserTicketDatabase
 
     @BeforeEach
     fun setUp() {
+        UserTicketRepositoryImpl.initializeRepository(FakeUserTicketDao())
+        UserTicketRepositoryImpl.get().apply {
+            insert(testUserTicket)
+        }
         view = mockk<MovieReservationCompleteContract.View>(relaxed = true)
-        presenter = MovieReservationCompletePresenter(view)
-        db = mockk<UserTicketDatabase>()
+        presenter = MovieReservationCompletePresenter(view, UserTicketRepositoryImpl.get())
     }
 
     @Test
     fun `티켓 정보를 보여준다`() {
-        val context = mockk<Context>()
-        setUpDatabase(context)
+        // given
 
-        every { db.userTicketDao().find(1L) } returns mockk<UserTicket>()
+        // when
+        presenter.loadTicket(0L)
 
-        presenter.loadTicket(1L)
-
-        verify { view.showTicket(any()) }
+        // then
+        verify { view.showTicket(testUserTicket) }
     }
 
     @Test
     fun `티켓 정보가 없을 경우 에러를 보여준다`() {
-        val context = mockk<Context>()
-        setUpDatabase(context)
-        every { db.userTicketDao().find(-1L) } throws NoSuchElementException()
-
         presenter.loadTicket(-1L)
 
         verify { view.showError(any()) }
@@ -60,16 +55,15 @@ class MovieReservationCompletePresenterTest {
         verify { view.showError(any()) }
     }
 
-    private fun setUpDatabase(context: Context) {
-        mockkStatic(Room::class)
-        every {
-            Room.databaseBuilder(
-                context.applicationContext,
-                UserTicketDatabase::class.java,
-                any(),
-            ).build()
-        } returns db
-
-        UserTicketDatabase.initialize(context)
+    companion object {
+        private val testUserTicket =
+            UserTicket(
+                movieTitle = "",
+                screeningStartDateTime = LocalDateTime.of(2024, 3, 28, 21, 0),
+                reservationCount = 1,
+                reservationSeats = listOf(A1_SEAT),
+                theaterName = "선릉",
+                reservationAmount = 10000,
+            )
     }
 }

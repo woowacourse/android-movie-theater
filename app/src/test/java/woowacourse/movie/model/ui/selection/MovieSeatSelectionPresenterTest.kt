@@ -5,8 +5,10 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.model.data.ReservationsImpl
+import woowacourse.movie.model.db.UserTicketRepositoryImpl
 import woowacourse.movie.model.movie.Reservation
 import woowacourse.movie.model.movie.ReservationCount
+import woowacourse.movie.model.ui.FakeUserTicketDao
 import woowacourse.movie.ui.selection.MovieSeatSelectionContract
 import woowacourse.movie.ui.selection.MovieSeatSelectionPresenter
 import java.time.LocalDateTime
@@ -17,8 +19,10 @@ class MovieSeatSelectionPresenterTest {
 
     @BeforeEach
     fun setUp() {
+        UserTicketRepositoryImpl.initializeRepository(FakeUserTicketDao())
         view = mockk<MovieSeatSelectionContract.View>(relaxed = true)
-        presenter = MovieSeatSelectionPresenter(view, ReservationsImpl)
+        presenter =
+            MovieSeatSelectionPresenter(view, ReservationsImpl, UserTicketRepositoryImpl.get())
         ReservationsImpl.save(
             Reservation(
                 title = "",
