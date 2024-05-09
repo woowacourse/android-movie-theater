@@ -6,13 +6,13 @@ import woowacourse.movie.model.ticket.Ticket
 
 interface ReservationResultContract {
     interface View {
-        fun showMovieTitle(movie: Movie)
+        fun showReservationMovieTitle(movie: Movie)
 
-        fun showReservationHistory(ticket: Ticket)
+        fun showReservationTicketInfo(ticket: Ticket)
 
         fun finshActivityWithErrorToast()
 
-        fun showTheaterName(theaterName: String)
+        fun showReservationTheaterName(theaterName: String)
     }
 
     interface Presenter {

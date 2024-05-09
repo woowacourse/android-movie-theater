@@ -44,12 +44,12 @@ class ReservationResultPresenterTest {
     fun `영화 예매를 완료하면 예매한 영화 제목이 화면에 표시되어야 한다`() {
         val expectedMovieTitle = "해리 포터와 마법사의 돌"
 
-        every { view.showMovieTitle(firstMovie) } answers {
+        every { view.showReservationMovieTitle(firstMovie) } answers {
             val actualMovie = arg<Movie>(0)
             assertEquals(actualMovie.title, expectedMovieTitle)
         }
         presenter.loadMovie(0)
-        verify { view.showMovieTitle(firstMovie) }
+        verify { view.showReservationMovieTitle(firstMovie) }
     }
 
     @Test
@@ -59,7 +59,7 @@ class ReservationResultPresenterTest {
         val expectedSeatRow = 'A'
         val expectedSeatColumn = 1
 
-        every { view.showReservationHistory(sampleTicket) } answers {
+        every { view.showReservationTicketInfo(sampleTicket) } answers {
             val actualTicket = arg<Ticket>(0)
             assertEquals(actualTicket.amount, expectedTicketPrice)
             assertEquals(actualTicket.seats.seats.size, expectedNumberOfTicket)
@@ -67,18 +67,18 @@ class ReservationResultPresenterTest {
             assertEquals(actualTicket.seats.seats.first().column, expectedSeatColumn)
         }
         presenter.loadTicket(sampleTicket)
-        verify { view.showReservationHistory(sampleTicket) }
+        verify { view.showReservationTicketInfo(sampleTicket) }
     }
 
     @Test
     fun `영화 예매를 완료하면 예매한 극장 이름이 화면에 표시되어야 한다`() {
         val expectedTheaterName = "선릉 극장"
 
-        every { view.showTheaterName(firstTheater.theaterName) } answers {
+        every { view.showReservationTheaterName(firstTheater.theaterName) } answers {
             val actualTheaterName = arg<String>(0)
             assertEquals(actualTheaterName, expectedTheaterName)
         }
         presenter.loadTheater(0)
-        verify { view.showTheaterName(firstTheater.theaterName) }
+        verify { view.showReservationTheaterName(firstTheater.theaterName) }
     }
 }

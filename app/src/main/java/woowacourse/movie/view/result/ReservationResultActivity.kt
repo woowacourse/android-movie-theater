@@ -40,11 +40,11 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
         receiveTicket()
     }
 
-    override fun showMovieTitle(movie: Movie) = runOnUiThread {
+    override fun showReservationMovieTitle(movie: Movie) = runOnUiThread {
         binding.textViewReservationFinishedTitle.text = movie.title
     }
 
-    override fun showReservationHistory(ticket: Ticket)  = runOnUiThread {
+    override fun showReservationTicketInfo(ticket: Ticket)  = runOnUiThread {
         val seats = ticket.seats.seats
         binding.textViewReservationFinishedNumberOfTickets.text = seats.size.toString()
         binding.textViewReservationFinishedTicketPrice.text =
@@ -61,7 +61,7 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
         finish()
     }
 
-    override fun showTheaterName(theaterName: String) {
+    override fun showReservationTheaterName(theaterName: String) {
         binding.textViewReservationFinishedTheaterName.text =
             getString(R.string.reservation_finished_theater, theaterName)
     }

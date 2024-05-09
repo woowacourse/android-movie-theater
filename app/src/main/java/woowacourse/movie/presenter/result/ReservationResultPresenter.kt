@@ -28,15 +28,15 @@ class ReservationResultPresenter(
 
     override fun loadMovie(movieId: Int) {
         val movie: Movie = screeningDao.find(movieId)
-        view.showMovieTitle(movie)
+        view.showReservationMovieTitle(movie)
     }
 
     override fun loadTicket(ticket: Ticket) {
-        view.showReservationHistory(ticket)
+        view.showReservationTicketInfo(ticket)
     }
 
     override fun loadTheater(theaterId: Int) {
         val theater = theaterDao.find(theaterId)
-        view.showTheaterName(theater.theaterName)
+        view.showReservationTheaterName(theater.theaterName)
     }
 }
