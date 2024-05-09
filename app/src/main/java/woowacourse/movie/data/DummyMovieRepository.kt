@@ -71,6 +71,8 @@ object DummyMovieRepository : MovieRepository {
 
     override fun movies(): List<Movie> = screeningSchedules.map { it.movie }.distinct()
 
+    override fun movieById(id: Long): Movie? = movies().getOrNull(id.toInt())
+
     override fun advertisements(): List<Advertisement> = List(10) { Advertisement() }
 
     override fun screeningById(id: Long): Screening? = screenings[id.toInt()]

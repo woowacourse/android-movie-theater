@@ -24,7 +24,7 @@ import woowacourse.movie.data.theater.TheaterDto
         ),
     ],
 )
-data class ScreeningDto(
+data class ScreeningRefDto(
     @PrimaryKey(autoGenerate = true) val id: Long,
     val movieId: Long,
     val theaterId: Long,
