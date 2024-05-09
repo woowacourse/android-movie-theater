@@ -126,6 +126,7 @@ class SeatSelectionPresenter(
     private fun saveReservation(reservation: Reservation) {
         thread(start = true) {
             reservationRepository.saveReservation(reservation).onSuccess { reservationId ->
+                view.setReservationNotification(reservation.copy(id = reservationId))
                 view.navigateToReservation(reservationId)
             }.onFailure { e ->
                 view.terminateOnError(e)

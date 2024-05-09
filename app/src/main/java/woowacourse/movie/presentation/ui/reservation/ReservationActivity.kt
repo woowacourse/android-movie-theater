@@ -42,7 +42,7 @@ class ReservationActivity : BaseActivity<ActivityReservationBinding>(), View {
     }
 
     companion object {
-        private const val PUT_EXTRA_KEY_RESERVATION_ID = "reservationId"
+        const val PUT_EXTRA_KEY_RESERVATION_ID = "reservationId"
         private const val DEFAULT_RESERVATION_ID = -1L
 
         fun startActivity(
