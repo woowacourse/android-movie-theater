@@ -23,20 +23,25 @@ class ReservationListPresenter(
     }
 
     private fun refreshDb(reservationDatabase: ReservationDatabase) {
-        Thread {
-            val dao = reservationDatabase.reservationDao()
-            dao.getAll().map { reservationData ->
-                _reservationList.add(
-                    ReservationItemUiModel(
-                        id = reservationData.id,
-                        theaterName = findTheater(reservationData.theaterId)?.name,
-                        movieTitle = reservationData.movieTitle,
-                        screenDate = reservationData.screenDate,
-                        screenTime = reservationData.screenTime,
-                    ),
-                )
+        val thread =
+            Thread {
+                val dao = reservationDatabase.reservationDao()
+                dao.getAll().map { reservationData ->
+                    val reservationItem =
+                        ReservationItemUiModel(
+                            id = reservationData.id,
+                            theaterName = findTheater(reservationData.theaterId)?.name,
+                            movieTitle = reservationData.movieTitle,
+                            screenDate = reservationData.screenDate,
+                            screenTime = reservationData.screenTime,
+                        )
+                    if (!_reservationList.contains(reservationItem)) {
+                        _reservationList.add(reservationItem)
+                    }
+                }
             }
-        }.start()
+        thread.start()
+        thread.join()
     }
 
     override fun navigate(
