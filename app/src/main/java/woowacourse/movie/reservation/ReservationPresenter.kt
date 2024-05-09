@@ -1,14 +1,12 @@
 package woowacourse.movie.reservation
 
-import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import woowacourse.movie.database.AppDatabase
+import woowacourse.movie.database.Ticket
 
-class ReservationPresenter(
-    private val database: AppDatabase
-) : ReservationContract.Presenter {
+class ReservationPresenter() : ReservationContract.Presenter {
 
     private var view: ReservationContract.View? = null
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
@@ -28,4 +26,9 @@ class ReservationPresenter(
             view?.showReservations(ticket)
         }.start()
     }
+
+    override fun onClickedList(ticket: Ticket) {
+        view?.navigateToTicketDetail(ticket)
+    }
+
 }

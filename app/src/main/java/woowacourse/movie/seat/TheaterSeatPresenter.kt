@@ -1,5 +1,6 @@
 package woowacourse.movie.seat
 
+import android.util.Log
 import woowacourse.movie.database.AppDatabase
 import woowacourse.movie.database.Ticket
 import woowacourse.movie.model.Cinema
@@ -85,13 +86,15 @@ class TheaterSeatPresenter(
     override fun saveTicketToDatabase() {
         val ticket =
             Ticket(
-                movieName = cinema.theater.movie.title.toString(),
                 date = showTime,
-                seatNumbers = selectedSeats.joinToString(),
+                seatNumbers = selectedSeats.toString(),
                 cinemaName = cinema.cinemaName,
+                movieTitle = cinema.theater.movie.title.toString(),
+                runningTime = cinema.theater.movie.runningTime.toString(),
                 ticketPrice = totalPrice,
             )
-        Thread{
+        Log.d("cinema", cinema.toString())
+        Thread {
             database.ticketDao().insertTicket(ticket)
         }.start()
     }

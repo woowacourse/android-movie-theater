@@ -133,11 +133,13 @@ class TheaterSeatActivity :
                 val ticketPrice = findViewById<TextView>(R.id.total_price).text
                 if (cinema != null) {
                     PurchaseConfirmationActivity.newIntent(
-                        this,
-                        ticketPrice.toString(),
-                        presenter.selectedSeats.toTypedArray(),
-                        cinema,
-                        intent.getStringExtra(EXTRA_TIME_DATE)!!,
+                        context = this,
+                        ticketPrice = ticketPrice.toString(),
+                        seatNumber = presenter.selectedSeats.toTypedArray(),
+                        cinemaName = cinema.cinemaName,
+                        movieTitle = cinema.theater.movie.title.toString(),
+                        runningTime = cinema.theater.movie.runningTime.toString(),
+                        timeDate = intent.getStringExtra(EXTRA_TIME_DATE)!!,
                     ).apply {
                         presenter.saveTicketToDatabase()
                         navigateToNextPage(this)
