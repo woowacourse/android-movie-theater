@@ -5,11 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <variable
-            name="presenter"
-            type="woowacourse.movie.ui.seat.SeatReservationPresenter" />
-
+        
         <variable
             name="timeReservation"
             type="woowacourse.movie.domain.model.TimeReservation" />
@@ -19,13 +15,8 @@
             type="Integer" />
 
         <variable
-            name="theaterId"
-            type="Integer" />
-
-        <variable
-            name="isReservationComplete"
-            type="Boolean" />
-
+            name="onReserveClickedListener"
+            type="woowacourse.movie.ui.seat.OnReserveClickedListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -91,26 +82,27 @@
                 android:id="@+id/tv_seat_reservation_total_price"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="18dp"
                 app:currency="@{totalPrice}"
+                android:textSize="18dp"
                 app:layout_constraintStart_toStartOf="@+id/tv_seat_reservation_movie_title"
                 app:layout_constraintTop_toBottomOf="@+id/tv_seat_reservation_movie_title"
                 tools:text="20,000원" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <Button
             android:id="@+id/btn_seat_reservation_complete"
             android:layout_width="100dp"
             android:layout_height="0dp"
-            android:onClick="@{() -> presenter.attemptReservation(timeReservation.id, theaterId)}"
+            android:background="@color/complete_deactivated"
+            android:enabled="false"
+            android:onClick="@{() -> onReserveClickedListener.onClick()}"
             android:text="@string/ok"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/cl_seat_reservation_bottom"
-            app:appCompatButtonEnabled="@{isReservationComplete}" />
+            app:layout_constraintTop_toTopOf="@+id/cl_seat_reservation_bottom" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -6,14 +6,11 @@ import woowacourse.movie.domain.model.TimeReservation
 
 interface SeatReservationContract {
     interface View {
-        fun initBinding(
-            totalPrice: Int,
-            timeReservation: TimeReservation,
-        )
-
-        fun updateTotalPrice(totalPrice: Int)
+        fun showTimeReservation(timeReservation: TimeReservation)
 
         fun showAllSeats(seats: Seats)
+
+        fun updateTotalPrice(totalPrice: Int)
 
         fun activateReservation(boolean: Boolean)
 
@@ -24,30 +21,24 @@ interface SeatReservationContract {
 
         fun showSeatReservationFail(throwable: Throwable)
 
-        fun showReservationConfirmDialog(
-            reservationId: Int,
-            theaterId: Int,
-        )
-
         fun showToast(e: Throwable)
     }
 
     interface Presenter {
-        fun loadData(timeReservationId: Int)
+        fun saveId(
+            theaterId: Int,
+            timeReservationId: Int,
+        )
+
+        fun loadAllSeats()
+
+        fun loadTimeReservation()
 
         fun selectSeat(
             position: Position,
             seatView: android.view.View,
         )
 
-        fun attemptReservation(
-            screenId: Int,
-            theaterId: Int,
-        )
-
-        fun completeReservation(
-            screenId: Int,
-            theaterId: Int,
-        )
+        fun reserve(theaterId: Int)
     }
 }
