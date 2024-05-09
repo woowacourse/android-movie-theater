@@ -40,11 +40,11 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
         receiveTicket()
     }
 
-    override fun showMovieTitle(movie: Movie) {
+    override fun showMovieTitle(movie: Movie) = runOnUiThread {
         binding.textViewReservationFinishedTitle.text = movie.title
     }
 
-    override fun showReservationHistory(ticket: Ticket) {
+    override fun showReservationHistory(ticket: Ticket)  = runOnUiThread {
         val seats = ticket.seats.seats
         binding.textViewReservationFinishedNumberOfTickets.text = seats.size.toString()
         binding.textViewReservationFinishedTicketPrice.text =
@@ -56,8 +56,9 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
         binding.textViewReservationFinishedScreeningTime.text = ticket.screeningDateTime.time
     }
 
-    override fun showErrorToast() {
+    override fun finshActivityWithErrorToast() = runOnUiThread {
         makeToast(this, getString(R.string.all_error))
+        finish()
     }
 
     override fun showTheaterName(theaterName: String) {
@@ -66,26 +67,13 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
     }
 
     private fun receiveTicket() {
-        Thread {
-            runCatching {
-                val ticketId = intent.getLongExtra(RESERVATION_TICKET_ID, DEFAULT_TICKET_ID)
-                val reservationTicket = presenter.loadTicketWithTicketId(ticketId)
-                reservationTicket ?: throw NoSuchElementException()
-            }.onSuccess {
-                runOnUiThread {
-                    with(presenter) {
-                        loadMovie(it.movieId)
-                        loadTicket(it.toTicket())
-                    }
-                }
-            }.onFailure {
-                runOnUiThread {
-                    showErrorToast()
-                    finish()
-                }
-            }
-        }.start()
+        val ticketId = receiveTicketId()
+        presenter.loadTicketWithTicketId(ticketId)
     }
+
+    private fun receiveTicketId(): Long =
+        intent.getLongExtra(RESERVATION_TICKET_ID, DEFAULT_TICKET_ID)
+
 
     private fun handleBackPressed() {
         onBackPressedDispatcher.addCallback(this) {

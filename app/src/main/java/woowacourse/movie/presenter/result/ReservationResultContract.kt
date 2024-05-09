@@ -10,13 +10,13 @@ interface ReservationResultContract {
 
         fun showReservationHistory(ticket: Ticket)
 
-        fun showErrorToast()
+        fun finshActivityWithErrorToast()
 
         fun showTheaterName(theaterName: String)
     }
 
     interface Presenter {
-        fun loadTicketWithTicketId(ticketId: Long): ReservationTicket?
+        fun loadTicketWithTicketId(ticketId: Long)
 
         fun loadMovie(movieId: Int)
 
