@@ -2,7 +2,7 @@ package woowacourse.movie.model
 
 import java.time.LocalDateTime
 
-class Screening(
+data class Screening(
     val id: Long,
     val movie: Movie,
     val theater: Theater,

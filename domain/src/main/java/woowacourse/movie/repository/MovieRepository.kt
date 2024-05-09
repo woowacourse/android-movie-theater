@@ -9,6 +9,8 @@ import woowacourse.movie.model.Seats
 import woowacourse.movie.model.Theater
 
 interface MovieRepository {
+    fun movieById(id: Long): Movie?
+
     fun movies(): List<Movie>
 
     fun advertisements(): List<Advertisement>
