@@ -14,10 +14,10 @@ import androidx.core.content.ContextCompat
 import woowacourse.movie.MovieTheaterApplication
 import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.databinding.FragmentSettingBinding
+import woowacourse.movie.feature.setting.notification.TicketAlarm
 import woowacourse.movie.util.BaseFragment
 import woowacourse.movie.util.MovieIntentConstant.DEFAULT_VALUE_NOTIFICATION
 import woowacourse.movie.util.MovieIntentConstant.KEY_NOTIFICATION
-import woowacourse.movie.feature.setting.notification.TicketAlarm
 
 class SettingFragment :
     BaseFragment<SettingContract.Presenter>(),

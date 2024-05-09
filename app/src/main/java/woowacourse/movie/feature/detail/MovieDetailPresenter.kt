@@ -47,7 +47,7 @@ class MovieDetailPresenter(
             movieId,
             screeningDate.unFormatSpinnerLocalDate(),
             screeningTime.unFormatSpinnerLocalTime(),
-            reservationCount.count
+            reservationCount.count,
         )
     }
 }
