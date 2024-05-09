@@ -16,6 +16,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieSettingBinding
+import woowacourse.movie.ui.setting.notification.MovieAlarmManager
 
 class MovieSettingFragment : Fragment() {
     private lateinit var binding: FragmentMovieSettingBinding

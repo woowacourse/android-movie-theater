@@ -9,7 +9,7 @@ import woowacourse.movie.model.db.UserTicketDatabase
 import woowacourse.movie.model.movie.Reservation
 import woowacourse.movie.model.movie.ReservationDetail
 import woowacourse.movie.model.movie.Seat
-import woowacourse.movie.ui.setting.MovieAlarmManager
+import woowacourse.movie.ui.setting.notification.MovieAlarmManager
 import woowacourse.movie.ui.utils.positionToIndex
 
 class MovieSeatSelectionPresenter(

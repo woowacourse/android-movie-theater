@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.setting
+package woowacourse.movie.ui.setting.notification
 
 import android.app.AlarmManager
 import android.app.PendingIntent

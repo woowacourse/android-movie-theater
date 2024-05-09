@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.setting
+package woowacourse.movie.ui.setting.notification
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -9,7 +9,7 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
-import woowacourse.movie.ui.setting.MovieAlarmManager.REQUEST_CODE
+import woowacourse.movie.ui.setting.notification.MovieAlarmManager.REQUEST_CODE
 
 class MovieAlarmNotificationBuilder(
     private val context: Context,

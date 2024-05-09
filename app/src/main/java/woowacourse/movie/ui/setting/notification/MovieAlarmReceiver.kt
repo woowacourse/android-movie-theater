@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.setting
+package woowacourse.movie.ui.setting.notification
 
 import android.content.BroadcastReceiver
 import android.content.Context
