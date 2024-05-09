@@ -1,5 +1,8 @@
 package woowacourse.movie.presentation.seatSelection
 
+import android.content.Context
+import woowacourse.movie.database.ReservationData
+import woowacourse.movie.database.ReservationDatabase
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.SeatingSystem
 import woowacourse.movie.model.Ticket
@@ -62,8 +65,36 @@ class SeatSelectionPresenter(
     override fun navigate(
         screeningDateTime: String,
         theaterId: Long,
+        // Is it possible to erase context here?
+        context: Context,
     ) {
-        val ticket = Ticket(selectedMovie.title, screeningDateTime, seatingSystem.selectedSeats.toList(), theaterId)
+        val ticket =
+            Ticket(
+                selectedMovie.title,
+                screeningDateTime,
+                seatingSystem.selectedSeats.toList(),
+                theaterId,
+            )
+        Thread {
+            ReservationDatabase.getInstance(context)?.let { storeDataToDatabase(it, ticket) }
+        }.start()
         seatSelectionContractView.navigate(ticket)
+    }
+
+    private fun storeDataToDatabase(
+        reservationDatabase: ReservationDatabase,
+        ticket: Ticket,
+    ) {
+        val dao = reservationDatabase.reservationDao()
+        val reservationData: ReservationData =
+            ReservationData(
+                theaterId = ticket.theaterId,
+                movieTitle = ticket.movieTitle,
+                screenDate = ticket.screeningDateTime.split(' ')[0],
+                screenTime = ticket.screeningDateTime.split(' ')[1],
+                selectedSeats = ticket.selectedSeatsToString(),
+                totalPrice = ticket.totalPriceToString(),
+            )
+        dao.insertAll(reservationData)
     }
 }

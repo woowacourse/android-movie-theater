@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.seatSelection
 
+import android.content.Context
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.Seat
 import woowacourse.movie.model.SeatingSystem
@@ -34,6 +35,7 @@ interface SeatSelectionContract {
         fun navigate(
             screeningDateTime: String,
             theaterId: Long,
+            context: Context,
         )
     }
 }
