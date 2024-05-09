@@ -12,6 +12,7 @@ import woowacourse.movie.seats.model.SeatsDataSource.seatTotalPrice
 import woowacourse.movie.seats.model.SeatsDataSource.selectedSeats
 import woowacourse.movie.seats.model.SeatsDataSource.theaterId
 import woowacourse.movie.seats.model.SeatsDataSource.ticketCount
+import woowacourse.movie.seats.model.SeatsDataSource.ticketData
 import woowacourse.movie.seats.model.SeatsDataSource.time
 
 class SeatsPresenter(val view: SeatsContract.View) : SeatsContract.Presenter {
@@ -38,15 +39,7 @@ class SeatsPresenter(val view: SeatsContract.View) : SeatsContract.Presenter {
     }
 
     override fun startNextActivity() {
-        view.startNextActivity(
-            movieId,
-            theaterId,
-            movieList[movieId.toInt()].title,
-            date,
-            time,
-            selectedSeats,
-            seatTotalPrice,
-        )
+        view.startNextActivity(ticketData)
     }
 
     override fun storeDate(date: String) {

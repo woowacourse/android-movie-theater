@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.list.adapter.MovieListAdapter
-import woowacourse.movie.list.adapter.OnItemClickListener
+import woowacourse.movie.list.adapter.MovieOnItemClickListener
 import woowacourse.movie.list.contract.MovieListContract
 import woowacourse.movie.list.model.TheaterContent
 import woowacourse.movie.list.presenter.MovieListPresenter
 import woowacourse.movie.list.view.TheaterBottomSheetFragment.Companion.newFragmentInstance
 
-class MovieListFragment : Fragment(), MovieListContract.View, OnItemClickListener {
+class MovieListFragment : Fragment(), MovieListContract.View, MovieOnItemClickListener {
     override val presenter = MovieListPresenter(this)
     private lateinit var binding: FragmentMovieListBinding
     private lateinit var movieListAdapter: MovieListAdapter

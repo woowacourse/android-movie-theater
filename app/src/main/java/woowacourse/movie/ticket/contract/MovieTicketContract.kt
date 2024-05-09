@@ -1,8 +1,7 @@
 package woowacourse.movie.ticket.contract
 
-import woowacourse.movie.detail.model.Count
-import woowacourse.movie.seats.model.Seat
 import woowacourse.movie.ticket.model.DbTicket
+import java.io.Serializable
 
 interface MovieTicketContract {
     interface View {
@@ -12,8 +11,8 @@ interface MovieTicketContract {
             movieTitle: String,
             screeningDate: String,
             screeningTime: String,
-            seatsCount: Count,
-            seats: List<Seat>,
+            seatsCount: Int,
+            seats: String,
             theater: String,
             moviePrice: Int,
         )
@@ -24,15 +23,7 @@ interface MovieTicketContract {
     interface Presenter {
         fun setTicketInfo()
 
-        fun storeTicketData(
-            movieId: Long,
-            screeningDate: String,
-            screeningTime: String,
-            seatsCount: Count,
-            seats: List<Seat>,
-            theaterId: Long,
-            price: Int,
-        )
+        fun storeTicketData(ticket: Serializable?)
 
         fun storeTicketInDb()
     }

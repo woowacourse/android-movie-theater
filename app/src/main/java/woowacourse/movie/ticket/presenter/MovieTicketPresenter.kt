@@ -1,39 +1,16 @@
 package woowacourse.movie.ticket.presenter
 
-import woowacourse.movie.common.CommonDataSource
-import woowacourse.movie.detail.model.Count
-import woowacourse.movie.list.model.TheaterData
-import woowacourse.movie.seats.model.Seat
 import woowacourse.movie.ticket.contract.MovieTicketContract
-import woowacourse.movie.ticket.db_mapper.DbMapper
-import woowacourse.movie.ticket.model.Ticket
+import woowacourse.movie.ticket.model.DbTicket
 import woowacourse.movie.ticket.model.TicketDataResource
+import java.io.Serializable
 
 class MovieTicketPresenter(
     val view: MovieTicketContract.View,
 ) : MovieTicketContract.Presenter {
 
-    override fun storeTicketData(
-        movieId: Long,
-        screeningDate: String,
-        screeningTime: String,
-        seatsCount: Count,
-        seats: List<Seat>,
-        theaterId: Long,
-        price: Int,
-    ) {
-        TicketDataResource.ticket =
-            Ticket(
-                movieId,
-                screeningDate,
-                screeningTime,
-                seatsCount,
-                seats,
-                theaterId,
-                price,
-            )
-
-        TicketDataResource.dbTicket = DbMapper.mapTicketDb(TicketDataResource.ticket)
+    override fun storeTicketData(ticket: Serializable?) {
+        TicketDataResource.dbTicket = ticket as DbTicket
     }
 
     override fun storeTicketInDb() {
@@ -41,16 +18,14 @@ class MovieTicketPresenter(
     }
 
     override fun setTicketInfo() {
-        val movieTitle = CommonDataSource.movieList.first { it.id == TicketDataResource.ticket.movieId }.title
-        val theaterName = TheaterData.theaters.first { it.id == TicketDataResource.ticket.theaterId }.name
         view.showTicketView(
-            movieTitle,
-            TicketDataResource.ticket.screeningDate,
-            TicketDataResource.ticket.screeningTime,
-            TicketDataResource.ticket.seatsCount,
-            TicketDataResource.ticket.seats,
-            theaterName,
-            TicketDataResource.ticket.price,
+            TicketDataResource.dbTicket.movieTitle,
+            TicketDataResource.dbTicket.screeningDate,
+            TicketDataResource.dbTicket.screeningTime,
+            TicketDataResource.dbTicket.seatsCount,
+            TicketDataResource.dbTicket.seats,
+            TicketDataResource.dbTicket.theaterName,
+            TicketDataResource.dbTicket.price,
         )
     }
 }

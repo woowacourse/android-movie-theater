@@ -2,6 +2,7 @@ package woowacourse.movie.seats.contract
 
 import android.widget.TextView
 import woowacourse.movie.seats.model.Seat
+import java.io.Serializable
 
 interface SeatsContract {
     interface View {
@@ -17,15 +18,7 @@ interface SeatsContract {
 
         fun setSeatsText(info: Seat)
 
-        fun startNextActivity(
-            movieId: Long,
-            theaterId: Long,
-            title: String,
-            date: String,
-            time: String,
-            seats: List<Seat>,
-            price: Int,
-        )
+        fun startNextActivity(ticketData: Serializable)
 
         fun initCell(
             cell: TextView,

@@ -138,24 +138,9 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
             }.setCancelable(false).show()
     }
 
-    override fun startNextActivity(
-        movieId: Long,
-        theaterId: Long,
-        title: String,
-        date: String,
-        time: String,
-        seats: List<Seat>,
-        price: Int
-    ) {
+    override fun startNextActivity(ticketData: Serializable) {
         val intent = Intent(this, MovieTicketActivity::class.java)
-        intent.putExtra(EXTRA_MOVIE_ID_KEY, movieId)
-        intent.putExtra(EXTRA_THEATER_ID_KEY, theaterId)
-        intent.putExtra(TITLE_KEY, title)
-        intent.putExtra(DATE_KEY, date)
-        intent.putExtra(TIME_KEY, time)
-        intent.putExtra(SEATS_KEY, seats as Serializable)
-        intent.putExtra(PRICE_KEY, price)
-        intent.putExtra(EXTRA_THEATER_ID_KEY, theaterId)
+        intent.putExtra("ticket_key", ticketData)
         startActivity(intent)
     }
 

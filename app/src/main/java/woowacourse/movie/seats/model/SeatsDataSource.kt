@@ -1,5 +1,9 @@
 package woowacourse.movie.seats.model
 
+import woowacourse.movie.common.CommonDataSource
+import woowacourse.movie.list.model.TheaterData
+import woowacourse.movie.ticket.model.DbTicket
+
 object SeatsDataSource {
     var date: String = ""
     var time: String = ""
@@ -10,4 +14,15 @@ object SeatsDataSource {
     var theaterId: Long = -1
     var ticketCount: Int = -1
     var seat: Seat = Seat.of(1, 1)
+
+    val ticketData
+        get() = DbTicket(
+            CommonDataSource.movieList.first { it.id == movieId }.title,
+            date,
+            time,
+            selectedSeats.size,
+            selectedSeats.joinToString { it.coordinate },
+            TheaterData.theaters.first { it.id == theaterId }.name,
+            seatTotalPrice,
+        )
 }

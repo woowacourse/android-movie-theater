@@ -13,13 +13,13 @@ import woowacourse.movie.list.model.TheaterContent
 
 class MovieListAdapter(
     private var theaterContent: List<TheaterContent>,
-    private val movieHomeClickListener: OnItemClickListener,
+    private val movieHomeClickListener: MovieOnItemClickListener,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class MovieListViewHolder(val binding: MovieItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie) {
             binding.movie = movie
             binding.moviePoster.setImageResource(movie.posterResourceId)
-            binding.onItemClickListener = movieHomeClickListener
+            binding.movieOnItemClickListener = movieHomeClickListener
         }
     }
 

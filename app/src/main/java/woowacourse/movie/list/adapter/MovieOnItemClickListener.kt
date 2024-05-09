@@ -1,5 +1,5 @@
 package woowacourse.movie.list.adapter
 
-interface OnItemClickListener {
+interface MovieOnItemClickListener {
     fun onClick(movieId: Long)
 }

@@ -8,6 +8,7 @@
         <variable
             name="reservationHistoryFragment"
             type="woowacourse.movie.list.view.ReservationHistoryFragment" />
+
     </data>
 
     <LinearLayout
