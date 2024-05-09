@@ -9,10 +9,10 @@ import woowacourse.movie.ticket.model.DbTicket
 
 @Dao
 interface TicketDao {
-    @Query("SELECT * FROM tickets")
+    @Query("SELECT * FROM ticketDb")
     fun getAll(): List<DbTicket>
 
-    @Query("DELETE FROM tickets")
+    @Query("DELETE FROM ticketDb")
     fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

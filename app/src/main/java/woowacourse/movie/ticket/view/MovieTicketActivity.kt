@@ -1,14 +1,12 @@
 package woowacourse.movie.ticket.view
 
-import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.room.Room
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieTicketBinding
 import woowacourse.movie.detail.model.Count
-import woowacourse.movie.list.view.AppDatabase
+import woowacourse.movie.list.model.TicketDatabase.Companion.getDatabase
 import woowacourse.movie.list.view.TheaterBottomSheetFragment.Companion.EXTRA_MOVIE_ID_KEY
 import woowacourse.movie.list.view.TheaterBottomSheetFragment.Companion.EXTRA_THEATER_ID_KEY
 import woowacourse.movie.seats.model.Seat
@@ -31,16 +29,12 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
         binding.ticket = this
         setContentView(binding.root)
         processPresenterTask()
-
-        presenter.saveTicketIntDb()
     }
 
-    override fun storeTicketsInDb(ticket: DbTicket) {
-        val ticketDb = getTicketDb(applicationContext)
+    override fun storeTicketInDb(ticket: DbTicket) {
+        val ticketDb = getDatabase(applicationContext)
         Thread {
             ticketDb.ticketDao().insertAll(ticket)
-            val tickets = ticketDb.ticketDao().getAll()
-            presenter.storeDbTickets(tickets)
         }.start()
     }
 
@@ -54,8 +48,8 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
             intent.getLongExtra(EXTRA_THEATER_ID_KEY, -1),
             intent.getIntExtra(PRICE_KEY, 0),
         )
-
         presenter.setTicketInfo()
+        presenter.storeTicketInDb()
     }
 
     override fun showTicketView(
@@ -83,8 +77,5 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
 
     companion object {
         private const val TICKET_PRICE = "%,d원 (현장결제)"
-        fun getTicketDb(context: Context): AppDatabase {
-            return Room.databaseBuilder(context, AppDatabase::class.java, "tickets").build()
-        }
     }
 }

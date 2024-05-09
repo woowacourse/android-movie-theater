@@ -16,7 +16,7 @@ data class Ticket(
     val price: Int,
 )
 
-@Entity(tableName = "tickets")
+@Entity(tableName = "ticketDb")
 data class DbTicket(
     @ColumnInfo(name = "movie_title") val movieTitle: String,
     @ColumnInfo(name = "screening_date") val screeningDate: String,

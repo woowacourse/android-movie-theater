@@ -18,7 +18,7 @@ interface MovieTicketContract {
             moviePrice: Int,
         )
 
-        fun storeTicketsInDb(ticket: DbTicket)
+        fun storeTicketInDb(ticket: DbTicket)
     }
 
     interface Presenter {
@@ -34,7 +34,6 @@ interface MovieTicketContract {
             price: Int,
         )
 
-        fun saveTicketIntDb()
-        fun storeDbTickets(tickets: List<DbTicket>)
+        fun storeTicketInDb()
     }
 }

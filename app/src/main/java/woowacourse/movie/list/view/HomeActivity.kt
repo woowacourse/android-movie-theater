@@ -8,7 +8,6 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityHomeBinding
 import woowacourse.movie.list.contract.HomeContract
 import woowacourse.movie.list.presenter.HomePresenter
-import woowacourse.movie.ticket.view.MovieTicketActivity
 
 class HomeActivity : AppCompatActivity(), HomeContract.View {
     private lateinit var binding: ActivityHomeBinding
@@ -21,12 +20,6 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
         presenter = HomePresenter(this)
         setContentView(binding.root)
         initBottomNavigation()
-
-        val ticketDb = MovieTicketActivity.getTicketDb(applicationContext)
-        Thread {
-            val tickets = ticketDb.ticketDao().getAll()
-            presenter.storeDbTickets(tickets)
-        }.start()
     }
 
     private fun initBottomNavigation() {

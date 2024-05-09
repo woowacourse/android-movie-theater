@@ -6,7 +6,6 @@ import woowacourse.movie.list.model.TheaterData
 import woowacourse.movie.seats.model.Seat
 import woowacourse.movie.ticket.contract.MovieTicketContract
 import woowacourse.movie.ticket.db_mapper.DbMapper
-import woowacourse.movie.ticket.model.DbTicket
 import woowacourse.movie.ticket.model.Ticket
 import woowacourse.movie.ticket.model.TicketDataResource
 
@@ -37,12 +36,8 @@ class MovieTicketPresenter(
         TicketDataResource.dbTicket = DbMapper.mapTicketDb(TicketDataResource.ticket)
     }
 
-    override fun saveTicketIntDb() {
-        view.storeTicketsInDb(TicketDataResource.dbTicket)
-    }
-
-    override fun storeDbTickets(tickets: List<DbTicket>) {
-        CommonDataSource.dbTickets = tickets
+    override fun storeTicketInDb() {
+        view.storeTicketInDb(TicketDataResource.dbTicket)
     }
 
     override fun setTicketInfo() {
