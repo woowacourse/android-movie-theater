@@ -92,8 +92,8 @@ class MovieSeatSelectionPresenterTest {
         presenter.clickPositiveButton(
             ticketRepository,
             movieId,
-            screeningDate.toString(),
-            screeningTime.toString(),
+            screeningDate,
+            screeningTime,
             selectedSeats,
             theaterName,
         )

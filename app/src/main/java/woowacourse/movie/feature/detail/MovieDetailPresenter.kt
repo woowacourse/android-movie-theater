@@ -1,6 +1,8 @@
 package woowacourse.movie.feature.detail
 
 import woowacourse.movie.data.movie.MovieRepository
+import woowacourse.movie.feature.detail.ui.unFormatSpinnerLocalDate
+import woowacourse.movie.feature.detail.ui.unFormatSpinnerLocalTime
 import woowacourse.movie.model.ReservationCount
 
 class MovieDetailPresenter(
@@ -41,6 +43,11 @@ class MovieDetailPresenter(
         screeningDate: String,
         screeningTime: String,
     ) {
-        view.navigateToSeatSelectionView(movieId, screeningDate, screeningTime, reservationCount.count)
+        view.navigateToSeatSelectionView(
+            movieId,
+            screeningDate.unFormatSpinnerLocalDate(),
+            screeningTime.unFormatSpinnerLocalTime(),
+            reservationCount.count
+        )
     }
 }

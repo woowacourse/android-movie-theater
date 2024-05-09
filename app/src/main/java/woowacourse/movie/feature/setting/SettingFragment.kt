@@ -55,7 +55,6 @@ class SettingFragment :
                 intent.putExtra(Settings.EXTRA_APP_PACKAGE, requireContext().packageName)
                 startActivity(intent)
             }
-
             requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             return
         }

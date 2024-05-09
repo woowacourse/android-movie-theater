@@ -61,8 +61,8 @@ class MovieSeatSelectionPresenter(
     override fun clickPositiveButton(
         ticketRepository: TicketRepository,
         movieId: Long,
-        screeningDate: String,
-        screeningTime: String,
+        screeningDate: LocalDate,
+        screeningTime: LocalTime,
         selectedSeats: MovieSelectedSeats,
         theaterName: String,
     ) {
@@ -70,8 +70,8 @@ class MovieSeatSelectionPresenter(
             val ticketId =
                 ticketRepository.save(
                     movieId,
-                    LocalDate.parse(screeningDate),
-                    LocalTime.parse(screeningTime),
+                    screeningDate,
+                    screeningTime,
                     selectedSeats,
                     theaterName,
                 )

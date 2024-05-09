@@ -18,6 +18,8 @@ import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_INDEX
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_INDEX
+import java.time.LocalDate
+import java.time.LocalTime
 
 class MovieDetailActivity :
     BaseActivity<MovieDetailContract.Presenter>(),
@@ -93,8 +95,8 @@ class MovieDetailActivity :
 
     override fun navigateToSeatSelectionView(
         movieId: Long,
-        screeningDate: String,
-        screeningTime: String,
+        screeningDate: LocalDate,
+        screeningTime: LocalTime,
         reservationCount: Int,
     ) {
         val movie = MovieRepository.getMovieById(this.movieId)

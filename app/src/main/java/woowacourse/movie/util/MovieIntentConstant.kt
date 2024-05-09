@@ -1,5 +1,8 @@
 package woowacourse.movie.util
 
+import java.time.LocalDate
+import java.time.LocalTime
+
 object MovieIntentConstant {
     const val KEY_MOVIE_ID = "movieId"
     const val KEY_MOVIE_DATE = "movieDate"
@@ -25,4 +28,6 @@ object MovieIntentConstant {
     const val DEFAULT_VALUE_NOTIFICATION: Boolean = false
     const val DEFAULT_VALUE_NOTIFICATION_TITLE: String = ""
     const val DEFAULT_VALUE_NOTIFICATION_DESCRIPTION: String = ""
+    val DEFAULT_VALUE_SCREENING_DATE: LocalDate = LocalDate.of(2000, 1, 1)
+    val DEFAULT_VALUE_SCREENING_TIME: LocalTime = LocalTime.of(0, 0)
 }

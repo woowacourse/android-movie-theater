@@ -42,28 +42,16 @@ class SettingPresenterTest {
 
     @Test
     fun `예매한 티켓들의 알림을 설정한다`() {
-        val ticketSlot = mutableListOf<Ticket>()
-        every { view.setTicketAlarm(capture(ticketSlot)) } just runs
+        // given
+        every { view.setTicketAlarm(any()) } just runs
 
+        // when
         presenter.setTicketsAlarm(ticketRepository)
 
-        val actual = ticketSlot
-        assertThat(actual.size).isEqualTo(3)
-        assertThat(actual[0].id).isEqualTo(0L)
-        assertThat(actual[1].id).isEqualTo(1L)
-        assertThat(actual[2].id).isEqualTo(2L)
-        verify { view.setTicketAlarm(any()) }
-
-//        // given
-//        every { view.setTicketAlarm(any()) } just runs
-//
-//        // when
-//        presenter.setTicketsAlarm(ticketRepository)
-//
-//        // then
-//        verify { view.setTicketAlarm(ticket.copy(id = 0L)) }
-//        verify { view.setTicketAlarm(ticket.copy(id = 1L)) }
-//        verify { view.setTicketAlarm(ticket.copy(id = 2L)) }
+        // then
+        verify { view.setTicketAlarm(ticket.copy(id = 0L)) }
+        verify { view.setTicketAlarm(ticket.copy(id = 1L)) }
+        verify { view.setTicketAlarm(ticket.copy(id = 2L)) }
     }
 
     @Test

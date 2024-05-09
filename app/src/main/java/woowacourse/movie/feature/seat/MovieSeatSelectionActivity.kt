@@ -2,6 +2,7 @@ package woowacourse.movie.feature.seat
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -9,6 +10,7 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
@@ -33,7 +35,12 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_SEAT_POSITIONS
 import woowacourse.movie.util.MovieIntentConstant.KEY_THEATER_NAME
 import woowacourse.movie.feature.setting.notification.TicketAlarmRegister
+import woowacourse.movie.util.MovieIntentConstant.DEFAULT_VALUE_SCREENING_DATE
+import woowacourse.movie.util.MovieIntentConstant.DEFAULT_VALUE_SCREENING_TIME
+import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_NAME
 import woowacourse.movie.util.formatSeat
+import java.time.LocalDate
+import java.time.LocalTime
 
 class MovieSeatSelectionActivity :
     BaseActivity<MovieSeatSelectionContract.Presenter>(),
@@ -118,13 +125,29 @@ class MovieSeatSelectionActivity :
                 presenter.clickPositiveButton(
                     ticketRepository = (application as MovieTheaterApplication).ticketRepository,
                     movieId = intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID),
-                    screeningDate = intent.getStringExtra(KEY_MOVIE_DATE)!!,
-                    screeningTime = intent.getStringExtra(KEY_MOVIE_TIME)!!,
+                    screeningDate = screeningDate(),
+                    screeningTime = screeningTime(),
                     selectedSeats = movieSelectedSeats,
-                    theaterName = intent.getStringExtra(KEY_THEATER_NAME)!!,
+                    theaterName = intent.getStringExtra(KEY_THEATER_NAME) ?: INVALID_VALUE_THEATER_NAME,
                 )
             }
             .setNegativeButton("취소") { dialog, _ -> dialog.dismiss() }.setCancelable(false).show()
+    }
+
+    private fun screeningDate(): LocalDate {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getSerializableExtra(KEY_MOVIE_DATE, LocalDate::class.java)
+        } else {
+            intent.getSerializableExtra(KEY_MOVIE_DATE) as? LocalDate
+        } ?: DEFAULT_VALUE_SCREENING_DATE
+    }
+
+    private fun screeningTime(): LocalTime {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getSerializableExtra(KEY_MOVIE_TIME, LocalTime::class.java)
+        } else {
+            intent.getSerializableExtra(KEY_MOVIE_TIME) as? LocalTime
+        } ?: DEFAULT_VALUE_SCREENING_TIME
     }
 
     override fun updateSelectResult(movieSelectedSeats: MovieSelectedSeats) {
@@ -145,7 +168,8 @@ class MovieSeatSelectionActivity :
     }
 
     override fun setTicketAlarm(ticket: Ticket) {
-        val sharedPreferencesManager = (application as MovieTheaterApplication).sharedPreferencesManager
+        val sharedPreferencesManager =
+            (application as MovieTheaterApplication).sharedPreferencesManager
         if (!sharedPreferencesManager.getBoolean(KEY_NOTIFICATION, DEFAULT_VALUE_NOTIFICATION)) {
             return
         }
@@ -188,8 +212,8 @@ class MovieSeatSelectionActivity :
         fun newIntent(
             context: Context,
             movieId: Long,
-            screeningDate: String,
-            screeningTime: String,
+            screeningDate: LocalDate,
+            screeningTime: LocalTime,
             reservationCount: Int,
             theaterName: String,
         ): Intent {

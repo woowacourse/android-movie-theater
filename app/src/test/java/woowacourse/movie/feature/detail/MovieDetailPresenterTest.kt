@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.feature.firstMovie
 import woowacourse.movie.feature.firstMovieId
 import woowacourse.movie.feature.invalidMovieId
+import java.time.LocalDate
+import java.time.LocalTime
 
 class MovieDetailPresenterTest {
     private lateinit var view: MovieDetailContract.View
@@ -95,6 +97,13 @@ class MovieDetailPresenterTest {
         presenter.reserveMovie(0, "2024-04-01", "10:00")
 
         // Then
-        verify { view.navigateToSeatSelectionView(0, "2024-04-01", "10:00", any()) }
+        verify {
+            view.navigateToSeatSelectionView(
+                0,
+                LocalDate.of(2024, 4, 1),
+                LocalTime.of(10, 0),
+                any(),
+            )
+        }
     }
 }

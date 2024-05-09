@@ -3,7 +3,6 @@ package woowacourse.movie.feature.detail.ui
 import androidx.annotation.DrawableRes
 import woowacourse.movie.model.Movie
 import java.time.LocalDate
-import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 data class MovieDetailUiModel(
@@ -29,21 +28,13 @@ data class MovieDetailUiModel(
                 movie.date.startLocalDate.screeningRangeMessage(),
                 movie.date.endLocalDate.screeningRangeMessage(),
                 movie.runningTime,
-                movie.date.generateDates().map { it.screeningDateSpinnerMessage() },
-                movie.theaters[theaterPosition].screeningTimes.map { it.screeningTimeSpinnerMessage() },
+                movie.date.generateDates().map { it.formatSpinnerMessage() },
+                movie.theaters[theaterPosition].screeningTimes.map { it.formatSpinnerMessage() },
             )
         }
 
         private fun LocalDate.screeningRangeMessage(): String {
             return format(DateTimeFormatter.ofPattern("yyyy.M.d"))
-        }
-
-        private fun LocalDate.screeningDateSpinnerMessage(): String {
-            return format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-        }
-
-        private fun LocalTime.screeningTimeSpinnerMessage(): String {
-            return format(DateTimeFormatter.ofPattern("HH:mm"))
         }
     }
 }
