@@ -75,4 +75,6 @@ dependencies {
     androidTestImplementation("io.mockk:mockk-agent:1.13.10")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     debugImplementation("androidx.fragment:fragment-testing:1.4.1")
+    implementation("androidx.room:room-runtime:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
 }
