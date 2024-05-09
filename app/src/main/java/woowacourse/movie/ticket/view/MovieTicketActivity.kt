@@ -3,9 +3,11 @@ package woowacourse.movie.ticket.view
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.room.Room
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieTicketBinding
 import woowacourse.movie.detail.model.Count
+import woowacourse.movie.list.view.AppDatabase
 import woowacourse.movie.list.view.TheaterBottomSheetFragment.Companion.EXTRA_MOVIE_ID_KEY
 import woowacourse.movie.list.view.TheaterBottomSheetFragment.Companion.EXTRA_THEATER_ID_KEY
 import woowacourse.movie.seats.model.Seat
@@ -14,6 +16,7 @@ import woowacourse.movie.seats.view.SeatsActivity.Companion.PRICE_KEY
 import woowacourse.movie.seats.view.SeatsActivity.Companion.SEATS_KEY
 import woowacourse.movie.seats.view.SeatsActivity.Companion.TIME_KEY
 import woowacourse.movie.ticket.contract.MovieTicketContract
+import woowacourse.movie.ticket.model.DbTicket
 import woowacourse.movie.ticket.presenter.MovieTicketPresenter
 import woowacourse.movie.util.IntentUtil.getSerializableCountData
 
@@ -27,6 +30,20 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
         binding.ticket = this
         setContentView(binding.root)
         processPresenterTask()
+
+        presenter.saveTicketIntDb()
+    }
+
+    override fun storeTicketsIntDb(ticket: DbTicket) {
+        val ticketDb = Room.databaseBuilder(
+            applicationContext, AppDatabase::class.java, "tickets",
+        ).build()
+
+        Thread {
+            ticketDb.ticketDao().insertAll(ticket)
+            val tickets = ticketDb.ticketDao().getAll()
+            presenter.storeDbTickets(tickets)
+        }.start()
     }
 
     private fun processPresenterTask() {

@@ -24,4 +24,6 @@ object TicketDataResource {
             "",
             0,
         )
+
+    var dbTickets: List<DbTicket> = emptyList()
 }

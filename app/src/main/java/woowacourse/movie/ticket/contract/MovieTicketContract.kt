@@ -2,6 +2,7 @@ package woowacourse.movie.ticket.contract
 
 import woowacourse.movie.detail.model.Count
 import woowacourse.movie.seats.model.Seat
+import woowacourse.movie.ticket.model.DbTicket
 
 interface MovieTicketContract {
     interface View {
@@ -16,6 +17,8 @@ interface MovieTicketContract {
             theater: String,
             moviePrice: Int,
         )
+
+        fun storeTicketsIntDb(ticket: DbTicket)
     }
 
     interface Presenter {
@@ -30,5 +33,8 @@ interface MovieTicketContract {
             theaterId: Long,
             price: Int,
         )
+
+        fun saveTicketIntDb()
+        fun storeDbTickets(tickets: List<DbTicket>)
     }
 }
