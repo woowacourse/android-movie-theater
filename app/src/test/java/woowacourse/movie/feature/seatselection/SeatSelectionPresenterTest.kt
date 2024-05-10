@@ -4,6 +4,7 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.just
+import io.mockk.mockk
 import io.mockk.runs
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
@@ -13,6 +14,7 @@ import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.seats.SeatsDao
 import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.model.movie.ScreeningDateTime
+import woowacourse.movie.db.ticket.TicketDao
 import woowacourse.movie.model.seats.Grade
 import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
@@ -26,6 +28,8 @@ class SeatSelectionPresenterTest {
     private lateinit var view: SeatSelectionContract.View
     private lateinit var presenter: SeatSelectionContract.Presenter
 
+    private val ticketDao = mockk<TicketDao>()
+
     @BeforeEach
     fun setUp() {
         presenter =
@@ -38,6 +42,7 @@ class SeatSelectionPresenterTest {
                 theaterId = 0,
                 HeadCount(4),
                 ScreeningDateTime(LocalDate.now(), LocalTime.now()),
+                ticketDao,
             )
         with(presenter) {
             manageSelectedSeats(true, 0, Seat('A', 1, Grade.B))

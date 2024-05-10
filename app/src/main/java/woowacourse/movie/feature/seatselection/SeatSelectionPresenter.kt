@@ -3,6 +3,8 @@ package woowacourse.movie.feature.seatselection
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.seats.SeatsDao
 import woowacourse.movie.db.theater.TheaterDao
+import woowacourse.movie.db.ticket.Ticket
+import woowacourse.movie.db.ticket.TicketDao
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.Movie.Companion.DEFAULT_MOVIE_ID
 import woowacourse.movie.model.movie.ScreeningDateTime
@@ -11,9 +13,10 @@ import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.theater.Theater.Companion.DEFAULT_THEATER_ID
 import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.ticket.HeadCount.Companion.DEFAULT_HEAD_COUNT
-import woowacourse.movie.model.ticket.Ticket
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
+import kotlin.concurrent.thread
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
@@ -24,6 +27,7 @@ class SeatSelectionPresenter(
     private val theaterId: Int,
     private val headCount: HeadCount,
     private val screeningDateTime: ScreeningDateTime,
+    private val ticketDao: TicketDao,
 ) : SeatSelectionContract.Presenter {
     private val selectedSeats = Seats()
     private val seats = seatsDao.findAll()
@@ -66,17 +70,13 @@ class SeatSelectionPresenter(
         view.showMovieTitle(movie)
     }
 
-    override fun makeTicket(screeningDateTime: ScreeningDateTime) {
-        val theaterName = theaterDao.find(theaterId).name
-        val ticket =
-            Ticket(
-                movieId,
-                theaterName,
-                selectedSeats,
-                screeningDateTime,
-                selectedSeats.calculateAmount(),
-            )
-        view.navigateToFinished(ticket)
+    override fun saveTicket(screeningDateTime: ScreeningDateTime) {
+        var ticketId: Long = 0
+        val ticket = makeTicket(screeningDateTime)
+        thread(start = true) {
+            ticketId = ticketDao.insert(ticket)
+        }.join()
+        view.navigateToFinished(ticketId)
     }
 
     override fun requestReservationConfirm() {
@@ -123,5 +123,18 @@ class SeatSelectionPresenter(
 
     private fun handleUndeliveredData() {
         view.showErrorSnackBar()
+    }
+
+    private fun makeTicket(screeningDateTime: ScreeningDateTime): Ticket {
+        val movieTitle = screeningDao.find(movieId).title
+        val theaterName = theaterDao.find(theaterId).name
+        val dateTime: LocalDateTime = LocalDateTime.of(screeningDateTime.date, screeningDateTime.time)
+
+        return Ticket(
+            dateTime,
+            movieTitle,
+            theaterName,
+            selectedSeats,
+        )
     }
 }

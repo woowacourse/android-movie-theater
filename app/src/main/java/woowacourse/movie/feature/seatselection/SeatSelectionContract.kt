@@ -7,7 +7,6 @@ import woowacourse.movie.model.seats.Grade
 import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.ticket.HeadCount
-import woowacourse.movie.model.ticket.Ticket
 
 typealias OnReservationDataSave = (HeadCount, Seats, seatsIndex: List<Int>) -> Unit
 
@@ -36,7 +35,7 @@ interface SeatSelectionContract {
             seat: Seat,
         )
 
-        fun makeTicket(screeningDateTime: ScreeningDateTime)
+        fun saveTicket(screeningDateTime: ScreeningDateTime)
 
         fun validateReservationAvailable()
 
@@ -73,7 +72,7 @@ interface SeatSelectionContract {
 
         fun launchReservationConfirmDialog()
 
-        fun navigateToFinished(ticket: Ticket)
+        fun navigateToFinished(ticketId: Long)
 
         fun restoreSelectedSeats(selectedSeats: List<Int>)
 

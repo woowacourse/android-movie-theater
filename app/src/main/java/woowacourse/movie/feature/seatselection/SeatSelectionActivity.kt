@@ -8,12 +8,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
+import androidx.room.Room
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.seats.SeatsDao
 import woowacourse.movie.db.theater.TheaterDao
+import woowacourse.movie.db.ticket.TicketDatabase
 import woowacourse.movie.feature.finished.ReservationFinishedActivity
 import woowacourse.movie.feature.home.HomeFragment.Companion.MOVIE_ID
 import woowacourse.movie.feature.reservation.ReservationActivity.Companion.HEAD_COUNT
@@ -28,7 +30,6 @@ import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.theater.Theater.Companion.DEFAULT_THEATER_ID
 import woowacourse.movie.model.ticket.HeadCount
-import woowacourse.movie.model.ticket.Ticket
 import woowacourse.movie.utils.MovieUtils.bundleSerializable
 import woowacourse.movie.utils.MovieUtils.convertAmountFormat
 import woowacourse.movie.utils.MovieUtils.intentSerializable
@@ -42,12 +43,19 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private lateinit var seatsTable: List<Button>
     private lateinit var headCount: HeadCount
     private lateinit var screeningDateTime: ScreeningDateTime
+    private lateinit var roomDB: TicketDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.activity = this
         initAmount()
         receiveReservationInfo()
+        roomDB =
+            Room.databaseBuilder(
+                applicationContext,
+                TicketDatabase::class.java, "reservation_history",
+            ).build()
+
         initPresenter()
         seatsTable = collectSeatsInTableLayout()
         presenter.loadReservationInformation()
@@ -124,9 +132,9 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         binding.amount = convertAmountFormat(this, amount)
     }
 
-    override fun navigateToFinished(ticket: Ticket) {
+    override fun navigateToFinished(ticketId: Long) {
         val intent = Intent(this, ReservationFinishedActivity::class.java)
-        intent.putExtra(TICKET, ticket)
+        intent.putExtra(TICKET, ticketId)
         startActivity(intent)
     }
 
@@ -140,7 +148,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 .setTitle(getString(R.string.seat_selection_reservation_confirm))
                 .setMessage(getString(R.string.seat_selection_reservation_ask_purchase_ticket))
                 .setPositiveButton(getString(R.string.seat_selection_reservation_finish)) { _, _ ->
-                    presenter.makeTicket(screeningDateTime)
+                    presenter.saveTicket(screeningDateTime)
                 }
                 .setNegativeButton(getString(R.string.seat_selection_cancel)) { dialog, _ ->
                     dialog.dismiss()
@@ -180,6 +188,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 receiveTheaterId(),
                 headCount,
                 screeningDateTime,
+                roomDB.ticketDao(),
             )
         binding.presenter = presenter
     }
