@@ -54,9 +54,8 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                         Manifest.permission.POST_NOTIFICATIONS,
                     )
                 ) {
-                    // 여기에 권한이 필요한 이유를 설명하는 UI를 보여주는 코드를 추가하세요.
+                    Toast.makeText(this, "알람 설정을 해야 영화 예매 알림을 줄 수 있습니다.", Toast.LENGTH_SHORT).show()
                 } else {
-                    // 권한 요청
                     ActivityCompat.requestPermissions(
                         this,
                         arrayOf(Manifest.permission.POST_NOTIFICATIONS),
@@ -67,24 +66,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray,
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            REQUEST_NOTIFICATION_PERMISSION -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                } else {
-                    Toast.makeText(this, "알림 권한이 거부되었습니다.", Toast.LENGTH_SHORT).show()
-                }
-                return
-            }
-        }
-    }
-
     companion object {
-        private const val REQUEST_NOTIFICATION_PERMISSION = 101 // 권한 요청 코드
+        private const val REQUEST_NOTIFICATION_PERMISSION = 101
     }
 }

@@ -44,8 +44,7 @@ class TheaterSeatPresenter(
     }
 
     private fun updateSeatBackground(seatId: String) {
-        val seat = seats[seatId] ?: return
-        if (seat.chosen) {
+        if (seatId in selectedSeats) {
             view.setSeatBackground(seatId, "#FF0000")
         } else {
             view.setSeatBackground(seatId, "#FFFFFF")
@@ -92,6 +91,6 @@ class TheaterSeatPresenter(
             )
         thread {
             database.ticketDao().insertTicket(ticket)
-        }.start()
+        }
     }
 }

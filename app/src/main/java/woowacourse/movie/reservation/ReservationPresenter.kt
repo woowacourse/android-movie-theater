@@ -22,7 +22,7 @@ class ReservationPresenter(
         thread {
             val ticket = database.ticketDao().getAllTickets()
             view.showReservations(ticket)
-        }.start()
+        }
     }
 
     override fun navigateDetailView(ticket: Ticket) {
