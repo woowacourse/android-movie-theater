@@ -61,10 +61,42 @@ data class ScreeningMovie(
                 Movie.STUB,
                 MovieTheater.STUB_C,
                 listOf(
-                    mapOf(LocalDate.of(2024, 3, 1) to listOf(LocalTime.of(9, 0, 0))),
-                    mapOf(LocalDate.of(2024, 3, 2) to listOf(LocalTime.of(10, 0, 0))),
-                    mapOf(LocalDate.of(2024, 3, 3) to listOf(LocalTime.of(11, 0, 0))),
-                    mapOf(LocalDate.of(2024, 3, 4) to listOf(LocalTime.of(12, 0, 0))),
+                    mapOf(
+                        LocalDate.of(2024, 3, 1) to
+                            listOf(
+                                LocalTime.of(9, 0, 0),
+                                LocalTime.of(10, 0, 0),
+                                LocalTime.of(11, 0, 0),
+                                LocalTime.of(12, 0, 0),
+                            ),
+                    ),
+                    mapOf(
+                        LocalDate.of(2024, 3, 2) to
+                            listOf(
+                                LocalTime.of(9, 0, 0),
+                                LocalTime.of(10, 0, 0),
+                                LocalTime.of(11, 0, 0),
+                                LocalTime.of(12, 0, 0),
+                            ),
+                    ),
+                    mapOf(
+                        LocalDate.of(2024, 3, 3) to
+                            listOf(
+                                LocalTime.of(10, 0, 0),
+                                LocalTime.of(11, 0, 0),
+                                LocalTime.of(12, 0, 0),
+                                LocalTime.of(13, 0, 0),
+                            ),
+                    ),
+                    mapOf(
+                        LocalDate.of(2024, 3, 4) to
+                            listOf(
+                                LocalTime.of(11, 0, 0),
+                                LocalTime.of(12, 0, 0),
+                                LocalTime.of(13, 0, 0),
+                                LocalTime.of(14, 0, 0),
+                            ),
+                    ),
                 ),
             )
     }
