@@ -1,27 +1,25 @@
 package woowacourse.movie.feature.finished
 
-import woowacourse.movie.db.screening.ScreeningDao
-import woowacourse.movie.model.movie.Movie
-import woowacourse.movie.model.movie.Movie.Companion.DEFAULT_MOVIE_ID
-import woowacourse.movie.model.ticket.Ticket
+import woowacourse.movie.db.ticket.Ticket
+import woowacourse.movie.db.ticket.TicketDao
+import kotlin.concurrent.thread
 
 class ReservationFinishedPresenter(
     private val view: ReservationFinishedContract.View,
-    private val screeningDao: ScreeningDao,
-    private val ticket: Ticket,
+    private val ticketId: Long,
+    private val ticketDao: TicketDao,
 ) : ReservationFinishedContract.Presenter {
+    private lateinit var ticket: Ticket
+
     override fun loadTicket() {
-        if (ticket.movieId != DEFAULT_MOVIE_ID) {
-            loadMovie()
+        thread {
+            ticket = ticketDao.find(ticketId)
+        }.join()
+        if (ticketId != 0L) {
             loadReservationInformation()
         } else {
             handleUndeliveredTicket()
         }
-    }
-
-    private fun loadMovie() {
-        val movie: Movie = screeningDao.find(ticket.movieId)
-        view.showMovieTitle(movie)
     }
 
     private fun loadReservationInformation() {

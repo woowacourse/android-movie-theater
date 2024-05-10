@@ -8,7 +8,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
-import androidx.room.Room
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
@@ -43,19 +42,12 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private lateinit var seatsTable: List<Button>
     private lateinit var headCount: HeadCount
     private lateinit var screeningDateTime: LocalDateTime
-    private lateinit var roomDB: TicketDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.activity = this
         initAmount()
         receiveReservationInfo()
-        roomDB =
-            Room.databaseBuilder(
-                applicationContext,
-                TicketDatabase::class.java, "reservation_history",
-            ).build()
-
         initPresenter()
         seatsTable = collectSeatsInTableLayout()
         presenter.loadReservationInformation()
@@ -178,6 +170,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun initPresenter() {
+        val ticketDao = TicketDatabase.initialize(this).ticketDao()
         presenter =
             SeatSelectionPresenter(
                 this,
@@ -188,7 +181,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 receiveTheaterId(),
                 headCount,
                 screeningDateTime,
-                roomDB.ticketDao(),
+                ticketDao,
             )
         binding.presenter = presenter
     }
