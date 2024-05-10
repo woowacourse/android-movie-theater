@@ -7,7 +7,7 @@
 
         <variable
             name="ticket"
-            type="woowacourse.movie.repository.db.ReservationTicketEntity" />
+            type="woowacourse.movie.presentation.uimodel.TicketUiModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{ticket.screenDate.toString()}"
+            android:text="@{ticket.reservationSchedule(context).toString()}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="2024.3.2 | 17:00 | 선릉 극장" />
@@ -31,7 +31,7 @@
             android:id="@+id/reservation_movie_title_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{ticket.movieTitle.toString()}"
+            android:text="@{ticket.title.toString()}"
             android:textSize="@dimen/size_16"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

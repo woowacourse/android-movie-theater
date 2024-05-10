@@ -9,6 +9,7 @@ import woowacourse.movie.domain.model.reservation.toReservationTicketEntity
 import woowacourse.movie.presentation.repository.SeatRepository
 import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
 import woowacourse.movie.repository.db.ReservationTicketDao
+import java.time.format.DateTimeFormatter
 
 class SeatSelectionPresenterImpl(
     reservationCount: Int,
@@ -20,7 +21,7 @@ class SeatSelectionPresenterImpl(
         ReservationInfo(reservationCount, seatRepository.getSeatingChart())
     private val reservationMovieInfoRepository = ReservationMovieInfoRepositoryImpl
 
-    fun makeTicket(): MovieTicket {
+    private fun makeTicket(): MovieTicket {
         val ticket = MovieTicket(
             0,
             reservationMovieInfo = reservationMovieInfoRepository.getScreeningMovieInfo()!!,
@@ -29,17 +30,19 @@ class SeatSelectionPresenterImpl(
         return ticket
     }
 
-    fun storeData(): Long {
+    private fun storeData(): Long {
         var ticketId = 0L
-        Log.d("ticket", "Before :storeData")
         val ticket = makeTicket()
 
         val thread = Thread {
-            Log.d("ticket", "ticektId :${ticket.ticketId}")
             ticketId = ticketDao.saveReservationTicket(
                 ticket.toReservationTicketEntity(
+                    ticket.reservationMovieInfo.dateTime.screeningDate.date.format(DateTimeFormatter.ISO_LOCAL_DATE),
                     ticket.reservationMovieInfo.title,
-                    ticket.reservationMovieInfo.theaterName
+                    ticket.reservationMovieInfo.theaterName,
+                    ticket.reservationMovieInfo.dateTime.screeningDate.screeningTime.startTime.format(
+                        DateTimeFormatter.ofPattern("HH:mm")
+                    )
                 )
             )
         }

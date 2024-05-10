@@ -9,14 +9,17 @@ data class MovieTicket(
 )
 
 fun MovieTicket.toReservationTicketEntity(
+    selectDate: String,
     movieTitle: String,
     theaterName: String,
+    screenTime : String,
 ): ReservationTicketEntity {
     return ReservationTicketEntity(
         ticketId = this.ticketId,
         movieTitle = reservationMovieInfo.title,
         theaterName = reservationMovieInfo.theaterName,
-        screenDate = reservationMovieInfo.dateTime.toString(),
+        screenDate = selectDate,
+        screenTime = screenTime,
         seats = reservationInfo.selectedSeats
     )
 }
