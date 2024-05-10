@@ -28,8 +28,8 @@ class ReservationRepositoryImpl(private val dao: ReservationDao) : ReservationRe
             dao.findReservation(reservationId).toDomain()
         }
 
-    override fun findReservations(): Result<List<Reservation>> =
+    override fun getReservations(): Result<List<Reservation>> =
         runCatching {
-            dao.findReservations().toDomain()
+            dao.getReservations().toDomain()
         }
 }

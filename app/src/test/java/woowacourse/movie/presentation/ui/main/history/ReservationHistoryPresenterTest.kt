@@ -26,7 +26,7 @@ class ReservationHistoryPresenterTest {
     @Test
     fun `ReservationPresenter가 loadReservation()을 했을 때, view에게 reservation 데이터와 theaterName을 전달한다`() {
         // given
-        every { repository.findReservations() } returns Result.success(listOf(dummyReservation))
+        every { repository.getReservations() } returns Result.success(listOf(dummyReservation))
         every { view.showReservations(any()) } just runs
 
         // when
@@ -40,7 +40,7 @@ class ReservationHistoryPresenterTest {
     fun `ReservationPresenter가 loadReservation()을 했을 때, 예외가 발생하면 view에게 예외를 전달한다`() {
         // given
         val exception = Exception()
-        every { repository.findReservations() } returns Result.failure(exception)
+        every { repository.getReservations() } returns Result.failure(exception)
         every { view.showToastMessage(e = any()) } just runs
 
         // when
@@ -53,7 +53,7 @@ class ReservationHistoryPresenterTest {
     @Test
     fun `ReservationPresenter가 onReservationClick()을 했을 때, view에게 reservationId를 전달한다`() {
         // given
-        every { repository.findReservations() } returns Result.success(listOf(dummyReservation))
+        every { repository.getReservations() } returns Result.success(listOf(dummyReservation))
         every { view.navigateToReservation(any()) } just runs
 
         // when

@@ -9,7 +9,7 @@ class ReservationHistoryPresenter(
 ) : ReservationHistoryContract.Presenter {
     override fun loadReservations() {
         thread {
-            repository.findReservations().onSuccess { reservations ->
+            repository.getReservations().onSuccess { reservations ->
                 view.showReservations(reservations)
             }.onFailure { e ->
                 view.showToastMessage(e)

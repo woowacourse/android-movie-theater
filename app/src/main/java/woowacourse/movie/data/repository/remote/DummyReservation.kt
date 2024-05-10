@@ -33,7 +33,9 @@ object DummyReservation : ReservationRepository {
         }
     }
 
-    override fun findReservations(): Result<List<Reservation>> {
-        TODO("Not yet implemented")
+    override fun getReservations(): Result<List<Reservation>> {
+        return runCatching {
+            reservations.toList()
+        }
     }
 }
