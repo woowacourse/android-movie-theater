@@ -17,6 +17,6 @@ interface ReservationContract {
 
         fun loadData()
 
-        fun onClickedList(ticket: Ticket)
+        fun navigateDetailView(ticket: Ticket)
     }
 }

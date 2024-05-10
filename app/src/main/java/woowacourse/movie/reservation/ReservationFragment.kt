@@ -28,7 +28,7 @@ class ReservationFragment :
         presenter = ReservationPresenter(this, database)
         reservationAdapter =
             ReservationAdapter {
-                presenter.onClickedList(it)
+                presenter.navigateDetailView(it)
             }
         binding.reservationRecyclerView.adapter = reservationAdapter
         presenter.loadData()

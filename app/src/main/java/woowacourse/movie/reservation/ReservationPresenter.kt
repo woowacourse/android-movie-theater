@@ -25,7 +25,7 @@ class ReservationPresenter(
         }.start()
     }
 
-    override fun onClickedList(ticket: Ticket) {
+    override fun navigateDetailView(ticket: Ticket) {
         view.navigateToTicketDetail(ticket)
     }
 }
