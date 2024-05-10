@@ -3,6 +3,7 @@ package woowacourse.movie.data.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import woowacourse.movie.data.entity.MovieReservation
 
@@ -11,10 +12,10 @@ interface MovieReservationDao {
     @Query("SELECT * FROM movie_reservation")
     fun getAll(): List<MovieReservation>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg movieReservations: MovieReservation): List<Long>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(movieReservation: MovieReservation): Long
 
     @Delete

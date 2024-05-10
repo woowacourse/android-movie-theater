@@ -3,6 +3,7 @@ package woowacourse.movie.data.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import woowacourse.movie.data.entity.MovieTheater
 import woowacourse.movie.data.entity.ScreeningMovie
@@ -12,7 +13,7 @@ interface ScreeningMovieDao {
     @Query("SELECT * FROM screening_movie")
     fun getAll(): List<ScreeningMovie>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg screeningMovies: ScreeningMovie)
 
     @Delete
