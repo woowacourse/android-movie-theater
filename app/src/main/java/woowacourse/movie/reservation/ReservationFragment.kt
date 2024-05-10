@@ -45,9 +45,10 @@ class ReservationFragment :
     }
 
     override fun navigateToTicketDetail(ticket: Ticket) {
-        val intent = Intent(requireContext(), PurchaseConfirmationActivity::class.java).apply {
-            putExtra(EXTRA_TICKET_ID, ticket.id)
-        }
+        val intent =
+            Intent(requireContext(), PurchaseConfirmationActivity::class.java).apply {
+                putExtra(EXTRA_TICKET_ID, ticket.id)
+            }
         startActivity(intent)
     }
 

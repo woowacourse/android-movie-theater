@@ -35,28 +35,30 @@ class NotificationChannelManager(private val context: Context) {
         ticketPrice: String,
         selectedSeats: Array<String>,
         timeDate: String,
-        ticketId: Int
+        ticketId: Int,
     ) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         if (AlarmManagerCompat.canScheduleExactAlarms(alarmManager)) {
             val alarmTime = movieStartTime + 1 - movieStartTime
-            val intent = Intent(context, NotificationReceiver::class.java).apply {
-                putExtra("notificationId", 1001)
-                putExtra("ticketId", ticketId)
-                putExtra("message", "${cinema.theater.movie.title} 영화 시작 30분 전입니다!")
-                putExtra("title", cinema.theater.movie.title.toString())
-                putExtra("cinemaName", cinema.cinemaName)
-                putExtra("ticketPrice", ticketPrice)
-                putExtra("seatNumber", selectedSeats)
-                putExtra("runningTime", cinema.theater.movie.runningTime.toString())
-                putExtra("timeDate", timeDate)
-            }
-            val pendingIntent = PendingIntent.getBroadcast(
-                context,
-                1001,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-            )
+            val intent =
+                Intent(context, NotificationReceiver::class.java).apply {
+                    putExtra("notificationId", 1001)
+                    putExtra("ticketId", ticketId)
+                    putExtra("message", "${cinema.theater.movie.title} 영화 시작 30분 전입니다!")
+                    putExtra("title", cinema.theater.movie.title.toString())
+                    putExtra("cinemaName", cinema.cinemaName)
+                    putExtra("ticketPrice", ticketPrice)
+                    putExtra("seatNumber", selectedSeats)
+                    putExtra("runningTime", cinema.theater.movie.runningTime.toString())
+                    putExtra("timeDate", timeDate)
+                }
+            val pendingIntent =
+                PendingIntent.getBroadcast(
+                    context,
+                    1001,
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+                )
             alarmManager.setExactAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
                 alarmTime,

@@ -8,7 +8,11 @@ import kotlin.concurrent.thread
 class TicketModel(context: Context) : PurchaseConfirmationContract.Model {
     private val appDatabase = AppDatabase.getInstance(context)
 
-    override fun getTicket(ticketId: Int, callback: (Ticket?) -> Unit, errorCallback: () -> Unit) {
+    override fun getTicket(
+        ticketId: Int,
+        callback: (Ticket?) -> Unit,
+        errorCallback: () -> Unit,
+    ) {
         thread {
             try {
                 val ticket = appDatabase.ticketDao().getTicketById(ticketId)

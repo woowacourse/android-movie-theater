@@ -121,9 +121,7 @@ class TheaterSeatActivity :
             .forEach { row ->
                 row.children.filterIsInstance<Button>()
                     .forEach { button ->
-                        button.setOnClickListener {
-                            presenter.toggleSeatSelection(button.text.toString())
-                        }
+                        button.setOnClickListener { presenter.toggleSeatSelection(button.text.toString()) }
                     }
             }
     }
@@ -138,44 +136,58 @@ class TheaterSeatActivity :
                     IntentCompat.getSerializableExtra(intent, EXTRA_CINEMA, Cinema::class.java)
                 val ticketPrice = findViewById<TextView>(R.id.total_price).text
                 if (cinema != null) {
-                    val timeDate = intent.getStringExtra(EXTRA_TIME_DATE)!!
-                    val formatter = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.KOREA)
-                    try {
-                        val date = formatter.parse(timeDate)
-                        val movieStartTime = date?.time ?: return@onPositiveButtonClicked
-                        presenter.saveTicketToDatabase { ticketId ->
-                            NotificationChannelManager(this).scheduleMovieStartNotification(
-                                movieStartTime,
-                                cinema,
-                                ticketPrice.toString(),
-                                presenter.selectedSeats.toTypedArray(),
-                                intent.getStringExtra(EXTRA_TIME_DATE).toString(),
-                                ticketId
-                            )
-                            val confirmationIntent = PurchaseConfirmationActivity.newIntent(
-                                context = this,
-                                ticketId = ticketId
-                            )
-                            navigateToNextPage(confirmationIntent)
-                        }
-                    } catch (e: ParseException) {
-                        Toast.makeText(this, "예매 시간 형식이 잘못되었습니다.", Toast.LENGTH_SHORT).show()
-                    }
+                    alarmSettings(cinema, ticketPrice)
                 } else {
                     Toast.makeText(this, "Cinema data is not available.", Toast.LENGTH_SHORT)
                         .show()
                 }
             },
             negativeLabel = "취소",
-            onNegativeButtonClicked = {}
+            onNegativeButtonClicked = {},
         )
     }
 
+    private fun alarmSettings(
+        cinema: Cinema,
+        ticketPrice: CharSequence,
+    ) {
+        val timeDate = intent.getStringExtra(EXTRA_TIME_DATE)!!
+        val formatter = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.KOREA)
+        try {
+            val date = formatter.parse(timeDate)
+            val movieStartTime = date?.time ?: return
+            saveTicket(movieStartTime, cinema, ticketPrice)
+        } catch (e: ParseException) {
+            Toast.makeText(this, RESERVATION_TIME_FORMAT_ERROR_MESSAGE, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun saveTicket(
+        movieStartTime: Long,
+        cinema: Cinema,
+        ticketPrice: CharSequence,
+    ) {
+        presenter.saveTicketToDatabase { ticketId ->
+            NotificationChannelManager(this).scheduleMovieStartNotification(
+                movieStartTime,
+                cinema,
+                ticketPrice.toString(),
+                presenter.selectedSeats.toTypedArray(),
+                intent.getStringExtra(EXTRA_TIME_DATE).toString(),
+                ticketId,
+            )
+            val confirmationIntent =
+                PurchaseConfirmationActivity
+                    .newIntent(context = this, ticketId = ticketId)
+            navigateToNextPage(confirmationIntent)
+        }
+    }
 
     companion object {
         const val EXTRA_TIME_DATE = "timeDate"
         const val EXTRA_TICKET_NUM = "ticketNum"
         const val EXTRA_CINEMA = "cinema"
+        const val RESERVATION_TIME_FORMAT_ERROR_MESSAGE = "예매 시간 형식이 잘못되었습니다."
 
         fun newIntent(
             context: Context,

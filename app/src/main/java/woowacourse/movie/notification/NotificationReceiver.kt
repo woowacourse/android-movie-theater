@@ -10,7 +10,10 @@ import woowacourse.movie.R
 import woowacourse.movie.purchaseConfirmation.PurchaseConfirmationActivity
 
 class NotificationReceiver : BroadcastReceiver() {
-    override fun onReceive(context: Context, intent: Intent) {
+    override fun onReceive(
+        context: Context,
+        intent: Intent,
+    ) {
         val notificationId = intent.getIntExtra("notificationId", 0)
         val ticketId = intent.getIntExtra("ticketId", 0)
 
@@ -20,25 +23,31 @@ class NotificationReceiver : BroadcastReceiver() {
         notifyNotification(context, notificationId, notification)
     }
 
-    private fun createNotificationIntent(context: Context, ticketId: Int): Intent {
+    private fun createNotificationIntent(
+        context: Context,
+        ticketId: Int,
+    ): Intent {
         return Intent(context, PurchaseConfirmationActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             putExtra("ticketId", ticketId)
         }
     }
 
-    private fun createPendingIntent(context: Context, intent: Intent): PendingIntent {
+    private fun createPendingIntent(
+        context: Context,
+        intent: Intent,
+    ): PendingIntent {
         return PendingIntent.getActivity(
             context,
             0,
             intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
     }
 
     private fun buildNotification(
         context: Context,
-        pendingIntent: PendingIntent
+        pendingIntent: PendingIntent,
     ): NotificationCompat.Builder {
         return NotificationCompat.Builder(context, "ticket_confirmation_channel")
             .setSmallIcon(R.drawable.ic_home_check)
@@ -52,7 +61,7 @@ class NotificationReceiver : BroadcastReceiver() {
     private fun notifyNotification(
         context: Context,
         notificationId: Int,
-        builder: NotificationCompat.Builder
+        builder: NotificationCompat.Builder,
     ) {
         val notificationManager = NotificationManagerCompat.from(context)
         notificationManager.notify(notificationId, builder.build())

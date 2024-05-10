@@ -5,7 +5,7 @@ import android.content.Context
 class PurchaseConfirmationPresenter(
     private val view: PurchaseConfirmationContract.View,
     private val model: PurchaseConfirmationContract.Model,
-    private val context: Context
+    private val context: Context,
 ) {
     fun loadTicket(ticketId: Int) {
         if (ticketId == 0) {

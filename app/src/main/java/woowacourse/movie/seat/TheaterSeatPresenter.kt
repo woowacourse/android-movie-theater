@@ -80,18 +80,18 @@ class TheaterSeatPresenter(
     }
 
     override fun saveTicketToDatabase(onResult: (Int) -> Unit) {
-        val ticket = Ticket(
-            screeningDate = screeningDate,
-            seatNumbers = selectedSeats.joinToString(","),
-            cinemaName = cinema.cinemaName,
-            movieTitle = cinema.theater.movie.title.toString(),
-            runningTime = cinema.theater.movie.runningTime.toString(),
-            ticketPrice = totalPrice
-        )
+        val ticket =
+            Ticket(
+                screeningDate = screeningDate,
+                seatNumbers = selectedSeats.joinToString(","),
+                cinemaName = cinema.cinemaName,
+                movieTitle = cinema.theater.movie.title.toString(),
+                runningTime = cinema.theater.movie.runningTime.toString(),
+                ticketPrice = totalPrice,
+            )
         thread {
             val ticketId = database.ticketDao().insertTicket(ticket).toInt()
             onResult(ticketId)
         }
     }
-
 }

@@ -13,7 +13,6 @@ import woowacourse.movie.databinding.ActivityPurchaseConfirmationBinding
 class PurchaseConfirmationActivity :
     BindingActivity<ActivityPurchaseConfirmationBinding>(R.layout.activity_purchase_confirmation),
     PurchaseConfirmationContract.View {
-
     private lateinit var presenter: PurchaseConfirmationPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +57,7 @@ class PurchaseConfirmationActivity :
 
         fun newIntent(
             context: Context,
-            ticketId: Int
+            ticketId: Int,
         ): Intent {
             return Intent(context, PurchaseConfirmationActivity::class.java).apply {
                 putExtra(EXTRA_TICKET_ID, ticketId)
