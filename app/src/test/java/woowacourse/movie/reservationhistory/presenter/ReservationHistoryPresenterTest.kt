@@ -1,6 +1,5 @@
 package woowacourse.movie.reservationhistory.presenter
 
-import android.content.Context
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -16,13 +15,11 @@ class ReservationHistoryPresenterTest {
     private lateinit var view: ReservationHistoryContract.View
     private lateinit var presenter: ReservationHistoryPresenter
     private lateinit var database: ReservationHistoryDatabase
-    private lateinit var mockContext: Context
 
     @BeforeEach
     fun setUp() {
         view = mockk()
         database = mockk()
-        mockContext = mockk()
         presenter = ReservationHistoryPresenter(view, database)
     }
 
