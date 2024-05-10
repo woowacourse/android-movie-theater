@@ -1,7 +1,6 @@
 package woowacourse.movie.selectseat
 
 import woowacourse.movie.model.HeadCount
-import woowacourse.movie.moviedetail.uimodel.BookingInfoUiModel
 import woowacourse.movie.selectseat.uimodel.Position
 import woowacourse.movie.selectseat.uimodel.PriceUiModel
 import woowacourse.movie.selectseat.uimodel.SeatUiModel
@@ -41,6 +40,6 @@ interface SelectSeatContract {
 
         fun loadSeats(seats: Map<Position, SeatUiModel>)
 
-        fun completeReservation(bookingInfoUiModel: BookingInfoUiModel)
+        fun completeReservation()
     }
 }

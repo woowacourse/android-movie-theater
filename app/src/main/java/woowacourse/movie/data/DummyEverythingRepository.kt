@@ -7,10 +7,10 @@ import woowacourse.movie.model.Screening
 import woowacourse.movie.model.ScreeningSchedule
 import woowacourse.movie.model.Seats
 import woowacourse.movie.model.Theater
-import woowacourse.movie.repository.MovieRepository
+import woowacourse.movie.repository.EverythingRepository
 import java.time.LocalDateTime
 
-object DummyMovieRepository : MovieRepository {
+object DummyEverythingRepository : EverythingRepository {
     private val screeningSchedules: List<ScreeningSchedule> =
         listOf(
             ScreeningSchedule.STUB_A,
@@ -24,7 +24,7 @@ object DummyMovieRepository : MovieRepository {
         var id = 0L
         val listA =
             (1..3).flatMap { day ->
-                (9..15 step 3).map { time ->
+                (9..12).map { time ->
                     id++
                     Screening(id, Movie.STUB_A, Theater.STUB_A, LocalDateTime.of(2024, 3, day, time, 0))
                 }
@@ -32,7 +32,7 @@ object DummyMovieRepository : MovieRepository {
 
         val listB =
             (1..3).flatMap { day ->
-                (9..15 step 3).map { time ->
+                (9..12).map { time ->
                     id++
                     Screening(id, Movie.STUB_A, Theater.STUB_B, LocalDateTime.of(2024, 3, day, time, 0))
                 }
@@ -40,7 +40,7 @@ object DummyMovieRepository : MovieRepository {
 
         val listC =
             (1..3).flatMap { day ->
-                (9..15 step 3).map { time ->
+                (9..12).map { time ->
                     id++
                     Screening(id, Movie.STUB_A, Theater.STUB_C, LocalDateTime.of(2024, 3, day, time, 0))
                 }
@@ -48,7 +48,7 @@ object DummyMovieRepository : MovieRepository {
 
         val listD =
             (1..3).flatMap { day ->
-                (9..15 step 3).map { time ->
+                (9..12).map { time ->
                     id++
                     Screening(id, Movie.STUB_B, Theater.STUB_C, LocalDateTime.of(2024, 3, day, time, 0))
                 }
@@ -56,7 +56,7 @@ object DummyMovieRepository : MovieRepository {
 
         val listE =
             (1..3).flatMap { day ->
-                (9..15 step 3).map { time ->
+                (9..12).map { time ->
                     id++
                     Screening(id, Movie.STUB_C, Theater.STUB_C, LocalDateTime.of(2024, 3, day, time, 0))
                 }

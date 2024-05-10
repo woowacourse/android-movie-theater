@@ -18,7 +18,7 @@ data class Seat(
     }
 
     companion object {
-        val STUB = Seat(Tier.A, 1, 1)
+        val STUB = Seat(Tier.B, 1, 1)
 
         fun from(seatString: String): Seat {
             val splited = seatString.split("|")

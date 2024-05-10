@@ -28,7 +28,7 @@ data class ScreeningSchedule(
     companion object {
         val STUB_A: ScreeningSchedule =
             ScreeningSchedule(
-                id = 0,
+                id = 1,
                 movie = Movie.STUB_A,
                 theater =
                     Theater.STUB_A,
@@ -36,6 +36,15 @@ data class ScreeningSchedule(
                     listOf(
                         Schedule(
                             LocalDate.of(2024, 3, 1),
+                            listOf(
+                                LocalTime.of(9, 0),
+                                LocalTime.of(10, 0),
+                                LocalTime.of(11, 0),
+                                LocalTime.of(12, 0),
+                            ),
+                        ),
+                        Schedule(
+                            LocalDate.of(2024, 3, 2),
                             listOf(
                                 LocalTime.of(9, 0),
                                 LocalTime.of(10, 0),
@@ -52,36 +61,27 @@ data class ScreeningSchedule(
                                 LocalTime.of(12, 0),
                             ),
                         ),
-                        Schedule(
-                            LocalDate.of(2024, 3, 4),
-                            listOf(
-                                LocalTime.of(9, 0),
-                                LocalTime.of(10, 0),
-                                LocalTime.of(11, 0),
-                                LocalTime.of(12, 0),
-                            ),
-                        ),
-                        Schedule(
-                            LocalDate.of(2024, 3, 5),
-                            listOf(
-                                LocalTime.of(9, 0),
-                                LocalTime.of(10, 0),
-                                LocalTime.of(11, 0),
-                                LocalTime.of(12, 0),
-                            ),
-                        ),
                     ),
             )
 
         val STUB_B: ScreeningSchedule =
             ScreeningSchedule(
-                id = 1,
+                id = 2,
                 movie = Movie.STUB_A,
                 theater = Theater.STUB_B,
                 schedules =
                     listOf(
                         Schedule(
                             LocalDate.of(2024, 3, 1),
+                            listOf(
+                                LocalTime.of(9, 0),
+                                LocalTime.of(10, 0),
+                                LocalTime.of(11, 0),
+                                LocalTime.of(12, 0),
+                            ),
+                        ),
+                        Schedule(
+                            LocalDate.of(2024, 3, 2),
                             listOf(
                                 LocalTime.of(9, 0),
                                 LocalTime.of(10, 0),
@@ -103,13 +103,22 @@ data class ScreeningSchedule(
 
         val STUB_C: ScreeningSchedule =
             ScreeningSchedule(
-                id = 2,
+                id = 3,
                 movie = Movie.STUB_A,
                 theater = Theater.STUB_C,
                 schedules =
                     listOf(
                         Schedule(
                             LocalDate.of(2024, 3, 1),
+                            listOf(
+                                LocalTime.of(9, 0),
+                                LocalTime.of(10, 0),
+                                LocalTime.of(11, 0),
+                                LocalTime.of(12, 0),
+                            ),
+                        ),
+                        Schedule(
+                            LocalDate.of(2024, 3, 2),
                             listOf(
                                 LocalTime.of(9, 0),
                                 LocalTime.of(10, 0),
@@ -131,13 +140,22 @@ data class ScreeningSchedule(
 
         val STUB_D: ScreeningSchedule =
             ScreeningSchedule(
-                id = 3,
+                id = 4,
                 movie = Movie.STUB_B,
                 theater = Theater.STUB_C,
                 schedules =
                     listOf(
                         Schedule(
                             LocalDate.of(2024, 3, 1),
+                            listOf(
+                                LocalTime.of(9, 0),
+                                LocalTime.of(10, 0),
+                                LocalTime.of(11, 0),
+                                LocalTime.of(12, 0),
+                            ),
+                        ),
+                        Schedule(
+                            LocalDate.of(2024, 3, 2),
                             listOf(
                                 LocalTime.of(9, 0),
                                 LocalTime.of(10, 0),
@@ -158,13 +176,22 @@ data class ScreeningSchedule(
             )
         val STUB_E: ScreeningSchedule =
             ScreeningSchedule(
-                id = 4,
+                id = 5,
                 movie = Movie.STUB_C,
                 theater = Theater.STUB_C,
                 schedules =
                     listOf(
                         Schedule(
                             LocalDate.of(2024, 3, 1),
+                            listOf(
+                                LocalTime.of(9, 0),
+                                LocalTime.of(10, 0),
+                                LocalTime.of(11, 0),
+                                LocalTime.of(12, 0),
+                            ),
+                        ),
+                        Schedule(
+                            LocalDate.of(2024, 3, 2),
                             listOf(
                                 LocalTime.of(9, 0),
                                 LocalTime.of(10, 0),

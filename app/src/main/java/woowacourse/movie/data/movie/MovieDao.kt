@@ -11,4 +11,7 @@ interface MovieDao {
 
     @Query("select * from movies where id == :id")
     fun getById(id: Long): MovieDto?
+
+    @Query("select * from movies")
+    fun getAll(): List<MovieDto>
 }

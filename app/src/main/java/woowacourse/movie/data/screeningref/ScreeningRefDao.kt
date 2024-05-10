@@ -9,6 +9,9 @@ interface ScreeningRefDao {
     @Insert
     fun insert(screeningRefDto: ScreeningRefDto)
 
+    @Insert
+    fun insertAll(screeningRefDtos: List<ScreeningRefDto>)
+
     @Query("select * from screenings where id == :id")
     fun findById(id: Long): ScreeningRefDto?
 

@@ -15,10 +15,7 @@ class FetchReservationWithIdUseCase(
                     NO_RESERVATION,
                 )
             val screening =
-                fetchScreeningWithIdUseCase(reservationRef.screeningId).getOrNull()
-                    ?: throw NoSuchElementException(
-                        NO_SCREENING,
-                    )
+                fetchScreeningWithIdUseCase(reservationRef.screeningId).getOrThrow()
             val seats = Seats.from(reservationRef.seats)
             Reservation(id, screening, seats)
         }

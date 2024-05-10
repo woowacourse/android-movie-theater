@@ -1,6 +1,8 @@
 package woowacourse.movie.data
 
+import android.content.Context
 import androidx.room.Database
+import androidx.room.Room
 import androidx.room.RoomDatabase
 import woowacourse.movie.data.movie.MovieDao
 import woowacourse.movie.data.movie.MovieDto
@@ -28,4 +30,22 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun screeningDao(): ScreeningRefDao
 
     abstract fun reservationDao(): ReservationRefDao
+
+    companion object {
+        @Volatile
+        private var dbInstance: AppDatabase? = null
+
+        fun getDatabase(context: Context): AppDatabase {
+            return dbInstance ?: synchronized(this) {
+                val instance =
+                    Room.databaseBuilder(
+                        context.applicationContext,
+                        AppDatabase::class.java,
+                        "movie_database",
+                    ).fallbackToDestructiveMigration().build()
+                dbInstance = instance
+                instance
+            }
+        }
+    }
 }

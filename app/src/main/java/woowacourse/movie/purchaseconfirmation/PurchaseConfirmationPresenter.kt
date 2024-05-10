@@ -1,25 +1,34 @@
 package woowacourse.movie.purchaseconfirmation
 
+import android.util.Log
 import woowacourse.movie.purchaseconfirmation.uimodel.toPurchaseConfirmationUiModel
-import woowacourse.movie.repository.MovieRepository
+import woowacourse.movie.usecase.FetchReservationWithIdUseCase
+import java.util.concurrent.FutureTask
 
 class PurchaseConfirmationPresenter(
-    private val repository: MovieRepository,
     private val view: PurchaseConfirmationContract.View,
+    private val fetchReservationWithIdUseCase: FetchReservationWithIdUseCase,
 ) : PurchaseConfirmationContract.Presenter {
     override fun loadReservationResult(reservationId: Long) {
-        runCatching {
-            val reservation =
-                repository.reservationById(reservationId) ?: error(RESERVATION_CHECK_ERROR)
-            reservation.toPurchaseConfirmationUiModel()
-        }.onSuccess {
-            view.showResult(it)
+        val task = FutureTask { fetchReservationWithIdUseCase(reservationId) }
+        Thread(task).start()
+        task.get().onSuccess {
+            Log.d("fsa", "$it")
+            val uiModel = it.toPurchaseConfirmationUiModel()
+            view.showResult(uiModel)
         }.onFailure {
+            Log.d("nope", it.toString())
             // view.showError()
         }
-    }
+        /*
+        runCatching {
+            //val reservation =
+                //repository.reservationById(reservationId) ?: error(RESERVATION_CHECK_ERROR)
 
-    companion object {
-        private const val RESERVATION_CHECK_ERROR = "예매 내역을 찾을 수 없었습니다"
+            reservation.toPurchaseConfirmationUiModel()
+        }.onSuccess {
+        }.onFailure {
+        }
+         */
     }
 }
