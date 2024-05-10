@@ -26,8 +26,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
+import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_COUNT
 
 @RunWith(AndroidJUnit4::class)
 class MovieSeatSelectionActivityTest {
@@ -37,7 +37,7 @@ class MovieSeatSelectionActivityTest {
             MovieSeatSelectionActivity::class.java,
         ).apply {
             putExtra(KEY_MOVIE_ID, 0L)
-            putExtra(KEY_MOVIE_COUNT, 3)
+            putExtra(KEY_RESERVATION_COUNT, 3)
         }
 
     @get:Rule
