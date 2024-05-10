@@ -1,9 +1,8 @@
 package woowacourse.movie.feature.detail
 
+import woowacourse.movie.data.reservation.ReservationRepository
 import woowacourse.movie.model.Movie
 import woowacourse.movie.util.BasePresenter
-import java.time.LocalDate
-import java.time.LocalTime
 
 interface MovieDetailContract {
     interface View {
@@ -11,12 +10,7 @@ interface MovieDetailContract {
 
         fun updateReservationCountView(count: Int)
 
-        fun navigateToSeatSelectionView(
-            movieId: Long,
-            screeningDate: LocalDate,
-            screeningTime: LocalTime,
-            reservationCount: Int,
-        )
+        fun navigateToSeatSelectionView(reservationId: Long)
 
         fun showToastInvalidMovieIdError(throwable: Throwable)
     }
@@ -29,9 +23,11 @@ interface MovieDetailContract {
         fun decreaseReservationCount()
 
         fun reserveMovie(
+            reservationRepository: ReservationRepository,
             movieId: Long,
             screeningDate: String,
             screeningTime: String,
+            theaterPosition: Int,
         )
 
         fun updateReservationCount(count: Int)

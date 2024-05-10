@@ -5,23 +5,29 @@ import io.mockk.just
 import io.mockk.mockk
 import io.mockk.runs
 import io.mockk.verify
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.data.reservation.ReservationRepositoryImpl
 import woowacourse.movie.feature.firstMovie
 import woowacourse.movie.feature.firstMovieId
 import woowacourse.movie.feature.invalidMovieId
-import java.time.LocalDate
-import java.time.LocalTime
 
 class MovieDetailPresenterTest {
     private lateinit var view: MovieDetailContract.View
     private lateinit var presenter: MovieDetailPresenter
+    private val reservationRepository = ReservationRepositoryImpl
     private val movie = firstMovie
 
     @BeforeEach
     fun setUp() {
         view = mockk()
         presenter = MovieDetailPresenter(view)
+    }
+
+    @AfterEach
+    fun tearDown() {
+        reservationRepository.deleteAll()
     }
 
     @Test
@@ -90,19 +96,18 @@ class MovieDetailPresenterTest {
     @Test
     fun `영화를 예매한다`() {
         // given
-        every { view.navigateToSeatSelectionView(any(), any(), any(), any()) } just runs
+        every { view.navigateToSeatSelectionView(any()) } just runs
 
         // when
-        presenter.reserveMovie(0, "2024-04-01", "10:00")
+        presenter.reserveMovie(
+            ReservationRepositoryImpl,
+            firstMovieId,
+            "2024-01-01",
+            "10:00",
+            0,
+        )
 
         // then
-        verify {
-            view.navigateToSeatSelectionView(
-                0,
-                LocalDate.of(2024, 4, 1),
-                LocalTime.of(10, 0),
-                any(),
-            )
-        }
+        verify { view.navigateToSeatSelectionView(any()) }
     }
 }

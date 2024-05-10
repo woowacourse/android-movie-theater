@@ -1,6 +1,7 @@
 package woowacourse.movie.feature.detail
 
 import woowacourse.movie.data.movie.MovieRepository
+import woowacourse.movie.data.reservation.ReservationRepository
 import woowacourse.movie.feature.detail.ui.unFormatSpinnerLocalDate
 import woowacourse.movie.feature.detail.ui.unFormatSpinnerLocalTime
 import woowacourse.movie.model.ReservationCount
@@ -39,15 +40,23 @@ class MovieDetailPresenter(
     }
 
     override fun reserveMovie(
+        reservationRepository: ReservationRepository,
         movieId: Long,
         screeningDate: String,
         screeningTime: String,
+        theaterPosition: Int,
     ) {
-        view.navigateToSeatSelectionView(
-            movieId,
-            screeningDate.unFormatSpinnerLocalDate(),
-            screeningTime.unFormatSpinnerLocalTime(),
-            reservationCount.count,
-        )
+        val movie = MovieRepository.getMovieById(movieId)
+        val theaterName = movie.theaters[theaterPosition].name
+
+        val reservationId =
+            reservationRepository.save(
+                movieId,
+                screeningDate.unFormatSpinnerLocalDate(),
+                screeningTime.unFormatSpinnerLocalTime(),
+                reservationCount,
+                theaterName,
+            )
+        view.navigateToSeatSelectionView(reservationId)
     }
 }

@@ -16,6 +16,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import woowacourse.movie.MovieTheaterApplication
 import woowacourse.movie.R
+import woowacourse.movie.data.movie.MovieRepository
+import woowacourse.movie.data.reservation.Reservation
+import woowacourse.movie.data.reservation.ReservationRepositoryImpl
 import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.databinding.ActivityMovieSeatSelectionBinding
 import woowacourse.movie.feature.result.MovieResultActivity
@@ -25,21 +28,13 @@ import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
 import woowacourse.movie.util.BaseActivity
 import woowacourse.movie.util.MovieIntentConstant.DEFAULT_VALUE_NOTIFICATION
-import woowacourse.movie.util.MovieIntentConstant.DEFAULT_VALUE_SCREENING_DATE
-import woowacourse.movie.util.MovieIntentConstant.DEFAULT_VALUE_SCREENING_TIME
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
+import woowacourse.movie.util.MovieIntentConstant.DEFAULT_VALUE_RESERVATION_ID
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_RESERVATION_COUNT
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_NAME
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_DATE
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
 import woowacourse.movie.util.MovieIntentConstant.KEY_NOTIFICATION
 import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_COUNT
+import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_SEAT_POSITIONS
-import woowacourse.movie.util.MovieIntentConstant.KEY_THEATER_NAME
 import woowacourse.movie.util.formatSeat
-import java.time.LocalDate
-import java.time.LocalTime
 
 class MovieSeatSelectionActivity :
     BaseActivity<MovieSeatSelectionContract.Presenter>(),
@@ -53,28 +48,23 @@ class MovieSeatSelectionActivity :
             }.toList()
     }
     private val ticketAlarm by lazy { TicketAlarm(this) }
+    private lateinit var reservation: Reservation
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMovieSeatSelectionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        movieSelectedSeats =
-            MovieSelectedSeats(
-                intent.getIntExtra(
-                    KEY_RESERVATION_COUNT,
-                    INVALID_VALUE_RESERVATION_COUNT,
-                ),
-            )
-        initializeView()
+        val reservationId = intent.getLongExtra(KEY_RESERVATION_ID, DEFAULT_VALUE_RESERVATION_ID)
+        initializeView(reservationId)
     }
 
     override fun initializePresenter() = MovieSeatSelectionPresenter(this)
 
-    private fun initializeView() {
+    private fun initializeView(reservationId: Long) {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        presenter.loadMovieTitle(intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID))
+        presenter.loadReservation(ReservationRepositoryImpl, reservationId)
         presenter.loadTableSeats(movieSelectedSeats)
 
         binding.btnComplete.setOnClickListener { displayDialog() }
@@ -96,8 +86,10 @@ class MovieSeatSelectionActivity :
         return super.onOptionsItemSelected(item)
     }
 
-    override fun displayMovieTitle(movieTitle: String) {
-        binding.movieTitle = movieTitle
+    override fun setUpReservation(reservation: Reservation) {
+        this.reservation = reservation
+        movieSelectedSeats = MovieSelectedSeats(reservation.reservationCount.count)
+        binding.movieTitle = MovieRepository.getMovieById(reservation.movieId).title
     }
 
     override fun setUpTableSeats(baseSeats: List<MovieSeat>) {
@@ -124,31 +116,11 @@ class MovieSeatSelectionActivity :
             .setPositiveButton("예매 완료") { _, _ ->
                 presenter.reserveMovie(
                     ticketRepository = (application as MovieTheaterApplication).ticketRepository,
-                    movieId = intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID),
-                    screeningDate = screeningDate(),
-                    screeningTime = screeningTime(),
+                    reservation = reservation,
                     selectedSeats = movieSelectedSeats,
-                    theaterName = intent.getStringExtra(KEY_THEATER_NAME)
-                        ?: INVALID_VALUE_THEATER_NAME,
                 )
             }
             .setNegativeButton("취소") { dialog, _ -> dialog.dismiss() }.setCancelable(false).show()
-    }
-
-    private fun screeningDate(): LocalDate {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getSerializableExtra(KEY_MOVIE_DATE, LocalDate::class.java)
-        } else {
-            intent.getSerializableExtra(KEY_MOVIE_DATE) as? LocalDate
-        } ?: DEFAULT_VALUE_SCREENING_DATE
-    }
-
-    private fun screeningTime(): LocalTime {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getSerializableExtra(KEY_MOVIE_TIME, LocalTime::class.java)
-        } else {
-            intent.getSerializableExtra(KEY_MOVIE_TIME) as? LocalTime
-        } ?: DEFAULT_VALUE_SCREENING_TIME
     }
 
     override fun updateSelectResult(movieSelectedSeats: MovieSelectedSeats) {
@@ -210,18 +182,10 @@ class MovieSeatSelectionActivity :
 
         fun newIntent(
             context: Context,
-            movieId: Long,
-            screeningDate: LocalDate,
-            screeningTime: LocalTime,
-            reservationCount: Int,
-            theaterName: String,
+            reservationId: Long,
         ): Intent {
             return Intent(context, MovieSeatSelectionActivity::class.java).apply {
-                putExtra(KEY_MOVIE_ID, movieId)
-                putExtra(KEY_MOVIE_DATE, screeningDate)
-                putExtra(KEY_MOVIE_TIME, screeningTime)
-                putExtra(KEY_RESERVATION_COUNT, reservationCount)
-                putExtra(KEY_THEATER_NAME, theaterName)
+                putExtra(KEY_RESERVATION_ID, reservationId)
             }
         }
     }

@@ -1,5 +1,7 @@
 package woowacourse.movie.feature.seat
 
+import woowacourse.movie.data.reservation.Reservation
+import woowacourse.movie.data.reservation.ReservationRepository
 import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.model.MovieSeat
@@ -10,7 +12,7 @@ import java.time.LocalTime
 
 interface MovieSeatSelectionContract {
     interface View {
-        fun displayMovieTitle(movieTitle: String)
+        fun setUpReservation(reservation: Reservation)
 
         fun setUpTableSeats(baseSeats: List<MovieSeat>)
 
@@ -31,7 +33,10 @@ interface MovieSeatSelectionContract {
     }
 
     interface Presenter : BasePresenter {
-        fun loadMovieTitle(movieId: Long)
+        fun loadReservation(
+            reservationRepository: ReservationRepository,
+            reservationId: Long,
+        )
 
         fun loadTableSeats(movieSelectedSeats: MovieSelectedSeats)
 
@@ -39,11 +44,8 @@ interface MovieSeatSelectionContract {
 
         fun reserveMovie(
             ticketRepository: TicketRepository,
-            movieId: Long,
-            screeningDate: LocalDate,
-            screeningTime: LocalTime,
+            reservation: Reservation,
             selectedSeats: MovieSelectedSeats,
-            theaterName: String,
         )
 
         fun updateSelectedSeats(movieSelectedSeats: MovieSelectedSeats)

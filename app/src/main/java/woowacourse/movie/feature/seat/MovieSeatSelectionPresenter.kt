@@ -1,13 +1,12 @@
 package woowacourse.movie.feature.seat
 
-import woowacourse.movie.data.movie.MovieRepository
+import woowacourse.movie.data.reservation.Reservation
+import woowacourse.movie.data.reservation.ReservationRepository
 import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
 import java.lang.IllegalArgumentException
-import java.time.LocalDate
-import java.time.LocalTime
 import kotlin.concurrent.thread
 
 class MovieSeatSelectionPresenter(
@@ -15,16 +14,13 @@ class MovieSeatSelectionPresenter(
 ) : MovieSeatSelectionContract.Presenter {
     private lateinit var movieSelectedSeats: MovieSelectedSeats
 
-    override fun loadMovieTitle(movieId: Long) {
-        val movie =
-            runCatching {
-                MovieRepository.getMovieById(movieId)
-            }.getOrElse {
-                view.showToastInvalidMovieIdError(it)
-                return
-            }
-
-        view.displayMovieTitle(movie.title)
+    override fun loadReservation(
+        reservationRepository: ReservationRepository,
+        reservationId: Long,
+    ) {
+        runCatching { reservationRepository.find(reservationId) }
+            .onSuccess { view.setUpReservation(it) }
+            .onFailure { view.showToastInvalidMovieIdError(it) }
     }
 
     override fun loadTableSeats(movieSelectedSeats: MovieSelectedSeats) {
@@ -63,21 +59,18 @@ class MovieSeatSelectionPresenter(
 
     override fun reserveMovie(
         ticketRepository: TicketRepository,
-        movieId: Long,
-        screeningDate: LocalDate,
-        screeningTime: LocalTime,
+        reservation: Reservation,
         selectedSeats: MovieSelectedSeats,
-        theaterName: String,
     ) {
         var ticket: Ticket? = null
         thread {
             val ticketId =
                 ticketRepository.save(
-                    movieId,
-                    screeningDate,
-                    screeningTime,
+                    reservation.movieId,
+                    reservation.screeningDate,
+                    reservation.screeningTime,
                     selectedSeats,
-                    theaterName,
+                    reservation.theaterName,
                 )
             ticket = ticketRepository.find(ticketId)
         }.join()

@@ -4,15 +4,19 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.runs
+import io.mockk.slot
 import io.mockk.verify
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.data.reservation.Reservation
+import woowacourse.movie.data.reservation.ReservationRepository
+import woowacourse.movie.data.reservation.ReservationRepositoryImpl
 import woowacourse.movie.data.ticket.FakeTicketRepository
 import woowacourse.movie.data.ticket.TicketRepository
-import woowacourse.movie.feature.firstMovie
-import woowacourse.movie.feature.firstMovieId
-import woowacourse.movie.feature.invalidMovieId
 import woowacourse.movie.feature.movieId
+import woowacourse.movie.feature.reservation
+import woowacourse.movie.feature.reservationCount
 import woowacourse.movie.feature.screeningDate
 import woowacourse.movie.feature.screeningTime
 import woowacourse.movie.feature.selectedSeats
@@ -22,35 +26,40 @@ class MovieSeatSelectionPresenterTest {
     private lateinit var view: MovieSeatSelectionContract.View
     private lateinit var presenter: MovieSeatSelectionPresenter
     private lateinit var ticketRepository: TicketRepository
-    private val movie = firstMovie
+    private lateinit var reservationRepository: ReservationRepository
 
     @BeforeEach
     fun setUp() {
         view = mockk()
         ticketRepository = FakeTicketRepository()
+        reservationRepository = ReservationRepositoryImpl
         presenter = MovieSeatSelectionPresenter(view)
         presenter.updateSelectedSeats(selectedSeats)
     }
 
     @Test
-    fun `영화 id의 영화 제목을 불러온다`() {
+    fun `예매 정보 id에 맞는 예매 정보를 불러온다`() {
         // given
-        every { view.displayMovieTitle(any()) } just runs
+        val reservationSlot = slot<Reservation>()
+        every { view.setUpReservation(capture(reservationSlot)) } just runs
+        val reservationId = reservationRepository.save(movieId, screeningDate, screeningTime, reservationCount, theaterName)
 
         // when
-        presenter.loadMovieTitle(firstMovieId)
+        presenter.loadReservation(reservationRepository, reservationId)
 
         // then
-        verify { view.displayMovieTitle(movie.title) }
+        val actual = reservationSlot.captured
+        assertThat(actual.id).isEqualTo(reservationId)
+        verify { view.setUpReservation(actual) }
     }
 
     @Test
-    fun `존재하지 않는 영화 id의 경우 영화 제목을 불러오면 에러 메시지를 보여준다`() {
+    fun `존재하지 않는 예매 정보 id의 경우 예외가 발생한다`() {
         // given
         every { view.showToastInvalidMovieIdError(any()) } just runs
 
         // when
-        presenter.loadMovieTitle(invalidMovieId)
+        presenter.loadReservation(reservationRepository, -1L)
 
         // then
         verify { view.showToastInvalidMovieIdError(any()) }
@@ -91,11 +100,8 @@ class MovieSeatSelectionPresenterTest {
         // when
         presenter.reserveMovie(
             ticketRepository,
-            movieId,
-            screeningDate,
-            screeningTime,
+            reservation,
             selectedSeats,
-            theaterName,
         )
 
         // then

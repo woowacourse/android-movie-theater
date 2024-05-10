@@ -8,7 +8,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.annotation.StringRes
 import woowacourse.movie.R
-import woowacourse.movie.data.movie.MovieRepository
+import woowacourse.movie.data.reservation.ReservationRepositoryImpl
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.feature.detail.ui.MovieDetailUiModel
 import woowacourse.movie.feature.seat.MovieSeatSelectionActivity
@@ -18,8 +18,6 @@ import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_INDEX
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_INDEX
-import java.time.LocalDate
-import java.time.LocalTime
 
 class MovieDetailActivity :
     BaseActivity<MovieDetailContract.Presenter>(),
@@ -78,9 +76,11 @@ class MovieDetailActivity :
 
         binding.btnSeatSelection.setOnClickListener {
             presenter.reserveMovie(
+                ReservationRepositoryImpl,
                 movieId,
                 binding.spScreeningDate.selectedItem.toString(),
                 binding.spScreeningTime.selectedItem.toString(),
+                selectedTheaterPosition,
             )
         }
     }
@@ -93,24 +93,8 @@ class MovieDetailActivity :
         binding.reservationCount = count
     }
 
-    override fun navigateToSeatSelectionView(
-        movieId: Long,
-        screeningDate: LocalDate,
-        screeningTime: LocalTime,
-        reservationCount: Int,
-    ) {
-        val movie = MovieRepository.getMovieById(this.movieId)
-        val theaterName = movie.theaters[selectedTheaterPosition].name
-
-        val intent =
-            MovieSeatSelectionActivity.newIntent(
-                this,
-                movieId,
-                screeningDate,
-                screeningTime,
-                reservationCount,
-                theaterName,
-            )
+    override fun navigateToSeatSelectionView(reservationId: Long) {
+        val intent = MovieSeatSelectionActivity.newIntent(this, reservationId)
         startActivity(intent)
     }
 
