@@ -12,8 +12,6 @@ interface ReservationContract {
     }
 
     interface Presenter {
-        fun detachView()
-
         fun loadData()
 
         fun navigateDetailView(ticket: Ticket)
