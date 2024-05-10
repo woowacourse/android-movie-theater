@@ -75,9 +75,9 @@
   - [x] 상영표에서 지금 예매 버튼을 누르면 예매 화면으로 이동한다
     - [x] 이동 시 선택된 아이템에 해당하는 영화 정보를 전달한다
 
-- [ ] ReservationHistoryFragment
+- [x] ReservationHistoryFragment
   - [x] 예매내역을 보여준다
   - [x] 예매내역 item은 상영일, 상영 시간, 극장, 영화 제목을 보여준다
-  - [ ] 예매내역 item을 클릭하면 예매 정보 화면으로 이동한다
+  - [x] 예매내역 item을 클릭하면 예매 정보 화면으로 이동한다
 
 - SettingFragment

@@ -70,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@{String.valueOf(ticket.screeningDateTime)}"
+            android:text="@{@string/reservation_finished_date_time(ticket.screeningDateTime.toLocalDate(), ticket.screeningDateTime.toLocalTime())}"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="@id/tv_reservation_finished_movie_title"

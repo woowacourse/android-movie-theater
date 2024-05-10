@@ -1,5 +1,6 @@
 package woowacourse.movie.feature.history
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +14,8 @@ import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.db.ticket.Ticket
 import woowacourse.movie.db.ticket.TicketDao
 import woowacourse.movie.db.ticket.TicketDatabase
+import woowacourse.movie.feature.finished.ReservationFinishedActivity
 import woowacourse.movie.feature.history.adapter.ReservationHistoryAdapter
-import woowacourse.movie.utils.MovieUtils.makeToast
 
 class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
     private var _binding: FragmentReservationHistoryBinding? = null
@@ -45,14 +46,21 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
         reservationHistoryAdapter.updateData(tickets)
     }
 
+    override fun navigateToReservationInformation(ticketId: Long?) {
+        val intent = Intent(context, ReservationFinishedActivity::class.java).putExtra(TICKET_ID, ticketId)
+        startActivity(intent)
+    }
+
     private fun initPresenter() {
         val ticketDao: TicketDao = TicketDatabase.initialize(requireContext()).ticketDao()
         presenter = ReservationHistoryPresenter(this, ticketDao)
     }
 
     private fun initReservationHistoryRecyclerView() {
-        // TODO 토스트 띄우는 동작 제거 후 예약 정보 화면으로 이동하도록 변경
-        reservationHistoryAdapter = ReservationHistoryAdapter { makeToast(requireContext(), "ripple test") }
+        reservationHistoryAdapter =
+            ReservationHistoryAdapter { ticketId ->
+                presenter.deliverTicketId(ticketId)
+            }
         binding.rvReservationHistory.adapter = reservationHistoryAdapter
         val dividerItemDecoration = MaterialDividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
         binding.rvReservationHistory.addItemDecoration(dividerItemDecoration)
@@ -61,5 +69,9 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val TICKET_ID = "ticketId"
     }
 }

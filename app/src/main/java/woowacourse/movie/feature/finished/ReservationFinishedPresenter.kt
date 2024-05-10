@@ -12,21 +12,13 @@ class ReservationFinishedPresenter(
     private lateinit var ticket: Ticket
 
     override fun loadTicket() {
-        thread {
-            ticket = ticketDao.find(ticketId)
-        }.join()
-        if (ticketId != 0L) {
-            loadReservationInformation()
+        if (ticketId != -1L) {
+            thread {
+                ticket = ticketDao.find(ticketId)
+            }.join()
+            view.showReservationHistory(ticket)
         } else {
-            handleUndeliveredTicket()
+            view.showErrorSnackBar()
         }
-    }
-
-    private fun loadReservationInformation() {
-        view.showReservationHistory(ticket)
-    }
-
-    private fun handleUndeliveredTicket() {
-        view.showErrorSnackBar()
     }
 }

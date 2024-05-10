@@ -8,7 +8,7 @@ import woowacourse.movie.databinding.ItemReservationHistoryBinding
 import woowacourse.movie.db.ticket.Ticket
 
 class ReservationHistoryAdapter(
-    private val onClickItem: OnClickItem,
+    private val onSelectedReservation: OnSelectedReservation,
 ) : RecyclerView.Adapter<ReservationHistoryViewHolder>() {
     private var tickets = listOf<Ticket>()
 
@@ -29,7 +29,7 @@ class ReservationHistoryAdapter(
         holder: ReservationHistoryViewHolder,
         position: Int,
     ) {
-        holder.bind(tickets[position], onClickItem)
+        holder.bind(tickets[position], onSelectedReservation)
     }
 
     @SuppressLint("NotifyDataSetChanged")

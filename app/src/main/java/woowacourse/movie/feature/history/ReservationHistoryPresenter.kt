@@ -11,10 +11,13 @@ class ReservationHistoryPresenter(
     private lateinit var tickets: List<Ticket>
 
     override fun loadTicket() {
-        // TODO 임시값 Room 데이터로 변경 후 제거
         thread {
             tickets = ticketDao.findAll()
         }.join()
         view.showReservationHistory(tickets)
+    }
+
+    override fun deliverTicketId(ticketId: Long?) {
+        view.navigateToReservationInformation(ticketId)
     }
 }
