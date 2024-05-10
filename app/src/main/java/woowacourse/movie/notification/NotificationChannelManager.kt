@@ -35,13 +35,14 @@ class NotificationChannelManager(private val context: Context) {
         ticketPrice: String,
         selectedSeats: Array<String>,
         timeDate: String,
+        ticketId: Int
     ) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         if (AlarmManagerCompat.canScheduleExactAlarms(alarmManager)) {
-            // val alarmTime = movieStartTime - 30 * 60 * 1000
             val alarmTime = movieStartTime + 1 - movieStartTime
             val intent = Intent(context, NotificationReceiver::class.java).apply {
                 putExtra("notificationId", 1001)
+                putExtra("ticketId", ticketId)
                 putExtra("message", "${cinema.theater.movie.title} 영화 시작 30분 전입니다!")
                 putExtra("title", cinema.theater.movie.title.toString())
                 putExtra("cinemaName", cinema.cinemaName)
@@ -56,7 +57,6 @@ class NotificationChannelManager(private val context: Context) {
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
             )
-
             alarmManager.setExactAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
                 alarmTime,

@@ -150,6 +150,7 @@ class TheaterSeatActivity :
                                 ticketPrice.toString(),
                                 presenter.selectedSeats.toTypedArray(),
                                 intent.getStringExtra(EXTRA_TIME_DATE).toString(),
+                                ticketId
                             )
                             val confirmationIntent = PurchaseConfirmationActivity.newIntent(
                                 context = this,
