@@ -1,7 +1,11 @@
 package woowacourse.movie.setting.presenter.contract
 
 interface SettingContract {
-    interface View
+    interface View {
+        fun setUpAlarmSwitch(savedAlarmSetting: Boolean)
+    }
 
-    interface Presenter
+    interface Presenter {
+        fun loadAlarmSwitch()
+    }
 }

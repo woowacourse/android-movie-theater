@@ -30,12 +30,12 @@ class SettingFragment : Fragment(), SettingContract.View {
 
     override fun onResume() {
         super.onResume()
-        setUpAlarmSwitch()
+        settingPresenter.loadAlarmSwitch()
     }
 
-    private fun setUpAlarmSwitch() {
+    override fun setUpAlarmSwitch(savedAlarmSetting: Boolean) {
         val isGranted = arguments?.getBoolean(KEY_IS_GRANTED) ?: INVALID_VALUE_IS_GRANTED
-        val isChecked = judgeChecked(isGranted)
+        val isChecked = judgeChecked(isGranted, savedAlarmSetting)
         binding.isGranted = isGranted
         binding.isChecked = isChecked
         binding.switchSettingAlarm.setOnCheckedChangeListener { _, onSwitch ->
@@ -43,8 +43,11 @@ class SettingFragment : Fragment(), SettingContract.View {
         }
     }
 
-    private fun judgeChecked(isGranted: Boolean): Boolean {
-        if (isGranted) return sharedPrefs.getSavedAlarmSetting()
+    private fun judgeChecked(
+        isGranted: Boolean,
+        savedAlarmSetting: Boolean,
+    ): Boolean {
+        if (isGranted) return savedAlarmSetting
         sharedPrefs.saveAlarmSetting(false)
         return false
     }
