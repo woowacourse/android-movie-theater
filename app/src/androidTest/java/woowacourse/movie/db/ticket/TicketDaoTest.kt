@@ -18,13 +18,21 @@ import java.time.LocalTime
 class TicketDaoTest {
     private lateinit var db: TicketDatabase
     private lateinit var dao: TicketDao
-    private val mockTicket: Ticket =
+    private val firstMockTicket: Ticket =
         Ticket(
             screeningDateTime = LocalDateTime.of(LocalDate.of(2024, 5, 9), LocalTime.of(10, 0)),
             movieTitle = "해리 포터와 마법사의 돌",
             theaterName = "선릉 극장",
             seats = Seats(),
             1,
+        )
+    private val secondMockTicket: Ticket =
+        Ticket(
+            screeningDateTime = LocalDateTime.of(LocalDate.of(2024, 3, 5), LocalTime.of(14, 0)),
+            movieTitle = "해리 포터와 비밀의 방",
+            theaterName = "잠실 극장",
+            seats = Seats(),
+            2,
         )
 
     @Before
@@ -45,14 +53,22 @@ class TicketDaoTest {
 
     @Test
     fun `티켓을_저장한다`() {
-        val actual = dao.insert(mockTicket)
+        val actual = dao.insert(firstMockTicket)
         assertThat(actual).isGreaterThan(0)
     }
 
     @Test
     fun `특정_id의_티켓을_가져온다`() {
-        dao.insert(mockTicket)
+        dao.insert(firstMockTicket)
         val actualTicket = dao.find(1)
         assertThat(actualTicket.uid).isEqualTo(1)
+    }
+
+    @Test
+    fun `예약된_모든_티켓을_가져온다`() {
+        dao.insert(firstMockTicket)
+        dao.insert(secondMockTicket)
+        val actual = dao.findAll()
+        assertThat(actual.size).isEqualTo(2)
     }
 }

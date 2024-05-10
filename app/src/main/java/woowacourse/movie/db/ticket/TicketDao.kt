@@ -12,4 +12,7 @@ interface TicketDao {
 
     @Query("SELECT * FROM reservation_history WHERE uid LIKE :uid")
     fun find(uid: Long): Ticket
+
+    @Query("SELECT * FROM reservation_history")
+    fun findAll(): List<Ticket>
 }
