@@ -7,56 +7,44 @@ import android.view.MenuItem
 import android.widget.Toast
 import woowacourse.movie.R
 import woowacourse.movie.base.BindingActivity
-import woowacourse.movie.database.AppDatabase
 import woowacourse.movie.database.Ticket
 import woowacourse.movie.databinding.ActivityPurchaseConfirmationBinding
-import woowacourse.movie.error.ErrorActivity
-import kotlin.concurrent.thread
 
 class PurchaseConfirmationActivity :
-    BindingActivity<ActivityPurchaseConfirmationBinding>(R.layout.activity_purchase_confirmation) {
+    BindingActivity<ActivityPurchaseConfirmationBinding>(R.layout.activity_purchase_confirmation),
+    PurchaseConfirmationContract.View {
+
+    private lateinit var presenter: PurchaseConfirmationPresenter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val ticketId = intent.getIntExtra(EXTRA_TICKET_ID, 0)
-        if (ticketId == 0) {
-            ErrorActivity.start(this)
-            return
-        }
+        presenter =
+            PurchaseConfirmationPresenter(this, TicketModel(applicationContext), applicationContext)
+        presenter.loadTicket(ticketId)
+    }
 
-        thread {
-            try {
-                val ticket =
-                    AppDatabase.getInstance(applicationContext).ticketDao().getTicketById(ticketId)
-                if (ticket != null) {
-                    runOnUiThread {
-                        updateUI(ticket)
-                    }
-                } else {
-                    runOnUiThread {
-                        showError()
-                    }
-                }
-            } catch (e: Exception) {
-                runOnUiThread {
-                    showError()
-                }
-            }
+    override fun showTicketInfo(ticket: Ticket) {
+        runOnUiThread {
+            binding.movieTitleConfirmation.text = ticket.movieTitle
+            binding.purchaseMovieRunningTime.text = ticket.runningTime
+            binding.reservedInformation.text =
+                "일반 ${ticket.seatNumbers.split(",").size}명 | ${ticket.seatNumbers} | ${ticket.cinemaName}"
+            binding.ticketCharge.text = ticket.ticketPrice.toString()
+            binding.movieTimeDate.text = ticket.screeningDate
         }
     }
 
-    private fun updateUI(ticket: Ticket) {
-        binding.movieTitleConfirmation.text = ticket.movieTitle
-        binding.purchaseMovieRunningTime.text = ticket.runningTime
-        binding.reservedInformation.text =
-            "일반 ${ticket.seatNumbers.split(",").size}명 | ${ticket.seatNumbers} | ${ticket.cinemaName}"
-        binding.ticketCharge.text = ticket.ticketPrice.toString()
-        binding.movieTimeDate.text = ticket.screeningDate
+    override fun showError() {
+        runOnUiThread {
+            Toast.makeText(this, "Failed to load ticket information.", Toast.LENGTH_LONG).show()
+            finish()
+        }
     }
 
-    private fun showError() {
-        Toast.makeText(this, "Failed to load ticket information.", Toast.LENGTH_LONG).show()
+    override fun navigateBack() {
         finish()
     }
 
