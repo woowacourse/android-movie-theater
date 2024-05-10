@@ -64,7 +64,7 @@ class ReservationPresenter(
         handleHeadCountBounds(result)
     }
 
-    override fun sendTicketToSeatSelection() {
+    override fun sendReservationInformationToSeatSelection() {
         val screeningDate = screeningDates[screeningDateId.toInt()]
         val screeningTime = screeningTimes[screeningTimeId.toInt()]
         val dateTime = LocalDateTime.of(screeningDate, screeningTime)

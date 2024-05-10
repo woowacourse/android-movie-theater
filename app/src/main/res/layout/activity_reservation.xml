@@ -182,7 +182,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:paddingVertical="8dp"
-                android:onClick="@{() -> presenter.sendTicketToSeatSelection()}"
+                android:onClick="@{() -> presenter.sendReservationInformationToSeatSelection()}"
                 android:text="@string/reservation_detail_select_seat"
                 android:textAppearance="@style/Bold20"
                 app:layout_constraintEnd_toEndOf="parent"

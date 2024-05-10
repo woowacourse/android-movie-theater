@@ -45,6 +45,6 @@ interface ReservationContract {
 
         fun decreaseHeadCount()
 
-        fun sendTicketToSeatSelection()
+        fun sendReservationInformationToSeatSelection()
     }
 }
