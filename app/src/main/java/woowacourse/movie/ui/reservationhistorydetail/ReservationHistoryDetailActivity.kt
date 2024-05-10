@@ -14,7 +14,6 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 class ReservationHistoryDetailActivity : AppCompatActivity(), ReservationHistoryDetailContract.View {
-
     private val binding: ActivityReservationCompleteBinding by lazy {
         DataBindingUtil.setContentView(this, R.layout.activity_reservation_complete)
     }
@@ -39,10 +38,11 @@ class ReservationHistoryDetailActivity : AppCompatActivity(), ReservationHistory
     }
 
     private fun initView() {
-        val reservationHistoryId = intent.getLongExtra(
-            RESERVATION_HISTORY_ID,
-            DEFAULT_RESERVATION_HISTORY_ID
-        )
+        val reservationHistoryId =
+            intent.getLongExtra(
+                RESERVATION_HISTORY_ID,
+                DEFAULT_RESERVATION_HISTORY_ID,
+            )
 
         presenter.loadReservation(reservationHistoryId)
     }

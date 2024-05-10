@@ -8,7 +8,7 @@ import woowacourse.movie.databinding.HolderScreenReservationHistoryBinding
 import woowacourse.movie.db.ReservationHistory
 
 class ReservationHistoryAdapter(
-    private val onClick: (Long) -> Unit
+    private val onClick: (Long) -> Unit,
 ) : ListAdapter<ReservationHistory, RecyclerView.ViewHolder>(ReservationHistoryDiffUtil()) {
     private lateinit var inflater: LayoutInflater
 

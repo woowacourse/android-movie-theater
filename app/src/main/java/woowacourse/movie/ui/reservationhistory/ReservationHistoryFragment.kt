@@ -44,9 +44,10 @@ class ReservationHistoryFragment : Fragment() {
             Thread {
                 val reservationHistories = db.reservationHistoryDao().getAll()
 
-                reservationHistoryAdapter = ReservationHistoryAdapter { reservationHistoryId ->
-                    ReservationHistoryDetailActivity.startActivity(requireContext(), reservationHistoryId)
-                }
+                reservationHistoryAdapter =
+                    ReservationHistoryAdapter { reservationHistoryId ->
+                        ReservationHistoryDetailActivity.startActivity(requireContext(), reservationHistoryId)
+                    }
                 reservationHistoryAdapter.submitList(reservationHistories)
 
                 binding.adapter = reservationHistoryAdapter

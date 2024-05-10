@@ -1,6 +1,5 @@
 package woowacourse.movie.ui.reservationhistorydetail
 
-import android.util.Log
 import woowacourse.movie.db.AppDatabase
 import woowacourse.movie.db.ReservationHistory
 import kotlin.concurrent.thread
@@ -19,7 +18,7 @@ class ReservationHistoryDetailPresenter(
                 reservationHistory.reservation,
                 reservationHistory.theaterName,
                 reservationHistory.screeningDate,
-                reservationHistory.screeningTime
+                reservationHistory.screeningTime,
             )
         }.join()
     }
