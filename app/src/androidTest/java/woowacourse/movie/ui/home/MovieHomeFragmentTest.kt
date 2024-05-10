@@ -1,6 +1,7 @@
 package woowacourse.movie.ui.home
 
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
@@ -14,13 +15,13 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.model.data.MovieContentsImpl
-import woowacourse.movie.model.movie.MovieContent
+import woowacourse.movie.model.movie.MovieContentEntity
+import woowacourse.movie.model.movie.MovieDatabase
 import woowacourse.movie.ui.home.adapter.MovieViewHolder
 
 @RunWith(AndroidJUnit4::class)
 class MovieHomeFragmentTest {
-    private val movieContent: MovieContent = MovieContentsImpl.find(0L)
+    private val movieContent: MovieContentEntity = MovieDatabase.getDatabase(ApplicationProvider.getApplicationContext()).movieContentDao().find(0L)
 
     @Before
     fun setUp() {

@@ -9,20 +9,18 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.model.data.UserTicketsImpl
-import woowacourse.movie.model.movie.SeatInformation
-import woowacourse.movie.model.movie.UserTicket
+import woowacourse.movie.model.movie.MovieDatabase
+import woowacourse.movie.model.movie.TicketEntity
 import woowacourse.movie.ui.selection.MovieSeatSelectionKey
-import java.time.LocalDateTime
 
 @RunWith(AndroidJUnit4::class)
 class MovieReservationCompleteActivityTest {
-    private val userTicket: UserTicket = UserTicketsImpl.find(0L)
+    private val dao = MovieDatabase.getDatabase(ApplicationProvider.getApplicationContext()).ticketDao()
+    private val userTicket: TicketEntity = dao.find(0L)
 
     private val intent =
         Intent(
@@ -58,31 +56,31 @@ class MovieReservationCompleteActivityTest {
 
     @Test
     fun `화면이_띄워지면_예매_금액이_보인다`() {
-        val reservationAmount = userTicket.seatInformation.totalSeatAmount()
+        val reservationAmount = userTicket.price
 
         onView(withId(R.id.reservation_amount_text))
             .check(matches(isDisplayed()))
             .check(matches(withText("%,d원 (현장 결제)".format(reservationAmount))))
     }
 
-    companion object {
-        private const val RESERVATION_COUNT = 1
-
-        @JvmStatic
-        @BeforeClass
-        fun setUp() {
-            val seatInformation =
-                SeatInformation(RESERVATION_COUNT).apply {
-                    addSeat(0, 0) // A1
-                }
-            UserTicketsImpl.save(
-                UserTicket(
-                    title = "해리",
-                    theater = "선릉",
-                    screeningStartDateTime = LocalDateTime.of(2024, 3, 28, 21, 0),
-                    seatInformation = seatInformation,
-                ),
-            )
-        }
-    }
+//    companion object {
+//        private const val RESERVATION_COUNT = 1
+//
+//        @JvmStatic
+//        @BeforeClass
+//        fun setUp() {
+//            val seatInformation =
+//                SeatInformation(RESERVATION_COUNT).apply {
+//                    addSeat(0, 0) // A1
+//                }
+//            dao.save(
+//                UserTicket(
+//                    title = "해리",
+//                    theater = "선릉",
+//                    screeningStartDateTime = LocalDateTime.of(2024, 3, 28, 21, 0),
+//                    seatInformation = seatInformation,
+//                ),
+//            )
+//        }
+//    }
 }
