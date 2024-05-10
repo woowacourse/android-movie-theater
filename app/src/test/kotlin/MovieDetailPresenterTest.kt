@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import woowacourse.movie.data.DummyMovieRepository
+import woowacourse.movie.data.DummyEverythingRepository
 import woowacourse.movie.model.ScreeningSchedule
 import woowacourse.movie.moviedetail.MovieDetailContract
 import woowacourse.movie.moviedetail.MovieDetailPresenter
@@ -28,7 +28,7 @@ class MovieDetailPresenterTest {
 
     @BeforeEach
     fun setUp() {
-        presenter = MovieDetailPresenter(view, DummyMovieRepository)
+        presenter = MovieDetailPresenter(view, DummyEverythingRepository)
     }
 
     @Test

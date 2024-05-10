@@ -1,14 +1,14 @@
 package woowacourse.movie.usecase
 
 import woowacourse.movie.model.Screening
-import woowacourse.movie.repository.MovieRepository
+import woowacourse.movie.repository.EverythingRepository
 import woowacourse.movie.repository.ScreeningRefRepository
 import woowacourse.movie.repository.TheaterRepository
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 class FetchScreeningWithIdUseCase(
-    private val movieRepository: MovieRepository,
+    private val everythingRepository: EverythingRepository,
     private val theaterRepository: TheaterRepository,
     private val screeningRefRepository: ScreeningRefRepository,
 ) {
@@ -20,7 +20,7 @@ class FetchScreeningWithIdUseCase(
                         NO_SCREENING_REF,
                     )
             val movie =
-                movieRepository.movieById(screeningRef.movieId)
+                everythingRepository.movieById(screeningRef.movieId - 1)
                     ?: throw NoSuchElementException(
                         NO_MOVIE,
                     )

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import woowacourse.movie.data.DummyMovieRepository
+import woowacourse.movie.data.DummyEverythingRepository
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.movielist.theaters.TheaterBottomSheetDialogFragment
 import woowacourse.movie.movielist.uimodel.ListItemUiModel
@@ -32,7 +32,7 @@ class MovieListFragment : Fragment(), MovieListContract.View, AdapterClickListen
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = MovieListPresenter(this, DummyMovieRepository)
+        presenter = MovieListPresenter(this, DummyEverythingRepository)
         presenter.loadContents()
     }
 

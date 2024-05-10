@@ -5,11 +5,11 @@ import woowacourse.movie.movielist.uimodel.ListItemUiModel
 import woowacourse.movie.movielist.uimodel.MovieUiModel
 import woowacourse.movie.movielist.uimodel.toAdvertisementUiModel
 import woowacourse.movie.movielist.uimodel.toMovieUiModel
-import woowacourse.movie.repository.MovieRepository
+import woowacourse.movie.repository.EverythingRepository
 
 class MovieListPresenter(
     private val view: MovieListContract.View,
-    private val repository: MovieRepository,
+    private val repository: EverythingRepository,
 ) : MovieListContract.Presenter {
     override fun loadContents() {
         val movieUiModels = repository.movies().map { it.toMovieUiModel() }

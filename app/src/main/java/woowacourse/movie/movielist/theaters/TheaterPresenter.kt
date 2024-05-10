@@ -1,9 +1,9 @@
 package woowacourse.movie.movielist.theaters
 
-import woowacourse.movie.repository.MovieRepository
+import woowacourse.movie.repository.EverythingRepository
 
 class TheaterPresenter(
-    private val repository: MovieRepository,
+    private val repository: EverythingRepository,
     private val view: TheaterContract.View,
 ) : TheaterContract.Presenter {
     override fun loadTheaters(movieId: Long) {

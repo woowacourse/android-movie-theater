@@ -13,7 +13,7 @@ import woowacourse.movie.model.Theater
 import woowacourse.movie.movielist.theaters.TheaterContract
 import woowacourse.movie.movielist.theaters.TheaterPresenter
 import woowacourse.movie.movielist.theaters.toTheaterUiModel
-import woowacourse.movie.repository.MovieRepository
+import woowacourse.movie.repository.EverythingRepository
 
 @ExtendWith(MockKExtension::class)
 class TheaterPresenterTest {
@@ -21,7 +21,7 @@ class TheaterPresenterTest {
     private lateinit var view: TheaterContract.View
 
     @MockK
-    private lateinit var repository: MovieRepository
+    private lateinit var repository: EverythingRepository
 
     @InjectMockKs
     private lateinit var presenter: TheaterPresenter

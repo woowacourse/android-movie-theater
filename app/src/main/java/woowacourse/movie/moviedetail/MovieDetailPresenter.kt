@@ -8,11 +8,11 @@ import woowacourse.movie.moviedetail.uimodel.ScheduleUiModels
 import woowacourse.movie.moviedetail.uimodel.toHeadCountUiModel
 import woowacourse.movie.moviedetail.uimodel.toMovieDetailUiModel
 import woowacourse.movie.moviedetail.uimodel.toScheduleUiModels
-import woowacourse.movie.repository.MovieRepository
+import woowacourse.movie.repository.EverythingRepository
 
 class MovieDetailPresenter(
     private val view: MovieDetailContract.View,
-    private val repository: MovieRepository,
+    private val repository: EverythingRepository,
 ) : MovieDetailContract.Presenter {
     private var count = HeadCount(1)
     private lateinit var bookingDetailUiModel: BookingDetailUiModel

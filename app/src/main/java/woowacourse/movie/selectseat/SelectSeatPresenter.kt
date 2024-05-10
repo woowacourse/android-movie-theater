@@ -1,19 +1,22 @@
 package woowacourse.movie.selectseat
 
+import android.util.Log
 import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.Seats
-import woowacourse.movie.moviedetail.uimodel.BookingInfoUiModel
-import woowacourse.movie.repository.MovieRepository
+import woowacourse.movie.repository.EverythingRepository
 import woowacourse.movie.selectseat.uimodel.Position
 import woowacourse.movie.selectseat.uimodel.PriceUiModel
 import woowacourse.movie.selectseat.uimodel.SeatState
 import woowacourse.movie.selectseat.uimodel.SeatUiModel
 import woowacourse.movie.selectseat.uimodel.toSeatUiModelMap
 import woowacourse.movie.selectseat.uimodel.toSeats
+import woowacourse.movie.usecase.PutReservationUseCase
+import java.util.concurrent.FutureTask
 
 class SelectSeatPresenter(
     private val view: SelectSeatContract.View,
-    private val repository: MovieRepository,
+    private val repository: EverythingRepository,
+    private val putReservationUseCase: PutReservationUseCase,
 ) : SelectSeatContract.Presenter {
     private lateinit var _seats: MutableMap<Position, SeatUiModel>
     private val seats: MutableMap<Position, SeatUiModel>
@@ -63,21 +66,6 @@ class SelectSeatPresenter(
         }
     }
 
-    override fun completeReservation(bookingInfoUiModel: BookingInfoUiModel) {
-        runCatching {
-            val screening =
-                repository.screeningById(screeningId) ?: error(
-                    SCREENING_NOT_EXISTS_ERROR,
-                )
-            repository.makeReservation(
-                screening,
-                Seats(selectedSeats.toSeats()),
-            )
-        }.onSuccess {
-            view.navigateToResult(it)
-        }
-    }
-
     override fun saveSeats() {
         view.onSaveSeats(seats)
     }
@@ -88,6 +76,20 @@ class SelectSeatPresenter(
         view.showPrice(this.price)
         view.deActivatePurchase()
         if (selectedSeats.size == maxCount) view.activatePurchase()
+    }
+
+    override fun completeReservation() {
+        runCatching {
+            val task =
+                FutureTask<Long> {
+                    putReservationUseCase(screeningId, Seats(selectedSeats.toSeats()))
+                }
+            Thread(task).start()
+            task.get()
+        }.onSuccess {
+            Log.d("fsa", "$it")
+            view.navigateToResult(it)
+        }
     }
 
     companion object {

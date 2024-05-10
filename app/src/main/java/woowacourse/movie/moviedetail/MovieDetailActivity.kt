@@ -9,7 +9,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.data.DummyMovieRepository
+import woowacourse.movie.data.DummyEverythingRepository
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.moviedetail.uimodel.BookingDetailUiModel
 import woowacourse.movie.moviedetail.uimodel.BookingInfoUiModel
@@ -36,7 +36,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         presenter =
             MovieDetailPresenter(
-                this, DummyMovieRepository,
+                this, DummyEverythingRepository,
             )
         val id = screeningScheduleId()
         presenter.loadMovieDetail(id)
