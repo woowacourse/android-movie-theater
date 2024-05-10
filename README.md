@@ -38,13 +38,15 @@
 - 설정 에서 알림 기능을 On/Off 할 수 있다.
   - [x]: SharedPref 에 푸시 알림 여부를 저장 한다.
 - 영화 시작 시간 30분 전에 푸시 알림이 온다.
-  - [ ]: Permission 설정
+  - [ ]: Permission 설정 - PermissionManager 만들어서 분리하기
   - [ ]: Channel 생성 
   - [ ]: AlarmManager + BroadCast Receiver
 - [ ]: 푸시 알림을 클릭 하면 예매 정보를 보여 준다.
   - [ ]: startActivity 로 Reservation 이동
 - [ ]: Notification 커스터 마이징
 
+
+### 리뷰 반영
 - [ ]: 말리빈 요구 사항 반영 하기  
 
 ----  
