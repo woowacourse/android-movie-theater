@@ -8,6 +8,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.rule.GrantPermissionRule
 import org.hamcrest.CoreMatchers.instanceOf
 import org.junit.Before
 import org.junit.Rule
@@ -21,6 +22,10 @@ import woowacourse.movie.home.view.adapter.theater.TheaterViewHolder
 class TheaterSelectionFragmentTest {
     @get:Rule
     val activityRule = ActivityScenarioRule(MovieMainActivity::class.java)
+
+    @get:Rule
+    val permissionRule: GrantPermissionRule =
+        GrantPermissionRule.grant(android.Manifest.permission.POST_NOTIFICATIONS)
 
     @Before
     fun setUp() {
