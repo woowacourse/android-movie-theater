@@ -46,8 +46,8 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
 
     private fun initView() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        val screenId = intent.getIntExtra(PUT_EXTRA_KEY_ID, DEFAULT_SCREEN_ID)
-        val theaterId = intent.getIntExtra(PUT_EXTRA_THEATER_ID_KEY, DEFAULT_THEATER_ID)
+        val screenId = intent.getIntExtra(SCREEN_ID, DEFAULT_SCREEN_ID)
+        val theaterId = intent.getIntExtra(THEATER_ID, DEFAULT_THEATER_ID)
         initClickListener(screenId, theaterId)
 
         presenter.loadScreen(screenId)
@@ -81,9 +81,9 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         with(outState) {
-            putInt(PUT_TICKET_STATE_KEY, ticketView.ticketCount())
-            putInt(PUT_DATE_POSITION_KEY, dateTimeSpinnerView.selectedDatePosition())
-            putInt(PUT_TIME_POSITION_KEY, dateTimeSpinnerView.selectedTimePosition())
+            putInt(TICKET_COUNT, ticketView.ticketCount())
+            putInt(DATE_POSITION, dateTimeSpinnerView.selectedDatePosition())
+            putInt(TIME_POSITION, dateTimeSpinnerView.selectedTimePosition())
         }
     }
 
@@ -91,15 +91,15 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
         super.onRestoreInstanceState(savedInstanceState)
 
         savedInstanceState.let { bundle ->
-            val count = bundle.getInt(PUT_TICKET_STATE_KEY)
+            val count = bundle.getInt(TICKET_COUNT)
             ticketView.restoreTicketCount(count)
             presenter.saveTicket(count)
 
-            val datePosition = bundle.getInt(PUT_DATE_POSITION_KEY)
+            val datePosition = bundle.getInt(DATE_POSITION)
             dateTimeSpinnerView.restoreDatePosition(datePosition)
             presenter.saveDatePosition(datePosition)
 
-            val timePosition = bundle.getInt(PUT_TIME_POSITION_KEY)
+            val timePosition = bundle.getInt(TIME_POSITION)
             dateTimeSpinnerView.restoreTimePosition(timePosition)
             presenter.saveTimePosition(timePosition)
         }
@@ -197,8 +197,7 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
                     findViewById(android.R.id.content),
                     R.string.UNEXPECTED_ERROR_OCCURRED,
                     Snackbar.LENGTH_SHORT,
-                )
-                    .show()
+                ).show()
         }
     }
 
@@ -208,23 +207,24 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
     }
 
     companion object {
+        private const val SCREEN_ID = "screenId"
+        private const val THEATER_ID = "theaterId"
+        private const val TICKET_COUNT = "ticketCount"
+        private const val DATE_POSITION = "datePosition"
+        private const val TIME_POSITION = "timePosition"
         private const val DEFAULT_SCREEN_ID = -1
         private const val DEFAULT_THEATER_ID = -1
-        private const val PUT_EXTRA_KEY_ID = "screenId"
-        private const val PUT_EXTRA_THEATER_ID_KEY = "theaterId"
-        private const val PUT_TICKET_STATE_KEY = "ticketCount"
-        private const val PUT_DATE_POSITION_KEY = "datePosition"
-        private const val PUT_TIME_POSITION_KEY = "timePosition"
 
         fun startActivity(
             context: Context,
             screenId: Int,
             theaterId: Int,
         ) {
-            val intent = Intent(context, ScreenDetailActivity::class.java)
-            intent.putExtra(PUT_EXTRA_KEY_ID, screenId)
-            intent.putExtra(PUT_EXTRA_THEATER_ID_KEY, theaterId)
-            context.startActivity(intent)
+            Intent(context, ScreenDetailActivity::class.java).apply {
+                putExtra(SCREEN_ID, screenId)
+                putExtra(THEATER_ID, theaterId)
+                context.startActivity(this)
+            }
         }
     }
 }
