@@ -4,6 +4,7 @@ import woowacourse.movie.database.AppDatabase
 import woowacourse.movie.database.Ticket
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.theater.Seat
+import kotlin.concurrent.thread
 
 class TheaterSeatPresenter(
     private val view: TheaterSeatContract.View,
@@ -89,7 +90,7 @@ class TheaterSeatPresenter(
                 runningTime = cinema.theater.movie.runningTime.toString(),
                 ticketPrice = totalPrice,
             )
-        Thread {
+        thread {
             database.ticketDao().insertTicket(ticket)
         }.start()
     }
