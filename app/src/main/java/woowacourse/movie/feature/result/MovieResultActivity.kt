@@ -49,9 +49,7 @@ class MovieResultActivity :
     }
 
     override fun displayTicket(ticket: Ticket) {
-        runOnUiThread {
-            binding.movieResult = MovieResultUiModel.from(ticket)
-        }
+        binding.movieResult = MovieResultUiModel.from(ticket)
     }
 
     override fun showToastInvalidMovieIdError(throwable: Throwable) {

@@ -56,8 +56,6 @@ class ReservationHistoryFragment :
     }
 
     override fun displayTickets(tickets: List<Ticket>) {
-        requireActivity().runOnUiThread {
-            reservationHistoryAdapter.submitList(tickets)
-        }
+        reservationHistoryAdapter.submitList(tickets)
     }
 }

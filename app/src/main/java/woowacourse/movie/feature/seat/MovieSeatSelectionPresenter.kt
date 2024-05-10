@@ -2,10 +2,13 @@ package woowacourse.movie.feature.seat
 
 import woowacourse.movie.data.movie.MovieRepository
 import woowacourse.movie.data.ticket.TicketRepository
+import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
+import java.lang.IllegalArgumentException
 import java.time.LocalDate
 import java.time.LocalTime
+import kotlin.concurrent.thread
 
 class MovieSeatSelectionPresenter(
     private val view: MovieSeatSelectionContract.View,
@@ -66,7 +69,8 @@ class MovieSeatSelectionPresenter(
         selectedSeats: MovieSelectedSeats,
         theaterName: String,
     ) {
-        Thread {
+        var ticket: Ticket? = null
+        thread {
             val ticketId =
                 ticketRepository.save(
                     movieId,
@@ -75,8 +79,11 @@ class MovieSeatSelectionPresenter(
                     selectedSeats,
                     theaterName,
                 )
-            view.navigateToResultView(ticketId)
-            view.setTicketAlarm(ticketRepository.find(ticketId))
-        }.start()
+            ticket = ticketRepository.find(ticketId)
+        }.join()
+        ticket?.let {
+            view.navigateToResultView(it.id)
+            view.setTicketAlarm(it)
+        } ?: throw IllegalArgumentException()
     }
 }

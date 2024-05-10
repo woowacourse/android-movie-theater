@@ -14,9 +14,10 @@ class SettingPresenter(private val view: SettingContract.View) : SettingContract
     }
 
     override fun cancelTicketsAlarm(ticketRepository: TicketRepository) {
-        Thread {
-            val tickets = ticketRepository.findAll()
-            tickets.forEach { view.cancelTicketAlarm(it) }
-        }.start()
+        var tickets = emptyList<Ticket>()
+        thread {
+            tickets = ticketRepository.findAll()
+        }.join()
+        tickets.forEach { view.cancelTicketAlarm(it) }
     }
 }

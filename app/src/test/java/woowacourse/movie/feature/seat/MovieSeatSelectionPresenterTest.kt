@@ -97,7 +97,6 @@ class MovieSeatSelectionPresenterTest {
             selectedSeats,
             theaterName,
         )
-        Thread.sleep(1000)
 
         // then
         verify { view.navigateToResultView(0L) }

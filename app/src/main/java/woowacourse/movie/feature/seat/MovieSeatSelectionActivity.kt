@@ -128,7 +128,8 @@ class MovieSeatSelectionActivity :
                     screeningDate = screeningDate(),
                     screeningTime = screeningTime(),
                     selectedSeats = movieSelectedSeats,
-                    theaterName = intent.getStringExtra(KEY_THEATER_NAME) ?: INVALID_VALUE_THEATER_NAME,
+                    theaterName = intent.getStringExtra(KEY_THEATER_NAME)
+                        ?: INVALID_VALUE_THEATER_NAME,
                 )
             }
             .setNegativeButton("취소") { dialog, _ -> dialog.dismiss() }.setCancelable(false).show()
@@ -155,10 +156,8 @@ class MovieSeatSelectionActivity :
     }
 
     override fun navigateToResultView(ticketId: Long) {
-        runOnUiThread {
-            val intent = MovieResultActivity.newIntent(this, ticketId)
-            startActivity(intent)
-        }
+        val intent = MovieResultActivity.newIntent(this, ticketId)
+        startActivity(intent)
     }
 
     override fun showToastInvalidMovieIdError(throwable: Throwable) {
