@@ -17,7 +17,10 @@ import woowacourse.movie.data.entity.MovieReservation
 import woowacourse.movie.data.entity.MovieTheater
 import woowacourse.movie.data.entity.ScreeningMovie
 
-@Database(entities = [MovieReservation::class, MovieTheater::class, Movie::class, ScreeningMovie::class], version = 1)
+@Database(
+    entities = [MovieReservation::class, MovieTheater::class, Movie::class, ScreeningMovie::class],
+    version = 1,
+)
 @TypeConverters(value = [ReservationSeatsConverters::class, LocalDateTimeConverters::class, ScreenDateTimeConverters::class])
 abstract class MovieDatabase : RoomDatabase() {
     abstract fun movieDao(): MovieDao
@@ -36,8 +39,7 @@ abstract class MovieDatabase : RoomDatabase() {
             instance ?: synchronized(this) {
                 val newInstance =
                     buildDatabase(context).apply {
-                        val screeningMovieDao = this.screeningMovieDao()
-                        screeningMovieDao.insertAll(ScreeningMovie.STUB_A, ScreeningMovie.STUB_B, ScreeningMovie.STUB_C)
+                        initData()
                     }
                 instance = newInstance
                 return newInstance
@@ -49,5 +51,23 @@ abstract class MovieDatabase : RoomDatabase() {
                 MovieDatabase::class.java,
                 "movie",
             ).build()
+
+        private fun MovieDatabase.initData() {
+            val movieDao = this.movieDao()
+            val movieTheaterDao = this.movieTheaterDao()
+            val screeningMovieDao = this.screeningMovieDao()
+
+            movieDao.insert(Movie.STUB)
+            movieTheaterDao.insertAll(
+                MovieTheater.STUB_A,
+                MovieTheater.STUB_B,
+                MovieTheater.STUB_C,
+            )
+            screeningMovieDao.insertAll(
+                ScreeningMovie.STUB_A,
+                ScreeningMovie.STUB_B,
+                ScreeningMovie.STUB_C,
+            )
+        }
     }
 }

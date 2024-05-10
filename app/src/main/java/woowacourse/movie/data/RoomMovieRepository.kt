@@ -77,4 +77,25 @@ class RoomMovieRepository(
         return theaters.firstOrNull { it.id == theaterId }?.seats?.firstOrNull { it.row == row && it.col == col }
             ?: error("해당 극장에는 row:$Int, col:${Int}에 해당하는 좌석이 없습니다.")
     }
+
+    companion object {
+        private var instance: MovieRepository? = null
+
+        fun initialize(
+            movieDao: MovieDao,
+            theaterDao: MovieTheaterDao,
+            screenMovieDao: ScreeningMovieDao,
+            reservationDao: MovieReservationDao,
+        ): MovieRepository =
+            instance ?: synchronized(this) {
+                instance ?: RoomMovieRepository(
+                    movieDao,
+                    theaterDao,
+                    screenMovieDao,
+                    reservationDao,
+                ).also { instance = it }
+            }
+
+        fun instance(): MovieRepository = instance ?: error("RoomRepo가 초기화되지 않았습니다.")
+    }
 }
