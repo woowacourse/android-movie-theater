@@ -1,19 +1,15 @@
 package woowacourse.movie.seat
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.provider.Settings
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.IntentCompat
 import androidx.core.view.children
 import androidx.room.Room
@@ -26,7 +22,6 @@ import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.movieInfo.Title
 import woowacourse.movie.model.theater.Seat
 import woowacourse.movie.notification.NotificationChannelManager
-import woowacourse.movie.notification.NotificationReceiver
 import woowacourse.movie.purchaseConfirmation.PurchaseConfirmationActivity
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -149,11 +144,12 @@ class TheaterSeatActivity :
                         val date = formatter.parse(timeDate)
                         val movieStartTime = date?.time ?: return@onPositiveButtonClicked
                         presenter.saveTicketToDatabase { ticketId ->
-                            scheduleNotification(
-                                this,
+                            NotificationChannelManager(this).scheduleMovieStartNotification(
                                 movieStartTime,
                                 cinema,
-                                ticketPrice.toString()
+                                ticketPrice.toString(),
+                                presenter.selectedSeats.toTypedArray(),
+                                intent.getStringExtra(EXTRA_TIME_DATE).toString(),
                             )
                             val confirmationIntent = PurchaseConfirmationActivity.newIntent(
                                 context = this,
@@ -172,50 +168,6 @@ class TheaterSeatActivity :
             negativeLabel = "취소",
             onNegativeButtonClicked = {}
         )
-    }
-
-
-    private fun scheduleNotification(
-        context: Context,
-        movieStartTime: Long,
-        cinema: Cinema,
-        ticketPrice: String,
-    ) {
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        try {
-            if (AlarmManagerCompat.canScheduleExactAlarms(alarmManager)) {
-                val alarmTime = movieStartTime - 30 * 60 * 1000 // 영화 시작 시간 30분 전
-                val intent = Intent(context, NotificationReceiver::class.java).apply {
-                    putExtra("notificationId", 1001)
-                    putExtra("message", "${cinema.theater.movie.title} 영화 시작 30분 전입니다!")
-                    putExtra("title", cinema.theater.movie.title.toString())
-                    putExtra("cinemaName", cinema.cinemaName)
-                    putExtra("ticketPrice", ticketPrice)
-                    putExtra("seatNumber", presenter.selectedSeats.toTypedArray())
-                    putExtra("runningTime", cinema.theater.movie.runningTime.toString())
-                    putExtra("timeDate", intent.getStringExtra(EXTRA_TIME_DATE))
-                }
-                val pendingIntent = PendingIntent.getBroadcast(
-                    context,
-                    1001,
-                    intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-                )
-
-                alarmManager.setExactAndAllowWhileIdle(
-                    AlarmManager.RTC_WAKEUP,
-                    alarmTime,
-                    pendingIntent,
-                )
-            } else {
-                val settingsIntent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
-                context.startActivity(settingsIntent)
-            }
-        } catch (e: SecurityException) {
-            Toast.makeText(context, "정확한 알람 스케줄링 권한이 필요합니다.", Toast.LENGTH_LONG).show()
-            val settingsIntent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
-            context.startActivity(settingsIntent)
-        }
     }
 
 

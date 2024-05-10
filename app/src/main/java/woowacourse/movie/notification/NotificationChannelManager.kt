@@ -1,9 +1,15 @@
 package woowacourse.movie.notification
 
+import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
+import android.provider.Settings
+import androidx.core.app.AlarmManagerCompat
+import woowacourse.movie.model.Cinema
 
 class NotificationChannelManager(private val context: Context) {
     companion object {
@@ -20,6 +26,44 @@ class NotificationChannelManager(private val context: Context) {
             val notificationManager: NotificationManager =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    fun scheduleMovieStartNotification(
+        movieStartTime: Long,
+        cinema: Cinema,
+        ticketPrice: String,
+        selectedSeats: Array<String>,
+        timeDate: String,
+    ) {
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        if (AlarmManagerCompat.canScheduleExactAlarms(alarmManager)) {
+            // val alarmTime = movieStartTime - 30 * 60 * 1000
+            val alarmTime = movieStartTime + 1 - movieStartTime
+            val intent = Intent(context, NotificationReceiver::class.java).apply {
+                putExtra("notificationId", 1001)
+                putExtra("message", "${cinema.theater.movie.title} 영화 시작 30분 전입니다!")
+                putExtra("title", cinema.theater.movie.title.toString())
+                putExtra("cinemaName", cinema.cinemaName)
+                putExtra("ticketPrice", ticketPrice)
+                putExtra("seatNumber", selectedSeats)
+                putExtra("runningTime", cinema.theater.movie.runningTime.toString())
+                putExtra("timeDate", timeDate)
+            }
+            val pendingIntent = PendingIntent.getBroadcast(
+                context,
+                1001,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+            )
+
+            alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                alarmTime,
+                pendingIntent,
+            )
+        } else {
+            context.startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM))
         }
     }
 }
