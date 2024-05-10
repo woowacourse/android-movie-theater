@@ -10,12 +10,13 @@ import woowacourse.movie.presentation.message.Messenger
 class MovieApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        ReservationDatabase.getInstance(applicationContext)
+        db = ReservationDatabase.getDatabase(applicationContext)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         Messenger.init(AndroidMessage(this))
     }
 
     companion object {
+        lateinit var db: ReservationDatabase
         lateinit var sharedPreferences: SharedPreferences
     }
 }

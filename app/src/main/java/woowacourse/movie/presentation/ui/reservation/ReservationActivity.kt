@@ -2,19 +2,22 @@ package woowacourse.movie.presentation.ui.reservation
 
 import android.content.Context
 import android.content.Intent
+import woowacourse.movie.MovieApplication.Companion.db
 import woowacourse.movie.R
 import woowacourse.movie.data.repository.local.ReservationRepositoryImpl
 import woowacourse.movie.data.repository.remote.DummyTheater
 import woowacourse.movie.databinding.ActivityReservationBinding
 import woowacourse.movie.domain.model.Reservation
+import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.presentation.base.BaseMvpBindingActivity
 import woowacourse.movie.presentation.ui.reservation.ReservationContract.View
 
 class ReservationActivity : BaseMvpBindingActivity<ActivityReservationBinding>(), View {
     override val layoutResourceId: Int
         get() = R.layout.activity_reservation
+    val repository: ReservationRepository by lazy { ReservationRepositoryImpl(db.dao()) }
     override val presenter: ReservationPresenter by lazy {
-        ReservationPresenter(this, ReservationRepositoryImpl(applicationContext), DummyTheater)
+        ReservationPresenter(this, repository, DummyTheater)
     }
 
     override fun initStartView() {

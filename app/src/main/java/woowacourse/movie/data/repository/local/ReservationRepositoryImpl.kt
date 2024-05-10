@@ -1,7 +1,6 @@
 package woowacourse.movie.data.repository.local
 
-import android.content.Context
-import woowacourse.movie.data.db.ReservationDatabase
+import woowacourse.movie.data.dao.ReservationDao
 import woowacourse.movie.data.mapper.toDomain
 import woowacourse.movie.data.model.ReservationEntity
 import woowacourse.movie.domain.model.Reservation
@@ -9,9 +8,7 @@ import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.repository.ReservationRepository
 import java.time.LocalDateTime
 
-class ReservationRepositoryImpl(context: Context) : ReservationRepository {
-    private val dao = ReservationDatabase.getInstance(context)?.dao()
-
+class ReservationRepositoryImpl(private val dao: ReservationDao) : ReservationRepository {
     override fun saveReservation(
         movieId: Int,
         theaterId: Int,
@@ -23,16 +20,16 @@ class ReservationRepositoryImpl(context: Context) : ReservationRepository {
         runCatching {
             val reservationEntity =
                 ReservationEntity(theaterId, movieId, title, ticketCount, seats, dateTime)
-            dao?.saveReservation(reservationEntity) ?: throw IllegalArgumentException()
+            dao.saveReservation(reservationEntity)
         }
 
     override fun findReservation(reservationId: Long): Result<Reservation> =
         runCatching {
-            dao?.findReservation(reservationId)?.toDomain() ?: throw IllegalArgumentException()
+            dao.findReservation(reservationId).toDomain()
         }
 
     override fun findReservations(): Result<List<Reservation>> =
         runCatching {
-            dao?.findReservations()?.toDomain() ?: throw IllegalArgumentException()
+            dao.findReservations().toDomain()
         }
 }

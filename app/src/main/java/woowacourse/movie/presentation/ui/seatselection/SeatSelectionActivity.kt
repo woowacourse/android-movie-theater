@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
+import woowacourse.movie.MovieApplication.Companion.db
 import woowacourse.movie.R
 import woowacourse.movie.data.repository.local.ReservationRepositoryImpl
 import woowacourse.movie.data.repository.remote.DummyScreens
@@ -22,13 +23,11 @@ import java.io.Serializable
 class SeatSelectionActivity : BaseMvpBindingActivity<ActivitySeatSelectionBinding>(), View {
     override val layoutResourceId: Int
         get() = R.layout.activity_seat_selection
+
+    val repository = ReservationRepositoryImpl(db.dao())
+
     override val presenter: SeatSelectionPresenter by lazy {
-        SeatSelectionPresenter(
-            this,
-            DummyScreens,
-            ReservationRepositoryImpl(applicationContext),
-            Notification(applicationContext),
-        )
+        SeatSelectionPresenter(this, DummyScreens, repository, Notification(applicationContext))
     }
 
     override fun initStartView() {

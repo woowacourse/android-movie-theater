@@ -8,27 +8,26 @@ import androidx.room.TypeConverters
 import woowacourse.movie.data.dao.ReservationDao
 import woowacourse.movie.data.model.ReservationEntity
 
-@Database(entities = [ReservationEntity::class], version = 8)
+@Database(entities = [ReservationEntity::class], version = 1)
 @TypeConverters(ReservationTypeConverters::class)
 abstract class ReservationDatabase : RoomDatabase() {
     abstract fun dao(): ReservationDao
 
     companion object {
+        @Volatile
         private var instance: ReservationDatabase? = null
 
-        @Synchronized
-        fun getInstance(context: Context): ReservationDatabase? {
-            if (instance == null) {
-                synchronized(ReservationDatabase::class) {
-                    instance =
-                        Room.databaseBuilder(
-                            context.applicationContext,
-                            ReservationDatabase::class.java,
-                            "reservation-database",
-                        ).fallbackToDestructiveMigration().build()
-                }
+        fun getDatabase(context: Context): ReservationDatabase {
+            return instance ?: synchronized(this) {
+                Room.databaseBuilder(
+                    context,
+                    ReservationDatabase::class.java,
+                    "reservation-database",
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
+                    .also { instance = it }
             }
-            return instance
         }
     }
 }

@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.ui.main.history
 
+import woowacourse.movie.MovieApplication.Companion.db
 import woowacourse.movie.R
 import woowacourse.movie.data.repository.local.ReservationRepositoryImpl
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
@@ -17,7 +18,7 @@ class ReservationHistoryFragment :
     val presenter: ReservationHistoryPresenter by lazy {
         ReservationHistoryPresenter(
             this,
-            ReservationRepositoryImpl(requireContext().applicationContext),
+            ReservationRepositoryImpl(db.dao()),
         )
     }
     private val adapter: ReservationHistoryAdapter by lazy { ReservationHistoryAdapter(presenter) }
