@@ -38,13 +38,8 @@ class Notification(context: Context) {
         reservation: Reservation,
     ) {
         val pendingIntent = createPendingIntent(context, reservation)
-        val builder =
-            NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_movie)
-                .setContentTitle("예매 알림")
-                .setContentText("${reservation.movieTitle} 30분 뒤 상영 예정")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent)
+        val builder = createReservationNotificationBuilder(context, reservation)
+        builder.setContentIntent(pendingIntent)
 
         with(NotificationManagerCompat.from(context)) {
             if (ActivityCompat.checkSelfPermission(
@@ -56,6 +51,17 @@ class Notification(context: Context) {
                 notify(1, builder.build())
             }
         }
+    }
+
+    private fun createReservationNotificationBuilder(
+        context: Context,
+        reservation: Reservation,
+    ): NotificationCompat.Builder {
+        return NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_movie)
+            .setContentTitle("예매 알림")
+            .setContentText("${reservation.movieTitle} 30분 뒤 상영 예정")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
     }
 
     private fun createPendingIntent(

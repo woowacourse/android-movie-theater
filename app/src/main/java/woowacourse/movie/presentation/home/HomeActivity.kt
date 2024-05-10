@@ -14,12 +14,13 @@ import woowacourse.movie.utils.SharedPreference
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private val fragmentManagerHelper: FragmentManagerHelper by lazy {
-        FragmentManagerHelper(
-            this,
-            R.id.fragment_container,
-        )
+        FragmentManagerHelper(this, R.id.fragment_container)
     }
     private var isPermitted = false
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            isPermitted = isGranted
+        }
 
     override fun onResume() {
         super.onResume()
@@ -39,15 +40,15 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun selectDefaultMenuItem() {
-        binding.bottomNavigationView.selectedItemId = R.id.action_home
-    }
-
     private fun setupBottomNavigationView() {
         binding.bottomNavigationView.setOnItemSelectedListener { menu ->
             fragmentManagerHelper.replace(menu.itemId, isPermitted)
             true
         }
+    }
+
+    private fun selectDefaultMenuItem() {
+        binding.bottomNavigationView.selectedItemId = R.id.action_home
     }
 
     private fun requestNotificationPermission() {
@@ -69,11 +70,6 @@ class HomeActivity : AppCompatActivity() {
             isPermitted = true
         }
     }
-
-    private val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-            isPermitted = isGranted
-        }
 
     companion object {
         lateinit var sharedPreference: SharedPreference

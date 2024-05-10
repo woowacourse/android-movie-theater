@@ -27,11 +27,10 @@ class SettingFragment : Fragment(), SettingContract.View {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-
         presenter.loadNotificationState(HomeActivity.sharedPreference.isPushNotificationActivated())
 
-        val result = arguments?.getBoolean(KEY_ENABLED, true)
-        binding.isSwitchEnabled = result
+        binding.isSwitchEnabled = arguments?.getBoolean(KEY_ENABLED, true)
+
         binding.switchSetting.setOnCheckedChangeListener { _, isChecked ->
             HomeActivity.sharedPreference.saveNotificationState(isChecked)
         }
