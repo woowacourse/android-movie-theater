@@ -1,8 +1,6 @@
 package woowacourse.movie.seat
 
 import android.app.AlarmManager
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -27,6 +25,7 @@ import woowacourse.movie.error.ErrorActivity
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.movieInfo.Title
 import woowacourse.movie.model.theater.Seat
+import woowacourse.movie.notification.NotificationChannelManager
 import woowacourse.movie.notification.NotificationReceiver
 import woowacourse.movie.purchaseConfirmation.PurchaseConfirmationActivity
 import java.text.ParseException
@@ -42,20 +41,12 @@ class TheaterSeatActivity :
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setContentView(binding.root)
+
+        val notificationChannelManager = NotificationChannelManager(this)
+        notificationChannelManager.createNotificationChannel()
+
         initPresenter()
         initSeats()
-
-        val channelName = "Ticket Confirmation"
-        val channelId = "ticket_confirmation_channel"
-        val channelDescription = "Notifications for ticket confirmations"
-        val importance = NotificationManager.IMPORTANCE_DEFAULT
-        val channel =
-            NotificationChannel(channelId, channelName, importance).apply {
-                description = channelDescription
-            }
-        val notificationManager: NotificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
 
         binding.confirmButton.setOnClickListener {
             confirmTicketPurchase()
