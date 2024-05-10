@@ -24,7 +24,6 @@ import woowacourse.movie.feature.reservation.ReservationActivity.Companion.TICKE
 import woowacourse.movie.feature.theater.TheaterSelectionFragment.Companion.THEATER_ID
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.Movie.Companion.DEFAULT_MOVIE_ID
-import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.seats.Grade
 import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
@@ -34,6 +33,7 @@ import woowacourse.movie.utils.MovieUtils.bundleSerializable
 import woowacourse.movie.utils.MovieUtils.convertAmountFormat
 import woowacourse.movie.utils.MovieUtils.intentSerializable
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
@@ -42,7 +42,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     private lateinit var seatsTable: List<Button>
     private lateinit var headCount: HeadCount
-    private lateinit var screeningDateTime: ScreeningDateTime
+    private lateinit var screeningDateTime: LocalDateTime
     private lateinit var roomDB: TicketDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -205,8 +205,8 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     private fun receiveScreeningDateTime() =
         intent.intentSerializable(
-            SCREENING_DATE_TIME, ScreeningDateTime::class.java,
-        ) ?: ScreeningDateTime(LocalDate.now(), LocalTime.now())
+            SCREENING_DATE_TIME, LocalDateTime::class.java,
+        ) ?: LocalDateTime.of(LocalDate.now(), LocalTime.now())
 
     private fun collectSeatsInTableLayout(): List<Button> =
         binding.tlSeatSelection.children.filterIsInstance<TableRow>().flatMap { it.children }

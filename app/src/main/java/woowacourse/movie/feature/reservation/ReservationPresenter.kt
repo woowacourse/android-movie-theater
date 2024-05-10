@@ -4,13 +4,13 @@ import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.Movie.Companion.DEFAULT_MOVIE_ID
-import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.result.ChangeTicketCountResult
 import woowacourse.movie.model.result.Failure
 import woowacourse.movie.model.result.Success
 import woowacourse.movie.model.theater.Theater.Companion.DEFAULT_THEATER_ID
 import woowacourse.movie.model.ticket.HeadCount
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 class ReservationPresenter(
@@ -67,7 +67,7 @@ class ReservationPresenter(
     override fun sendTicketToSeatSelection() {
         val screeningDate = screeningDates[screeningDateId.toInt()]
         val screeningTime = screeningTimes[screeningTimeId.toInt()]
-        val dateTime = ScreeningDateTime(screeningDate, screeningTime)
+        val dateTime = LocalDateTime.of(screeningDate, screeningTime)
         view.showDateTime(dateTime)
         view.navigateToSeatSelection(dateTime, movieId, theaterId, headCount)
     }

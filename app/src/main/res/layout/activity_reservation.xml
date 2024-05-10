@@ -18,8 +18,8 @@
             type="int" />
 
         <variable
-            name="dateTime"
-            type="woowacourse.movie.model.movie.ScreeningDateTime" />
+            name="screeningDateTime"
+            type="java.time.LocalDateTime" />
 
         <variable
             name="movie"

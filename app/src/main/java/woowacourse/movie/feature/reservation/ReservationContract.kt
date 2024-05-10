@@ -1,9 +1,9 @@
 package woowacourse.movie.feature.reservation
 
 import woowacourse.movie.model.movie.Movie
-import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.ticket.HeadCount
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 interface ReservationContract {
@@ -19,13 +19,13 @@ interface ReservationContract {
         fun showResultToast()
 
         fun navigateToSeatSelection(
-            dateTime: ScreeningDateTime,
+            dateTime: LocalDateTime,
             movieId: Int,
             theaterId: Int,
             count: HeadCount,
         )
 
-        fun showDateTime(dateTime: ScreeningDateTime)
+        fun showDateTime(dateTime: LocalDateTime)
 
         fun showErrorSnackBar()
 

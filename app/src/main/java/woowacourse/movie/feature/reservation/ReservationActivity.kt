@@ -19,12 +19,12 @@ import woowacourse.movie.feature.seatselection.SeatSelectionActivity
 import woowacourse.movie.feature.theater.TheaterSelectionFragment.Companion.THEATER_ID
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.Movie.Companion.DEFAULT_MOVIE_ID
-import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.theater.Theater.Companion.DEFAULT_THEATER_ID
 import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.ticket.HeadCount.Companion.DEFAULT_HEAD_COUNT
 import woowacourse.movie.utils.MovieUtils.makeToast
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 class ReservationActivity : AppCompatActivity(), ReservationContract.View {
@@ -88,7 +88,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     override fun showResultToast() = makeToast(this, getString(R.string.invalid_number_of_tickets))
 
     override fun navigateToSeatSelection(
-        dateTime: ScreeningDateTime,
+        dateTime: LocalDateTime,
         movieId: Int,
         theaterId: Int,
         count: HeadCount,
@@ -110,8 +110,8 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         binding.spinnerReservationScreeningTime.setSelection(selectedTimeId.toInt())
     }
 
-    override fun showDateTime(dateTime: ScreeningDateTime) {
-        binding.dateTime = dateTime
+    override fun showDateTime(dateTime: LocalDateTime) {
+        binding.screeningDateTime = dateTime
     }
 
     override fun showErrorSnackBar() {

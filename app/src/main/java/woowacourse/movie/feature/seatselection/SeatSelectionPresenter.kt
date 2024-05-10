@@ -7,7 +7,6 @@ import woowacourse.movie.db.ticket.Ticket
 import woowacourse.movie.db.ticket.TicketDao
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.Movie.Companion.DEFAULT_MOVIE_ID
-import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.theater.Theater.Companion.DEFAULT_THEATER_ID
@@ -26,7 +25,7 @@ class SeatSelectionPresenter(
     private val movieId: Int,
     private val theaterId: Int,
     private val headCount: HeadCount,
-    private val screeningDateTime: ScreeningDateTime,
+    private val screeningDateTime: LocalDateTime,
     private val ticketDao: TicketDao,
 ) : SeatSelectionContract.Presenter {
     private val selectedSeats = Seats()
@@ -36,7 +35,7 @@ class SeatSelectionPresenter(
         if (movieId != DEFAULT_MOVIE_ID &&
             theaterId != DEFAULT_THEATER_ID &&
             headCount.count != DEFAULT_HEAD_COUNT &&
-            screeningDateTime != ScreeningDateTime(LocalDate.now(), LocalTime.now())
+            screeningDateTime != LocalDateTime.of(LocalDate.now(), LocalTime.now())
         ) {
             loadSeatNumber()
             loadMovie()
@@ -70,7 +69,7 @@ class SeatSelectionPresenter(
         view.showMovieTitle(movie)
     }
 
-    override fun saveTicket(screeningDateTime: ScreeningDateTime) {
+    override fun saveTicket(screeningDateTime: LocalDateTime) {
         var ticketId: Long = 0
         val ticket = makeTicket(screeningDateTime)
         thread(start = true) {
@@ -125,10 +124,10 @@ class SeatSelectionPresenter(
         view.showErrorSnackBar()
     }
 
-    private fun makeTicket(screeningDateTime: ScreeningDateTime): Ticket {
+    private fun makeTicket(screeningDateTime: LocalDateTime): Ticket {
         val movieTitle = screeningDao.find(movieId).title
         val theaterName = theaterDao.find(theaterId).name
-        val dateTime: LocalDateTime = LocalDateTime.of(screeningDateTime.date, screeningDateTime.time)
+        val dateTime: LocalDateTime = screeningDateTime
 
         return Ticket(
             dateTime,

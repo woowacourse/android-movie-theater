@@ -13,13 +13,13 @@ import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.seats.SeatsDao
 import woowacourse.movie.db.theater.TheaterDao
-import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.db.ticket.TicketDao
 import woowacourse.movie.model.seats.Grade
 import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.ticket.HeadCount
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 @ExtendWith(MockKExtension::class)
@@ -41,7 +41,7 @@ class SeatSelectionPresenterTest {
                 movieId = 0,
                 theaterId = 0,
                 HeadCount(4),
-                ScreeningDateTime(LocalDate.now(), LocalTime.now()),
+                LocalDateTime.of(LocalDate.now(), LocalTime.now()),
                 ticketDao,
             )
         with(presenter) {
