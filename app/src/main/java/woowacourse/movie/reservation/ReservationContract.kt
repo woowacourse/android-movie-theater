@@ -13,8 +13,6 @@ interface ReservationContract {
     }
 
     interface Presenter {
-        fun attachView(view: View)
-
         fun detachView()
 
         fun loadData(database: AppDatabase)

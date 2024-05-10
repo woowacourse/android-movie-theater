@@ -25,8 +25,7 @@ class ReservationFragment :
         super.onViewCreated(view, savedInstanceState)
         val database =
             Room.databaseBuilder(requireContext(), AppDatabase::class.java, "ticket").build()
-        presenter = ReservationPresenter()
-        presenter.attachView(this)
+        presenter = ReservationPresenter(this)
         reservationAdapter =
             ReservationAdapter {
                 presenter.onClickedList(it)
