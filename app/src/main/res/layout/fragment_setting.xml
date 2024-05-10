@@ -3,25 +3,45 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="settingFragment"
+            type="woowacourse.movie.list.view.SettingFragment" />
     </data>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        tools:context=".list.view.SettingFragment">
-
-        <TextView
-            android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="16sp"
+        android:layout_marginTop="16sp"
+        android:layout_marginEnd="16sp">
+        <LinearLayout
+            android:layout_width="325sp"
             android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="푸시 알림 수신"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/textView"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="해제하면 푸시 알림을 수신할 수 없습니다."
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/permission_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="테스트용텍스트" />
-
-    </FrameLayout>
+            android:layout_weight="1"
+            android:layout_marginTop="12sp"
+            android:layout_marginBottom="12sp"
+            android:layout_marginEnd="0sp"
+            android:shadowColor="@color/purple_200"/>
+    </LinearLayout>
 </layout>
