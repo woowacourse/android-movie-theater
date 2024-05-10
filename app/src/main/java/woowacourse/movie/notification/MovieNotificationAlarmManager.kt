@@ -12,7 +12,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneId
 
-object MovieNotification {
+object MovieNotificationAlarmManager {
     private const val ALARM_OFFSET_MINUTES = 30
 
     fun createNotification(

@@ -19,7 +19,7 @@ import woowacourse.movie.databinding.ActivityMovieSeatSelectionBinding
 import woowacourse.movie.model.MovieGrade
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
-import woowacourse.movie.notification.MovieNotification
+import woowacourse.movie.notification.MovieNotificationAlarmManager
 import woowacourse.movie.result.view.MovieResultActivity
 import woowacourse.movie.seatselection.presenter.MovieSeatSelectionPresenter
 import woowacourse.movie.seatselection.presenter.contract.MovieSeatSelectionContract
@@ -165,7 +165,7 @@ class MovieSeatSelectionActivity :
         seatSelectionPresenter.saveReservationHistory(reservationHistoryEntity)
 
         sharedPrefs.getSavedAlarmSetting()
-        MovieNotification.createNotification(this, reservationHistoryEntity)
+        MovieNotificationAlarmManager.createNotification(this, reservationHistoryEntity)
         startActivity(intent)
     }
 
