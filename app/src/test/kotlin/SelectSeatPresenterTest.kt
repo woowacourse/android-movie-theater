@@ -36,7 +36,7 @@ class SelectSeatPresenterTest {
         every { view.showSeat(expectedSeats) } just Runs
 
         // given
-        presenter.loadSeat(0, 3)
+        presenter.loadInitData(0, 3)
 
         // then
         verify(exactly = 1) { view.showSeat(expectedSeats) }
@@ -53,7 +53,7 @@ class SelectSeatPresenterTest {
         every { view.updatePrice(any()) } just Runs
         every { view.updateSeatState(expectedSelectSeats1, SelectState.SUCCESS) } just Runs
         every { view.updateSeatState(expectedSelectSeats2, SelectState.EXCEED) } just Runs
-        presenter.loadSeat(0, 1)
+        presenter.loadInitData(0, 1)
 
         // given
         presenter.changeSeatState(selectedSeat1)
@@ -79,7 +79,7 @@ class SelectSeatPresenterTest {
         every { view.showSeat(any()) } just Runs
         every { view.updatePrice(any()) } just Runs
         every { view.updateSeatState(expectedSelectSeats1, SelectState.LESS) } just Runs
-        presenter.loadSeat(0, 2)
+        presenter.loadInitData(0, 2)
 
         // given
         presenter.changeSeatState(selectedSeat1)
@@ -103,7 +103,7 @@ class SelectSeatPresenterTest {
         every { view.updateSeatState(expectedSelectSeats1, SelectState.LESS) } just Runs
         every { view.updateSeatState(expectedSelectSeats2, SelectState.SUCCESS) } just Runs
         every { view.updateSeatState(expectedSelectSeats3, SelectState.EXCEED) } just Runs
-        presenter.loadSeat(0, 2)
+        presenter.loadInitData(0, 2)
 
         // given
         presenter.changeSeatState(selectedSeat1)
@@ -129,7 +129,7 @@ class SelectSeatPresenterTest {
         every { view.showSeat(any()) } just Runs
         every { view.updateSeatState(any(), any()) } just Runs
         every { view.updatePrice(any()) } just Runs
-        presenter.loadSeat(0, 3)
+        presenter.loadInitData(0, 3)
 
         // given
         presenter.changeSeatState(selectedSeat1)

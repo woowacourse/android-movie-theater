@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import woowacourse.movie.data.DummyMovies
+import woowacourse.movie.data.RoomMovieRepository
 import woowacourse.movie.databinding.BottomSheetTheaterBinding
 import woowacourse.movie.moviereservation.MovieReservationActivity
 import woowacourse.movie.screeningmovie.AdapterClickListener
@@ -36,7 +36,7 @@ class TheaterBottomSheetDialogFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         movieId = this.arguments?.getLong(EXTRA_SCREENING_MOVIE_ID) ?: error("movie id가 잘못 들어옴")
-        presenter = TheaterPresenter(DummyMovies, this)
+        presenter = TheaterPresenter(RoomMovieRepository.instance(), this)
         presenter.loadTheaters(movieId)
     }
 

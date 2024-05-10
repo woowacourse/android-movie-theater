@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import woowacourse.movie.data.DummyMovies
+import woowacourse.movie.data.RoomMovieRepository
 import woowacourse.movie.databinding.FragmentScreeningMovieBinding
 import woowacourse.movie.screeningmovie.theaters.TheaterBottomSheetDialogFragment
 
@@ -29,7 +29,7 @@ class ScreeningMovieFragment : Fragment(), ScreeningMovieContract.View, AdapterC
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = ScreenMoviePresenter(this, DummyMovies)
+        presenter = ScreenMoviePresenter(this, RoomMovieRepository.instance())
         presenter.loadScreeningMovies()
     }
 

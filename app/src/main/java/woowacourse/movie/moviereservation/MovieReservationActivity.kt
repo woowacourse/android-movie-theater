@@ -9,7 +9,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.data.DummyMovies
+import woowacourse.movie.data.RoomMovieRepository
 import woowacourse.movie.databinding.ActivityMovieReservationBinding
 import woowacourse.movie.moviereservation.uimodel.BookingInfo
 import woowacourse.movie.moviereservation.uimodel.CurrentBookingDetail
@@ -36,7 +36,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         presenter =
             MovieReservationPresenter(
-                this, DummyMovies,
+                this, RoomMovieRepository.instance(),
             )
         presenter.loadMovieDetail(id)
     }
@@ -153,7 +153,7 @@ class MovieReservationActivity : AppCompatActivity(), MovieReservationContract.V
             )
 
         timeAdapter =
-            ArrayAdapter(this, R.layout.item_spinner, screeningDateTimesUiModel.defaultTimes())
+            ArrayAdapter(this, R.layout.item_spinner, screeningDateTimesUiModel.defaultTimes().toMutableList())
 
         binding.spinnerDetailDate.adapter = dateAdapter
         binding.spinnerDetailTime.adapter = timeAdapter

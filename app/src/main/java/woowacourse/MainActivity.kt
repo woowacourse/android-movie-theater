@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.reservationlist.ReservationListFragment
@@ -11,9 +12,6 @@ import woowacourse.movie.reservationlist.SettingFragment
 import woowacourse.movie.screeningmovie.ScreeningMovieFragment
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var screeningMovieFragment: ScreeningMovieFragment
-    private lateinit var settingMovieFragment: SettingFragment
-    private lateinit var reservationListFragment: ReservationListFragment
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,41 +19,28 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        screeningMovieFragment = ScreeningMovieFragment()
-        settingMovieFragment = SettingFragment()
-        reservationListFragment = ReservationListFragment()
-
         binding.bnvMain.selectedItemId = R.id.menu_home
-        supportFragmentManager.findFragmentById(R.id.fcv_main) ?: changeFragment(
-            screeningMovieFragment,
-        )
+        supportFragmentManager.findFragmentById(R.id.fcv_main) ?: navigateTo<ScreeningMovieFragment>()
         setNavigation()
     }
 
     private fun setNavigation() {
         binding.bnvMain.setOnItemSelectedListener { item ->
-            changeFragment(
-                when (item.itemId) {
-                    R.id.menu_home ->
-                        screeningMovieFragment
+            when (item.itemId) {
+                R.id.menu_home -> navigateTo<ScreeningMovieFragment>()
+                R.id.menu_setting -> navigateTo<SettingFragment>()
 
-                    R.id.menu_setting ->
-                        settingMovieFragment
+                R.id.menu_reservation_list -> navigateTo<ReservationListFragment>()
 
-                    R.id.menu_reservation_list ->
-                        reservationListFragment
-
-                    else -> screeningMovieFragment
-                },
-            )
-            true
+                else -> navigateTo<ScreeningMovieFragment>()
+            }
+            return@setOnItemSelectedListener true
         }
     }
 
-    private fun changeFragment(fragment: Fragment) {
+    private inline fun <reified T : Fragment> navigateTo() {
         supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            replace(R.id.fcv_main, fragment)
+            replace<T>(R.id.fcv_main, T::class.simpleName)
         }
     }
 }

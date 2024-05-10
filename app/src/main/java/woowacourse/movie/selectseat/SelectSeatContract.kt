@@ -24,12 +24,10 @@ interface SelectSeatContract {
     }
 
     interface Presenter {
-        fun loadSeat(
+        fun loadInitData(
             movieId: Long,
             count: Int,
         )
-
-        fun loadReservationInfo(movieId: Long)
 
         fun completeReservation(bookingInfoUiModel: BookingInfo)
 
