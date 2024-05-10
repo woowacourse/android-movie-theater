@@ -9,7 +9,7 @@ import androidx.fragment.app.replace
 
 inline fun <reified T : Fragment> FragmentActivity.replaceTo(
     @IdRes fragmentContainerId: Int,
-    tag: String? = T::class.java.canonicalName,
+    tag: String = T::class.java.simpleName,
     args: Bundle? = null,
     action: () -> Unit = {},
 ) {

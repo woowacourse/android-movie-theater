@@ -72,7 +72,7 @@ class TheaterSeatPresenter(
             seats = selectedSeats.mapNotNull { seats[it] }.toSet(),
         )
         movieRepository.saveReservation(reservation).onSuccess {
-            view.navigateToPurchaseConfirmView(it)
+            view.navigateToPurchaseConfirmView(reservation.copy(id = it))
         }.onFailure {
             Log.e("confirmPurchase", it.stackTraceToString())
             view.showError()

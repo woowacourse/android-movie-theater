@@ -39,7 +39,7 @@ class MovieDetailActivity :
 
     override fun onTicketCountChanged(ticketNum: Int) {
         binding.ticketNum = ticketNum
-        binding.invalidateAll()
+        binding.executePendingBindings()
     }
 
     override fun showTicketMessage(message: String) {
@@ -56,22 +56,22 @@ class MovieDetailActivity :
 
     override fun showTitle(title: Title) {
         binding.title = title.toString()
-        binding.invalidateAll()
+        binding.executePendingBindings()
     }
 
     override fun showRunningTime(runningTime: RunningTime) {
         binding.runningTime = runningTime.toString()
-        binding.invalidateAll()
+        binding.executePendingBindings()
     }
 
     override fun showSynopsis(synopsis: Synopsis) {
         binding.synopsis = synopsis.toString()
-        binding.invalidateAll()
+        binding.executePendingBindings()
     }
 
     override fun showReleaseDate(movieDate: MovieDate) {
         binding.date = movieDate.date
-        binding.invalidateAll()
+        binding.executePendingBindings()
     }
 
     override fun updateDateAdapter(dates: List<String>) {

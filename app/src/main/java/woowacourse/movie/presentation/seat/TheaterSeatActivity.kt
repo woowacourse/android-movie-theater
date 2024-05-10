@@ -2,8 +2,7 @@ package woowacourse.movie.presentation.seat
 
 import android.annotation.SuppressLint
 import android.app.AlarmManager
-import android.app.NotificationChannel
-import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -14,6 +13,7 @@ import android.widget.TableRow
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.IntentCompat
 import androidx.core.view.children
+import woowacourse.movie.MovieBroadCastReceiver.Companion.RESERVATION_NOTIFICATION_ACTION
 import woowacourse.movie.MovieReservationApp
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityTheaterSeatBinding
@@ -79,10 +79,10 @@ class TheaterSeatActivity :
         button.setBackgroundColor(colorInt)
     }
 
-    override fun navigateToPurchaseConfirmView(reservationId: Long) {
+    override fun navigateToPurchaseConfirmView(reservation: Reservation) {
+        postReservationAlarm(reservation)
         runOnUiThread {
-//            pushAlarm()
-            PurchaseConfirmationActivity.newIntent(this, reservationId).also {
+            PurchaseConfirmationActivity.newIntent(this, reservation.id).also {
                 startActivity(it)
             }
         }
@@ -138,38 +138,31 @@ class TheaterSeatActivity :
             }
     }
 
-    fun pushAlarm(reservation: Reservation) {
-        val movieTitle = reservation.title
+    private fun postReservationAlarm(reservation: Reservation) {
+        val movieTitle: String = reservation.title.name
         val movieDateTime = reservation.releaseDate
-        createNotificationChannel()
 
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-//        alarmManager.setAlarmClock(
-//            AlarmManager.AlarmClockInfo(System.currentTimeMillis() + 30 * 60 * 1000, null),
-//            null,
-//            null
-//
-//        val notification = NotificationCompat.Builder(this, "pangtae_odoong_hardi")
-//            .setSmallIcon(R.drawable.ic_launcher_foreground)
-//            .setContentTitle("예매 알림")
-//            .setContentText(movieTitle + " 30분 뒤에 상영")
-//            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-//            .build()
-    }
-
-    fun createNotificationChannel() {
-        val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val channel =
-            NotificationChannel(
-                "pangtae_odoong_hardi",
-                "예매 알림",
-                NotificationManager.IMPORTANCE_DEFAULT
+        val pendingIntent = Intent(RESERVATION_NOTIFICATION_ACTION).apply {
+            putExtra("movieTitle", movieTitle)
+            putExtra("reservationId", reservation.id)
+        }.let {
+            PendingIntent.getBroadcast(
+                this,
+                0,
+                it,
+                PendingIntent.FLAG_IMMUTABLE
             )
+        }
 
-        notificationManager.createNotificationChannel(channel)
+        val alarmClockInfo = AlarmManager.AlarmClockInfo(
+            System.currentTimeMillis(),
+            pendingIntent
+        )
+        alarmManager.setAlarmClock(alarmClockInfo, pendingIntent)
     }
+
 
     companion object {
         const val EXTRA_TIME_DATE = "timeDate"

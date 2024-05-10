@@ -1,6 +1,7 @@
 package woowacourse.movie.presentation.seat
 
 import android.content.Intent
+import woowacourse.movie.model.Reservation
 import woowacourse.movie.model.movieInfo.Title
 import woowacourse.movie.model.theater.Seat
 
@@ -15,7 +16,7 @@ interface TheaterSeatContract {
             color: String,
         )
 
-        fun navigateToPurchaseConfirmView(reservationId: Long)
+        fun navigateToPurchaseConfirmView(reservation: Reservation)
 
         fun showTitle(title: Title)
 
@@ -31,5 +32,6 @@ interface TheaterSeatContract {
         fun completeSeatSelection()
 
         fun confirmPurchase()
+
     }
 }
