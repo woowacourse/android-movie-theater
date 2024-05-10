@@ -13,6 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
+import woowacourse.movie.data.db.ReservationDatabase
 import woowacourse.movie.data.repository.local.ReservationRepositoryImpl
 import woowacourse.movie.data.repository.remote.DummyTheater
 import woowacourse.movie.domain.model.Reservation
@@ -38,7 +39,8 @@ class ReservationActivityTest {
                 ReservationActivity::class.java,
             ).apply {
                 val context = ApplicationProvider.getApplicationContext<Context>()
-                reservationRepository = ReservationRepositoryImpl(context)
+                val db = ReservationDatabase.getDatabase(context)
+                reservationRepository = ReservationRepositoryImpl(db.dao())
                 thread {
                     reservationId =
                         reservationRepository.saveReservation(
