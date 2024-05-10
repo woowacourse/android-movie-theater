@@ -1,5 +1,6 @@
 package woowacourse.movie.notification
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -26,17 +27,19 @@ class NotificationReceiver : BroadcastReceiver() {
             intent.getLongExtra(PUT_EXTRA_KEY_RESERVATION_ID, DEFAULT_RESERVATION_ID)
         val movieTitle = intent.getStringExtra(PUT_EXTRA_KEY_MOVIE_TITLE_ID) ?: ""
 
-        val notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val pendingIntent = createPendingIntent(context, reservationId)
+        val notification = createNotification(context, pendingIntent, movieTitle)
+        val notificationMode = sharedPreferences.getBoolean(KEY_NOTIFICATION_MODE, false)
 
-        val channel =
-            NotificationChannel(
-                CHANNEL_ID,
-                CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_DEFAULT,
-            )
-        notificationManager.createNotificationChannel(channel)
+        if (notificationMode) {
+            notifyNotification(context, notification)
+        }
+    }
 
+    private fun createPendingIntent(
+        context: Context,
+        reservationId: Long,
+    ): PendingIntent {
         val mainIntent = Intent(context, MainActivity::class.java)
         val notificationIntent =
             Intent(context, ReservationActivity::class.java).apply {
@@ -50,24 +53,39 @@ class NotificationReceiver : BroadcastReceiver() {
                 addNextIntent(notificationIntent)
             }
 
-        val pendingIntent =
-            stackBuilder.getPendingIntent(
-                PENDING_REQUEST_CODE,
-                PendingIntent.FLAG_IMMUTABLE,
+        return stackBuilder.getPendingIntent(
+            PENDING_REQUEST_CODE,
+            PendingIntent.FLAG_IMMUTABLE,
+        )
+    }
+
+    private fun createNotification(
+        context: Context,
+        pendingIntent: PendingIntent,
+        movieTitle: String,
+    ): Notification {
+        return NotificationCompat.Builder(context, CHANNEL_ID)
+            .setContentTitle(context.getString(R.string.notification_title))
+            .setContentText(context.getString(R.string.notification_description, movieTitle))
+            .setSmallIcon(R.drawable.ic_notification).setContentIntent(pendingIntent)
+            .setAutoCancel(true).build()
+    }
+
+    private fun notifyNotification(
+        context: Context,
+        notification: Notification,
+    ) {
+        val notificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        val channel =
+            NotificationChannel(
+                CHANNEL_ID,
+                CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_DEFAULT,
             )
-
-        val notification =
-            NotificationCompat.Builder(context, CHANNEL_ID)
-                .setContentTitle(context.getString(R.string.notification_title))
-                .setContentText(context.getString(R.string.notification_description, movieTitle))
-                .setSmallIcon(R.drawable.ic_notification).setContentIntent(pendingIntent)
-                .setAutoCancel(true).build()
-
-        val notificationMode = sharedPreferences.getBoolean(KEY_NOTIFICATION_MODE, false)
-
-        if (notificationMode) {
-            notificationManager.notify(NOTIFICATION_ID, notification)
-        }
+        notificationManager.createNotificationChannel(channel)
+        notificationManager.notify(NOTIFICATION_ID, notification)
     }
 
     companion object {
