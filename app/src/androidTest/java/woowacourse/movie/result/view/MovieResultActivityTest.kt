@@ -12,11 +12,11 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_DATE
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_SEATS
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
+import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
 
 @RunWith(AndroidJUnit4::class)
@@ -29,7 +29,7 @@ class MovieResultActivityTest {
             putExtra(KEY_MOVIE_ID, 0L)
             putExtra(KEY_MOVIE_DATE, "2024-04-01")
             putExtra(KEY_MOVIE_TIME, "12:00")
-            putExtra(KEY_MOVIE_COUNT, 3)
+            putExtra(KEY_RESERVATION_COUNT, 3)
             putExtra(KEY_MOVIE_SEATS, "A3, C2, E1")
             putExtra(KEY_SELECTED_THEATER_POSITION, 1)
         }

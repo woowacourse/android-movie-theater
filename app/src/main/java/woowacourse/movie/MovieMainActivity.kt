@@ -13,7 +13,7 @@ import woowacourse.movie.databinding.ActivityMovieMainBinding
 import woowacourse.movie.home.view.MovieHomeFragment
 import woowacourse.movie.reservationhistory.view.ReservationHistoryFragment
 import woowacourse.movie.setting.view.SettingFragment
-import woowacourse.movie.util.SharedPreferencesUtil
+import woowacourse.movie.util.SharedPrefs
 
 class MovieMainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieMainBinding
@@ -29,7 +29,7 @@ class MovieMainActivity : AppCompatActivity() {
         binding = ActivityMovieMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupBottomNavigation(savedInstanceState)
-        sharedPreferences = SharedPreferencesUtil(this)
+        sharedPrefs = SharedPrefs(this)
     }
 
     override fun onResume() {
@@ -103,10 +103,10 @@ class MovieMainActivity : AppCompatActivity() {
             ActivityResultContracts.RequestPermission(),
         ) { isGranted: Boolean ->
             this.isGranted = isGranted
-            sharedPreferences.saveAlarmSetting(isGranted)
+            sharedPrefs.saveAlarmSetting(isGranted)
         }
 
     companion object {
-        lateinit var sharedPreferences: SharedPreferencesUtil
+        lateinit var sharedPrefs: SharedPrefs
     }
 }

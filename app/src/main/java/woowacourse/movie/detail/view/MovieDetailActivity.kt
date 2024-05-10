@@ -16,8 +16,8 @@ import woowacourse.movie.seatselection.view.MovieSeatSelectionActivity
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_POSITION
 import woowacourse.movie.util.MovieIntentConstant.KEY_ITEM_POSITION
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
+import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -54,7 +54,7 @@ class MovieDetailActivity :
         outState.putInt(KEY_ITEM_POSITION, position)
 
         val count = binding.reservationCount
-        outState.putInt(KEY_MOVIE_COUNT, count)
+        outState.putInt(KEY_RESERVATION_COUNT, count)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -63,7 +63,7 @@ class MovieDetailActivity :
         val savedPosition = savedInstanceState.getInt(KEY_ITEM_POSITION)
         movieDetailPresenter.updateTimeSpinnerPosition(savedPosition)
 
-        val savedCount = savedInstanceState.getInt(KEY_MOVIE_COUNT)
+        val savedCount = savedInstanceState.getInt(KEY_RESERVATION_COUNT)
         movieDetailPresenter.updateReservationCount(savedCount)
     }
 

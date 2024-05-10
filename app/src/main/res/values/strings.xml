@@ -4,4 +4,5 @@
     <string name="result">일반 %d명 | %s | %s 극장</string>
     <string name="theater">%s 극장</string>
     <string name="history_information">%s | %s | %s 극장</string>
+    <string name="notification_content">%s 30분 후에 상영</string>
 </resources>

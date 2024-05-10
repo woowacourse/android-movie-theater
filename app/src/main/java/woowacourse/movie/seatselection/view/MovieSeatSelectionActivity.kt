@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
+import woowacourse.movie.MovieMainActivity.Companion.sharedPrefs
 import woowacourse.movie.R
 import woowacourse.movie.data.db.ReservationHistoryDatabase
 import woowacourse.movie.data.db.ReservationHistoryEntity
@@ -18,21 +19,22 @@ import woowacourse.movie.databinding.ActivityMovieSeatSelectionBinding
 import woowacourse.movie.model.MovieGrade
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
+import woowacourse.movie.notification.MovieNotificationReceiver
 import woowacourse.movie.result.view.MovieResultActivity
 import woowacourse.movie.seatselection.presenter.MovieSeatSelectionPresenter
 import woowacourse.movie.seatselection.presenter.contract.MovieSeatSelectionContract
 import woowacourse.movie.seatselection.view.listener.MovieSeatSelectionClickListener
 import woowacourse.movie.util.Formatter.formatColumn
 import woowacourse.movie.util.Formatter.formatRow
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_DATE
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_TIME
+import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_RESERVATION_COUNT
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_POSITION
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_DATE
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
+import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_SEAT_POSITIONS
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
 
@@ -71,8 +73,8 @@ class MovieSeatSelectionActivity :
         )
         seatSelectionPresenter.loadTableSeats(
             intent.getIntExtra(
-                KEY_MOVIE_COUNT,
-                INVALID_VALUE_MOVIE_COUNT,
+                KEY_RESERVATION_COUNT,
+                INVALID_VALUE_RESERVATION_COUNT,
             ),
         )
     }
@@ -81,7 +83,7 @@ class MovieSeatSelectionActivity :
         super.onSaveInstanceState(outState)
 
         val count = seatSelectionPresenter.movieSelectedSeats.count
-        outState.putInt(KEY_MOVIE_COUNT, count)
+        outState.putInt(KEY_RESERVATION_COUNT, count)
 
         val selectedPositions = seatSelectionPresenter.movieSelectedSeats.getSelectedPositions()
         outState.putIntArray(KEY_SELECTED_SEAT_POSITIONS, selectedPositions)
@@ -92,8 +94,8 @@ class MovieSeatSelectionActivity :
 
         val savedCount =
             savedInstanceState.getInt(
-                KEY_MOVIE_COUNT,
-                INVALID_VALUE_MOVIE_COUNT,
+                KEY_RESERVATION_COUNT,
+                INVALID_VALUE_RESERVATION_COUNT,
             )
         seatSelectionPresenter.updateSelectedSeats(savedCount)
 
@@ -162,6 +164,8 @@ class MovieSeatSelectionActivity :
             ReservationHistoryEntity(date, time, count, seats, movieId, theaterPosition)
         seatSelectionPresenter.saveReservationHistory(reservationHistoryEntity)
 
+        sharedPrefs.getSavedAlarmSetting()
+        MovieNotificationReceiver().onReceive(this, intent)
         startActivity(intent)
     }
 
@@ -200,7 +204,7 @@ class MovieSeatSelectionActivity :
                 putExtra(KEY_MOVIE_ID, movieId)
                 putExtra(KEY_MOVIE_DATE, date)
                 putExtra(KEY_MOVIE_TIME, time)
-                putExtra(KEY_MOVIE_COUNT, count)
+                putExtra(KEY_RESERVATION_COUNT, count)
                 putExtra(KEY_SELECTED_THEATER_POSITION, theaterPosition)
             }
         }
