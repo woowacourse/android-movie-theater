@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.main.reservation
+package woowacourse.movie.presentation.ui.reservation
 
 import android.content.Context
 import android.content.Intent
@@ -17,9 +17,7 @@ import woowacourse.movie.domain.db.AppDatabase
 import woowacourse.movie.domain.model.Reservation
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.ReservationRepositoryImpl
-import woowacourse.movie.presentation.main.util.getDummySeats
-import woowacourse.movie.presentation.ui.reservation.ReservationActivity
-import woowacourse.movie.presentation.ui.reservation.toSeatString
+import woowacourse.movie.presentation.ui.util.getDummySeats
 import woowacourse.movie.presentation.utils.currency
 import woowacourse.movie.presentation.utils.toScreeningDate
 import java.time.LocalDateTime

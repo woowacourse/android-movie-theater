@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.main.util
+package woowacourse.movie.presentation.ui.util
 
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.ViewActions

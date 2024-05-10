@@ -57,6 +57,8 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.activity:activity:1.8.0")
     implementation("androidx.test.espresso:espresso-contrib:3.5.1")
+    implementation("androidx.test.ext:junit-ktx:1.1.5")
+    implementation("androidx.test:rules:1.5.0")
     kapt("androidx.room:room-compiler:2.6.1")
     implementation("com.google.code.gson:gson:2.9.0")
     implementation("androidx.room:room-runtime:2.6.1")
