@@ -8,7 +8,7 @@ import woowacourse.movie.database.Ticket
 import woowacourse.movie.databinding.ItemReservationBinding
 
 class ReservationAdapter(
-    private var reservations: MutableList<Ticket> = mutableListOf(),
+    private val reservations: MutableList<Ticket> = mutableListOf(),
     private val onClick: (Ticket) -> Unit,
 ) : RecyclerView.Adapter<ReservationAdapter.ReservationViewHolder>() {
     override fun onCreateViewHolder(
