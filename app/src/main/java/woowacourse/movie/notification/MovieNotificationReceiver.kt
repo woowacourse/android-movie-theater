@@ -10,6 +10,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.core.app.NotificationCompat
+import woowacourse.movie.MovieMainActivity.Companion.sharedPrefs
 import woowacourse.movie.R
 import woowacourse.movie.data.db.ReservationHistoryEntity
 import woowacourse.movie.data.repository.HomeContentRepository.getMovieById
@@ -49,7 +50,7 @@ class MovieNotificationReceiver : BroadcastReceiver() {
         val pendingIntent = createPendingIntent(context, reservationHistoryEntity)
         val notification =
             buildNotification(context, reservationHistoryEntity.movieId, pendingIntent)
-        notificationManager.notify(NOTIFICATION_ID, notification)
+        if (sharedPrefs.getSavedAlarmSetting()) notificationManager.notify(NOTIFICATION_ID, notification)
     }
 
     private fun registrationChannel(notificationManager: NotificationManager) {
@@ -106,7 +107,26 @@ class MovieNotificationReceiver : BroadcastReceiver() {
     companion object {
         private const val NOTIFICATION_CHANNEL_ID = "notification_channel"
         private const val NOTIFICATION_CHANNEL_NAME = "movieNotification"
-        private const val NOTIFICATION_ID = 1
-        private const val PENDING_REQUEST_CODE = 0
+        const val NOTIFICATION_ID = 1
+        const val PENDING_REQUEST_CODE = 0
+
+        fun createIntent(
+            context: Context,
+            movieId: Long,
+            date: String,
+            time: String,
+            count: Int,
+            seats: String,
+            theaterPosition: Int,
+        ): Intent {
+            return Intent(context, MovieNotificationReceiver::class.java).apply {
+                putExtra(KEY_MOVIE_ID, movieId)
+                putExtra(KEY_MOVIE_DATE, date)
+                putExtra(KEY_MOVIE_TIME, time)
+                putExtra(KEY_RESERVATION_COUNT, count)
+                putExtra(KEY_MOVIE_SEATS, seats)
+                putExtra(KEY_SELECTED_THEATER_POSITION, theaterPosition)
+            }
+        }
     }
 }
