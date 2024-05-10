@@ -33,7 +33,7 @@ class MovieSeatSelectionPresenter(
         this.movieSelectedSeats = movieSelectedSeats
     }
 
-    override fun clickTableSeat(index: Int) {
+    override fun selectSeat(index: Int) {
         val seat = movieSelectedSeats.getBaseSeats()[index]
         when {
             movieSelectedSeats.isSelected(index) -> unSelectSeat(seat, index)
@@ -58,7 +58,7 @@ class MovieSeatSelectionPresenter(
         movieSelectedSeats.unSelectSeat(seat)
     }
 
-    override fun clickPositiveButton(
+    override fun reserveMovie(
         ticketRepository: TicketRepository,
         movieId: Long,
         screeningDate: LocalDate,

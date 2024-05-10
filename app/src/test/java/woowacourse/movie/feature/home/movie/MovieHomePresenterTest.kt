@@ -21,14 +21,14 @@ class MovieHomePresenterTest {
     }
 
     @Test
-    fun `loadMovies를 호출하면 view에서 영화 리스트를 보여준다`() {
-        // Given
+    fun `영화들을 불러온다`() {
+        // given
         every { view.displayMovies(any()) } just Runs
 
-        // When
+        // when
         presenter.loadMovies()
 
-        // Then
+        // then
         verify { view.displayMovies(movies) }
     }
 }

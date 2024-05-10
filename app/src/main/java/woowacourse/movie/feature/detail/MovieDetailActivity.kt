@@ -69,11 +69,11 @@ class MovieDetailActivity :
 
     private fun setUpButtonListener() {
         binding.btnPlus.setOnClickListener {
-            presenter.plusReservationCount()
+            presenter.increaseReservationCount()
         }
 
         binding.btnMinus.setOnClickListener {
-            presenter.minusReservationCount()
+            presenter.decreaseReservationCount()
         }
 
         binding.btnSeatSelection.setOnClickListener {

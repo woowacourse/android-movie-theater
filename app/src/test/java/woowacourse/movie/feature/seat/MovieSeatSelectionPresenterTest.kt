@@ -33,63 +33,63 @@ class MovieSeatSelectionPresenterTest {
     }
 
     @Test
-    fun `loadMovieTitle를 호출하면 선택된 영화의 제목이 보여진다`() {
-        // Given
+    fun `영화 id의 영화 제목을 불러온다`() {
+        // given
         every { view.displayMovieTitle(any()) } just runs
 
-        // When
+        // when
         presenter.loadMovieTitle(firstMovieId)
 
-        // Then
+        // then
         verify { view.displayMovieTitle(movie.title) }
     }
 
     @Test
-    fun `영화 데이터가 없는 경우 loadMovieTitle을 호출하면 에러 메시지를 보여준다`() {
-        // Given
+    fun `존재하지 않는 영화 id의 경우 영화 제목을 불러오면 에러 메시지를 보여준다`() {
+        // given
         every { view.showToastInvalidMovieIdError(any()) } just runs
 
-        // When
+        // when
         presenter.loadMovieTitle(invalidMovieId)
 
-        // Then
+        // then
         verify { view.showToastInvalidMovieIdError(any()) }
     }
 
     @Test
-    fun `loadTableSeats를 호출하면 테이블 좌석들의 정보가 세팅된다`() {
-        // Given
+    fun `영화 좌석 정보를 초기화한다`() {
+        // given
         every { view.setUpTableSeats(any()) } just runs
 
-        // When
+        // when
         presenter.loadTableSeats(selectedSeats)
 
-        // Then
+        // then
         verify { view.setUpTableSeats(any()) }
     }
 
     @Test
-    fun `clickTableSeat를 호출하면 좌석의 배경색이 바뀌고 선택 결과가 화면에 보여진다`() {
-        // Given
+    fun `좌석을 선택한다`() {
+        // given
         every { view.updateSeatBackgroundColor(any(), any()) } just runs
         every { view.updateSelectResult(any()) } just runs
 
-        // When
-        presenter.clickTableSeat(0)
+        // when
+        presenter.selectSeat(0)
 
-        // Then
+        // then
         verify { view.updateSeatBackgroundColor(0, false) }
         verify { view.updateSelectResult(any()) }
     }
 
     @Test
-    fun `clickPositiveButton를 호출하면 예매 알림을 등록하고 예매 결과를 보여주는 화면으로 이동한다`() {
+    fun `영화를 예매하면 예매 알림을 등록한다`() {
         // given
         every { view.navigateToResultView(any()) } just runs
         every { view.setTicketAlarm(any()) } just runs
 
         // when
-        presenter.clickPositiveButton(
+        presenter.reserveMovie(
             ticketRepository,
             movieId,
             screeningDate,

@@ -35,9 +35,9 @@ interface MovieSeatSelectionContract {
 
         fun loadTableSeats(movieSelectedSeats: MovieSelectedSeats)
 
-        fun clickTableSeat(index: Int)
+        fun selectSeat(index: Int)
 
-        fun clickPositiveButton(
+        fun reserveMovie(
             ticketRepository: TicketRepository,
             movieId: Long,
             screeningDate: LocalDate,

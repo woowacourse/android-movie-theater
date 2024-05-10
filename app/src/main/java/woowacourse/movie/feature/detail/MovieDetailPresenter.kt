@@ -28,12 +28,12 @@ class MovieDetailPresenter(
         view.updateReservationCountView(reservationCount.count)
     }
 
-    override fun plusReservationCount() {
+    override fun increaseReservationCount() {
         reservationCount = ++reservationCount
         view.updateReservationCountView(reservationCount.count)
     }
 
-    override fun minusReservationCount() {
+    override fun decreaseReservationCount() {
         reservationCount = --reservationCount
         view.updateReservationCountView(reservationCount.count)
     }

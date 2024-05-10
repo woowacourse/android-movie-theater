@@ -106,7 +106,7 @@ class MovieSeatSelectionActivity :
             view.text = seat.formatSeat()
             view.setTextColor(ContextCompat.getColor(this, seat.grade.getSeatColor()))
             view.setOnClickListener {
-                presenter.clickTableSeat(index)
+                presenter.selectSeat(index)
             }
         }
     }
@@ -122,7 +122,7 @@ class MovieSeatSelectionActivity :
     override fun displayDialog() {
         AlertDialog.Builder(this).setTitle("예매 확인").setMessage("정말 예매하시겠습니까?")
             .setPositiveButton("예매 완료") { _, _ ->
-                presenter.clickPositiveButton(
+                presenter.reserveMovie(
                     ticketRepository = (application as MovieTheaterApplication).ticketRepository,
                     movieId = intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID),
                     screeningDate = screeningDate(),
@@ -184,7 +184,7 @@ class MovieSeatSelectionActivity :
 
     private fun setUpSelectedSeats(selectedPositions: IntArray?) {
         selectedPositions?.forEach { position ->
-            presenter.clickTableSeat(position)
+            presenter.selectSeat(position)
         }
     }
 
