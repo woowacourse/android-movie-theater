@@ -14,6 +14,8 @@ import woowacourse.movie.db.AppDatabase
 import woowacourse.movie.domain.model.Reservation
 import woowacourse.movie.domain.repository.DummyReservation
 import woowacourse.movie.domain.repository.DummyTheaters
+import java.time.LocalDate
+import java.time.LocalTime
 
 class ReservationCompleteActivity : AppCompatActivity(), ReservationContract.View {
     private lateinit var presenter: ReservationContract.Presenter
@@ -51,9 +53,13 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationContract.Vie
     override fun showReservation(
         reservation: Reservation,
         theaterName: String,
+        screeningDate: LocalDate,
+        screeningTime: LocalTime,
     ) {
         binding.reservation = reservation
         binding.theaterName = theaterName
+        binding.screeningDate = screeningDate
+        binding.screeningTime = screeningTime
     }
 
     override fun showToastMessage(message: String) {

@@ -19,7 +19,7 @@ class ReservationPresenter(
             .onSuccess {
                 val theaterName = theaterRepository.findById(theaterId).name
 
-                view.showReservation(it, theaterName)
+                view.showReservation(it, theaterName, it.dateTime?.date!!, it.dateTime.time)
             }
             .onFailure { e ->
                 when (e) {

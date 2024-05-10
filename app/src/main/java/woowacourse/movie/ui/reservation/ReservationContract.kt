@@ -1,12 +1,16 @@
 package woowacourse.movie.ui.reservation
 
 import woowacourse.movie.domain.model.Reservation
+import java.time.LocalDate
+import java.time.LocalTime
 
 interface ReservationContract {
     interface View {
         fun showReservation(
             reservation: Reservation,
             theaterName: String,
+            screeningDate: LocalDate,
+            screeningTime: LocalTime,
         )
 
         fun showToastMessage(message: String)
