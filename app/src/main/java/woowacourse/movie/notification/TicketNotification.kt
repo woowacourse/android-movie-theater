@@ -4,7 +4,9 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Context.ALARM_SERVICE
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import woowacourse.movie.R
 import woowacourse.movie.model.movie.ScreeningDateTime
@@ -15,7 +17,8 @@ import java.util.Calendar
 import java.util.Locale
 
 object TicketNotification {
-    const val NOTIFICATION_ID = 1
+    private const val NOTIFICATION_ID = "notificationId"
+    private const val DEFAULT_NOTIFICATION_ID = 0
     const val PENDING_REQUEST_CODE = 0
     private const val ALARM_MINUTE = -30
 
@@ -98,5 +101,38 @@ object TicketNotification {
             intent,
             PendingIntent.FLAG_IMMUTABLE,
         )
+    }
+
+    fun getNextNotificationTicketId(context: Context): Int {
+        val sharedPreferences = context.getSharedPreferences(NOTIFICATION_ID, MODE_PRIVATE)
+        val currentId = getTicketId(sharedPreferences)
+        val nextId = currentId + 1
+        if (isTicketIdValidate(nextId)) {
+            saveTicketId(nextId, sharedPreferences)
+        } else {
+            resetTicketId(sharedPreferences)
+        }
+        return nextId
+    }
+
+    private fun resetTicketId(sharedPreferences: SharedPreferences) {
+        saveTicketId(DEFAULT_NOTIFICATION_ID, sharedPreferences)
+    }
+
+    private fun isTicketIdValidate(ticketId: Int): Boolean {
+        return ticketId < Int.MAX_VALUE - 1
+    }
+
+    private fun getTicketId(
+        sharedPreferences: SharedPreferences
+    ): Int {
+        return sharedPreferences.getInt(NOTIFICATION_ID, DEFAULT_NOTIFICATION_ID)
+    }
+
+    private fun saveTicketId(
+        nextId: Int,
+        sharedPreferences: SharedPreferences
+    ) {
+        sharedPreferences.edit().putInt(NOTIFICATION_ID, nextId).apply()
     }
 }
