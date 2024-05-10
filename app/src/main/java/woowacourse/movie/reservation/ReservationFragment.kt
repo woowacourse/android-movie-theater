@@ -51,7 +51,7 @@ class ReservationFragment :
         intent.putExtra(EXTRA_CINEMA_NAME, ticket.cinemaName)
         intent.putExtra(EXTRA_MOVIE_TITLE, ticket.movieTitle)
         intent.putExtra(EXTRA_RUNNING_TIME, ticket.runningTime)
-        intent.putExtra(EXTRA_TIME_DATE, ticket.date)
+        intent.putExtra(EXTRA_TIME_DATE, ticket.screeningDate)
         startActivity(intent)
     }
 

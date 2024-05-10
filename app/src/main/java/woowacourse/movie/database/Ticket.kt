@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class Ticket(
     @PrimaryKey(autoGenerate = true) val id: Int? = null,
     @ColumnInfo(name = "ticketPrice") val ticketPrice: Int,
-    @ColumnInfo(name = "date") val date: String,
+    @ColumnInfo(name = "screeningDate") val screeningDate: String,
     @ColumnInfo(name = "seatNumbers") val seatNumbers: String,
     @ColumnInfo(name = "cinemaName") val cinemaName: String,
     @ColumnInfo(name = "movieTitle") val movieTitle: String,

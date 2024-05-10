@@ -9,7 +9,7 @@ import kotlin.concurrent.thread
 class TheaterSeatPresenter(
     private val view: TheaterSeatContract.View,
     private val database: AppDatabase,
-    private val showTime: String,
+    private val screeningDate: String,
     private val ticketLimit: Int,
     val cinema: Cinema,
 ) :
@@ -83,7 +83,7 @@ class TheaterSeatPresenter(
     override fun saveTicketToDatabase() {
         val ticket =
             Ticket(
-                date = showTime,
+                screeningDate = screeningDate,
                 seatNumbers = selectedSeats.toString(),
                 cinemaName = cinema.cinemaName,
                 movieTitle = cinema.theater.movie.title.toString(),

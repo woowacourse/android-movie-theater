@@ -22,7 +22,7 @@
             android:id="@+id/movieDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{@string/reservation_detail(ticket.date,ticket.cinemaName)}"
+            android:text="@{@string/reservation_detail(ticket.screeningDate,ticket.cinemaName)}"
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
