@@ -8,11 +8,18 @@
         <variable
             name="ticket"
             type="woowacourse.movie.presentation.uimodel.TicketUiModel" />
+
+        <variable
+            name="listener"
+            type="woowacourse.movie.presentation.view.navigation.ReservationListContract.ItemListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_76"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{()->listener.onClick(ticket.ticketId)}"
         android:paddingLeft="@dimen/size_12"
         android:paddingTop="@dimen/size_15">
 

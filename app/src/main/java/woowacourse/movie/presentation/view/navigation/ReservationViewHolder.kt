@@ -8,7 +8,11 @@ class ReservationViewHolder(
     private val binding: ReservationItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(ticket: TicketUiModel) {
+    fun bind(
+        ticket: TicketUiModel,
+        clickListener: ReservationListContract.ItemListener
+    ) {
         binding.ticket = ticket
+        binding.listener = clickListener
     }
 }

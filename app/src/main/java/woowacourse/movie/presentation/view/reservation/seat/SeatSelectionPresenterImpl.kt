@@ -37,10 +37,10 @@ class SeatSelectionPresenterImpl(
         val thread = Thread {
             ticketId = ticketDao.saveReservationTicket(
                 ticket.toReservationTicketEntity(
-                    ticket.reservationMovieInfo.dateTime.screeningDate.date.format(DateTimeFormatter.ISO_LOCAL_DATE),
-                    ticket.reservationMovieInfo.title,
-                    ticket.reservationMovieInfo.theaterName,
-                    ticket.reservationMovieInfo.dateTime.screeningDate.screeningTime.startTime.format(
+                    selectDate = ticket.reservationMovieInfo.dateTime.screeningDate.date.format(
+                        DateTimeFormatter.ISO_LOCAL_DATE
+                    ),
+                    screenTime = ticket.reservationMovieInfo.dateTime.screeningDate.screeningTime.startTime.format(
                         DateTimeFormatter.ofPattern("HH:mm")
                     )
                 )
