@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemAdBinding
 import woowacourse.movie.databinding.ItemMovieListBinding
 import woowacourse.movie.model.ui.Ad
-import woowacourse.movie.model.ui.MovieItem
 import woowacourse.movie.model.ui.Movie
+import woowacourse.movie.model.ui.MovieItem
 
 class MovieAdapter(
     private val context: Context,

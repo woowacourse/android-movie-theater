@@ -45,7 +45,6 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     }
 
     private fun requestNotificationPermission() {
-
         if (!isPermissionGranted()) {
             if (shouldShowRequestPermissionRationale()) {
                 explainPermissionNeed()
@@ -53,18 +52,18 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
                 requestPermission()
             }
         }
-
     }
 
     private fun isPermissionGranted(): Boolean {
         return ContextCompat.checkSelfPermission(
-            this, Manifest.permission.POST_NOTIFICATIONS
+            this, Manifest.permission.POST_NOTIFICATIONS,
         ) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun shouldShowRequestPermissionRationale(): Boolean {
         return ActivityCompat.shouldShowRequestPermissionRationale(
-            this, Manifest.permission.POST_NOTIFICATIONS
+            this,
+            Manifest.permission.POST_NOTIFICATIONS,
         )
     }
 
@@ -76,10 +75,9 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         ActivityCompat.requestPermissions(
             this,
             arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-            REQUEST_NOTIFICATION_PERMISSION
+            REQUEST_NOTIFICATION_PERMISSION,
         )
     }
-
 
     companion object {
         private const val REQUEST_NOTIFICATION_PERMISSION = 101

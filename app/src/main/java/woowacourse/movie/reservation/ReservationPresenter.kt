@@ -9,7 +9,7 @@ import kotlin.concurrent.thread
 
 class ReservationPresenter(
     private val view: ReservationContract.View,
-    private val database: AppDatabase
+    private val database: AppDatabase,
 ) :
     ReservationContract.Presenter {
     private val coroutineScope = CoroutineScope(Dispatchers.Main)

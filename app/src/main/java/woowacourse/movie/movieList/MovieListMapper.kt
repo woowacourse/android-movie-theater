@@ -2,8 +2,8 @@ package woowacourse.movie.movieList
 
 import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.model.ui.Ad
-import woowacourse.movie.model.ui.MovieItem
 import woowacourse.movie.model.ui.Movie
+import woowacourse.movie.model.ui.MovieItem
 
 fun List<Theater>.toMovieDisplays(): List<MovieItem> {
     return map(Theater::toMovieItemDisplay)

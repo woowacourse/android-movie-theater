@@ -1,6 +1,5 @@
 package woowacourse.movie.reservation
 
-import woowacourse.movie.database.AppDatabase
 import woowacourse.movie.database.Ticket
 
 interface ReservationContract {
