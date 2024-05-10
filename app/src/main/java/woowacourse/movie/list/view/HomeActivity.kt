@@ -12,12 +12,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityHomeBinding
-import woowacourse.movie.list.contract.HomeContract
-import woowacourse.movie.list.presenter.HomePresenter
 
-class HomeActivity : AppCompatActivity(), HomeContract.View {
+class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
-    private lateinit var presenter: HomePresenter
     private var isNotificationGranted: Boolean = false
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
@@ -29,7 +26,6 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         binding.home = this
-        presenter = HomePresenter(this)
         setContentView(binding.root)
         initBottomNavigation()
         requestNotificationPermission()
@@ -39,12 +35,20 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
         binding.bottomNav.selectedItemId = R.id.home_fragment_item
         showFragment(MovieListFragment())
         binding.bottomNav.setOnItemSelectedListener { item ->
-            presenter.setBottomNavFragment(item.itemId)
+            convertFragment(item.itemId)
             true
         }
     }
 
-    override fun showFragment(fragment: Fragment) {
+    private fun convertFragment(itemId: Int) {
+        when (itemId) {
+            R.id.home_fragment_item -> showFragment(MovieListFragment())
+            R.id.reservation_details_fragment_item -> showFragment(ReservationHistoryFragment())
+            R.id.setting_fragment_item -> showFragment(SettingFragment())
+        }
+    }
+
+    private fun showFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commitAllowingStateLoss()
