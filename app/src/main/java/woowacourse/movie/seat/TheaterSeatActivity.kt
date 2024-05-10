@@ -157,23 +157,18 @@ class TheaterSeatActivity :
                     try {
                         val date = formatter.parse(timeDate)
                         val movieStartTime = date?.time ?: return@onPositiveButtonClicked
-                        scheduleNotification(
-                            this,
-                            movieStartTime,
-                            cinema,
-                            ticketPrice.toString(),
-                        )
-                        PurchaseConfirmationActivity.newIntent(
-                            context = this,
-                            ticketPrice = ticketPrice.toString(),
-                            seatNumber = presenter.selectedSeats.toTypedArray(),
-                            cinemaName = cinema.cinemaName,
-                            movieTitle = cinema.theater.movie.title.toString(),
-                            runningTime = cinema.theater.movie.runningTime.toString(),
-                            timeDate = timeDate,
-                        ).apply {
-                            presenter.saveTicketToDatabase()
-                            navigateToNextPage(this)
+                        presenter.saveTicketToDatabase { ticketId ->
+                            scheduleNotification(
+                                this,
+                                movieStartTime,
+                                cinema,
+                                ticketPrice.toString()
+                            )
+                            val confirmationIntent = PurchaseConfirmationActivity.newIntent(
+                                context = this,
+                                ticketId = ticketId
+                            )
+                            navigateToNextPage(confirmationIntent)
                         }
                     } catch (e: ParseException) {
                         Toast.makeText(this, "예매 시간 형식이 잘못되었습니다.", Toast.LENGTH_SHORT).show()
@@ -184,9 +179,10 @@ class TheaterSeatActivity :
                 }
             },
             negativeLabel = "취소",
-            onNegativeButtonClicked = {},
+            onNegativeButtonClicked = {}
         )
     }
+
 
     private fun scheduleNotification(
         context: Context,
@@ -195,10 +191,10 @@ class TheaterSeatActivity :
         ticketPrice: String,
     ) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        if (AlarmManagerCompat.canScheduleExactAlarms(alarmManager)) {
-            val alarmTime = movieStartTime - 30 * 60 * 1000 // 영화 시작 시간 30분 전
-            val intent =
-                Intent(context, NotificationReceiver::class.java).apply {
+        try {
+            if (AlarmManagerCompat.canScheduleExactAlarms(alarmManager)) {
+                val alarmTime = movieStartTime - 30 * 60 * 1000 // 영화 시작 시간 30분 전
+                val intent = Intent(context, NotificationReceiver::class.java).apply {
                     putExtra("notificationId", 1001)
                     putExtra("message", "${cinema.theater.movie.title} 영화 시작 30분 전입니다!")
                     putExtra("title", cinema.theater.movie.title.toString())
@@ -208,24 +204,29 @@ class TheaterSeatActivity :
                     putExtra("runningTime", cinema.theater.movie.runningTime.toString())
                     putExtra("timeDate", intent.getStringExtra(EXTRA_TIME_DATE))
                 }
-            val pendingIntent =
-                PendingIntent.getBroadcast(
+                val pendingIntent = PendingIntent.getBroadcast(
                     context,
                     1001,
                     intent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
                 )
 
-            alarmManager.setExactAndAllowWhileIdle(
-                AlarmManager.RTC_WAKEUP,
-                alarmTime,
-                pendingIntent,
-            )
-        } else {
+                alarmManager.setExactAndAllowWhileIdle(
+                    AlarmManager.RTC_WAKEUP,
+                    alarmTime,
+                    pendingIntent,
+                )
+            } else {
+                val settingsIntent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                context.startActivity(settingsIntent)
+            }
+        } catch (e: SecurityException) {
+            Toast.makeText(context, "정확한 알람 스케줄링 권한이 필요합니다.", Toast.LENGTH_LONG).show()
             val settingsIntent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
             context.startActivity(settingsIntent)
         }
     }
+
 
     companion object {
         const val EXTRA_TIME_DATE = "timeDate"

@@ -4,35 +4,60 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import woowacourse.movie.R
 import woowacourse.movie.base.BindingActivity
+import woowacourse.movie.database.AppDatabase
+import woowacourse.movie.database.Ticket
 import woowacourse.movie.databinding.ActivityPurchaseConfirmationBinding
 import woowacourse.movie.error.ErrorActivity
+import kotlin.concurrent.thread
 
 class PurchaseConfirmationActivity :
     BindingActivity<ActivityPurchaseConfirmationBinding>(R.layout.activity_purchase_confirmation) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val ticketPrice =
-            intent.getStringExtra(EXTRA_TICKET_PRICE) ?: return ErrorActivity.start(this)
-        val seatNumber =
-            intent.getStringArrayExtra(EXTRA_SEAT_NUMBER) ?: return ErrorActivity.start(this)
-        val timeDate = intent.getStringExtra(EXTRA_TIME_DATE) ?: return ErrorActivity.start(this)
-        val title = intent.getStringExtra(EXTRA_MOVIE_TITLE)
-        val runningTime = intent.getStringExtra(EXTRA_RUNNING_TIME)
-        val cinemaName = intent.getStringExtra(EXTRA_CINEMA_NAME)
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.movieTitleConfirmation.text = title
-        binding.purchaseMovieRunningTime.text = runningTime
+
+        val ticketId = intent.getIntExtra(EXTRA_TICKET_ID, 0)
+        if (ticketId == 0) {
+            ErrorActivity.start(this)
+            return
+        }
+
+        thread {
+            try {
+                val ticket =
+                    AppDatabase.getInstance(applicationContext).ticketDao().getTicketById(ticketId)
+                if (ticket != null) {
+                    runOnUiThread {
+                        updateUI(ticket)
+                    }
+                } else {
+                    runOnUiThread {
+                        showError()
+                    }
+                }
+            } catch (e: Exception) {
+                runOnUiThread {
+                    showError()
+                }
+            }
+        }
+    }
+
+    private fun updateUI(ticket: Ticket) {
+        binding.movieTitleConfirmation.text = ticket.movieTitle
+        binding.purchaseMovieRunningTime.text = ticket.runningTime
         binding.reservedInformation.text =
-            "일반 %s명 | %s | %s".format(
-                seatNumber.size,
-                seatNumber.joinToString(),
-                cinemaName,
-            )
-        binding.ticketCharge.text = ticketPrice
-        binding.movieTimeDate.text = timeDate
+            "일반 ${ticket.seatNumbers.split(",").size}명 | ${ticket.seatNumbers} | ${ticket.cinemaName}"
+        binding.ticketCharge.text = ticket.ticketPrice.toString()
+        binding.movieTimeDate.text = ticket.screeningDate
+    }
+
+    private fun showError() {
+        Toast.makeText(this, "Failed to load ticket information.", Toast.LENGTH_LONG).show()
+        finish()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -41,29 +66,14 @@ class PurchaseConfirmationActivity :
     }
 
     companion object {
-        const val EXTRA_TICKET_PRICE = "ticketPrice"
-        const val EXTRA_SEAT_NUMBER = "seatNumber"
-        const val EXTRA_CINEMA_NAME = "cinemaName"
-        const val EXTRA_MOVIE_TITLE = "title"
-        const val EXTRA_RUNNING_TIME = "runningTime"
-        const val EXTRA_TIME_DATE = "timeDate"
+        const val EXTRA_TICKET_ID = "ticketId"
 
         fun newIntent(
             context: Context,
-            ticketPrice: String,
-            seatNumber: Array<String>,
-            cinemaName: String,
-            movieTitle: String,
-            runningTime: String,
-            timeDate: String,
+            ticketId: Int
         ): Intent {
             return Intent(context, PurchaseConfirmationActivity::class.java).apply {
-                putExtra(EXTRA_TICKET_PRICE, ticketPrice)
-                putExtra(EXTRA_SEAT_NUMBER, seatNumber)
-                putExtra(EXTRA_CINEMA_NAME, cinemaName)
-                putExtra(EXTRA_RUNNING_TIME, runningTime)
-                putExtra(EXTRA_MOVIE_TITLE, movieTitle)
-                putExtra(EXTRA_TIME_DATE, timeDate)
+                putExtra(EXTRA_TICKET_ID, ticketId)
             }
         }
     }

@@ -41,6 +41,6 @@ interface TheaterSeatContract {
             onNegativeButtonClicked: () -> Unit,
         )
 
-        fun saveTicketToDatabase()
+        fun saveTicketToDatabase(onResult: (Int) -> Unit)
     }
 }

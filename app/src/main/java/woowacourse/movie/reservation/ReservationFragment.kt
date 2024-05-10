@@ -45,22 +45,13 @@ class ReservationFragment :
     }
 
     override fun navigateToTicketDetail(ticket: Ticket) {
-        val intent = Intent(requireContext(), PurchaseConfirmationActivity::class.java)
-        intent.putExtra(EXTRA_TICKET_PRICE, ticket.ticketPrice.toString())
-        intent.putExtra(EXTRA_SEAT_NUMBER, ticket.seatNumbers.split(",").toTypedArray())
-        intent.putExtra(EXTRA_CINEMA_NAME, ticket.cinemaName)
-        intent.putExtra(EXTRA_MOVIE_TITLE, ticket.movieTitle)
-        intent.putExtra(EXTRA_RUNNING_TIME, ticket.runningTime)
-        intent.putExtra(EXTRA_TIME_DATE, ticket.screeningDate)
+        val intent = Intent(requireContext(), PurchaseConfirmationActivity::class.java).apply {
+            putExtra(EXTRA_TICKET_ID, ticket.id)
+        }
         startActivity(intent)
     }
 
     companion object {
-        const val EXTRA_TICKET_PRICE = "ticketPrice"
-        const val EXTRA_SEAT_NUMBER = "seatNumber"
-        const val EXTRA_CINEMA_NAME = "cinemaName"
-        const val EXTRA_MOVIE_TITLE = "title"
-        const val EXTRA_RUNNING_TIME = "runningTime"
-        const val EXTRA_TIME_DATE = "timeDate"
+        const val EXTRA_TICKET_ID = "ticketId"
     }
 }
