@@ -14,4 +14,15 @@ interface TheaterRepository {
     fun theatersInfo(movieId: Int): List<TheaterUiModel>
 
     fun theaterName(theaterId: Int): String
+
+    fun getScreeningDateInfo(
+        theaterId: Int,
+        movieId: Int,
+    ): List<String>
+
+    fun getScreeningTimeInfo(
+        theaterId: Int,
+        movieId: Int,
+        date: String,
+    ): List<String>
 }

@@ -1,6 +1,7 @@
 package woowacourse.movie.presentation.view.reservation.detail
 
-import woowacourse.movie.data.repository.MovieRepositoryImpl
+import android.util.Log
+import woowacourse.movie.repository.MovieRepositoryImpl
 import woowacourse.movie.data.repository.ReservationMovieInfoRepositoryImpl
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.reservation.ReservationCount
@@ -18,6 +19,9 @@ class MovieDetailPresenterImpl(
     val movieId: Int,
     val theaterId: Int,
     private val movieRepository: MovieRepository = MovieRepositoryImpl,
+    private val theaterRepository: TheaterRepository = TheaterRepositoryImpl,
+    private val reservationMovieInfoRepository: ReservationMovieInfoRepository =
+        ReservationMovieInfoRepositoryImpl,
 ) : MovieDetailContract.Presenter {
     private var view: MovieDetailContract.View? = null
     private val movie: Movie = movieRepository.findMovieById(movieId)
@@ -26,9 +30,6 @@ class MovieDetailPresenterImpl(
     }
     private val reservationCount: ReservationCount = ReservationCount()
     private val movieUiModel: MovieUiModel = MovieUiModel(movie)
-    private val reservationMovieInfoRepository: ReservationMovieInfoRepository =
-        ReservationMovieInfoRepositoryImpl
-    private val theaterRepository: TheaterRepository = TheaterRepositoryImpl
 
     private fun setScreeningMovieInfo(): ReservationMovieInfo {
         val theaterName = theaterRepository.theaterName(theaterId)
@@ -46,24 +47,24 @@ class MovieDetailPresenterImpl(
 
     override fun onViewSetUp() {
         loadMovieDetails()
-        loadScreeningDates(movieId)
+        loadScreeningDates()
     }
 
     override fun loadMovieDetails() {
         view?.showMovieDetails(movieUiModel)
     }
 
-    override fun loadScreeningDates(movieId: Int) {
-        val dates =
-            movieRepository.getScreeningDateInfo(movieId).map { date ->
-                date.format(DEFAULT_DATE_FORMAT)
-            }
-        val times = getScreeningTimeSchedule(reservationMovieInfo.dateTime.screeningDate.isWeekend())
-        view?.setScreeningDatesAndTimes(dates, times, DEFAULT_DATA_INDEX)
+    override fun loadScreeningDates() {
+        val dates = theaterRepository.getScreeningDateInfo(theaterId, movieId)
+        val times = theaterRepository.getScreeningTimeInfo(theaterId, movieId, dates[DEFAULT_DATA_INDEX])
+        Log.d("in loadScreeningDates", "times: $times")
+        view?.setScreeningDates(dates, DEFAULT_DATA_INDEX)
     }
 
-    override fun loadScreeningTimes(isWeekend: Boolean) {
-        val times = getScreeningTimeSchedule(isWeekend)
+    override fun loadScreeningTimes(date: String) {
+        Log.d("selected date", date)
+        val times = theaterRepository.getScreeningTimeInfo(theaterId, movieId, date)
+        Log.d("in loadScreeningTimes", "times: $times")
         view?.updateScreeningTimes(times, DEFAULT_DATA_INDEX)
     }
 
@@ -74,7 +75,7 @@ class MovieDetailPresenterImpl(
             month = screeningDate.monthValue,
             day = screeningDate.dayOfMonth,
         )
-        loadScreeningTimes(reservationMovieInfo.dateTime.screeningDate.isWeekend())
+        loadScreeningTimes(date)
     }
 
     override fun selectTime(time: String) {
@@ -103,14 +104,6 @@ class MovieDetailPresenterImpl(
     override fun onReserveButtonClicked() {
         reservationMovieInfoRepository.saveMovieInfo(reservationMovieInfo)
         view?.moveToSeatSelection(reservationCount.count, reservationMovieInfo.title)
-    }
-
-    private fun getScreeningTimeSchedule(isWeekend: Boolean): List<String> {
-        val times =
-            movieRepository.getScreeningTimeInfo(isWeekend).map { time ->
-                time.format(DateTimeFormatter.ofPattern(DEFAULT_TIME_FORMAT))
-            }
-        return times
     }
 
     companion object {

@@ -29,8 +29,7 @@ class MovieDetailActivity : BaseActivity(), MovieDetailContract.View, MovieDetai
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
         binding.view = this
 
-        movieDetailPresenter =
-            MovieDetailPresenterImpl(movieId, theaterId) // todo: theaterId 넣어줘서 극장별 상영시간 받아오기
+        movieDetailPresenter = MovieDetailPresenterImpl(movieId, theaterId)
         movieDetailPresenter.attachView(this)
 
         savedInstanceState?.let { it ->
@@ -56,13 +55,12 @@ class MovieDetailActivity : BaseActivity(), MovieDetailContract.View, MovieDetai
         updateBinding()
     }
 
-    override fun setScreeningDatesAndTimes(
+    override fun setScreeningDates(
         dates: List<String>,
-        times: List<String>,
         defaultDataIndex: Int,
     ) {
         attachDateSpinnerAdapter(dates, defaultDataIndex)
-        attachTimeSpinnerAdapter(times, defaultDataIndex)
+        attachTimeSpinnerAdapter(mutableListOf(), defaultDataIndex)
     }
 
     private fun attachDateSpinnerAdapter(
@@ -93,7 +91,7 @@ class MovieDetailActivity : BaseActivity(), MovieDetailContract.View, MovieDetai
     }
 
     private fun attachTimeSpinnerAdapter(
-        times: List<String>,
+        times: MutableList<String>,
         defaultDataIndex: Int,
     ) {
         timeSpinnerAdapter =

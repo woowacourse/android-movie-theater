@@ -1,12 +1,12 @@
 package woowacourse.movie.presentation.view.screening
 
 import woowacourse.movie.data.repository.AdRepositoryImpl
-import woowacourse.movie.data.repository.MovieRepositoryImpl
 import woowacourse.movie.domain.admodel.Ad
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.presentation.repository.AdRepository
 import woowacourse.movie.presentation.repository.MovieRepository
 import woowacourse.movie.presentation.uimodel.MovieUiModel
+import woowacourse.movie.repository.MovieRepositoryImpl
 
 class ScreeningPresenterImpl(
     private val movieRepository: MovieRepository = MovieRepositoryImpl,
