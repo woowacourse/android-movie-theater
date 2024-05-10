@@ -28,10 +28,11 @@ object TicketNotification {
         movieTitle: String,
         screeningDateTime: ScreeningDateTime,
     ) {
-        val screeningTime = makeScreeningTime(
-            context = context,
-            screeningDateTime = screeningDateTime,
-        )
+        val screeningTime =
+            makeScreeningTime(
+                context = context,
+                screeningDateTime = screeningDateTime,
+            )
         if (!isValidScreeningTime(screeningTime)) return
 
         val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
@@ -123,15 +124,13 @@ object TicketNotification {
         return ticketId < Int.MAX_VALUE - 1
     }
 
-    private fun getTicketId(
-        sharedPreferences: SharedPreferences
-    ): Int {
+    private fun getTicketId(sharedPreferences: SharedPreferences): Int {
         return sharedPreferences.getInt(NOTIFICATION_ID, DEFAULT_NOTIFICATION_ID)
     }
 
     private fun saveTicketId(
         nextId: Int,
-        sharedPreferences: SharedPreferences
+        sharedPreferences: SharedPreferences,
     ) {
         sharedPreferences.edit().putInt(NOTIFICATION_ID, nextId).apply()
     }

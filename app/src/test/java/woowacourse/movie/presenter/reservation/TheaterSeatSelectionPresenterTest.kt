@@ -18,8 +18,8 @@ import woowacourse.movie.db.screening.ScreeningDatabase
 import woowacourse.movie.db.seats.SeatsDao
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.seats.Grade
-import woowacourse.movie.model.seats.TheaterSeat
 import woowacourse.movie.model.seats.SeatSelection
+import woowacourse.movie.model.seats.TheaterSeat
 
 @ExtendWith(MockKExtension::class)
 class TheaterSeatSelectionPresenterTest {

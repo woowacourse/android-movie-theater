@@ -40,26 +40,29 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
         receiveTicket()
     }
 
-    override fun showReservationMovieTitle(movie: Movie) = runOnUiThread {
-        binding.textViewReservationFinishedTitle.text = movie.title
-    }
+    override fun showReservationMovieTitle(movie: Movie) =
+        runOnUiThread {
+            binding.textViewReservationFinishedTitle.text = movie.title
+        }
 
-    override fun showReservationTicketInfo(ticket: Ticket)  = runOnUiThread {
-        val seats = ticket.seatSelection.theaterSeats
-        binding.textViewReservationFinishedNumberOfTickets.text = seats.size.toString()
-        binding.textViewReservationFinishedTicketPrice.text =
-            convertAmountFormat(this, ticket.amount)
-        binding.textViewReservationFinishedSeats.text =
-            seats.joinToString(getString(R.string.reservation_finished_seat_separator)) { "${it.row}${it.column}" }
-        presenter.loadTheater(ticket.theaterId)
-        binding.textViewReservationFinishedScreeningDate.text = ticket.screeningDateTime.date
-        binding.textViewReservationFinishedScreeningTime.text = ticket.screeningDateTime.time
-    }
+    override fun showReservationTicketInfo(ticket: Ticket) =
+        runOnUiThread {
+            val seats = ticket.seatSelection.theaterSeats
+            binding.textViewReservationFinishedNumberOfTickets.text = seats.size.toString()
+            binding.textViewReservationFinishedTicketPrice.text =
+                convertAmountFormat(this, ticket.amount)
+            binding.textViewReservationFinishedSeats.text =
+                seats.joinToString(getString(R.string.reservation_finished_seat_separator)) { "${it.row}${it.column}" }
+            presenter.loadTheater(ticket.theaterId)
+            binding.textViewReservationFinishedScreeningDate.text = ticket.screeningDateTime.date
+            binding.textViewReservationFinishedScreeningTime.text = ticket.screeningDateTime.time
+        }
 
-    override fun finshActivityWithErrorToast() = runOnUiThread {
-        makeToast(this, getString(R.string.all_error))
-        finish()
-    }
+    override fun finshActivityWithErrorToast() =
+        runOnUiThread {
+            makeToast(this, getString(R.string.all_error))
+            finish()
+        }
 
     override fun showReservationTheaterName(theaterName: String) {
         binding.textViewReservationFinishedTheaterName.text =
@@ -71,9 +74,7 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
         presenter.loadTicketWithTicketId(ticketId)
     }
 
-    private fun receiveTicketId(): Long =
-        intent.getLongExtra(RESERVATION_TICKET_ID, DEFAULT_TICKET_ID)
-
+    private fun receiveTicketId(): Long = intent.getLongExtra(RESERVATION_TICKET_ID, DEFAULT_TICKET_ID)
 
     private fun handleBackPressed() {
         onBackPressedDispatcher.addCallback(this) {

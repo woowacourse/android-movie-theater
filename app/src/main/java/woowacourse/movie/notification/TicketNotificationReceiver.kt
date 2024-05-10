@@ -23,7 +23,7 @@ class TicketNotificationReceiver : BroadcastReceiver() {
         context: Context?,
         intent: Intent?,
     ) {
-        setBootReceiver(intent,context)
+        setBootReceiver(intent, context)
         if (!isPushOnState(context)) return
 
         val ticketId = intent?.getLongExtra(RESERVATION_TICKET_ID, DEFAULT_TICKET_ID)

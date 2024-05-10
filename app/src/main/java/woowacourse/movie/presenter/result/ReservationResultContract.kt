@@ -1,7 +1,6 @@
 package woowacourse.movie.presenter.result
 
 import woowacourse.movie.model.movie.Movie
-import woowacourse.movie.model.ticket.ReservationTicket
 import woowacourse.movie.model.ticket.Ticket
 
 interface ReservationResultContract {

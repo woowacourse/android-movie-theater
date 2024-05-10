@@ -1,6 +1,5 @@
 package woowacourse.movie.presenter.setting
 
-import android.content.Context
 import android.content.SharedPreferences
 import io.mockk.every
 import io.mockk.mockk

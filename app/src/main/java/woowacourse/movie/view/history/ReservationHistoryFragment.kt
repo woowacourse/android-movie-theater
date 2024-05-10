@@ -1,7 +1,6 @@
 package woowacourse.movie.view.history
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +16,6 @@ import woowacourse.movie.repository.ReservationTicketRepositoryImpl
 import woowacourse.movie.view.MainActivity
 import woowacourse.movie.view.history.adapter.ReservationTicketAdapter
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.RESERVATION_TICKET_ID
-import woowacourse.movie.view.result.ReservationResultActivity
 
 class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
     private lateinit var presenter: ReservationHistoryPresenter

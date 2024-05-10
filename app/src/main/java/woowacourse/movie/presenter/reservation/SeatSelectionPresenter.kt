@@ -5,8 +5,8 @@ import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.seats.SeatsDao
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
-import woowacourse.movie.model.seats.TheaterSeat
 import woowacourse.movie.model.seats.SeatSelection
+import woowacourse.movie.model.seats.TheaterSeat
 import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.ticket.Ticket
 import woowacourse.movie.notification.TicketNotification

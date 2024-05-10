@@ -3,8 +3,8 @@ package woowacourse.movie.model.ticket
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import woowacourse.movie.model.seats.Grade
-import woowacourse.movie.model.seats.TheaterSeat
 import woowacourse.movie.model.seats.SeatSelection
+import woowacourse.movie.model.seats.TheaterSeat
 
 class SeatSelectionTest {
     @Test

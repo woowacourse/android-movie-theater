@@ -17,7 +17,7 @@ class SettingFragment : Fragment(), SettingContract.View {
     private val presenter: SettingPresenter by lazy {
         SettingPresenter(
             view = this,
-            sharedPreference = requireContext().getSharedPreferences(PUSH_SETTING, MODE_PRIVATE)
+            sharedPreference = requireContext().getSharedPreferences(PUSH_SETTING, MODE_PRIVATE),
         )
     }
     private var _binding: FragmentSettingBinding? = null
@@ -50,16 +50,15 @@ class SettingFragment : Fragment(), SettingContract.View {
         binding.switchButton.isChecked = isPushSetting
     }
 
-    override fun showPushSettingOnToast()  = MovieUtils.makeToast(requireContext(), getString(R.string.on_push_text))
+    override fun showPushSettingOnToast() = MovieUtils.makeToast(requireContext(), getString(R.string.on_push_text))
 
-    override fun showPushSettingOffToast()  = MovieUtils.makeToast(requireContext(), getString(R.string.off_push_text))
+    override fun showPushSettingOffToast() = MovieUtils.makeToast(requireContext(), getString(R.string.off_push_text))
 
     private fun initView() {
         binding.switchButton.setOnCheckedChangeListener { _, isChecked ->
             presenter.settingPushAlarmState(isChecked)
         }
     }
-
 
     companion object {
         const val PUSH_SETTING = "pushSetting"
