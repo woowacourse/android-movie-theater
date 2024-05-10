@@ -23,5 +23,20 @@
             tools:listitem="@layout/movie_ticket_item"
             tools:itemCount="5"/>
 
+        <TextView
+            android:id="@+id/tv_empty_reservation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding= "20dp"
+            android:text="@string/no_reservation"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

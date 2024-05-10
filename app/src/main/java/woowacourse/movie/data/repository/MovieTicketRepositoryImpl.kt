@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.room.Room
 import com.google.gson.Gson
 import woowacourse.movie.data.database.MovieTicketDatabase
-import woowacourse.movie.data.utils.Constants.DATABASE_NAME
-import woowacourse.movie.data.utils.Constants.INVALID_MOVIE_TICKET_ID_MESSAGE
+import woowacourse.movie.data.mapper.toDomainModel
+import woowacourse.movie.data.model.MovieTicketEntity
+import woowacourse.movie.data.utils.DataConstants.DATABASE_NAME
+import woowacourse.movie.data.utils.DataConstants.INVALID_MOVIE_TICKET_ID_MESSAGE
 import woowacourse.movie.data.utils.GsonUtil
 import woowacourse.movie.domain.model.movieticket.MovieTicket
 import woowacourse.movie.domain.repository.MovieTicketRepository
@@ -32,7 +34,7 @@ class MovieTicketRepositoryImpl(context: Context) : MovieTicketRepository {
         reservationSeats: String,
         totalPrice: Int
     ): MovieTicket {
-        val newTicket = MovieTicket(
+        val newTicketEntity = MovieTicketEntity(
             theaterName = theaterName,
             movieTitle = movieTitle,
             screeningDate = screeningDate,
@@ -46,32 +48,38 @@ class MovieTicketRepositoryImpl(context: Context) : MovieTicketRepository {
         var ticketId: Long = 0L
 
         val task = Runnable {
-            ticketId = movieTicketDao.insertMovieTicket(newTicket)
+            ticketId = movieTicketDao.insertMovieTicket(newTicketEntity)
             latch.countDown()
         }
         executor.execute(task)
         latch.await()
 
-        return newTicket.copy(id = ticketId)
+        return newTicketEntity.toDomainModel().copy(id = ticketId)
     }
 
     override fun getMovieTicket(movieTicketId: Long): MovieTicket {
-        var ticket: MovieTicket? = null
+        var ticketEntity: MovieTicketEntity? = null
         val latch = CountDownLatch(1)
         val task = Runnable {
-            ticket = movieTicketDao.getMovieTicket(movieTicketId)
+            ticketEntity = movieTicketDao.getMovieTicket(movieTicketId)
             latch.countDown()
         }
         executor.execute(task)
         latch.await()
-        return ticket ?: throw IllegalStateException(INVALID_MOVIE_TICKET_ID_MESSAGE)
+
+        return ticketEntity?.toDomainModel() ?: throw IllegalStateException(INVALID_MOVIE_TICKET_ID_MESSAGE)
     }
 
-    fun movieTicketToJson(movieTicket: MovieTicket): String {
-        return gson.toJson(movieTicket)
-    }
+    override fun findAll(): List<MovieTicket> {
+        var ticketEntities: List<MovieTicketEntity> = emptyList()
+        val latch = CountDownLatch(1)
+        val task = Runnable {
+            ticketEntities = movieTicketDao.getAllMovieTickets()
+            latch.countDown()
+        }
+        executor.execute(task)
+        latch.await()
 
-    fun jsonToMovieTicket(json: String): MovieTicket {
-        return gson.fromJson(json, MovieTicket::class.java)
+        return ticketEntities.map { it.toDomainModel() }
     }
 }

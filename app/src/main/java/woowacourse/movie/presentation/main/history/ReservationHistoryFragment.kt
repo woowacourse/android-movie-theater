@@ -1,28 +1,52 @@
 package woowacourse.movie.presentation.main.history
 
-import android.os.Bundle
-import android.view.LayoutInflater
+import android.content.Intent
 import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.data.repository.MovieTicketRepositoryImpl
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
+import woowacourse.movie.domain.model.movieticket.MovieTicket
+import woowacourse.movie.presentation.base.BaseFragment
+import woowacourse.movie.presentation.main.history.adapter.OnMovieTicketItemClickListener
+import woowacourse.movie.presentation.main.history.adapter.ReservationHistoryAdapter
+import woowacourse.movie.presentation.seats.SeatsActivity.Companion.EXTRA_MOVIE_TICKET_ID
+import woowacourse.movie.presentation.ticket.MovieTicketActivity
 
-class ReservationHistoryFragment : Fragment() {
-    private lateinit var binding: FragmentReservationHistoryBinding
+class ReservationHistoryFragment :
+    BaseFragment<FragmentReservationHistoryBinding>(R.layout.fragment_reservation_history),
+    ReservationHistoryContract.View {
+    private lateinit var presenter: ReservationHistoryContract.Presenter
+    private lateinit var adapter: ReservationHistoryAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_reservation_history, container, false,
+    override fun onViewCreatedSetup() {
+        val movieTicketRepository = MovieTicketRepositoryImpl(requireContext())
+        presenter = ReservationHistoryPresenter(this, movieTicketRepository)
+        presenter.loadReservationHistory()
+    }
+
+    override fun showReservationHistory(movieTickets: List<MovieTicket>) {
+        if (movieTickets.isEmpty()) {
+            binding.reservationHistoryRecyclerView.visibility = View.INVISIBLE
+            binding.tvEmptyReservation.visibility = View.VISIBLE
+        } else {
+            binding.tvEmptyReservation.visibility = View.INVISIBLE
+            adapter = ReservationHistoryAdapter(
+                movieTickets,
+                object : OnMovieTicketItemClickListener {
+                    override fun onClick(movieTicketId: Long) {
+                        presenter.itemClicked(movieTicketId)
+                    }
+                }
             )
+            binding.reservationHistoryRecyclerView.adapter = adapter
+            binding.reservationHistoryRecyclerView.visibility = View.VISIBLE
+        }
+    }
 
-        return binding.root
+    override fun navigateToReservationActivity(movieTicketId: Long) {
+        val intent = Intent(activity, MovieTicketActivity::class.java).apply {
+            putExtra(EXTRA_MOVIE_TICKET_ID, movieTicketId)
+        }
+        startActivity(intent)
     }
 }

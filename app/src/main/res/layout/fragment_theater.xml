@@ -24,7 +24,7 @@
             tools:listitem="@layout/theater_item" />
 
         <TextView
-            android:id="@+id/tv_no_theater"
+            android:id="@+id/tv_empty_theater"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding= "20dp"

@@ -14,4 +14,6 @@ interface MovieTicketRepository {
     ): MovieTicket
 
     fun getMovieTicket(movieTicketId: Long): MovieTicket
+
+    fun findAll(): List<MovieTicket>
 }

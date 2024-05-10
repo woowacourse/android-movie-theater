@@ -29,8 +29,8 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
 
         val movieTicketRepository = MovieTicketRepositoryImpl(this)
 
-        val theaterId = intent.getLongExtra(DetailActivity.EXTRA_THEATER_ID_KEY, -1)
-        val movieId = intent.getLongExtra(DetailActivity.EXTRA_MOVIE_ID_KEY, -1)
+        val theaterId = intent.getLongExtra(DetailActivity.EXTRA_THEATER_ID_KEY, INVALID_ID)
+        val movieId = intent.getLongExtra(DetailActivity.EXTRA_MOVIE_ID_KEY, INVALID_ID)
         val screeningDate = intent.getStringExtra(DetailActivity.EXTRA_SCREENING_DATE_KEY) ?: ""
         val screeningTime = intent.getStringExtra(DetailActivity.EXTRA_SCREENING_TIME_KEY) ?: ""
         val seatsCount = intent.getIntExtra(DetailActivity.EXTRA_COUNT_KEY, 0)
@@ -135,5 +135,6 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
     companion object {
         const val EXTRA_SELECTED_SEATS = "selected_seats"
         const val EXTRA_MOVIE_TICKET_ID = "movie_ticket_Id"
+        const val INVALID_ID = -1L
     }
 }

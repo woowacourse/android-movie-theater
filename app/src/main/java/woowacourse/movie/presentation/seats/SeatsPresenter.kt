@@ -108,7 +108,7 @@ class SeatsPresenter(
     }
 
     companion object {
-        const val INVALID_ID = -1
+        const val INVALID_ID = -1L
         const val INVALID_MOVIE_TICKET_ID_MESSAGE = "올바르지 않은 예매 정보입니다."
         const val ERROR_MESSAGE = "예매 정보를 불러오는데 실패했습니다. %s"
         const val MAX_SELECTABLE_SEATS_EXCEEDED_MESSAGE = "최대 선택 가능 좌석 수를 초과하였습니다."

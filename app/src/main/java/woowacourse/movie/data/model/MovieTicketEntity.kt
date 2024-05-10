@@ -1,6 +1,11 @@
-package woowacourse.movie.domain.model.movieticket
+package woowacourse.movie.data.model
 
-data class MovieTicket(
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "movie_ticket")
+data class MovieTicketEntity(
+    @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
     val theaterName: String,
     val movieTitle: String,
