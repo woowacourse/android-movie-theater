@@ -43,6 +43,7 @@ class SeatSelectionPresenterTest {
 
         every { screenRepository.findScreen(THEATER_ID, MOVIE_ID) } returns
             Result.success(dummyScreen)
+        every { screenRepository.findTheaterNameById(THEATER_ID) } returns Result.success("선릉")
         every { view.showSeatModel(any()) } just runs
         every { view.terminateOnError(any()) } just runs
         every { screenRepository.loadSeatBoard(THEATER_ID) } returns Result.success(seatBoard)
@@ -58,9 +59,13 @@ class SeatSelectionPresenterTest {
     fun `스크린을 불러오지 못하면 view에게 예외를 전달한다`() {
         // given
         val exception = NoSuchElementException()
-        every { screenRepository.findScreen(THEATER_ID, MOVIE_ID) } returns
-            Result.failure(exception)
         every { view.terminateOnError(any()) } just runs
+        every {
+            screenRepository.findScreen(
+                THEATER_ID,
+                MOVIE_ID,
+            )
+        } returns Result.failure(exception)
         every { screenRepository.loadSeatBoard(THEATER_ID) } returns Result.success(seatBoard)
         every { view.showSeatModel(any()) } just runs
 
@@ -77,7 +82,10 @@ class SeatSelectionPresenterTest {
         // given
         val exception = NoSuchElementException()
         every { screenRepository.findScreen(THEATER_ID, MOVIE_ID) } returns
-            Result.success(dummyScreen)
+            Result.success(
+                dummyScreen,
+            )
+        every { screenRepository.findTheaterNameById(THEATER_ID) } returns Result.failure(exception)
         every { screenRepository.loadSeatBoard(THEATER_ID) } returns Result.failure(exception)
         every { view.terminateOnError(any()) } just runs
 
@@ -105,16 +113,15 @@ class SeatSelectionPresenterTest {
         // given
         every { view.showSeatModel(any()) } just runs
         every { screenRepository.loadSeatBoard(THEATER_ID) } returns Result.success(seatBoard)
-        every { screenRepository.findScreen(THEATER_ID, MOVIE_ID) } returns Result.success(dummyScreen)
-        every {
-            reservationRepository.saveReservation(
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
+        every { screenRepository.findScreen(THEATER_ID, MOVIE_ID) } returns
+            Result.success(
+                dummyScreen,
             )
+        every { screenRepository.findTheaterNameById(THEATER_ID) } returns Result.success("선릉")
+        every {
+            reservationRepository.saveReservation(any())
         } returns Result.success(RESERVATION_ID)
+        every { view.setReservationNotification(any()) } just runs
         every { view.navigateToReservation(any()) } just runs
 
         // when

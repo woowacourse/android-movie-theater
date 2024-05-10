@@ -30,7 +30,7 @@ class ReservationPresenterTest {
 
     @BeforeEach
     fun setUp() {
-        presenter = ReservationPresenter(view, reservationRepository, theaterRepository)
+        presenter = ReservationPresenter(view, reservationRepository)
     }
 
     @Test
@@ -45,14 +45,13 @@ class ReservationPresenterTest {
             Result.success(
                 theaterName,
             )
-        every { view.showReservation(any(), any()) } just runs
+        every { view.showReservation(any()) } just runs
 
         // when
         presenter.loadReservation(RESERVATION_ID)
 
         // then
-        val result = ReservationModel(theaterName = theaterName, reservation = dummyReservation)
-        verify { view.showReservation(result, theaterName) }
+        verify { view.showReservation(dummyReservation) }
     }
 
     @Test
@@ -74,22 +73,15 @@ class ReservationPresenterTest {
     @Test
     fun `유효하지 않은 상영관 id라면 뷰에게 예외를 전달하고 이전 화면으로 간다`() {
         // given
+        val exception = NoSuchElementException()
         every { reservationRepository.findByReservationId(RESERVATION_ID) } returns
-            Result.success(
-                dummyReservation,
-            )
-
-        every { theaterRepository.findTheaterNameById(THEATER_ID) } returns
-            Result.failure(
-                NoSuchElementException(),
-            )
-
-        every { view.terminateOnError(e = any()) } just runs
+            Result.failure(exception)
+        every { view.terminateOnError(e = exception) } just runs
 
         // when
         presenter.loadReservation(RESERVATION_ID)
 
         // then
-        verify { view.terminateOnError(e = any()) }
+        verify { view.terminateOnError(e = exception) }
     }
 }

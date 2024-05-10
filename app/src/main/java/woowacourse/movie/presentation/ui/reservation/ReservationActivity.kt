@@ -7,6 +7,7 @@ import woowacourse.movie.databinding.ActivityReservationBinding
 import woowacourse.movie.domain.db.AppDatabase
 import woowacourse.movie.domain.db.reservationdb.ReservationDao
 import woowacourse.movie.domain.model.Reservation
+import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.ReservationRepositoryImpl
 import woowacourse.movie.presentation.base.BaseActivity
 import woowacourse.movie.presentation.ui.reservation.ReservationContract.View
@@ -16,7 +17,7 @@ class ReservationActivity : BaseActivity<ActivityReservationBinding>(), View {
         get() = R.layout.activity_reservation
 
     private lateinit var reservationDao: ReservationDao
-    private lateinit var reservationRepository: ReservationRepositoryImpl
+    private lateinit var reservationRepository: ReservationRepository
 
     val presenter: ReservationPresenter by lazy {
         ReservationPresenter(
