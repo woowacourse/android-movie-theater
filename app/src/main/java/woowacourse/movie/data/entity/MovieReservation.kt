@@ -17,6 +17,7 @@ import java.time.LocalDateTime
             parentColumns = ["id"],
             childColumns = ["theater_id"],
             onDelete = ForeignKey.RESTRICT,
+            onUpdate = ForeignKey.CASCADE,
         ),
     ],
 )
