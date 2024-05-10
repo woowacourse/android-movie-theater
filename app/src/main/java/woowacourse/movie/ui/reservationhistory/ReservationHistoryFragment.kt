@@ -11,6 +11,7 @@ import androidx.room.Room
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.db.AppDatabase
 import woowacourse.movie.ui.reservationhistory.adapter.ReservationHistoryAdapter
+import woowacourse.movie.ui.reservationhistorydetail.ReservationHistoryDetailActivity
 
 class ReservationHistoryFragment : Fragment() {
     private var _binding: FragmentReservationHistoryBinding? = null
@@ -43,7 +44,9 @@ class ReservationHistoryFragment : Fragment() {
             Thread {
                 val reservationHistories = db.reservationHistoryDao().getAll()
 
-                reservationHistoryAdapter = ReservationHistoryAdapter()
+                reservationHistoryAdapter = ReservationHistoryAdapter { reservationHistoryId ->
+                    ReservationHistoryDetailActivity.startActivity(requireContext(), reservationHistoryId)
+                }
                 reservationHistoryAdapter.submitList(reservationHistories)
 
                 binding.adapter = reservationHistoryAdapter

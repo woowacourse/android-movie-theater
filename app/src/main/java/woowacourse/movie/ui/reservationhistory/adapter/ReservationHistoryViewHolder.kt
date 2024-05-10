@@ -8,11 +8,11 @@ import woowacourse.movie.db.ReservationHistory
 class ReservationHistoryViewHolder(
     private val binding: HolderScreenReservationHistoryBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(reservationHistory: ReservationHistory) {
+    fun bind(reservationHistory: ReservationHistory, onClick: (Long) -> Unit) {
         binding.reservationHistory = reservationHistory
 
         binding.reservationHistoryLayout.setOnClickListener {
-            Log.d("HELLO", "bind: ${reservationHistory.id}")
+            onClick(reservationHistory.id)
         }
     }
 }

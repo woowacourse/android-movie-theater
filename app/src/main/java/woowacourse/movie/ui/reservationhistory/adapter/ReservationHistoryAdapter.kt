@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.HolderScreenReservationHistoryBinding
 import woowacourse.movie.db.ReservationHistory
 
-class ReservationHistoryAdapter() : ListAdapter<ReservationHistory, RecyclerView.ViewHolder>(ReservationHistoryDiffUtil()) {
+class ReservationHistoryAdapter(
+    private val onClick: (Long) -> Unit
+) : ListAdapter<ReservationHistory, RecyclerView.ViewHolder>(ReservationHistoryDiffUtil()) {
     private lateinit var inflater: LayoutInflater
 
     override fun onCreateViewHolder(
@@ -26,6 +28,6 @@ class ReservationHistoryAdapter() : ListAdapter<ReservationHistory, RecyclerView
         holder: RecyclerView.ViewHolder,
         position: Int,
     ) {
-        (holder as ReservationHistoryViewHolder).bind(getItem(position))
+        (holder as ReservationHistoryViewHolder).bind(getItem(position), onClick)
     }
 }
