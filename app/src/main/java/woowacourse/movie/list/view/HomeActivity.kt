@@ -1,6 +1,7 @@
 package woowacourse.movie.list.view
 
 import android.Manifest
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -15,20 +16,21 @@ import woowacourse.movie.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
-    private var isNotificationGranted: Boolean = false
+    private var isNotificationEnabled = false
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-            Log.d("alsong", "isGranted: $isGranted")
-            isNotificationGranted = isGranted
+            isNotificationEnabled = isGranted
         }
+    private lateinit var sharedPreference: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedPreference = getSharedPreferences("notification", MODE_PRIVATE)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         binding.home = this
         setContentView(binding.root)
-        initBottomNavigation()
         requestNotificationPermission()
+        initBottomNavigation()
     }
 
     private fun initBottomNavigation() {
