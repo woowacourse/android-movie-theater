@@ -208,7 +208,7 @@ class SeatSelectionPresenterTest {
             )
         } returns Result.success(1)
         every {
-            notificationRepository.createNotification(
+            notificationRepository.registerNotification(
                 any(),
                 any(),
                 any(),
@@ -243,7 +243,7 @@ class SeatSelectionPresenterTest {
             )
         } returns Result.failure(exception)
         every {
-            notificationRepository.createNotification(
+            notificationRepository.registerNotification(
                 any(),
                 any(),
                 any(),

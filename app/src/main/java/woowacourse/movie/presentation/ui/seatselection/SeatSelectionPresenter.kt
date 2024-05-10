@@ -134,7 +134,7 @@ class SeatSelectionPresenter(
         movieTitle: String,
         screeningDateTime: LocalDateTime,
     ) {
-        notificationRepository.createNotification(reservationId, movieTitle, screeningDateTime)
+        notificationRepository.registerNotification(reservationId, movieTitle, screeningDateTime)
             .onSuccess {
                 view.showToastMessage(ReservationSuccessMessage)
                 view.navigateToReservation(reservationId)

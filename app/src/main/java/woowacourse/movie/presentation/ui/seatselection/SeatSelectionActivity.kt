@@ -12,7 +12,7 @@ import woowacourse.movie.data.repository.local.ReservationRepositoryImpl
 import woowacourse.movie.data.repository.remote.DummyScreens
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.domain.model.Screen
-import woowacourse.movie.notification.Notification
+import woowacourse.movie.notification.NotificationHandler
 import woowacourse.movie.presentation.base.BaseMvpBindingActivity
 import woowacourse.movie.presentation.model.ReservationInfo
 import woowacourse.movie.presentation.model.UserSeat
@@ -27,7 +27,7 @@ class SeatSelectionActivity : BaseMvpBindingActivity<ActivitySeatSelectionBindin
     val repository = ReservationRepositoryImpl(db.dao())
 
     override val presenter: SeatSelectionPresenter by lazy {
-        SeatSelectionPresenter(this, DummyScreens, repository, Notification(applicationContext))
+        SeatSelectionPresenter(this, DummyScreens, repository, NotificationHandler(applicationContext))
     }
 
     override fun initStartView() {

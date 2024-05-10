@@ -3,7 +3,7 @@ package woowacourse.movie.domain.repository
 import java.time.LocalDateTime
 
 interface NotificationRepository {
-    fun createNotification(
+    fun registerNotification(
         reservationId: Long,
         movieTitle: String,
         dateTime: LocalDateTime,
