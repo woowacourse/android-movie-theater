@@ -11,8 +11,8 @@ interface ReservationHistoryDao {
     fun getAll(): List<ReservationHistory>
 
     @Query("SELECT * FROM reservationHistory WHERE id = :id")
-    fun getById(id: Int): ReservationHistory
+    fun getById(id: Long): ReservationHistory
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(reservationHistory: ReservationHistory)
+    fun insert(reservationHistory: ReservationHistory): Long
 }

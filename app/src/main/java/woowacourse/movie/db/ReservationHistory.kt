@@ -10,7 +10,7 @@ import java.time.LocalTime
 @Entity(tableName = "reservationHistory")
 data class ReservationHistory(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val id: Long = 0,
     @ColumnInfo(name = "reservation")
     val reservation: Reservation,
     @ColumnInfo(name = "theaterName")
