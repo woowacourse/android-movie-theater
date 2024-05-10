@@ -16,7 +16,8 @@
         android:id="@+id/theater_item"
         android:layout_height="66dp"
         android:layout_width="match_parent"
-        android:onClick="@{()->reservationOnItemClickListener.onClick(dbTicket.id)}">
+        android:onClick="@{()->reservationOnItemClickListener.onClick(dbTicket.id)}"
+        android:background="@drawable/btn_effect">
 
         <LinearLayout
             android:id="@+id/line1"
