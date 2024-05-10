@@ -107,24 +107,20 @@ class SeatSelectionPresenter(
     }
 
     override fun reserve() {
-        uiModel.screen?.let { screen ->
-            uiModel.dateTime?.let { dateTime ->
-                thread {
-                    reservationRepository.saveReservation(
-                        screen.movie.id,
-                        uiModel.theaterId,
-                        screen.movie.title,
-                        uiModel.ticketCount,
-                        uiModel.userSeat.seatModels.filter { seatModel -> seatModel.isSelected }
-                            .map { seatModel -> seatModel.toSeat() },
-                        dateTime,
-                    ).onSuccess { id ->
-                        createNotification(id, screen.movie.title, dateTime)
-                    }.onFailure { e ->
-                        view.showToastMessage(e)
-                        view.navigateBackToPrevious()
-                    }
-                }
+        thread {
+            reservationRepository.saveReservation(
+                uiModel.screen.movie.id,
+                uiModel.theaterId,
+                uiModel.screen.movie.title,
+                uiModel.ticketCount,
+                uiModel.userSeat.seatModels.filter { seatModel -> seatModel.isSelected }
+                    .map { seatModel -> seatModel.toSeat() },
+                uiModel.dateTime,
+            ).onSuccess { id ->
+                createNotification(id, uiModel.screen.movie.title, uiModel.dateTime)
+            }.onFailure { e ->
+                view.showToastMessage(e)
+                view.navigateBackToPrevious()
             }
         }
     }

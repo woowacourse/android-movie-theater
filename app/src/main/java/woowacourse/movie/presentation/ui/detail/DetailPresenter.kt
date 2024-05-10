@@ -97,15 +97,13 @@ class DetailPresenter(
     }
 
     override fun selectSeat() {
-        uiModel.selectedDate?.let { selectedDate ->
-            val reservationInfo =
-                ReservationInfo(
-                    theaterId = uiModel.theaterId,
-                    movieId = uiModel.movieId,
-                    dateTime = selectedDate.getLocalDateTime(uiModel.selectedTime),
-                    ticketCount = uiModel.ticket.count,
-                )
-            view.navigateToSeatSelection(reservationInfo)
-        }
+        val reservationInfo =
+            ReservationInfo(
+                theaterId = uiModel.theaterId,
+                movieId = uiModel.movieId,
+                dateTime = uiModel.selectedDate.getLocalDateTime(uiModel.selectedTime),
+                ticketCount = uiModel.ticket.count,
+            )
+        view.navigateToSeatSelection(reservationInfo)
     }
 }

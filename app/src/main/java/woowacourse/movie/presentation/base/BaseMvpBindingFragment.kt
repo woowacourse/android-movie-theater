@@ -49,24 +49,18 @@ abstract class BaseMvpBindingFragment<T : ViewDataBinding> : Fragment(), BaseVie
     }
 
     override fun showSnackBar(e: Throwable) {
-        requireActivity().runOnUiThread {
-            Messenger.showSnackBar(binding.root, e)
-        }
+        Messenger.showSnackBar(binding.root, e)
     }
 
     override fun showSnackBar(messageType: MessageType) {
-        requireActivity().runOnUiThread {
-            Messenger.showSnackBar(binding.root, messageType)
-        }
+        Messenger.showSnackBar(binding.root, messageType)
     }
 
     override fun showSnackBar(
         messageType: MessageType,
         action: Snackbar.() -> Snackbar,
     ) {
-        requireActivity().runOnUiThread {
-            Messenger.showSnackBar(binding.root, messageType, action)
-        }
+        Messenger.showSnackBar(binding.root, messageType, action)
     }
 
     override fun onDestroyView() {
