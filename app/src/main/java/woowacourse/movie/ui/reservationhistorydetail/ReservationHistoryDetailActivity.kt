@@ -5,10 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.room.Room
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
-import woowacourse.movie.db.AppDatabase
+import woowacourse.movie.db.ReservationHistoryDatabase
 import woowacourse.movie.domain.model.Reservation
 import java.time.LocalDate
 import java.time.LocalTime
@@ -27,12 +26,7 @@ class ReservationHistoryDetailActivity : AppCompatActivity(), ReservationHistory
     }
 
     private fun initPresenter() {
-        val db =
-            Room.databaseBuilder(
-                applicationContext,
-                AppDatabase::class.java,
-                "reservationHistory",
-            ).build()
+        val db = ReservationHistoryDatabase.getInstance(this)
 
         presenter = ReservationHistoryDetailPresenter(this, db)
     }

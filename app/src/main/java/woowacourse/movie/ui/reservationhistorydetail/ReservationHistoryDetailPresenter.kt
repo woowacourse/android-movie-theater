@@ -1,12 +1,12 @@
 package woowacourse.movie.ui.reservationhistorydetail
 
-import woowacourse.movie.db.AppDatabase
 import woowacourse.movie.db.ReservationHistory
+import woowacourse.movie.db.ReservationHistoryDatabase
 import kotlin.concurrent.thread
 
 class ReservationHistoryDetailPresenter(
     private val view: ReservationHistoryDetailContract.View,
-    private val db: AppDatabase,
+    private val db: ReservationHistoryDatabase,
 ) : ReservationHistoryDetailContract.Presenter {
     lateinit var reservationHistory: ReservationHistory
 

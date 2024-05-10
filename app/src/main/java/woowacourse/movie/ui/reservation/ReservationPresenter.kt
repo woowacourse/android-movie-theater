@@ -1,7 +1,7 @@
 package woowacourse.movie.ui.reservation
 
-import woowacourse.movie.db.AppDatabase
 import woowacourse.movie.db.ReservationHistory
+import woowacourse.movie.db.ReservationHistoryDatabase
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.TheaterRepository
 
@@ -9,7 +9,7 @@ class ReservationPresenter(
     private val view: ReservationContract.View,
     private val reservationRepository: ReservationRepository,
     private val theaterRepository: TheaterRepository,
-    private val db: AppDatabase,
+    private val db: ReservationHistoryDatabase,
 ) : ReservationContract.Presenter {
     override fun loadReservation(
         reservationId: Int,

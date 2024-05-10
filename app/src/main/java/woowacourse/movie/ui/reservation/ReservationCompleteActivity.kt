@@ -6,11 +6,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.room.Room
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
-import woowacourse.movie.db.AppDatabase
+import woowacourse.movie.db.ReservationHistoryDatabase
 import woowacourse.movie.domain.model.Reservation
 import woowacourse.movie.domain.repository.DummyReservation
 import woowacourse.movie.domain.repository.DummyTheaters
@@ -31,12 +30,7 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationContract.Vie
     }
 
     private fun initPresenter() {
-        val db =
-            Room.databaseBuilder(
-                applicationContext,
-                AppDatabase::class.java,
-                "reservationHistory",
-            ).build()
+        val db = ReservationHistoryDatabase.getInstance(this)
 
         presenter = ReservationPresenter(this, DummyReservation, DummyTheaters(), db)
     }

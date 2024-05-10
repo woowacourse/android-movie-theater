@@ -7,9 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.room.Room
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
-import woowacourse.movie.db.AppDatabase
+import woowacourse.movie.db.ReservationHistoryDatabase
 import woowacourse.movie.ui.reservationhistory.adapter.ReservationHistoryAdapter
 import woowacourse.movie.ui.reservationhistorydetail.ReservationHistoryDetailActivity
 
@@ -33,12 +32,7 @@ class ReservationHistoryFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val db =
-            Room.databaseBuilder(
-                requireContext(),
-                AppDatabase::class.java,
-                "reservationHistory",
-            ).build()
+        val db = ReservationHistoryDatabase.getInstance(requireContext())
 
         val thread =
             Thread {
@@ -46,7 +40,10 @@ class ReservationHistoryFragment : Fragment() {
 
                 reservationHistoryAdapter =
                     ReservationHistoryAdapter { reservationHistoryId ->
-                        ReservationHistoryDetailActivity.startActivity(requireContext(), reservationHistoryId)
+                        ReservationHistoryDetailActivity.startActivity(
+                            requireContext(),
+                            reservationHistoryId,
+                        )
                     }
                 reservationHistoryAdapter.submitList(reservationHistories)
 
