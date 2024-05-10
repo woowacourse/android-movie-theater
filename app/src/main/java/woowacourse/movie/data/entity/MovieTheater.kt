@@ -31,7 +31,7 @@ data class MovieTheater(
 
         val STUB_C =
             MovieTheater(
-                2L,
+                3L,
                 "강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남강남 ",
             )
     }

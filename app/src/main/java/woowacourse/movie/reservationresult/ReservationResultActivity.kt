@@ -67,6 +67,7 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
         ): Intent {
             return Intent(context, ReservationResultActivity::class.java).apply {
                 putExtra(EXTRA_RESERVATION_ID, reservationId)
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             }
         }
     }

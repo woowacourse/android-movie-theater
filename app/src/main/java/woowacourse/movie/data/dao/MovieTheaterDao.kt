@@ -15,6 +15,9 @@ interface MovieTheaterDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg movieTheaters: MovieTheater)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(movieTheater: MovieTheater)
+
     @Delete
     fun delete(theater: MovieTheater)
 
