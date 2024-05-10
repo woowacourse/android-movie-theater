@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import woowacourse.movie.database.TicketDatabase
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.list.adapter.ReservationHistoryAdapter
 import woowacourse.movie.list.adapter.ReservationOnItemClickListener
-import woowacourse.movie.list.model.TicketDatabase
 import woowacourse.movie.ticket.model.DbTicket
 import woowacourse.movie.ticket.view.MovieTicketActivity
 import java.util.concurrent.CountDownLatch

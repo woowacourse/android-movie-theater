@@ -6,8 +6,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.database.TicketDatabase.Companion.getDatabase
 import woowacourse.movie.databinding.ActivityMovieTicketBinding
-import woowacourse.movie.list.model.TicketDatabase.Companion.getDatabase
 import woowacourse.movie.ticket.contract.MovieTicketContract
 import woowacourse.movie.ticket.model.DbTicket
 import woowacourse.movie.ticket.presenter.MovieTicketPresenter

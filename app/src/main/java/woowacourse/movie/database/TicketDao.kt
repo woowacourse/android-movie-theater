@@ -1,4 +1,4 @@
-package woowacourse.movie.list.adapter
+package woowacourse.movie.database
 
 import androidx.room.Dao
 import androidx.room.Delete
