@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.data.repository.MovieTicketRepositoryImpl
 import woowacourse.movie.databinding.ActivitySeatsBinding
 import woowacourse.movie.domain.model.seat.SeatGrade
 import woowacourse.movie.domain.model.seat.Seats
@@ -26,12 +27,23 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seats)
         setContentView(binding.root)
 
+        val movieTicketRepository = MovieTicketRepositoryImpl(this)
+
         val theaterId = intent.getLongExtra(DetailActivity.EXTRA_THEATER_ID_KEY, -1)
         val movieId = intent.getLongExtra(DetailActivity.EXTRA_MOVIE_ID_KEY, -1)
-        val screeningSchedule = intent.getStringExtra(DetailActivity.EXTRA_SCREENING_SCHEDULE_KEY) ?: ""
+        val screeningDate = intent.getStringExtra(DetailActivity.EXTRA_SCREENING_DATE_KEY) ?: ""
+        val screeningTime = intent.getStringExtra(DetailActivity.EXTRA_SCREENING_TIME_KEY) ?: ""
         val seatsCount = intent.getIntExtra(DetailActivity.EXTRA_COUNT_KEY, 0)
 
-        presenter = SeatsPresenter(this, theaterId, movieId, screeningSchedule, seatsCount)
+        presenter = SeatsPresenter(
+            this,
+            movieTicketRepository,
+            theaterId,
+            movieId,
+            screeningDate,
+            screeningTime,
+            seatsCount
+        )
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -83,7 +95,7 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
         binding.confirmButton.isSelected = enabled
     }
 
-    override fun moveToReservationResult(movieTicketId: Int) {
+    override fun moveToReservationResult(movieTicketId: Long) {
         val intent = Intent(this, MovieTicketActivity::class.java)
         intent.putExtra(EXTRA_MOVIE_TICKET_ID, movieTicketId)
         startActivity(intent)

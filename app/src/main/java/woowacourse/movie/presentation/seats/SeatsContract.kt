@@ -14,7 +14,7 @@ interface SeatsContract {
 
         fun updateConfirmButton(enabled: Boolean)
 
-        fun moveToReservationResult(movieTicketId: Int)
+        fun moveToReservationResult(movieTicketId: Long)
 
         fun showMessage(message: String)
     }

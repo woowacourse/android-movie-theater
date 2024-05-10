@@ -13,8 +13,8 @@ import woowacourse.movie.databinding.ActivityDetailBinding
 import woowacourse.movie.domain.model.home.Movie
 import woowacourse.movie.presentation.seats.SeatsActivity
 import woowacourse.movie.presentation.util.dateToString
+import woowacourse.movie.presentation.util.timeToString
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
 
 class DetailActivity : AppCompatActivity(), DetailContract.View {
@@ -139,8 +139,8 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
         val intent = Intent(this, SeatsActivity::class.java)
         intent.putExtra(EXTRA_THEATER_ID_KEY, theaterId)
         intent.putExtra(EXTRA_MOVIE_ID_KEY, movieId)
-        val localDateTime: LocalDateTime = selectedDate.atTime(selectedTime)
-        intent.putExtra(EXTRA_SCREENING_SCHEDULE_KEY, localDateTime.dateToString())
+        intent.putExtra(EXTRA_SCREENING_DATE_KEY, selectedDate.dateToString())
+        intent.putExtra(EXTRA_SCREENING_TIME_KEY, selectedTime.timeToString())
         intent.putExtra(EXTRA_COUNT_KEY, count)
         this.startActivity(intent)
     }
@@ -149,6 +149,7 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
         const val EXTRA_COUNT_KEY = "count_key"
         const val EXTRA_THEATER_ID_KEY = "theater_id_key"
         const val EXTRA_MOVIE_ID_KEY = "movie_id_key"
-        const val EXTRA_SCREENING_SCHEDULE_KEY = "screening_schedule_key"
+        const val EXTRA_SCREENING_DATE_KEY = "screening_date_key"
+        const val EXTRA_SCREENING_TIME_KEY = "screening_time_key"
     }
 }

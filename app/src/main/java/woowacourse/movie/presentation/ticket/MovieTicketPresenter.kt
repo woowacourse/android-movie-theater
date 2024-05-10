@@ -5,7 +5,7 @@ import woowacourse.movie.domain.repository.MovieTicketRepository
 class MovieTicketPresenter(
     val view: MovieTicketContract.View,
     private val movieTicketRepository: MovieTicketRepository,
-    private val movieTicketId: Int
+    private val movieTicketId: Long
 ) : MovieTicketContract.Presenter {
     init {
         if (movieTicketId <= INVALID_MOVIE_TICKET_ID) {

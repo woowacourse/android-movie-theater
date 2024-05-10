@@ -19,8 +19,8 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_ticket)
         setContentView(binding.root)
-        val movieTicketId = intent.getIntExtra(EXTRA_MOVIE_TICKET_ID, -1)
-        presenter = MovieTicketPresenter(this, MovieTicketRepositoryImpl, movieTicketId)
+        val movieTicketId = intent.getLongExtra(EXTRA_MOVIE_TICKET_ID, -1)
+        presenter = MovieTicketPresenter(this, MovieTicketRepositoryImpl(this), movieTicketId)
     }
 
     override fun showTicketData(movieTicket: MovieTicket) {

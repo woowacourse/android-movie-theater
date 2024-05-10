@@ -7,10 +7,11 @@ interface MovieTicketRepository {
         theaterName: String,
         movieTitle: String,
         screeningDate: String,
+        screeningTime: String,
         reservationCount: Int,
         reservationSeats: String,
-        totalPrice: Int,
+        totalPrice: Int
     ): MovieTicket
 
-    fun getMovieTicket(movieTicketId: Int): MovieTicket
+    fun getMovieTicket(movieTicketId: Long): MovieTicket
 }
