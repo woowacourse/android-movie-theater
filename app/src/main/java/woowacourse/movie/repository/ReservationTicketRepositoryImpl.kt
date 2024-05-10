@@ -25,10 +25,6 @@ class ReservationTicketRepositoryImpl(context: Context) : ReservationTicketRepos
         return historyDao.saveReservationTicket(reservationTicket)
     }
 
-    override fun clearReservationTickets() {
-        historyDao.clearReservations()
-    }
-
     override fun findReservationTicket(ticketId: Long): ReservationTicket? {
         return historyDao.findReservationById(ticketId)
     }

@@ -8,7 +8,5 @@ interface ReservationTicketRepository {
 
     fun saveReservationTicket(ticket: Ticket): Long
 
-    fun clearReservationTickets()
-
     fun findReservationTicket(ticketId: Long): ReservationTicket?
 }
