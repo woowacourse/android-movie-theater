@@ -1,4 +1,4 @@
-package woowacourse.movie.db
+package woowacourse.movie.db.reservationhistory
 
 import android.content.Context
 import androidx.room.Database

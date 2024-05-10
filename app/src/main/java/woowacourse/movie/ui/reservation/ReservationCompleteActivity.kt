@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
-import woowacourse.movie.db.ReservationHistoryDatabase
+import woowacourse.movie.db.reservationhistory.ReservationHistoryDatabase
 import woowacourse.movie.domain.model.Reservation
 import woowacourse.movie.domain.repository.DummyReservation
 import woowacourse.movie.domain.repository.DummyTheaters

@@ -1,7 +1,7 @@
 package woowacourse.movie.ui.reservationhistory.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import woowacourse.movie.db.ReservationHistory
+import woowacourse.movie.db.reservationhistory.ReservationHistory
 
 class ReservationHistoryDiffUtil : DiffUtil.ItemCallback<ReservationHistory>() {
     override fun areItemsTheSame(

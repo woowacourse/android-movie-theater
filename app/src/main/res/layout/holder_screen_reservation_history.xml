@@ -7,7 +7,7 @@
 
         <variable
             name="reservationHistory"
-            type="woowacourse.movie.db.ReservationHistory" />
+            type="woowacourse.movie.db.reservationhistory.ReservationHistory" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

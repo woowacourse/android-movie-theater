@@ -1,7 +1,7 @@
 package woowacourse.movie.ui.reservation
 
-import woowacourse.movie.db.ReservationHistory
-import woowacourse.movie.db.ReservationHistoryDatabase
+import woowacourse.movie.db.reservationhistory.ReservationHistory
+import woowacourse.movie.db.reservationhistory.ReservationHistoryDatabase
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.TheaterRepository
 
@@ -37,7 +37,7 @@ class ReservationPresenter(
             Thread {
                 reservationRepository.findById(reservationId)
                     .onSuccess {
-                        db.reservationHistoryDao().insert(
+                        db.reservationHistoryDao().upsert(
                             ReservationHistory(
                                 reservation = it,
                                 theaterName = theaterRepository.findById(theaterId).name,

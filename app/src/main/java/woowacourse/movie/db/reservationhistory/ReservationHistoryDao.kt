@@ -1,9 +1,8 @@
-package woowacourse.movie.db
+package woowacourse.movie.db.reservationhistory
 
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Upsert
 
 @Dao
 interface ReservationHistoryDao {
@@ -13,6 +12,6 @@ interface ReservationHistoryDao {
     @Query("SELECT * FROM reservationHistory WHERE id = :id")
     fun getById(id: Long): ReservationHistory
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(reservationHistory: ReservationHistory): Long
+    @Upsert
+    fun upsert(reservationHistory: ReservationHistory): Long
 }

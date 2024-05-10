@@ -1,4 +1,4 @@
-package woowacourse.movie.db
+package woowacourse.movie.db.reservationhistory
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

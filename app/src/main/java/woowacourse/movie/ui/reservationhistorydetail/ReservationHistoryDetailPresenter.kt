@@ -1,7 +1,7 @@
 package woowacourse.movie.ui.reservationhistorydetail
 
-import woowacourse.movie.db.ReservationHistory
-import woowacourse.movie.db.ReservationHistoryDatabase
+import woowacourse.movie.db.reservationhistory.ReservationHistory
+import woowacourse.movie.db.reservationhistory.ReservationHistoryDatabase
 import kotlin.concurrent.thread
 
 class ReservationHistoryDetailPresenter(

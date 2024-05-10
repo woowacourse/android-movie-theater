@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.HolderScreenReservationHistoryBinding
-import woowacourse.movie.db.ReservationHistory
+import woowacourse.movie.db.reservationhistory.ReservationHistory
 
 class ReservationHistoryAdapter(
     private val onClick: (Long) -> Unit,

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
-import woowacourse.movie.db.ReservationHistoryDatabase
+import woowacourse.movie.db.reservationhistory.ReservationHistoryDatabase
 import woowacourse.movie.ui.reservationhistory.adapter.ReservationHistoryAdapter
 import woowacourse.movie.ui.reservationhistorydetail.ReservationHistoryDetailActivity
 

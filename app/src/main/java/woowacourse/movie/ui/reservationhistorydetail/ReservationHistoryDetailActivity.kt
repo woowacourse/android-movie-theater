@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
-import woowacourse.movie.db.ReservationHistoryDatabase
+import woowacourse.movie.db.reservationhistory.ReservationHistoryDatabase
 import woowacourse.movie.domain.model.Reservation
 import java.time.LocalDate
 import java.time.LocalTime
