@@ -234,6 +234,8 @@ object DummyData {
             dateTime = LocalDateTime.now(),
         )
 
+    val dummyReservations = listOf(dummyReservation)
+
     fun load(): List<ScreenView> =
         movies.flatMap {
             listOf(
