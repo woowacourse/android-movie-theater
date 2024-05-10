@@ -1,7 +1,6 @@
 package woowacourse.movie
 
 import android.content.Context
-import woowacourse.movie.db.history.ReservationHistoryDatabase
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.model.ticket.ReservationTicket
@@ -30,7 +29,7 @@ class MockReservationTicketRepository(context: Context) : ReservationTicketRepos
         return historyDao.findReservationById(ticketId)
     }
 
-    fun clearReservationTickets(){
+    fun clearReservationTickets() {
         historyDao.clearReservations()
     }
 }

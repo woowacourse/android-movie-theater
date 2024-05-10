@@ -2,6 +2,7 @@ package woowacourse.movie.view
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -75,7 +76,9 @@ class MainActivity : AppCompatActivity() {
             ActivityResultContracts.RequestPermission(),
         ) { _: Boolean -> }
 
-    override fun getIntent(): Intent {
-        return Intent(this, ReservationResultActivity::class.java)
+    companion object {
+        fun getIntent(context: Context): Intent {
+            return Intent(context, ReservationResultActivity::class.java)
+        }
     }
 }

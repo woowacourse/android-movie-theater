@@ -22,11 +22,9 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
     private var _binding: FragmentReservationHistoryBinding? = null
     private val binding: FragmentReservationHistoryBinding get() = _binding!!
     private lateinit var reservationTicketAdapter: ReservationTicketAdapter
-    private lateinit var mActivity: MainActivity
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        mActivity = context as MainActivity
         presenter =
             ReservationHistoryPresenter(
                 this@ReservationHistoryFragment,
@@ -75,7 +73,7 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
 
     override fun navigateToDetail(reservationTicket: ReservationTicket) {
         val intent =
-            mActivity.intent.apply {
+            MainActivity.getIntent(requireContext()).apply {
                 putExtra(RESERVATION_TICKET_ID, reservationTicket.ticketId)
             }
         startActivity(intent)

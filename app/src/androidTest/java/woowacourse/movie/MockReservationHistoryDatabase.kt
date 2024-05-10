@@ -6,7 +6,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import woowacourse.movie.db.history.ReservationHistoryConverters
-import woowacourse.movie.db.history.ReservationHistoryDatabase
 import woowacourse.movie.model.ticket.ReservationTicket
 
 @Database(

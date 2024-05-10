@@ -15,12 +15,10 @@ class SettingPresenter(
     override fun settingPushAlarmState(isPushSetting: Boolean) {
         val editor = sharedPreference.edit()
         editor.putBoolean(SettingFragment.PUSH_SETTING, isPushSetting).apply()
-        if (isPushSetting)
-            {
-                view.showPushSettingOnToast()
-            } else
-            {
-                view.showPushSettingOffToast()
-            }
+        if (isPushSetting) {
+            view.showPushSettingOnToast()
+        } else {
+            view.showPushSettingOffToast()
+        }
     }
 }
