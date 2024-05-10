@@ -1,6 +1,6 @@
 package woowacourse.movie.feature.history
 
-import woowacourse.movie.model.ticket.Ticket
+import woowacourse.movie.db.ticket.Ticket
 
 interface ReservationHistoryContract {
     interface Presenter {

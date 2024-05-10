@@ -10,14 +10,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
+import woowacourse.movie.db.ticket.Ticket
+import woowacourse.movie.db.ticket.TicketDao
+import woowacourse.movie.db.ticket.TicketDatabase
 import woowacourse.movie.feature.history.adapter.ReservationHistoryAdapter
-import woowacourse.movie.model.ticket.Ticket
 import woowacourse.movie.utils.MovieUtils.makeToast
 
 class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
     private var _binding: FragmentReservationHistoryBinding? = null
     private val binding get() = _binding!!
-    private var presenter: ReservationHistoryPresenter = ReservationHistoryPresenter(this)
+    private lateinit var presenter: ReservationHistoryPresenter
     private lateinit var reservationHistoryAdapter: ReservationHistoryAdapter
 
     override fun onCreateView(
@@ -34,12 +36,18 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        initPresenter()
         initReservationHistoryRecyclerView()
         presenter.loadTicket()
     }
 
     override fun showReservationHistory(tickets: List<Ticket>) {
         reservationHistoryAdapter.updateData(tickets)
+    }
+
+    private fun initPresenter() {
+        val ticketDao: TicketDao = TicketDatabase.initialize(requireContext()).ticketDao()
+        presenter = ReservationHistoryPresenter(this, ticketDao)
     }
 
     private fun initReservationHistoryRecyclerView() {

@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemReservationHistoryBinding
-import woowacourse.movie.model.ticket.Ticket
+import woowacourse.movie.db.ticket.Ticket
 
 class ReservationHistoryAdapter(
-    private val onClickItem: OnClickItem
+    private val onClickItem: OnClickItem,
 ) : RecyclerView.Adapter<ReservationHistoryViewHolder>() {
     private var tickets = listOf<Ticket>()
 

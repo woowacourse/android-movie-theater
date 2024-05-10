@@ -2,7 +2,7 @@ package woowacourse.movie.feature.history.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemReservationHistoryBinding
-import woowacourse.movie.model.ticket.Ticket
+import woowacourse.movie.db.ticket.Ticket
 
 typealias OnClickItem = () -> Unit
 
