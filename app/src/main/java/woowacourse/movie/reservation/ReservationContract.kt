@@ -15,7 +15,7 @@ interface ReservationContract {
     interface Presenter {
         fun detachView()
 
-        fun loadData(database: AppDatabase)
+        fun loadData()
 
         fun onClickedList(ticket: Ticket)
     }

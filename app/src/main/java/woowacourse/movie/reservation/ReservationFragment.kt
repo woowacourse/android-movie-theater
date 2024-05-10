@@ -25,13 +25,13 @@ class ReservationFragment :
         super.onViewCreated(view, savedInstanceState)
         val database =
             Room.databaseBuilder(requireContext(), AppDatabase::class.java, "ticket").build()
-        presenter = ReservationPresenter(this)
+        presenter = ReservationPresenter(this, database)
         reservationAdapter =
             ReservationAdapter {
                 presenter.onClickedList(it)
             }
         binding.reservationRecyclerView.adapter = reservationAdapter
-        presenter.loadData(database)
+        presenter.loadData()
     }
 
     override fun showReservations(reservations: List<Ticket>) {
