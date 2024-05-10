@@ -28,7 +28,7 @@ class SettingFragment : Fragment(), SettingContract.View {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter.loadNotificationState(HomeActivity.sharedPreference.isNotificationPermissionGranted())
+        presenter.loadNotificationState(HomeActivity.sharedPreference.isPushNotificationActivated())
 
         val result = arguments?.getBoolean(KEY_ENABLED, true)
         binding.isSwitchEnabled = result

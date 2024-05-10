@@ -71,10 +71,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private val requestPermissionLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestPermission(),
-        ) { isGranted: Boolean ->
-            sharedPreference.saveNotificationState(isGranted)
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             isPermitted = isGranted
         }
 

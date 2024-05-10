@@ -13,7 +13,7 @@ class SharedPreference(context: Context) {
         }
     }
 
-    fun isNotificationPermissionGranted(): Boolean = sharedPref.getBoolean(SHARED_PREF_KEY_NOTIFICATION, false)
+    fun isPushNotificationActivated(): Boolean = sharedPref.getBoolean(SHARED_PREF_KEY_NOTIFICATION, false)
 
     companion object {
         const val SHARED_PREF_KEY_NOTIFICATION = "notification"

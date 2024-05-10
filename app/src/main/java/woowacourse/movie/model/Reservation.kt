@@ -13,8 +13,7 @@ data class Reservation(
     val screeningTime: String,
     val selectedSeats: List<Seat>,
     val theaterName: String,
-) :
-    Parcelable {
+) : Parcelable {
     private val totalPrice = selectedSeats.sumOf { it.seatGrade.price }
     val totalCount = selectedSeats.size
 
