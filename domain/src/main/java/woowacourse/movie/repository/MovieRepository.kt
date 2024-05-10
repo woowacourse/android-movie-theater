@@ -38,4 +38,6 @@ interface MovieRepository {
         col: Int,
         theaterId: Long,
     ): Seat
+
+    fun reservations(): List<MovieReservation>
 }

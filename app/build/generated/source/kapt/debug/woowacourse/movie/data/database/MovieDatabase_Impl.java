@@ -49,12 +49,12 @@ public final class MovieDatabase_Impl extends MovieDatabase {
     final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(1) {
       @Override
       public void createAllTables(@NonNull final SupportSQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS `movie_reservation` (`id` INTEGER NOT NULL, `selected_seats` TEXT NOT NULL, `screen_date_time` TEXT NOT NULL, `head_count` INTEGER NOT NULL, `theater_id` INTEGER NOT NULL, `movie_id` INTEGER NOT NULL, `movie_title` TEXT NOT NULL, `movie_description` TEXT NOT NULL, `movie_image_url` TEXT NOT NULL, `movie_start_date` TEXT NOT NULL, `movie_end_date` TEXT NOT NULL, `movie_running_time` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`theater_id`) REFERENCES `movie_theater`(`id`) ON UPDATE NO ACTION ON DELETE RESTRICT )");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `movie_reservation` (`id` INTEGER NOT NULL, `selected_seats` TEXT NOT NULL, `screen_date_time` TEXT NOT NULL, `head_count` INTEGER NOT NULL, `theater_id` INTEGER NOT NULL, `movie_id` INTEGER NOT NULL, `movie_title` TEXT NOT NULL, `movie_description` TEXT NOT NULL, `movie_image_url` TEXT NOT NULL, `movie_start_date` TEXT NOT NULL, `movie_end_date` TEXT NOT NULL, `movie_running_time` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`theater_id`) REFERENCES `movie_theater`(`id`) ON UPDATE CASCADE ON DELETE RESTRICT )");
         db.execSQL("CREATE TABLE IF NOT EXISTS `movie_theater` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `movie` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `description` TEXT NOT NULL, `image_url` TEXT NOT NULL, `start_date` TEXT NOT NULL, `end_date` TEXT NOT NULL, `running_time` INTEGER NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `screening_movie` (`id` INTEGER NOT NULL, `screen_date_times` TEXT NOT NULL, `movie_id` INTEGER NOT NULL, `movie_title` TEXT NOT NULL, `movie_description` TEXT NOT NULL, `movie_image_url` TEXT NOT NULL, `movie_start_date` TEXT NOT NULL, `movie_end_date` TEXT NOT NULL, `movie_running_time` INTEGER NOT NULL, `theater_id` INTEGER NOT NULL, `theater_name` TEXT NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3cdf524256457e34e17d1eac41719c90')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd6fc53d2da3a4096e886d104c555ca99')");
       }
 
       @Override
@@ -121,7 +121,7 @@ public final class MovieDatabase_Impl extends MovieDatabase {
         _columnsMovieReservation.put("movie_end_date", new TableInfo.Column("movie_end_date", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsMovieReservation.put("movie_running_time", new TableInfo.Column("movie_running_time", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysMovieReservation = new HashSet<TableInfo.ForeignKey>(1);
-        _foreignKeysMovieReservation.add(new TableInfo.ForeignKey("movie_theater", "RESTRICT", "NO ACTION", Arrays.asList("theater_id"), Arrays.asList("id")));
+        _foreignKeysMovieReservation.add(new TableInfo.ForeignKey("movie_theater", "RESTRICT", "CASCADE", Arrays.asList("theater_id"), Arrays.asList("id")));
         final HashSet<TableInfo.Index> _indicesMovieReservation = new HashSet<TableInfo.Index>(0);
         final TableInfo _infoMovieReservation = new TableInfo("movie_reservation", _columnsMovieReservation, _foreignKeysMovieReservation, _indicesMovieReservation);
         final TableInfo _existingMovieReservation = TableInfo.read(db, "movie_reservation");
@@ -182,7 +182,7 @@ public final class MovieDatabase_Impl extends MovieDatabase {
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "3cdf524256457e34e17d1eac41719c90", "f59fab9874ee0fd3115f5cc883fbdb11");
+    }, "d6fc53d2da3a4096e886d104c555ca99", "ceb33766eec7a495132edf9d0aad2237");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;

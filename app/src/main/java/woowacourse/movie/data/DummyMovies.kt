@@ -83,4 +83,6 @@ object DummyMovies : MovieRepository {
     ): Seat =
         theaterById(theaterId).seats.firstOrNull { it.row == row && it.col == col }
             ?: error("해당 극장에는 row:$Int, col:${Int}에 해당하는 좌석이 없습니다.")
+
+    override fun reservations(): List<MovieReservation> = reservations
 }

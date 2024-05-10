@@ -50,7 +50,7 @@ class RoomMovieRepository(
         seats: SelectedSeats,
         theaterId: Long,
     ): Long {
-        val movie = movieDao.getMovieById(screenMovieId)
+        val movie = screenMovieDao.getScreenMovieById(screenMovieId).movie
         return reservationDao.insert(
             woowacourse.movie.data.entity.MovieReservation(
                 screenMovieId,
@@ -76,6 +76,10 @@ class RoomMovieRepository(
             listOf(MovieTheater.STUB_A, MovieTheater.STUB_B, MovieTheater.STUB_C)
         return theaters.firstOrNull { it.id == theaterId }?.seats?.firstOrNull { it.row == row && it.col == col }
             ?: error("해당 극장에는 row:$Int, col:${Int}에 해당하는 좌석이 없습니다.")
+    }
+
+    override fun reservations(): List<MovieReservation> {
+        return reservationDao.getAll().map { it.toMovieReservation() }
     }
 
     companion object {
