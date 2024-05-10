@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 클릭 상태 -->
+    <item android:drawable="@android:color/darker_gray" android:state_pressed="true"/>
+    <!-- 선택 상태 -->
+    <item android:drawable="@android:color/darker_gray" android:state_selected="true"/>
+    <!-- 기본 상태 -->
+    <item android:drawable="@android:color/transparent"/>
+</selector>

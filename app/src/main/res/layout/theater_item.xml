@@ -20,8 +20,10 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/theater_item"
+        android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/item_selector"
         android:onClick="@{()->onTheaterItemClickListener.onClick(movieId, theater.id)}">
 
         <TextView
