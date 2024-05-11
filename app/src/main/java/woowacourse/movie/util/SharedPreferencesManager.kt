@@ -1,6 +1,7 @@
 package woowacourse.movie.util
 
 import android.content.Context
+import androidx.core.content.edit
 
 class SharedPreferencesManager(context: Context) {
     private val sharedPreferences by lazy {
@@ -11,9 +12,10 @@ class SharedPreferencesManager(context: Context) {
         key: String,
         value: Boolean,
     ) {
-        val editor = sharedPreferences.edit()
-        editor.putBoolean(key, value)
-        editor.apply()
+        sharedPreferences.edit {
+            putBoolean(key, value)
+            apply()
+        }
     }
 
     fun getBoolean(
