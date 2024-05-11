@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
@@ -19,7 +20,8 @@ import woowacourse.movie.ui.complete.MovieReservationCompleteActivity
 import woowacourse.movie.ui.complete.MovieReservationCompleteKey.TICKET_ID
 import kotlin.concurrent.thread
 
-class MovieBookingHistoryFragment : Fragment(), BookingHistoryContract.View, BookingHistoryAdapter.BookingHistoryClickListener {
+class MovieBookingHistoryFragment : Fragment(), BookingHistoryContract.View,
+    BookingHistoryAdapter.BookingHistoryClickListener {
     private var _binding: FragmentMovieBookingHistoryBinding? = null
     private val binding: FragmentMovieBookingHistoryBinding
         get() = _binding!!
@@ -70,6 +72,8 @@ class MovieBookingHistoryFragment : Fragment(), BookingHistoryContract.View, Boo
     }
 
     override fun showError(throwable: Throwable) {
+        Toast.makeText(requireContext(), getString(R.string.toast_invalid_key), Toast.LENGTH_SHORT)
+            .show()
     }
 
     override fun onBookingHistoryClick(ticketId: Long) {
@@ -79,24 +83,3 @@ class MovieBookingHistoryFragment : Fragment(), BookingHistoryContract.View, Boo
     }
 }
 
-interface BookingHistoryContract {
-    interface View : HandleError {
-        fun showHistoryItems(items: List<UserTicket>)
-    }
-
-    interface Presenter {
-        fun loadHistoryItems()
-    }
-}
-
-class BookingHistoryPresenter(
-    private val view: BookingHistoryContract.View,
-    private val ticketDao: TicketDao,
-) : BookingHistoryContract.Presenter {
-    override fun loadHistoryItems() {
-        thread {
-            val items: List<UserTicket> = ticketDao.findAll().map(TicketEntity::toUserTicket)
-            view.showHistoryItems(items)
-        }
-    }
-}

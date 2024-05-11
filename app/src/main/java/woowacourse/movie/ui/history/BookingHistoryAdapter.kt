@@ -62,22 +62,6 @@ class BookingHistoryAdapter(
     }
 }
 
-object BookingHistoryDiffUtil : DiffUtil.ItemCallback<UserTicket>() {
-    override fun areItemsTheSame(
-        oldItem: UserTicket,
-        newItem: UserTicket,
-    ): Boolean {
-        return oldItem.id == newItem.id
-    }
-
-    override fun areContentsTheSame(
-        oldItem: UserTicket,
-        newItem: UserTicket,
-    ): Boolean {
-        return oldItem == newItem
-    }
-}
-
 @BindingAdapter("ticketDataForHistory")
 fun TextView.setBookingHistoryData(ticket: UserTicket) {
     val dateFormat = DateTimeFormatter.ofPattern(context.getString(R.string.history_booking_date_format))
