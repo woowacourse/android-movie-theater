@@ -17,10 +17,11 @@ import java.util.Calendar
 import java.util.Locale
 
 object TicketNotification {
+    const val PENDING_REQUEST_CODE = 0
     private const val NOTIFICATION_ID = "notificationId"
     private const val DEFAULT_NOTIFICATION_ID = 0
     private const val WRONG_SCREENING_TIME = -1L
-    const val PENDING_REQUEST_CODE = 0
+    private const val MAX_TICKET_NOTIFICATION_ID = Int.MAX_VALUE - 1
     private const val ALARM_MINUTE = -30
 
     fun setNotification(
@@ -107,29 +108,29 @@ object TicketNotification {
 
     fun getNextNotificationTicketId(context: Context): Int {
         val sharedPreferences = context.getSharedPreferences(NOTIFICATION_ID, MODE_PRIVATE)
-        val currentId = getTicketId(sharedPreferences)
+        val currentId = getNotificationTicketId(sharedPreferences)
         val nextId = currentId + 1
-        if (isTicketIdValidate(nextId)) {
-            saveTicketId(nextId, sharedPreferences)
+        if (isNotificationTicketIdValidate(nextId)) {
+            saveNotificationTicketId(nextId, sharedPreferences)
         } else {
-            resetTicketId(sharedPreferences)
+            resetNotificationTicketId(sharedPreferences)
         }
         return nextId
     }
 
-    private fun resetTicketId(sharedPreferences: SharedPreferences) {
-        saveTicketId(DEFAULT_NOTIFICATION_ID, sharedPreferences)
+    private fun resetNotificationTicketId(sharedPreferences: SharedPreferences) {
+        saveNotificationTicketId(DEFAULT_NOTIFICATION_ID, sharedPreferences)
     }
 
-    private fun isTicketIdValidate(ticketId: Int): Boolean {
-        return ticketId < Int.MAX_VALUE - 1
+    private fun isNotificationTicketIdValidate(ticketId: Int): Boolean {
+        return ticketId < MAX_TICKET_NOTIFICATION_ID
     }
 
-    private fun getTicketId(sharedPreferences: SharedPreferences): Int {
+    private fun getNotificationTicketId(sharedPreferences: SharedPreferences): Int {
         return sharedPreferences.getInt(NOTIFICATION_ID, DEFAULT_NOTIFICATION_ID)
     }
 
-    private fun saveTicketId(
+    private fun saveNotificationTicketId(
         nextId: Int,
         sharedPreferences: SharedPreferences,
     ) {
