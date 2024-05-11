@@ -19,6 +19,7 @@ import java.util.Locale
 object TicketNotification {
     private const val NOTIFICATION_ID = "notificationId"
     private const val DEFAULT_NOTIFICATION_ID = 0
+    private const val WRONG_SCREENING_TIME = -1L
     const val PENDING_REQUEST_CODE = 0
     private const val ALARM_MINUTE = -30
 
@@ -79,12 +80,12 @@ object TicketNotification {
                 screeningDateTime.date,
                 screeningDateTime.time,
             ),
-        )?.time ?: -1L
+        )?.time ?: WRONG_SCREENING_TIME
     }
 
     private fun isValidScreeningTime(screeningTime: Long): Boolean {
         val currentDateTime = Calendar.getInstance().timeInMillis
-        return screeningTime != -1L && currentDateTime < screeningTime
+        return screeningTime != WRONG_SCREENING_TIME && currentDateTime < screeningTime
     }
 
     private fun makePendingIntent(

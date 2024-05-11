@@ -97,7 +97,7 @@ class TicketNotificationReceiver : BroadcastReceiver() {
         context: Context?,
     ) {
         if (isBootingState(intent)) {
-            context?.let { setNotificationTickets(it, ReservationTicketRepositoryImpl(context)) }
+            context?.let { setNotificationTickets(it, ReservationTicketRepositoryImpl(it)) }
         }
     }
 
