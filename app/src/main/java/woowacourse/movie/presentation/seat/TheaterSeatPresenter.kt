@@ -63,14 +63,15 @@ class TheaterSeatPresenter(
     }
 
     override fun confirmPurchase() {
-        val reservation = Reservation(
-            cinemaName = cinema.cinemaName,
-            title = cinema.theater.movie.title,
-            releaseDate = LocalDateTime.parse(dateTime, Formatter),
-            runningTime = cinema.theater.movie.runningTime,
-            synopsis = cinema.theater.movie.synopsis,
-            seats = selectedSeats.mapNotNull { seats[it] }.toSet(),
-        )
+        val reservation =
+            Reservation(
+                cinemaName = cinema.cinemaName,
+                title = cinema.theater.movie.title,
+                releaseDate = LocalDateTime.parse(dateTime, Formatter),
+                runningTime = cinema.theater.movie.runningTime,
+                synopsis = cinema.theater.movie.synopsis,
+                seats = selectedSeats.mapNotNull { seats[it] }.toSet(),
+            )
         movieRepository.saveReservation(reservation).onSuccess {
             view.navigateToPurchaseConfirmView(reservation.copy(id = it))
         }.onFailure {

@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.BundleCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import woowacourse.movie.presentation.common.withArgs
 import woowacourse.movie.databinding.FragmentBottomSheetTheatersBinding
-import woowacourse.movie.presentation.error.ErrorActivity
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.theater.Theater
+import woowacourse.movie.presentation.common.withArgs
+import woowacourse.movie.presentation.error.ErrorActivity
 import woowacourse.movie.presentation.movieDetail.MovieDetailActivity
 import woowacourse.movie.presentation.movieList.MovieListFragment.Companion.THEATER_KEY
 

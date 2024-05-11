@@ -5,8 +5,8 @@ import android.content.IntentFilter
 import androidx.core.content.ContextCompat
 import woowacourse.movie.MovieBroadCastReceiver.Companion.RESERVATION_NOTIFICATION_ACTION
 import woowacourse.movie.data.MovieRepository
-import woowacourse.movie.data.datastore.DefaultNotificationDataStore
 import woowacourse.movie.data.MovieRepositoryStore
+import woowacourse.movie.data.datastore.DefaultNotificationDataStore
 
 class MovieReservationApp : Application() {
     val movieRepository: MovieRepository by lazy {
@@ -25,9 +25,8 @@ class MovieReservationApp : Application() {
             this,
             reservationBroadcastReceiver,
             IntentFilter(RESERVATION_NOTIFICATION_ACTION),
-            ContextCompat.RECEIVER_NOT_EXPORTED
+            ContextCompat.RECEIVER_NOT_EXPORTED,
         )
-
     }
 
     override fun onTerminate() {

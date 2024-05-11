@@ -12,9 +12,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.presentation.base.BindingFragment
 
-
 class SettingFragment : BindingFragment<FragmentSettingBinding>(R.layout.fragment_setting) {
-
     private val notificationPreference by lazy { (requireActivity().application as MovieReservationApp).notificationDatastore }
 
     private val explanationDialogForPushAlarm by lazy {
@@ -71,15 +69,16 @@ class SettingFragment : BindingFragment<FragmentSettingBinding>(R.layout.fragmen
     }
 
     private fun isSecondRequestPermission(): Boolean =
-        (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) && shouldShowRequestPermissionRationale(
-            POST_NOTIFICATIONS
-        )
+        (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) &&
+            shouldShowRequestPermissionRationale(
+                POST_NOTIFICATIONS,
+            )
 
     private fun showToast(message: String) {
         Toast.makeText(
             requireActivity(),
             message,
-            Toast.LENGTH_SHORT
+            Toast.LENGTH_SHORT,
         ).show()
     }
 }

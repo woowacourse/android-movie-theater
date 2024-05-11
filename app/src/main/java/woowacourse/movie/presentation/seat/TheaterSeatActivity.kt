@@ -147,29 +147,30 @@ class TheaterSeatActivity :
 
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-        val pendingIntent = Intent(RESERVATION_NOTIFICATION_ACTION).apply {
-            putExtra("movieTitle", movieTitle)
-            putExtra("reservationId", reservation.id)
-        }.let {
-            PendingIntent.getBroadcast(
-                this,
-                0,
-                it,
-                PendingIntent.FLAG_IMMUTABLE
-            )
-        }
+        val pendingIntent =
+            Intent(RESERVATION_NOTIFICATION_ACTION).apply {
+                putExtra("movieTitle", movieTitle)
+                putExtra("reservationId", reservation.id)
+            }.let {
+                PendingIntent.getBroadcast(
+                    this,
+                    0,
+                    it,
+                    PendingIntent.FLAG_IMMUTABLE,
+                )
+            }
 
-        val alarmClockInfo = AlarmManager.AlarmClockInfo(
-            milliTimes,
-            pendingIntent
-        )
+        val alarmClockInfo =
+            AlarmManager.AlarmClockInfo(
+                milliTimes,
+                pendingIntent,
+            )
         alarmManager.setAlarmClock(alarmClockInfo, pendingIntent)
     }
 
     private fun LocalDateTime.toMilliSeconds(): Long {
         return atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
     }
-
 
     companion object {
         const val ALARM_OFFSET = 30L

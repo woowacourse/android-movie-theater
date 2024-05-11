@@ -41,13 +41,14 @@ class ReservationAdapter(
 
     class ReservationViewHolder(
         private val binding: ItemReservationBinding,
-        private val onClick: (reservationId: Long) -> Unit
+        private val onClick: (reservationId: Long) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(reservation: Reservation) {
             binding.data = reservation
-            binding.listener = MovieItemListener {
-                onClick(reservation.id)
-            }
+            binding.listener =
+                MovieItemListener {
+                    onClick(reservation.id)
+                }
         }
     }
 }

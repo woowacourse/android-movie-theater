@@ -14,17 +14,18 @@ fun reservationEntity(
     movieName = movieName,
     synopsis = synopsis,
     runningTime = runningTime,
-    releaseDate = releaseDate
+    releaseDate = releaseDate,
 )
 
 fun seatEntity(
     reservationId: Long = 0,
     row: Int = 1,
     col: Int = 1,
-    grade: String = "S"
-): SeatEntity = SeatEntity(
-    reservationId,
-    row,
-    col,
-    grade
-)
+    grade: String = "S",
+): SeatEntity =
+    SeatEntity(
+        reservationId,
+        row,
+        col,
+        grade,
+    )

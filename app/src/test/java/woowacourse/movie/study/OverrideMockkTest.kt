@@ -10,7 +10,6 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-
 @ExtendWith(MockKExtension::class)
 class OverrideMockkTest {
     /**
@@ -99,7 +98,6 @@ class OverrideMockkTest {
     }
 
     class Car(val name: String = "abc", private val price: Int = 9999) {
-
         private val age: Int = 0
         private lateinit var engine: Engine
 

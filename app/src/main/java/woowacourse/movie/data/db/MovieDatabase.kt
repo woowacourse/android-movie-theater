@@ -16,15 +16,15 @@ abstract class MovieDatabase : RoomDatabase() {
         private const val DATABASE_NAME = "movie.db"
 
         @Volatile
-        private var INSTANCE: MovieDatabase? = null
+        private var instance: MovieDatabase? = null
 
         fun instance(context: Context): MovieDatabase {
-            return INSTANCE ?: synchronized(this) {
-                INSTANCE ?: Room.databaseBuilder(
+            return instance ?: synchronized(this) {
+                instance ?: Room.databaseBuilder(
                     context,
                     MovieDatabase::class.java,
-                    DATABASE_NAME
-                ).build().also { INSTANCE = it }
+                    DATABASE_NAME,
+                ).build().also { instance = it }
             }
         }
     }

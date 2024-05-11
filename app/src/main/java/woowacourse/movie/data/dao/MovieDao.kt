@@ -22,7 +22,7 @@ interface MovieDao {
         JOIN movie_seats AS seat
         ON res.id = seat.reservationId
         ORDER BY seat.rowNumber, seat.columnNumber
-    """
+    """,
     )
     fun loadReservationWithSeats(id: Long): Map<ReservationEntity, List<SeatEntity>>
 
@@ -35,7 +35,7 @@ interface MovieDao {
         JOIN movie_seats AS seat
         ON reservation.id = seat.reservationId
         ORDER BY seat.rowNumber, seat.columnNumber
-    """
+    """,
     )
     fun loadAllReservations(): Map<ReservationEntity, List<SeatEntity>>
 

@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import woowacourse.movie.R
-import woowacourse.movie.presentation.base.BindingFragment
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.model.theater.Theater
-import woowacourse.movie.presentation.movieList.model.MovieDisplay
+import woowacourse.movie.presentation.base.BindingFragment
 import woowacourse.movie.presentation.movieList.cinemaListDialog.ChooseCinemasBottomSheetFragment
+import woowacourse.movie.presentation.movieList.model.MovieDisplay
 
-class MovieListFragment : BindingFragment<FragmentMovieListBinding>(R.layout.fragment_movie_list),
+class MovieListFragment :
+    BindingFragment<FragmentMovieListBinding>(R.layout.fragment_movie_list),
     MovieListView {
     private lateinit var presenter: MovieListPresenter
     private lateinit var adapter: MovieAdapter
@@ -38,9 +39,10 @@ class MovieListFragment : BindingFragment<FragmentMovieListBinding>(R.layout.fra
     }
 
     private fun initViews() {
-        adapter = MovieAdapter(requireContext()) { position ->
-            presenter.onDetailButtonClicked(position)
-        }
+        adapter =
+            MovieAdapter(requireContext()) { position ->
+                presenter.onDetailButtonClicked(position)
+            }
         binding.rvMovies.adapter = adapter
     }
 

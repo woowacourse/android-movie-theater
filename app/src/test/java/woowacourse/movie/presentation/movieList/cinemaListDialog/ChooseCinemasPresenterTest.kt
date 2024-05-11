@@ -17,14 +17,11 @@ import woowacourse.movie.model.movieInfo.Synopsis
 import woowacourse.movie.model.movieInfo.Title
 import woowacourse.movie.model.theater.Seat
 import woowacourse.movie.model.theater.Theater
-import woowacourse.movie.presentation.movieList.MovieListPresenter
 import java.time.LocalDate
 import java.time.LocalTime
 
-
 @ExtendWith(MockKExtension::class)
 class ChooseCinemasPresenterTest {
-
     @MockK
     private lateinit var view: ChooseCinemasContract.View
 
@@ -33,10 +30,8 @@ class ChooseCinemasPresenterTest {
 
     private var theaters = generateTheaters(GENERATE_DUMMY_DATA_NUM)
 
-
     @Test
     fun `loadCinema 호출로 만들어진 데이터가 showCinema로 이동되는지 테스트`() {
-
         val expected = makeCinemasFromTheater(theaters[0])
         every { view.showCinemas(any()) } just runs
 
@@ -47,7 +42,6 @@ class ChooseCinemasPresenterTest {
 
     @Test
     fun `selectedCinema로 넘어감 Cinma가 view의 navigateToMovieDetail로 이동되는지 테스트`() {
-
         val expected = makeCinemasFromTheater(theaters[0])[0]
         every { view.navigateToMovieDetail(any()) } just runs
 
@@ -104,34 +98,34 @@ class ChooseCinemasPresenterTest {
                 "CGV",
                 theater.copy(
                     times =
-                    listOf(
-                        LocalTime.of(9, 0),
-                        LocalTime.of(11, 0),
-                        LocalTime.of(15, 0),
-                    ),
+                        listOf(
+                            LocalTime.of(9, 0),
+                            LocalTime.of(11, 0),
+                            LocalTime.of(15, 0),
+                        ),
                 ),
             ),
             Cinema(
                 "롯데시네마",
                 theater.copy(
                     times =
-                    listOf(
-                        LocalTime.of(13, 0),
-                        LocalTime.of(15, 0),
-                        LocalTime.of(17, 0),
-                        LocalTime.of(19, 0),
-                    ),
+                        listOf(
+                            LocalTime.of(13, 0),
+                            LocalTime.of(15, 0),
+                            LocalTime.of(17, 0),
+                            LocalTime.of(19, 0),
+                        ),
                 ),
             ),
             Cinema(
                 "메가 박스",
                 theater.copy(
                     times =
-                    listOf(
-                        LocalTime.of(20, 0),
-                        LocalTime.of(22, 0),
-                        LocalTime.of(23, 30),
-                    ),
+                        listOf(
+                            LocalTime.of(20, 0),
+                            LocalTime.of(22, 0),
+                            LocalTime.of(23, 30),
+                        ),
                 ),
             ),
         )

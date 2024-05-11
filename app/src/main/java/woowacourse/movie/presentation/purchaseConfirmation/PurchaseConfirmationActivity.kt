@@ -6,21 +6,18 @@ import android.os.Bundle
 import android.view.MenuItem
 import woowacourse.movie.MovieReservationApp
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.databinding.ActivityPurchaseConfirmationBinding
 import woowacourse.movie.model.Reservation
 import woowacourse.movie.presentation.base.BindingActivity
 import woowacourse.movie.presentation.error.ErrorActivity
-import kotlin.concurrent.thread
 
 class PurchaseConfirmationActivity :
     BindingActivity<ActivityPurchaseConfirmationBinding>(R.layout.activity_purchase_confirmation),
     PurchaseConfirmationContract.View {
-
     private val presenter: PurchaseConfirmationContract.Presenter by lazy {
         PurchaseConfirmationPresenter(
             (applicationContext as MovieReservationApp).movieRepository,
-            this
+            this,
         )
     }
 
@@ -68,4 +65,3 @@ class PurchaseConfirmationActivity :
         }
     }
 }
-

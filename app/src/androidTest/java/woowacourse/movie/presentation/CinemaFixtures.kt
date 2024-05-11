@@ -11,7 +11,6 @@ import woowacourse.movie.model.theater.Theater
 import java.time.LocalDate
 import java.time.LocalTime
 
-
 fun cinema(
     title: String = "차람과 하디의 진지한 여행기 1",
     year: Int = 2024,
@@ -19,11 +18,12 @@ fun cinema(
     day: Int = 25,
     runningTime: Int = 230,
     synopsis: String = "wow!",
-    times: List<LocalTime> = listOf(
-        LocalTime.of(10, 0),
-        LocalTime.of(14, 0),
-        LocalTime.of(18, 0),
-    ),
+    times: List<LocalTime> =
+        listOf(
+            LocalTime.of(10, 0),
+            LocalTime.of(14, 0),
+            LocalTime.of(18, 0),
+        ),
 ): Cinema {
     return Cinema(
         "CGV",
@@ -63,8 +63,11 @@ fun seat(
     chosen: Boolean = false,
 ): Seat = Seat(row, number, grade, chosen)
 
-fun movieDate(year: Int, month: Int, day: Int): MovieDate =
-    MovieDate(LocalDate.of(year, month, day))
+fun movieDate(
+    year: Int,
+    month: Int,
+    day: Int,
+): MovieDate = MovieDate(LocalDate.of(year, month, day))
 
 fun runningTime(minutes: Int): RunningTime = RunningTime(minutes)
 

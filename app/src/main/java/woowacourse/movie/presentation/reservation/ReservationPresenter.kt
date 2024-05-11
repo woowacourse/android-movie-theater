@@ -5,7 +5,7 @@ import kotlin.concurrent.thread
 
 class ReservationPresenter(
     private val repository: MovieRepository,
-    private val view: ReservationContract.View
+    private val view: ReservationContract.View,
 ) {
     fun loadReservations() {
         thread {

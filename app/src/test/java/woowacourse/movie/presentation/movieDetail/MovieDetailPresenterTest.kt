@@ -19,7 +19,6 @@ import java.time.LocalTime
 
 @ExtendWith(MockKExtension::class)
 class MovieDetailPresenterTest {
-
     @RelaxedMockK
     private lateinit var view: MovieDetailContract.View
 
@@ -27,27 +26,27 @@ class MovieDetailPresenterTest {
     private lateinit var presenter: MovieDetailPresenter
 
     private var cinema =
-            Cinema(
-                "CGV",
-                Theater(
-                    MovieInfo(
-                        Title("차람과 하디의 진지한 여행기 1"),
-                        MovieDate(LocalDate.of(2024, 2, 25)),
-                        RunningTime(230),
-                        Synopsis("wow!"),
-                    ),
-                    times =
+        Cinema(
+            "CGV",
+            Theater(
+                MovieInfo(
+                    Title("차람과 하디의 진지한 여행기 1"),
+                    MovieDate(LocalDate.of(2024, 2, 25)),
+                    RunningTime(230),
+                    Synopsis("wow!"),
+                ),
+                times =
                     listOf(
                         LocalTime.of(10, 0),
                         LocalTime.of(14, 0),
                         LocalTime.of(18, 0),
                     ),
-                    seats = mapOf(),
-                ),
-            )
+                seats = mapOf(),
+            ),
+        )
+
     @Test
     fun `티켓을 하나 증가시키면 값이 반영되어 view의 onTicketChanged로 전달되는지 테스트`() {
-
         presenter.increaseTicketCount()
 
         verify { view.onTicketCountChanged(2) }
@@ -55,7 +54,6 @@ class MovieDetailPresenterTest {
 
     @Test
     fun `티켓을 하나 감소시키면 값이 반영되어 view의 onTicketChanged로 전달되는지 테스트`() {
-
         presenter.increaseTicketCount()
         presenter.increaseTicketCount()
         presenter.decreaseTicketCount()
@@ -74,7 +72,6 @@ class MovieDetailPresenterTest {
 
     @Test
     fun `loadMovieInfo를 호출하면 view에 movie 데이터들이 반영되는지 테스트`() {
-
         val expectedMovie = cinema.theater.movie
         val expectedCount = 1
 

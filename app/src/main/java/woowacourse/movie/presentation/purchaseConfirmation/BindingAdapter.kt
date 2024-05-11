@@ -6,6 +6,9 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @BindingAdapter("reservationTime")
-fun setFormattedTime(view: TextView, localDateTime: LocalDateTime?) {
+fun setFormattedTime(
+    view: TextView,
+    localDateTime: LocalDateTime?,
+) {
     view.text = localDateTime?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) ?: ""
 }

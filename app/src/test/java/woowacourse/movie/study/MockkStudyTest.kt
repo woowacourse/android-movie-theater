@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test
 
 // https://mockk.io/
 class MockkStudyTest {
-
     enum class Direction { NORTH, SOUTH }
+
     enum class OutCome { OK }
 
     class Car() {
@@ -45,9 +45,10 @@ class MockkStudyTest {
     @DisplayName("만약, mockk 로 만들어진 객체의 함수 호출 여부를 verify 로 검사하지 않았으면 AssertionError 가 발생한다")
     fun `test2`() {
         // given
-        val car = mockk<Car> {
-            every { drive(Direction.NORTH) } returns OutCome.OK
-        }
+        val car =
+            mockk<Car> {
+                every { drive(Direction.NORTH) } returns OutCome.OK
+            }
         // when
         car.drive(Direction.NORTH)
         // then

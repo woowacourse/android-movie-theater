@@ -18,7 +18,7 @@ fun Reservation.toReservationEntity(): ReservationEntity {
         movieName = title.name,
         synopsis = synopsis.content,
         runningTime = runningTime.time.toString(),
-        releaseDate = releaseDate.toFormattedString()
+        releaseDate = releaseDate.toFormattedString(),
     )
 }
 
@@ -28,17 +28,17 @@ fun Reservation.toSeatEntities(reservationId: Long): List<SeatEntity> {
             row = it.row - 'A',
             col = it.number,
             grade = it.grade,
-            reservationId = reservationId
+            reservationId = reservationId,
         )
     }
 }
 
-
 fun Map<ReservationEntity, List<SeatEntity>>.toReservation(): Reservation {
     val reservationEntity = keys.first()
-    val seats = values.flatten()
-        .map { Seat('A' + it.row, it.col, it.grade, true) }
-        .toSet()
+    val seats =
+        values.flatten()
+            .map { Seat('A' + it.row, it.col, it.grade, true) }
+            .toSet()
     return Reservation(
         id = reservationEntity.id,
         cinemaName = reservationEntity.cinemaName,
@@ -46,15 +46,16 @@ fun Map<ReservationEntity, List<SeatEntity>>.toReservation(): Reservation {
         releaseDate = reservationEntity.releaseDate.toDateTime(),
         runningTime = RunningTime(reservationEntity.runningTime.toInt()),
         synopsis = Synopsis(reservationEntity.synopsis),
-        seats = seats
+        seats = seats,
     )
 }
 
 fun Map<ReservationEntity, List<SeatEntity>>.toReservations(): List<Reservation> {
     return keys.map { reservation ->
-        val seats = get(reservation)
-            ?.map { Seat('A' + it.row, it.col, it.grade, true) }
-            ?.toSet() ?: emptySet()
+        val seats =
+            get(reservation)
+                ?.map { Seat('A' + it.row, it.col, it.grade, true) }
+                ?.toSet() ?: emptySet()
         Reservation(
             id = reservation.id,
             cinemaName = reservation.cinemaName,
@@ -62,7 +63,7 @@ fun Map<ReservationEntity, List<SeatEntity>>.toReservations(): List<Reservation>
             releaseDate = reservation.releaseDate.toDateTime(),
             runningTime = RunningTime(reservation.runningTime.toInt()),
             synopsis = Synopsis(reservation.synopsis),
-            seats = seats
+            seats = seats,
         )
     }
 }
