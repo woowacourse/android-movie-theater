@@ -19,7 +19,6 @@ class ScreeningPresenterImpl(
 
     override fun attachView(view: ScreeningContract.View) {
         this.view = view
-        onViewSetUp()
     }
 
     override fun detachView() {

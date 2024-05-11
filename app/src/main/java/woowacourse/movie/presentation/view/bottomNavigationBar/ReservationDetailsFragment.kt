@@ -26,8 +26,8 @@ class ReservationDetailsFragment : Fragment(), ReservationDetailsContract.View, 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         reservationDatabase = ReservationDatabase.getDatabase(requireActivity().applicationContext)
+        adapter = ReservationDetailsListAdapter(emptyList(), this)
         presenter = ReservationDetailsPresenterImpl(this, reservationDatabase.reservationDao())
-        presenter.loadDetailsList()
     }
 
     override fun onCreateView(
@@ -48,11 +48,12 @@ class ReservationDetailsFragment : Fragment(), ReservationDetailsContract.View, 
         val dividerItemDecoration =
             DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
         binding.reservationDetailsList.addItemDecoration(dividerItemDecoration)
+        binding.reservationDetailsList.adapter = adapter
+        presenter.loadDetailsList()
     }
 
     override fun showDetailsList(ticketList: List<MovieTicketUiModel>) {
-        adapter = ReservationDetailsListAdapter(ticketList, this)
-        binding.reservationDetailsList.adapter = adapter
+        adapter.updateReservationDetailsList(ticketList)
     }
 
     override fun moveToReservationResult(ticketUiModel: MovieTicketUiModel) {

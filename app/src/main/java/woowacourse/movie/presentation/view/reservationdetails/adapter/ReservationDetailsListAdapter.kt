@@ -13,6 +13,10 @@ class ReservationDetailsListAdapter(
 ) : RecyclerView.Adapter<DetailViewHolder>() {
     private lateinit var binding: ItemReservationDetailBinding
 
+    fun updateReservationDetailsList(newReservationDetailsList: List<MovieTicketUiModel>) {
+        reservationDetailsList = newReservationDetailsList
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,

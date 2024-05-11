@@ -43,6 +43,7 @@ class HomeFragment : Fragment(), ScreeningContract.View, ScreeningContract.ViewA
         super.onViewCreated(view, savedInstanceState)
         binding.movieList.layoutManager = LinearLayoutManager(context)
         binding.movieList.adapter = adapter
+        presenter.onViewSetUp()
     }
 
     override fun onUpdateMovies(movies: List<MovieUiModel>) {

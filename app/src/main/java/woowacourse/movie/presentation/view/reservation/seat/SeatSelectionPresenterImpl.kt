@@ -1,7 +1,5 @@
 package woowacourse.movie.presentation.view.reservation.seat
 
-import android.os.Handler
-import android.os.Looper
 import woowacourse.movie.data.repository.ReservationMovieInfoRepositoryImpl
 import woowacourse.movie.data.repository.SeatRepositoryImpl
 import woowacourse.movie.database.Reservation
@@ -10,6 +8,7 @@ import woowacourse.movie.domain.model.reservation.MovieTicket
 import woowacourse.movie.domain.model.reservation.ReservationInfo
 import woowacourse.movie.presentation.repository.SeatRepository
 import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
+import kotlin.concurrent.thread
 
 class SeatSelectionPresenterImpl(
     reservationCount: Int,
@@ -76,11 +75,7 @@ class SeatSelectionPresenterImpl(
                 seats = movieTicketUiModel.selectedSeats,
                 totalPrice = movieTicketUiModel.totalPrice,
             )
-        Thread {
-            reservationDao.insert(reservation)
-            Handler(Looper.getMainLooper()).post {
-                view?.moveToReservationResult(movieTicketUiModel)
-            }
-        }.start()
+        thread(start = true) { reservationDao.insert(reservation) }.join()
+        view?.moveToReservationResult(movieTicketUiModel)
     }
 }

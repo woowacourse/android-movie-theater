@@ -1,36 +1,27 @@
 package woowacourse.movie.presentation.view.reservationdetails
 
-import android.os.Handler
-import android.os.Looper
+import woowacourse.movie.database.Reservation
 import woowacourse.movie.database.ReservationDao
 import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
+import kotlin.concurrent.thread
 
 class ReservationDetailsPresenterImpl(
     private val view: ReservationDetailsContract.View,
     private val reservationDao: ReservationDao,
 ) : ReservationDetailsContract.Presenter {
     override fun loadDetailsList() {
-        Thread {
-            val reservations = reservationDao.getAll()
-            val detailsList =
-                reservations.map { reservation ->
-                    MovieTicketUiModel.fromReservation(reservation)
-                }
-
-            Handler(Looper.getMainLooper()).post {
-                view.showDetailsList(detailsList)
+        var reservations: List<Reservation> = listOf()
+        thread(start = true) { reservations = reservationDao.getAll() }.join()
+        val detailsList =
+            reservations.map { reservation ->
+                MovieTicketUiModel.fromReservation(reservation)
             }
-        }.start()
+        view.showDetailsList(detailsList)
     }
 
     override fun onDetailItemClicked(ticketId: Long) {
-        Thread {
-            val reservation = reservationDao.getTicketById(ticketId)
-            Handler(Looper.getMainLooper()).post {
-                view.moveToReservationResult(MovieTicketUiModel.fromReservation(reservation))
-            }
-        }.start()
+        var reservation: Reservation? = null
+        thread { reservation = reservationDao.getTicketById(ticketId) }.join()
+        view.moveToReservationResult(MovieTicketUiModel.fromReservation(reservation!!))
     }
 }
-
-// thread{  }.join()
