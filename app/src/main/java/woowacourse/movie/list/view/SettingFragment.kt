@@ -23,6 +23,12 @@ class SettingFragment : Fragment() {
     ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
+        setInitialSwitch()
+        storeNotificationGrantedOrNot()
+        return binding.root
+    }
+
+    private fun setInitialSwitch() {
         val isPermissionGranted = ContextCompat.checkSelfPermission(
             requireContext(), Manifest.permission.POST_NOTIFICATIONS
         ) != -1
@@ -30,7 +36,13 @@ class SettingFragment : Fragment() {
             binding.permissionSwitch.isClickable = false
         }
         binding.permissionSwitch.isChecked = isPermissionGranted
-        val sharedPreference = requireActivity().getSharedPreferences(SHARED_PREFERENCE_SETTING, AppCompatActivity.MODE_PRIVATE)
+    }
+
+    private fun storeNotificationGrantedOrNot() {
+        val sharedPreference = requireActivity().getSharedPreferences(
+            SHARED_PREFERENCE_SETTING,
+            AppCompatActivity.MODE_PRIVATE,
+        )
         val editor: SharedPreferences.Editor = sharedPreference.edit()
         binding.permissionSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -39,7 +51,6 @@ class SettingFragment : Fragment() {
                 editor.putBoolean(NOTIFICATION_KEY, false).apply()
             }
         }
-        return binding.root
     }
 
     companion object {

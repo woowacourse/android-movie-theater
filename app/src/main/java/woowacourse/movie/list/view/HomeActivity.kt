@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -20,7 +19,6 @@ class HomeActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             val editor: SharedPreferences.Editor = sharedPreference.edit()
             editor.putBoolean("notification", isGranted).apply()
-            Log.d("alsong", "requestNotificationPermission: $isGranted")
         }
     private lateinit var sharedPreference: SharedPreferences
 
