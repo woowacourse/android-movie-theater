@@ -8,8 +8,8 @@ import androidx.fragment.app.replace
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.reservationlist.ReservationListFragment
-import woowacourse.movie.reservationlist.SettingFragment
 import woowacourse.movie.screeningmovie.ScreeningMovieFragment
+import woowacourse.movie.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
