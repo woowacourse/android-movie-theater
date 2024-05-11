@@ -19,7 +19,7 @@ abstract class MovieDatabase : RoomDatabase() {
         private var INSTANCE: MovieDatabase? = null
 
         fun instance(context: Context): MovieDatabase {
-            return INSTANCE ?: synchronized(this) { // thread 2
+            return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: Room.databaseBuilder(
                     context,
                     MovieDatabase::class.java,
