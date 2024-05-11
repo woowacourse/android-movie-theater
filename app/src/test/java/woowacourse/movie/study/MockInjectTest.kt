@@ -7,10 +7,8 @@ import io.mockk.junit5.MockKExtension
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-
 @ExtendWith(MockKExtension::class)
 class MockInjectTest {
-
     @SpyK
     private var engine = Engine()
 
@@ -38,11 +36,9 @@ class MockInjectTest {
         fun start() {
             println("Engine start")
         }
-
     }
 
     class Car(private val engine: Engine, val name: String, private val price: Int) {
-
         private val age: Int = 0
 
         fun start() {

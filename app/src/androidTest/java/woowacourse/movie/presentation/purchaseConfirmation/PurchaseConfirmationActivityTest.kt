@@ -25,43 +25,43 @@ import java.time.LocalDateTime
 
 @RunWith(AndroidJUnit4::class)
 class PurchaseConfirmationActivityTest {
-
     private lateinit var movieRepositoryStore: MovieRepositoryStore
 
     @Before
     fun setUp() {
         movieRepositoryStore = MovieRepositoryStore.instance(context)
-        movieRepositoryStore.setRepository(object : MovieRepository {
-            override fun loadReservedMovies(): Result<List<Reservation>> {
-                throw UnsupportedOperationException()
-            }
+        movieRepositoryStore.setRepository(
+            object : MovieRepository {
+                override fun loadReservedMovies(): Result<List<Reservation>> {
+                    throw UnsupportedOperationException()
+                }
 
-            override fun loadReservedMovie(id: Long): Result<Reservation> {
-                return Result.success(
-                    Reservation(
-                        1,
-                        "CGV",
-                        Title("차람과 하디의 진지한 여행기"),
-                        LocalDateTime.of(2024, 2, 25, 10, 0),
-                        RunningTime(230),
-                        Synopsis("wow!"),
-                        setOf(
-                            Seat('A', 1, "B"),
-                            Seat('B', 1, "S"),
-                        )
+                override fun loadReservedMovie(id: Long): Result<Reservation> {
+                    return Result.success(
+                        Reservation(
+                            1,
+                            "CGV",
+                            Title("차람과 하디의 진지한 여행기"),
+                            LocalDateTime.of(2024, 2, 25, 10, 0),
+                            RunningTime(230),
+                            Synopsis("wow!"),
+                            setOf(
+                                Seat('A', 1, "B"),
+                                Seat('B', 1, "S"),
+                            ),
+                        ),
                     )
-                )
-            }
+                }
 
-            override fun saveReservation(reservation: Reservation): Result<Long> {
-                throw UnsupportedOperationException()
-            }
+                override fun saveReservation(reservation: Reservation): Result<Long> {
+                    throw UnsupportedOperationException()
+                }
 
-            override fun deleteAllReservedMovie(): Result<Unit> {
-                throw UnsupportedOperationException()
-            }
-
-        })
+                override fun deleteAllReservedMovie(): Result<Unit> {
+                    throw UnsupportedOperationException()
+                }
+            },
+        )
     }
 
     @After

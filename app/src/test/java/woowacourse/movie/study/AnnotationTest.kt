@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MockKExtension::class)
-@MockKExtension.ConfirmVerification  //모든 테스트 함수에 confirmVerified 를 추가할 필요가 없다.
+@MockKExtension.ConfirmVerification // 모든 테스트 함수에 confirmVerified 를 추가할 필요가 없다.
 class AnnotationTest {
     enum class Direction { NORTH, SOUTH }
 
@@ -23,16 +23,20 @@ class AnnotationTest {
 
     enum class OutCome { OK }
 
-    class Car(
-    ) {
-        private fun a(){
+    class Car() {
+        private fun a() {
             println("a")
         }
+
         fun drive(direction: Direction): OutCome {
             throw UnsupportedOperationException("Not implemented")
         }
 
-        fun noReturnFunction(speed: Double, direction: Direction, roadType: RoadType?) {}
+        fun noReturnFunction(
+            speed: Double,
+            direction: Direction,
+            roadType: RoadType?,
+        ) {}
     }
 
     @MockK
@@ -50,7 +54,6 @@ class AnnotationTest {
     // val로 쓰면 안됨
     @SpyK
     private var car5: Car = Car() // 실제 객체를 spy 객체로 만들어준다, 실제 객체를 사용하지만 verify 를 사용할 수 있다.
-
 
     @Test
     @DisplayName("Mockk 어노테이션으로 Mockk 객체를 생성할 수 있음, 더 간단 하다!")

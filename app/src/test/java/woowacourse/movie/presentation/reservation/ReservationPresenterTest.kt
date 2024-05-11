@@ -1,7 +1,5 @@
 package woowacourse.movie.presentation.reservation
 
-import io.kotest.matchers.should
-import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
@@ -12,12 +10,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.model.Reservation
-import kotlin.concurrent.thread
-
 
 @ExtendWith(MockKExtension::class)
 class ReservationPresenterTest {
-
     @MockK
     private lateinit var repository: MovieRepository
 
@@ -38,7 +33,6 @@ class ReservationPresenterTest {
 
         verify { view.showReservations(listOf(reservation)) }
     }
-
 
     @Test
     fun `loadReservations를 호출하여 오류가 발생했다면 view의 showError로 전달된다`() {

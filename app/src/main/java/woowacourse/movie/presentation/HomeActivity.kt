@@ -65,10 +65,11 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
     private fun isFirstRequestPermission(): Boolean =
         (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) &&
-                ContextCompat.checkSelfPermission(
-                    this,
-                    POST_NOTIFICATIONS
-                ) == PackageManager.PERMISSION_DENIED && shouldShowRequestPermissionRationale(
-            POST_NOTIFICATIONS
-        ).not()
+            ContextCompat.checkSelfPermission(
+                this,
+                POST_NOTIFICATIONS,
+            ) == PackageManager.PERMISSION_DENIED &&
+            shouldShowRequestPermissionRationale(
+                POST_NOTIFICATIONS,
+            ).not()
 }

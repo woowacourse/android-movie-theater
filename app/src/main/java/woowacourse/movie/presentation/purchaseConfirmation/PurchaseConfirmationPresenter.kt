@@ -5,7 +5,7 @@ import kotlin.concurrent.thread
 
 class PurchaseConfirmationPresenter(
     private val repository: MovieRepository,
-    private val view: PurchaseConfirmationContract.View
+    private val view: PurchaseConfirmationContract.View,
 ) : PurchaseConfirmationContract.Presenter {
     override fun loadReservation(reservationId: Long) {
         thread {

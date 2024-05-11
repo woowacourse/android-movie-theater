@@ -7,14 +7,14 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.content.IntentCompat
 import woowacourse.movie.R
-import woowacourse.movie.presentation.base.BindingActivity
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
-import woowacourse.movie.presentation.error.ErrorActivity
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.movieInfo.MovieDate
 import woowacourse.movie.model.movieInfo.RunningTime
 import woowacourse.movie.model.movieInfo.Synopsis
 import woowacourse.movie.model.movieInfo.Title
+import woowacourse.movie.presentation.base.BindingActivity
+import woowacourse.movie.presentation.error.ErrorActivity
 import woowacourse.movie.presentation.seat.TheaterSeatActivity
 
 class MovieDetailActivity :

@@ -14,16 +14,16 @@ import woowacourse.movie.data.reservationEntity
 import woowacourse.movie.data.seatEntity
 
 class MovieDaoTest {
-
     private lateinit var movieDatabase: MovieDatabase
     private lateinit var movieDao: MovieDao
 
     @Before
     fun setUp() {
-        movieDatabase = Room.inMemoryDatabaseBuilder(
-            ApplicationProvider.getApplicationContext(),
-            MovieDatabase::class.java
-        ).build()
+        movieDatabase =
+            Room.inMemoryDatabaseBuilder(
+                ApplicationProvider.getApplicationContext(),
+                MovieDatabase::class.java,
+            ).build()
         movieDao = movieDatabase.movieDao()
     }
 
@@ -35,11 +35,11 @@ class MovieDaoTest {
     @Test
     @DisplayName("MovieDB 에 예매 내역을 저장할 수 있다.")
     fun insert_test() {
-        //given
+        // given
         val reservationEntity = reservationEntity()
-        //when
+        // when
         val id = movieDao.saveReservation(reservationEntity)
-        //then
+        // then
         id shouldBe 1L
     }
 
@@ -47,12 +47,12 @@ class MovieDaoTest {
     @DisplayName("예매 내역을 저장 하고, id로 영화 내역을 조회할 수 있다.")
     fun insert_and_load_test() {
         repeat(1000) {
-            //given
+            // given
             val reservationEntity = reservationEntity().copy(cinemaName = "$it")
-            //when
+            // when
             val id: Long = movieDao.saveReservation(reservationEntity)
             val reservationResult = movieDao.loadReservation(id)
-            //then
+            // then
             assertSoftly {
                 id shouldBe (it + 1L)
                 reservationResult shouldBe reservationEntity
@@ -67,10 +67,11 @@ class MovieDaoTest {
         val reservationEntity = reservationEntity()
         // when
         val reservationId = movieDao.saveReservation(reservationEntity)
-        val seatEntities = listOf(
-            seatEntity(reservationId, 1, 2),
-            seatEntity(reservationId, 2, 2),
-        )
+        val seatEntities =
+            listOf(
+                seatEntity(reservationId, 1, 2),
+                seatEntity(reservationId, 2, 2),
+            )
         movieDao.saveMovieSeats(seatEntities)
         val reservationWithSeats = movieDao.loadReservationWithSeats(1)
         // then

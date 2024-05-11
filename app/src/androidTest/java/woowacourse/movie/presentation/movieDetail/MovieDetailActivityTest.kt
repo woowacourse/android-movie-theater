@@ -20,18 +20,18 @@ import woowacourse.movie.util.context
 
 @RunWith(AndroidJUnit4::class)
 class MovieDetailActivityTest {
-
-    private val intent = MovieDetailActivity.newIntent(
-        context,
-        cinema(
-            title = "차람과 하디의 진지한 여행기 1",
-            year = 2024,
-            month = 4,
-            day = 25,
-            runningTime = 230,
-            synopsis = "wow!"
+    private val intent =
+        MovieDetailActivity.newIntent(
+            context,
+            cinema(
+                title = "차람과 하디의 진지한 여행기 1",
+                year = 2024,
+                month = 4,
+                day = 25,
+                runningTime = 230,
+                synopsis = "wow!",
+            ),
         )
-    )
 
     @get:Rule
     val activityScenarioRule = ActivityScenarioRule<MovieDetailActivity>(intent)
@@ -62,7 +62,7 @@ class MovieDetailActivityTest {
     @Test
     @DisplayName(
         "count 가 1일 때, plus button 클릭 시 count 가 2로 증가하고" +
-                " minus button 클릭 시 count 가 1로 감소하는 지 테스트",
+            " minus button 클릭 시 count 가 1로 감소하는 지 테스트",
     )
     fun button_test3() {
         onView(withId(R.id.quantity_text_view))
@@ -79,10 +79,10 @@ class MovieDetailActivityTest {
 
     @Test
     @DisplayName(
-        "date picker 를 통해 Date 를 선택했을 때, 선택한 날짜가 표시되는지 테스트"
+        "date picker 를 통해 Date 를 선택했을 때, 선택한 날짜가 표시되는지 테스트",
     )
     fun date_picker_test() {
-        //given
+        // given
         val expectedDate = "2024.04.01"
         // when: 영화 예약 화면에서 날짜를 선택한다.
         onView(withId(R.id.movie_date_spinner))
@@ -92,16 +92,16 @@ class MovieDetailActivityTest {
         // then: 선택한 날짜가 화면에 표시된다.
         onView(withId(R.id.movie_date_spinner))
             .check(
-                matches(withSpinnerText(expectedDate))
+                matches(withSpinnerText(expectedDate)),
             )
     }
 
     @Test
     @DisplayName(
-        "time picker 를 통해 time 을 선택했을 때, 선택한 Time 이 표시되는지 테스트"
+        "time picker 를 통해 time 을 선택했을 때, 선택한 Time 이 표시되는지 테스트",
     )
     fun time_picker_test() {
-        //given
+        // given
         val expectedTime = "14:00"
         // when: 영화 예약 화면에서 날짜를 선택한다.
         onView(withId(R.id.movie_time_spinner))
@@ -111,13 +111,13 @@ class MovieDetailActivityTest {
         // then: 선택한 날짜가 화면에 표시된다.
         onView(withId(R.id.movie_time_spinner))
             .check(
-                matches(withSpinnerText(expectedTime))
+                matches(withSpinnerText(expectedTime)),
             )
     }
 
     @Test
     @DisplayName(
-        "좌석 선택 버튼이 활성화 되어 있는지 테스트"
+        "좌석 선택 버튼이 활성화 되어 있는지 테스트",
     )
     fun select_button_active_test() {
         onView(withId(R.id.seat_confirmation_button))

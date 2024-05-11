@@ -17,21 +17,20 @@ import woowacourse.movie.presentation.movieInfo
 
 @RunWith(AndroidJUnit4::class)
 class MovieListFragmentTest {
-
     @Test
     @DisplayName("영화 목록이 화면에 보여지는지 테스트")
     fun test1() {
-        //given
+        // given
         val movie = movieInfo()
         val title = movie.title.name
-        //when
+        // when
         launchFragmentInContainer<MovieListFragment>()
 
         val viewInteraction =
             onView(withId(R.id.rv_movies)).perform(
                 RecyclerViewActions.scrollToHolder(
                     CoreMatchers.instanceOf(MovieAdapter.MovieViewHolder::class.java),
-                ).atPosition(0)
+                ).atPosition(0),
             )
         viewInteraction.check(matches(hasDescendant(withText(title))))
     }

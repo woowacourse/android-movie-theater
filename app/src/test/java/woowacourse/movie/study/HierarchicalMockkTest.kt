@@ -7,12 +7,10 @@ import io.mockk.mockk
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-
 @ExtendWith(MockKExtension::class)
 class HierarchicalMockkTest {
-
     data class AddressBook(
-        val contacts: List<Contact>
+        val contacts: List<Contact>,
     )
 
     data class Contact(
@@ -23,27 +21,30 @@ class HierarchicalMockkTest {
 
     data class Address(
         val city: String,
-        val zip: String
+        val zip: String,
     )
 
-    val addressBook: AddressBook = mockk<AddressBook> {
-        every { contacts } returns listOf(
-            mockk {
-                every { name } returns "John"
-                every { telephone } returns "123-456-789"
-                every { address.city } returns "New-York"
-                every { address.zip } returns "123-45"
-            },
-            mockk {
-                every { name } returns "Alex"
-                every { telephone } returns "789-456-123"
-                every { address } returns mockk {
-                    every { city } returns "Wroclaw"
-                    every { zip } returns "543-21"
-                }
-            }
-        )
-    }
+    val addressBook: AddressBook =
+        mockk<AddressBook> {
+            every { contacts } returns
+                listOf(
+                    mockk {
+                        every { name } returns "John"
+                        every { telephone } returns "123-456-789"
+                        every { address.city } returns "New-York"
+                        every { address.zip } returns "123-45"
+                    },
+                    mockk {
+                        every { name } returns "Alex"
+                        every { telephone } returns "789-456-123"
+                        every { address } returns
+                            mockk {
+                                every { city } returns "Wroclaw"
+                                every { zip } returns "543-21"
+                            }
+                    },
+                )
+        }
 
     @Test
     fun `test`() {

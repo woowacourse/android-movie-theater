@@ -4,13 +4,11 @@ import android.os.Bundle
 import android.view.View
 import woowacourse.movie.MovieReservationApp
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.databinding.FragmentReservationBinding
 import woowacourse.movie.model.Reservation
 import woowacourse.movie.presentation.base.BindingFragment
 import woowacourse.movie.presentation.error.ErrorActivity
 import woowacourse.movie.presentation.purchaseConfirmation.PurchaseConfirmationActivity
-import kotlin.concurrent.thread
 
 class ReservationFragment :
     BindingFragment<FragmentReservationBinding>(R.layout.fragment_reservation),
@@ -52,4 +50,3 @@ class ReservationFragment :
         binding.rvReservationMovies.adapter = adapter
     }
 }
-

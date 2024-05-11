@@ -12,32 +12,37 @@ import androidx.core.content.ContextCompat
 import woowacourse.movie.presentation.purchaseConfirmation.PurchaseConfirmationActivity
 
 class MovieBroadCastReceiver : BroadcastReceiver() {
-    override fun onReceive(context: Context, intent: Intent?) {
+    override fun onReceive(
+        context: Context,
+        intent: Intent?,
+    ) {
         if (intent?.action == RESERVATION_NOTIFICATION_ACTION) {
             val movieTitle = intent.getStringExtra("movieTitle") ?: "영화 제목"
             val reservationId =
                 intent.getLongExtra(PurchaseConfirmationActivity.EXTRA_RESERVATION_ID, -1)
 
-            if((context.applicationContext as MovieReservationApp).notificationDatastore.canNotification)
+            if ((context.applicationContext as MovieReservationApp).notificationDatastore.canNotification) {
                 sendNotification(context, movieTitle, reservationId)
+            }
         }
     }
 
     private fun sendNotification(
         context: Context,
         movieTitle: String,
-        reservationId: Long
+        reservationId: Long,
     ) {
         createNotificationChannel(context)
         val pendingIntent = createPendingIntent(context, reservationId)
 
-        val notificationBuilder = NotificationCompat.Builder(context, RESERVATION_NOTIFICATION_ID)
-            .setContentTitle("예매 알림")
-            .setContentText("$movieTitle 30분 후에 상영")
-            .setSmallIcon(R.drawable.ic_notifications_active_24)
-            .setContentIntent(pendingIntent)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setAutoCancel(true)
+        val notificationBuilder =
+            NotificationCompat.Builder(context, RESERVATION_NOTIFICATION_ID)
+                .setContentTitle("예매 알림")
+                .setContentText("$movieTitle 30분 후에 상영")
+                .setSmallIcon(R.drawable.ic_notifications_active_24)
+                .setContentIntent(pendingIntent)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true)
 
         val notificationManager =
             ContextCompat.getSystemService(context, NotificationManager::class.java)
@@ -49,18 +54,21 @@ class MovieBroadCastReceiver : BroadcastReceiver() {
             NotificationChannel(
                 RESERVATION_NOTIFICATION_ID,
                 "예매 알림",
-                NotificationManager.IMPORTANCE_DEFAULT
+                NotificationManager.IMPORTANCE_DEFAULT,
             )
         NotificationManagerCompat.from(context).createNotificationChannel(channel)
     }
 
-    private fun createPendingIntent(context: Context, reservationId: Long): PendingIntent {
+    private fun createPendingIntent(
+        context: Context,
+        reservationId: Long,
+    ): PendingIntent {
         val newIntent = PurchaseConfirmationActivity.newIntent(context, reservationId)
         return PendingIntent.getActivity(
             context,
             RESERVATION_REQUEST_CODE,
             newIntent,
-            PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_IMMUTABLE,
         )
     }
 

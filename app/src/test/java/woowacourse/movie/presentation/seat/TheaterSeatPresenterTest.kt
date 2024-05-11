@@ -14,8 +14,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.model.Cinema
-import woowacourse.movie.presentation.seat.TheaterSeatContract
-import woowacourse.movie.presentation.seat.TheaterSeatPresenter
 
 @ExtendWith(MockKExtension::class)
 class TheaterSeatPresenterTest {
@@ -33,7 +31,6 @@ class TheaterSeatPresenterTest {
 
     @InjectMockKs
     private lateinit var presenter: TheaterSeatPresenter
-
 
     @Test
     fun `좌석 선택 시 배경색 변경 테스트`() {

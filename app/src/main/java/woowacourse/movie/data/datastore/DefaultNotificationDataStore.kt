@@ -6,9 +6,8 @@ import android.os.Build
 import androidx.core.content.edit
 
 class DefaultNotificationDataStore private constructor(
-    private val preferences: SharedPreferences
+    private val preferences: SharedPreferences,
 ) : NotificationDataStore {
-
     override var canNotification: Boolean
         get() = preferences.getBoolean(NOTIFICATION_KEY, defaultCanNotification())
         set(value) {
@@ -17,20 +16,19 @@ class DefaultNotificationDataStore private constructor(
             }
         }
 
-    fun defaultCanNotification(): Boolean =
-        Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU
+    private fun defaultCanNotification(): Boolean = Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU
 
     companion object {
         @Volatile
-        private var INSTANCE: NotificationDataStore? = null
+        private var instance: NotificationDataStore? = null
         private const val DATASTORE_KEY = "DATASTORE_KEY"
         private const val NOTIFICATION_KEY = "NOTIFICATION_KEY"
 
         fun instance(context: Context): NotificationDataStore {
-            return INSTANCE ?: synchronized(this) {
-                INSTANCE ?: DefaultNotificationDataStore(
-                    context.getSharedPreferences(DATASTORE_KEY, Context.MODE_PRIVATE)
-                ).also { INSTANCE = it }
+            return instance ?: synchronized(this) {
+                instance ?: DefaultNotificationDataStore(
+                    context.getSharedPreferences(DATASTORE_KEY, Context.MODE_PRIVATE),
+                ).also { instance = it }
             }
         }
     }

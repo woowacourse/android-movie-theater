@@ -36,6 +36,7 @@ class MovieRepositoryStore(private val context: Context) {
     companion object {
         @Volatile
         private var instance: MovieRepositoryStore? = null
+
         fun instance(context: Context): MovieRepositoryStore {
             return instance ?: synchronized(this) {
                 instance ?: MovieRepositoryStore(context).also { instance = it }

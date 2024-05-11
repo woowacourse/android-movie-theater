@@ -10,10 +10,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.model.Reservation
-import kotlin.concurrent.thread
+
 @ExtendWith(MockKExtension::class)
 class PurchaseConfirmationPresenterTest {
-
     @MockK
     private lateinit var repository: MovieRepository
 

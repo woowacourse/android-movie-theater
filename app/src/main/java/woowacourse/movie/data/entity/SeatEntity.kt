@@ -13,10 +13,10 @@ import androidx.room.PrimaryKey
             entity = ReservationEntity::class,
             parentColumns = ["id"],
             childColumns = ["reservationId"],
-            onDelete = ForeignKey.CASCADE
-        )
+            onDelete = ForeignKey.CASCADE,
+        ),
     ],
-    indices = [Index(value = ["reservationId"])]
+    indices = [Index(value = ["reservationId"])],
 )
 data class SeatEntity(
     val reservationId: Long,
