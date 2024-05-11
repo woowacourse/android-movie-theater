@@ -35,6 +35,14 @@
             android:name=".feature.seatselection.SeatSelectionActivity"
             android:parentActivityName=".feature.reservation.ReservationActivity"
             android:exported="false" />
+
+        <receiver android:name=".feature.notification.NotificationReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

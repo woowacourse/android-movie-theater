@@ -9,6 +9,8 @@ interface ReservationFinishedContract {
         fun showErrorSnackBar()
 
         fun navigateToHome()
+
+        fun notifyScreeningTime(ticket: Ticket)
     }
 
     interface Presenter {

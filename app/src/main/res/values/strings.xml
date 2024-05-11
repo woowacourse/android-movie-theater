@@ -60,4 +60,5 @@
     <!-- SettingFragment -->
     <string name="setting_notification_permission_dialog_message">푸시 알림 수신이 거부된 상태 입니다. 푸시 알림 수신 허용하기 위해 설정 화면으로 이동하시겠습니까?</string>
     <string name="setting_notification_rejection_dialog_message">"푸시 알림 수신이 허용된 상태입니다. 푸시 알림 수신을 거부하기 위해 설정 화면으로 이동하시겠습니까?"</string>
+    <string name="notification_channel_description">"%s 30분 후에 상영"</string>
 </resources>

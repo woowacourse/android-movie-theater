@@ -12,6 +12,7 @@ import woowacourse.movie.databinding.ActivityReservationFinishedBinding
 import woowacourse.movie.db.ticket.Ticket
 import woowacourse.movie.db.ticket.TicketDatabase
 import woowacourse.movie.feature.history.ReservationHistoryFragment.Companion.TICKET_ID
+import woowacourse.movie.feature.notification.ScreeningAlarm
 import woowacourse.movie.utils.MovieUtils.convertAmountFormat
 
 class ReservationFinishedActivity : AppCompatActivity(), ReservationFinishedContract.View {
@@ -58,6 +59,10 @@ class ReservationFinishedActivity : AppCompatActivity(), ReservationFinishedCont
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
         finish()
+    }
+
+    override fun notifyScreeningTime(ticket: Ticket) {
+        ScreeningAlarm(this).generate(ticket)
     }
 
     private fun initPresenter() {

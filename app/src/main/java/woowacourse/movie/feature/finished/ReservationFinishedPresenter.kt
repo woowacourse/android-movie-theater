@@ -17,6 +17,7 @@ class ReservationFinishedPresenter(
                 ticket = ticketDao.find(ticketId)
             }.join()
             view.showReservationHistory(ticket)
+            view.notifyScreeningTime(ticket)
         } else {
             view.showErrorSnackBar()
         }
