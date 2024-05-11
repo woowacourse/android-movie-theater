@@ -1,7 +1,6 @@
 package woowacourse.movie.ui.main
 
 import android.Manifest
-import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Build
@@ -16,13 +15,10 @@ import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieMainBinding
 import woowacourse.movie.model.MoviePreferencesUtil
-import woowacourse.movie.model.movie.AlarmItem
 import woowacourse.movie.model.movie.AlarmReceiver
-import woowacourse.movie.model.movie.AlarmScheduler
 import woowacourse.movie.ui.history.MovieBookingHistoryFragment
 import woowacourse.movie.ui.home.MovieHomeFragment
 import woowacourse.movie.ui.setting.MovieSettingFragment
-import java.time.LocalDateTime
 
 class MovieMainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieMainBinding
@@ -31,11 +27,12 @@ class MovieMainActivity : AppCompatActivity() {
     private val movieSettingFragment: MovieSettingFragment by lazy { MovieSettingFragment() }
     private val alarmReceiver: AlarmReceiver by lazy { AlarmReceiver() }
 
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean ->
-        MoviePreferencesUtil(this).setBoolean("rcv_notification", isGranted)
-    }
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+        ) { isGranted: Boolean ->
+            MoviePreferencesUtil(this).setBoolean("rcv_notification", isGranted)
+        }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +47,7 @@ class MovieMainActivity : AppCompatActivity() {
         registerReceiver(
             alarmReceiver,
             IntentFilter().apply { addAction("alert") },
-            RECEIVER_NOT_EXPORTED
+            RECEIVER_NOT_EXPORTED,
         )
 
         requestNotificationPermission()
@@ -64,7 +61,7 @@ class MovieMainActivity : AppCompatActivity() {
 
     private fun requestNotificationPermission() {
         if (ContextCompat.checkSelfPermission(
-                this, Manifest.permission.POST_NOTIFICATIONS
+                this, Manifest.permission.POST_NOTIFICATIONS,
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

@@ -23,7 +23,10 @@ interface MovieSeatSelectionContract {
 
         fun navigateToCompleteScreen(ticketId: Long)
 
-        fun setAlarm(reservedTime: LocalDateTime, movieTitle: String)
+        fun setAlarm(
+            reservedTime: LocalDateTime,
+            movieTitle: String,
+        )
     }
 
     interface Presenter {

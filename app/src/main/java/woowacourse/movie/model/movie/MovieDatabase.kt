@@ -19,7 +19,7 @@ import woowacourse.movie.model.movie.TicketContract.MOVIE_DATABASE
         MovieContentEntity::class,
     ],
     version = 7,
-    autoMigrations = [AutoMigration(6, 7)]
+    autoMigrations = [AutoMigration(6, 7)],
 )
 abstract class MovieDatabase : RoomDatabase() {
     abstract fun ticketDao(): TicketDao

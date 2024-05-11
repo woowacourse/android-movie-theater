@@ -18,19 +18,18 @@ import woowacourse.movie.model.movie.AlarmScheduler.Companion.EXTRA_TITLE
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
-import java.time.temporal.TemporalField
 import kotlin.random.Random
-
 
 class AlarmScheduler(private val context: Context) {
     private val alarmManager = context.getSystemService(AlarmManager::class.java) as AlarmManager
 
     fun setSchedule(item: AlarmItem) {
         Log.i("Alarm", "setSchedule: $item")
-        val intent = Intent(context, AlarmReceiver::class.java)
-            .setAction("alert")
-            .putExtra(EXTRA_TITLE, item.title)
-            .putExtra(EXTRA_SUBTITLE, item.subTitle)
+        val intent =
+            Intent(context, AlarmReceiver::class.java)
+                .setAction("alert")
+                .putExtra(EXTRA_TITLE, item.title)
+                .putExtra(EXTRA_SUBTITLE, item.subTitle)
 
         alarmManager.setExact(
             AlarmManager.RTC_WAKEUP,
@@ -40,8 +39,8 @@ class AlarmScheduler(private val context: Context) {
                 context,
                 item.hashCode(),
                 intent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            )
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+            ),
         )
     }
 
@@ -58,7 +57,10 @@ data class AlarmItem(
 )
 
 class AlarmReceiver : BroadcastReceiver() {
-    override fun onReceive(context: Context?, intent: Intent?) {
+    override fun onReceive(
+        context: Context?,
+        intent: Intent?,
+    ) {
         val isNotificationEnabled =
             MoviePreferencesUtil(context ?: return).getBoolean("rcv_notification")
         if (isNotificationEnabled && intent?.action == "alert") {
@@ -70,13 +72,14 @@ class AlarmReceiver : BroadcastReceiver() {
                 NotificationChannel(
                     CHANNEL_ID_RESERVATION,
                     CHANNEL_NAME_RESERVATION,
-                    IMPORTANCE_HIGH
+                    IMPORTANCE_HIGH,
                 )
             notificationManager.createNotificationChannel(notificationChannel)
-            val notifyBuilder = NotificationCompat.Builder(context, CHANNEL_ID_RESERVATION)
-                .setContentTitle(title)
-                .setContentText(subtitle)
-                .setSmallIcon(R.drawable.ic_home)
+            val notifyBuilder =
+                NotificationCompat.Builder(context, CHANNEL_ID_RESERVATION)
+                    .setContentTitle(title)
+                    .setContentText(subtitle)
+                    .setSmallIcon(R.drawable.ic_home)
             notificationManager.notify(Random(100).nextInt(), notifyBuilder.build())
         }
     }

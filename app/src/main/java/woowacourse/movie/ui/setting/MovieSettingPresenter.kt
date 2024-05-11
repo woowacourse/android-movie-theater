@@ -1,6 +1,5 @@
 package woowacourse.movie.ui.setting
 
-import android.util.Log
 import woowacourse.movie.model.MoviePreferencesUtil
 
 class MovieSettingPresenter(

@@ -21,7 +21,10 @@ import woowacourse.movie.ui.home.adapter.MovieViewHolder
 
 @RunWith(AndroidJUnit4::class)
 class MovieHomeFragmentTest {
-    private val movieContent: MovieContentEntity = MovieDatabase.getDatabase(ApplicationProvider.getApplicationContext()).movieContentDao().find(0L)
+    private val movieContent: MovieContentEntity =
+        MovieDatabase.getDatabase(
+            ApplicationProvider.getApplicationContext(),
+        ).movieContentDao().find(0L)
 
     @Before
     fun setUp() {

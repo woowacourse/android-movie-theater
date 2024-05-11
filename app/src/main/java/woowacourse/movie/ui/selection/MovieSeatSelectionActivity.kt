@@ -152,9 +152,18 @@ class MovieSeatSelectionActivity :
         }
     }
 
-    override fun setAlarm(reservedTime: LocalDateTime, movieTitle: String) {
+    override fun setAlarm(
+        reservedTime: LocalDateTime,
+        movieTitle: String,
+    ) {
         val scheduler = AlarmScheduler(this)
-        scheduler.setSchedule(AlarmItem(reservedTime, getString(R.string.notification_reservation_title), getString(R.string.notification_reservation_subtitle, movieTitle)))
+        scheduler.setSchedule(
+            AlarmItem(
+                reservedTime,
+                getString(R.string.notification_reservation_title),
+                getString(R.string.notification_reservation_subtitle, movieTitle),
+            ),
+        )
     }
 
     override fun navigateToCompleteScreen(ticketId: Long) {
