@@ -2,12 +2,13 @@ package woowacourse.movie.ui
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 
 class MovieSharedPreference(private val context: Context) {
     private val preferences by lazy { initializePreference() }
 
     fun setAlarmChecked(isChecked: Boolean) {
-        with(preferences.edit()) {
+        preferences.edit {
             putBoolean(PREFERENCE_KEY, isChecked)
             apply()
         }
