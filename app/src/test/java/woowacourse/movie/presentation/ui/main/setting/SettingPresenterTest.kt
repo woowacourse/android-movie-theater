@@ -56,13 +56,17 @@ class SettingPresenterTest {
         // given
         val mode = true
         val message = NotificationSuccessMessage
-        every { repository.saveNotificationMode(mode) } returns Result.success(Unit)
+        every { repository.saveNotificationMode(any()) } returns Result.success(Unit)
+        every { view.showNotificationMode(mode) } just runs
         every { view.showSnackBar(message) } just runs
+        every { view.checkNotificationPermissions(!mode) } just runs
 
         // when
+        presenter.saveNotificationMode(mode)
         presenter.changeNotificationMode(mode)
 
         // then
+        verify { view.showNotificationMode(mode) }
         verify { view.showSnackBar(message) }
     }
 
@@ -71,13 +75,17 @@ class SettingPresenterTest {
         // given
         val mode = false
         val message = NotificationFailureMessage
-        every { repository.saveNotificationMode(mode) } returns Result.success(Unit)
+        every { repository.saveNotificationMode(any()) } returns Result.success(Unit)
+        every { view.showNotificationMode(mode) } just runs
         every { view.showSnackBar(message) } just runs
+        every { view.checkNotificationPermissions(!mode) } just runs
 
         // when
+        presenter.saveNotificationMode(mode)
         presenter.changeNotificationMode(mode)
 
         // then
+        verify { view.showNotificationMode(mode) }
         verify { view.showSnackBar(message) }
     }
 
@@ -87,9 +95,12 @@ class SettingPresenterTest {
         val exception = Exception()
         val mode = true
         every { repository.saveNotificationMode(any()) } returns Result.failure(exception)
+        every { view.showNotificationMode(mode) } just runs
         every { view.showSnackBar(exception) } just runs
+        every { view.checkNotificationPermissions(!mode) } just runs
 
         // when
+        presenter.saveNotificationMode(mode)
         presenter.changeNotificationMode(mode)
 
         // then
