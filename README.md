@@ -92,3 +92,21 @@ false: 권한이 있는 경우, 2번 거절한 경우
 ```kotlin
 shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)
 ```
+
+## 궁금한 점 
+인수 테스트에서 Binding 객체를 가져오려 노력했지만, 어떻게 가져와야할지 모르겠습니다..  
+아래는 제가 시도해봤던 코드입니다.
+```kotlin
+ private lateinit var binding: FragmentMovieListBinding
+ 
+ // binding 객체를 어떻게 가져와야하죠..?
+launchFragmentInContainer<MovieListFragment>().onFragment {
+    // 현재는 새로운 객체를 생성하고 있음
+    binding = FragmentMovieListBinding.bind(it.requireView()) 
+}
+
+// 이와 같이 테스트 코드를 작성하고 싶었습니다
+onView(withId(binding.rvMovies.id)).perform(...)
+```
+역시, 에러가 발생했습니다.
+![image](https://github.com/android/architecture-components-samples/assets/87055456/315cad6d-975b-4273-8d86-f31c49ba2066)

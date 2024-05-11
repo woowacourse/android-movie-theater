@@ -43,7 +43,7 @@ class IntegrationTest {
     @DisplayName("영화 버튼 누르면 Dialog 보이는지 테스트")
     fun test2() {
         launchFragmentInContainer<MovieListFragment>()
-        Espresso.onView(ViewMatchers.withId(R.id.rv_movies))
+        Espresso.onView(ViewMatchers.withId(R.id.rv_reservation_movies))
             .perform(
                 RecyclerViewActions
                     .actionOnItemAtPosition<MovieAdapter.MovieViewHolder>(
