@@ -92,7 +92,7 @@ class SeatsPresenter(
                 seats.totalPrice()
             )
         }.onSuccess {
-            view.moveToReservationResult(it.id)
+            view.moveToReservationResult(it.id, it.screeningDate, it.screeningTime)
         }.onFailure {
             view.showMessage(ERROR_MESSAGE.format(it.message ?: ""))
         }
@@ -100,6 +100,10 @@ class SeatsPresenter(
 
     override fun selectedSeats(): ArrayList<Int> {
         return seats.selectedSeatIndices().toCollection(ArrayList())
+    }
+
+    override fun getScreeningTime(): String {
+        return screeningTime
     }
 
     private fun updateTotalPriceDisplay() {

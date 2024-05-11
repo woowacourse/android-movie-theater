@@ -28,4 +28,5 @@
     <string name="no_reservation">예매 내역이 없습니다.</string>
     <string name="push_alarm">푸시 알림 수신</string>
     <string name="push_alarm_description">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+    <string name="permission_explanation">앱을 사용하기 위해서는 권한이 필요합니다.</string>
 </resources>

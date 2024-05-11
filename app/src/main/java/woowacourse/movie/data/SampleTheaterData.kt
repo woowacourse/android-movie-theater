@@ -13,6 +13,12 @@ object SampleTheaterData {
         -1,
     )
 
+    val minutes = 1 until 60 step 1
+
+    private val everyScreeningTimes = minutes.map { minute ->
+        LocalTime.of(3, minute, 0)
+    }
+
     private val screeningTimes1 =
         listOf(
             LocalTime.of(9, 0, 0),
@@ -35,7 +41,7 @@ object SampleTheaterData {
             Theater(
                 "선릉 극장",
                 mapOf(
-                    movieList[0] to screeningTimes1,
+                    movieList[0] to everyScreeningTimes,
                     movieList[2] to screeningTimes2,
                     movieList[4] to screeningTimes2,
                     movieList[5] to screeningTimes1,

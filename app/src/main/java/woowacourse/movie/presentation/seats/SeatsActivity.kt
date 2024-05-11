@@ -11,6 +11,8 @@ import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.data.repository.MovieTicketRepositoryImpl
+import woowacourse.movie.data.utils.NotificationScheduler
+import woowacourse.movie.data.utils.SharedPreferencesHelper
 import woowacourse.movie.databinding.ActivitySeatsBinding
 import woowacourse.movie.domain.model.seat.SeatGrade
 import woowacourse.movie.domain.model.seat.Seats
@@ -95,7 +97,10 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
         binding.confirmButton.isSelected = enabled
     }
 
-    override fun moveToReservationResult(movieTicketId: Long) {
+    override fun moveToReservationResult(movieTicketId: Long, screeningDate: String, screeningTime: String) {
+        if (SharedPreferencesHelper.isNotificationEnabled(this)) {
+            scheduleNotificationForTicket(movieTicketId, screeningDate, screeningTime)
+        }
         val intent = Intent(this, MovieTicketActivity::class.java)
         intent.putExtra(EXTRA_MOVIE_TICKET_ID, movieTicketId)
         startActivity(intent)
@@ -129,6 +134,20 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
             SeatGrade.B -> getColor(R.color.purple_500)
             SeatGrade.A -> getColor(R.color.teal_700)
             SeatGrade.S -> getColor(R.color.blue_500)
+        }
+    }
+
+    private fun scheduleNotificationForTicket(movieTicketId: Long, screeningDate: String, screeningTime: String) {
+        try {
+            if (screeningTime != null) {
+                NotificationScheduler.scheduleNotification(
+                    this,
+                    movieTicketId,
+                    screeningTime,
+                )
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
