@@ -49,35 +49,7 @@ class ReservationFragment :
 
     private fun initViews() {
         adapter = ReservationAdapter { presenter.findReservation(it) }
-        binding.rvMovies.adapter = adapter
+        binding.rvReservationMovies.adapter = adapter
     }
 }
 
-interface ReservationContract {
-    interface View {
-        fun showReservations(reservations: List<Reservation>)
-
-        fun navigateToConfirmPurchaseView(reservationId: Long)
-
-        fun showError()
-    }
-}
-
-class ReservationPresenter(
-    private val repository: MovieRepository,
-    private val view: ReservationContract.View
-) {
-    fun loadReservations() {
-        thread {
-            repository.loadReservedMovies().onSuccess {
-                view.showReservations(it)
-            }.onFailure {
-                view.showError()
-            }
-        }.join()
-    }
-
-    fun findReservation(reservationId: Long) {
-        view.navigateToConfirmPurchaseView(reservationId)
-    }
-}
