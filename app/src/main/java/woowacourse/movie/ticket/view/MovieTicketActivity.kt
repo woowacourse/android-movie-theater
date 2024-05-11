@@ -5,7 +5,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
@@ -71,11 +70,8 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
         val intent = Intent(this, MovieBroadcastReceiver::class.java).apply {
             putExtra(EXTRA_MOVIE_TITLE_KEY, movieTitle)
         }
-        Log.d("alsong", "$date, $time, $movieTitle")
         val calendar = setCalendar(date, time)
-        Log.d("alsong", "A ${calendar.timeInMillis}, ${System.currentTimeMillis()}")
         if (System.currentTimeMillis() > calendar.timeInMillis) return
-        Log.d("alsong", "B")
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         val alarmIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_MUTABLE)
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, alarmIntent)
@@ -83,7 +79,6 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
 
     private fun setCalendar(date: LocalDate, time: LocalTime): Calendar {
         return Calendar.getInstance().apply {
-//            timeInMillis = System.currentTimeMillis() + 20000
             set(Calendar.YEAR, date.year)
             set(Calendar.MONTH, date.monthValue - 1)
             set(Calendar.DATE, date.dayOfMonth)
