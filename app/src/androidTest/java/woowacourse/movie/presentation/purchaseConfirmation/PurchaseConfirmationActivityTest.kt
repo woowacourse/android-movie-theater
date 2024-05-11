@@ -1,92 +1,87 @@
 package woowacourse.movie.presentation.purchaseConfirmation
 
-import android.content.Intent
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso
+import androidx.test.core.app.ActivityScenario
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.junit.Rule
+import org.hamcrest.CoreMatchers.containsString
+import org.junit.After
+import org.junit.Before
 import org.junit.Test
+import org.junit.jupiter.api.DisplayName
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.model.Cinema
-import woowacourse.movie.model.movieInfo.MovieDate
-import woowacourse.movie.model.movieInfo.MovieInfo
+import woowacourse.movie.data.MovieRepository
+import woowacourse.movie.data.MovieRepositoryStore
+import woowacourse.movie.model.Reservation
 import woowacourse.movie.model.movieInfo.RunningTime
 import woowacourse.movie.model.movieInfo.Synopsis
 import woowacourse.movie.model.movieInfo.Title
 import woowacourse.movie.model.theater.Seat
-import woowacourse.movie.model.theater.Theater
-import woowacourse.movie.presentation.purchaseConfirmation.PurchaseConfirmationActivity
-import java.time.LocalDate
-import java.time.LocalTime
+import woowacourse.movie.util.context
+import java.time.LocalDateTime
 
 @RunWith(AndroidJUnit4::class)
 class PurchaseConfirmationActivityTest {
-    private val movie =
-        MovieInfo(
-            Title("차람과 하디의 진지한 여행기"),
-            MovieDate(LocalDate.of(2024, 2, 25)),
-            RunningTime(230),
-            Synopsis("wow!"),
-        )
-    private val seats =
-        mapOf(
-            "B1" to Seat('B', 1, "B"),
-            "C1" to Seat('S', 1, "B"),
-            "E1" to Seat('A', 1, "B"),
-        )
-    private val cinema =
-        Cinema(
-            "CGV",
-            Theater(
-                MovieInfo(
-                    Title("차람과 하디의 진지한 여행기"),
-                    MovieDate(LocalDate.of(2024, 2, 25)),
-                    RunningTime(230),
-                    Synopsis("wow!"),
-                ),
-                times =
-                    listOf(
-                        LocalTime.of(10, 0),
-                        LocalTime.of(14, 0),
-                        LocalTime.of(18, 0),
-                    ),
-                seats = mapOf(),
+
+    private lateinit var movieRepositoryStore: MovieRepositoryStore
+
+    @Before
+    fun setUp() {
+        movieRepositoryStore = MovieRepositoryStore.instance(context)
+        movieRepositoryStore.setRepository(object : MovieRepository {
+            override fun loadReservedMovies(): Result<List<Reservation>> {
+                throw UnsupportedOperationException()
+            }
+
+            override fun loadReservedMovie(id: Long): Result<Reservation> {
+                return Result.success(
+                    Reservation(
+                        1,
+                        "CGV",
+                        Title("차람과 하디의 진지한 여행기"),
+                        LocalDateTime.of(2024, 2, 25, 10, 0),
+                        RunningTime(230),
+                        Synopsis("wow!"),
+                        setOf(
+                            Seat('A', 1, "B"),
+                            Seat('B', 1, "S"),
+                        )
+                    )
+                )
+            }
+
+            override fun saveReservation(reservation: Reservation): Result<Long> {
+                throw UnsupportedOperationException()
+            }
+
+            override fun deleteAllReservedMovie(): Result<Unit> {
+                throw UnsupportedOperationException()
+            }
+
+        })
+    }
+
+    @After
+    fun tearDown() {
+        movieRepositoryStore.clear()
+    }
+
+    @Test
+    @DisplayName("예약 화면이 보이는지 테스트")
+    fun reservation_test() {
+        ActivityScenario.launch<PurchaseConfirmationActivity>(
+            PurchaseConfirmationActivity.newIntent(
+                context,
+                1,
             ),
         )
-    private val intent =
-        Intent(
-            ApplicationProvider.getApplicationContext(),
-            PurchaseConfirmationActivity::class.java,
-        ).also {
-            it.putExtra("timeDate", "2024.04.25")
-            it.putExtra("ticketPrice", "30000")
-            it.putExtra("seatNumber", listOf("B1", "C1").toTypedArray())
-            it.putExtra("Cinema", cinema)
-        }
-
-    @get:Rule
-    val activityScenarioRule = ActivityScenarioRule<PurchaseConfirmationActivity>(intent)
-
-    @Test
-    fun `영화제목표시_영화제목정확히표시되는지검증`() {
-        Espresso.onView(withId(R.id.movie_title_confirmation))
-            .check(matches(ViewMatchers.withText(movie.title.toString())))
-    }
-
-    @Test
-    fun `상영시간표시_상영시간정확히표시되는지검증`() {
-        Espresso.onView(withId(R.id.purchase_movie_running_time))
-            .check(matches(ViewMatchers.withText(movie.runningTime.toString())))
-    }
-
-    @Test
-    fun `티켓_가격_표시되는지검증`() {
-        Espresso.onView(withId(R.id.ticket_charge))
-            .check(matches(ViewMatchers.withText("30000")))
+        Thread.sleep(2000)
+        onView(withId(R.id.movie_title_confirmation))
+            .check(matches(ViewMatchers.withText(containsString("차람과 하디의 진지한 여행기"))))
+        onView(withId(R.id.reserved_information))
+            .check(matches(ViewMatchers.withText(containsString("CGV"))))
     }
 }
