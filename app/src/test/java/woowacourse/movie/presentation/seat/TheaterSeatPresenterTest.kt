@@ -1,34 +1,39 @@
-package woowacourse.movie
+package woowacourse.movie.presentation.seat
 
 import io.kotest.matchers.shouldBe
 import io.mockk.every
+import io.mockk.impl.annotations.InjectMockKs
+import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.just
 import io.mockk.runs
 import io.mockk.slot
 import io.mockk.verify
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import woowacourse.movie.data.MovieRepository
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.presentation.seat.TheaterSeatContract
 import woowacourse.movie.presentation.seat.TheaterSeatPresenter
 
 @ExtendWith(MockKExtension::class)
-class SeatPresenterTest {
+class TheaterSeatPresenterTest {
     @RelaxedMockK
     private lateinit var view: TheaterSeatContract.View
 
     @RelaxedMockK
     private lateinit var cinema: Cinema
 
+    @MockK
+    private lateinit var repository: MovieRepository
+
+    private var ticketLimit: Int = 2
+    private var dateTime: String = "2024.05.01 10:00"
+
+    @InjectMockKs
     private lateinit var presenter: TheaterSeatPresenter
 
-    @BeforeEach
-    fun setUp() {
-        presenter = TheaterSeatPresenter(view, 2, cinema)
-    }
 
     @Test
     fun `좌석 선택 시 배경색 변경 테스트`() {
