@@ -15,7 +15,7 @@ class MovieReservationApp : Application() {
         DefaultMovieRepository(db.movieDao())
     }
 
-    val notificationPreference by lazy {
+    val notificationDatastore by lazy {
         DefaultNotificationDataStore.instance(applicationContext)
     }
 

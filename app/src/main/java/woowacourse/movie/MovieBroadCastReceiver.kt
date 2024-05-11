@@ -18,7 +18,7 @@ class MovieBroadCastReceiver : BroadcastReceiver() {
             val reservationId =
                 intent.getLongExtra(PurchaseConfirmationActivity.EXTRA_RESERVATION_ID, -1)
 
-            if((context.applicationContext as MovieReservationApp).notificationPreference.canNotification)
+            if((context.applicationContext as MovieReservationApp).notificationDatastore.canNotification)
                 sendNotification(context, movieTitle, reservationId)
         }
     }

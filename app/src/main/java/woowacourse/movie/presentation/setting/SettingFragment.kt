@@ -15,8 +15,7 @@ import woowacourse.movie.presentation.base.BindingFragment
 
 class SettingFragment : BindingFragment<FragmentSettingBinding>(R.layout.fragment_setting) {
 
-    private val notificationPreference by lazy { (requireActivity().application as MovieReservationApp).notificationPreference }
-
+    private val notificationPreference by lazy { (requireActivity().application as MovieReservationApp).notificationDatastore }
 
     private val explanationDialogForPushAlarm by lazy {
         AlertDialog.Builder(requireContext())
@@ -48,28 +47,27 @@ class SettingFragment : BindingFragment<FragmentSettingBinding>(R.layout.fragmen
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        initViews()
+    }
+
+    private fun initViews() {
         binding.switchAlarm.isChecked = notificationPreference.canNotification
-
         binding.layoutPushAlarm.setOnClickListener {
-            when (notificationPreference.canNotification) {
-                true -> {
-                    notificationPreference.canNotification = false
-                    binding.switchAlarm.isChecked = false
-                }
-
-                false -> {
-                    when {
-                        (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) -> {
-                            notificationPreference.canNotification = true
-                            binding.switchAlarm.isChecked = true
-                        }
-
-                        isSecondRequestPermission() -> explanationDialogForPushAlarm.show()
-                        else -> requestPermissionLauncher.launch(POST_NOTIFICATIONS)
-                    }
-                }
+            if (notificationPreference.canNotification) {
+                updateAlarmSwitch(false)
+                return@setOnClickListener
+            }
+            when {
+                Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU -> updateAlarmSwitch(true)
+                isSecondRequestPermission() -> explanationDialogForPushAlarm.show()
+                else -> requestPermissionLauncher.launch(POST_NOTIFICATIONS)
             }
         }
+    }
+
+    private fun updateAlarmSwitch(isChecked: Boolean) {
+        notificationPreference.canNotification = isChecked
+        binding.switchAlarm.isChecked = isChecked
     }
 
     private fun isSecondRequestPermission(): Boolean =
