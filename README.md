@@ -43,7 +43,7 @@
   - [x]: 푸시 알림을 클릭 하면 예매 정보를 보여 준다.
   - [x]: startActivity 로 Reservation 이동
   - [x]: Notification 커스터 마이징
-
+  - [x]: 32 일 때는 preference canNotify 를 true, 33 이상은 false 로 변경
 - 푸시 알림 퍼미션 로직
 -
     1) Home - 맨 처음에만 퍼미션 체크를 함
