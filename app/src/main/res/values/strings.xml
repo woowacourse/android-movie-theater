@@ -1,21 +1,17 @@
 <resources>
     <string name="app_name">Movie</string>
     <string name="release_date_yyyy_mm_dd">Release Date: YYYY.MM.DD</string>
-    <string name="_0">0분</string>
-    <string name="title">Title</string>
-    <string name="price">Price</string>
     <string name="price_format">%s</string>
     <string name="movie_release_date">상영일: %s</string>
     <string name="total_price">"%,d 원"</string>
+    <string name="purchase_confirm">확인</string>
     <string name="movie_duration">러닝타임: %s분</string>
-    <string name="cancle_time">영화 상영 시작 시간 15분 전까지 취소가 가능합니다.</string>
+    <string name="cancel_time">영화 상영 시작 시간 15분 전까지 취소가 가능합니다.</string>
     <string name="movie_title">Movie Title</string>
     <string name="screen_time">Screen time</string>
     <string name="screen">Screen</string>
     <string name="chose_seat">좌석 선택</string>
     <string name="screen_display">SCREEN</string>
-    <string name="time_date">TIME DATE</string>
-    <string name="확인">확인</string>
     <string name="reserved_information">영화 정보</string>
 
     <string name="null_point_error">NullPoint Exception</string>
@@ -33,10 +29,10 @@
         푸시 알림 권한
     </string>
     <string name="request_notification_permission">
-        영화 시작 30분 전에 알려 드리기 위해 권한이 필요해요
+        영화 시작 30분 전에 알려 드리기 위해 권한이 필요해요.
     </string>
     <string name="deny_notification_permission">
-        푸시 알림 권한이 거절당했습니다
+        푸시 알림 권한이 거절 하셨습니다.
     </string>
     <string name="request_notification_permission_confirm">
         확인

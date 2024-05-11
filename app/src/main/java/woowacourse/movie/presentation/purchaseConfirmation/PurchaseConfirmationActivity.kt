@@ -10,6 +10,7 @@ import woowacourse.movie.databinding.ActivityPurchaseConfirmationBinding
 import woowacourse.movie.model.Reservation
 import woowacourse.movie.presentation.base.BindingActivity
 import woowacourse.movie.presentation.error.ErrorActivity
+import kotlin.concurrent.thread
 
 class PurchaseConfirmationActivity :
     BindingActivity<ActivityPurchaseConfirmationBinding>(R.layout.activity_purchase_confirmation),
@@ -26,7 +27,9 @@ class PurchaseConfirmationActivity :
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val reservationId = intent.getLongExtra(EXTRA_RESERVATION_ID, -1)
-        presenter.loadReservation(reservationId)
+        thread {
+            presenter.loadReservation(reservationId)
+        }.join()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -35,16 +38,14 @@ class PurchaseConfirmationActivity :
     }
 
     override fun showReservation(reservation: Reservation) {
-        runOnUiThread {
-            binding.data = reservation
-            binding.reservedInformation.text =
-                getString(
-                    R.string.reserved_format,
-                    reservation.seats.size,
-                    reservation.seats.joinToString { it.row.toString() + it.number },
-                    reservation.cinemaName,
-                )
-        }
+        binding.data = reservation
+        binding.reservedInformation.text =
+            getString(
+                R.string.reserved_format,
+                reservation.seats.size,
+                reservation.seats.joinToString { it.row.toString() + it.number },
+                reservation.cinemaName,
+            )
     }
 
     override fun showError() {

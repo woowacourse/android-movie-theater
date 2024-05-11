@@ -29,7 +29,7 @@
                 android:layout_centerInParent="true"
                 android:layout_margin="13dp"
                 android:backgroundTint="@color/purple_700"
-                android:text="@string/cancle_time"
+                android:text="@string/cancel_time"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
         </RelativeLayout>
 

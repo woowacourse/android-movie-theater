@@ -219,7 +219,7 @@
                 android:height="78dp"
                 android:background="@color/purple_700"
                 android:gravity="center"
-                android:text="@string/확인"
+                android:text="@string/purchase_confirm"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="18sp" />

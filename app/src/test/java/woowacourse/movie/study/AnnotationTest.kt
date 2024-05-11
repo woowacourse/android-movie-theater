@@ -14,8 +14,8 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
+// @MockKExtension.ConfirmVerification // 모든 테스트 함수에 confirmVerified 를 추가할 필요가 없다.
 @ExtendWith(MockKExtension::class)
-@MockKExtension.ConfirmVerification // 모든 테스트 함수에 confirmVerified 를 추가할 필요가 없다.
 class AnnotationTest {
     enum class Direction { NORTH, SOUTH }
 
