@@ -19,9 +19,9 @@ import woowacourse.movie.view.history.ReservationHistoryFragment
 
 object TestFixture {
     const val FIRST_MOVIE_ITEM_POSITION = 0
-    val movies: List<Movie> = ScreeningDao().findAll()
     const val FIRST_THEATER_ITEM_POSITION = 0
-    val theaterDao = TheaterDao()
+    private val movies: List<Movie> = ScreeningDao().findAll()
+    private val theaterDao = TheaterDao()
 
     fun makeMockTicket(): Ticket {
         val movie = movies[FIRST_MOVIE_ITEM_POSITION]
