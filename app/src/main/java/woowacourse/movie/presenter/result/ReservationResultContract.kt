@@ -9,7 +9,7 @@ interface ReservationResultContract {
 
         fun showReservationTicketInfo(ticket: Ticket)
 
-        fun finshActivityWithErrorToast()
+        fun showErrorMessageWithCloseActivity()
 
         fun showReservationTheaterName(theaterName: String)
     }

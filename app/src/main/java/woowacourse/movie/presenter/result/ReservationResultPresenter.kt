@@ -21,7 +21,7 @@ class ReservationResultPresenter(
                 loadMovie(it.movieId)
                 loadTicket(it.toTicket())
             }.onFailure {
-                view.finshActivityWithErrorToast()
+                view.showErrorMessageWithCloseActivity()
             }
         }.start()
     }

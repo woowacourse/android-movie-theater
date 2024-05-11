@@ -24,14 +24,14 @@ class SettingPresenterTest {
     fun `유저가 알림을 설정하는 스위치를 키면 알림을 허용하는 토스트를 띄어서 유저에게 알린다`() {
         presenter.settingPushAlarmState(isPushSetting = true)
 
-        verify { view.showPushSettingOnToast() }
+        verify { view.showPushSettingOnMessage() }
     }
 
     @Test
     fun `유저가 알림을 설정하는 스위치를 끄면 알림을 거부하는 토스트를 띄어서 유저에게 알린다`() {
         presenter.settingPushAlarmState(isPushSetting = false)
 
-        verify { view.showPushSettingOffToast() }
+        verify { view.showPushSettingOffMessage() }
     }
 
     @Test

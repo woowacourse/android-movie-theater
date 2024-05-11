@@ -19,16 +19,16 @@ interface ReservationDetailContract {
 
         fun changeHeadCount(count: Int)
 
-        fun showResultToast()
+        fun showResultMessage()
 
         fun navigateToSeatSelection(
             dateTime: ScreeningDateTime,
             count: HeadCount,
         )
 
-        fun showErrorToast()
+        fun showErrorMessage()
 
-        fun showIdErrorToast()
+        fun showIdErrorMessage()
 
         fun updateScreeningTimes(selectedTimeId: Int? = null)
     }

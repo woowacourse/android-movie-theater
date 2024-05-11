@@ -16,9 +16,9 @@ class SettingPresenter(
         val editor = sharedPreference.edit()
         editor.putBoolean(SettingFragment.PUSH_SETTING, isPushSetting).apply()
         if (isPushSetting) {
-            view.showPushSettingOnToast()
+            view.showPushSettingOnMessage()
         } else {
-            view.showPushSettingOffToast()
+            view.showPushSettingOffMessage()
         }
     }
 }

@@ -4,9 +4,9 @@ interface SettingContract {
     interface View {
         fun showSavedSetting(isPushSetting: Boolean)
 
-        fun showPushSettingOnToast()
+        fun showPushSettingOnMessage()
 
-        fun showPushSettingOffToast()
+        fun showPushSettingOffMessage()
     }
 
     interface Presenter {

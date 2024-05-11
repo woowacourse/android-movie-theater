@@ -7,7 +7,7 @@ class TheaterSelectionPresenter(
     private val movieId: Int,
 ) : TheaterSelectionContract.Presenter {
     override fun loadTheaters(movieId: Int) {
-        view.showTheaters(TheaterDao().findTheaterByMovieId(movieId))
+        view.showScreeningTheaters(TheaterDao().findTheaterByMovieId(movieId))
     }
 
     override fun loadTheater(theaterId: Int) {

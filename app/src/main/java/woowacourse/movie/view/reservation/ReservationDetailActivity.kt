@@ -63,7 +63,7 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
                 presenter.headCount.restore(headCount)
                 binding.textViewReservationDetailNumberOfTickets.text = presenter.headCount.count.toString()
             }.onFailure {
-                showErrorToast()
+                showErrorMessage()
                 finish()
             }
 
@@ -111,11 +111,11 @@ class ReservationDetailActivity : AppCompatActivity(), ReservationDetailContract
         binding.textViewReservationDetailNumberOfTickets.text = count.toString()
     }
 
-    override fun showResultToast() = makeToast(this, getString(R.string.invalid_number_of_tickets))
+    override fun showResultMessage() = makeToast(this, getString(R.string.invalid_number_of_tickets))
 
-    override fun showErrorToast() = makeToast(this, getString(R.string.all_error))
+    override fun showErrorMessage() = makeToast(this, getString(R.string.all_error))
 
-    override fun showIdErrorToast() = makeToast(this, getString(R.string.load_error))
+    override fun showIdErrorMessage() = makeToast(this, getString(R.string.load_error))
 
     override fun navigateToSeatSelection(
         dateTime: ScreeningDateTime,

@@ -15,6 +15,6 @@ interface TheaterSelectionContract {
             theaterId: Int,
         )
 
-        fun showTheaters(theaters: List<Theater>)
+        fun showScreeningTheaters(theaters: List<Theater>)
     }
 }

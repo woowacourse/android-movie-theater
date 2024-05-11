@@ -87,7 +87,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 restoreSeatsData(bundle)
                 restoreReservationData(bundle)
             }.onFailure {
-                showErrorToast()
+                showErrorMessage()
                 finish()
             }
         }
@@ -190,7 +190,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         }
     }
 
-    override fun showErrorToast() = makeToast(this, getString(R.string.all_error))
+    override fun showErrorMessage() = makeToast(this, getString(R.string.all_error))
 
     private fun takeMovieId() =
         intent.getIntExtra(
@@ -205,7 +205,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         }.onSuccess {
             headCount = it
         }.onFailure {
-            showErrorToast()
+            showErrorMessage()
             finish()
         }
     }
@@ -220,7 +220,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         }.onSuccess {
             screeningDateTime = it
         }.onFailure {
-            showErrorToast()
+            showErrorMessage()
             finish()
         }
     }

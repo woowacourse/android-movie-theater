@@ -50,9 +50,9 @@ class SettingFragment : Fragment(), SettingContract.View {
         binding.switchButton.isChecked = isPushSetting
     }
 
-    override fun showPushSettingOnToast() = MovieUtils.makeToast(requireContext(), getString(R.string.on_push_text))
+    override fun showPushSettingOnMessage() = MovieUtils.makeToast(requireContext(), getString(R.string.on_push_text))
 
-    override fun showPushSettingOffToast() = MovieUtils.makeToast(requireContext(), getString(R.string.off_push_text))
+    override fun showPushSettingOffMessage() = MovieUtils.makeToast(requireContext(), getString(R.string.off_push_text))
 
     private fun initView() {
         binding.switchButton.setOnCheckedChangeListener { _, isChecked ->

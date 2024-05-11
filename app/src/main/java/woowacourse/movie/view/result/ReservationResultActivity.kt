@@ -58,7 +58,7 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
             binding.textViewReservationFinishedScreeningTime.text = ticket.screeningDateTime.time
         }
 
-    override fun finshActivityWithErrorToast() =
+    override fun showErrorMessageWithCloseActivity() =
         runOnUiThread {
             makeToast(this, getString(R.string.all_error))
             finish()

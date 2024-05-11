@@ -88,7 +88,7 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
         }
     }
 
-    override fun showTheaters(theaters: List<Theater>) {
+    override fun showScreeningTheaters(theaters: List<Theater>) {
         theaterSelectionAdapter.updateTheaters(theaters)
     }
 
