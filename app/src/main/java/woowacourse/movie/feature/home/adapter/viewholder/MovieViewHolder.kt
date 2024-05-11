@@ -9,10 +9,6 @@ typealias OnMovieSelected = (movieId: Int) -> Unit
 class MovieViewHolder(
     private val binding: ItemMovieCatalogBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
-    init {
-        binding.viewHolder = this
-    }
-
     fun bind(
         movie: Movie,
         onMovieSelected: OnMovieSelected,

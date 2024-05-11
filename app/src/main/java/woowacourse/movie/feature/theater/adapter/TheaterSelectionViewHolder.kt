@@ -7,10 +7,6 @@ import woowacourse.movie.model.theater.Theater
 class TheaterSelectionViewHolder(
     private val binding: ItemTheaterBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
-    init {
-        binding.viewHolder = this
-    }
-
     fun bind(
         theater: Theater,
         screeningCount: Int,

@@ -6,10 +6,6 @@
     <data>
 
         <variable
-            name="viewHolder"
-            type="woowacourse.movie.feature.home.adapter.viewholder.MovieViewHolder" />
-
-        <variable
             name="movie"
             type="woowacourse.movie.model.movie.Movie" />
 

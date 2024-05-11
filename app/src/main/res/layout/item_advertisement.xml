@@ -5,10 +5,6 @@
     <data>
 
         <variable
-            name="viewHolder"
-            type="woowacourse.movie.feature.home.adapter.viewholder.AdvertisementViewHolder" />
-
-        <variable
             name="advertisement"
             type="woowacourse.movie.model.advertisement.Advertisement" />
     </data>

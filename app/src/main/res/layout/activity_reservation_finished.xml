@@ -6,10 +6,6 @@
     <data>
 
         <variable
-            name="activity"
-            type="woowacourse.movie.feature.finished.ReservationFinishedActivity" />
-
-        <variable
             name="ticket"
             type="woowacourse.movie.db.ticket.Ticket" />
 

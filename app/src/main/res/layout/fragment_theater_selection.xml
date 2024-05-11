@@ -4,9 +4,6 @@
 
     <data>
 
-        <variable
-            name="theaterSelection"
-            type="woowacourse.movie.feature.theater.TheaterSelectionFragment" />
     </data>
 
     <androidx.recyclerview.widget.RecyclerView xmlns:tools="http://schemas.android.com/tools"

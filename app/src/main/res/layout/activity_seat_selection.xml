@@ -4,10 +4,6 @@
     <data>
 
         <variable
-            name="activity"
-            type="woowacourse.movie.feature.seatselection.SeatSelectionActivity" />
-
-        <variable
             name="presenter"
             type="woowacourse.movie.feature.seatselection.SeatSelectionPresenter" />
 

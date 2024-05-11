@@ -4,10 +4,6 @@
     <data>
 
         <variable
-            name="viewHolder"
-            type="woowacourse.movie.feature.theater.adapter.TheaterSelectionViewHolder" />
-
-        <variable
             name="theater"
             type="woowacourse.movie.model.theater.Theater" />
 

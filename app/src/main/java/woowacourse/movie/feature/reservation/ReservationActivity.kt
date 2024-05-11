@@ -39,8 +39,6 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.activity = this
-
         val savedHeadCount = bringSavedHeadCount(savedInstanceState)
         initPresenter(savedHeadCount)
         presenter.loadMovieInformation()
