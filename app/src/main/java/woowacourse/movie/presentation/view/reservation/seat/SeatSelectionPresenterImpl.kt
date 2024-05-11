@@ -1,7 +1,11 @@
 package woowacourse.movie.presentation.view.reservation.seat
 
+import android.os.Handler
+import android.os.Looper
 import woowacourse.movie.data.repository.ReservationMovieInfoRepositoryImpl
 import woowacourse.movie.data.repository.SeatRepositoryImpl
+import woowacourse.movie.database.Reservation
+import woowacourse.movie.database.ReservationDao
 import woowacourse.movie.domain.model.reservation.MovieTicket
 import woowacourse.movie.domain.model.reservation.ReservationInfo
 import woowacourse.movie.presentation.repository.SeatRepository
@@ -9,6 +13,7 @@ import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
 
 class SeatSelectionPresenterImpl(
     reservationCount: Int,
+    private val reservationDao: ReservationDao,
     seatRepository: SeatRepository = SeatRepositoryImpl,
 ) : SeatSelectionContract.Presenter {
     private var view: SeatSelectionContract.View? = null
@@ -29,7 +34,6 @@ class SeatSelectionPresenterImpl(
         loadSeatingChart()
     }
 
-    // TODO: 좌석 배치도 정보를 repository에서 불러와서, 좌석 예약 정보 설정하기
     override fun loadSeatingChart() {
         view?.showSeatingChart(
             reservationInfo.seatingChart.rowCount,
@@ -38,7 +42,6 @@ class SeatSelectionPresenterImpl(
         )
     }
 
-    // TODO: 뷰에서 선택된 좌석을 ReservationInfo에 업데이트 - 선택 or 선택 해제
     override fun selectSeat(
         row: Int,
         col: Int,
@@ -60,6 +63,24 @@ class SeatSelectionPresenterImpl(
                     reservationInfo,
                 ),
             )
-        view?.moveToReservationResult(movieTicketUiModel)
+        val reservation =
+            Reservation(
+                ticketId = movieTicketUiModel.ticketId,
+                title = movieTicketUiModel.title,
+                screeningDate = movieTicketUiModel.screeningDate,
+                startTime = movieTicketUiModel.startTime,
+                endTime = movieTicketUiModel.endTime,
+                runningTime = movieTicketUiModel.runningTime,
+                count = movieTicketUiModel.reservationCount,
+                theater = movieTicketUiModel.theaterName,
+                seats = movieTicketUiModel.selectedSeats,
+                totalPrice = movieTicketUiModel.totalPrice,
+            )
+        Thread {
+            reservationDao.insert(reservation)
+            Handler(Looper.getMainLooper()).post {
+                view?.moveToReservationResult(movieTicketUiModel)
+            }
+        }.start()
     }
 }

@@ -14,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.database.ReservationDatabase
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.databinding.ReservationConfirmDialogBinding
 import woowacourse.movie.presentation.base.BaseActivity
@@ -23,6 +24,7 @@ import woowacourse.movie.presentation.view.reservation.detail.MovieDetailActivit
 import woowacourse.movie.presentation.view.reservation.result.ReservationResultActivity
 
 class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View, SeatSelectionContract.ViewActions {
+    private lateinit var reservationDatabase: ReservationDatabase
     private lateinit var seatSelectionPresenter: SeatSelectionContract.Presenter
     private lateinit var activitySeatSelectionBinding: ActivitySeatSelectionBinding
     private lateinit var dialogBinding: ReservationConfirmDialogBinding
@@ -39,6 +41,8 @@ class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View, SeatSe
     override fun onCreateSetup(savedInstanceState: Bundle?) {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
+        reservationDatabase = ReservationDatabase.getDatabase(applicationContext)
+
         activitySeatSelectionBinding = DataBindingUtil.setContentView(this, R.layout.activity_seat_selection)
         activitySeatSelectionBinding.listener = this
         dialogBinding = ReservationConfirmDialogBinding.inflate(LayoutInflater.from(this))
@@ -47,7 +51,7 @@ class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View, SeatSe
         activitySeatSelectionBinding.movieTitle.text = intent.getStringExtra(TITLE_KEY)
         val reservationCount = intent.getIntExtra(RESERVATION_COUNT_KEY, DEFAULT_COUNT)
 
-        seatSelectionPresenter = SeatSelectionPresenterImpl(reservationCount)
+        seatSelectionPresenter = SeatSelectionPresenterImpl(reservationCount, reservationDatabase.reservationDao())
         seatSelectionPresenter.attachView(this)
     }
 
