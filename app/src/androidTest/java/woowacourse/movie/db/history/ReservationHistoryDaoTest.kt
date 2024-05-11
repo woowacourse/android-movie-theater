@@ -7,6 +7,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.runner.RunWith
+import woowacourse.movie.TestFixture.makeMockReservationTicket
 import woowacourse.movie.TestFixture.makeMockTicket
 
 @RunWith(AndroidJUnit4::class)
@@ -24,7 +25,7 @@ class ReservationHistoryDaoTest {
     @Test
     fun `티켓_저장과_저장된_데이터의_로드를_확인한다`() {
         // given
-        val reservationTicket = makeMockTicket().toReservationTicket("영화 제목", "극장 이름")
+        val reservationTicket = makeMockReservationTicket()
         reservationDao.saveReservationTicket(reservationTicket)
         val reservations = reservationDao.findReservations()
 
@@ -44,7 +45,7 @@ class ReservationHistoryDaoTest {
     @Test
     fun `티켓의_고유값으로_저장_된_티켓을_찾아오는지_확인한다`() {
         // given
-        val reservationTicket = makeMockTicket().toReservationTicket("영화 제목", "극장 이름")
+        val reservationTicket = makeMockReservationTicket()
         reservationDao.saveReservationTicket(reservationTicket)
         val actualReservation = reservationDao.findReservations().first()
         val expectedReservation = reservationDao.findReservationById(actualReservation.ticketId)

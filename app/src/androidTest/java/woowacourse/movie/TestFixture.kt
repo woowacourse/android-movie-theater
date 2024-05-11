@@ -10,6 +10,7 @@ import woowacourse.movie.model.seats.Grade
 import woowacourse.movie.model.seats.SeatSelection
 import woowacourse.movie.model.seats.TheaterSeat
 import woowacourse.movie.model.theater.Theater
+import woowacourse.movie.model.ticket.ReservationTicket
 import woowacourse.movie.model.ticket.Ticket
 import woowacourse.movie.repository.ReservationTicketRepository
 import woowacourse.movie.utils.MovieUtils.navigateToBottomMenu
@@ -28,6 +29,24 @@ object TestFixture {
         val seats = makeMockSeats()
         val amount = seats.calculateAmount()
         return Ticket(movie.id, theater.theaterId, seats, ScreeningDateTime("2024.3.2", "16:00"), amount)
+    }
+
+    fun makeMockReservationTicket(): ReservationTicket {
+        val movie = movies[FIRST_MOVIE_ITEM_POSITION]
+        val theater: Theater =
+            theaterDao.findTheaterByMovieId(movie.id)[FIRST_THEATER_ITEM_POSITION]
+        val seats = makeMockSeats()
+        val amount = seats.calculateAmount()
+        return ReservationTicket(
+            ticketId = 0L,
+            movieTitle = movie.title,
+            movieId = movie.id,
+            theaterId = theater.theaterId,
+            seatSelection = seats,
+            screeningDateTime = ScreeningDateTime("2024.3.2", "16:00"),
+            amount = amount,
+            theaterName = theater.theaterName,
+        )
     }
 
     fun makeTheater(): List<Theater> {

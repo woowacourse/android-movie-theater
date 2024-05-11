@@ -28,7 +28,7 @@ object TestFixture {
             movieId = movie.id,
             theaterId = theater.theaterId,
             seatSelection = seats,
-            screeningDateTime = ScreeningDateTime("", ""),
+            screeningDateTime = ScreeningDateTime("2024.3.2", "16:00"),
             amount = amount,
             theaterName = theater.theaterName,
         )
