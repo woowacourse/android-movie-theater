@@ -8,7 +8,6 @@ import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.runner.RunWith
 import woowacourse.movie.TestFixture.makeMockReservationTicket
-import woowacourse.movie.TestFixture.makeMockTicket
 
 @RunWith(AndroidJUnit4::class)
 class ReservationHistoryDaoTest {

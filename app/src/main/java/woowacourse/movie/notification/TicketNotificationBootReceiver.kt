@@ -6,8 +6,11 @@ import android.content.Intent
 import woowacourse.movie.repository.ReservationTicketRepository
 import woowacourse.movie.repository.ReservationTicketRepositoryImpl
 
-class TicketNotificationBootReceiver: BroadcastReceiver() {
-    override fun onReceive(context: Context?, intent: Intent?) {
+class TicketNotificationBootReceiver : BroadcastReceiver() {
+    override fun onReceive(
+        context: Context?,
+        intent: Intent?,
+    ) {
         if (isBootingState(intent)) {
             context?.let { setNotificationTickets(it, ReservationTicketRepositoryImpl(it)) }
         }

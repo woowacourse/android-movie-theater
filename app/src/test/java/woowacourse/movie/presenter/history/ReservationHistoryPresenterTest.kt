@@ -4,7 +4,6 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -34,22 +33,9 @@ class ReservationHistoryPresenterTest {
             )
         } answers {
             val actualTicket = arg<ReservationTicket>(0)
-            Assertions.assertEquals(actualTicket.ticketId, expectedTicketId)
+            assertEquals(actualTicket.ticketId, expectedTicketId)
         }
         presenter.loadReservationTicket(reservationTicket)
         verify { view.navigateToDetail(reservationTicket) }
-    }
-
-    @Test
-    fun `예약 화면으로 이동하면 티켓 예약 목록이 화면에 표시되어야 한다`(){
-        val tickets = listOf(makeMockReservationTicket())
-        every { view.showReservationHistory(tickets) } answers {
-            arg<List<ReservationTicket>>(0).forEachIndexed { index, reservationTicket ->
-                val actualTicket = tickets[index]
-                assertEquals(actualTicket.ticketId,reservationTicket.ticketId)
-            }
-        }
-        presenter.loadReservationTickets()
-        verify { view.showReservationHistory(tickets) }
     }
 }

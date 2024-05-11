@@ -27,10 +27,16 @@ abstract class ReservationHistoryDatabase : RoomDatabase() {
                 override fun migrate(db: SupportSQLiteDatabase) {
                     db.execSQL("ALTER TABLE reservationTicket RENAME TO temp_reservationTicket")
                     db.execSQL(
-                        "CREATE TABLE IF NOT EXISTS `reservationTicket` (ticketId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, movieId INTEGER NOT NULL, theaterId INTEGER NOT NULL, movieTitle TEXT NOT NULL, theaterName TEXT NOT NULL, seatSelection TEXT NOT NULL, screeningDateTime TEXT NOT NULL, amount INTEGER NOT NULL)",
+                        "CREATE TABLE IF NOT EXISTS `reservationTicket` " +
+                            "(ticketId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, movieId INTEGER NOT NULL, " +
+                            "theaterId INTEGER NOT NULL, movieTitle TEXT NOT NULL, theaterName TEXT NOT NULL, " +
+                            "seatSelection TEXT NOT NULL, screeningDateTime TEXT NOT NULL, amount INTEGER NOT NULL)",
                     )
                     db.execSQL(
-                        "INSERT INTO reservationTicket (ticketId, movieId, theaterId, movieTitle, theaterName, seatSelection, screeningDateTime, amount) SELECT ticketId, movieId, theaterId, movieTitle, theaterName, seats, screeningDateTime, amount FROM temp_reservationTicket",
+                        "INSERT INTO reservationTicket " +
+                            "(ticketId, movieId, theaterId, movieTitle, theaterName, seatSelection, screeningDateTime, amount) " +
+                            "SELECT ticketId, movieId, theaterId, movieTitle, theaterName, seats, screeningDateTime, amount " +
+                            "FROM temp_reservationTicket",
                     )
                     db.execSQL("DROP TABLE temp_reservationTicket")
                 }
