@@ -1,6 +1,5 @@
 package woowacourse.movie.selectseat
 
-import android.util.Log
 import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.Seats
 import woowacourse.movie.repository.EverythingRepository
@@ -87,7 +86,6 @@ class SelectSeatPresenter(
             Thread(task).start()
             task.get()
         }.onSuccess {
-            Log.d("fsa", "$it")
             view.navigateToResult(it)
         }
     }
