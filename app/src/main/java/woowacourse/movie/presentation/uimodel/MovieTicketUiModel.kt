@@ -2,6 +2,7 @@ package woowacourse.movie.presentation.uimodel
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import woowacourse.movie.database.Reservation
 import woowacourse.movie.domain.model.reservation.MovieTicket
 import woowacourse.movie.presentation.view.reservation.seat.SeatSelectionActivity.Companion.SEAT_COL_START_VALUE
 import woowacourse.movie.presentation.view.reservation.seat.SeatSelectionActivity.Companion.SEAT_POSITION_TEXT_FORMAT
@@ -60,7 +61,7 @@ data class MovieTicketUiModel(
         val DEFAULT_DATE_FORMAT: DateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE
         const val DEFAULT_TIME_FORMAT = "HH:mm"
 
-        fun from(movieTicket: MovieTicket): MovieTicketUiModel {
+        fun fromMovieTicket(movieTicket: MovieTicket): MovieTicketUiModel {
             return MovieTicketUiModel(
                 movieTicket.ticketId,
                 movieTicket.reservationMovieInfo.title,
@@ -85,6 +86,21 @@ data class MovieTicketUiModel(
                     )
                 },
                 movieTicket.reservationMovieInfo.theaterName,
+            )
+        }
+
+        fun fromReservation(reservation: Reservation): MovieTicketUiModel {
+            return MovieTicketUiModel(
+                ticketId = reservation.ticketId,
+                title = reservation.title,
+                screeningDate = reservation.screeningDate,
+                startTime = reservation.startTime,
+                endTime = reservation.endTime,
+                runningTime = reservation.runningTime,
+                reservationCount = reservation.count,
+                totalPrice = reservation.totalPrice,
+                selectedSeats = reservation.seats,
+                theaterName = reservation.theater,
             )
         }
     }

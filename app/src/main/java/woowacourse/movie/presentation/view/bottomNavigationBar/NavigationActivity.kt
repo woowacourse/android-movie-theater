@@ -40,7 +40,7 @@ class NavigationActivity : AppCompatActivity() {
 
                 R.id.reservation_list_fragment -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.selected_fragment, ReservationListFragment())
+                        .replace(R.id.selected_fragment, ReservationDetailsFragment())
                         .addToBackStack(null)
                         .commit()
                     true
