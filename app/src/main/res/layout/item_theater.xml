@@ -34,7 +34,6 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@{@string/home_theater_name(theater.name)}"
-            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/selection_arrow_image"
