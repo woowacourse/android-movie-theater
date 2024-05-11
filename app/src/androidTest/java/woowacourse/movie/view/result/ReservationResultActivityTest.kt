@@ -35,7 +35,6 @@ class ReservationResultActivityTest {
 
     @Before
     fun setUp() {
-
         activityRule.scenario.onActivity {
             repository =
                 ReservationTicketRepositoryImpl(it)

@@ -54,5 +54,4 @@ object TestFixture {
             ReservationHistoryDatabase.getInstance(context).openHelper.writableDatabase
         supportSQLiteDatabase.execSQL("DELETE FROM reservationTicket")
     }
-
 }
