@@ -31,7 +31,7 @@ object TestFixture {
             Room.databaseBuilder(
                 ApplicationProvider.getApplicationContext(),
                 TicketDatabase::class.java,
-                "reservation_history"
+                "reservation_history",
             ).build()
         val dao = db.ticketDao()
         dao.insert(firstMockTicket)

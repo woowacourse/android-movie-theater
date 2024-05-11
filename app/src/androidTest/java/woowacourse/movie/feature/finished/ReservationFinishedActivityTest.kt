@@ -18,19 +18,20 @@ import woowacourse.movie.feature.history.ReservationHistoryFragment.Companion.TI
 
 @RunWith(AndroidJUnit4::class)
 class ReservationFinishedActivityTest {
-    @get: Rule
+    @get:Rule
     var activityScenarioRule: ActivityScenarioRule<ReservationFinishedActivity>
 
     init {
         saveMockTicket()
-        activityScenarioRule = ActivityScenarioRule<ReservationFinishedActivity>(
-            Intent(
-                ApplicationProvider.getApplicationContext(),
-                ReservationFinishedActivity::class.java,
-            ).apply {
-                putExtra(TICKET_ID, firstMockTicket.uid)
-            },
-        )
+        activityScenarioRule =
+            ActivityScenarioRule<ReservationFinishedActivity>(
+                Intent(
+                    ApplicationProvider.getApplicationContext(),
+                    ReservationFinishedActivity::class.java,
+                ).apply {
+                    putExtra(TICKET_ID, firstMockTicket.uid)
+                },
+            )
     }
 
     @Test
