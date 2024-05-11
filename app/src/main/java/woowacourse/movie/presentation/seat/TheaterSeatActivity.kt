@@ -83,10 +83,8 @@ class TheaterSeatActivity :
 
     override fun navigateToPurchaseConfirmView(reservation: Reservation) {
         postReservationAlarm(reservation)
-        runOnUiThread {
-            PurchaseConfirmationActivity.newIntent(this, reservation.id).also {
-                startActivity(it)
-            }
+        PurchaseConfirmationActivity.newIntent(this, reservation.id).also {
+            startActivity(it)
         }
     }
 

@@ -56,7 +56,11 @@
 
 ### 리뷰 반영
 
-- [ ]: 말리빈 요구 사항 반영 하기
+- [x]: 스피너에 대한 일을 객체로 분리
+- [x]: navigateToPurchaseConfirmation - MVP 방식으로 리팩토링
+- [x]: presenter getter() 삭제
+- [x]: InjectMockKs 애너테이션을 활용하여 테스트 코드 리팩토링
+- [x]: assertion 함수들 assertSoftly 로 묶기  
 
 ----  
 시간 남으면 할 것

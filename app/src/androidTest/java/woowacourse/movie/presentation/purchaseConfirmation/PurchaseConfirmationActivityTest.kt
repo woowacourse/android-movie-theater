@@ -78,7 +78,6 @@ class PurchaseConfirmationActivityTest {
                 1,
             ),
         )
-        Thread.sleep(2000)
         onView(withId(R.id.movie_title_confirmation))
             .check(matches(ViewMatchers.withText(containsString("차람과 하디의 진지한 여행기"))))
         onView(withId(R.id.reserved_information))

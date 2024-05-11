@@ -31,9 +31,7 @@ class ReservationFragment :
     }
 
     override fun showReservations(reservations: List<Reservation>) {
-        requireActivity().runOnUiThread {
-            adapter.updateItems(reservations)
-        }
+        adapter.updateItems(reservations)
     }
 
     override fun navigateToConfirmPurchaseView(reservationId: Long) {

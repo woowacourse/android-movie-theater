@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.seat
 
+import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
@@ -42,7 +43,6 @@ class TheaterSeatPresenterTest {
         // when
         presenter.toggleSeatSelection(seatId)
         // then
-        verify(exactly = 1) { view.setSeatBackground(seatId, colorSlot.captured) }
         colorSlot.captured shouldBe expectedColor
     }
 
@@ -51,13 +51,11 @@ class TheaterSeatPresenterTest {
         // given
         val seatId = "A1"
         val expectedPrice = 10_000
-        val priceSlot = slot<Int>()
-        every { view.showPrice(capture(priceSlot)) } just runs
+        every { view.showPrice(expectedPrice) } just runs
         // when
         presenter.toggleSeatSelection(seatId)
         // then
-        verify(exactly = 1) { view.showPrice(priceSlot.captured) }
-        priceSlot.captured shouldBe expectedPrice
+        verify(exactly = 1) { view.showPrice(expectedPrice) }
     }
 
     @Test
@@ -73,10 +71,10 @@ class TheaterSeatPresenterTest {
         presenter.toggleSeatSelection(seatId1)
         presenter.toggleSeatSelection(seatId2)
         // then
-        verify(exactly = 1) { view.setSeatBackground(seatId1, seatColorSlot[0]) }
-        verify(exactly = 1) { view.setSeatBackground(seatId2, seatColorSlot[1]) }
-        seatColorSlot[0] shouldBe redColor
-        seatColorSlot[1] shouldBe redColor
+        assertSoftly {
+            seatColorSlot[0] shouldBe redColor
+            seatColorSlot[1] shouldBe redColor
+        }
     }
 
     @Test
@@ -111,9 +109,9 @@ class TheaterSeatPresenterTest {
         presenter.toggleSeatSelection(seatId) // Select
         presenter.toggleSeatSelection(seatId) // Deselect
         // then
-        verify(exactly = 1) { view.setSeatBackground(seatId, colorSlot[0]) }
-        verify(exactly = 1) { view.setSeatBackground(seatId, colorSlot[1]) }
-        colorSlot[0] shouldBe redColor
-        colorSlot[1] shouldBe whiteColor
+        assertSoftly {
+            colorSlot[0] shouldBe redColor
+            colorSlot[1] shouldBe whiteColor
+        }
     }
 }

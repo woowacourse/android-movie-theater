@@ -16,7 +16,7 @@ class PurchaseConfirmationPresenterTest {
     @MockK
     private lateinit var repository: MovieRepository
 
-    @MockK
+    @RelaxedMockK
     private lateinit var view: PurchaseConfirmationContract.View
 
     @InjectMockKs
@@ -26,7 +26,7 @@ class PurchaseConfirmationPresenterTest {
     private lateinit var reservation: Reservation
 
     @Test
-    fun `loadReservation을 호출하면 repository에서 데이터를 가져와 view의 showReservation으로 전달한다`() {
+    fun `loadReservation 을 호출하면 repository에서 데이터를 가져와 view 의 showReservation 으로 전달한다`() {
         every { repository.loadReservedMovie(any()) } returns Result.success(reservation)
 
         presenter.loadReservation(1)
@@ -34,6 +34,7 @@ class PurchaseConfirmationPresenterTest {
         verify { view.showReservation(reservation) }
     }
 
+    @Test
     fun `loadReservation을 호출하여 오류가 발생하면 view의 showError를 호출한다`() {
         every { repository.loadReservedMovie(any()) } returns Result.failure(Throwable())
 
