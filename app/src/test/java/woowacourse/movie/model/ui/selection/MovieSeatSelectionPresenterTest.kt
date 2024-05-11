@@ -19,10 +19,13 @@ class MovieSeatSelectionPresenterTest {
 
     @BeforeEach
     fun setUp() {
-        UserTicketRepositoryImpl.initializeRepository(FakeUserTicketDao())
         view = mockk<MovieSeatSelectionContract.View>(relaxed = true)
         presenter =
-            MovieSeatSelectionPresenter(view, ReservationsImpl, UserTicketRepositoryImpl.get())
+            MovieSeatSelectionPresenter(
+                view,
+                ReservationsImpl,
+                UserTicketRepositoryImpl.get(FakeUserTicketDao()),
+            )
         ReservationsImpl.save(
             Reservation(
                 title = "",

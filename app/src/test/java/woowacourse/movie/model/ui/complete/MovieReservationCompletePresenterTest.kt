@@ -18,12 +18,15 @@ class MovieReservationCompletePresenterTest {
 
     @BeforeEach
     fun setUp() {
-        UserTicketRepositoryImpl.initializeRepository(FakeUserTicketDao())
-        UserTicketRepositoryImpl.get().apply {
+        UserTicketRepositoryImpl.get(FakeUserTicketDao()).apply {
             insert(testUserTicket)
         }
         view = mockk<MovieReservationCompleteContract.View>(relaxed = true)
-        presenter = MovieReservationCompletePresenter(view, UserTicketRepositoryImpl.get())
+        presenter =
+            MovieReservationCompletePresenter(
+                view,
+                UserTicketRepositoryImpl.get(FakeUserTicketDao()),
+            )
     }
 
     @Test
