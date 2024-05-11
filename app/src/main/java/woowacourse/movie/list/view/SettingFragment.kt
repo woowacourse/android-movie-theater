@@ -32,7 +32,7 @@ class SettingFragment : Fragment() {
         binding.permissionSwitch.isChecked = isPermissionGranted
         val sharedPreference = requireActivity().getSharedPreferences("notification", AppCompatActivity.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = sharedPreference.edit()
-        binding.permissionSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.permissionSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 editor.putBoolean("notification", true).commit()
             } else {

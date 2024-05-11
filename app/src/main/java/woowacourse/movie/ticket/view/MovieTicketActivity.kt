@@ -33,7 +33,6 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
     }
 
     private fun processPresenterTask() {
-        val a = intent.getSerializableExtra(EXTRA_TICKET_KEY)
         presenter.storeTicketData(intent.getSerializableExtra(EXTRA_TICKET_KEY))
         presenter.setTicketInfo()
         presenter.storeTicketInDb()
