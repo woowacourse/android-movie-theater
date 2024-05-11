@@ -7,6 +7,7 @@ import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import woowacourse.movie.R
 import woowacourse.movie.db.ticket.Ticket
+import woowacourse.movie.feature.history.ReservationHistoryFragment.Companion.TICKET_ID
 import java.time.ZoneId
 import java.time.ZonedDateTime
 
@@ -53,6 +54,7 @@ class ScreeningAlarm(
         val notificationTitle: String = getNotificationTitle()
         val notificationText: String = getNotificationText(ticket)
         return Intent(context, NotificationReceiver::class.java)
+            .putExtra(TICKET_ID, ticket.uid)
             .putExtra(NOTIFICATION_TITLE, notificationTitle)
             .putExtra(NOTIFICATION_TEXT, notificationText)
     }
