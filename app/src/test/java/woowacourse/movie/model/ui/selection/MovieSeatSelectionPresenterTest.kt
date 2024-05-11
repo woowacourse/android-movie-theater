@@ -9,33 +9,18 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.data.database.MovieDatabase
 import woowacourse.movie.data.database.ticket.TicketDao
 import woowacourse.movie.model.RESERVATION_DETAIL
+import woowacourse.movie.model.ui.repository.FakeTicketRepository
 import woowacourse.movie.ui.selection.MovieSeatSelectionContract
 import woowacourse.movie.ui.selection.MovieSeatSelectionPresenter
 
 class MovieSeatSelectionPresenterTest {
-    private lateinit var ticketDao: TicketDao
-    private lateinit var db: MovieDatabase
     private lateinit var presenter: MovieSeatSelectionPresenter
     private lateinit var view: MovieSeatSelectionContract.View
 
     @BeforeEach
     fun setUp() {
-        db =
-            Room.inMemoryDatabaseBuilder(
-                ApplicationProvider.getApplicationContext(),
-                MovieDatabase::class.java,
-            ).build()
-        ticketDao = db.ticketDao()
         view = mockk<MovieSeatSelectionContract.View>(relaxed = true)
-        presenter = MovieSeatSelectionPresenter(view, ticketDao)
-//        UserTicketsImpl.save(
-//            UserTicket(
-//                title = "",
-//                theater = "강남",
-//                screeningStartDateTime = LocalDateTime.of(2024, 3, 28, 10, 0),
-//                seatInformation = SeatInformation(1),
-//            ),
-//        )
+        presenter = MovieSeatSelectionPresenter(view, FakeTicketRepository)
     }
 
     @Test

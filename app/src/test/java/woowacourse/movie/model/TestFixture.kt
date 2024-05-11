@@ -3,6 +3,7 @@ package woowacourse.movie.model
 import woowacourse.movie.domain.MovieContent
 import woowacourse.movie.domain.Seat
 import woowacourse.movie.domain.Theater
+import woowacourse.movie.ui.reservation.ReservationDetail
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime

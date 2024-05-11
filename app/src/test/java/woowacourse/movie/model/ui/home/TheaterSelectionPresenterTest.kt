@@ -9,27 +9,19 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.data.database.MovieDatabase
 import woowacourse.movie.data.database.movie.MovieContentDao
 import woowacourse.movie.data.database.theater.TheaterDao
+import woowacourse.movie.model.ui.repository.FakeMovieContentRepository
+import woowacourse.movie.model.ui.repository.FakeTheaterRepository
 import woowacourse.movie.ui.home.TheaterSelectionContract
 import woowacourse.movie.ui.home.TheaterSelectionPresenter
 
 class TheaterSelectionPresenterTest {
-    private lateinit var movieContentDao: MovieContentDao
-    private lateinit var theaterDao: TheaterDao
-    private lateinit var db: MovieDatabase
     private lateinit var view: TheaterSelectionContract.View
     private lateinit var presenter: TheaterSelectionPresenter
 
     @BeforeEach
     fun setUp() {
-        db =
-            Room.inMemoryDatabaseBuilder(
-                ApplicationProvider.getApplicationContext(),
-                MovieDatabase::class.java,
-            ).build()
-        movieContentDao = db.movieContentDao()
-        theaterDao = db.theaterDao()
         view = mockk<TheaterSelectionContract.View>(relaxed = true)
-        presenter = TheaterSelectionPresenter(view, movieContentDao, theaterDao)
+        presenter = TheaterSelectionPresenter(view, FakeMovieContentRepository, FakeTheaterRepository)
     }
 
     @Test
