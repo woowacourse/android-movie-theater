@@ -1,7 +1,7 @@
 package woowacourse.movie.feature.history.ui
 
-import woowacourse.movie.data.movie.MovieRepository
 import woowacourse.movie.data.ticket.entity.Ticket
+import woowacourse.movie.model.Movie
 import woowacourse.movie.util.formatScreeningDate
 import woowacourse.movie.util.formatScreeningTime
 
@@ -12,9 +12,12 @@ class ReservationHistoryUiModel(
     val theaterName: String,
 ) {
     companion object {
-        fun from(ticket: Ticket): ReservationHistoryUiModel {
+        fun from(
+            movie: Movie,
+            ticket: Ticket,
+        ): ReservationHistoryUiModel {
             return ReservationHistoryUiModel(
-                MovieRepository.getMovieById(ticket.movieId).title,
+                movie.title,
                 ticket.screeningDate.formatScreeningDate(),
                 ticket.screeningTime.formatScreeningTime(),
                 ticket.theaterName,
