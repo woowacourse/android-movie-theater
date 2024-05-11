@@ -64,18 +64,10 @@
             android:paddingHorizontal="30dp" />
 
         <TextView
-            android:id="@+id/purchase_movie_running_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/reserved_information"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp" />
-
-        <TextView
             android:id="@+id/ticket_charge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/purchase_movie_running_time"
+            android:layout_below="@id/reserved_information"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
             android:text="@{@string/total_price(data.totalPrice)}" />
