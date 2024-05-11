@@ -10,6 +10,7 @@
         tools:context=".presentation.setting.SettingFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_push_alarm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent">
