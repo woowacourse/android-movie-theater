@@ -1,17 +1,24 @@
 package woowacourse.movie.ticket.view
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.alarm.MovieBroadcastReceiver
 import woowacourse.movie.database.TicketDatabase.Companion.getDatabase
 import woowacourse.movie.databinding.ActivityMovieTicketBinding
 import woowacourse.movie.ticket.contract.MovieTicketContract
 import woowacourse.movie.ticket.model.DbTicket
 import woowacourse.movie.ticket.presenter.MovieTicketPresenter
 import java.io.Serializable
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
 
 class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
     override val presenter: MovieTicketPresenter = MovieTicketPresenter(this)
@@ -51,6 +58,30 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
         Thread {
             ticketDb.ticketDao().insertAll(ticket)
         }.start()
+
+        val alarmDate =
+            LocalDate.parse(ticket.screeningDate, DateTimeFormatter.ofPattern("yyyy.MM.dd"))
+        val alarmTime =
+            LocalTime.parse(ticket.screeningTime, DateTimeFormatter.ofPattern("HH:mm"))
+                .minusMinutes(30)
+        makeAlarmAtTime(alarmDate, alarmTime, ticket.movieTitle)
+    }
+
+    private fun makeAlarmAtTime(date: LocalDate, time: LocalTime, movieTitle: String) {
+        val intent = Intent(this, MovieBroadcastReceiver::class.java).apply {
+            putExtra("movie_title_key", movieTitle)
+        }
+        val calendar = Calendar.getInstance().apply {
+            timeInMillis = System.currentTimeMillis()
+            set(Calendar.YEAR, date.year)
+            set(Calendar.MONTH, date.monthValue - 1)
+            set(Calendar.DATE, date.dayOfMonth)
+            set(Calendar.HOUR, time.hour)
+            set(Calendar.MINUTE, time.minute)
+        }
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        val alarmIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, alarmIntent)
     }
 
     companion object {

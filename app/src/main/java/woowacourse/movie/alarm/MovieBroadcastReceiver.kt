@@ -14,7 +14,9 @@ import java.util.concurrent.CountDownLatch
 
 class MovieBroadcastReceiver : BroadcastReceiver() {
     private lateinit var tickets: List<DbTicket>
+    private var movieTitle: String? = null
     override fun onReceive(context: Context, intent: Intent?) {
+        movieTitle = intent?.getStringExtra("movie_title_key")
         val latch = CountDownLatch(1)
         loadTicketsFromDb(context, latch)
         latch.await()
@@ -52,11 +54,11 @@ class MovieBroadcastReceiver : BroadcastReceiver() {
 
     private fun setBuilder(
         builder: NotificationCompat.Builder,
-        pendingIntent: PendingIntent?
+        pendingIntent: PendingIntent?,
     ) {
         builder.setSmallIcon(android.R.drawable.ic_popup_reminder)
         builder.setContentTitle("예매 알림")
-        builder.setContentText("30분 후에 상영")
+        builder.setContentText("$movieTitle 30분 후에 상영")
         builder.setContentIntent(pendingIntent)
     }
 }

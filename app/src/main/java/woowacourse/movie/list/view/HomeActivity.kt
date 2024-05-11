@@ -1,7 +1,6 @@
 package woowacourse.movie.list.view
 
 import android.Manifest
-import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
@@ -13,7 +12,6 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.alarm.MovieBroadcastReceiver
 import woowacourse.movie.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
@@ -33,9 +31,6 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
         requestNotificationPermission()
         initBottomNavigation()
-
-        val intent = Intent(this, MovieBroadcastReceiver::class.java)
-        sendBroadcast(intent)
     }
 
     private fun initBottomNavigation() {
