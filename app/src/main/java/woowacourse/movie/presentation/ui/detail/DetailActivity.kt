@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import woowacourse.movie.R
 import woowacourse.movie.data.repository.remote.DummyScreens
 import woowacourse.movie.databinding.ActivityDetailBinding
@@ -29,6 +31,13 @@ class DetailActivity : BaseMvpBindingActivity<ActivityDetailBinding>(), View {
     private val spinnerTimeAdapter: SpinnerTimeAdapter by lazy {
         SpinnerTimeAdapter(this, presenter)
     }
+
+    private val filterActivityLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                finish()
+            }
+        }
 
     override fun initStartView() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -70,8 +79,8 @@ class DetailActivity : BaseMvpBindingActivity<ActivityDetailBinding>(), View {
     }
 
     override fun navigateToSeatSelection(reservationInfo: ReservationInfo) {
-        SeatSelectionActivity.startActivity(this, reservationInfo)
-        navigateBackToPrevious()
+        val intent = SeatSelectionActivity.getIntent(this, reservationInfo)
+        filterActivityLauncher.launch(intent)
     }
 
     override fun navigateBackToPrevious() = runOnUiThread { finish() }
@@ -161,10 +170,12 @@ class DetailActivity : BaseMvpBindingActivity<ActivityDetailBinding>(), View {
             movieId: Int,
             theaterId: Int,
         ) {
-            val intent = Intent(context, DetailActivity::class.java)
+            val intent = getIntent(context)
             intent.putExtra(PUT_EXTRA_KEY_MOVIE_ID, movieId)
             intent.putExtra(PUT_EXTRA_KEY_THEATER_ID, theaterId)
             context.startActivity(intent)
         }
+
+        fun getIntent(context: Context): Intent = Intent(context, DetailActivity::class.java)
     }
 }

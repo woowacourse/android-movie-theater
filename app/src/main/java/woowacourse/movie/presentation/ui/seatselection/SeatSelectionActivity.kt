@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.ui.seatselection
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -16,6 +17,7 @@ import woowacourse.movie.notification.NotificationHandler
 import woowacourse.movie.presentation.base.BaseMvpBindingActivity
 import woowacourse.movie.presentation.model.ReservationInfo
 import woowacourse.movie.presentation.model.UserSeat
+import woowacourse.movie.presentation.ui.detail.DetailActivity
 import woowacourse.movie.presentation.ui.reservation.ReservationActivity
 import woowacourse.movie.presentation.ui.seatselection.SeatSelectionContract.View
 import java.io.Serializable
@@ -27,7 +29,12 @@ class SeatSelectionActivity : BaseMvpBindingActivity<ActivitySeatSelectionBindin
     val repository = ReservationRepositoryImpl(db.dao())
 
     override val presenter: SeatSelectionPresenter by lazy {
-        SeatSelectionPresenter(this, DummyScreens, repository, NotificationHandler(applicationContext))
+        SeatSelectionPresenter(
+            this,
+            DummyScreens,
+            repository,
+            NotificationHandler(applicationContext),
+        )
     }
 
     override fun initStartView() {
@@ -96,6 +103,7 @@ class SeatSelectionActivity : BaseMvpBindingActivity<ActivitySeatSelectionBindin
 
     override fun navigateToReservation(id: Long) {
         ReservationActivity.startActivity(this, id)
+        setResult(Activity.RESULT_OK, DetailActivity.getIntent(this))
         navigateBackToPrevious()
     }
 
@@ -126,13 +134,12 @@ class SeatSelectionActivity : BaseMvpBindingActivity<ActivitySeatSelectionBindin
         private const val PUT_EXTRA_KEY_RESERVATION_INFO = "reservationInfo"
         private const val PUT_STATE_KEY_USER_SEAT = "userSeat"
 
-        fun startActivity(
+        fun getIntent(
             context: Context,
             reservationInfo: ReservationInfo,
-        ) {
+        ): Intent {
             val intent = Intent(context, SeatSelectionActivity::class.java)
-            intent.putExtra(PUT_EXTRA_KEY_RESERVATION_INFO, reservationInfo as Serializable)
-            context.startActivity(intent)
+            return intent.putExtra(PUT_EXTRA_KEY_RESERVATION_INFO, reservationInfo as Serializable)
         }
     }
 }
