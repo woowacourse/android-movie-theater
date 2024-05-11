@@ -34,7 +34,7 @@ class MovieBroadCastReceiver : BroadcastReceiver() {
         val notificationBuilder = NotificationCompat.Builder(context, RESERVATION_NOTIFICATION_ID)
             .setContentTitle("예매 알림")
             .setContentText("$movieTitle 30분 후에 상영")
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_notifications_active_24)
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setAutoCancel(true)
