@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieBookingHistoryBinding
 import woowacourse.movie.model.db.UserTicket
+import woowacourse.movie.model.db.UserTicketDatabase
 import woowacourse.movie.model.db.UserTicketRepositoryImpl
 import woowacourse.movie.ui.booking.adapter.MovieBookingHistoryAdapter
 import woowacourse.movie.ui.complete.MovieReservationCompleteActivity
@@ -20,7 +21,10 @@ class MovieBookingHistoryFragment : Fragment(), MovieBookingHistoryContract.View
     private lateinit var binding: FragmentMovieBookingHistoryBinding
     private val adapter by lazy { movieBookingHistoryAdapter() }
     private val presenter: MovieBookingHistoryPresenter by lazy {
-        MovieBookingHistoryPresenter(this, UserTicketRepositoryImpl.get())
+        MovieBookingHistoryPresenter(
+            this,
+            UserTicketRepositoryImpl.get(UserTicketDatabase.database().userTicketDao()),
+        )
     }
 
     override fun onCreateView(

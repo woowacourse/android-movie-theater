@@ -16,12 +16,11 @@ abstract class UserTicketDatabase : RoomDatabase() {
         private const val ERROR_DATABASE = "데이터베이스가 초기화 되지 않았습니다."
         private var database: UserTicketDatabase? = null
 
-        fun database(context: Context): UserTicketDatabase {
-            initialize(context)
+        fun database(): UserTicketDatabase {
             return database ?: throw IllegalStateException(ERROR_DATABASE)
         }
 
-        private fun initialize(context: Context) {
+        fun initialize(context: Context) {
             if (database == null) {
                 database =
                     Room.databaseBuilder(

@@ -14,12 +14,18 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieSettingBinding
+import woowacourse.movie.model.db.UserTicketDatabase
 import woowacourse.movie.model.db.UserTicketRepositoryImpl
 import woowacourse.movie.ui.MovieSharedPreference
 
 class MovieSettingFragment : Fragment(), MovieSettingContract.View {
     private lateinit var binding: FragmentMovieSettingBinding
-    private val presenter by lazy { MovieSettingPresenter(this, UserTicketRepositoryImpl.get()) }
+    private val presenter by lazy {
+        MovieSettingPresenter(
+            this,
+            UserTicketRepositoryImpl.get(UserTicketDatabase.database().userTicketDao()),
+        )
+    }
     private val sharedPreference: MovieSharedPreference by lazy {
         MovieSharedPreference(requireContext())
     }

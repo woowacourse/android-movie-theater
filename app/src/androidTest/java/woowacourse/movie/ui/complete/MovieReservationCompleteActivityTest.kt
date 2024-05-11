@@ -23,7 +23,7 @@ import java.time.LocalDateTime
 
 @RunWith(AndroidJUnit4::class)
 class MovieReservationCompleteActivityTest {
-    private val userTicket: UserTicket = UserTicketRepositoryImpl.get().find(testUserTicket.id)
+    private val userTicket: UserTicket = UserTicketRepositoryImpl.get(FakeUserTicketDao()).find(testUserTicket.id)
 
     private val intent =
         Intent(
@@ -81,8 +81,7 @@ class MovieReservationCompleteActivityTest {
         @JvmStatic
         @BeforeClass
         fun setUp() {
-            UserTicketRepositoryImpl.initializeRepository(FakeUserTicketDao())
-            UserTicketRepositoryImpl.get().apply {
+            UserTicketRepositoryImpl.get(FakeUserTicketDao()).apply {
                 insert(testUserTicket)
             }
         }

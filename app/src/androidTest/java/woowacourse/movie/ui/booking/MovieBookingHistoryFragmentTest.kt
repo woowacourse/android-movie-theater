@@ -26,8 +26,7 @@ import java.time.LocalDateTime
 class MovieBookingHistoryFragmentTest {
     @Before
     fun setUp() {
-        UserTicketRepositoryImpl.initializeRepository(FakeUserTicketDao())
-        UserTicketRepositoryImpl.get().apply {
+        UserTicketRepositoryImpl.get(FakeUserTicketDao()).apply {
             insert(testUserTicket)
         }
         launchFragmentInContainer<MovieBookingHistoryFragment>()

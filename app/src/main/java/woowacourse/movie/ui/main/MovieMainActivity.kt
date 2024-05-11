@@ -78,7 +78,7 @@ class MovieMainActivity : AppCompatActivity() {
     private val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
-        ) { isGranted: Boolean ->
+        ) { _: Boolean ->
         }
 
     companion object {

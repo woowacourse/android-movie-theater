@@ -13,16 +13,12 @@ class UserTicketRepositoryImpl private constructor(private val userTicketDao: Us
         override fun deleteAll() = userTicketDao.deleteAll()
 
         companion object {
-            private const val ERROR_REPOSITORY = "레포지토리가 초기화 되지 않았습니다."
-
             private var instance: UserTicketRepository? = null
 
-            fun initializeRepository(userTicketDao: UserTicketDao) {
-                if (instance == null) instance = UserTicketRepositoryImpl((userTicketDao))
-            }
-
-            fun get(): UserTicketRepository {
-                return instance ?: throw IllegalStateException(ERROR_REPOSITORY)
+            fun get(userTicketDao: UserTicketDao): UserTicketRepository {
+                return instance ?: synchronized(this) {
+                    instance ?: UserTicketRepositoryImpl(userTicketDao).also { instance = it }
+                }
             }
         }
     }
