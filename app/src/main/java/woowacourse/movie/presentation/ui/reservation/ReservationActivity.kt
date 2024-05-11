@@ -2,6 +2,7 @@ package woowacourse.movie.presentation.ui.reservation
 
 import android.content.Context
 import android.content.Intent
+import android.view.MenuItem
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationBinding
 import woowacourse.movie.domain.db.AppDatabase
@@ -27,6 +28,7 @@ class ReservationActivity : BaseActivity<ActivityReservationBinding>(), View {
     }
 
     override fun initStartView() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         reservationDao = AppDatabase.getDatabase(applicationContext)!!.reservationDao()
         reservationRepository = ReservationRepositoryImpl(reservationDao)
         val id = intent.getLongExtra(PUT_EXTRA_KEY_RESERVATION_ID, DEFAULT_RESERVATION_ID)
@@ -40,6 +42,11 @@ class ReservationActivity : BaseActivity<ActivityReservationBinding>(), View {
     override fun terminateOnError(e: Throwable) {
         showToastMessage(e)
         finish()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        finish()
+        return true
     }
 
     companion object {
