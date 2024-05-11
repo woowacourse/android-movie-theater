@@ -38,4 +38,10 @@ object DummyReservation : ReservationRepository {
             reservations.toList()
         }
     }
+
+    override fun deleteAllReservations(): Result<Unit> {
+        return runCatching {
+            reservations.clear()
+        }
+    }
 }

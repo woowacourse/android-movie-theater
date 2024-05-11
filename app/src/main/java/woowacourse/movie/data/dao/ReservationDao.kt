@@ -15,4 +15,7 @@ interface ReservationDao {
 
     @Query("SELECT * from reservationEntity")
     fun getReservations(): List<ReservationEntity>
+
+    @Query("DELETE FROM reservationEntity")
+    fun deleteAllReservations()
 }

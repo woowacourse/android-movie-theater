@@ -32,4 +32,9 @@ class ReservationRepositoryImpl(private val dao: ReservationDao) : ReservationRe
         runCatching {
             dao.getReservations().toDomain()
         }
+
+    override fun deleteAllReservations(): Result<Unit> =
+        runCatching {
+            dao.deleteAllReservations()
+        }
 }
