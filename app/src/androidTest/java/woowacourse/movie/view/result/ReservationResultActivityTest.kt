@@ -12,10 +12,7 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import androidx.test.platform.app.InstrumentationRegistry
-import org.junit.After
 import org.junit.Before
-import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.R
@@ -59,7 +56,6 @@ class ReservationResultActivityTest {
             )
         Thread.sleep(1000)
     }
-
 
     @Test
     fun `예매한_영화의_제목을_보여준다`() {

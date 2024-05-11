@@ -41,7 +41,7 @@ class ReservationHistoryFragmentTest {
     }
 
     @After
-    fun clearDb(){
+    fun clearDb()  {
         activityRule.scenario.onActivity {
             Thread {
                 repository.clearReservations(it)

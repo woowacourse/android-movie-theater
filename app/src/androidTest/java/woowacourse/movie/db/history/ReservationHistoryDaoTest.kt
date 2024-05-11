@@ -23,7 +23,7 @@ class ReservationHistoryDaoTest {
     }
 
     @After
-    fun closeDb()  {
+    fun closeDb() {
         db.close()
     }
 
