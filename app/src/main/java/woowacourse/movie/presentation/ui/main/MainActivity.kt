@@ -92,6 +92,7 @@ class MainActivity : BaseMvpBindingActivity<ActivityMainBinding>(), MainContract
             if (permissions.values.all { it }) {
                 presenter.changeNotificationMode(true)
             } else {
+                presenter.changeNotificationMode(false)
                 val stringResId =
                     permissions.entries.find { !it.value }?.key?.toPermissionText()
                         ?: R.string.permission_default_text
