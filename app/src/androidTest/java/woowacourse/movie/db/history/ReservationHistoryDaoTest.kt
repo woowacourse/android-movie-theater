@@ -21,12 +21,6 @@ class ReservationHistoryDaoTest {
         reservationDao = db.reservationDao()
     }
 
-//    @After
-//    fun closeDb() {
-//        reservationDao.clearReservations()
-//        db.close()
-//    }
-
     @Test
     fun `티켓_저장과_저장된_데이터의_로드를_확인한다`() {
         // given
@@ -66,17 +60,4 @@ class ReservationHistoryDaoTest {
             assertEquals(seatSelection.theaterSeats.size, expectedReservation?.seatSelection?.theaterSeats?.size)
         }
     }
-
-//    @Test
-//    fun `저장_된_모든_티켓을_삭제하는지_확인한다`() {
-//        // given
-//        val reservationTicket = makeMockTicket().toReservationTicket("영화 제목", "극장 이름")
-//        reservationDao.saveReservationTicket(reservationTicket)
-//        val prevReservationsSize = reservationDao.findReservations().size
-//        reservationDao.clearReservations()
-//        val afterReservationsSize = reservationDao.findReservations().size
-//
-//        // then
-//        assertNotEquals(prevReservationsSize, afterReservationsSize)
-//    }
 }
