@@ -6,17 +6,68 @@
 
     <data>
 
+        <variable
+            name="isNotificationActive"
+            type="Boolean" />
+
+        <variable
+            name="presenter"
+            type="woowacourse.movie.ui.setting.MovieSettingPresenter" />
     </data>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.setting.MovieSettingFragment">
+        android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/layout_notification_setting"
-            layout="@layout/item_setting"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_setting_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/tv_setting_description"
+                app:layout_constraintEnd_toStartOf="@id/switch_setting"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="푸시 알림 수신" />
+
+            <TextView
+                android:id="@+id/tv_setting_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/gray"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/switch_setting"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_setting_title"
+                tools:text="해제하면 푸시 알림을 수신할 수 없습니다." />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@{isNotificationActive}"
+                android:onCheckedChanged="@{(buttonView, isChecked) -> presenter.updateNotificationSelection(isChecked)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

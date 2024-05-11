@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.selection
 
+import woowacourse.movie.model.movie.AlarmItem
 import woowacourse.movie.model.movie.ReservationDetail
 import woowacourse.movie.model.movie.Seat
 import woowacourse.movie.model.movie.SeatInformation
@@ -54,6 +55,7 @@ class MovieSeatSelectionPresenter(
     override fun completeReservation() {
         thread {
             val ticketId = userTicketDataSource.save(userTicket.toTicketEntity())
+            view.setAlarm(userTicket.screeningStartDateTime, userTicket.title)
             view.navigateToCompleteScreen(ticketId)
         }
     }

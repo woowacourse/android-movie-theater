@@ -16,6 +16,8 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieSeatSelectionBinding
+import woowacourse.movie.model.movie.AlarmItem
+import woowacourse.movie.model.movie.AlarmScheduler
 import woowacourse.movie.model.movie.MovieDatabase
 import woowacourse.movie.model.movie.ReservationDetail
 import woowacourse.movie.model.movie.Seat
@@ -24,6 +26,7 @@ import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.complete.MovieReservationCompleteActivity
 import woowacourse.movie.ui.reservation.MovieReservationKey.RESERVATION_DETAIL
 import woowacourse.movie.ui.utils.positionToIndex
+import java.time.LocalDateTime
 
 class MovieSeatSelectionActivity :
     BaseActivity<MovieSeatSelectionPresenter>(),
@@ -147,6 +150,11 @@ class MovieSeatSelectionActivity :
         runOnUiThread {
             binding.title = title
         }
+    }
+
+    override fun setAlarm(reservedTime: LocalDateTime, movieTitle: String) {
+        val scheduler = AlarmScheduler(this)
+        scheduler.setSchedule(AlarmItem(reservedTime, getString(R.string.notification_reservation_title), getString(R.string.notification_reservation_subtitle, movieTitle)))
     }
 
     override fun navigateToCompleteScreen(ticketId: Long) {

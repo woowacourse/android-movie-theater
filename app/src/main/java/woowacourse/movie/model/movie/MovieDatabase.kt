@@ -1,6 +1,7 @@
 package woowacourse.movie.model.movie
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -17,7 +18,8 @@ import woowacourse.movie.model.movie.TicketContract.MOVIE_DATABASE
         TheaterEntity::class,
         MovieContentEntity::class,
     ],
-    version = 6,
+    version = 7,
+    autoMigrations = [AutoMigration(6, 7)]
 )
 abstract class MovieDatabase : RoomDatabase() {
     abstract fun ticketDao(): TicketDao

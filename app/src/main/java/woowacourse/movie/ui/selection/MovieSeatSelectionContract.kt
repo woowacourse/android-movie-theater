@@ -2,6 +2,7 @@ package woowacourse.movie.ui.selection
 
 import woowacourse.movie.model.movie.ReservationDetail
 import woowacourse.movie.ui.HandleError
+import java.time.LocalDateTime
 
 interface MovieSeatSelectionContract {
     interface View : HandleError {
@@ -21,6 +22,8 @@ interface MovieSeatSelectionContract {
         fun showMovieTitle(title: String)
 
         fun navigateToCompleteScreen(ticketId: Long)
+
+        fun setAlarm(reservedTime: LocalDateTime, movieTitle: String)
     }
 
     interface Presenter {
