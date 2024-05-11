@@ -59,4 +59,19 @@ class ReservationDbTest {
         val expected = reservationRef
         assertThat(actual).isEqualTo(expected)
     }
+
+    @Test
+    fun `모든_예매_데이터를_불러온다`() {
+        movieDao.insert(Movie.STUB_A.toDto())
+        theaterDao.insert(Theater.STUB_A.toDto())
+        val screeningRefDto = ScreeningRef.STUB.toDto()
+        screeningRefDao.insert(screeningRefDto)
+
+        val reservationRef = ReservationRef.STUB
+        reservationRefDao.insert(reservationRef.toDto())
+        val actual = reservationRefDao.findAll().map { it.toReservationRef() }
+
+        val expected = listOf(reservationRef)
+        assertThat(actual).isEqualTo(expected)
+    }
 }

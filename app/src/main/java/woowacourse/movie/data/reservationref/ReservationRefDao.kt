@@ -11,4 +11,7 @@ interface ReservationRefDao {
 
     @Query("select * from reservationRefs where id == :id")
     fun findById(id: Long): ReservationRefDto?
+
+    @Query("select * from reservationRefs")
+    fun findAll(): List<ReservationRefDto>
 }
