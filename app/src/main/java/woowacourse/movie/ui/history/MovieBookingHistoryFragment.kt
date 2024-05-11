@@ -9,11 +9,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieBookingHistoryBinding
-import woowacourse.movie.model.movie.MovieDatabase
-import woowacourse.movie.model.movie.TicketDao
-import woowacourse.movie.model.movie.TicketEntity
-import woowacourse.movie.model.movie.UserTicket
-import woowacourse.movie.model.movie.toUserTicket
+import woowacourse.movie.data.database.MovieDatabase
+import woowacourse.movie.data.database.ticket.TicketDao
+import woowacourse.movie.data.database.ticket.TicketEntity
+import woowacourse.movie.domain.UserTicket
+import woowacourse.movie.domain.mapper.toUserTicket
 import woowacourse.movie.ui.HandleError
 import woowacourse.movie.ui.complete.MovieReservationCompleteActivity
 import woowacourse.movie.ui.complete.MovieReservationCompleteKey.TICKET_ID

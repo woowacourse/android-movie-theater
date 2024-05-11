@@ -2,6 +2,8 @@ package woowacourse.movie.model.movie
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import woowacourse.movie.domain.ScreeningDate
+import woowacourse.movie.domain.ScreeningTime
 import java.time.LocalDate
 
 class ScreeningDateTest {

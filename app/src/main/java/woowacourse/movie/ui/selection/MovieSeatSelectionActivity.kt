@@ -16,15 +16,15 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieSeatSelectionBinding
-import woowacourse.movie.model.movie.AlarmItem
-import woowacourse.movie.model.movie.AlarmScheduler
-import woowacourse.movie.model.movie.MovieDatabase
-import woowacourse.movie.model.movie.ReservationDetail
-import woowacourse.movie.model.movie.Seat
-import woowacourse.movie.model.movie.TicketDao
+import woowacourse.movie.ui.notification.AlarmItem
+import woowacourse.movie.ui.notification.AlarmScheduler
+import woowacourse.movie.data.database.MovieDatabase
+import woowacourse.movie.domain.Seat
+import woowacourse.movie.data.database.ticket.TicketDao
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.complete.MovieReservationCompleteActivity
 import woowacourse.movie.ui.reservation.MovieReservationKey.RESERVATION_DETAIL
+import woowacourse.movie.ui.reservation.ReservationDetail
 import woowacourse.movie.ui.utils.positionToIndex
 import java.time.LocalDateTime
 

@@ -13,8 +13,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.model.movie.MovieDatabase
-import woowacourse.movie.model.movie.TicketEntity
+import woowacourse.movie.data.database.MovieDatabase
+import woowacourse.movie.model.TicketEntity
 import woowacourse.movie.ui.selection.MovieSeatSelectionKey
 
 @RunWith(AndroidJUnit4::class)

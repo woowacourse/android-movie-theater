@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemBookingHistoryBinding
-import woowacourse.movie.model.movie.UserTicket
+import woowacourse.movie.domain.UserTicket
 import java.time.format.DateTimeFormatter
 
 class BookingHistoryAdapter(

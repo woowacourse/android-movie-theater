@@ -11,7 +11,7 @@
 
         <variable
             name="theater"
-            type="woowacourse.movie.model.movie.Theater" />
+            type="woowacourse.movie.domain.Theater" />
 
         <variable
             name="onClickListener"

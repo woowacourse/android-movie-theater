@@ -1,6 +1,9 @@
 package woowacourse.movie.ui.complete
 
-import woowacourse.movie.model.movie.TicketDao
+import woowacourse.movie.data.database.ticket.TicketDao
+import woowacourse.movie.data.database.ticket.TicketEntity
+import woowacourse.movie.domain.mapper.toUserTicket
+import java.lang.IllegalStateException
 import kotlin.concurrent.thread
 
 class MovieReservationCompletePresenter(
@@ -10,10 +13,13 @@ class MovieReservationCompletePresenter(
     MovieReservationCompleteContract.Presenter {
     override fun loadTicket(ticketId: Long) {
         try {
+            var ticketEntity: TicketEntity? = null
             thread {
-                val userTicket = userTicketDataSource.find(ticketId)
-                view.showReservationResult(userTicket)
-            }
+                ticketEntity = userTicketDataSource.find(ticketId)
+            }.join()
+            ticketEntity?.let {
+                view.showReservationResult(it.toUserTicket())
+            } ?: view.showError(IllegalStateException())
         } catch (e: NoSuchElementException) {
             view.showError(e)
         }

@@ -10,10 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieHomeBinding
-import woowacourse.movie.model.movie.MovieContent
-import woowacourse.movie.model.movie.MovieContentDao
-import woowacourse.movie.model.movie.MovieDatabase
-import woowacourse.movie.ui.ReservationButtonClickListener
+import woowacourse.movie.domain.MovieContent
+import woowacourse.movie.data.database.movie.MovieContentDao
+import woowacourse.movie.data.database.MovieDatabase
 import woowacourse.movie.ui.home.adapter.MovieContentAdapter
 
 class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonClickListener {

@@ -1,6 +1,6 @@
 package woowacourse.movie.ui.home
 
-import woowacourse.movie.model.movie.Theater
+import woowacourse.movie.domain.Theater
 import woowacourse.movie.ui.HandleError
 
 interface TheaterSelectionContract {

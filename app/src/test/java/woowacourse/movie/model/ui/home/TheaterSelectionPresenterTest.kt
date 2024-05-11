@@ -1,22 +1,34 @@
 package woowacourse.movie.model.ui.home
 
+import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.model.data.MovieContentsImpl
-import woowacourse.movie.model.data.TheatersImpl
+import woowacourse.movie.data.database.movie.MovieContentDao
+import woowacourse.movie.data.database.MovieDatabase
+import woowacourse.movie.data.database.theater.TheaterDao
 import woowacourse.movie.ui.home.TheaterSelectionContract
 import woowacourse.movie.ui.home.TheaterSelectionPresenter
 
 class TheaterSelectionPresenterTest {
+    private lateinit var movieContentDao: MovieContentDao
+    private lateinit var theaterDao: TheaterDao
+    private lateinit var db: MovieDatabase
     private lateinit var view: TheaterSelectionContract.View
     private lateinit var presenter: TheaterSelectionPresenter
 
     @BeforeEach
     fun setUp() {
+        db = Room.inMemoryDatabaseBuilder(
+            ApplicationProvider.getApplicationContext(),
+            MovieDatabase::class.java
+        ).build()
+        movieContentDao = db.movieContentDao()
+        theaterDao = db.theaterDao()
         view = mockk<TheaterSelectionContract.View>(relaxed = true)
-        presenter = TheaterSelectionPresenter(view, MovieContentsImpl, TheatersImpl)
+        presenter = TheaterSelectionPresenter(view, movieContentDao, theaterDao)
     }
 
     @Test

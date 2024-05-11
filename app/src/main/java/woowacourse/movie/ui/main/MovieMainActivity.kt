@@ -14,8 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieMainBinding
-import woowacourse.movie.model.MoviePreferencesUtil
-import woowacourse.movie.model.movie.AlarmReceiver
+import woowacourse.movie.data.preferences.MoviePreferencesUtil
+import woowacourse.movie.ui.notification.AlarmReceiver
 import woowacourse.movie.ui.history.MovieBookingHistoryFragment
 import woowacourse.movie.ui.home.MovieHomeFragment
 import woowacourse.movie.ui.setting.MovieSettingFragment

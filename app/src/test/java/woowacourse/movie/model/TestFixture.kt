@@ -1,9 +1,10 @@
 package woowacourse.movie.model
 
-import woowacourse.movie.model.movie.MovieContent
-import woowacourse.movie.model.movie.Seat
-import woowacourse.movie.model.movie.Theater
+import woowacourse.movie.domain.MovieContent
+import woowacourse.movie.domain.Seat
+import woowacourse.movie.domain.Theater
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 val movieContent =
@@ -37,6 +38,13 @@ fun makeTheater(name: String): Theater {
             ),
     )
 }
+
+val RESERVATION_DETAIL = ReservationDetail(
+    title = "",
+    theater = "강남",
+    screeningDateTime = LocalDateTime.of(2024, 3, 28, 10, 0),
+    count = 1
+)
 
 val A1_SEAT = Seat(0, 0)
 val A2_SEAT = Seat(0, 1)

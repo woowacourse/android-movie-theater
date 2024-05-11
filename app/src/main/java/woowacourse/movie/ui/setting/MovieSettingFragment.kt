@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieSettingBinding
-import woowacourse.movie.model.MoviePreferencesUtil
+import woowacourse.movie.data.preferences.MoviePreferencesUtil
 
 class MovieSettingFragment : Fragment(), MovieSettingContract.View {
     private var _binding: FragmentMovieSettingBinding? = null

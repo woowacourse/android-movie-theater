@@ -4,16 +4,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieReservationCompleteBinding
-import woowacourse.movie.model.movie.MovieDatabase
-import woowacourse.movie.model.movie.TicketDao
-import woowacourse.movie.model.movie.TicketEntity
+import woowacourse.movie.data.database.MovieDatabase
+import woowacourse.movie.data.database.ticket.TicketDao
+import woowacourse.movie.domain.UserTicket
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.main.MovieMainActivity
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class MovieReservationCompleteActivity :
     BaseActivity<MovieReservationCompletePresenter>(),
@@ -39,11 +43,9 @@ class MovieReservationCompleteActivity :
 
     private fun userTicketId() = intent.getLongExtra(MovieReservationCompleteKey.TICKET_ID, USER_TICKET_ID_DEFAULT_VALUE)
 
-    override fun showReservationResult(userTicket: TicketEntity) {
-        runOnUiThread {
-            binding.userTicket = userTicket
-            binding.executePendingBindings()
-        }
+    override fun showReservationResult(userTicket: UserTicket) {
+        binding.userTicket = userTicket
+        binding.executePendingBindings()
     }
 
     override fun showError(throwable: Throwable) {
@@ -78,4 +80,29 @@ class MovieReservationCompleteActivity :
         private val TAG = MovieReservationCompleteActivity::class.simpleName
         private const val USER_TICKET_ID_DEFAULT_VALUE = -1L
     }
+}
+
+@BindingAdapter("userTicket")
+fun setReservationResult(
+    textView: TextView,
+    userTicket: UserTicket,
+) {
+    textView.text =
+        textView.context.getString(
+            R.string.complete_reservation_result,
+            userTicket.seatInformation.reservationCount,
+            userTicket.seatInformation.selectedSeat.joinToString(),
+            userTicket.theater,
+        )
+}
+
+@BindingAdapter("reservedDateTime")
+fun setReservedDateTime(
+    textView: TextView,
+    dateTime: LocalDateTime,
+) {
+    val context = textView.context
+    val dateTimeFormat = context.getString(R.string.reservation_screening_date_time_format)
+    val dateTimePattern = DateTimeFormatter.ofPattern(dateTimeFormat)
+    textView.text = dateTime.format(dateTimePattern)
 }

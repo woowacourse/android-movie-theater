@@ -1,11 +1,11 @@
 package woowacourse.movie.ui.selection
 
-import woowacourse.movie.model.movie.ReservationDetail
-import woowacourse.movie.model.movie.Seat
-import woowacourse.movie.model.movie.SeatInformation
-import woowacourse.movie.model.movie.TicketDao
-import woowacourse.movie.model.movie.UserTicket
-import woowacourse.movie.model.movie.toTicketEntity
+import woowacourse.movie.domain.Seat
+import woowacourse.movie.domain.SeatInformation
+import woowacourse.movie.data.database.ticket.TicketDao
+import woowacourse.movie.domain.UserTicket
+import woowacourse.movie.domain.mapper.toTicketEntity
+import woowacourse.movie.ui.reservation.ReservationDetail
 import woowacourse.movie.ui.utils.positionToIndex
 import kotlin.concurrent.thread
 

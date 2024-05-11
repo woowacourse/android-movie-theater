@@ -14,9 +14,9 @@ import org.hamcrest.Matchers.not
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.model.movie.MovieDatabase
-import woowacourse.movie.model.movie.ReservationDetail
-import woowacourse.movie.model.movie.TicketEntity
+import woowacourse.movie.data.database.MovieDatabase
+import woowacourse.movie.model.ReservationDetail
+import woowacourse.movie.model.TicketEntity
 import woowacourse.movie.ui.reservation.MovieReservationKey
 import java.time.LocalDateTime
 

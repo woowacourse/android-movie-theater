@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemTheaterBinding
-import woowacourse.movie.model.movie.Theater
+import woowacourse.movie.domain.Theater
 
 class TheaterAdapter(
     private val theaters: List<Theater>,

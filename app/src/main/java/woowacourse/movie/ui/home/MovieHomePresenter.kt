@@ -1,8 +1,8 @@
 package woowacourse.movie.ui.home
 
-import woowacourse.movie.model.movie.MovieContentDao
-import woowacourse.movie.model.movie.MovieContentEntity
-import woowacourse.movie.model.movie.toMovieContent
+import woowacourse.movie.data.database.movie.MovieContentDao
+import woowacourse.movie.data.database.movie.MovieContentEntity
+import woowacourse.movie.domain.mapper.toMovieContent
 import kotlin.concurrent.thread
 
 class MovieHomePresenter(

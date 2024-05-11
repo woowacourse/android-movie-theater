@@ -1,7 +1,7 @@
 package woowacourse.movie.ui.selection
 
-import woowacourse.movie.model.movie.ReservationDetail
 import woowacourse.movie.ui.HandleError
+import woowacourse.movie.ui.reservation.ReservationDetail
 import java.time.LocalDateTime
 
 interface MovieSeatSelectionContract {

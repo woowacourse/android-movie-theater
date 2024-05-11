@@ -1,6 +1,6 @@
 package woowacourse.movie.ui.setting
 
-import woowacourse.movie.model.MoviePreferencesUtil
+import woowacourse.movie.data.preferences.MoviePreferencesUtil
 
 class MovieSettingPresenter(
     private val view: MovieSettingContract.View,

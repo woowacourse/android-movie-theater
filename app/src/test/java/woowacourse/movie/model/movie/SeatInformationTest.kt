@@ -6,6 +6,8 @@ import woowacourse.movie.model.A1_SEAT
 import woowacourse.movie.model.A2_SEAT
 import woowacourse.movie.model.B1_SEAT
 import woowacourse.movie.model.B2_SEAT
+import woowacourse.movie.domain.Seat
+import woowacourse.movie.domain.SeatInformation
 
 class SeatInformationTest {
     @Test

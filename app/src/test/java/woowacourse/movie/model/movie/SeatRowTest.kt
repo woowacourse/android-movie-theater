@@ -2,6 +2,7 @@ package woowacourse.movie.model.movie
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import woowacourse.movie.domain.SeatRow
 
 class SeatRowTest {
     @Test
