@@ -23,7 +23,7 @@ class SelectSeatPresenterTest {
 
     @BeforeEach
     fun setUp() {
-        view = mockk<SelectSeatContract.View>()
+        view = mockk<SelectSeatContract.View>(relaxed = true)
         presenter = SelectSeatPresenter(view, DummyMovies)
     }
 
