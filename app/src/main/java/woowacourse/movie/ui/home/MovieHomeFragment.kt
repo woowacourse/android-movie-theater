@@ -21,7 +21,9 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonC
     private val binding: FragmentMovieHomeBinding
         get() = _binding!!
     private val presenter: MovieHomePresenter by lazy { generatePresenter() }
-    private val dao: MovieContentDao by lazy { MovieDatabase.getDatabase(requireContext()).movieContentDao() }
+    private val dao: MovieContentDao by lazy {
+        MovieDatabase.getDatabase(requireContext()).movieContentDao()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

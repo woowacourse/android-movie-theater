@@ -26,6 +26,7 @@ class AlarmScheduler(private val context: Context) {
     fun setSchedule(item: AlarmItem) {
         val intent = Intent(context, AlarmReceiver::class.java)
             .setAction("alert")
+            .putExtra(EXTRA_ID, item.targetId)
             .putExtra(EXTRA_TITLE, item.title)
             .putExtra(EXTRA_SUBTITLE, item.subTitle)
 
@@ -39,7 +40,7 @@ class AlarmScheduler(private val context: Context) {
         alarmManager.setAlarmClock(
             AlarmManager.AlarmClockInfo(
                 ZonedDateTime.of(item.dateTime.minusMinutes(30), ZoneId.systemDefault()).toInstant()
-                .toEpochMilli(),
+                    .toEpochMilli(),
                 pendingIntent
             ),
             pendingIntent,
@@ -47,6 +48,7 @@ class AlarmScheduler(private val context: Context) {
     }
 
     companion object {
+        const val EXTRA_ID = "id"
         const val EXTRA_TITLE = "title"
         const val EXTRA_SUBTITLE = "subtitle"
     }

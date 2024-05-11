@@ -153,12 +153,14 @@ class MovieSeatSelectionActivity :
     }
 
     override fun setAlarm(
+        reservationId: Long,
         reservedTime: LocalDateTime,
         movieTitle: String,
     ) {
         val scheduler = AlarmScheduler(this)
         scheduler.setSchedule(
             AlarmItem(
+                reservationId,
                 reservedTime,
                 getString(R.string.notification_reservation_title),
                 getString(R.string.notification_reservation_subtitle, movieTitle),

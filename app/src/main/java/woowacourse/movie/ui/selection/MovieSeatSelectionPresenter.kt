@@ -54,7 +54,7 @@ class MovieSeatSelectionPresenter(
     override fun completeReservation() {
         thread {
             val ticketId = userTicketDataSource.save(userTicket.toTicketEntity())
-            view.setAlarm(userTicket.screeningStartDateTime, userTicket.title)
+            view.setAlarm(ticketId, userTicket.screeningStartDateTime, userTicket.title)
             view.navigateToCompleteScreen(ticketId)
         }
     }
