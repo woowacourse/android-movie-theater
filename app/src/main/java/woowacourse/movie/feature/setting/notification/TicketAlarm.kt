@@ -17,13 +17,20 @@ class TicketAlarm(private val context: Context) {
     private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
     fun setReservationAlarm(ticket: Ticket) {
+        val screeningDateTime = LocalDateTime.of(ticket.screeningDate, ticket.screeningTime)
+        if (isBeforeToday(screeningDateTime)) return
+
         val alarmTimeInMillis =
-            LocalDateTime.of(ticket.screeningDate, ticket.screeningTime)
+            screeningDateTime
                 .minusMinutes(TICKET_ALARM_INTERVAL_MINUTE)
                 .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
         val alarmPendingIntent = alarmPendingIntent(ticket)
         alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarmTimeInMillis, alarmPendingIntent)
+    }
+
+    private fun isBeforeToday(screeningDateTime: LocalDateTime): Boolean {
+        return screeningDateTime.isBefore(LocalDateTime.now())
     }
 
     fun cancelReservationAlarm(ticket: Ticket) {
