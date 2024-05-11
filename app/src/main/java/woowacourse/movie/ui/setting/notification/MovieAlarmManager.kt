@@ -25,16 +25,18 @@ object MovieAlarmManager {
                 putExtra(MovieSettingKey.TICKET_ID, userTicketId)
             }
 
-        val alarmTime =
-            screeningStartDateTime
-                .minusMinutes(ALARM_OFFSET)
-                .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+        if (isReservationAfterCurrentTime(screeningStartDateTime)) {
+            val alarmTime =
+                screeningStartDateTime
+                    .minusMinutes(ALARM_OFFSET)
+                    .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
-        alarmManager.setAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            alarmTime,
-            makePendingIntent(context, userTicketId.toInt(), intent),
-        )
+            alarmManager.setAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                alarmTime,
+                makePendingIntent(context, userTicketId.toInt(), intent),
+            )
+        }
     }
 
     fun cancelAlarm(
@@ -57,4 +59,8 @@ object MovieAlarmManager {
             intent,
             PendingIntent.FLAG_IMMUTABLE,
         )
+
+    private fun isReservationAfterCurrentTime(screeningStartDateTime: LocalDateTime): Boolean {
+        return screeningStartDateTime.isAfter(LocalDateTime.now())
+    }
 }
