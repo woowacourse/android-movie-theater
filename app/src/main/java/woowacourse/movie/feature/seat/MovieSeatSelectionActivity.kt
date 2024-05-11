@@ -13,11 +13,12 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
-import woowacourse.movie.MovieTheaterApplication
 import woowacourse.movie.R
 import woowacourse.movie.data.movie.MovieRepository
 import woowacourse.movie.data.reservation.Reservation
 import woowacourse.movie.data.reservation.ReservationRepositoryImpl
+import woowacourse.movie.data.ticket.TicketDatabase
+import woowacourse.movie.data.ticket.TicketRepositoryImpl
 import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.databinding.ActivityMovieSeatSelectionBinding
 import woowacourse.movie.feature.result.MovieResultActivity
@@ -33,6 +34,7 @@ import woowacourse.movie.util.MovieIntentConstant.KEY_NOTIFICATION
 import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_SEAT_POSITIONS
+import woowacourse.movie.util.MovieSharedPreferences
 import woowacourse.movie.util.formatSeat
 
 class MovieSeatSelectionActivity :
@@ -48,6 +50,8 @@ class MovieSeatSelectionActivity :
     }
     private val ticketAlarm by lazy { TicketAlarm(this) }
     private lateinit var reservation: Reservation
+    private val ticketRepository by lazy { TicketRepositoryImpl(TicketDatabase.instance(application).ticketDao()) }
+    private val movieSharedPreferences by lazy { MovieSharedPreferences.instance(application) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,7 +118,7 @@ class MovieSeatSelectionActivity :
         AlertDialog.Builder(this).setTitle("예매 확인").setMessage("정말 예매하시겠습니까?")
             .setPositiveButton("예매 완료") { _, _ ->
                 presenter.reserveMovie(
-                    ticketRepository = (application as MovieTheaterApplication).ticketRepository,
+                    ticketRepository = ticketRepository,
                     reservation = reservation,
                     selectedSeats = movieSelectedSeats,
                 )
@@ -138,9 +142,7 @@ class MovieSeatSelectionActivity :
     }
 
     override fun setTicketAlarm(ticket: Ticket) {
-        val sharedPreferencesManager =
-            (application as MovieTheaterApplication).sharedPreferencesManager
-        if (!sharedPreferencesManager.getBoolean(KEY_NOTIFICATION, DEFAULT_VALUE_NOTIFICATION)) {
+        if (!movieSharedPreferences.getBoolean(KEY_NOTIFICATION, DEFAULT_VALUE_NOTIFICATION)) {
             return
         }
         ticketAlarm.setReservationAlarm(ticket)

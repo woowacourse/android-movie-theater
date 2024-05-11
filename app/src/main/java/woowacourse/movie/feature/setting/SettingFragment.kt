@@ -11,13 +11,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import woowacourse.movie.MovieTheaterApplication
+import woowacourse.movie.data.ticket.TicketDatabase
+import woowacourse.movie.data.ticket.TicketRepositoryImpl
 import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.feature.setting.notification.TicketAlarm
 import woowacourse.movie.util.BaseFragment
 import woowacourse.movie.util.MovieIntentConstant.DEFAULT_VALUE_NOTIFICATION
 import woowacourse.movie.util.MovieIntentConstant.KEY_NOTIFICATION
+import woowacourse.movie.util.MovieSharedPreferences
 
 class SettingFragment :
     BaseFragment<SettingContract.Presenter>(),
@@ -26,8 +28,9 @@ class SettingFragment :
     private val binding get() = _binding!!
 
     private val ticketAlarm by lazy { TicketAlarm(requireContext()) }
-    private val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
+    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
+    private val movieSharedPreferences by lazy { MovieSharedPreferences.instance(requireActivity().application) }
+    private val ticketRepository by lazy { TicketRepositoryImpl(TicketDatabase.instance(requireActivity().application).ticketDao()) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,14 +81,13 @@ class SettingFragment :
     }
 
     private fun initializeNotificationSwitch() {
-        val sharedPreferencesManager = (requireActivity().application as MovieTheaterApplication).sharedPreferencesManager
-        binding.switchNotification.isChecked = sharedPreferencesManager.getBoolean(KEY_NOTIFICATION, DEFAULT_VALUE_NOTIFICATION)
+        binding.switchNotification.isChecked = movieSharedPreferences.getBoolean(KEY_NOTIFICATION, DEFAULT_VALUE_NOTIFICATION)
         binding.switchNotification.setOnCheckedChangeListener { _, isChecked ->
-            sharedPreferencesManager.setBoolean(KEY_NOTIFICATION, isChecked)
+            movieSharedPreferences.setBoolean(KEY_NOTIFICATION, isChecked)
             if (isChecked) {
-                presenter.setTicketsAlarm((requireActivity().application as MovieTheaterApplication).ticketRepository)
+                presenter.setTicketsAlarm(ticketRepository)
             } else {
-                presenter.cancelTicketsAlarm((requireActivity().application as MovieTheaterApplication).ticketRepository)
+                presenter.cancelTicketsAlarm(ticketRepository)
             }
         }
     }

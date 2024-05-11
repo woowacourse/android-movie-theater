@@ -67,7 +67,7 @@ class MovieResultActivityTest {
     companion object {
         private val ticketRepository =
             TicketRepositoryImpl(
-                TicketDatabase.getInstance(ApplicationProvider.getApplicationContext()).ticketDao(),
+                TicketDatabase.instance(ApplicationProvider.getApplicationContext()).ticketDao(),
             )
 
         @JvmStatic

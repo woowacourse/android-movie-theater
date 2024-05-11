@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import woowacourse.movie.data.ticket.entity.Ticket
+import kotlin.concurrent.Volatile
 
 @Database(entities = [Ticket::class], version = 1)
 @TypeConverters(TicketConverters::class)
@@ -13,14 +14,17 @@ abstract class TicketDatabase : RoomDatabase() {
     abstract fun ticketDao(): TicketDao
 
     companion object {
+        @Volatile
         private var instance: TicketDatabase? = null
 
-        fun getInstance(context: Context): TicketDatabase {
+        fun instance(context: Context): TicketDatabase {
             return instance ?: run {
-                val newInstance =
-                    Room.databaseBuilder(context, TicketDatabase::class.java, "ticket").build()
-                instance = newInstance
-                newInstance
+                synchronized(this) {
+                    val newInstance =
+                        Room.databaseBuilder(context, TicketDatabase::class.java, "ticket").build()
+                    instance = newInstance
+                    newInstance
+                }
             }
         }
     }

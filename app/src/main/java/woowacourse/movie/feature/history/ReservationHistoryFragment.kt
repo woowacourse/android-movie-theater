@@ -4,7 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import woowacourse.movie.MovieTheaterApplication
+import woowacourse.movie.data.ticket.TicketDatabase
+import woowacourse.movie.data.ticket.TicketRepositoryImpl
 import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.feature.history.adapter.ReservationHistoryAdapter
@@ -18,6 +19,7 @@ class ReservationHistoryFragment :
     private var _binding: FragmentReservationHistoryBinding? = null
     private val binding get() = _binding!!
     private lateinit var reservationHistoryAdapter: ReservationHistoryAdapter
+    private val ticketRepository by lazy { TicketRepositoryImpl(TicketDatabase.instance(requireActivity().application).ticketDao()) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,9 +47,7 @@ class ReservationHistoryFragment :
 
     override fun onResume() {
         super.onResume()
-        presenter.loadTickets(
-            (requireActivity().application as MovieTheaterApplication).ticketRepository,
-        )
+        presenter.loadTickets(ticketRepository)
     }
 
     override fun onDestroyView() {

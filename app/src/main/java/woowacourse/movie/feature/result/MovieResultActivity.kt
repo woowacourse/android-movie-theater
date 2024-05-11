@@ -8,8 +8,9 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
-import woowacourse.movie.MovieTheaterApplication
 import woowacourse.movie.R
+import woowacourse.movie.data.ticket.TicketDatabase
+import woowacourse.movie.data.ticket.TicketRepositoryImpl
 import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.databinding.ActivityMovieResultBinding
 import woowacourse.movie.feature.MovieMainActivity
@@ -22,6 +23,7 @@ class MovieResultActivity :
     BaseActivity<MovieResultContract.Presenter>(),
     MovieResultContract.View {
     private lateinit var binding: ActivityMovieResultBinding
+    private val ticketRepository by lazy { TicketRepositoryImpl(TicketDatabase.instance(application).ticketDao()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,10 +39,7 @@ class MovieResultActivity :
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setUpBackButtonAction()
 
-        presenter.loadTicket(
-            (application as MovieTheaterApplication).ticketRepository,
-            intent.getLongExtra(KEY_TICKET_ID, INVALID_VALUE_TICKET_ID),
-        )
+        presenter.loadTicket(ticketRepository, intent.getLongExtra(KEY_TICKET_ID, INVALID_VALUE_TICKET_ID))
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -2,8 +2,9 @@ package woowacourse.movie.util
 
 import android.content.Context
 import androidx.core.content.edit
+import kotlin.concurrent.Volatile
 
-class SharedPreferencesManager(context: Context) {
+class MovieSharedPreferences private constructor(context: Context) {
     private val sharedPreferences by lazy {
         context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
     }
@@ -27,5 +28,18 @@ class SharedPreferencesManager(context: Context) {
 
     companion object {
         private const val PREFERENCES_NAME = "shared_preferences"
+
+        @Volatile
+        private var instance: MovieSharedPreferences? = null
+
+        fun instance(context: Context): MovieSharedPreferences {
+            return instance ?: run {
+                synchronized(this) {
+                    val newInstance = MovieSharedPreferences(context)
+                    instance = newInstance
+                    newInstance
+                }
+            }
+        }
     }
 }
