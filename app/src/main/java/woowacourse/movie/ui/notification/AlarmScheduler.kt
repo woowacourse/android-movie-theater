@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import woowacourse.movie.ui.notification.NotificationContract.ACTION_NOTIFICATION
 import java.time.ZoneId
 import java.time.ZonedDateTime
 
@@ -12,7 +13,7 @@ class AlarmScheduler(private val context: Context) {
 
     fun setSchedule(item: AlarmItem) {
         val intent = Intent(context, AlarmReceiver::class.java)
-            .setAction("alert")
+            .setAction(ACTION_NOTIFICATION)
             .putExtra(EXTRA_ID, item.targetId)
             .putExtra(EXTRA_TITLE, item.title)
             .putExtra(EXTRA_SUBTITLE, item.subTitle)

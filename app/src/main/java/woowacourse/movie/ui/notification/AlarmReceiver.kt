@@ -18,6 +18,8 @@ import woowacourse.movie.ui.notification.AlarmScheduler.Companion.EXTRA_TITLE
 import woowacourse.movie.ui.complete.MovieReservationCompleteActivity
 import woowacourse.movie.ui.complete.MovieReservationCompleteKey
 import woowacourse.movie.ui.main.MovieMainActivity
+import woowacourse.movie.ui.notification.NotificationContract.ACTION_NOTIFICATION
+import woowacourse.movie.ui.notification.NotificationContract.KEY_RECEIVE_NOTIFICATION
 
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(
@@ -26,8 +28,8 @@ class AlarmReceiver : BroadcastReceiver() {
     ) {
         val requestId = System.currentTimeMillis().toInt()
         val isNotificationEnabled =
-            MoviePreferencesUtil(context ?: return).getBoolean("rcv_notification")
-        if (isNotificationEnabled && intent?.action == "alert") {
+            MoviePreferencesUtil(context ?: return).getBoolean(KEY_RECEIVE_NOTIFICATION)
+        if (isNotificationEnabled && intent?.action == ACTION_NOTIFICATION) {
             val id = intent.getLongExtra(EXTRA_ID, -1)
             val title = intent.getStringExtra(EXTRA_TITLE)
             val subtitle = intent.getStringExtra(EXTRA_SUBTITLE)
