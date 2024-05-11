@@ -14,7 +14,7 @@ object TheaterData {
 
     val screeningTimes2 =
         listOf(
-            LocalTime.of(13, 30, 0),
+            LocalTime.of(23, 36, 0),
             LocalTime.of(12, 0, 0),
             LocalTime.of(14, 0, 0),
             LocalTime.of(16, 0, 0),

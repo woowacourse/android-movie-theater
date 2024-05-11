@@ -70,17 +70,22 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
         val intent = Intent(this, MovieBroadcastReceiver::class.java).apply {
             putExtra(EXTRA_MOVIE_TITLE_KEY, movieTitle)
         }
-        val calendar = Calendar.getInstance().apply {
-            timeInMillis = System.currentTimeMillis()
+        val calendar = setCalendar(date, time)
+        if (calendar.timeInMillis <= System.currentTimeMillis()) return
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        val alarmIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, alarmIntent)
+    }
+
+    private fun setCalendar(date: LocalDate, time: LocalTime): Calendar {
+        return Calendar.getInstance().apply {
             set(Calendar.YEAR, date.year)
             set(Calendar.MONTH, date.monthValue - 1)
             set(Calendar.DATE, date.dayOfMonth)
             set(Calendar.HOUR_OF_DAY, time.hour)
             set(Calendar.MINUTE, time.minute)
+            set(Calendar.SECOND, 0)
         }
-        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        val alarmIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, alarmIntent)
     }
 
     companion object {
