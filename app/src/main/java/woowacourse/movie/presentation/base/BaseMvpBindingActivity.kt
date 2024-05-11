@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.presentation.message.Messenger
-import woowacourse.movie.presentation.model.MessageType
+import woowacourse.movie.presentation.model.message.MessageType
 
 abstract class BaseMvpBindingActivity<T : ViewDataBinding> : AppCompatActivity(), BaseView {
     abstract val layoutResourceId: Int

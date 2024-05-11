@@ -9,7 +9,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.presentation.message.Messenger
-import woowacourse.movie.presentation.model.MessageType
+import woowacourse.movie.presentation.model.message.MessageType
 
 abstract class BaseMvpBindingFragment<T : ViewDataBinding> : Fragment(), BaseView {
     abstract val layoutResourceId: Int

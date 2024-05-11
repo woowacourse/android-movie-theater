@@ -1,7 +1,7 @@
 package woowacourse.movie.presentation.base
 
 import com.google.android.material.snackbar.Snackbar
-import woowacourse.movie.presentation.model.MessageType
+import woowacourse.movie.presentation.model.message.MessageType
 
 interface BaseView {
     fun showToastMessage(messageType: MessageType)

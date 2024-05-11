@@ -2,7 +2,7 @@ package woowacourse.movie.presentation.message
 
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
-import woowacourse.movie.presentation.model.MessageType
+import woowacourse.movie.presentation.model.message.MessageType
 
 object Messenger {
     private lateinit var message: Message

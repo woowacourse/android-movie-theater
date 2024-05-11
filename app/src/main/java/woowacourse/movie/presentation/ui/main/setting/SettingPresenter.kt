@@ -1,7 +1,8 @@
 package woowacourse.movie.presentation.ui.main.setting
 
 import woowacourse.movie.domain.repository.PreferenceRepository
-import woowacourse.movie.presentation.model.MessageType
+import woowacourse.movie.presentation.model.message.NotificationMessageType.NotificationFailureMessage
+import woowacourse.movie.presentation.model.message.NotificationMessageType.NotificationSuccessMessage
 
 class SettingPresenter(
     private val view: SettingContract.View,
@@ -19,9 +20,9 @@ class SettingPresenter(
         repository.saveNotificationMode(mode).onSuccess {
             val message =
                 if (mode) {
-                    MessageType.NotificationSuccessMessage
+                    NotificationSuccessMessage
                 } else {
-                    MessageType.NotificationFailureMessage
+                    NotificationFailureMessage
                 }
             view.showSnackBar(message)
         }.onFailure { e ->

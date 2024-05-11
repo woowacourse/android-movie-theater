@@ -4,11 +4,11 @@ import woowacourse.movie.domain.model.toSeatModel
 import woowacourse.movie.domain.repository.NotificationRepository
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.ScreenRepository
-import woowacourse.movie.presentation.model.MessageType
-import woowacourse.movie.presentation.model.MessageType.ReservationSuccessMessage
 import woowacourse.movie.presentation.model.ReservationInfo
 import woowacourse.movie.presentation.model.SeatModel
 import woowacourse.movie.presentation.model.UserSeat
+import woowacourse.movie.presentation.model.message.ReservationMessageType.ReservationSuccessMessage
+import woowacourse.movie.presentation.model.message.SeatMessageType.*
 import woowacourse.movie.presentation.model.toSeat
 import java.time.LocalDateTime
 import kotlin.concurrent.thread
@@ -88,7 +88,7 @@ class SeatSelectionPresenter(
         }
 
         if (uiModel.userSeat.seatModels.count { it.isSelected } == uiModel.ticketCount) {
-            view.showSnackBar(MessageType.AllSeatsSelectedMessage(uiModel.ticketCount))
+            view.showSnackBar(AllSeatsSelectedMessage(uiModel.ticketCount))
         } else {
             uiModel = uiModel.copy(userSeat = uiModel.userSeat.copy(seatModels = updatedSeatModels))
             view.selectSeat(uiModel.userSeat)

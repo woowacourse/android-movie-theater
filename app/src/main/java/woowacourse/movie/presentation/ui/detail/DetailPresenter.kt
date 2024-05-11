@@ -2,11 +2,12 @@ package woowacourse.movie.presentation.ui.detail
 
 import woowacourse.movie.domain.model.ScreenDate
 import woowacourse.movie.domain.repository.ScreenRepository
-import woowacourse.movie.presentation.model.MessageType
 import woowacourse.movie.presentation.model.ReservationInfo
 import woowacourse.movie.presentation.model.Ticket
 import woowacourse.movie.presentation.model.Ticket.Companion.MAX_TICKET_COUNT
 import woowacourse.movie.presentation.model.Ticket.Companion.MIN_TICKET_COUNT
+import woowacourse.movie.presentation.model.message.TicketMessageType.TicketMaxCountMessage
+import woowacourse.movie.presentation.model.message.TicketMessageType.TicketMinCountMessage
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -78,7 +79,7 @@ class DetailPresenter(
         val nextTicket = uiModel.ticket.increase(1)
 
         if (nextTicket.isInvalidCount()) {
-            view.showSnackBar(MessageType.TicketMaxCountMessage(MAX_TICKET_COUNT))
+            view.showSnackBar(TicketMaxCountMessage(MAX_TICKET_COUNT))
             return
         }
         uiModel = uiModel.copy(ticket = nextTicket)
@@ -89,7 +90,7 @@ class DetailPresenter(
         val nextTicket = uiModel.ticket.decrease(1)
 
         if (nextTicket.isInvalidCount()) {
-            view.showSnackBar(MessageType.TicketMinCountMessage(MIN_TICKET_COUNT))
+            view.showSnackBar(TicketMinCountMessage(MIN_TICKET_COUNT))
             return
         }
         uiModel = uiModel.copy(ticket = nextTicket)

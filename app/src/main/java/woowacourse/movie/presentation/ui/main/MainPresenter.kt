@@ -2,7 +2,8 @@ package woowacourse.movie.presentation.ui.main
 
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.domain.repository.PreferenceRepository
-import woowacourse.movie.presentation.model.MessageType
+import woowacourse.movie.presentation.model.message.NotificationMessageType
+import woowacourse.movie.presentation.model.message.PermissionMessageType.RequestPermissionMessage
 
 class MainPresenter(
     private val view: MainContract.View,
@@ -12,9 +13,9 @@ class MainPresenter(
         repository.saveNotificationMode(mode).onSuccess {
             val message =
                 if (mode) {
-                    MessageType.NotificationSuccessMessage
+                    NotificationMessageType.NotificationSuccessMessage
                 } else {
-                    MessageType.NotificationFailureMessage
+                    NotificationMessageType.NotificationFailureMessage
                 }
             view.showSnackBar(message)
         }.onFailure { e ->
@@ -26,6 +27,6 @@ class MainPresenter(
         permissionText: String,
         action: Snackbar.() -> Snackbar,
     ) {
-        view.showSnackBar(MessageType.RequestPermissionMessage(permissionText), action)
+        view.showSnackBar(RequestPermissionMessage(permissionText), action)
     }
 }

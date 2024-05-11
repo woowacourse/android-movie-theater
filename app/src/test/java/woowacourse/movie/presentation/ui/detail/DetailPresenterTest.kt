@@ -10,11 +10,11 @@ import io.mockk.verify
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.domain.repository.ScreenRepository
-import woowacourse.movie.presentation.model.MessageType
 import woowacourse.movie.presentation.model.ReservationInfo
 import woowacourse.movie.presentation.model.Ticket
+import woowacourse.movie.presentation.model.message.TicketMessageType.TicketMaxCountMessage
+import woowacourse.movie.presentation.model.message.TicketMessageType.TicketMinCountMessage
 import woowacourse.movie.presentation.ui.utils.DummyData.dummyScreen
-import woowacourse.movie.presentation.ui.utils.DummyData.findByScreenId
 
 @ExtendWith(MockKExtension::class)
 class DetailPresenterTest {
@@ -79,7 +79,7 @@ class DetailPresenterTest {
         every { repository.findByScreenId(any(), any()) } returns Result.success(dummyScreen)
         every { view.showScreen(any()) } just runs
         every { view.showTicket(any()) } just runs
-        every { view.showSnackBar(MessageType.TicketMaxCountMessage(Ticket.MAX_TICKET_COUNT)) } just runs
+        every { view.showSnackBar(TicketMaxCountMessage(Ticket.MAX_TICKET_COUNT)) } just runs
         presenter.loadScreen(0, 0)
 
         // when
@@ -89,7 +89,7 @@ class DetailPresenterTest {
         presenter.plusTicket()
 
         // then
-        verify { view.showSnackBar(MessageType.TicketMaxCountMessage(Ticket.MAX_TICKET_COUNT)) }
+        verify { view.showSnackBar(TicketMaxCountMessage(count = Ticket.MAX_TICKET_COUNT)) }
     }
 
     @Test
@@ -98,14 +98,14 @@ class DetailPresenterTest {
         every { repository.findByScreenId(any(), any()) } returns Result.success(dummyScreen)
         every { view.showScreen(any()) } just runs
         every { view.showTicket(any()) } just runs
-        every { view.showSnackBar(MessageType.TicketMinCountMessage(Ticket.MIN_TICKET_COUNT)) } just runs
+        every { view.showSnackBar(TicketMinCountMessage(Ticket.MIN_TICKET_COUNT)) } just runs
         presenter.loadScreen(0, 0)
 
         // when
         presenter.minusTicket()
 
         // then
-        verify { view.showSnackBar(MessageType.TicketMinCountMessage(Ticket.MIN_TICKET_COUNT)) }
+        verify { view.showSnackBar(TicketMinCountMessage(Ticket.MIN_TICKET_COUNT)) }
     }
 
     @Test

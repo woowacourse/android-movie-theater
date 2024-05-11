@@ -12,9 +12,10 @@ import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.domain.repository.NotificationRepository
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.ScreenRepository
-import woowacourse.movie.presentation.model.MessageType
 import woowacourse.movie.presentation.model.SeatModel
 import woowacourse.movie.presentation.model.UserSeat
+import woowacourse.movie.presentation.model.message.ReservationMessageType.ReservationSuccessMessage
+import woowacourse.movie.presentation.model.message.SeatMessageType.AllSeatsSelectedMessage
 import woowacourse.movie.presentation.ui.utils.DummyData.dummyReservationInfo
 import woowacourse.movie.presentation.ui.utils.DummyData.dummyScreen
 import woowacourse.movie.presentation.ui.utils.DummyData.dummySeatBoard
@@ -148,7 +149,7 @@ class SeatSelectionPresenterTest {
         presenter.clickSeat(dummySeatModel)
 
         // then
-        verify { view.showSnackBar(MessageType.AllSeatsSelectedMessage(reservationInfo.ticketCount)) }
+        verify { view.showSnackBar(AllSeatsSelectedMessage(reservationInfo.ticketCount)) }
     }
 
     @Test
@@ -214,7 +215,7 @@ class SeatSelectionPresenterTest {
                 any(),
             )
         } returns Result.success(Unit)
-        every { view.showToastMessage(MessageType.ReservationSuccessMessage) } just runs
+        every { view.showToastMessage(ReservationSuccessMessage) } just runs
         every { view.navigateToReservation(any()) } just runs
         every { view.showScreen(any(), any(), any()) } just runs
 
@@ -223,7 +224,7 @@ class SeatSelectionPresenterTest {
         presenter.reserve()
 
         // then
-        verify { view.showToastMessage(MessageType.ReservationSuccessMessage) }
+        verify { view.showToastMessage(ReservationSuccessMessage) }
         verify { view.navigateToReservation(1) }
     }
 

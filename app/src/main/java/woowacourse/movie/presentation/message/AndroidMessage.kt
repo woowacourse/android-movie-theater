@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
-import woowacourse.movie.presentation.model.MessageType
+import woowacourse.movie.presentation.model.message.MessageType
 
 class AndroidMessage(private val context: Context) : Message {
     private var toast: Toast? = null
@@ -18,7 +18,7 @@ class AndroidMessage(private val context: Context) : Message {
     }
 
     override fun showToast(messageType: MessageType) {
-        showToast(messageType.toMessage())
+        showToast(messageType.toMessage(context))
     }
 
     override fun showToast(e: Throwable) {
@@ -38,7 +38,7 @@ class AndroidMessage(private val context: Context) : Message {
         view: View,
         messageType: MessageType,
     ) {
-        showSnackBar(view, messageType.toMessage())
+        showSnackBar(view, messageType.toMessage(context))
     }
 
     override fun showSnackBar(
@@ -47,7 +47,8 @@ class AndroidMessage(private val context: Context) : Message {
         action: Snackbar.() -> Snackbar,
     ) {
         snackbar?.dismiss()
-        snackbar = Snackbar.make(view, messageType.toMessage(), Snackbar.LENGTH_SHORT).action()
+        snackbar =
+            Snackbar.make(view, messageType.toMessage(context), Snackbar.LENGTH_SHORT).action()
         snackbar?.show()
     }
 
@@ -56,37 +57,6 @@ class AndroidMessage(private val context: Context) : Message {
         e: Throwable,
     ) {
         showSnackBar(view, e.toErrorMessage())
-    }
-
-    private fun MessageType.toMessage(): String {
-        return when (this) {
-            is MessageType.TicketMaxCountMessage ->
-                context.getString(
-                    R.string.ticke_max_count_message,
-                    this.count,
-                )
-
-            is MessageType.TicketMinCountMessage ->
-                context.getString(
-                    R.string.ticke_min_count_message,
-                    this.count,
-                )
-
-            is MessageType.AllSeatsSelectedMessage ->
-                context.getString(
-                    R.string.all_seats_selected_message,
-                    this.count,
-                )
-
-            is MessageType.ReservationSuccessMessage -> context.getString(R.string.reservation_success_message)
-            is MessageType.NotificationFailureMessage -> context.getString(R.string.notification_failure_message)
-            is MessageType.NotificationSuccessMessage -> context.getString(R.string.notification_success_message)
-            is MessageType.RequestPermissionMessage ->
-                context.getString(
-                    R.string.request_permission_message,
-                    this.permission,
-                )
-        }
     }
 
     private fun Throwable.toErrorMessage(): String {

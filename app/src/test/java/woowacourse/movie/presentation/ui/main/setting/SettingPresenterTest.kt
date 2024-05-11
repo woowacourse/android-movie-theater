@@ -10,7 +10,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.domain.repository.PreferenceRepository
-import woowacourse.movie.presentation.model.MessageType
+import woowacourse.movie.presentation.model.message.NotificationMessageType.*
 
 @ExtendWith(MockKExtension::class)
 class SettingPresenterTest {
@@ -55,7 +55,7 @@ class SettingPresenterTest {
     fun `SettingPresenter가 changeNotificationMode()을 했을 때, mode가 true라면 view에게 NotificationSuccessMessage를 전달한다`() {
         // given
         val mode = true
-        val message = MessageType.NotificationSuccessMessage
+        val message = NotificationSuccessMessage
         every { repository.saveNotificationMode(mode) } returns Result.success(Unit)
         every { view.showSnackBar(message) } just runs
 
@@ -70,7 +70,7 @@ class SettingPresenterTest {
     fun `SettingPresenter가 changeNotificationMode()을 했을 때, mode가 false라면 view에게 NotificationFailureMessage 전달한다`() {
         // given
         val mode = false
-        val message = MessageType.NotificationFailureMessage
+        val message = NotificationFailureMessage
         every { repository.saveNotificationMode(mode) } returns Result.success(Unit)
         every { view.showSnackBar(message) } just runs
 
