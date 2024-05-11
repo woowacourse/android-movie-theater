@@ -29,7 +29,19 @@
     <string name="running_time_format">"%d 분"</string>
     <string name="reserved_format">"일반 %d명 | %s | %s"</string>
 
+    <string name="request_notification_permission_title">
+        푸시 알림 권한
+    </string>
     <string name="request_notification_permission">
         영화 시작 30분 전에 알려 드리기 위해 권한이 필요해요
+    </string>
+    <string name="deny_notification_permission">
+        푸시 알림 권한이 거절당했습니다
+    </string>
+    <string name="request_notification_permission_confirm">
+        확인
+    </string>
+    <string name="request_notification_permission_deny">
+        취소
     </string>
 </resources>
