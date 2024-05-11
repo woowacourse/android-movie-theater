@@ -1,8 +1,8 @@
 package woowacourse.movie.ui.selection
 
+import woowacourse.movie.data.database.ticket.TicketDao
 import woowacourse.movie.domain.Seat
 import woowacourse.movie.domain.SeatInformation
-import woowacourse.movie.data.database.ticket.TicketDao
 import woowacourse.movie.domain.UserTicket
 import woowacourse.movie.domain.mapper.toTicketEntity
 import woowacourse.movie.ui.reservation.ReservationDetail

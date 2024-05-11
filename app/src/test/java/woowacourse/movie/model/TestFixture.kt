@@ -39,12 +39,13 @@ fun makeTheater(name: String): Theater {
     )
 }
 
-val RESERVATION_DETAIL = ReservationDetail(
-    title = "",
-    theater = "강남",
-    screeningDateTime = LocalDateTime.of(2024, 3, 28, 10, 0),
-    count = 1
-)
+val RESERVATION_DETAIL =
+    ReservationDetail(
+        title = "",
+        theater = "강남",
+        screeningDateTime = LocalDateTime.of(2024, 3, 28, 10, 0),
+        count = 1,
+    )
 
 val A1_SEAT = Seat(0, 0)
 val A2_SEAT = Seat(0, 1)

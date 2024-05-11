@@ -26,7 +26,7 @@ interface MovieSeatSelectionContract {
         fun setAlarm(
             reservationId: Long,
             reservedTime: LocalDateTime,
-            movieTitle: String
+            movieTitle: String,
         )
     }
 

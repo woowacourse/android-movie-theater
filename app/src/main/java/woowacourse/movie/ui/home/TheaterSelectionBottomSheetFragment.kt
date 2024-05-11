@@ -9,11 +9,11 @@ import android.widget.Toast
 import androidx.fragment.app.setFragmentResultListener
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
-import woowacourse.movie.databinding.FragmentTheaterSelectionBottomSheetBinding
-import woowacourse.movie.data.database.movie.MovieContentDao
 import woowacourse.movie.data.database.MovieDatabase
-import woowacourse.movie.domain.Theater
+import woowacourse.movie.data.database.movie.MovieContentDao
 import woowacourse.movie.data.database.theater.TheaterDao
+import woowacourse.movie.databinding.FragmentTheaterSelectionBottomSheetBinding
+import woowacourse.movie.domain.Theater
 import woowacourse.movie.ui.home.adapter.TheaterAdapter
 import woowacourse.movie.ui.reservation.MovieReservationActivity
 

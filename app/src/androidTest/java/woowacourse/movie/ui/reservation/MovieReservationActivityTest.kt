@@ -15,8 +15,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.model.MovieContentEntity
 import woowacourse.movie.data.database.MovieDatabase
+import woowacourse.movie.model.MovieContentEntity
 
 @RunWith(AndroidJUnit4::class)
 class MovieReservationActivityTest {

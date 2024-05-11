@@ -19,10 +19,11 @@ class MovieReservationCompletePresenterTest {
 
     @BeforeEach
     fun setUp() {
-        db = Room.inMemoryDatabaseBuilder(
-            ApplicationProvider.getApplicationContext(),
-            MovieDatabase::class.java
-        ).allowMainThreadQueries().build()
+        db =
+            Room.inMemoryDatabaseBuilder(
+                ApplicationProvider.getApplicationContext(),
+                MovieDatabase::class.java,
+            ).allowMainThreadQueries().build()
         ticketDao = db.ticketDao()
         view = mockk<MovieReservationCompleteContract.View>(relaxed = true)
         presenter = MovieReservationCompletePresenter(view, ticketDao)

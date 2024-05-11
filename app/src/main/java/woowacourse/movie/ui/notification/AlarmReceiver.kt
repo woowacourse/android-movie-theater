@@ -12,12 +12,12 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
 import woowacourse.movie.data.preferences.MoviePreferencesUtil
-import woowacourse.movie.ui.notification.AlarmScheduler.Companion.EXTRA_ID
-import woowacourse.movie.ui.notification.AlarmScheduler.Companion.EXTRA_SUBTITLE
-import woowacourse.movie.ui.notification.AlarmScheduler.Companion.EXTRA_TITLE
 import woowacourse.movie.ui.complete.MovieReservationCompleteActivity
 import woowacourse.movie.ui.complete.MovieReservationCompleteKey
 import woowacourse.movie.ui.main.MovieMainActivity
+import woowacourse.movie.ui.notification.AlarmScheduler.Companion.EXTRA_ID
+import woowacourse.movie.ui.notification.AlarmScheduler.Companion.EXTRA_SUBTITLE
+import woowacourse.movie.ui.notification.AlarmScheduler.Companion.EXTRA_TITLE
 import woowacourse.movie.ui.notification.NotificationContract.ACTION_NOTIFICATION
 import woowacourse.movie.ui.notification.NotificationContract.KEY_RECEIVE_NOTIFICATION
 
@@ -33,13 +33,14 @@ class AlarmReceiver : BroadcastReceiver() {
             val id = intent.getLongExtra(EXTRA_ID, -1)
             val title = intent.getStringExtra(EXTRA_TITLE)
             val subtitle = intent.getStringExtra(EXTRA_SUBTITLE)
-            val navigatingIntents = arrayOf(
-                Intent(context, MovieMainActivity::class.java),
-                Intent(context, MovieReservationCompleteActivity::class.java).putExtra(
-                    MovieReservationCompleteKey.TICKET_ID,
-                    id
+            val navigatingIntents =
+                arrayOf(
+                    Intent(context, MovieMainActivity::class.java),
+                    Intent(context, MovieReservationCompleteActivity::class.java).putExtra(
+                        MovieReservationCompleteKey.TICKET_ID,
+                        id,
+                    ),
                 )
-            )
 
             val notificationManager =
                 context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
@@ -47,7 +48,7 @@ class AlarmReceiver : BroadcastReceiver() {
                 NotificationChannel(
                     CHANNEL_ID_RESERVATION,
                     CHANNEL_NAME_RESERVATION,
-                    IMPORTANCE_HIGH
+                    IMPORTANCE_HIGH,
                 )
             notificationManager.createNotificationChannel(notificationChannel)
             val notificationBuilder =
@@ -61,7 +62,7 @@ class AlarmReceiver : BroadcastReceiver() {
                             requestId,
                             navigatingIntents,
                             FLAG_IMMUTABLE,
-                        )
+                        ),
                     )
             notificationManager.notify(requestId, notificationBuilder.build())
         }

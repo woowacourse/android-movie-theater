@@ -1,8 +1,8 @@
 package woowacourse.movie.ui.home
 
-import woowacourse.movie.domain.MovieContent
 import woowacourse.movie.data.database.movie.MovieContentDao
 import woowacourse.movie.data.database.theater.TheaterDao
+import woowacourse.movie.domain.MovieContent
 import woowacourse.movie.domain.mapper.toMovieContent
 import woowacourse.movie.domain.mapper.toTheater
 import kotlin.concurrent.thread

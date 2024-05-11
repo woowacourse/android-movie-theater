@@ -9,12 +9,12 @@ import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.data.database.MovieDatabase
+import woowacourse.movie.data.database.movie.MovieContentDao
+import woowacourse.movie.data.database.theater.TheaterDao
 import woowacourse.movie.databinding.ActivityMovieReservationBinding
 import woowacourse.movie.domain.MovieContent
-import woowacourse.movie.data.database.movie.MovieContentDao
-import woowacourse.movie.data.database.MovieDatabase
 import woowacourse.movie.domain.Theater
-import woowacourse.movie.data.database.theater.TheaterDao
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.selection.MovieSeatSelectionActivity
 import woowacourse.movie.ui.utils.getImageFromId

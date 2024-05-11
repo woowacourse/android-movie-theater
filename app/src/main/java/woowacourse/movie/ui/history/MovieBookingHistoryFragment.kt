@@ -9,18 +9,16 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.databinding.FragmentMovieBookingHistoryBinding
 import woowacourse.movie.data.database.MovieDatabase
 import woowacourse.movie.data.database.ticket.TicketDao
-import woowacourse.movie.data.database.ticket.TicketEntity
+import woowacourse.movie.databinding.FragmentMovieBookingHistoryBinding
 import woowacourse.movie.domain.UserTicket
-import woowacourse.movie.domain.mapper.toUserTicket
-import woowacourse.movie.ui.HandleError
 import woowacourse.movie.ui.complete.MovieReservationCompleteActivity
 import woowacourse.movie.ui.complete.MovieReservationCompleteKey.TICKET_ID
-import kotlin.concurrent.thread
 
-class MovieBookingHistoryFragment : Fragment(), BookingHistoryContract.View,
+class MovieBookingHistoryFragment :
+    Fragment(),
+    BookingHistoryContract.View,
     BookingHistoryAdapter.BookingHistoryClickListener {
     private var _binding: FragmentMovieBookingHistoryBinding? = null
     private val binding: FragmentMovieBookingHistoryBinding
@@ -82,4 +80,3 @@ class MovieBookingHistoryFragment : Fragment(), BookingHistoryContract.View,
             .also(::startActivity)
     }
 }
-

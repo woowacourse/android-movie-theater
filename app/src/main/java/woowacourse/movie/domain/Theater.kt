@@ -1,6 +1,5 @@
 package woowacourse.movie.domain
 
-import woowacourse.movie.data.database.theater.TheaterEntity
 import java.time.LocalTime
 
 data class Theater(

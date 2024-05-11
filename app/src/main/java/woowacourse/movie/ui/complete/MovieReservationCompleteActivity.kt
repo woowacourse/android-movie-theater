@@ -10,9 +10,9 @@ import androidx.activity.OnBackPressedCallback
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
-import woowacourse.movie.databinding.ActivityMovieReservationCompleteBinding
 import woowacourse.movie.data.database.MovieDatabase
 import woowacourse.movie.data.database.ticket.TicketDao
+import woowacourse.movie.databinding.ActivityMovieReservationCompleteBinding
 import woowacourse.movie.domain.UserTicket
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.main.MovieMainActivity

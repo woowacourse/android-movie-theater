@@ -12,24 +12,26 @@ class AlarmScheduler(private val context: Context) {
     private val alarmManager = context.getSystemService(AlarmManager::class.java) as AlarmManager
 
     fun setSchedule(item: AlarmItem) {
-        val intent = Intent(context, AlarmReceiver::class.java)
-            .setAction(ACTION_NOTIFICATION)
-            .putExtra(EXTRA_ID, item.targetId)
-            .putExtra(EXTRA_TITLE, item.title)
-            .putExtra(EXTRA_SUBTITLE, item.subTitle)
+        val intent =
+            Intent(context, AlarmReceiver::class.java)
+                .setAction(ACTION_NOTIFICATION)
+                .putExtra(EXTRA_ID, item.targetId)
+                .putExtra(EXTRA_TITLE, item.title)
+                .putExtra(EXTRA_SUBTITLE, item.subTitle)
 
-        val pendingIntent = PendingIntent.getBroadcast(
-            context,
-            item.hashCode(),
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-        )
+        val pendingIntent =
+            PendingIntent.getBroadcast(
+                context,
+                item.hashCode(),
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+            )
 
         alarmManager.setAlarmClock(
             AlarmManager.AlarmClockInfo(
                 ZonedDateTime.of(item.dateTime.minusMinutes(30), ZoneId.systemDefault()).toInstant()
                     .toEpochMilli(),
-                pendingIntent
+                pendingIntent,
             ),
             pendingIntent,
         )

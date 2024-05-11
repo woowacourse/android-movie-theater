@@ -1,6 +1,5 @@
 package woowacourse.movie.domain
 
-import woowacourse.movie.data.database.movie.MovieContentEntity
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 

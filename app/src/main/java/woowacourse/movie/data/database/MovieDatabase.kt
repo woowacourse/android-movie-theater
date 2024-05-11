@@ -6,11 +6,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import woowacourse.movie.data.database.ticket.TicketContract.MOVIE_DATABASE
 import woowacourse.movie.data.database.movie.MovieContentDao
 import woowacourse.movie.data.database.movie.MovieContentEntity
 import woowacourse.movie.data.database.theater.TheaterDao
 import woowacourse.movie.data.database.theater.TheaterEntity
+import woowacourse.movie.data.database.ticket.TicketContract.MOVIE_DATABASE
 import woowacourse.movie.data.database.ticket.TicketDao
 import woowacourse.movie.data.database.ticket.TicketEntity
 import woowacourse.movie.data.database.util.LongListConverter
@@ -38,10 +38,10 @@ abstract class MovieDatabase : RoomDatabase() {
 
     companion object {
         @Volatile
-        private var INSTANCE: MovieDatabase? = null
+        private var synchronizedInstance: MovieDatabase? = null
 
         fun getDatabase(context: Context): MovieDatabase {
-            return INSTANCE ?: synchronized(this) {
+            return synchronizedInstance ?: synchronized(this) {
                 val instance =
                     Room.databaseBuilder(
                         context.applicationContext,
@@ -50,7 +50,7 @@ abstract class MovieDatabase : RoomDatabase() {
                     )
                         .createFromAsset("database/movie_contents.db")
                         .build()
-                INSTANCE = instance
+                synchronizedInstance = instance
                 instance
             }
         }

@@ -6,8 +6,8 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.database.movie.MovieContentDao
 import woowacourse.movie.data.database.MovieDatabase
+import woowacourse.movie.data.database.movie.MovieContentDao
 import woowacourse.movie.ui.home.MovieHomeContract
 import woowacourse.movie.ui.home.MovieHomePresenter
 
@@ -19,10 +19,11 @@ class MovieHomePresenterTest {
 
     @BeforeEach
     fun setUp() {
-        db = Room.inMemoryDatabaseBuilder(
-            ApplicationProvider.getApplicationContext(),
-            MovieDatabase::class.java
-        ).build()
+        db =
+            Room.inMemoryDatabaseBuilder(
+                ApplicationProvider.getApplicationContext(),
+                MovieDatabase::class.java,
+            ).build()
         movieContentDao = db.movieContentDao()
         view = mockk<MovieHomeContract.View>(relaxed = true)
         presenter = MovieHomePresenter(view, movieContentDao)
