@@ -69,7 +69,7 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
 
     private fun makeAlarmAtTime(date: LocalDate, time: LocalTime, movieTitle: String) {
         val intent = Intent(this, MovieBroadcastReceiver::class.java).apply {
-            putExtra("movie_title_key", movieTitle)
+            putExtra(EXTRA_MOVIE_TITLE_KEY, movieTitle)
         }
         val calendar = Calendar.getInstance().apply {
             timeInMillis = System.currentTimeMillis()
@@ -87,6 +87,7 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
     companion object {
         private const val TICKET_PRICE = "%,d원 (현장결제)"
         private const val EXTRA_TICKET_KEY = "ticket_key"
+        const val EXTRA_MOVIE_TITLE_KEY = "movie_title_key"
 
         fun newTicketActivityInstance(context: Context, tickets: List<DbTicket>, id: Long): Intent {
             return Intent(context, MovieTicketActivity::class.java).apply {

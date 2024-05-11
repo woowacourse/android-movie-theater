@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -62,18 +61,13 @@ class HomeActivity : AppCompatActivity() {
                 this, Manifest.permission.POST_NOTIFICATIONS
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            Log.d("alsong", "A")
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                Log.d("alsong", "B")
                 if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
                     // 이전에 권한 요청 거부했다면 이쪽으로 빠짐
-                    Log.d("alsong", "C")
                 } else {
                     // 처음에 권한 요청을 할 때에는 무조건 이쪽으로 빠짐
-
-                    // 이녀석이 알림을 요청하는 녀석. 동시에 requestPermissionLauncher의 람다함수를 실행한다.
+                    // 알림을 요청함. 동시에 requestPermissionLauncher의 람다함수를 실행한다.
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                    Log.d("alsong", "D")
                 }
             } else {
                 // 안드로이드 12 이하는 Notification에 관한 권한 필요 없음

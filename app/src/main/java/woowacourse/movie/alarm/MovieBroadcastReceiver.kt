@@ -16,7 +16,7 @@ class MovieBroadcastReceiver : BroadcastReceiver() {
     private lateinit var tickets: List<DbTicket>
     private var movieTitle: String? = null
     override fun onReceive(context: Context, intent: Intent?) {
-        movieTitle = intent?.getStringExtra("movie_title_key")
+        movieTitle = intent?.getStringExtra(MovieTicketActivity.EXTRA_MOVIE_TITLE_KEY)
         val latch = CountDownLatch(1)
         loadTicketsFromDb(context, latch)
         latch.await()
@@ -57,8 +57,13 @@ class MovieBroadcastReceiver : BroadcastReceiver() {
         pendingIntent: PendingIntent?,
     ) {
         builder.setSmallIcon(android.R.drawable.ic_popup_reminder)
-        builder.setContentTitle("예매 알림")
-        builder.setContentText("$movieTitle 30분 후에 상영")
+        builder.setContentTitle(MESSAGE_RESERVATION_NOTIFICATION)
+        builder.setContentText(MESSAGE_SCREENING_INFORMATION.format(movieTitle))
         builder.setContentIntent(pendingIntent)
+    }
+
+    companion object {
+        private const val MESSAGE_RESERVATION_NOTIFICATION = "예매 알림"
+        private const val MESSAGE_SCREENING_INFORMATION = "$%s 30분 후에 상영"
     }
 }
