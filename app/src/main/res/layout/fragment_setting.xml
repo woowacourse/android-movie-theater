@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:checked="@{mode}"
-            android:onCheckedChanged="@{(view, checked) -> presenter.changeNotificationMode(checked)}"
+            android:onClick="@{() -> presenter.changeNotificationMode(mode)}"
             app:layout_constraintBottom_toBottomOf="@+id/alarm_settings_new_push"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/alarm_settings_new_push"
