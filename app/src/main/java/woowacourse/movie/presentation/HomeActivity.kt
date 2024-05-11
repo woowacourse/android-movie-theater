@@ -17,7 +17,7 @@ import woowacourse.movie.presentation.reservation.ReservationFragment
 import woowacourse.movie.presentation.setting.SettingFragment
 
 class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home) {
-    private val notificationPreference by lazy { (application as MovieReservationApp).notificationPreference }
+    private val notificationPreference by lazy { (application as MovieReservationApp).notificationDatastore }
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
