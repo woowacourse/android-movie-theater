@@ -5,13 +5,30 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/setting_alarm_title_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Page_3"
-        android:textSize="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="@dimen/size_16"
+        android:text="푸쉬 알림 수신"
+        android:textColor="@color/black"
+        android:textSize="@dimen/size_16"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/setting_alarm_information_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="해제하면 푸시 알림을 수신할 수 없습니다."
+        app:layout_constraintLeft_toLeftOf="@id/setting_alarm_title_textview"
+        app:layout_constraintTop_toBottomOf="@id/setting_alarm_title_textview" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switch_setting_alarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/setting_alarm_information_textview"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/setting_alarm_title_textview" />
 </androidx.constraintlayout.widget.ConstraintLayout>
