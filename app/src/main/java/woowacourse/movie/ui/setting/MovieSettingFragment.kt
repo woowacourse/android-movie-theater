@@ -61,7 +61,6 @@ class MovieSettingFragment : Fragment(), MovieSettingContract.View {
     }
 
     override fun updateSwitchStatus(isEnabled: Boolean) {
-        Log.i("isEnabled", "updateSwitchStatus: ${hasNotificationPermission()}")
         binding.isNotificationActive = isEnabled
         binding.executePendingBindings()
     }
