@@ -11,6 +11,7 @@ import woowacourse.movie.domain.mapper.toTheater
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import kotlin.concurrent.thread
 
 class MovieReservationPresenter(
     private val view: MovieReservationContract.View,
@@ -41,15 +42,15 @@ class MovieReservationPresenter(
         movieContentId: Long,
         theaterId: Long,
     ) {
-        Thread {
-            try {
+        runCatching {
+            thread {
                 movieContent = movieContentDataSource.find(movieContentId).toMovieContent()
                 theater = theaterDataSource.find(theaterId).toTheater()
-                view.showScreeningContent(movieContent, theater)
-            } catch (e: NoSuchElementException) {
-                view.showError(e)
-            }
-        }.start()
+            }.join()
+            view.showScreeningContent(movieContent, theater)
+        }.onFailure {
+            view.showError(it)
+        }
     }
 
     override fun decreaseCount() {

@@ -26,8 +26,12 @@ class TheaterSelectionBottomSheetFragment :
     private lateinit var theaters: List<Theater>
     private val adapter: TheaterAdapter by lazy { generateTheaterAdapter() }
     private val presenter: TheaterSelectionPresenter by lazy { generatePresenter() }
-    private val movieContentDao: MovieContentDao by lazy { MovieDatabase.getDatabase(requireContext()).movieContentDao() }
-    private val theaterDao: TheaterDao by lazy { MovieDatabase.getDatabase(requireContext()).theaterDao() }
+    private val movieContentDao: MovieContentDao by lazy {
+        MovieDatabase.getDatabase(requireContext()).movieContentDao()
+    }
+    private val theaterDao: TheaterDao by lazy {
+        MovieDatabase.getDatabase(requireContext()).theaterDao()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,21 +58,17 @@ class TheaterSelectionBottomSheetFragment :
         movieContentId: Long,
         theaters: List<Theater>,
     ) {
-        view?.post {
-            this.theaters = theaters
-            this.movieContentId = movieContentId
-            binding.theaterList.adapter = adapter
-        }
+        this.theaters = theaters
+        this.movieContentId = movieContentId
+        binding.theaterList.adapter = adapter
     }
 
     override fun showError(throwable: Throwable) {
-        view?.post {
-            Toast.makeText(
-                requireContext(),
-                resources.getString(R.string.toast_invalid_key),
-                Toast.LENGTH_LONG,
-            ).show()
-        }
+        Toast.makeText(
+            requireContext(),
+            resources.getString(R.string.toast_invalid_key),
+            Toast.LENGTH_LONG,
+        ).show()
     }
 
     override fun onTheaterClick(

@@ -4,7 +4,6 @@ import woowacourse.movie.data.database.ticket.TicketDao
 import woowacourse.movie.data.database.ticket.TicketEntity
 import woowacourse.movie.domain.UserTicket
 import woowacourse.movie.domain.mapper.toUserTicket
-import java.lang.IllegalStateException
 import kotlin.concurrent.thread
 
 class BookingHistoryPresenter(
@@ -12,12 +11,12 @@ class BookingHistoryPresenter(
     private val ticketDao: TicketDao,
 ) : BookingHistoryContract.Presenter {
     override fun loadHistoryItems() {
-        var items: List<UserTicket>? = null
-        thread {
-            items = ticketDao.findAll().map(TicketEntity::toUserTicket)
-        }.join()
-        items?.let {
-            view.showHistoryItems(it)
-        } ?: view.showError(IllegalStateException())
+        runCatching {
+            lateinit var items: List<UserTicket>
+            thread { items = ticketDao.findAll().map(TicketEntity::toUserTicket) }.join()
+            view.showHistoryItems(items)
+        }.onFailure {
+            view.showError(it)
+        }
     }
 }

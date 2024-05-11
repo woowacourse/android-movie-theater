@@ -110,10 +110,8 @@ class MovieSeatSelectionActivity :
         rowSize: Int,
         colSize: Int,
     ) {
-        runOnUiThread {
-            repeat(rowSize) { row ->
-                makeSeats(colSize, row)
-            }
+        repeat(rowSize) { row ->
+            makeSeats(colSize, row)
         }
     }
 
@@ -132,11 +130,9 @@ class MovieSeatSelectionActivity :
     }
 
     override fun showReservationTotalAmount(amount: Int) {
-        runOnUiThread {
-            binding.totalSeatAmountText.text =
-                resources.getString(R.string.selection_total_price)
-                    .format(amount)
-        }
+        binding.totalSeatAmountText.text =
+            resources.getString(R.string.selection_total_price)
+                .format(amount)
     }
 
     override fun updateSelectCompletion(isComplete: Boolean) {
@@ -147,9 +143,7 @@ class MovieSeatSelectionActivity :
     }
 
     override fun showMovieTitle(title: String) {
-        runOnUiThread {
-            binding.title = title
-        }
+        binding.title = title
     }
 
     override fun setAlarm(
@@ -177,7 +171,8 @@ class MovieSeatSelectionActivity :
 
     override fun showError(throwable: Throwable) {
         Log.e(TAG, throwable.message.toString())
-        Toast.makeText(this, resources.getString(R.string.toast_invalid_key), Toast.LENGTH_LONG).show()
+        Toast.makeText(this, resources.getString(R.string.toast_invalid_key), Toast.LENGTH_LONG)
+            .show()
         finish()
     }
 

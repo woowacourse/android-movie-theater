@@ -62,11 +62,9 @@ class MovieBookingHistoryFragment :
     }
 
     override fun showHistoryItems(items: List<UserTicket>) {
-        view?.post {
-            val adapter = BookingHistoryAdapter(this)
-            adapter.submitList(items)
-            binding.rvBookingHistory.adapter = adapter
-        }
+        val adapter = BookingHistoryAdapter(this)
+        adapter.submitList(items)
+        binding.rvBookingHistory.adapter = adapter
     }
 
     override fun showError(throwable: Throwable) {

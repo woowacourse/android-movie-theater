@@ -3,6 +3,7 @@ package woowacourse.movie.ui.home
 import woowacourse.movie.data.database.movie.MovieContentDao
 import woowacourse.movie.data.database.theater.TheaterDao
 import woowacourse.movie.domain.MovieContent
+import woowacourse.movie.domain.Theater
 import woowacourse.movie.domain.mapper.toMovieContent
 import woowacourse.movie.domain.mapper.toTheater
 import kotlin.concurrent.thread
@@ -16,18 +17,20 @@ class TheaterSelectionPresenter(
     private lateinit var movieContent: MovieContent
 
     override fun loadTheaters(movieContentId: Long) {
-        thread {
-            runCatching {
+        runCatching {
+            lateinit var movieContent: MovieContent
+            lateinit var theaters: List<Theater>
+            thread {
                 movieContent = movieContentDataSource.find(movieContentId).toMovieContent()
-                val movieTheaters =
+                theaters =
                     movieContent.theaterIds.map { theaterId ->
                         val theater = theaterDataSource.find(theaterId).toTheater()
                         theater
                     }
-                view.showTheaters(movieContentId, movieTheaters)
-            }.onFailure {
-                view.showError(it)
-            }
+            }.join()
+            view.showTheaters(movieContentId, theaters)
+        }.onFailure {
+            view.showError(it)
         }
     }
 }

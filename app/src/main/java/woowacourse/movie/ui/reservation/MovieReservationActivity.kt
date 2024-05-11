@@ -25,8 +25,14 @@ class MovieReservationActivity :
     BaseActivity<MovieReservationPresenter>(),
     MovieReservationContract.View {
     private lateinit var binding: ActivityMovieReservationBinding
-    private val theaterDao: TheaterDao by lazy { MovieDatabase.getDatabase(applicationContext).theaterDao() }
-    private val movieContentDao: MovieContentDao by lazy { MovieDatabase.getDatabase(applicationContext).movieContentDao() }
+    private val theaterDao: TheaterDao by lazy {
+        MovieDatabase.getDatabase(applicationContext).theaterDao()
+    }
+    private val movieContentDao: MovieContentDao by lazy {
+        MovieDatabase.getDatabase(
+            applicationContext,
+        ).movieContentDao()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,11 +100,9 @@ class MovieReservationActivity :
         movieContent: MovieContent,
         theater: Theater,
     ) {
-        runOnUiThread {
-            binding.movieContent = movieContent
-            binding.theater = theater
-            binding.executePendingBindings()
-        }
+        binding.movieContent = movieContent
+        binding.theater = theater
+        binding.executePendingBindings()
     }
 
     companion object {
@@ -130,6 +134,10 @@ fun setScreeningDate(
         val formattedEndingDate =
             endingDate.format(DateTimeFormatter.ofPattern(context.getString(R.string.reservation_screening_date_format)))
         textView.text =
-            context.getString(R.string.home_screening_date, formattedOpeningDate, formattedEndingDate)
+            context.getString(
+                R.string.home_screening_date,
+                formattedOpeningDate,
+                formattedEndingDate,
+            )
     }
 }

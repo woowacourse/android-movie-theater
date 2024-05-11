@@ -40,13 +40,11 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonC
     }
 
     override fun showMovieContents(movieContents: List<MovieContent>) {
-        view?.post {
-            runCatching {
-                val adapter = MovieContentAdapter(this).apply { submitList(movieContents) }
-                binding.movieContentList.adapter = adapter
-            }.onFailure {
-                presenter.handleError(it)
-            }
+        runCatching {
+            val adapter = MovieContentAdapter(this).apply { submitList(movieContents) }
+            binding.movieContentList.adapter = adapter
+        }.onFailure {
+            presenter.handleError(it)
         }
     }
 
