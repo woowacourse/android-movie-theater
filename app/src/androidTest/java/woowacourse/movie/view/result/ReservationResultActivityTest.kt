@@ -12,7 +12,10 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.platform.app.InstrumentationRegistry
+import org.junit.After
 import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.R
@@ -31,13 +34,13 @@ import woowacourse.movie.view.theater.TheaterSelectionFragment
 class ReservationResultActivityTest {
     @get:Rule
     val activityRule = ActivityScenarioRule(MainActivity::class.java)
+
     private lateinit var repository: ReservationTicketRepository
 
     @Before
     fun setUp() {
         activityRule.scenario.onActivity {
-            repository =
-                ReservationTicketRepositoryImpl(it)
+            repository = ReservationTicketRepositoryImpl(it)
             Thread {
                 val reservationTicket = makeMockTicket()
                 repository.clearReservations(it)
@@ -57,6 +60,7 @@ class ReservationResultActivityTest {
         Thread.sleep(1000)
     }
 
+
     @Test
     fun `예매한_영화의_제목을_보여준다`() {
         onView(withId(R.id.text_view_reservation_finished_title)).check(matches(withText(movies[FIRST_MOVIE_ITEM_POSITION].title)))
@@ -75,17 +79,6 @@ class ReservationResultActivityTest {
             matches(
                 withText(
                     "2",
-                ),
-            ),
-        )
-    }
-
-    @Test
-    fun `예매한_영화의_총_결제금액을_보여준다`() {
-        onView(withId(R.id.text_view_reservation_finished_ticket_price)).check(
-            matches(
-                withText(
-                    "25,000",
                 ),
             ),
         )

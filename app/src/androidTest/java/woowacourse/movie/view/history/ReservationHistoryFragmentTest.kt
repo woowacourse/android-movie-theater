@@ -7,6 +7,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -32,11 +33,19 @@ class ReservationHistoryFragmentTest {
             repository = ReservationTicketRepositoryImpl(it)
             Thread {
                 val reservationTicket = makeMockTicket()
-                repository.clearReservations(it)
                 repository.saveReservationTicket(reservationTicket)
             }.start()
             Thread.sleep(1000)
             it.fragmentChangeToReservationHistoryFragment()
+        }
+    }
+
+    @After
+    fun clearDb(){
+        activityRule.scenario.onActivity {
+            Thread {
+                repository.clearReservations(it)
+            }.start()
         }
     }
 
