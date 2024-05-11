@@ -30,15 +30,20 @@ class SettingFragment : Fragment() {
             binding.permissionSwitch.isClickable = false
         }
         binding.permissionSwitch.isChecked = isPermissionGranted
-        val sharedPreference = requireActivity().getSharedPreferences("notification", AppCompatActivity.MODE_PRIVATE)
+        val sharedPreference = requireActivity().getSharedPreferences(SHARED_PREFERENCE_SETTING, AppCompatActivity.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = sharedPreference.edit()
         binding.permissionSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                editor.putBoolean("notification", true).commit()
+                editor.putBoolean(NOTIFICATION_KEY, true).apply()
             } else {
-                editor.putBoolean("notification", false).commit()
+                editor.putBoolean(NOTIFICATION_KEY, false).apply()
             }
         }
         return binding.root
+    }
+
+    companion object {
+        const val SHARED_PREFERENCE_SETTING = "settings"
+        const val NOTIFICATION_KEY = "notification"
     }
 }

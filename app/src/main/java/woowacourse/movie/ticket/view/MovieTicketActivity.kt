@@ -75,7 +75,7 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
             set(Calendar.YEAR, date.year)
             set(Calendar.MONTH, date.monthValue - 1)
             set(Calendar.DATE, date.dayOfMonth)
-            set(Calendar.HOUR, time.hour)
+            set(Calendar.HOUR_OF_DAY, time.hour)
             set(Calendar.MINUTE, time.minute)
         }
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
