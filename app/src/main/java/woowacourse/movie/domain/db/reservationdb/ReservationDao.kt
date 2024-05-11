@@ -11,7 +11,7 @@ interface ReservationDao {
     @Query("SELECT * FROM reservations")
     fun getAll(): List<ReservationEntity>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE) // id 충돌 시 새로운 값으로 대체하겠다는 옵션
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(reservationEntity: ReservationEntity): Long
 
     @Delete

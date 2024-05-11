@@ -84,7 +84,6 @@ class ReservationActivityTest {
 
     @Test
     fun `상영_영화_예매_가격을_표시한다`() {
-//        val reservation = repository.findByReservationId(reservationId)
         val context = ApplicationProvider.getApplicationContext<Context>()
 
         onView(withId(R.id.tv_reservation_amount)).check(

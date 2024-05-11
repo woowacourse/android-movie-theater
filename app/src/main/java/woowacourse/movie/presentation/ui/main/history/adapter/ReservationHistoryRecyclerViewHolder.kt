@@ -13,9 +13,5 @@ class ReservationHistoryRecyclerViewHolder(
     fun bind(reservation: Reservation) {
         binding.handler = handler
         binding.reservation = reservation
-//        binding.tvHistoryDate.text = reservation.dateTime.toString()
-//        binding.tvHistoryTime.text = reservation.dateTime.toString()
-//        binding.tvHistoryTheater.text = reservation.theaterName
-//        binding.tvHistoryTitle.text = reservation.movieTitle
     }
 }
