@@ -21,6 +21,7 @@ abstract class ReservationHistoryDatabase : RoomDatabase() {
 
     companion object {
         private var instance: ReservationHistoryDatabase? = null
+        const val RESERVATION_TICKET_DB_NAME = "reservationTicket"
         private val migration_1_2 =
             object : Migration(1, 2) {
                 override fun migrate(db: SupportSQLiteDatabase) {
@@ -42,7 +43,7 @@ abstract class ReservationHistoryDatabase : RoomDatabase() {
                     Room.databaseBuilder(
                         context.applicationContext,
                         ReservationHistoryDatabase::class.java,
-                        "reservationTicket",
+                        RESERVATION_TICKET_DB_NAME,
                     ).addMigrations(migration_1_2).build()
                 }
         }
