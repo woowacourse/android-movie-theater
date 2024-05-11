@@ -3,13 +3,13 @@
     <item
         android:id="@+id/fragment_reservation_history"
         android:icon="@drawable/ic_reservation_history"
-        android:title="예매 내역" />
+        android:title="@string/bottom_bar_reserve_history_title" />
     <item
         android:id="@+id/fragment_home"
         android:icon="@drawable/ic_home"
-        android:title="홈" />
+        android:title="@string/bottom_bar_home_title" />
     <item
         android:id="@+id/fragment_setting"
         android:icon="@drawable/ic_setting"
-        android:title="즐겨찾기" />
+        android:title="@string/bottom_bar_setting_title" />
 </menu>
