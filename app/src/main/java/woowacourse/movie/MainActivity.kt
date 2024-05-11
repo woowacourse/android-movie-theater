@@ -1,9 +1,15 @@
 package woowacourse.movie
 
+import android.Manifest.permission.POST_NOTIFICATIONS
 import android.annotation.SuppressLint
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -21,9 +27,16 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+        ) { isGranted: Boolean ->
+            showNotificationGrantedStatus(isGranted)
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.main = this
+        requestNotificationPermission()
         setBottomNavigationView()
     }
 
@@ -56,6 +69,24 @@ class MainActivity : AppCompatActivity() {
         commit {
             setReorderingAllowed(true)
             replace(fragmentLayoutResource, nextFragment)
+        }
+    }
+
+    private fun requestNotificationPermission() {
+        if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (shouldShowRequestPermissionRationale(POST_NOTIFICATIONS)) {
+                    requestPermissionLauncher.launch(POST_NOTIFICATIONS)
+                }
+            }
+        }
+    }
+
+    private fun showNotificationGrantedStatus(isGranted: Boolean) {
+        if (isGranted) {
+            Toast.makeText(this, getString(R.string.main_notification_permission), Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, getString(R.string.main_notification_rejection), Toast.LENGTH_SHORT).show()
         }
     }
 }
