@@ -11,8 +11,6 @@ import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
 import woowacourse.movie.notification.TicketNotification.PENDING_REQUEST_CODE
 import woowacourse.movie.notification.TicketNotification.getNextNotificationTicketId
-import woowacourse.movie.repository.ReservationTicketRepository
-import woowacourse.movie.repository.ReservationTicketRepositoryImpl
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.DEFAULT_TICKET_ID
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.RESERVATION_TICKET_ID
 import woowacourse.movie.view.result.ReservationResultActivity
@@ -23,7 +21,6 @@ class TicketNotificationReceiver : BroadcastReceiver() {
         context: Context?,
         intent: Intent?,
     ) {
-        setBootReceiver(intent, context)
         if (!isPushOnState(context)) return
 
         val ticketId = intent?.getLongExtra(RESERVATION_TICKET_ID, DEFAULT_TICKET_ID)
@@ -90,36 +87,6 @@ class TicketNotificationReceiver : BroadcastReceiver() {
             notificationIntent,
             PendingIntent.FLAG_IMMUTABLE,
         )
-    }
-
-    private fun setBootReceiver(
-        intent: Intent?,
-        context: Context?,
-    ) {
-        if (isBootingState(intent)) {
-            context?.let { setNotificationTickets(it, ReservationTicketRepositoryImpl(it)) }
-        }
-    }
-
-    private fun isBootingState(intent: Intent?): Boolean {
-        return intent?.action == Intent.ACTION_BOOT_COMPLETED
-    }
-
-    private fun setNotificationTickets(
-        context: Context,
-        repository: ReservationTicketRepository,
-    ) {
-        Thread {
-            val tickets = repository.loadReservationTickets()
-            tickets.forEach { reservationTicket ->
-                TicketNotification.setNotification(
-                    context = context,
-                    ticketId = reservationTicket.ticketId,
-                    movieTitle = reservationTicket.movieTitle,
-                    screeningDateTime = reservationTicket.screeningDateTime,
-                )
-            }
-        }.start()
     }
 
     companion object {
