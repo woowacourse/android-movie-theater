@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.MovieApplication
+import woowacourse.movie.data.AppDatabase
 import woowacourse.movie.data.DummyEverythingRepository
 import woowacourse.movie.data.reservationref.ReservationRefRepositoryImpl
 import woowacourse.movie.data.screeningref.ScreeningRefRepositoryImpl
@@ -26,18 +27,7 @@ class PurchaseConfirmationActivity : AppCompatActivity(), PurchaseConfirmationCo
 
         val reservationId = intent.getLongExtra(EXTRA_RESERVATION_ID, INVALID_RESERVATION_ID)
         val db = (application as MovieApplication).db
-        val fetchScreeningWithIdUseCase =
-            FetchScreeningWithIdUseCase(
-                DummyEverythingRepository,
-                TheaterRepositoryImpl(db.theaterDao()),
-                ScreeningRefRepositoryImpl(db.screeningDao()),
-            )
-
-        val fetchReservationWithIdUseCase =
-            FetchReservationWithIdUseCase(
-                fetchScreeningWithIdUseCase,
-                ReservationRefRepositoryImpl(db.reservationDao()),
-            )
+        val fetchReservationWithIdUseCase = buildFetchReservationWithIdUseCase(db)
         presenter =
             PurchaseConfirmationPresenter(
                 view = this,
@@ -45,6 +35,20 @@ class PurchaseConfirmationActivity : AppCompatActivity(), PurchaseConfirmationCo
             )
         presenter.loadReservationResult(reservationId)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun buildFetchReservationWithIdUseCase(db: AppDatabase): FetchReservationWithIdUseCase {
+        val fetchScreeningWithIdUseCase =
+            FetchScreeningWithIdUseCase(
+                DummyEverythingRepository,
+                TheaterRepositoryImpl(db.theaterDao()),
+                ScreeningRefRepositoryImpl(db.screeningDao()),
+            )
+
+        return FetchReservationWithIdUseCase(
+            fetchScreeningWithIdUseCase,
+            ReservationRefRepositoryImpl(db.reservationDao()),
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
