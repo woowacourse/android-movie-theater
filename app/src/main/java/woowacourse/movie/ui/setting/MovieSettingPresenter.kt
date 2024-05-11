@@ -8,17 +8,12 @@ class MovieSettingPresenter(
     private val moviePreferences: MoviePreferencesUtil,
 ) : MovieSettingContract.Presenter {
     override fun loadInitialSetting() {
-//        val isChecked = if (isNotificationGranted) {
-            val status = moviePreferences.getBoolean("rcv_notification")
-//        } else {
-//            moviePreferences.setBoolean("rcv_notification", false)
-//        }
+        val status = moviePreferences.getBoolean("rcv_notification")
         view.setInitialSetting(status)
     }
 
     override fun updateNotificationSelection(isChecked: Boolean) {
         val result = moviePreferences.setBoolean("rcv_notification", isChecked)
-        Log.i("isEnabled : result", "$result")
         view.updateSwitchStatus(result)
     }
 }

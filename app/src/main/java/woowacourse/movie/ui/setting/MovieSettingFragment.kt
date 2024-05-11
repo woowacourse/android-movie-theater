@@ -1,8 +1,6 @@
 package woowacourse.movie.ui.setting
 
 import android.Manifest
-import android.content.Context
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -11,22 +9,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieSettingBinding
 import woowacourse.movie.model.MoviePreferencesUtil
-import woowacourse.movie.ui.HandleError
 
 class MovieSettingFragment : Fragment(), MovieSettingContract.View {
     private var _binding: FragmentMovieSettingBinding? = null
     private val binding: FragmentMovieSettingBinding
         get() = _binding!!
     private val moviePreferencesUtil by lazy { MoviePreferencesUtil(requireContext()) }
-    private val presenter: MovieSettingPresenter by lazy {
+    private val movieSettingPresenter: MovieSettingPresenter by lazy {
         MovieSettingPresenter(this, moviePreferencesUtil)
     }
 
@@ -37,7 +32,7 @@ class MovieSettingFragment : Fragment(), MovieSettingContract.View {
     ): View {
         _binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_movie_setting, container, false)
-        presenter.loadInitialSetting()
+        movieSettingPresenter.loadInitialSetting()
         return binding.root
     }
 
@@ -54,7 +49,7 @@ class MovieSettingFragment : Fragment(), MovieSettingContract.View {
 
     override fun setInitialSetting(isEnabled: Boolean) {
         binding.apply {
-            presenter = presenter
+            presenter = movieSettingPresenter
             tvSettingTitle.text = "푸시 알림 수신"
             tvSettingDescription.text = "해제하면 푸시 알림을 수신할 수 없습니다."
             isNotificationActive = isEnabled

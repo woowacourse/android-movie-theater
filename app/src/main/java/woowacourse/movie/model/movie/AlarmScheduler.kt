@@ -12,6 +12,7 @@ import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
+import woowacourse.movie.model.MoviePreferencesUtil
 import woowacourse.movie.model.movie.AlarmScheduler.Companion.EXTRA_SUBTITLE
 import woowacourse.movie.model.movie.AlarmScheduler.Companion.EXTRA_TITLE
 import java.time.LocalDateTime
@@ -33,7 +34,8 @@ class AlarmScheduler(private val context: Context) {
 
         alarmManager.setExact(
             AlarmManager.RTC_WAKEUP,
-            ZonedDateTime.of(item.dateTime.minusMinutes(30), ZoneId.systemDefault()).toInstant().toEpochMilli(),
+            ZonedDateTime.of(item.dateTime.minusMinutes(30), ZoneId.systemDefault()).toInstant()
+                .toEpochMilli(),
             PendingIntent.getBroadcast(
                 context,
                 item.hashCode(),
@@ -57,13 +59,19 @@ data class AlarmItem(
 
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        Log.i("AlarmReceiver", "onReceive: received ${intent?.action}")
-        if (intent?.action == "alert") {
+        val isNotificationEnabled =
+            MoviePreferencesUtil(context ?: return).getBoolean("rcv_notification")
+        if (isNotificationEnabled && intent?.action == "alert") {
             val title = intent.getStringExtra(EXTRA_TITLE)
             val subtitle = intent.getStringExtra(EXTRA_SUBTITLE)
-            val notificationManager = context?.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            val notificationManager =
+                context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             val notificationChannel =
-                NotificationChannel(CHANNEL_ID_RESERVATION, CHANNEL_NAME_RESERVATION, IMPORTANCE_HIGH)
+                NotificationChannel(
+                    CHANNEL_ID_RESERVATION,
+                    CHANNEL_NAME_RESERVATION,
+                    IMPORTANCE_HIGH
+                )
             notificationManager.createNotificationChannel(notificationChannel)
             val notifyBuilder = NotificationCompat.Builder(context, CHANNEL_ID_RESERVATION)
                 .setContentTitle(title)
