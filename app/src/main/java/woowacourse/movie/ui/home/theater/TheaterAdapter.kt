@@ -10,7 +10,7 @@ import woowacourse.movie.model.movie.Theater
 
 class TheaterAdapter(
     private val theaters: List<Theater>,
-    private val movieContentId: Long,
+    private val theaterClickListener: (Long) -> Unit,
 ) : RecyclerView.Adapter<TheaterViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -24,7 +24,7 @@ class TheaterAdapter(
                 false,
             )
 
-        return TheaterViewHolder(binding, movieContentId)
+        return TheaterViewHolder(binding, theaterClickListener)
     }
 
     override fun onBindViewHolder(
