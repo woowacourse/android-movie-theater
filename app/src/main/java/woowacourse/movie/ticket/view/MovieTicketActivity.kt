@@ -26,16 +26,10 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
     }
 
     private fun processPresenterTask() {
+        val a = intent.getSerializableExtra(EXTRA_TICKET_KEY)
         presenter.storeTicketData(intent.getSerializableExtra(EXTRA_TICKET_KEY))
         presenter.setTicketInfo()
         presenter.storeTicketInDb()
-    }
-
-    override fun storeTicketInDb(ticket: DbTicket) {
-        val ticketDb = getDatabase(applicationContext)
-        Thread {
-            ticketDb.ticketDao().insertAll(ticket)
-        }.start()
     }
 
     override fun showTicketView(dbTicket: DbTicket) {
@@ -50,6 +44,13 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
                 dbTicket.theaterName,
             )
         binding.ticketPrice.text = TICKET_PRICE.format(dbTicket.price)
+    }
+
+    override fun storeTicketInDb(ticket: DbTicket) {
+        val ticketDb = getDatabase(applicationContext)
+        Thread {
+            ticketDb.ticketDao().insertAll(ticket)
+        }.start()
     }
 
     companion object {

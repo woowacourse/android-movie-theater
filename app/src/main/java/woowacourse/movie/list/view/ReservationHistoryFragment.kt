@@ -24,18 +24,15 @@ class ReservationHistoryFragment : Fragment(), ReservationOnItemClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentReservationHistoryBinding.inflate(inflater, container, false,)
-        val ticketDb = TicketDatabase.getDatabase(requireContext())
+        binding = FragmentReservationHistoryBinding.inflate(inflater, container, false)
         val latch = CountDownLatch(1)
-        loadAndDisplayDataFromDb(ticketDb, latch)
+        loadAndDisplayDataFromDb(latch)
         latch.await()
         return binding.root
     }
 
-    private fun loadAndDisplayDataFromDb(
-        ticketDb: TicketDatabase,
-        latch: CountDownLatch
-    ) {
+    private fun loadAndDisplayDataFromDb(latch: CountDownLatch) {
+        val ticketDb = TicketDatabase.getDatabase(requireContext())
         Thread {
             tickets = ticketDb.ticketDao().getAll()
             reservationHistoryAdapter = ReservationHistoryAdapter(tickets, this)
