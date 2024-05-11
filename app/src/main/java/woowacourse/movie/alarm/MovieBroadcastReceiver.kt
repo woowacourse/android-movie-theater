@@ -6,12 +6,8 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.database.TicketDatabase
-import woowacourse.movie.list.view.SettingFragment.Companion.KEY_NOTIFICATION
-import woowacourse.movie.list.view.SettingFragment.Companion.SHARED_PREFERENCE_SETTING
 import woowacourse.movie.ticket.model.DbTicket
 import woowacourse.movie.ticket.view.MovieTicketActivity
 import java.util.concurrent.CountDownLatch
@@ -24,11 +20,7 @@ class MovieBroadcastReceiver : BroadcastReceiver() {
         val latch = CountDownLatch(1)
         loadTicketsFromDb(context, latch)
         latch.await()
-        val sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCE_SETTING, AppCompatActivity.MODE_PRIVATE)
-        val isNotificationGranted = sharedPreferences.getBoolean(KEY_NOTIFICATION, false)
-        Log.d("alsong", "onReceive: $isNotificationGranted")
-        if (!isNotificationGranted) return
-        showNotification(context)
+        makeNotification(context)
     }
 
     private fun loadTicketsFromDb(
@@ -42,7 +34,7 @@ class MovieBroadcastReceiver : BroadcastReceiver() {
         }.start()
     }
 
-    private fun showNotification(context: Context) {
+    private fun makeNotification(context: Context) {
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val builder: NotificationCompat.Builder
         val channelId = "one-channel"
@@ -72,6 +64,6 @@ class MovieBroadcastReceiver : BroadcastReceiver() {
 
     companion object {
         private const val MESSAGE_RESERVATION_NOTIFICATION = "예매 알림"
-        private const val MESSAGE_SCREENING_INFORMATION = "%s 30분 후에 상영"
+        private const val MESSAGE_SCREENING_INFORMATION = "$%s 30분 후에 상영"
     }
 }
