@@ -12,7 +12,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -144,8 +143,6 @@ class SettingFragment : Fragment(), SettingContract.View, SwitchListener {
             val pendingIntent = getPendingIntent(requestCode, intent)
             val alarmClock = AlarmManager.AlarmClockInfo(it.alarmTime, pendingIntent)
             alarmMgr.setAlarmClock(alarmClock, pendingIntent)
-            Log.d("alarmcat", "nowtime: ${System.currentTimeMillis()}")
-            Log.d("alarmcat", "${alarmClock.triggerTime}")
         }
     }
 
