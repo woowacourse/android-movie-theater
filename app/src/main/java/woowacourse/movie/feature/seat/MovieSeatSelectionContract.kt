@@ -7,8 +7,6 @@ import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
 import woowacourse.movie.util.BasePresenter
-import java.time.LocalDate
-import java.time.LocalTime
 
 interface MovieSeatSelectionContract {
     interface View {

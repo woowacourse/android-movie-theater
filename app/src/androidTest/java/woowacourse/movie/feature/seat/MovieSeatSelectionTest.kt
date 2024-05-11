@@ -27,15 +27,12 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.data.reservation.ReservationRepositoryImpl
-import woowacourse.movie.feature.firstMovieId
 import woowacourse.movie.feature.movieId
 import woowacourse.movie.feature.reservationCount
 import woowacourse.movie.feature.screeningDate
 import woowacourse.movie.feature.screeningTime
 import woowacourse.movie.feature.theaterName
 import woowacourse.movie.model.ReservationCount
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_ID
 
 @RunWith(AndroidJUnit4::class)

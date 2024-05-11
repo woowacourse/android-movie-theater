@@ -20,7 +20,7 @@ object GenerateReservation {
             screeningDate,
             screeningTime,
             reservationCount,
-            theaterName
+            theaterName,
         )
     }
 }
