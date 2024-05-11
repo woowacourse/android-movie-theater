@@ -1,7 +1,6 @@
 package woowacourse.movie.list.view
 
 import android.Manifest
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -20,11 +19,9 @@ class HomeActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             isNotificationEnabled = isGranted
         }
-    private lateinit var sharedPreference: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedPreference = getSharedPreferences("notification", MODE_PRIVATE)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         binding.home = this
         setContentView(binding.root)

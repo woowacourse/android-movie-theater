@@ -15,30 +15,38 @@ import woowacourse.movie.databinding.FragmentSettingBinding
 
 class SettingFragment : Fragment() {
     private lateinit var binding: FragmentSettingBinding
-
+    private var sharedPreference = requireActivity().getSharedPreferences(SHARED_PREFERENCE_SETTING, AppCompatActivity.MODE_PRIVATE)
+    private val sharedPreferenceEditor: SharedPreferences.Editor = sharedPreference.edit()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
         val isPermissionGranted = ContextCompat.checkSelfPermission(
             requireContext(), Manifest.permission.POST_NOTIFICATIONS
         ) != -1
+        sharedPreferenceEditor.putBoolean(KEY_NOTIFICATION, isPermissionGranted).apply()
         if (!isPermissionGranted) {
             binding.permissionSwitch.isClickable = false
         }
         binding.permissionSwitch.isChecked = isPermissionGranted
-        val sharedPreference = requireActivity().getSharedPreferences("notification", AppCompatActivity.MODE_PRIVATE)
-        val editor: SharedPreferences.Editor = sharedPreference.edit()
+        storeNotificationIsGrantedOrNot()
+        return binding.root
+    }
+
+    private fun storeNotificationIsGrantedOrNot() {
         binding.permissionSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                editor.putBoolean("notification", true).commit()
+                sharedPreferenceEditor.putBoolean(KEY_NOTIFICATION, true).apply()
             } else {
-                editor.putBoolean("notification", false).commit()
+                sharedPreferenceEditor.putBoolean(KEY_NOTIFICATION, false).apply()
             }
         }
-        return binding.root
+    }
+
+    companion object {
+        const val SHARED_PREFERENCE_SETTING = "settings"
+        const val KEY_NOTIFICATION = "notification"
     }
 }
