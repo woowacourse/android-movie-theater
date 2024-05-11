@@ -24,6 +24,8 @@ import woowacourse.movie.model.theater.Seat
 import woowacourse.movie.presentation.base.BindingActivity
 import woowacourse.movie.presentation.error.ErrorActivity
 import woowacourse.movie.presentation.purchaseConfirmation.PurchaseConfirmationActivity
+import java.time.LocalDateTime
+import java.time.ZoneId
 import kotlin.concurrent.thread
 
 @SuppressLint("DiscouragedApi")
@@ -140,7 +142,8 @@ class TheaterSeatActivity :
 
     private fun postReservationAlarm(reservation: Reservation) {
         val movieTitle: String = reservation.title.name
-        val movieDateTime = reservation.releaseDate
+        val milliTimes =
+            reservation.releaseDate.minusMinutes(ALARM_OFFSET).toMilliSeconds()
 
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
@@ -157,14 +160,19 @@ class TheaterSeatActivity :
         }
 
         val alarmClockInfo = AlarmManager.AlarmClockInfo(
-            System.currentTimeMillis(),
+            milliTimes,
             pendingIntent
         )
         alarmManager.setAlarmClock(alarmClockInfo, pendingIntent)
     }
 
+    private fun LocalDateTime.toMilliSeconds(): Long {
+        return atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+    }
+
 
     companion object {
+        const val ALARM_OFFSET = 30L
         const val EXTRA_TIME_DATE = "timeDate"
         const val EXTRA_TICKET_NUM = "ticketNum"
         const val EXTRA_CINEMA = "cinema"
