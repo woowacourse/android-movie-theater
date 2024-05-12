@@ -1,6 +1,6 @@
 package woowacourse.movie.feature.result.ui
 
-import woowacourse.movie.data.movie.MovieRepository
+import woowacourse.movie.data.movie.dto.Movie
 import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.util.formatScreeningDate
 import woowacourse.movie.util.formatScreeningTime
@@ -16,9 +16,12 @@ class MovieResultUiModel(
     val totalPrice: Int,
 ) {
     companion object {
-        fun from(ticket: Ticket): MovieResultUiModel {
+        fun from(
+            ticket: Ticket,
+            movie: Movie,
+        ): MovieResultUiModel {
             return MovieResultUiModel(
-                MovieRepository.getMovieById(ticket.movieId).title,
+                movie.title,
                 ticket.screeningDate.formatScreeningDate(),
                 ticket.screeningTime.formatScreeningTime(),
                 ticket.selectedSeats.reservationCount,

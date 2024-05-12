@@ -7,6 +7,7 @@ import io.mockk.runs
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.data.movie.MovieRepositoryImpl
 import woowacourse.movie.data.ticket.FakeTicketRepository
 import woowacourse.movie.feature.movieId
 import woowacourse.movie.feature.screeningDate
@@ -28,15 +29,16 @@ class MovieResultPresenterTest {
     @Test
     fun `예매한 영화 티켓의 정보가 보여진다`() {
         // given
-        every { view.displayTicket(any()) } just runs
-        val ticketId =
-            ticketRepository.save(movieId, screeningDate, screeningTime, selectedSeats, theaterName)
+        every { view.displayTicket(any(), any()) } just runs
+        val ticketId = ticketRepository.save(movieId, screeningDate, screeningTime, selectedSeats, theaterName)
 
         // when
         presenter.loadTicket(ticketRepository, ticketId)
 
         // then
-        verify { view.displayTicket(ticketRepository.find(ticketId)) }
+        val ticket = ticketRepository.find(ticketId)
+        val movie = MovieRepositoryImpl.getMovieById(ticket.movieId)
+        verify { view.displayTicket(ticket, movie) }
     }
 
     @Test

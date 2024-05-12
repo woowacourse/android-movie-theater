@@ -1,9 +1,10 @@
 package woowacourse.movie.feature.seat
 
 import android.content.Context
+import woowacourse.movie.data.movie.MovieRepositoryImpl
 import woowacourse.movie.data.notification.NotificationRepository
 import woowacourse.movie.data.notification.NotificationSharedPreferencesRepository
-import woowacourse.movie.data.reservation.ReservationRepository
+import woowacourse.movie.data.reservation.ReservationRepositoryImpl
 import woowacourse.movie.data.reservation.dto.Reservation
 import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.data.ticket.entity.Ticket
@@ -22,12 +23,12 @@ class MovieSeatSelectionPresenter(
 ) : MovieSeatSelectionContract.Presenter {
     private lateinit var movieSelectedSeats: MovieSelectedSeats
 
-    override fun loadReservation(
-        reservationRepository: ReservationRepository,
-        reservationId: Long,
-    ) {
-        runCatching { reservationRepository.find(reservationId) }
-            .onSuccess { view.setUpReservation(it) }
+    override fun loadReservation(reservationId: Long) {
+        runCatching { ReservationRepositoryImpl.find(reservationId) }
+            .onSuccess { reservation ->
+                val movie = MovieRepositoryImpl.getMovieById(reservation.movieId)
+                view.setUpReservation(reservation, movie)
+            }
             .onFailure { view.showToastInvalidMovieIdError(it) }
     }
 

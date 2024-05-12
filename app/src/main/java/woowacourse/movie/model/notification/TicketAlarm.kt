@@ -5,7 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import woowacourse.movie.R
-import woowacourse.movie.data.movie.MovieRepository
+import woowacourse.movie.data.movie.MovieRepositoryImpl
 import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.util.MovieIntentConstant.KEY_NOTIFICATION_DESCRIPTION
 import woowacourse.movie.util.MovieIntentConstant.KEY_NOTIFICATION_TITLE
@@ -51,7 +51,7 @@ class TicketAlarm(private val context: Context) {
         val notificationText =
             context.resources.getString(
                 R.string.notification_description,
-                MovieRepository.getMovieById(ticket.movieId).title,
+                MovieRepositoryImpl.getMovieById(ticket.movieId).title,
                 TICKET_ALARM_INTERVAL_MINUTE,
             )
 

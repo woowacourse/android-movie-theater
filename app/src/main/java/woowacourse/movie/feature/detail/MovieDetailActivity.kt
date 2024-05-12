@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import woowacourse.movie.R
 import woowacourse.movie.data.movie.dto.Movie
-import woowacourse.movie.data.reservation.ReservationRepositoryImpl
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.feature.detail.ui.MovieDetailUiModel
 import woowacourse.movie.feature.seat.MovieSeatSelectionActivity
@@ -76,7 +75,6 @@ class MovieDetailActivity :
 
         binding.btnSeatSelection.setOnClickListener {
             presenter.reserveMovie(
-                ReservationRepositoryImpl,
                 movieId,
                 binding.spScreeningDate.selectedItem.toString(),
                 binding.spScreeningTime.selectedItem.toString(),

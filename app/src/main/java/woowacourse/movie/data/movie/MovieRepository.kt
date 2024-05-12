@@ -1,29 +1,13 @@
 package woowacourse.movie.data.movie
 
 import woowacourse.movie.data.movie.dto.Movie
-import java.lang.IllegalArgumentException
 
-object MovieRepository {
-    private val movies: MutableMap<Long, Movie> = mutableMapOf()
-    private const val NOT_EXIST_ID_MOVIE_MESSAGE = "해당하는 아이디의 영화가 존재하지 않습니다."
+interface MovieRepository {
+    fun saveMovie(movie: Movie)
 
-    init {
-        saveAllMovies(dummyMovieData)
-    }
+    fun saveAllMovies(movies: List<Movie>)
 
-    fun saveMovie(movie: Movie) {
-        movies[movie.id] = movie
-    }
+    fun getAllMovies(): List<Movie>
 
-    fun saveAllMovies(movies: List<Movie>) {
-        movies.forEach { saveMovie(it) }
-    }
-
-    fun getAllMovies(): List<Movie> {
-        return movies.map { it.value }
-    }
-
-    fun getMovieById(id: Long): Movie {
-        return movies[id] ?: throw IllegalArgumentException(NOT_EXIST_ID_MOVIE_MESSAGE)
-    }
+    fun getMovieById(id: Long): Movie
 }

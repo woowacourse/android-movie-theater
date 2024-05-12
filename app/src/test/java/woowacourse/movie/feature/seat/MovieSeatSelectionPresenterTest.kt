@@ -10,6 +10,7 @@ import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.data.movie.MovieRepositoryImpl
 import woowacourse.movie.data.notification.NotificationRepository
 import woowacourse.movie.data.reservation.ReservationRepository
 import woowacourse.movie.data.reservation.ReservationRepositoryImpl
@@ -43,7 +44,13 @@ class MovieSeatSelectionPresenterTest {
         ticketRepository = FakeTicketRepository()
         reservationRepository = ReservationRepositoryImpl
 
-        presenter = MovieSeatSelectionPresenter(view, applicationContext, notificationRepository, ticketAlarm)
+        presenter =
+            MovieSeatSelectionPresenter(
+                view,
+                applicationContext,
+                notificationRepository,
+                ticketAlarm,
+            )
         presenter.updateSelectedSeats(selectedSeats)
     }
 
@@ -51,7 +58,7 @@ class MovieSeatSelectionPresenterTest {
     fun `예매 정보 id에 맞는 예매 정보를 불러온다`() {
         // given
         val reservationSlot = slot<Reservation>()
-        every { view.setUpReservation(capture(reservationSlot)) } just runs
+        every { view.setUpReservation(capture(reservationSlot), any()) } just runs
         val reservationId =
             reservationRepository.save(
                 movieId,
@@ -62,12 +69,13 @@ class MovieSeatSelectionPresenterTest {
             )
 
         // when
-        presenter.loadReservation(reservationRepository, reservationId)
+        presenter.loadReservation(reservationId)
 
         // then
-        val actual = reservationSlot.captured
-        assertThat(actual.id).isEqualTo(reservationId)
-        verify { view.setUpReservation(actual) }
+        val reservation = reservationSlot.captured
+        val movie = MovieRepositoryImpl.getMovieById(reservation.movieId)
+        assertThat(reservation.id).isEqualTo(reservationId)
+        verify { view.setUpReservation(reservation, movie) }
     }
 
     @Test
@@ -76,7 +84,7 @@ class MovieSeatSelectionPresenterTest {
         every { view.showToastInvalidMovieIdError(any()) } just runs
 
         // when
-        presenter.loadReservation(reservationRepository, -1L)
+        presenter.loadReservation(-1L)
 
         // then
         verify { view.showToastInvalidMovieIdError(any()) }

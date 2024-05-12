@@ -7,12 +7,12 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.movie.MovieRepository
+import woowacourse.movie.data.movie.MovieRepositoryImpl
 
 class MovieHomePresenterTest {
     private lateinit var view: MovieHomeContract.View
     private lateinit var presenter: MovieHomePresenter
-    private val movies = MovieRepository.getAllMovies()
+    private val movies = MovieRepositoryImpl.getAllMovies()
 
     @BeforeEach
     fun setUp() {

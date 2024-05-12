@@ -14,8 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import woowacourse.movie.R
-import woowacourse.movie.data.movie.MovieRepository
-import woowacourse.movie.data.reservation.ReservationRepositoryImpl
+import woowacourse.movie.data.movie.dto.Movie
 import woowacourse.movie.data.reservation.dto.Reservation
 import woowacourse.movie.data.ticket.TicketDatabase
 import woowacourse.movie.data.ticket.TicketRepository
@@ -62,7 +61,7 @@ class MovieSeatSelectionActivity :
     private fun initializeView(reservationId: Long) {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        presenter.loadReservation(ReservationRepositoryImpl, reservationId)
+        presenter.loadReservation(reservationId)
         presenter.loadTableSeats(movieSelectedSeats)
 
         binding.btnComplete.setOnClickListener { displayDialog() }
@@ -84,10 +83,13 @@ class MovieSeatSelectionActivity :
         return super.onOptionsItemSelected(item)
     }
 
-    override fun setUpReservation(reservation: Reservation) {
+    override fun setUpReservation(
+        reservation: Reservation,
+        movie: Movie,
+    ) {
         this.reservation = reservation
         movieSelectedSeats = MovieSelectedSeats(reservation.reservationCount.count)
-        binding.movieTitle = MovieRepository.getMovieById(reservation.movieId).title
+        binding.movieTitle = movie.title
     }
 
     override fun setUpTableSeats(baseSeats: List<MovieSeat>) {

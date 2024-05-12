@@ -1,6 +1,6 @@
 package woowacourse.movie.feature.seat
 
-import woowacourse.movie.data.reservation.ReservationRepository
+import woowacourse.movie.data.movie.dto.Movie
 import woowacourse.movie.data.reservation.dto.Reservation
 import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.model.MovieSeat
@@ -9,7 +9,10 @@ import woowacourse.movie.util.BasePresenter
 
 interface MovieSeatSelectionContract {
     interface View {
-        fun setUpReservation(reservation: Reservation)
+        fun setUpReservation(
+            reservation: Reservation,
+            movie: Movie,
+        )
 
         fun setUpTableSeats(baseSeats: List<MovieSeat>)
 
@@ -28,10 +31,7 @@ interface MovieSeatSelectionContract {
     }
 
     interface Presenter : BasePresenter {
-        fun loadReservation(
-            reservationRepository: ReservationRepository,
-            reservationId: Long,
-        )
+        fun loadReservation(reservationId: Long)
 
         fun loadTableSeats(movieSelectedSeats: MovieSelectedSeats)
 

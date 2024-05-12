@@ -1,5 +1,6 @@
 package woowacourse.movie.feature.result
 
+import woowacourse.movie.data.movie.MovieRepositoryImpl
 import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.data.ticket.entity.Ticket
 import kotlin.concurrent.thread
@@ -16,6 +17,9 @@ class MovieResultPresenter(private val view: MovieResultContract.View) :
         }.join()
         result
             ?.onFailure { view.showToastInvalidMovieIdError(it) }
-            ?.onSuccess { view.displayTicket(it) }
+            ?.onSuccess { ticket ->
+                val movie = MovieRepositoryImpl.getMovieById(ticket.movieId)
+                view.displayTicket(ticket, movie)
+            }
     }
 }

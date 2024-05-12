@@ -1,6 +1,6 @@
 package woowacourse.movie.feature
 
-import woowacourse.movie.data.movie.MovieRepository
+import woowacourse.movie.data.movie.MovieRepositoryImpl
 import woowacourse.movie.data.reservation.dto.Reservation
 import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.model.MovieSelectedSeats
@@ -9,7 +9,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 val firstMovieId = 0L
-val firstMovie = MovieRepository.getMovieById(0L)
+val firstMovie = MovieRepositoryImpl.getMovieById(0L)
 val invalidMovieId = -1L
 
 val movieId = 0L
