@@ -1,5 +1,6 @@
 package woowacourse.movie.feature.seat
 
+import android.content.Context
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
@@ -9,8 +10,9 @@ import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.data.notification.NotificationRepository
 import woowacourse.movie.data.reservation.ReservationRepository
-import woowacourse.movie.data.reservation.ReservationRoomRepository
+import woowacourse.movie.data.reservation.ReservationRepositoryImpl
 import woowacourse.movie.data.reservation.dto.Reservation
 import woowacourse.movie.data.ticket.FakeTicketRepository
 import woowacourse.movie.data.ticket.TicketRepository
@@ -24,16 +26,20 @@ import woowacourse.movie.feature.theaterName
 
 class MovieSeatSelectionPresenterTest {
     private lateinit var view: MovieSeatSelectionContract.View
-    private lateinit var presenter: MovieSeatSelectionPresenter
+    private lateinit var applicationContext: Context
+    private lateinit var notificationRepository: NotificationRepository
+    private lateinit var presenter: MovieSeatSelectionContract.Presenter
     private lateinit var ticketRepository: TicketRepository
     private lateinit var reservationRepository: ReservationRepository
 
     @BeforeEach
     fun setUp() {
         view = mockk()
+        applicationContext = mockk()
+        notificationRepository = mockk()
         ticketRepository = FakeTicketRepository()
-        reservationRepository = ReservationRoomRepository
-        presenter = MovieSeatSelectionPresenter(view)
+        reservationRepository = ReservationRepositoryImpl
+        presenter = MovieSeatSelectionPresenter(view, applicationContext, notificationRepository)
         presenter.updateSelectedSeats(selectedSeats)
     }
 
@@ -42,7 +48,14 @@ class MovieSeatSelectionPresenterTest {
         // given
         val reservationSlot = slot<Reservation>()
         every { view.setUpReservation(capture(reservationSlot)) } just runs
-        val reservationId = reservationRepository.save(movieId, screeningDate, screeningTime, reservationCount, theaterName)
+        val reservationId =
+            reservationRepository.save(
+                movieId,
+                screeningDate,
+                screeningTime,
+                reservationCount,
+                theaterName,
+            )
 
         // when
         presenter.loadReservation(reservationRepository, reservationId)
@@ -92,10 +105,11 @@ class MovieSeatSelectionPresenterTest {
     }
 
     @Test
-    fun `영화를 예매하면 예매 알림을 등록한다`() {
+    fun `알림 수신이 켜져있는 경우 영화를 예매하면 예매 알림을 등록한다`() {
         // given
         every { view.navigateToResultView(any()) } just runs
         every { view.setTicketAlarm(any()) } just runs
+        every { notificationRepository.isGrant() } returns true
 
         // when
         presenter.reserveMovie(
@@ -107,5 +121,24 @@ class MovieSeatSelectionPresenterTest {
         // then
         verify { view.navigateToResultView(0L) }
         verify { view.setTicketAlarm(ticketRepository.find(0L)) }
+    }
+
+    @Test
+    fun `알림 수신이 꺼져있는 경우 영화를 예매해도 예매 알림을 등록하지 않는다`() {
+        // given
+        every { view.navigateToResultView(any()) } just runs
+        every { view.setTicketAlarm(any()) } just runs
+        every { notificationRepository.isGrant() } returns false
+
+        // when
+        presenter.reserveMovie(
+            ticketRepository,
+            reservation,
+            selectedSeats,
+        )
+
+        // then
+        verify { view.navigateToResultView(0L) }
+        verify(exactly = 0) { view.setTicketAlarm(ticketRepository.find(0L)) }
     }
 }

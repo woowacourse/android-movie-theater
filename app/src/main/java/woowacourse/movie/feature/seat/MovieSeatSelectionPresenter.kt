@@ -15,10 +15,10 @@ import kotlin.concurrent.thread
 class MovieSeatSelectionPresenter(
     private val view: MovieSeatSelectionContract.View,
     applicationContext: Context,
+    private val notificationRepository: NotificationRepository =
+        NotificationSharedPreferencesRepository.instance(applicationContext),
 ) : MovieSeatSelectionContract.Presenter {
     private lateinit var movieSelectedSeats: MovieSelectedSeats
-    private val notificationRepository: NotificationRepository
-        by lazy { NotificationSharedPreferencesRepository.instance(applicationContext) }
 
     override fun loadReservation(
         reservationRepository: ReservationRepository,

@@ -15,7 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.data.movie.MovieRepository
-import woowacourse.movie.data.reservation.ReservationRoomRepository
+import woowacourse.movie.data.reservation.ReservationRepositoryImpl
 import woowacourse.movie.data.reservation.dto.Reservation
 import woowacourse.movie.data.ticket.TicketDatabase
 import woowacourse.movie.data.ticket.TicketRepository
@@ -65,7 +65,7 @@ class MovieSeatSelectionActivity :
     private fun initializeView(reservationId: Long) {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        presenter.loadReservation(ReservationRoomRepository, reservationId)
+        presenter.loadReservation(ReservationRepositoryImpl, reservationId)
         presenter.loadTableSeats(movieSelectedSeats)
 
         binding.btnComplete.setOnClickListener { displayDialog() }

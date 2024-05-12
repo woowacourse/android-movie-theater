@@ -1,13 +1,16 @@
 package woowacourse.movie.feature.setting
 
+import android.content.Context
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.runs
+import io.mockk.slot
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.data.notification.NotificationRepository
 import woowacourse.movie.data.ticket.FakeTicketRepository
 import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.data.ticket.entity.Ticket
@@ -20,6 +23,8 @@ import woowacourse.movie.feature.ticket
 
 class SettingPresenterTest {
     private lateinit var view: SettingContract.View
+    private lateinit var applicationContext: Context
+    private lateinit var notificationRepository: NotificationRepository
     private lateinit var ticketRepository: TicketRepository
     private lateinit var presenter: SettingContract.Presenter
     private val ticketCount = 3
@@ -27,8 +32,10 @@ class SettingPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk()
+        applicationContext = mockk()
+        notificationRepository = mockk()
         ticketRepository = FakeTicketRepository()
-        presenter = SettingPresenter(view)
+        presenter = SettingPresenter(view, applicationContext, notificationRepository)
         repeat(ticketCount) {
             ticketRepository.save(
                 movieId,
@@ -38,6 +45,37 @@ class SettingPresenterTest {
                 theaterName,
             )
         }
+    }
+
+    @Test
+    fun `알림 수신 여부를 불러온다`() {
+        // given
+        val isGrantSlot = slot<Boolean>()
+        every { notificationRepository.isGrant() } returns true
+        every { view.initializeSwitch(capture(isGrantSlot)) } just runs
+
+        // when
+        presenter.loadNotificationGrant()
+
+        // then
+        val actual = isGrantSlot.captured
+        assertThat(actual).isTrue
+        verify { view.initializeSwitch(any()) }
+    }
+
+    @Test
+    fun `알림 수신 여부를 업데이트한다`() {
+        // given
+        val isGrantSlot = slot<Boolean>()
+        every { notificationRepository.update(capture(isGrantSlot)) } just runs
+
+        // when
+        presenter.updateNotificationGrant(true)
+
+        // then
+        val actual = isGrantSlot.captured
+        assertThat(actual).isTrue
+        verify { notificationRepository.update(actual) }
     }
 
     @Test

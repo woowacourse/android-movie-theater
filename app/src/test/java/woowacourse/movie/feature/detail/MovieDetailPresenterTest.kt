@@ -8,7 +8,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.reservation.ReservationRoomRepository
+import woowacourse.movie.data.reservation.ReservationRepositoryImpl
 import woowacourse.movie.feature.firstMovie
 import woowacourse.movie.feature.firstMovieId
 import woowacourse.movie.feature.invalidMovieId
@@ -16,7 +16,7 @@ import woowacourse.movie.feature.invalidMovieId
 class MovieDetailPresenterTest {
     private lateinit var view: MovieDetailContract.View
     private lateinit var presenter: MovieDetailPresenter
-    private val reservationRepository = ReservationRoomRepository
+    private val reservationRepository = ReservationRepositoryImpl
     private val movie = firstMovie
 
     @BeforeEach
@@ -100,7 +100,7 @@ class MovieDetailPresenterTest {
 
         // when
         presenter.reserveMovie(
-            ReservationRoomRepository,
+            reservationRepository,
             firstMovieId,
             "2024-01-01",
             "10:00",

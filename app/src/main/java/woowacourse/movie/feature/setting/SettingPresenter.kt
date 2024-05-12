@@ -10,10 +10,9 @@ import kotlin.concurrent.thread
 class SettingPresenter(
     private val view: SettingContract.View,
     applicationContext: Context,
+    private val notificationRepository: NotificationRepository =
+        NotificationSharedPreferencesRepository.instance(applicationContext),
 ) : SettingContract.Presenter {
-    private val notificationRepository: NotificationRepository
-        by lazy { NotificationSharedPreferencesRepository.instance(applicationContext) }
-
     override fun loadNotificationGrant() {
         val isGrant = notificationRepository.isGrant()
         view.initializeSwitch(isGrant)
