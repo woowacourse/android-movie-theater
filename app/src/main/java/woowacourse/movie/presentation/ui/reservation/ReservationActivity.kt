@@ -29,12 +29,20 @@ class ReservationActivity : BaseActivity<ActivityReservationBinding>(), View {
 
     override fun initStartView() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        initRepository()
+        val id = intent.getLongExtra(PUT_EXTRA_KEY_RESERVATION_ID, INVALID_RESERVATION_ID)
+        if (id != INVALID_RESERVATION_ID) {
+            presenter.loadReservation(id)
+        } else {
+            terminateOnError(IllegalArgumentException())
+        }
+    }
+
+    private fun initRepository() {
         AppDatabase.getDatabase(applicationContext)?.let { database ->
             reservationDao = database.reservationDao()
             reservationRepository = ReservationRepositoryImpl(reservationDao)
         }
-        val id = intent.getLongExtra(PUT_EXTRA_KEY_RESERVATION_ID, DEFAULT_RESERVATION_ID)
-        presenter.loadReservation(id)
     }
 
     override fun showReservation(reservation: Reservation) {
@@ -53,7 +61,7 @@ class ReservationActivity : BaseActivity<ActivityReservationBinding>(), View {
 
     companion object {
         const val PUT_EXTRA_KEY_RESERVATION_ID = "reservationId"
-        private const val DEFAULT_RESERVATION_ID = -1L
+        private const val INVALID_RESERVATION_ID = -1L
 
         fun startActivity(
             context: Context,
