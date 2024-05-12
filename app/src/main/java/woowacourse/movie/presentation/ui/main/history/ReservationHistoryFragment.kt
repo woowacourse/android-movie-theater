@@ -57,9 +57,10 @@ class ReservationHistoryFragment :
     }
 
     private fun initRepository() {
-        reservationDao =
-            context?.let { AppDatabase.getDatabase(it.applicationContext) }!!.reservationDao()
-        reservationRepository = ReservationRepositoryImpl(reservationDao)
+        context?.let { AppDatabase.getDatabase(it.applicationContext) }?.let {
+            reservationDao = it.reservationDao()
+            reservationRepository = ReservationRepositoryImpl(reservationDao)
+        }
     }
 
     private fun loadReservationHistory() {

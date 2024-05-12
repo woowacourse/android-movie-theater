@@ -53,8 +53,10 @@ class SeatSelectionActivity : BaseActivity<ActivitySeatSelectionBinding>(), View
     }
 
     private fun initRepository() {
-        reservationDao = AppDatabase.getDatabase(applicationContext)!!.reservationDao()
-        reservationRepository = ReservationRepositoryImpl(reservationDao)
+        AppDatabase.getDatabase(applicationContext)?.let { database ->
+            reservationDao = database.reservationDao()
+            reservationRepository = ReservationRepositoryImpl(reservationDao)
+        }
     }
 
     private fun getReservationInfoFromIntent() =

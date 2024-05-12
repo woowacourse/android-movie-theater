@@ -16,7 +16,7 @@ import woowacourse.movie.presentation.ui.detail.ScreenDetailActivity
 class BottomTheatersFragment : BottomSheetDialogFragment(), BottomTheaterContract.View {
     private var _binding: FragmentBottomTheatersBinding? = null
     val binding: FragmentBottomTheatersBinding
-        get() = _binding!!
+        get() = requireNotNull(_binding)
 
     private var movieId: Int? = null
     private lateinit var adapter: BottomTheatersAdapter

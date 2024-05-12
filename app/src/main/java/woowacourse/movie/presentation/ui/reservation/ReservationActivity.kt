@@ -29,8 +29,10 @@ class ReservationActivity : BaseActivity<ActivityReservationBinding>(), View {
 
     override fun initStartView() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        reservationDao = AppDatabase.getDatabase(applicationContext)!!.reservationDao()
-        reservationRepository = ReservationRepositoryImpl(reservationDao)
+        AppDatabase.getDatabase(applicationContext)?.let { database ->
+            reservationDao = database.reservationDao()
+            reservationRepository = ReservationRepositoryImpl(reservationDao)
+        }
         val id = intent.getLongExtra(PUT_EXTRA_KEY_RESERVATION_ID, DEFAULT_RESERVATION_ID)
         presenter.loadReservation(id)
     }

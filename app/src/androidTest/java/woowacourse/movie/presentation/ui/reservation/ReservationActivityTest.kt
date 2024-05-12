@@ -48,13 +48,14 @@ class ReservationActivityTest {
                 ReservationActivity::class.java,
             ).apply {
                 val context = ApplicationProvider.getApplicationContext<Context>()
-                val reservationDao = AppDatabase.getDatabase(context)!!.reservationDao()
-                thread {
+                AppDatabase.getDatabase(context)?.let { db ->
+                    val reservationDao = db.reservationDao()
                     repository = ReservationRepositoryImpl(reservationDao)
-                    reservationId = repository.saveReservation(reservation).getOrThrow()
+                    thread {
+                        reservationId = repository.saveReservation(reservation).getOrThrow()
+                    }.join()
+                    putExtra("reservationId", reservationId)
                 }
-                Thread.sleep(1500)
-                putExtra("reservationId", reservationId)
             },
         )
 
