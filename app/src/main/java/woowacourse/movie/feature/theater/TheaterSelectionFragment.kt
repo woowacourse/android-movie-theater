@@ -15,7 +15,6 @@ import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.feature.home.HomeFragment.Companion.MOVIE_ID
 import woowacourse.movie.feature.reservation.ReservationActivity
 import woowacourse.movie.feature.theater.adapter.TheaterSelectionAdapter
-import woowacourse.movie.model.movie.Movie.Companion.DEFAULT_MOVIE_ID
 import woowacourse.movie.model.theater.Theater
 
 class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionContract.View {
@@ -81,13 +80,7 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
         _binding = null
     }
 
-    private fun receiveMovieId(): Int {
-        val movieId = arguments?.getInt(MOVIE_ID)
-        movieId?.let {
-            return movieId
-        }
-        return DEFAULT_MOVIE_ID
-    }
+    private fun receiveMovieId(): Int? = arguments?.getInt(MOVIE_ID)
 
     private fun initPresenter() {
         presenter =

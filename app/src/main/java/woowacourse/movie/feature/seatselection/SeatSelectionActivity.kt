@@ -31,17 +31,15 @@ import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.utils.MovieUtils.bundleSerializable
 import woowacourse.movie.utils.MovieUtils.convertAmountFormat
 import woowacourse.movie.utils.MovieUtils.intentSerializable
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private val binding: ActivitySeatSelectionBinding by lazy { DataBindingUtil.setContentView(this, R.layout.activity_seat_selection) }
     private lateinit var presenter: SeatSelectionPresenter
 
     private lateinit var seatsTable: List<Button>
-    private lateinit var headCount: HeadCount
-    private lateinit var screeningDateTime: LocalDateTime
+    private var headCount: HeadCount? = null
+    private var screeningDateTime: LocalDateTime? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -191,28 +189,29 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             DEFAULT_MOVIE_ID,
         )
 
-    private fun receiveHeadCount() = intent.intentSerializable(HEAD_COUNT, HeadCount::class.java) ?: HeadCount(0)
+    private fun receiveHeadCount() = intent.intentSerializable(HEAD_COUNT, HeadCount::class.java)
 
     private fun receiveTheaterId(): Int = intent.getIntExtra(THEATER_ID, DEFAULT_THEATER_ID)
 
     private fun receiveScreeningDateTime() =
         intent.intentSerializable(
-            SCREENING_DATE_TIME, LocalDateTime::class.java,
-        ) ?: LocalDateTime.of(LocalDate.now(), LocalTime.now())
+            SCREENING_DATE_TIME,
+            LocalDateTime::class.java,
+        )
 
     private fun collectSeatsInTableLayout(): List<Button> =
         binding.tlSeatSelection.children.filterIsInstance<TableRow>().flatMap { it.children }
             .filterIsInstance<Button>().toList()
 
     private fun restoreReservationData(bundle: Bundle) {
-        headCount = bundle.bundleSerializable(HEAD_COUNT, HeadCount::class.java) ?: HeadCount(0)
+        headCount = bundle.bundleSerializable(HEAD_COUNT, HeadCount::class.java)
         presenter.restoreReservation()
     }
 
     private fun restoreSeatsData(bundle: Bundle) {
-        val seats = bundle.bundleSerializable(SEATS, Seats::class.java) ?: throw NoSuchElementException()
-        val index = bundle.getIntegerArrayList(SEATS_INDEX) ?: throw NoSuchElementException()
-        presenter.restoreSeats(seats, index.toList())
+        val seats = bundle.bundleSerializable(SEATS, Seats::class.java)
+        val index = bundle.getIntegerArrayList(SEATS_INDEX)
+        presenter.restoreSeats(seats, index)
     }
 
     private fun initAmount() {

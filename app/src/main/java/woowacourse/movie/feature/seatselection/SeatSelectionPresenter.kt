@@ -11,10 +11,7 @@ import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.theater.Theater.Companion.DEFAULT_THEATER_ID
 import woowacourse.movie.model.ticket.HeadCount
-import woowacourse.movie.model.ticket.HeadCount.Companion.DEFAULT_HEAD_COUNT
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 import kotlin.concurrent.thread
 
 class SeatSelectionPresenter(
@@ -24,19 +21,15 @@ class SeatSelectionPresenter(
     private val theaterDao: TheaterDao,
     private val movieId: Int,
     private val theaterId: Int,
-    private val headCount: HeadCount,
-    private val screeningDateTime: LocalDateTime,
+    private val headCount: HeadCount? = null,
+    private val screeningDateTime: LocalDateTime? = null,
     private val ticketDao: TicketDao,
 ) : SeatSelectionContract.Presenter {
     private val selectedSeats = Seats()
     private val seats = seatsDao.findAll()
 
     override fun loadReservationInformation() {
-        if (movieId != DEFAULT_MOVIE_ID &&
-            theaterId != DEFAULT_THEATER_ID &&
-            headCount.count != DEFAULT_HEAD_COUNT &&
-            screeningDateTime != LocalDateTime.of(LocalDate.now(), LocalTime.now())
-        ) {
+        if (isValidInformation()) {
             loadSeatNumber()
             loadMovie()
         } else {
@@ -50,12 +43,16 @@ class SeatSelectionPresenter(
     }
 
     override fun restoreSeats(
-        seats: Seats,
-        seatsIndex: List<Int>,
+        selectedSeats: Seats?,
+        seatsIndex: ArrayList<Int>?,
     ) {
-        selectedSeats.restoreSeats(seats)
-        selectedSeats.restoreSeatsIndex(seatsIndex)
-        view.restoreSelectedSeats(seatsIndex)
+        selectedSeats?.let {
+            this.selectedSeats.restoreSeats(selectedSeats)
+        }
+        seatsIndex?.let {
+            this.selectedSeats.restoreSeatsIndex(seatsIndex)
+            view.restoreSelectedSeats(seatsIndex)
+        }
     }
 
     override fun loadSeatNumber() {
@@ -69,13 +66,15 @@ class SeatSelectionPresenter(
         view.showMovieTitle(movie)
     }
 
-    override fun saveTicket(screeningDateTime: LocalDateTime) {
-        var ticketId: Long = 0
-        val ticket = makeTicket(screeningDateTime)
-        thread(start = true) {
-            ticketId = ticketDao.insert(ticket)
-        }.join()
-        view.navigateToFinished(ticketId)
+    override fun saveTicket(screeningDateTime: LocalDateTime?) {
+        screeningDateTime?.let {
+            var ticketId: Long = 0
+            val ticket = makeTicket(screeningDateTime)
+            thread {
+                ticketId = ticketDao.insert(ticket)
+            }.join()
+            view.navigateToFinished(ticketId)
+        }
     }
 
     override fun requestReservationConfirm() {
@@ -83,14 +82,16 @@ class SeatSelectionPresenter(
     }
 
     override fun deliverReservationInfo(onReservationDataSave: OnReservationDataSave) {
-        onReservationDataSave(headCount, selectedSeats, selectedSeats.seatsIndex)
+        headCount?.let {
+            onReservationDataSave(headCount, selectedSeats, selectedSeats.seatsIndex)
+        }
     }
 
     override fun updateReservationState(
         seat: Seat,
         isSelected: Boolean,
     ) {
-        if (selectedSeats.seats.size < headCount.count || isSelected) {
+        if (headCount != null && selectedSeats.seats.size < headCount.count || isSelected) {
             val seatIndex = seats.indexOf(seat)
             view.updateSeatSelectedState(seatIndex, isSelected)
             manageSelectedSeats(!isSelected, seatIndex, seat)
@@ -116,8 +117,18 @@ class SeatSelectionPresenter(
     }
 
     override fun validateReservationAvailable() {
-        val isReservationAvailable = selectedSeats.seats.size >= headCount.count
-        view.setConfirmButtonEnabled(isReservationAvailable)
+        headCount?.let {
+            val isReservationAvailable = selectedSeats.seats.size >= headCount.count
+            view.setConfirmButtonEnabled(isReservationAvailable)
+        }
+    }
+
+    private fun isValidInformation(): Boolean {
+        if (movieId == DEFAULT_MOVIE_ID) return false
+        if (theaterId == DEFAULT_THEATER_ID) return false
+        if (headCount == null) return false
+        if (screeningDateTime == null) return false
+        return true
     }
 
     private fun handleUndeliveredData() {

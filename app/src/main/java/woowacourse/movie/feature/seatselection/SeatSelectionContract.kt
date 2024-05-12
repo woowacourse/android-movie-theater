@@ -25,8 +25,8 @@ interface SeatSelectionContract {
         fun restoreReservation()
 
         fun restoreSeats(
-            selectedSeats: Seats,
-            seatsIndex: List<Int>,
+            selectedSeats: Seats?,
+            seatsIndex: ArrayList<Int>?,
         )
 
         fun manageSelectedSeats(
@@ -35,7 +35,7 @@ interface SeatSelectionContract {
             seat: Seat,
         )
 
-        fun saveTicket(screeningDateTime: LocalDateTime)
+        fun saveTicket(screeningDateTime: LocalDateTime?)
 
         fun validateReservationAvailable()
 

@@ -33,9 +33,7 @@ class ReservationPresenter(
     }
 
     override fun loadMovieInformation() {
-        if (movieId != DEFAULT_MOVIE_ID &&
-            theaterId != DEFAULT_THEATER_ID
-        ) {
+        if (isValidMovieInformation()) {
             loadMovie()
             loadScreeningDates()
             loadScreeningTimes()
@@ -70,6 +68,12 @@ class ReservationPresenter(
         val dateTime = LocalDateTime.of(screeningDate, screeningTime)
         view.showDateTime(dateTime)
         view.navigateToSeatSelection(dateTime, movieId, theaterId, headCount)
+    }
+
+    private fun isValidMovieInformation(): Boolean {
+        if (movieId == DEFAULT_MOVIE_ID) return false
+        if (theaterId == DEFAULT_THEATER_ID) return false
+        return true
     }
 
     private fun handleUndeliveredData() {

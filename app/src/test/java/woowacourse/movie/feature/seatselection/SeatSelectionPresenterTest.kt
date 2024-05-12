@@ -75,7 +75,7 @@ class SeatSelectionPresenterTest {
     @Test
     fun `선택된 좌석들을 복구한다`() {
         every { view.restoreSelectedSeats(any()) } just runs
-        presenter.restoreSeats(Seats(), emptyList())
+        presenter.restoreSeats(Seats(), ArrayList())
         verify { view.restoreSelectedSeats(any()) }
     }
 
