@@ -38,7 +38,9 @@ abstract class MovieDatabase : RoomDatabase() {
         fun database(context: Context): MovieDatabase =
             instance ?: synchronized(this) {
                 val newInstance =
-                    buildDatabase(context)
+                    buildDatabase(context).apply {
+                        initData()
+                    }
                 instance = newInstance
                 return newInstance
             }
@@ -49,5 +51,26 @@ abstract class MovieDatabase : RoomDatabase() {
                 MovieDatabase::class.java,
                 "movieEntity",
             ).build()
+
+        private fun MovieDatabase.initData() {
+            this.clearAllTables()
+
+            val movieDao = this.movieDao()
+            val movieTheaterDao = this.movieTheaterDao()
+            val screeningMovieDao = this.screeningMovieDao()
+
+            movieDao.insert(MovieEntity.STUB)
+            movieTheaterDao.insertAll(
+                MovieTheaterEntity.STUB_A,
+                MovieTheaterEntity.STUB_B,
+                MovieTheaterEntity.STUB_C,
+            )
+
+            screeningMovieDao.insertAll(
+                ScreeningMovieEntity.STUB_A,
+                ScreeningMovieEntity.STUB_B,
+                ScreeningMovieEntity.STUB_C,
+            )
+        }
     }
 }
