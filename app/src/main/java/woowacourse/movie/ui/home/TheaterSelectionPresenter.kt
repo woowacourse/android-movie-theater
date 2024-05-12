@@ -14,8 +14,6 @@ class TheaterSelectionPresenter(
     private val theaterDataSource: TheaterDao,
 ) :
     TheaterSelectionContract.Presenter {
-    private lateinit var movieContent: MovieContent
-
     override fun loadTheaters(movieContentId: Long) {
         runCatching {
             lateinit var movieContent: MovieContent
@@ -24,8 +22,7 @@ class TheaterSelectionPresenter(
                 movieContent = movieContentDataSource.find(movieContentId).toMovieContent()
                 theaters =
                     movieContent.theaterIds.map { theaterId ->
-                        val theater = theaterDataSource.find(theaterId).toTheater()
-                        theater
+                        theaterDataSource.find(theaterId).toTheater()
                     }
             }.join()
             view.showTheaters(movieContentId, theaters)

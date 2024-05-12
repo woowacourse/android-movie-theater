@@ -22,6 +22,55 @@ object FakeTheaterRepository : TheaterDao {
                 screeningTimes = listOf("14:00", "16:00"),
             ),
         )
+
+        save(
+            TheaterEntity(
+                name = "잠실",
+                screeningTimes = listOf("14:00", "16:00"),
+            ),
+        )
+
+        save(
+            TheaterEntity(
+                name = "강남",
+                screeningTimes = listOf("11:00", "13:00", "15:00"),
+            ),
+        )
+
+        save(
+            TheaterEntity(
+                name = "선릉",
+                screeningTimes = listOf("14:00", "16:00"),
+            ),
+        )
+
+        save(
+            TheaterEntity(
+                name = "잠실",
+                screeningTimes = listOf("14:00", "16:00"),
+            ),
+        )
+
+        save(
+            TheaterEntity(
+                name = "강남",
+                screeningTimes = listOf("11:00", "13:00", "15:00"),
+            ),
+        )
+
+        save(
+            TheaterEntity(
+                name = "선릉",
+                screeningTimes = listOf("14:00", "16:00"),
+            ),
+        )
+
+        save(
+            TheaterEntity(
+                name = "잠실",
+                screeningTimes = listOf("14:00", "16:00"),
+            ),
+        )
     }
 
     override fun save(data: TheaterEntity): Long {
