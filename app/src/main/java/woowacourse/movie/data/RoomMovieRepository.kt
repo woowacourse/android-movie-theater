@@ -51,7 +51,7 @@ class RoomMovieRepository(
         seats: SelectedSeats,
         theaterId: Long,
     ): Long {
-        val movie = screenMovieDao.getScreenMovieById(screenMovieId).movie
+        val movie = screenMovieDao.getScreenMovieById(screenMovieId).movieEntity
         return reservationDao.insert(
             MovieReservationEntity(
                 screenMovieId,

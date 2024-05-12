@@ -12,13 +12,13 @@ import woowacourse.movie.data.dao.MovieDao
 import woowacourse.movie.data.dao.MovieReservationDao
 import woowacourse.movie.data.dao.MovieTheaterDao
 import woowacourse.movie.data.dao.ScreeningMovieDao
-import woowacourse.movie.data.entity.Movie
+import woowacourse.movie.data.entity.MovieEntity
 import woowacourse.movie.data.entity.MovieReservationEntity
 import woowacourse.movie.data.entity.MovieTheaterEntity
 import woowacourse.movie.data.entity.ScreeningMovieEntity
 
 @Database(
-    entities = [MovieReservationEntity::class, MovieTheaterEntity::class, Movie::class, ScreeningMovieEntity::class],
+    entities = [MovieReservationEntity::class, MovieTheaterEntity::class, MovieEntity::class, ScreeningMovieEntity::class],
     version = 1,
 )
 @TypeConverters(value = [ReservationSeatsConverters::class, LocalDateTimeConverters::class, ScreenDateTimeConverters::class])
@@ -47,7 +47,7 @@ abstract class MovieDatabase : RoomDatabase() {
             Room.databaseBuilder(
                 context.applicationContext,
                 MovieDatabase::class.java,
-                "movie",
+                "movieEntity",
             ).build()
     }
 }

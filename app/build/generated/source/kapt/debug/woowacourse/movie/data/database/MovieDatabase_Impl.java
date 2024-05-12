@@ -126,7 +126,7 @@ public final class MovieDatabase_Impl extends MovieDatabase {
         final TableInfo _infoMovieReservation = new TableInfo("movie_reservation", _columnsMovieReservation, _foreignKeysMovieReservation, _indicesMovieReservation);
         final TableInfo _existingMovieReservation = TableInfo.read(db, "movie_reservation");
         if (!_infoMovieReservation.equals(_existingMovieReservation)) {
-          return new RoomOpenHelper.ValidationResult(false, "movie_reservation(woowacourse.movie.data.entity.MovieReservationEntity).\n"
+          return new RoomOpenHelper.ValidationResult(false, "movie_reservation(woowacourse.movieEntity.data.entity.MovieReservationEntity).\n"
                   + " Expected:\n" + _infoMovieReservation + "\n"
                   + " Found:\n" + _existingMovieReservation);
         }
@@ -138,7 +138,7 @@ public final class MovieDatabase_Impl extends MovieDatabase {
         final TableInfo _infoMovieTheater = new TableInfo("movie_theater", _columnsMovieTheater, _foreignKeysMovieTheater, _indicesMovieTheater);
         final TableInfo _existingMovieTheater = TableInfo.read(db, "movie_theater");
         if (!_infoMovieTheater.equals(_existingMovieTheater)) {
-          return new RoomOpenHelper.ValidationResult(false, "movie_theater(woowacourse.movie.data.entity.MovieTheaterEntity).\n"
+          return new RoomOpenHelper.ValidationResult(false, "movie_theater(woowacourse.movieEntity.data.entity.MovieTheaterEntity).\n"
                   + " Expected:\n" + _infoMovieTheater + "\n"
                   + " Found:\n" + _existingMovieTheater);
         }
@@ -152,10 +152,10 @@ public final class MovieDatabase_Impl extends MovieDatabase {
         _columnsMovie.put("running_time", new TableInfo.Column("running_time", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysMovie = new HashSet<TableInfo.ForeignKey>(0);
         final HashSet<TableInfo.Index> _indicesMovie = new HashSet<TableInfo.Index>(0);
-        final TableInfo _infoMovie = new TableInfo("movie", _columnsMovie, _foreignKeysMovie, _indicesMovie);
-        final TableInfo _existingMovie = TableInfo.read(db, "movie");
+        final TableInfo _infoMovie = new TableInfo("movieEntity", _columnsMovie, _foreignKeysMovie, _indicesMovie);
+        final TableInfo _existingMovie = TableInfo.read(db, "movieEntity");
         if (!_infoMovie.equals(_existingMovie)) {
-          return new RoomOpenHelper.ValidationResult(false, "movie(woowacourse.movie.data.entity.Movie).\n"
+          return new RoomOpenHelper.ValidationResult(false, "movieEntity(woowacourse.movieEntity.data.entity.MovieEntity).\n"
                   + " Expected:\n" + _infoMovie + "\n"
                   + " Found:\n" + _existingMovie);
         }
@@ -176,7 +176,7 @@ public final class MovieDatabase_Impl extends MovieDatabase {
         final TableInfo _infoScreeningMovie = new TableInfo("screening_movie", _columnsScreeningMovie, _foreignKeysScreeningMovie, _indicesScreeningMovie);
         final TableInfo _existingScreeningMovie = TableInfo.read(db, "screening_movie");
         if (!_infoScreeningMovie.equals(_existingScreeningMovie)) {
-          return new RoomOpenHelper.ValidationResult(false, "screening_movie(woowacourse.movie.data.entity.ScreeningMovieEntity).\n"
+          return new RoomOpenHelper.ValidationResult(false, "screening_movie(woowacourse.movieEntity.data.entity.ScreeningMovieEntity).\n"
                   + " Expected:\n" + _infoScreeningMovie + "\n"
                   + " Found:\n" + _existingScreeningMovie);
         }
@@ -193,7 +193,7 @@ public final class MovieDatabase_Impl extends MovieDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     final HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "movie_reservation","movie_theater","movie","screening_movie");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "movie_reservation","movie_theater","movieEntity","screening_movie");
   }
 
   @Override

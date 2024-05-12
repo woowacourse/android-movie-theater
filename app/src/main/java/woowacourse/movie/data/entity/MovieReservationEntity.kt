@@ -23,7 +23,7 @@ import java.time.LocalDateTime
 )
 data class MovieReservationEntity(
     @PrimaryKey val id: Long,
-    @Embedded(prefix = "movie_") val movie: Movie,
+    @Embedded(prefix = "movie_") val movieEntity: MovieEntity,
     @ColumnInfo(name = "selected_seats") val selectedSeats: List<Map<Int, Int>>,
     @ColumnInfo(name = "screen_date_time") val screenDateTime: LocalDateTime,
     @ColumnInfo(name = "head_count") val headCount: Int,
@@ -32,7 +32,7 @@ data class MovieReservationEntity(
     fun toMovieReservation(): woowacourse.movie.model.MovieReservation =
         woowacourse.movie.model.MovieReservation(
             id,
-            movie.toMovie(),
+            movieEntity.toMovie(),
             selectedSeats.toSelectedSeats(),
             screenDateTime,
             HeadCount(headCount),
@@ -54,7 +54,7 @@ data class MovieReservationEntity(
         val STUB =
             MovieReservationEntity(
                 0L,
-                Movie.STUB,
+                MovieEntity.STUB,
                 listOf(mapOf(0 to 0), mapOf(0 to 1)),
                 LocalDateTime.of(2024, 3, 1, 9, 0),
                 3,

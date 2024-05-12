@@ -7,7 +7,7 @@ import woowacourse.movie.data.dao.MovieReservationDao
 import woowacourse.movie.data.dao.MovieTheaterDao
 import woowacourse.movie.data.dao.ScreeningMovieDao
 import woowacourse.movie.data.database.MovieDatabase
-import woowacourse.movie.data.entity.Movie
+import woowacourse.movie.data.entity.MovieEntity
 import woowacourse.movie.data.entity.MovieTheaterEntity
 import woowacourse.movie.data.entity.ScreeningMovieEntity
 import kotlin.concurrent.thread
@@ -65,7 +65,7 @@ class TheaterApp : Application() {
             movieTheaterDao.insert(MovieTheaterEntity.STUB_C)
         }.join()
         thread {
-            movieDao.insert(Movie.STUB)
+            movieDao.insert(MovieEntity.STUB)
         }.join()
 
         thread {

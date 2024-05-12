@@ -12,7 +12,7 @@ import java.time.LocalTime
 data class ScreeningMovieEntity(
     @PrimaryKey val id: Long,
     @Embedded(prefix = "movie_")
-    val movie: Movie,
+    val movieEntity: MovieEntity,
     @Embedded(prefix = "theater_")
     val theater: MovieTheaterEntity,
     @ColumnInfo(name = "screen_date_times")
@@ -27,7 +27,7 @@ data class ScreeningMovieEntity(
             }
         return woowacourse.movie.model.ScreeningMovie(
             id = id,
-            movie = movie.toMovie(),
+            movie = movieEntity.toMovie(),
             theater = theater.toMovieTheater(),
             screenDateTimes = transformedDateTimes,
         )
@@ -37,7 +37,7 @@ data class ScreeningMovieEntity(
         val STUB_A =
             ScreeningMovieEntity(
                 0L,
-                Movie.STUB,
+                MovieEntity.STUB,
                 MovieTheaterEntity.STUB_A,
                 listOf(
                     mapOf(LocalDate.of(2024, 3, 1) to listOf(LocalTime.of(9, 0, 0))),
@@ -47,7 +47,7 @@ data class ScreeningMovieEntity(
         val STUB_B =
             ScreeningMovieEntity(
                 1L,
-                Movie.STUB,
+                MovieEntity.STUB,
                 MovieTheaterEntity.STUB_B,
                 listOf(
                     mapOf(LocalDate.of(2024, 3, 1) to listOf(LocalTime.of(9, 0, 0))),
@@ -58,7 +58,7 @@ data class ScreeningMovieEntity(
         val STUB_C =
             ScreeningMovieEntity(
                 2L,
-                Movie.STUB,
+                MovieEntity.STUB,
                 MovieTheaterEntity.STUB_C,
                 listOf(
                     mapOf(

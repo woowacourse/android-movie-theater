@@ -9,8 +9,8 @@ import woowacourse.movie.model.RunningTime
 import java.time.LocalDate
 import kotlin.time.Duration.Companion.minutes
 
-@Entity(tableName = "movie")
-data class Movie(
+@Entity(tableName = "movieEntity")
+data class MovieEntity(
     @PrimaryKey val id: Long = 0,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "description") val description: String,
@@ -32,7 +32,7 @@ data class Movie(
 
     companion object {
         val STUB =
-            Movie(
+            MovieEntity(
                 0,
                 "해리 포터와 마법사의 돌",
                 "《해리 포터와 마법사의 돌》은 2001년 J. K. 롤링의 동명 소설을 원작으로 하여 만든, 영국과 미국 합작, 판타지 영화이다. " +
