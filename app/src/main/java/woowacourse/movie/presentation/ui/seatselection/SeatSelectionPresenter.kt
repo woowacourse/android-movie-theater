@@ -2,7 +2,6 @@ package woowacourse.movie.presentation.ui.seatselection
 
 import woowacourse.movie.domain.model.Reservation
 import woowacourse.movie.domain.model.Screen
-import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.SeatBoard
 import woowacourse.movie.domain.model.SeatModel
 import woowacourse.movie.domain.repository.ReservationRepository
@@ -10,7 +9,6 @@ import woowacourse.movie.domain.repository.ScreenRepository
 import woowacourse.movie.presentation.model.MessageType
 import woowacourse.movie.presentation.model.ReservationInfo
 import woowacourse.movie.presentation.model.UserSeat
-import java.time.LocalDateTime
 import kotlin.concurrent.thread
 
 class SeatSelectionPresenter(
@@ -27,10 +25,7 @@ class SeatSelectionPresenter(
         movieId: Int,
     ) {
         _seatSelectionModel =
-            seatSelectionModel.copy(
-                dateTime = reservationInfo.dateTime,
-                ticketQuantity = reservationInfo.ticketQuantity,
-            )
+            seatSelectionModel.copyWithReservationInfo(reservationInfo)
         loadScreen(reservationInfo.theaterId, movieId)
         loadSeatBoard(reservationInfo.theaterId)
     }
@@ -102,26 +97,11 @@ class SeatSelectionPresenter(
     override fun reserve() {
         seatSelectionModel.screen?.let { screen ->
             seatSelectionModel.dateTime?.let { dateTime ->
-                val reservation =
-                    createReservation(screen, dateTime)
+                val reservation = seatSelectionModel.createReservation(screen, dateTime)
                 saveReservation(reservation)
             }
         }
     }
-
-    private fun createReservation(
-        screen: Screen,
-        dateTime: LocalDateTime,
-    ) = Reservation(
-        id = 0L,
-        theaterName = seatSelectionModel.theaterName,
-        movieTitle = screen.movie.title,
-        ticketCount = seatSelectionModel.ticketQuantity,
-        seats =
-            seatSelectionModel.userSeat.seatModels.filter { it.isSelected }
-                .map { Seat(it.column, it.row, it.seatRank) },
-        dateTime = dateTime,
-    )
 
     private fun saveReservation(reservation: Reservation) {
         thread {
