@@ -26,6 +26,7 @@ class MovieTicketPresenter(
         thread {
             ticketDb.ticketDao().insertAll(ticket)
         }.join()
+        view.showTicketView(TicketDataResource.dbTicket)
         view.makeAlarm(TicketDataResource.dbTicket)
     }
 
