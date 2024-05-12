@@ -1,4 +1,4 @@
-package woowacourse.movie.model
+package woowacourse.movie
 
 import woowacourse.movie.domain.MovieContent
 import woowacourse.movie.domain.Seat

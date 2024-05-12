@@ -1,13 +1,13 @@
-package woowacourse.movie.model.movie
+package woowacourse.movie.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.Seat
 import woowacourse.movie.domain.SeatInformation
-import woowacourse.movie.model.A1_SEAT
-import woowacourse.movie.model.A2_SEAT
-import woowacourse.movie.model.B1_SEAT
-import woowacourse.movie.model.B2_SEAT
+import woowacourse.movie.A1_SEAT
+import woowacourse.movie.A2_SEAT
+import woowacourse.movie.B1_SEAT
+import woowacourse.movie.B2_SEAT
 
 class SeatInformationTest {
     @Test

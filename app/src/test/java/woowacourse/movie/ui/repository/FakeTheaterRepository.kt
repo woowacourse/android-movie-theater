@@ -1,4 +1,4 @@
-package woowacourse.movie.model.ui.repository
+package woowacourse.movie.ui.repository
 
 import woowacourse.movie.data.database.theater.TheaterDao
 import woowacourse.movie.data.database.theater.TheaterEntity

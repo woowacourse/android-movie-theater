@@ -1,13 +1,11 @@
-package woowacourse.movie.model.ui.complete
+package woowacourse.movie.ui.complete
 
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.database.ticket.TicketEntity
-import woowacourse.movie.model.ui.repository.FakeTicketRepository
-import woowacourse.movie.ui.complete.MovieReservationCompleteContract
-import woowacourse.movie.ui.complete.MovieReservationCompletePresenter
+import woowacourse.movie.ui.repository.FakeTicketRepository
 
 class MovieReservationCompletePresenterTest {
     private lateinit var presenter: MovieReservationCompletePresenter

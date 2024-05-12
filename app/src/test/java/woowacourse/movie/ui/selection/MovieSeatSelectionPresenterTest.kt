@@ -1,17 +1,11 @@
-package woowacourse.movie.model.ui.selection
+package woowacourse.movie.ui.selection
 
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.database.MovieDatabase
-import woowacourse.movie.data.database.ticket.TicketDao
-import woowacourse.movie.model.RESERVATION_DETAIL
-import woowacourse.movie.model.ui.repository.FakeTicketRepository
-import woowacourse.movie.ui.selection.MovieSeatSelectionContract
-import woowacourse.movie.ui.selection.MovieSeatSelectionPresenter
+import woowacourse.movie.RESERVATION_DETAIL
+import woowacourse.movie.ui.repository.FakeTicketRepository
 
 class MovieSeatSelectionPresenterTest {
     private lateinit var presenter: MovieSeatSelectionPresenter

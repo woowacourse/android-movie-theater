@@ -1,4 +1,4 @@
-package woowacourse.movie.model.movie
+package woowacourse.movie.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
