@@ -1,5 +1,6 @@
 package woowacourse.movie.reservationresult
 
+import android.content.Context
 import woowacourse.movie.reservationresult.uimodel.ReservationResultUiModel
 
 interface ReservationResultContract {
@@ -9,5 +10,10 @@ interface ReservationResultContract {
 
     interface Presenter {
         fun loadReservationResult(reservationId: Long)
+
+        fun setAlarm(
+            reservationId: Long,
+            context: Context,
+        )
     }
 }
