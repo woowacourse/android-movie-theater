@@ -16,9 +16,6 @@ import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.data.movie.dto.Movie
 import woowacourse.movie.data.reservation.dto.Reservation
-import woowacourse.movie.data.ticket.TicketDatabase
-import woowacourse.movie.data.ticket.TicketRepository
-import woowacourse.movie.data.ticket.TicketRoomRepository
 import woowacourse.movie.databinding.ActivityMovieSeatSelectionBinding
 import woowacourse.movie.feature.result.MovieResultActivity
 import woowacourse.movie.model.MovieGrade
@@ -44,8 +41,6 @@ class MovieSeatSelectionActivity :
             }.toList()
     }
     private lateinit var reservation: Reservation
-    private val ticketRepository: TicketRepository
-        by lazy { TicketRoomRepository(TicketDatabase.instance(application).ticketDao()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +51,7 @@ class MovieSeatSelectionActivity :
         initializeView(reservationId)
     }
 
-    override fun initializePresenter() = MovieSeatSelectionPresenter(this, application)
+    override fun initializePresenter() = MovieSeatSelectionPresenter(this, applicationContext)
 
     private fun initializeView(reservationId: Long) {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -114,11 +109,7 @@ class MovieSeatSelectionActivity :
     override fun displayDialog() {
         AlertDialog.Builder(this).setTitle("예매 확인").setMessage("정말 예매하시겠습니까?")
             .setPositiveButton("예매 완료") { _, _ ->
-                presenter.reserveMovie(
-                    ticketRepository = ticketRepository,
-                    reservation = reservation,
-                    selectedSeats = movieSelectedSeats,
-                )
+                presenter.reserveMovie(reservation, movieSelectedSeats)
             }
             .setNegativeButton("취소") { dialog, _ -> dialog.dismiss() }.setCancelable(false).show()
     }

@@ -11,8 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import woowacourse.movie.data.ticket.TicketDatabase
-import woowacourse.movie.data.ticket.TicketRoomRepository
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.util.BaseFragment
 
@@ -24,13 +22,6 @@ class SettingFragment :
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
-    private val ticketRepository by lazy {
-        TicketRoomRepository(
-            TicketDatabase.instance(
-                requireActivity().application,
-            ).ticketDao(),
-        )
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -85,9 +76,9 @@ class SettingFragment :
         binding.switchNotification.setOnCheckedChangeListener { _, isChecked ->
             presenter.updateNotificationGrant(isChecked)
             if (isChecked) {
-                presenter.setTicketsAlarm(ticketRepository)
+                presenter.setTicketsAlarm()
             } else {
-                presenter.cancelTicketsAlarm(ticketRepository)
+                presenter.cancelTicketsAlarm()
             }
         }
     }

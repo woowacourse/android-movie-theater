@@ -1,5 +1,6 @@
 package woowacourse.movie.feature.history
 
+import android.content.Context
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
@@ -16,6 +17,7 @@ import woowacourse.movie.feature.theaterName
 
 class ReservationHistoryPresenterTest {
     private lateinit var view: ReservationHistoryContract.View
+    private lateinit var applicationContext: Context
     private lateinit var presenter: ReservationHistoryContract.Presenter
     private val ticketRepository = FakeTicketRepository()
     private val ticketCount = 3
@@ -23,7 +25,8 @@ class ReservationHistoryPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk()
-        presenter = ReservationHistoryPresenter(view)
+        applicationContext = mockk()
+        presenter = ReservationHistoryPresenter(view, applicationContext, ticketRepository)
         repeat(ticketCount) {
             ticketRepository.save(movieId, screeningDate, screeningTime, selectedSeats, theaterName)
         }
@@ -35,7 +38,7 @@ class ReservationHistoryPresenterTest {
         every { view.displayTickets(any()) } just runs
 
         // when
-        presenter.loadTickets(ticketRepository)
+        presenter.loadTickets()
 
         // then
         verify { view.displayTickets(ticketRepository.findAll()) }

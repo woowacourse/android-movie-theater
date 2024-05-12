@@ -26,8 +26,8 @@ class SettingPresenterTest {
     private lateinit var applicationContext: Context
     private lateinit var notificationRepository: NotificationRepository
     private lateinit var ticketAlarm: TicketAlarm
-    private lateinit var ticketRepository: TicketRepository
     private lateinit var presenter: SettingContract.Presenter
+    private val ticketRepository: TicketRepository = FakeTicketRepository()
     private val ticketCount = 3
 
     @BeforeEach
@@ -36,8 +36,13 @@ class SettingPresenterTest {
         applicationContext = mockk()
         notificationRepository = mockk()
         ticketAlarm = mockk()
-        ticketRepository = FakeTicketRepository()
-        presenter = SettingPresenter(view, applicationContext, notificationRepository, ticketAlarm)
+        presenter = SettingPresenter(
+            view,
+            applicationContext,
+            notificationRepository,
+            ticketAlarm,
+            ticketRepository,
+        )
         repeat(ticketCount) {
             ticketRepository.save(
                 movieId,
@@ -87,7 +92,7 @@ class SettingPresenterTest {
         every { ticketAlarm.setReservationAlarms(capture(ticketSlot)) } just runs
 
         // when
-        presenter.setTicketsAlarm(ticketRepository)
+        presenter.setTicketsAlarm()
 
         // then
         val actual = ticketSlot.captured
@@ -102,7 +107,7 @@ class SettingPresenterTest {
         every { ticketAlarm.cancelReservationAlarms(capture(ticketSlot)) } just runs
 
         // when
-        presenter.cancelTicketsAlarm(ticketRepository)
+        presenter.cancelTicketsAlarm()
 
         // then
         val actual = ticketSlot.captured

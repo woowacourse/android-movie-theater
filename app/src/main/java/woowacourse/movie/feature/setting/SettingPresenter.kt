@@ -3,7 +3,9 @@ package woowacourse.movie.feature.setting
 import android.content.Context
 import woowacourse.movie.data.notification.NotificationRepository
 import woowacourse.movie.data.notification.NotificationSharedPreferencesRepository
+import woowacourse.movie.data.ticket.TicketDatabase
 import woowacourse.movie.data.ticket.TicketRepository
+import woowacourse.movie.data.ticket.TicketRoomRepository
 import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.model.notification.TicketAlarm
 import kotlin.concurrent.thread
@@ -14,6 +16,8 @@ class SettingPresenter(
     private val notificationRepository: NotificationRepository =
         NotificationSharedPreferencesRepository.instance(applicationContext),
     private val ticketAlarm: TicketAlarm = TicketAlarm(applicationContext),
+    private val ticketRepository: TicketRepository
+    = TicketRoomRepository(TicketDatabase.instance(applicationContext).ticketDao()),
 ) : SettingContract.Presenter {
     override fun loadNotificationGrant() {
         val isGrant = notificationRepository.isGrant()
@@ -24,7 +28,7 @@ class SettingPresenter(
         notificationRepository.update(isGrant)
     }
 
-    override fun setTicketsAlarm(ticketRepository: TicketRepository) {
+    override fun setTicketsAlarm() {
         var tickets = emptyList<Ticket>()
         thread {
             tickets = ticketRepository.findAll()
@@ -32,7 +36,7 @@ class SettingPresenter(
         ticketAlarm.setReservationAlarms(tickets)
     }
 
-    override fun cancelTicketsAlarm(ticketRepository: TicketRepository) {
+    override fun cancelTicketsAlarm() {
         var tickets = emptyList<Ticket>()
         thread {
             tickets = ticketRepository.findAll()

@@ -38,7 +38,6 @@ interface MovieSeatSelectionContract {
         fun selectSeat(index: Int)
 
         fun reserveMovie(
-            ticketRepository: TicketRepository,
             reservation: Reservation,
             selectedSeats: MovieSelectedSeats,
         )

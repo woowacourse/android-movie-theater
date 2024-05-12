@@ -13,8 +13,8 @@ interface SettingContract {
 
         fun updateNotificationGrant(isGrant: Boolean)
 
-        fun setTicketsAlarm(ticketRepository: TicketRepository)
+        fun setTicketsAlarm()
 
-        fun cancelTicketsAlarm(ticketRepository: TicketRepository)
+        fun cancelTicketsAlarm()
     }
 }

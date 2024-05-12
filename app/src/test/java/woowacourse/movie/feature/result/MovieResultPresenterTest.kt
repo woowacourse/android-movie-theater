@@ -1,5 +1,6 @@
 package woowacourse.movie.feature.result
 
+import android.content.Context
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
@@ -17,23 +18,26 @@ import woowacourse.movie.feature.theaterName
 
 class MovieResultPresenterTest {
     private lateinit var view: MovieResultContract.View
+    private lateinit var applicationContext: Context
     private lateinit var presenter: MovieResultPresenter
     private val ticketRepository = FakeTicketRepository()
 
     @BeforeEach
     fun setUp() {
         view = mockk()
-        presenter = MovieResultPresenter(view)
+        applicationContext = mockk()
+        presenter = MovieResultPresenter(view, applicationContext, ticketRepository)
     }
 
     @Test
     fun `예매한 영화 티켓의 정보가 보여진다`() {
         // given
         every { view.displayTicket(any(), any()) } just runs
-        val ticketId = ticketRepository.save(movieId, screeningDate, screeningTime, selectedSeats, theaterName)
+        val ticketId =
+            ticketRepository.save(movieId, screeningDate, screeningTime, selectedSeats, theaterName)
 
         // when
-        presenter.loadTicket(ticketRepository, ticketId)
+        presenter.loadTicket(ticketId)
 
         // then
         val ticket = ticketRepository.find(ticketId)
@@ -47,7 +51,7 @@ class MovieResultPresenterTest {
         every { view.showToastInvalidMovieIdError(any()) } just runs
 
         // when
-        presenter.loadTicket(ticketRepository, -1)
+        presenter.loadTicket(-1)
 
         // then
         verify { view.showToastInvalidMovieIdError(any()) }

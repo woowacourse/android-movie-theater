@@ -5,14 +5,12 @@ import woowacourse.movie.data.movie.MovieRepositoryImpl
 class TheaterSelectionPresenter(private val view: TheaterSelectionContract.View) :
     TheaterSelectionContract.Presenter {
     override fun loadTheaters(movieId: Long) {
-        val movie =
-            runCatching {
-                MovieRepositoryImpl.getMovieById(movieId)
-            }.getOrElse {
-                view.showToastInvalidMovieIdError(it)
-                return
+        runCatching { MovieRepositoryImpl.getMovieById(movieId) }
+            .onSuccess {
+                view.setUpTheaterAdapter(it.theaters)
             }
-
-        view.setUpTheaterAdapter(movie.theaters)
+            .onFailure {
+                view.showToastInvalidMovieIdError(it)
+            }
     }
 }

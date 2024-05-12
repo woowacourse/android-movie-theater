@@ -1,7 +1,6 @@
 package woowacourse.movie.feature.result
 
 import woowacourse.movie.data.movie.dto.Movie
-import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.util.BasePresenter
 
@@ -16,9 +15,6 @@ interface MovieResultContract {
     }
 
     interface Presenter : BasePresenter {
-        fun loadTicket(
-            ticketRepository: TicketRepository,
-            ticketId: Long,
-        )
+        fun loadTicket(ticketId: Long)
     }
 }

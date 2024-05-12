@@ -50,6 +50,7 @@ class MovieSeatSelectionPresenterTest {
                 applicationContext,
                 notificationRepository,
                 ticketAlarm,
+                ticketRepository,
             )
         presenter.updateSelectedSeats(selectedSeats)
     }
@@ -125,7 +126,6 @@ class MovieSeatSelectionPresenterTest {
 
         // when
         presenter.reserveMovie(
-            ticketRepository,
             reservation,
             selectedSeats,
         )
@@ -143,7 +143,6 @@ class MovieSeatSelectionPresenterTest {
 
         // when
         presenter.reserveMovie(
-            ticketRepository,
             reservation,
             selectedSeats,
         )
