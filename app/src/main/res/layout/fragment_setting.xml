@@ -1,34 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/setting_alarm_title_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/size_16"
-        android:text="푸쉬 알림 수신"
-        android:textColor="@color/black"
-        android:textSize="@dimen/size_16"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <TextView
-        android:id="@+id/setting_alarm_information_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="해제하면 푸시 알림을 수신할 수 없습니다."
-        app:layout_constraintLeft_toLeftOf="@id/setting_alarm_title_textview"
-        app:layout_constraintTop_toBottomOf="@id/setting_alarm_title_textview" />
+    </data>
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switch_setting_alarm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/setting_alarm_information_textview"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/setting_alarm_title_textview" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/setting_alarm_title_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/size_16"
+            android:text="@string/notification_title"
+            android:textColor="@color/black"
+            android:textSize="@dimen/size_16"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/setting_alarm_information_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/notification_detail"
+            app:layout_constraintLeft_toLeftOf="@id/setting_alarm_title_textview"
+            app:layout_constraintTop_toBottomOf="@id/setting_alarm_title_textview" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_setting_alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/setting_alarm_information_textview"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/setting_alarm_title_textview" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

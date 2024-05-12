@@ -24,4 +24,9 @@
     <string name="screening_count_text">개의 상영 시간</string>
     <string name="chevron_right">\></string>
     <string name="reservation_schedule_format">%1$s | %2$s | %3$s </string>
+    <string name="notification_content">%s 30분 후에 상영합니다.</string>
+    <string name="notification_title">푸쉬 알림 수신</string>
+    <string name="notification_detail">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+    <string name="agree_notification_permission">푸시 알림 수신을 허용 하셨습니다.</string>
+    <string name="disagree_notification_permission">푸시 알림 수신을 거부 하셨습니다.</string>
 </resources>
