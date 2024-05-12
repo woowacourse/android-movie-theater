@@ -9,14 +9,12 @@ interface MovieTicketContract {
 
         fun showTicketView(dbTicket: DbTicket)
 
-        fun storeTicketInDb(ticket: DbTicket)
+        fun makeAlarm(ticket: DbTicket)
     }
 
     interface Presenter {
         fun setTicketInfo()
 
-        fun storeTicketData(ticket: Serializable?)
-
-        fun storeTicketInDb()
+        fun storeTicketData(ticket: Serializable?, movieId: Long?)
     }
 }

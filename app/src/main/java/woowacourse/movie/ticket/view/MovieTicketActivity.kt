@@ -9,12 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.alarm.MovieBroadcastReceiver
-import woowacourse.movie.database.TicketDatabase.Companion.getDatabase
 import woowacourse.movie.databinding.ActivityMovieTicketBinding
 import woowacourse.movie.ticket.contract.MovieTicketContract
 import woowacourse.movie.ticket.model.DbTicket
 import woowacourse.movie.ticket.presenter.MovieTicketPresenter
-import java.io.Serializable
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -33,9 +31,10 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
     }
 
     private fun processPresenterTask() {
-        presenter.storeTicketData(intent.getSerializableExtra(EXTRA_TICKET_KEY))
-        presenter.setTicketInfo()
-        presenter.storeTicketInDb()
+        presenter.storeTicketData(
+            intent.getSerializableExtra(EXTRA_TICKET_KEY),
+            intent.getLongExtra(EXTRA_MOVIE_ID_KEY, 0),
+        )
     }
 
     override fun showTicketView(dbTicket: DbTicket) {
@@ -52,23 +51,19 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
         binding.ticketPrice.text = TICKET_PRICE.format(dbTicket.price)
     }
 
-    override fun storeTicketInDb(ticket: DbTicket) {
-        val ticketDb = getDatabase(applicationContext)
-        Thread {
-            ticketDb.ticketDao().insertAll(ticket)
-        }.start()
-
+    override fun makeAlarm(ticket: DbTicket) {
         val alarmDate =
             LocalDate.parse(ticket.screeningDate, DateTimeFormatter.ofPattern("yyyy.MM.dd"))
         val alarmTime =
             LocalTime.parse(ticket.screeningTime, DateTimeFormatter.ofPattern("HH:mm"))
                 .minusMinutes(30)
-        makeAlarmAtTime(alarmDate, alarmTime, ticket.movieTitle)
+        makeAlarmAtTime(alarmDate, alarmTime, ticket.movieTitle, ticket.id)
     }
 
-    private fun makeAlarmAtTime(date: LocalDate, time: LocalTime, movieTitle: String) {
+    private fun makeAlarmAtTime(date: LocalDate, time: LocalTime, movieTitle: String, id: Long) {
         val intent = Intent(this, MovieBroadcastReceiver::class.java).apply {
             putExtra(EXTRA_MOVIE_TITLE_KEY, movieTitle)
+            putExtra(EXTRA_MOVIE_ID_KEY, id)
         }
         val calendar = setCalendar(date, time)
         if (System.currentTimeMillis() > calendar.timeInMillis) return
@@ -92,10 +87,11 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
         private const val TICKET_PRICE = "%,d원 (현장결제)"
         private const val EXTRA_TICKET_KEY = "ticket_key"
         const val EXTRA_MOVIE_TITLE_KEY = "movie_title_key"
+        const val EXTRA_MOVIE_ID_KEY = "movie_id_key"
 
-        fun newTicketActivityInstance(context: Context, tickets: List<DbTicket>, id: Long): Intent {
+        fun newTicketActivityInstance(context: Context, id: Long): Intent {
             return Intent(context, MovieTicketActivity::class.java).apply {
-                putExtra(EXTRA_TICKET_KEY, tickets[id.toInt() - 1] as Serializable)
+                putExtra(EXTRA_MOVIE_ID_KEY, id)
             }
         }
     }

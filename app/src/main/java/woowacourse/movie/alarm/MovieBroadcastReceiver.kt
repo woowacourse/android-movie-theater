@@ -8,33 +8,17 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.database.NotificationSharedPreference
-import woowacourse.movie.database.TicketDatabase
-import woowacourse.movie.ticket.model.DbTicket
 import woowacourse.movie.ticket.view.MovieTicketActivity
-import java.util.concurrent.CountDownLatch
 
 class MovieBroadcastReceiver : BroadcastReceiver() {
-    private lateinit var tickets: List<DbTicket>
     private var movieTitle: String? = null
+    private var movieId: Long = 0
     override fun onReceive(context: Context, intent: Intent?) {
         val isNotificationGranted = NotificationSharedPreference(context).load()
         movieTitle = intent?.getStringExtra(MovieTicketActivity.EXTRA_MOVIE_TITLE_KEY)
-        val latch = CountDownLatch(1)
-        loadTicketsFromDb(context, latch)
-        latch.await()
+        movieId = intent!!.getLongExtra(MovieTicketActivity.EXTRA_MOVIE_ID_KEY, 0)
         if (!isNotificationGranted) return
         makeNotification(context)
-    }
-
-    private fun loadTicketsFromDb(
-        context: Context,
-        latch: CountDownLatch
-    ) {
-        Thread {
-            val ticketDb = TicketDatabase.getDatabase(context)
-            tickets = ticketDb.ticketDao().getAll()
-            latch.countDown()
-        }.start()
     }
 
     private fun makeNotification(context: Context) {
@@ -52,7 +36,7 @@ class MovieBroadcastReceiver : BroadcastReceiver() {
     }
 
     private fun makePendingIntent(context: Context): PendingIntent? {
-        val ticketIntent = MovieTicketActivity.newTicketActivityInstance(context, tickets, 1)
+        val ticketIntent = MovieTicketActivity.newTicketActivityInstance(context, movieId)
         return PendingIntent.getActivity(context, 10, ticketIntent, PendingIntent.FLAG_MUTABLE)
     }
 

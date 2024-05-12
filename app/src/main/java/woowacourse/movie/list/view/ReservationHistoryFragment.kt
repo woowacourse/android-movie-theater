@@ -42,7 +42,7 @@ class ReservationHistoryFragment : Fragment(), ReservationOnItemClickListener {
     }
 
     override fun onClick(id: Long) {
-        val intent = MovieTicketActivity.newTicketActivityInstance(context as Context, tickets, id)
+        val intent = MovieTicketActivity.newTicketActivityInstance(context as Context, id)
         startActivity(intent)
     }
 }

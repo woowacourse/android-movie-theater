@@ -23,11 +23,11 @@ class MovieTicketPresenterTest {
 
     @Test
     fun `티켓 정보를 db에 저장할 수 있어야 한다`() {
-        every { view.storeTicketInDb(any()) } just runs
+        every { view.makeAlarm(any()) } just runs
         // when
-        presenter.storeTicketInDb()
+        presenter.makeAlarm()
         // then
-        verify { view.storeTicketInDb(TicketDataResource.dbTicket) }
+        verify { view.makeAlarm(TicketDataResource.dbTicket) }
     }
 
     @Test
