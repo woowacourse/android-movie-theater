@@ -19,12 +19,13 @@ import woowacourse.movie.feature.screeningDate
 import woowacourse.movie.feature.screeningTime
 import woowacourse.movie.feature.selectedSeats
 import woowacourse.movie.feature.theaterName
-import woowacourse.movie.feature.ticket
+import woowacourse.movie.model.notification.TicketAlarm
 
 class SettingPresenterTest {
     private lateinit var view: SettingContract.View
     private lateinit var applicationContext: Context
     private lateinit var notificationRepository: NotificationRepository
+    private lateinit var ticketAlarm: TicketAlarm
     private lateinit var ticketRepository: TicketRepository
     private lateinit var presenter: SettingContract.Presenter
     private val ticketCount = 3
@@ -34,8 +35,9 @@ class SettingPresenterTest {
         view = mockk()
         applicationContext = mockk()
         notificationRepository = mockk()
+        ticketAlarm = mockk()
         ticketRepository = FakeTicketRepository()
-        presenter = SettingPresenter(view, applicationContext, notificationRepository)
+        presenter = SettingPresenter(view, applicationContext, notificationRepository, ticketAlarm)
         repeat(ticketCount) {
             ticketRepository.save(
                 movieId,
@@ -81,31 +83,30 @@ class SettingPresenterTest {
     @Test
     fun `예매한 티켓들의 알림을 설정한다`() {
         // given
-        val ticketSlot = mutableListOf<Ticket>()
-        every { view.setTicketAlarm(capture(ticketSlot)) } just runs
+        val ticketSlot = slot<List<Ticket>>()
+        every { ticketAlarm.setReservationAlarms(capture(ticketSlot)) } just runs
 
         // when
         presenter.setTicketsAlarm(ticketRepository)
 
         // then
-        val actual = ticketSlot
+        val actual = ticketSlot.captured
         assertThat(actual).hasSize(3)
-        verify { view.setTicketAlarm(ticket.copy(id = 0L)) }
-        verify { view.setTicketAlarm(ticket.copy(id = 1L)) }
-        verify { view.setTicketAlarm(ticket.copy(id = 2L)) }
+        verify { ticketAlarm.setReservationAlarms(actual) }
     }
 
     @Test
     fun `예매한 티켓들의 알림을 취소한다`() {
         // given
-        every { view.cancelTicketAlarm(any()) } just runs
+        val ticketSlot = slot<List<Ticket>>()
+        every { ticketAlarm.cancelReservationAlarms(capture(ticketSlot)) } just runs
 
         // when
         presenter.cancelTicketsAlarm(ticketRepository)
 
         // then
-        verify { view.cancelTicketAlarm(ticket.copy(id = 0L)) }
-        verify { view.cancelTicketAlarm(ticket.copy(id = 1L)) }
-        verify { view.cancelTicketAlarm(ticket.copy(id = 2L)) }
+        val actual = ticketSlot.captured
+        assertThat(actual).hasSize(3)
+        verify { ticketAlarm.cancelReservationAlarms(actual) }
     }
 }

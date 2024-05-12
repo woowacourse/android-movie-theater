@@ -23,11 +23,13 @@ import woowacourse.movie.feature.screeningDate
 import woowacourse.movie.feature.screeningTime
 import woowacourse.movie.feature.selectedSeats
 import woowacourse.movie.feature.theaterName
+import woowacourse.movie.model.notification.TicketAlarm
 
 class MovieSeatSelectionPresenterTest {
     private lateinit var view: MovieSeatSelectionContract.View
     private lateinit var applicationContext: Context
     private lateinit var notificationRepository: NotificationRepository
+    private lateinit var ticketAlarm: TicketAlarm
     private lateinit var presenter: MovieSeatSelectionContract.Presenter
     private lateinit var ticketRepository: TicketRepository
     private lateinit var reservationRepository: ReservationRepository
@@ -37,9 +39,11 @@ class MovieSeatSelectionPresenterTest {
         view = mockk()
         applicationContext = mockk()
         notificationRepository = mockk()
+        ticketAlarm = mockk()
         ticketRepository = FakeTicketRepository()
         reservationRepository = ReservationRepositoryImpl
-        presenter = MovieSeatSelectionPresenter(view, applicationContext, notificationRepository)
+
+        presenter = MovieSeatSelectionPresenter(view, applicationContext, notificationRepository, ticketAlarm)
         presenter.updateSelectedSeats(selectedSeats)
     }
 
@@ -108,8 +112,8 @@ class MovieSeatSelectionPresenterTest {
     fun `알림 수신이 켜져있는 경우 영화를 예매하면 예매 알림을 등록한다`() {
         // given
         every { view.navigateToResultView(any()) } just runs
-        every { view.setTicketAlarm(any()) } just runs
         every { notificationRepository.isGrant() } returns true
+        every { ticketAlarm.setReservationAlarm(any()) } just runs
 
         // when
         presenter.reserveMovie(
@@ -120,14 +124,13 @@ class MovieSeatSelectionPresenterTest {
 
         // then
         verify { view.navigateToResultView(0L) }
-        verify { view.setTicketAlarm(ticketRepository.find(0L)) }
+        every { ticketAlarm.setReservationAlarm(any()) }
     }
 
     @Test
     fun `알림 수신이 꺼져있는 경우 영화를 예매해도 예매 알림을 등록하지 않는다`() {
         // given
         every { view.navigateToResultView(any()) } just runs
-        every { view.setTicketAlarm(any()) } just runs
         every { notificationRepository.isGrant() } returns false
 
         // when
@@ -139,6 +142,6 @@ class MovieSeatSelectionPresenterTest {
 
         // then
         verify { view.navigateToResultView(0L) }
-        verify(exactly = 0) { view.setTicketAlarm(ticketRepository.find(0L)) }
+        verify(exactly = 0) { ticketAlarm.setReservationAlarm(any()) }
     }
 }
