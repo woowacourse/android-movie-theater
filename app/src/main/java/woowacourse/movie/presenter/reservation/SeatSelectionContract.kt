@@ -1,11 +1,12 @@
 package woowacourse.movie.presenter.reservation
 
+import android.content.Context
 import android.widget.Button
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.seats.Grade
-import woowacourse.movie.model.seats.Seat
-import woowacourse.movie.model.seats.Seats
+import woowacourse.movie.model.seats.SeatSelection
+import woowacourse.movie.model.seats.TheaterSeat
 import woowacourse.movie.model.ticket.Ticket
 
 interface SeatSelectionContract {
@@ -16,7 +17,14 @@ interface SeatSelectionContract {
 
         fun updateTotalPrice(
             isSelected: Boolean,
-            seat: Seat,
+            theaterSeat: TheaterSeat,
+        )
+
+        fun setTicketAlarm(
+            context: Context,
+            movieTitle: String,
+            ticket: Ticket,
+            ticketId: Long,
         )
 
         fun initializeConfirmButton()
@@ -24,14 +32,14 @@ interface SeatSelectionContract {
         fun restoreReservation(count: Int)
 
         fun restoreSeats(
-            selectedSeats: Seats,
+            selectedSeatSelection: SeatSelection,
             seatsIndex: List<Int>,
         )
 
         fun manageSelectedSeats(
             isSelected: Boolean,
             index: Int,
-            seat: Seat,
+            theaterSeat: TheaterSeat,
         )
 
         fun makeTicket(
@@ -39,21 +47,23 @@ interface SeatSelectionContract {
             theaterId: Int,
             screeningDateTime: ScreeningDateTime,
         )
+
+        fun saveTicket(ticket: Ticket)
     }
 
     interface View {
         fun initializeSeatsTable(
             index: Int,
-            seat: Seat,
+            theaterSeat: TheaterSeat,
         )
 
         fun setUpSeatColorByGrade(grade: Grade): Int
 
-        fun Button.showSeatNumber(seat: Seat)
+        fun Button.showSeatNumber(theaterSeat: TheaterSeat)
 
         fun Button.updateReservationInformation(
             index: Int,
-            seat: Seat,
+            theaterSeat: TheaterSeat,
         )
 
         fun updateSeatSelectedState(
@@ -69,10 +79,13 @@ interface SeatSelectionContract {
 
         fun launchReservationConfirmDialog()
 
-        fun navigateToFinished(ticket: Ticket)
+        fun navigateToFinished(
+            ticket: Ticket,
+            ticketId: Long,
+        )
 
         fun restoreSelectedSeats(selectedSeats: List<Int>)
 
-        fun showErrorToast()
+        fun showErrorMessage()
     }
 }

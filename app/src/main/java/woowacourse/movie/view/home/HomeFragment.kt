@@ -20,7 +20,9 @@ import woowacourse.movie.view.theater.TheaterSelectionFragment
 
 class HomeFragment : Fragment(), ReservationHomeContract.View {
     private val presenter = ReservationHomePresenter(this)
-    private lateinit var binding: FragmentHomeBinding
+    private var _binding: FragmentHomeBinding? = null
+    private val binding: FragmentHomeBinding get() = _binding!!
+
     private lateinit var movieCatalogAdapter: MovieCatalogAdapter
 
     override fun onCreateView(
@@ -28,7 +30,7 @@ class HomeFragment : Fragment(), ReservationHomeContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         return binding.root
     }
 
@@ -67,6 +69,11 @@ class HomeFragment : Fragment(), ReservationHomeContract.View {
     ) {
         movieCatalogAdapter.updateMovies(ScreeningDao().findAll())
         movieCatalogAdapter.updateAds(AdvertisementDao().findAll())
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

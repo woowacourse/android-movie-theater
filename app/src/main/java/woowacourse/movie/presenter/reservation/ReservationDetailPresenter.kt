@@ -40,7 +40,7 @@ class ReservationDetailPresenter(
         theaterId: Int,
     ) {
         if (movieId == DEFAULT_ID || theaterId == DEFAULT_ID) {
-            view.showIdErrorToast()
+            view.showIdErrorMessage()
         } else {
             loadMovie(movieId)
             loadScreeningPeriod(movieId)
@@ -67,7 +67,7 @@ class ReservationDetailPresenter(
     override fun handleHeadCountBounds(result: ChangeTicketCountResult) {
         when (result) {
             is Success -> view.changeHeadCount(headCount.count)
-            is Failure -> view.showResultToast()
+            is Failure -> view.showResultMessage()
         }
     }
 }

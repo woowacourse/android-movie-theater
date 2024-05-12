@@ -15,26 +15,40 @@ import woowacourse.movie.db.seats.SeatsDao
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.seats.Grade
-import woowacourse.movie.model.seats.Seat
-import woowacourse.movie.model.seats.Seats
+import woowacourse.movie.model.seats.SeatSelection
+import woowacourse.movie.model.seats.TheaterSeat
 import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.ticket.Ticket
 import woowacourse.movie.presenter.reservation.SeatSelectionContract
 import woowacourse.movie.presenter.reservation.SeatSelectionPresenter
+import woowacourse.movie.repository.ReservationTicketRepositoryImpl
 import woowacourse.movie.utils.MovieUtils.bundleSerializable
 import woowacourse.movie.utils.MovieUtils.convertAmountFormat
 import woowacourse.movie.utils.MovieUtils.intentSerializable
 import woowacourse.movie.utils.MovieUtils.makeToast
-import woowacourse.movie.view.finished.ReservationFinishedActivity
 import woowacourse.movie.view.home.HomeFragment.Companion.MOVIE_ID
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.HEAD_COUNT
+import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.RESERVATION_TICKET_ID
 import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.SCREENING_DATE_TIME
-import woowacourse.movie.view.reservation.ReservationDetailActivity.Companion.TICKET
+import woowacourse.movie.view.result.ReservationResultActivity
+import woowacourse.movie.view.setting.SettingFragment.Companion.PUSH_SETTING
 import woowacourse.movie.view.theater.TheaterSelectionFragment.Companion.THEATER_ID
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
-    private val binding: ActivitySeatSelectionBinding by lazy { DataBindingUtil.setContentView(this, R.layout.activity_seat_selection) }
-    private val presenter: SeatSelectionPresenter = SeatSelectionPresenter(this, SeatsDao(), ScreeningDao())
+    private val binding: ActivitySeatSelectionBinding by lazy {
+        DataBindingUtil.setContentView(
+            this,
+            R.layout.activity_seat_selection,
+        )
+    }
+    private val presenter: SeatSelectionPresenter by lazy {
+        SeatSelectionPresenter(
+            view = this,
+            seatsDao = SeatsDao(),
+            screeningDao = ScreeningDao(),
+            repository = ReservationTicketRepositoryImpl(this@SeatSelectionActivity),
+        )
+    }
 
     private lateinit var seatsTable: List<Button>
     private lateinit var headCount: HeadCount
@@ -61,8 +75,8 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         super.onSaveInstanceState(outState)
         outState.apply {
             putSerializable(HEAD_COUNT, headCount)
-            putSerializable(SEATS, presenter.seats)
-            putIntegerArrayList(SEATS_INDEX, ArrayList(presenter.seats.seatsIndex))
+            putSerializable(SEATS, presenter.seatSelection)
+            putIntegerArrayList(SEATS_INDEX, ArrayList(presenter.seatSelection.seatsIndex))
         }
     }
 
@@ -73,7 +87,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 restoreSeatsData(bundle)
                 restoreReservationData(bundle)
             }.onFailure {
-                showErrorToast()
+                showErrorMessage()
                 finish()
             }
         }
@@ -87,28 +101,28 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     override fun initializeSeatsTable(
         index: Int,
-        seat: Seat,
+        theaterSeat: TheaterSeat,
     ) {
         seatsTable[index].apply {
-            showSeatNumber(seat)
-            updateReservationInformation(index, seat)
+            showSeatNumber(theaterSeat)
+            updateReservationInformation(index, theaterSeat)
         }
     }
 
-    override fun Button.showSeatNumber(seat: Seat) {
-        text = getString(R.string.select_seat_number, seat.row, seat.column)
-        setTextColor(setUpSeatColorByGrade(seat.grade))
+    override fun Button.showSeatNumber(theaterSeat: TheaterSeat) {
+        text = getString(R.string.select_seat_number, theaterSeat.row, theaterSeat.column)
+        setTextColor(setUpSeatColorByGrade(theaterSeat.grade))
     }
 
     override fun Button.updateReservationInformation(
         index: Int,
-        seat: Seat,
+        theaterSeat: TheaterSeat,
     ) {
         setOnClickListener {
             if (getSeatsCount() < headCount.count || isSelected) {
                 updateSeatSelectedState(index, isSelected)
-                presenter.manageSelectedSeats(isSelected, index, seat)
-                presenter.updateTotalPrice(isSelected, seat)
+                presenter.manageSelectedSeats(isSelected, index, theaterSeat)
+                presenter.updateTotalPrice(isSelected, theaterSeat)
                 setConfirmButtonEnabled(getSeatsCount())
             }
         }
@@ -137,9 +151,20 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         binding.textviewSeatSelectionPrice.text = convertAmountFormat(this, amount)
     }
 
-    override fun navigateToFinished(ticket: Ticket) {
-        val intent = Intent(this, ReservationFinishedActivity::class.java)
-        intent.putExtra(TICKET, ticket)
+    override fun navigateToFinished(
+        ticket: Ticket,
+        ticketId: Long,
+    ) = runOnUiThread {
+        if (isOnAlarmState()) {
+            presenter.setTicketAlarm(
+                context = this@SeatSelectionActivity,
+                movieTitle = binding.textviewSeatSelectionTitle.text.toString(),
+                ticket = ticket,
+                ticketId = ticketId,
+            )
+        }
+        val intent = Intent(this, ReservationResultActivity::class.java)
+        intent.putExtra(RESERVATION_TICKET_ID, ticketId)
         startActivity(intent)
     }
 
@@ -153,7 +178,9 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 .setTitle(getString(R.string.seat_selection_reservation_confirm))
                 .setMessage(getString(R.string.seat_selection_reservation_ask_purchase_ticket))
                 .setPositiveButton(getString(R.string.seat_selection_reservation_finish)) { _, _ ->
-                    presenter.makeTicket(movieId, theaterId, screeningDateTime)
+                    Thread {
+                        presenter.makeTicket(movieId, theaterId, screeningDateTime)
+                    }.start()
                 }
                 .setNegativeButton(getString(R.string.seat_selection_cancel)) { dialog, _ ->
                     dialog.dismiss()
@@ -163,7 +190,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         }
     }
 
-    override fun showErrorToast() = makeToast(this, getString(R.string.all_error))
+    override fun showErrorMessage() = makeToast(this, getString(R.string.all_error))
 
     private fun takeMovieId() =
         intent.getIntExtra(
@@ -173,11 +200,12 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     private fun receiveHeadCount() {
         runCatching {
-            intent.intentSerializable(HEAD_COUNT, HeadCount::class.java) ?: throw NoSuchElementException()
+            intent.intentSerializable(HEAD_COUNT, HeadCount::class.java)
+                ?: throw NoSuchElementException()
         }.onSuccess {
             headCount = it
         }.onFailure {
-            showErrorToast()
+            showErrorMessage()
             finish()
         }
     }
@@ -192,13 +220,14 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         }.onSuccess {
             screeningDateTime = it
         }.onFailure {
-            showErrorToast()
+            showErrorMessage()
             finish()
         }
     }
 
     private fun collectSeatsInTableLayout(): List<Button> =
-        binding.tableLayoutSeatSelection.children.filterIsInstance<TableRow>().flatMap { it.children }
+        binding.tableLayoutSeatSelection.children.filterIsInstance<TableRow>()
+            .flatMap { it.children }
             .filterIsInstance<Button>().toList()
 
     private fun getSeatsCount(): Int = seatsTable.count { seat -> seat.isSelected }
@@ -210,14 +239,22 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun restoreReservationData(bundle: Bundle) {
-        val headCount = bundle.bundleSerializable(HEAD_COUNT, HeadCount::class.java) ?: throw NoSuchElementException()
+        val headCount =
+            bundle.bundleSerializable(HEAD_COUNT, HeadCount::class.java)
+                ?: throw NoSuchElementException()
         presenter.restoreReservation(headCount.count)
     }
 
     private fun restoreSeatsData(bundle: Bundle) {
-        val seats = bundle.bundleSerializable(SEATS, Seats::class.java) ?: throw NoSuchElementException()
+        val seatSelection =
+            bundle.bundleSerializable(SEATS, SeatSelection::class.java) ?: throw NoSuchElementException()
         val index = bundle.getIntegerArrayList(SEATS_INDEX) ?: throw NoSuchElementException()
-        presenter.restoreSeats(seats, index.toList())
+        presenter.restoreSeats(seatSelection, index.toList())
+    }
+
+    private fun isOnAlarmState(): Boolean {
+        val sharedPreference = this.getSharedPreferences(PUSH_SETTING, MODE_PRIVATE)
+        return sharedPreference.getBoolean(PUSH_SETTING, false)
     }
 
     companion object {

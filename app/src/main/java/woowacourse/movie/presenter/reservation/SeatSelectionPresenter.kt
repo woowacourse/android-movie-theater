@@ -1,34 +1,38 @@
 package woowacourse.movie.presenter.reservation
 
+import android.content.Context
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.seats.SeatsDao
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.ScreeningDateTime
-import woowacourse.movie.model.seats.Seat
-import woowacourse.movie.model.seats.Seats
+import woowacourse.movie.model.seats.SeatSelection
+import woowacourse.movie.model.seats.TheaterSeat
 import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.ticket.Ticket
+import woowacourse.movie.notification.TicketNotification
+import woowacourse.movie.repository.ReservationTicketRepository
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
     private val seatsDao: SeatsDao,
     private val screeningDao: ScreeningDao,
+    private val repository: ReservationTicketRepository,
 ) : SeatSelectionContract.Presenter {
-    val seats = Seats()
+    val seatSelection = SeatSelection()
     private val headCount = HeadCount()
 
     override fun restoreReservation(count: Int) {
         headCount.restore(count)
         view.setConfirmButtonEnabled(headCount.count)
-        view.showAmount(seats.calculateAmount())
+        view.showAmount(seatSelection.calculateAmount())
     }
 
     override fun restoreSeats(
-        selectedSeats: Seats,
+        selectedSeatSelection: SeatSelection,
         seatsIndex: List<Int>,
     ) {
-        seats.restoreSeats(selectedSeats)
-        seats.restoreSeatsIndex(seatsIndex)
+        seatSelection.restoreSeats(selectedSeatSelection)
+        seatSelection.restoreSeatsIndex(seatsIndex)
         view.restoreSelectedSeats(seatsIndex)
     }
 
@@ -47,11 +51,11 @@ class SeatSelectionPresenter(
     override fun manageSelectedSeats(
         isSelected: Boolean,
         index: Int,
-        seat: Seat,
+        theaterSeat: TheaterSeat,
     ) {
-        seats.apply {
+        seatSelection.apply {
             manageSelectedIndex(isSelected, index)
-            manageSelected(isSelected, seat)
+            manageSelected(isSelected, theaterSeat)
         }
     }
 
@@ -64,19 +68,39 @@ class SeatSelectionPresenter(
             Ticket(
                 movieId,
                 theaterId,
-                seats,
+                seatSelection,
                 screeningDateTime,
-                seats.calculateAmount(),
+                seatSelection.calculateAmount(),
             )
-        view.navigateToFinished(ticket)
+
+        saveTicket(ticket)
+    }
+
+    override fun saveTicket(ticket: Ticket) {
+        val ticketId = repository.saveReservationTicket(ticket)
+        view.navigateToFinished(ticket, ticketId)
     }
 
     override fun updateTotalPrice(
         isSelected: Boolean,
-        seat: Seat,
+        theaterSeat: TheaterSeat,
     ) {
-        val totalPrice = seats.calculateAmount()
+        val totalPrice = seatSelection.calculateAmount()
         view.showAmount(totalPrice)
+    }
+
+    override fun setTicketAlarm(
+        context: Context,
+        movieTitle: String,
+        ticket: Ticket,
+        ticketId: Long,
+    ) {
+        TicketNotification.setNotification(
+            context = context,
+            movieTitle = movieTitle,
+            screeningDateTime = ticket.screeningDateTime,
+            ticketId = ticketId,
+        )
     }
 
     override fun initializeConfirmButton() {

@@ -84,14 +84,14 @@ class TheaterSelectionPresenterTest {
                     movieId = 0,
                 ),
             )
-        every { view.showTheaters(movieTheaters) } answers {
+        every { view.showScreeningTheaters(movieTheaters) } answers {
             val actualTheaters = arg<List<Theater>>(0)
             actualTheaters.forEachIndexed { index, theater ->
                 assertEquals(theater.theaterId, expectedTheaters[index].theaterId)
             }
         }
         presenter.loadTheaters(0)
-        verify { view.showTheaters(movieTheaters) }
+        verify { view.showScreeningTheaters(movieTheaters) }
     }
 
     @Test

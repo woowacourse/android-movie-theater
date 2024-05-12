@@ -15,4 +15,8 @@
     <color name="gray">#FFB7B7B7</color>
     <color name="medium_gray">#FF727272</color>
     <color name="dark_gray">#FF494949</color>
+    <color name="bar_color">#D0D0D0</color>
+
+    <color name="ticket_select_color">#FFE0E0E0</color>
+    <color name="ticket_un_select_color">#FFFFFFFF</color>
 </resources>

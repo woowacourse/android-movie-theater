@@ -6,9 +6,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class SeatDaoTest {
+class TheaterSeatDaoTest {
     private val dao = SeatsDao()
-    private val seats = SeatsDatabase.seats
+    private val seats = SeatsDatabase.theaterSeats
 
     @Test
     fun `좌석_데이터베이스의_모든_좌석을_가지고_온다`() {

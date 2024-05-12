@@ -7,16 +7,16 @@ import java.time.LocalDate
 object ScreeningDatabase {
     private val period: List<LocalDate> =
         listOf(
-            LocalDate.of(2024, 3, 1),
-            LocalDate.of(2024, 3, 2),
-            LocalDate.of(2024, 3, 3),
-            LocalDate.of(2024, 3, 4),
-            LocalDate.of(2024, 3, 5),
-            LocalDate.of(2024, 3, 6),
-            LocalDate.of(2024, 3, 7),
-            LocalDate.of(2024, 3, 8),
-            LocalDate.of(2024, 3, 9),
-            LocalDate.of(2024, 3, 10),
+            LocalDate.of(2024, 5, 8),
+            LocalDate.of(2024, 5, 8),
+            LocalDate.of(2024, 5, 8),
+            LocalDate.of(2024, 5, 8),
+            LocalDate.of(2024, 5, 9),
+            LocalDate.of(2024, 5, 9),
+            LocalDate.of(2024, 5, 9),
+            LocalDate.of(2024, 5, 9),
+            LocalDate.of(2024, 5, 9),
+            LocalDate.of(2024, 5, 9),
         )
 
     val movies: List<Movie> =

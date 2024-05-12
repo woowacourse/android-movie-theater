@@ -56,16 +56,16 @@ class ReservationDetailPresenterTest {
     fun `영화와 극장 선택을 완료하면 선택한 극장의 상영 날짜가 표시되어야 한다`() {
         val expectedPeriod =
             listOf(
-                LocalDate.of(2024, 3, 1),
-                LocalDate.of(2024, 3, 2),
-                LocalDate.of(2024, 3, 3),
-                LocalDate.of(2024, 3, 4),
-                LocalDate.of(2024, 3, 5),
-                LocalDate.of(2024, 3, 6),
-                LocalDate.of(2024, 3, 7),
-                LocalDate.of(2024, 3, 8),
-                LocalDate.of(2024, 3, 9),
-                LocalDate.of(2024, 3, 10),
+                LocalDate.of(2024, 5, 8),
+                LocalDate.of(2024, 5, 8),
+                LocalDate.of(2024, 5, 8),
+                LocalDate.of(2024, 5, 8),
+                LocalDate.of(2024, 5, 9),
+                LocalDate.of(2024, 5, 9),
+                LocalDate.of(2024, 5, 9),
+                LocalDate.of(2024, 5, 9),
+                LocalDate.of(2024, 5, 9),
+                LocalDate.of(2024, 5, 9),
             )
         every { view.showScreeningPeriod(firstMovie) } answers {
             val actualMovie = arg<Movie>(0)
@@ -116,9 +116,9 @@ class ReservationDetailPresenterTest {
 
     @Test
     fun `예약 인원이 1인 상태에서 마이너스 버튼을 누르면 토스트를 띄워서 유저에게 알린다`() {
-        every { view.showResultToast() } just runs
+        every { view.showResultMessage() } just runs
         presenter.decreaseHeadCount(1)
-        verify { view.showResultToast() }
+        verify { view.showResultMessage() }
     }
 
     @Test
@@ -135,9 +135,9 @@ class ReservationDetailPresenterTest {
 
     @Test
     fun `예약 인원이 20인 상태에서 플러스 버튼을 누르면 토스트를 띄어서 유저에게 알린다`() {
-        every { view.showResultToast() } just runs
+        every { view.showResultMessage() } just runs
         presenter.increaseHeadCount(20)
-        verify { view.showResultToast() }
+        verify { view.showResultMessage() }
     }
 
     @Test
@@ -154,15 +154,15 @@ class ReservationDetailPresenterTest {
 
     @Test
     fun `영화 정보가 존재하지 않는다면 토스트를 띄어서 유저에게 알린다`() {
-        every { view.showIdErrorToast() } just runs
+        every { view.showIdErrorMessage() } just runs
         presenter.checkIdValidation(-1, 0)
-        verify { view.showIdErrorToast() }
+        verify { view.showIdErrorMessage() }
     }
 
     @Test
     fun `극장 정보가 존재하지 않는다면 토스트를 띄어서 유저에게 알린다`() {
-        every { view.showIdErrorToast() } just runs
+        every { view.showIdErrorMessage() } just runs
         presenter.checkIdValidation(0, -1)
-        verify { view.showIdErrorToast() }
+        verify { view.showIdErrorMessage() }
     }
 }

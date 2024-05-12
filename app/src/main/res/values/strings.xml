@@ -46,4 +46,14 @@
     <string name="advertisement_message">우아한테크코스 광고</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Setting-->
+    <string name="on_push_text">알림 설정 On</string>
+    <string name="off_push_text">알림 설정 Off</string>
+
+    <!-- alarm -->
+    <string name="ticket_alarm_text">%s 30분 후에 상영</string>
+    <string name="ticket_alarm_title">예매 알림</string>
+    <string name="ticket_date_format">%s %s</string>
+    <string name="ticket_date_pattern_format">yyyy-MM-dd HH:mm</string>
 </resources>
