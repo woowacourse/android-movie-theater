@@ -8,7 +8,7 @@ import androidx.core.content.edit
 class DefaultNotificationDataStore private constructor(
     private val preferences: SharedPreferences,
 ) : NotificationDataStore {
-    override var canNotification: Boolean
+    override var acceptedPushAlarm: Boolean
         get() = preferences.getBoolean(NOTIFICATION_KEY, defaultCanNotification())
         set(value) {
             preferences.edit(commit = true) {

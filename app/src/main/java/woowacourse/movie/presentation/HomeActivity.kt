@@ -21,7 +21,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) notificationPreference.canNotification = true
+            if (isGranted) notificationPreference.acceptedPushAlarm = true
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,8 +47,8 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     private fun requestAlarmPermission() {
         when {
             (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) -> return
-            notificationPreference.canNotification -> return
-            isFirstRequestPermission() -> requestPermissionLauncher.launch(POST_NOTIFICATIONS)
+            notificationPreference.acceptedPushAlarm -> return
+            isFirstRequest() -> requestPermissionLauncher.launch(POST_NOTIFICATIONS)
             else -> return
         }
     }
