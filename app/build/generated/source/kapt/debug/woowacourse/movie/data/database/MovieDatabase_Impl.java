@@ -51,17 +51,17 @@ public final class MovieDatabase_Impl extends MovieDatabase {
       public void createAllTables(@NonNull final SupportSQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS `movie_reservation` (`id` INTEGER NOT NULL, `selected_seats` TEXT NOT NULL, `screen_date_time` TEXT NOT NULL, `head_count` INTEGER NOT NULL, `theater_id` INTEGER NOT NULL, `movie_id` INTEGER NOT NULL, `movie_title` TEXT NOT NULL, `movie_description` TEXT NOT NULL, `movie_image_url` TEXT NOT NULL, `movie_start_date` TEXT NOT NULL, `movie_end_date` TEXT NOT NULL, `movie_running_time` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`theater_id`) REFERENCES `movie_theater`(`id`) ON UPDATE CASCADE ON DELETE RESTRICT )");
         db.execSQL("CREATE TABLE IF NOT EXISTS `movie_theater` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`id`))");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `movie` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `description` TEXT NOT NULL, `image_url` TEXT NOT NULL, `start_date` TEXT NOT NULL, `end_date` TEXT NOT NULL, `running_time` INTEGER NOT NULL, PRIMARY KEY(`id`))");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `movieEntity` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `description` TEXT NOT NULL, `image_url` TEXT NOT NULL, `start_date` TEXT NOT NULL, `end_date` TEXT NOT NULL, `running_time` INTEGER NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `screening_movie` (`id` INTEGER NOT NULL, `screen_date_times` TEXT NOT NULL, `movie_id` INTEGER NOT NULL, `movie_title` TEXT NOT NULL, `movie_description` TEXT NOT NULL, `movie_image_url` TEXT NOT NULL, `movie_start_date` TEXT NOT NULL, `movie_end_date` TEXT NOT NULL, `movie_running_time` INTEGER NOT NULL, `theater_id` INTEGER NOT NULL, `theater_name` TEXT NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd6fc53d2da3a4096e886d104c555ca99')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3844a858fe1327a65020776e857da588')");
       }
 
       @Override
       public void dropAllTables(@NonNull final SupportSQLiteDatabase db) {
         db.execSQL("DROP TABLE IF EXISTS `movie_reservation`");
         db.execSQL("DROP TABLE IF EXISTS `movie_theater`");
-        db.execSQL("DROP TABLE IF EXISTS `movie`");
+        db.execSQL("DROP TABLE IF EXISTS `movieEntity`");
         db.execSQL("DROP TABLE IF EXISTS `screening_movie`");
         final List<? extends RoomDatabase.Callback> _callbacks = mCallbacks;
         if (_callbacks != null) {
@@ -126,7 +126,7 @@ public final class MovieDatabase_Impl extends MovieDatabase {
         final TableInfo _infoMovieReservation = new TableInfo("movie_reservation", _columnsMovieReservation, _foreignKeysMovieReservation, _indicesMovieReservation);
         final TableInfo _existingMovieReservation = TableInfo.read(db, "movie_reservation");
         if (!_infoMovieReservation.equals(_existingMovieReservation)) {
-          return new RoomOpenHelper.ValidationResult(false, "movie_reservation(woowacourse.movieEntity.data.entity.MovieReservationEntity).\n"
+          return new RoomOpenHelper.ValidationResult(false, "movie_reservation(woowacourse.movie.data.entity.MovieReservationEntity).\n"
                   + " Expected:\n" + _infoMovieReservation + "\n"
                   + " Found:\n" + _existingMovieReservation);
         }
@@ -138,26 +138,26 @@ public final class MovieDatabase_Impl extends MovieDatabase {
         final TableInfo _infoMovieTheater = new TableInfo("movie_theater", _columnsMovieTheater, _foreignKeysMovieTheater, _indicesMovieTheater);
         final TableInfo _existingMovieTheater = TableInfo.read(db, "movie_theater");
         if (!_infoMovieTheater.equals(_existingMovieTheater)) {
-          return new RoomOpenHelper.ValidationResult(false, "movie_theater(woowacourse.movieEntity.data.entity.MovieTheaterEntity).\n"
+          return new RoomOpenHelper.ValidationResult(false, "movie_theater(woowacourse.movie.data.entity.MovieTheaterEntity).\n"
                   + " Expected:\n" + _infoMovieTheater + "\n"
                   + " Found:\n" + _existingMovieTheater);
         }
-        final HashMap<String, TableInfo.Column> _columnsMovie = new HashMap<String, TableInfo.Column>(7);
-        _columnsMovie.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsMovie.put("title", new TableInfo.Column("title", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsMovie.put("description", new TableInfo.Column("description", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsMovie.put("image_url", new TableInfo.Column("image_url", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsMovie.put("start_date", new TableInfo.Column("start_date", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsMovie.put("end_date", new TableInfo.Column("end_date", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsMovie.put("running_time", new TableInfo.Column("running_time", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        final HashSet<TableInfo.ForeignKey> _foreignKeysMovie = new HashSet<TableInfo.ForeignKey>(0);
-        final HashSet<TableInfo.Index> _indicesMovie = new HashSet<TableInfo.Index>(0);
-        final TableInfo _infoMovie = new TableInfo("movieEntity", _columnsMovie, _foreignKeysMovie, _indicesMovie);
-        final TableInfo _existingMovie = TableInfo.read(db, "movieEntity");
-        if (!_infoMovie.equals(_existingMovie)) {
-          return new RoomOpenHelper.ValidationResult(false, "movieEntity(woowacourse.movieEntity.data.entity.MovieEntity).\n"
-                  + " Expected:\n" + _infoMovie + "\n"
-                  + " Found:\n" + _existingMovie);
+        final HashMap<String, TableInfo.Column> _columnsMovieEntity = new HashMap<String, TableInfo.Column>(7);
+        _columnsMovieEntity.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsMovieEntity.put("title", new TableInfo.Column("title", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsMovieEntity.put("description", new TableInfo.Column("description", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsMovieEntity.put("image_url", new TableInfo.Column("image_url", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsMovieEntity.put("start_date", new TableInfo.Column("start_date", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsMovieEntity.put("end_date", new TableInfo.Column("end_date", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsMovieEntity.put("running_time", new TableInfo.Column("running_time", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysMovieEntity = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesMovieEntity = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoMovieEntity = new TableInfo("movieEntity", _columnsMovieEntity, _foreignKeysMovieEntity, _indicesMovieEntity);
+        final TableInfo _existingMovieEntity = TableInfo.read(db, "movieEntity");
+        if (!_infoMovieEntity.equals(_existingMovieEntity)) {
+          return new RoomOpenHelper.ValidationResult(false, "movieEntity(woowacourse.movie.data.entity.MovieEntity).\n"
+                  + " Expected:\n" + _infoMovieEntity + "\n"
+                  + " Found:\n" + _existingMovieEntity);
         }
         final HashMap<String, TableInfo.Column> _columnsScreeningMovie = new HashMap<String, TableInfo.Column>(11);
         _columnsScreeningMovie.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
@@ -176,13 +176,13 @@ public final class MovieDatabase_Impl extends MovieDatabase {
         final TableInfo _infoScreeningMovie = new TableInfo("screening_movie", _columnsScreeningMovie, _foreignKeysScreeningMovie, _indicesScreeningMovie);
         final TableInfo _existingScreeningMovie = TableInfo.read(db, "screening_movie");
         if (!_infoScreeningMovie.equals(_existingScreeningMovie)) {
-          return new RoomOpenHelper.ValidationResult(false, "screening_movie(woowacourse.movieEntity.data.entity.ScreeningMovieEntity).\n"
+          return new RoomOpenHelper.ValidationResult(false, "screening_movie(woowacourse.movie.data.entity.ScreeningMovieEntity).\n"
                   + " Expected:\n" + _infoScreeningMovie + "\n"
                   + " Found:\n" + _existingScreeningMovie);
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "d6fc53d2da3a4096e886d104c555ca99", "ceb33766eec7a495132edf9d0aad2237");
+    }, "3844a858fe1327a65020776e857da588", "5ee689407025146fa22c75af8e8d7382");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
@@ -211,7 +211,7 @@ public final class MovieDatabase_Impl extends MovieDatabase {
       }
       _db.execSQL("DELETE FROM `movie_reservation`");
       _db.execSQL("DELETE FROM `movie_theater`");
-      _db.execSQL("DELETE FROM `movie`");
+      _db.execSQL("DELETE FROM `movieEntity`");
       _db.execSQL("DELETE FROM `screening_movie`");
       super.setTransactionSuccessful();
     } finally {

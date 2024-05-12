@@ -6,6 +6,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import woowacourse.movie.model.HeadCount
+import woowacourse.movie.model.MovieReservation
 import woowacourse.movie.model.Seat
 import java.time.LocalDateTime
 
@@ -29,8 +30,8 @@ data class MovieReservationEntity(
     @ColumnInfo(name = "head_count") val headCount: Int,
     @ColumnInfo(name = "theater_id") val theaterId: Long,
 ) {
-    fun toMovieReservation(): woowacourse.movie.model.MovieReservation =
-        woowacourse.movie.model.MovieReservation(
+    fun toMovieReservation(): MovieReservation =
+        MovieReservation(
             id,
             movieEntity.toMovie(),
             selectedSeats.toSelectedSeats(),

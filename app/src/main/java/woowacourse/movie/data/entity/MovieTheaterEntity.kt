@@ -3,17 +3,18 @@ package woowacourse.movie.data.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import woowacourse.movie.model.MovieTheater
 
 @Entity(tableName = "movie_theater")
 data class MovieTheaterEntity(
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "name") val name: String,
 ) {
-    fun toMovieTheater(): woowacourse.movie.model.MovieTheater =
-        woowacourse.movie.model.MovieTheater(
+    fun toMovieTheater(): MovieTheater =
+        MovieTheater(
             id,
             name,
-            woowacourse.movie.model.MovieTheater.seatSystem.seats(),
+            MovieTheater.seatSystem.seats(),
         )
 
     companion object {
