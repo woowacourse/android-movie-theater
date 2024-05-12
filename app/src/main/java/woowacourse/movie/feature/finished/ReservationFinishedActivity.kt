@@ -10,6 +10,7 @@ import woowacourse.movie.MainActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationFinishedBinding
 import woowacourse.movie.db.ticket.Ticket
+import woowacourse.movie.db.ticket.Ticket.Companion.DEFAULT_TICKET_ID
 import woowacourse.movie.db.ticket.TicketDatabase
 import woowacourse.movie.feature.history.ReservationHistoryFragment.Companion.TICKET_ID
 import woowacourse.movie.feature.notification.ScreeningAlarm
@@ -74,7 +75,7 @@ class ReservationFinishedActivity : AppCompatActivity(), ReservationFinishedCont
             )
     }
 
-    private fun receiveTicketId(): Long = intent.getLongExtra(TICKET_ID, -1)
+    private fun receiveTicketId(): Long = intent.getLongExtra(TICKET_ID, DEFAULT_TICKET_ID)
 
     private fun handleBackPressed() {
         onBackPressedDispatcher.addCallback(this) {

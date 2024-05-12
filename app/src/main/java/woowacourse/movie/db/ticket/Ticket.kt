@@ -16,4 +16,8 @@ data class Ticket(
     @PrimaryKey(autoGenerate = true) var uid: Long? = null,
 ) : Serializable {
     fun getSeatsAmount() = seats.calculateAmount()
+
+    companion object {
+        const val DEFAULT_TICKET_ID = -1L
+    }
 }
