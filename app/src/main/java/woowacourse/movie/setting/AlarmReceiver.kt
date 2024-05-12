@@ -60,8 +60,8 @@ class AlarmReceiver() : BroadcastReceiver() {
         val builder =
             NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle("예매 알림")
-                .setContentText("$title 잠시 후에 상영 예정")
+                .setContentTitle(context.getString(R.string.alarm_title))
+                .setContentText(context.getString(R.string.alarm_content, title))
                 .setContentIntent(contentPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
