@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.MovieApplication
-import woowacourse.movie.data.DummyEverythingRepository
+import woowacourse.movie.data.AdvertisementRepository
 import woowacourse.movie.data.movie.MovieRepositoryImpl
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.movielist.theaters.TheaterBottomSheetDialogFragment
@@ -36,7 +36,7 @@ class MovieListFragment : Fragment(), MovieListContract.View, AdapterClickListen
     ) {
         super.onViewCreated(view, savedInstanceState)
         val fetchAllMoviesUseCase = buildFetchAllMoviesUseCase()
-        presenter = MovieListPresenter(this, DummyEverythingRepository, fetchAllMoviesUseCase)
+        presenter = MovieListPresenter(this, AdvertisementRepository, fetchAllMoviesUseCase)
         presenter.loadContents()
     }
 

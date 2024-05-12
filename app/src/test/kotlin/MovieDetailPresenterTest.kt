@@ -1,5 +1,7 @@
 import io.mockk.CapturingSlot
 import io.mockk.every
+import io.mockk.impl.annotations.InjectMockKs
+import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.just
@@ -7,37 +9,45 @@ import io.mockk.runs
 import io.mockk.slot
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import woowacourse.movie.data.DummyEverythingRepository
 import woowacourse.movie.model.ScreeningSchedule
 import woowacourse.movie.moviedetail.MovieDetailContract
 import woowacourse.movie.moviedetail.MovieDetailPresenter
 import woowacourse.movie.moviedetail.uimodel.HeadCountUiModel
 import woowacourse.movie.moviedetail.uimodel.MovieDetailUiModel
 import woowacourse.movie.moviedetail.uimodel.toMovieDetailUiModel
+import woowacourse.movie.usecase.FetchScreeningScheduleWithMovieIdAndTheaterIdUseCase
+import woowacourse.movie.usecase.FetchScreeningsWithMovieIdAndTheaterIdUseCase
 
 @ExtendWith(MockKExtension::class)
 class MovieDetailPresenterTest {
     @RelaxedMockK
     private lateinit var view: MovieDetailContract.View
 
-    private lateinit var presenter: MovieDetailContract.Presenter
+    @MockK
+    private lateinit var fetchScreeningScheduleWithMovieIdAndTheaterIdUseCase: FetchScreeningScheduleWithMovieIdAndTheaterIdUseCase
 
-    @BeforeEach
-    fun setUp() {
-        presenter = MovieDetailPresenter(view, DummyEverythingRepository)
-    }
+    @MockK
+    private lateinit var fetchScreeningsWithMovieIdAndTheaterIdUseCase: FetchScreeningsWithMovieIdAndTheaterIdUseCase
+
+    @InjectMockKs
+    private lateinit var presenter: MovieDetailPresenter
 
     @Test
     @DisplayName("영화 정보를 불러오면 화면에 나타난다")
     fun show_movie_info_When_load_movie_data() {
         val slot = slot<MovieDetailUiModel>()
         every { view.showMovieInfo(capture(slot)) } just runs
+        every {
+            fetchScreeningScheduleWithMovieIdAndTheaterIdUseCase(
+                1,
+                1,
+            )
+        } returns Result.success(ScreeningSchedule.STUB_A)
 
-        presenter.loadMovieDetail(0)
+        presenter.loadMovieDetail(1, 1)
 
         assertThat(ScreeningSchedule.STUB_A.toMovieDetailUiModel()).isEqualTo(slot.captured)
     }
@@ -76,7 +86,13 @@ class MovieDetailPresenterTest {
     fun `예매 날짜를 선택하면 예매 시간 목록이 나온다`() {
         val slot = CapturingSlot<List<String>>()
         every { view.showTime(capture(slot)) } just runs
-        presenter.loadMovieDetail(0)
+        every {
+            fetchScreeningScheduleWithMovieIdAndTheaterIdUseCase(
+                1,
+                1,
+            )
+        } returns Result.success(ScreeningSchedule.STUB_A)
+        presenter.loadMovieDetail(1, 1)
 
         presenter.selectDate(0)
         val expected = listOf("09:00", "10:00", "11:00", "12:00")

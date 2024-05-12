@@ -2,19 +2,19 @@ package woowacourse.movie.selectseat
 
 import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.Seats
-import woowacourse.movie.repository.EverythingRepository
 import woowacourse.movie.selectseat.uimodel.Position
 import woowacourse.movie.selectseat.uimodel.PriceUiModel
 import woowacourse.movie.selectseat.uimodel.SeatState
 import woowacourse.movie.selectseat.uimodel.SeatUiModel
 import woowacourse.movie.selectseat.uimodel.toSeatUiModelMap
 import woowacourse.movie.selectseat.uimodel.toSeats
+import woowacourse.movie.usecase.FetchScreeningWithIdUseCase
 import woowacourse.movie.usecase.PutReservationUseCase
-import java.util.concurrent.FutureTask
+import woowacourse.movie.util.runOnOtherThreadAndReturn
 
 class SelectSeatPresenter(
     private val view: SelectSeatContract.View,
-    private val repository: EverythingRepository,
+    private val fetchScreeningWithIdUseCase: FetchScreeningWithIdUseCase,
     private val putReservationUseCase: PutReservationUseCase,
 ) : SelectSeatContract.Presenter {
     private lateinit var _seats: MutableMap<Position, SeatUiModel>
@@ -34,13 +34,14 @@ class SelectSeatPresenter(
     private var maxCount = -1
 
     override fun initSeats(screeningId: Long) {
-        runCatching {
-            repository.screeningById(screeningId) ?: error(SCREENING_NOT_EXISTS_ERROR)
-        }.onSuccess { screening ->
-            _seats = screening.theater.seats.toSeatUiModelMap().toMutableMap()
-            this.screeningId = screeningId
-            view.initSeats(seats)
-        }
+        runOnOtherThreadAndReturn { fetchScreeningWithIdUseCase(screeningId) }
+            .onSuccess { screening ->
+                _seats = screening.theater.seats.toSeatUiModelMap().toMutableMap()
+                this.screeningId = screeningId
+                view.initSeats(seats)
+            }.onFailure {
+                error(SCREENING_NOT_EXISTS_ERROR)
+            }
         view.deActivatePurchase()
     }
 
@@ -57,12 +58,13 @@ class SelectSeatPresenter(
         loadSeats(seats)
     }
 
-    override fun loadReservationInfo(movieId: Long) {
-        runCatching {
-            repository.screeningById(movieId) ?: error(SCREENING_NOT_EXISTS_ERROR)
-        }.onSuccess {
-            view.showMovieInfo(it.movie.title, PriceUiModel(Seats().totalPrice.price))
-        }
+    override fun loadReservationInfo(screeningId: Long) {
+        runOnOtherThreadAndReturn { fetchScreeningWithIdUseCase(screeningId) }
+            .onSuccess {
+                view.showMovieInfo(it.movie.title, PriceUiModel(Seats().totalPrice.price))
+            }.onFailure {
+                error(SCREENING_NOT_EXISTS_ERROR)
+            }
     }
 
     override fun saveSeats() {
@@ -78,15 +80,15 @@ class SelectSeatPresenter(
     }
 
     override fun completeReservation() {
-        runCatching {
-            val task =
-                FutureTask<Long> {
-                    putReservationUseCase(screeningId, Seats(selectedSeats.toSeats()))
-                }
-            Thread(task).start()
-            task.get()
+        runOnOtherThreadAndReturn {
+            putReservationUseCase(
+                screeningId,
+                Seats(selectedSeats.toSeats()),
+            )
         }.onSuccess {
             view.navigateToResult(it)
+        }.onFailure {
+            // view.showError()
         }
     }
 

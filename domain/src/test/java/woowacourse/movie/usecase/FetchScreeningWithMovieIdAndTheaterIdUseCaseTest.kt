@@ -11,7 +11,6 @@ import woowacourse.movie.model.Movie
 import woowacourse.movie.model.Screening
 import woowacourse.movie.model.ScreeningRef
 import woowacourse.movie.model.Theater
-import woowacourse.movie.repository.EverythingRepository
 import woowacourse.movie.repository.ScreeningRefRepository
 import woowacourse.movie.repository.TheaterRepository
 

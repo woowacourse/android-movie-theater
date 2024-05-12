@@ -11,4 +11,7 @@ interface TheaterDao {
 
     @Query("select * from theaters where id == :id")
     fun findById(id: Long): TheaterDto?
+
+    @Query("select * from theaters where id In (:idList)")
+    fun findByIds(idList: List<Long>): List<TheaterDto>
 }

@@ -31,8 +31,8 @@ class ReservationActivityTest {
                 context,
                 MovieDetailActivity::class.java,
             ).apply {
-                putExtra(MovieDetailActivity.EXTRA_SCREEN_MOVIE_ID, 0L)
-                putExtra(MovieDetailActivity.EXTRA_THEATER_ID, 0L)
+                putExtra(MovieDetailActivity.MOVIE_ID, 0L)
+                putExtra(MovieDetailActivity.THEATER_ID, 0L)
             },
         )
 

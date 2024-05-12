@@ -20,17 +20,12 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.AlarmReceiver
 import woowacourse.movie.MovieApplication
-import woowacourse.movie.data.movie.MovieRepositoryImpl
-import woowacourse.movie.data.reservationref.ReservationRefRepositoryImpl
-import woowacourse.movie.data.screeningref.ScreeningRefRepositoryImpl
-import woowacourse.movie.data.theater.TheaterRepositoryImpl
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.setting.SettingContract
 import woowacourse.movie.setting.SettingPresenter
 import woowacourse.movie.setting.SwitchListener
 import woowacourse.movie.setting.uimodel.ReservationAlarmUiModel
-import woowacourse.movie.usecase.FetchAllReservationsUseCase
-import woowacourse.movie.usecase.FetchScreeningWithIdUseCase
+import woowacourse.movie.util.buildFetchAllReservationsUseCase
 
 class SettingFragment : Fragment(), SettingContract.View, SwitchListener {
     private lateinit var binding: FragmentSettingBinding
@@ -54,29 +49,15 @@ class SettingFragment : Fragment(), SettingContract.View, SwitchListener {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        movieApplication = (requireActivity().application as MovieApplication)
         alarmMgr = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-        presenter = SettingPresenter(this, buildFetchAllReservationsUseCase())
+        val db = (requireActivity().application as MovieApplication).db
+        val fetchAllReservationsUseCase = buildFetchAllReservationsUseCase(db)
+        presenter = SettingPresenter(this, fetchAllReservationsUseCase)
         val sharedPreference = requireContext().getSharedPreferences("settings", MODE_PRIVATE)
         val value = sharedPreference.getBoolean("notification", false)
         presenter.initSetting(value)
         binding.checked = value
-    }
-
-    private fun buildFetchAllReservationsUseCase(): FetchAllReservationsUseCase {
-        val db = (requireActivity().application as MovieApplication).db
-        val movieRepository = MovieRepositoryImpl(db.movieDao())
-        val reservationRefRepository = ReservationRefRepositoryImpl(db.reservationDao())
-        val theaterRepository = TheaterRepositoryImpl(db.theaterDao())
-        val screeningRefRepository = ScreeningRefRepositoryImpl(db.screeningDao())
-        val screeningWithIdUseCase =
-            FetchScreeningWithIdUseCase(
-                movieRepository,
-                theaterRepository,
-                screeningRefRepository,
-            )
-        return FetchAllReservationsUseCase(reservationRefRepository, screeningWithIdUseCase)
     }
 
     private fun requestNotificationPermission() {

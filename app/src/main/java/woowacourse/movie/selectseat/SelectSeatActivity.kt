@@ -9,7 +9,6 @@ import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.MovieApplication
-import woowacourse.movie.data.DummyEverythingRepository
 import woowacourse.movie.databinding.ActivitySelectSeatBinding
 import woowacourse.movie.moviedetail.uimodel.BookingInfoUiModel
 import woowacourse.movie.moviedetail.uimodel.toHeadCount
@@ -20,7 +19,8 @@ import woowacourse.movie.selectseat.uimodel.PriceUiModel
 import woowacourse.movie.selectseat.uimodel.SeatUiModel
 import woowacourse.movie.selectseat.uimodel.toParcelable
 import woowacourse.movie.selectseat.uimodel.toUiModel
-import woowacourse.movie.usecase.PutReservationUseCase
+import woowacourse.movie.util.buildFetchScreeningWithId
+import woowacourse.movie.util.buildPutReservationUseCase
 import woowacourse.movie.util.intentParcelable
 import woowacourse.movie.util.showAlertDialog
 
@@ -40,9 +40,11 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
         bookingInfoUiModel =
             intent.intentParcelable(EXTRA_BOOKING_ID, BookingInfoUiModel::class.java)
                 ?: error("bookingInfo에 대한 정보가 없습니다.")
-        val movieApplication = application as MovieApplication
-        val putReservationUseCase = PutReservationUseCase(movieApplication.reservationRefRepository)
-        presenter = SelectSeatPresenter(this, DummyEverythingRepository, putReservationUseCase)
+        val db = (application as MovieApplication).db
+        val putReservationRefRepository = buildPutReservationUseCase(db)
+        val fetchScreeningWithIdUseCase = buildFetchScreeningWithId(db)
+        presenter =
+            SelectSeatPresenter(this, fetchScreeningWithIdUseCase, putReservationRefRepository)
 
         initView(bookingInfoUiModel)
     }

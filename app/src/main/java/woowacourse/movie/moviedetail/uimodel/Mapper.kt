@@ -5,7 +5,6 @@ import woowacourse.movie.model.ScreeningSchedule
 
 fun ScreeningSchedule.toMovieDetailUiModel(): MovieDetailUiModel =
     MovieDetailUiModel(
-        id,
         movie.title,
         startDate,
         endDate,

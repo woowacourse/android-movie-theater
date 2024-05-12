@@ -9,5 +9,5 @@ class PutReservationUseCase(
     operator fun invoke(
         screeningId: Long,
         seats: Seats,
-    ): Long = reservationRefRepository.makeReservationRef(screeningId, seats.toString())
+    ): Result<Long> = runCatching { reservationRefRepository.makeReservationRef(screeningId, seats.toString()) }
 }

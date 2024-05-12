@@ -8,8 +8,8 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.R
-import woowacourse.movie.data.DummyEverythingRepository
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.moviedetail.uimodel.BookingDetailUiModel
 import woowacourse.movie.moviedetail.uimodel.BookingInfoUiModel
@@ -17,6 +17,8 @@ import woowacourse.movie.moviedetail.uimodel.HeadCountUiModel
 import woowacourse.movie.moviedetail.uimodel.MovieDetailUiModel
 import woowacourse.movie.moviedetail.uimodel.ScheduleUiModels
 import woowacourse.movie.selectseat.SelectSeatActivity
+import woowacourse.movie.util.buildFetchScreeningScheduleWithMovieIdAndTheaterId
+import woowacourse.movie.util.buildFetchScreeningsWithMovieIdAndTheaterIdUseCase
 import woowacourse.movie.util.bundleParcelable
 import woowacourse.movie.util.showErrorToastMessage
 
@@ -34,22 +36,34 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         setContentView(binding.root)
         initClickListener()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        val db = (application as MovieApplication).db
         presenter =
             MovieDetailPresenter(
-                this, DummyEverythingRepository,
+                this,
+                buildFetchScreeningScheduleWithMovieIdAndTheaterId(db),
+                buildFetchScreeningsWithMovieIdAndTheaterIdUseCase(db),
             )
-        val id = screeningScheduleId()
-        presenter.loadMovieDetail(id)
+        val movieId = movieId()
+        val theaterId = theaterId()
+        presenter.loadMovieDetail(movieId, theaterId)
         binding.bookingDetail = bookingDetailUiModel
         binding.view = this
     }
 
-    private fun screeningScheduleId(): Long {
-        val screeningScheduleId = intent.getLongExtra(EXTRA_SCREEN_MOVIE_ID, INVALID_ID)
-        if (screeningScheduleId == INVALID_ID) {
-            error("screeningScheduleId에 관한 정보가 없습니다.")
+    private fun movieId(): Long {
+        val movieId = intent.getLongExtra(MOVIE_ID, INVALID_ID)
+        if (movieId == INVALID_ID) {
+            error("movieId에 관한 정보가 없습니다.")
         }
-        return screeningScheduleId
+        return movieId
+    }
+
+    private fun theaterId(): Long {
+        val theaterId = intent.getLongExtra(THEATER_ID, INVALID_ID)
+        if (theaterId == INVALID_ID) {
+            error("theaterId에 관한 정보가 없습니다.")
+        }
+        return theaterId
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -185,17 +199,19 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     }
 
     companion object {
-        const val EXTRA_SCREEN_MOVIE_ID: String = "screenMovieId"
-        const val EXTRA_THEATER_ID: String = "theaterId"
+        const val MOVIE_ID: String = "movieId"
+        const val THEATER_ID: String = "theaterId"
         const val INVALID_ID = -1L
         private const val STATE_BOOKING_ID = "booking"
 
         fun getIntent(
             context: Context,
-            screeningScheduleId: Long,
+            movieId: Long,
+            theaterId: Long,
         ): Intent {
             return Intent(context, MovieDetailActivity::class.java).apply {
-                putExtra(EXTRA_SCREEN_MOVIE_ID, screeningScheduleId)
+                putExtra(MOVIE_ID, movieId)
+                putExtra(THEATER_ID, theaterId)
             }
         }
     }

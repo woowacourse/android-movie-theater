@@ -5,7 +5,6 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 data class ScreeningSchedule(
-    val id: Long,
     val movie: Movie,
     val theater: Theater,
     val schedules: List<Schedule>,
@@ -28,7 +27,6 @@ data class ScreeningSchedule(
     companion object {
         val STUB_A: ScreeningSchedule =
             ScreeningSchedule(
-                id = 1,
                 movie = Movie.STUB_A,
                 theater =
                     Theater.STUB_A,
@@ -66,7 +64,6 @@ data class ScreeningSchedule(
 
         val STUB_B: ScreeningSchedule =
             ScreeningSchedule(
-                id = 2,
                 movie = Movie.STUB_A,
                 theater = Theater.STUB_B,
                 schedules =
@@ -103,7 +100,6 @@ data class ScreeningSchedule(
 
         val STUB_C: ScreeningSchedule =
             ScreeningSchedule(
-                id = 3,
                 movie = Movie.STUB_A,
                 theater = Theater.STUB_C,
                 schedules =
@@ -140,7 +136,6 @@ data class ScreeningSchedule(
 
         val STUB_D: ScreeningSchedule =
             ScreeningSchedule(
-                id = 4,
                 movie = Movie.STUB_B,
                 theater = Theater.STUB_C,
                 schedules =
@@ -176,7 +171,6 @@ data class ScreeningSchedule(
             )
         val STUB_E: ScreeningSchedule =
             ScreeningSchedule(
-                id = 5,
                 movie = Movie.STUB_C,
                 theater = Theater.STUB_C,
                 schedules =

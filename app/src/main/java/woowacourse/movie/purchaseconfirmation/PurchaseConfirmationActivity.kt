@@ -6,15 +6,9 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.MovieApplication
-import woowacourse.movie.data.AppDatabase
-import woowacourse.movie.data.movie.MovieRepositoryImpl
-import woowacourse.movie.data.reservationref.ReservationRefRepositoryImpl
-import woowacourse.movie.data.screeningref.ScreeningRefRepositoryImpl
-import woowacourse.movie.data.theater.TheaterRepositoryImpl
 import woowacourse.movie.databinding.ActivityPuchaseConfirmationBinding
 import woowacourse.movie.purchaseconfirmation.uimodel.PurchaseConfirmationUiModel
-import woowacourse.movie.usecase.FetchReservationWithIdUseCase
-import woowacourse.movie.usecase.FetchScreeningWithIdUseCase
+import woowacourse.movie.util.buildFetchReservationWithIdUseCase
 
 class PurchaseConfirmationActivity : AppCompatActivity(), PurchaseConfirmationContract.View {
     private lateinit var binding: ActivityPuchaseConfirmationBinding
@@ -35,20 +29,6 @@ class PurchaseConfirmationActivity : AppCompatActivity(), PurchaseConfirmationCo
             )
         presenter.loadReservationResult(reservationId)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    private fun buildFetchReservationWithIdUseCase(db: AppDatabase): FetchReservationWithIdUseCase {
-        val fetchScreeningWithIdUseCase =
-            FetchScreeningWithIdUseCase(
-                MovieRepositoryImpl(db.movieDao()),
-                TheaterRepositoryImpl(db.theaterDao()),
-                ScreeningRefRepositoryImpl(db.screeningDao()),
-            )
-
-        return FetchReservationWithIdUseCase(
-            fetchScreeningWithIdUseCase,
-            ReservationRefRepositoryImpl(db.reservationDao()),
-        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

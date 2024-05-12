@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter
 import kotlin.time.Duration
 
 data class MovieDetailUiModel(
-    val id: Long,
     val title: String,
     @DrawableRes val imageRes: Int = R.drawable.img_movie_poster,
     val screeningDate: String,
@@ -15,14 +14,12 @@ data class MovieDetailUiModel(
     val runningTime: String,
 ) {
     constructor(
-        id: Long,
         title: String,
         startDate: LocalDate,
         endDate: LocalDate,
         description: String,
         runningTime: Duration,
     ) : this(
-        id = id,
         title = title,
         screeningDate = "상영일: ${startDate.format(dateFormatter)} ~ ${endDate.format(dateFormatter)}",
         description = description,

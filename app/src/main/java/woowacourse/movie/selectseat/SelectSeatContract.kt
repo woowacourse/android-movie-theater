@@ -34,7 +34,7 @@ interface SelectSeatContract {
 
         fun selectSeat(position: Position)
 
-        fun loadReservationInfo(movieId: Long)
+        fun loadReservationInfo(screeningId: Long)
 
         fun saveSeats()
 

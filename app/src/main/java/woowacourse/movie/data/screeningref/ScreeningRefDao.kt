@@ -20,4 +20,7 @@ interface ScreeningRefDao {
         movieId: Long,
         theaterId: Long,
     ): List<ScreeningRefDto>
+
+    @Query("select * from screenings where movieId == :movieId")
+    fun findByMovieId(movieId: Long): List<ScreeningRefDto>
 }

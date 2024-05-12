@@ -13,7 +13,8 @@ import woowacourse.movie.model.Theater
 import woowacourse.movie.movielist.theaters.TheaterContract
 import woowacourse.movie.movielist.theaters.TheaterPresenter
 import woowacourse.movie.movielist.theaters.toTheaterUiModel
-import woowacourse.movie.repository.EverythingRepository
+import woowacourse.movie.usecase.FetchScreeningScheduleWithMovieIdAndTheaterIdUseCase
+import woowacourse.movie.usecase.FetchTheatersWithMovieIdUseCase
 
 @ExtendWith(MockKExtension::class)
 class TheaterPresenterTest {
@@ -21,7 +22,10 @@ class TheaterPresenterTest {
     private lateinit var view: TheaterContract.View
 
     @MockK
-    private lateinit var repository: EverythingRepository
+    private lateinit var fetchTheatersWithMovieIdUseCase: FetchTheatersWithMovieIdUseCase
+
+    @MockK
+    private lateinit var fetchScreeningScheduleWithMovieIdAndTheaterIdUseCase: FetchScreeningScheduleWithMovieIdAndTheaterIdUseCase
 
     @InjectMockKs
     private lateinit var presenter: TheaterPresenter
@@ -31,22 +35,31 @@ class TheaterPresenterTest {
         val theaterList = listOf(Theater.STUB_A)
         val screeningSchedule = ScreeningSchedule.STUB_A
         // given
-        every { repository.theatersByMovieId(0) } returns theaterList
-        every { repository.screeningScheduleByMovieIdAndTheaterId(0, any()) } returns ScreeningSchedule.STUB_A
+        every { fetchTheatersWithMovieIdUseCase(1) } returns Result.success(theaterList)
+        every {
+            fetchScreeningScheduleWithMovieIdAndTheaterIdUseCase(
+                1,
+                any(),
+            )
+        } returns Result.success(screeningSchedule)
         // when
-        presenter.loadTheaters(0)
+        presenter.loadTheaters(1)
         // then
         verify { view.showTheaters(theaterList.map { it.toTheaterUiModel(screeningSchedule.totalScreeningTimesNum()) }) }
     }
 
     @Test
     fun `상영관을 선택하면 영화 예매 세부 화면으로 넘어간다`() {
+        val screeningSchedule = ScreeningSchedule.STUB_A
         // given
-        every { view.navigateToMovieDetail(0) } just runs
-        every { repository.screeningScheduleByMovieIdAndTheaterId(0, 0) } returns ScreeningSchedule.STUB_A
+        every { view.navigateToMovieDetail(1, 1) } just runs
+        every { fetchScreeningScheduleWithMovieIdAndTheaterIdUseCase(1, 1) } returns
+            Result.success(
+                screeningSchedule,
+            )
         // when
-        presenter.selectTheater(0, 0)
+        presenter.selectTheater(1, 1)
         // then
-        verify { view.navigateToMovieDetail(0) }
+        verify { view.navigateToMovieDetail(1, 1) }
     }
 }

@@ -6,15 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.MovieApplication
-import woowacourse.movie.data.movie.MovieRepositoryImpl
-import woowacourse.movie.data.reservationref.ReservationRefRepositoryImpl
-import woowacourse.movie.data.screeningref.ScreeningRefRepositoryImpl
-import woowacourse.movie.data.theater.TheaterRepositoryImpl
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.purchaseconfirmation.PurchaseConfirmationActivity
 import woowacourse.movie.reservationlist.uimodel.ReservationUiModel
-import woowacourse.movie.usecase.FetchAllReservationsUseCase
-import woowacourse.movie.usecase.FetchScreeningWithIdUseCase
+import woowacourse.movie.util.buildFetchAllReservationsUseCase
 
 class ReservationListFragment : Fragment(), ReservationListContract.View, AdapterClickListener {
     private var _binding: FragmentReservationListBinding? = null
@@ -39,24 +34,10 @@ class ReservationListFragment : Fragment(), ReservationListContract.View, Adapte
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val fetchAllReservationsUseCase = buildFetchAllReservationsUseCase()
+        val db = (requireActivity().application as MovieApplication).db
+        val fetchAllReservationsUseCase = buildFetchAllReservationsUseCase(db)
         presenter = ReservationListPresenter(this, fetchAllReservationsUseCase)
         presenter.loadContent()
-    }
-
-    private fun buildFetchAllReservationsUseCase(): FetchAllReservationsUseCase {
-        val db = (requireActivity().application as MovieApplication).db
-        val reservationRefRepository = ReservationRefRepositoryImpl(db.reservationDao())
-        val movieRepository = MovieRepositoryImpl(db.movieDao())
-        val theaterRepository = TheaterRepositoryImpl(db.theaterDao())
-        val screeningRefRepository = ScreeningRefRepositoryImpl(db.screeningDao())
-        val screeningWithIdUseCase =
-            FetchScreeningWithIdUseCase(
-                movieRepository,
-                theaterRepository,
-                screeningRefRepository,
-            )
-        return FetchAllReservationsUseCase(reservationRefRepository, screeningWithIdUseCase)
     }
 
     override fun onDestroyView() {

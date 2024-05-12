@@ -1,4 +1,5 @@
 import io.mockk.every
+import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.junit5.MockKExtension
@@ -8,13 +9,14 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import woowacourse.movie.data.DummyEverythingRepository
 import woowacourse.movie.model.HeadCount
+import woowacourse.movie.model.Screening
 import woowacourse.movie.model.Seats
 import woowacourse.movie.selectseat.SelectSeatContract
 import woowacourse.movie.selectseat.SelectSeatPresenter
 import woowacourse.movie.selectseat.uimodel.Position
 import woowacourse.movie.selectseat.uimodel.PriceUiModel
+import woowacourse.movie.usecase.FetchScreeningWithIdUseCase
 import woowacourse.movie.usecase.PutReservationUseCase
 
 @ExtendWith(MockKExtension::class)
@@ -25,11 +27,15 @@ class SelectSeatPresenterTest {
     @MockK
     private lateinit var putReservationUseCase: PutReservationUseCase
 
-    private lateinit var presenter: SelectSeatContract.Presenter
+    @MockK
+    private lateinit var fetchScreeningWithIdUseCase: FetchScreeningWithIdUseCase
+
+    @InjectMockKs
+    private lateinit var presenter: SelectSeatPresenter
 
     @BeforeEach
     fun setUp() {
-        presenter = SelectSeatPresenter(view, DummyEverythingRepository, putReservationUseCase)
+        every { fetchScreeningWithIdUseCase(1) } returns Result.success(Screening.STUB)
         presenter.initSeats(1)
     }
 
@@ -79,7 +85,7 @@ class SelectSeatPresenterTest {
     fun `사용자가 선택한 좌석를 기반으로 영화를 예매한다`() {
         // given
         val seatSlot = slot<Seats>()
-        every { putReservationUseCase(1, capture(seatSlot)) } returns 1L
+        every { putReservationUseCase(1, capture(seatSlot)) } returns Result.success(1L)
         presenter.initMaxCount(HeadCount(1))
         presenter.selectSeat(Position(0, 0))
 
