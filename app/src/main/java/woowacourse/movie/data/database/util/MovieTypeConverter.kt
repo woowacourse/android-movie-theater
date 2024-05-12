@@ -5,27 +5,32 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 class StringListConverter {
+    private val gson = Gson()
+
     @TypeConverter
     fun fromJsonToList(value: String?): List<String> {
         val arrayType = object : TypeToken<ArrayList<String>>() {}.type
-        return Gson().fromJson(value, arrayType)
+        return gson.fromJson(value, arrayType)
     }
 
     @TypeConverter
     fun fromListToJson(value: List<String>?): String {
-        return Gson().toJson(value)
+        return gson.toJson(value)
     }
 }
 
 class LongListConverter {
+    private val gson = Gson()
+
     @TypeConverter
     fun fromJsonToList(value: String?): List<Long> {
         val arrayType = object : TypeToken<ArrayList<Long>>() {}.type
-        return Gson().fromJson(value, arrayType)
+        return gson.fromJson(value, arrayType)
     }
+
 
     @TypeConverter
     fun fromListToJson(value: List<Long>?): String {
-        return Gson().toJson(value)
+        return gson.toJson(value)
     }
 }
