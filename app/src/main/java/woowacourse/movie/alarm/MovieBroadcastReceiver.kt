@@ -6,11 +6,9 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import woowacourse.movie.database.NotificationSharedPreference
 import woowacourse.movie.database.TicketDatabase
-import woowacourse.movie.list.view.SettingFragment.Companion.NOTIFICATION_KEY
-import woowacourse.movie.list.view.SettingFragment.Companion.SHARED_PREFERENCE_SETTING
 import woowacourse.movie.ticket.model.DbTicket
 import woowacourse.movie.ticket.view.MovieTicketActivity
 import java.util.concurrent.CountDownLatch
@@ -19,9 +17,7 @@ class MovieBroadcastReceiver : BroadcastReceiver() {
     private lateinit var tickets: List<DbTicket>
     private var movieTitle: String? = null
     override fun onReceive(context: Context, intent: Intent?) {
-        val sharedPreference =
-            context.getSharedPreferences(SHARED_PREFERENCE_SETTING, AppCompatActivity.MODE_PRIVATE)
-        val isNotificationGranted = sharedPreference.getBoolean(NOTIFICATION_KEY, false)
+        val isNotificationGranted = NotificationSharedPreference(context).load()
         movieTitle = intent?.getStringExtra(MovieTicketActivity.EXTRA_MOVIE_TITLE_KEY)
         val latch = CountDownLatch(1)
         loadTicketsFromDb(context, latch)
