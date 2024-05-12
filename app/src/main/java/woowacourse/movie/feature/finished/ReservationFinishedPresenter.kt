@@ -13,7 +13,7 @@ class ReservationFinishedPresenter(
     private lateinit var ticket: Ticket
 
     override fun loadTicket() {
-        if (ticketId != DEFAULT_TICKET_ID) {
+        if (isValidTicketId()) {
             thread {
                 ticket = ticketDao.find(ticketId)
             }.join()
@@ -22,5 +22,9 @@ class ReservationFinishedPresenter(
         } else {
             view.showErrorSnackBar()
         }
+    }
+
+    private fun isValidTicketId(): Boolean {
+        return ticketId != DEFAULT_TICKET_ID
     }
 }
