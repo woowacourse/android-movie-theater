@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.commit
 import woowacourse.movie.MovieReservationApp
@@ -63,13 +64,16 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         return true
     }
 
-    private fun isFirstRequestPermission(): Boolean =
+    private fun isFirstRequest(): Boolean =
         (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) &&
-            ContextCompat.checkSelfPermission(
-                this,
-                POST_NOTIFICATIONS,
-            ) == PackageManager.PERMISSION_DENIED &&
-            shouldShowRequestPermissionRationale(
-                POST_NOTIFICATIONS,
-            ).not()
+            hasAccessPermission().not() &&
+            shouldShowRequestPermissionRationale(POST_NOTIFICATIONS).not() &&
+            notificationPreference.hasBeenDeniedPermission.not()
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun hasAccessPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this, POST_NOTIFICATIONS,
+        ) == PackageManager.PERMISSION_GRANTED
+    }
 }

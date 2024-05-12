@@ -34,8 +34,15 @@
     <string name="deny_notification_permission">
         푸시 알림 권한이 거절 하셨습니다.
     </string>
+    <string name="navigate_to_application_detail_setting_descriptrion">
+        영화 시작 30분 전에 알려 드리기 위해 권한이 필요해요.\n
+        푸시 알림을 받기 위해서 세팅 에서 알림 권한을 부여 해주세요..!
+    </string>
     <string name="request_notification_permission_confirm">
         확인
+    </string>
+    <string name="navigate_to_application_detail_setting_positive_button">
+        이동
     </string>
     <string name="request_notification_permission_deny">
         취소
