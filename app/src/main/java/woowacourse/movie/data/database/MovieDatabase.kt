@@ -26,8 +26,8 @@ import woowacourse.movie.data.database.util.StringListConverter
         TheaterEntity::class,
         MovieContentEntity::class,
     ],
-    version = 7,
-    autoMigrations = [AutoMigration(6, 7)],
+    version = 8,
+    autoMigrations = [AutoMigration(6, 7), AutoMigration(7, 8)],
 )
 abstract class MovieDatabase : RoomDatabase() {
     abstract fun ticketDao(): TicketDao
