@@ -81,27 +81,28 @@ class MovieReservationCompleteActivity :
     }
 }
 
+// TODO 파라미터를 nullable로 해야 동작하는 이유?
 @BindingAdapter("userTicket")
 fun setReservationResult(
     textView: TextView,
-    userTicket: UserTicket,
+    userTicket: UserTicket?,
 ) {
     textView.text =
         textView.context.getString(
             R.string.complete_reservation_result,
-            userTicket.seatInformation.reservationCount,
-            userTicket.seatInformation.selectedSeat.joinToString(),
-            userTicket.theater,
+            userTicket?.seatInformation?.reservationCount,
+            userTicket?.seatInformation?.selectedSeat?.joinToString(),
+            userTicket?.theater,
         )
 }
 
 @BindingAdapter("reservedDateTime")
 fun setReservedDateTime(
     textView: TextView,
-    dateTime: LocalDateTime,
+    dateTime: LocalDateTime?,
 ) {
     val context = textView.context
     val dateTimeFormat = context.getString(R.string.reservation_screening_date_time_format)
     val dateTimePattern = DateTimeFormatter.ofPattern(dateTimeFormat)
-    textView.text = dateTime.format(dateTimePattern)
+    textView.text = dateTime?.format(dateTimePattern) ?: context.getString(R.string.toast_invalid_key)
 }
