@@ -13,7 +13,7 @@ class AlarmSharedPreferences(context: Context) {
         editor.commit()
     }
 
-    fun getAlarmSetting(): Boolean = prefs.getBoolean(ALARM_SETTING, false)
+    fun isReservationAlarm(): Boolean = prefs.getBoolean(ALARM_SETTING, false)
 
     companion object {
         private const val ALARM: String = "alarm"
