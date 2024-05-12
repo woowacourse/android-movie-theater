@@ -1,7 +1,6 @@
 package woowacourse.movie.ticket.presenter
 
 import android.content.Context
-import android.util.Log
 import woowacourse.movie.database.TicketDatabase
 import woowacourse.movie.ticket.contract.MovieTicketContract
 import woowacourse.movie.ticket.model.DbTicket
@@ -21,13 +20,12 @@ class MovieTicketPresenter(
                 dbTickets = ticketDb.ticketDao().getAll()
             }.join()
             view.showTicketView(dbTickets!!.first { it.id == movieId })
-            Log.d("alsong", "storeTicketData ${dbTickets!!.first { it.id == movieId }}")
             return
         }
         TicketDataResource.dbTicket = ticket as DbTicket
-        Thread {
+        thread {
             ticketDb.ticketDao().insertAll(ticket)
-        }.start()
+        }.join()
         view.makeAlarm(TicketDataResource.dbTicket)
     }
 
