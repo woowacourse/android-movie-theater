@@ -61,7 +61,7 @@ class AlarmReceiver() : BroadcastReceiver() {
             NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("예매 알림")
-                .setContentText("$title 30분 후에 상영")
+                .setContentText("$title 잠시 후에 상영 예정")
                 .setContentIntent(contentPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
