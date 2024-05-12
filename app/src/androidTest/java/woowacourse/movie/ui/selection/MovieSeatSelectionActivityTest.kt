@@ -1,6 +1,7 @@
 package woowacourse.movie.ui.selection
 
 import android.content.Intent
+import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -11,19 +12,20 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import org.hamcrest.Matchers.not
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.data.database.MovieDatabase
-import woowacourse.movie.model.ReservationDetail
-import woowacourse.movie.model.TicketEntity
+import woowacourse.movie.data.database.ticket.TicketEntity
 import woowacourse.movie.ui.reservation.MovieReservationKey
+import woowacourse.movie.ui.reservation.ReservationDetail
 import java.time.LocalDateTime
 
 class MovieSeatSelectionActivityTest {
-    private val dao =
-        MovieDatabase.getDatabase(ApplicationProvider.getApplicationContext()).ticketDao()
-    private val userTicket: TicketEntity = dao.find(0L)
+    private lateinit var db: MovieDatabase
+    private lateinit var userTicket: TicketEntity
 
     private val intent =
         Intent(
@@ -42,6 +44,20 @@ class MovieSeatSelectionActivityTest {
 
     @get:Rule
     val activityRule = ActivityScenarioRule<MovieSeatSelectionActivity>(intent)
+
+    @Before
+    fun setUp() {
+        db = Room.inMemoryDatabaseBuilder(
+            ApplicationProvider.getApplicationContext(),
+            MovieDatabase::class.java
+        ).build()
+        userTicket = db.ticketDao().find(0L)
+    }
+
+    @After
+    fun tearDown() {
+        db.close()
+    }
 
     @Test
     fun `화면이_띄워지면_영화_제목이_보인다`() {

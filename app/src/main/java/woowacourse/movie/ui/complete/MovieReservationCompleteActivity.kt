@@ -51,7 +51,6 @@ class MovieReservationCompleteActivity :
     override fun showError(throwable: Throwable) {
         Log.e(TAG, throwable.message.toString())
         Toast.makeText(this, resources.getString(R.string.toast_invalid_key), Toast.LENGTH_LONG).show()
-        finish()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

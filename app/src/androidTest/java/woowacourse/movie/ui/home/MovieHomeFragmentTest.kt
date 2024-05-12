@@ -1,6 +1,7 @@
 package woowacourse.movie.ui.home
 
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -11,24 +12,34 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.hamcrest.Matchers.allOf
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.data.database.MovieDatabase
-import woowacourse.movie.model.MovieContentEntity
+import woowacourse.movie.data.database.movie.MovieContentDao
+import woowacourse.movie.data.database.movie.MovieContentEntity
 import woowacourse.movie.ui.home.adapter.MovieViewHolder
 
 @RunWith(AndroidJUnit4::class)
 class MovieHomeFragmentTest {
-    private val movieContent: MovieContentEntity =
-        MovieDatabase.getDatabase(
-            ApplicationProvider.getApplicationContext(),
-        ).movieContentDao().find(0L)
+    private lateinit var db: MovieDatabase
+    private lateinit var movieContent: MovieContentEntity
 
     @Before
     fun setUp() {
         launchFragmentInContainer<MovieHomeFragment>()
+        db = Room.inMemoryDatabaseBuilder(
+            ApplicationProvider.getApplicationContext(),
+            MovieDatabase::class.java
+        ).allowMainThreadQueries().build()
+        movieContent = db.movieContentDao().find(0L)
+    }
+
+    @After
+    fun tearDown() {
+        db.close()
     }
 
     @Test
