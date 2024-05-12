@@ -23,13 +23,10 @@ class MovieBroadcastReceiver : BroadcastReceiver() {
 
     private fun makeNotification(context: Context) {
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val builder: NotificationCompat.Builder
-        val channelId = "one-channel"
-        val channelName = "My Channel One"
         val channel =
-            NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT)
+            NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
         manager.createNotificationChannel(channel)
-        builder = NotificationCompat.Builder(context, channelId)
+        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
         val pendingIntent = makePendingIntent(context)
         setBuilder(builder, pendingIntent)
         manager.notify(1, builder.build())
@@ -53,5 +50,7 @@ class MovieBroadcastReceiver : BroadcastReceiver() {
     companion object {
         private const val MESSAGE_RESERVATION_NOTIFICATION = "예매 알림"
         private const val MESSAGE_SCREENING_INFORMATION = "%s 30분 후에 상영"
+        const val CHANNEL_ID = "one-channel"
+        const val CHANNEL_NAME = "My Channel One"
     }
 }
