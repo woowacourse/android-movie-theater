@@ -25,7 +25,6 @@ import woowacourse.movie.presentation.ui.reservation.ReservationActivity.Compani
 import woowacourse.movie.presentation.ui.seatselection.SeatSelectionContract.View
 import woowacourse.movie.receiver.MyBroadCastReceiver
 import woowacourse.movie.receiver.MyBroadCastReceiver.Companion.ACTION_NAME
-import woowacourse.movie.receiver.MyBroadCastReceiver.Companion.PUT_EXTRA_KEY_ACTIVITY
 import woowacourse.movie.receiver.MyBroadCastReceiver.Companion.PUT_EXTRA_KEY_MOVIE_TITLE
 import java.io.Serializable
 import java.time.LocalDateTime
@@ -120,7 +119,6 @@ class SeatSelectionActivity : BaseActivity<ActivitySeatSelectionBinding>(), View
             action = ACTION_NAME
             putExtra(PUT_EXTRA_KEY_MOVIE_TITLE, reservation.movieTitle)
             putExtra(PUT_EXTRA_KEY_RESERVATION_ID, reservation.id)
-            putExtra(PUT_EXTRA_KEY_ACTIVITY, "ReservationActivity")
         }
     }
 

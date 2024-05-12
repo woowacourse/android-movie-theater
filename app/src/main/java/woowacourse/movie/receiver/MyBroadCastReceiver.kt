@@ -9,7 +9,8 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
 import woowacourse.movie.TheaterApplication.Companion.CHANNEL_ID
-import woowacourse.movie.presentation.ui.main.setting.SettingFragment
+import woowacourse.movie.presentation.ui.main.setting.SettingFragment.Companion.PREF_KEY_RESERVATION_NOTIFICATION
+import woowacourse.movie.presentation.ui.main.setting.SettingFragment.Companion.PREF_KEY_RESERVATION_NOTIFICATION_SETTINGS
 import woowacourse.movie.presentation.ui.reservation.ReservationActivity
 import woowacourse.movie.presentation.ui.reservation.ReservationActivity.Companion.PUT_EXTRA_KEY_RESERVATION_ID
 
@@ -21,8 +22,11 @@ class MyBroadCastReceiver : BroadcastReceiver() {
         intent: Intent,
     ) {
         val pref =
-            context.getSharedPreferences("ReservationNotificationSettings", Context.MODE_PRIVATE)
-        val isNotifiable = pref.getBoolean(SettingFragment.PREF_KEY_RESERVATION_NOTIFICATION, false)
+            context.getSharedPreferences(
+                PREF_KEY_RESERVATION_NOTIFICATION_SETTINGS,
+                Context.MODE_PRIVATE,
+            )
+        val isNotifiable = pref.getBoolean(PREF_KEY_RESERVATION_NOTIFICATION, false)
         if (actionName == intent.action && isNotifiable) {
             notifyReservationAlarm(context, intent)
         }
@@ -83,7 +87,6 @@ class MyBroadCastReceiver : BroadcastReceiver() {
         const val CONTENT_TITLE = "예매 알림"
         const val CONTENT_TEXT = "%s 30분 후에 상영"
         const val PUT_EXTRA_KEY_MOVIE_TITLE = "movieTitle"
-        const val PUT_EXTRA_KEY_ACTIVITY = "Activity"
         const val DEFAULT_VALUE = -1L
         const val RESERVATION_PENDING_INTENT_CODE = 0
     }

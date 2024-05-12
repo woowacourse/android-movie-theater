@@ -81,12 +81,13 @@ class SettingFragment : Fragment() {
 
     private fun getNotificationPreferences(): SharedPreferences {
         return requireActivity().getSharedPreferences(
-            "ReservationNotificationSettings",
+            PREF_KEY_RESERVATION_NOTIFICATION_SETTINGS,
             Context.MODE_PRIVATE,
         )
     }
 
     companion object {
+        const val PREF_KEY_RESERVATION_NOTIFICATION_SETTINGS = "ReservationNotificationSettings"
         const val PREF_KEY_RESERVATION_NOTIFICATION = "reservation_notification"
     }
 }
