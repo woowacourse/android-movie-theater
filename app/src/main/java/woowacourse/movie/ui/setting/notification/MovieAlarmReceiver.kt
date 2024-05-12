@@ -3,7 +3,7 @@ package woowacourse.movie.ui.setting.notification
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import woowacourse.movie.ui.MovieSharedPreference
+import woowacourse.movie.model.data.MovieSharedPreferenceImpl
 import woowacourse.movie.ui.complete.MovieReservationCompleteActivity
 import woowacourse.movie.ui.setting.MovieSettingKey
 
@@ -12,7 +12,7 @@ class MovieAlarmReceiver : BroadcastReceiver() {
         context: Context,
         intent: Intent,
     ) {
-        if (MovieSharedPreference(context).getAlarmChecked()) {
+        if (MovieSharedPreferenceImpl.getAlarmChecked()) {
             val userTicketId = userTicketId(intent)
             val movieTitle = movieTitle(intent)
             val movieIntent =

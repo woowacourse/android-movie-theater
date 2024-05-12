@@ -16,7 +16,6 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieSettingBinding
 import woowacourse.movie.model.db.UserTicketDatabase
 import woowacourse.movie.model.db.UserTicketRepositoryImpl
-import woowacourse.movie.ui.MovieSharedPreference
 
 class MovieSettingFragment : Fragment(), MovieSettingContract.View {
     private lateinit var binding: FragmentMovieSettingBinding
@@ -25,9 +24,6 @@ class MovieSettingFragment : Fragment(), MovieSettingContract.View {
             this,
             UserTicketRepositoryImpl.get(UserTicketDatabase.database().userTicketDao()),
         )
-    }
-    private val sharedPreference: MovieSharedPreference by lazy {
-        MovieSharedPreference(requireContext())
     }
 
     override fun onCreateView(
@@ -46,7 +42,7 @@ class MovieSettingFragment : Fragment(), MovieSettingContract.View {
 
     private fun setOnSwitchListener() {
         binding.swAlarmStatus.setOnCheckedChangeListener { _, isChecked ->
-            sharedPreference.setAlarmChecked(isChecked)
+            presenter.setAlarmStatus(isChecked)
             if (!isChecked) {
                 presenter.cancelNotification(requireContext())
             } else {
@@ -68,12 +64,12 @@ class MovieSettingFragment : Fragment(), MovieSettingContract.View {
                 )
                     .show()
                 binding.swAlarmStatus.isChecked = false
-                sharedPreference.setAlarmChecked(false)
+                presenter.setAlarmStatus(false)
             }
         }
     }
 
-    override fun showNotificationStatus() {
-        binding.swAlarmStatus.isChecked = sharedPreference.getAlarmChecked()
+    override fun showNotificationStatus(status: Boolean) {
+        binding.swAlarmStatus.isChecked = status
     }
 }

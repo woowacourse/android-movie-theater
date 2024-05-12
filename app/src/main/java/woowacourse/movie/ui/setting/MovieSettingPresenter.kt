@@ -1,6 +1,7 @@
 package woowacourse.movie.ui.setting
 
 import android.content.Context
+import woowacourse.movie.model.data.MovieSharedPreferenceImpl
 import woowacourse.movie.model.db.UserTicketRepository
 import woowacourse.movie.ui.setting.notification.MovieAlarmManager
 
@@ -10,7 +11,7 @@ class MovieSettingPresenter(
 ) :
     MovieSettingContract.Presenter {
     override fun loadNotificationStatus() {
-        view.showNotificationStatus()
+        view.showNotificationStatus(MovieSharedPreferenceImpl.getAlarmChecked())
     }
 
     override fun cancelNotification(context: Context) {
@@ -20,5 +21,9 @@ class MovieSettingPresenter(
                 MovieAlarmManager.cancelAlarm(context, userTicket.id.toInt())
             }
         }.start()
+    }
+
+    override fun setAlarmStatus(status: Boolean) {
+        MovieSharedPreferenceImpl.setAlarmChecked(status)
     }
 }
