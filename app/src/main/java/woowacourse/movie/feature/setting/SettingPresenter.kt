@@ -6,9 +6,7 @@ import woowacourse.movie.data.notification.NotificationSharedPreferencesReposito
 import woowacourse.movie.data.ticket.TicketDatabase
 import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.data.ticket.RoomTicketRepository
-import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.model.notification.TicketAlarm
-import kotlin.concurrent.thread
 
 class SettingPresenter(
     private val view: SettingContract.View,
@@ -29,18 +27,12 @@ class SettingPresenter(
     }
 
     override fun setTicketsAlarm() {
-        var tickets = emptyList<Ticket>()
-        thread {
-            tickets = ticketRepository.findAll()
-        }.join()
+        val tickets = ticketRepository.findAll()
         ticketAlarm.setReservationAlarms(tickets)
     }
 
     override fun cancelTicketsAlarm() {
-        var tickets = emptyList<Ticket>()
-        thread {
-            tickets = ticketRepository.findAll()
-        }.join()
+        val tickets = ticketRepository.findAll()
         ticketAlarm.cancelReservationAlarms(tickets)
     }
 }

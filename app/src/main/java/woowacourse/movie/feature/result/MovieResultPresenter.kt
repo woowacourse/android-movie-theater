@@ -5,8 +5,6 @@ import woowacourse.movie.data.movie.MovieRepositoryImpl
 import woowacourse.movie.data.ticket.TicketDatabase
 import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.data.ticket.RoomTicketRepository
-import woowacourse.movie.data.ticket.entity.Ticket
-import kotlin.concurrent.thread
 
 class MovieResultPresenter(
     private val view: MovieResultContract.View,
@@ -16,13 +14,9 @@ class MovieResultPresenter(
 ) :
     MovieResultContract.Presenter {
     override fun loadTicket(ticketId: Long) {
-        var result: Result<Ticket>? = null
-        thread {
-            result = runCatching { ticketRepository.find(ticketId) }
-        }.join()
-        result
-            ?.onFailure { view.showToastInvalidMovieIdError(it) }
-            ?.onSuccess { ticket ->
+        runCatching { ticketRepository.find(ticketId) }
+            .onFailure { view.showToastInvalidMovieIdError(it) }
+            .onSuccess { ticket ->
                 val movie = MovieRepositoryImpl.getMovieById(ticket.movieId)
                 view.displayTicket(ticket, movie)
             }

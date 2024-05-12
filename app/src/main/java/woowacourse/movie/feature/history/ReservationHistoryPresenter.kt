@@ -4,8 +4,6 @@ import android.content.Context
 import woowacourse.movie.data.ticket.TicketDatabase
 import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.data.ticket.RoomTicketRepository
-import woowacourse.movie.data.ticket.entity.Ticket
-import kotlin.concurrent.thread
 
 class ReservationHistoryPresenter(
     private val view: ReservationHistoryContract.View,
@@ -15,10 +13,7 @@ class ReservationHistoryPresenter(
 ) :
     ReservationHistoryContract.Presenter {
     override fun loadTickets() {
-        var tickets = emptyList<Ticket>()
-        thread {
-            tickets = ticketRepository.findAll()
-        }.join()
+        val tickets = ticketRepository.findAll()
         view.displayTickets(tickets)
     }
 }

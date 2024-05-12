@@ -14,7 +14,6 @@ import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
 import woowacourse.movie.model.notification.TicketAlarm
 import java.lang.IllegalArgumentException
-import kotlin.concurrent.thread
 
 class MovieSeatSelectionPresenter(
     private val view: MovieSeatSelectionContract.View,
@@ -85,18 +84,14 @@ class MovieSeatSelectionPresenter(
         reservation: Reservation,
         selectedSeats: MovieSelectedSeats,
     ): Ticket {
-        var ticket: Ticket? = null
-        thread {
-            val ticketId =
-                ticketRepository.save(
-                    reservation.movieId,
-                    reservation.screeningDate,
-                    reservation.screeningTime,
-                    selectedSeats,
-                    reservation.theaterName,
-                )
-            ticket = ticketRepository.find(ticketId)
-        }.join()
-        return ticket ?: throw IllegalArgumentException()
+        val ticketId =
+            ticketRepository.save(
+                reservation.movieId,
+                reservation.screeningDate,
+                reservation.screeningTime,
+                selectedSeats,
+                reservation.theaterName,
+            )
+        return ticketRepository.find(ticketId)
     }
 }
