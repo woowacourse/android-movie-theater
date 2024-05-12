@@ -23,7 +23,7 @@ import woowacourse.movie.model.ScreeningSchedule
 import woowacourse.movie.moviedetail.MovieDetailActivity
 import java.time.format.DateTimeFormatter
 
-class ReservationActivityTest {
+class MovieDetailActivityTest {
     @get:Rule
     val activityRule =
         ActivityScenarioRule<MovieDetailActivity>(
@@ -31,8 +31,8 @@ class ReservationActivityTest {
                 context,
                 MovieDetailActivity::class.java,
             ).apply {
-                putExtra(MovieDetailActivity.MOVIE_ID, 0L)
-                putExtra(MovieDetailActivity.THEATER_ID, 0L)
+                putExtra(MovieDetailActivity.MOVIE_ID, 1L)
+                putExtra(MovieDetailActivity.THEATER_ID, 1L)
             },
         )
 

@@ -5,6 +5,7 @@ import woowacourse.movie.data.movie.MovieRepositoryImpl
 import woowacourse.movie.data.reservationref.ReservationRefRepositoryImpl
 import woowacourse.movie.data.screeningref.ScreeningRefRepositoryImpl
 import woowacourse.movie.data.theater.TheaterRepositoryImpl
+import woowacourse.movie.usecase.FetchAllMoviesUseCase
 import woowacourse.movie.usecase.FetchAllReservationsUseCase
 import woowacourse.movie.usecase.FetchReservationWithIdUseCase
 import woowacourse.movie.usecase.FetchScreeningScheduleWithMovieIdAndTheaterIdUseCase
@@ -76,4 +77,9 @@ fun buildFetchScreeningWithId(db: AppDatabase): FetchScreeningWithIdUseCase {
 fun buildPutReservationUseCase(db: AppDatabase): PutReservationUseCase {
     val reservationRefRepository = ReservationRefRepositoryImpl(db.reservationDao())
     return PutReservationUseCase(reservationRefRepository)
+}
+
+fun buildFetchAllMoviesUseCase(db: AppDatabase): FetchAllMoviesUseCase {
+    val movieRepository = MovieRepositoryImpl(db.movieDao())
+    return FetchAllMoviesUseCase(movieRepository)
 }

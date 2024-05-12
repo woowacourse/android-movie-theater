@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.MovieApplication
 import woowacourse.movie.data.AdvertisementRepository
-import woowacourse.movie.data.movie.MovieRepositoryImpl
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.movielist.theaters.TheaterBottomSheetDialogFragment
 import woowacourse.movie.movielist.uimodel.ListItemUiModel
-import woowacourse.movie.usecase.FetchAllMoviesUseCase
+import woowacourse.movie.util.buildFetchAllMoviesUseCase
 
 class MovieListFragment : Fragment(), MovieListContract.View, AdapterClickListener {
     private lateinit var presenter: MovieListPresenter
@@ -35,15 +34,10 @@ class MovieListFragment : Fragment(), MovieListContract.View, AdapterClickListen
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val fetchAllMoviesUseCase = buildFetchAllMoviesUseCase()
+        val db = (requireActivity().application as MovieApplication).db
+        val fetchAllMoviesUseCase = buildFetchAllMoviesUseCase(db)
         presenter = MovieListPresenter(this, AdvertisementRepository, fetchAllMoviesUseCase)
         presenter.loadContents()
-    }
-
-    private fun buildFetchAllMoviesUseCase(): FetchAllMoviesUseCase {
-        val db = (requireActivity().application as MovieApplication).db
-        val movieRepository = MovieRepositoryImpl(db.movieDao())
-        return FetchAllMoviesUseCase(movieRepository)
     }
 
     override fun showContents(movies: List<ListItemUiModel>) {
