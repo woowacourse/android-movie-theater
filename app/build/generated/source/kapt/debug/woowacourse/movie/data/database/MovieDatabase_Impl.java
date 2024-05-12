@@ -138,7 +138,7 @@ public final class MovieDatabase_Impl extends MovieDatabase {
         final TableInfo _infoMovieTheater = new TableInfo("movie_theater", _columnsMovieTheater, _foreignKeysMovieTheater, _indicesMovieTheater);
         final TableInfo _existingMovieTheater = TableInfo.read(db, "movie_theater");
         if (!_infoMovieTheater.equals(_existingMovieTheater)) {
-          return new RoomOpenHelper.ValidationResult(false, "movie_theater(woowacourse.movie.data.entity.MovieTheater).\n"
+          return new RoomOpenHelper.ValidationResult(false, "movie_theater(woowacourse.movie.data.entity.MovieTheaterEntity).\n"
                   + " Expected:\n" + _infoMovieTheater + "\n"
                   + " Found:\n" + _existingMovieTheater);
         }

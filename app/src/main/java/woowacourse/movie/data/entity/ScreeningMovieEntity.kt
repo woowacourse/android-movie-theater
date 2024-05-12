@@ -14,7 +14,7 @@ data class ScreeningMovieEntity(
     @Embedded(prefix = "movie_")
     val movie: Movie,
     @Embedded(prefix = "theater_")
-    val theater: MovieTheater,
+    val theater: MovieTheaterEntity,
     @ColumnInfo(name = "screen_date_times")
     val screenDateTimes: List<Map<LocalDate, List<LocalTime>>>,
 ) {
@@ -38,7 +38,7 @@ data class ScreeningMovieEntity(
             ScreeningMovieEntity(
                 0L,
                 Movie.STUB,
-                MovieTheater.STUB_A,
+                MovieTheaterEntity.STUB_A,
                 listOf(
                     mapOf(LocalDate.of(2024, 3, 1) to listOf(LocalTime.of(9, 0, 0))),
                     mapOf(LocalDate.of(2024, 3, 2) to listOf(LocalTime.of(10, 0, 0))),
@@ -48,7 +48,7 @@ data class ScreeningMovieEntity(
             ScreeningMovieEntity(
                 1L,
                 Movie.STUB,
-                MovieTheater.STUB_B,
+                MovieTheaterEntity.STUB_B,
                 listOf(
                     mapOf(LocalDate.of(2024, 3, 1) to listOf(LocalTime.of(9, 0, 0))),
                     mapOf(LocalDate.of(2024, 3, 2) to listOf(LocalTime.of(10, 0, 0))),
@@ -59,7 +59,7 @@ data class ScreeningMovieEntity(
             ScreeningMovieEntity(
                 2L,
                 Movie.STUB,
-                MovieTheater.STUB_C,
+                MovieTheaterEntity.STUB_C,
                 listOf(
                     mapOf(
                         LocalDate.of(2024, 3, 1) to

@@ -14,11 +14,11 @@ import woowacourse.movie.data.dao.MovieTheaterDao
 import woowacourse.movie.data.dao.ScreeningMovieDao
 import woowacourse.movie.data.entity.Movie
 import woowacourse.movie.data.entity.MovieReservation
-import woowacourse.movie.data.entity.MovieTheater
+import woowacourse.movie.data.entity.MovieTheaterEntity
 import woowacourse.movie.data.entity.ScreeningMovieEntity
 
 @Database(
-    entities = [MovieReservation::class, MovieTheater::class, Movie::class, ScreeningMovieEntity::class],
+    entities = [MovieReservation::class, MovieTheaterEntity::class, Movie::class, ScreeningMovieEntity::class],
     version = 1,
 )
 @TypeConverters(value = [ReservationSeatsConverters::class, LocalDateTimeConverters::class, ScreenDateTimeConverters::class])

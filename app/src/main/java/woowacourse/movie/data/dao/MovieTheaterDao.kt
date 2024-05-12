@@ -5,22 +5,22 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import woowacourse.movie.data.entity.MovieTheater
+import woowacourse.movie.data.entity.MovieTheaterEntity
 
 @Dao
 interface MovieTheaterDao {
     @Query("SELECT * FROM movie_theater")
-    fun getAll(): List<MovieTheater>
+    fun getAll(): List<MovieTheaterEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg movieTheaters: MovieTheater)
+    fun insertAll(vararg movieTheaterEntities: MovieTheaterEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(movieTheater: MovieTheater)
+    fun insert(movieTheaterEntity: MovieTheaterEntity)
 
     @Delete
-    fun delete(theater: MovieTheater)
+    fun delete(theater: MovieTheaterEntity)
 
     @Query("SELECT * FROM movie_theater WHERE id = :theaterId")
-    fun getMovieTheaterById(theaterId: Long): MovieTheater
+    fun getMovieTheaterById(theaterId: Long): MovieTheaterEntity
 }

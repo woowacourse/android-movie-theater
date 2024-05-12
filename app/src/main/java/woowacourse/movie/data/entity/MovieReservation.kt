@@ -13,7 +13,7 @@ import java.time.LocalDateTime
     tableName = "movie_reservation",
     foreignKeys = [
         ForeignKey(
-            entity = MovieTheater::class,
+            entity = MovieTheaterEntity::class,
             parentColumns = ["id"],
             childColumns = ["theater_id"],
             onDelete = ForeignKey.RESTRICT,

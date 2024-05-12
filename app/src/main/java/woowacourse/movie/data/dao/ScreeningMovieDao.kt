@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import woowacourse.movie.data.entity.MovieTheater
+import woowacourse.movie.data.entity.MovieTheaterEntity
 import woowacourse.movie.data.entity.ScreeningMovieEntity
 
 @Dao
@@ -29,5 +29,5 @@ interface ScreeningMovieDao {
     ): ScreeningMovieEntity
 
     @Query("SELECT theater_id AS id, theater_name AS name FROM screening_movie WHERE movie_id = :movieId")
-    fun getTheatersByMovieId(movieId: Long): List<MovieTheater>
+    fun getTheatersByMovieId(movieId: Long): List<MovieTheaterEntity>
 }

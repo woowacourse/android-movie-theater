@@ -8,7 +8,7 @@ import woowacourse.movie.data.dao.MovieTheaterDao
 import woowacourse.movie.data.dao.ScreeningMovieDao
 import woowacourse.movie.data.database.MovieDatabase
 import woowacourse.movie.data.entity.Movie
-import woowacourse.movie.data.entity.MovieTheater
+import woowacourse.movie.data.entity.MovieTheaterEntity
 import woowacourse.movie.data.entity.ScreeningMovieEntity
 import kotlin.concurrent.thread
 
@@ -60,9 +60,9 @@ class TheaterApp : Application() {
     private fun addInitData() {
         thread {
             db.clearAllTables()
-            movieTheaterDao.insert(MovieTheater.STUB_A)
-            movieTheaterDao.insert(MovieTheater.STUB_B)
-            movieTheaterDao.insert(MovieTheater.STUB_C)
+            movieTheaterDao.insert(MovieTheaterEntity.STUB_A)
+            movieTheaterDao.insert(MovieTheaterEntity.STUB_B)
+            movieTheaterDao.insert(MovieTheaterEntity.STUB_C)
         }.join()
         thread {
             movieDao.insert(Movie.STUB)
