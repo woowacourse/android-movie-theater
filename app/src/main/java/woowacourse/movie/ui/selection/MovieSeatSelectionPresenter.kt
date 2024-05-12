@@ -1,8 +1,6 @@
 package woowacourse.movie.ui.selection
 
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import woowacourse.movie.model.data.MovieDataSource
 import woowacourse.movie.model.db.UserTicket
 import woowacourse.movie.model.db.UserTicketRepository
@@ -11,6 +9,7 @@ import woowacourse.movie.model.movie.ReservationDetail
 import woowacourse.movie.model.movie.Seat
 import woowacourse.movie.ui.setting.notification.MovieAlarmManager
 import woowacourse.movie.ui.utils.positionToIndex
+import kotlin.concurrent.thread
 
 class MovieSeatSelectionPresenter(
     private val view: MovieSeatSelectionContract.View,
@@ -55,6 +54,7 @@ class MovieSeatSelectionPresenter(
     }
 
     override fun reservationSeat(context: Context) {
+        var userTicketId = -1L
         val userTicket =
             UserTicket(
                 movieTitle = reservation.title,
@@ -64,19 +64,16 @@ class MovieSeatSelectionPresenter(
                 theaterName = reservation.theater,
                 reservationAmount = reservationDetail.totalSeatAmount(),
             )
-        val handler = Handler(Looper.getMainLooper())
-        Thread {
-            val userTicketId = userTicketRepository.insert(userTicket)
-            MovieAlarmManager.setAlarm(
-                context,
-                userTicket.movieTitle,
-                userTicketId,
-                userTicket.screeningStartDateTime,
-            )
-            handler.post {
-                view.showReservationComplete(userTicketId)
-            }
-        }.start()
+        thread {
+            userTicketId = userTicketRepository.insert(userTicket)
+        }.join()
+        MovieAlarmManager.setAlarm(
+            context,
+            userTicket.movieTitle,
+            userTicketId,
+            userTicket.screeningStartDateTime,
+        )
+        view.showReservationComplete(userTicketId)
     }
 
     override fun checkReservationSeat() {

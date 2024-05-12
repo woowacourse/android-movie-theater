@@ -1,8 +1,8 @@
 package woowacourse.movie.ui.booking
 
-import android.os.Handler
-import android.os.Looper
+import woowacourse.movie.model.db.UserTicket
 import woowacourse.movie.model.db.UserTicketRepository
+import kotlin.concurrent.thread
 
 class MovieBookingHistoryPresenter(
     private val view: MovieBookingHistoryContract.View,
@@ -10,12 +10,10 @@ class MovieBookingHistoryPresenter(
 ) :
     MovieBookingHistoryContract.Presenter {
     override fun loadBookingHistories() {
-        val handler = Handler(Looper.getMainLooper())
-        Thread {
-            val userTickets = userTicketRepository.findAll()
-            handler.post {
-                view.showBookingHistories(userTickets)
-            }
-        }.start()
+        var userTickets: List<UserTicket> = emptyList()
+        thread {
+            userTickets = userTicketRepository.findAll()
+        }.join()
+        view.showBookingHistories(userTickets)
     }
 }
