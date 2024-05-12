@@ -5,7 +5,7 @@ import woowacourse.movie.model.MovieSelectedSeats
 import java.time.LocalDate
 import java.time.LocalTime
 
-class TicketRoomRepository(private val ticketDao: TicketDao) : TicketRepository {
+class RoomTicketRepository(private val ticketDao: TicketDao) : TicketRepository {
     override fun save(
         movieId: Long,
         screeningDate: LocalDate,

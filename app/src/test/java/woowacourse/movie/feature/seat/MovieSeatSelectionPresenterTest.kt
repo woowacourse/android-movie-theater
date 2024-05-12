@@ -11,12 +11,10 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.movie.MovieRepositoryImpl
-import woowacourse.movie.data.notification.NotificationRepository
-import woowacourse.movie.data.reservation.ReservationRepository
+import woowacourse.movie.data.notification.FakeNotificationRepository
 import woowacourse.movie.data.reservation.ReservationRepositoryImpl
 import woowacourse.movie.data.reservation.dto.Reservation
 import woowacourse.movie.data.ticket.FakeTicketRepository
-import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.feature.movieId
 import woowacourse.movie.feature.reservation
 import woowacourse.movie.feature.reservationCount
@@ -29,20 +27,17 @@ import woowacourse.movie.model.notification.TicketAlarm
 class MovieSeatSelectionPresenterTest {
     private lateinit var view: MovieSeatSelectionContract.View
     private lateinit var applicationContext: Context
-    private lateinit var notificationRepository: NotificationRepository
     private lateinit var ticketAlarm: TicketAlarm
     private lateinit var presenter: MovieSeatSelectionContract.Presenter
-    private lateinit var ticketRepository: TicketRepository
-    private lateinit var reservationRepository: ReservationRepository
+    private val notificationRepository = FakeNotificationRepository()
+    private val ticketRepository = FakeTicketRepository()
+    private val reservationRepository = ReservationRepositoryImpl
 
     @BeforeEach
     fun setUp() {
         view = mockk()
         applicationContext = mockk()
-        notificationRepository = mockk()
         ticketAlarm = mockk()
-        ticketRepository = FakeTicketRepository()
-        reservationRepository = ReservationRepositoryImpl
 
         presenter =
             MovieSeatSelectionPresenter(
@@ -121,8 +116,8 @@ class MovieSeatSelectionPresenterTest {
     fun `알림 수신이 켜져있는 경우 영화를 예매하면 예매 알림을 등록한다`() {
         // given
         every { view.navigateToResultView(any()) } just runs
-        every { notificationRepository.isGrant() } returns true
         every { ticketAlarm.setReservationAlarm(any()) } just runs
+        notificationRepository.update(true)
 
         // when
         presenter.reserveMovie(
@@ -139,7 +134,7 @@ class MovieSeatSelectionPresenterTest {
     fun `알림 수신이 꺼져있는 경우 영화를 예매해도 예매 알림을 등록하지 않는다`() {
         // given
         every { view.navigateToResultView(any()) } just runs
-        every { notificationRepository.isGrant() } returns false
+        notificationRepository.update(false)
 
         // when
         presenter.reserveMovie(

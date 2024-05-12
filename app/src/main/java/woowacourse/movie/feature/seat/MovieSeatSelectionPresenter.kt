@@ -8,7 +8,7 @@ import woowacourse.movie.data.reservation.ReservationRepositoryImpl
 import woowacourse.movie.data.reservation.dto.Reservation
 import woowacourse.movie.data.ticket.TicketDatabase
 import woowacourse.movie.data.ticket.TicketRepository
-import woowacourse.movie.data.ticket.TicketRoomRepository
+import woowacourse.movie.data.ticket.RoomTicketRepository
 import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
@@ -23,7 +23,7 @@ class MovieSeatSelectionPresenter(
         NotificationSharedPreferencesRepository.instance(applicationContext),
     private val ticketAlarm: TicketAlarm = TicketAlarm(applicationContext),
     private val ticketRepository: TicketRepository
-    = TicketRoomRepository(TicketDatabase.instance(applicationContext).ticketDao()),
+    = RoomTicketRepository(TicketDatabase.instance(applicationContext).ticketDao()),
 ) : MovieSeatSelectionContract.Presenter {
     private lateinit var movieSelectedSeats: MovieSelectedSeats
 

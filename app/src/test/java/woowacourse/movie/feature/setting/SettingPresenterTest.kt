@@ -10,9 +10,8 @@ import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.notification.NotificationRepository
+import woowacourse.movie.data.notification.FakeNotificationRepository
 import woowacourse.movie.data.ticket.FakeTicketRepository
-import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.feature.movieId
 import woowacourse.movie.feature.screeningDate
@@ -24,17 +23,16 @@ import woowacourse.movie.model.notification.TicketAlarm
 class SettingPresenterTest {
     private lateinit var view: SettingContract.View
     private lateinit var applicationContext: Context
-    private lateinit var notificationRepository: NotificationRepository
     private lateinit var ticketAlarm: TicketAlarm
     private lateinit var presenter: SettingContract.Presenter
-    private val ticketRepository: TicketRepository = FakeTicketRepository()
+    private val notificationRepository = FakeNotificationRepository()
+    private val ticketRepository = FakeTicketRepository()
     private val ticketCount = 3
 
     @BeforeEach
     fun setUp() {
         view = mockk()
         applicationContext = mockk()
-        notificationRepository = mockk()
         ticketAlarm = mockk()
         presenter = SettingPresenter(
             view,
@@ -58,8 +56,8 @@ class SettingPresenterTest {
     fun `알림 수신 여부를 불러온다`() {
         // given
         val isGrantSlot = slot<Boolean>()
-        every { notificationRepository.isGrant() } returns true
         every { view.initializeSwitch(capture(isGrantSlot)) } just runs
+        notificationRepository.update(true)
 
         // when
         presenter.loadNotificationGrant()
@@ -73,16 +71,14 @@ class SettingPresenterTest {
     @Test
     fun `알림 수신 여부를 업데이트한다`() {
         // given
-        val isGrantSlot = slot<Boolean>()
-        every { notificationRepository.update(capture(isGrantSlot)) } just runs
+        notificationRepository.update(false)
 
         // when
         presenter.updateNotificationGrant(true)
 
         // then
-        val actual = isGrantSlot.captured
+        val actual = notificationRepository.isGrant()
         assertThat(actual).isTrue
-        verify { notificationRepository.update(actual) }
     }
 
     @Test

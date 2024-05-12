@@ -14,7 +14,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.data.ticket.TicketDatabase
-import woowacourse.movie.data.ticket.TicketRoomRepository
+import woowacourse.movie.data.ticket.RoomTicketRepository
 import woowacourse.movie.feature.movieId
 import woowacourse.movie.feature.screeningDate
 import woowacourse.movie.feature.screeningTime
@@ -66,7 +66,7 @@ class MovieResultActivityTest {
 
     companion object {
         private val ticketRepository =
-            TicketRoomRepository(
+            RoomTicketRepository(
                 TicketDatabase.instance(ApplicationProvider.getApplicationContext()).ticketDao(),
             )
 

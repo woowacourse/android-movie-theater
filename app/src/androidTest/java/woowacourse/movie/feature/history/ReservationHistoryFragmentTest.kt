@@ -16,7 +16,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.data.ticket.TicketDatabase
-import woowacourse.movie.data.ticket.TicketRoomRepository
+import woowacourse.movie.data.ticket.RoomTicketRepository
 import woowacourse.movie.feature.history.adapter.ReservationHistoryViewHolder
 import woowacourse.movie.feature.movieId
 import woowacourse.movie.feature.screeningDate
@@ -27,7 +27,7 @@ import woowacourse.movie.feature.theaterName
 @RunWith(AndroidJUnit4::class)
 class ReservationHistoryFragmentTest {
     private val ticketRepository =
-        TicketRoomRepository(
+        RoomTicketRepository(
             TicketDatabase.instance(ApplicationProvider.getApplicationContext()).ticketDao(),
         )
 
