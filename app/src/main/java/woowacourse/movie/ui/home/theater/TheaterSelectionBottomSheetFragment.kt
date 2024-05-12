@@ -54,7 +54,7 @@ class TheaterSelectionBottomSheetFragment :
     ) {
         adapter =
             TheaterAdapter(theaters) { theaterId ->
-                MovieReservationActivity.startActivity(binding.root.context, movieContentId, theaterId)
+                MovieReservationActivity.startActivity(requireContext(), movieContentId, theaterId)
             }
         binding.theaterList.adapter = adapter
     }
