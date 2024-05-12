@@ -1,5 +1,8 @@
 package woowacourse.movie.feature.seat
 
+import android.content.Context
+import woowacourse.movie.data.notification.NotificationRepository
+import woowacourse.movie.data.notification.NotificationSharedPreferencesRepository
 import woowacourse.movie.data.reservation.dto.Reservation
 import woowacourse.movie.data.reservation.ReservationRepository
 import woowacourse.movie.data.ticket.TicketRepository
@@ -11,8 +14,11 @@ import kotlin.concurrent.thread
 
 class MovieSeatSelectionPresenter(
     private val view: MovieSeatSelectionContract.View,
+    applicationContext: Context,
 ) : MovieSeatSelectionContract.Presenter {
     private lateinit var movieSelectedSeats: MovieSelectedSeats
+    private val notificationRepository: NotificationRepository
+            by lazy { NotificationSharedPreferencesRepository.instance(applicationContext) }
 
     override fun loadReservation(
         reservationRepository: ReservationRepository,
@@ -62,6 +68,18 @@ class MovieSeatSelectionPresenter(
         reservation: Reservation,
         selectedSeats: MovieSelectedSeats,
     ) {
+        val ticket = savaTicket(ticketRepository, reservation, selectedSeats)
+        view.navigateToResultView(ticket.id)
+        if (notificationRepository.isGrant()) {
+            view.setTicketAlarm(ticket)
+        }
+    }
+
+    private fun savaTicket(
+        ticketRepository: TicketRepository,
+        reservation: Reservation,
+        selectedSeats: MovieSelectedSeats,
+    ): Ticket {
         var ticket: Ticket? = null
         thread {
             val ticketId =
@@ -74,9 +92,6 @@ class MovieSeatSelectionPresenter(
                 )
             ticket = ticketRepository.find(ticketId)
         }.join()
-        ticket?.let {
-            view.navigateToResultView(it.id)
-            view.setTicketAlarm(it)
-        } ?: throw IllegalArgumentException()
+        return ticket ?: throw IllegalArgumentException()
     }
 }

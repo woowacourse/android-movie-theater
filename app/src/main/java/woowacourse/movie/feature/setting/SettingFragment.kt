@@ -17,8 +17,6 @@ import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.model.notification.TicketAlarm
 import woowacourse.movie.util.BaseFragment
-import woowacourse.movie.util.MovieIntentConstant.DEFAULT_VALUE_NOTIFICATION
-import woowacourse.movie.util.MovieIntentConstant.KEY_NOTIFICATION
 import woowacourse.movie.data.MovieSharedPreferences
 
 class SettingFragment :
@@ -28,9 +26,16 @@ class SettingFragment :
     private val binding get() = _binding!!
 
     private val ticketAlarm by lazy { TicketAlarm(requireContext()) }
-    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
     private val movieSharedPreferences by lazy { MovieSharedPreferences.instance(requireActivity().application) }
-    private val ticketRepository by lazy { TicketRoomRepository(TicketDatabase.instance(requireActivity().application).ticketDao()) }
+    private val ticketRepository by lazy {
+        TicketRoomRepository(
+            TicketDatabase.instance(
+                requireActivity().application
+            ).ticketDao()
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,11 +43,11 @@ class SettingFragment :
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSettingBinding.inflate(inflater)
-        initializeNotificationSwitch()
+        initializeView()
         return binding.root
     }
 
-    override fun initializePresenter() = SettingPresenter(this)
+    override fun initializePresenter() = SettingPresenter(this, requireContext().applicationContext)
 
     override fun onStart() {
         super.onStart()
@@ -80,16 +85,20 @@ class SettingFragment :
         return true
     }
 
-    private fun initializeNotificationSwitch() {
-        binding.switchNotification.isChecked = movieSharedPreferences.getBoolean(KEY_NOTIFICATION, DEFAULT_VALUE_NOTIFICATION)
+    private fun initializeView() {
+        presenter.loadNotificationGrant()
         binding.switchNotification.setOnCheckedChangeListener { _, isChecked ->
-            movieSharedPreferences.setBoolean(KEY_NOTIFICATION, isChecked)
+            presenter.updateNotificationGrant(isChecked)
             if (isChecked) {
                 presenter.setTicketsAlarm(ticketRepository)
             } else {
                 presenter.cancelTicketsAlarm(ticketRepository)
             }
         }
+    }
+
+    override fun initializeSwitch(isGrant: Boolean) {
+        binding.switchNotification.isChecked = isGrant
     }
 
     override fun onDestroyView() {

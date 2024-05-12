@@ -27,14 +27,13 @@ import woowacourse.movie.model.MovieGrade
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
 import woowacourse.movie.util.BaseActivity
-import woowacourse.movie.util.MovieIntentConstant.DEFAULT_VALUE_NOTIFICATION
 import woowacourse.movie.util.MovieIntentConstant.DEFAULT_VALUE_RESERVATION_ID
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_RESERVATION_COUNT
-import woowacourse.movie.util.MovieIntentConstant.KEY_NOTIFICATION
 import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_COUNT
 import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_ID
 import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_SEAT_POSITIONS
 import woowacourse.movie.data.MovieSharedPreferences
+import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.util.formatSeat
 
 class MovieSeatSelectionActivity :
@@ -50,8 +49,8 @@ class MovieSeatSelectionActivity :
     }
     private val ticketAlarm by lazy { TicketAlarm(this) }
     private lateinit var reservation: Reservation
-    private val ticketRepository by lazy { TicketRoomRepository(TicketDatabase.instance(application).ticketDao()) }
-    private val movieSharedPreferences by lazy { MovieSharedPreferences.instance(application) }
+    private val ticketRepository: TicketRepository
+            by lazy { TicketRoomRepository(TicketDatabase.instance(application).ticketDao()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +61,7 @@ class MovieSeatSelectionActivity :
         initializeView(reservationId)
     }
 
-    override fun initializePresenter() = MovieSeatSelectionPresenter(this)
+    override fun initializePresenter() = MovieSeatSelectionPresenter(this, application)
 
     private fun initializeView(reservationId: Long) {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -142,9 +141,6 @@ class MovieSeatSelectionActivity :
     }
 
     override fun setTicketAlarm(ticket: Ticket) {
-        if (!movieSharedPreferences.getBoolean(KEY_NOTIFICATION, DEFAULT_VALUE_NOTIFICATION)) {
-            return
-        }
         ticketAlarm.setReservationAlarm(ticket)
     }
 
