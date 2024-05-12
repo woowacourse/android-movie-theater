@@ -107,20 +107,4 @@ class MovieSeatSelectionActivityTest {
         onView(withId(R.id.confirm_button))
             .check(matches(isEnabled()))
     }
-
-    companion object {
-//        @JvmStatic
-//        @BeforeClass
-//        fun setUp() {
-//            .save(
-//                UserTicket(
-//                    title = "해리포터와 마법사의 돌0",
-//                    theater = "선릉",
-//                    screeningStartDateTime = LocalDateTime.of(2024, 3, 28, 10, 0),
-//                    seatInformation = SeatInformation(2),
-//                    id = 0L,
-//                ),
-//            )
-//        }
-    }
 }

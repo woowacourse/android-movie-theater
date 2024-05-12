@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.notification
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_HIGH
@@ -30,18 +31,6 @@ class AlarmReceiver : BroadcastReceiver() {
         val isNotificationEnabled =
             MoviePreferencesUtil(context ?: return).getBoolean(KEY_RECEIVE_NOTIFICATION)
         if (isNotificationEnabled && intent?.action == ACTION_NOTIFICATION) {
-            val id = intent.getLongExtra(EXTRA_ID, -1)
-            val title = intent.getStringExtra(EXTRA_TITLE)
-            val subtitle = intent.getStringExtra(EXTRA_SUBTITLE)
-            val navigatingIntents =
-                arrayOf(
-                    Intent(context, MovieMainActivity::class.java),
-                    Intent(context, MovieReservationCompleteActivity::class.java).putExtra(
-                        MovieReservationCompleteKey.TICKET_ID,
-                        id,
-                    ),
-                )
-
             val notificationManager =
                 context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             val notificationChannel =
@@ -51,21 +40,39 @@ class AlarmReceiver : BroadcastReceiver() {
                     IMPORTANCE_HIGH,
                 )
             notificationManager.createNotificationChannel(notificationChannel)
-            val notificationBuilder =
-                NotificationCompat.Builder(context, CHANNEL_ID_RESERVATION)
-                    .setContentTitle(title)
-                    .setContentText(subtitle)
-                    .setSmallIcon(R.drawable.ic_home)
-                    .setContentIntent(
-                        PendingIntent.getActivities(
-                            context,
-                            requestId,
-                            navigatingIntents,
-                            FLAG_IMMUTABLE,
-                        ),
-                    )
+            val notificationBuilder = generateNotificationBuilder(context, requestId, intent)
             notificationManager.notify(requestId, notificationBuilder.build())
         }
+    }
+
+    private fun generateNotificationBuilder(
+        context: Context,
+        requestId: Int,
+        intent: Intent,
+    ): NotificationCompat.Builder {
+        val id = intent.getLongExtra(EXTRA_ID, -1)
+        val title = intent.getStringExtra(EXTRA_TITLE)
+        val subtitle = intent.getStringExtra(EXTRA_SUBTITLE)
+        val navigatingIntents =
+            arrayOf(
+                Intent(context, MovieMainActivity::class.java),
+                Intent(context, MovieReservationCompleteActivity::class.java).putExtra(
+                    MovieReservationCompleteKey.TICKET_ID,
+                    id,
+                ),
+            )
+        return NotificationCompat.Builder(context, CHANNEL_ID_RESERVATION)
+            .setContentTitle(title)
+            .setContentText(subtitle)
+            .setSmallIcon(R.drawable.ic_home)
+            .setContentIntent(
+                PendingIntent.getActivities(
+                    context,
+                    requestId,
+                    navigatingIntents,
+                    FLAG_IMMUTABLE,
+                ),
+            )
     }
 
     companion object {
