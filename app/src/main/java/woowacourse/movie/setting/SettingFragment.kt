@@ -90,7 +90,6 @@ class SettingFragment : Fragment() {
 
     private fun alarmSwitchListener() {
         val alarmSetting = AlarmSharedPreferences(requireContext())
-        binding.switchSettingAlarm.isChecked = alarmSetting.isReservationAlarm()
 
         binding.switchSettingAlarm.setOnCheckedChangeListener { buttonView, isChecked ->
             alarmSetting.setAlarm(isChecked)
@@ -100,6 +99,7 @@ class SettingFragment : Fragment() {
                 presenter.cancelAlarm()
             }
         }
+        binding.switchSettingAlarm.isChecked = alarmSetting.isReservationAlarm()
     }
 
     override fun onDestroyView() {
