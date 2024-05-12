@@ -64,7 +64,7 @@ class MyBroadCastReceiver : BroadcastReceiver() {
     ): Notification {
         return NotificationCompat.Builder(context, CHANNEL_ID)
             .setContentTitle(CONTENT_TITLE)
-            .setContentText(CONTENT_TEXT.format(movieTitle))
+            .setContentText(context.getString(R.string.notification_content_text, movieTitle))
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(getPendingIntent(context, activityIntent))
@@ -85,7 +85,6 @@ class MyBroadCastReceiver : BroadcastReceiver() {
     companion object {
         const val ACTION_NAME = "RESERVATION_ALARM_ACTION"
         const val CONTENT_TITLE = "예매 알림"
-        const val CONTENT_TEXT = "%s 30분 후에 상영"
         const val PUT_EXTRA_KEY_MOVIE_TITLE = "movieTitle"
         const val DEFAULT_VALUE = -1L
         const val RESERVATION_PENDING_INTENT_CODE = 0
