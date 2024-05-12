@@ -18,4 +18,7 @@
     <string name="screening_movie_running_date">상영일: %s ~ %s</string>
     <string name="screening_movie_running_time">러닝타임: %d분</string>
     <string name="reservation_result_cancel_deadline_message">영화 상영 시작 시간 %d분 전\n까지 취소가 가능합니다</string>
+    <string name="should_get_alarm_right_message">예매 직전에 알림을 보낼 수 있도록 권한을 허용해주세요</string>
+    <string name="alarm_right_get_message">알림 권한이 허용되었습니다.</string>
+    <string name="alarm_right_denied_message">알림 권한이 거부되었습니다.</string>
 </resources>

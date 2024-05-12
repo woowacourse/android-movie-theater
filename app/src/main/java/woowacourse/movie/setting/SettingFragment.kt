@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
+import woowacourse.movie.R
 import woowacourse.movie.data.AlarmSharedPreferences
 import woowacourse.movie.data.RoomMovieRepository
 import woowacourse.movie.databinding.FragmentSettingBinding
@@ -54,7 +55,7 @@ class SettingFragment : Fragment() {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
                     Snackbar.make(
                         binding.root,
-                        "예매 직전에 알림을 보낼 수 있도록 권한을 허용해주세요",
+                        getString(R.string.should_get_alarm_right_message),
                         Snackbar.LENGTH_SHORT,
                     )
                         .show()
@@ -73,9 +74,17 @@ class SettingFragment : Fragment() {
             ActivityResultContracts.RequestPermission(),
         ) { isGranted: Boolean ->
             if (isGranted) {
-                Snackbar.make(binding.root, "알림 권한이 허용되었습니다.", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.alarm_right_get_message),
+                    Snackbar.LENGTH_SHORT,
+                ).show()
             } else {
-                Snackbar.make(binding.root, "알림 권한이 거부되었습니다.", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.alarm_right_denied_message),
+                    Snackbar.LENGTH_SHORT,
+                ).show()
             }
         }
 
@@ -84,11 +93,10 @@ class SettingFragment : Fragment() {
         binding.switchSettingAlarm.isChecked = alarmSetting.isReservationAlarm()
 
         binding.switchSettingAlarm.setOnCheckedChangeListener { buttonView, isChecked ->
+            alarmSetting.setAlarm(isChecked)
             if (isChecked) {
-                alarmSetting.setAlarm(isChecked)
                 presenter.setAlarm()
             } else {
-                alarmSetting.setAlarm(isChecked)
                 presenter.cancelAlarm()
             }
         }
