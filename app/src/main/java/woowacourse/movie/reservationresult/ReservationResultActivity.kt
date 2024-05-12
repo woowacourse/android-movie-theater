@@ -10,6 +10,7 @@ import woowacourse.movie.data.AlarmSharedPreferences
 import woowacourse.movie.data.RoomMovieRepository
 import woowacourse.movie.databinding.ActivityReservationResultBinding
 import woowacourse.movie.reservationresult.uimodel.ReservationResultUiModel
+import woowacourse.movie.setting.MovieAlarmSetting
 
 class ReservationResultActivity : AppCompatActivity(), ReservationResultContract.View {
     private lateinit var binding: ActivityReservationResultBinding
@@ -26,6 +27,7 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
             ReservationResultPresenter(
                 repository = RoomMovieRepository.instance(),
                 view = this,
+                alarmSetting = MovieAlarmSetting(this),
             )
         presenter.loadReservationResult(reservationId)
 

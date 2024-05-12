@@ -1,21 +1,19 @@
 package woowacourse.movie.setting
 
-import android.content.Context
 import woowacourse.movie.repository.MovieRepository
 import kotlin.concurrent.thread
 
 class SettingPresenter(
     private val repository: MovieRepository,
-    private val context: Context,
+    private val alarmSetting: AlarmSetting,
 ) : SettingContract.Presenter {
     override fun setAlarm() {
         thread {
             runCatching {
                 repository.reservations()
             }.onSuccess { reservations ->
-                val settingAlarm = AlarmSetting()
                 reservations.forEach {
-                    settingAlarm.setAlarm(context, it)
+                    alarmSetting.setAlarm(it)
                 }
             }
         }.join()
@@ -26,9 +24,8 @@ class SettingPresenter(
             runCatching {
                 repository.reservations()
             }.onSuccess { reservations ->
-                val settingAlarm = AlarmSetting()
                 reservations.forEach {
-                    settingAlarm.cancelAlarm(context, it)
+                    alarmSetting.cancelAlarm(it)
                 }
             }
         }.join()

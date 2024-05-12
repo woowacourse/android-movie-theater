@@ -20,8 +20,8 @@ object DummyMovies : MovieRepository {
 
     private val theaters: List<MovieTheater> =
         listOf(MovieTheater.STUB_A, MovieTheater.STUB_B, MovieTheater.STUB_C)
-    private var reservations: List<MovieReservation> = emptyList()
-    private var reservationId: Long = 0
+    private var reservations: List<MovieReservation> = listOf(MovieReservation.STUB)
+    private var reservationId: Long = 1
 
     override fun movies(): List<Movie> = screenMovies.map { it.movie }.distinct()
 

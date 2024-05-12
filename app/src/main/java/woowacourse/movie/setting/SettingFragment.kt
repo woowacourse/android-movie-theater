@@ -40,7 +40,7 @@ class SettingFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter = SettingPresenter(RoomMovieRepository.instance(), requireContext())
+        presenter = SettingPresenter(RoomMovieRepository.instance(), MovieAlarmSetting(requireContext()))
 
         askNotificationPermission()
         alarmSwitchListener()

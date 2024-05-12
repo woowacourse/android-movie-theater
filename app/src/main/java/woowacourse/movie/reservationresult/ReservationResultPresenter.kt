@@ -8,6 +8,7 @@ import kotlin.concurrent.thread
 class ReservationResultPresenter(
     private val repository: MovieRepository,
     private val view: ReservationResultContract.View,
+    private val alarmSetting: AlarmSetting,
 ) : ReservationResultContract.Presenter {
     override fun loadReservationResult(reservationId: Long) {
         thread {
@@ -25,8 +26,7 @@ class ReservationResultPresenter(
             runCatching {
                 repository.movieReservationById(reservationId)
             }.onSuccess { reservation ->
-                val settingAlarm = AlarmSetting()
-                settingAlarm.setAlarm(context, reservation)
+                alarmSetting.setAlarm(reservation)
             }
         }.join()
     }
