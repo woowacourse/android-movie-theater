@@ -1,5 +1,6 @@
 package woowacourse.movie.alarm
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -26,25 +27,26 @@ class MovieBroadcastReceiver : BroadcastReceiver() {
         val channel =
             NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
         manager.createNotificationChannel(channel)
-        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
         val pendingIntent = makePendingIntent(context)
-        setBuilder(builder, pendingIntent)
-        manager.notify(1, builder.build())
+        val notification = buildNotification(context, pendingIntent)
+        manager.notify(1, notification)
     }
 
-    private fun makePendingIntent(context: Context): PendingIntent? {
+    private fun buildNotification(
+        context: Context,
+        pendingIntent: PendingIntent,
+    ): Notification {
+        return NotificationCompat.Builder(context, CHANNEL_ID)
+            .setSmallIcon(android.R.drawable.ic_popup_reminder)
+            .setContentTitle(MESSAGE_RESERVATION_NOTIFICATION)
+            .setContentText(MESSAGE_SCREENING_INFORMATION.format(movieTitle))
+            .setContentIntent(pendingIntent)
+            .build()
+    }
+
+    private fun makePendingIntent(context: Context): PendingIntent {
         val ticketIntent = MovieTicketActivity.newTicketActivityInstance(context, movieId)
         return PendingIntent.getActivity(context, 10, ticketIntent, PendingIntent.FLAG_MUTABLE)
-    }
-
-    private fun setBuilder(
-        builder: NotificationCompat.Builder,
-        pendingIntent: PendingIntent?,
-    ) {
-        builder.setSmallIcon(android.R.drawable.ic_popup_reminder)
-        builder.setContentTitle(MESSAGE_RESERVATION_NOTIFICATION)
-        builder.setContentText(MESSAGE_SCREENING_INFORMATION.format(movieTitle))
-        builder.setContentIntent(pendingIntent)
     }
 
     companion object {
