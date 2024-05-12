@@ -5,10 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.data.DummyEverythingRepository
+import woowacourse.movie.data.movie.MovieRepositoryImpl
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.movielist.theaters.TheaterBottomSheetDialogFragment
 import woowacourse.movie.movielist.uimodel.ListItemUiModel
+import woowacourse.movie.usecase.FetchAllMoviesUseCase
 
 class MovieListFragment : Fragment(), MovieListContract.View, AdapterClickListener {
     private lateinit var presenter: MovieListPresenter
@@ -21,7 +24,7 @@ class MovieListFragment : Fragment(), MovieListContract.View, AdapterClickListen
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentMovieListBinding.inflate(inflater, container, false)
-        movieAdapter = MovieAdapter(kotlin.collections.listOf(), this)
+        movieAdapter = MovieAdapter(listOf(), this)
         val listView = binding.rcvScreening
         listView.adapter = movieAdapter
         return binding.root
@@ -32,8 +35,15 @@ class MovieListFragment : Fragment(), MovieListContract.View, AdapterClickListen
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = MovieListPresenter(this, DummyEverythingRepository)
+        val fetchAllMoviesUseCase = buildFetchAllMoviesUseCase()
+        presenter = MovieListPresenter(this, DummyEverythingRepository, fetchAllMoviesUseCase)
         presenter.loadContents()
+    }
+
+    private fun buildFetchAllMoviesUseCase(): FetchAllMoviesUseCase {
+        val db = (requireActivity().application as MovieApplication).db
+        val movieRepository = MovieRepositoryImpl(db.movieDao())
+        return FetchAllMoviesUseCase(movieRepository)
     }
 
     override fun showContents(movies: List<ListItemUiModel>) {
