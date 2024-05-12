@@ -15,14 +15,15 @@ import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.utils.versionTiramisuOrHigher
 
 class SettingFragment : Fragment() {
-    private lateinit var binding: FragmentSettingBinding
+    private var _binding: FragmentSettingBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding =
+        _binding =
             FragmentSettingBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -70,5 +71,10 @@ class SettingFragment : Fragment() {
             putExtra("android.provider.extra.APP_PACKAGE", activity?.packageName)
         }
         startActivity(intent)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -17,7 +17,9 @@ import woowacourse.movie.presentation.view.screening.theater.TheaterBottomSheetD
 class ScreeningMovieFragment : Fragment(), ScreeningContract.View, ScreeningContract.ViewActions {
     private lateinit var adapter: MovieListAdapter
     private lateinit var presenter: ScreeningContract.Presenter
-    private lateinit var binding: FragmentHomeBinding
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +33,7 @@ class ScreeningMovieFragment : Fragment(), ScreeningContract.View, ScreeningCont
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding =
+        _binding =
             FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -68,6 +70,11 @@ class ScreeningMovieFragment : Fragment(), ScreeningContract.View, ScreeningCont
         activity?.runOnUiThread {
             Toast.makeText(context, content, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

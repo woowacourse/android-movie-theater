@@ -14,8 +14,9 @@ import woowacourse.movie.repository.db.ReservationTicketDatabase
 
 class ReservationListFragment : Fragment(), ReservationListContract.View,
     ReservationListContract.ItemListener {
+    private var _binding: FragmentReservationListBinding? = null
+    private val binding get() = _binding!!
     private lateinit var adapter: ReservationListAdapter
-    private lateinit var binding: FragmentReservationListBinding
     private lateinit var presenter: ReservationListPresenterImpl
 
     override fun onCreateView(
@@ -23,7 +24,7 @@ class ReservationListFragment : Fragment(), ReservationListContract.View,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding =
+        _binding =
             FragmentReservationListBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -53,5 +54,10 @@ class ReservationListFragment : Fragment(), ReservationListContract.View,
 
     override fun onClick(ticketId: Long) {
         presenter.ticketInfo(ticketId)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
