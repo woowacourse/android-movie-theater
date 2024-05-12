@@ -14,7 +14,7 @@ import woowacourse.movie.data.database.MovieDatabase
 import woowacourse.movie.data.entity.Movie
 import woowacourse.movie.data.entity.MovieReservation
 import woowacourse.movie.data.entity.MovieTheater
-import woowacourse.movie.data.entity.ScreeningMovie
+import woowacourse.movie.data.entity.ScreeningMovieEntity
 import woowacourse.movie.fixtures.context
 import java.io.IOException
 
@@ -78,33 +78,33 @@ class MovieDatabaseTest {
     @DisplayName("screen_movie를_저장하면_다시_꺼낼_수_있다")
     fun can_get_stored_Screen_movie() {
         // when
-        screeningMovieDao.insertAll(ScreeningMovie.STUB_A)
+        screeningMovieDao.insertAll(ScreeningMovieEntity.STUB_A)
 
         // given
         val screenMovie = screeningMovieDao.getAll()
 
         // then
-        assertThat(screenMovie).contains(ScreeningMovie.STUB_A)
+        assertThat(screenMovie).contains(ScreeningMovieEntity.STUB_A)
     }
 
     @Test
     @DisplayName("movieId와 theaterId를 이용해 screeningMovie를 조회할 수 있다")
     fun get_screen_movie_Useing_movieId_and_theaterId() {
         // when
-        screeningMovieDao.insertAll(ScreeningMovie.STUB_A)
+        screeningMovieDao.insertAll(ScreeningMovieEntity.STUB_A)
 
         // given
         val screenMovie =
             screeningMovieDao.getByMovieIdAndTheaterId(Movie.STUB.id, MovieTheater.STUB_A.id)
 
         // then
-        assertThat(screenMovie).isEqualTo(ScreeningMovie.STUB_A)
+        assertThat(screenMovie).isEqualTo(ScreeningMovieEntity.STUB_A)
     }
 
     @Test
     @DisplayName("movieId에 해당하는 극장 리스트를 반환한다")
     fun get_theaterList_Using_movieId() {
-        screeningMovieDao.insertAll(ScreeningMovie.STUB_A, ScreeningMovie.STUB_B, ScreeningMovie.STUB_C)
+        screeningMovieDao.insertAll(ScreeningMovieEntity.STUB_A, ScreeningMovieEntity.STUB_B, ScreeningMovieEntity.STUB_C)
 
         val theaters: List<MovieTheater> = screeningMovieDao.getTheatersByMovieId(Movie.STUB.id)
 

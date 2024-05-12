@@ -9,7 +9,7 @@ import woowacourse.movie.data.dao.ScreeningMovieDao
 import woowacourse.movie.data.database.MovieDatabase
 import woowacourse.movie.data.entity.Movie
 import woowacourse.movie.data.entity.MovieTheater
-import woowacourse.movie.data.entity.ScreeningMovie
+import woowacourse.movie.data.entity.ScreeningMovieEntity
 import kotlin.concurrent.thread
 
 class TheaterApp : Application() {
@@ -70,9 +70,9 @@ class TheaterApp : Application() {
 
         thread {
             screeningMovieDao.insertAll(
-                ScreeningMovie.STUB_A,
-                ScreeningMovie.STUB_B,
-                ScreeningMovie.STUB_C,
+                ScreeningMovieEntity.STUB_A,
+                ScreeningMovieEntity.STUB_B,
+                ScreeningMovieEntity.STUB_C,
             )
         }.join()
     }

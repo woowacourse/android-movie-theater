@@ -176,7 +176,7 @@ public final class MovieDatabase_Impl extends MovieDatabase {
         final TableInfo _infoScreeningMovie = new TableInfo("screening_movie", _columnsScreeningMovie, _foreignKeysScreeningMovie, _indicesScreeningMovie);
         final TableInfo _existingScreeningMovie = TableInfo.read(db, "screening_movie");
         if (!_infoScreeningMovie.equals(_existingScreeningMovie)) {
-          return new RoomOpenHelper.ValidationResult(false, "screening_movie(woowacourse.movie.data.entity.ScreeningMovie).\n"
+          return new RoomOpenHelper.ValidationResult(false, "screening_movie(woowacourse.movie.data.entity.ScreeningMovieEntity).\n"
                   + " Expected:\n" + _infoScreeningMovie + "\n"
                   + " Found:\n" + _existingScreeningMovie);
         }

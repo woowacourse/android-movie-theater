@@ -9,7 +9,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 @Entity(tableName = "screening_movie")
-data class ScreeningMovie(
+data class ScreeningMovieEntity(
     @PrimaryKey val id: Long,
     @Embedded(prefix = "movie_")
     val movie: Movie,
@@ -35,7 +35,7 @@ data class ScreeningMovie(
 
     companion object {
         val STUB_A =
-            ScreeningMovie(
+            ScreeningMovieEntity(
                 0L,
                 Movie.STUB,
                 MovieTheater.STUB_A,
@@ -45,7 +45,7 @@ data class ScreeningMovie(
                 ),
             )
         val STUB_B =
-            ScreeningMovie(
+            ScreeningMovieEntity(
                 1L,
                 Movie.STUB,
                 MovieTheater.STUB_B,
@@ -56,7 +56,7 @@ data class ScreeningMovie(
             )
 
         val STUB_C =
-            ScreeningMovie(
+            ScreeningMovieEntity(
                 2L,
                 Movie.STUB,
                 MovieTheater.STUB_C,
