@@ -5,7 +5,7 @@ import java.lang.IllegalArgumentException
 import java.time.LocalDate
 import java.time.LocalTime
 
-object ReservationRepositoryImpl : ReservationRepository {
+object ReservationRoomRepository : ReservationRepository {
     private val reservations = mutableMapOf<Long, Reservation>()
 
     override fun save(

@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import woowacourse.movie.data.ticket.TicketDatabase
-import woowacourse.movie.data.ticket.TicketRepositoryImpl
+import woowacourse.movie.data.ticket.TicketRoomRepository
 import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.feature.setting.notification.TicketAlarm
@@ -30,7 +30,7 @@ class SettingFragment :
     private val ticketAlarm by lazy { TicketAlarm(requireContext()) }
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
     private val movieSharedPreferences by lazy { MovieSharedPreferences.instance(requireActivity().application) }
-    private val ticketRepository by lazy { TicketRepositoryImpl(TicketDatabase.instance(requireActivity().application).ticketDao()) }
+    private val ticketRepository by lazy { TicketRoomRepository(TicketDatabase.instance(requireActivity().application).ticketDao()) }
 
     override fun onCreateView(
         inflater: LayoutInflater,

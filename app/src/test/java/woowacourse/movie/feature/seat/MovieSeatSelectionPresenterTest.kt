@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.reservation.Reservation
 import woowacourse.movie.data.reservation.ReservationRepository
-import woowacourse.movie.data.reservation.ReservationRepositoryImpl
+import woowacourse.movie.data.reservation.ReservationRoomRepository
 import woowacourse.movie.data.ticket.FakeTicketRepository
 import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.feature.movieId
@@ -32,7 +32,7 @@ class MovieSeatSelectionPresenterTest {
     fun setUp() {
         view = mockk()
         ticketRepository = FakeTicketRepository()
-        reservationRepository = ReservationRepositoryImpl
+        reservationRepository = ReservationRoomRepository
         presenter = MovieSeatSelectionPresenter(view)
         presenter.updateSelectedSeats(selectedSeats)
     }

@@ -16,9 +16,9 @@ import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.data.movie.MovieRepository
 import woowacourse.movie.data.reservation.Reservation
-import woowacourse.movie.data.reservation.ReservationRepositoryImpl
+import woowacourse.movie.data.reservation.ReservationRoomRepository
 import woowacourse.movie.data.ticket.TicketDatabase
-import woowacourse.movie.data.ticket.TicketRepositoryImpl
+import woowacourse.movie.data.ticket.TicketRoomRepository
 import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.databinding.ActivityMovieSeatSelectionBinding
 import woowacourse.movie.feature.result.MovieResultActivity
@@ -50,7 +50,7 @@ class MovieSeatSelectionActivity :
     }
     private val ticketAlarm by lazy { TicketAlarm(this) }
     private lateinit var reservation: Reservation
-    private val ticketRepository by lazy { TicketRepositoryImpl(TicketDatabase.instance(application).ticketDao()) }
+    private val ticketRepository by lazy { TicketRoomRepository(TicketDatabase.instance(application).ticketDao()) }
     private val movieSharedPreferences by lazy { MovieSharedPreferences.instance(application) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,7 +67,7 @@ class MovieSeatSelectionActivity :
     private fun initializeView(reservationId: Long) {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        presenter.loadReservation(ReservationRepositoryImpl, reservationId)
+        presenter.loadReservation(ReservationRoomRepository, reservationId)
         presenter.loadTableSeats(movieSelectedSeats)
 
         binding.btnComplete.setOnClickListener { displayDialog() }

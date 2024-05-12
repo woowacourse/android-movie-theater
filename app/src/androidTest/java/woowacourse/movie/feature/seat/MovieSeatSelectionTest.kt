@@ -26,7 +26,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.data.reservation.ReservationRepositoryImpl
+import woowacourse.movie.data.reservation.ReservationRoomRepository
 import woowacourse.movie.feature.movieId
 import woowacourse.movie.feature.reservationCount
 import woowacourse.movie.feature.screeningDate
@@ -42,7 +42,7 @@ class MovieSeatSelectionTest {
 
     init {
         val reservationId =
-            ReservationRepositoryImpl.save(
+            ReservationRoomRepository.save(
                 movieId,
                 screeningDate,
                 screeningTime,

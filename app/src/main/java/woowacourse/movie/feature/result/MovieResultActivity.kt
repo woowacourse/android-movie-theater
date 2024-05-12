@@ -10,7 +10,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
 import woowacourse.movie.R
 import woowacourse.movie.data.ticket.TicketDatabase
-import woowacourse.movie.data.ticket.TicketRepositoryImpl
+import woowacourse.movie.data.ticket.TicketRoomRepository
 import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.databinding.ActivityMovieResultBinding
 import woowacourse.movie.feature.MovieMainActivity
@@ -23,7 +23,7 @@ class MovieResultActivity :
     BaseActivity<MovieResultContract.Presenter>(),
     MovieResultContract.View {
     private lateinit var binding: ActivityMovieResultBinding
-    private val ticketRepository by lazy { TicketRepositoryImpl(TicketDatabase.instance(application).ticketDao()) }
+    private val ticketRepository by lazy { TicketRoomRepository(TicketDatabase.instance(application).ticketDao()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
