@@ -12,8 +12,8 @@ import woowacourse.movie.data.dao.MovieTheaterDao
 import woowacourse.movie.data.dao.ScreeningMovieDao
 import woowacourse.movie.data.database.MovieDatabase
 import woowacourse.movie.data.entity.Movie
-import woowacourse.movie.data.entity.MovieReservation
-import woowacourse.movie.data.entity.MovieTheater
+import woowacourse.movie.data.entity.MovieReservationEntity
+import woowacourse.movie.data.entity.MovieTheaterEntity
 import woowacourse.movie.data.entity.ScreeningMovieEntity
 import woowacourse.movie.fixtures.context
 import java.io.IOException
@@ -49,14 +49,14 @@ class MovieDatabaseTest {
     fun can_get_stored_reservation_list() {
         // when
         movieDao.insert(Movie.STUB)
-        theaterDao.insertAll(MovieTheater.STUB_A, MovieTheater.STUB_B, MovieTheater.STUB_C)
+        theaterDao.insertAll(MovieTheaterEntity.STUB_A, MovieTheaterEntity.STUB_B, MovieTheaterEntity.STUB_C)
 
         // given
-        movieReservationDao.insertAll(MovieReservation.STUB)
+        movieReservationDao.insertAll(MovieReservationEntity.STUB)
 
         // then
         val reservation = movieReservationDao.getAll()
-        assertThat(reservation).contains(MovieReservation.STUB)
+        assertThat(reservation).contains(MovieReservationEntity.STUB)
     }
 
     @Test
@@ -64,14 +64,14 @@ class MovieDatabaseTest {
     fun get_reservation_Using_id() {
         // when
         movieDao.insert(Movie.STUB)
-        theaterDao.insertAll(MovieTheater.STUB_A, MovieTheater.STUB_B, MovieTheater.STUB_C)
-        movieReservationDao.insertAll(MovieReservation.STUB)
+        theaterDao.insertAll(MovieTheaterEntity.STUB_A, MovieTheaterEntity.STUB_B, MovieTheaterEntity.STUB_C)
+        movieReservationDao.insertAll(MovieReservationEntity.STUB)
 
         // given
-        val reservation = movieReservationDao.getMovieReservationById(MovieReservation.STUB.id)
+        val reservation = movieReservationDao.getMovieReservationById(MovieReservationEntity.STUB.id)
 
         // then
-        assertThat(reservation).isEqualTo(MovieReservation.STUB)
+        assertThat(reservation).isEqualTo(MovieReservationEntity.STUB)
     }
 
     @Test
@@ -95,7 +95,7 @@ class MovieDatabaseTest {
 
         // given
         val screenMovie =
-            screeningMovieDao.getByMovieIdAndTheaterId(Movie.STUB.id, MovieTheater.STUB_A.id)
+            screeningMovieDao.getByMovieIdAndTheaterId(Movie.STUB.id, MovieTheaterEntity.STUB_A.id)
 
         // then
         assertThat(screenMovie).isEqualTo(ScreeningMovieEntity.STUB_A)
@@ -106,8 +106,8 @@ class MovieDatabaseTest {
     fun get_theaterList_Using_movieId() {
         screeningMovieDao.insertAll(ScreeningMovieEntity.STUB_A, ScreeningMovieEntity.STUB_B, ScreeningMovieEntity.STUB_C)
 
-        val theaters: List<MovieTheater> = screeningMovieDao.getTheatersByMovieId(Movie.STUB.id)
+        val theaters: List<MovieTheaterEntity> = screeningMovieDao.getTheatersByMovieId(Movie.STUB.id)
 
-        assertThat(theaters).contains(MovieTheater.STUB_A)
+        assertThat(theaters).contains(MovieTheaterEntity.STUB_A)
     }
 }

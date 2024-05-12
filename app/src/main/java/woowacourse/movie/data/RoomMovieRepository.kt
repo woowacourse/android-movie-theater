@@ -4,6 +4,7 @@ import woowacourse.movie.data.dao.MovieDao
 import woowacourse.movie.data.dao.MovieReservationDao
 import woowacourse.movie.data.dao.MovieTheaterDao
 import woowacourse.movie.data.dao.ScreeningMovieDao
+import woowacourse.movie.data.entity.MovieReservationEntity
 import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieReservation
@@ -52,7 +53,7 @@ class RoomMovieRepository(
     ): Long {
         val movie = screenMovieDao.getScreenMovieById(screenMovieId).movie
         return reservationDao.insert(
-            woowacourse.movie.data.entity.MovieReservation(
+            MovieReservationEntity(
                 screenMovieId,
                 movie,
                 seats.selectedSeats.map { mapOf(it.row to it.col) },

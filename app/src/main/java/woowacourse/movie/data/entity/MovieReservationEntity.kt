@@ -21,7 +21,7 @@ import java.time.LocalDateTime
         ),
     ],
 )
-data class MovieReservation(
+data class MovieReservationEntity(
     @PrimaryKey val id: Long,
     @Embedded(prefix = "movie_") val movie: Movie,
     @ColumnInfo(name = "selected_seats") val selectedSeats: List<Map<Int, Int>>,
@@ -52,7 +52,7 @@ data class MovieReservation(
 
     companion object {
         val STUB =
-            MovieReservation(
+            MovieReservationEntity(
                 0L,
                 Movie.STUB,
                 listOf(mapOf(0 to 0), mapOf(0 to 1)),
