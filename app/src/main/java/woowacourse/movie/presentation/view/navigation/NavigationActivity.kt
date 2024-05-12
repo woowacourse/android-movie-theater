@@ -8,31 +8,33 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityNavigationBinding
+import woowacourse.movie.utils.SharedPrefs
 import woowacourse.movie.utils.versionTiramisuOrHigher
 
 class NavigationActivity : AppCompatActivity() {
-    private val bottomNavigationView: BottomNavigationView by lazy {
-        findViewById(R.id.navigationView)
-    }
+    private lateinit var binding: ActivityNavigationBinding
     private val screeningMovieFragment: ScreeningMovieFragment by lazy { ScreeningMovieFragment() }
     private val reservationListFragment: ReservationListFragment by lazy { ReservationListFragment() }
     private val settingFragment: SettingFragment by lazy { SettingFragment() }
+    private lateinit var sharedPrefs: SharedPrefs
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_navigation)
+        binding = ActivityNavigationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        sharedPrefs = SharedPrefs(this)
         requestNotificationPermission()
 
         setBottomNavigationView()
         if (savedInstanceState == null) {
-            bottomNavigationView.selectedItemId = R.id.home_fragment
+            binding.navigationView.selectedItemId = R.id.home_fragment
         }
     }
 
     private fun setBottomNavigationView() {
-        bottomNavigationView.setOnItemSelectedListener { item ->
+        binding.navigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home_fragment -> {
                     replaceFragment(screeningMovieFragment)
