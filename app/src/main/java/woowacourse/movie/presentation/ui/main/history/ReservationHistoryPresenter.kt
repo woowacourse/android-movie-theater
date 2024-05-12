@@ -8,7 +8,7 @@ class ReservationHistoryPresenter(
     private val repository: ReservationRepository,
 ) : ReservationHistoryContract.Presenter {
     override fun fetchData() {
-        thread(start = true) {
+        thread {
             repository.findAll().onSuccess {
                 view.showReservations(it)
             }

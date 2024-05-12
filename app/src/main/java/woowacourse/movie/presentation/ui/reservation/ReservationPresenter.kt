@@ -13,7 +13,7 @@ class ReservationPresenter(
         get() = _reservation
 
     override fun loadReservation(reservationId: Long) {
-        thread(start = true) {
+        thread {
             repository.findByReservationId(reservationId)
                 .onSuccess { reservation ->
                     _reservation = reservation

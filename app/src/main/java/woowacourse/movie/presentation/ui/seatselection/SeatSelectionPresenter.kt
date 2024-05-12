@@ -124,7 +124,7 @@ class SeatSelectionPresenter(
     )
 
     private fun saveReservation(reservation: Reservation) {
-        thread(start = true) {
+        thread {
             reservationRepository.saveReservation(reservation).onSuccess { reservationId ->
                 view.setReservationNotification(reservation.copy(id = reservationId))
                 view.navigateToReservation(reservationId)
