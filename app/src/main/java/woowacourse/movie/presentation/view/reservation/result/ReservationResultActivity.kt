@@ -2,6 +2,7 @@ package woowacourse.movie.presentation.view.reservation.result
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.core.content.IntentCompat
 import androidx.databinding.DataBindingUtil
@@ -10,6 +11,7 @@ import woowacourse.movie.databinding.ActivityReservationResultBinding
 import woowacourse.movie.presentation.base.BaseActivity
 import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
 import woowacourse.movie.presentation.view.navigation.NavigationActivity
+import woowacourse.movie.presentation.view.notification.MovieNotificationAlarmManager
 
 class ReservationResultActivity : BaseActivity() {
     override fun getLayoutResId(): Int = R.layout.activity_reservation_result
@@ -19,6 +21,7 @@ class ReservationResultActivity : BaseActivity() {
     override fun onCreateSetup(savedInstanceState: Bundle?) {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         binding = DataBindingUtil.setContentView(this, getLayoutResId())
+        Log.d("ReservationResultActivity", "Notification clicked")
         setUpFromIntent()
     }
 
@@ -26,6 +29,7 @@ class ReservationResultActivity : BaseActivity() {
         val ticket =
             IntentCompat.getParcelableExtra(intent, INTENT_TICKET, MovieTicketUiModel::class.java)
         binding.data = ticket
+        MovieNotificationAlarmManager.init(this, ticketUiModel = ticket!!)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
