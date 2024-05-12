@@ -1,7 +1,7 @@
 package woowacourse.movie.feature.history.ui
 
-import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.data.movie.dto.Movie
+import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.util.formatScreeningDate
 import woowacourse.movie.util.formatScreeningTime
 

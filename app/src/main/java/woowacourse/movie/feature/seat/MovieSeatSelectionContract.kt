@@ -1,7 +1,7 @@
 package woowacourse.movie.feature.seat
 
-import woowacourse.movie.data.reservation.dto.Reservation
 import woowacourse.movie.data.reservation.ReservationRepository
+import woowacourse.movie.data.reservation.dto.Reservation
 import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.model.MovieSeat

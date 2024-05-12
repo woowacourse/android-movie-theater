@@ -12,7 +12,7 @@ class SettingPresenter(
     applicationContext: Context,
 ) : SettingContract.Presenter {
     private val notificationRepository: NotificationRepository
-            by lazy { NotificationSharedPreferencesRepository.instance(applicationContext) }
+        by lazy { NotificationSharedPreferencesRepository.instance(applicationContext) }
 
     override fun loadNotificationGrant() {
         val isGrant = notificationRepository.isGrant()

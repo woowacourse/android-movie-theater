@@ -18,13 +18,11 @@ abstract class TicketDatabase : RoomDatabase() {
         private var instance: TicketDatabase? = null
 
         fun instance(context: Context): TicketDatabase {
-            return instance ?: run {
-                synchronized(this) {
-                    val newInstance =
-                        Room.databaseBuilder(context, TicketDatabase::class.java, "ticket").build()
-                    instance = newInstance
-                    newInstance
-                }
+            return instance ?: synchronized(this) {
+                val newInstance =
+                    Room.databaseBuilder(context, TicketDatabase::class.java, "ticket").build()
+                instance = newInstance
+                newInstance
             }
         }
     }

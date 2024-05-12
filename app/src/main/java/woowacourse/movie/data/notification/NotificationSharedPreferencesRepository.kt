@@ -4,7 +4,7 @@ import android.content.Context
 import woowacourse.movie.data.MovieSharedPreferences
 import kotlin.concurrent.Volatile
 
-class NotificationSharedPreferencesRepository private constructor(context: Context): NotificationRepository {
+class NotificationSharedPreferencesRepository private constructor(context: Context) : NotificationRepository {
     private val movieSharedPreferences by lazy { MovieSharedPreferences.instance(context) }
 
     override fun update(isGrant: Boolean) {

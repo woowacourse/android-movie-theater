@@ -3,8 +3,8 @@ package woowacourse.movie.feature.seat
 import android.content.Context
 import woowacourse.movie.data.notification.NotificationRepository
 import woowacourse.movie.data.notification.NotificationSharedPreferencesRepository
-import woowacourse.movie.data.reservation.dto.Reservation
 import woowacourse.movie.data.reservation.ReservationRepository
+import woowacourse.movie.data.reservation.dto.Reservation
 import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.model.MovieSeat
@@ -18,7 +18,7 @@ class MovieSeatSelectionPresenter(
 ) : MovieSeatSelectionContract.Presenter {
     private lateinit var movieSelectedSeats: MovieSelectedSeats
     private val notificationRepository: NotificationRepository
-            by lazy { NotificationSharedPreferencesRepository.instance(applicationContext) }
+        by lazy { NotificationSharedPreferencesRepository.instance(applicationContext) }
 
     override fun loadReservation(
         reservationRepository: ReservationRepository,

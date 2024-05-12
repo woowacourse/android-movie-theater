@@ -11,13 +11,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import woowacourse.movie.data.MovieSharedPreferences
 import woowacourse.movie.data.ticket.TicketDatabase
 import woowacourse.movie.data.ticket.TicketRoomRepository
 import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.model.notification.TicketAlarm
 import woowacourse.movie.util.BaseFragment
-import woowacourse.movie.data.MovieSharedPreferences
 
 class SettingFragment :
     BaseFragment<SettingContract.Presenter>(),
@@ -32,8 +32,8 @@ class SettingFragment :
     private val ticketRepository by lazy {
         TicketRoomRepository(
             TicketDatabase.instance(
-                requireActivity().application
-            ).ticketDao()
+                requireActivity().application,
+            ).ticketDao(),
         )
     }
 

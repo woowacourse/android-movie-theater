@@ -33,12 +33,10 @@ class MovieSharedPreferences private constructor(context: Context) {
         private var instance: MovieSharedPreferences? = null
 
         fun instance(context: Context): MovieSharedPreferences {
-            return instance ?: run {
-                synchronized(this) {
-                    val newInstance = MovieSharedPreferences(context)
-                    instance = newInstance
-                    newInstance
-                }
+            return instance ?: synchronized(this) {
+                val newInstance = MovieSharedPreferences(context)
+                instance = newInstance
+                newInstance
             }
         }
     }

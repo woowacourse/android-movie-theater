@@ -1,7 +1,7 @@
 package woowacourse.movie.feature.detail
 
-import woowacourse.movie.data.reservation.ReservationRepository
 import woowacourse.movie.data.movie.dto.Movie
+import woowacourse.movie.data.reservation.ReservationRepository
 import woowacourse.movie.util.BasePresenter
 
 interface MovieDetailContract {
