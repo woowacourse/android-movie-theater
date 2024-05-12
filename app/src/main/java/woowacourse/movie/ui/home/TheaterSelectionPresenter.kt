@@ -4,8 +4,8 @@ import woowacourse.movie.data.database.movie.MovieContentDao
 import woowacourse.movie.data.database.theater.TheaterDao
 import woowacourse.movie.domain.MovieContent
 import woowacourse.movie.domain.Theater
-import woowacourse.movie.domain.mapper.toMovieContent
-import woowacourse.movie.domain.mapper.toTheater
+import woowacourse.movie.data.mapper.toMovieContent
+import woowacourse.movie.data.mapper.toTheater
 import kotlin.concurrent.thread
 
 class TheaterSelectionPresenter(

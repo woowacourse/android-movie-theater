@@ -4,7 +4,7 @@ import woowacourse.movie.data.database.ticket.TicketDao
 import woowacourse.movie.domain.Seat
 import woowacourse.movie.domain.SeatInformation
 import woowacourse.movie.domain.UserTicket
-import woowacourse.movie.domain.mapper.toTicketEntity
+import woowacourse.movie.data.mapper.toTicketEntity
 import woowacourse.movie.ui.reservation.ReservationDetail
 import woowacourse.movie.ui.utils.positionToIndex
 import kotlin.concurrent.thread

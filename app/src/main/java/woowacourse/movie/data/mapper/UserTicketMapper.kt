@@ -1,4 +1,4 @@
-package woowacourse.movie.domain.mapper
+package woowacourse.movie.data.mapper
 
 import woowacourse.movie.data.database.ticket.TicketEntity
 import woowacourse.movie.domain.Seat

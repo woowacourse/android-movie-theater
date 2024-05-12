@@ -3,7 +3,7 @@ package woowacourse.movie.ui.history
 import woowacourse.movie.data.database.ticket.TicketDao
 import woowacourse.movie.data.database.ticket.TicketEntity
 import woowacourse.movie.domain.UserTicket
-import woowacourse.movie.domain.mapper.toUserTicket
+import woowacourse.movie.data.mapper.toUserTicket
 import kotlin.concurrent.thread
 
 class BookingHistoryPresenter(

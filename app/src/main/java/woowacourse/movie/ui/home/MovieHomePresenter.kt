@@ -3,7 +3,7 @@ package woowacourse.movie.ui.home
 import woowacourse.movie.data.database.movie.MovieContentDao
 import woowacourse.movie.data.database.movie.MovieContentEntity
 import woowacourse.movie.domain.MovieContent
-import woowacourse.movie.domain.mapper.toMovieContent
+import woowacourse.movie.data.mapper.toMovieContent
 import java.lang.IllegalStateException
 import kotlin.concurrent.thread
 

@@ -6,8 +6,8 @@ import woowacourse.movie.domain.MovieContent
 import woowacourse.movie.domain.ReservationCount
 import woowacourse.movie.domain.ScreeningDate
 import woowacourse.movie.domain.Theater
-import woowacourse.movie.domain.mapper.toMovieContent
-import woowacourse.movie.domain.mapper.toTheater
+import woowacourse.movie.data.mapper.toMovieContent
+import woowacourse.movie.data.mapper.toTheater
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime

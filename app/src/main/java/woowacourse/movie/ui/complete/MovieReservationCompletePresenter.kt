@@ -2,7 +2,7 @@ package woowacourse.movie.ui.complete
 
 import woowacourse.movie.data.database.ticket.TicketDao
 import woowacourse.movie.data.database.ticket.TicketEntity
-import woowacourse.movie.domain.mapper.toUserTicket
+import woowacourse.movie.data.mapper.toUserTicket
 import java.lang.IllegalStateException
 import kotlin.concurrent.thread
 
