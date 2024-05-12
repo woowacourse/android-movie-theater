@@ -15,11 +15,11 @@ import woowacourse.movie.data.ticket.TicketDatabase
 import woowacourse.movie.data.ticket.TicketRoomRepository
 import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.databinding.FragmentSettingBinding
-import woowacourse.movie.feature.setting.notification.TicketAlarm
+import woowacourse.movie.model.notification.TicketAlarm
 import woowacourse.movie.util.BaseFragment
 import woowacourse.movie.util.MovieIntentConstant.DEFAULT_VALUE_NOTIFICATION
 import woowacourse.movie.util.MovieIntentConstant.KEY_NOTIFICATION
-import woowacourse.movie.util.MovieSharedPreferences
+import woowacourse.movie.data.MovieSharedPreferences
 
 class SettingFragment :
     BaseFragment<SettingContract.Presenter>(),

@@ -1,4 +1,4 @@
-package woowacourse.movie.util
+package woowacourse.movie.data
 
 import android.content.Context
 import androidx.core.content.edit

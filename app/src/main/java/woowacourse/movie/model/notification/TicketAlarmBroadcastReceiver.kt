@@ -1,4 +1,4 @@
-package woowacourse.movie.feature.setting.notification
+package woowacourse.movie.model.notification
 
 import android.content.BroadcastReceiver
 import android.content.Context

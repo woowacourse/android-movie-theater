@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import woowacourse.movie.databinding.ItemAdvertisementBinding
 import woowacourse.movie.databinding.ItemMovieBinding
-import woowacourse.movie.model.Movie
+import woowacourse.movie.data.movie.dto.Movie
 
 typealias ReservationButtonClickListener = (movieId: Long) -> Unit
 

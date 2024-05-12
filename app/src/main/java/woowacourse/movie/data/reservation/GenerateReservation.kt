@@ -1,5 +1,6 @@
 package woowacourse.movie.data.reservation
 
+import woowacourse.movie.data.reservation.dto.Reservation
 import woowacourse.movie.model.ReservationCount
 import java.time.LocalDate
 import java.time.LocalTime

@@ -9,7 +9,7 @@ import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.reservation.Reservation
+import woowacourse.movie.data.reservation.dto.Reservation
 import woowacourse.movie.data.reservation.ReservationRepository
 import woowacourse.movie.data.reservation.ReservationRoomRepository
 import woowacourse.movie.data.ticket.FakeTicketRepository

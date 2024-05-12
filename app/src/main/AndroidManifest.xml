@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".feature.setting.notification.TicketAlarmBroadcastReceiver" />
+        <receiver android:name=".model.notification.TicketAlarmBroadcastReceiver" />
     </application>
 
 </manifest>

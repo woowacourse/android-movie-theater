@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import woowacourse.movie.databinding.FragmentMovieHomeBinding
 import woowacourse.movie.feature.home.movie.adapter.MovieAdapter
 import woowacourse.movie.feature.home.theater.TheaterSelectionBottomSheetFragment
-import woowacourse.movie.model.Movie
+import woowacourse.movie.data.movie.dto.Movie
 import woowacourse.movie.util.BaseFragment
 
 class MovieHomeFragment : BaseFragment<MovieHomeContract.Presenter>(), MovieHomeContract.View {

@@ -12,7 +12,7 @@ import woowacourse.movie.data.reservation.ReservationRoomRepository
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.feature.detail.ui.MovieDetailUiModel
 import woowacourse.movie.feature.seat.MovieSeatSelectionActivity
-import woowacourse.movie.model.Movie
+import woowacourse.movie.data.movie.dto.Movie
 import woowacourse.movie.util.BaseActivity
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_INDEX

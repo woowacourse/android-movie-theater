@@ -1,6 +1,6 @@
 package woowacourse.movie.data.movie
 
-import woowacourse.movie.model.Movie
+import woowacourse.movie.data.movie.dto.Movie
 import java.lang.IllegalArgumentException
 
 object MovieRepository {
