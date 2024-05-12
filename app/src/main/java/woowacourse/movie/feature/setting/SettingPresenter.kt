@@ -5,6 +5,7 @@ import woowacourse.movie.data.notification.NotificationRepository
 import woowacourse.movie.data.notification.NotificationSharedPreferencesRepository
 import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.data.ticket.entity.Ticket
+import woowacourse.movie.model.notification.TicketAlarm
 import kotlin.concurrent.thread
 
 class SettingPresenter(
@@ -12,6 +13,7 @@ class SettingPresenter(
     applicationContext: Context,
     private val notificationRepository: NotificationRepository =
         NotificationSharedPreferencesRepository.instance(applicationContext),
+    private val ticketAlarm: TicketAlarm = TicketAlarm(applicationContext),
 ) : SettingContract.Presenter {
     override fun loadNotificationGrant() {
         val isGrant = notificationRepository.isGrant()
@@ -27,7 +29,7 @@ class SettingPresenter(
         thread {
             tickets = ticketRepository.findAll()
         }.join()
-        tickets.forEach { view.setTicketAlarm(it) }
+        ticketAlarm.setReservationAlarms(tickets)
     }
 
     override fun cancelTicketsAlarm(ticketRepository: TicketRepository) {
@@ -35,6 +37,6 @@ class SettingPresenter(
         thread {
             tickets = ticketRepository.findAll()
         }.join()
-        tickets.forEach { view.cancelTicketAlarm(it) }
+        ticketAlarm.cancelReservationAlarms(tickets)
     }
 }

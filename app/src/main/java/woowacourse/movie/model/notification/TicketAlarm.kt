@@ -16,6 +16,10 @@ import java.time.ZoneId
 class TicketAlarm(private val context: Context) {
     private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
+    fun setReservationAlarms(tickets: List<Ticket>) {
+        tickets.forEach { setReservationAlarm(it) }
+    }
+
     fun setReservationAlarm(ticket: Ticket) {
         val screeningDateTime = LocalDateTime.of(ticket.screeningDate, ticket.screeningTime)
         if (isBeforeToday(screeningDateTime)) return
@@ -31,6 +35,10 @@ class TicketAlarm(private val context: Context) {
 
     private fun isBeforeToday(screeningDateTime: LocalDateTime): Boolean {
         return screeningDateTime.isBefore(LocalDateTime.now())
+    }
+
+    fun cancelReservationAlarms(tickets: List<Ticket>) {
+        tickets.forEach { cancelReservationAlarm(it) }
     }
 
     fun cancelReservationAlarm(ticket: Ticket) {

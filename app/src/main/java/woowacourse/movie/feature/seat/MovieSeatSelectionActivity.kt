@@ -20,13 +20,11 @@ import woowacourse.movie.data.reservation.dto.Reservation
 import woowacourse.movie.data.ticket.TicketDatabase
 import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.data.ticket.TicketRoomRepository
-import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.databinding.ActivityMovieSeatSelectionBinding
 import woowacourse.movie.feature.result.MovieResultActivity
 import woowacourse.movie.model.MovieGrade
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
-import woowacourse.movie.model.notification.TicketAlarm
 import woowacourse.movie.util.BaseActivity
 import woowacourse.movie.util.MovieIntentConstant.DEFAULT_VALUE_RESERVATION_ID
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_RESERVATION_COUNT
@@ -46,7 +44,6 @@ class MovieSeatSelectionActivity :
                 tableRow.children.filterIsInstance<TextView>().toList()
             }.toList()
     }
-    private val ticketAlarm by lazy { TicketAlarm(this) }
     private lateinit var reservation: Reservation
     private val ticketRepository: TicketRepository
         by lazy { TicketRoomRepository(TicketDatabase.instance(application).ticketDao()) }
@@ -137,10 +134,6 @@ class MovieSeatSelectionActivity :
         Log.e(TAG, "invalid movie id - ${throwable.message}")
         showToast(R.string.invalid_movie_id)
         finish()
-    }
-
-    override fun setTicketAlarm(ticket: Ticket) {
-        ticketAlarm.setReservationAlarm(ticket)
     }
 
     private fun showToast(

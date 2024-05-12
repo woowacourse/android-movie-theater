@@ -11,12 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import woowacourse.movie.data.MovieSharedPreferences
 import woowacourse.movie.data.ticket.TicketDatabase
 import woowacourse.movie.data.ticket.TicketRoomRepository
-import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.databinding.FragmentSettingBinding
-import woowacourse.movie.model.notification.TicketAlarm
 import woowacourse.movie.util.BaseFragment
 
 class SettingFragment :
@@ -25,10 +22,8 @@ class SettingFragment :
     private var _binding: FragmentSettingBinding? = null
     private val binding get() = _binding!!
 
-    private val ticketAlarm by lazy { TicketAlarm(requireContext()) }
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
-    private val movieSharedPreferences by lazy { MovieSharedPreferences.instance(requireActivity().application) }
     private val ticketRepository by lazy {
         TicketRoomRepository(
             TicketDatabase.instance(
@@ -104,13 +99,5 @@ class SettingFragment :
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun setTicketAlarm(ticket: Ticket) {
-        ticketAlarm.setReservationAlarm(ticket)
-    }
-
-    override fun cancelTicketAlarm(ticket: Ticket) {
-        ticketAlarm.cancelReservationAlarm(ticket)
     }
 }

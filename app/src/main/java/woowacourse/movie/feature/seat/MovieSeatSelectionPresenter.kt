@@ -9,6 +9,7 @@ import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
+import woowacourse.movie.model.notification.TicketAlarm
 import java.lang.IllegalArgumentException
 import kotlin.concurrent.thread
 
@@ -17,6 +18,7 @@ class MovieSeatSelectionPresenter(
     applicationContext: Context,
     private val notificationRepository: NotificationRepository =
         NotificationSharedPreferencesRepository.instance(applicationContext),
+    private val ticketAlarm: TicketAlarm = TicketAlarm(applicationContext),
 ) : MovieSeatSelectionContract.Presenter {
     private lateinit var movieSelectedSeats: MovieSelectedSeats
 
@@ -69,10 +71,10 @@ class MovieSeatSelectionPresenter(
         selectedSeats: MovieSelectedSeats,
     ) {
         val ticket = savaTicket(ticketRepository, reservation, selectedSeats)
-        view.navigateToResultView(ticket.id)
         if (notificationRepository.isGrant()) {
-            view.setTicketAlarm(ticket)
+            ticketAlarm.setReservationAlarm(ticket)
         }
+        view.navigateToResultView(ticket.id)
     }
 
     private fun savaTicket(
