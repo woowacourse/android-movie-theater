@@ -59,6 +59,7 @@ class TheaterApp : Application() {
 
     private fun addInitData() {
         thread {
+            db.clearAllTables()
             movieTheaterDao.insert(MovieTheater.STUB_A)
             movieTheaterDao.insert(MovieTheater.STUB_B)
             movieTheaterDao.insert(MovieTheater.STUB_C)
