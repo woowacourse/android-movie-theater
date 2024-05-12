@@ -18,14 +18,16 @@ class AlarmReceiver() : BroadcastReceiver() {
         context: Context,
         intent: Intent,
     ) {
-        notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if (intent.action == "android.intent.action.BOOT_COMPLETED") {
+            notificationManager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val title = intent.getStringExtra(TITLE_ID) ?: error("영화 제목에 대한 정보가 없습니다.")
-        val id = intent.getLongExtra(CHANNEL_ID, INVALID_CHANNEL_ID)
+            val title = intent.getStringExtra(TITLE_ID) ?: error("영화 제목에 대한 정보가 없습니다.")
+            val id = intent.getLongExtra(CHANNEL_ID, INVALID_CHANNEL_ID)
 
-        createNotificationChannel()
-        deliverNotification(context, title, id)
+            createNotificationChannel()
+            deliverNotification(context, title, id)
+        }
     }
 
     private fun createNotificationChannel() {
