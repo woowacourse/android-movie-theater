@@ -2,15 +2,15 @@ package woowacourse.movie.feature.result
 
 import android.content.Context
 import woowacourse.movie.data.movie.MovieRepositoryImpl
+import woowacourse.movie.data.ticket.RoomTicketRepository
 import woowacourse.movie.data.ticket.TicketDatabase
 import woowacourse.movie.data.ticket.TicketRepository
-import woowacourse.movie.data.ticket.RoomTicketRepository
 
 class MovieResultPresenter(
     private val view: MovieResultContract.View,
     applicationContext: Context,
-    private val ticketRepository: TicketRepository
-    = RoomTicketRepository(TicketDatabase.instance(applicationContext).ticketDao())
+    private val ticketRepository: TicketRepository =
+        RoomTicketRepository(TicketDatabase.instance(applicationContext).ticketDao()),
 ) :
     MovieResultContract.Presenter {
     override fun loadTicket(ticketId: Long) {

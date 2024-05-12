@@ -34,13 +34,14 @@ class SettingPresenterTest {
         view = mockk()
         applicationContext = mockk()
         ticketAlarm = mockk()
-        presenter = SettingPresenter(
-            view,
-            applicationContext,
-            notificationRepository,
-            ticketAlarm,
-            ticketRepository,
-        )
+        presenter =
+            SettingPresenter(
+                view,
+                applicationContext,
+                notificationRepository,
+                ticketAlarm,
+                ticketRepository,
+            )
         repeat(ticketCount) {
             ticketRepository.save(
                 movieId,

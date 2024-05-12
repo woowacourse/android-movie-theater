@@ -1,6 +1,5 @@
 package woowacourse.movie.feature.setting
 
-import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.util.BasePresenter
 
 interface SettingContract {
