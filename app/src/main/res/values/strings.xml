@@ -29,4 +29,5 @@
     <string name="notification_detail">해제하면 푸시 알림을 수신할 수 없습니다.</string>
     <string name="agree_notification_permission">푸시 알림 수신을 허용 하셨습니다.</string>
     <string name="disagree_notification_permission">푸시 알림 수신을 거부 하셨습니다.</string>
+    <string name="change_notification_permission">푸시 알림 수신을 변경 하시겠습니까?</string>
 </resources>
