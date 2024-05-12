@@ -20,7 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.AlarmReceiver
 import woowacourse.movie.MovieApplication
-import woowacourse.movie.data.DummyEverythingRepository
+import woowacourse.movie.data.movie.MovieRepositoryImpl
 import woowacourse.movie.data.reservationref.ReservationRefRepositoryImpl
 import woowacourse.movie.data.screeningref.ScreeningRefRepositoryImpl
 import woowacourse.movie.data.theater.TheaterRepositoryImpl
@@ -66,12 +66,13 @@ class SettingFragment : Fragment(), SettingContract.View, SwitchListener {
 
     private fun buildFetchAllReservationsUseCase(): FetchAllReservationsUseCase {
         val db = (requireActivity().application as MovieApplication).db
+        val movieRepository = MovieRepositoryImpl(db.movieDao())
         val reservationRefRepository = ReservationRefRepositoryImpl(db.reservationDao())
         val theaterRepository = TheaterRepositoryImpl(db.theaterDao())
         val screeningRefRepository = ScreeningRefRepositoryImpl(db.screeningDao())
         val screeningWithIdUseCase =
             FetchScreeningWithIdUseCase(
-                DummyEverythingRepository,
+                movieRepository,
                 theaterRepository,
                 screeningRefRepository,
             )

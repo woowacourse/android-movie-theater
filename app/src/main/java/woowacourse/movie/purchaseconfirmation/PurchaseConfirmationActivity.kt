@@ -7,7 +7,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.MovieApplication
 import woowacourse.movie.data.AppDatabase
-import woowacourse.movie.data.DummyEverythingRepository
+import woowacourse.movie.data.movie.MovieRepositoryImpl
 import woowacourse.movie.data.reservationref.ReservationRefRepositoryImpl
 import woowacourse.movie.data.screeningref.ScreeningRefRepositoryImpl
 import woowacourse.movie.data.theater.TheaterRepositoryImpl
@@ -40,7 +40,7 @@ class PurchaseConfirmationActivity : AppCompatActivity(), PurchaseConfirmationCo
     private fun buildFetchReservationWithIdUseCase(db: AppDatabase): FetchReservationWithIdUseCase {
         val fetchScreeningWithIdUseCase =
             FetchScreeningWithIdUseCase(
-                DummyEverythingRepository,
+                MovieRepositoryImpl(db.movieDao()),
                 TheaterRepositoryImpl(db.theaterDao()),
                 ScreeningRefRepositoryImpl(db.screeningDao()),
             )

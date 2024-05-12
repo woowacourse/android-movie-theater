@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.MovieApplication
-import woowacourse.movie.data.DummyEverythingRepository
+import woowacourse.movie.data.movie.MovieRepositoryImpl
 import woowacourse.movie.data.reservationref.ReservationRefRepositoryImpl
 import woowacourse.movie.data.screeningref.ScreeningRefRepositoryImpl
 import woowacourse.movie.data.theater.TheaterRepositoryImpl
@@ -47,11 +47,12 @@ class ReservationListFragment : Fragment(), ReservationListContract.View, Adapte
     private fun buildFetchAllReservationsUseCase(): FetchAllReservationsUseCase {
         val db = (requireActivity().application as MovieApplication).db
         val reservationRefRepository = ReservationRefRepositoryImpl(db.reservationDao())
+        val movieRepository = MovieRepositoryImpl(db.movieDao())
         val theaterRepository = TheaterRepositoryImpl(db.theaterDao())
         val screeningRefRepository = ScreeningRefRepositoryImpl(db.screeningDao())
         val screeningWithIdUseCase =
             FetchScreeningWithIdUseCase(
-                DummyEverythingRepository,
+                movieRepository,
                 theaterRepository,
                 screeningRefRepository,
             )
