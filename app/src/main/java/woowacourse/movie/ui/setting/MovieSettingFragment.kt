@@ -44,7 +44,7 @@ class MovieSettingFragment : Fragment(), MovieSettingContract.View {
         binding.swAlarmStatus.setOnCheckedChangeListener { _, isChecked ->
             presenter.setAlarmStatus(isChecked)
             if (!isChecked) {
-                presenter.cancelNotification(requireContext())
+                presenter.cancelNotification()
             } else {
                 requestNotificationPermission(requireContext())
             }

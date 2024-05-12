@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.setting.notification
+package woowacourse.movie.model.notification
 
 import android.app.NotificationChannel
 import android.app.NotificationManager

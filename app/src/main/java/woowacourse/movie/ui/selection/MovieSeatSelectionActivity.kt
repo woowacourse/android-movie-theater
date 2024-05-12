@@ -122,7 +122,7 @@ class MovieSeatSelectionActivity :
             .setTitle(R.string.reservation_confirm)
             .setMessage(R.string.reservation_confirm_comment)
             .setPositiveButton(R.string.reservation_complete) { _, _ ->
-                presenter.reservationSeat(this)
+                presenter.reservationSeat()
             }
             .setNegativeButton(R.string.cancel) { dialog, _ ->
                 dialog.dismiss()

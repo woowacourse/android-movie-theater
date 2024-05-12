@@ -1,6 +1,5 @@
 package woowacourse.movie.ui.selection
 
-import android.content.Context
 import woowacourse.movie.ui.HandleError
 
 interface MovieSeatSelectionContract {
@@ -37,7 +36,7 @@ interface MovieSeatSelectionContract {
 
         fun recoverSeatSelection(index: Int)
 
-        fun reservationSeat(context: Context)
+        fun reservationSeat()
 
         fun checkReservationSeat()
     }

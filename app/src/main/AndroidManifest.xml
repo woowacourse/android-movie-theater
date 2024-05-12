@@ -34,7 +34,7 @@
             android:name=".ui.complete.MovieReservationCompleteActivity"
             android:exported="false" />
 
-        <receiver android:name=".ui.setting.notification.MovieAlarmReceiver" />
+        <receiver android:name=".model.notification.MovieAlarmReceiver" />
 
     </application>
 
