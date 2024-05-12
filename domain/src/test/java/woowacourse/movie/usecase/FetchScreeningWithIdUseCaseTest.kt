@@ -11,13 +11,14 @@ import woowacourse.movie.model.Movie
 import woowacourse.movie.model.Screening
 import woowacourse.movie.model.ScreeningRef
 import woowacourse.movie.model.Theater
+import woowacourse.movie.repository.MovieRepository
 import woowacourse.movie.repository.ScreeningRefRepository
 import woowacourse.movie.repository.TheaterRepository
 
 @ExtendWith(MockKExtension::class)
 class FetchScreeningWithIdUseCaseTest {
     @MockK
-    private lateinit var everythingRepository: EverythingRepository
+    private lateinit var movieRepository: MovieRepository
 
     @MockK
     private lateinit var theaterRepository: TheaterRepository
@@ -31,7 +32,7 @@ class FetchScreeningWithIdUseCaseTest {
     @Test
     fun `영화 상영 정보를 id를 통해 불러온다`() {
         // given
-        every { everythingRepository.movieById(any()) } returns Movie.STUB_A
+        every { movieRepository.movieById(any()) } returns Movie.STUB_A
         every { theaterRepository.theaterById(any()) } returns Theater.STUB_A
         every { screeningRefRepository.screeningRefById(any()) } returns ScreeningRef.STUB
 
