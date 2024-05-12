@@ -11,7 +11,7 @@ import java.time.LocalDateTime
 data class ReservationEntity(
     @PrimaryKey(autoGenerate = true) val uid: Long,
     @ColumnInfo(name = "theater_name") val theaterName: String,
-    @ColumnInfo(name = "movie_name") val movieName: String,
+    @ColumnInfo(name = "movie_title") val movieTitle: String,
     @ColumnInfo(name = "quantity") val ticketCount: Int,
     @ColumnInfo(name = "seats") val seats: List<Seat>,
     @ColumnInfo(name = "date_time") val dateTime: LocalDateTime,
@@ -21,7 +21,7 @@ data class ReservationEntity(
         Reservation(
             this.uid,
             this.theaterName,
-            this.movieName,
+            this.movieTitle,
             this.ticketCount,
             this.seats,
             this.dateTime,
