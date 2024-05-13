@@ -20,7 +20,7 @@ class MovieStartNotificationManager(
     private lateinit var notificationBuilder: NotificationCompat.Builder
 
     fun startNotification() {
-        val ticket = intent.getParcelableExtra<MovieTicketUiModel>("ticket")!!
+        val ticket = intent.getParcelableExtra<MovieTicketUiModel>(ReservationResultActivity.INTENT_TICKET)!!
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channelId = "notification_before_screening"
