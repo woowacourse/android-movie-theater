@@ -4,18 +4,18 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 
-object MovieSharedPreferenceImpl : MovieSharedPreference {
+object MovieSharedPreferenceImpl {
     private const val PREFERENCE_KEY = "settings"
     private var sharedPreferences: SharedPreferences? = null
 
-    override fun setAlarmChecked(isChecked: Boolean) {
+    fun setAlarmChecked(isChecked: Boolean) {
         sharedPreferences?.edit {
             putBoolean(PREFERENCE_KEY, isChecked)
             apply()
         }
     }
 
-    override fun getAlarmChecked(): Boolean {
+    fun getAlarmChecked(): Boolean {
         return sharedPreferences?.getBoolean(PREFERENCE_KEY, false) ?: false
     }
 
