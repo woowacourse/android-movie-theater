@@ -11,15 +11,13 @@ import java.time.ZoneId
 class MovieAlarmSetting(private val context: Context) : AlarmSetting {
     override fun setAlarm(movieReservation: MovieReservation) {
         val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
+        // TODO 추후 now 에서 movieReservation을 이용한 시간으로 수정
+        val triggerTime =
+            LocalDateTime.now().plusSeconds(3)
+                .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
-        if (isReservationAfterCurrentTime(movieReservation.screenDateTime)) {
-            val triggerTime =
-                movieReservation.screenDateTime.minusMinutes(ALARM_OFFSET)
-                    .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
-
-            val pendingIntent = alarmPendingIntent(context, movieReservation)
-            alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent)
-        }
+        val pendingIntent = alarmPendingIntent(context, movieReservation)
+        alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent)
     }
 
     override fun cancelAlarm(movieReservation: MovieReservation) {
