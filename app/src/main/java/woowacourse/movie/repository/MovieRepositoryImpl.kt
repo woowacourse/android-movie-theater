@@ -16,7 +16,7 @@ object MovieRepositoryImpl : MovieRepository {
             screeningInfo =
                 ScreeningInfo(
                     startDate = LocalDate.of(2024, 4, 1),
-                    endDate = LocalDate.of(2024, 4, 30),
+                    endDate = LocalDate.of(2024, 10, 30),
                     runningTime = 148,
                 ),
             summary =
