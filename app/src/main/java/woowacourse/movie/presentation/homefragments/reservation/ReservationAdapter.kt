@@ -35,6 +35,5 @@ class ReservationAdapter(private val listener: ReservationItemClickListener) : R
 
     fun updateReservations(newReservations: List<Reservation>) {
         reservations = newReservations
-        notifyDataSetChanged()
     }
 }
