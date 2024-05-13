@@ -46,17 +46,17 @@ class MovieDaoTest {
     @Test
     @DisplayName("예매 내역을 저장 하고, id로 영화 내역을 조회할 수 있다.")
     fun insert_and_load_test() {
-        repeat(1000) {
-            // given
-            val reservationEntity = reservationEntity().copy(cinemaName = "$it")
-            // when
-            val id: Long = movieDao.saveReservation(reservationEntity)
-            val reservationResult = movieDao.loadReservation(id)
-            // then
-            assertSoftly {
-                id shouldBe (it + 1L)
-                reservationResult shouldBe reservationEntity
-            }
+        // given
+        val expectId = 1L
+        val cinemaName = "CGV"
+        val reservationEntity = reservationEntity().copy(cinemaName = cinemaName)
+        // when
+        val id: Long = movieDao.saveReservation(reservationEntity)
+        val reservationResult = movieDao.loadReservation(id)
+        // then
+        assertSoftly {
+            id shouldBe (expectId)
+            reservationResult shouldBe reservationEntity
         }
     }
 

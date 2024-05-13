@@ -67,7 +67,7 @@ class MovieDetailPresenterTest {
 
         presenter.updateRunMovieTimes()
 
-        verify { view.updateTimeAdapter(expected) }
+        verify { view.showReleaseTimes(expected) }
     }
 
     @Test

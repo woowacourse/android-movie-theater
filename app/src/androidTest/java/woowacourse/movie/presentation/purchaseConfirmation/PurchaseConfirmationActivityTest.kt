@@ -14,23 +14,23 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieRepository
-import woowacourse.movie.data.MovieRepositoryStore
+import woowacourse.movie.data.MovieRepositoryInjector
 import woowacourse.movie.model.Reservation
 import woowacourse.movie.model.movieInfo.RunningTime
 import woowacourse.movie.model.movieInfo.Synopsis
 import woowacourse.movie.model.movieInfo.Title
 import woowacourse.movie.model.theater.Seat
-import woowacourse.movie.util.context
+import woowacourse.movie.util.testApplicationContext
 import java.time.LocalDateTime
 
 @RunWith(AndroidJUnit4::class)
 class PurchaseConfirmationActivityTest {
-    private lateinit var movieRepositoryStore: MovieRepositoryStore
+    private lateinit var movieRepositoryInjector: MovieRepositoryInjector
 
     @Before
     fun setUp() {
-        movieRepositoryStore = MovieRepositoryStore.instance(context)
-        movieRepositoryStore.setRepository(
+        movieRepositoryInjector = MovieRepositoryInjector.instance(testApplicationContext)
+        movieRepositoryInjector.setRepository(
             object : MovieRepository {
                 override fun loadReservedMovies(): Result<List<Reservation>> {
                     throw UnsupportedOperationException()
@@ -66,7 +66,7 @@ class PurchaseConfirmationActivityTest {
 
     @After
     fun tearDown() {
-        movieRepositoryStore.clear()
+        movieRepositoryInjector.clear()
     }
 
     @Test
@@ -74,7 +74,7 @@ class PurchaseConfirmationActivityTest {
     fun reservation_test() {
         ActivityScenario.launch<PurchaseConfirmationActivity>(
             PurchaseConfirmationActivity.newIntent(
-                context,
+                testApplicationContext,
                 1,
             ),
         )

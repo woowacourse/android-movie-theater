@@ -1,5 +1,6 @@
 package woowacourse.movie
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -9,6 +10,7 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import woowacourse.movie.data.datastore.DefaultNotificationDataStore
 import woowacourse.movie.presentation.purchaseConfirmation.PurchaseConfirmationActivity
 
 class MovieBroadCastReceiver : BroadcastReceiver() {
@@ -21,7 +23,9 @@ class MovieBroadCastReceiver : BroadcastReceiver() {
             val reservationId =
                 intent.getLongExtra(PurchaseConfirmationActivity.EXTRA_RESERVATION_ID, -1)
 
-            if ((context.applicationContext as MovieReservationApp).notificationDatastore.canNotification) {
+            val notificationDatastore =
+                DefaultNotificationDataStore.instance(context.applicationContext)
+            if (notificationDatastore.acceptedPushAlarm) {
                 sendNotification(context, movieTitle, reservationId)
             }
         }
@@ -34,19 +38,25 @@ class MovieBroadCastReceiver : BroadcastReceiver() {
     ) {
         createNotificationChannel(context)
         val pendingIntent = createPendingIntent(context, reservationId)
-
-        val notificationBuilder =
-            NotificationCompat.Builder(context, RESERVATION_NOTIFICATION_ID)
-                .setContentTitle("예매 알림")
-                .setContentText("$movieTitle 30분 후에 상영")
-                .setSmallIcon(R.drawable.ic_notifications_active_24)
-                .setContentIntent(pendingIntent)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setAutoCancel(true)
-
+        val notification = createNotification(context, movieTitle, pendingIntent)
         val notificationManager =
             ContextCompat.getSystemService(context, NotificationManager::class.java)
-        notificationManager?.notify(RESERVATION_REQUEST_CODE, notificationBuilder.build())
+        notificationManager?.notify(RESERVATION_REQUEST_CODE, notification)
+    }
+
+    private fun createNotification(
+        context: Context,
+        movieTitle: String,
+        pendingIntent: PendingIntent,
+    ): Notification {
+        return NotificationCompat.Builder(context, RESERVATION_NOTIFICATION_ID)
+            .setContentTitle("예매 알림")
+            .setContentText("$movieTitle 30분 후에 상영")
+            .setSmallIcon(R.drawable.ic_notifications_active_24)
+            .setContentIntent(pendingIntent)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setAutoCancel(true)
+            .build()
     }
 
     private fun createNotificationChannel(context: Context) {

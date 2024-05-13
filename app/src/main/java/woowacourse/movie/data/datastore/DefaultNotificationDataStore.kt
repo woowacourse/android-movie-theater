@@ -8,11 +8,19 @@ import androidx.core.content.edit
 class DefaultNotificationDataStore private constructor(
     private val preferences: SharedPreferences,
 ) : NotificationDataStore {
-    override var canNotification: Boolean
+    override var acceptedPushAlarm: Boolean
         get() = preferences.getBoolean(NOTIFICATION_KEY, defaultCanNotification())
         set(value) {
             preferences.edit(commit = true) {
                 putBoolean(NOTIFICATION_KEY, value)
+            }
+        }
+
+    override var hasBeenDeniedPermission: Boolean
+        get() = preferences.getBoolean(POST_NOTIFICATIONS, false)
+        set(value) {
+            preferences.edit(commit = true) {
+                putBoolean(POST_NOTIFICATIONS, value)
             }
         }
 
@@ -23,6 +31,7 @@ class DefaultNotificationDataStore private constructor(
         private var instance: NotificationDataStore? = null
         private const val DATASTORE_KEY = "DATASTORE_KEY"
         private const val NOTIFICATION_KEY = "NOTIFICATION_KEY"
+        private const val POST_NOTIFICATIONS = "POST_NOTIFICATIONS"
 
         fun instance(context: Context): NotificationDataStore {
             return instance ?: synchronized(this) {

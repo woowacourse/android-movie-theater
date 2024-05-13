@@ -74,11 +74,11 @@ class MovieDetailActivity :
         binding.executePendingBindings()
     }
 
-    override fun updateDateAdapter(dates: List<String>) {
+    override fun showReleaseDates(dates: List<String>) {
         dateAdapter.updateRunningDates(dates)
     }
 
-    override fun updateTimeAdapter(times: List<String>) {
+    override fun showReleaseTimes(times: List<String>) {
         timeAdapter.updateRunningTimes(times)
     }
 

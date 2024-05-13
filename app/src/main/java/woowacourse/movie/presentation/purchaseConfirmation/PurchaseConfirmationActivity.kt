@@ -4,10 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import woowacourse.movie.MovieReservationApp
+import androidx.activity.addCallback
 import woowacourse.movie.R
+import woowacourse.movie.data.MovieRepositoryInjector
 import woowacourse.movie.databinding.ActivityPurchaseConfirmationBinding
 import woowacourse.movie.model.Reservation
+import woowacourse.movie.presentation.HomeActivity
 import woowacourse.movie.presentation.base.BindingActivity
 import woowacourse.movie.presentation.error.ErrorActivity
 import kotlin.concurrent.thread
@@ -17,7 +19,7 @@ class PurchaseConfirmationActivity :
     PurchaseConfirmationContract.View {
     private val presenter: PurchaseConfirmationContract.Presenter by lazy {
         PurchaseConfirmationPresenter(
-            (applicationContext as MovieReservationApp).movieRepository,
+            MovieRepositoryInjector.instance(applicationContext).movieRepository(),
             this,
         )
     }
@@ -25,7 +27,7 @@ class PurchaseConfirmationActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+        initBackPressCallback()
         val reservationId = intent.getLongExtra(EXTRA_RESERVATION_ID, -1)
         thread {
             presenter.loadReservation(reservationId)
@@ -33,8 +35,10 @@ class PurchaseConfirmationActivity :
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        finish()
-        return true
+        if (item.itemId == android.R.id.home) {
+            onBackPressedDispatcher.onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun showReservation(reservation: Reservation) {
@@ -51,6 +55,14 @@ class PurchaseConfirmationActivity :
     override fun showError() {
         ErrorActivity.start(this)
         finish()
+    }
+
+    private fun initBackPressCallback() {
+        onBackPressedDispatcher.addCallback {
+            HomeActivity.start(this@PurchaseConfirmationActivity) {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }
+        }
     }
 
     companion object {

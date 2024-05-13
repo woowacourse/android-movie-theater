@@ -44,16 +44,6 @@
   - [x]: startActivity 로 Reservation 이동
   - [x]: Notification 커스터 마이징
   - [x]: 32 일 때는 preference canNotify 를 true, 33 이상은 false 로 변경
-- 푸시 알림 퍼미션 로직
--
-    1) Home - 맨 처음에만 퍼미션 체크를 함
--
-    2) Setting
-
-    - 1번째 요청 아무 것도 없음
-    - 2번째 요청에만 Explanation Dialog 보여줌
-    - 3번째 요청부터도 아무 것도 없음 (이게.. 1, 3 번째 구분하는게 모르겠음)
-
 ### 리뷰 반영
 
 - [x]: 스피너에 대한 일을 객체로 분리
@@ -62,16 +52,15 @@
 - [x]: InjectMockKs 애너테이션을 활용하여 테스트 코드 리팩토링
 - [x]: assertion 함수들 assertSoftly 로 묶기  
 
-----  
-시간 남으면 할 것
+- [x]: 푸시 알람 권한 요청 완전히 거절 시, 설정으로 이동하도록 변경
+- [x]: MovieDaoTest repeat(1000) 삭제
+- [x]: testApplicationContext 으로 네이밍 변경
+- [x]: MovieDetailContract 네이밍 변경
+    - showReleaseDates
+    -  showReleaseTimes
+- [x]: MovieBroadCastReceiver 함수 분리
 
-- [ ]: Looper + Handler 로 리팩
-
-## 할 일
-
-- [x]: dataBinding 적용
-- [x]: test 코드 작성
-- [x]: 화면 회전 대응
+## 푸시 알람 권한
 
 ## Study
 
@@ -90,57 +79,59 @@ private fun hasNotificationPermission(): Boolean = ContextCompat.checkSelfPermis
 ```
 
 사용자가 한 번 거절하면, 다시 요청할 때 권한 요청에 대한 이유를 설명해야 하는걸 권장한다.
-true: 처음 요청하는 경우, 1번 이미 거절한 경우
-false: 권한이 있는 경우, 2번 거절한 경우
-
+해당 함수를 사용하면 이미 한 번 거절한 권한인지 확인할 수 있다.
 ```kotlin
 shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)
 ```
+true: 한 번 거절한 경우
+false: 한 번 거절하지 않은 경우 (즉, 처음 요청한 경우, 2번 거절한 경우에도 false)
 
-## 궁금한 점 & 질문 사항
+## SettingFragment Switch ON 눌렀을 때 액션 분기 처리
 
-### 1. Espresso 테스트 에서 dataBinding 객체 가져오기
-인수 테스트에서 Binding 객체를 가져오려 노력했지만, 어떻게 가져와야할지 모르겠습니다..  
-아래는 제가 시도해봤던 코드입니다.
+`shouldShowRequestPermissionRationale` 함수가 처음 거절한 경우와 2번 이상 거절한 경우 모두 true 를 반환하기에
+`notificationPreference.hasBeenDeniedPermission` 변수를 추가하여 2번 이상 거절한 경우를 구분하였습니다! 
+
+class 들로 역할 분리하는 것이 좋다고 생각하지만.. 시간이 없어 일단은 SettingFragment 내부에서 분기처리를 하였습니다.
+
+1) API 32 이하인 경우, 권한이 있는 걍우 ---> Switch On 자유로움
+```
+Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU &&
+hasAccessPermission()
+```
+2) 처음 권한 요청한 경우 ---> 권한 요청
 ```kotlin
- private lateinit var binding: FragmentMovieListBinding
- 
- // binding 객체를 어떻게 가져와야하죠..?
-launchFragmentInContainer<MovieListFragment>().onFragment {
-    // 현재는 새로운 객체를 생성하고 있음
-    binding = FragmentMovieListBinding.bind(it.requireView()) 
-}
-
-// 이와 같이 테스트 코드를 작성하고 싶었습니다
-onView(withId(binding.rvMovies.id)).perform(...)
+// 1. 권한이 없음?
+hasAccessPermission().not() &&
+// 2. 2번째 권한 요청?
+shouldShowRequestPermissionRationale(POST_NOTIFICATIONS).not() &&
+// 3. 이미 거절당한 이력이 없니?
+notificationPreference.hasBeenDeniedPermission.not()
 ```
-역시, 에러가 발생했습니다.
-![image](https://github.com/android/architecture-components-samples/assets/87055456/315cad6d-975b-4273-8d86-f31c49ba2066)
-
-## 2. Permission 요청 로직
-
-Home 에서 권한 요청을 하는 것이  미션 요구 사항이였으나  
-정말 필요할 때 권한을 요청하는 것이 사용자 친화적인 UX 라고 생각했습니다.
-따라서, 다음과 같이 퍼미션을 요청 로직으로 구현했습니다.
-```
-- 푸시 알림 퍼미션 로직
-- Android Tiramisu(13) 이상에서만 동작
-    1) Home - 맨 처음에만 퍼미션 체크를 함
-    2) Setting
-    - 1번째 요청 - ActivityResultLauncher 에서 권한 요청
-    - 2번째 요청 
-      - Explanation Dialog show -> ActivityResultLauncher 에서 권한 요청
-    - 3번째 요청부터는 아무 것도 하지 않음
-- Android Tiramisu(13) 미만에서는 자동으로 권한이 부여되어 있도록 함
-```
-
-이때, 이미 2번 거절을 한 경우에는 `Setting` 화면으로 이동시키거나 이동 확인 Dialog 를 보여주도록 구현하고 싶었으나
-2번 거절을 한 경우를 구분하는 방법을 찾지 못했습니다.
-혹시, 이에 대한 좋은 방법이나 힌트를 주실 수 있을까요??
+3) 두 번째 권한 요청한 경우 ---> 권한 요청에 대한 설명 다이얼로그 띄우기
 ```kotlin
- Intent().also { intent ->
-        intent.action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
-        intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
-        startActivity(intent)
+// 해당 함수로 한 번 거절한 이력이 있는지 확인
+shouldShowRequestPermissionRationale(POST_NOTIFICATIONS)
+```
+4) 완전히 거절한 경우 ---> 설정으로 이동
+```kotlin
+// 1. 권한이 없음?
+hasAccessPermission().not() &&
+// 2번째 권한 요청?
+shouldShowRequestPermissionRationale(POST_NOTIFICATIONS).not() &&
+// 3. 이미 거절당한 이력이 있니?
+notificationPreference.hasBeenDeniedPermission
+```
+
+- 최종 분기처리문
+```kotlin
+when {
+    Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU -> updateAlarmSwitch(true)
+    isFirstRequest() -> requestPermissionLauncher.launch(POST_NOTIFICATIONS)
+    isSecondRequest() -> {
+        notificationPreference.hasBeenDeniedPermission = true
+        explanationDialogForPushAlarm.show()
     }
+    isCompletelyDenied() -> explanationDialogForNavigateToSetting.show()
+    else -> requestPermissionLauncher.launch(POST_NOTIFICATIONS)
+}
 ```

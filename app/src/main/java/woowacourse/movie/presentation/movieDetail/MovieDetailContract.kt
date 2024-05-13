@@ -22,9 +22,9 @@ interface MovieDetailContract {
 
         fun showReleaseDate(movieDate: MovieDate)
 
-        fun updateDateAdapter(dates: List<String>)
+        fun showReleaseDates(dates: List<String>)
 
-        fun updateTimeAdapter(times: List<String>)
+        fun showReleaseTimes(times: List<String>)
     }
 
     interface Presenter {

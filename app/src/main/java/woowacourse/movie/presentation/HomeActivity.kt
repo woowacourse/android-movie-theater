@@ -1,14 +1,18 @@
 package woowacourse.movie.presentation
 
 import android.Manifest.permission.POST_NOTIFICATIONS
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.commit
-import woowacourse.movie.MovieReservationApp
 import woowacourse.movie.R
+import woowacourse.movie.data.datastore.DefaultNotificationDataStore
+import woowacourse.movie.data.datastore.NotificationDataStore
 import woowacourse.movie.databinding.ActivityHomeBinding
 import woowacourse.movie.presentation.base.BindingActivity
 import woowacourse.movie.presentation.common.replaceTo
@@ -17,11 +21,12 @@ import woowacourse.movie.presentation.reservation.ReservationFragment
 import woowacourse.movie.presentation.setting.SettingFragment
 
 class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home) {
-    private val notificationPreference by lazy { (application as MovieReservationApp).notificationDatastore }
-
+    private val notificationDataStore: NotificationDataStore by lazy {
+        DefaultNotificationDataStore.instance(applicationContext)
+    }
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) notificationPreference.canNotification = true
+            if (isGranted) notificationDataStore.acceptedPushAlarm = true
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,8 +52,8 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     private fun requestAlarmPermission() {
         when {
             (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) -> return
-            notificationPreference.canNotification -> return
-            isFirstRequestPermission() -> requestPermissionLauncher.launch(POST_NOTIFICATIONS)
+            notificationDataStore.acceptedPushAlarm -> return
+            isFirstRequest() -> requestPermissionLauncher.launch(POST_NOTIFICATIONS)
             else -> return
         }
     }
@@ -63,13 +68,26 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         return true
     }
 
-    private fun isFirstRequestPermission(): Boolean =
+    private fun isFirstRequest(): Boolean =
         (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) &&
-            ContextCompat.checkSelfPermission(
-                this,
-                POST_NOTIFICATIONS,
-            ) == PackageManager.PERMISSION_DENIED &&
-            shouldShowRequestPermissionRationale(
-                POST_NOTIFICATIONS,
-            ).not()
+            hasAccessPermission().not() &&
+            shouldShowRequestPermissionRationale(POST_NOTIFICATIONS).not() &&
+            notificationDataStore.hasBeenDeniedPermission.not()
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun hasAccessPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this, POST_NOTIFICATIONS,
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    companion object {
+        fun start(
+            context: Context,
+            action: Intent.() -> Unit = {},
+        ) {
+            val intent = Intent(context, HomeActivity::class.java).apply(action)
+            context.startActivity(intent)
+        }
+    }
 }
