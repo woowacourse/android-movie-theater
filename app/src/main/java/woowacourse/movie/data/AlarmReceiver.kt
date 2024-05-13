@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
 import woowacourse.movie.presentation.ticket.MovieTicketActivity
@@ -16,9 +15,8 @@ import woowacourse.movie.presentation.ticket.MovieTicketActivity
 class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        val movieTicketId = intent.getLongExtra(EXTRA_MOVIE_TICKET_ID, -1)
-        Log.d("AlarmReceiver", "Received movie ticket id: $movieTicketId")
-        if (movieTicketId != -1L) {
+        val movieTicketId = intent.getLongExtra(EXTRA_MOVIE_TICKET_ID, INVALID_ID)
+        if (movieTicketId > INVALID_ID) {
             sendNotification(context, movieTicketId)
         }
     }
@@ -59,8 +57,8 @@ class AlarmReceiver : BroadcastReceiver() {
 
         val notification = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.ic_notification)
-            .setContentTitle("영화 시작 30분 전입니다!")
-            .setContentText("예매하신 영화가 곧 시작합니다. 예매 정보를 확인하세요.")
+            .setContentTitle(context.getString(R.string.notification_title))
+            .setContentText(context.getString(R.string.notification_content))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
@@ -70,6 +68,7 @@ class AlarmReceiver : BroadcastReceiver() {
     }
 
     companion object {
+        const val INVALID_ID = -1L
         const val EXTRA_MOVIE_TICKET_ID = "movie_ticket_Id"
     }
 }
