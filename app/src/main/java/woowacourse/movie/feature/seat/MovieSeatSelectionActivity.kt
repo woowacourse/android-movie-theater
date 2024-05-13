@@ -64,13 +64,15 @@ class MovieSeatSelectionActivity :
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        val reservationCount =
-            savedInstanceState.getInt(KEY_RESERVATION_COUNT, INVALID_VALUE_RESERVATION_COUNT)
-        movieSelectedSeats = MovieSelectedSeats(reservationCount)
-        presenter.updateSelectedSeats(movieSelectedSeats)
 
-        val selectedSeatPositions = savedInstanceState.getIntArray(KEY_SELECTED_SEAT_POSITIONS)
-        setUpSelectedSeats(selectedSeatPositions)
+        with(savedInstanceState) {
+            val reservationCount = getInt(KEY_RESERVATION_COUNT, INVALID_VALUE_RESERVATION_COUNT)
+            movieSelectedSeats = MovieSelectedSeats(reservationCount)
+            presenter.updateSelectedSeats(movieSelectedSeats)
+
+            val selectedSeatPositions = getIntArray(KEY_SELECTED_SEAT_POSITIONS)
+            setUpSelectedSeats(selectedSeatPositions)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -166,9 +168,8 @@ class MovieSeatSelectionActivity :
             context: Context,
             reservationId: Long,
         ): Intent {
-            return Intent(context, MovieSeatSelectionActivity::class.java).apply {
-                putExtra(KEY_RESERVATION_ID, reservationId)
-            }
+            return Intent(context, MovieSeatSelectionActivity::class.java)
+                .putExtra(KEY_RESERVATION_ID, reservationId)
         }
     }
 }

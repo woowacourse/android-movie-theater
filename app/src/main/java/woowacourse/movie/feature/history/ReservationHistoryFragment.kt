@@ -26,10 +26,10 @@ class ReservationHistoryFragment :
         _binding = FragmentReservationHistoryBinding.inflate(inflater)
 
         reservationHistoryAdapter =
-            ReservationHistoryAdapter {
+            ReservationHistoryAdapter(onReservationHistoryItemClickListener = {
                 val intent = MovieResultActivity.newIntent(requireContext(), it.id)
                 startActivity(intent)
-            }
+            })
 
         initializeView()
         return binding.root

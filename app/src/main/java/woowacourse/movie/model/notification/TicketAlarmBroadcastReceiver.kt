@@ -20,7 +20,7 @@ class TicketAlarmBroadcastReceiver : BroadcastReceiver() {
         val newIntent =
             MovieResultActivity.newIntent(
                 context,
-                intent.getLongExtra(KEY_TICKET_ID, INVALID_VALUE_TICKET_ID)
+                intent.getLongExtra(KEY_TICKET_ID, INVALID_VALUE_TICKET_ID),
             )
         ticketNotification.sendNotification(
             newIntent,

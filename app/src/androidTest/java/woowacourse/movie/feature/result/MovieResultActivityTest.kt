@@ -34,9 +34,8 @@ class MovieResultActivityTest {
             Intent(
                 ApplicationProvider.getApplicationContext(),
                 MovieResultActivity::class.java,
-            ).apply {
-                putExtra(KEY_TICKET_ID, ticketId)
-            }
+            )
+                .putExtra(KEY_TICKET_ID, ticketId)
         activityRule = ActivityScenarioRule<MovieResultActivity>(intent)
     }
 

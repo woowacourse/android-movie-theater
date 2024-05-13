@@ -10,8 +10,7 @@ class ReservationHistoryPresenter(
     applicationContext: Context,
     private val ticketRepository: TicketRepository =
         RoomTicketRepository(TicketDatabase.instance(applicationContext).ticketDao()),
-) :
-    ReservationHistoryContract.Presenter {
+) : ReservationHistoryContract.Presenter {
     override fun loadTickets() {
         val tickets = ticketRepository.findAll()
         view.displayTickets(tickets)

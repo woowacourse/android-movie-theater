@@ -53,9 +53,8 @@ class MovieSeatSelectionTest {
             Intent(
                 ApplicationProvider.getApplicationContext(),
                 MovieSeatSelectionActivity::class.java,
-            ).apply {
-                putExtra(KEY_RESERVATION_ID, reservationId)
-            }
+            )
+                .putExtra(KEY_RESERVATION_ID, reservationId)
 
         activityRule = ActivityScenarioRule<MovieSeatSelectionActivity>(intent)
     }

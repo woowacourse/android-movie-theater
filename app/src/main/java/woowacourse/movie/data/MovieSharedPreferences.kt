@@ -5,9 +5,7 @@ import androidx.core.content.edit
 import kotlin.concurrent.Volatile
 
 class MovieSharedPreferences private constructor(context: Context) {
-    private val sharedPreferences by lazy {
-        context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
-    }
+    private val sharedPreferences by lazy { context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE) }
 
     fun setBoolean(
         key: String,

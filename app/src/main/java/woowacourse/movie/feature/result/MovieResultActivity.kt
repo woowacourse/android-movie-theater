@@ -88,9 +88,8 @@ class MovieResultActivity :
             context: Context,
             ticketId: Long,
         ): Intent {
-            return Intent(context, MovieResultActivity::class.java).apply {
-                putExtra(KEY_TICKET_ID, ticketId)
-            }
+            return Intent(context, MovieResultActivity::class.java)
+                .putExtra(KEY_TICKET_ID, ticketId)
         }
     }
 }

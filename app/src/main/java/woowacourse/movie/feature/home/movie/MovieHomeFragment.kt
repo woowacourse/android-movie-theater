@@ -33,9 +33,9 @@ class MovieHomeFragment : BaseFragment<MovieHomeContract.Presenter>(), MovieHome
 
     override fun displayMovies(movies: List<Movie>) {
         binding.movieRecyclerView.adapter =
-            MovieAdapter(movies) { movieId ->
+            MovieAdapter(movies, onReservationButtonClick = { movieId ->
                 displayTheaterSelectionDialog(movieId)
-            }
+            })
     }
 
     override fun displayTheaterSelectionDialog(movieId: Long) {
