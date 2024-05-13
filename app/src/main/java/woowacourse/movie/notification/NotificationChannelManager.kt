@@ -40,12 +40,6 @@ class NotificationChannelManager(private val context: Context) {
                     putExtra("notificationId", 1001)
                     putExtra("ticketId", ticketId)
                     putExtra("message", "${cinema.theater.movie.title} 영화 시작 30분 전입니다!")
-                    putExtra("title", cinema.theater.movie.title.toString())
-                    putExtra("cinemaName", cinema.cinemaName)
-                    putExtra("ticketPrice", ticketPrice)
-                    putExtra("seatNumber", selectedSeats)
-                    putExtra("runningTime", cinema.theater.movie.runningTime.toString())
-                    putExtra("timeDate", timeDate)
                 }
             val pendingIntent =
                 PendingIntent.getBroadcast(
