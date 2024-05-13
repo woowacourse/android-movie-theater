@@ -64,7 +64,6 @@ class SeatSelectionPresenterImpl(
             )
         val reservation =
             Reservation(
-                ticketId = movieTicketUiModel.ticketId,
                 title = movieTicketUiModel.title,
                 screeningDate = movieTicketUiModel.screeningDate,
                 startTime = movieTicketUiModel.startTime,
