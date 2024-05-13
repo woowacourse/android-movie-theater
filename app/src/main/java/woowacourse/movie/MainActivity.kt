@@ -73,13 +73,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun requestNotificationPermission() {
-        if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (shouldShowRequestPermissionRationale(POST_NOTIFICATIONS)) {
-                    requestPermissionLauncher.launch(POST_NOTIFICATIONS)
-                }
-            }
-        }
+        if (isPermissionRequestValid()) requestPermissionLauncher.launch(POST_NOTIFICATIONS)
+    }
+
+    private fun isPermissionRequestValid(): Boolean {
+        if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) return false
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return false
+        if (!shouldShowRequestPermissionRationale(POST_NOTIFICATIONS)) return false
+        return true
     }
 
     private fun showNotificationGrantedStatus(isGranted: Boolean) {
