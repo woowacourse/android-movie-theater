@@ -12,16 +12,14 @@ class MovieDetailPresenter(
     private var reservationCount: ReservationCount = ReservationCount()
 
     override fun loadMovieDetail(movieId: Long) {
-        val movie =
-            runCatching {
-                MovieRepositoryImpl.find(movieId)
-            }.getOrElse {
-                view.showToastInvalidMovieIdError(it)
-                return
+        runCatching { MovieRepositoryImpl.find(movieId) }
+            .onSuccess {
+                view.displayMovieDetail(it)
+                view.updateReservationCountView(reservationCount.count)
             }
-
-        view.displayMovieDetail(movie)
-        view.updateReservationCountView(reservationCount.count)
+            .onFailure {
+                view.showToastInvalidMovieIdError(it)
+            }
     }
 
     override fun updateReservationCount(count: Int) {
@@ -45,17 +43,29 @@ class MovieDetailPresenter(
         screeningTime: String,
         theaterPosition: Int,
     ) {
+        try {
+            val reservationId = saveReservation(movieId, screeningDate, screeningTime, theaterPosition)
+            view.navigateToSeatSelectionView(reservationId)
+        } catch (exception: Exception) {
+            view.showToastInvalidMovieIdError(exception)
+        }
+    }
+
+    private fun saveReservation(
+        movieId: Long,
+        screeningDate: String,
+        screeningTime: String,
+        theaterPosition: Int,
+    ): Long {
         val movie = MovieRepositoryImpl.find(movieId)
         val theaterName = movie.theaters[theaterPosition].name
 
-        val reservationId =
-            ReservationRepositoryImpl.save(
-                movieId,
-                screeningDate.unFormatSpinnerLocalDate(),
-                screeningTime.unFormatSpinnerLocalTime(),
-                reservationCount,
-                theaterName,
-            )
-        view.navigateToSeatSelectionView(reservationId)
+        return ReservationRepositoryImpl.save(
+            movieId,
+            screeningDate.unFormatSpinnerLocalDate(),
+            screeningTime.unFormatSpinnerLocalTime(),
+            reservationCount,
+            theaterName,
+        )
     }
 }
