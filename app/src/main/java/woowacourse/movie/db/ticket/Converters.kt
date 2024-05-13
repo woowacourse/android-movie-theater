@@ -7,6 +7,8 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class Converters {
+    private val gson = Gson()
+
     @TypeConverter
     fun localDateTimeToJson(dateTime: LocalDateTime): String {
         return dateTime.format(
@@ -21,12 +23,12 @@ class Converters {
 
     @TypeConverter
     fun seatsToJson(seats: Seats): String {
-        return Gson().toJson(seats)
+        return gson.toJson(seats)
     }
 
     @TypeConverter
     fun jsonToSeats(seats: String): Seats {
-        return Gson().fromJson(seats, Seats::class.java)
+        return gson.fromJson(seats, Seats::class.java)
     }
 
     companion object {
