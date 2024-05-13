@@ -16,7 +16,7 @@ class AlarmController(private val context: Context) {
     private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
     fun setNotification(reservation: Reservation) {
-        val pendingIntent = createPendingIntent(reservation)
+        val pendingIntent = createAlarmPendingIntent(reservation)
         val dateTime = convertToDateTime(reservation.screeningDate, reservation.screeningTime)
 
         calculateDateTimeToMilli(dateTime)?.let {
@@ -24,7 +24,7 @@ class AlarmController(private val context: Context) {
         }
     }
 
-    private fun createPendingIntent(reservation: Reservation): PendingIntent {
+    private fun createAlarmPendingIntent(reservation: Reservation): PendingIntent {
         val intent =
             Intent(context, AlarmReceiver::class.java).apply {
                 putExtra("reservation", reservation)
@@ -32,7 +32,7 @@ class AlarmController(private val context: Context) {
 
         return PendingIntent.getBroadcast(
             context,
-            Notification.NOTIFICATION_REQUEST_CODE,
+            NotificationManager.NOTIFICATION_REQUEST_CODE,
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )

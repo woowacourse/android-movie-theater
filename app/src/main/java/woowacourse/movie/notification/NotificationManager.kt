@@ -1,21 +1,17 @@
 package woowacourse.movie.notification
 
-import android.Manifest
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
-import android.content.pm.PackageManager
-import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
 import woowacourse.movie.model.Reservation
-import woowacourse.movie.presentation.home.HomeActivity
 import woowacourse.movie.presentation.ticketingResult.TicketingResultActivity
 
-class Notification(context: Context) {
+class NotificationManager(context: Context) {
     private val notificationManager =
         context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
@@ -33,38 +29,30 @@ class Notification(context: Context) {
         notificationManager.createNotificationChannel(channel)
     }
 
-    fun buildNotification(
+    fun buildReservationNotification(
         context: Context,
         reservation: Reservation,
-    ) {
-        val pendingIntent = createPendingIntent(context, reservation)
-        val builder = createReservationNotificationBuilder(context, reservation)
-        builder.setContentIntent(pendingIntent)
+    ): Notification {
+        val pendingIntent = createTicketingResultPendingIntent(context, reservation)
+        val builder = createReservationNotificationBuilder(context, reservation, pendingIntent)
 
-        with(NotificationManagerCompat.from(context)) {
-            if (ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.POST_NOTIFICATIONS,
-                ) == PackageManager.PERMISSION_GRANTED &&
-                HomeActivity.sharedPreference.isPushNotificationActivated()
-            ) {
-                notify(1, builder.build())
-            }
-        }
+        return builder.build()
     }
 
     private fun createReservationNotificationBuilder(
         context: Context,
         reservation: Reservation,
+        pendingIntent: PendingIntent,
     ): NotificationCompat.Builder {
         return NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_movie)
             .setContentTitle("예매 알림")
             .setContentText("${reservation.movieTitle} 30분 뒤 상영 예정")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
     }
 
-    private fun createPendingIntent(
+    private fun createTicketingResultPendingIntent(
         context: Context,
         reservation: Reservation,
     ): PendingIntent {
