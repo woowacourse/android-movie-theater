@@ -88,15 +88,16 @@ fun setReservationResult(
     textView: TextView,
     userTicket: UserTicket?,
 ) {
-    if (userTicket != null) {
-        textView.text =
-            textView.context.getString(
-                R.string.complete_reservation_result,
-                userTicket.seatInformation.reservationCount,
-                userTicket.seatInformation.selectedSeat.joinToString(),
-                userTicket.theater,
-            )
+    if (userTicket == null) {
+        return
     }
+    textView.text =
+        textView.context.getString(
+            R.string.complete_reservation_result,
+            userTicket.seatInformation.reservationCount,
+            userTicket.seatInformation.selectedSeat.joinToString(),
+            userTicket.theater,
+        )
 }
 
 @BindingAdapter("reservedDateTime")
@@ -104,10 +105,11 @@ fun setReservedDateTime(
     textView: TextView,
     dateTime: LocalDateTime?,
 ) {
-    if (dateTime != null) {
-        val context = textView.context
-        val dateTimeFormat = context.getString(R.string.reservation_screening_date_time_format)
-        val dateTimePattern = DateTimeFormatter.ofPattern(dateTimeFormat)
-        textView.text = dateTime.format(dateTimePattern)
+    if (dateTime == null) {
+        return
     }
+    val context = textView.context
+    val dateTimeFormat = context.getString(R.string.reservation_screening_date_time_format)
+    val dateTimePattern = DateTimeFormatter.ofPattern(dateTimeFormat)
+    textView.text = dateTime.format(dateTimePattern)
 }

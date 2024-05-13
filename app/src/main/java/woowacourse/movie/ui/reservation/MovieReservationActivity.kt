@@ -71,7 +71,8 @@ class MovieReservationActivity :
         }
     }
 
-    override fun initializePresenter() = MovieReservationPresenter(this, movieContentDao, theaterDao)
+    override fun initializePresenter() =
+        MovieReservationPresenter(this, movieContentDao, theaterDao)
 
     override fun showError(throwable: Throwable) {
         Toast.makeText(this, resources.getString(R.string.toast_invalid_key), Toast.LENGTH_LONG)
@@ -116,9 +117,10 @@ fun setImageViewResource(
     imageView: ImageView,
     imageName: String?,
 ) {
-    imageName?.let {
-        imageView.setImageResource(it.getImageFromId(imageView.context))
+    if (imageName == null) {
+        return
     }
+    imageView.setImageResource(imageName.getImageFromId(imageView.context))
 }
 
 @BindingAdapter("openingDate", "endingDate")
@@ -127,17 +129,18 @@ fun setScreeningDate(
     openingDate: LocalDate?,
     endingDate: LocalDate?,
 ) {
-    if (openingDate != null && endingDate != null) {
-        val context = textView.context
-        val formattedOpeningDate =
-            openingDate.format(DateTimeFormatter.ofPattern(context.getString(R.string.reservation_screening_date_format)))
-        val formattedEndingDate =
-            endingDate.format(DateTimeFormatter.ofPattern(context.getString(R.string.reservation_screening_date_format)))
-        textView.text =
-            context.getString(
-                R.string.home_screening_date,
-                formattedOpeningDate,
-                formattedEndingDate,
-            )
+    if (openingDate == null || endingDate == null) {
+        return
     }
+    val context = textView.context
+    val formattedOpeningDate =
+        openingDate.format(DateTimeFormatter.ofPattern(context.getString(R.string.reservation_screening_date_format)))
+    val formattedEndingDate =
+        endingDate.format(DateTimeFormatter.ofPattern(context.getString(R.string.reservation_screening_date_format)))
+    textView.text =
+        context.getString(
+            R.string.home_screening_date,
+            formattedOpeningDate,
+            formattedEndingDate,
+        )
 }
