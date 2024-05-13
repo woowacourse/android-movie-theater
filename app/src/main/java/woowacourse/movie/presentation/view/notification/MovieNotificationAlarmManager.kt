@@ -35,7 +35,10 @@ object MovieNotificationAlarmManager {
                 LocalDate.parse(ticketUiModel.screeningDate),
                 LocalTime.parse(ticketUiModel.startTime),
             )
-        sendNotification(alarmTime, alarmManager, pendingIntent)
+
+        if (isFutureTime(alarmTime)) {
+            sendNotification(alarmTime, alarmManager, pendingIntent)
+        }
     }
 
     private fun pendingIntent(
@@ -65,5 +68,9 @@ object MovieNotificationAlarmManager {
         pendingIntent: PendingIntent,
     ) {
         alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent)
+    }
+
+    private fun isFutureTime(alarmTime: Long): Boolean {
+        return System.currentTimeMillis() <= alarmTime
     }
 }

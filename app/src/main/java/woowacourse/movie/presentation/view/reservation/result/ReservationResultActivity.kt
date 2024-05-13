@@ -28,7 +28,7 @@ class ReservationResultActivity : BaseActivity() {
             IntentCompat.getParcelableExtra(intent, INTENT_TICKET, MovieTicketUiModel::class.java)
         ticket?.let {
             binding.data = ticket
-            MovieNotificationAlarmManager.init(this, ticketUiModel = ticket!!)
+            MovieNotificationAlarmManager.init(this, ticketUiModel = ticket)
         }
     }
 
