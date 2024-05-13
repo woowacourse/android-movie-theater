@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import android.os.Build
-import woowacourse.movie.data.db.ReservationHistoryDatabase
+import woowacourse.MovieApplication.Companion.database
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -31,7 +31,7 @@ object MovieNotificationAlarmManager {
         val thread =
             Thread {
                 movieNotification =
-                    ReservationHistoryDatabase.getInstance(context).reservationHistoryDao()
+                    database.reservationHistoryDao()
                         .findReservationHistoryById(
                             ticketId,
                         ).toMovieNotification()
@@ -92,6 +92,6 @@ object MovieNotificationAlarmManager {
         val alarmTime = screeningTime - ALARM_OFFSET_MINUTES * 60 * 1000
         val currentTime = System.currentTimeMillis()
 
-        return if (alarmTime >= currentTime) alarmTime else null
+        return if (alarmTime == currentTime) alarmTime else null
     }
 }

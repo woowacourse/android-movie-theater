@@ -3,11 +3,13 @@ package woowacourse.movie.setting.presenter
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
+import io.mockk.mockkObject
 import io.mockk.runs
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.MovieMainActivity.Companion.sharedPrefs
+import woowacourse.MovieApplication
+import woowacourse.MovieApplication.Companion.sharedPrefs
 import woowacourse.movie.setting.presenter.contract.SettingContract
 
 class SettingFragmentPresenterTest {
@@ -18,7 +20,7 @@ class SettingFragmentPresenterTest {
     fun setUp() {
         view = mockk()
         presenter = SettingPresenter(view)
-        sharedPrefs = mockk()
+        mockkObject(MovieApplication.Companion)
     }
 
     @Test

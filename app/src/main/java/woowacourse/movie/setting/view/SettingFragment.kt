@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import woowacourse.movie.MovieMainActivity.Companion.sharedPrefs
+import woowacourse.MovieApplication.Companion.sharedPrefs
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.setting.presenter.SettingPresenter
 import woowacourse.movie.setting.presenter.contract.SettingContract

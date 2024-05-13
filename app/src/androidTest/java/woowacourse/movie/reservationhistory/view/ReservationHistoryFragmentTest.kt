@@ -1,7 +1,5 @@
 package woowacourse.movie.reservationhistory.view
 
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -15,10 +13,9 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import woowacourse.MovieApplication.Companion.database
 import woowacourse.movie.MovieMainActivity
 import woowacourse.movie.R
-import woowacourse.movie.data.db.ReservationHistoryDAO
-import woowacourse.movie.data.db.ReservationHistoryDatabase
 import woowacourse.movie.data.db.ReservationHistoryEntity
 
 @RunWith(AndroidJUnit4::class)
@@ -30,18 +27,14 @@ class ReservationHistoryFragmentTest {
     val permissionRule: GrantPermissionRule =
         GrantPermissionRule.grant(android.Manifest.permission.POST_NOTIFICATIONS)
 
-    private lateinit var reservationHistoryDAO: ReservationHistoryDAO
     private val reservationHistoryEntity =
         ReservationHistoryEntity("2024-05-09", "11:15", 2, "A1, B1", 0L, 1)
 
     @Before
     fun setUp() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
         Thread {
-            reservationHistoryDAO =
-                ReservationHistoryDatabase.getInstance(context).reservationHistoryDao()
-            reservationHistoryDAO.clearReservations()
-            reservationHistoryDAO.saveReservationHistory(reservationHistoryEntity)
+            database.reservationHistoryDao().clearReservations()
+            database.reservationHistoryDao().saveReservationHistory(reservationHistoryEntity)
         }.start()
         Thread.sleep(1000)
 
@@ -56,7 +49,7 @@ class ReservationHistoryFragmentTest {
     @After
     fun tearDown() {
         Thread {
-            reservationHistoryDAO.clearReservations()
+            database.reservationHistoryDao().clearReservations()
         }.start()
     }
 

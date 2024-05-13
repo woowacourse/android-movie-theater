@@ -10,9 +10,9 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.core.app.NotificationCompat
-import woowacourse.movie.MovieMainActivity.Companion.sharedPrefs
+import woowacourse.MovieApplication.Companion.database
+import woowacourse.MovieApplication.Companion.sharedPrefs
 import woowacourse.movie.R
-import woowacourse.movie.data.db.ReservationHistoryDatabase
 import woowacourse.movie.data.db.ReservationHistoryEntity
 import woowacourse.movie.data.repository.HomeContentRepository.getMovieById
 import woowacourse.movie.result.view.MovieResultActivity
@@ -39,7 +39,7 @@ class MovieNotificationReceiver : BroadcastReceiver() {
         val thread =
             Thread {
                 reservationHistoryEntity =
-                    ReservationHistoryDatabase.getInstance(context).reservationHistoryDao()
+                    database.reservationHistoryDao()
                         .findReservationHistoryById(
                             ticketId,
                         )

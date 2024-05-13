@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import woowacourse.movie.R
-import woowacourse.movie.data.db.ReservationHistoryDatabase
 import woowacourse.movie.databinding.ActivityMovieSeatSelectionBinding
 import woowacourse.movie.model.MovieGrade
 import woowacourse.movie.model.MovieSeat
@@ -53,10 +52,7 @@ class MovieSeatSelectionActivity :
         setContentView(binding.root)
 
         seatSelectionPresenter =
-            MovieSeatSelectionPresenter(
-                this,
-                ReservationHistoryDatabase.getInstance(applicationContext),
-            )
+            MovieSeatSelectionPresenter(this)
         seatSelectionPresenter.loadDetailMovie(
             intent.getLongExtra(
                 MOVIE_ID.key,

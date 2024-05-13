@@ -1,6 +1,6 @@
 package woowacourse.movie.seatselection.presenter
 
-import woowacourse.movie.data.db.ReservationHistoryDatabase
+import woowacourse.MovieApplication.Companion.database
 import woowacourse.movie.data.db.ReservationHistoryEntity
 import woowacourse.movie.data.repository.HomeContentRepository.getMovieById
 import woowacourse.movie.model.MovieSelectedSeats
@@ -10,7 +10,6 @@ import woowacourse.movie.util.Formatter.formatRow
 
 class MovieSeatSelectionPresenter(
     private val movieSeatSelectionContractView: MovieSeatSelectionContract.View,
-    private val database: ReservationHistoryDatabase,
 ) : MovieSeatSelectionContract.Presenter {
     lateinit var movieSelectedSeats: MovieSelectedSeats
 
@@ -75,7 +74,8 @@ class MovieSeatSelectionPresenter(
         val thread =
             Thread {
                 ticketId =
-                    database.reservationHistoryDao().saveReservationHistory(reservationHistoryEntity)
+                    database.reservationHistoryDao()
+                        .saveReservationHistory(reservationHistoryEntity)
             }
         thread.start()
         thread.join()

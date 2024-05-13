@@ -7,35 +7,42 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import androidx.test.runner.AndroidJUnit4
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import woowacourse.MovieApplication.Companion.database
 import woowacourse.movie.R
-import woowacourse.movie.util.MovieIntent.MOVIE_DATE
-import woowacourse.movie.util.MovieIntent.MOVIE_ID
-import woowacourse.movie.util.MovieIntent.MOVIE_SEATS
-import woowacourse.movie.util.MovieIntent.MOVIE_TIME
-import woowacourse.movie.util.MovieIntent.RESERVATION_COUNT
-import woowacourse.movie.util.MovieIntent.SELECTED_THEATER_POSITION
+import woowacourse.movie.data.db.ReservationHistoryEntity
+import woowacourse.movie.util.MovieIntent
 
-@RunWith(AndroidJUnit4::class)
+@RunWith(androidx.test.runner.AndroidJUnit4::class)
 class MovieResultActivityTest {
     private val intent =
         Intent(
             ApplicationProvider.getApplicationContext(),
             MovieResultActivity::class.java,
         ).apply {
-            putExtra(MOVIE_ID.key, 0L)
-            putExtra(MOVIE_DATE.key, "2024-04-01")
-            putExtra(MOVIE_TIME.key, "12:00")
-            putExtra(RESERVATION_COUNT.key, 3)
-            putExtra(MOVIE_SEATS.key, "A3, C2, E1")
-            putExtra(SELECTED_THEATER_POSITION.key, 1)
+            putExtra(MovieIntent.MOVIE_TICKET_ID.key, 0L)
         }
 
     @get:Rule
     val activityRule = ActivityScenarioRule<MovieResultActivity>(intent)
+
+    @Before
+    fun setUp() {
+        database.reservationHistoryDao()
+            .saveReservationHistory(
+                ReservationHistoryEntity("2024-04-01", "12:00", 3, "A3, C2, E1", 0L, 1),
+            )
+    }
+
+    @After
+    fun tearDown() {
+        database.reservationHistoryDao().clearReservations()
+    }
 
     @Test
     fun `예매한_영화의_제목이_표시된다`() {

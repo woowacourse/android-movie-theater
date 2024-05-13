@@ -9,7 +9,6 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.R
-import woowacourse.movie.data.db.ReservationHistoryDatabase
 import woowacourse.movie.data.repository.HomeContentRepository
 import woowacourse.movie.data.repository.HomeContentRepository.getMovieById
 import woowacourse.movie.home.view.adapter.movie.HomeContent.Movie
@@ -22,7 +21,6 @@ import java.time.LocalTime
 class MovieSeatSelectionPresenterTest {
     private lateinit var view: MovieSeatSelectionContract.View
     private lateinit var presenter: MovieSeatSelectionPresenter
-    private lateinit var database: ReservationHistoryDatabase
 
     private val movie =
         Movie(
@@ -60,8 +58,7 @@ class MovieSeatSelectionPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk()
-        database = mockk()
-        presenter = MovieSeatSelectionPresenter(view, database)
+        presenter = MovieSeatSelectionPresenter(view)
         presenter.updateSelectedSeats(3)
         mockkObject(HomeContentRepository)
     }
@@ -113,7 +110,7 @@ class MovieSeatSelectionPresenterTest {
 
         // When
 
-        presenter.clickPositiveButton()
+        presenter.clickPositiveButton(0L, "2024-05-05", "13:00", 1)
 
         // Then
         verify { view.navigateToResultView(any()) }

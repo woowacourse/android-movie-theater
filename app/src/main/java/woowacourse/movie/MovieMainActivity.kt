@@ -9,11 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import woowacourse.MovieApplication.Companion.sharedPrefs
 import woowacourse.movie.databinding.ActivityMovieMainBinding
 import woowacourse.movie.home.view.MovieHomeFragment
 import woowacourse.movie.reservationhistory.view.ReservationHistoryFragment
 import woowacourse.movie.setting.view.SettingFragment
-import woowacourse.movie.util.SharedPrefs
 
 class MovieMainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieMainBinding
@@ -27,7 +27,6 @@ class MovieMainActivity : AppCompatActivity() {
         binding = ActivityMovieMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupBottomNavigation(savedInstanceState)
-        sharedPrefs = SharedPrefs(this)
     }
 
     override fun onStart() {
@@ -97,8 +96,4 @@ class MovieMainActivity : AppCompatActivity() {
         ) { isGranted: Boolean ->
             sharedPrefs.saveAlarmSetting(isGranted)
         }
-
-    companion object {
-        lateinit var sharedPrefs: SharedPrefs
-    }
 }

@@ -4,23 +4,24 @@ import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
+import io.mockk.mockkObject
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.MovieApplication
+import woowacourse.MovieApplication.Companion.database
 import woowacourse.movie.data.db.ReservationHistoryDAO
-import woowacourse.movie.data.db.ReservationHistoryDatabase
 import woowacourse.movie.data.db.ReservationHistoryEntity
 
 class ReservationHistoryPresenterTest {
     private lateinit var view: ReservationHistoryContract.View
     private lateinit var presenter: ReservationHistoryPresenter
-    private lateinit var database: ReservationHistoryDatabase
 
     @BeforeEach
     fun setUp() {
         view = mockk()
-        database = mockk()
-        presenter = ReservationHistoryPresenter(view, database)
+        presenter = ReservationHistoryPresenter(view)
+        mockkObject(MovieApplication)
     }
 
     @Test

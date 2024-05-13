@@ -1,7 +1,7 @@
 package woowacourse.movie.result.presenter
 
 import android.content.Context
-import woowacourse.movie.data.db.ReservationHistoryDatabase
+import woowacourse.MovieApplication.Companion.database
 import woowacourse.movie.data.db.ReservationHistoryEntity
 import woowacourse.movie.data.repository.HomeContentRepository.getMovieById
 import woowacourse.movie.model.MovieSeat
@@ -25,7 +25,7 @@ class MovieResultPresenter(private val movieResultContractView: MovieResultContr
         val thread =
             Thread {
                 reservationHistoryEntity =
-                    ReservationHistoryDatabase.getInstance(context).reservationHistoryDao()
+                    database.reservationHistoryDao()
                         .findReservationHistoryById(
                             ticketId,
                         )
