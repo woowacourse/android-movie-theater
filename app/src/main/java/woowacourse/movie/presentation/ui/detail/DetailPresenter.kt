@@ -54,19 +54,13 @@ class DetailPresenter(
         }
     }
 
-    override fun loadDateSpinnerAdapter(screenDates: List<ScreenDate>) {
-        view.showDateSpinnerAdapter(screenDates)
+    override fun selectDate(date: LocalDate) {
+        val screenDate = ScreenDate(date)
+        uiModel = uiModel.copy(selectedDate = screenDate)
+        view.showTime(screenDate)
     }
 
-    override fun loadTimeSpinnerAdapter(screenDate: ScreenDate) {
-        view.showTimeSpinnerAdapter(screenDate)
-    }
-
-    override fun registerDate(date: LocalDate) {
-        uiModel = uiModel.copy(selectedDate = ScreenDate(date))
-    }
-
-    override fun registerTime(time: LocalTime) {
+    override fun selectTime(time: LocalTime) {
         uiModel = uiModel.copy(selectedTime = time)
     }
 

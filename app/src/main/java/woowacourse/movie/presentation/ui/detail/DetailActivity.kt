@@ -25,12 +25,8 @@ class DetailActivity : BaseMvpBindingActivity<ActivityDetailBinding>(), View {
         get() = R.layout.activity_detail
     override val presenter: DetailPresenter by lazy { DetailPresenter(this, DummyScreens) }
 
-    private val spinnerDateAdapter: SpinnerDateAdapter by lazy {
-        SpinnerDateAdapter(this, presenter)
-    }
-    private val spinnerTimeAdapter: SpinnerTimeAdapter by lazy {
-        SpinnerTimeAdapter(this, presenter)
-    }
+    private val spinnerDateAdapter: SpinnerDateAdapter by lazy { SpinnerDateAdapter(this) }
+    private val spinnerTimeAdapter: SpinnerTimeAdapter by lazy { SpinnerTimeAdapter(this) }
 
     private val filterActivityLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -50,28 +46,18 @@ class DetailActivity : BaseMvpBindingActivity<ActivityDetailBinding>(), View {
     override fun showScreen(screen: Screen) {
         binding.screen = screen
         binding.count = presenter.count
-        presenter.loadDateSpinnerAdapter(screen.selectableDates)
-        presenter.loadTimeSpinnerAdapter(screen.selectableDates.first())
+        binding.localDates = screen.selectableDates.map { it.date }
         initAdapter()
     }
 
     private fun initAdapter() {
         binding.spinnerDate.adapter = spinnerDateAdapter
-        binding.spinnerDate.onItemSelectedListener =
-            spinnerDateAdapter.initClickListener(presenter.date)
-
         binding.spinnerTime.adapter = spinnerTimeAdapter
-        binding.spinnerTime.onItemSelectedListener = spinnerTimeAdapter.initClickListener()
     }
 
-    override fun showDateSpinnerAdapter(screenDates: List<ScreenDate>) {
-        binding.spinnerDate.setSelection(0)
-        spinnerDateAdapter.updateDate(screenDates.map { it.date })
-    }
-
-    override fun showTimeSpinnerAdapter(screenDate: ScreenDate) {
+    override fun showTime(screenDate: ScreenDate) {
         binding.spinnerTime.setSelection(0)
-        spinnerTimeAdapter.updateTime(screenDate.getSelectableTimes().map { it })
+        binding.localTimes = screenDate.getSelectableTimes().map { it }
     }
 
     override fun showTicket(count: Int) {
@@ -116,12 +102,9 @@ class DetailActivity : BaseMvpBindingActivity<ActivityDetailBinding>(), View {
         val savedLocalDate =
             savedInstanceState.getSerializable(PUT_STATE_KEY_SELECTED_DATE) as LocalDate?
         savedLocalDate?.let { localDate ->
-            presenter.registerDate(localDate)
+            presenter.selectDate(localDate)
             val position = findPositionForSelectedDate(localDate)
-            binding.spinnerDate.onItemSelectedListener =
-                spinnerDateAdapter.initClickListener(localDate)
             binding.spinnerDate.setSelection(position)
-            presenter.loadTimeSpinnerAdapter(ScreenDate(localDate))
         }
     }
 
@@ -138,7 +121,6 @@ class DetailActivity : BaseMvpBindingActivity<ActivityDetailBinding>(), View {
         val savedLocalTime =
             savedInstanceState.getSerializable(PUT_STATE_KEY_SELECTED_TIME) as LocalTime?
         savedLocalTime?.let { localTime ->
-            presenter.registerTime(localTime)
             val position = findPositionForSelectedTime(localTime)
             binding.spinnerTime.setSelection(position)
         }
