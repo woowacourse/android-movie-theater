@@ -62,7 +62,7 @@ class ReservationFinishedActivity : AppCompatActivity(), ReservationFinishedCont
     }
 
     override fun notifyScreeningTime(ticket: Ticket) {
-        ScreeningAlarm(this).generate(ticket)
+        ScreeningAlarm(this).schedule(ticket)
     }
 
     private fun initPresenter() {

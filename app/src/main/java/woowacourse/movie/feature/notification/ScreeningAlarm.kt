@@ -16,7 +16,7 @@ class ScreeningAlarm(
 ) {
     private val alarmManager: AlarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
 
-    fun generate(ticket: Ticket) {
+    fun schedule(ticket: Ticket) {
         val triggerTime: Long = calculateTriggerTime(ticket)
         val pendingIntent: PendingIntent = createPendingIntent(ticket)
         alarmManager.setAndAllowWhileIdle(
