@@ -21,16 +21,16 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.AlarmReceiver
 import woowacourse.movie.MovieApplication
 import woowacourse.movie.databinding.FragmentSettingBinding
+import woowacourse.movie.repository.SettingRepository
 import woowacourse.movie.setting.SettingContract
 import woowacourse.movie.setting.SettingPresenter
 import woowacourse.movie.setting.SwitchListener
 import woowacourse.movie.setting.uimodel.ReservationAlarmUiModel
 import woowacourse.movie.util.buildFetchAllReservationsUseCase
 
-class SettingFragment : Fragment(), SettingContract.View, SwitchListener {
+class SettingFragment : Fragment(), SettingContract.View, SwitchListener, SettingRepository {
     private lateinit var binding: FragmentSettingBinding
     private lateinit var presenter: SettingContract.Presenter
-    private lateinit var movieApplication: MovieApplication
     private lateinit var alarmMgr: AlarmManager
 
     override fun onCreateView(
@@ -40,7 +40,6 @@ class SettingFragment : Fragment(), SettingContract.View, SwitchListener {
     ): View {
         binding = FragmentSettingBinding.inflate(inflater, container, false)
         binding.listener = this
-
         return binding.root
     }
 
@@ -53,11 +52,8 @@ class SettingFragment : Fragment(), SettingContract.View, SwitchListener {
 
         val db = (requireActivity().application as MovieApplication).db
         val fetchAllReservationsUseCase = buildFetchAllReservationsUseCase(db)
-        presenter = SettingPresenter(this, fetchAllReservationsUseCase)
-        val sharedPreference = requireContext().getSharedPreferences("settings", MODE_PRIVATE)
-        val value = sharedPreference.getBoolean("notification", false)
-        presenter.initSetting(value)
-        binding.checked = value
+        presenter = SettingPresenter(this, fetchAllReservationsUseCase, this)
+        presenter.initSetting()
     }
 
     private fun requestNotificationPermission() {
@@ -109,11 +105,6 @@ class SettingFragment : Fragment(), SettingContract.View, SwitchListener {
     override fun turnOnAlarm(reservationAlarmUiModels: List<ReservationAlarmUiModel>) {
         requestNotificationPermission()
         requestScheduleExactAlarmPermission()
-        val sharedPreference = requireContext().getSharedPreferences("settings", MODE_PRIVATE)
-        val editor: SharedPreferences.Editor = sharedPreference.edit()
-        editor.putBoolean("notification", true).apply()
-        val value = sharedPreference.getBoolean("notification", true)
-        binding.checked = value
         setAlarmAt(reservationAlarmUiModels)
     }
 
@@ -129,21 +120,16 @@ class SettingFragment : Fragment(), SettingContract.View, SwitchListener {
     }
 
     override fun turnOffAlarm(reservationAlarmUiModels: List<ReservationAlarmUiModel>) {
-        val sharedPreference = requireContext().getSharedPreferences("settings", MODE_PRIVATE)
-        val editor: SharedPreferences.Editor = sharedPreference.edit()
-        editor.putBoolean("notification", false).apply()
-        val value = sharedPreference.getBoolean("notification", true)
-        binding.checked = value
-        cancelAlarm(reservationAlarmUiModels)
-    }
-
-    private fun cancelAlarm(reservationAlarmUiModels: List<ReservationAlarmUiModel>) {
         reservationAlarmUiModels.forEach {
             val intent = Intent(requireContext(), AlarmReceiver::class.java)
             val requestCode = it.id.toInt()
             val alarmIntent = getPendingIntent(requestCode, intent)
             alarmMgr.cancel(alarmIntent)
         }
+    }
+
+    override fun showChecked(checked: Boolean) {
+        binding.checked = checked
     }
 
     private fun getPendingIntent(
@@ -168,5 +154,16 @@ class SettingFragment : Fragment(), SettingContract.View, SwitchListener {
 
     override fun onClick() {
         presenter.toggleAlarm()
+    }
+
+    override fun setAlarmState(state: Boolean) {
+        val sharedPreference = requireContext().getSharedPreferences("settings", MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = sharedPreference.edit()
+        editor.putBoolean("notification", state).apply()
+    }
+
+    override fun getAlarmState(): Boolean {
+        val sharedPreference = requireContext().getSharedPreferences("settings", MODE_PRIVATE)
+        return sharedPreference.getBoolean("notification", false)
     }
 }

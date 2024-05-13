@@ -7,10 +7,12 @@ interface SettingContract {
         fun turnOnAlarm(reservationAlarmUiModels: List<ReservationAlarmUiModel>)
 
         fun turnOffAlarm(reservationAlarmUiModels: List<ReservationAlarmUiModel>)
+
+        fun showChecked(checked: Boolean)
     }
 
     interface Presenter {
-        fun initSetting(checked: Boolean)
+        fun initSetting()
 
         fun toggleAlarm()
     }

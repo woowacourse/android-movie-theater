@@ -1,6 +1,7 @@
 package woowacourse.movie.setting
 
 import woowacourse.movie.model.Reservation
+import woowacourse.movie.repository.SettingRepository
 import woowacourse.movie.setting.uimodel.ReservationAlarmUiModel
 import woowacourse.movie.usecase.FetchAllReservationsUseCase
 import java.util.concurrent.FutureTask
@@ -8,24 +9,28 @@ import java.util.concurrent.FutureTask
 class SettingPresenter(
     private val view: SettingContract.View,
     private val fetchAllReservationsUseCase: FetchAllReservationsUseCase,
+    private val settingRepository: SettingRepository,
 ) : SettingContract.Presenter {
-    private var alarmChecked: Boolean = false
     private lateinit var reservationAlarmUiModels: List<ReservationAlarmUiModel>
 
-    override fun initSetting(checked: Boolean) {
-        alarmChecked = checked
+    override fun initSetting() {
         reservationAlarmUiModels =
             getReservationTimes().map {
                 ReservationAlarmUiModel(it, 30)
             }
+        val checked = settingRepository.getAlarmState()
+        view.showChecked(checked)
     }
 
     override fun toggleAlarm() {
+        val alarmChecked = settingRepository.getAlarmState()
         if (alarmChecked) {
-            alarmChecked = false
+            settingRepository.setAlarmState(false)
+            view.showChecked(false)
             view.turnOffAlarm(reservationAlarmUiModels)
         } else {
-            alarmChecked = true
+            settingRepository.setAlarmState(true)
+            view.showChecked(true)
             view.turnOnAlarm(reservationAlarmUiModels)
         }
     }
