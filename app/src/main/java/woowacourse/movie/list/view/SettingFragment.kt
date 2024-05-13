@@ -9,11 +9,13 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.database.NotificationSharedPreference
 import woowacourse.movie.databinding.FragmentSettingBinding
+import woowacourse.movie.list.contract.SettingContract
+import woowacourse.movie.list.presenter.SettingPresenter
 
-class SettingFragment : Fragment() {
+class SettingFragment : Fragment(), SettingContract.View {
     private lateinit var binding: FragmentSettingBinding
+    private val presenter = SettingPresenter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -23,7 +25,7 @@ class SettingFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
         setInitialSwitch()
-        storeNotificationGrantedOrNot()
+        setOnSettingChangeListener()
         return binding.root
     }
 
@@ -37,10 +39,9 @@ class SettingFragment : Fragment() {
         binding.permissionSwitch.isChecked = isPermissionGranted
     }
 
-    private fun storeNotificationGrantedOrNot() {
-        val sharedPreference = NotificationSharedPreference(requireContext())
+    private fun setOnSettingChangeListener() {
         binding.permissionSwitch.setOnCheckedChangeListener { _, isChecked ->
-            sharedPreference.save(isChecked)
+            presenter.saveNotificationGranted(isChecked)
         }
     }
 }
