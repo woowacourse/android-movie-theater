@@ -18,19 +18,12 @@ class FragmentManagerHelper(activity: HomeActivity, private val containerId: Int
         }
     }
 
-    fun replace(
-        menuId: Int,
-        isEnabled: Boolean,
-    ) {
+    fun replace(menuId: Int) {
         val target =
             when (menuId) {
                 R.id.action_home -> movieListFragment
                 R.id.action_reservation_list -> reservationFragment
-                R.id.action_settings -> {
-                    settingFragment.apply {
-                        arguments = SettingFragment.createBundle(isEnabled)
-                    }
-                }
+                R.id.action_settings -> settingFragment
                 else -> movieListFragment
             }
         fragmentManager.commit {

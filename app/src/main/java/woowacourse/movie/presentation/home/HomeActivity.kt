@@ -16,14 +16,12 @@ class HomeActivity : AppCompatActivity() {
     private val fragmentManagerHelper: FragmentManagerHelper by lazy {
         FragmentManagerHelper(this, R.id.fragment_container)
     }
-    private var isPermitted = false
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-            isPermitted = isGranted
         }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         requestNotificationPermission()
     }
 
@@ -42,7 +40,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setupBottomNavigationView() {
         binding.bottomNavigationView.setOnItemSelectedListener { menu ->
-            fragmentManagerHelper.replace(menu.itemId, isPermitted)
+            fragmentManagerHelper.replace(menu.itemId)
             true
         }
     }
@@ -58,16 +56,12 @@ class HomeActivity : AppCompatActivity() {
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                    isPermitted = false
-                } else {
+                if (!shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
             } else {
                 // 안드로이드 12 이하는 Notification에 관한 권한 필요 없음
             }
-        } else {
-            isPermitted = true
         }
     }
 
