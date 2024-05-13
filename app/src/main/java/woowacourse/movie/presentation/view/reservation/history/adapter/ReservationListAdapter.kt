@@ -1,10 +1,11 @@
-package woowacourse.movie.presentation.view.navigation
+package woowacourse.movie.presentation.view.reservation.history.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ReservationItemBinding
 import woowacourse.movie.presentation.uimodel.TicketUiModel
+import woowacourse.movie.presentation.view.reservation.history.ReservationListContract
 
 class ReservationListAdapter(
     var ticketList: List<TicketUiModel>,

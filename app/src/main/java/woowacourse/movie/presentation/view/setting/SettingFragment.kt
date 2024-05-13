@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.view.navigation
+package woowacourse.movie.presentation.view.setting
 
 import android.Manifest.permission.POST_NOTIFICATIONS
 import android.content.Intent

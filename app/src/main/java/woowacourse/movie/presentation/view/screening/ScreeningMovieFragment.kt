@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.view.navigation
+package woowacourse.movie.presentation.view.screening
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,8 +9,6 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.domain.admodel.Ad
 import woowacourse.movie.presentation.uimodel.MovieUiModel
-import woowacourse.movie.presentation.view.screening.ScreeningContract
-import woowacourse.movie.presentation.view.screening.ScreeningPresenterImpl
 import woowacourse.movie.presentation.view.screening.adapter.MovieListAdapter
 import woowacourse.movie.presentation.view.screening.theater.TheaterBottomSheetDialogFragment
 

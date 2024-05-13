@@ -10,6 +10,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityNavigationBinding
+import woowacourse.movie.presentation.view.reservation.history.ReservationListFragment
+import woowacourse.movie.presentation.view.screening.ScreeningMovieFragment
+import woowacourse.movie.presentation.view.setting.SettingFragment
 import woowacourse.movie.utils.SharedPrefs
 import woowacourse.movie.utils.versionTiramisuOrHigher
 

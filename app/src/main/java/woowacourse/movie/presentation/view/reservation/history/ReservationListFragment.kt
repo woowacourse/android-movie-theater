@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.view.navigation
+package woowacourse.movie.presentation.view.reservation.history
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
 import woowacourse.movie.presentation.uimodel.TicketUiModel
+import woowacourse.movie.presentation.view.reservation.history.adapter.ReservationListAdapter
 import woowacourse.movie.presentation.view.reservation.result.ReservationResultActivity
 import woowacourse.movie.repository.db.ReservationTicketDatabase
 

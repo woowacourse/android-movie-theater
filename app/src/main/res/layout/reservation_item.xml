@@ -11,7 +11,7 @@
 
         <variable
             name="listener"
-            type="woowacourse.movie.presentation.view.navigation.ReservationListContract.ItemListener" />
+            type="woowacourse.movie.presentation.view.reservation.history.ReservationListContract" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

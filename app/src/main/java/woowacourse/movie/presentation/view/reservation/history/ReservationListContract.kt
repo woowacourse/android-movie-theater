@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.view.navigation
+package woowacourse.movie.presentation.view.reservation.history
 
 import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
 import woowacourse.movie.presentation.uimodel.TicketUiModel
@@ -16,7 +16,7 @@ interface ReservationListContract {
         fun ticketInfo(ticketId: Long)
     }
 
-    interface ItemListener {
+    interface ItemListener : ReservationListContract {
         fun onClick(ticketId: Long)
     }
 }

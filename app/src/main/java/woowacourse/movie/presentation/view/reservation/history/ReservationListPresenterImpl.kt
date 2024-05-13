@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.view.navigation
+package woowacourse.movie.presentation.view.reservation.history
 
 import woowacourse.movie.domain.model.reservation.seat.Seat
 import woowacourse.movie.presentation.uimodel.MovieTicketUiModel

@@ -1,8 +1,9 @@
-package woowacourse.movie.presentation.view.navigation
+package woowacourse.movie.presentation.view.reservation.history.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ReservationItemBinding
 import woowacourse.movie.presentation.uimodel.TicketUiModel
+import woowacourse.movie.presentation.view.reservation.history.ReservationListContract
 
 class ReservationViewHolder(
     private val binding: ReservationItemBinding
