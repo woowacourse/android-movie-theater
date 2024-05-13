@@ -13,7 +13,7 @@ import woowacourse.movie.data.repository.local.ReservationRepositoryImpl
 import woowacourse.movie.data.repository.remote.DummyScreens
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.domain.model.Screen
-import woowacourse.movie.notification.NotificationHandler
+import woowacourse.movie.notification.NotificationRepositoryImpl
 import woowacourse.movie.presentation.base.BaseMvpBindingActivity
 import woowacourse.movie.presentation.model.ReservationInfo
 import woowacourse.movie.presentation.model.UserSeat
@@ -33,7 +33,7 @@ class SeatSelectionActivity : BaseMvpBindingActivity<ActivitySeatSelectionBindin
             this,
             DummyScreens,
             repository,
-            NotificationHandler(applicationContext),
+            NotificationRepositoryImpl(applicationContext),
         )
     }
 

@@ -11,10 +11,10 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.MovieApplication.Companion.sharedPreferences
 import woowacourse.movie.R
-import woowacourse.movie.notification.NotificationHandler.Companion.NOTIFICATION_ID
-import woowacourse.movie.notification.NotificationHandler.Companion.PENDING_REQUEST_CODE
-import woowacourse.movie.notification.NotificationHandler.Companion.PUT_EXTRA_KEY_MOVIE_TITLE_ID
-import woowacourse.movie.notification.NotificationHandler.Companion.PUT_EXTRA_KEY_RESERVATION_ID
+import woowacourse.movie.notification.NotificationRepositoryImpl.Companion.NOTIFICATION_ID
+import woowacourse.movie.notification.NotificationRepositoryImpl.Companion.PENDING_REQUEST_CODE
+import woowacourse.movie.notification.NotificationRepositoryImpl.Companion.PUT_EXTRA_KEY_MOVIE_TITLE_ID
+import woowacourse.movie.notification.NotificationRepositoryImpl.Companion.PUT_EXTRA_KEY_RESERVATION_ID
 import woowacourse.movie.presentation.ui.main.MainActivity
 import woowacourse.movie.presentation.ui.reservation.ReservationActivity
 

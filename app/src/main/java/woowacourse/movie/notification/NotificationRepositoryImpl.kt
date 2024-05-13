@@ -10,7 +10,7 @@ import woowacourse.movie.domain.repository.NotificationRepository
 import java.time.LocalDateTime
 import java.time.ZoneId
 
-class NotificationHandler(private val context: Context) : NotificationRepository {
+class NotificationRepositoryImpl(private val context: Context) : NotificationRepository {
     override fun registerNotification(
         reservationId: Long,
         movieTitle: String,
