@@ -2,13 +2,11 @@ package woowacourse.movie.data.repository
 
 import android.content.Context
 import androidx.room.Room
-import com.google.gson.Gson
 import woowacourse.movie.data.database.MovieTicketDatabase
 import woowacourse.movie.data.mapper.toDomainModel
 import woowacourse.movie.data.model.MovieTicketEntity
 import woowacourse.movie.data.utils.DataConstants.DATABASE_NAME
 import woowacourse.movie.data.utils.DataConstants.INVALID_MOVIE_TICKET_ID_MESSAGE
-import woowacourse.movie.data.utils.GsonUtil
 import woowacourse.movie.domain.model.movieticket.MovieTicket
 import woowacourse.movie.domain.repository.MovieTicketRepository
 import java.util.concurrent.CountDownLatch
@@ -22,7 +20,6 @@ class MovieTicketRepositoryImpl(context: Context) : MovieTicketRepository {
     ).build()
 
     private val movieTicketDao = db.movieTicketDao()
-    private val gson: Gson = GsonUtil.gson
     private val executor = Executors.newSingleThreadExecutor()
 
     override fun createMovieTicket(
