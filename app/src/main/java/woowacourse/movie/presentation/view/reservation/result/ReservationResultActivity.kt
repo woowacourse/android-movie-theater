@@ -26,8 +26,10 @@ class ReservationResultActivity : BaseActivity() {
     private fun setUpFromIntent() {
         val ticket =
             IntentCompat.getParcelableExtra(intent, INTENT_TICKET, MovieTicketUiModel::class.java)
-        binding.data = ticket
-        MovieNotificationAlarmManager.init(this, ticketUiModel = ticket!!)
+        ticket?.let {
+            binding.data = ticket
+            MovieNotificationAlarmManager.init(this, ticketUiModel = ticket!!)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

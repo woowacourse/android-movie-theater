@@ -35,8 +35,6 @@ class ReservationListPresenterImpl(
                         screeningDate = ticketUiModel.screeningDate,
                         title = ticketUiModel.title,
                         startTime = ticketUiModel.startTime,
-                        endTime = "",
-                        runningTime = 0,
                         reservationCount = ticket.seats.seats.size,
                         totalPrice = ticket.seats.totalPrice(),
                         selectedSeats = seat,
