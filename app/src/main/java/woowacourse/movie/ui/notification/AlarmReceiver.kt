@@ -1,6 +1,5 @@
 package woowacourse.movie.ui.notification
 
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_HIGH
@@ -16,9 +15,9 @@ import woowacourse.movie.data.preferences.MoviePreferencesUtil
 import woowacourse.movie.ui.complete.MovieReservationCompleteActivity
 import woowacourse.movie.ui.complete.MovieReservationCompleteKey
 import woowacourse.movie.ui.main.MovieMainActivity
-import woowacourse.movie.ui.notification.AlarmScheduler.Companion.EXTRA_ID
-import woowacourse.movie.ui.notification.AlarmScheduler.Companion.EXTRA_SUBTITLE
-import woowacourse.movie.ui.notification.AlarmScheduler.Companion.EXTRA_TITLE
+import woowacourse.movie.ui.notification.ReservationAlarmScheduler.Companion.EXTRA_ID
+import woowacourse.movie.ui.notification.ReservationAlarmScheduler.Companion.EXTRA_SUBTITLE
+import woowacourse.movie.ui.notification.ReservationAlarmScheduler.Companion.EXTRA_TITLE
 import woowacourse.movie.ui.notification.NotificationContract.ACTION_NOTIFICATION
 import woowacourse.movie.ui.notification.NotificationContract.KEY_RECEIVE_NOTIFICATION
 

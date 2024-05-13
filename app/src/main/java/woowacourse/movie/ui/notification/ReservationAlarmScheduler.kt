@@ -8,14 +8,14 @@ import woowacourse.movie.ui.notification.NotificationContract.ACTION_NOTIFICATIO
 import java.time.ZoneId
 import java.time.ZonedDateTime
 
-class AlarmScheduler(private val context: Context) {
+class ReservationAlarmScheduler(private val context: Context) {
     private val alarmManager = context.getSystemService(AlarmManager::class.java) as AlarmManager
 
-    fun setSchedule(item: AlarmItem) {
+    fun setSchedule(item: ReservationAlarmItem) {
         val intent =
             Intent(context, AlarmReceiver::class.java)
                 .setAction(ACTION_NOTIFICATION)
-                .putExtra(EXTRA_ID, item.targetId)
+                .putExtra(EXTRA_ID, item.reservationId)
                 .putExtra(EXTRA_TITLE, item.title)
                 .putExtra(EXTRA_SUBTITLE, item.subTitle)
 
@@ -29,7 +29,7 @@ class AlarmScheduler(private val context: Context) {
 
         alarmManager.setAlarmClock(
             AlarmManager.AlarmClockInfo(
-                ZonedDateTime.of(item.dateTime.minusMinutes(30), ZoneId.systemDefault()).toInstant()
+                ZonedDateTime.of(item.screeningStartDateTime.minusMinutes(30), ZoneId.systemDefault()).toInstant()
                     .toEpochMilli(),
                 pendingIntent,
             ),

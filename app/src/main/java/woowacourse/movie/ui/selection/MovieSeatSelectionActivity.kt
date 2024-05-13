@@ -21,8 +21,8 @@ import woowacourse.movie.databinding.ActivityMovieSeatSelectionBinding
 import woowacourse.movie.domain.Seat
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.complete.MovieReservationCompleteActivity
-import woowacourse.movie.ui.notification.AlarmItem
-import woowacourse.movie.ui.notification.AlarmScheduler
+import woowacourse.movie.ui.notification.ReservationAlarmItem
+import woowacourse.movie.ui.notification.ReservationAlarmScheduler
 import woowacourse.movie.ui.reservation.MovieReservationKey.RESERVATION_DETAIL
 import woowacourse.movie.ui.reservation.ReservationDetail
 import woowacourse.movie.ui.utils.positionToIndex
@@ -151,9 +151,9 @@ class MovieSeatSelectionActivity :
         reservedTime: LocalDateTime,
         movieTitle: String,
     ) {
-        val scheduler = AlarmScheduler(this)
+        val scheduler = ReservationAlarmScheduler(this)
         scheduler.setSchedule(
-            AlarmItem(
+            ReservationAlarmItem(
                 reservationId,
                 reservedTime,
                 getString(R.string.notification_reservation_title),
