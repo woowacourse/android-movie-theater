@@ -23,6 +23,8 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonC
     private val dao: MovieContentDao by lazy {
         MovieDatabase.getDatabase(requireContext()).movieContentDao()
     }
+    private lateinit var movieContents: List<MovieContent>
+    private val adapter: MovieContentAdapter by lazy { generateMovieContentAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,6 +33,7 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonC
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_home, container, false)
         presenter.loadMovieContents()
+        binding.movieContentList.adapter = adapter
         return binding.root
     }
 
@@ -41,8 +44,7 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonC
 
     override fun showMovieContents(movieContents: List<MovieContent>) {
         runCatching {
-            val adapter = MovieContentAdapter(this).apply { submitList(movieContents) }
-            binding.movieContentList.adapter = adapter
+            this.movieContents = movieContents
         }.onFailure {
             presenter.handleError(it)
         }
@@ -70,6 +72,10 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonC
             resources.getString(R.string.toast_invalid_key),
             Toast.LENGTH_LONG,
         ).show()
+    }
+
+    private fun generateMovieContentAdapter(): MovieContentAdapter {
+        return MovieContentAdapter(this).apply { submitList(movieContents) }
     }
 
     private fun generatePresenter() = MovieHomePresenter(this, dao)

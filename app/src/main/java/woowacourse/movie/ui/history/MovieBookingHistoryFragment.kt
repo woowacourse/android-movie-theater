@@ -23,6 +23,8 @@ class MovieBookingHistoryFragment :
     private var _binding: FragmentMovieBookingHistoryBinding? = null
     private val binding: FragmentMovieBookingHistoryBinding
         get() = _binding!!
+    private lateinit var historyContents: List<UserTicket>
+    private val adapter: BookingHistoryAdapter by lazy { generateBookingHistoryAdapter() }
     private val ticketDao: TicketDao by lazy {
         MovieDatabase.getDatabase(requireContext()).ticketDao()
     }
@@ -54,6 +56,7 @@ class MovieBookingHistoryFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         presenter.loadHistoryItems()
+        binding.rvBookingHistory.adapter = adapter
     }
 
     override fun onDestroy() {
@@ -62,10 +65,11 @@ class MovieBookingHistoryFragment :
     }
 
     override fun showHistoryItems(items: List<UserTicket>) {
-        val adapter = BookingHistoryAdapter(this)
-        adapter.submitList(items)
-        binding.rvBookingHistory.adapter = adapter
+        historyContents = items
     }
+
+    private fun generateBookingHistoryAdapter(): BookingHistoryAdapter =
+        BookingHistoryAdapter(this).apply { submitList(historyContents) }
 
     override fun showError(throwable: Throwable) {
         Toast.makeText(requireContext(), getString(R.string.toast_invalid_key), Toast.LENGTH_SHORT)
