@@ -43,8 +43,8 @@ class MovieSettingFragment : Fragment(), MovieSettingContract.View {
     override fun setInitialSetting(isEnabled: Boolean) {
         binding.apply {
             presenter = movieSettingPresenter
-            tvSettingTitle.text = "푸시 알림 수신"
-            tvSettingDescription.text = "해제하면 푸시 알림을 수신할 수 없습니다."
+            tvSettingTitle.text = getString(R.string.setting_menu_title_notification)
+            tvSettingDescription.text = getString(R.string.setting_menu_description_notification)
             isNotificationActive = isEnabled
             executePendingBindings()
         }
