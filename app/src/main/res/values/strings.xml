@@ -24,4 +24,9 @@
     <string name="screening_count_text">개의 상영 시간</string>
     <string name="chevron_right">\></string>
     <string name="vertical_bar">|</string>
+
+    <string name="settings_notifications_title">알림</string>
+    <string name="settings_notifications_summary">상영 시작 30분 전 알림을 발송합니다.</string>
+
+    <string name="notification_action">movie_start_after_30min</string>
 </resources>
