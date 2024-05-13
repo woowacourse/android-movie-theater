@@ -49,28 +49,28 @@ abstract class MovieDatabase : RoomDatabase() {
             Room.databaseBuilder(
                 context.applicationContext,
                 MovieDatabase::class.java,
-                "movieEntity",
+                "movie",
             ).build()
 
         private fun MovieDatabase.initData() {
-            this.clearAllTables()
-
             val movieDao = this.movieDao()
             val movieTheaterDao = this.movieTheaterDao()
             val screeningMovieDao = this.screeningMovieDao()
 
-            movieDao.insert(MovieEntity.STUB)
-            movieTheaterDao.insertAll(
-                MovieTheaterEntity.STUB_A,
-                MovieTheaterEntity.STUB_B,
-                MovieTheaterEntity.STUB_C,
-            )
+            if (movieDao.getAll().isEmpty()) {
+                movieDao.insert(MovieEntity.STUB)
+                movieTheaterDao.insertAll(
+                    MovieTheaterEntity.STUB_A,
+                    MovieTheaterEntity.STUB_B,
+                    MovieTheaterEntity.STUB_C,
+                )
 
-            screeningMovieDao.insertAll(
-                ScreeningMovieEntity.STUB_A,
-                ScreeningMovieEntity.STUB_B,
-                ScreeningMovieEntity.STUB_C,
-            )
+                screeningMovieDao.insertAll(
+                    ScreeningMovieEntity.STUB_A,
+                    ScreeningMovieEntity.STUB_B,
+                    ScreeningMovieEntity.STUB_C,
+                )
+            }
         }
     }
 }
