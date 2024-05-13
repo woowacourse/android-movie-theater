@@ -2,17 +2,15 @@ package woowacourse.movie.feature.reservation
 
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.ticket.HeadCount
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
 interface ReservationContract {
     interface View {
-        fun showMovieInformation(movie: Movie)
-
-        fun showScreeningDates(screeningDates: List<LocalDate>)
-
-        fun showScreeningTimes(screeningTimes: List<LocalTime>)
+        fun showScreeningInformation(
+            movie: Movie,
+            screeningTimes: List<LocalTime>,
+        )
 
         fun changeHeadCount(count: Int)
 
@@ -35,7 +33,7 @@ interface ReservationContract {
     }
 
     interface Presenter {
-        fun loadMovieInformation()
+        fun loadScreening()
 
         fun selectScreeningDate(selectedDateId: Long)
 

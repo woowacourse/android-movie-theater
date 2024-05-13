@@ -41,7 +41,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val savedHeadCount = bringSavedHeadCount(savedInstanceState)
         initPresenter(savedHeadCount)
-        presenter.loadMovieInformation()
+        presenter.loadScreening()
         setOnScreeningDateSelectedListener()
         setOnScreeningTimeSelectedListener()
     }
@@ -53,30 +53,17 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         }
     }
 
-    override fun showMovieInformation(movie: Movie) {
+    override fun showScreeningInformation(
+        movie: Movie,
+        screeningTimes: List<LocalTime>,
+    ) {
         with(binding) {
             this.movie = movie
             screeningStartDate = movie.screeningPeriod.first()
             screeningEndDate = movie.screeningPeriod.last()
         }
-    }
-
-    override fun showScreeningDates(screeningDates: List<LocalDate>) {
-        binding.spinnerReservationScreeningDate.adapter =
-            ArrayAdapter(
-                this,
-                android.R.layout.simple_spinner_item,
-                screeningDates,
-            )
-    }
-
-    override fun showScreeningTimes(screeningTimes: List<LocalTime>) {
-        binding.spinnerReservationScreeningTime.adapter =
-            ArrayAdapter(
-                this,
-                android.R.layout.simple_spinner_item,
-                screeningTimes,
-            )
+        initScreeningDatesSpinner(movie.screeningPeriod)
+        initScreeningTimesSpinner(screeningTimes)
     }
 
     override fun changeHeadCount(count: Int) {
@@ -171,6 +158,24 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
                     Log.d(SPINNER_TAG, NOTHING_SELECTED_MESSAGE)
                 }
             }
+    }
+
+    private fun initScreeningDatesSpinner(screeningDates: List<LocalDate>) {
+        binding.spinnerReservationScreeningDate.adapter =
+            ArrayAdapter(
+                this,
+                android.R.layout.simple_spinner_item,
+                screeningDates,
+            )
+    }
+
+    private fun initScreeningTimesSpinner(screeningTimes: List<LocalTime>) {
+        binding.spinnerReservationScreeningTime.adapter =
+            ArrayAdapter(
+                this,
+                android.R.layout.simple_spinner_item,
+                screeningTimes,
+            )
     }
 
     companion object {

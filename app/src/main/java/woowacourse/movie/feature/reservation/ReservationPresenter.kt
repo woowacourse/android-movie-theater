@@ -15,15 +15,15 @@ import java.time.LocalTime
 
 class ReservationPresenter(
     private val view: ReservationContract.View,
-    screeningDao: ScreeningDao,
+    private val screeningDao: ScreeningDao,
     private val theaterDao: TheaterDao,
     private val movieId: Int,
     private val theaterId: Int,
     savedHeadCount: Int,
 ) : ReservationContract.Presenter {
     private val headCount = HeadCount(savedHeadCount)
-    private val movie: Movie = screeningDao.find(movieId)
-    private val screeningDates: List<LocalDate> = movie.screeningPeriod
+    private lateinit var movie: Movie
+    private lateinit var screeningDates: List<LocalDate>
     private lateinit var screeningTimes: List<LocalTime>
     private var screeningDateId: Long = 0
     private var screeningTimeId: Long = 0
@@ -32,11 +32,9 @@ class ReservationPresenter(
         view.changeHeadCount(savedHeadCount)
     }
 
-    override fun loadMovieInformation() {
-        if (isValidMovieInformation()) {
-            loadMovie()
-            loadScreeningDates()
-            loadScreeningTimes()
+    override fun loadScreening() {
+        if (isValidScreening()) {
+            loadScreeningInformation()
         } else {
             handleUndeliveredData()
         }
@@ -63,6 +61,7 @@ class ReservationPresenter(
     }
 
     override fun sendReservationInformationToSeatSelection() {
+        screeningDates = movie.screeningPeriod
         val screeningDate = screeningDates[screeningDateId.toInt()]
         val screeningTime = screeningTimes[screeningTimeId.toInt()]
         val dateTime = LocalDateTime.of(screeningDate, screeningTime)
@@ -70,7 +69,7 @@ class ReservationPresenter(
         view.navigateToSeatSelection(dateTime, movieId, theaterId, headCount)
     }
 
-    private fun isValidMovieInformation(): Boolean {
+    private fun isValidScreening(): Boolean {
         if (movieId == DEFAULT_MOVIE_ID) return false
         if (theaterId == DEFAULT_THEATER_ID) return false
         return true
@@ -80,17 +79,10 @@ class ReservationPresenter(
         view.showErrorSnackBar()
     }
 
-    private fun loadMovie() {
-        view.showMovieInformation(movie)
-    }
-
-    private fun loadScreeningDates() {
-        view.showScreeningDates(screeningDates)
-    }
-
-    private fun loadScreeningTimes() {
+    private fun loadScreeningInformation() {
+        movie = screeningDao.find(movieId)
         screeningTimes = theaterDao.findScreeningTimesByMovieId(theaterId, movieId)
-        view.showScreeningTimes(screeningTimes)
+        view.showScreeningInformation(movie, screeningTimes)
     }
 
     private fun handleHeadCountBounds(result: ChangeTicketCountResult) {
