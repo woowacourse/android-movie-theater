@@ -12,6 +12,6 @@ class ReservationViewHolder(private val binding: ItemReservationBinding) :
     ) {
         binding.reservation = reservation
         binding.theaterName = "${reservation.theaterName} 극장"
-        binding.listener = listener
+        binding.reservationItemClickListener = listener
     }
 }

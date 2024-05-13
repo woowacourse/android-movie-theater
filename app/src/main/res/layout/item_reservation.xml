@@ -14,14 +14,14 @@
             type="String" />
 
         <variable
-            name="listener"
+            name="reservationItemClickListener"
             type="woowacourse.movie.presentation.homefragments.reservation.ReservationItemClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:background="@drawable/effect_item_reservation"
         android:layout_width="match_parent"
-        android:onClick="@{() -> listener.onClickReservationItem(reservation)}"
+        android:onClick="@{() -> reservationItemClickListener.onClickReservationItem(reservation)}"
         android:clickable="true"
         android:focusable="true"
         android:layout_height="wrap_content">

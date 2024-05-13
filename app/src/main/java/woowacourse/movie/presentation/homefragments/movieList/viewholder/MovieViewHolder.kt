@@ -9,6 +9,6 @@ class MovieViewHolder(private val binding: ItemMovieBinding, val listener: Movie
     RecyclerView.ViewHolder(binding.root) {
     fun bind(movie: Movie) {
         binding.movie = movie
-        binding.listener = listener
+        binding.movieItemClickListener = listener
     }
 }

@@ -13,6 +13,6 @@ class TheaterViewHolder(private val binding: ItemTheaterBinding) : RecyclerView.
     ) {
         binding.theater = theater
         binding.movieId = movieId
-        binding.listener = listener
+        binding.theaterItemClickListener = listener
     }
 }
