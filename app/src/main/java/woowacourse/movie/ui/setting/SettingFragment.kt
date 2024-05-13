@@ -69,16 +69,6 @@ class SettingFragment : Fragment(), SettingContract.View {
                 presenter.confirmAlarm()
             } else {
                 presenter.cancelAram()
-
-                reservationHistoryAlarm.cancelReservationAlarm(
-                    ReservationHistory(
-                        1,
-                        Reservation.NULL,
-                        "HELOO",
-                        LocalDate.of(2024, 5, 13),
-                        LocalTime.of(10, 30),
-                    ),
-                )
             }
         }
     }
