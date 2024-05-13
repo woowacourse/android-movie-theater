@@ -31,8 +31,12 @@ class MovieSettingFragment : Fragment(), MovieSettingContract.View {
     ): View {
         _binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_movie_setting, container, false)
-        movieSettingPresenter.loadInitialSetting()
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        movieSettingPresenter.loadInitialSetting()
     }
 
     override fun onDestroy() {

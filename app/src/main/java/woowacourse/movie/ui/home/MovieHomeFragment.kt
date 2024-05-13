@@ -32,9 +32,13 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonC
         savedInstanceState: Bundle?,
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_home, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         presenter.loadMovieContents()
         binding.movieContentList.adapter = adapter
-        return binding.root
     }
 
     override fun onDestroy() {
