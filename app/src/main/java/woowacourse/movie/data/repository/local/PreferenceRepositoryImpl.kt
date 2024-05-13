@@ -5,9 +5,9 @@ import woowacourse.movie.MovieApplication.Companion.sharedPreferences
 import woowacourse.movie.domain.repository.PreferenceRepository
 
 class PreferenceRepositoryImpl : PreferenceRepository {
-    override fun getNotificationMode(): Boolean = sharedPreferences.getBoolean(KEY_NOTIFICATION_MODE, false)
+    override fun isNotificationEnabled(): Boolean = sharedPreferences.getBoolean(KEY_NOTIFICATION_MODE, false)
 
-    override fun saveNotificationMode(mode: Boolean) =
+    override fun saveNotificationEnabled(mode: Boolean) =
         sharedPreferences.edit(true) {
             putBoolean(KEY_NOTIFICATION_MODE, mode)
         }

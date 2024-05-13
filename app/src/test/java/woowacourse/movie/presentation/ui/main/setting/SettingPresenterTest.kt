@@ -26,15 +26,15 @@ class SettingPresenterTest {
     @Test
     fun `SettingPresenter가 loadNotificationMode()을 했을 때, view에게 mode를 전달한다`() {
         // given
-        val mode = true
-        every { repository.getNotificationMode() } returns mode
-        every { view.showNotificationMode(mode) } just runs
+        val enabled = true
+        every { repository.isNotificationEnabled() } returns enabled
+        every { view.showNotificationMode(enabled) } just runs
 
         // when
         presenter.loadNotificationMode()
 
         // then
-        verify { view.showNotificationMode(mode) }
+        verify { view.showNotificationMode(enabled) }
     }
 
     @Test
@@ -42,7 +42,7 @@ class SettingPresenterTest {
         // given
         val mode = true
         val message = NotificationSuccessMessage
-        every { repository.saveNotificationMode(any()) } just runs
+        every { repository.saveNotificationEnabled(any()) } just runs
         every { view.showNotificationMode(mode) } just runs
         every { view.showSnackBar(message) } just runs
         every { view.checkNotificationPermissions(!mode) } just runs
@@ -61,7 +61,7 @@ class SettingPresenterTest {
         // given
         val mode = false
         val message = NotificationFailureMessage
-        every { repository.saveNotificationMode(any()) } just runs
+        every { repository.saveNotificationEnabled(any()) } just runs
         every { view.showNotificationMode(mode) } just runs
         every { view.showSnackBar(message) } just runs
         every { view.checkNotificationPermissions(!mode) } just runs

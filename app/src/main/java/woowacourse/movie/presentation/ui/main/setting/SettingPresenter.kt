@@ -11,8 +11,8 @@ class SettingPresenter(
     private val repository: PreferenceRepository,
 ) : SettingContract.Presenter {
     override fun loadNotificationMode() {
-        val mode = repository.getNotificationMode()
-        view.showNotificationMode(mode)
+        val enabled = repository.isNotificationEnabled()
+        view.showNotificationMode(enabled)
     }
 
     override fun changeNotificationMode(mode: Boolean) {
@@ -20,7 +20,7 @@ class SettingPresenter(
     }
 
     override fun saveNotificationMode(mode: Boolean) {
-        repository.saveNotificationMode(mode)
+        repository.saveNotificationEnabled(mode)
         val message =
             if (mode) {
                 NotificationSuccessMessage
