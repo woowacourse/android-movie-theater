@@ -59,13 +59,13 @@ class ReservationHistoryDetailActivity : AppCompatActivity(), ReservationHistory
         private const val RESERVATION_HISTORY_ID = "reservationHistoryId"
         private const val DEFAULT_RESERVATION_HISTORY_ID = -1L
 
-        fun startActivity(
+        fun newIntent(
             context: Context,
             reservationHistoryId: Long,
-        ) {
-            val intent = Intent(context, ReservationHistoryDetailActivity::class.java)
-            intent.putExtra(RESERVATION_HISTORY_ID, reservationHistoryId)
-            context.startActivity(intent)
+        ): Intent {
+            return Intent(context, ReservationHistoryDetailActivity::class.java).apply {
+                putExtra(RESERVATION_HISTORY_ID, reservationHistoryId)
+            }
         }
     }
 }

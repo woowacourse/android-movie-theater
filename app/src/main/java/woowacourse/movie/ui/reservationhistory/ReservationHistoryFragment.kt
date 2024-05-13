@@ -40,9 +40,11 @@ class ReservationHistoryFragment : Fragment() {
 
                 reservationHistoryAdapter =
                     ReservationHistoryAdapter { reservationHistoryId ->
-                        ReservationHistoryDetailActivity.startActivity(
-                            requireContext(),
-                            reservationHistoryId,
+                        startActivity(
+                            ReservationHistoryDetailActivity.newIntent(
+                                requireContext(),
+                                reservationHistoryId,
+                            ),
                         )
                     }
                 reservationHistoryAdapter.submitList(reservationHistories)
