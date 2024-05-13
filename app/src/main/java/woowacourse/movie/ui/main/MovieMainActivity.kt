@@ -14,15 +14,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.data.preferences.MoviePreferencesUtil
+import woowacourse.movie.data.preferences.PreferencesUtil
 import woowacourse.movie.databinding.ActivityMovieMainBinding
+import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.history.MovieBookingHistoryFragment
 import woowacourse.movie.ui.home.MovieHomeFragment
+import woowacourse.movie.ui.notification.NotificationContract
 import woowacourse.movie.ui.notification.ReservationAlarmReceiver
 import woowacourse.movie.ui.notification.NotificationContract.ACTION_NOTIFICATION
 import woowacourse.movie.ui.notification.NotificationContract.KEY_RECEIVE_NOTIFICATION
 import woowacourse.movie.ui.setting.MovieSettingFragment
 
-class MovieMainActivity : AppCompatActivity() {
+class MovieMainActivity : BaseActivity<MovieMainPresenter>() {
     private lateinit var binding: ActivityMovieMainBinding
     private val movieBookingHistoryFragment: MovieBookingHistoryFragment by lazy { MovieBookingHistoryFragment() }
     private val movieHomeFragment: MovieHomeFragment by lazy { MovieHomeFragment() }
@@ -32,8 +35,9 @@ class MovieMainActivity : AppCompatActivity() {
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
         ) { isGranted: Boolean ->
-            MoviePreferencesUtil(this).setBoolean(KEY_RECEIVE_NOTIFICATION, isGranted)
+            presenter.saveReceiveNotificationActivation(isGranted)
         }
+    private val moviePreferencesUtil: MoviePreferencesUtil by lazy { MoviePreferencesUtil(this) }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +61,9 @@ class MovieMainActivity : AppCompatActivity() {
         unregisterReceiver(reservationAlarmReceiver)
     }
 
+    override fun initializePresenter(): MovieMainPresenter =
+        MovieMainPresenter(moviePreferencesUtil)
+
     private fun requestNotificationPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
             != PackageManager.PERMISSION_GRANTED
@@ -68,12 +75,12 @@ class MovieMainActivity : AppCompatActivity() {
     private fun handleNotificationRequestBySdkVersion() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                MoviePreferencesUtil(this).setBoolean(KEY_RECEIVE_NOTIFICATION, false)
+                presenter.saveReceiveNotificationActivation(false)
             } else {
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         } else {
-            MoviePreferencesUtil(this).setBoolean(KEY_RECEIVE_NOTIFICATION, true)
+            presenter.saveReceiveNotificationActivation(true)
         }
     }
 

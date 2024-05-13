@@ -3,12 +3,12 @@ package woowacourse.movie.data.preferences
 import android.content.Context
 import android.content.SharedPreferences
 
-class MoviePreferencesUtil(private val context: Context) {
-    fun getBoolean(key: String): Boolean {
+class MoviePreferencesUtil(private val context: Context) : PreferencesUtil {
+    override fun getBoolean(key: String): Boolean {
         return getSharedPreferences(context).getBoolean(key, false)
     }
 
-    fun setBoolean(
+    override fun setBoolean(
         key: String,
         newValue: Boolean,
     ): Boolean {
@@ -25,3 +25,5 @@ class MoviePreferencesUtil(private val context: Context) {
         }
     }
 }
+
+
