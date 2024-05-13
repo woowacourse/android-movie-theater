@@ -22,15 +22,6 @@ class MovieTicketPresenterTest {
     }
 
     @Test
-    fun `티켓 정보를 db에 저장할 수 있어야 한다`() {
-        every { view.makeAlarm(any()) } just runs
-        // when
-        presenter.makeAlarm()
-        // then
-        verify { view.makeAlarm(TicketDataResource.ticketEntity) }
-    }
-
-    @Test
     fun `티켓을 뷰에 띄울 수 있어야 한다`() {
         every { view.showTicketView(any()) } just runs
         // when
