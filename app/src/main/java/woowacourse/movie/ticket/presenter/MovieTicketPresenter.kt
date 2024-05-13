@@ -3,8 +3,8 @@ package woowacourse.movie.ticket.presenter
 import android.content.Context
 import woowacourse.movie.database.TicketDatabase
 import woowacourse.movie.ticket.contract.MovieTicketContract
-import woowacourse.movie.ticket.model.DbTicket
 import woowacourse.movie.ticket.model.TicketDataResource
+import woowacourse.movie.ticket.model.TicketEntity
 import java.io.Serializable
 import kotlin.concurrent.thread
 
@@ -15,22 +15,22 @@ class MovieTicketPresenter(
     override fun storeTicketData(ticket: Serializable?, movieId: Long?) {
         val ticketDb = TicketDatabase.getDatabase(view as Context)
         if (ticket == null) {
-            var dbTickets: List<DbTicket>? = null
+            var ticketEntities: List<TicketEntity>? = null
             thread {
-                dbTickets = ticketDb.ticketDao().getAll()
+                ticketEntities = ticketDb.ticketDao().getAll()
             }.join()
-            view.showTicketView(dbTickets!!.first { it.id == movieId })
+            view.showTicketView(ticketEntities!!.first { it.id == movieId })
             return
         }
-        TicketDataResource.dbTicket = ticket as DbTicket
+        TicketDataResource.ticketEntity = ticket as TicketEntity
         thread {
             ticketDb.ticketDao().insertAll(ticket)
         }.join()
-        view.showTicketView(TicketDataResource.dbTicket)
-        view.makeAlarm(TicketDataResource.dbTicket)
+        view.showTicketView(TicketDataResource.ticketEntity)
+        view.makeAlarm(TicketDataResource.ticketEntity)
     }
 
     override fun setTicketInfo() {
-        view.showTicketView(TicketDataResource.dbTicket)
+        view.showTicketView(TicketDataResource.ticketEntity)
     }
 }

@@ -11,7 +11,7 @@ import woowacourse.movie.R
 import woowacourse.movie.alarm.MovieBroadcastReceiver
 import woowacourse.movie.databinding.ActivityMovieTicketBinding
 import woowacourse.movie.ticket.contract.MovieTicketContract
-import woowacourse.movie.ticket.model.DbTicket
+import woowacourse.movie.ticket.model.TicketEntity
 import woowacourse.movie.ticket.presenter.MovieTicketPresenter
 import java.time.LocalDate
 import java.time.LocalTime
@@ -37,21 +37,21 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
         )
     }
 
-    override fun showTicketView(dbTicket: DbTicket) {
-        binding.ticketTitle.text = dbTicket.movieTitle
-        binding.ticketScreeningDate.text = dbTicket.screeningDate
-        binding.ticketScreeningTime.text = dbTicket.screeningTime
+    override fun showTicketView(ticketEntity: TicketEntity) {
+        binding.ticketTitle.text = ticketEntity.movieTitle
+        binding.ticketScreeningDate.text = ticketEntity.screeningDate
+        binding.ticketScreeningTime.text = ticketEntity.screeningTime
         binding.ticketReservationInformation.text =
             getString(
                 R.string.ticket_information_format,
-                dbTicket.seatsCount,
-                dbTicket.seats,
-                dbTicket.theaterName,
+                ticketEntity.seatsCount,
+                ticketEntity.seats,
+                ticketEntity.theaterName,
             )
-        binding.ticketPrice.text = TICKET_PRICE.format(dbTicket.price)
+        binding.ticketPrice.text = TICKET_PRICE.format(ticketEntity.price)
     }
 
-    override fun makeAlarm(ticket: DbTicket) {
+    override fun makeAlarm(ticket: TicketEntity) {
         val alarmDate =
             LocalDate.parse(ticket.screeningDate, DateTimeFormatter.ofPattern("yyyy.MM.dd"))
         val alarmTime =

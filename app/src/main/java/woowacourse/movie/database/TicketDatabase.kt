@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import woowacourse.movie.ticket.model.DbTicket
+import woowacourse.movie.ticket.model.TicketEntity
 
-@Database(entities = [DbTicket::class], version = 1)
+@Database(entities = [TicketEntity::class], version = 1)
 abstract class TicketDatabase : RoomDatabase() {
     abstract fun ticketDao(): TicketDao
 
@@ -18,7 +18,7 @@ abstract class TicketDatabase : RoomDatabase() {
             val instance = Room.databaseBuilder(
                 context.applicationContext,
                 TicketDatabase::class.java,
-                "ticketDb"
+                "alsong.db"
             ).build()
             return INSTANCE ?: synchronized(this) { instance }
         }

@@ -6,7 +6,7 @@
 
         <variable
             name="dbTicket"
-            type="woowacourse.movie.ticket.model.DbTicket" />
+            type="woowacourse.movie.ticket.model.TicketEntity" />
         <variable
             name="reservationOnItemClickListener"
             type="woowacourse.movie.list.adapter.ReservationOnItemClickListener" />

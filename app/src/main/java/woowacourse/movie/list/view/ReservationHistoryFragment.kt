@@ -10,7 +10,7 @@ import woowacourse.movie.list.adapter.ReservationHistoryAdapter
 import woowacourse.movie.list.adapter.ReservationOnItemClickListener
 import woowacourse.movie.list.contract.ReservationHistoryContract
 import woowacourse.movie.list.presenter.ReservationHistoryPresenter
-import woowacourse.movie.ticket.model.DbTicket
+import woowacourse.movie.ticket.model.TicketEntity
 import woowacourse.movie.ticket.view.MovieTicketActivity
 
 class ReservationHistoryFragment :
@@ -31,7 +31,7 @@ class ReservationHistoryFragment :
         return binding.root
     }
 
-    override fun showData(tickets: List<DbTicket>) {
+    override fun showData(tickets: List<TicketEntity>) {
         reservationHistoryAdapter = ReservationHistoryAdapter(tickets, this)
         binding.reservationHistoryRecyclerView.adapter = reservationHistoryAdapter
     }

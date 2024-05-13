@@ -1,15 +1,15 @@
 package woowacourse.movie.ticket.contract
 
-import woowacourse.movie.ticket.model.DbTicket
+import woowacourse.movie.ticket.model.TicketEntity
 import java.io.Serializable
 
 interface MovieTicketContract {
     interface View {
         val presenter: Presenter
 
-        fun showTicketView(dbTicket: DbTicket)
+        fun showTicketView(ticketEntity: TicketEntity)
 
-        fun makeAlarm(ticket: DbTicket)
+        fun makeAlarm(ticket: TicketEntity)
     }
 
     interface Presenter {

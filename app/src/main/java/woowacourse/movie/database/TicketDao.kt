@@ -5,19 +5,19 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import woowacourse.movie.ticket.model.DbTicket
+import woowacourse.movie.ticket.model.TicketEntity
 
 @Dao
 interface TicketDao {
-    @Query("SELECT * FROM ticketDb")
-    fun getAll(): List<DbTicket>
+    @Query("SELECT * FROM ticket")
+    fun getAll(): List<TicketEntity>
 
-    @Query("DELETE FROM ticketDb")
+    @Query("DELETE FROM ticket")
     fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg tickets: DbTicket)
+    fun insertAll(vararg tickets: TicketEntity)
 
     @Delete
-    fun delete(tickets: DbTicket)
+    fun delete(tickets: TicketEntity)
 }

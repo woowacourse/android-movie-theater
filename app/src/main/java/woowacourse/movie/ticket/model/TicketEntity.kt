@@ -5,8 +5,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-@Entity(tableName = "ticketDb")
-data class DbTicket(
+@Entity(tableName = "ticket")
+data class TicketEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @ColumnInfo(name = "movie_title") val movieTitle: String,
     @ColumnInfo(name = "screening_date") val screeningDate: String,

@@ -4,16 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ReservationHistoryItemBinding
-import woowacourse.movie.ticket.model.DbTicket
+import woowacourse.movie.ticket.model.TicketEntity
 
 class ReservationHistoryAdapter(
-    private val tickets: List<DbTicket>,
+    private val tickets: List<TicketEntity>,
     private val clickListener: ReservationOnItemClickListener,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class ReservationHistoryViewHolder(val binding: ReservationHistoryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(dbTicket: DbTicket) {
-            binding.dbTicket = dbTicket
+        fun bind(ticketEntity: TicketEntity) {
+            binding.dbTicket = ticketEntity
             binding.reservationOnItemClickListener = clickListener
         }
     }

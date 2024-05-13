@@ -27,7 +27,7 @@ class MovieTicketPresenterTest {
         // when
         presenter.makeAlarm()
         // then
-        verify { view.makeAlarm(TicketDataResource.dbTicket) }
+        verify { view.makeAlarm(TicketDataResource.ticketEntity) }
     }
 
     @Test
@@ -36,6 +36,6 @@ class MovieTicketPresenterTest {
         // when
         presenter.setTicketInfo()
         // then
-        verify { view.showTicketView(TicketDataResource.dbTicket) }
+        verify { view.showTicketView(TicketDataResource.ticketEntity) }
     }
 }

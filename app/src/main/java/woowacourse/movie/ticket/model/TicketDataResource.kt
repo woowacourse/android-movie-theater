@@ -14,8 +14,8 @@ object TicketDataResource {
             0,
         )
 
-    var dbTicket: DbTicket =
-        DbTicket(
+    var ticketEntity: TicketEntity =
+        TicketEntity(
             0,
             "",
             "",

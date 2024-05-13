@@ -2,7 +2,7 @@ package woowacourse.movie.seats.model
 
 import woowacourse.movie.common.CommonDataSource
 import woowacourse.movie.list.model.TheaterData
-import woowacourse.movie.ticket.model.DbTicket
+import woowacourse.movie.ticket.model.TicketEntity
 
 object SeatsDataSource {
     var date: String = ""
@@ -16,7 +16,7 @@ object SeatsDataSource {
     var seat: Seat = Seat.of(1, 1)
 
     val ticketData
-        get() = DbTicket(
+        get() = TicketEntity(
             0,
             CommonDataSource.movieList.first { it.id == movieId }.title,
             date,
