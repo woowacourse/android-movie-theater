@@ -40,5 +40,5 @@
     <string name="image_description_arrow_image">arrow_image</string>
 
     <string name="notification_reservation_title">예매 알림</string>
-    <string name="notification_reservation_subtitle">%s 30분 후에 상영</string>
+    <string name="notification_reservation_subtitle">%s 30분 후에 상영</string>z
 </resources>

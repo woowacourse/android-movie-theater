@@ -17,7 +17,7 @@ import woowacourse.movie.data.preferences.MoviePreferencesUtil
 import woowacourse.movie.databinding.ActivityMovieMainBinding
 import woowacourse.movie.ui.history.MovieBookingHistoryFragment
 import woowacourse.movie.ui.home.MovieHomeFragment
-import woowacourse.movie.ui.notification.AlarmReceiver
+import woowacourse.movie.ui.notification.ReservationAlarmReceiver
 import woowacourse.movie.ui.notification.NotificationContract.ACTION_NOTIFICATION
 import woowacourse.movie.ui.notification.NotificationContract.KEY_RECEIVE_NOTIFICATION
 import woowacourse.movie.ui.setting.MovieSettingFragment
@@ -27,7 +27,7 @@ class MovieMainActivity : AppCompatActivity() {
     private val movieBookingHistoryFragment: MovieBookingHistoryFragment by lazy { MovieBookingHistoryFragment() }
     private val movieHomeFragment: MovieHomeFragment by lazy { MovieHomeFragment() }
     private val movieSettingFragment: MovieSettingFragment by lazy { MovieSettingFragment() }
-    private val alarmReceiver: AlarmReceiver by lazy { AlarmReceiver() }
+    private val reservationAlarmReceiver: ReservationAlarmReceiver by lazy { ReservationAlarmReceiver() }
     private val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
@@ -44,7 +44,7 @@ class MovieMainActivity : AppCompatActivity() {
             binding.mainBottomNavigation.selectedItemId = R.id.menu_home
         }
         registerReceiver(
-            alarmReceiver,
+            reservationAlarmReceiver,
             IntentFilter().apply { addAction(ACTION_NOTIFICATION) },
             RECEIVER_NOT_EXPORTED,
         )
@@ -54,7 +54,7 @@ class MovieMainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        unregisterReceiver(alarmReceiver)
+        unregisterReceiver(reservationAlarmReceiver)
     }
 
     private fun requestNotificationPermission() {

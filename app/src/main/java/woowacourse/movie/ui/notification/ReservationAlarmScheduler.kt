@@ -13,7 +13,7 @@ class ReservationAlarmScheduler(private val context: Context) {
 
     fun setSchedule(item: ReservationAlarmItem) {
         val intent =
-            Intent(context, AlarmReceiver::class.java)
+            Intent(context, ReservationAlarmReceiver::class.java)
                 .setAction(ACTION_NOTIFICATION)
                 .putExtra(EXTRA_ID, item.reservationId)
                 .putExtra(EXTRA_TITLE, item.title)

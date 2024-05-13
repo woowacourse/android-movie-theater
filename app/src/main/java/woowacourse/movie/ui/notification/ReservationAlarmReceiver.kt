@@ -21,27 +21,35 @@ import woowacourse.movie.ui.notification.ReservationAlarmScheduler.Companion.EXT
 import woowacourse.movie.ui.notification.NotificationContract.ACTION_NOTIFICATION
 import woowacourse.movie.ui.notification.NotificationContract.KEY_RECEIVE_NOTIFICATION
 
-class AlarmReceiver : BroadcastReceiver() {
+class ReservationAlarmReceiver : BroadcastReceiver() {
     override fun onReceive(
-        context: Context?,
-        intent: Intent?,
+        context: Context,
+        intent: Intent,
     ) {
         val requestId = System.currentTimeMillis().toInt()
         val isNotificationEnabled =
-            MoviePreferencesUtil(context ?: return).getBoolean(KEY_RECEIVE_NOTIFICATION)
-        if (isNotificationEnabled && intent?.action == ACTION_NOTIFICATION) {
-            val notificationManager =
-                context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            val notificationChannel =
-                NotificationChannel(
-                    CHANNEL_ID_RESERVATION,
-                    CHANNEL_NAME_RESERVATION,
-                    IMPORTANCE_HIGH,
-                )
-            notificationManager.createNotificationChannel(notificationChannel)
-            val notificationBuilder = generateNotificationBuilder(context, requestId, intent)
-            notificationManager.notify(requestId, notificationBuilder.build())
+            MoviePreferencesUtil(context).getBoolean(KEY_RECEIVE_NOTIFICATION)
+        if (isNotificationEnabled && intent.action == ACTION_NOTIFICATION) {
+            notifyReservation(context, intent, requestId)
         }
+    }
+
+    private fun notifyReservation(
+        context: Context,
+        intent: Intent,
+        requestId: Int,
+    ) {
+        val notificationManager =
+            context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        val notificationChannel =
+            NotificationChannel(
+                CHANNEL_ID_RESERVATION,
+                CHANNEL_NAME_RESERVATION,
+                IMPORTANCE_HIGH,
+            )
+        notificationManager.createNotificationChannel(notificationChannel)
+        val notificationBuilder = generateNotificationBuilder(context, requestId, intent)
+        notificationManager.notify(requestId, notificationBuilder.build())
     }
 
     private fun generateNotificationBuilder(
