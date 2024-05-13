@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TableRow
@@ -169,7 +168,11 @@ class TheaterSeatActivity :
         navigateToNextPage(confirmationIntent)
     }
 
-    override fun makeNotify(movieStartTime: Long, cinema: Cinema, ticketId: Int) {
+    override fun makeNotify(
+        movieStartTime: Long,
+        cinema: Cinema,
+        ticketId: Int,
+    ) {
         NotificationChannelManager(this).scheduleMovieStartNotification(
             movieStartTime,
             cinema,

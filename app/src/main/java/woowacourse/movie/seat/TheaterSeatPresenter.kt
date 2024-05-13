@@ -79,7 +79,10 @@ class TheaterSeatPresenter(
         view.showPrice(totalPrice)
     }
 
-    override fun saveTicketToDatabase(movieStartTime: Long, cinema: Cinema) {
+    override fun saveTicketToDatabase(
+        movieStartTime: Long,
+        cinema: Cinema,
+    ) {
         val ticket =
             Ticket(
                 screeningDate = screeningDate,

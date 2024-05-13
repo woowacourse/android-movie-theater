@@ -8,6 +8,7 @@ import woowacourse.movie.model.theater.Seat
 interface TheaterSeatContract {
     interface View {
         fun updateSeatDisplay(seat: Seat)
+
         fun navigateToPurchase(ticketId: Int)
 
         fun showConfirmationDialog(
@@ -24,7 +25,12 @@ interface TheaterSeatContract {
             color: String,
         )
 
-        fun makeNotify(movieStartTime: Long, cinema: Cinema, ticketId: Int)
+        fun makeNotify(
+            movieStartTime: Long,
+            cinema: Cinema,
+            ticketId: Int,
+        )
+
         fun navigateToNextPage(intent: Intent)
 
         fun showTitle(title: Title)
@@ -44,6 +50,9 @@ interface TheaterSeatContract {
             onNegativeButtonClicked: () -> Unit,
         )
 
-        fun saveTicketToDatabase(movieStartTime: Long, cinema: Cinema)
+        fun saveTicketToDatabase(
+            movieStartTime: Long,
+            cinema: Cinema,
+        )
     }
 }
