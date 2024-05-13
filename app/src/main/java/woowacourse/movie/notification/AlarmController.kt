@@ -12,10 +12,10 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneId
 
-class AlarmController(private val context: Context) {
+class AlarmController(private val context: Context, private val timeProvider: TimeProvider) {
     private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-    fun setNotification(reservation: Reservation) {
+    fun setReservationAlarm(reservation: Reservation) {
         val pendingIntent = createAlarmPendingIntent(reservation)
         val dateTime = convertToDateTime(reservation.screeningDate, reservation.screeningTime)
 
@@ -39,7 +39,7 @@ class AlarmController(private val context: Context) {
         val screeningTime =
             reservedDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
         val alarmTime = screeningTime - ALARM_OFFSET_MINUTES * 60 * 1000
-        val currentTime = System.currentTimeMillis()
+        val currentTime = timeProvider.getTimeMill()
 
         return if (alarmTime > currentTime) alarmTime else null
     }

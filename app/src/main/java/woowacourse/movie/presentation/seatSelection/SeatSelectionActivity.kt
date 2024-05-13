@@ -19,6 +19,7 @@ import woowacourse.movie.model.Seat
 import woowacourse.movie.model.SeatGrade
 import woowacourse.movie.model.SeatingSystem
 import woowacourse.movie.notification.AlarmController
+import woowacourse.movie.notification.CurrentTimeProvider
 import woowacourse.movie.presentation.ticketingResult.TicketingResultActivity
 import woowacourse.movie.utils.formatSeat
 
@@ -31,7 +32,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             }.toList()
     }
     private lateinit var binding: ActivitySeatSelectionBinding
-    private val alarmController by lazy { AlarmController(this) }
+    private val alarmController by lazy { AlarmController(this, CurrentTimeProvider()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,7 +110,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     override fun navigate(reservation: Reservation) {
-        alarmController.setNotification(reservation)
+        alarmController.setReservationAlarm(reservation)
         startActivity(TicketingResultActivity.createIntent(this, reservation))
     }
 
