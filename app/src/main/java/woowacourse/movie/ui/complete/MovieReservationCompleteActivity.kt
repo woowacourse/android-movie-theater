@@ -41,7 +41,8 @@ class MovieReservationCompleteActivity :
 
     override fun initializePresenter() = MovieReservationCompletePresenter(this, dao)
 
-    private fun userTicketId() = intent.getLongExtra(MovieReservationCompleteKey.TICKET_ID, USER_TICKET_ID_DEFAULT_VALUE)
+    private fun userTicketId() =
+        intent.getLongExtra(MovieReservationCompleteKey.TICKET_ID, USER_TICKET_ID_DEFAULT_VALUE)
 
     override fun showReservationResult(userTicket: UserTicket) {
         binding.userTicket = userTicket
@@ -50,7 +51,8 @@ class MovieReservationCompleteActivity :
 
     override fun showError(throwable: Throwable) {
         Log.e(TAG, throwable.message.toString())
-        Toast.makeText(this, resources.getString(R.string.toast_invalid_key), Toast.LENGTH_LONG).show()
+        Toast.makeText(this, resources.getString(R.string.toast_invalid_key), Toast.LENGTH_LONG)
+            .show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -81,19 +83,20 @@ class MovieReservationCompleteActivity :
     }
 }
 
-// TODO 파라미터를 nullable로 해야 동작하는 이유?
 @BindingAdapter("userTicket")
 fun setReservationResult(
     textView: TextView,
     userTicket: UserTicket?,
 ) {
-    textView.text =
-        textView.context.getString(
-            R.string.complete_reservation_result,
-            userTicket?.seatInformation?.reservationCount,
-            userTicket?.seatInformation?.selectedSeat?.joinToString(),
-            userTicket?.theater,
-        )
+    if (userTicket != null) {
+        textView.text =
+            textView.context.getString(
+                R.string.complete_reservation_result,
+                userTicket.seatInformation.reservationCount,
+                userTicket.seatInformation.selectedSeat.joinToString(),
+                userTicket.theater,
+            )
+    }
 }
 
 @BindingAdapter("reservedDateTime")
@@ -101,8 +104,10 @@ fun setReservedDateTime(
     textView: TextView,
     dateTime: LocalDateTime?,
 ) {
-    val context = textView.context
-    val dateTimeFormat = context.getString(R.string.reservation_screening_date_time_format)
-    val dateTimePattern = DateTimeFormatter.ofPattern(dateTimeFormat)
-    textView.text = dateTime?.format(dateTimePattern) ?: context.getString(R.string.toast_invalid_key)
+    if (dateTime != null) {
+        val context = textView.context
+        val dateTimeFormat = context.getString(R.string.reservation_screening_date_time_format)
+        val dateTimePattern = DateTimeFormatter.ofPattern(dateTimeFormat)
+        textView.text = dateTime.format(dateTimePattern)
+    }
 }
