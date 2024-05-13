@@ -22,12 +22,11 @@ class MovieTicketPresenter(
             view.showTicketView(ticketEntities!!.first { it.id == movieId })
             return
         }
-        TicketDataResource.ticketEntity = ticket as TicketEntity
         thread {
-            ticketDb.ticketDao().insertAll(ticket)
+            ticketDb.ticketDao().insertAll(ticket as TicketEntity)
+            view.makeAlarm(ticketDb.ticketDao().getLast())
+            view.showTicketView(ticketDb.ticketDao().getLast())
         }.join()
-        view.showTicketView(TicketDataResource.ticketEntity)
-        view.makeAlarm(TicketDataResource.ticketEntity)
     }
 
     override fun setTicketInfo() {

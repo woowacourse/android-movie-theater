@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
@@ -58,6 +59,7 @@ class MovieTicketActivity : AppCompatActivity(), MovieTicketContract.View {
             LocalTime.parse(ticket.screeningTime, DateTimeFormatter.ofPattern("HH:mm"))
                 .minusMinutes(30)
         makeAlarmAtTime(alarmDate, alarmTime, ticket.movieTitle, ticket.id)
+        Log.d("alsong", "ticketId: ${ticket.id}")
     }
 
     private fun makeAlarmAtTime(date: LocalDate, time: LocalTime, movieTitle: String, id: Long) {

@@ -15,6 +15,9 @@ interface TicketDao {
     @Query("DELETE FROM ticket")
     fun deleteAll()
 
+    @Query("SELECT * FROM ticket ORDER BY id DESC LIMIT 1")
+    fun getLast(): TicketEntity
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg tickets: TicketEntity)
 
