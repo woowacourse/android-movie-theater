@@ -6,8 +6,9 @@ import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import woowacourse.movie.R
-import woowacourse.movie.db.ticket.Ticket
+import woowacourse.movie.db.ticket.TicketEntity
 import woowacourse.movie.feature.history.ReservationHistoryFragment.Companion.TICKET_ID
+import woowacourse.movie.model.ticket.Ticket
 import java.time.ZoneId
 import java.time.ZonedDateTime
 
@@ -26,7 +27,7 @@ class ScreeningAlarm(
         )
     }
 
-    private fun createPendingIntent(ticket: Ticket): PendingIntent {
+    private fun createPendingIntent(ticket: TicketEntity): PendingIntent {
         val intent = createIntent(ticket)
 
         return PendingIntent.getBroadcast(
@@ -37,31 +38,31 @@ class ScreeningAlarm(
         )
     }
 
-    private fun calculateTriggerTime(ticket: Ticket): Long {
+    private fun calculateTriggerTime(ticket: TicketEntity): Long {
         val screeningTime = ZonedDateTime.of(ticket.screeningDateTime, ZoneId.systemDefault())
         return screeningTime.minusMinutes(ALARM_INTERVAL).toInstant().toEpochMilli()
     }
 
     private fun getNotificationTitle(): String = context.getString(R.string.setting_notification_title)
 
-    private fun getNotificationText(ticket: Ticket): String =
+    private fun getNotificationText(ticket: TicketEntity): String =
         context.getString(
             R.string.notification_channel_description,
             ticket.movieTitle,
         )
 
-    private fun createIntent(ticket: Ticket): Intent {
+    private fun createIntent(ticket: TicketEntity): Intent {
         val notificationTitle: String = getNotificationTitle()
         val notificationText: String = getNotificationText(ticket)
-        return Intent(context, NotificationReceiver::class.java)
+        return Intent(context, ScreeningNotificationReceiver::class.java)
             .putExtra(TICKET_ID, ticket.uid)
-            .putExtra(NOTIFICATION_TITLE, notificationTitle)
-            .putExtra(NOTIFICATION_TEXT, notificationText)
+            .putExtra(SCREENING_NOTIFICATION_TITLE, notificationTitle)
+            .putExtra(SCREENING_NOTIFICATION_TEXT, notificationText)
     }
 
     companion object {
-        const val NOTIFICATION_TITLE = "title"
-        const val NOTIFICATION_TEXT = "description"
+        const val SCREENING_NOTIFICATION_TITLE = "Screening Notification Title"
+        const val SCREENING_NOTIFICATION_TEXT = "Screening Notification Text"
         private const val ALARM_INTERVAL = 30L
     }
 }
