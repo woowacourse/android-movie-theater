@@ -51,8 +51,8 @@ class NotificationReceiver : BroadcastReceiver() {
     ): NotificationCompat.Builder {
         return NotificationCompat.Builder(context, "ticket_confirmation_channel")
             .setSmallIcon(R.drawable.ic_home_check)
-            .setContentTitle("영화 알림")
-            .setContentText("영화 예매가 완료되었습니다. 자세한 정보를 확인하려면 여기를 탭하세요.")
+            .setContentTitle(NOTIFY_TITLE)
+            .setContentText(NOTIFY_DETAIL)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
@@ -65,5 +65,10 @@ class NotificationReceiver : BroadcastReceiver() {
     ) {
         val notificationManager = NotificationManagerCompat.from(context)
         notificationManager.notify(notificationId, builder.build())
+    }
+
+    companion object {
+        const val NOTIFY_TITLE = "영화 알림"
+        const val NOTIFY_DETAIL = "영화 예매가 완료되었습니다. 자세한 정보를 확인하려면 여기를 탭하세요."
     }
 }
