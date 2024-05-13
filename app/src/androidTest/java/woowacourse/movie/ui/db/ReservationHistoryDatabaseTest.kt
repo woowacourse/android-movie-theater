@@ -41,7 +41,7 @@ class ReservationHistoryDatabaseTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeReservationHistoryAndRead() {
+    fun `처음으로_예매_내역을_저장하면_id_가_1인_예매_내역이_저장된다`() {
         val reservationHistory =
             ReservationHistory(
                 1L,
