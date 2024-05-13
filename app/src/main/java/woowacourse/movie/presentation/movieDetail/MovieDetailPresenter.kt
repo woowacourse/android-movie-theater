@@ -33,7 +33,7 @@ class MovieDetailPresenter(
     }
 
     override fun updateRunMovieTimes() {
-        view.updateTimeAdapter(cinema.theater.times.map { it.toString() })
+        view.showReleaseTimes(cinema.theater.times.map { it.toString() })
     }
 
     override fun loadRunMovieDateRange() {
@@ -45,7 +45,7 @@ class MovieDetailPresenter(
             dates.add(date.format(DateTimeFormatter.ofPattern("yyyy.MM.dd")))
             date = date.plusDays(1)
         }
-        view.updateDateAdapter(dates)
+        view.showReleaseDates(dates)
     }
 
     override fun loadMovieInfo() {
