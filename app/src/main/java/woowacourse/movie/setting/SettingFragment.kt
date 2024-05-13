@@ -2,33 +2,33 @@ package woowacourse.movie.reservationlist
 
 import android.Manifest
 import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import woowacourse.movie.AlarmReceiver
+import woowacourse.MovieAlarmManager
+import woowacourse.PreferenceManager
 import woowacourse.movie.MovieApplication
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.repository.SettingRepository
 import woowacourse.movie.setting.SettingContract
 import woowacourse.movie.setting.SettingPresenter
 import woowacourse.movie.setting.SwitchListener
-import woowacourse.movie.setting.uimodel.ReservationAlarmUiModel
 import woowacourse.movie.util.buildFetchAllReservationsUseCase
 
-class SettingFragment : Fragment(), SettingContract.View, SwitchListener, SettingRepository {
+class SettingFragment :
+    Fragment(),
+    SettingContract.View,
+    SwitchListener {
     private lateinit var binding: FragmentSettingBinding
     private lateinit var presenter: SettingContract.Presenter
     private lateinit var alarmMgr: AlarmManager
@@ -48,12 +48,29 @@ class SettingFragment : Fragment(), SettingContract.View, SwitchListener, Settin
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        val movieApplication = (requireActivity().application as MovieApplication)
         alarmMgr = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-        val db = (requireActivity().application as MovieApplication).db
+        val db = movieApplication.db
         val fetchAllReservationsUseCase = buildFetchAllReservationsUseCase(db)
-        presenter = SettingPresenter(this, fetchAllReservationsUseCase, this)
+        val settingRepository: SettingRepository = PreferenceManager(requireContext())
+        val movieAlarmManager: MovieAlarmManager =
+            MovieAlarmManager(requireContext(), fetchAllReservationsUseCase)
+        presenter = SettingPresenter(this, settingRepository, movieAlarmManager)
         presenter.initSetting()
+    }
+
+    override fun requestPermission() {
+        requestNotificationPermission()
+        requestExactAlarmPermission()
+    }
+
+    override fun showChecked(checked: Boolean) {
+        binding.checked = checked
+    }
+
+    override fun onClick() {
+        presenter.toggleAlarm()
     }
 
     private fun requestNotificationPermission() {
@@ -73,7 +90,7 @@ class SettingFragment : Fragment(), SettingContract.View, SwitchListener, Settin
         }
     }
 
-    private fun requestScheduleExactAlarmPermission() {
+    private fun requestExactAlarmPermission() {
         if (ContextCompat.checkSelfPermission(
                 requireContext(), Manifest.permission.SCHEDULE_EXACT_ALARM,
             ) != PackageManager.PERMISSION_GRANTED
@@ -86,7 +103,7 @@ class SettingFragment : Fragment(), SettingContract.View, SwitchListener, Settin
                 }
                 if (!alarmMgr.canScheduleExactAlarms()) {
                     val intent =
-                        Intent(ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
+                        Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
                             data = Uri.fromParts("package", requireContext().packageName, null)
                         }
                     requireContext().startActivity(intent)
@@ -101,69 +118,4 @@ class SettingFragment : Fragment(), SettingContract.View, SwitchListener, Settin
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
         ) { isGranted: Boolean -> }
-
-    override fun turnOnAlarm(reservationAlarmUiModels: List<ReservationAlarmUiModel>) {
-        requestNotificationPermission()
-        requestScheduleExactAlarmPermission()
-        setAlarmAt(reservationAlarmUiModels)
-    }
-
-    private fun setAlarmAt(reservationAlarmUiModels: List<ReservationAlarmUiModel>) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && !alarmMgr.canScheduleExactAlarms()) return
-        reservationAlarmUiModels.forEach {
-            val intent = AlarmReceiver.getIntent(requireContext(), it.id, it.title)
-            val requestCode = it.id.toInt()
-            val pendingIntent = getPendingIntent(requestCode, intent)
-            val alarmClock = AlarmManager.AlarmClockInfo(it.alarmTime, pendingIntent)
-            alarmMgr.setAlarmClock(alarmClock, pendingIntent)
-        }
-    }
-
-    override fun turnOffAlarm(reservationAlarmUiModels: List<ReservationAlarmUiModel>) {
-        reservationAlarmUiModels.forEach {
-            val intent = Intent(requireContext(), AlarmReceiver::class.java)
-            val requestCode = it.id.toInt()
-            val alarmIntent = getPendingIntent(requestCode, intent)
-            alarmMgr.cancel(alarmIntent)
-        }
-    }
-
-    override fun showChecked(checked: Boolean) {
-        binding.checked = checked
-    }
-
-    private fun getPendingIntent(
-        requestCode: Int,
-        intent: Intent,
-    ): PendingIntent =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            PendingIntent.getBroadcast(
-                requireContext(),
-                requestCode,
-                intent,
-                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
-            )
-        } else {
-            PendingIntent.getBroadcast(
-                requireContext(),
-                requestCode,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT,
-            )
-        }
-
-    override fun onClick() {
-        presenter.toggleAlarm()
-    }
-
-    override fun setAlarmState(state: Boolean) {
-        val sharedPreference = requireContext().getSharedPreferences("settings", MODE_PRIVATE)
-        val editor: SharedPreferences.Editor = sharedPreference.edit()
-        editor.putBoolean("notification", state).apply()
-    }
-
-    override fun getAlarmState(): Boolean {
-        val sharedPreference = requireContext().getSharedPreferences("settings", MODE_PRIVATE)
-        return sharedPreference.getBoolean("notification", false)
-    }
 }

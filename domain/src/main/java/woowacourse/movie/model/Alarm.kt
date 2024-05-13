@@ -1,9 +1,8 @@
-package woowacourse.movie.setting.uimodel
+package woowacourse.movie.model
 
-import woowacourse.movie.model.Reservation
 import java.time.ZoneOffset
 
-class ReservationAlarmUiModel(
+class Alarm(
     val id: Long,
     val title: String,
     val alarmTime: Long,

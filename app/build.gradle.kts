@@ -62,6 +62,7 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
     kapt("androidx.room:room-compiler:2.6.1")
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
     testImplementation("org.assertj:assertj-core:3.25.3")
