@@ -31,7 +31,6 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
 
     override fun displayTicketInfo(reservation: Reservation) {
         binding.reservation = reservation
-        binding.theaterName = "${reservation.theaterName} 극장"
     }
 
     override fun showToastMessage(message: String?) {
