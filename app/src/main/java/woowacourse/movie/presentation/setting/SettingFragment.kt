@@ -109,18 +109,17 @@ class SettingFragment : BindingFragment<FragmentSettingBinding>(R.layout.fragmen
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun isFirstRequestPermission(): Boolean =
         hasAccessPermission().not() &&
-                shouldShowRequestPermissionRationale(POST_NOTIFICATIONS).not() &&
-                notificationDataStore.hasBeenDeniedPermission.not()
+            shouldShowRequestPermissionRationale(POST_NOTIFICATIONS).not() &&
+            notificationDataStore.hasBeenDeniedPermission.not()
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    private fun isSecondRequestPermission(): Boolean =
-        shouldShowRequestPermissionRationale(POST_NOTIFICATIONS)
+    private fun isSecondRequestPermission(): Boolean = shouldShowRequestPermissionRationale(POST_NOTIFICATIONS)
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun isCompletelyDeniedPermission(): Boolean =
         hasAccessPermission().not() &&
-                shouldShowRequestPermissionRationale(POST_NOTIFICATIONS).not() &&
-                notificationDataStore.hasBeenDeniedPermission
+            shouldShowRequestPermissionRationale(POST_NOTIFICATIONS).not() &&
+            notificationDataStore.hasBeenDeniedPermission
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun hasAccessPermission(): Boolean {

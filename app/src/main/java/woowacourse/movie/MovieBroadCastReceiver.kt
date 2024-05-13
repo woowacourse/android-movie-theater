@@ -47,7 +47,7 @@ class MovieBroadCastReceiver : BroadcastReceiver() {
     private fun createNotification(
         context: Context,
         movieTitle: String,
-        pendingIntent: PendingIntent
+        pendingIntent: PendingIntent,
     ): Notification {
         return NotificationCompat.Builder(context, RESERVATION_NOTIFICATION_ID)
             .setContentTitle("예매 알림")

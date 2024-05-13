@@ -70,9 +70,9 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
 
     private fun isFirstRequest(): Boolean =
         (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) &&
-                hasAccessPermission().not() &&
-                shouldShowRequestPermissionRationale(POST_NOTIFICATIONS).not() &&
-                notificationDataStore.hasBeenDeniedPermission.not()
+            hasAccessPermission().not() &&
+            shouldShowRequestPermissionRationale(POST_NOTIFICATIONS).not() &&
+            notificationDataStore.hasBeenDeniedPermission.not()
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun hasAccessPermission(): Boolean {
@@ -82,7 +82,10 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     }
 
     companion object {
-        fun start(context: Context, action: Intent.() -> Unit = {}) {
+        fun start(
+            context: Context,
+            action: Intent.() -> Unit = {},
+        ) {
             val intent = Intent(context, HomeActivity::class.java).apply(action)
             context.startActivity(intent)
         }

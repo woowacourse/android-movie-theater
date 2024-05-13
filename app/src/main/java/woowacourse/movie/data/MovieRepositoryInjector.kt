@@ -8,9 +8,10 @@ import woowacourse.movie.data.db.MovieDatabase
 class MovieRepositoryInjector(private val context: Context) {
     private var movieRepository: MovieRepository? = null
 
-    fun movieRepository(): MovieRepository = movieRepository ?: synchronized(this) {
-        movieRepository ?: DefaultMovieRepository(movieDao()).also { movieRepository = it }
-    }
+    fun movieRepository(): MovieRepository =
+        movieRepository ?: synchronized(this) {
+            movieRepository ?: DefaultMovieRepository(movieDao()).also { movieRepository = it }
+        }
 
     private fun movieDao(): MovieDao = MovieDatabase.instance(context).movieDao()
 
