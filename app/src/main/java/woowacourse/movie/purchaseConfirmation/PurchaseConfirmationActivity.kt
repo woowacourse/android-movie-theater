@@ -27,12 +27,8 @@ class PurchaseConfirmationActivity :
 
     override fun showTicketInfo(ticket: Ticket) {
         runOnUiThread {
-            binding.movieTitleConfirmation.text = ticket.movieTitle
-            binding.purchaseMovieRunningTime.text = ticket.runningTime
-            binding.reservedInformation.text =
-                "일반 ${ticket.seatNumbers.split(",").size}명 | ${ticket.seatNumbers} | ${ticket.cinemaName}"
-            binding.ticketCharge.text = ticket.ticketPrice.toString()
-            binding.movieTimeDate.text = ticket.screeningDate
+            binding.ticket = ticket
+            binding.seatNumbersSize = ticket.seatNumbers.split(",").size
         }
     }
 

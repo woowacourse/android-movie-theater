@@ -1,6 +1,18 @@
 <!-- Screen 3: woowacourse.movie.database.Purchase Confirmation View -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+
+        <variable
+            name="ticket"
+            type="woowacourse.movie.database.Ticket" />
+
+        <variable
+            name="seatNumbersSize"
+            type="Integer" />
+
+    </data>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -32,7 +44,7 @@
             android:layout_below="@id/can_cancel_time"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="28dp"
-            android:text="@string/movie_title" />
+            android:text="@{ticket.movieTitle}" />
 
         <TextView
             android:id="@+id/movie_time_date"
@@ -41,7 +53,7 @@
             android:layout_below="@id/movie_title_confirmation"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="28dp"
-            android:text="@string/time_date" />
+            android:text="@{ticket.runningTime}" />
 
         <TextView
             android:id="@+id/reserved_information"
@@ -53,7 +65,7 @@
             android:gravity="center"
             android:maxLines="1"
             android:paddingHorizontal="30dp"
-            android:text="@string/reserved_information" />
+            android:text="@{@string/reserved_information(seatNumbersSize,ticket.seatNumbers,ticket.cinemaName)}" />
 
         <TextView
             android:id="@+id/purchase_movie_running_time"
@@ -62,7 +74,7 @@
             android:layout_below="@id/reserved_information"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="24dp"
-            android:text="@string/screen_time" />
+            android:text="@{ticket.ticketPrice}" />
 
         <TextView
             android:id="@+id/ticket_charge"
@@ -71,7 +83,7 @@
             android:layout_below="@id/purchase_movie_running_time"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
-            android:text="@string/price" />
+            android:text="@{ticket.screeningDate}" />
 
     </RelativeLayout>
 </layout>

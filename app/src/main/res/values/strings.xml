@@ -16,8 +16,7 @@
     <string name="screen_display">SCREEN</string>
     <string name="time_date">TIME DATE</string>
     <string name="확인">확인</string>
-    <string name="reserved_information">영화 정보</string>
-
+    <string name="reserved_information">일반 %d명 | %s | %s</string>
     <string name="null_point_error">NullPoint Exception</string>
     <string name="title_reserve">예매 정보</string>
     <string name="title_home">홈</string>
