@@ -3,6 +3,7 @@ package woowacourse.movie.purchaseConfirmation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import woowacourse.movie.R
@@ -18,8 +19,8 @@ class PurchaseConfirmationActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         val ticketId = intent.getIntExtra(EXTRA_TICKET_ID, 0)
+
         presenter =
             PurchaseConfirmationPresenter(this, TicketModel(applicationContext))
         presenter.loadTicket(ticketId)

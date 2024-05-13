@@ -27,9 +27,6 @@ class NotificationChannelManager(private val context: Context) {
     fun scheduleMovieStartNotification(
         movieStartTime: Long,
         cinema: Cinema,
-        ticketPrice: String,
-        selectedSeats: Array<String>,
-        timeDate: String,
         ticketId: Int,
     ) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager

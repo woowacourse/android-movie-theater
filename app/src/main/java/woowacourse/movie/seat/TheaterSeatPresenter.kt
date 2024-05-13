@@ -79,7 +79,7 @@ class TheaterSeatPresenter(
         view.showPrice(totalPrice)
     }
 
-    override fun saveTicketToDatabase(onResult: (Int) -> Unit) {
+    override fun saveTicketToDatabase(movieStartTime: Long, cinema: Cinema) {
         val ticket =
             Ticket(
                 screeningDate = screeningDate,
@@ -89,9 +89,11 @@ class TheaterSeatPresenter(
                 runningTime = cinema.theater.movie.runningTime.toString(),
                 ticketPrice = totalPrice,
             )
+        var ticketId = -1
         thread {
-            val ticketId = database.ticketDao().insertTicket(ticket).toInt()
-            onResult(ticketId)
-        }
+            ticketId = database.ticketDao().insertTicket(ticket).toInt()
+            view.makeNotify(movieStartTime, cinema, ticketId)
+        }.join()
+        view.navigateToPurchase(ticketId)
     }
 }

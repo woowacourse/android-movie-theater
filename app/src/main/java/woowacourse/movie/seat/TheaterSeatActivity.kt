@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TableRow
@@ -155,31 +156,25 @@ class TheaterSeatActivity :
             notificationChannelManager.createNotificationChannel()
             val date = formatter.parse(timeDate)
             val movieStartTime = date?.time ?: return
-            saveTicket(movieStartTime, cinema, ticketPrice)
+            presenter.saveTicketToDatabase(movieStartTime, cinema)
         } catch (e: ParseException) {
             Toast.makeText(this, RESERVATION_TIME_FORMAT_ERROR_MESSAGE, Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun saveTicket(
-        movieStartTime: Long,
-        cinema: Cinema,
-        ticketPrice: CharSequence,
-    ) {
-        presenter.saveTicketToDatabase { ticketId ->
-            NotificationChannelManager(this).scheduleMovieStartNotification(
-                movieStartTime,
-                cinema,
-                ticketPrice.toString(),
-                presenter.selectedSeats.toTypedArray(),
-                intent.getStringExtra(EXTRA_TIME_DATE).toString(),
-                ticketId,
-            )
-            val confirmationIntent =
-                PurchaseConfirmationActivity
-                    .newIntent(context = this, ticketId = ticketId)
-            navigateToNextPage(confirmationIntent)
-        }
+    override fun navigateToPurchase(ticketId: Int) {
+        val confirmationIntent =
+            PurchaseConfirmationActivity
+                .newIntent(context = this, ticketId = ticketId)
+        navigateToNextPage(confirmationIntent)
+    }
+
+    override fun makeNotify(movieStartTime: Long, cinema: Cinema, ticketId: Int) {
+        NotificationChannelManager(this).scheduleMovieStartNotification(
+            movieStartTime,
+            cinema,
+            ticketId,
+        )
     }
 
     companion object {
