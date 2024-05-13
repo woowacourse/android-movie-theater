@@ -1,6 +1,7 @@
 package woowacourse.movie.util
 
 import android.content.Context
+import androidx.core.content.edit
 
 class SharedPrefs(context: Context) {
     private val sharedPrefs =
@@ -10,8 +11,10 @@ class SharedPrefs(context: Context) {
         )
 
     fun saveAlarmSetting(onSwitch: Boolean) {
-        val editor = sharedPrefs?.edit()
-        editor?.putBoolean(ALARM_SETTING, onSwitch)?.apply()
+        sharedPrefs.edit {
+            putBoolean(ALARM_SETTING, onSwitch)
+            apply()
+        }
     }
 
     fun getSavedAlarmSetting(): Boolean {
