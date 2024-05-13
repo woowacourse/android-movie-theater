@@ -70,7 +70,7 @@ class SeatReservationPresenter(
             }
 
             else -> {
-                view.showToast(IllegalArgumentException("exceed ticket count that can be reserved."))
+                view.showToast(IllegalArgumentException("예약 가능한 티켓 수를 초과했습니다."))
                 false
             }
         }
