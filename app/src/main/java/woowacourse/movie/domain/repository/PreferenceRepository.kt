@@ -1,7 +1,7 @@
 package woowacourse.movie.domain.repository
 
 interface PreferenceRepository {
-    fun getNotificationMode(): Result<Boolean>
+    fun getNotificationMode(): Boolean
 
-    fun saveNotificationMode(mode: Boolean): Result<Unit>
+    fun saveNotificationMode(mode: Boolean)
 }

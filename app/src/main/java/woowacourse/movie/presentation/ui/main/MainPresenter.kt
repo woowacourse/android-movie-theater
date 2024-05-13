@@ -10,13 +10,10 @@ class MainPresenter(
     private val repository: PreferenceRepository,
 ) : MainContract.Presenter {
     override fun changeNotificationMode(mode: Boolean) {
-        repository.saveNotificationMode(mode).onSuccess {
-            if (mode) {
-                val message = NotificationMessageType.NotificationSuccessMessage
-                view.showSnackBar(message)
-            }
-        }.onFailure { e ->
-            view.showSnackBar(e)
+        repository.saveNotificationMode(mode)
+        if (mode) {
+            val message = NotificationMessageType.NotificationSuccessMessage
+            view.showSnackBar(message)
         }
     }
 
