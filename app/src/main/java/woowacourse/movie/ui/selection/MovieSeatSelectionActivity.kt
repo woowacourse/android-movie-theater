@@ -82,20 +82,6 @@ class MovieSeatSelectionActivity :
         }
     }
 
-    fun showAlertDialog() {
-        AlertDialog.Builder(this)
-            .setCancelable(false)
-            .setTitle(R.string.selection_dialog_title)
-            .setMessage(R.string.selection_dialog_content)
-            .setPositiveButton(R.string.selection_dialog_btn_complete) { _, _ ->
-                presenter.completeReservation()
-            }
-            .setNegativeButton(R.string.selection_dialog_btn_cancel) { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> finish()
@@ -122,16 +108,11 @@ class MovieSeatSelectionActivity :
     }
 
     override fun showReservationTotalAmount(amount: Int) {
-        binding.totalSeatAmountText.text =
-            resources.getString(R.string.selection_total_price)
-                .format(amount)
+        updateTotalPrice(amount)
     }
 
     override fun updateSelectCompletion(isComplete: Boolean) {
-        binding.confirmButton.apply {
-            isEnabled = isComplete
-            isClickable = isComplete
-        }
+        updateButtonCompletion(isComplete)
     }
 
     override fun setAlarm(
@@ -155,18 +136,12 @@ class MovieSeatSelectionActivity :
         rowSize: Int,
         colSize: Int
     ) {
-        binding.totalSeatAmountText.text =
-            resources.getString(R.string.selection_total_price)
-                .format(userTicket.seatInformation.totalSeatAmount())
         binding.title = userTicket.title
-        binding.confirmButton.apply {
-            val isCompleted = userTicket.seatInformation.checkSelectCompletion()
-            isEnabled = isCompleted
-            isClickable = isCompleted
-        }
         repeat(rowSize) { row ->
             makeSeats(colSize, row)
         }
+        updateTotalPrice(userTicket.seatInformation.totalSeatAmount())
+        updateButtonCompletion(userTicket.seatInformation.checkSelectCompletion())
     }
 
     override fun navigateToCompleteScreen(ticketId: Long) {
@@ -181,6 +156,33 @@ class MovieSeatSelectionActivity :
         Toast.makeText(this, resources.getString(R.string.toast_invalid_key), Toast.LENGTH_LONG)
             .show()
         finish()
+    }
+
+    fun showAlertDialog() {
+        AlertDialog.Builder(this)
+            .setCancelable(false)
+            .setTitle(R.string.selection_dialog_title)
+            .setMessage(R.string.selection_dialog_content)
+            .setPositiveButton(R.string.selection_dialog_btn_complete) { _, _ ->
+                presenter.completeReservation()
+            }
+            .setNegativeButton(R.string.selection_dialog_btn_cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun updateTotalPrice(amount: Int) {
+        binding.totalSeatAmountText.text =
+            resources.getString(R.string.selection_total_price)
+                .format(amount)
+    }
+
+    private fun updateButtonCompletion(isComplete: Boolean) {
+        binding.confirmButton.apply {
+            isEnabled = isComplete
+            isClickable = isComplete
+        }
     }
 
     private fun TableLayout.makeSeats(): List<TextView> =
