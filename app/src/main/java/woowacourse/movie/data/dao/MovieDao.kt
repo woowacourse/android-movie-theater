@@ -9,7 +9,7 @@ import woowacourse.movie.data.entity.MovieEntity
 
 @Dao
 interface MovieDao {
-    @Query("SELECT * FROM movieEntity")
+    @Query("SELECT * FROM movie")
     fun getAll(): List<MovieEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -21,6 +21,6 @@ interface MovieDao {
     @Delete
     fun delete(movieEntity: MovieEntity)
 
-    @Query("SELECT * FROM movieEntity WHERE id = :movieId")
+    @Query("SELECT * FROM movie WHERE id = :movieId")
     fun getMovieById(movieId: Long): MovieEntity
 }

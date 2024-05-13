@@ -9,7 +9,7 @@ import woowacourse.movie.model.RunningTime
 import java.time.LocalDate
 import kotlin.time.Duration.Companion.minutes
 
-@Entity(tableName = "movieEntity")
+@Entity(tableName = "movie")
 data class MovieEntity(
     @PrimaryKey val id: Long = 0,
     @ColumnInfo(name = "title") val title: String,
