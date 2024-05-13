@@ -34,7 +34,7 @@ class MovieAlarmSetting(private val context: Context) : AlarmSetting {
             AlarmReceiver.newIntent(
                 context,
                 movieReservation.movie.title,
-                movieReservation.theaterId,
+                movieReservation.id,
             )
         return PendingIntent.getBroadcast(
             context,

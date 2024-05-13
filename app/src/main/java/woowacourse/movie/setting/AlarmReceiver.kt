@@ -52,7 +52,7 @@ class AlarmReceiver() : BroadcastReceiver() {
         val contentPendingIntent =
             PendingIntent.getActivity(
                 context,
-                NOTIFICATION_ID,
+                id.toInt(),
                 contentIntent,
                 PendingIntent.FLAG_IMMUTABLE,
             )
