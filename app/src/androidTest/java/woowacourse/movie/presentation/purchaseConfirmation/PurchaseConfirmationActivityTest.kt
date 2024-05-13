@@ -20,7 +20,7 @@ import woowacourse.movie.model.movieInfo.RunningTime
 import woowacourse.movie.model.movieInfo.Synopsis
 import woowacourse.movie.model.movieInfo.Title
 import woowacourse.movie.model.theater.Seat
-import woowacourse.movie.util.context
+import woowacourse.movie.util.testApplicationContext
 import java.time.LocalDateTime
 
 @RunWith(AndroidJUnit4::class)
@@ -29,7 +29,7 @@ class PurchaseConfirmationActivityTest {
 
     @Before
     fun setUp() {
-        movieRepositoryStore = MovieRepositoryStore.instance(context)
+        movieRepositoryStore = MovieRepositoryStore.instance(testApplicationContext)
         movieRepositoryStore.setRepository(
             object : MovieRepository {
                 override fun loadReservedMovies(): Result<List<Reservation>> {
@@ -74,7 +74,7 @@ class PurchaseConfirmationActivityTest {
     fun reservation_test() {
         ActivityScenario.launch<PurchaseConfirmationActivity>(
             PurchaseConfirmationActivity.newIntent(
-                context,
+                testApplicationContext,
                 1,
             ),
         )

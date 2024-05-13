@@ -16,13 +16,13 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.presentation.cinema
-import woowacourse.movie.util.context
+import woowacourse.movie.util.testApplicationContext
 
 @RunWith(AndroidJUnit4::class)
 class MovieDetailActivityTest {
     private val intent =
         MovieDetailActivity.newIntent(
-            context,
+            testApplicationContext,
             cinema(
                 title = "차람과 하디의 진지한 여행기 1",
                 year = 2024,
