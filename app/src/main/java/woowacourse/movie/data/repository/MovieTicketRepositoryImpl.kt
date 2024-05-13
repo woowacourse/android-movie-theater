@@ -15,8 +15,9 @@ import java.util.concurrent.Executors
 class MovieTicketRepositoryImpl(context: Context) : MovieTicketRepository {
 
     private val db = Room.databaseBuilder(
-        context,
-        MovieTicketDatabase::class.java, DATABASE_NAME
+        context = context,
+        klass = MovieTicketDatabase::class.java,
+        name = DATABASE_NAME
     ).build()
 
     private val movieTicketDao = db.movieTicketDao()
