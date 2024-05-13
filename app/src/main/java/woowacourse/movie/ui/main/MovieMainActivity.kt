@@ -66,7 +66,11 @@ class MovieMainActivity : AppCompatActivity() {
         ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                    Toast.makeText(this, "예매 알림 기능을 사용할 수 없습니다.", Toast.LENGTH_SHORT)
+                    Toast.makeText(
+                        this,
+                        getString(R.string.alarm_permission_fail_comment),
+                        Toast.LENGTH_SHORT,
+                    )
                         .show()
                 } else {
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
@@ -78,8 +82,7 @@ class MovieMainActivity : AppCompatActivity() {
     private val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
-        ) { _: Boolean ->
-        }
+        ) {}
 
     companion object {
         fun startActivity(context: Context) =
