@@ -32,8 +32,8 @@ class MovieMainActivity : AppCompatActivity() {
         sharedPrefs = SharedPrefs(this)
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         requestNotificationPermission()
     }
 
