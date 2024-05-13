@@ -13,7 +13,6 @@ import woowacourse.movie.domain.model.SeatModel
 import woowacourse.movie.domain.model.SeatRank
 import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.domain.model.TheaterCount
-import woowacourse.movie.domain.repository.DummySeatBoard
 import woowacourse.movie.presentation.model.ReservationInfo
 import woowacourse.movie.presentation.ui.detail.ScreenDetailUiModel
 import java.time.LocalDate
@@ -133,7 +132,7 @@ object DummyData {
 
     const val THEATER_ID = 0
 
-    const val RESERVATION_ID = 0
+    const val RESERVATION_ID = 0L
 
     const val MOVIE_ID = 0
 
@@ -222,17 +221,17 @@ object DummyData {
             isSelected = false,
         )
 
-    val dummySeatBoard = SeatBoard(1, 4, 5, listOf(dummySeat))
-
     val dummyReservation =
         Reservation(
             id = 0,
-            theaterId = 0,
-            movie = piro,
+            theaterName = "선릉",
+            movieTitle = piro.title,
             ticketCount = 3,
             seats = listOf(dummySeat),
             dateTime = LocalDateTime.now(),
         )
+
+    val dummyReservations = listOf(dummyReservation)
 
     fun load(): List<ScreenView> =
         movies.flatMap {
@@ -243,30 +242,6 @@ object DummyData {
                 Ads(R.drawable.img_ads),
                 piro,
             )
-        }
-
-    fun loadSeatBoard(id: Int): Result<SeatBoard> =
-        runCatching {
-            DummySeatBoard.seatBoards.find { seatBoard -> seatBoard.id == id }
-                ?: throw NoSuchElementException()
-        }
-
-    fun findTheaterCount(id: Int): Result<List<TheaterCount>> =
-        runCatching {
-            val tmpList: MutableList<TheaterCount> = mutableListOf()
-            theaters.forEach { theater ->
-                val size = theater.findScreenTimeCount(id)
-                if (size != 0) {
-                    tmpList.add(
-                        TheaterCount(
-                            id = theater.id,
-                            name = theater.name,
-                            size = size,
-                        ),
-                    )
-                }
-            }
-            tmpList
         }
 
     private fun createScreenDateList(

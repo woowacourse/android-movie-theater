@@ -10,17 +10,18 @@ import java.time.LocalDateTime
 
 @BindingAdapter("count", "seats", "theaterName")
 fun TextView.showReservation(
-    count: Int,
-    seats: List<Seat>,
-    theaterName: String,
+    count: Int?,
+    seats: List<Seat>?,
+    theaterName: String?,
 ) {
-    this.text =
-        this.context.getString(R.string.reserve_count, count, seats.toSeatString(), theaterName)
+    if (seats != null) {
+        this.text =
+            this.context.getString(R.string.reserve_count, count, seats.toSeatString(), theaterName)
+    }
 }
 
 fun List<Seat>.toSeatString(): String = this.map { "${it.column}${it.row + 1}" }.sorted().joinToString(", ")
 
-// this.joinToString(", ")
 @BindingAdapter("bindShowTotalPrice")
 fun TextView.showTotalPrice(totalPrice: Int) {
     this.text =
@@ -28,6 +29,6 @@ fun TextView.showTotalPrice(totalPrice: Int) {
 }
 
 @BindingAdapter("bindShowReservationDate")
-fun TextView.showReservationDate(dateTime: LocalDateTime) {
-    this.text = dateTime.toScreeningDate()
+fun TextView.showReservationDate(dateTime: LocalDateTime?) {
+    this.text = dateTime?.toScreeningDate()
 }

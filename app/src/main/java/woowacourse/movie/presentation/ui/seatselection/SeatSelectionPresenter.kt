@@ -1,7 +1,7 @@
 package woowacourse.movie.presentation.ui.seatselection
 
+import woowacourse.movie.domain.model.Reservation
 import woowacourse.movie.domain.model.Screen
-import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.SeatBoard
 import woowacourse.movie.domain.model.SeatModel
 import woowacourse.movie.domain.repository.ReservationRepository
@@ -9,6 +9,7 @@ import woowacourse.movie.domain.repository.ScreenRepository
 import woowacourse.movie.presentation.model.MessageType
 import woowacourse.movie.presentation.model.ReservationInfo
 import woowacourse.movie.presentation.model.UserSeat
+import kotlin.concurrent.thread
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
@@ -24,10 +25,7 @@ class SeatSelectionPresenter(
         movieId: Int,
     ) {
         _seatSelectionModel =
-            seatSelectionModel.copy(
-                dateTime = reservationInfo.dateTime,
-                ticketQuantity = reservationInfo.ticketQuantity,
-            )
+            seatSelectionModel.copyWithReservationInfo(reservationInfo)
         loadScreen(reservationInfo.theaterId, movieId)
         loadSeatBoard(reservationInfo.theaterId)
     }
@@ -37,17 +35,21 @@ class SeatSelectionPresenter(
         movieId: Int,
     ) {
         repository.findScreen(theaterId = theaterId, movieId = movieId)
-            .onSuccess { screen -> updateScreen(theaterId, screen) }
+            .onSuccess { screen ->
+                repository.findTheaterNameById(theaterId).onSuccess {
+                    updateScreen(it, screen)
+                }
+            }
             .onFailure { e -> view.terminateOnError(e) }
     }
 
     private fun updateScreen(
-        theaterId: Int,
+        theaterName: String,
         screen: Screen,
     ) {
         _seatSelectionModel =
             seatSelectionModel.copy(
-                id = theaterId,
+                theaterName = theaterName,
                 screen = screen,
             )
     }
@@ -95,18 +97,19 @@ class SeatSelectionPresenter(
     override fun reserve() {
         seatSelectionModel.screen?.let { screen ->
             seatSelectionModel.dateTime?.let { dateTime ->
-                reservationRepository.saveReservation(
-                    screen.movie,
-                    seatSelectionModel.id,
-                    seatSelectionModel.ticketQuantity,
-                    seatSelectionModel.userSeat.seatModels.filter { it.isSelected }
-                        .map { Seat(it.column, it.row, it.seatRank) },
-                    dateTime,
-                ).onSuccess { reservationId ->
-                    view.navigateToReservation(reservationId)
-                }.onFailure { e ->
-                    view.terminateOnError(e)
-                }
+                val reservation = seatSelectionModel.createReservation(screen, dateTime)
+                saveReservation(reservation)
+            }
+        }
+    }
+
+    private fun saveReservation(reservation: Reservation) {
+        thread {
+            reservationRepository.saveReservation(reservation).onSuccess { reservationId ->
+                view.setReservationNotification(reservation.copy(id = reservationId))
+                view.navigateToReservation(reservationId)
+            }.onFailure { e ->
+                view.terminateOnError(e)
             }
         }
     }

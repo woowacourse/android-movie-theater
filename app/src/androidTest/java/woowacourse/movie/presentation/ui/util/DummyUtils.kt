@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.main.util
+package woowacourse.movie.presentation.ui.util
 
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.Reservation
@@ -27,7 +27,6 @@ fun getDummyMovie(): ScreenView.Movie {
 
 fun getDummySeats(): List<Seat> {
     return listOf(
-        Seat("A", 1, SeatRank.A),
         Seat("A", 2, SeatRank.A),
         Seat("A", 3, SeatRank.A),
     )
@@ -36,8 +35,8 @@ fun getDummySeats(): List<Seat> {
 fun getDummyReservation(): Reservation {
     return Reservation(
         id = 1,
-        1,
-        getDummyMovie(),
+        "선릉",
+        "해리포터",
         3,
         seats = getDummySeats(),
         dateTime = LocalDateTime.now(),

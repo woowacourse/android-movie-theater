@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.main.detail
+package woowacourse.movie.presentation.ui.detail
 
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
@@ -14,8 +14,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.presentation.main.util.repeatClick
-import woowacourse.movie.presentation.ui.detail.ScreenDetailActivity
+import woowacourse.movie.presentation.ui.util.repeatClick
 
 @RunWith(AndroidJUnit4::class)
 class ScreenDetailActivityTest {

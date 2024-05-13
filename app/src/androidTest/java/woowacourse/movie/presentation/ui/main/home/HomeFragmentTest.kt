@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.main.home
+package woowacourse.movie.presentation.ui.main.home
 
 import android.annotation.SuppressLint
 import androidx.annotation.LayoutRes
@@ -17,7 +17,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.presentation.ui.main.MainActivity
-import woowacourse.movie.presentation.ui.main.home.HomeFragment
 
 @RunWith(AndroidJUnit4::class)
 class HomeFragmentTest {

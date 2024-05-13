@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?android:attr/selectableItemBackground">
+
+    <data>
+
+        <variable
+            name="reservation"
+            type="woowacourse.movie.domain.model.Reservation" />
+
+        <variable
+            name="handler"
+            type="woowacourse.movie.presentation.ui.main.history.ReservationHistoryActionHandler" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{()->handler.onReservationClick(reservation.id)}">
+
+        <TextView
+            android:id="@+id/tv_history_date"
+            bindFormatScreeningDate="@{reservation.dateTime}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2024.05.07" />
+
+        <TextView
+            android:id="@+id/tv_divider_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:text="|"
+            android:textColor="#D0D0D0"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/tv_history_date"
+            app:layout_constraintTop_toTopOf="@id/tv_history_date" />
+
+        <TextView
+            android:id="@+id/tv_history_time"
+            bindFormatScreeningTime="@{reservation.dateTime}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/tv_divider_1"
+            app:layout_constraintTop_toTopOf="@id/tv_history_date"
+            tools:text="17:00" />
+
+        <TextView
+            android:id="@+id/tv_divider_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:text="|"
+            android:textColor="#D0D0D0"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/tv_history_time"
+            app:layout_constraintTop_toTopOf="@id/tv_history_date" />
+
+        <TextView
+            android:id="@+id/tv_history_theater"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:text="@{reservation.theaterName}"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/tv_divider_2"
+            app:layout_constraintTop_toTopOf="@id/tv_history_date"
+            tools:text="ㅇㅇ 극장" />
+
+        <TextView
+            android:id="@+id/tv_history_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="13dp"
+            android:text="@{reservation.movieTitle}"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_history_date"
+            app:layout_constraintTop_toBottomOf="@id/tv_history_date"
+            app:layout_goneMarginBottom="12dp"
+            tools:text="영화 이름" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

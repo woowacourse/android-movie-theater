@@ -2,34 +2,51 @@ package woowacourse.movie.presentation.ui.reservation
 
 import android.content.Context
 import android.content.Intent
+import android.view.MenuItem
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationBinding
-import woowacourse.movie.domain.repository.DummyReservation
-import woowacourse.movie.domain.repository.DummyScreens
+import woowacourse.movie.domain.db.AppDatabase
+import woowacourse.movie.domain.db.reservationdb.ReservationDao
+import woowacourse.movie.domain.model.Reservation
+import woowacourse.movie.domain.repository.ReservationRepository
+import woowacourse.movie.domain.repository.ReservationRepositoryImpl
 import woowacourse.movie.presentation.base.BaseActivity
 import woowacourse.movie.presentation.ui.reservation.ReservationContract.View
 
 class ReservationActivity : BaseActivity<ActivityReservationBinding>(), View {
     override val layoutResourceId: Int
         get() = R.layout.activity_reservation
+
+    private lateinit var reservationDao: ReservationDao
+    private lateinit var reservationRepository: ReservationRepository
+
     val presenter: ReservationPresenter by lazy {
         ReservationPresenter(
             this,
-            DummyReservation,
-            DummyScreens(),
+            reservationRepository,
         )
     }
 
     override fun initStartView() {
-        val id = intent.getIntExtra(PUT_EXTRA_KEY_RESERVATION_ID, DEFAULT_RESERVATION_ID)
-        presenter.loadReservation(id)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        initRepository()
+        val id = intent.getLongExtra(PUT_EXTRA_KEY_RESERVATION_ID, INVALID_RESERVATION_ID)
+        if (id != INVALID_RESERVATION_ID) {
+            presenter.loadReservation(id)
+        } else {
+            terminateOnError(IllegalArgumentException())
+        }
     }
 
-    override fun showReservation(
-        reservationModel: ReservationModel,
-        theaterName: String,
-    ) {
-        binding.reservationModel = reservationModel
+    private fun initRepository() {
+        AppDatabase.getDatabase(applicationContext)?.let { database ->
+            reservationDao = database.reservationDao()
+            reservationRepository = ReservationRepositoryImpl(reservationDao)
+        }
+    }
+
+    override fun showReservation(reservation: Reservation) {
+        binding.reservation = reservation
     }
 
     override fun terminateOnError(e: Throwable) {
@@ -37,13 +54,18 @@ class ReservationActivity : BaseActivity<ActivityReservationBinding>(), View {
         finish()
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        finish()
+        return true
+    }
+
     companion object {
-        private const val PUT_EXTRA_KEY_RESERVATION_ID = "reservationId"
-        private const val DEFAULT_RESERVATION_ID = -1
+        const val PUT_EXTRA_KEY_RESERVATION_ID = "reservationId"
+        private const val INVALID_RESERVATION_ID = -1L
 
         fun startActivity(
             context: Context,
-            reservationId: Int,
+            reservationId: Long,
         ) {
             val intent = Intent(context, ReservationActivity::class.java)
             intent.putExtra(PUT_EXTRA_KEY_RESERVATION_ID, reservationId)

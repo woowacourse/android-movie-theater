@@ -28,11 +28,11 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity(), BaseView
     abstract fun initStartView()
 
     override fun showToastMessage(messageType: MessageType) {
-        Toast.makeText(this, messageType.toMessage(), Toast.LENGTH_SHORT).show()
+        runOnUiThread { Toast.makeText(this, messageType.toMessage(), Toast.LENGTH_SHORT).show() }
     }
 
     override fun showToastMessage(e: Throwable) {
-        Toast.makeText(this, e.toErrorMessage(), Toast.LENGTH_SHORT).show()
+        runOnUiThread { Toast.makeText(this, e.toErrorMessage(), Toast.LENGTH_SHORT).show() }
     }
 
     override fun showSnackBar(e: Throwable) {

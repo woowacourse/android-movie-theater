@@ -1,10 +1,16 @@
 package woowacourse.movie.presentation.ui.main.home
 
+import android.Manifest.permission.POST_NOTIFICATIONS
+import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
@@ -23,6 +29,15 @@ class HomeFragment : Fragment(), HomeContract.View {
     private var _binding: FragmentHomeBinding? = null
     private val binding
         get() = requireNotNull(_binding)
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            val pref = requireActivity().getPreferences(Context.MODE_PRIVATE)
+            val edit = pref.edit()
+            with(edit) {
+                putBoolean("notification_permission", isGranted)
+                apply()
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +55,20 @@ class HomeFragment : Fragment(), HomeContract.View {
         initAdapter()
         presenter = HomePresenter(this, DummyScreens())
         presenter.fetchScreens()
+        requestNotificationPermission()
+    }
+
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val permission = POST_NOTIFICATIONS
+            val isGranted =
+                ContextCompat.checkSelfPermission(
+                    requireActivity(), permission,
+                ) == PackageManager.PERMISSION_GRANTED
+            if (!isGranted || shouldShowRequestPermissionRationale(permission)) {
+                requestPermissionLauncher.launch(permission)
+            }
+        }
     }
 
     private fun initAdapter() {
