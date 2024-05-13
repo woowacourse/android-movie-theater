@@ -30,7 +30,7 @@ object MovieNotificationAlarmManager {
                 reservationHistoryEntity.seats,
                 reservationHistoryEntity.theaterPosition,
             )
-        val pendingIntent = createPendingIntent(context, intent)
+        val pendingIntent = createBroadcastPendingIntent(context, intent)
 
         val alarmTimeMillis =
             calculateAlarmTime(
@@ -64,7 +64,7 @@ object MovieNotificationAlarmManager {
         }
     }
 
-    private fun createPendingIntent(
+    private fun createBroadcastPendingIntent(
         context: Context,
         intent: Intent,
     ): PendingIntent {

@@ -44,7 +44,7 @@ class MovieNotificationReceiver : BroadcastReceiver() {
                 ),
             )
 
-        val pendingIntent = createPendingIntent(context, reservationHistoryEntity)
+        val pendingIntent = createResultActivityPendingIntent(context, reservationHistoryEntity)
         val notification =
             buildNotification(context, reservationHistoryEntity.movieId, pendingIntent)
         if (sharedPrefs.getSavedAlarmSetting()) {
@@ -84,7 +84,7 @@ class MovieNotificationReceiver : BroadcastReceiver() {
         }
     }
 
-    private fun createPendingIntent(
+    private fun createResultActivityPendingIntent(
         context: Context,
         reservationHistoryEntity: ReservationHistoryEntity,
     ): PendingIntent {
