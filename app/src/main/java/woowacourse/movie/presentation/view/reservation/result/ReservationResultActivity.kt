@@ -2,7 +2,6 @@ package woowacourse.movie.presentation.view.reservation.result
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.core.content.IntentCompat
 import androidx.databinding.DataBindingUtil
@@ -21,7 +20,6 @@ class ReservationResultActivity : BaseActivity() {
     override fun onCreateSetup(savedInstanceState: Bundle?) {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         binding = DataBindingUtil.setContentView(this, getLayoutResId())
-        Log.d("ReservationResultActivity", "Notification clicked")
         setUpFromIntent()
     }
 

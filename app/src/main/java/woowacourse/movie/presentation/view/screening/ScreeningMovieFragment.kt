@@ -18,7 +18,6 @@ class ScreeningMovieFragment : Fragment(), ScreeningContract.View, ScreeningCont
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         adapter = MovieListAdapter(emptyList(), emptyList(), this)

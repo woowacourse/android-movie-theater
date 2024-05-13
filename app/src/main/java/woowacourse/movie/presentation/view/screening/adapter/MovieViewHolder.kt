@@ -8,7 +8,6 @@ class MovieViewHolder(
     private val binding: MovieItemBinding,
     private val buttonClickedListener: (Int) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
-
     init {
         binding.reserveButton.setOnClickListener { buttonClickedListener(adapterPosition) }
     }

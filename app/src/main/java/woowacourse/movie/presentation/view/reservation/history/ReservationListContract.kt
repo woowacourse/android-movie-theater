@@ -16,7 +16,7 @@ interface ReservationListContract {
         fun ticketInfo(ticketId: Long)
     }
 
-    interface ItemListener : ReservationListContract {
+    interface ItemListener {
         fun onClick(ticketId: Long)
     }
 }

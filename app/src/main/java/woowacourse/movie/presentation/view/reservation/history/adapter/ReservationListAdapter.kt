@@ -11,7 +11,10 @@ class ReservationListAdapter(
     var ticketList: List<TicketUiModel>,
     private val listener: ReservationListContract.ItemListener,
 ) : RecyclerView.Adapter<ReservationViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReservationViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): ReservationViewHolder {
         val reservationViewHolder =
             ReservationItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ReservationViewHolder(reservationViewHolder)
@@ -19,7 +22,10 @@ class ReservationListAdapter(
 
     override fun getItemCount(): Int = ticketList.size
 
-    override fun onBindViewHolder(holder: ReservationViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ReservationViewHolder,
+        position: Int,
+    ) {
         holder.bind(ticketList[position], listener)
     }
 }

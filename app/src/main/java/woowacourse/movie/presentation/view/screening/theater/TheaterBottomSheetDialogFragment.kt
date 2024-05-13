@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.databinding.TheaterBottomSheetBinding
 import woowacourse.movie.presentation.uimodel.TheaterUiModel
+import woowacourse.movie.presentation.view.reservation.detail.MovieDetailActivity
 import woowacourse.movie.presentation.view.screening.ScreeningMovieFragment.Companion.DEFAULT_MOVIE_ID
 import woowacourse.movie.presentation.view.screening.ScreeningMovieFragment.Companion.MOVIE_ID_KEY
-import woowacourse.movie.presentation.view.reservation.detail.MovieDetailActivity
 import woowacourse.movie.presentation.view.screening.theater.adapter.TheaterAdapter
 
 class TheaterBottomSheetDialogFragment :

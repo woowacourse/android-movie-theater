@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.Window
 import android.widget.TableLayout
@@ -14,7 +13,6 @@ import android.widget.TextView
 import android.widget.Toast
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
-import woowacourse.movie.domain.model.reservation.MovieTicket
 import woowacourse.movie.presentation.base.BaseActivity
 import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
 import woowacourse.movie.presentation.view.reservation.detail.MovieDetailActivity.Companion.RESERVATION_COUNT_KEY
@@ -48,7 +46,6 @@ class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View {
         binding.confirmButton.isEnabled = false
         binding.confirmButton.setOnClickListener {
             showConfirmationDialog()
-            Log.d("confirmed", "confirm dialog")
         }
     }
 
@@ -170,7 +167,6 @@ class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View {
     override fun moveToReservationResult(movieTicketUiModel: MovieTicketUiModel) {
         val intent = Intent(this, ReservationResultActivity::class.java)
         intent.putExtra(ReservationResultActivity.INTENT_TICKET, movieTicketUiModel)
-        // todo 예매내역 페이지에 보내기
         startActivity(intent)
     }
 
@@ -199,7 +195,6 @@ class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View {
         val confirmButton = dialog.findViewById<TextView>(R.id.confirmButton)
         confirmButton.setOnClickListener {
             seatSelectionPresenter.onAcceptButtonClicked()
-            Log.d("confirmed", "confirm")
             dialog.dismiss()
         }
 

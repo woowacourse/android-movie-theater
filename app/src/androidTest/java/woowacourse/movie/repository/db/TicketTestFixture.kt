@@ -9,9 +9,11 @@ fun ticket(
     theaterName: String = "선릉",
     screenDate: String = "2024-05-01",
     screenTime: String = "22:00",
-    seats: SelectedSeats = SelectedSeats(
-        SeatingChart(4, 4), 1,
-    )
+    seats: SelectedSeats =
+        SelectedSeats(
+            SeatingChart(4, 4),
+            1,
+        ),
 ): ReservationTicketEntity {
     return ReservationTicketEntity(
         ticketId,

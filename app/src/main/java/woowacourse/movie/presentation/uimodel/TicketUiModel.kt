@@ -10,7 +10,6 @@ data class TicketUiModel(
     val screeningDate: String,
     val theaterName: String,
 ) {
-
     fun reservationSchedule(context: Context): String {
         return if (theaterName.isNotEmpty()) {
             context.getString(

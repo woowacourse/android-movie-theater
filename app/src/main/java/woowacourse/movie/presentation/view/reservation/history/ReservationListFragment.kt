@@ -13,7 +13,9 @@ import woowacourse.movie.presentation.view.reservation.history.adapter.Reservati
 import woowacourse.movie.presentation.view.reservation.result.ReservationResultActivity
 import woowacourse.movie.repository.db.ReservationTicketDatabase
 
-class ReservationListFragment : Fragment(), ReservationListContract.View,
+class ReservationListFragment :
+    Fragment(),
+    ReservationListContract.View,
     ReservationListContract.ItemListener {
     private var _binding: FragmentReservationListBinding? = null
     private val binding get() = _binding!!
@@ -30,7 +32,10 @@ class ReservationListFragment : Fragment(), ReservationListContract.View,
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         val ticketDao = ReservationTicketDatabase.getInstance(requireContext()).reservationDao()
         presenter = ReservationListPresenterImpl(ticketDao = ticketDao, view = this)

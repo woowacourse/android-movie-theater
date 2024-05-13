@@ -22,6 +22,6 @@ fun ReservationTicketEntity.toTicketUiModel(): TicketUiModel {
         title = this.movieTitle,
         startTime = this.screenTime,
         screeningDate = this.screenDate,
-        theaterName = this.theaterName
+        theaterName = this.theaterName,
     )
 }

@@ -8,8 +8,8 @@ import android.widget.ArrayAdapter
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.presentation.base.BaseActivity
-import woowacourse.movie.presentation.view.screening.ScreeningMovieFragment.Companion.MOVIE_ID_KEY
 import woowacourse.movie.presentation.view.reservation.seat.SeatSelectionActivity
+import woowacourse.movie.presentation.view.screening.ScreeningMovieFragment.Companion.MOVIE_ID_KEY
 import woowacourse.movie.presentation.view.screening.theater.TheaterBottomSheetDialogFragment.Companion.THEATER_ID_KEY
 
 class MovieDetailActivity : BaseActivity(), MovieDetailContract.View {

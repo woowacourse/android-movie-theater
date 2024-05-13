@@ -1,6 +1,5 @@
 package woowacourse.movie.presentation.view.reservation.seat
 
-import android.util.Log
 import woowacourse.movie.data.repository.ReservationMovieInfoRepositoryImpl
 import woowacourse.movie.data.repository.SeatRepositoryImpl
 import woowacourse.movie.domain.model.reservation.MovieTicket
@@ -22,11 +21,12 @@ class SeatSelectionPresenterImpl(
     private val reservationMovieInfoRepository = ReservationMovieInfoRepositoryImpl
 
     private fun makeTicket(): MovieTicket {
-        val ticket = MovieTicket(
-            0,
-            reservationMovieInfo = reservationMovieInfoRepository.getScreeningMovieInfo()!!,
-            reservationInfo = reservationInfo
-        )
+        val ticket =
+            MovieTicket(
+                0,
+                reservationMovieInfo = reservationMovieInfoRepository.getScreeningMovieInfo()!!,
+                reservationInfo = reservationInfo,
+            )
         return ticket
     }
 
@@ -34,23 +34,25 @@ class SeatSelectionPresenterImpl(
         var ticketId = 0L
         val ticket = makeTicket()
 
-        val thread = Thread {
-            ticketId = ticketDao.saveReservationTicket(
-                ticket.toReservationTicketEntity(
-                    selectDate = ticket.reservationMovieInfo.dateTime.screeningDate.date.format(
-                        DateTimeFormatter.ISO_LOCAL_DATE
-                    ),
-                    screenTime = ticket.reservationMovieInfo.dateTime.screeningDate.screeningTime.startTime.format(
-                        DateTimeFormatter.ofPattern("HH:mm")
+        val thread =
+            Thread {
+                ticketId =
+                    ticketDao.saveReservationTicket(
+                        ticket.toReservationTicketEntity(
+                            selectDate =
+                                ticket.reservationMovieInfo.dateTime.screeningDate.date.format(
+                                    DateTimeFormatter.ISO_LOCAL_DATE,
+                                ),
+                            screenTime =
+                                ticket.reservationMovieInfo.dateTime.screeningDate.screeningTime.startTime.format(
+                                    DateTimeFormatter.ofPattern("HH:mm"),
+                                ),
+                        ),
                     )
-                )
-            )
-        }
+            }
 
         thread.start()
         thread.join()
-
-        Log.d("ticket", "After: storeData")
 
         return ticketId
     }

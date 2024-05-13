@@ -23,10 +23,11 @@ object MovieNotificationAlarmManager {
     ) {
         val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
 
-        val intent = Intent(context, MovieNotificationReceiver::class.java).apply {
-            putExtra(NOTIFICATION_TITLE, ticketUiModel.title)
-            putExtra(NOTIFICATION_TICKET_ID, ticketUiModel.ticketId)
-        }
+        val intent =
+            Intent(context, MovieNotificationReceiver::class.java).apply {
+                putExtra(NOTIFICATION_TITLE, ticketUiModel.title)
+                putExtra(NOTIFICATION_TICKET_ID, ticketUiModel.ticketId)
+            }
 
         val pendingIntent = pendingIntent(context, intent)
         val alarmTime =
@@ -37,7 +38,6 @@ object MovieNotificationAlarmManager {
         sendNotification(alarmTime, alarmManager, pendingIntent)
     }
 
-    // 브로드캐스트 메시지로 보낼 PendingIntent, 알림이 클릭되었을 때 실행될 액티비티를 위한 인텐트 생성
     private fun pendingIntent(
         context: Context,
         intent: Intent,
@@ -50,7 +50,6 @@ object MovieNotificationAlarmManager {
         )
     }
 
-    // 알림을 표시할 시간을 계산
     private fun calculateAlarmTime(
         date: LocalDate,
         time: LocalTime,
@@ -60,8 +59,6 @@ object MovieNotificationAlarmManager {
         return screeningTime.minusMinutes(ALARM_OFFSET_MINUTES).toInstant().toEpochMilli()
     }
 
-
-    // 알림 설정하고 알림 보내기
     private fun sendNotification(
         alarmTime: Long,
         alarmManager: AlarmManager,

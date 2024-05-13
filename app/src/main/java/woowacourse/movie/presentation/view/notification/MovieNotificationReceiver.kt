@@ -8,7 +8,6 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
 import woowacourse.movie.presentation.view.notification.MovieNotificationAlarmManager.NOTIFICATION_TITLE
@@ -17,39 +16,40 @@ import woowacourse.movie.presentation.view.reservation.result.ReservationResultA
 class MovieNotificationReceiver : BroadcastReceiver() {
     private lateinit var notificationManager: NotificationManager
 
-
-    override fun onReceive(context: Context, intent: Intent) {
-        Log.d("MovieNotificationReceiver", "Notification received")
-        notificationManager = context.getSystemService(
-            Context.NOTIFICATION_SERVICE
-        ) as NotificationManager
+    override fun onReceive(
+        context: Context,
+        intent: Intent,
+    ) {
+        notificationManager =
+            context.getSystemService(
+                Context.NOTIFICATION_SERVICE,
+            ) as NotificationManager
 
         subScribeToChannel()
         val pendingIntent = createPendingIntent(context)
 
         val title = intent.getStringExtra(NOTIFICATION_TITLE) ?: " "
-        val notification = buildNotification(
-            context = context,
-            title = title,
-            pendingIntent = pendingIntent,
-        )
+        val notification =
+            buildNotification(
+                context = context,
+                title = title,
+                pendingIntent = pendingIntent,
+            )
         notificationManager.notify(NOTIFICATION_ID, notification)
     }
 
-    // channel 등록
     private fun subScribeToChannel() {
-        val channel = NotificationChannel(
-            NOTIFICATION_CHANNEL_ID,
-            NOTIFICATION_CHANNEL_NAME,
-            IMPORTANCE_DEFAULT
-        )
+        val channel =
+            NotificationChannel(
+                NOTIFICATION_CHANNEL_ID,
+                NOTIFICATION_CHANNEL_NAME,
+                IMPORTANCE_DEFAULT,
+            )
         channel.enableVibration(true)
-        notificationManager.createNotificationChannel(channel) // 채널을 시스템에 등록
+        notificationManager.createNotificationChannel(channel)
     }
 
-    private fun createPendingIntent(
-        context: Context,
-    ): PendingIntent {
+    private fun createPendingIntent(context: Context): PendingIntent {
         val contentIntent = Intent(context, ReservationResultActivity::class.java)
         return PendingIntent.getActivity(
             context,
@@ -59,7 +59,6 @@ class MovieNotificationReceiver : BroadcastReceiver() {
         )
     }
 
-    // 알람만들기
     private fun buildNotification(
         context: Context,
         title: String,
@@ -73,7 +72,6 @@ class MovieNotificationReceiver : BroadcastReceiver() {
             .setAutoCancel(true)
             .build()
     }
-
 
     companion object {
         private const val NOTIFICATION_CHANNEL_ID = "notification_channel"

@@ -6,12 +6,11 @@ import woowacourse.movie.presentation.uimodel.TicketUiModel
 import woowacourse.movie.presentation.view.reservation.history.ReservationListContract
 
 class ReservationViewHolder(
-    private val binding: ReservationItemBinding
+    private val binding: ReservationItemBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
-
     fun bind(
         ticket: TicketUiModel,
-        clickListener: ReservationListContract.ItemListener
+        clickListener: ReservationListContract.ItemListener,
     ) {
         binding.ticket = ticket
         binding.listener = clickListener

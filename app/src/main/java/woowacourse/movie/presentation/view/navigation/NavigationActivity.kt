@@ -13,7 +13,6 @@ import woowacourse.movie.databinding.ActivityNavigationBinding
 import woowacourse.movie.presentation.view.reservation.history.ReservationListFragment
 import woowacourse.movie.presentation.view.screening.ScreeningMovieFragment
 import woowacourse.movie.presentation.view.setting.SettingFragment
-import woowacourse.movie.utils.SharedPrefs
 import woowacourse.movie.utils.versionTiramisuOrHigher
 
 class NavigationActivity : AppCompatActivity() {
@@ -21,13 +20,11 @@ class NavigationActivity : AppCompatActivity() {
     private val screeningMovieFragment: ScreeningMovieFragment by lazy { ScreeningMovieFragment() }
     private val reservationListFragment: ReservationListFragment by lazy { ReservationListFragment() }
     private val settingFragment: SettingFragment by lazy { SettingFragment() }
-    private lateinit var sharedPrefs: SharedPrefs
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNavigationBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        sharedPrefs = SharedPrefs(this)
         requestNotificationPermission()
 
         setBottomNavigationView()
@@ -70,7 +67,7 @@ class NavigationActivity : AppCompatActivity() {
     private fun requestNotificationPermission() {
         if (ContextCompat.checkSelfPermission(
                 this,
-                POST_NOTIFICATIONS
+                POST_NOTIFICATIONS,
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             if (versionTiramisuOrHigher()) {
@@ -104,7 +101,7 @@ class NavigationActivity : AppCompatActivity() {
         Toast.makeText(
             this,
             message,
-            Toast.LENGTH_SHORT
+            Toast.LENGTH_SHORT,
         ).show()
     }
 }

@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.view.navigation
+package woowacourse.movie.presentation.view.screening
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -13,7 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.presentation.view.screening.ScreeningMovieFragment
+import woowacourse.movie.presentation.view.navigation.NavigationActivity
 import woowacourse.movie.presentation.view.screening.adapter.MovieViewHolder
 
 @RunWith(AndroidJUnit4::class)

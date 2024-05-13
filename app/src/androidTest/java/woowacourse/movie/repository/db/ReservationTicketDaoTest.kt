@@ -16,10 +16,11 @@ class ReservationTicketDaoTest {
 
     @Before
     fun createDb() {
-        db = Room.inMemoryDatabaseBuilder(
-            InstrumentationRegistry.getInstrumentation().context,
-            ReservationTicketDatabase::class.java
-        ).build()
+        db =
+            Room.inMemoryDatabaseBuilder(
+                InstrumentationRegistry.getInstrumentation().context,
+                ReservationTicketDatabase::class.java,
+            ).build()
         ticketDao = db.reservationDao()
     }
 
@@ -30,7 +31,7 @@ class ReservationTicketDaoTest {
     }
 
     @Test
-    fun 데이터베이스에_값을_저장한다() {
+    fun `데이터베이스에_값을_저장한다`() {
         // given
         val ticket = ticket()
 
@@ -42,7 +43,7 @@ class ReservationTicketDaoTest {
     }
 
     @Test
-    fun 데이터베이스에_저장된_값을_모두_불러올_수_있다() {
+    fun `데이터베이스에_저장된_값을_모두_불러올_수_있다`() {
         // given
         val ticket1 = ticket(ticketId = 1, movieTitle = "헝거게임")
         val ticket2 = ticket(ticketId = 2, movieTitle = "타이타닉")
@@ -62,7 +63,7 @@ class ReservationTicketDaoTest {
     }
 
     @Test
-    fun 데이터베이스에_저장된_값을_모두_지울_수_있다() {
+    fun `데이터베이스에_저장된_값을_모두_지울_수_있다`() {
         // given
         val ticket1 = ticket(ticketId = 1, movieTitle = "헝거게임")
         val ticket2 = ticket(ticketId = 2, movieTitle = "타이타닉")
@@ -80,7 +81,7 @@ class ReservationTicketDaoTest {
     }
 
     @Test
-    fun 잘못된_id값으로_데이터베이스를_조회하면_null이다() {
+    fun `잘못된_id값으로_데이터베이스를_조회하면_null이다`() {
         // given
         val ticket1 = ticket(ticketId = 1, movieTitle = "헝거게임")
         val ticket2 = ticket(ticketId = 2, movieTitle = "타이타닉")
@@ -95,7 +96,7 @@ class ReservationTicketDaoTest {
     }
 
     @Test
-    fun id값으로_데이터베이스에_저장된_값을_찾을_수_있다() {
+    fun `id값으로_데이터베이스에_저장된_값을_찾을_수_있다`() {
         // given
         val ticket1 = ticket(ticketId = 1, movieTitle = "헝거게임")
         val ticket2 = ticket(ticketId = 2, movieTitle = "타이타닉")

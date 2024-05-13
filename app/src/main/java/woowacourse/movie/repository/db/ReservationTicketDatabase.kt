@@ -19,7 +19,7 @@ abstract class ReservationTicketDatabase : RoomDatabase() {
             return instance ?: Room.databaseBuilder(
                 context.applicationContext,
                 ReservationTicketDatabase::class.java,
-                "reservation_ticket.db"
+                "reservation_ticket.db",
             ).build()
         }
     }

@@ -28,7 +28,10 @@ class SettingFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         checkNotificationStatus()
         setupNotificationSwitchListener()
@@ -36,10 +39,11 @@ class SettingFragment : Fragment() {
 
     private fun checkNotificationStatus() {
         if (versionTiramisuOrHigher()) {
-            val isGranted = ContextCompat.checkSelfPermission(
-                requireContext(),
-                POST_NOTIFICATIONS,
-            ) == PackageManager.PERMISSION_GRANTED
+            val isGranted =
+                ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    POST_NOTIFICATIONS,
+                ) == PackageManager.PERMISSION_GRANTED
             binding.switchSettingAlarm.isChecked = isGranted
         }
     }
@@ -66,10 +70,11 @@ class SettingFragment : Fragment() {
     }
 
     private fun navigateToNotificationSetting() {
-        val intent = Intent().apply {
-            setAction("android.settings.APP_NOTIFICATION_SETTINGS")
-            putExtra("android.provider.extra.APP_PACKAGE", activity?.packageName)
-        }
+        val intent =
+            Intent().apply {
+                setAction("android.settings.APP_NOTIFICATION_SETTINGS")
+                putExtra("android.provider.extra.APP_PACKAGE", activity?.packageName)
+            }
         startActivity(intent)
     }
 
