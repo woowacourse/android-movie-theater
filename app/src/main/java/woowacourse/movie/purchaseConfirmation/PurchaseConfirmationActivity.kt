@@ -21,7 +21,7 @@ class PurchaseConfirmationActivity :
 
         val ticketId = intent.getIntExtra(EXTRA_TICKET_ID, 0)
         presenter =
-            PurchaseConfirmationPresenter(this, TicketModel(applicationContext), applicationContext)
+            PurchaseConfirmationPresenter(this, TicketModel(applicationContext))
         presenter.loadTicket(ticketId)
     }
 
