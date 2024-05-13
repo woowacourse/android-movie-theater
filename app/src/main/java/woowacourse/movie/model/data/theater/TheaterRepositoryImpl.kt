@@ -1,4 +1,4 @@
-package woowacourse.movie.data.theater
+package woowacourse.movie.model.data.theater
 
 import woowacourse.movie.model.Theater
 import woowacourse.movie.repository.TheaterRepository

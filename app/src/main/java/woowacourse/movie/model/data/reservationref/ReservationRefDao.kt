@@ -1,4 +1,4 @@
-package woowacourse.movie.data.reservationref
+package woowacourse.movie.model.data.reservationref
 
 import androidx.room.Dao
 import androidx.room.Insert

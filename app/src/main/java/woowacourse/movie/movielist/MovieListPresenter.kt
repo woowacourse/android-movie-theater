@@ -1,6 +1,6 @@
 package woowacourse.movie.movielist
 
-import woowacourse.movie.data.AdvertisementRepository
+import woowacourse.movie.model.data.AdvertisementRepository
 import woowacourse.movie.movielist.uimodel.AdvertisementUiModel
 import woowacourse.movie.movielist.uimodel.ListItemUiModel
 import woowacourse.movie.movielist.uimodel.MovieUiModel

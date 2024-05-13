@@ -15,10 +15,10 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import woowacourse.MovieAlarmManager
-import woowacourse.PreferenceManager
 import woowacourse.movie.MovieApplication
 import woowacourse.movie.databinding.FragmentSettingBinding
+import woowacourse.movie.model.MovieAlarmManager
+import woowacourse.movie.model.PreferenceManager
 import woowacourse.movie.repository.SettingRepository
 import woowacourse.movie.setting.SettingContract
 import woowacourse.movie.setting.SettingPresenter

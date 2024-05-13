@@ -1,24 +1,24 @@
-package woowacourse.movie.data
+package woowacourse.movie.model.data
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import woowacourse.movie.data.movie.MovieDao
-import woowacourse.movie.data.movie.MovieDto
-import woowacourse.movie.data.movie.toDto
-import woowacourse.movie.data.reservationref.ReservationRefDao
-import woowacourse.movie.data.reservationref.ReservationRefDto
-import woowacourse.movie.data.screeningref.ScreeningRefDao
-import woowacourse.movie.data.screeningref.ScreeningRefDto
-import woowacourse.movie.data.screeningref.toDto
-import woowacourse.movie.data.theater.TheaterDao
-import woowacourse.movie.data.theater.TheaterDto
-import woowacourse.movie.data.theater.toDto
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.ScreeningRef
 import woowacourse.movie.model.Theater
+import woowacourse.movie.model.data.movie.MovieDao
+import woowacourse.movie.model.data.movie.MovieDto
+import woowacourse.movie.model.data.movie.toDto
+import woowacourse.movie.model.data.reservationref.ReservationRefDao
+import woowacourse.movie.model.data.reservationref.ReservationRefDto
+import woowacourse.movie.model.data.screeningref.ScreeningRefDao
+import woowacourse.movie.model.data.screeningref.ScreeningRefDto
+import woowacourse.movie.model.data.screeningref.toDto
+import woowacourse.movie.model.data.theater.TheaterDao
+import woowacourse.movie.model.data.theater.TheaterDto
+import woowacourse.movie.model.data.theater.toDto
 
 @Database(
     entities = [

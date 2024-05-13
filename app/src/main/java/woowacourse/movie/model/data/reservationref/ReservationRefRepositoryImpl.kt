@@ -1,4 +1,4 @@
-package woowacourse.movie.data.reservationref
+package woowacourse.movie.model.data.reservationref
 
 import woowacourse.movie.model.ReservationRef
 import woowacourse.movie.repository.ReservationRefRepository

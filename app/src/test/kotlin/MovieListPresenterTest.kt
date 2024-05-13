@@ -6,9 +6,9 @@ import io.mockk.junit5.MockKExtension
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import woowacourse.movie.data.AdvertisementRepository
 import woowacourse.movie.model.Advertisement
 import woowacourse.movie.model.Movie
+import woowacourse.movie.model.data.AdvertisementRepository
 import woowacourse.movie.movielist.MovieListContract
 import woowacourse.movie.movielist.MovieListPresenter
 import woowacourse.movie.movielist.uimodel.toAdvertisementUiModel

@@ -1,11 +1,11 @@
-package woowacourse.movie.data.screeningref
+package woowacourse.movie.model.data.screeningref
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
-import woowacourse.movie.data.movie.MovieDto
-import woowacourse.movie.data.theater.TheaterDto
+import woowacourse.movie.model.data.movie.MovieDto
+import woowacourse.movie.model.data.theater.TheaterDto
 
 @Entity(
     tableName = "screenings",

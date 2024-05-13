@@ -1,10 +1,10 @@
 package woowacourse.movie.util
 
-import woowacourse.movie.data.AppDatabase
-import woowacourse.movie.data.movie.MovieRepositoryImpl
-import woowacourse.movie.data.reservationref.ReservationRefRepositoryImpl
-import woowacourse.movie.data.screeningref.ScreeningRefRepositoryImpl
-import woowacourse.movie.data.theater.TheaterRepositoryImpl
+import woowacourse.movie.model.data.AppDatabase
+import woowacourse.movie.model.data.movie.MovieRepositoryImpl
+import woowacourse.movie.model.data.reservationref.ReservationRefRepositoryImpl
+import woowacourse.movie.model.data.screeningref.ScreeningRefRepositoryImpl
+import woowacourse.movie.model.data.theater.TheaterRepositoryImpl
 import woowacourse.movie.usecase.FetchAllMoviesUseCase
 import woowacourse.movie.usecase.FetchAllReservationsUseCase
 import woowacourse.movie.usecase.FetchReservationWithIdUseCase

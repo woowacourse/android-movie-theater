@@ -1,10 +1,10 @@
-package woowacourse.movie.data.reservationref
+package woowacourse.movie.model.data.reservationref
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
-import woowacourse.movie.data.screeningref.ScreeningRefDto
+import woowacourse.movie.model.data.screeningref.ScreeningRefDto
 
 @Entity(
     tableName = "reservationRefs",

@@ -7,11 +7,11 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.data.AppDatabase
-import woowacourse.movie.data.movie.MovieDao
-import woowacourse.movie.data.movie.toDto
-import woowacourse.movie.data.movie.toMovie
 import woowacourse.movie.model.Movie
+import woowacourse.movie.model.data.AppDatabase
+import woowacourse.movie.model.data.movie.MovieDao
+import woowacourse.movie.model.data.movie.toDto
+import woowacourse.movie.model.data.movie.toMovie
 
 class MovieDbTest {
     private lateinit var movieDao: MovieDao

@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.MovieApplication
-import woowacourse.movie.data.AdvertisementRepository
 import woowacourse.movie.databinding.FragmentMovieListBinding
+import woowacourse.movie.model.data.AdvertisementRepository
 import woowacourse.movie.movielist.theaters.TheaterBottomSheetDialogFragment
 import woowacourse.movie.movielist.uimodel.ListItemUiModel
 import woowacourse.movie.util.buildFetchAllMoviesUseCase

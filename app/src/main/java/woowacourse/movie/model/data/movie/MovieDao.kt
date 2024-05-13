@@ -1,4 +1,4 @@
-package woowacourse.movie.data.movie
+package woowacourse.movie.model.data.movie
 
 import androidx.room.Dao
 import androidx.room.Insert

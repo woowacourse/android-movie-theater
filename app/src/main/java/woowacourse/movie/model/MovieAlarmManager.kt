@@ -1,4 +1,4 @@
-package woowacourse
+package woowacourse.movie.model
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import woowacourse.movie.AlarmReceiver
-import woowacourse.movie.model.Alarm
 import woowacourse.movie.setting.AlarmInterface
 import woowacourse.movie.usecase.FetchAllReservationsUseCase
 import woowacourse.movie.util.runOnOtherThreadAndReturn

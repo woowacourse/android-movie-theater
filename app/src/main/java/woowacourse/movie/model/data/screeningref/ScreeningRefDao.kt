@@ -1,4 +1,4 @@
-package woowacourse.movie.data.screeningref
+package woowacourse.movie.model.data.screeningref
 
 import androidx.room.Dao
 import androidx.room.Insert

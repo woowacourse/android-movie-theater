@@ -1,4 +1,4 @@
-package woowacourse.movie.data.theater
+package woowacourse.movie.model.data.theater
 
 import androidx.room.Dao
 import androidx.room.Insert

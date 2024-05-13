@@ -7,20 +7,20 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.data.AppDatabase
-import woowacourse.movie.data.movie.MovieDao
-import woowacourse.movie.data.movie.toDto
-import woowacourse.movie.data.reservationref.ReservationRefDao
-import woowacourse.movie.data.reservationref.toDto
-import woowacourse.movie.data.reservationref.toReservationRef
-import woowacourse.movie.data.screeningref.ScreeningRefDao
-import woowacourse.movie.data.screeningref.toDto
-import woowacourse.movie.data.theater.TheaterDao
-import woowacourse.movie.data.theater.toDto
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.ReservationRef
 import woowacourse.movie.model.ScreeningRef
 import woowacourse.movie.model.Theater
+import woowacourse.movie.model.data.AppDatabase
+import woowacourse.movie.model.data.movie.MovieDao
+import woowacourse.movie.model.data.movie.toDto
+import woowacourse.movie.model.data.reservationref.ReservationRefDao
+import woowacourse.movie.model.data.reservationref.toDto
+import woowacourse.movie.model.data.reservationref.toReservationRef
+import woowacourse.movie.model.data.screeningref.ScreeningRefDao
+import woowacourse.movie.model.data.screeningref.toDto
+import woowacourse.movie.model.data.theater.TheaterDao
+import woowacourse.movie.model.data.theater.toDto
 
 class ReservationDbTest {
     private lateinit var movieDao: MovieDao
