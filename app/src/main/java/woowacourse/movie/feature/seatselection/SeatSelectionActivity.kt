@@ -87,17 +87,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         }
     }
 
-    override fun Button.showSeatNumber(seat: Seat) {
-        text = getString(R.string.select_seat_number, seat.row, seat.column)
-        setTextColor(setUpSeatColorByGrade(seat.grade))
-    }
-
-    override fun Button.updateReservationInformation(seat: Seat) {
-        setOnClickListener {
-            presenter.updateReservationState(seat, isSelected)
-        }
-    }
-
     override fun setUpSeatColorByGrade(grade: Grade): Int {
         return when (grade) {
             Grade.B -> getColor(R.color.purple_500)
@@ -216,6 +205,17 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     private fun initAmount() {
         binding.amount = getString(R.string.select_seat_default_price)
+    }
+
+    private fun Button.showSeatNumber(seat: Seat) {
+        text = getString(R.string.select_seat_number, seat.row, seat.column)
+        setTextColor(setUpSeatColorByGrade(seat.grade))
+    }
+
+    private fun Button.updateReservationInformation(seat: Seat) {
+        setOnClickListener {
+            presenter.updateReservationState(seat, isSelected)
+        }
     }
 
     companion object {

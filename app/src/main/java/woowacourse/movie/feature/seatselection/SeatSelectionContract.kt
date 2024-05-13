@@ -1,6 +1,5 @@
 package woowacourse.movie.feature.seatselection
 
-import android.widget.Button
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.seats.Grade
 import woowacourse.movie.model.seats.Seat
@@ -54,10 +53,6 @@ interface SeatSelectionContract {
         )
 
         fun setUpSeatColorByGrade(grade: Grade): Int
-
-        fun Button.showSeatNumber(seat: Seat)
-
-        fun Button.updateReservationInformation(seat: Seat)
 
         fun updateSeatSelectedState(
             index: Int,
