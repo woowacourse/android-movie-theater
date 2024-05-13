@@ -54,7 +54,6 @@ class RoomMovieRepository(
         val movie = screenMovieDao.getScreenMovieById(screenMovieId).movieEntity
         return reservationDao.insert(
             MovieReservationEntity(
-                screenMovieId,
                 movie,
                 seats.selectedSeats.map { mapOf(it.row to it.col) },
                 dateTime,
