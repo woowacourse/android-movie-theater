@@ -53,6 +53,13 @@
 - [x]: assertion 함수들 assertSoftly 로 묶기  
 
 - [x]: 푸시 알람 권한 요청 완전히 거절 시, 설정으로 이동하도록 변경
+- [x]: MovieDaoTest repeat(1000) 삭제
+- [x]: testApplicationContext 으로 네이밍 변경
+- [x]: MovieDetailContract 네이밍 변경
+    - showReleaseDates
+    -  showReleaseTimes
+- [x]: MovieBroadCastReceiver 함수 분리
+
 ## 푸시 알람 권한
 
 ## Study
