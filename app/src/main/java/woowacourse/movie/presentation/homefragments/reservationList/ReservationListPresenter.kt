@@ -67,12 +67,14 @@ class ReservationListPresenter(
                 val dao = reservationDatabase.reservationDao()
                 val data = dao.selectWithId(reservationId)
                 ticket =
-                    Ticket(
-                        movieTitle = data.movieTitle,
-                        screeningDateTime = "${data.screenDate} ${data.screenTime}",
-                        selectedSeats = data.selectedSeats.toSeatList(),
-                        theaterId = data.theaterId,
-                    )
+                    data?.movieTitle?.let {
+                        Ticket(
+                            movieTitle = it,
+                            screeningDateTime = "${data.screenDate} ${data.screenTime}",
+                            selectedSeats = data.selectedSeats.toSeatList(),
+                            theaterId = data.theaterId,
+                        )
+                    }
             }
         t.start()
         t.join()
