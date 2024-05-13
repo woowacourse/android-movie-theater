@@ -67,12 +67,11 @@ class AlarmReceiver() : BroadcastReceiver() {
                 .setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
 
-        notificationManager.notify(NOTIFICATION_ID, builder.build())
+        notificationManager.notify(id.toInt(), builder.build())
     }
 
     companion object {
-        const val NOTIFICATION_ID = 0
-        const val CHANNEL_ID = "alarm_id"
+        private const val CHANNEL_ID = "alarm_id"
         private const val CHANNEL_NAME = "alam"
         private const val INVALID_CHANNEL_ID = -1L
 
