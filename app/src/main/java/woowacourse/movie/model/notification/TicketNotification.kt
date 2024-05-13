@@ -27,24 +27,32 @@ class TicketNotification(private val context: Context) {
         notificationTitle: String,
         notificationText: String,
     ) {
-        val pendingIntent =
-            PendingIntent.getActivity(
-                context,
-                NOTIFICATION_ID,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-            )
-
-        val builder =
-            NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle(notificationTitle)
-                .setContentText(notificationText)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-                .setDefaults(NotificationCompat.DEFAULT_ALL)
-
+        val pendingIntent = notificationPendingIntent(intent)
+        val builder = notificationBuilder(pendingIntent, notificationTitle, notificationText)
         notificationManager.notify(NOTIFICATION_ID, builder.build())
+    }
+
+    private fun notificationPendingIntent(intent: Intent): PendingIntent {
+        return PendingIntent.getActivity(
+            context,
+            NOTIFICATION_ID,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+        )
+    }
+
+    private fun notificationBuilder(
+        pendingIntent: PendingIntent,
+        notificationTitle: String,
+        notificationText: String,
+    ): NotificationCompat.Builder {
+        return NotificationCompat.Builder(context, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle(notificationTitle)
+            .setContentText(notificationText)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .setDefaults(NotificationCompat.DEFAULT_ALL)
     }
 
     companion object {

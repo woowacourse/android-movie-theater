@@ -24,17 +24,46 @@ class TicketAlarm(private val context: Context) {
         val screeningDateTime = LocalDateTime.of(ticket.screeningDate, ticket.screeningTime)
         if (isBeforeToday(screeningDateTime)) return
 
-        val alarmTimeInMillis =
-            screeningDateTime
-                .minusMinutes(TICKET_ALARM_INTERVAL_MINUTE)
-                .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
-
+        val alarmTimeInMillis = screeningDateTime.toAlarmTimeMillis()
         val alarmPendingIntent = alarmPendingIntent(ticket)
-        alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarmTimeInMillis, alarmPendingIntent)
+        alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTimeInMillis, alarmPendingIntent)
     }
 
     private fun isBeforeToday(screeningDateTime: LocalDateTime): Boolean {
         return screeningDateTime.isBefore(LocalDateTime.now())
+    }
+
+    private fun LocalDateTime.toAlarmTimeMillis(): Long {
+        return minusMinutes(TICKET_ALARM_INTERVAL_MINUTE)
+            .atZone(ZoneId.systemDefault())
+            .toInstant()
+            .toEpochMilli()
+    }
+
+    private fun alarmPendingIntent(ticket: Ticket): PendingIntent {
+        val alarmIntent = alarmIntent(ticket)
+
+        return PendingIntent.getBroadcast(
+            context,
+            ticket.id.toInt(),
+            alarmIntent,
+            PendingIntent.FLAG_IMMUTABLE,
+        )
+    }
+
+    private fun alarmIntent(ticket: Ticket): Intent {
+        val notificationTitle = context.resources.getString(R.string.notification_title)
+        val notificationText =
+            context.resources.getString(
+                R.string.notification_description,
+                MovieRepositoryImpl.find(ticket.movieId).title,
+                TICKET_ALARM_INTERVAL_MINUTE,
+            )
+
+        return Intent(context, TicketAlarmBroadcastReceiver::class.java)
+            .putExtra(KEY_TICKET_ID, ticket.id)
+            .putExtra(KEY_NOTIFICATION_TITLE, notificationTitle)
+            .putExtra(KEY_NOTIFICATION_DESCRIPTION, notificationText)
     }
 
     fun cancelReservationAlarms(tickets: List<Ticket>) {
@@ -44,29 +73,6 @@ class TicketAlarm(private val context: Context) {
     fun cancelReservationAlarm(ticket: Ticket) {
         val alarmPendingIntent = alarmPendingIntent(ticket)
         alarmManager.cancel(alarmPendingIntent)
-    }
-
-    private fun alarmPendingIntent(ticket: Ticket): PendingIntent {
-        val notificationTitle = context.resources.getString(R.string.notification_title)
-        val notificationText =
-            context.resources.getString(
-                R.string.notification_description,
-                MovieRepositoryImpl.find(ticket.movieId).title,
-                TICKET_ALARM_INTERVAL_MINUTE,
-            )
-
-        val intent =
-            Intent(context, TicketAlarmBroadcastReceiver::class.java)
-                .putExtra(KEY_TICKET_ID, ticket.id)
-                .putExtra(KEY_NOTIFICATION_TITLE, notificationTitle)
-                .putExtra(KEY_NOTIFICATION_DESCRIPTION, notificationText)
-
-        return PendingIntent.getBroadcast(
-            context,
-            ticket.id.toInt(),
-            intent,
-            PendingIntent.FLAG_IMMUTABLE,
-        )
     }
 
     companion object {

@@ -19,8 +19,7 @@ abstract class TicketDatabase : RoomDatabase() {
 
         fun instance(context: Context): TicketDatabase {
             return instance ?: synchronized(this) {
-                val newInstance =
-                    Room.databaseBuilder(context, TicketDatabase::class.java, "ticket").build()
+                val newInstance = Room.databaseBuilder(context, TicketDatabase::class.java, "ticket").build()
                 instance = newInstance
                 newInstance
             }
