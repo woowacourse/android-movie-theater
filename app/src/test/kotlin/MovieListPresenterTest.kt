@@ -8,11 +8,12 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.model.Advertisement
 import woowacourse.movie.model.Movie
+import woowacourse.movie.model.data.AdvertisementRepository
 import woowacourse.movie.movielist.MovieListContract
 import woowacourse.movie.movielist.MovieListPresenter
 import woowacourse.movie.movielist.uimodel.toAdvertisementUiModel
 import woowacourse.movie.movielist.uimodel.toMovieUiModel
-import woowacourse.movie.repository.MovieRepository
+import woowacourse.movie.usecase.FetchAllMoviesUseCase
 
 @ExtendWith(MockKExtension::class)
 class MovieListPresenterTest {
@@ -20,7 +21,10 @@ class MovieListPresenterTest {
     private lateinit var view: MovieListContract.View
 
     @MockK
-    private lateinit var repository: MovieRepository
+    private lateinit var fetchAllMoviesUseCase: FetchAllMoviesUseCase
+
+    @MockK
+    private lateinit var advertisementRepository: AdvertisementRepository
 
     @InjectMockKs
     private lateinit var presenter: MovieListPresenter
@@ -30,8 +34,8 @@ class MovieListPresenterTest {
         val movieList = List(3) { Movie.STUB_A }
         val advertisementList = List(1) { Advertisement() }
         // given
-        every { repository.movies() } returns movieList
-        every { repository.advertisements() } returns advertisementList
+        every { fetchAllMoviesUseCase() } returns Result.success(movieList)
+        every { advertisementRepository.advertisements() } returns advertisementList
         // when
         presenter.loadContents()
         // then
@@ -43,8 +47,8 @@ class MovieListPresenterTest {
     @Test
     fun `영화를 선택하면 극장 목록이 보여진다`() {
         // when
-        presenter.selectMovie(0)
+        presenter.selectMovie(1)
         // then
-        verify { view.showTheaters(0) }
+        verify { view.showTheaters(1) }
     }
 }

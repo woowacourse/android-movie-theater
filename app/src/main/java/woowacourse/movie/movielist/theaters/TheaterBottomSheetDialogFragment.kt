@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import woowacourse.movie.data.DummyMovieRepository
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.databinding.BottomSheetTheaterBinding
 import woowacourse.movie.moviedetail.MovieDetailActivity
 import woowacourse.movie.movielist.AdapterClickListener
+import woowacourse.movie.util.buildFetchScreeningScheduleWithMovieIdAndTheaterId
+import woowacourse.movie.util.buildFetchTheatersWithMovieIdUseCase
 
 class TheaterBottomSheetDialogFragment :
     BottomSheetDialogFragment(),
@@ -34,7 +36,16 @@ class TheaterBottomSheetDialogFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         movieId = this.arguments?.getLong(EXTRA_SCREENING_MOVIE_ID) ?: error("movie id가 잘못 들어옴")
-        presenter = TheaterPresenter(DummyMovieRepository, this)
+        val db = (requireActivity().application as MovieApplication).db
+        val fetchTheatersWithMovieIdUseCase = buildFetchTheatersWithMovieIdUseCase(db)
+        val fetchScreeningScheduleWithMovieIdAndTheaterId =
+            buildFetchScreeningScheduleWithMovieIdAndTheaterId(db)
+        presenter =
+            TheaterPresenter(
+                this,
+                fetchTheatersWithMovieIdUseCase,
+                fetchScreeningScheduleWithMovieIdAndTheaterId,
+            )
         presenter.loadTheaters(movieId)
     }
 
@@ -51,13 +62,13 @@ class TheaterBottomSheetDialogFragment :
     }
 
     override fun navigateToMovieDetail(
-        screeningId: Long,
+        movieId: Long,
         theaterId: Long,
     ) {
         startActivity(
             MovieDetailActivity.getIntent(
                 requireContext(),
-                screeningId,
+                movieId,
                 theaterId,
             ),
         )

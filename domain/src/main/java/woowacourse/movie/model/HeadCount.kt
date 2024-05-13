@@ -2,6 +2,10 @@ package woowacourse.movie.model
 
 @JvmInline
 value class HeadCount(val count: Int = MIN_COUNT) {
+    init {
+        require(count >= 0) { "머릿수는 0 이상이어야 합니다" }
+    }
+
     fun increase(): HeadCount = HeadCount(count + INCREASE_COUNT)
 
     fun decrease(): HeadCount {

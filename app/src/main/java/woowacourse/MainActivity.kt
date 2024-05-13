@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
         movieListFragment = MovieListFragment()
         settingMovieFragment = SettingFragment()
         reservationListFragment = ReservationListFragment()
-
         binding.bnvMain.selectedItemId = R.id.menu_home
         supportFragmentManager.findFragmentById(R.id.fcv_main) ?: changeFragment(
             movieListFragment,

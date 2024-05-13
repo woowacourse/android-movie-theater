@@ -1,9 +1,10 @@
 package woowacourse.movie.moviedetail
 
 import woowacourse.movie.moviedetail.uimodel.BookingDetailUiModel
+import woowacourse.movie.moviedetail.uimodel.BookingInfoUiModel
 import woowacourse.movie.moviedetail.uimodel.HeadCountUiModel
-import woowacourse.movie.moviedetail.uimodel.ReservationPlanUiModel
-import woowacourse.movie.moviedetail.uimodel.ScreeningDateTimesUiModel
+import woowacourse.movie.moviedetail.uimodel.MovieDetailUiModel
+import woowacourse.movie.moviedetail.uimodel.ScheduleUiModels
 
 interface MovieDetailContract {
     interface View {
@@ -11,29 +12,40 @@ interface MovieDetailContract {
 
         fun intendToMinusCount()
 
-        fun showMovieInfo(reservation: ReservationPlanUiModel)
+        fun showMovieInfo(reservation: MovieDetailUiModel)
 
         fun showCantDecreaseError(minCount: Int)
 
         fun showBookingDetail(
-            screeningDateTimeUiModels: ScreeningDateTimesUiModel,
+            screeningDateTimeUiModels: ScheduleUiModels,
             bookingDetailUiModel: BookingDetailUiModel,
         )
 
         fun updateHeadCount(updatedCount: HeadCountUiModel)
 
-        fun navigateToReservationResultView(reservationId: Long)
-
         fun showScreeningMovieError()
 
         fun showMovieReservationError()
+
+        fun showTime(times: List<String>)
+
+        fun navigateToSeatSelect(bookingInfoUiModel: BookingInfoUiModel)
     }
 
     interface Presenter {
-        fun loadMovieDetail(screeningId: Long)
+        fun loadMovieDetail(
+            movieId: Long,
+            theaterId: Long,
+        )
 
         fun plusCount()
 
         fun minusCount()
+
+        fun selectDate(position: Int)
+
+        fun selectTime(position: Int)
+
+        fun confirm()
     }
 }

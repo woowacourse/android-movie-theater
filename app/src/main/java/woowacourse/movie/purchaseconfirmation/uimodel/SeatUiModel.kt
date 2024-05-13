@@ -10,8 +10,8 @@ data class SeatUiModel(
             row: Int,
             col: Int,
         ): String {
-            val rowLetter = 'A' + row
-            return "$rowLetter${col + 1}"
+            val rowLetter = 'A' + row - 1
+            return "$rowLetter$col"
         }
     }
 }

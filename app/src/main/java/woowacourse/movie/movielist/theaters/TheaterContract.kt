@@ -5,7 +5,7 @@ interface TheaterContract {
         fun showTheaters(theaterUiModels: List<TheaterUiModel>)
 
         fun navigateToMovieDetail(
-            screeningId: Long,
+            movieId: Long,
             theaterId: Long,
         )
     }

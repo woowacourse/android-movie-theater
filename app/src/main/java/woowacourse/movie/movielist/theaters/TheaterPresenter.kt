@@ -1,31 +1,43 @@
 package woowacourse.movie.movielist.theaters
 
-import woowacourse.movie.repository.MovieRepository
+import woowacourse.movie.usecase.FetchScreeningScheduleWithMovieIdAndTheaterIdUseCase
+import woowacourse.movie.usecase.FetchTheatersWithMovieIdUseCase
+import woowacourse.movie.util.runOnOtherThreadAndReturn
 
 class TheaterPresenter(
-    private val repository: MovieRepository,
     private val view: TheaterContract.View,
+    private val fetchTheatersWithMovieIdUseCase: FetchTheatersWithMovieIdUseCase,
+    private val fetchScreeningScheduleWithMovieIdAndTheaterIdUseCase: FetchScreeningScheduleWithMovieIdAndTheaterIdUseCase,
 ) : TheaterContract.Presenter {
     override fun loadTheaters(movieId: Long) {
-        val theaters = repository.theatersByMovieId(movieId)
-        runCatching {
+        val result = runOnOtherThreadAndReturn { fetchTheatersWithMovieIdUseCase(movieId) }
+        result.map { theaters ->
             theaters.map { theater ->
-                val screening = repository.screeningByMovieIdAndTheaterId(movieId, theater.id) ?: error("선택한 상영이 존재하지 않습니다")
-                screening.theater.toTheaterUiModel(screening.totalScreeningTimesNum())
+                val timeCount = getScheduleTimeCount(movieId, theater.id)
+                TheaterUiModel(theater.id, theater.name, timeCount.toString())
             }
         }.onSuccess {
             view.showTheaters(it)
+        }.onFailure {
+            // view.showError(it)
+            error(it)
         }
     }
+
+    private fun getScheduleTimeCount(
+        movieId: Long,
+        theaterId: Long,
+    ) = runOnOtherThreadAndReturn {
+        fetchScreeningScheduleWithMovieIdAndTheaterIdUseCase(
+            movieId,
+            theaterId,
+        ).map { it.totalScreeningTimesNum() }
+    }.getOrThrow()
 
     override fun selectTheater(
         movieId: Long,
         theaterId: Long,
     ) {
-        runCatching {
-            repository.screeningByMovieIdAndTheaterId(movieId, theaterId) ?: error("선택한 상영이 존재하지 않습니다")
-        }.onSuccess {
-            view.navigateToMovieDetail(it.id, theaterId)
-        }
+        view.navigateToMovieDetail(movieId, theaterId)
     }
 }

@@ -7,7 +7,7 @@
     <data>
         <variable
             name="movieReservationUiModel"
-            type="woowacourse.movie.moviedetail.uimodel.ReservationPlanUiModel" />
+            type="woowacourse.movie.moviedetail.uimodel.MovieDetailUiModel" />
         <variable
             name="view"
             type="woowacourse.movie.moviedetail.MovieDetailContract.View" />

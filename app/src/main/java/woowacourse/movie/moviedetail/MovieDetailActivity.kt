@@ -8,16 +8,17 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.R
-import woowacourse.movie.data.DummyMovieRepository
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.moviedetail.uimodel.BookingDetailUiModel
 import woowacourse.movie.moviedetail.uimodel.BookingInfoUiModel
 import woowacourse.movie.moviedetail.uimodel.HeadCountUiModel
-import woowacourse.movie.moviedetail.uimodel.ReservationPlanUiModel
-import woowacourse.movie.moviedetail.uimodel.ScreeningDateTimesUiModel
-import woowacourse.movie.purchaseconfirmation.PurchaseConfirmationActivity
+import woowacourse.movie.moviedetail.uimodel.MovieDetailUiModel
+import woowacourse.movie.moviedetail.uimodel.ScheduleUiModels
 import woowacourse.movie.selectseat.SelectSeatActivity
+import woowacourse.movie.util.buildFetchScreeningScheduleWithMovieIdAndTheaterId
+import woowacourse.movie.util.buildFetchScreeningsWithMovieIdAndTheaterIdUseCase
 import woowacourse.movie.util.bundleParcelable
 import woowacourse.movie.util.showErrorToastMessage
 
@@ -33,29 +34,32 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         super.onCreate(savedInstanceState)
         binding = ActivityMovieDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val id = movieId()
         initClickListener()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        val db = (application as MovieApplication).db
         presenter =
             MovieDetailPresenter(
-                this, DummyMovieRepository,
+                this,
+                buildFetchScreeningScheduleWithMovieIdAndTheaterId(db),
+                buildFetchScreeningsWithMovieIdAndTheaterIdUseCase(db),
             )
-        presenter.loadMovieDetail(id)
+        val movieId = movieId()
+        val theaterId = theaterId()
+        presenter.loadMovieDetail(movieId, theaterId)
         binding.bookingDetail = bookingDetailUiModel
         binding.view = this
     }
 
     private fun movieId(): Long {
-        val movieId = intent.getLongExtra(EXTRA_SCREEN_MOVIE_ID, INVALID_ID)
-        val theaterId = intent.getLongExtra(EXTRA_THEATER_ID, INVALID_ID)
-        if (movieId == INVALID_ID || theaterId == INVALID_ID) {
+        val movieId = intent.getLongExtra(MOVIE_ID, INVALID_ID)
+        if (movieId == INVALID_ID) {
             error("movieId에 관한 정보가 없습니다.")
         }
         return movieId
     }
 
     private fun theaterId(): Long {
-        val theaterId = intent.getLongExtra(EXTRA_THEATER_ID, INVALID_ID)
+        val theaterId = intent.getLongExtra(THEATER_ID, INVALID_ID)
         if (theaterId == INVALID_ID) {
             error("theaterId에 관한 정보가 없습니다.")
         }
@@ -84,7 +88,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
 
     private fun initClickListener() {
         binding.btnDetailComplete.setOnClickListener {
-            startActivity(SelectSeatActivity.getIntent(this, BookingInfoUiModel(movieId(), theaterId(), bookingDetailUiModel)))
+            presenter.confirm()
         }
     }
 
@@ -103,8 +107,8 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         presenter.minusCount()
     }
 
-    override fun showMovieInfo(reservation: ReservationPlanUiModel) {
-        binding.movieReservationUiModel = reservation
+    override fun showMovieInfo(movieDetail: MovieDetailUiModel) {
+        binding.movieReservationUiModel = movieDetail
     }
 
     override fun updateHeadCount(updatedCount: HeadCountUiModel) {
@@ -112,8 +116,13 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         binding.bookingDetail = bookingDetailUiModel
     }
 
-    override fun navigateToReservationResultView(reservationId: Long) {
-        startActivity(PurchaseConfirmationActivity.getIntent(this, reservationId))
+    override fun navigateToSeatSelect(bookingInfoUiModel: BookingInfoUiModel) {
+        startActivity(
+            SelectSeatActivity.getIntent(
+                this,
+                bookingInfoUiModel,
+            ),
+        )
     }
 
     override fun showScreeningMovieError() {
@@ -124,36 +133,41 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
         showErrorToastMessage(this, getString(R.string.reserve_error_message))
     }
 
+    override fun showTime(times: List<String>) {
+        timeAdapter.clear()
+        timeAdapter.addAll(times)
+    }
+
     override fun showCantDecreaseError(minCount: Int) {
         showErrorToastMessage(this, getString(R.string.min_count_error_message, minCount))
     }
 
     override fun showBookingDetail(
-        screeningDateTimesUiModel: ScreeningDateTimesUiModel,
+        screeningDateTimeUiModels: ScheduleUiModels,
         bookingDetailUiModel: BookingDetailUiModel,
     ) {
         this.bookingDetailUiModel = bookingDetailUiModel
-        initSpinner(screeningDateTimesUiModel)
+        initSpinner(screeningDateTimeUiModels)
     }
 
-    private fun initSpinner(screeningDateTimesUiModel: ScreeningDateTimesUiModel) {
+    private fun initSpinner(scheduleUiModels: ScheduleUiModels) {
         dateAdapter =
             ArrayAdapter(
                 this,
                 R.layout.item_spinner,
-                screeningDateTimesUiModel.dates(),
+                scheduleUiModels.dates(),
             )
 
         timeAdapter =
-            ArrayAdapter(this, R.layout.item_spinner, screeningDateTimesUiModel.defaultTimes())
+            ArrayAdapter(this, R.layout.item_spinner, scheduleUiModels.defaultTimes())
 
         binding.spinnerDetailDate.adapter = dateAdapter
         binding.spinnerDetailTime.adapter = timeAdapter
 
-        setSpinnerClickListener(screeningDateTimesUiModel)
+        setSpinnerClickListener(scheduleUiModels)
     }
 
-    private fun setSpinnerClickListener(screeningDateTimesUiModel: ScreeningDateTimesUiModel) {
+    private fun setSpinnerClickListener(scheduleUiModels: ScheduleUiModels) {
         binding.spinnerDetailDate.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -162,12 +176,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
                     position: Int,
                     id: Long,
                 ) {
-                    bookingDetailUiModel =
-                        bookingDetailUiModel.updateDate(
-                            position, binding.spinnerDetailDate.selectedItem.toString(),
-                        )
-                    timeAdapter.clear()
-                    timeAdapter.addAll(screeningDateTimesUiModel.screeningTimeOfDate(position))
+                    presenter.selectDate(position)
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -181,10 +190,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
                     position: Int,
                     id: Long,
                 ) {
-                    bookingDetailUiModel =
-                        bookingDetailUiModel.updateTime(
-                            position, binding.spinnerDetailTime.selectedItem.toString(),
-                        )
+                    presenter.selectTime(position)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -193,19 +199,19 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     }
 
     companion object {
-        const val EXTRA_SCREEN_MOVIE_ID: String = "screenMovieId"
-        const val EXTRA_THEATER_ID: String = "theaterId"
+        const val MOVIE_ID: String = "movieId"
+        const val THEATER_ID: String = "theaterId"
         const val INVALID_ID = -1L
         private const val STATE_BOOKING_ID = "booking"
 
         fun getIntent(
             context: Context,
-            screenMovieId: Long,
+            movieId: Long,
             theaterId: Long,
         ): Intent {
             return Intent(context, MovieDetailActivity::class.java).apply {
-                putExtra(EXTRA_SCREEN_MOVIE_ID, screenMovieId)
-                putExtra(EXTRA_THEATER_ID, theaterId)
+                putExtra(MOVIE_ID, movieId)
+                putExtra(THEATER_ID, theaterId)
             }
         }
     }

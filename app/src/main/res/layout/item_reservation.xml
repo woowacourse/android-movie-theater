@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="reservation"
+            type="woowacourse.movie.reservationlist.uimodel.ReservationUiModel" />
+
+        <variable
+            name="clickListener"
+            type="woowacourse.movie.reservationlist.AdapterClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{() -> clickListener.onClick(reservation.id)}"
+        tools:context=".movielist.MovieListFragment">
+
+        <TextView
+            android:id="@+id/tv_reservation_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:text="@{reservation.date}"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tv_reservation_item_movie_title"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_reservation_item_movie_title"
+            tools:text="2024.3.1" />
+        <TextView
+            android:id="@+id/tv_reservation_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:text="@{reservation.time}"
+            android:textColor="@color/black"
+            android:layout_marginStart="8dp"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/tv_reservation_date"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_reservation_item_movie_title"
+            tools:text="17:00" />
+        <TextView
+            android:id="@+id/tv_reservation_item_theater"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/roboto"
+            android:text="@{reservation.theater}"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintStart_toEndOf="@+id/tv_reservation_time"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_reservation_item_movie_title"
+            tools:text="선릉 극장" />
+
+        <TextView
+            android:id="@+id/tv_reservation_item_movie_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@{reservation.movieTitle}"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_reservation_date"
+            tools:text="해리 포터와 마법사의 돌" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

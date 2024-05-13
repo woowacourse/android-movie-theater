@@ -8,7 +8,7 @@ import android.view.MenuItem
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import woowacourse.movie.data.DummyMovieRepository
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.databinding.ActivitySelectSeatBinding
 import woowacourse.movie.moviedetail.uimodel.BookingInfoUiModel
 import woowacourse.movie.moviedetail.uimodel.toHeadCount
@@ -19,6 +19,8 @@ import woowacourse.movie.selectseat.uimodel.PriceUiModel
 import woowacourse.movie.selectseat.uimodel.SeatUiModel
 import woowacourse.movie.selectseat.uimodel.toParcelable
 import woowacourse.movie.selectseat.uimodel.toUiModel
+import woowacourse.movie.util.buildFetchScreeningWithId
+import woowacourse.movie.util.buildPutReservationUseCase
 import woowacourse.movie.util.intentParcelable
 import woowacourse.movie.util.showAlertDialog
 
@@ -38,7 +40,11 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
         bookingInfoUiModel =
             intent.intentParcelable(EXTRA_BOOKING_ID, BookingInfoUiModel::class.java)
                 ?: error("bookingInfo에 대한 정보가 없습니다.")
-        presenter = SelectSeatPresenter(this, DummyMovieRepository)
+        val db = (application as MovieApplication).db
+        val putReservationRefRepository = buildPutReservationUseCase(db)
+        val fetchScreeningWithIdUseCase = buildFetchScreeningWithId(db)
+        presenter =
+            SelectSeatPresenter(this, fetchScreeningWithIdUseCase, putReservationRefRepository)
 
         initView(bookingInfoUiModel)
     }
@@ -61,8 +67,8 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
     }
 
     private fun initView(bookingInfoUiModel: BookingInfoUiModel) {
-        presenter.initSeats(bookingInfoUiModel.screenMovieId)
-        presenter.loadReservationInfo(bookingInfoUiModel.screenMovieId)
+        presenter.initSeats(bookingInfoUiModel.screeningId)
+        presenter.loadReservationInfo(bookingInfoUiModel.screeningId)
         presenter.initMaxCount(bookingInfoUiModel.count.toHeadCount())
         binding.btnSelectSeatReserve.setOnClickListener {
             confirmAlertDialog()
@@ -133,7 +139,7 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
             "정말 예매하시겠습니까?",
             "예매 완료",
             onPositiveButtonClicked = {
-                presenter.completeReservation(bookingInfoUiModel)
+                presenter.completeReservation()
             },
             "취소",
         )

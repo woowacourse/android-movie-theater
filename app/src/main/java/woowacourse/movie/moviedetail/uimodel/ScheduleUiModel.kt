@@ -4,7 +4,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
-data class ScreeningDateTimeUiModel(
+data class ScheduleUiModel(
     val date: String,
     val times: List<String>,
 ) {

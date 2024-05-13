@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import woowacourse.movie.data.DummyMovieRepository
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.databinding.FragmentMovieListBinding
+import woowacourse.movie.model.data.AdvertisementRepository
 import woowacourse.movie.movielist.theaters.TheaterBottomSheetDialogFragment
 import woowacourse.movie.movielist.uimodel.ListItemUiModel
+import woowacourse.movie.util.buildFetchAllMoviesUseCase
 
 class MovieListFragment : Fragment(), MovieListContract.View, AdapterClickListener {
     private lateinit var presenter: MovieListPresenter
@@ -21,7 +23,7 @@ class MovieListFragment : Fragment(), MovieListContract.View, AdapterClickListen
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentMovieListBinding.inflate(inflater, container, false)
-        movieAdapter = MovieAdapter(kotlin.collections.listOf(), this)
+        movieAdapter = MovieAdapter(listOf(), this)
         val listView = binding.rcvScreening
         listView.adapter = movieAdapter
         return binding.root
@@ -32,7 +34,9 @@ class MovieListFragment : Fragment(), MovieListContract.View, AdapterClickListen
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = MovieListPresenter(this, DummyMovieRepository)
+        val db = (requireActivity().application as MovieApplication).db
+        val fetchAllMoviesUseCase = buildFetchAllMoviesUseCase(db)
+        presenter = MovieListPresenter(this, AdvertisementRepository, fetchAllMoviesUseCase)
         presenter.loadContents()
     }
 
