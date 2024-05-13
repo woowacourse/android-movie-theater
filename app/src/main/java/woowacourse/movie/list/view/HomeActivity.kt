@@ -1,7 +1,6 @@
 package woowacourse.movie.list.view
 
 import android.Manifest
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -12,19 +11,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityHomeBinding
+import woowacourse.movie.list.contract.HomeContract
+import woowacourse.movie.list.presenter.HomePresenter
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), HomeContract.View {
     private lateinit var binding: ActivityHomeBinding
+    private val presenter = HomePresenter(this)
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-            val editor: SharedPreferences.Editor = sharedPreference.edit()
-            editor.putBoolean("notification", isGranted).apply()
+            presenter.saveInSharedPreference(isGranted)
         }
-    private lateinit var sharedPreference: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedPreference = getSharedPreferences("settings", MODE_PRIVATE)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         binding.home = this
         setContentView(binding.root)
