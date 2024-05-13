@@ -1,7 +1,6 @@
 package woowacourse.movie.repository
 
 import android.content.Context
-import android.util.Log
 import woowacourse.movie.database.ReservationData
 import woowacourse.movie.database.ReservationDatabase
 import woowacourse.movie.model.Seat
@@ -42,8 +41,6 @@ class ReservationRepositoryImpl(context: Context) : ReservationRepository {
             }
         t.start()
         t.join()
-        Log.d("repo crong", "$ticketId")
-        Log.d("repo crong", "$reservationData")
         return reservationData?.let {
             Ticket(
                 movieTitle = it.movieTitle,

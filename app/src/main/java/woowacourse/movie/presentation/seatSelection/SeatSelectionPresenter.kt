@@ -108,7 +108,6 @@ class SeatSelectionPresenter(
             }
         t.start()
         t.join()
-        Log.d("seatselection crong", "$ticketId")
         return ticketId
     }
 

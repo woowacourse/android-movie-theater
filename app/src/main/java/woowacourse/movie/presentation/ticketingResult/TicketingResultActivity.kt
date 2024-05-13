@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -39,9 +38,6 @@ class TicketingResultActivity() :
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
-        Log.d("result crong", "${intent.extras}")
-        Log.d("result crong", "${intent.getLongExtra(TICKET_ID, -1L)}")
-
         var movieTicket =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 intent.getParcelableExtra(EXTRA_MOVIE_TICKET, Ticket::class.java)
@@ -50,14 +46,8 @@ class TicketingResultActivity() :
             }
 
         if (movieTicket == null) {
-            // val ticketId = intent.getLongExtra(TICKET_ID, -1L)
             val ticketId = intent.extras?.getLong(TICKET_ID) ?: -1L
-            // val ticketId = 1L
             movieTicket = presenter.loadTicket(ticketId, ReservationRepositoryImpl(this))
-            // intent.extras?.getLong(TICKET_ID)
-
-            Log.d("result crong", "$ticketId")
-            Log.d("result crong", "$movieTicket")
         }
 
         if (movieTicket != null) {

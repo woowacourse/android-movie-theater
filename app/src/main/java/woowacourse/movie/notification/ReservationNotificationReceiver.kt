@@ -8,10 +8,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
-import woowacourse.movie.notification.ReservationNotification.PENDING_REQUEST_CODE
+import woowacourse.movie.notification.ReservationNotification.REQUEST_ID
 import woowacourse.movie.notification.ReservationNotification.getNextNotificationTicketId
 import woowacourse.movie.presentation.homefragments.setting.SettingFragment.Companion.PUSH_SETTING
 import woowacourse.movie.presentation.ticketingResult.TicketingResultActivity
@@ -27,14 +26,9 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
         setBootReceiver(intent, context)
         if (!isPushOnState(context)) return
 
-        // val ticketId = intent?.getLongExtra(TICKET_ID_RECEIVER, -1L)
-        val ticketId = intent?.getLongExtra(TICKET_ID_RECEIVER2, -1L)
-        // val extras = intent?.extras
-
-        Log.d("receiver crong", "${intent?.extras}")
-        Log.d("receiver crong", "$ticketId")
+        val ticketId = intent?.getLongExtra(TICKET_ID_RECEIVER, -1L)
         val movieTitle = intent?.getStringExtra(MOVIE_TITLE) ?: ""
-        Log.d("receiver crong", movieTitle)
+        val requestId = intent?.getIntExtra(REQUEST_ID, 0)
 
         val notificationManager =
             context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -45,6 +39,7 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
             makePendingIntent(
                 context = context,
                 ticketId = ticketId,
+                requestId = requestId,
             )
 
         val notification =
@@ -88,15 +83,15 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
     private fun makePendingIntent(
         context: Context,
         ticketId: Long?,
+        requestId: Int?,
     ): PendingIntent {
         val notificationIntent = Intent(context, TicketingResultActivity::class.java)
         val bundle = Bundle()
         bundle.putLong(TICKET_ID, ticketId!!)
         notificationIntent.putExtras(bundle)
-        Log.d("receiver2 crong", "$ticketId")
         return PendingIntent.getActivity(
             context,
-            PENDING_REQUEST_CODE,
+            requestId!!,
             notificationIntent,
             PendingIntent.FLAG_IMMUTABLE,
         )
@@ -139,7 +134,6 @@ class ReservationNotificationReceiver : BroadcastReceiver() {
         const val MOVIE_TITLE = "movieTitle"
         const val CHANNEL_ID = "ticket_notification_channel"
         const val CHANNEL_NAME = "Ticket Notifications"
-        const val TICKET_ID_RECEIVER = "ticket_Id"
-        const val TICKET_ID_RECEIVER2 = "ticket_Id"
+        const val TICKET_ID_RECEIVER = "ticket_id"
     }
 }

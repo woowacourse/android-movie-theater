@@ -9,17 +9,16 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import woowacourse.movie.notification.ReservationNotificationReceiver.Companion.MOVIE_TITLE
-import woowacourse.movie.notification.ReservationNotificationReceiver.Companion.TICKET_ID_RECEIVER2
+import woowacourse.movie.notification.ReservationNotificationReceiver.Companion.TICKET_ID_RECEIVER
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
 object ReservationNotification {
-    private const val NOTIFICATION_ID = "notificationId"
+    const val NOTIFICATION_ID = "notificationId"
+    const val REQUEST_ID = "requestId"
     private const val DEFAULT_NOTIFICATION_ID = 0
-    const val PENDING_REQUEST_CODE = 0
     private const val ALARM_MINUTE = 0
 
     fun setNotification(
@@ -29,17 +28,13 @@ object ReservationNotification {
         screeningDateTime: String,
     ) {
         // Test용 2millisecond 추가한 값
-        val screeningTime = Calendar.getInstance().timeInMillis + 2
+        // val screeningTime = Calendar.getInstance().timeInMillis + 2
         // 실제 영화 상영 시간
-        // val screeningTime = makeScreeningTime(screeningDateTime)
-        Log.d("crong", "$screeningTime")
+        val screeningTime = makeScreeningTime(screeningDateTime)
         if (!isValidScreeningTime(screeningTime)) return
-        Log.d("crong", "valid")
-        Log.d("crong", "$ticketId")
 
         val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
 
-        Log.d("crong", "$ticketId")
         val pendingIntent =
             makePendingIntent(
                 context = context,
@@ -60,7 +55,6 @@ object ReservationNotification {
                     calendar.timeInMillis,
                     pendingIntent,
                 )
-                Log.d("crong", "${calendar.timeInMillis}")
             }
         } else {
             alarmManager.set(
@@ -89,17 +83,15 @@ object ReservationNotification {
         ticketId: Long,
     ): PendingIntent {
         val intent = Intent(context, ReservationNotificationReceiver::class.java)
-        // intent.putExtra(MOVIE_TITLE, movieTitle)
-        // intent.putExtra(TICKET_ID_RECEIVER2, ticketId)
         val bundle = Bundle()
-        bundle.putLong(TICKET_ID_RECEIVER2, ticketId)
+        bundle.putLong(TICKET_ID_RECEIVER, ticketId)
         bundle.putString(MOVIE_TITLE, movieTitle)
+        bundle.putInt(REQUEST_ID, getTicketId(sharedPreferences = context.getSharedPreferences(NOTIFICATION_ID, 0)))
         intent.putExtras(bundle)
-        Log.d("Notification crong", "$ticketId")
 
         return PendingIntent.getBroadcast(
             context,
-            PENDING_REQUEST_CODE,
+            getTicketId(sharedPreferences = context.getSharedPreferences(NOTIFICATION_ID, 0)),
             intent,
             PendingIntent.FLAG_IMMUTABLE,
         )
@@ -125,7 +117,7 @@ object ReservationNotification {
         return ticketId < Int.MAX_VALUE - 1
     }
 
-    private fun getTicketId(sharedPreferences: SharedPreferences): Int {
+    fun getTicketId(sharedPreferences: SharedPreferences): Int {
         return sharedPreferences.getInt(NOTIFICATION_ID, DEFAULT_NOTIFICATION_ID)
     }
 
