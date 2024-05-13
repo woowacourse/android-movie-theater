@@ -14,6 +14,6 @@ class MovieSettingPresenter(
 
     override fun updateNotificationSelection(isChecked: Boolean) {
         val result = moviePreferences.setBoolean(KEY_RECEIVE_NOTIFICATION, isChecked)
-        view.updateSwitchStatus(result)
+        view.updateReceiveNotificationStatus(result)
     }
 }

@@ -6,7 +6,7 @@ interface MovieSettingContract {
     interface View : HandleError {
         fun setInitialSetting(isEnabled: Boolean)
 
-        fun updateSwitchStatus(isEnabled: Boolean)
+        fun updateReceiveNotificationStatus(isEnabled: Boolean)
     }
 
     interface Presenter {

@@ -50,7 +50,7 @@ class MovieSettingFragment : Fragment(), MovieSettingContract.View {
         }
     }
 
-    override fun updateSwitchStatus(isEnabled: Boolean) {
+    override fun updateReceiveNotificationStatus(isEnabled: Boolean) {
         binding.isNotificationActive = isEnabled
         binding.executePendingBindings()
     }
