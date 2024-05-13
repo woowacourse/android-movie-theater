@@ -18,7 +18,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.rule.GrantPermissionRule
 import androidx.test.runner.AndroidJUnit4
 import org.hamcrest.Description
 import org.hamcrest.Matcher
@@ -43,10 +42,6 @@ class MovieSeatSelectionActivityTest {
 
     @get:Rule
     val activityRule = ActivityScenarioRule<MovieSeatSelectionActivity>(intent)
-
-    @get:Rule
-    val permissionRule: GrantPermissionRule =
-        GrantPermissionRule.grant(android.Manifest.permission.POST_NOTIFICATIONS)
 
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
     private val bGradeColor = ContextCompat.getColor(context, R.color.b_grade)

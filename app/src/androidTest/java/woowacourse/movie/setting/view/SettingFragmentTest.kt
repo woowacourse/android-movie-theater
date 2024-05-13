@@ -11,7 +11,6 @@ import androidx.test.espresso.matcher.ViewMatchers.isNotEnabled
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.rule.GrantPermissionRule
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -22,10 +21,6 @@ import woowacourse.movie.R
 class SettingFragmentTest {
     @get:Rule
     val activityRule = ActivityScenarioRule(MovieMainActivity::class.java)
-
-    @get:Rule
-    val permissionRule: GrantPermissionRule =
-        GrantPermissionRule.grant(android.Manifest.permission.POST_NOTIFICATIONS)
 
     @Test
     fun `알림_설정을_하는_switch가_보인다`() {

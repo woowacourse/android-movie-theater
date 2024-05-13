@@ -7,7 +7,6 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import androidx.test.rule.GrantPermissionRule
 import androidx.test.runner.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
@@ -37,10 +36,6 @@ class MovieResultActivityTest {
 
     @get:Rule
     val activityRule = ActivityScenarioRule<MovieResultActivity>(intent)
-
-    @get:Rule
-    val permissionRule: GrantPermissionRule =
-        GrantPermissionRule.grant(android.Manifest.permission.POST_NOTIFICATIONS)
 
     @Test
     fun `예매한_영화의_제목이_표시된다`() {
