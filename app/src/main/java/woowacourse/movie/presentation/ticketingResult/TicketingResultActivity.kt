@@ -2,13 +2,13 @@ package woowacourse.movie.presentation.ticketingResult
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.databinding.ActivityTicketingResultBinding
 import woowacourse.movie.model.Reservation
+import woowacourse.movie.utils.getParcelableReservationExtra
 
 class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.View {
     private lateinit var binding: ActivityTicketingResultBinding
@@ -20,12 +20,8 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val movieReservation =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                intent.getParcelableExtra(EXTRA_MOVIE_RESERVATION, Reservation::class.java)
-            } else {
-                intent.getParcelableExtra(EXTRA_MOVIE_RESERVATION)
-            }
+        val movieReservation = intent.getParcelableReservationExtra(EXTRA_MOVIE_RESERVATION)
+
         presenter.loadTicketInfo(movieReservation)
     }
 

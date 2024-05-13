@@ -3,8 +3,8 @@ package woowacourse.movie.notification
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import woowacourse.movie.model.Reservation
+import woowacourse.movie.notification.AlarmReceiver.Companion.createIntent
 import woowacourse.movie.utils.dateFormatter
 import woowacourse.movie.utils.timeFormatter
 import java.time.LocalDate
@@ -25,10 +25,7 @@ class AlarmController(private val context: Context) {
     }
 
     private fun createAlarmPendingIntent(reservation: Reservation): PendingIntent {
-        val intent =
-            Intent(context, AlarmReceiver::class.java).apply {
-                putExtra("reservation", reservation)
-            }
+        val intent = createIntent(context, reservation)
 
         return PendingIntent.getBroadcast(
             context,
