@@ -59,7 +59,7 @@ data class MovieReservationEntity(
                 LocalDateTime.of(2024, 3, 1, 9, 0),
                 3,
                 0,
-                0L,
+                1L,
             )
     }
 }

@@ -65,10 +65,10 @@ class MovieDatabaseTest {
         // when
         movieDao.insert(MovieEntity.STUB)
         theaterDao.insertAll(MovieTheaterEntity.STUB_A, MovieTheaterEntity.STUB_B, MovieTheaterEntity.STUB_C)
-        movieReservationDao.insertAll(MovieReservationEntity.STUB)
+        val id = movieReservationDao.insert(MovieReservationEntity.STUB)
 
         // given
-        val reservation = movieReservationDao.getMovieReservationById(MovieReservationEntity.STUB.id)
+        val reservation = movieReservationDao.getMovieReservationById(id)
 
         // then
         assertThat(reservation).isEqualTo(MovieReservationEntity.STUB)
