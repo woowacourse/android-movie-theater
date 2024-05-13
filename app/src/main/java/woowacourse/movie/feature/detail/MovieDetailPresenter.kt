@@ -14,7 +14,7 @@ class MovieDetailPresenter(
     override fun loadMovieDetail(movieId: Long) {
         val movie =
             runCatching {
-                MovieRepositoryImpl.getMovieById(movieId)
+                MovieRepositoryImpl.find(movieId)
             }.getOrElse {
                 view.showToastInvalidMovieIdError(it)
                 return
@@ -45,7 +45,7 @@ class MovieDetailPresenter(
         screeningTime: String,
         theaterPosition: Int,
     ) {
-        val movie = MovieRepositoryImpl.getMovieById(movieId)
+        val movie = MovieRepositoryImpl.find(movieId)
         val theaterName = movie.theaters[theaterPosition].name
 
         val reservationId =

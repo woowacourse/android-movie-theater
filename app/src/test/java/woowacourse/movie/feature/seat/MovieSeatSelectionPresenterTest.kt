@@ -69,7 +69,7 @@ class MovieSeatSelectionPresenterTest {
 
         // then
         val reservation = reservationSlot.captured
-        val movie = MovieRepositoryImpl.getMovieById(reservation.movieId)
+        val movie = MovieRepositoryImpl.find(reservation.movieId)
         assertThat(reservation.id).isEqualTo(reservationId)
         verify { view.setUpReservation(reservation, movie) }
     }

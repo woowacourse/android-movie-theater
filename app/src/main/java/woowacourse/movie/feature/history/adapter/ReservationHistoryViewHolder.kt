@@ -13,7 +13,7 @@ class ReservationHistoryViewHolder(
         ticket: Ticket,
         onReservationHistoryItemClickListener: ReservationHistoryItemClickListener,
     ) {
-        val movie = MovieRepositoryImpl.getMovieById(ticket.movieId)
+        val movie = MovieRepositoryImpl.find(ticket.movieId)
         binding.reservationHistory = ReservationHistoryUiModel.from(movie, ticket)
         binding.root.setOnClickListener {
             onReservationHistoryItemClickListener(ticket)

@@ -17,7 +17,7 @@ class MovieResultPresenter(
         runCatching { ticketRepository.find(ticketId) }
             .onFailure { view.showToastInvalidMovieIdError(it) }
             .onSuccess { ticket ->
-                val movie = MovieRepositoryImpl.getMovieById(ticket.movieId)
+                val movie = MovieRepositoryImpl.find(ticket.movieId)
                 view.displayTicket(ticket, movie)
             }
     }

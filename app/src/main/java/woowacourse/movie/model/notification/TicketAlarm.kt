@@ -51,7 +51,7 @@ class TicketAlarm(private val context: Context) {
         val notificationText =
             context.resources.getString(
                 R.string.notification_description,
-                MovieRepositoryImpl.getMovieById(ticket.movieId).title,
+                MovieRepositoryImpl.find(ticket.movieId).title,
                 TICKET_ALARM_INTERVAL_MINUTE,
             )
 

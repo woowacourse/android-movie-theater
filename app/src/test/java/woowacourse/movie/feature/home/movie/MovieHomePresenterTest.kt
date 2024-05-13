@@ -12,7 +12,7 @@ import woowacourse.movie.data.movie.MovieRepositoryImpl
 class MovieHomePresenterTest {
     private lateinit var view: MovieHomeContract.View
     private lateinit var presenter: MovieHomePresenter
-    private val movies = MovieRepositoryImpl.getAllMovies()
+    private val movies = MovieRepositoryImpl.findAll()
 
     @BeforeEach
     fun setUp() {

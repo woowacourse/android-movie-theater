@@ -3,11 +3,11 @@ package woowacourse.movie.data.movie
 import woowacourse.movie.data.movie.dto.Movie
 
 interface MovieRepository {
-    fun saveMovie(movie: Movie)
+    fun save(movie: Movie)
 
-    fun saveAllMovies(movies: List<Movie>)
+    fun saveAll(movies: List<Movie>)
 
-    fun getAllMovies(): List<Movie>
+    fun findAll(): List<Movie>
 
-    fun getMovieById(id: Long): Movie
+    fun find(id: Long): Movie
 }

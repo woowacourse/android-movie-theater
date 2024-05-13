@@ -5,7 +5,7 @@ import woowacourse.movie.data.movie.MovieRepositoryImpl
 class MovieHomePresenter(private val movieHomeContractView: MovieHomeContract.View) :
     MovieHomeContract.Presenter {
     override fun loadMovies() {
-        val movies = MovieRepositoryImpl.getAllMovies()
+        val movies = MovieRepositoryImpl.findAll()
         movieHomeContractView.displayMovies(movies)
     }
 }

@@ -29,7 +29,7 @@ class MovieSeatSelectionPresenter(
     override fun loadReservation(reservationId: Long) {
         runCatching { ReservationRepositoryImpl.find(reservationId) }
             .onSuccess { reservation ->
-                val movie = MovieRepositoryImpl.getMovieById(reservation.movieId)
+                val movie = MovieRepositoryImpl.find(reservation.movieId)
                 view.setUpReservation(reservation, movie)
             }
             .onFailure { view.showToastInvalidMovieIdError(it) }

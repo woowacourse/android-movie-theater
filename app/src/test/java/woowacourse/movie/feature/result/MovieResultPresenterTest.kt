@@ -41,7 +41,7 @@ class MovieResultPresenterTest {
 
         // then
         val ticket = ticketRepository.find(ticketId)
-        val movie = MovieRepositoryImpl.getMovieById(ticket.movieId)
+        val movie = MovieRepositoryImpl.find(ticket.movieId)
         verify { view.displayTicket(ticket, movie) }
     }
 

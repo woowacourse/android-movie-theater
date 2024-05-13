@@ -9,7 +9,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 val firstMovieId = 0L
-val firstMovie = MovieRepositoryImpl.getMovieById(0L)
+val firstMovie = MovieRepositoryImpl.find(0L)
 val invalidMovieId = -1L
 
 val movieId = 0L
