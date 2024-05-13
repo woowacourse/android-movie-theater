@@ -37,9 +37,6 @@ class TheaterSeatActivity :
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setContentView(binding.root)
 
-        val notificationChannelManager = NotificationChannelManager(this)
-        notificationChannelManager.createNotificationChannel()
-
         initPresenter()
         initSeats()
 
@@ -154,6 +151,8 @@ class TheaterSeatActivity :
         val timeDate = intent.getStringExtra(EXTRA_TIME_DATE)!!
         val formatter = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.KOREA)
         try {
+            val notificationChannelManager = NotificationChannelManager(this)
+            notificationChannelManager.createNotificationChannel()
             val date = formatter.parse(timeDate)
             val movieStartTime = date?.time ?: return
             saveTicket(movieStartTime, cinema, ticketPrice)
