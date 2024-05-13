@@ -18,16 +18,16 @@ import java.time.LocalTime
 class TicketDaoTest {
     private lateinit var db: TicketDatabase
     private lateinit var dao: TicketDao
-    private val firstMockTicket: Ticket =
-        Ticket(
+    private val firstMockTicket: TicketEntity =
+        TicketEntity(
             screeningDateTime = LocalDateTime.of(LocalDate.of(2024, 5, 9), LocalTime.of(10, 0)),
             movieTitle = "해리 포터와 마법사의 돌",
             theaterName = "선릉 극장",
             seats = Seats(),
             1,
         )
-    private val secondMockTicket: Ticket =
-        Ticket(
+    private val secondMockTicket: TicketEntity =
+        TicketEntity(
             screeningDateTime = LocalDateTime.of(LocalDate.of(2024, 3, 5), LocalTime.of(14, 0)),
             movieTitle = "해리 포터와 비밀의 방",
             theaterName = "잠실 극장",

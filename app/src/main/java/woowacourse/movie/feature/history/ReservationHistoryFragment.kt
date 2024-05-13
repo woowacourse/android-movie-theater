@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
-import woowacourse.movie.db.ticket.Ticket
 import woowacourse.movie.db.ticket.TicketDao
 import woowacourse.movie.db.ticket.TicketDatabase
 import woowacourse.movie.feature.finished.ReservationFinishedActivity
 import woowacourse.movie.feature.history.adapter.ReservationHistoryAdapter
+import woowacourse.movie.model.ticket.Ticket
 
 class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
     private var _binding: FragmentReservationHistoryBinding? = null

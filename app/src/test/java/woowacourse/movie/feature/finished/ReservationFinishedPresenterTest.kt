@@ -11,8 +11,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.TestFixture.makeMockSeats
-import woowacourse.movie.db.ticket.Ticket
 import woowacourse.movie.db.ticket.TicketDao
+import woowacourse.movie.model.ticket.Ticket
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime

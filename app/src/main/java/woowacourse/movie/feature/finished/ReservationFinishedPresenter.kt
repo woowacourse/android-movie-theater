@@ -1,8 +1,9 @@
 package woowacourse.movie.feature.finished
 
-import woowacourse.movie.db.ticket.Ticket
-import woowacourse.movie.db.ticket.Ticket.Companion.DEFAULT_TICKET_ID
 import woowacourse.movie.db.ticket.TicketDao
+import woowacourse.movie.db.ticket.TicketEntity.Companion.toDomain
+import woowacourse.movie.model.ticket.Ticket
+import woowacourse.movie.model.ticket.Ticket.Companion.DEFAULT_TICKET_ID
 import kotlin.concurrent.thread
 
 class ReservationFinishedPresenter(
@@ -15,7 +16,7 @@ class ReservationFinishedPresenter(
     override fun loadTicket() {
         if (isValidTicketId()) {
             thread {
-                ticket = ticketDao.find(ticketId)
+                ticket = ticketDao.find(ticketId).toDomain()
             }.join()
             view.showReservationHistory(ticket)
             view.notifyScreeningTime(ticket)

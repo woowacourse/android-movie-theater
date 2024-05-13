@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemReservationHistoryBinding
-import woowacourse.movie.db.ticket.Ticket
+import woowacourse.movie.model.ticket.Ticket
 
 class ReservationHistoryAdapter(
     private val onSelectedReservation: OnSelectedReservation,

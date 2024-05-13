@@ -3,11 +3,11 @@ package woowacourse.movie.feature.notification
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import woowacourse.movie.db.ticket.TicketEntity.Companion.DEFAULT_TICKET_ID
 import woowacourse.movie.feature.finished.ReservationFinishedActivity
 import woowacourse.movie.feature.history.ReservationHistoryFragment.Companion.TICKET_ID
 import woowacourse.movie.feature.notification.ScreeningAlarm.Companion.SCREENING_NOTIFICATION_TEXT
 import woowacourse.movie.feature.notification.ScreeningAlarm.Companion.SCREENING_NOTIFICATION_TITLE
+import woowacourse.movie.model.ticket.Ticket.Companion.DEFAULT_TICKET_ID
 
 class ScreeningNotificationReceiver : BroadcastReceiver() {
     override fun onReceive(

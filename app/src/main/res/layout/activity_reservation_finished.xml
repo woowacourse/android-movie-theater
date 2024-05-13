@@ -7,7 +7,7 @@
 
         <variable
             name="ticket"
-            type="woowacourse.movie.db.ticket.Ticket" />
+            type="woowacourse.movie.model.ticket.Ticket" />
 
         <variable
             name="headCount"

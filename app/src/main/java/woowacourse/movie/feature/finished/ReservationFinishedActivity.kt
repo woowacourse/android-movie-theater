@@ -9,11 +9,11 @@ import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.MainActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationFinishedBinding
-import woowacourse.movie.db.ticket.Ticket
-import woowacourse.movie.db.ticket.Ticket.Companion.DEFAULT_TICKET_ID
 import woowacourse.movie.db.ticket.TicketDatabase
 import woowacourse.movie.feature.history.ReservationHistoryFragment.Companion.TICKET_ID
 import woowacourse.movie.feature.notification.ScreeningAlarm
+import woowacourse.movie.model.ticket.Ticket
+import woowacourse.movie.model.ticket.Ticket.Companion.DEFAULT_TICKET_ID
 import woowacourse.movie.utils.MovieUtils.convertAmountFormat
 
 class ReservationFinishedActivity : AppCompatActivity(), ReservationFinishedContract.View {

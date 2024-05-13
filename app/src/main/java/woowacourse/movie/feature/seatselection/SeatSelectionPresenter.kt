@@ -3,7 +3,6 @@ package woowacourse.movie.feature.seatselection
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.seats.SeatsDao
 import woowacourse.movie.db.theater.TheaterDao
-import woowacourse.movie.db.ticket.Ticket
 import woowacourse.movie.db.ticket.TicketDao
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.Movie.Companion.DEFAULT_MOVIE_ID
@@ -11,6 +10,8 @@ import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.theater.Theater.Companion.DEFAULT_THEATER_ID
 import woowacourse.movie.model.ticket.HeadCount
+import woowacourse.movie.model.ticket.Ticket
+import woowacourse.movie.model.ticket.Ticket.Companion.toEntity
 import java.time.LocalDateTime
 import kotlin.concurrent.thread
 
@@ -69,7 +70,7 @@ class SeatSelectionPresenter(
     override fun saveTicket(screeningDateTime: LocalDateTime?) {
         screeningDateTime?.let {
             var ticketId: Long = 0
-            val ticket = makeTicket(screeningDateTime)
+            val ticket = makeTicket(screeningDateTime).toEntity()
             thread {
                 ticketId = ticketDao.insert(ticket)
             }.join()

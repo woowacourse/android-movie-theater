@@ -3,12 +3,13 @@ package woowacourse.movie
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import woowacourse.movie.db.theater.TheaterDao
-import woowacourse.movie.db.ticket.Ticket
 import woowacourse.movie.db.ticket.TicketDatabase
 import woowacourse.movie.model.seats.Grade
 import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.theater.Theater
+import woowacourse.movie.model.ticket.Ticket
+import woowacourse.movie.model.ticket.Ticket.Companion.toEntity
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -34,7 +35,7 @@ object TestFixture {
                 "reservation_history",
             ).build()
         val dao = db.ticketDao()
-        dao.insert(firstMockTicket)
+        dao.insert(firstMockTicket.toEntity())
     }
 
     fun makeTheater(): List<Theater> {

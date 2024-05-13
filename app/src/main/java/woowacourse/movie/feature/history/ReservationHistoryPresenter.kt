@@ -1,7 +1,8 @@
 package woowacourse.movie.feature.history
 
-import woowacourse.movie.db.ticket.Ticket
 import woowacourse.movie.db.ticket.TicketDao
+import woowacourse.movie.db.ticket.TicketEntity.Companion.toDomain
+import woowacourse.movie.model.ticket.Ticket
 import kotlin.concurrent.thread
 
 class ReservationHistoryPresenter(
@@ -12,7 +13,7 @@ class ReservationHistoryPresenter(
 
     override fun loadTicket() {
         thread {
-            tickets = ticketDao.findAll()
+            tickets = ticketDao.findAll().map { it.toDomain() }
         }.join()
         view.showReservationHistory(tickets)
     }

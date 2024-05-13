@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import woowacourse.movie.R
-import woowacourse.movie.db.ticket.TicketEntity
 import woowacourse.movie.feature.history.ReservationHistoryFragment.Companion.TICKET_ID
 import woowacourse.movie.model.ticket.Ticket
 import java.time.ZoneId
@@ -27,7 +26,7 @@ class ScreeningAlarm(
         )
     }
 
-    private fun createPendingIntent(ticket: TicketEntity): PendingIntent {
+    private fun createPendingIntent(ticket: Ticket): PendingIntent {
         val intent = createIntent(ticket)
 
         return PendingIntent.getBroadcast(
@@ -38,20 +37,20 @@ class ScreeningAlarm(
         )
     }
 
-    private fun calculateTriggerTime(ticket: TicketEntity): Long {
+    private fun calculateTriggerTime(ticket: Ticket): Long {
         val screeningTime = ZonedDateTime.of(ticket.screeningDateTime, ZoneId.systemDefault())
         return screeningTime.minusMinutes(ALARM_INTERVAL).toInstant().toEpochMilli()
     }
 
     private fun getNotificationTitle(): String = context.getString(R.string.setting_notification_title)
 
-    private fun getNotificationText(ticket: TicketEntity): String =
+    private fun getNotificationText(ticket: Ticket): String =
         context.getString(
             R.string.notification_channel_description,
             ticket.movieTitle,
         )
 
-    private fun createIntent(ticket: TicketEntity): Intent {
+    private fun createIntent(ticket: Ticket): Intent {
         val notificationTitle: String = getNotificationTitle()
         val notificationText: String = getNotificationText(ticket)
         return Intent(context, ScreeningNotificationReceiver::class.java)
