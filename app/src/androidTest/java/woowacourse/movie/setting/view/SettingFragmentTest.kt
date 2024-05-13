@@ -25,7 +25,6 @@ class SettingFragmentTest {
     @Test
     fun `알림_설정을_하는_switch가_보인다`() {
         activityRule.scenario.onActivity {
-            SettingFragment.newInstance(SettingFragment(), false)
             it.supportFragmentManager.beginTransaction().replace(
                 R.id.fragment_main_container,
                 SettingFragment(),
@@ -39,10 +38,9 @@ class SettingFragmentTest {
     @Test
     fun `알림_권한이_부여되지_않으면_스위치가_비활성화_되고_스위치가_OFF상태가_된다`() {
         activityRule.scenario.onActivity {
-            val settingFragment = SettingFragment.newInstance(SettingFragment(), false)
             it.supportFragmentManager.beginTransaction().replace(
                 R.id.fragment_main_container,
-                settingFragment,
+                SettingFragment(),
             ).commit()
         }
 
@@ -56,10 +54,9 @@ class SettingFragmentTest {
     @Test
     fun `알림_권한이_부여되면_스위치가_활성화_되고_스위치가_ON상태가_된다`() {
         activityRule.scenario.onActivity {
-            val settingFragment = SettingFragment.newInstance(SettingFragment(), true)
             it.supportFragmentManager.beginTransaction().replace(
                 R.id.fragment_main_container,
-                settingFragment,
+                SettingFragment(),
             ).commit()
         }
 
@@ -73,10 +70,9 @@ class SettingFragmentTest {
     @Test
     fun `알림_권한이_부여되어_있을떄_스위치를_한번_클릭하면_스위치가_OFF_상태가_된다`() {
         activityRule.scenario.onActivity {
-            val settingFragment = SettingFragment.newInstance(SettingFragment(), true)
             it.supportFragmentManager.beginTransaction().replace(
                 R.id.fragment_main_container,
-                settingFragment,
+                SettingFragment(),
             ).commit()
         }
 
@@ -90,10 +86,9 @@ class SettingFragmentTest {
     @Test
     fun `알림_권한이_부여되어_있을떄_스위치를_두번_클릭하면_스위치가_ON_상태가_된다`() {
         activityRule.scenario.onActivity {
-            val settingFragment = SettingFragment.newInstance(SettingFragment(), true)
             it.supportFragmentManager.beginTransaction().replace(
                 R.id.fragment_main_container,
-                settingFragment,
+                SettingFragment(),
             ).commit()
         }
 

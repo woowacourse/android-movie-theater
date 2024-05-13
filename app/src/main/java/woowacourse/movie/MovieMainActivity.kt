@@ -21,8 +21,6 @@ class MovieMainActivity : AppCompatActivity() {
     private val movieHomeFragment: MovieHomeFragment by lazy { MovieHomeFragment() }
     private var settingFragment: SettingFragment = SettingFragment()
 
-    private var isGranted: Boolean = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -56,7 +54,6 @@ class MovieMainActivity : AppCompatActivity() {
                 }
 
                 R.id.item_setting -> {
-                    settingFragment = SettingFragment.newInstance(settingFragment, isGranted)
                     replaceFragment(settingFragment)
                     true
                 }
@@ -87,14 +84,10 @@ class MovieMainActivity : AppCompatActivity() {
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (shouldShowRequestPermissionRationale(permission.POST_NOTIFICATIONS)) {
-                    isGranted = false
-                } else {
+                if (!shouldShowRequestPermissionRationale(permission.POST_NOTIFICATIONS)) {
                     requestPermissionLauncher.launch(permission.POST_NOTIFICATIONS)
                 }
             }
-        } else {
-            isGranted = true
         }
     }
 
@@ -102,7 +95,6 @@ class MovieMainActivity : AppCompatActivity() {
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
         ) { isGranted: Boolean ->
-            this.isGranted = isGranted
             sharedPrefs.saveAlarmSetting(isGranted)
         }
 

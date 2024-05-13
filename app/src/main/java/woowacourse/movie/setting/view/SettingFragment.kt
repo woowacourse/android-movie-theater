@@ -1,15 +1,18 @@
 package woowacourse.movie.setting.view
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.MovieMainActivity.Companion.sharedPrefs
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.setting.presenter.SettingPresenter
 import woowacourse.movie.setting.presenter.contract.SettingContract
-import woowacourse.movie.util.MovieIntent.IS_GRANTED
 
 class SettingFragment : Fragment(), SettingContract.View {
     private lateinit var binding: FragmentSettingBinding
@@ -27,13 +30,20 @@ class SettingFragment : Fragment(), SettingContract.View {
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         settingPresenter.loadAlarmSwitch()
     }
 
     override fun setUpAlarmSwitch(savedAlarmSetting: Boolean) {
-        val isGranted = arguments?.getBoolean(IS_GRANTED.key) ?: IS_GRANTED.invalidValue as Boolean
+        var isGranted = false
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            isGranted = ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.POST_NOTIFICATIONS,
+            ) == PackageManager.PERMISSION_GRANTED
+        }
+
         val isChecked = judgeChecked(isGranted, savedAlarmSetting)
         binding.isGranted = isGranted
         binding.isChecked = isChecked
@@ -49,19 +59,5 @@ class SettingFragment : Fragment(), SettingContract.View {
         if (isGranted) return savedAlarmSetting
         sharedPrefs.saveAlarmSetting(false)
         return false
-    }
-
-    companion object {
-        fun newInstance(
-            settingFragment: SettingFragment,
-            isGranted: Boolean,
-        ): SettingFragment {
-            return settingFragment.apply {
-                arguments =
-                    Bundle().apply {
-                        putBoolean(IS_GRANTED.key, isGranted)
-                    }
-            }
-        }
     }
 }
