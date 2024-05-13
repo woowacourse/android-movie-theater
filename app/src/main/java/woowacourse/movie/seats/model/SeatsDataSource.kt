@@ -17,6 +17,7 @@ object SeatsDataSource {
 
     val ticketData
         get() = DbTicket(
+            0,
             CommonDataSource.movieList.first { it.id == movieId }.title,
             date,
             time,

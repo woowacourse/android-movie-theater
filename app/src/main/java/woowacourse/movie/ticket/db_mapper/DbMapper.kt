@@ -11,6 +11,7 @@ object DbMapper {
         val seatsFormatted = ticket.seats.joinToString { it.coordinate }
         val theaterName = TheaterData.theaters.first { it.id == ticket.theaterId }.name
         return DbTicket(
+            0,
             movieTitle,
             ticket.screeningDate,
             ticket.screeningTime,

@@ -16,6 +16,7 @@ object TicketDataResource {
 
     var dbTicket: DbTicket =
         DbTicket(
+            0,
             "",
             "",
             "",
