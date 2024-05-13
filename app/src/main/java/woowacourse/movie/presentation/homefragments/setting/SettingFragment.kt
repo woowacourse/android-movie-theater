@@ -44,7 +44,7 @@ class SettingFragment : Fragment(), SettingContract.View {
             binding.isSwitchEnabled = ContextCompat.checkSelfPermission(
                 requireActivity(),
                 Manifest.permission.POST_NOTIFICATIONS,
-            ) != PackageManager.PERMISSION_GRANTED
+            ) == PackageManager.PERMISSION_GRANTED
         }
     }
 
