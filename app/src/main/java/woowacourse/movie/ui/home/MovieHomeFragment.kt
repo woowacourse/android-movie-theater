@@ -29,9 +29,17 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View {
         savedInstanceState: Bundle?,
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_home, container, false)
-        presenter.loadMovieContents()
 
         return binding.root
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+
+        presenter.loadMovieContents()
     }
 
     override fun showMovieContents(movieContents: List<MovieContent>) {

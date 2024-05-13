@@ -39,8 +39,16 @@ class MovieBookingHistoryFragment : Fragment(), MovieBookingHistoryContract.View
                 container,
                 false,
             )
-        presenter.loadBookingHistories()
         return binding.root
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+
+        presenter.loadBookingHistories()
     }
 
     override fun showBookingHistories(bookingHistories: List<UserTicket>) {

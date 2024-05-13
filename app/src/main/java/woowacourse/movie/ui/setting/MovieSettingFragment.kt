@@ -34,10 +34,17 @@ class MovieSettingFragment : Fragment(), MovieSettingContract.View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_movie_setting, container, false)
 
+        return binding.root
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+
         presenter.loadNotificationStatus()
         setOnSwitchListener()
-
-        return binding.root
     }
 
     private fun setOnSwitchListener() {
