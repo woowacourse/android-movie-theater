@@ -173,6 +173,7 @@ class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View, SeatSe
     override fun moveToReservationResult(movieTicketUiModel: MovieTicketUiModel) {
         val intent = Intent(this, ReservationResultActivity::class.java)
         intent.putExtra(ReservationResultActivity.INTENT_TICKET, movieTicketUiModel)
+        intent.putExtra(ReservationResultActivity.INTENT_SET_ALARM, true)
         startActivity(intent)
     }
 

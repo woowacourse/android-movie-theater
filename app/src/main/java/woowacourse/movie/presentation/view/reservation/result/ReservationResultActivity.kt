@@ -21,7 +21,10 @@ class ReservationResultActivity : BaseActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_reservation_result)
         setUpFromIntent()
-        setAlarmManager()
+        if (intent.getBooleanExtra(INTENT_SET_ALARM, false)) {
+            setAlarmManager()
+            setAlarmReceiver()
+        }
     }
 
     private fun setUpFromIntent() {
@@ -37,12 +40,13 @@ class ReservationResultActivity : BaseActivity() {
     private fun setAlarmReceiver() {
         val alarmReceiver = AlarmReceiver()
         val intentFilter = IntentFilter().apply {
-            addAction("movie.movie_start_after_30min")
+            addAction(getString(R.string.notification_action))
         }
         registerReceiver(alarmReceiver, intentFilter, RECEIVER_NOT_EXPORTED)
     }
 
     companion object {
         const val INTENT_TICKET = "ticket"
+        const val INTENT_SET_ALARM = "setAlarm"
     }
 }
