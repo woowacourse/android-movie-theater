@@ -1,6 +1,7 @@
 package woowacourse.movie.feature.seat
 
 import android.content.Context
+import woowacourse.movie.data.MovieSharedPreferences
 import woowacourse.movie.data.movie.MovieRepositoryImpl
 import woowacourse.movie.data.notification.NotificationRepository
 import woowacourse.movie.data.notification.NotificationSharedPreferencesRepository
@@ -18,7 +19,7 @@ class MovieSeatSelectionPresenter(
     private val view: MovieSeatSelectionContract.View,
     applicationContext: Context,
     private val notificationRepository: NotificationRepository =
-        NotificationSharedPreferencesRepository.instance(applicationContext),
+        NotificationSharedPreferencesRepository.instance(MovieSharedPreferences.instance(applicationContext)),
     private val ticketAlarm: TicketAlarm = TicketAlarm(applicationContext),
     private val ticketRepository: TicketRepository =
         RoomTicketRepository(TicketDatabase.instance(applicationContext).ticketDao()),

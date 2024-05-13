@@ -1,12 +1,11 @@
 package woowacourse.movie.data.notification
 
-import android.content.Context
 import woowacourse.movie.data.MovieSharedPreferences
 import kotlin.concurrent.Volatile
 
-class NotificationSharedPreferencesRepository private constructor(context: Context) : NotificationRepository {
-    private val movieSharedPreferences by lazy { MovieSharedPreferences.instance(context) }
-
+class NotificationSharedPreferencesRepository private constructor(
+    private val movieSharedPreferences: MovieSharedPreferences,
+) : NotificationRepository {
     override fun update(isGrant: Boolean) {
         movieSharedPreferences.setBoolean(KEY, isGrant)
     }
@@ -22,9 +21,9 @@ class NotificationSharedPreferencesRepository private constructor(context: Conte
         @Volatile
         private var instance: NotificationSharedPreferencesRepository? = null
 
-        fun instance(context: Context): NotificationSharedPreferencesRepository {
+        fun instance(movieSharedPreferences: MovieSharedPreferences): NotificationSharedPreferencesRepository {
             return instance ?: synchronized(this) {
-                val newInstance = NotificationSharedPreferencesRepository(context)
+                val newInstance = NotificationSharedPreferencesRepository(movieSharedPreferences)
                 instance = newInstance
                 newInstance
             }
