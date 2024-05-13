@@ -6,17 +6,18 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import woowacourse.movie.R
 import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
+import woowacourse.movie.presentation.view.reservation.result.ReservationResultActivity
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-// 영화 시작 30분 전에 이벤트 호출
 class MovieStartAlarmManager(
-    val context: Context,
-    val ticket: MovieTicketUiModel,
+    private val context: Context,
+    private val ticket: MovieTicketUiModel,
 ) {
     private val alarmManager =
         context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -24,7 +25,8 @@ class MovieStartAlarmManager(
     @SuppressLint("ScheduleExactAlarm")
     fun setAlarm() {
         val receiverIntent = Intent(context, AlarmReceiver::class.java)
-        receiverIntent.putExtra("ticket", ticket)
+        receiverIntent.putExtra(ReservationResultActivity.INTENT_TICKET, ticket)
+        receiverIntent.action = context.getString(R.string.notification_action)
         val pendingIntent =
             PendingIntent.getBroadcast(
                 context,
@@ -32,7 +34,6 @@ class MovieStartAlarmManager(
                 receiverIntent,
                 PendingIntent.FLAG_IMMUTABLE,
             )
-
         val alarmTime = dateTimeBefore30min()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -55,7 +56,7 @@ class MovieStartAlarmManager(
         val time = LocalTime.parse(ticket.startTime, DateTimeFormatter.ofPattern("HH:mm"))
         val startTime = LocalDateTime.of(date, time)
         val alarmTime = startTime.minusMinutes(30)
-        val zonedDateTime = alarmTime.atZone(ZoneId.of("UTC"))
+        val zonedDateTime = alarmTime.atZone(ZoneId.systemDefault())
         return zonedDateTime.toInstant().toEpochMilli()
     }
 }
