@@ -14,7 +14,8 @@ class TheaterSeatsSystem(
         }
 
     fun rateOfSeat(row: Int): SeatRate {
-        return rowRate.entries.firstOrNull { it.value.contains(row) }?.key
-            ?: error("해당 행에 헤당하는 등급이 없습니다.")
+        val containRow = row + 1
+        return rowRate.entries.firstOrNull { it.value.contains(containRow) }?.key
+            ?: error("$row 해당 행에 헤당하는 등급이 없습니다.")
     }
 }
