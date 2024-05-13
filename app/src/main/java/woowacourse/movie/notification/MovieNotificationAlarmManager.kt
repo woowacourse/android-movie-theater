@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import android.os.Build
-import woowacourse.movie.data.db.ReservationHistoryEntity
+import woowacourse.movie.data.db.ReservationHistoryDatabase
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -14,28 +14,35 @@ import java.time.ZoneId
 
 object MovieNotificationAlarmManager {
     private const val ALARM_OFFSET_MINUTES = 30
+    private lateinit var movieNotification: MovieNotification
 
     fun createNotification(
         context: Context,
-        reservationHistoryEntity: ReservationHistoryEntity,
+        ticketId: Long,
     ) {
         val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
         val intent =
             MovieNotificationReceiver.createIntent(
                 context,
-                reservationHistoryEntity.movieId,
-                reservationHistoryEntity.date,
-                reservationHistoryEntity.time,
-                reservationHistoryEntity.count,
-                reservationHistoryEntity.seats,
-                reservationHistoryEntity.theaterPosition,
+                ticketId,
             )
         val pendingIntent = createBroadcastPendingIntent(context, intent)
 
+        val thread =
+            Thread {
+                movieNotification =
+                    ReservationHistoryDatabase.getInstance(context).reservationHistoryDao()
+                        .findReservationHistoryById(
+                            ticketId,
+                        ).toMovieNotification()
+            }
+        thread.start()
+        thread.join()
+
         val alarmTimeMillis =
             calculateAlarmTime(
-                LocalDate.parse(reservationHistoryEntity.date),
-                LocalTime.parse(reservationHistoryEntity.time),
+                LocalDate.parse(movieNotification.date),
+                LocalTime.parse(movieNotification.time),
             )
         sendNotification(alarmTimeMillis, alarmManager, pendingIntent)
     }

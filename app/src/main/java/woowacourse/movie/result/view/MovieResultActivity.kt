@@ -11,12 +11,7 @@ import woowacourse.movie.databinding.ActivityMovieResultBinding
 import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.result.presenter.MovieResultPresenter
 import woowacourse.movie.result.presenter.contract.MovieResultContract
-import woowacourse.movie.util.MovieIntent.MOVIE_DATE
-import woowacourse.movie.util.MovieIntent.MOVIE_ID
-import woowacourse.movie.util.MovieIntent.MOVIE_SEATS
-import woowacourse.movie.util.MovieIntent.MOVIE_TIME
-import woowacourse.movie.util.MovieIntent.RESERVATION_COUNT
-import woowacourse.movie.util.MovieIntent.SELECTED_THEATER_POSITION
+import woowacourse.movie.util.MovieIntent.MOVIE_TICKET_ID
 
 class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
     private lateinit var binding: ActivityMovieResultBinding
@@ -32,15 +27,12 @@ class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
 
         movieResultPresenter = MovieResultPresenter(this)
         movieResultPresenter.loadMovieTicket(
-            intent.getLongExtra(MOVIE_ID.key, MOVIE_ID.invalidValue as Long),
-            intent.getStringExtra(MOVIE_DATE.key) ?: MOVIE_DATE.invalidValue as String,
-            intent.getStringExtra(MOVIE_TIME.key) ?: MOVIE_TIME.invalidValue as String,
-            intent.getIntExtra(RESERVATION_COUNT.key, RESERVATION_COUNT.invalidValue as Int),
-            intent.getStringExtra(MOVIE_SEATS.key) ?: MOVIE_SEATS.invalidValue as String,
-            intent.getIntExtra(
-                SELECTED_THEATER_POSITION.key,
-                SELECTED_THEATER_POSITION.invalidValue as Int,
-            ),
+            this,
+            intent.getLongExtra(MOVIE_TICKET_ID.key, MOVIE_TICKET_ID.invalidValue as Long),
+        )
+        movieResultPresenter.registrationMovieNotification(
+            this,
+            intent.getLongExtra(MOVIE_TICKET_ID.key, MOVIE_TICKET_ID.invalidValue),
         )
     }
 
@@ -72,20 +64,10 @@ class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
     companion object {
         fun createIntent(
             context: Context,
-            movieId: Long,
-            date: String,
-            time: String,
-            count: Int,
-            seats: String,
-            theaterPosition: Int,
+            ticketId: Long,
         ): Intent {
             return Intent(context, MovieResultActivity::class.java).apply {
-                putExtra(MOVIE_ID.key, movieId)
-                putExtra(MOVIE_DATE.key, date)
-                putExtra(MOVIE_TIME.key, time)
-                putExtra(RESERVATION_COUNT.key, count)
-                putExtra(MOVIE_SEATS.key, seats)
-                putExtra(SELECTED_THEATER_POSITION.key, theaterPosition)
+                putExtra(MOVIE_TICKET_ID.key, ticketId)
             }
         }
     }

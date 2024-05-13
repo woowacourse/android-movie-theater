@@ -1,6 +1,5 @@
 package woowacourse.movie.seatselection.presenter.contract
 
-import woowacourse.movie.data.db.ReservationHistoryEntity
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
 
@@ -17,7 +16,7 @@ interface MovieSeatSelectionContract {
 
         fun updateSelectedSeats(movieSelectedSeats: MovieSelectedSeats)
 
-        fun navigateToResultView(movieSelectedSeats: MovieSelectedSeats)
+        fun navigateToResultView(ticketId: Long)
     }
 
     interface Presenter {
@@ -27,10 +26,13 @@ interface MovieSeatSelectionContract {
 
         fun clickTableSeat(index: Int)
 
-        fun clickPositiveButton()
+        fun clickPositiveButton(
+            movieId: Long,
+            date: String,
+            time: String,
+            theaterPosition: Int,
+        )
 
         fun updateSelectedSeats(count: Int)
-
-        fun saveReservationHistory(reservationHistoryEntity: ReservationHistoryEntity)
     }
 }

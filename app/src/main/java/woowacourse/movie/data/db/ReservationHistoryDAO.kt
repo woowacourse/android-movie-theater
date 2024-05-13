@@ -7,7 +7,10 @@ import androidx.room.Query
 @Dao
 interface ReservationHistoryDAO {
     @Insert
-    fun saveReservationHistory(reservationHistoryEntity: ReservationHistoryEntity)
+    fun saveReservationHistory(reservationHistoryEntity: ReservationHistoryEntity): Long
+
+    @Query("SELECT * FROM reservation_history WHERE id = :ticketId")
+    fun findReservationHistoryById(ticketId: Long): ReservationHistoryEntity
 
     @Query("SELECT * from reservation_history")
     fun findReservationHistories(): List<ReservationHistoryEntity>

@@ -9,5 +9,5 @@ enum class MovieIntent(val key: String, val invalidValue: Any) {
     ITEM_POSITION("itemPosition", -1),
     SELECTED_SEAT_POSITIONS("selectedSeatPositions", false),
     SELECTED_THEATER_POSITION("selectedTheaterPosition", -1),
-    IS_GRANTED("isGranted", false),
+    MOVIE_TICKET_ID("movieTicketId", -1L),
 }

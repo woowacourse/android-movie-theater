@@ -24,7 +24,7 @@
         android:background="@drawable/ripple_background"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="@{() -> reservationHistoryClickListener.onReservationHistoryClick(reservationHistoryEntity)}">
+        android:onClick="@{() -> reservationHistoryClickListener.onReservationHistoryClick(reservationHistoryEntity.id)}">
 
         <TextView
             android:id="@+id/tv_history_information"

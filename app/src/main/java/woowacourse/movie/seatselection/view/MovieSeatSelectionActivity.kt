@@ -13,12 +13,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.data.db.ReservationHistoryDatabase
-import woowacourse.movie.data.db.ReservationHistoryEntity
 import woowacourse.movie.databinding.ActivityMovieSeatSelectionBinding
 import woowacourse.movie.model.MovieGrade
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
-import woowacourse.movie.notification.MovieNotificationAlarmManager
 import woowacourse.movie.result.view.MovieResultActivity
 import woowacourse.movie.seatselection.presenter.MovieSeatSelectionPresenter
 import woowacourse.movie.seatselection.presenter.contract.MovieSeatSelectionContract
@@ -129,39 +127,12 @@ class MovieSeatSelectionActivity :
         binding.movieSelectedSeats = movieSelectedSeats
     }
 
-    override fun navigateToResultView(movieSelectedSeats: MovieSelectedSeats) {
-        val movieId =
-            intent?.getLongExtra(MOVIE_ID.key, MOVIE_ID.invalidValue as Long)
-                ?: MOVIE_ID.invalidValue as Long
-        val date = intent?.getStringExtra(MOVIE_DATE.key) ?: MOVIE_DATE.invalidValue as String
-        val time = intent?.getStringExtra(MOVIE_TIME.key) ?: MOVIE_TIME.invalidValue as String
-        val count = movieSelectedSeats.count
-        val seats =
-            movieSelectedSeats.selectedSeats.joinToString(", ") { seat ->
-                (seat.row.formatRow() + seat.column.formatColumn())
-            }
-        val theaterPosition =
-            intent?.getIntExtra(
-                SELECTED_THEATER_POSITION.key,
-                SELECTED_THEATER_POSITION.invalidValue as Int,
-            ) ?: SELECTED_THEATER_POSITION.invalidValue as Int
-
+    override fun navigateToResultView(ticketId: Long) {
         val intent =
             MovieResultActivity.createIntent(
                 baseContext,
-                movieId,
-                date,
-                time,
-                count,
-                seats,
-                theaterPosition,
+                ticketId,
             )
-
-        val reservationHistoryEntity =
-            ReservationHistoryEntity(date, time, count, seats, movieId, theaterPosition)
-        seatSelectionPresenter.saveReservationHistory(reservationHistoryEntity)
-
-        MovieNotificationAlarmManager.createNotification(this, reservationHistoryEntity)
         startActivity(intent)
     }
 
@@ -182,7 +153,16 @@ class MovieSeatSelectionActivity :
     override fun onCompleteButtonClick() {
         AlertDialog.Builder(this).setTitle("예매 확인").setMessage("정말 예매하시겠습니까?")
             .setPositiveButton("예매 완료") { _, _ ->
-                seatSelectionPresenter.clickPositiveButton()
+                seatSelectionPresenter.clickPositiveButton(
+                    intent?.getLongExtra(MOVIE_ID.key, MOVIE_ID.invalidValue as Long)
+                        ?: MOVIE_ID.invalidValue as Long,
+                    intent?.getStringExtra(MOVIE_DATE.key) ?: MOVIE_DATE.invalidValue as String,
+                    intent?.getStringExtra(MOVIE_TIME.key) ?: MOVIE_TIME.invalidValue as String,
+                    intent?.getIntExtra(
+                        SELECTED_THEATER_POSITION.key,
+                        SELECTED_THEATER_POSITION.invalidValue as Int,
+                    ) ?: SELECTED_THEATER_POSITION.invalidValue as Int,
+                )
             }
             .setNegativeButton("취소") { dialog, _ -> dialog.dismiss() }.setCancelable(false).show()
     }

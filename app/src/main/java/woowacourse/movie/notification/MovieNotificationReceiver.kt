@@ -12,17 +12,15 @@ import android.graphics.BitmapFactory
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.MovieMainActivity.Companion.sharedPrefs
 import woowacourse.movie.R
+import woowacourse.movie.data.db.ReservationHistoryDatabase
 import woowacourse.movie.data.db.ReservationHistoryEntity
 import woowacourse.movie.data.repository.HomeContentRepository.getMovieById
 import woowacourse.movie.result.view.MovieResultActivity
-import woowacourse.movie.util.MovieIntent.MOVIE_DATE
-import woowacourse.movie.util.MovieIntent.MOVIE_ID
-import woowacourse.movie.util.MovieIntent.MOVIE_SEATS
-import woowacourse.movie.util.MovieIntent.MOVIE_TIME
-import woowacourse.movie.util.MovieIntent.RESERVATION_COUNT
-import woowacourse.movie.util.MovieIntent.SELECTED_THEATER_POSITION
+import woowacourse.movie.util.MovieIntent.MOVIE_TICKET_ID
 
 class MovieNotificationReceiver : BroadcastReceiver() {
+    private lateinit var reservationHistoryEntity: ReservationHistoryEntity
+
     override fun onReceive(
         context: Context,
         intent: Intent,
@@ -31,20 +29,25 @@ class MovieNotificationReceiver : BroadcastReceiver() {
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         registrationChannel(notificationManager)
-        val reservationHistoryEntity =
-            ReservationHistoryEntity(
-                intent.getStringExtra(MOVIE_DATE.key) ?: MOVIE_DATE.invalidValue as String,
-                intent.getStringExtra(MOVIE_TIME.key) ?: MOVIE_TIME.invalidValue as String,
-                intent.getIntExtra(RESERVATION_COUNT.key, RESERVATION_COUNT.invalidValue as Int),
-                intent.getStringExtra(MOVIE_SEATS.key) ?: MOVIE_SEATS.invalidValue as String,
-                intent.getLongExtra(MOVIE_ID.key, MOVIE_ID.invalidValue as Long),
-                intent.getIntExtra(
-                    SELECTED_THEATER_POSITION.key,
-                    SELECTED_THEATER_POSITION.invalidValue as Int,
-                ),
+
+        val ticketId =
+            intent.getLongExtra(
+                MOVIE_TICKET_ID.key,
+                MOVIE_TICKET_ID.invalidValue as Long,
             )
 
-        val pendingIntent = createResultActivityPendingIntent(context, reservationHistoryEntity)
+        val thread =
+            Thread {
+                reservationHistoryEntity =
+                    ReservationHistoryDatabase.getInstance(context).reservationHistoryDao()
+                        .findReservationHistoryById(
+                            ticketId,
+                        )
+            }
+        thread.start()
+        thread.join()
+
+        val pendingIntent = createResultActivityPendingIntent(context, ticketId)
         val notification =
             buildNotification(context, reservationHistoryEntity.movieId, pendingIntent)
         if (sharedPrefs.getSavedAlarmSetting()) {
@@ -86,17 +89,12 @@ class MovieNotificationReceiver : BroadcastReceiver() {
 
     private fun createResultActivityPendingIntent(
         context: Context,
-        reservationHistoryEntity: ReservationHistoryEntity,
+        ticketId: Long,
     ): PendingIntent {
         val resultActivityIntent =
             MovieResultActivity.createIntent(
                 context,
-                reservationHistoryEntity.movieId,
-                reservationHistoryEntity.date,
-                reservationHistoryEntity.time,
-                reservationHistoryEntity.count,
-                reservationHistoryEntity.seats,
-                reservationHistoryEntity.theaterPosition,
+                ticketId,
             )
         return PendingIntent.getActivity(
             context,
@@ -114,20 +112,10 @@ class MovieNotificationReceiver : BroadcastReceiver() {
 
         fun createIntent(
             context: Context,
-            movieId: Long,
-            date: String,
-            time: String,
-            count: Int,
-            seats: String,
-            theaterPosition: Int,
+            ticketId: Long,
         ): Intent {
             return Intent(context, MovieNotificationReceiver::class.java).apply {
-                putExtra(MOVIE_ID.key, movieId)
-                putExtra(MOVIE_DATE.key, date)
-                putExtra(MOVIE_TIME.key, time)
-                putExtra(RESERVATION_COUNT.key, count)
-                putExtra(MOVIE_SEATS.key, seats)
-                putExtra(SELECTED_THEATER_POSITION.key, theaterPosition)
+                putExtra(MOVIE_TICKET_ID.key, ticketId)
             }
         }
     }

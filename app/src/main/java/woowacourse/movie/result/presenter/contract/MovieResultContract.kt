@@ -1,5 +1,6 @@
 package woowacourse.movie.result.presenter.contract
 
+import android.content.Context
 import woowacourse.movie.model.MovieTicket
 
 interface MovieResultContract {
@@ -9,12 +10,13 @@ interface MovieResultContract {
 
     interface Presenter {
         fun loadMovieTicket(
-            movieId: Long,
-            date: String,
-            time: String,
-            count: Int,
-            seats: String,
-            theaterPosition: Int,
+            context: Context,
+            ticketId: Long,
+        )
+
+        fun registrationMovieNotification(
+            context: Context,
+            ticketId: Long,
         )
     }
 }

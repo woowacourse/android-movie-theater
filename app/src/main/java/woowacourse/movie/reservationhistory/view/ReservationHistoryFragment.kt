@@ -42,20 +42,19 @@ class ReservationHistoryFragment :
         val divider = DividerItemDecoration(requireActivity(), DividerItemDecoration.VERTICAL)
         binding.recyclerViewHistory.addItemDecoration(divider)
 
-        reservationHistoryPresenter = ReservationHistoryPresenter(this, ReservationHistoryDatabase.getInstance(requireActivity()))
+        reservationHistoryPresenter =
+            ReservationHistoryPresenter(
+                this,
+                ReservationHistoryDatabase.getInstance(requireActivity()),
+            )
         reservationHistoryPresenter.loadReservationHistories()
     }
 
-    override fun onReservationHistoryClick(reservationHistoryEntity: ReservationHistoryEntity) {
+    override fun onReservationHistoryClick(ticketId: Long) {
         val intent =
             MovieResultActivity.createIntent(
                 requireActivity(),
-                reservationHistoryEntity.movieId,
-                reservationHistoryEntity.date,
-                reservationHistoryEntity.time,
-                reservationHistoryEntity.count,
-                reservationHistoryEntity.seats,
-                reservationHistoryEntity.theaterPosition,
+                ticketId,
             )
         startActivity(intent)
     }
