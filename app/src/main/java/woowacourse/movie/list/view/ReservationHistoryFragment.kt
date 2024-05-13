@@ -1,6 +1,5 @@
 package woowacourse.movie.list.view
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -38,7 +37,7 @@ class ReservationHistoryFragment :
     }
 
     override fun onClick(id: Long) {
-        val intent = MovieTicketActivity.newTicketActivityInstance(context as Context, id)
+        val intent = MovieTicketActivity.newTicketActivityInstance(requireContext(), id)
         startActivity(intent)
     }
 }
