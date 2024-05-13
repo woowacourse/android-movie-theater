@@ -5,8 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.addCallback
-import woowacourse.movie.MovieReservationApp
 import woowacourse.movie.R
+import woowacourse.movie.data.MovieRepositoryInjector
 import woowacourse.movie.databinding.ActivityPurchaseConfirmationBinding
 import woowacourse.movie.model.Reservation
 import woowacourse.movie.presentation.HomeActivity
@@ -19,7 +19,7 @@ class PurchaseConfirmationActivity :
     PurchaseConfirmationContract.View {
     private val presenter: PurchaseConfirmationContract.Presenter by lazy {
         PurchaseConfirmationPresenter(
-            (applicationContext as MovieReservationApp).movieRepository,
+            MovieRepositoryInjector.instance(applicationContext).movieRepository(),
             this,
         )
     }

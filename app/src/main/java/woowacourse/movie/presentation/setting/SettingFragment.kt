@@ -13,13 +13,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import woowacourse.movie.MovieReservationApp
 import woowacourse.movie.R
+import woowacourse.movie.data.datastore.DefaultNotificationDataStore
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.presentation.base.BindingFragment
 
 class SettingFragment : BindingFragment<FragmentSettingBinding>(R.layout.fragment_setting) {
-    private val notificationPreference by lazy { (requireActivity().application as MovieReservationApp).notificationDatastore }
+    private val notificationDataStore by lazy {
+        DefaultNotificationDataStore.instance(requireContext().applicationContext)
+    }
+
     private val explanationDialogForPushAlarm by lazy {
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.request_notification_permission_title)
@@ -77,9 +80,9 @@ class SettingFragment : BindingFragment<FragmentSettingBinding>(R.layout.fragmen
     }
 
     private fun initViews() {
-        binding.switchAlarm.isChecked = notificationPreference.acceptedPushAlarm
+        binding.switchAlarm.isChecked = notificationDataStore.acceptedPushAlarm
         binding.layoutPushAlarm.setOnClickListener {
-            if (notificationPreference.acceptedPushAlarm) {
+            if (notificationDataStore.acceptedPushAlarm) {
                 updateAlarmSwitch(false)
                 return@setOnClickListener
             }
@@ -88,9 +91,10 @@ class SettingFragment : BindingFragment<FragmentSettingBinding>(R.layout.fragmen
                 hasAccessPermission() -> updateAlarmSwitch(true)
                 isFirstRequestPermission() -> requestPermissionLauncher.launch(POST_NOTIFICATIONS)
                 isSecondRequestPermission() -> {
-                    notificationPreference.hasBeenDeniedPermission = true
+                    notificationDataStore.hasBeenDeniedPermission = true
                     explanationDialogForPushAlarm.show()
                 }
+
                 isCompletelyDeniedPermission() -> explanationDialogForNavigateToSetting.show()
                 else -> requestPermissionLauncher.launch(POST_NOTIFICATIONS)
             }
@@ -98,24 +102,25 @@ class SettingFragment : BindingFragment<FragmentSettingBinding>(R.layout.fragmen
     }
 
     private fun updateAlarmSwitch(isChecked: Boolean) {
-        notificationPreference.acceptedPushAlarm = isChecked
+        notificationDataStore.acceptedPushAlarm = isChecked
         binding.switchAlarm.isChecked = isChecked
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun isFirstRequestPermission(): Boolean =
         hasAccessPermission().not() &&
-            shouldShowRequestPermissionRationale(POST_NOTIFICATIONS).not() &&
-            notificationPreference.hasBeenDeniedPermission.not()
+                shouldShowRequestPermissionRationale(POST_NOTIFICATIONS).not() &&
+                notificationDataStore.hasBeenDeniedPermission.not()
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    private fun isSecondRequestPermission(): Boolean = shouldShowRequestPermissionRationale(POST_NOTIFICATIONS)
+    private fun isSecondRequestPermission(): Boolean =
+        shouldShowRequestPermissionRationale(POST_NOTIFICATIONS)
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun isCompletelyDeniedPermission(): Boolean =
         hasAccessPermission().not() &&
-            shouldShowRequestPermissionRationale(POST_NOTIFICATIONS).not() &&
-            notificationPreference.hasBeenDeniedPermission
+                shouldShowRequestPermissionRationale(POST_NOTIFICATIONS).not() &&
+                notificationDataStore.hasBeenDeniedPermission
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun hasAccessPermission(): Boolean {

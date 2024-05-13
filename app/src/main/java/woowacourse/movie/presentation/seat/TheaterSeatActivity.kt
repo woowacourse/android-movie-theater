@@ -14,8 +14,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.IntentCompat
 import androidx.core.view.children
 import woowacourse.movie.MovieBroadCastReceiver.Companion.RESERVATION_NOTIFICATION_ACTION
-import woowacourse.movie.MovieReservationApp
 import woowacourse.movie.R
+import woowacourse.movie.data.MovieRepositoryInjector
 import woowacourse.movie.databinding.ActivityTheaterSeatBinding
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.Reservation
@@ -118,7 +118,7 @@ class TheaterSeatActivity :
         }
         presenter =
             TheaterSeatPresenter(
-                (application as MovieReservationApp).movieRepository,
+                MovieRepositoryInjector.instance(applicationContext).movieRepository(),
                 this,
                 ticketNum.toInt(),
                 dateTime,

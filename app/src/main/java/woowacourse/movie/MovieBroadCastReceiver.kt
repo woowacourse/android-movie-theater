@@ -10,6 +10,7 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import woowacourse.movie.data.datastore.DefaultNotificationDataStore
 import woowacourse.movie.presentation.purchaseConfirmation.PurchaseConfirmationActivity
 
 class MovieBroadCastReceiver : BroadcastReceiver() {
@@ -22,7 +23,9 @@ class MovieBroadCastReceiver : BroadcastReceiver() {
             val reservationId =
                 intent.getLongExtra(PurchaseConfirmationActivity.EXTRA_RESERVATION_ID, -1)
 
-            if ((context.applicationContext as MovieReservationApp).notificationDatastore.acceptedPushAlarm) {
+            val notificationDatastore =
+                DefaultNotificationDataStore.instance(context.applicationContext)
+            if (notificationDatastore.acceptedPushAlarm) {
                 sendNotification(context, movieTitle, reservationId)
             }
         }

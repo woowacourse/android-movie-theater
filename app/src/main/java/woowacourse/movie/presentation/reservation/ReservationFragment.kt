@@ -2,8 +2,8 @@ package woowacourse.movie.presentation.reservation
 
 import android.os.Bundle
 import android.view.View
-import woowacourse.movie.MovieReservationApp
 import woowacourse.movie.R
+import woowacourse.movie.data.MovieRepositoryInjector
 import woowacourse.movie.databinding.FragmentReservationBinding
 import woowacourse.movie.model.Reservation
 import woowacourse.movie.presentation.base.BindingFragment
@@ -14,7 +14,7 @@ class ReservationFragment :
     BindingFragment<FragmentReservationBinding>(R.layout.fragment_reservation),
     ReservationContract.View {
     private val repository by lazy {
-        (requireActivity().applicationContext as MovieReservationApp).movieRepository
+        MovieRepositoryInjector.instance(requireContext().applicationContext).movieRepository()
     }
     private val presenter by lazy {
         ReservationPresenter(repository, this)
