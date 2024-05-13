@@ -1,7 +1,5 @@
 package woowacourse.movie.presentation.view.reservation.detail
 
-import android.util.Log
-import woowacourse.movie.repository.MovieRepositoryImpl
 import woowacourse.movie.data.repository.ReservationMovieInfoRepositoryImpl
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.reservation.ReservationCount
@@ -10,6 +8,7 @@ import woowacourse.movie.presentation.repository.MovieRepository
 import woowacourse.movie.presentation.repository.ReservationMovieInfoRepository
 import woowacourse.movie.presentation.repository.TheaterRepository
 import woowacourse.movie.presentation.uimodel.MovieUiModel
+import woowacourse.movie.repository.MovieRepositoryImpl
 import woowacourse.movie.repository.TheaterRepositoryImpl
 import java.time.LocalDate
 import java.time.LocalTime
@@ -56,15 +55,13 @@ class MovieDetailPresenterImpl(
 
     override fun loadScreeningDates() {
         val dates = theaterRepository.getScreeningDateInfo(theaterId, movieId)
-        val times = theaterRepository.getScreeningTimeInfo(theaterId, movieId, dates[DEFAULT_DATA_INDEX])
-        Log.d("in loadScreeningDates", "times: $times")
+        val times =
+            theaterRepository.getScreeningTimeInfo(theaterId, movieId, dates[DEFAULT_DATA_INDEX])
         view?.setScreeningDates(dates, DEFAULT_DATA_INDEX)
     }
 
     override fun loadScreeningTimes(date: String) {
-        Log.d("selected date", date)
         val times = theaterRepository.getScreeningTimeInfo(theaterId, movieId, date)
-        Log.d("in loadScreeningTimes", "times: $times")
         view?.updateScreeningTimes(times, DEFAULT_DATA_INDEX)
     }
 
