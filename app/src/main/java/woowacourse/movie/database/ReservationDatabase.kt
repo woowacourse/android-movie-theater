@@ -22,7 +22,7 @@ abstract class ReservationDatabase : RoomDatabase() {
          * @return ReservationDatabase instance. As it is singleton object, it is same instance whenever you call this function.
          */
         @Synchronized
-        fun getInstance(context: Context): ReservationDatabase? {
+        fun getInstance(context: Context): ReservationDatabase {
             if (instance == null) {
                 synchronized(ReservationDatabase::class) {
                     instance =
@@ -33,7 +33,7 @@ abstract class ReservationDatabase : RoomDatabase() {
                         ).fallbackToDestructiveMigration().build()
                 }
             }
-            return instance
+            return instance!!
         }
     }
 }

@@ -11,10 +11,13 @@ interface ReservationDao {
     fun getAll(): List<ReservationData>
 
     @Query("SELECT * FROM reservations WHERE id = :id")
-    fun selectWithId(id: Long): ReservationData
+    fun selectWithId(id: Long): ReservationData?
+
+    @Query("DELETE FROM reservations WHERE id = :id")
+    fun deleteWithId(id: Long)
 
     @Insert
-    fun insert(reservationData: ReservationData)
+    fun insert(reservationData: ReservationData): Long
 
     @Insert
     fun insertAll(vararg reservationData: ReservationData)
