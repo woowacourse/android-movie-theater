@@ -19,6 +19,7 @@ import woowacourse.movie.data.database.MovieDatabase
 import woowacourse.movie.data.database.ticket.TicketDao
 import woowacourse.movie.databinding.ActivityMovieSeatSelectionBinding
 import woowacourse.movie.domain.Seat
+import woowacourse.movie.domain.UserTicket
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.complete.MovieReservationCompleteActivity
 import woowacourse.movie.ui.notification.ReservationAlarmItem
@@ -106,15 +107,6 @@ class MovieSeatSelectionActivity :
         return MovieSeatSelectionPresenter(this, dao)
     }
 
-    override fun showTheater(
-        rowSize: Int,
-        colSize: Int,
-    ) {
-        repeat(rowSize) { row ->
-            makeSeats(colSize, row)
-        }
-    }
-
     override fun showSelectedSeat(index: Int) {
         seats[index]
             .setBackgroundColor(
@@ -142,10 +134,6 @@ class MovieSeatSelectionActivity :
         }
     }
 
-    override fun showMovieTitle(title: String) {
-        binding.title = title
-    }
-
     override fun setAlarm(
         reservationId: Long,
         reservedTime: LocalDateTime,
@@ -160,6 +148,25 @@ class MovieSeatSelectionActivity :
                 getString(R.string.notification_reservation_subtitle, movieTitle),
             ),
         )
+    }
+
+    override fun showReservationInfo(
+        userTicket: UserTicket,
+        rowSize: Int,
+        colSize: Int
+    ) {
+        binding.totalSeatAmountText.text =
+            resources.getString(R.string.selection_total_price)
+                .format(userTicket.seatInformation.totalSeatAmount())
+        binding.title = userTicket.title
+        binding.confirmButton.apply {
+            val isCompleted = userTicket.seatInformation.checkSelectCompletion()
+            isEnabled = isCompleted
+            isClickable = isCompleted
+        }
+        repeat(rowSize) { row ->
+            makeSeats(colSize, row)
+        }
     }
 
     override fun navigateToCompleteScreen(ticketId: Long) {

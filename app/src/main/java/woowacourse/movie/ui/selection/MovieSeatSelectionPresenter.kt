@@ -24,10 +24,8 @@ class MovieSeatSelectionPresenter(
                 screeningStartDateTime = reservationDetail.screeningDateTime,
                 seatInformation = SeatInformation(reservationCount = reservationDetail.count),
             )
-        view.showReservationTotalAmount(userTicket.seatInformation.totalSeatAmount())
-        view.showTheater(Seat.ROW_LEN, Seat.COL_LEN)
-        view.showMovieTitle(userTicket.title)
-        view.updateSelectCompletion(userTicket.seatInformation.checkSelectCompletion())
+
+        view.showReservationInfo(userTicket, Seat.ROW_LEN, Seat.COL_LEN)
     }
 
     override fun updateSelectCompletion() {

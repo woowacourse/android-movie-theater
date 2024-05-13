@@ -1,16 +1,12 @@
 package woowacourse.movie.ui.selection
 
+import woowacourse.movie.domain.UserTicket
 import woowacourse.movie.ui.HandleError
 import woowacourse.movie.ui.reservation.ReservationDetail
 import java.time.LocalDateTime
 
 interface MovieSeatSelectionContract {
     interface View : HandleError {
-        fun showTheater(
-            rowSize: Int,
-            colSize: Int,
-        )
-
         fun showSelectedSeat(index: Int)
 
         fun showUnSelectedSeat(index: Int)
@@ -19,14 +15,18 @@ interface MovieSeatSelectionContract {
 
         fun updateSelectCompletion(isComplete: Boolean)
 
-        fun showMovieTitle(title: String)
-
         fun navigateToCompleteScreen(ticketId: Long)
 
         fun setAlarm(
             reservationId: Long,
             reservedTime: LocalDateTime,
             movieTitle: String,
+        )
+
+        fun showReservationInfo(
+            userTicket: UserTicket,
+            rowSize: Int,
+            colSize: Int,
         )
     }
 
