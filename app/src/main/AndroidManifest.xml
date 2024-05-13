@@ -26,7 +26,7 @@
             android:name=".selectseat.SelectSeatActivity"
             android:exported="false" />
         <activity
-            android:name="woowacourse.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
