@@ -13,12 +13,10 @@ import woowacourse.movie.home.view.adapter.movie.HomeContent.Movie
 import woowacourse.movie.model.MovieDate
 import woowacourse.movie.model.MovieReservationCount
 import woowacourse.movie.seatselection.view.MovieSeatSelectionActivity
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_POSITION
-import woowacourse.movie.util.MovieIntentConstant.KEY_ITEM_POSITION
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_COUNT
-import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
+import woowacourse.movie.util.MovieIntent.ITEM_POSITION
+import woowacourse.movie.util.MovieIntent.MOVIE_ID
+import woowacourse.movie.util.MovieIntent.RESERVATION_COUNT
+import woowacourse.movie.util.MovieIntent.SELECTED_THEATER_POSITION
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
@@ -27,11 +25,16 @@ class MovieDetailActivity :
     private lateinit var binding: ActivityMovieDetailBinding
     private lateinit var movieDetailPresenter: MovieDetailPresenter
 
-    private val movieId: Long by lazy { intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID) }
+    private val movieId: Long by lazy {
+        intent.getLongExtra(
+            MOVIE_ID.key,
+            MOVIE_ID.invalidValue as Long,
+        )
+    }
     private val selectedTheaterPosition: Int by lazy {
         intent.getIntExtra(
-            KEY_SELECTED_THEATER_POSITION,
-            INVALID_VALUE_THEATER_POSITION,
+            SELECTED_THEATER_POSITION.key,
+            SELECTED_THEATER_POSITION.invalidValue as Int,
         )
     }
 
@@ -51,19 +54,19 @@ class MovieDetailActivity :
         super.onSaveInstanceState(outState)
 
         val position = binding.spinnerDetailDate.selectedItemPosition
-        outState.putInt(KEY_ITEM_POSITION, position)
+        outState.putInt(ITEM_POSITION.key, position)
 
         val count = binding.reservationCount
-        outState.putInt(KEY_RESERVATION_COUNT, count)
+        outState.putInt(RESERVATION_COUNT.key, count)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 
-        val savedPosition = savedInstanceState.getInt(KEY_ITEM_POSITION)
+        val savedPosition = savedInstanceState.getInt(ITEM_POSITION.key)
         movieDetailPresenter.updateTimeSpinnerPosition(savedPosition)
 
-        val savedCount = savedInstanceState.getInt(KEY_RESERVATION_COUNT)
+        val savedCount = savedInstanceState.getInt(RESERVATION_COUNT.key)
         movieDetailPresenter.updateReservationCount(savedCount)
     }
 
@@ -147,8 +150,8 @@ class MovieDetailActivity :
             position: Int,
         ): Intent {
             return Intent(context, MovieDetailActivity::class.java).apply {
-                putExtra(KEY_MOVIE_ID, movieId)
-                putExtra(KEY_SELECTED_THEATER_POSITION, position)
+                putExtra(MOVIE_ID.key, movieId)
+                putExtra(SELECTED_THEATER_POSITION.key, position)
             }
         }
     }

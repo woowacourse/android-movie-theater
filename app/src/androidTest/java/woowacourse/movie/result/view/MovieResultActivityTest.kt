@@ -13,12 +13,12 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_DATE
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_SEATS
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
-import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_COUNT
-import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
+import woowacourse.movie.util.MovieIntent.MOVIE_DATE
+import woowacourse.movie.util.MovieIntent.MOVIE_ID
+import woowacourse.movie.util.MovieIntent.MOVIE_SEATS
+import woowacourse.movie.util.MovieIntent.MOVIE_TIME
+import woowacourse.movie.util.MovieIntent.RESERVATION_COUNT
+import woowacourse.movie.util.MovieIntent.SELECTED_THEATER_POSITION
 
 @RunWith(AndroidJUnit4::class)
 class MovieResultActivityTest {
@@ -27,12 +27,12 @@ class MovieResultActivityTest {
             ApplicationProvider.getApplicationContext(),
             MovieResultActivity::class.java,
         ).apply {
-            putExtra(KEY_MOVIE_ID, 0L)
-            putExtra(KEY_MOVIE_DATE, "2024-04-01")
-            putExtra(KEY_MOVIE_TIME, "12:00")
-            putExtra(KEY_RESERVATION_COUNT, 3)
-            putExtra(KEY_MOVIE_SEATS, "A3, C2, E1")
-            putExtra(KEY_SELECTED_THEATER_POSITION, 1)
+            putExtra(MOVIE_ID.key, 0L)
+            putExtra(MOVIE_DATE.key, "2024-04-01")
+            putExtra(MOVIE_TIME.key, "12:00")
+            putExtra(RESERVATION_COUNT.key, 3)
+            putExtra(MOVIE_SEATS.key, "A3, C2, E1")
+            putExtra(SELECTED_THEATER_POSITION.key, 1)
         }
 
     @get:Rule

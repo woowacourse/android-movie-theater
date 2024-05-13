@@ -11,18 +11,12 @@ import woowacourse.movie.databinding.ActivityMovieResultBinding
 import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.result.presenter.MovieResultPresenter
 import woowacourse.movie.result.presenter.contract.MovieResultContract
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_DATE
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_SEATS
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_TIME
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_RESERVATION_COUNT
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_POSITION
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_DATE
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_SEATS
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
-import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_COUNT
-import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_POSITION
+import woowacourse.movie.util.MovieIntent.MOVIE_DATE
+import woowacourse.movie.util.MovieIntent.MOVIE_ID
+import woowacourse.movie.util.MovieIntent.MOVIE_SEATS
+import woowacourse.movie.util.MovieIntent.MOVIE_TIME
+import woowacourse.movie.util.MovieIntent.RESERVATION_COUNT
+import woowacourse.movie.util.MovieIntent.SELECTED_THEATER_POSITION
 
 class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
     private lateinit var binding: ActivityMovieResultBinding
@@ -38,12 +32,15 @@ class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
 
         movieResultPresenter = MovieResultPresenter(this)
         movieResultPresenter.loadMovieTicket(
-            intent.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID),
-            intent.getStringExtra(KEY_MOVIE_DATE) ?: INVALID_VALUE_MOVIE_DATE,
-            intent.getStringExtra(KEY_MOVIE_TIME) ?: INVALID_VALUE_MOVIE_TIME,
-            intent.getIntExtra(KEY_RESERVATION_COUNT, INVALID_VALUE_RESERVATION_COUNT),
-            intent.getStringExtra(KEY_MOVIE_SEATS) ?: INVALID_VALUE_MOVIE_SEATS,
-            intent.getIntExtra(KEY_SELECTED_THEATER_POSITION, INVALID_VALUE_THEATER_POSITION),
+            intent.getLongExtra(MOVIE_ID.key, MOVIE_ID.invalidValue as Long),
+            intent.getStringExtra(MOVIE_DATE.key) ?: MOVIE_DATE.invalidValue as String,
+            intent.getStringExtra(MOVIE_TIME.key) ?: MOVIE_TIME.invalidValue as String,
+            intent.getIntExtra(RESERVATION_COUNT.key, RESERVATION_COUNT.invalidValue as Int),
+            intent.getStringExtra(MOVIE_SEATS.key) ?: MOVIE_SEATS.invalidValue as String,
+            intent.getIntExtra(
+                SELECTED_THEATER_POSITION.key,
+                SELECTED_THEATER_POSITION.invalidValue as Int,
+            ),
         )
     }
 
@@ -83,12 +80,12 @@ class MovieResultActivity : AppCompatActivity(), MovieResultContract.View {
             theaterPosition: Int,
         ): Intent {
             return Intent(context, MovieResultActivity::class.java).apply {
-                putExtra(KEY_MOVIE_ID, movieId)
-                putExtra(KEY_MOVIE_DATE, date)
-                putExtra(KEY_MOVIE_TIME, time)
-                putExtra(KEY_RESERVATION_COUNT, count)
-                putExtra(KEY_MOVIE_SEATS, seats)
-                putExtra(KEY_SELECTED_THEATER_POSITION, theaterPosition)
+                putExtra(MOVIE_ID.key, movieId)
+                putExtra(MOVIE_DATE.key, date)
+                putExtra(MOVIE_TIME.key, time)
+                putExtra(RESERVATION_COUNT.key, count)
+                putExtra(MOVIE_SEATS.key, seats)
+                putExtra(SELECTED_THEATER_POSITION.key, theaterPosition)
             }
         }
     }

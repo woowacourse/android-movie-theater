@@ -9,8 +9,7 @@ import woowacourse.movie.MovieMainActivity.Companion.sharedPrefs
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.setting.presenter.SettingPresenter
 import woowacourse.movie.setting.presenter.contract.SettingContract
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_IS_GRANTED
-import woowacourse.movie.util.MovieIntentConstant.KEY_IS_GRANTED
+import woowacourse.movie.util.MovieIntent.IS_GRANTED
 
 class SettingFragment : Fragment(), SettingContract.View {
     private lateinit var binding: FragmentSettingBinding
@@ -34,7 +33,7 @@ class SettingFragment : Fragment(), SettingContract.View {
     }
 
     override fun setUpAlarmSwitch(savedAlarmSetting: Boolean) {
-        val isGranted = arguments?.getBoolean(KEY_IS_GRANTED) ?: INVALID_VALUE_IS_GRANTED
+        val isGranted = arguments?.getBoolean(IS_GRANTED.key) ?: IS_GRANTED.invalidValue as Boolean
         val isChecked = judgeChecked(isGranted, savedAlarmSetting)
         binding.isGranted = isGranted
         binding.isChecked = isChecked
@@ -60,7 +59,7 @@ class SettingFragment : Fragment(), SettingContract.View {
             return settingFragment.apply {
                 arguments =
                     Bundle().apply {
-                        putBoolean(KEY_IS_GRANTED, isGranted)
+                        putBoolean(IS_GRANTED.key, isGranted)
                     }
             }
         }
