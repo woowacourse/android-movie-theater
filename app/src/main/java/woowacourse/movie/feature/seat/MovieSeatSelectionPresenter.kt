@@ -37,7 +37,7 @@ class MovieSeatSelectionPresenter(
 
     override fun loadTableSeats(movieSelectedSeats: MovieSelectedSeats) {
         this.movieSelectedSeats = movieSelectedSeats
-        view.setUpTableSeats(movieSelectedSeats.getBaseSeats())
+        view.setUpTableSeats(movieSelectedSeats.baseSeats)
     }
 
     override fun updateSelectedSeats(movieSelectedSeats: MovieSelectedSeats) {
@@ -45,7 +45,7 @@ class MovieSeatSelectionPresenter(
     }
 
     override fun selectSeat(index: Int) {
-        val seat = movieSelectedSeats.getBaseSeats()[index]
+        val seat = movieSelectedSeats.baseSeats[index]
         when {
             movieSelectedSeats.isSelected(index) -> unSelectSeat(seat, index)
             !movieSelectedSeats.isSelectionComplete() -> selectSeat(seat, index)

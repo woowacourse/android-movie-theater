@@ -5,12 +5,14 @@ class MovieSelectedSeats(
     rowSize: Int = DEFAULT_ROW_SIZE,
     private val columnSize: Int = DEFAULT_COLUMN_SIZE,
 ) {
-    private val baseSeats =
+    private val _baseSeats =
         List(rowSize * columnSize) { index ->
             val row = index / columnSize
             val column = index % columnSize
             MovieSeat(row, column)
         }
+    val baseSeats: List<MovieSeat>
+        get() = _baseSeats
 
     private val _selectedSeats: MutableSet<MovieSeat> = mutableSetOf()
     val selectedSeats: Set<MovieSeat>
@@ -24,7 +26,7 @@ class MovieSelectedSeats(
         _selectedSeats.remove(seat)
     }
 
-    fun isSelected(index: Int): Boolean = baseSeats[index] in selectedSeats
+    fun isSelected(index: Int): Boolean = _baseSeats[index] in selectedSeats
 
     fun totalPrice(): Int = selectedSeats.sumOf { selectedSeat -> selectedSeat.grade.price }
 
@@ -35,8 +37,6 @@ class MovieSelectedSeats(
             seat.row * columnSize + seat.column
         }.toIntArray()
     }
-
-    fun getBaseSeats(): List<MovieSeat> = baseSeats
 
     companion object {
         private const val DEFAULT_ROW_SIZE = 5
