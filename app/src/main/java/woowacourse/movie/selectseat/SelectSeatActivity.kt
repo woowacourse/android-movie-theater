@@ -15,6 +15,7 @@ import woowacourse.movie.reservationresult.ReservationResultActivity
 import woowacourse.movie.selectseat.uimodel.SeatUiModel
 import woowacourse.movie.selectseat.uimodel.SelectState
 import woowacourse.movie.selectseat.uimodel.SelectedSeatsUiModel
+import woowacourse.movie.setting.MovieAlarmSetting
 import woowacourse.movie.util.bundleParcelable
 import woowacourse.movie.util.intentParcelable
 import woowacourse.movie.util.showAlertDialog
@@ -162,6 +163,7 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
             onPositiveButtonClicked = {
                 presenter.completeReservation(
                     bookingInfoUiModel,
+                    MovieAlarmSetting(this),
                 )
             },
             "취소",

@@ -9,6 +9,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
+import woowacourse.movie.data.AlarmSharedPreferences
 import woowacourse.movie.reservationresult.ReservationResultActivity
 
 class AlarmReceiver() : BroadcastReceiver() {
@@ -24,8 +25,10 @@ class AlarmReceiver() : BroadcastReceiver() {
         val title = intent.getStringExtra(TITLE_ID) ?: error("영화 제목에 대한 정보가 없습니다.")
         val id = intent.getLongExtra(CHANNEL_ID, INVALID_CHANNEL_ID)
 
-        createNotificationChannel()
-        deliverNotification(context, title, id)
+        if (AlarmSharedPreferences(context).isReservationAlarm()) {
+            createNotificationChannel()
+            deliverNotification(context, title, id)
+        }
     }
 
     private fun createNotificationChannel() {

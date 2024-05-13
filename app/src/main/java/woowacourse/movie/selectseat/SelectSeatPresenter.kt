@@ -8,6 +8,7 @@ import woowacourse.movie.moviereservation.uimodel.BookingInfo
 import woowacourse.movie.repository.MovieRepository
 import woowacourse.movie.selectseat.uimodel.SeatUiModel
 import woowacourse.movie.selectseat.uimodel.SelectState
+import woowacourse.movie.setting.AlarmSetting
 import kotlin.concurrent.thread
 
 class SelectSeatPresenter(
@@ -59,7 +60,10 @@ class SelectSeatPresenter(
         view.updatePrice(this.selectedSeats.totalPrice.price)
     }
 
-    override fun completeReservation(bookingInfoUiModel: BookingInfo) {
+    override fun completeReservation(
+        bookingInfoUiModel: BookingInfo,
+        alarmSettig: AlarmSetting,
+    ) {
         thread {
             runCatching {
                 repository.reserveMovie(
@@ -71,6 +75,7 @@ class SelectSeatPresenter(
                 )
             }.onSuccess {
                 view.navigateToResult(it)
+                alarmSettig.setAlarm(repository.movieReservationById(it))
             }
         }.join()
     }

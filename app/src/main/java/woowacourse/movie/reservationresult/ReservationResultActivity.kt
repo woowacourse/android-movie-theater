@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.data.AlarmSharedPreferences
 import woowacourse.movie.data.RoomMovieRepository
 import woowacourse.movie.databinding.ActivityReservationResultBinding
 import woowacourse.movie.reservationresult.uimodel.ReservationResultUiModel
@@ -30,11 +29,6 @@ class ReservationResultActivity : AppCompatActivity(), ReservationResultContract
                 alarmSetting = MovieAlarmSetting(this),
             )
         presenter.loadReservationResult(reservationId)
-
-        val alarmSetting = AlarmSharedPreferences(this)
-        if (alarmSetting.isReservationAlarm()) {
-            presenter.setAlarm(reservationId, this)
-        }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
