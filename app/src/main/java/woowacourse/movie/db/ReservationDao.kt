@@ -14,4 +14,7 @@ interface ReservationDao {
 
     @Query("DELETE FROM reservations")
     fun deleteAll()
+
+    @Query("SELECT * FROM reservations WHERE uid == :id")
+    fun findReservationById(id: Long): ReservationEntity
 }

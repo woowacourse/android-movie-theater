@@ -31,8 +31,9 @@ class ReservationDaoTest {
     fun `예매_정보_저장_테스트`() {
         val data =
             ReservationEntity("영화 제목", "2024.05.09", "10:00", listOf(Seat(0, 0), Seat(0, 1)), "선릉")
-        val actual = dao.saveReservation(data)
-        assertThat(actual > 0).isTrue()
+        val dataId = dao.saveReservation(data)
+
+        assertThat(dao.findReservationById(dataId)).isEqualTo(data)
     }
 
     @Test
