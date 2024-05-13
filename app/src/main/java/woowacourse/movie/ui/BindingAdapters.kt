@@ -5,6 +5,8 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.app.NotificationCompat.getColor
 import androidx.databinding.BindingAdapter
+import com.google.android.material.switchmaterial.SwitchMaterial
+import woowacourse.movie.MovieTheaterSharedPreference
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.Image
@@ -72,4 +74,14 @@ fun buttonEnabled(
         appCompatButton.setBackgroundColor(appCompatButton.context.getColor(R.color.complete_deactivated))
     }
     appCompatButton.isEnabled = boolean
+}
+
+@BindingAdapter("app:clicknotification")
+fun notification(
+    switchMaterial: SwitchMaterial,
+    movieTheaterSharedPreference: MovieTheaterSharedPreference,
+) {
+    switchMaterial.setOnClickListener {
+        movieTheaterSharedPreference.notificationReservationHistory = !movieTheaterSharedPreference.notificationReservationHistory
+    }
 }
