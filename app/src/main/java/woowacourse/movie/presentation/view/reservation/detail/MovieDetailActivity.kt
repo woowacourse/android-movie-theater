@@ -84,6 +84,7 @@ class MovieDetailActivity : BaseActivity(), MovieDetailContract.View, MovieDetai
         timeSpinnerAdapter.addAll(times)
         timeSpinnerAdapter.notifyDataSetChanged()
         binding.timeSpinner.setSelection(defaultDataIndex)
+        movieDetailPresenter.selectTime(times[defaultDataIndex])
     }
 
     override fun updateReservationCount(count: Int) {
