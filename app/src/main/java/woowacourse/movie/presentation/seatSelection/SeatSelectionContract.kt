@@ -22,7 +22,10 @@ interface SeatSelectionContract {
 
         fun showToastMessage(message: String?)
 
-        fun navigate(ticket: Ticket)
+        fun navigate(
+            ticket: Ticket,
+            ticketId: Long,
+        )
     }
 
     interface Presenter {
@@ -31,6 +34,13 @@ interface SeatSelectionContract {
         fun loadSeats()
 
         fun updateSeatSelection(index: Int)
+
+        fun setAlarm(
+            context: Context,
+            movieTitle: String,
+            ticket: Ticket,
+            ticketId: Long,
+        )
 
         fun navigate(
             screeningDateTime: String,

@@ -104,8 +104,19 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun navigate(ticket: Ticket) {
-        startActivity(TicketingResultActivity.createIntent(this, ticket))
+    override fun navigate(
+        ticket: Ticket,
+        ticketId: Long,
+    ) {
+        runOnUiThread {
+            presenter.setAlarm(
+                context = this@SeatSelectionActivity,
+                movieTitle = ticket.movieTitle,
+                ticket = ticket,
+                ticketId = ticketId,
+            )
+            startActivity(TicketingResultActivity.createIntent(this, ticket))
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

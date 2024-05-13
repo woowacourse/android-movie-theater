@@ -1,6 +1,7 @@
 package woowacourse.movie.presentation.ticketingResult
 
 import woowacourse.movie.model.Ticket
+import woowacourse.movie.repository.ReservationRepository
 import woowacourse.movie.repository.TheaterListRepository
 
 class TicketingResultPresenter(
@@ -11,6 +12,13 @@ class TicketingResultPresenter(
         movieTicket?.let { ticket ->
             ticketingResultView.displayTicketInfo(ticket, findTheaterName(ticket.theaterId))
         }
+    }
+
+    override fun loadTicket(
+        ticketId: Long,
+        reservationRepository: ReservationRepository,
+    ): Ticket? {
+        return reservationRepository.findTicket(ticketId)
     }
 
     private fun findTheaterName(theaterId: Long): String = theaterListRepository.findTheaterOrNull(theaterId)?.name ?: ""

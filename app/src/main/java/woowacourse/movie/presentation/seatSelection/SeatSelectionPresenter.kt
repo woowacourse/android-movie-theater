@@ -1,12 +1,15 @@
 package woowacourse.movie.presentation.seatSelection
 
 import android.content.Context
+import android.util.Log
 import woowacourse.movie.database.ReservationData
-import woowacourse.movie.database.ReservationDatabase
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.SeatingSystem
 import woowacourse.movie.model.Ticket
+import woowacourse.movie.notification.ReservationNotification
 import woowacourse.movie.repository.MovieRepository
+import woowacourse.movie.repository.ReservationRepository
+import woowacourse.movie.repository.ReservationRepositoryImpl
 
 class SeatSelectionPresenter(
     private val seatSelectionContractView: SeatSelectionContract.View,
@@ -65,7 +68,6 @@ class SeatSelectionPresenter(
     override fun navigate(
         screeningDateTime: String,
         theaterId: Long,
-        // Is it possible to erase context here?
         context: Context,
     ) {
         val ticket =
@@ -75,17 +77,21 @@ class SeatSelectionPresenter(
                 seatingSystem.selectedSeats.toList(),
                 theaterId,
             )
-        Thread {
-            ReservationDatabase.getInstance(context)?.let { storeDataToDatabase(it, ticket) }
-        }.start()
-        seatSelectionContractView.navigate(ticket)
+        var ticketId = -1L
+        // val t =
+        //    Thread {
+        ticketId = storeDataToDatabase(ReservationRepositoryImpl(context), ticket)
+        //    }
+        // t.start()
+        // t.join()
+        Log.d("seatSelection", "$ticketId")
+        seatSelectionContractView.navigate(ticket, ticketId)
     }
 
     private fun storeDataToDatabase(
-        reservationDatabase: ReservationDatabase,
+        reservationRepository: ReservationRepository,
         ticket: Ticket,
-    ) {
-        val dao = reservationDatabase.reservationDao()
+    ): Long {
         val reservationData: ReservationData =
             ReservationData(
                 theaterId = ticket.theaterId,
@@ -95,6 +101,28 @@ class SeatSelectionPresenter(
                 selectedSeats = ticket.selectedSeatsToString(),
                 totalPrice = ticket.totalPriceToString(),
             )
-        dao.insertAll(reservationData)
+        var ticketId: Long = -1L
+        val t =
+            Thread {
+                ticketId = reservationRepository.saveReservationData(ticket)
+            }
+        t.start()
+        t.join()
+        Log.d("seatselection crong", "$ticketId")
+        return ticketId
+    }
+
+    override fun setAlarm(
+        context: Context,
+        movieTitle: String,
+        ticket: Ticket,
+        ticketId: Long,
+    ) {
+        ReservationNotification.setNotification(
+            context = context,
+            movieTitle = movieTitle,
+            screeningDateTime = ticket.screeningDateTime,
+            ticketId = ticketId,
+        )
     }
 }

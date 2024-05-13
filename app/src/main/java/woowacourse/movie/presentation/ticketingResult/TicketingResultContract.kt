@@ -1,6 +1,7 @@
 package woowacourse.movie.presentation.ticketingResult
 
 import woowacourse.movie.model.Ticket
+import woowacourse.movie.repository.ReservationRepository
 
 interface TicketingResultContract {
     interface View {
@@ -14,5 +15,10 @@ interface TicketingResultContract {
 
     interface Presenter {
         fun loadTicketInfo(movieTicket: Ticket?)
+
+        fun loadTicket(
+            ticketId: Long,
+            reservationRepository: ReservationRepository,
+        ): Ticket?
     }
 }
