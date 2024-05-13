@@ -10,7 +10,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.data.db.ReservationDatabase
 import woowacourse.movie.data.repository.local.ReservationRepositoryImpl
+import woowacourse.movie.domain.model.Reservation
+import woowacourse.movie.presentation.ui.util.getDummyMovie
 import woowacourse.movie.presentation.ui.util.getDummyReservation
+import woowacourse.movie.presentation.ui.util.getDummySeats
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 @RunWith(AndroidJUnit4::class)
 class ReservationRepositoryTest {
@@ -47,7 +53,16 @@ class ReservationRepositoryTest {
 
     @Test
     fun `예약_내역을_저장하고_저장된_예약_id를_통해_예약_내역을_확인할_수_있다`() {
-        val reservation = getDummyReservation()
+        val reservation =
+            Reservation(
+                reservationId = 1,
+                theaterId = 1,
+                movieId = getDummyMovie().id,
+                title = getDummyMovie().title,
+                ticketCount = 3,
+                seats = getDummySeats(),
+                dateTime = LocalDateTime.of(LocalDate.of(2024, 5, 13), LocalTime.of(0, 0)),
+            )
 
         val reservationId =
             repository.saveReservation(
@@ -61,7 +76,17 @@ class ReservationRepositoryTest {
 
         val actual = repository.findReservation(reservationId).getOrThrow()
 
-        assertThat(actual).isEqualTo(reservation.copy(reservationId = actual.reservationId))
+        assertThat(actual).isEqualTo(
+            Reservation(
+                reservationId = reservationId,
+                theaterId = 1,
+                movieId = getDummyMovie().id,
+                title = getDummyMovie().title,
+                ticketCount = 3,
+                seats = getDummySeats(),
+                dateTime = LocalDateTime.of(LocalDate.of(2024, 5, 13), LocalTime.of(0, 0)),
+            ),
+        )
     }
 
     @Test
