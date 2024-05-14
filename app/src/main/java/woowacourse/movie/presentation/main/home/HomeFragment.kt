@@ -27,7 +27,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home), 
             }
         )
 
-        binding.movieRecyclerView.adapter = homeMovieAdapter
+        binding?.movieRecyclerView?.adapter = homeMovieAdapter
     }
 
     private fun navigateToTheater(movieId: Long) {

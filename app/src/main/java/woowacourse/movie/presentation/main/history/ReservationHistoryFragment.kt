@@ -26,10 +26,10 @@ class ReservationHistoryFragment :
 
     override fun showReservationHistory(movieTickets: List<MovieTicket>) {
         if (movieTickets.isEmpty()) {
-            binding.reservationHistoryRecyclerView.visibility = View.INVISIBLE
-            binding.tvEmptyReservation.visibility = View.VISIBLE
+            binding?.reservationHistoryRecyclerView?.visibility = View.INVISIBLE
+            binding?.tvEmptyReservation?.visibility = View.VISIBLE
         } else {
-            binding.tvEmptyReservation.visibility = View.INVISIBLE
+            binding?.tvEmptyReservation?.visibility = View.INVISIBLE
             adapter = ReservationHistoryAdapter(
                 movieTickets,
                 object : OnMovieTicketItemClickListener {
@@ -38,8 +38,8 @@ class ReservationHistoryFragment :
                     }
                 }
             )
-            binding.reservationHistoryRecyclerView.adapter = adapter
-            binding.reservationHistoryRecyclerView.visibility = View.VISIBLE
+            binding?.reservationHistoryRecyclerView?.adapter = adapter
+            binding?.reservationHistoryRecyclerView?.visibility = View.VISIBLE
         }
     }
 
