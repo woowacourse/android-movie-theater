@@ -1,6 +1,6 @@
-package woowacourse.movie.domain.dummy
+package woowacourse.movie.data.repository.remote
 
-import woowacourse.movie.domain.dummy.DummyData.theaters
+import woowacourse.movie.data.repository.remote.DummyData.theaters
 import woowacourse.movie.domain.model.TheaterCount
 import woowacourse.movie.domain.repository.TheaterRepository
 

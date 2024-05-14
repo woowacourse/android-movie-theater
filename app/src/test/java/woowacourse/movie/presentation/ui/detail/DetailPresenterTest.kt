@@ -1,45 +1,36 @@
 package woowacourse.movie.presentation.ui.detail
 
 import io.mockk.every
+import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.just
 import io.mockk.runs
 import io.mockk.verify
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.domain.repository.ScreenRepository
-import woowacourse.movie.presentation.model.MessageType
+import woowacourse.movie.presentation.model.ReservationInfo
 import woowacourse.movie.presentation.model.Ticket
+import woowacourse.movie.presentation.model.message.TicketMessageType.TicketMaxCountMessage
+import woowacourse.movie.presentation.model.message.TicketMessageType.TicketMinCountMessage
 import woowacourse.movie.presentation.ui.utils.DummyData.dummyScreen
-import woowacourse.movie.presentation.ui.utils.DummyData.findByScreenId
 
 @ExtendWith(MockKExtension::class)
 class DetailPresenterTest {
     @MockK
     private lateinit var view: DetailContract.View
 
-    private lateinit var presenter: DetailContract.Presenter
-
     @MockK
     private lateinit var repository: ScreenRepository
 
-    @BeforeEach
-    fun setUp() {
-        presenter = DetailPresenter(view, repository)
-    }
+    @InjectMockKs
+    private lateinit var presenter: DetailPresenter
 
     @Test
     fun `DetailPresenter가 유효한 상영 id값으로 loadScreen()을 했을 때, view에게 screen, count 정보를 전달한다`() {
         // given
-        every { repository.findByScreenId(any(), any()) } returns
-            Result.success(
-                findByScreenId(
-                    0,
-                    0,
-                ),
-            )
+        every { repository.findByScreenId(any(), any()) } returns Result.success(dummyScreen)
         every { view.showScreen(any()) } just runs
         every { view.showTicket(any()) } just runs
 
@@ -48,31 +39,32 @@ class DetailPresenterTest {
 
         // then
         verify { view.showScreen(dummyScreen) }
-        verify { view.showTicket(any()) }
+        verify { view.showTicket(1) }
     }
 
     @Test
     fun `DetailPresenter가 유효하지 않은 상영 id값으로 loadScreen()을 했을 때, view에게 back과 throwable를 전달한다`() {
         // given
-        every { repository.findByScreenId(any(), any()) } returns
-            Result.failure(
-                NoSuchElementException(),
-            )
-        every { view.showToastMessage(e = any()) } just runs
+        val exception = NoSuchElementException()
+        every { repository.findByScreenId(any(), any()) } returns Result.failure(exception)
+        every { view.showToastMessage(e = exception) } just runs
         every { view.navigateBackToPrevious() } just runs
 
         // when
-        presenter.loadScreen(1, 1)
+        presenter.loadScreen(0, 0)
 
         // then
-        verify { view.showToastMessage(e = any()) }
+        verify { view.showToastMessage(e = exception) }
         verify { view.navigateBackToPrevious() }
     }
 
     @Test
     fun `DetailPresenter가 ticket 값이 1일 때 plusTicket()을 하면, view에게 티켓 개수를 전달한다`() {
         // given
+        every { repository.findByScreenId(any(), any()) } returns Result.success(dummyScreen)
+        every { view.showScreen(any()) } just runs
         every { view.showTicket(any()) } just runs
+        presenter.loadScreen(0, 0)
 
         // when
         presenter.plusTicket()
@@ -84,8 +76,11 @@ class DetailPresenterTest {
     @Test
     fun `DetailPresenter가 ticket 값이 티켓의 최대 개수일 때 plusTicket()을 하면, view에게 snackbar message(TicketMaxCountMessage)를 전달한다`() {
         // given
+        every { repository.findByScreenId(any(), any()) } returns Result.success(dummyScreen)
+        every { view.showScreen(any()) } just runs
         every { view.showTicket(any()) } just runs
-        every { view.showSnackBar(MessageType.TicketMaxCountMessage(Ticket.MAX_TICKET_COUNT)) } just runs
+        every { view.showSnackBar(TicketMaxCountMessage(Ticket.MAX_TICKET_COUNT)) } just runs
+        presenter.loadScreen(0, 0)
 
         // when
         repeat(Ticket.MAX_TICKET_COUNT - 1) {
@@ -94,24 +89,34 @@ class DetailPresenterTest {
         presenter.plusTicket()
 
         // then
-        verify { view.showSnackBar(MessageType.TicketMaxCountMessage(Ticket.MAX_TICKET_COUNT)) }
+        verify { view.showSnackBar(TicketMaxCountMessage(count = Ticket.MAX_TICKET_COUNT)) }
     }
 
     @Test
     fun `DetailPresenter가 ticket 값이 1일 때 minusTicket()을 하면, view에게 snackbar message(TicketMinCountMessage)를 전달한다`() {
         // given
-        every { view.showSnackBar(MessageType.TicketMinCountMessage(Ticket.MIN_TICKET_COUNT)) } just runs
+        every { repository.findByScreenId(any(), any()) } returns Result.success(dummyScreen)
+        every { view.showScreen(any()) } just runs
+        every { view.showTicket(any()) } just runs
+        every { view.showSnackBar(TicketMinCountMessage(Ticket.MIN_TICKET_COUNT)) } just runs
+        presenter.loadScreen(0, 0)
 
         // when
         presenter.minusTicket()
 
         // then
-        verify { view.showSnackBar(MessageType.TicketMinCountMessage(Ticket.MIN_TICKET_COUNT)) }
+        verify { view.showSnackBar(TicketMinCountMessage(Ticket.MIN_TICKET_COUNT)) }
     }
 
     @Test
     fun `DetailPresenter가 ticket 값이 티켓의 최대 개수일 때 minusTicket()을 하면, view에게 티켓 개수를 전달한다`() {
-        // given && when
+        // given
+        every { repository.findByScreenId(any(), any()) } returns Result.success(dummyScreen)
+        every { view.showScreen(any()) } just runs
+        every { view.showTicket(any()) } just runs
+        presenter.loadScreen(0, 0)
+
+        // when
         repeat(Ticket.MAX_TICKET_COUNT - 1) {
             every { view.showTicket(it + 2) } just runs
             presenter.plusTicket()
@@ -129,13 +134,24 @@ class DetailPresenterTest {
         every { view.showScreen(any()) } just runs
         every { view.showTicket(any()) } just runs
         every { view.navigateToSeatSelection(any()) } just runs
+        presenter.loadScreen(0, 0)
 
         // when
-        presenter.loadScreen(1, 1)
         presenter.selectSeat()
 
         // then
-        verify { view.navigateToSeatSelection(any()) }
+        val reservationInfo =
+            ReservationInfo(
+                theaterId = 0,
+                movieId = dummyScreen.movie.id,
+                dateTime =
+                    dummyScreen.selectableDates.first()
+                        .getLocalDateTime(
+                            dummyScreen.selectableDates.first().getSelectableTimes().first(),
+                        ),
+                ticketCount = 1,
+            )
+        verify { view.navigateToSeatSelection(reservationInfo) }
     }
 
     @Test
@@ -144,9 +160,9 @@ class DetailPresenterTest {
         every { repository.findByScreenId(any(), any()) } returns Result.success(dummyScreen)
         every { view.showScreen(any()) } just runs
         every { view.showTicket(any()) } just runs
+        presenter.loadScreen(1, 1)
 
         // when
-        presenter.loadScreen(1, 1)
         presenter.updateTicket(5)
 
         // then

@@ -1,28 +1,39 @@
 package woowacourse.movie.presentation.ui.main
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.provider.Settings
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.StringRes
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
+import woowacourse.movie.data.repository.local.PreferenceRepositoryImpl
 import woowacourse.movie.databinding.ActivityMainBinding
+import woowacourse.movie.presentation.base.BaseMvpBindingActivity
+import woowacourse.movie.presentation.permision.Permission
+import woowacourse.movie.presentation.permision.Permission.toPermissionText
 import woowacourse.movie.presentation.ui.main.history.ReservationHistoryFragment
 import woowacourse.movie.presentation.ui.main.home.HomeFragment
 import woowacourse.movie.presentation.ui.main.setting.SettingFragment
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+class MainActivity : BaseMvpBindingActivity<ActivityMainBinding>(), MainContract.View {
+    override val layoutResourceId: Int
+        get() = R.layout.activity_main
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override val presenter: MainContract.Presenter by lazy {
+        MainPresenter(this, PreferenceRepositoryImpl())
+    }
 
-        if (savedInstanceState == null) {
-            binding.bottomNavigationViewMain.selectedItemId = R.id.fragment_home
-            replaceFragment(HomeFragment(), HomeFragment.TAG)
-        }
+    override fun initStartView() {
+        binding.bottomNavigationViewMain.selectedItemId = R.id.fragment_home
+        replaceFragment(HomeFragment(), HomeFragment.TAG)
         setupBottomNavigationView()
+        if (Permission.notificationPermissions.isNotEmpty()) {
+            requestNotificationPermissions(Permission.notificationPermissions.toList())
+        }
     }
 
     private fun setupBottomNavigationView() {
@@ -56,6 +67,52 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return true
+    }
+
+    private fun requestNotificationPermissions(permissionList: List<String>) {
+        val requestList = ArrayList<String>()
+        for (permission in permissionList) {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    permission,
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                requestList.add(permission)
+            }
+
+            if (requestList.isNotEmpty()) {
+                requestMultiplePermissionsLauncher.launch(requestList.toTypedArray())
+                return
+            }
+        }
+    }
+
+    private val requestMultiplePermissionsLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            if (permissions.values.all { it }) {
+                presenter.changeNotificationMode(true)
+            } else {
+                presenter.changeNotificationMode(false)
+                val stringResId =
+                    permissions.entries.find { !it.value }?.key?.toPermissionText()
+                        ?: R.string.permission_default_text
+
+                showPermissionSnackBar(stringResId)
+            }
+        }
+
+    private fun showPermissionSnackBar(
+        @StringRes stringResId: Int,
+    ) {
+        presenter.requestNotificationPermission(getString(stringResId)) {
+            setAction(getString(R.string.permission_done)) {
+                val intent =
+                    Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                        data = Uri.fromParts("package", packageName, null)
+                    }
+                startActivity(intent)
+            }
+        }
     }
 
     override fun onBackPressed() {

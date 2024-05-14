@@ -64,7 +64,7 @@ class ScreenRecyclerViewAdapter(
     fun updateScreens(newScreens: List<ScreenView>) {
         screens.clear()
         screens.addAll(newScreens)
-        notifyDataSetChanged()
+        notifyItemRangeChanged(0, newScreens.size)
     }
 
     companion object {

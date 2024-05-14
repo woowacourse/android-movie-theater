@@ -1,19 +1,23 @@
 package woowacourse.movie.presentation.ui.seatselection
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
+import woowacourse.movie.MovieApplication.Companion.db
 import woowacourse.movie.R
+import woowacourse.movie.data.repository.local.ReservationRepositoryImpl
+import woowacourse.movie.data.repository.remote.DummyScreens
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
-import woowacourse.movie.domain.dummy.DummyReservation
-import woowacourse.movie.domain.dummy.DummyScreens
 import woowacourse.movie.domain.model.Screen
+import woowacourse.movie.notification.NotificationRepositoryImpl
 import woowacourse.movie.presentation.base.BaseMvpBindingActivity
 import woowacourse.movie.presentation.model.ReservationInfo
 import woowacourse.movie.presentation.model.UserSeat
+import woowacourse.movie.presentation.ui.detail.DetailActivity
 import woowacourse.movie.presentation.ui.reservation.ReservationActivity
 import woowacourse.movie.presentation.ui.seatselection.SeatSelectionContract.View
 import java.io.Serializable
@@ -21,8 +25,16 @@ import java.io.Serializable
 class SeatSelectionActivity : BaseMvpBindingActivity<ActivitySeatSelectionBinding>(), View {
     override val layoutResourceId: Int
         get() = R.layout.activity_seat_selection
+
+    val repository = ReservationRepositoryImpl(db.dao())
+
     override val presenter: SeatSelectionPresenter by lazy {
-        SeatSelectionPresenter(this, DummyScreens, DummyReservation)
+        SeatSelectionPresenter(
+            this,
+            DummyScreens,
+            repository,
+            NotificationRepositoryImpl(applicationContext),
+        )
     }
 
     override fun initStartView() {
@@ -39,8 +51,7 @@ class SeatSelectionActivity : BaseMvpBindingActivity<ActivitySeatSelectionBindin
             }
 
         reservationInfo?.let { reservationInfoItem ->
-            presenter.updateUiModel(reservationInfoItem)
-            presenter.loadScreen(reservationInfoItem.theaterId)
+            presenter.loadScreen(reservationInfoItem)
             presenter.loadSeatBoard(reservationInfoItem.theaterId)
         }
     }
@@ -90,8 +101,9 @@ class SeatSelectionActivity : BaseMvpBindingActivity<ActivitySeatSelectionBindin
         builder.show()
     }
 
-    override fun navigateToReservation(id: Int) {
+    override fun navigateToReservation(id: Long) {
         ReservationActivity.startActivity(this, id)
+        setResult(Activity.RESULT_OK, DetailActivity.getIntent(this))
         navigateBackToPrevious()
     }
 
@@ -113,8 +125,7 @@ class SeatSelectionActivity : BaseMvpBindingActivity<ActivitySeatSelectionBindin
         val savedUserSeat = savedInstanceState.getSerializable(PUT_STATE_KEY_USER_SEAT) as UserSeat?
         savedUserSeat?.let { userSeat ->
             userSeat.seatModels.forEach { seat ->
-                val n = seat.copy(isSelected = false)
-                presenter.clickSeat(n)
+                presenter.clickSeat(seat.copy(isSelected = false))
             }
         }
     }
@@ -123,13 +134,12 @@ class SeatSelectionActivity : BaseMvpBindingActivity<ActivitySeatSelectionBindin
         private const val PUT_EXTRA_KEY_RESERVATION_INFO = "reservationInfo"
         private const val PUT_STATE_KEY_USER_SEAT = "userSeat"
 
-        fun startActivity(
+        fun getIntent(
             context: Context,
             reservationInfo: ReservationInfo,
-        ) {
+        ): Intent {
             val intent = Intent(context, SeatSelectionActivity::class.java)
-            intent.putExtra(PUT_EXTRA_KEY_RESERVATION_INFO, reservationInfo as Serializable)
-            context.startActivity(intent)
+            return intent.putExtra(PUT_EXTRA_KEY_RESERVATION_INFO, reservationInfo as Serializable)
         }
     }
 }

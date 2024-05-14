@@ -2,11 +2,12 @@ package woowacourse.movie.presentation.ui.detail
 
 import woowacourse.movie.domain.model.ScreenDate
 import woowacourse.movie.domain.repository.ScreenRepository
-import woowacourse.movie.presentation.model.MessageType
 import woowacourse.movie.presentation.model.ReservationInfo
 import woowacourse.movie.presentation.model.Ticket
 import woowacourse.movie.presentation.model.Ticket.Companion.MAX_TICKET_COUNT
 import woowacourse.movie.presentation.model.Ticket.Companion.MIN_TICKET_COUNT
+import woowacourse.movie.presentation.model.message.TicketMessageType.TicketMaxCountMessage
+import woowacourse.movie.presentation.model.message.TicketMessageType.TicketMinCountMessage
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -14,12 +15,12 @@ class DetailPresenter(
     private val view: DetailContract.View,
     private val repository: ScreenRepository,
 ) : DetailContract.Presenter {
-    private var uiModel = DetailUiModel()
+    private lateinit var uiModel: DetailUiModel
     val count: Int get() = uiModel.ticket.count
     val selectableDates: List<ScreenDate> get() = uiModel.selectableDates
-    val selectedDate: ScreenDate? get() = uiModel.selectedDate
-    val date: LocalDate? get() = uiModel.selectedDate?.date
-    val selectedTime: LocalTime? get() = uiModel.selectedTime
+    val selectedDate: ScreenDate get() = uiModel.selectedDate
+    val date: LocalDate get() = uiModel.selectedDate.date
+    val selectedTime: LocalTime get() = uiModel.selectedTime
 
     override fun loadScreen(
         movieId: Int,
@@ -27,9 +28,10 @@ class DetailPresenter(
     ) {
         repository.findByScreenId(movieId = movieId, theaterId = theaterId).onSuccess { screen ->
             uiModel =
-                uiModel.copy(
-                    screenId = screen.id,
+                DetailUiModel(
+                    screenId = screen.screenId,
                     theaterId = theaterId,
+                    movieId = movieId,
                     screen = screen,
                     selectableDates = screen.selectableDates,
                     selectedDate = screen.selectableDates.first(),
@@ -52,19 +54,13 @@ class DetailPresenter(
         }
     }
 
-    override fun createDateSpinnerAdapter(screenDates: List<ScreenDate>) {
-        view.showDateSpinnerAdapter(screenDates)
+    override fun selectDate(date: LocalDate) {
+        val screenDate = ScreenDate(date)
+        uiModel = uiModel.copy(selectedDate = screenDate)
+        view.showTime(screenDate)
     }
 
-    override fun createTimeSpinnerAdapter(screenDate: ScreenDate) {
-        view.showTimeSpinnerAdapter(screenDate)
-    }
-
-    override fun registerDate(date: LocalDate) {
-        uiModel = uiModel.copy(selectedDate = ScreenDate(date))
-    }
-
-    override fun registerTime(time: LocalTime) {
+    override fun selectTime(time: LocalTime) {
         uiModel = uiModel.copy(selectedTime = time)
     }
 
@@ -77,7 +73,7 @@ class DetailPresenter(
         val nextTicket = uiModel.ticket.increase(1)
 
         if (nextTicket.isInvalidCount()) {
-            view.showSnackBar(MessageType.TicketMaxCountMessage(MAX_TICKET_COUNT))
+            view.showSnackBar(TicketMaxCountMessage(MAX_TICKET_COUNT))
             return
         }
         uiModel = uiModel.copy(ticket = nextTicket)
@@ -88,7 +84,7 @@ class DetailPresenter(
         val nextTicket = uiModel.ticket.decrease(1)
 
         if (nextTicket.isInvalidCount()) {
-            view.showSnackBar(MessageType.TicketMinCountMessage(MIN_TICKET_COUNT))
+            view.showSnackBar(TicketMinCountMessage(MIN_TICKET_COUNT))
             return
         }
         uiModel = uiModel.copy(ticket = nextTicket)
@@ -96,14 +92,13 @@ class DetailPresenter(
     }
 
     override fun selectSeat() {
-        uiModel.selectedDate?.let { selectedDate ->
-            val reservationInfo =
-                ReservationInfo(
-                    theaterId = uiModel.theaterId,
-                    dateTime = selectedDate.getLocalDateTime(uiModel.selectedTime),
-                    ticketCount = uiModel.ticket.count,
-                )
-            view.navigateToSeatSelection(reservationInfo)
-        }
+        val reservationInfo =
+            ReservationInfo(
+                theaterId = uiModel.theaterId,
+                movieId = uiModel.movieId,
+                dateTime = uiModel.selectedDate.getLocalDateTime(uiModel.selectedTime),
+                ticketCount = uiModel.ticket.count,
+            )
+        view.navigateToSeatSelection(reservationInfo)
     }
 }

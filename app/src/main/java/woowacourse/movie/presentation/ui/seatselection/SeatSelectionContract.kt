@@ -23,7 +23,7 @@ interface SeatSelectionContract {
 
         fun showTotalPrice(totalPrice: Int)
 
-        fun navigateToReservation(id: Int)
+        fun navigateToReservation(id: Long)
 
         fun showReservationDialog()
 
@@ -31,9 +31,7 @@ interface SeatSelectionContract {
     }
 
     interface Presenter : BasePresenter {
-        fun updateUiModel(reservationInfo: ReservationInfo)
-
-        fun loadScreen(id: Int)
+        fun loadScreen(reservationInfo: ReservationInfo)
 
         fun loadSeatBoard(id: Int)
 

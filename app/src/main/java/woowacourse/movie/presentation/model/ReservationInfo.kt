@@ -5,6 +5,7 @@ import java.time.LocalDateTime
 
 data class ReservationInfo(
     val theaterId: Int,
+    val movieId: Int,
     val dateTime: LocalDateTime,
     val ticketCount: Int,
 ) : Serializable

@@ -18,8 +18,3 @@ fun TextView.formatScreeningDate(
         (this.context).getString(R.string.screening_period, formattedStartDate, formattedEndDate)
     this.text = resultText
 }
-
-@BindingAdapter("bindFormatRunningTime")
-fun TextView.formatRunningTime(runningTime: Int) {
-    this.text = (this.context).getString(R.string.running_time, runningTime)
-}

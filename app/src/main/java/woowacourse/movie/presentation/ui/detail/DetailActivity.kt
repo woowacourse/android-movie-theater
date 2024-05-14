@@ -4,9 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import woowacourse.movie.R
+import woowacourse.movie.data.repository.remote.DummyScreens
 import woowacourse.movie.databinding.ActivityDetailBinding
-import woowacourse.movie.domain.dummy.DummyScreens
 import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.ScreenDate
 import woowacourse.movie.presentation.base.BaseMvpBindingActivity
@@ -23,47 +25,39 @@ class DetailActivity : BaseMvpBindingActivity<ActivityDetailBinding>(), View {
         get() = R.layout.activity_detail
     override val presenter: DetailPresenter by lazy { DetailPresenter(this, DummyScreens) }
 
-    private val spinnerDateAdapter: SpinnerDateAdapter by lazy {
-        SpinnerDateAdapter(this, presenter)
-    }
-    private val spinnerTimeAdapter: SpinnerTimeAdapter by lazy {
-        SpinnerTimeAdapter(this, presenter)
-    }
+    private val spinnerDateAdapter: SpinnerDateAdapter by lazy { SpinnerDateAdapter(this) }
+    private val spinnerTimeAdapter: SpinnerTimeAdapter by lazy { SpinnerTimeAdapter(this) }
+
+    private val filterActivityLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                finish()
+            }
+        }
 
     override fun initStartView() {
-        binding.presenter = presenter
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.presenter = presenter
         val movieId = intent.getIntExtra(PUT_EXTRA_KEY_MOVIE_ID, DEFAULT_ID)
         val theaterId = intent.getIntExtra(PUT_EXTRA_KEY_THEATER_ID, DEFAULT_ID)
-        initAdapter()
         presenter.loadScreen(movieId, theaterId)
-    }
-
-    private fun initAdapter() {
-        binding.spinnerDate.adapter = spinnerDateAdapter
-        binding.spinnerDate.onItemSelectedListener =
-            spinnerDateAdapter.initClickListener(presenter.date)
-
-        binding.spinnerTime.adapter = spinnerTimeAdapter
-        binding.spinnerTime.onItemSelectedListener = spinnerTimeAdapter.initClickListener()
     }
 
     override fun showScreen(screen: Screen) {
         binding.screen = screen
         binding.count = presenter.count
-        presenter.createDateSpinnerAdapter(screen.selectableDates)
-        presenter.createTimeSpinnerAdapter(screen.selectableDates.first())
+        binding.localDates = screen.selectableDates.map { it.date }
+        initAdapter()
     }
 
-    override fun showDateSpinnerAdapter(screenDates: List<ScreenDate>) {
-        binding.spinnerDate.setSelection(0)
-        spinnerDateAdapter.updateDate(screenDates.map { it.date })
+    private fun initAdapter() {
+        binding.spinnerDate.adapter = spinnerDateAdapter
+        binding.spinnerTime.adapter = spinnerTimeAdapter
     }
 
-    override fun showTimeSpinnerAdapter(screenDate: ScreenDate) {
+    override fun showTime(screenDate: ScreenDate) {
         binding.spinnerTime.setSelection(0)
-        spinnerTimeAdapter.updateTime(screenDate.getSelectableTimes().map { it })
+        binding.localTimes = screenDate.getSelectableTimes().map { it }
     }
 
     override fun showTicket(count: Int) {
@@ -71,11 +65,11 @@ class DetailActivity : BaseMvpBindingActivity<ActivityDetailBinding>(), View {
     }
 
     override fun navigateToSeatSelection(reservationInfo: ReservationInfo) {
-        SeatSelectionActivity.startActivity(this, reservationInfo)
-        navigateBackToPrevious()
+        val intent = SeatSelectionActivity.getIntent(this, reservationInfo)
+        filterActivityLauncher.launch(intent)
     }
 
-    override fun navigateBackToPrevious() = finish()
+    override fun navigateBackToPrevious() = runOnUiThread { finish() }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         navigateBackToPrevious()
@@ -108,12 +102,9 @@ class DetailActivity : BaseMvpBindingActivity<ActivityDetailBinding>(), View {
         val savedLocalDate =
             savedInstanceState.getSerializable(PUT_STATE_KEY_SELECTED_DATE) as LocalDate?
         savedLocalDate?.let { localDate ->
-            presenter.registerDate(localDate)
+            presenter.selectDate(localDate)
             val position = findPositionForSelectedDate(localDate)
-            binding.spinnerDate.onItemSelectedListener =
-                spinnerDateAdapter.initClickListener(localDate)
             binding.spinnerDate.setSelection(position)
-            presenter.createTimeSpinnerAdapter(ScreenDate(localDate))
         }
     }
 
@@ -130,7 +121,6 @@ class DetailActivity : BaseMvpBindingActivity<ActivityDetailBinding>(), View {
         val savedLocalTime =
             savedInstanceState.getSerializable(PUT_STATE_KEY_SELECTED_TIME) as LocalTime?
         savedLocalTime?.let { localTime ->
-            presenter.registerTime(localTime)
             val position = findPositionForSelectedTime(localTime)
             binding.spinnerTime.setSelection(position)
         }
@@ -162,10 +152,12 @@ class DetailActivity : BaseMvpBindingActivity<ActivityDetailBinding>(), View {
             movieId: Int,
             theaterId: Int,
         ) {
-            val intent = Intent(context, DetailActivity::class.java)
+            val intent = getIntent(context)
             intent.putExtra(PUT_EXTRA_KEY_MOVIE_ID, movieId)
             intent.putExtra(PUT_EXTRA_KEY_THEATER_ID, theaterId)
             context.startActivity(intent)
         }
+
+        fun getIntent(context: Context): Intent = Intent(context, DetailActivity::class.java)
     }
 }

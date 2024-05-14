@@ -5,15 +5,14 @@ import woowacourse.movie.domain.model.ScreenDate
 import woowacourse.movie.presentation.base.BasePresenter
 import woowacourse.movie.presentation.base.BaseView
 import woowacourse.movie.presentation.model.ReservationInfo
-import woowacourse.movie.presentation.ui.detail.adapter.SpinnerActionHandler
+import java.time.LocalDate
+import java.time.LocalTime
 
 interface DetailContract {
     interface View : BaseView {
         fun showScreen(screen: Screen)
 
-        fun showDateSpinnerAdapter(screenDates: List<ScreenDate>)
-
-        fun showTimeSpinnerAdapter(screenDate: ScreenDate)
+        fun showTime(screenDate: ScreenDate)
 
         fun showTicket(count: Int)
 
@@ -22,7 +21,7 @@ interface DetailContract {
         fun navigateBackToPrevious()
     }
 
-    interface Presenter : BasePresenter, SpinnerActionHandler {
+    interface Presenter : BasePresenter {
         fun loadScreen(
             movieId: Int,
             theaterId: Int,
@@ -35,5 +34,9 @@ interface DetailContract {
         fun minusTicket()
 
         fun selectSeat()
+
+        fun selectDate(date: LocalDate)
+
+        fun selectTime(time: LocalTime)
     }
 }

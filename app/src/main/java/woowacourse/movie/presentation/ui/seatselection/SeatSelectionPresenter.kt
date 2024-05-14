@@ -1,36 +1,40 @@
 package woowacourse.movie.presentation.ui.seatselection
 
 import woowacourse.movie.domain.model.toSeatModel
+import woowacourse.movie.domain.repository.NotificationRepository
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.ScreenRepository
-import woowacourse.movie.presentation.model.MessageType
-import woowacourse.movie.presentation.model.MessageType.ReservationSuccessMessage
 import woowacourse.movie.presentation.model.ReservationInfo
 import woowacourse.movie.presentation.model.SeatModel
 import woowacourse.movie.presentation.model.UserSeat
+import woowacourse.movie.presentation.model.message.ReservationMessageType.ReservationSuccessMessage
+import woowacourse.movie.presentation.model.message.SeatMessageType.*
 import woowacourse.movie.presentation.model.toSeat
+import java.time.LocalDateTime
+import kotlin.concurrent.thread
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
     private val screenRepository: ScreenRepository,
     private val reservationRepository: ReservationRepository,
+    private val notificationRepository: NotificationRepository,
 ) : SeatSelectionContract.Presenter {
-    private var uiModel: SeatSelectionUiModel = SeatSelectionUiModel()
+    private lateinit var uiModel: SeatSelectionUiModel
     val userSeat: UserSeat
         get() = UserSeat(uiModel.userSeat.seatModels.filter { it.isSelected })
 
-    override fun updateUiModel(reservationInfo: ReservationInfo) {
-        uiModel =
-            uiModel.copy(
-                id = reservationInfo.theaterId,
-                dateTime = reservationInfo.dateTime,
-                ticketCount = reservationInfo.ticketCount,
-            )
-    }
-
-    override fun loadScreen(id: Int) {
-        screenRepository.findByScreenId(theaterId = id, movieId = id).onSuccess { screen ->
-            uiModel = uiModel.copy(screen = screen)
+    override fun loadScreen(reservationInfo: ReservationInfo) {
+        screenRepository.findByScreenId(
+            theaterId = reservationInfo.theaterId,
+            movieId = reservationInfo.movieId,
+        ).onSuccess { screen ->
+            uiModel =
+                SeatSelectionUiModel(
+                    theaterId = reservationInfo.theaterId,
+                    screen = screen,
+                    dateTime = reservationInfo.dateTime,
+                    ticketCount = reservationInfo.ticketCount,
+                )
             view.showScreen(screen, uiModel.totalPrice, uiModel.ticketCount)
         }.onFailure { e ->
             when (e) {
@@ -84,7 +88,7 @@ class SeatSelectionPresenter(
         }
 
         if (uiModel.userSeat.seatModels.count { it.isSelected } == uiModel.ticketCount) {
-            view.showSnackBar(MessageType.AllSeatsSelectedMessage(uiModel.ticketCount))
+            view.showSnackBar(AllSeatsSelectedMessage(uiModel.ticketCount))
         } else {
             uiModel = uiModel.copy(userSeat = uiModel.userSeat.copy(seatModels = updatedSeatModels))
             view.selectSeat(uiModel.userSeat)
@@ -103,23 +107,36 @@ class SeatSelectionPresenter(
     }
 
     override fun reserve() {
-        uiModel.screen?.let { screen ->
-            uiModel.dateTime?.let { dateTime ->
-                reservationRepository.saveReservation(
-                    screen.movie,
-                    uiModel.id,
-                    uiModel.ticketCount,
-                    uiModel.userSeat.seatModels.filter { seatModel -> seatModel.isSelected }
-                        .map { seatModel -> seatModel.toSeat() },
-                    dateTime,
-                ).onSuccess { id ->
-                    view.showToastMessage(ReservationSuccessMessage)
-                    view.navigateToReservation(id)
-                }.onFailure { e ->
-                    view.showSnackBar(e)
-                    view.navigateBackToPrevious()
-                }
+        thread {
+            reservationRepository.saveReservation(
+                uiModel.screen.movie.id,
+                uiModel.theaterId,
+                uiModel.screen.movie.title,
+                uiModel.ticketCount,
+                uiModel.userSeat.seatModels.filter { seatModel -> seatModel.isSelected }
+                    .map { seatModel -> seatModel.toSeat() },
+                uiModel.dateTime,
+            ).onSuccess { id ->
+                createNotification(id, uiModel.screen.movie.title, uiModel.dateTime)
+            }.onFailure { e ->
+                view.showToastMessage(e)
+                view.navigateBackToPrevious()
             }
         }
+    }
+
+    private fun createNotification(
+        reservationId: Long,
+        movieTitle: String,
+        screeningDateTime: LocalDateTime,
+    ) {
+        notificationRepository.registerNotification(reservationId, movieTitle, screeningDateTime)
+            .onSuccess {
+                view.showToastMessage(ReservationSuccessMessage)
+                view.navigateToReservation(reservationId)
+            }.onFailure { e ->
+                view.showToastMessage(e)
+                view.navigateBackToPrevious()
+            }
     }
 }

@@ -1,12 +1,12 @@
-package woowacourse.movie.domain.dummy
+package woowacourse.movie.data.repository.remote
 
 import woowacourse.movie.R
-import woowacourse.movie.domain.dummy.DummyData.bang
-import woowacourse.movie.domain.dummy.DummyData.piro
-import woowacourse.movie.domain.dummy.DummyData.seatBoards
-import woowacourse.movie.domain.dummy.DummyData.theaters
-import woowacourse.movie.domain.dummy.DummyData.wizardStone
-import woowacourse.movie.domain.dummy.DummyData.zoesu
+import woowacourse.movie.data.repository.remote.DummyData.bang
+import woowacourse.movie.data.repository.remote.DummyData.piro
+import woowacourse.movie.data.repository.remote.DummyData.seatBoards
+import woowacourse.movie.data.repository.remote.DummyData.theaters
+import woowacourse.movie.data.repository.remote.DummyData.wizardStone
+import woowacourse.movie.data.repository.remote.DummyData.zoesu
 import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.ScreenView
 import woowacourse.movie.domain.model.ScreenView.Ads
