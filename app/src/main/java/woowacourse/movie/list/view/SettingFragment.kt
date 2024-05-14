@@ -9,19 +9,21 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.database.NotificationSharedPreference
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.list.contract.SettingContract
 import woowacourse.movie.list.presenter.SettingPresenter
 
 class SettingFragment : Fragment(), SettingContract.View {
     private lateinit var binding: FragmentSettingBinding
-    private val presenter = SettingPresenter(this)
+    private lateinit var presenter: SettingContract.Presenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        presenter = SettingPresenter(this, NotificationSharedPreference(requireContext().applicationContext))
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
         setInitialSwitch()
