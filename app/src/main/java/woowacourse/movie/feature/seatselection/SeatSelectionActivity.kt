@@ -39,7 +39,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     private lateinit var seatsTable: List<Button>
     private var headCount: HeadCount? = null
-    private var screeningDateTime: LocalDateTime? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,7 +125,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 .setTitle(getString(R.string.seat_selection_reservation_confirm))
                 .setMessage(getString(R.string.seat_selection_reservation_ask_purchase_ticket))
                 .setPositiveButton(getString(R.string.seat_selection_reservation_finish)) { _, _ ->
-                    presenter.saveTicket(screeningDateTime)
+                    presenter.saveTicket()
                 }
                 .setNegativeButton(getString(R.string.seat_selection_cancel)) { dialog, _ ->
                     dialog.dismiss()
@@ -152,7 +151,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     private fun receiveReservationInfo() {
         headCount = receiveHeadCount()
-        screeningDateTime = receiveScreeningDateTime()
     }
 
     private fun initPresenter() {
@@ -166,7 +164,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 receiveMovieId(),
                 receiveTheaterId(),
                 headCount,
-                screeningDateTime,
+                receiveScreeningDateTime(),
                 ticketDao,
             )
         binding.presenter = presenter

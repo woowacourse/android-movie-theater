@@ -5,7 +5,6 @@ import woowacourse.movie.model.seats.Grade
 import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.ticket.HeadCount
-import java.time.LocalDateTime
 
 typealias OnReservationDataSave = (HeadCount, Seats, seatsIndex: List<Int>) -> Unit
 
@@ -34,7 +33,7 @@ interface SeatSelectionContract {
             seat: Seat,
         )
 
-        fun saveTicket(screeningDateTime: LocalDateTime?)
+        fun saveTicket()
 
         fun validateReservationAvailable()
 

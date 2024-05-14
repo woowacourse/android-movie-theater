@@ -67,7 +67,7 @@ class SeatSelectionPresenter(
         view.showMovieTitle(movie)
     }
 
-    override fun saveTicket(screeningDateTime: LocalDateTime?) {
+    override fun saveTicket() {
         screeningDateTime?.let {
             var ticketId: Long = 0
             val ticket = makeTicket(screeningDateTime).toEntity()
