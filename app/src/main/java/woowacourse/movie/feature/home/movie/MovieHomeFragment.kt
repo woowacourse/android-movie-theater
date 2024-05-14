@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import woowacourse.movie.data.movie.dto.Movie
 import woowacourse.movie.databinding.FragmentMovieHomeBinding
 import woowacourse.movie.feature.home.movie.adapter.MovieAdapter
 import woowacourse.movie.feature.home.theater.TheaterSelectionBottomSheetFragment
-import woowacourse.movie.model.Movie
 import woowacourse.movie.util.BaseFragment
 
 class MovieHomeFragment : BaseFragment<MovieHomeContract.Presenter>(), MovieHomeContract.View {
@@ -33,9 +33,9 @@ class MovieHomeFragment : BaseFragment<MovieHomeContract.Presenter>(), MovieHome
 
     override fun displayMovies(movies: List<Movie>) {
         binding.movieRecyclerView.adapter =
-            MovieAdapter(movies) { movieId ->
+            MovieAdapter(movies, onReservationButtonClick = { movieId ->
                 displayTheaterSelectionDialog(movieId)
-            }
+            })
     }
 
     override fun displayTheaterSelectionDialog(movieId: Long) {

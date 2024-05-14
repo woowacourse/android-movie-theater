@@ -1,12 +1,17 @@
-package woowacourse.movie.feature.seatselection
+package woowacourse.movie.feature.seat
 
+import woowacourse.movie.data.movie.dto.Movie
+import woowacourse.movie.data.reservation.dto.Reservation
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
 import woowacourse.movie.util.BasePresenter
 
 interface MovieSeatSelectionContract {
     interface View {
-        fun displayMovieTitle(movieTitle: String)
+        fun setUpReservation(
+            reservation: Reservation,
+            movie: Movie,
+        )
 
         fun setUpTableSeats(baseSeats: List<MovieSeat>)
 
@@ -19,19 +24,22 @@ interface MovieSeatSelectionContract {
 
         fun updateSelectResult(movieSelectedSeats: MovieSelectedSeats)
 
-        fun navigateToResultView(movieSelectedSeats: MovieSelectedSeats)
+        fun navigateToResultView(ticketId: Long)
 
         fun showToastInvalidMovieIdError(throwable: Throwable)
     }
 
     interface Presenter : BasePresenter {
-        fun loadMovieTitle(movieId: Long)
+        fun loadReservation(reservationId: Long)
 
         fun loadTableSeats(movieSelectedSeats: MovieSelectedSeats)
 
-        fun clickTableSeat(index: Int)
+        fun selectSeat(index: Int)
 
-        fun clickPositiveButton()
+        fun reserveMovie(
+            reservation: Reservation,
+            selectedSeats: MovieSelectedSeats,
+        )
 
         fun updateSelectedSeats(movieSelectedSeats: MovieSelectedSeats)
     }

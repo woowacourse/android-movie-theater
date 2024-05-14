@@ -1,5 +1,6 @@
 package woowacourse.movie.feature.result
 
+import android.content.Context
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
@@ -7,40 +8,52 @@ import io.mockk.runs
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.feature.firstMovieId
-import woowacourse.movie.feature.invalidMovieId
+import woowacourse.movie.data.movie.MovieRepositoryImpl
+import woowacourse.movie.data.ticket.FakeTicketRepository
+import woowacourse.movie.feature.movieId
+import woowacourse.movie.feature.screeningDate
+import woowacourse.movie.feature.screeningTime
+import woowacourse.movie.feature.selectedSeats
+import woowacourse.movie.feature.theaterName
 
 class MovieResultPresenterTest {
     private lateinit var view: MovieResultContract.View
+    private lateinit var applicationContext: Context
     private lateinit var presenter: MovieResultPresenter
+    private val ticketRepository = FakeTicketRepository()
 
     @BeforeEach
     fun setUp() {
         view = mockk()
-        presenter = MovieResultPresenter(view)
+        applicationContext = mockk()
+        presenter = MovieResultPresenter(view, applicationContext, ticketRepository)
     }
 
     @Test
-    fun `loadMovieTicket를 호출하면 예매한 영화 티켓의 정보가 보여진다`() {
-        // Given
-        every { view.displayMovieTicket(any()) } just runs
+    fun `예매한 영화 티켓의 정보가 보여진다`() {
+        // given
+        every { view.displayTicket(any(), any()) } just runs
+        val ticketId =
+            ticketRepository.save(movieId, screeningDate, screeningTime, selectedSeats, theaterName)
 
-        // When
-        presenter.loadMovieTicket(firstMovieId, "2024-04-01", "10:00", 3, "A0, A1, A2", "선릉")
+        // when
+        presenter.loadTicket(ticketId)
 
-        // Then
-        verify { view.displayMovieTicket(any()) }
+        // then
+        val ticket = ticketRepository.find(ticketId)
+        val movie = MovieRepositoryImpl.find(ticket.movieId)
+        verify { view.displayTicket(ticket, movie) }
     }
 
     @Test
-    fun `영화 데이터가 없는 경우 loadMovieTicket를 호출하면 에러 메시지를 보여준다`() {
-        // Given
+    fun `티켓의 정보가 없다면 예외가 발생한다`() {
+        // given
         every { view.showToastInvalidMovieIdError(any()) } just runs
 
-        // When
-        presenter.loadMovieTicket(invalidMovieId, "2024-04-01", "10:00", 3, "A0, A1, A2", "선릉")
+        // when
+        presenter.loadTicket(-1)
 
-        // Then
+        // then
         verify { view.showToastInvalidMovieIdError(any()) }
     }
 }

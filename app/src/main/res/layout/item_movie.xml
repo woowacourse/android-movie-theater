@@ -9,7 +9,7 @@
 
         <variable
             name="movie"
-            type="woowacourse.movie.model.Movie" />
+            type="woowacourse.movie.data.movie.dto.Movie" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

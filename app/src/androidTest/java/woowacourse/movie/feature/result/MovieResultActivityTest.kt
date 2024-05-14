@@ -8,35 +8,36 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.AfterClass
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.feature.firstMovieId
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_DATE
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_SEATS
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
-import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_COUNT
-import woowacourse.movie.util.MovieIntentConstant.KEY_THEATER_NAME
+import woowacourse.movie.data.ticket.RoomTicketRepository
+import woowacourse.movie.data.ticket.TicketDatabase
+import woowacourse.movie.feature.movieId
+import woowacourse.movie.feature.screeningDate
+import woowacourse.movie.feature.screeningTime
+import woowacourse.movie.feature.selectedSeats
+import woowacourse.movie.feature.theaterName
+import woowacourse.movie.util.MovieIntentConstant.KEY_TICKET_ID
 
 @RunWith(AndroidJUnit4::class)
 class MovieResultActivityTest {
-    private val intent =
-        Intent(
-            ApplicationProvider.getApplicationContext(),
-            MovieResultActivity::class.java,
-        ).apply {
-            putExtra(KEY_MOVIE_ID, firstMovieId)
-            putExtra(KEY_MOVIE_DATE, "2024-04-01")
-            putExtra(KEY_MOVIE_TIME, "12:00")
-            putExtra(KEY_RESERVATION_COUNT, 3)
-            putExtra(KEY_MOVIE_SEATS, "A3, C2, E1")
-            putExtra(KEY_THEATER_NAME, "선릉")
-        }
-
     @get:Rule
-    val activityRule = ActivityScenarioRule<MovieResultActivity>(intent)
+    val activityRule: ActivityScenarioRule<MovieResultActivity>
+
+    init {
+        val ticketId =
+            ticketRepository.save(movieId, screeningDate, screeningTime, selectedSeats, theaterName)
+        val intent =
+            Intent(
+                ApplicationProvider.getApplicationContext(),
+                MovieResultActivity::class.java,
+            )
+                .putExtra(KEY_TICKET_ID, ticketId)
+        activityRule = ActivityScenarioRule<MovieResultActivity>(intent)
+    }
 
     @Test
     fun `예매한_영화의_제목이_표시된다`() {
@@ -47,18 +48,31 @@ class MovieResultActivityTest {
     @Test
     fun `예매한_영화의_상영일과_상영_시간이_표시된다`() {
         onView(withId(R.id.tv_screening_date_time))
-            .check(matches(withText("2024.4.1 12:00")))
+            .check(matches(withText("2024.4.1 12:30")))
     }
 
     @Test
     fun `예매한_영화의_좌석이_표시된다`() {
         onView(withId(R.id.tv_reservation_info))
-            .check(matches(withText("일반 3명 | A3, C2, E1 | 선릉 극장")))
+            .check(matches(withText("일반 3명 | B2, C3, D4 | 선릉 극장")))
     }
 
     @Test
     fun `예매한_영화의_가격이_표시된다`() {
         onView(withId(R.id.tv_reservation_price))
-            .check(matches(withText("37,000원 (현장 결제)")))
+            .check(matches(withText("40,000원 (현장 결제)")))
+    }
+
+    companion object {
+        private val ticketRepository =
+            RoomTicketRepository(
+                TicketDatabase.instance(ApplicationProvider.getApplicationContext()).ticketDao(),
+            )
+
+        @JvmStatic
+        @AfterClass
+        fun tearDown() {
+            ticketRepository.deleteAll()
+        }
     }
 }

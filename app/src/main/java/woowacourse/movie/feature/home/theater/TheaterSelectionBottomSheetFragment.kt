@@ -42,11 +42,11 @@ class TheaterSelectionBottomSheetFragment :
 
     override fun setUpTheaterAdapter(theaters: List<Theater>) {
         binding.theaterRecyclerview.adapter =
-            TheaterAdapter(theaters) { selectedTheaterIndex ->
+            TheaterAdapter(theaters, onTheaterItemClick = { selectedTheaterIndex ->
                 val intent = MovieDetailActivity.newIntent(requireContext(), movieId, selectedTheaterIndex)
                 startActivity(intent)
                 dismiss()
-            }
+            })
     }
 
     override fun showToastInvalidMovieIdError(throwable: Throwable) {
@@ -58,8 +58,7 @@ class TheaterSelectionBottomSheetFragment :
     private fun showToast(
         @StringRes stringResId: Int,
     ) {
-        Toast.makeText(requireContext(), resources.getString(stringResId), Toast.LENGTH_SHORT)
-            .show()
+        Toast.makeText(requireContext(), resources.getString(stringResId), Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {

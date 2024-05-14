@@ -7,12 +7,12 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.MovieRepository
+import woowacourse.movie.data.movie.MovieRepositoryImpl
 
 class MovieHomePresenterTest {
     private lateinit var view: MovieHomeContract.View
     private lateinit var presenter: MovieHomePresenter
-    private val movies = MovieRepository.getAllMovies()
+    private val movies = MovieRepositoryImpl.findAll()
 
     @BeforeEach
     fun setUp() {
@@ -21,14 +21,14 @@ class MovieHomePresenterTest {
     }
 
     @Test
-    fun `loadMovies를 호출하면 view에서 영화 리스트를 보여준다`() {
-        // Given
+    fun `영화들을 불러온다`() {
+        // given
         every { view.displayMovies(any()) } just Runs
 
-        // When
+        // when
         presenter.loadMovies()
 
-        // Then
+        // then
         verify { view.displayMovies(movies) }
     }
 }

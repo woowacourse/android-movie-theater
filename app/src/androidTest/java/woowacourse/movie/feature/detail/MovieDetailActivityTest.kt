@@ -24,10 +24,9 @@ class MovieDetailActivityTest {
         Intent(
             ApplicationProvider.getApplicationContext(),
             MovieDetailActivity::class.java,
-        ).apply {
-            putExtra(KEY_MOVIE_ID, firstMovieId)
-            putExtra(KEY_SELECTED_THEATER_INDEX, 0)
-        }
+        )
+            .putExtra(KEY_MOVIE_ID, firstMovieId)
+            .putExtra(KEY_SELECTED_THEATER_INDEX, 0)
 
     @get:Rule
     val activityRule = ActivityScenarioRule<MovieDetailActivity>(intent)

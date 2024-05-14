@@ -23,26 +23,26 @@ class TheaterSelectionPresenterTest {
     }
 
     @Test
-    fun `loadTheaters를 호출하면 view에서 TheaterAdapter를 세팅한다`() {
-        // Given
+    fun `영화 id에 맞는 극장들을 불러온다`() {
+        // given
         every { view.setUpTheaterAdapter(any()) } just Runs
 
-        // When
+        // when
         presenter.loadTheaters(firstMovieId)
 
-        // Then
+        // when
         verify { view.setUpTheaterAdapter(movie.theaters) }
     }
 
     @Test
-    fun `영화 데이터가 없는 경우 loadTheaters를 호출하면 에러 메시지를 보여준다`() {
-        // Given
+    fun `존재하지 않는 영화 id의 경우 극장을 불러오면 에러 메시지를 보여준다`() {
+        // given
         every { view.showToastInvalidMovieIdError(any()) } just Runs
 
-        // When
+        // when
         presenter.loadTheaters(invalidMovieId)
 
-        // Then
+        // then
         verify { view.showToastInvalidMovieIdError(any()) }
     }
 }

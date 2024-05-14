@@ -1,6 +1,8 @@
-package woowacourse.movie.model
+package woowacourse.movie.data.movie.dto
 
 import androidx.annotation.DrawableRes
+import woowacourse.movie.model.MovieDate
+import woowacourse.movie.model.Theater
 
 data class Movie(
     val id: Long,

@@ -1,4 +1,4 @@
-package woowacourse.movie.feature.seatselection
+package woowacourse.movie.feature.seat
 
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -26,23 +26,38 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.feature.firstMovieId
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_COUNT
+import woowacourse.movie.data.reservation.ReservationRepositoryImpl
+import woowacourse.movie.feature.movieId
+import woowacourse.movie.feature.reservationCount
+import woowacourse.movie.feature.screeningDate
+import woowacourse.movie.feature.screeningTime
+import woowacourse.movie.feature.theaterName
+import woowacourse.movie.model.ReservationCount
+import woowacourse.movie.util.MovieIntentConstant.KEY_RESERVATION_ID
 
 @RunWith(AndroidJUnit4::class)
 class MovieSeatSelectionTest {
-    private val intent =
-        Intent(
-            ApplicationProvider.getApplicationContext(),
-            MovieSeatSelectionActivity::class.java,
-        ).apply {
-            putExtra(KEY_MOVIE_ID, firstMovieId)
-            putExtra(KEY_RESERVATION_COUNT, 3)
-        }
-
     @get:Rule
-    val activityRule = ActivityScenarioRule<MovieSeatSelectionActivity>(intent)
+    val activityRule: ActivityScenarioRule<MovieSeatSelectionActivity>
+
+    init {
+        val reservationId =
+            ReservationRepositoryImpl.save(
+                movieId,
+                screeningDate,
+                screeningTime,
+                ReservationCount(reservationCount),
+                theaterName,
+            )
+        val intent =
+            Intent(
+                ApplicationProvider.getApplicationContext(),
+                MovieSeatSelectionActivity::class.java,
+            )
+                .putExtra(KEY_RESERVATION_ID, reservationId)
+
+        activityRule = ActivityScenarioRule<MovieSeatSelectionActivity>(intent)
+    }
 
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
     private val bGradeColor = ContextCompat.getColor(context, R.color.b_grade)

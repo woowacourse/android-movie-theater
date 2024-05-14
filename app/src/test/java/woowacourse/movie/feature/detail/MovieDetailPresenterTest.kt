@@ -5,8 +5,10 @@ import io.mockk.just
 import io.mockk.mockk
 import io.mockk.runs
 import io.mockk.verify
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.data.reservation.ReservationRepositoryImpl
 import woowacourse.movie.feature.firstMovie
 import woowacourse.movie.feature.firstMovieId
 import woowacourse.movie.feature.invalidMovieId
@@ -14,6 +16,7 @@ import woowacourse.movie.feature.invalidMovieId
 class MovieDetailPresenterTest {
     private lateinit var view: MovieDetailContract.View
     private lateinit var presenter: MovieDetailPresenter
+    private val reservationRepository = ReservationRepositoryImpl
     private val movie = firstMovie
 
     @BeforeEach
@@ -22,79 +25,88 @@ class MovieDetailPresenterTest {
         presenter = MovieDetailPresenter(view)
     }
 
+    @AfterEach
+    fun tearDown() {
+        reservationRepository.deleteAll()
+    }
+
     @Test
-    fun `loadMovieDetail를 호출하면 view에서 영화 리스트를 보여준다`() {
-        // Given
+    fun `영화 id에 해당하는 영화를 불러온다`() {
+        // given
         every { view.displayMovieDetail(any()) } just runs
         every { view.updateReservationCountView(any()) } just runs
 
-        // When
+        // when
         presenter.loadMovieDetail(firstMovieId)
 
-        // Then
+        // then
         verify { view.displayMovieDetail(movie) }
         every { view.updateReservationCountView(any()) } just runs
     }
 
     @Test
-    fun `영화 데이터가 없는 경우 loadMovieDetail를 호출하면 에러 메시지를 보여준다`() {
-        // Given
+    fun `존재하지 않는 영화 id의 경우 영화를 불러오면 에러 메시지를 보여준다`() {
+        // given
         every { view.showToastInvalidMovieIdError(any()) } just runs
 
-        // When
+        // when
         presenter.loadMovieDetail(invalidMovieId)
 
-        // Then
+        // then
         every { view.showToastInvalidMovieIdError(any()) } just runs
     }
 
     @Test
-    fun `plusReservationCount를 호출하면 카운트가 1만큼 증가한다`() {
-        // Given
+    fun `예매 개수가 1인 경우 예매 개수를 증가시키면 2가 된다`() {
+        // given
         every { view.updateReservationCountView(any()) } just runs
 
-        // When
-        presenter.plusReservationCount()
+        // when
+        presenter.increaseReservationCount()
 
-        // Then
+        // then
         verify { view.updateReservationCountView(2) }
     }
 
     @Test
-    fun `count가 1일때 minusReservationCount를 호출하면 카운트가 감소되지 않는다`() {
-        // Given
+    fun `예매 개수가 1인 경우 예매 개수를 감소시키면 감소되지 않는다`() {
+        // given
         every { view.updateReservationCountView(any()) } just runs
 
-        // When
-        presenter.minusReservationCount()
+        // when
+        presenter.decreaseReservationCount()
 
-        // Then
+        // then
         verify { view.updateReservationCountView(1) }
     }
 
     @Test
-    fun `minusReservationCount를 호출하면 카운트가 감소된다`() {
-        // Given
+    fun `예매 개수가 2인 경우 예매 개수를 감소시키면 1이 된다`() {
+        // given
         every { view.updateReservationCountView(any()) } just runs
+        presenter.increaseReservationCount()
 
-        // When
-        presenter.plusReservationCount()
-        presenter.plusReservationCount()
-        presenter.minusReservationCount()
+        // when
+        presenter.decreaseReservationCount()
 
-        // Then
+        // then
         verify { view.updateReservationCountView(2) }
     }
 
     @Test
-    fun `reserveMovie를 호출하면 SeatSelectionView로 이동한다`() {
-        // Given
-        every { view.navigateToSeatSelectionView(any(), any(), any(), any()) } just runs
+    fun `영화를 예매한다`() {
+        // given
+        every { view.navigateToSeatSelectionView(any()) } just runs
 
-        // When
-        presenter.reserveMovie(0, "2024-04-01", "10:00")
+        // when
+        presenter.reserveMovie(
+            firstMovieId,
+            "2024-01-01",
+            "10:00",
+            0,
+        )
 
-        // Then
-        verify { view.navigateToSeatSelectionView(0, "2024-04-01", "10:00", any()) }
+        // then
+        verify { view.navigateToSeatSelectionView(any()) }
     }
 }

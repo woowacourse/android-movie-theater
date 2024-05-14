@@ -1,51 +1,24 @@
 package woowacourse.movie.feature.result
 
-import woowacourse.movie.data.MovieRepository
-import woowacourse.movie.model.MovieSeat
-import woowacourse.movie.model.MovieSelectedSeats
-import woowacourse.movie.model.MovieTicket
-import woowacourse.movie.util.unFormatSeatColumn
-import woowacourse.movie.util.unFormatSeatRow
-import java.time.LocalDate
-import java.time.LocalTime
+import android.content.Context
+import woowacourse.movie.data.movie.MovieRepositoryImpl
+import woowacourse.movie.data.ticket.RoomTicketRepository
+import woowacourse.movie.data.ticket.TicketDatabase
+import woowacourse.movie.data.ticket.TicketRepository
 
-class MovieResultPresenter(private val view: MovieResultContract.View) :
+class MovieResultPresenter(
+    private val view: MovieResultContract.View,
+    applicationContext: Context,
+    private val ticketRepository: TicketRepository =
+        RoomTicketRepository(TicketDatabase.instance(applicationContext).ticketDao()),
+) :
     MovieResultContract.Presenter {
-    override fun loadMovieTicket(
-        movieId: Long,
-        screeningDate: String,
-        screeningTime: String,
-        reservationCount: Int,
-        selectedSeats: String,
-        theaterName: String,
-    ) {
-        val movie =
-            runCatching {
-                MovieRepository.getMovieById(movieId)
-            }.getOrElse {
-                view.showToastInvalidMovieIdError(it)
-                return
+    override fun loadTicket(ticketId: Long) {
+        runCatching { ticketRepository.find(ticketId) }
+            .onFailure { view.showToastInvalidMovieIdError(it) }
+            .onSuccess { ticket ->
+                val movie = MovieRepositoryImpl.find(ticket.movieId)
+                view.displayTicket(ticket, movie)
             }
-
-        val movieSelectedSeats = MovieSelectedSeats(reservationCount)
-        selectedSeats.split(", ").forEach { seat ->
-            movieSelectedSeats.selectSeat(
-                MovieSeat(
-                    seat.unFormatSeatRow(),
-                    seat.unFormatSeatColumn(),
-                ),
-            )
-        }
-
-        view.displayMovieTicket(
-            MovieTicket(
-                movie.title,
-                LocalDate.parse(screeningDate),
-                LocalTime.parse(screeningTime),
-                reservationCount,
-                movieSelectedSeats,
-                theaterName,
-            ),
-        )
     }
 }

@@ -8,11 +8,10 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.annotation.StringRes
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieRepository
+import woowacourse.movie.data.movie.dto.Movie
 import woowacourse.movie.databinding.ActivityMovieDetailBinding
 import woowacourse.movie.feature.detail.ui.MovieDetailUiModel
-import woowacourse.movie.feature.seatselection.MovieSeatSelectionActivity
-import woowacourse.movie.model.Movie
+import woowacourse.movie.feature.seat.MovieSeatSelectionActivity
 import woowacourse.movie.util.BaseActivity
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
 import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_THEATER_INDEX
@@ -48,16 +47,16 @@ class MovieDetailActivity :
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 
-        val screeningDateSpinnerPosition =
-            savedInstanceState.getInt(KEY_SCREENING_DATE_SPINNER_POSITION)
-        binding.spScreeningDate.setSelection(screeningDateSpinnerPosition)
+        with(savedInstanceState) {
+            val screeningDateSpinnerPosition = getInt(KEY_SCREENING_DATE_SPINNER_POSITION)
+            binding.spScreeningDate.setSelection(screeningDateSpinnerPosition)
 
-        val screeningTimeSpinnerPosition =
-            savedInstanceState.getInt(KEY_SCREENING_TIME_SPINNER_POSITION)
-        binding.spScreeningTime.setSelection(screeningTimeSpinnerPosition)
+            val screeningTimeSpinnerPosition = getInt(KEY_SCREENING_TIME_SPINNER_POSITION)
+            binding.spScreeningTime.setSelection(screeningTimeSpinnerPosition)
 
-        val reservationCount = savedInstanceState.getInt(KEY_RESERVATION_COUNT)
-        presenter.updateReservationCount(reservationCount)
+            val reservationCount = getInt(KEY_RESERVATION_COUNT)
+            presenter.updateReservationCount(reservationCount)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -67,11 +66,11 @@ class MovieDetailActivity :
 
     private fun setUpButtonListener() {
         binding.btnPlus.setOnClickListener {
-            presenter.plusReservationCount()
+            presenter.increaseReservationCount()
         }
 
         binding.btnMinus.setOnClickListener {
-            presenter.minusReservationCount()
+            presenter.decreaseReservationCount()
         }
 
         binding.btnSeatSelection.setOnClickListener {
@@ -79,6 +78,7 @@ class MovieDetailActivity :
                 movieId,
                 binding.spScreeningDate.selectedItem.toString(),
                 binding.spScreeningTime.selectedItem.toString(),
+                selectedTheaterPosition,
             )
         }
     }
@@ -91,24 +91,8 @@ class MovieDetailActivity :
         binding.reservationCount = count
     }
 
-    override fun navigateToSeatSelectionView(
-        movieId: Long,
-        screeningDate: String,
-        screeningTime: String,
-        reservationCount: Int,
-    ) {
-        val movie = MovieRepository.getMovieById(this.movieId)
-        val theaterName = movie.theaters[selectedTheaterPosition].name
-
-        val intent =
-            MovieSeatSelectionActivity.newIntent(
-                this,
-                movieId,
-                screeningDate,
-                screeningTime,
-                reservationCount,
-                theaterName,
-            )
+    override fun navigateToSeatSelectionView(reservationId: Long) {
+        val intent = MovieSeatSelectionActivity.newIntent(this, reservationId)
         startActivity(intent)
     }
 
@@ -148,10 +132,9 @@ class MovieDetailActivity :
             movieId: Long,
             selectedTheaterIndex: Int,
         ): Intent {
-            return Intent(context, MovieDetailActivity::class.java).apply {
-                putExtra(KEY_MOVIE_ID, movieId)
-                putExtra(KEY_SELECTED_THEATER_INDEX, selectedTheaterIndex)
-            }
+            return Intent(context, MovieDetailActivity::class.java)
+                .putExtra(KEY_MOVIE_ID, movieId)
+                .putExtra(KEY_SELECTED_THEATER_INDEX, selectedTheaterIndex)
         }
     }
 }

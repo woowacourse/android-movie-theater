@@ -1,6 +1,6 @@
 package woowacourse.movie.feature.home.movie
 
-import woowacourse.movie.model.Movie
+import woowacourse.movie.data.movie.dto.Movie
 import woowacourse.movie.util.BasePresenter
 
 interface MovieHomeContract {

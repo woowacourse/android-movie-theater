@@ -1,6 +1,7 @@
 package woowacourse.movie.feature.result.ui
 
-import woowacourse.movie.model.MovieTicket
+import woowacourse.movie.data.movie.dto.Movie
+import woowacourse.movie.data.ticket.entity.Ticket
 import woowacourse.movie.util.formatScreeningDate
 import woowacourse.movie.util.formatScreeningTime
 import woowacourse.movie.util.formatSeats
@@ -15,15 +16,18 @@ class MovieResultUiModel(
     val totalPrice: Int,
 ) {
     companion object {
-        fun from(movieTicket: MovieTicket): MovieResultUiModel {
+        fun from(
+            ticket: Ticket,
+            movie: Movie,
+        ): MovieResultUiModel {
             return MovieResultUiModel(
-                movieTicket.movieTitle,
-                movieTicket.screeningDate.formatScreeningDate(),
-                movieTicket.screeningTime.formatScreeningTime(),
-                movieTicket.reservationCount,
-                movieTicket.formatSeats(),
-                movieTicket.theaterName,
-                movieTicket.movieSelectedSeats.totalPrice(),
+                movie.title,
+                ticket.screeningDate.formatScreeningDate(),
+                ticket.screeningTime.formatScreeningTime(),
+                ticket.selectedSeats.reservationCount,
+                ticket.selectedSeats.formatSeats(),
+                ticket.theaterName,
+                ticket.selectedSeats.totalPrice(),
             )
         }
     }
