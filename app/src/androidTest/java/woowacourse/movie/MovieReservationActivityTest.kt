@@ -18,8 +18,8 @@ import org.hamcrest.Matchers.`is`
 import org.junit.Rule
 import org.junit.Test
 import org.junit.jupiter.api.DisplayName
+import woowacourse.movie.data.entity.ScreeningMovieEntity
 import woowacourse.movie.fixtures.context
-import woowacourse.movie.model.ScreeningMovie
 import woowacourse.movie.moviereservation.MovieReservationActivity
 import java.time.format.DateTimeFormatter
 
@@ -31,8 +31,8 @@ class MovieReservationActivityTest {
                 context,
                 MovieReservationActivity::class.java,
             ).apply {
-                putExtra(MovieReservationActivity.EXTRA_SCREEN_MOVIE_ID, 0L)
-                putExtra(MovieReservationActivity.EXTRA_THEATER_ID, 0L)
+                putExtra(MovieReservationActivity.EXTRA_SCREEN_MOVIE_ID, 2L)
+                putExtra(MovieReservationActivity.EXTRA_THEATER_ID, 3L)
             },
         )
 
@@ -82,7 +82,7 @@ class MovieReservationActivityTest {
 
     @Test
     fun `date_spinner의_특정_데이터를_클릭하면_뷰에_나타난다`() {
-        val expected = ScreeningMovie.STUB_A.screenDateTimes[3].date.format(dateFormatter)
+        val expected = woowacourse.movie.data.entity.ScreeningMovieEntity.STUB_C.screenDateTimes[3].keys.first().format(dateFormatter)
         onView(withId(R.id.spinner_detail_date)).perform(click())
 
         onData(
@@ -102,8 +102,11 @@ class MovieReservationActivityTest {
 
     @Test
     fun `time_spinner의_특정_데이터를_클릭하면_뷰에_나타난다`() {
-        val dateString = ScreeningMovie.STUB_A.screenDateTimes[3].date.format(dateFormatter)
-        val expected = ScreeningMovie.STUB_A.screenDateTimes[3].times[3].format(timeFormatter)
+        val dateString = ScreeningMovieEntity.STUB_C.screenDateTimes[3].keys.first().format(dateFormatter)
+        val expected =
+            ScreeningMovieEntity.STUB_C.screenDateTimes[3].values.flatten()[3].format(
+                timeFormatter,
+            )
         onView(withId(R.id.spinner_detail_date)).perform(click())
 
         onData(

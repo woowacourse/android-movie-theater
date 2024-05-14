@@ -3,6 +3,7 @@ package woowacourse.movie.selectseat
 import woowacourse.movie.moviereservation.uimodel.BookingInfo
 import woowacourse.movie.selectseat.uimodel.SeatUiModel
 import woowacourse.movie.selectseat.uimodel.SelectState
+import woowacourse.movie.setting.AlarmSetting
 
 interface SelectSeatContract {
     interface View {
@@ -24,14 +25,15 @@ interface SelectSeatContract {
     }
 
     interface Presenter {
-        fun loadSeat(
+        fun loadInitData(
             movieId: Long,
             count: Int,
         )
 
-        fun loadReservationInfo(movieId: Long)
-
-        fun completeReservation(bookingInfoUiModel: BookingInfo)
+        fun completeReservation(
+            bookingInfoUiModel: BookingInfo,
+            alarmSettig: AlarmSetting,
+        )
 
         fun changeSeatState(selectedSeat: SeatUiModel)
     }

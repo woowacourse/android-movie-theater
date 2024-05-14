@@ -12,7 +12,7 @@ fun MovieReservation.toReservationResultUiModel(theaterName: String): Reservatio
         cancelDeadLine.inWholeMinutes.toInt(),
         screenDateTime.format(formatter),
         headCount.count,
-        selectedSeats.selectedSeats.toSeatUiModel(),
+        selectedSeats.toSeatUiModel(),
         theaterName,
         totalPrice.price,
     )

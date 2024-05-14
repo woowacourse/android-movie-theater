@@ -6,6 +6,7 @@ import woowacourse.movie.moviereservation.uimodel.BookingInfo
 import woowacourse.movie.moviereservation.uimodel.CurrentBookingDetail
 import woowacourse.movie.repository.MovieRepository
 import java.time.LocalDateTime
+import kotlin.concurrent.thread
 
 class MovieReservationPresenter(
     private val view: MovieReservationContract.View,
@@ -14,19 +15,21 @@ class MovieReservationPresenter(
     private lateinit var screeningMovie: ScreeningMovie
 
     override fun loadMovieDetail(screenMovieId: Long) {
-        runCatching {
-            screeningMovie = repository.screenMovieById(screenMovieId)
-        }.onSuccess {
-            view.showMovieInfo(screeningMovie.toMovieReservationUiModel())
-            view.showBookingDetail(
-                screeningMovie.toScreeningDateTimeUiModel(),
-                CurrentBookingDetail(
-                    HeadCount.MIN_COUNT,
-                ),
-            )
-        }.onFailure {
-            view.showScreeningMovieError()
-        }
+        thread {
+            runCatching {
+                screeningMovie = repository.screenMovieById(screenMovieId)
+            }.onSuccess {
+                view.showMovieInfo(screeningMovie.toMovieReservationUiModel())
+                view.showBookingDetail(
+                    screeningMovie.toScreeningDateTimeUiModel(),
+                    CurrentBookingDetail(
+                        HeadCount.MIN_COUNT,
+                    ),
+                )
+            }.onFailure {
+                view.showScreeningMovieError()
+            }
+        }.join()
     }
 
     override fun plusCount(currentCount: Int) {
@@ -50,18 +53,20 @@ class MovieReservationPresenter(
         theaterId: Long,
         currentBookingDetail: CurrentBookingDetail,
     ) {
-        val localDate = screeningMovie.screenDateTimes[currentBookingDetail.datePosition].date
-        val localTime =
-            screeningMovie.screenDateTimes[currentBookingDetail.datePosition].times[currentBookingDetail.timePosition]
+        thread {
+            val localDate = screeningMovie.screenDateTimes[currentBookingDetail.datePosition].date
+            val localTime =
+                screeningMovie.screenDateTimes[currentBookingDetail.datePosition].times[currentBookingDetail.timePosition]
 
-        val bookingInfo =
-            BookingInfo(
-                movieId,
-                theaterId,
-                currentBookingDetail.count,
-                LocalDateTime.of(localDate, localTime),
-            )
+            val bookingInfo =
+                BookingInfo(
+                    movieId,
+                    theaterId,
+                    currentBookingDetail.count,
+                    LocalDateTime.of(localDate, localTime),
+                )
 
-        view.navigateToSelectSeatView(bookingInfo)
+            view.navigateToSelectSeatView(bookingInfo)
+        }.join()
     }
 }

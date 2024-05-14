@@ -8,6 +8,8 @@ import woowacourse.movie.moviereservation.uimodel.BookingInfo
 import woowacourse.movie.repository.MovieRepository
 import woowacourse.movie.selectseat.uimodel.SeatUiModel
 import woowacourse.movie.selectseat.uimodel.SelectState
+import woowacourse.movie.setting.AlarmSetting
+import kotlin.concurrent.thread
 
 class SelectSeatPresenter(
     private val view: SelectSeatContract.View,
@@ -16,25 +18,30 @@ class SelectSeatPresenter(
     private lateinit var movieTheater: MovieTheater
     private lateinit var selectedSeats: SelectedSeats
 
-    override fun loadSeat(
+    override fun loadInitData(
         movieId: Long,
         count: Int,
     ) {
-        runCatching {
-            movieTheater = repository.screenMovieById(movieId).theater
-            selectedSeats = SelectedSeats(movieTheater, HeadCount(count))
-            movieTheater
-        }.onSuccess {
-            view.showSeat(it.seats.toSeatsUiModel())
-        }
+        thread {
+            runCatching {
+                movieTheater = repository.screenMovieById(movieId).theater
+                selectedSeats = SelectedSeats(movieTheater, HeadCount(count))
+                loadReservationInfo(movieId)
+                movieTheater
+            }.onSuccess {
+                view.showSeat(it.seats.toSeatsUiModel())
+            }
+        }.join()
     }
 
-    override fun loadReservationInfo(movieId: Long) {
-        runCatching {
-            repository.screenMovieById(movieId)
-        }.onSuccess {
-            view.showMovieInfo(it.movie.title, selectedSeats.totalPrice.price)
-        }
+    private fun loadReservationInfo(movieId: Long) {
+        thread {
+            runCatching {
+                repository.screenMovieById(movieId)
+            }.onSuccess {
+                view.showMovieInfo(it.movie.title, selectedSeats.totalPrice.price)
+            }
+        }.join()
     }
 
     override fun changeSeatState(selectedSeat: SeatUiModel) {
@@ -53,17 +60,23 @@ class SelectSeatPresenter(
         view.updatePrice(this.selectedSeats.totalPrice.price)
     }
 
-    override fun completeReservation(bookingInfoUiModel: BookingInfo) {
-        runCatching {
-            repository.reserveMovie(
-                bookingInfoUiModel.screenMovieId,
-                bookingInfoUiModel.dateTime,
-                HeadCount(bookingInfoUiModel.count),
-                selectedSeats,
-                bookingInfoUiModel.theaterId,
-            )
-        }.onSuccess {
-            view.navigateToResult(it)
-        }
+    override fun completeReservation(
+        bookingInfoUiModel: BookingInfo,
+        alarmSettig: AlarmSetting,
+    ) {
+        thread {
+            runCatching {
+                repository.reserveMovie(
+                    bookingInfoUiModel.screenMovieId,
+                    bookingInfoUiModel.dateTime,
+                    HeadCount(bookingInfoUiModel.count),
+                    selectedSeats,
+                    bookingInfoUiModel.theaterId,
+                )
+            }.onSuccess {
+                view.navigateToResult(it)
+                alarmSettig.setAlarm(repository.movieReservationById(it))
+            }
+        }.join()
     }
 }

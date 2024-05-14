@@ -12,11 +12,14 @@ import woowacourse.movie.repository.MovieRepository
 import woowacourse.movie.reservationresult.ReservationResultContract
 import woowacourse.movie.reservationresult.ReservationResultPresenter
 import woowacourse.movie.reservationresult.toReservationResultUiModel
+import woowacourse.movie.setting.AlarmSetting
 
 class ReservationResultPresenterTest {
     private lateinit var view: ReservationResultContract.View
 
     private lateinit var repository: MovieRepository
+
+    private lateinit var alarmSetting: AlarmSetting
 
     private lateinit var presenter: ReservationResultPresenter
 
@@ -24,7 +27,8 @@ class ReservationResultPresenterTest {
     fun setUp() {
         view = mockk<ReservationResultContract.View>()
         repository = mockk<MovieRepository>()
-        presenter = ReservationResultPresenter(repository, view)
+        alarmSetting = mockk<AlarmSetting>()
+        presenter = ReservationResultPresenter(repository, view, alarmSetting)
     }
 
     @Test

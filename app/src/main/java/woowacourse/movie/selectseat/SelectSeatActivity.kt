@@ -8,13 +8,14 @@ import android.widget.CheckBox
 import android.widget.TableRow
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.movie.R
-import woowacourse.movie.data.DummyMovies
+import woowacourse.movie.data.RoomMovieRepository
 import woowacourse.movie.databinding.ActivitySelectSeatBinding
 import woowacourse.movie.moviereservation.uimodel.BookingInfo
 import woowacourse.movie.reservationresult.ReservationResultActivity
 import woowacourse.movie.selectseat.uimodel.SeatUiModel
 import woowacourse.movie.selectseat.uimodel.SelectState
 import woowacourse.movie.selectseat.uimodel.SelectedSeatsUiModel
+import woowacourse.movie.setting.MovieAlarmSetting
 import woowacourse.movie.util.bundleParcelable
 import woowacourse.movie.util.intentParcelable
 import woowacourse.movie.util.showAlertDialog
@@ -37,7 +38,7 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
         bookingInfoUiModel =
             intent.intentParcelable(EXTRA_BOOKING_ID, BookingInfo::class.java)
                 ?: error("bookingInfo에 대한 정보가 없습니다.")
-        presenter = SelectSeatPresenter(this, DummyMovies)
+        presenter = SelectSeatPresenter(this, RoomMovieRepository.instance())
 
         initView()
         clickReserveButton()
@@ -65,8 +66,7 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
     }
 
     private fun initView() {
-        presenter.loadSeat(bookingInfoUiModel.screenMovieId, bookingInfoUiModel.count)
-        presenter.loadReservationInfo(bookingInfoUiModel.screenMovieId)
+        presenter.loadInitData(bookingInfoUiModel.screenMovieId, bookingInfoUiModel.count)
         binding.state = state
     }
 
@@ -163,6 +163,7 @@ class SelectSeatActivity : AppCompatActivity(), SelectSeatContract.View {
             onPositiveButtonClicked = {
                 presenter.completeReservation(
                     bookingInfoUiModel,
+                    MovieAlarmSetting(this),
                 )
             },
             "취소",

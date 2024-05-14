@@ -20,8 +20,8 @@ object DummyMovies : MovieRepository {
 
     private val theaters: List<MovieTheater> =
         listOf(MovieTheater.STUB_A, MovieTheater.STUB_B, MovieTheater.STUB_C)
-    private var reservations: List<MovieReservation> = emptyList()
-    private var reservationId: Long = 0
+    private var reservations: List<MovieReservation> = listOf(MovieReservation.STUB)
+    private var reservationId: Long = 1
 
     override fun movies(): List<Movie> = screenMovies.map { it.movie }.distinct()
 
@@ -83,4 +83,6 @@ object DummyMovies : MovieRepository {
     ): Seat =
         theaterById(theaterId).seats.firstOrNull { it.row == row && it.col == col }
             ?: error("해당 극장에는 row:$Int, col:${Int}에 해당하는 좌석이 없습니다.")
+
+    override fun reservations(): List<MovieReservation> = reservations
 }
