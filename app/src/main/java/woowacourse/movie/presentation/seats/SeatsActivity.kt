@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.data.AlarmReceiver.Companion.EXTRA_MOVIE_TICKET_ID
 import woowacourse.movie.data.repository.MovieTicketRepositoryImpl
 import woowacourse.movie.data.utils.NotificationScheduler
 import woowacourse.movie.data.utils.SharedPreferencesHelper
@@ -138,17 +139,11 @@ class SeatsActivity : AppCompatActivity(), SeatsContract.View {
     }
 
     private fun scheduleNotificationForTicket(movieTicketId: Long, screeningDate: String, screeningTime: String) {
-        try {
-            if (screeningTime != null) {
-                NotificationScheduler.scheduleNotification(
-                    this,
-                    movieTicketId,
-                    screeningTime,
-                )
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        NotificationScheduler.scheduleNotification(
+            this,
+            movieTicketId,
+            screeningTime,
+        )
     }
 
     companion object {
