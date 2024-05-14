@@ -13,22 +13,23 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import woowacourse.movie.model.Reservation
 import woowacourse.movie.model.Seat
-import woowacourse.movie.model.Ticket
 import woowacourse.movie.presentation.ticketingResult.TicketingResultActivity
 
 @RunWith(AndroidJUnit4::class)
 class TicketingResultActivityTest {
-    private val movieTicket =
-        Ticket(
-            theaterId = 4L,
+    private val movieReservation =
+        Reservation(
             movieTitle = "해리 포터와 마법사의 돌",
-            screeningDateTime = "2024-04-30",
+            screeningDate = "2024-04-30",
+            screeningTime = "17:00",
             selectedSeats =
                 listOf(
                     Seat(1, 1),
                     Seat(3, 2),
                 ),
+            theaterName = "아주아주아주아주아주긴 극장 이름인데 아주 나이스 빰빠밤바밤 밤밤 빠라바라밤 바밤",
         )
 
     @get:Rule
@@ -39,7 +40,7 @@ class TicketingResultActivityTest {
                 TicketingResultActivity::class.java,
             ).apply
                 {
-                    putExtra(TicketingResultActivity.EXTRA_MOVIE_TICKET, movieTicket)
+                    putExtra(TicketingResultActivity.EXTRA_MOVIE_RESERVATION, movieReservation)
                 },
         )
 

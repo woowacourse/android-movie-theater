@@ -2,12 +2,18 @@ package woowacourse.movie.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import woowacourse.movie.db.ReservationEntity
 import woowacourse.movie.utils.formatSeat
 import java.text.DecimalFormat
 
 @Parcelize
-data class Ticket(val movieTitle: String, val screeningDateTime: String, val selectedSeats: List<Seat>, val theaterId: Long = 0L) :
-    Parcelable {
+data class Reservation(
+    val movieTitle: String,
+    val screeningDate: String,
+    val screeningTime: String,
+    val selectedSeats: List<Seat>,
+    val theaterName: String,
+) : Parcelable {
     private val totalPrice = selectedSeats.sumOf { it.seatGrade.price }
     val totalCount = selectedSeats.size
 
@@ -18,4 +24,14 @@ data class Ticket(val movieTitle: String, val screeningDateTime: String, val sel
     companion object {
         val decimal = DecimalFormat("#,###")
     }
+}
+
+fun Reservation.toReservationEntity(): ReservationEntity {
+    return ReservationEntity(
+        movieTitle = movieTitle,
+        screeningDate = screeningDate,
+        screeningTime = screeningTime,
+        selectedSeats = selectedSeats,
+        theaterName = theaterName,
+    )
 }

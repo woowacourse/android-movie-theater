@@ -19,7 +19,8 @@ import org.junit.runner.RunWith
 import woowacourse.movie.presentation.seatSelection.SeatSelectionActivity
 import woowacourse.movie.presentation.seatSelection.SeatSelectionActivity.Companion.EXTRA_COUNT
 import woowacourse.movie.presentation.seatSelection.SeatSelectionActivity.Companion.EXTRA_MOVIE_ID
-import woowacourse.movie.presentation.seatSelection.SeatSelectionActivity.Companion.EXTRA_SCREENING_DATE_TIME
+import woowacourse.movie.presentation.seatSelection.SeatSelectionActivity.Companion.EXTRA_SCREENING_DATE
+import woowacourse.movie.presentation.seatSelection.SeatSelectionActivity.Companion.EXTRA_SCREENING_TIME
 
 @RunWith(AndroidJUnit4::class)
 class SeatSelectionActivityTest {
@@ -32,7 +33,8 @@ class SeatSelectionActivityTest {
             ).apply {
                 putExtra(EXTRA_MOVIE_ID, 1L)
                 putExtra(EXTRA_COUNT, 2) // 선택 가능한 좌석 개수
-                putExtra(EXTRA_SCREENING_DATE_TIME, "")
+                putExtra(EXTRA_SCREENING_DATE, "")
+                putExtra(EXTRA_SCREENING_TIME, "")
             },
         )
 

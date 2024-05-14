@@ -2,19 +2,17 @@ package woowacourse.movie.presentation.ticketingResult
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityTicketingResultBinding
-import woowacourse.movie.model.Ticket
-import woowacourse.movie.repository.DummyTheaterList
+import woowacourse.movie.model.Reservation
+import woowacourse.movie.utils.getParcelableReservationExtra
 
 class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.View {
     private lateinit var binding: ActivityTicketingResultBinding
-    private val presenter: TicketingResultPresenter = TicketingResultPresenter(this, DummyTheaterList)
+    private val presenter: TicketingResultPresenter = TicketingResultPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,21 +20,13 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val movieTicket =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                intent.getParcelableExtra(EXTRA_MOVIE_TICKET, Ticket::class.java)
-            } else {
-                intent.getParcelableExtra(EXTRA_MOVIE_TICKET)
-            }
-        presenter.loadTicketInfo(movieTicket)
+        val movieReservation = intent.getParcelableReservationExtra(EXTRA_MOVIE_RESERVATION)
+
+        presenter.loadTicketInfo(movieReservation)
     }
 
-    override fun displayTicketInfo(
-        ticket: Ticket,
-        theaterName: String,
-    ) {
-        binding.ticket = ticket
-        binding.theaterName = "$theaterName 극장"
+    override fun displayTicketInfo(reservation: Reservation) {
+        binding.reservation = reservation
     }
 
     override fun showToastMessage(message: String?) {
@@ -49,14 +39,14 @@ class TicketingResultActivity : AppCompatActivity(), TicketingResultContract.Vie
     }
 
     companion object {
-        const val EXTRA_MOVIE_TICKET = "movie_ticket"
+        const val EXTRA_MOVIE_RESERVATION = "movie_reservation"
 
         fun createIntent(
             context: Context,
-            movieTicket: Ticket,
+            movieReservation: Reservation,
         ): Intent {
             return Intent(context, TicketingResultActivity::class.java).apply {
-                putExtra(EXTRA_MOVIE_TICKET, movieTicket)
+                putExtra(EXTRA_MOVIE_RESERVATION, movieReservation)
             }
         }
     }

@@ -2,12 +2,17 @@ package woowacourse.movie.presentation.ticketing
 
 import io.mockk.Runs
 import io.mockk.every
+import io.mockk.impl.annotations.MockK
+import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.junit5.MockKExtension
 import io.mockk.just
-import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
+import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.R
+import woowacourse.movie.model.Count
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.ScreeningDates
 import woowacourse.movie.repository.DummyTheaterList
@@ -20,7 +25,7 @@ private val dummyMovies =
             id = 0L,
             title = "해리 포터와 마법사의 돌",
             thumbnail = R.drawable.movie1,
-            screeningDates = ScreeningDates(LocalDate.of(2024, 3, 1), LocalDate.of(2024, 3, 31)),
+            screeningDates = ScreeningDates(LocalDate.of(2024, 3, 1), LocalDate.of(2024, 3, 3)),
             runningTime = 152,
             introduction =
                 """
@@ -29,9 +34,14 @@ private val dummyMovies =
         ),
     )
 
+@ExtendWith(MockKExtension::class)
 class TicketingPresenterTest {
-    private val view = mockk<TicketingActivity>(relaxed = true)
-    private val repository = mockk<MovieRepository>()
+    @RelaxedMockK
+    private lateinit var view: TicketingActivity
+
+    @MockK
+    private lateinit var repository: MovieRepository
+
     private lateinit var presenter: TicketingPresenter
 
     @BeforeEach
@@ -41,13 +51,20 @@ class TicketingPresenterTest {
 
     @Test
     fun `유효한_movieId를_전달받았을_경우_초기_화면_세팅을_진행한다`() {
+        val expectedMovie = dummyMovies[0]
+        val expectedDates =
+            listOf(LocalDate.of(2024, 3, 1), LocalDate.of(2024, 3, 2), LocalDate.of(2024, 3, 3))
+        val expectedCount = Count()
+
         every { repository.findMovieById(any()) } returns Result.success(dummyMovies[0])
 
         presenter.loadMovieData(1L, 1L)
 
-        verify { view.displayMovieDetail(dummyMovies[0]) }
-        verify { view.setUpDateSpinners(any()) }
-        verify { view.bindTicketCount(any()) }
+        assertAll(
+            { verify { view.displayMovieDetail(expectedMovie) } },
+            { verify { view.setUpDateSpinners(expectedDates) } },
+            { verify { view.bindTicketCount(expectedCount) } },
+        )
     }
 
     @Test

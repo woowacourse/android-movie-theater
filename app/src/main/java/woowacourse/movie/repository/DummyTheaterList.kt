@@ -16,8 +16,8 @@ object DummyTheaterList : TheaterListRepository {
                             1,
                             listOf(
                                 LocalTime.of(10, 0),
-                                LocalTime.of(12, 0),
-                                LocalTime.of(14, 0),
+                                LocalTime.of(18, 15),
+                                LocalTime.of(18, 35),
                             ),
                         ),
                         ScreeningMovie(
@@ -25,12 +25,15 @@ object DummyTheaterList : TheaterListRepository {
                             listOf(
                                 LocalTime.of(11, 0),
                                 LocalTime.of(13, 0),
+                                LocalTime.of(18, 35),
+                                LocalTime.of(18, 38),
                             ),
                         ),
                         ScreeningMovie(
                             3,
                             listOf(
                                 LocalTime.of(9, 0),
+                                LocalTime.of(18, 31),
                             ),
                         ),
                     ),

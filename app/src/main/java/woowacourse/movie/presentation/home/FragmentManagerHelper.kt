@@ -8,25 +8,26 @@ import woowacourse.movie.presentation.homefragments.setting.SettingFragment
 
 class FragmentManagerHelper(activity: HomeActivity, private val containerId: Int) {
     private val fragmentManager = activity.supportFragmentManager
-    private val fragmentsMap =
-        mapOf(
-            R.id.action_home to MovieListFragment(),
-            R.id.action_reservation_list to ReservationFragment(),
-            R.id.action_settings to SettingFragment(),
-        )
+    private val movieListFragment = MovieListFragment()
+    private val reservationFragment = ReservationFragment()
+    private val settingFragment = SettingFragment()
 
     init {
-        val firstFragment = fragmentsMap[R.id.action_home] ?: MovieListFragment()
         fragmentManager.commit {
-            add(containerId, firstFragment)
+            add(containerId, movieListFragment)
         }
     }
 
     fun replace(menuId: Int) {
-        fragmentsMap[menuId]?.let {
-            fragmentManager.commit {
-                replace(containerId, it)
+        val target =
+            when (menuId) {
+                R.id.action_home -> movieListFragment
+                R.id.action_reservation_list -> reservationFragment
+                R.id.action_settings -> settingFragment
+                else -> movieListFragment
             }
+        fragmentManager.commit {
+            replace(containerId, target)
         }
     }
 }

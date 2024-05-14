@@ -1,17 +1,13 @@
 package woowacourse.movie.presentation.ticketingResult
 
-import woowacourse.movie.model.Ticket
-import woowacourse.movie.repository.TheaterListRepository
+import woowacourse.movie.model.Reservation
 
 class TicketingResultPresenter(
     private val ticketingResultView: TicketingResultContract.View,
-    private val theaterListRepository: TheaterListRepository,
 ) : TicketingResultContract.Presenter {
-    override fun loadTicketInfo(movieTicket: Ticket?) {
-        movieTicket?.let { ticket ->
-            ticketingResultView.displayTicketInfo(ticket, findTheaterName(ticket.theaterId))
+    override fun loadTicketInfo(movieReservation: Reservation?) {
+        movieReservation?.let { reservation ->
+            ticketingResultView.displayTicketInfo(reservation)
         }
     }
-
-    private fun findTheaterName(theaterId: Long): String = theaterListRepository.findTheaterOrNull(theaterId)?.name ?: ""
 }

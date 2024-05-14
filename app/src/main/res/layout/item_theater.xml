@@ -3,7 +3,7 @@
 
     <data>
         <variable
-            name="listener"
+            name="theaterItemClickListener"
             type="woowacourse.movie.presentation.homefragments.movieList.listener.TheaterClickListener" />
 
         <variable
@@ -13,7 +13,6 @@
         <variable
             name="movieId"
             type="Long" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,29 +30,18 @@
 
         <TextView
             android:id="@+id/item_theater_name_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:text="@{theater.name}"
+            android:text="@{@string/item_theater_name_tail(theater.name)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="선릉" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="@string/item_theater_name_tail"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBaseline_toBaselineOf="@id/item_theater_name_tv"
             app:layout_constraintEnd_toEndOf="@id/gl_div"
-            app:layout_constraintStart_toEndOf="@id/item_theater_name_tv" />
+            tools:text="선릉" />
 
         <TextView
             android:id="@+id/item_theater_time_tv"
@@ -83,7 +71,7 @@
             android:layout_height="0dp"
             android:background="@android:color/transparent"
             android:src="@drawable/arrow_img"
-            android:onClick="@{() -> listener.onTheaterClick(theater.id, movieId)}"
+            android:onClick="@{() -> theaterItemClickListener.onTheaterClick(theater.id, movieId)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/gl_div"

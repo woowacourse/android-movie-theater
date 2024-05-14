@@ -3,11 +3,8 @@
 
     <data>
         <variable
-            name="ticket"
-            type="woowacourse.movie.model.Ticket" />
-        <variable
-            name="theaterName"
-            type="String" />
+            name="reservation"
+            type="woowacourse.movie.model.Reservation" />
     </data>
 
 
@@ -39,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="44dp"
             android:gravity="center"
-            android:text="@{ticket.movieTitle}"
+            android:text="@{reservation.movieTitle}"
             android:textColor="@color/black"
             android:textSize="26sp"
             android:textStyle="bold"
@@ -50,18 +47,35 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_movie_date"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="@{ticket.screeningDateTime}"
+            android:text="@{reservation.screeningDate}"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginEnd="12dp"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintEnd_toStartOf="@id/tv_movie_time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_movie_title"
+            tools:text="2024.1.1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_movie_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="@{reservation.screeningTime}"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_movie_title"
-            tools:text="2024.1.1" />
+            app:layout_constraintStart_toEndOf="@id/tv_movie_date"
+            app:layout_constraintBaseline_toBaselineOf="@id/tv_movie_date"
+            tools:text="17:00" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_ticket_count_head"
@@ -71,6 +85,7 @@
             android:text="일반"
             android:textColor="@color/black"
             android:textSize="20sp"
+            android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toStartOf="@id/tv_ticket_count"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +95,7 @@
             android:id="@+id/tv_ticket_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{String.valueOf(ticket.totalCount)}"
+            android:text="@{String.valueOf(reservation.totalCount)}"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintBaseline_toBaselineOf="@id/tv_ticket_count_head"
@@ -118,7 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxWidth="130dp"
-            android:text="@{ticket.selectedSeatsToString()}"
+            android:text="@{reservation.selectedSeatsToString()}"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/tv_ticket_count"
@@ -147,7 +162,7 @@
             android:ellipsize="end"
             android:maxWidth="130dp"
             android:maxLines="1"
-            android:text="@{theaterName}"
+            android:text="@{@string/item_theater_name_tail(reservation.theaterName)}"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/tv_ticket_count"
@@ -162,7 +177,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:gravity="center"
-            android:text="@{ticket.totalPriceToString()}"
+            android:text="@{reservation.totalPriceToString()}"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintEnd_toStartOf="@id/tv_price_tail"

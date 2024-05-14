@@ -1,11 +1,13 @@
 package woowacourse.movie.presentation.seatSelection
 
 import io.mockk.impl.annotations.MockK
+import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import woowacourse.movie.db.ReservationDatabase
 import woowacourse.movie.repository.MovieRepository
 
 @ExtendWith(MockKExtension::class)
@@ -14,15 +16,18 @@ class SeatSelectionPresenterTest {
 
     private val ticketCount = 3
 
-    @MockK(relaxed = true)
+    @RelaxedMockK
     private lateinit var view: SeatSelectionContract.View
 
     @MockK
     private lateinit var repository: MovieRepository
 
+    @RelaxedMockK
+    private lateinit var db: ReservationDatabase
+
     @BeforeEach
     fun setUp() {
-        presenter = SeatSelectionPresenter(view, ticketCount, repository)
+        presenter = SeatSelectionPresenter(view, ticketCount, db, repository)
     }
 
     @Test
