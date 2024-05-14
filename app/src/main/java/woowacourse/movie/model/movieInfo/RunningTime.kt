@@ -2,7 +2,7 @@ package woowacourse.movie.model.movieInfo
 
 import java.io.Serializable
 
-class RunningTime(private val time: Int) : Serializable {
+class RunningTime(val time: Int) : Serializable {
     init {
         require(time > MINIMUM_LENGTH) { ERROR_MESSAGE }
     }

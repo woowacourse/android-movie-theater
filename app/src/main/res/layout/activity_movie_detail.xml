@@ -3,12 +3,33 @@
     <data>
 
         <variable
-            name="presenter"
-            type="woowacourse.movie.movieDetail.MovieDetailPresenter" />
+            name="title"
+            type="String" />
+
+        <variable
+            name="runningTime"
+            type="String" />
+
+        <variable
+            name="synopsis"
+            type="String" />
+
+        <variable
+            name="date"
+            type="java.time.LocalDate" />
+
+        <variable
+            name="ticketNum"
+            type="Integer" />
+
+        <variable
+            name="listener"
+            type="woowacourse.movie.presentation.movieDetail.TicketCountListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/layout_movie_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -40,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="16dp"
-                    android:text="@{presenter.movie.title.toString()}"
+                    android:text="@{title}"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -50,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="8dp"
-                    android:text="@{presenter.movie.releaseDate.toString()}" />
+                    android:text="@{@string/running_date_format(date.year, date.monthValue, date.dayOfMonth)}" />
 
                 <TextView
                     android:id="@+id/movie_running_time"
@@ -58,14 +79,14 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="8dp"
-                    android:text="@{presenter.movie.runningTime.toString()}" />
+                    android:text="@{runningTime}" />
 
                 <TextView
                     android:id="@+id/movie_synopsis"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="@{presenter.movie.synopsis.toString()}" />
+                    android:text="@{synopsis}" />
             </LinearLayout>
         </ScrollView>
 
@@ -100,7 +121,7 @@
                 android:id="@+id/minus_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> presenter.onTicketMinus()}"
+                android:onClick="@{() -> listener.onClickDecrease()}"
                 android:text="-"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -110,7 +131,7 @@
                 android:id="@+id/quantity_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{String.valueOf(presenter.ticketNum)}"
+                android:text="@{ticketNum.toString()}"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/plus_button"
@@ -120,7 +141,7 @@
                 android:id="@+id/plus_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> presenter.onTicketPlus()}"
+                android:onClick="@{() -> listener.onClickIncrease()}"
                 android:text="+"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
