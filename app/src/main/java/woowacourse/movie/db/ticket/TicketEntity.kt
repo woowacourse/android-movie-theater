@@ -14,7 +14,7 @@ data class TicketEntity(
     @ColumnInfo(name = "movie_title") val movieTitle: String,
     @ColumnInfo(name = "theater_name") val theaterName: String,
     @ColumnInfo(name = "seats") val seats: Seats,
-    @PrimaryKey(autoGenerate = true) var uid: Long? = null,
+    @PrimaryKey(autoGenerate = true) var uid: Long = 0L,
 ) : Serializable {
     companion object {
         fun TicketEntity.toDomain() =

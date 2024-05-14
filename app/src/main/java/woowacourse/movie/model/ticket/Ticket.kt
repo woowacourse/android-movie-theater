@@ -10,7 +10,7 @@ data class Ticket(
     val movieTitle: String,
     val theaterName: String,
     val seats: Seats,
-    var uid: Long? = null,
+    var uid: Long = 0L,
 ) : Serializable {
     fun getSeatsAmount() = seats.calculateAmount()
 

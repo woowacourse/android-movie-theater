@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemReservationHistoryBinding
 import woowacourse.movie.model.ticket.Ticket
 
-typealias OnSelectedReservation = (ticketId: Long?) -> Unit
+typealias OnSelectedReservation = (ticketId: Long) -> Unit
 
 class ReservationHistoryViewHolder(
     private val binding: ItemReservationHistoryBinding,
