@@ -1,4 +1,4 @@
-package woowacourse.movie.db.ticket
+package woowacourse.movie.db
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
