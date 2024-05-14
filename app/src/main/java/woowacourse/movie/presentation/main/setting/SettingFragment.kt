@@ -38,9 +38,7 @@ class SettingFragment : Fragment(), SettingContract.View {
         val repository = MovieTicketRepositoryImpl(requireContext())
         presenter = SettingPresenter(this, repository)
 
-        binding.alarmSettingSwitch.setOnCheckedChangeListener { _, isChecked ->
-            presenter.onAlarmSwitchChanged(isChecked)
-        }
+        binding.mode = SharedPreferencesHelper.isNotificationEnabled(requireContext())
         initSettingView()
 
         presenter.initializeSettings()
@@ -62,7 +60,7 @@ class SettingFragment : Fragment(), SettingContract.View {
             if (ContextCompat.checkSelfPermission(it, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                        showMessage("알림 권한이 필요합니다.")
+                        showMessage(getString(R.string.notification_permission))
                     }
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 } else {

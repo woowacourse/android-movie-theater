@@ -31,4 +31,5 @@
     <string name="permission_explanation">앱을 사용하기 위해서는 권한이 필요합니다.</string>
     <string name="notification_title">"영화 시작 30분 전입니다!"</string>
     <string name="notification_content">영화 시작 시간이 얼마 남지 않았습니다. 빠르게 극장에 도착해주세요.</string>
+    <string name="notification_permission">"알림 권한이 필요합니다."</string>
 </resources>
