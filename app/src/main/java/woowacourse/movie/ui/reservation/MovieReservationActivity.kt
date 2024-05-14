@@ -2,6 +2,8 @@ package woowacourse.movie.ui.reservation
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
@@ -33,6 +35,7 @@ class MovieReservationActivity :
             applicationContext,
         ).movieContentDao()
     }
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,9 +104,11 @@ class MovieReservationActivity :
         movieContent: MovieContent,
         theater: Theater,
     ) {
-        binding.movieContent = movieContent
-        binding.theater = theater
-        binding.executePendingBindings()
+        handler.post {
+            binding.movieContent = movieContent
+            binding.theater = theater
+            binding.executePendingBindings()
+        }
     }
 
     companion object {

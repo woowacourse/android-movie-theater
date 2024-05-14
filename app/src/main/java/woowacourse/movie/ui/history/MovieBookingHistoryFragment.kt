@@ -2,6 +2,8 @@ package woowacourse.movie.ui.history
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +36,7 @@ class MovieBookingHistoryFragment :
             ticketDao,
         )
     }
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,7 +59,6 @@ class MovieBookingHistoryFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         presenter.loadHistoryItems()
-        binding.rvBookingHistory.adapter = adapter
     }
 
     override fun onDestroy() {
@@ -65,7 +67,10 @@ class MovieBookingHistoryFragment :
     }
 
     override fun showHistoryItems(items: List<UserTicket>) {
-        historyContents = items
+        handler.post {
+            historyContents = items
+            binding.rvBookingHistory.adapter = adapter
+        }
     }
 
     private fun generateBookingHistoryAdapter(): BookingHistoryAdapter =

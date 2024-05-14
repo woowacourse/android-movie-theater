@@ -46,8 +46,8 @@ class MovieReservationPresenter(
             thread {
                 movieContent = movieContentDataSource.find(movieContentId).toMovieContent()
                 theater = theaterDataSource.find(theaterId).toTheater()
-            }.join()
-            view.showScreeningContent(movieContent, theater)
+                view.showScreeningContent(movieContent, theater)
+            }
         }.onFailure {
             view.showError(it)
         }

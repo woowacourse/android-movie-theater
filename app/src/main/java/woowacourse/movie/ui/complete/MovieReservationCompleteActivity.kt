@@ -2,6 +2,8 @@ package woowacourse.movie.ui.complete
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
@@ -24,6 +26,7 @@ class MovieReservationCompleteActivity :
     MovieReservationCompleteContract.View {
     private lateinit var binding: ActivityMovieReservationCompleteBinding
     private val dao: TicketDao by lazy { MovieDatabase.getDatabase(applicationContext).ticketDao() }
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +48,10 @@ class MovieReservationCompleteActivity :
         intent.getLongExtra(MovieReservationCompleteKey.TICKET_ID, USER_TICKET_ID_DEFAULT_VALUE)
 
     override fun showReservationResult(userTicket: UserTicket) {
-        binding.userTicket = userTicket
-        binding.executePendingBindings()
+        handler.post {
+            binding.userTicket = userTicket
+            binding.executePendingBindings()
+        }
     }
 
     override fun showError(throwable: Throwable) {

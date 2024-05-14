@@ -16,16 +16,15 @@ class TheaterSelectionPresenter(
     TheaterSelectionContract.Presenter {
     override fun loadTheaters(movieContentId: Long) {
         runCatching {
-            lateinit var movieContent: MovieContent
-            lateinit var theaters: List<Theater>
+            var theaters: List<Theater>? = null
             thread {
-                movieContent = movieContentDataSource.find(movieContentId).toMovieContent()
+                val movieContent = movieContentDataSource.find(movieContentId).toMovieContent()
                 theaters =
                     movieContent.theaterIds.map { theaterId ->
                         theaterDataSource.find(theaterId).toTheater()
                     }
             }.join()
-            view.showTheaters(movieContentId, theaters)
+            view.showTheaters(movieContentId, theaters ?: throw IllegalStateException())
         }.onFailure {
             view.showError(it)
         }

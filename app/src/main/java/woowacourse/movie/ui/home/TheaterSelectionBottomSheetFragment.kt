@@ -51,6 +51,7 @@ class TheaterSelectionBottomSheetFragment :
             presenter.loadTheaters(
                 bundle.getLong(MovieHomeKey.MOVIE_CONTENT_ID),
             )
+            binding.theaterList.adapter = adapter
         }
     }
 
@@ -60,7 +61,6 @@ class TheaterSelectionBottomSheetFragment :
     ) {
         this.theaters = theaters
         this.movieContentId = movieContentId
-        binding.theaterList.adapter = adapter
     }
 
     override fun showError(throwable: Throwable) {

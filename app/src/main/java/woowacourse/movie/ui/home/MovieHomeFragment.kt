@@ -1,6 +1,8 @@
 package woowacourse.movie.ui.home
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,6 +50,7 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View, ReservationButtonC
 
     override fun showMovieContents(movieContents: List<MovieContent>) {
         runCatching {
+
             this.movieContents = movieContents
         }.onFailure {
             presenter.handleError(it)

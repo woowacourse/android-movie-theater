@@ -17,9 +17,9 @@ class MovieReservationCompletePresenter(
             thread {
                 ticketEntity = userTicketDataSource.find(ticketId)
             }.join()
-            ticketEntity?.let {
-                view.showReservationResult(it.toUserTicket())
-            } ?: view.showError(IllegalStateException())
+            ticketEntity?.toUserTicket()?.let {
+                view.showReservationResult(it)
+            } ?: view.showError(IllegalStateException(ERROR_NULL_ENTITY))
         } catch (e: NoSuchElementException) {
             view.showError(e)
         }
@@ -27,5 +27,9 @@ class MovieReservationCompletePresenter(
 
     override fun handleError(throwable: Throwable) {
         view.showError(throwable)
+    }
+
+    companion object {
+        private const val ERROR_NULL_ENTITY = "데이터를 찾을 수 없습니다."
     }
 }

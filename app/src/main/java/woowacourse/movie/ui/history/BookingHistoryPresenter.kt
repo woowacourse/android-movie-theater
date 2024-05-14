@@ -12,9 +12,10 @@ class BookingHistoryPresenter(
 ) : BookingHistoryContract.Presenter {
     override fun loadHistoryItems() {
         runCatching {
-            lateinit var items: List<UserTicket>
-            thread { items = ticketDao.findAll().map(TicketEntity::toUserTicket) }.join()
-            view.showHistoryItems(items)
+            thread {
+                val items = ticketDao.findAll().map(TicketEntity::toUserTicket)
+                view.showHistoryItems(items)
+            }
         }.onFailure {
             view.showError(it)
         }
